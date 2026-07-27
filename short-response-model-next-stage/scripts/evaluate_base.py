@@ -237,10 +237,14 @@ def main() -> None:
 
     cat_rows = "\n".join(f"| {k} | {v:.3f} |" for k, v in summary["category_scores"].items())
     worst = sorted(outputs, key=lambda r: r["heuristic_score"])[:10]
-    worst_rows = "\n".join(
-        f"| {r['id']} | {r['category']} | {r['heuristic_score']:.3f} | {r['reply'].replace('|', '\\|')} |"
-        for r in worst
-    )
+    worst_row_lines: list[str] = []
+    for row in worst:
+        escaped_reply = str(row["reply"]).replace("|", "\\|").replace("\n", " ")
+        worst_row_lines.append(
+            f"| {row['id']} | {row['category']} | "
+            f"{row['heuristic_score']:.3f} | {escaped_reply} |"
+        )
+    worst_rows = "\n".join(worst_row_lines)
     report = f"""# BASELINE EVALUATION
 
 ## Scope
