@@ -1,0 +1,21 @@
+project:
+  name: short_response_model
+  dataset_version: short_response_sft_pilot_v1
+model:
+  base_id: Qwen/Qwen3-0.6B
+training:
+  method: qlora
+  objective: sft
+  seed: 11
+  selected_layers: all
+  lora_rank: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  learning_rate: 0.0002
+  max_steps: 200
+data:
+  training_manifest: data/train/train.jsonl
+  development_manifest: data/dev/dev.jsonl
+  sealed_eval_manifest: data/sealed/sealed.jsonl
+evaluation:
+  benchmark_path: data/benchmark/shortchatbench_pilot.jsonl
