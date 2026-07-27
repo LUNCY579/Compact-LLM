@@ -1,4 +1,4 @@
-# Short-Response Model — Next-Stage Package
+# Short-Response Model — Next-Stage Package (Phase 0 completed)
 
 This is a complete continuation of the earlier starter ZIP. It includes the original benchmark and model scripts plus populated train/dev/sealed datasets, validation tools, an audit workflow, and PowerShell commands.
 

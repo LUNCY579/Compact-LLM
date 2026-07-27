@@ -14,7 +14,7 @@ def read(s):
 # This makes the comparison focus on the underlying prompt rather than
 # harmless wording such as 'Quick question:' or 'In one sentence,'.
 def norm(x):
-    x=x.lower();x=re.sub(r"quick (update|question):|just to let you know,|can you answer briefly:|in one sentence,|i am wondering:|based on what i said,|remind me:|one quick check:","",x);return re.sub(r"\s+"," ",x).strip(" .!?,")
+    x=x.lower();x=re.sub(r"fyi|btw|by the way|now that i think of it|check this out|tell me|just tell me|quick (update|question):|just to let you know,|can you answer briefly:|in one sentence,|i am wondering:|based on what i said,|remind me:|one quick check:","",x);return re.sub(r"\s+"," ",x).strip(" .!?,")
 # Extract the most recent user message, which is the prompt answered by
 # the final assistant target.
 def prompt(r):return next(m["content"] for m in reversed(r["messages"]) if m["role"]=="user")
