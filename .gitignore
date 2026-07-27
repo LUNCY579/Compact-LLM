@@ -1,0 +1,62 @@
+# Dependencies
+node_modules/
+
+# Next.js
+.next/
+out/
+
+# Tauri
+src-tauri/target/
+src-tauri/gen/
+
+# Environment
+.env
+.env.local
+.env*.local
+
+# Code signing secrets / local artifacts (never commit private keys)
+*.pfx
+*.p12
+*.pem.key
+certs/
+signing/*.pfx
+src-tauri/target/release/UNSIGNED_NOT_PUBLISHABLE.txt
+src-tauri/target/release/SIGNING_VERDICT.txt
+src-tauri/target/release/bundle/nsis/UNSIGNED_NOT_PUBLISHABLE.txt
+
+# IDE
+.vscode/
+!.vscode/extensions.json
+*.swp
+*.swo
+.freebuff/*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.next-dev.log
+.next-dev-err.log
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# AI Models + bundled Quick Companion runtime (large binaries — keep locally, ship via build)
+models/*.gguf
+src-tauri/resources/models/*.gguf
+src-tauri/resources/runtime/*
+!src-tauri/resources/runtime/.gitkeep
+
+# Steam depot staging (regenerated locally; do not commit binaries or secrets)
+packaging/steam-staging/depots/
+packaging/steam-staging/manifests/
+packaging/steam-staging/steampipe/
+packaging/steam-staging/VERDICT.txt
+packaging/steam/steam-build.local.env
+
+.venv/
