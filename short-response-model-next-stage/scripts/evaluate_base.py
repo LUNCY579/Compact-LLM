@@ -14,18 +14,25 @@ import torch
 from rapidfuzz.fuzz import ratio as fuzzy_ratio
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
+# PEFT is optional for base-model evaluation. When an adapter path is
+# supplied later, the same evaluator can attach the LoRA/QLoRA adapter.
 try:
     from peft import PeftModel
 except ImportError:
     PeftModel = None  # type: ignore[assignment]
 
+# Shared default for the untouched baseline and adapted comparisons.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
+# Resolve the pilot benchmark relative to the project root so the command
+# works regardless of the caller's current directory.
 DEFAULT_BENCHMARK = (
     Path(__file__).resolve().parents[1]
     / "data"
     / "benchmark"
     / "shortchatbench_pilot.jsonl"
 )
+# This stable policy tells every evaluated model what short-response
+# behavior is expected. It is not itself a learned adapter.
 DEFAULT_SYSTEM_PROMPT = (
     "Reply like a casual text message. Use only a few words or one short sentence. "
     "Be accurate, use the conversation context, ask one brief clarification when "
@@ -33,6 +40,8 @@ DEFAULT_SYSTEM_PROMPT = (
 )
 
 
+# Configure model/adapter selection, benchmark location, decoding, and
+# output paths from the command line.
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(description="Evaluate a base model or PEFT adapter.")
     p.add_argument("--model-id", default=DEFAULT_MODEL_ID)
@@ -48,6 +57,7 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+# Parse benchmark records and report the exact line for malformed JSON.
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     with path.open("r", encoding="utf-8") as f:
@@ -61,18 +71,24 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+# Lowercase and collapse whitespace for simple text comparisons.
 def normalize(text: str) -> str:
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
+# Approximate word-like units for the completeness heuristic. Actual reply
+# length metrics later use tokenizer-generated token counts.
 def words(text: str) -> list[str]:
     return re.findall(r"[a-z0-9][a-z0-9+._-]*", normalize(text))
 
 
+# Case-insensitive substring check used by expected-property rules.
 def contains(text: str, phrase: str) -> bool:
     return normalize(phrase) in normalize(text)
 
 
+# Heuristically reject empty or obviously cut-off replies. Very short
+# acknowledgments can be complete without terminal punctuation.
 def complete_utterance(reply: str) -> bool:
     value = reply.strip()
     if not value:
@@ -86,19 +102,26 @@ def complete_utterance(reply: str) -> bool:
     )
 
 
+# Measure surface similarity between the user message and model reply.
+# High similarity can indicate parroting rather than a genuine response.
 def echo_score(user: str, reply: str) -> float:
     if not user.strip() or not reply.strip():
         return 0.0
     return float(fuzzy_ratio(normalize(user), normalize(reply)))
 
 
+# Convert each benchmark record's expected properties into deterministic
+# pass/fail checks. This is a pilot heuristic, not a semantic judge.
 def score_case(record: dict[str, Any], reply: str, token_count: int) -> dict[str, Any]:
     exp = record.get("expected", {})
+    # Every case requires a nonempty, complete reply within its token range.
     checks: dict[str, bool] = {
         "nonempty": bool(reply.strip()),
         "complete_utterance": complete_utterance(reply),
         "token_range": int(exp.get("min_tokens", 1)) <= token_count <= int(exp.get("max_tokens", 32)),
     }
+    # Some cases require all listed concepts; others accept any one of
+    # several equivalent phrases.
     for phrase in exp.get("must_include_all", []):
         checks[f"include:{phrase}"] = contains(reply, phrase)
     include_any = exp.get("must_include_any", [])
@@ -111,6 +134,7 @@ def score_case(record: dict[str, Any], reply: str, token_count: int) -> dict[str
         checks["asks_question"] = "?" in reply
     if exp.get("should_not_ask_question"):
         checks["does_not_ask_question"] = "?" not in reply
+    # Only run echo detection for benchmark cases that explicitly request it.
     if exp.get("should_not_echo_user"):
         user = record["messages"][-1]["content"]
         checks["does_not_echo_user"] = echo_score(user, reply) < 78.0
@@ -125,6 +149,8 @@ def score_case(record: dict[str, Any], reply: str, token_count: int) -> dict[str
     }
 
 
+# Use a nearest-rank percentile, which is simple and deterministic for
+# the small pilot benchmark.
 def percentile(values: list[float], p: float) -> float:
     if not values:
         return math.nan
@@ -133,38 +159,49 @@ def percentile(values: list[float], p: float) -> float:
     return float(ordered[index])
 
 
+# Synchronize asynchronous GPU work before and after timing.
 def sync_cuda() -> None:
     if torch.cuda.is_available():
         torch.cuda.synchronize()
 
 
+# Generate one reply for every benchmark record, score it, and write
+# raw results plus aggregate JSON and Markdown reports.
 def main() -> None:
     args = parse_args()
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is unavailable. Fix PyTorch/GPU setup first.")
 
+    # Keep each evaluation run in an explicit artifact directory.
     args.output_dir.mkdir(parents=True, exist_ok=True)
     records = read_jsonl(args.benchmark)
     if args.limit is not None:
         records = records[: args.limit]
 
+    # The same base tokenizer is used whether or not a PEFT adapter is loaded.
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
     model = AutoModelForCausalLM.from_pretrained(
         args.model_id,
         torch_dtype="auto",
         device_map="auto",
     )
+    # Attach a saved PEFT adapter to the frozen base model for post-training
+    # evaluation; omit this argument for the untouched baseline.
     if args.adapter_path is not None:
         if PeftModel is None:
             raise RuntimeError("Install peft before loading an adapter.")
         model = PeftModel.from_pretrained(model, args.adapter_path)
     model.eval()
 
+    # Preserve every case-level result so aggregate scores remain auditable.
     outputs: list[dict[str, Any]] = []
     for index, record in enumerate(records, 1):
         messages = record["messages"]
+        # Inject the common policy only when the benchmark case does not
+        # already provide its own system message.
         if not messages or messages[0].get("role") != "system":
             messages = [{"role": "system", "content": args.system_prompt}, *messages]
+        # Convert role-structured messages into the model's native chat prompt.
         rendered = tokenizer.apply_chat_template(
             messages,
             tokenize=False,
@@ -172,6 +209,7 @@ def main() -> None:
             enable_thinking=False,
         )
         inputs = tokenizer(rendered, return_tensors="pt").to(model.device)
+        # Measure per-case peak allocated VRAM.
         torch.cuda.reset_peak_memory_stats()
         sync_cuda()
         started = time.perf_counter()
@@ -182,12 +220,15 @@ def main() -> None:
         }
         if args.do_sample:
             kwargs.update(temperature=args.temperature, top_p=args.top_p)
+        # Evaluation never needs gradients.
         with torch.inference_mode():
             generated = model.generate(**inputs, **kwargs)
         sync_cuda()
         elapsed = time.perf_counter() - started
+        # Remove the input portion before decoding and counting the reply.
         new_tokens = generated[0, inputs.input_ids.shape[1] :]
         reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+        # Apply the record's deterministic expected-property checks.
         scored = score_case(record, reply, int(new_tokens.shape[0]))
         row = {
             "id": record["id"],
@@ -203,17 +244,23 @@ def main() -> None:
         outputs.append(row)
         print(f"[{index:03d}/{len(records):03d}] {record['id']}: {reply!r} score={row['heuristic_score']:.3f}")
 
+    # Save raw case-level outputs first; this is the evidence behind every
+    # aggregate metric in the report.
     result_path = args.output_dir / "results.jsonl"
     with result_path.open("w", encoding="utf-8", newline="\n") as f:
         for row in outputs:
             f.write(json.dumps(row, ensure_ascii=False) + "\n")
 
+    # Aggregate reply length, latency, heuristic quality, category scores,
+    # and exact duplicate replies.
     token_counts = [float(r["generated_tokens"]) for r in outputs]
     times = [float(r["elapsed_seconds"]) for r in outputs]
     scores = [float(r["heuristic_score"]) for r in outputs]
     category_scores: dict[str, list[float]] = defaultdict(list)
     for row in outputs:
         category_scores[row["category"]].append(float(row["heuristic_score"]))
+    # Repeated exact normalized replies are a simple warning for canned
+    # response behavior or template collapse.
     repeats = Counter(normalize(r["reply"]) for r in outputs)
     summary = {
         "case_count": len(outputs),
@@ -235,8 +282,10 @@ def main() -> None:
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
+    # Render category metrics and the lowest-scoring cases into Markdown.
     cat_rows = "\n".join(f"| {k} | {v:.3f} |" for k, v in summary["category_scores"].items())
     worst = sorted(outputs, key=lambda r: r["heuristic_score"])[:10]
+    # Escape Markdown table separators before embedding model replies.
     worst_row_lines: list[str] = []
     for row in worst:
         escaped_reply = str(row["reply"]).replace("|", "\\|").replace("\n", " ")
@@ -245,6 +294,8 @@ def main() -> None:
             f"{row['heuristic_score']:.3f} | {escaped_reply} |"
         )
     worst_rows = "\n".join(worst_row_lines)
+    # State the evaluator's limits in the generated report: automated
+    # checks still require human review for meaning, tone, and safety.
     report = f"""# BASELINE EVALUATION
 
 ## Scope
@@ -298,5 +349,6 @@ formal project baseline.
     print(f"Report: {args.output_dir / 'BASELINE_EVALUATION.md'}")
 
 
+# Standard script entry point.
 if __name__ == "__main__":
     main()

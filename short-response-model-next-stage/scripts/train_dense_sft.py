@@ -20,7 +20,10 @@ from transformers import (
     TrainingArguments,
 )
 
+# Default base checkpoint for the first dense-inference SFT reference.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
+# LoRA may be attached to attention projections (q/k/v/o) and gated-MLP
+# projections (gate/up/down), matching the project's initial experiment.
 TARGET_SUFFIXES = (
     "q_proj",
     "k_proj",
@@ -32,6 +35,8 @@ TARGET_SUFFIXES = (
 )
 
 
+# Expose all important training and adapter settings so experiments can
+# be reproduced without editing source code.
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description=(
@@ -68,6 +73,8 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+# Seed Python, NumPy, CPU PyTorch, and every CUDA device to reduce
+# avoidable run-to-run variation.
 def seed_everything(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
@@ -75,6 +82,8 @@ def seed_everything(seed: int) -> None:
     torch.cuda.manual_seed_all(seed)
 
 
+# Load versioned SFT records and reject files that cannot provide a valid
+# assistant training target.
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     if not path.exists():
         raise FileNotFoundError(
@@ -100,6 +109,8 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+# `None` represents all transformer layers. A list limits LoRA placement
+# to explicit layer IDs for the later controlled layer scan.
 def parse_selected_layers(value: str) -> list[int] | None:
     if value.strip().lower() == "all":
         return None
@@ -109,16 +120,21 @@ def parse_selected_layers(value: str) -> list[int] | None:
     return layers
 
 
+# Inspect the loaded model rather than assuming exact module paths. Return
+# full module names so PEFT can attach adapters only where requested.
 def discover_target_modules(
     model: torch.nn.Module,
     selected_layers: list[int] | None,
 ) -> list[str]:
     targets: list[str] = []
     for name, module in model.named_modules():
+        # LoRA in this experiment targets linear projection modules only.
         if not isinstance(module, torch.nn.Linear):
             continue
         if not name.endswith(TARGET_SUFFIXES):
             continue
+        # During selective experiments, discard matching projections that
+        # do not belong to one of the requested transformer layers.
         if selected_layers is not None:
             wrapped = f".{name}."
             if not any(f".layers.{layer_id}." in wrapped for layer_id in selected_layers):
@@ -132,12 +148,17 @@ def discover_target_modules(
     return targets
 
 
+# Convert chat records into causal-language-model tensors while training
+# only on the final assistant answer.
 class ChatSFTDataset(Dataset[dict[str, torch.Tensor]]):
     def __init__(self, records: list[dict[str, Any]], tokenizer: Any, max_length: int) -> None:
         self.examples: list[dict[str, torch.Tensor]] = []
         for row in records:
             messages = row["messages"]
+            # Separate the context/prompt from the final assistant target.
             prompt_messages = messages[:-1]
+            # Render the prompt with a generation marker, then render the
+            # complete conversation containing the target answer.
             prompt_text = tokenizer.apply_chat_template(
                 prompt_messages,
                 tokenize=False,
@@ -164,6 +185,8 @@ class ChatSFTDataset(Dataset[dict[str, torch.Tensor]]):
             )["input_ids"]
             if len(full_ids) <= len(prompt_ids):
                 continue
+            # Transformers ignores label value -100. Masking prompt tokens
+            # makes the loss teach only the desired assistant continuation.
             labels = [-100] * len(prompt_ids) + full_ids[len(prompt_ids) :]
             input_ids = torch.tensor(full_ids, dtype=torch.long)
             self.examples.append(
@@ -183,6 +206,8 @@ class ChatSFTDataset(Dataset[dict[str, torch.Tensor]]):
         return self.examples[index]
 
 
+# Batch examples have different lengths, so this collator pads inputs,
+# masks, and labels consistently.
 @dataclass
 class CausalChatCollator:
     pad_token_id: int
@@ -201,12 +226,18 @@ class CausalChatCollator:
         }
 
 
+# Load tokenizer/base model, apply optional 4-bit QLoRA preparation,
+# discover targets, and attach trainable LoRA adapters.
 def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
     tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+    # Decoder-only tokenizers often lack a dedicated padding token; EOS is
+    # a standard safe fallback for padded batch positions.
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
     model_kwargs: dict[str, Any] = {"torch_dtype": "auto", "device_map": "auto"}
+    # QLoRA keeps the frozen base in 4-bit NF4 form while training the small
+    # adapter, reducing weight memory on a consumer GPU.
     if args.qlora:
         if not torch.cuda.is_available():
             raise RuntimeError("QLoRA requires CUDA.")
@@ -219,7 +250,11 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
         )
 
     model = AutoModelForCausalLM.from_pretrained(args.model_id, **model_kwargs)
+    # KV caching helps generation but conflicts with training and gradient
+    # checkpointing, so it is disabled for this training process.
     model.config.use_cache = False
+    # Recompute selected activations during backward passes to trade speed
+    # for lower training memory.
     if args.gradient_checkpointing:
         model.gradient_checkpointing_enable()
     if args.qlora:
@@ -228,8 +263,12 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
             use_gradient_checkpointing=args.gradient_checkpointing,
         )
 
+    # Resolve either the all-layer reference or a controlled subset before
+    # creating the PEFT configuration.
     selected_layers = parse_selected_layers(args.selected_layers)
     targets = discover_target_modules(model, selected_layers)
+    # These parameters define adapter capacity, scaling, dropout, and the
+    # exact projection modules that receive trainable low-rank updates.
     lora_config = LoraConfig(
         r=args.lora_rank,
         lora_alpha=args.lora_alpha,
@@ -243,6 +282,8 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
     return model, tokenizer, targets
 
 
+# Orchestrate data loading, adapter construction, Trainer execution, and
+# reproducibility-artifact output.
 def main() -> None:
     args = parse_args()
     seed_everything(args.seed)
@@ -252,10 +293,13 @@ def main() -> None:
     train_rows = read_jsonl(args.train_file)
     dev_rows = read_jsonl(args.dev_file) if args.dev_file.exists() else []
     model, tokenizer, targets = build_model(args)
+    # Tokenize training and optional development records with identical rules.
     train_data = ChatSFTDataset(train_rows, tokenizer, args.max_sequence_length)
     eval_data = ChatSFTDataset(dev_rows, tokenizer, args.max_sequence_length) if dev_rows else None
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Hugging Face Trainer manages optimization, accumulation, checkpointing,
+    # periodic development loss, precision, and reproducible seeds.
     training_args = TrainingArguments(
         output_dir=str(args.output_dir),
         num_train_epochs=args.epochs,
@@ -287,12 +331,18 @@ def main() -> None:
         data_collator=CausalChatCollator(tokenizer.pad_token_id),
     )
 
+    # Record the training run's peak allocated VRAM for later comparisons
+    # between all-layer and selected-layer adapters.
     torch.cuda.reset_peak_memory_stats()
     result = trainer.train()
+    # Save only the PEFT adapter and tokenizer, not another full copy of the
+    # frozen base checkpoint.
     adapter_dir = args.output_dir / "adapter"
     trainer.save_model(str(adapter_dir))
     tokenizer.save_pretrained(str(adapter_dir))
 
+    # Persist the model, data paths, selected layers, targets, seed, metrics,
+    # and peak memory needed to reproduce and compare this run.
     manifest = {
         "model_id": args.model_id,
         "train_file": str(args.train_file),
@@ -315,5 +365,6 @@ def main() -> None:
     print(f"Manifest saved to: {args.output_dir / 'training_manifest.json'}")
 
 
+# Standard script entry point.
 if __name__ == "__main__":
     main()

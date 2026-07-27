@@ -9,9 +9,12 @@ from typing import Any
 
 from transformers import AutoConfig
 
+# Default model for the first static layer-selection experiment.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
 
 
+# Configure the candidate layers and keep the data, step budget, seed,
+# benchmark, and training method fixed across variants.
 def parse_args() -> argparse.Namespace:
     p = argparse.ArgumentParser(
         description="Train and evaluate equivalent static single-layer adapters."
@@ -38,6 +41,8 @@ def parse_args() -> argparse.Namespace:
     return p.parse_args()
 
 
+# Sample positions across the full stack, with extra coverage around the
+# middle. Fractions adapt automatically to architectures with other depths.
 def coarse_candidates(num_layers: int) -> list[int]:
     fractions = (0.0, 0.17, 0.33, 0.42, 0.50, 0.58, 0.67, 0.83, 1.0)
     return sorted(
@@ -48,21 +53,30 @@ def coarse_candidates(num_layers: int) -> list[int]:
     )
 
 
+# Launch each training/evaluation stage as a subprocess using the current
+# Python environment. `check=True` stops the scan on any failed variant.
 def run(command: list[str]) -> None:
     print("\n$", " ".join(command))
     subprocess.run(command, check=True)
 
 
+# Read machine-readable outputs created by the training/evaluation scripts.
 def load_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+# Train equivalent adapters, evaluate each one, rank the results, and
+# create a preliminary layer-importance report.
 def main() -> None:
     args = parse_args()
     args.output_dir.mkdir(parents=True, exist_ok=True)
 
+    # Query the checkpoint configuration so layer IDs are validated against
+    # the model's actual transformer depth.
     config = AutoConfig.from_pretrained(args.model_id)
     num_layers = int(config.num_hidden_layers)
+    # Respect an explicit candidate list, otherwise use the reproducible
+    # coarse early/middle/late scan.
     if args.layers:
         layer_ids = sorted({int(x.strip()) for x in args.layers.split(",") if x.strip()})
     else:
@@ -71,8 +85,12 @@ def main() -> None:
     if invalid:
         raise ValueError(f"Invalid layer IDs for {num_layers} layers: {invalid}")
 
+    # Reuse the project's canonical trainer and evaluator rather than
+    # duplicating their logic inside the scan orchestrator.
     train_script = Path(__file__).with_name("train_dense_sft.py")
     eval_script = Path(__file__).with_name("evaluate_base.py")
+    # Give every candidate a separate artifact directory. Optionally include
+    # the all-layer reference under the same experimental settings.
     variants: list[tuple[str, str]] = [
         (f"layer_{layer:02d}", str(layer)) for layer in layer_ids
     ]
@@ -80,10 +98,13 @@ def main() -> None:
         variants.insert(0, ("all_layers", "all"))
 
     results: list[dict[str, Any]] = []
+    # Each variant receives the same base model, data, steps, and seed; only
+    # adapter layer placement changes.
     for variant, selected_layers in variants:
         variant_dir = args.output_dir / variant
         train_dir = variant_dir / "training"
         eval_dir = variant_dir / "evaluation"
+        # Construct the exact training command for this layer selection.
         train_cmd = [
             sys.executable,
             str(train_script),
@@ -101,6 +122,7 @@ def main() -> None:
             train_cmd.append("--gradient-checkpointing")
         run(train_cmd)
 
+        # Evaluate the saved adapter on the same fixed benchmark.
         eval_cmd = [
             sys.executable,
             str(eval_script),
@@ -111,6 +133,8 @@ def main() -> None:
         ]
         run(eval_cmd)
 
+        # Combine behavioral metrics with the trainer's measured memory and
+        # target-module count.
         summary = load_json(eval_dir / "summary.json")
         manifest = load_json(train_dir / "training_manifest.json")
         results.append(
@@ -127,6 +151,8 @@ def main() -> None:
             }
         )
 
+    # Rank primarily by heuristic quality; use lower peak training VRAM as
+    # a tie-breaker rather than allowing efficiency to hide quality loss.
     ranked = sorted(
         results,
         key=lambda row: (
@@ -135,6 +161,7 @@ def main() -> None:
         ),
         reverse=True,
     )
+    # Preserve both original execution order and ranked results in JSON.
     payload = {
         "model_id": args.model_id,
         "num_hidden_layers": num_layers,
@@ -147,6 +174,8 @@ def main() -> None:
         json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
+    # Produce a human-readable comparison while warning that one seed and
+    # one heuristic score cannot establish scientific layer importance.
     rows = "\n".join(
         "| {rank} | {variant} | {layers} | {score:.3f} | {median} | {p90} | {vram:.3f} |".format(
             rank=i,
@@ -197,5 +226,6 @@ low-ranked four, and all-layer reference before selecting a final subset.
     print(f"\nReport: {args.output_dir / 'LAYER_IMPORTANCE_REPORT.md'}")
 
 
+# Standard script entry point.
 if __name__ == "__main__":
     main()
