@@ -47,9 +47,12 @@ No candidate passed every automated requirement.
 
 Review `reports/PHASE_2_HUMAN_REVIEW_PACKET.md`, raw replies, and category scores for the recommended candidate, the all-layer reference, RANDOM4, and BOTTOM4. Confirm that the ranking is behaviorally meaningful and not a heuristic artifact. A critical semantic failure is disqualifying even when the average heuristic score is high.
 
-- Human decision: `PENDING`
-- Reviewer:
-- Date:
-- Notes:
+- Human decision: `FAIL`
+- Reviewer: Cheng Li
+- Date: 2026-07-28
+- Notes: No selective configuration met the predefined quality and
+  resource thresholds. Preserve the negative result. Continue preference
+  alignment using the accepted all-layer dense SFT reference under an
+  explicitly approved dense-fallback deviation.
 
 Dynamic IST-style selection is optional after this static gate. It must be reported separately because gradient masking does not automatically prove optimizer-state memory savings.
