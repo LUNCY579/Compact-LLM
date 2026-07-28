@@ -48,7 +48,13 @@ Before Phase 4, inspect blinded SFT-versus-DPO outputs and confirm:
 
 DPO must improve preference behavior rather than merely shorten replies.
 
-- Human decision: `PENDING`
-- Reviewer:
-- Date:
-- Notes:
+- Human decision: `PASS`
+- Reviewer: Cheng Li
+- Date: 2026-07-28
+- Notes: The automated gate reported three major issues for uncertain_002,
+  uncertain_004, and uncertain_005 under unsupported_certainty. Manual review
+  found all three to be false positives. Each response appropriately expressed
+  uncertainty, requested missing evidence, or recommended testing rather than
+  making an unsupported claim. The DPO candidate preserved a 1.000 completion
+  rate, 9-token median, 11-token P90, zero critical failures, and improved the
+  mean heuristic score from 0.995 to 1.000. Approved for Phase 4.
