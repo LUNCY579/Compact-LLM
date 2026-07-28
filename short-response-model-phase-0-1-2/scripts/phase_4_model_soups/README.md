@@ -27,3 +27,7 @@ Review every Python and PowerShell file before execution. Defaults are conservat
 ## Manual approval
 
 Create or update `reports/PHASE_4_STOP_GATE.md` and use exactly `- Human decision: `PASS`` only after the checklist and blueprint gate are satisfied.
+
+## Phase 4B handoff
+
+After choosing the best individual or accepted soup, save it as a normal dense Transformers checkpoint, preserve it unchanged, and record its path in `reports/PHASE_4_STOP_GATE.md`. Phase 4B consumes that exact path and creates all reduced candidates in a separate artifact directory.

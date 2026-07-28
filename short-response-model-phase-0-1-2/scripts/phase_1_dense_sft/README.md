@@ -27,3 +27,7 @@ From the repository root:
 
 The final automated status is not sufficient to start Phase 2. Review the
 generated replies and record a human decision in `reports/PHASE_1_STOP_GATE.md`.
+
+## Attention-versus-MLP adapter ablation
+
+`train_dense_sft.py` now accepts `--target-module-group both|attention|mlp`. Use the same selected layers, seed, data, and training budget when comparing groups. This tests where concise behavior is easiest to learn; it does not authorize skipping other modules at inference.

@@ -1,0 +1,42 @@
+phase:
+  id: "4B"
+  name: structural_reduction_and_reference_selection
+  purpose: >-
+    Build physically smaller candidates from the accepted Phase 4 checkpoint,
+    evaluate them through the common harness, and select one downstream model.
+
+inputs:
+  # Replace this with the actual accepted Phase 4 individual/soup checkpoint.
+  accepted_phase_4_model: artifacts/phase_4_soup/merged_model
+  calibration: data/phase_4b_structural_reduction/long_form_calibration.jsonl
+  benchmark: data/benchmark/shortchatbench_pilot.jsonl
+
+pilot_matrix:
+  mlp_prune_ratios: [0.10]
+  depth_drop_counts: [2]
+  include_random_mlp_control: true
+  include_uniform_depth_control: true
+  enable_attention_pruning: false
+
+full_matrix:
+  mlp_prune_ratios: [0.05, 0.10, 0.20]
+  depth_drop_counts: [1, 2, 4]
+  attention_group_prune_ratios: [0.10]
+
+pruning:
+  mlp_multiple: 64
+  short_importance_quantile: 0.60
+  default_selection_method: long-specific
+
+selection_floors:
+  max_mean_score_loss: 0.01
+  max_category_score_loss: 0.02
+  max_semantic_pass_loss: 0.01
+  min_complete_utterance_rate: 0.99
+  min_parameter_reduction: 0.03
+  critical_failure_count: 0
+
+outputs:
+  artifact_root: artifacts/phase_4b_structural_reduction
+  selected_reference_manifest: artifacts/references/selected_inference_reference.json
+  stop_gate_report: reports/PHASE_4B_STOP_GATE.md

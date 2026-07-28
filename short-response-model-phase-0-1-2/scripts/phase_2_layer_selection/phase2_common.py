@@ -45,6 +45,7 @@ def train_and_evaluate(
     seed: int,
     qlora: bool,
     gradient_checkpointing: bool,
+    target_module_group: str = "both",
 ) -> dict[str, Any]:
     train_dir = output_dir / "training"
     eval_dir = output_dir / "evaluation"
@@ -56,6 +57,7 @@ def train_and_evaluate(
         "--dev-file", str(dev_file),
         "--output-dir", str(train_dir),
         "--selected-layers", selected_layers,
+        "--target-module-group", target_module_group,
         "--max-steps", str(max_steps),
         "--seed", str(seed),
     ]

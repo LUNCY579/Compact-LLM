@@ -1,0 +1,22 @@
+reference:
+  # Normal runners resolve this manifest; use an explicit model only for a
+  # clearly labeled ablation or rollback comparison.
+  selected_reference_manifest: artifacts/references/selected_inference_reference.json
+
+phase_6:
+  calibration: data/calibration/calibration.jsonl
+  benchmark: data/benchmark/shortchatbench_pilot.jsonl
+  block_size: 128
+  positions: last
+  active_ratios: [1.0, 0.8, 0.65, 0.5, 0.35]
+
+phase_7:
+  target_ratio: 0.65
+  minimum_weighted_recall: 0.95
+  dense_fallback: true
+  benchmark: data/benchmark/shortchatbench_pilot.jsonl
+
+release_targets:
+  minimum_decode_speedup: 1.20
+  minimum_peak_vram_reduction: 0.20
+  require_no_critical_regression: true

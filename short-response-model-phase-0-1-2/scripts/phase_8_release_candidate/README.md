@@ -1,29 +1,38 @@
 # Phase 8 — Release Candidate
 
-**Blueprint reference:** Pages 22–26. This folder is an executable research scaffold plus a verification manual. Generated metrics are never assumed; artifacts remain outside source control.
+**Blueprint reference:** pages 22–26.
+
+Phase 8 evaluates and packages the exact checkpoint selected in Phase 4B, together with the context and optional sparse runtime accepted in later phases.
 
 ## Prerequisite
 
-The preceding phase report must contain an explicit human `PASS`. The PowerShell runner checks this before continuing.
+Phase 7 must have an explicit human `PASS`. The runner resolves the selected model from:
+
+```text
+artifacts/references/selected_inference_reference.json
+```
 
 ## Step-by-step execution
 
-1. Confirm every previous human gate. 2. Run the required A–I ablation matrix. 3. Use sealed evaluation only now and preserve immutable results. 4. Conduct blinded randomized human review for correctness, naturalness, usefulness and preferred brevity. 5. Enforce category floors and zero critical safety regressions. 6. Hash model, tokenizer, adapters/soup recipe and manifests. 7. Record hardware, software, seeds and commands. 8. Audit risks and negative results. 9. Choose dense quantized, selective dense, soup, sparse feature flag, or larger-model routing based on evidence. 10. Human signs the final release decision.
+1. Confirm human gates for Phases 1, 2, 3, 4, 4B, 5, 6, and 7.
+2. Run the required A–I ablation matrix, including dense-vs-structural Phase 4B controls.
+3. Use sealed evaluation only now and preserve immutable outputs.
+4. Conduct blinded randomized human review for correctness, naturalness, usefulness, and preferred brevity.
+5. Enforce category floors and zero critical safety regressions.
+6. Hash the selected model, tokenizer, reference manifest, adapters/soup recipe, routers, and runtime configuration.
+7. Record hardware, software, seeds, commands, latency, VRAM/RAM, and fallback rates.
+8. Confirm rollback to the Phase 4 dense reference remains possible.
+9. Choose dense, structurally reduced, or sparse-feature-flag deployment based on measured value.
+10. Record a separate human release decision.
 
-## Verification checklist
+```powershell
+.\scripts\phase_8_release_candidate\run_phase_8.ps1
+```
 
-- [ ] Inputs, hashes, dataset versions, model/tokenizer versions and seed recorded.
-- [ ] Development/calibration data used only for the intended phase.
-- [ ] Sealed evaluation remains untouched until Phase 8.
-- [ ] Commands and raw outputs preserved under `artifacts/`.
-- [ ] Automated scores reviewed against raw generations/traces.
-- [ ] No theoretical memory, active-parameter, or speed claim is presented as measured.
-- [ ] Stop-gate report has evidence, risks, and a human decision.
+## Files
 
-## Files in this folder
+- `build_release_audit.py`: hashes the exact local checkpoint, checks the entire gate chain including 4B, and generates the audit.
+- `run_phase_8.ps1`: resolves the selected reference and invokes the audit.
+- `EXECUTION_MANUAL.md`: execution, review, and recovery discipline.
 
-Review every Python and PowerShell file before execution. Defaults are conservative examples; paths to winning adapters/models must be supplied from your actual reports. The scripts fail rather than fabricate missing results.
-
-## Manual approval
-
-Create or update `reports/PHASE_8_STOP_GATE.md` and use exactly `- Human decision: `PASS`` only after the checklist and blueprint gate are satisfied.
+No script self-approves commercial release.

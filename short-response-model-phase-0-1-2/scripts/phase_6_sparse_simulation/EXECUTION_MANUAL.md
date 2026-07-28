@@ -1,23 +1,14 @@
-# Verified execution manual — Phase 6
+# Phase 6 Execution Manual
 
-“Verified” here means the procedure contains explicit preflight, evidence, and review steps. It does **not** claim that your hardware run has already passed.
+1. Freeze and hash the accepted dense reference.
+2. Prepare a diverse non-sealed calibration JSONL.
+3. Run `profile_activations.py` with decode-oriented `--positions last`.
+4. Inspect the summary for sample count, block count, active ratio, and retained contribution in every layer.
+5. Run `simulate_sparsity.py` for 100/80/65/50/35% active ratios.
+6. Re-run with `--model` and `--benchmark` to capture masked generations.
+7. Evaluate raw replies with the same deterministic generation settings used for the dense reference.
+8. Record category regressions and confidence intervals.
+9. Create `reports/PHASE_6_STOP_GATE.md`.
+10. Record human `PASS` only if simulated sparsity skips a meaningful fraction without exceeding the accepted quality loss.
 
-## Preflight
-
-1. Activate the same virtual environment used by earlier phases.
-2. Confirm the preceding human gate.
-3. Copy the current artifact tree or record its hashes before changing it.
-4. Confirm adequate free disk space and that no second GPU workload is running during latency/VRAM measurement.
-5. Open this phase README and replace placeholder paths with the accepted prior-phase artifacts.
-
-## Execution discipline
-
-Run one command at a time. Keep stdout/stderr. Do not overwrite a successful experiment without archiving its manifest. Use fixed seeds for comparisons. When rerunning only evaluation, preserve training adapters and record the evaluator revision.
-
-## Review discipline
-
-Inspect lowest-scoring and safety-sensitive cases, not only averages. Compare against the correct control. Record failures and negative findings. A human gate is mandatory; scripts never self-approve.
-
-## Recovery
-
-Completed model/adapters are reusable if training code, data, seed, and configuration match. Evaluation can be rerun without retraining. Never mix evaluator versions in one ranking; regenerate all comparable summaries when evaluator logic changes.
+Do not interpret a high retained-contribution score as a runtime speedup. The simulation computes all gate/up channels before masking.

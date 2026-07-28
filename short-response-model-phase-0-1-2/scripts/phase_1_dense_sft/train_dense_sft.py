@@ -25,15 +25,9 @@ DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
 ROOT = Path(__file__).resolve().parents[2]
 # LoRA may be attached to attention projections (q/k/v/o) and gated-MLP
 # projections (gate/up/down), matching the project's initial experiment.
-TARGET_SUFFIXES = (
-    "q_proj",
-    "k_proj",
-    "v_proj",
-    "o_proj",
-    "gate_proj",
-    "up_proj",
-    "down_proj",
-)
+ATTENTION_TARGET_SUFFIXES = ("q_proj", "k_proj", "v_proj", "o_proj")
+MLP_TARGET_SUFFIXES = ("gate_proj", "up_proj", "down_proj")
+TARGET_SUFFIXES = ATTENTION_TARGET_SUFFIXES + MLP_TARGET_SUFFIXES
 
 
 # Expose all important training and adapter settings so experiments can
@@ -53,6 +47,15 @@ def parse_args() -> argparse.Namespace:
         "--selected-layers",
         default="all",
         help='Use "all" or a comma-separated list such as "12" or "10,11".',
+    )
+    p.add_argument(
+        "--target-module-group",
+        choices=("both", "attention", "mlp"),
+        default="both",
+        help=(
+            "Attach LoRA to attention projections, gated-MLP projections, or both. "
+            "This enables the Phase 2 attention-vs-MLP ablation without source edits."
+        ),
     )
     p.add_argument("--qlora", action="store_true")
     p.add_argument("--lora-rank", type=int, default=16)
@@ -126,13 +129,22 @@ def parse_selected_layers(value: str) -> list[int] | None:
 def discover_target_modules(
     model: torch.nn.Module,
     selected_layers: list[int] | None,
+    target_module_group: str = "both",
 ) -> list[str]:
+    if target_module_group == "attention":
+        allowed_suffixes = ATTENTION_TARGET_SUFFIXES
+    elif target_module_group == "mlp":
+        allowed_suffixes = MLP_TARGET_SUFFIXES
+    elif target_module_group == "both":
+        allowed_suffixes = TARGET_SUFFIXES
+    else:
+        raise ValueError(f"Unsupported target module group: {target_module_group}")
     targets: list[str] = []
     for name, module in model.named_modules():
         # LoRA in this experiment targets linear projection modules only.
         if not isinstance(module, torch.nn.Linear):
             continue
-        if not name.endswith(TARGET_SUFFIXES):
+        if not name.endswith(allowed_suffixes):
             continue
         # During selective experiments, discard matching projections that
         # do not belong to one of the requested transformer layers.
@@ -267,7 +279,7 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
     # Resolve either the all-layer reference or a controlled subset before
     # creating the PEFT configuration.
     selected_layers = parse_selected_layers(args.selected_layers)
-    targets = discover_target_modules(model, selected_layers)
+    targets = discover_target_modules(model, selected_layers, args.target_module_group)
     # These parameters define adapter capacity, scaling, dropout, and the
     # exact projection modules that receive trainable low-rank updates.
     lora_config = LoraConfig(
@@ -350,6 +362,7 @@ def main() -> None:
         "dev_file": str(args.dev_file),
         "selected_layers": args.selected_layers,
         "qlora": args.qlora,
+        "target_module_group": args.target_module_group,
         "target_module_count": len(targets),
         "target_modules": targets,
         "seed": args.seed,

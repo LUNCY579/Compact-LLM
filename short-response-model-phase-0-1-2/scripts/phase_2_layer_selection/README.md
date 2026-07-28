@@ -50,3 +50,7 @@ Dynamic selection is **not required** to pass Stop Gate 2. The blueprint says st
 `phase_1_dense_sft/evaluate_model.py` now preserves the original pilot heuristic and adds a separate conservative semantic audit. It flags generated placeholders, failed required clarifications, unsupported certainty, emotional contradiction, canned assistant phrasing, and narrowly defined critical gas/medication safety failures. These flags are recorded per case and aggregated into every Phase 2 result.
 
 The heuristic remains useful for broad scanning, but a candidate with a critical semantic failure cannot pass Stop Gate 2.
+
+## Module-group controls
+
+The static study accepts `--target-module-group attention`, `mlp`, or `both`. Run separate output directories for each group so cached variant files are never mixed. Keep the all-layer reference consistent with the module group being claimed, or label the comparison as exploratory rather than a formal contribution ratio.

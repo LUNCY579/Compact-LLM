@@ -29,6 +29,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--repeat-seeds", default="11,23,37")
     p.add_argument("--quality-tolerance", type=float, default=0.02)
     p.add_argument("--minimum-resource-reduction", type=float, default=0.15)
+    p.add_argument("--target-module-group", choices=("both", "attention", "mlp"), default="both")
+    p.add_argument("--allow-mismatched-all-layer-reference", action="store_true", help="Exploratory only; formal contribution ratios require a matching module group.")
     p.add_argument("--qlora", action="store_true")
     p.add_argument("--gradient-checkpointing", action="store_true")
     p.add_argument("--resume", action="store_true", help="Reuse completed variant_result.json files.")
@@ -67,6 +69,7 @@ def run_variant(args: argparse.Namespace, name: str, layers: list[int] | None, s
         seed=seed,
         qlora=args.qlora,
         gradient_checkpointing=args.gradient_checkpointing,
+        target_module_group=args.target_module_group,
     )
     result.update({"variant": name, "layers": layers if layers is not None else "all"})
     write_json(cached, result)
@@ -99,6 +102,13 @@ def main() -> None:
     base = load_json(args.base_summary)
     all_summary = load_json(args.all_summary)
     all_manifest = load_json(args.all_training_manifest)
+    reference_group = str(all_manifest.get("target_module_group", "both"))
+    if reference_group != args.target_module_group and not args.allow_mismatched_all_layer_reference:
+        raise RuntimeError(
+            f"The all-layer reference used target_module_group={reference_group!r}, but this study requested "
+            f"{args.target_module_group!r}. Train/evaluate a matching all-layer reference or pass "
+            "--allow-mismatched-all-layer-reference for a clearly labeled exploratory run."
+        )
     base_score = float(base["mean_heuristic_score"])
     all_score = float(all_summary["mean_heuristic_score"])
 
@@ -188,6 +198,7 @@ def main() -> None:
 
     payload = {
         "model_id": args.model_id,
+        "target_module_group": args.target_module_group,
         "num_hidden_layers": n,
         "base_score": base_score,
         "all_layer_score": all_score,

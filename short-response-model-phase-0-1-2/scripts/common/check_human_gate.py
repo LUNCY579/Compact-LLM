@@ -1,5 +1,12 @@
 from __future__ import annotations
 
+"""Require an explicit human PASS before advancing the pipeline.
+
+The official phases use numeric labels, while structural reduction is inserted
+as Phase 4B. Accepting a string label keeps all runners on one gate checker and
+prevents a second, slightly different approval implementation from drifting.
+"""
+
 import argparse
 import re
 from pathlib import Path
@@ -8,6 +15,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def has_human_pass(path: Path) -> bool:
+    """Return True only for the repository's exact approval line."""
+
     if not path.exists():
         return False
     text = path.read_text(encoding="utf-8")
@@ -20,6 +29,8 @@ def has_human_pass(path: Path) -> bool:
 
 
 def automated_gate_failed(path: Path) -> bool:
+    """Detect the special Phase 2 automated FAIL status."""
+
     if not path.exists():
         return False
     text = path.read_text(encoding="utf-8")
@@ -31,11 +42,22 @@ def automated_gate_failed(path: Path) -> bool:
     )
 
 
+def normalize_phase_label(value: str) -> str:
+    """Normalize supported labels such as ``4b`` to the filename form ``4B``."""
+
+    phase = value.strip().upper()
+    if not re.fullmatch(r"(?:[0-9]+|4B)", phase):
+        raise argparse.ArgumentTypeError(
+            "Phase must be a number such as 3, or the inserted structural phase 4B."
+        )
+    return phase
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(
         description="Require an explicit human PASS before advancing phases."
     )
-    parser.add_argument("--phase", type=int, required=True)
+    parser.add_argument("--phase", type=normalize_phase_label, required=True)
     parser.add_argument(
         "--allow-deviation",
         action="store_true",
@@ -48,7 +70,9 @@ def main() -> None:
 
     report = ROOT / "reports" / f"PHASE_{args.phase}_STOP_GATE.md"
 
-    if args.phase == 2 and args.allow_deviation and automated_gate_failed(report):
+    # Preserve the repository's existing Phase 2 negative-result/deviation
+    # workflow. No other phase may bypass its own stop-gate report.
+    if args.phase == "2" and args.allow_deviation and automated_gate_failed(report):
         deviation = ROOT / "reports" / "PHASE_2_DEVIATION_APPROVAL.md"
         if not deviation.exists():
             raise SystemExit(
@@ -68,7 +92,6 @@ def main() -> None:
 
     if not report.exists():
         raise SystemExit(f"Missing {report}")
-
     if not has_human_pass(report):
         raise SystemExit(
             f"Phase {args.phase} lacks explicit human PASS in {report}"
