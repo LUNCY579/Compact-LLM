@@ -57,6 +57,22 @@ class SparseMLPTests(unittest.TestCase):
         self.assertEqual(tuple(output.shape), (1, 1, 8))
         self.assertEqual(wrapper.stats.sparse_calls, 1)
 
+
+    def test_dense_decode_fallback_counts_as_full_active(self) -> None:
+        dense = FakeMLP()
+        router = TinyBlockRouter(hidden_size=8, router_width=4, num_blocks=4)
+        wrapper = RoutedSparseGatedMLP(
+            dense,
+            router,
+            block_size=4,
+            keep_ratio=0.5,
+            confidence_threshold=2.0,  # impossible confidence forces dense decode
+        )
+        wrapper(torch.randn(1, 1, 8))
+        stats = wrapper.stats.as_dict()
+        self.assertEqual(stats["decode_dense_fallback_rate"], 1.0)
+        self.assertEqual(stats["mean_decode_active_block_ratio"], 1.0)
+
     def test_routed_reference_falls_back_for_prefill(self) -> None:
         dense = FakeMLP()
         router = TinyBlockRouter(hidden_size=8, router_width=4, num_blocks=4)
@@ -69,7 +85,8 @@ class SparseMLPTests(unittest.TestCase):
         )
         hidden = torch.randn(1, 6, 8)
         torch.testing.assert_close(wrapper(hidden), dense(hidden))
-        self.assertEqual(wrapper.stats.dense_fallback_calls, 1)
+        self.assertEqual(wrapper.stats.prefill_dense_calls, 1)
+        self.assertEqual(wrapper.stats.dense_fallback_calls, 0)
 
 
 if __name__ == "__main__":

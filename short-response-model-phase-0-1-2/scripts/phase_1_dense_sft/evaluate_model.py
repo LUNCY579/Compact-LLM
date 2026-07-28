@@ -55,6 +55,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--do-sample", action="store_true")
     p.add_argument("--temperature", type=float, default=0.6)
     p.add_argument("--top-p", type=float, default=0.9)
+    p.add_argument(
+        "--require-cuda",
+        action="store_true",
+        help="Fail instead of using CPU when CUDA is unavailable.",
+    )
     return p.parse_args()
 
 
@@ -70,6 +75,56 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
             except json.JSONDecodeError as exc:
                 raise ValueError(f"Invalid JSON at {path}:{line_no}: {exc}") from exc
     return rows
+
+
+def normalize_benchmark_record(record: dict[str, Any]) -> dict[str, Any]:
+    """Normalize pilot and SFT/sealed rows into one evaluator contract.
+
+    SFT-style rows end with the reference assistant answer.  That answer must
+    never be included in the generation prompt; doing so would leak the sealed
+    target.  The reference is retained only for post-generation diagnostics.
+    """
+
+    normalized = dict(record)
+    messages = [dict(message) for message in record.get("messages", [])]
+    reference = record.get("reference")
+    if messages and messages[-1].get("role") == "assistant":
+        reference = str(messages[-1].get("content", ""))
+        messages = messages[:-1]
+    metadata = record.get("metadata") or {}
+    normalized["messages"] = messages
+    normalized["reference"] = reference
+    normalized["category"] = str(
+        record.get("category") or metadata.get("reply_class") or "uncategorized"
+    )
+    if not isinstance(record.get("expected"), dict):
+        normalized["expected"] = {
+            "min_tokens": int(metadata.get("target_token_min", 1)),
+            "max_tokens": int(metadata.get("target_token_max", 32)),
+        }
+    return normalized
+
+
+def reference_token_f1(reference: str | None, reply: str) -> float | None:
+    """Return a transparent lexical reference score for sealed diagnostics.
+
+    This is deliberately not presented as semantic correctness.  It is useful
+    for spotting completely unrelated outputs while human review remains the
+    release authority.
+    """
+
+    if not reference:
+        return None
+    reference_tokens = words(reference)
+    reply_tokens = words(reply)
+    if not reference_tokens or not reply_tokens:
+        return 0.0
+    reference_counts = Counter(reference_tokens)
+    reply_counts = Counter(reply_tokens)
+    overlap = sum((reference_counts & reply_counts).values())
+    precision = overlap / len(reply_tokens)
+    recall = overlap / len(reference_tokens)
+    return 2 * precision * recall / max(1e-12, precision + recall)
 
 
 # Lowercase and collapse whitespace for simple text comparisons.
@@ -267,16 +322,28 @@ def sync_cuda() -> None:
         torch.cuda.synchronize()
 
 
+def apply_chat_template(tokenizer: Any, messages: list[dict[str, Any]]) -> str:
+    """Render a generation prompt across Qwen and generic chat templates."""
+
+    kwargs = {"tokenize": False, "add_generation_prompt": True}
+    try:
+        return tokenizer.apply_chat_template(messages, enable_thinking=False, **kwargs)
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
+
+
 # Generate one reply for every benchmark record, score it, and write
 # raw results plus aggregate JSON and Markdown reports.
 def main() -> None:
     args = parse_args()
+    if args.require_cuda and not torch.cuda.is_available():
+        raise RuntimeError("CUDA is unavailable and --require-cuda was requested.")
     if not torch.cuda.is_available():
-        raise RuntimeError("CUDA is unavailable. Fix PyTorch/GPU setup first.")
+        print("WARNING: CUDA is unavailable; evaluation will run on CPU and VRAM metrics will be 0.")
 
     # Keep each evaluation run in an explicit artifact directory.
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    records = read_jsonl(args.benchmark)
+    records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)]
     if args.limit is not None:
         records = records[: args.limit]
 
@@ -304,15 +371,11 @@ def main() -> None:
         if not messages or messages[0].get("role") != "system":
             messages = [{"role": "system", "content": args.system_prompt}, *messages]
         # Convert role-structured messages into the model's native chat prompt.
-        rendered = tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-            enable_thinking=False,
-        )
+        rendered = apply_chat_template(tokenizer, messages)
         inputs = tokenizer(rendered, return_tensors="pt").to(model.device)
         # Measure per-case peak allocated VRAM.
-        torch.cuda.reset_peak_memory_stats()
+        if torch.cuda.is_available():
+            torch.cuda.reset_peak_memory_stats()
         sync_cuda()
         started = time.perf_counter()
         kwargs: dict[str, Any] = {
@@ -339,11 +402,17 @@ def main() -> None:
             "id": record["id"],
             "category": record["category"],
             "messages": record["messages"],
+            "reference": record.get("reference"),
+            "reference_token_f1": reference_token_f1(record.get("reference"), reply),
             "reply": reply,
             "prompt_tokens": int(inputs.input_ids.shape[1]),
             "generated_tokens": int(new_tokens.shape[0]),
             "elapsed_seconds": elapsed,
-            "peak_vram_gb": torch.cuda.max_memory_allocated() / 1024**3,
+            "peak_vram_gb": (
+                torch.cuda.max_memory_allocated() / 1024**3
+                if torch.cuda.is_available()
+                else 0.0
+            ),
             **scored,
             **audited,
         }
@@ -378,6 +447,11 @@ def main() -> None:
     # Repeated exact normalized replies are a simple warning for canned
     # response behavior or template collapse.
     repeats = Counter(normalize(r["reply"]) for r in outputs)
+    reference_scores = [
+        float(row["reference_token_f1"])
+        for row in outputs
+        if row.get("reference_token_f1") is not None
+    ]
     summary = {
         "case_count": len(outputs),
         "median_reply_tokens": statistics.median(token_counts),
@@ -396,6 +470,7 @@ def main() -> None:
         "major_case_count": sum(1 for r in outputs if r["major_issues"]),
         "semantic_warning_count": sum(len(r["semantic_warnings"]) for r in outputs),
         "semantic_pass_rate": statistics.mean(1.0 if r["semantic_pass"] else 0.0 for r in outputs),
+        "mean_reference_token_f1": (statistics.mean(reference_scores) if reference_scores else None),
         "category_scores": {
             k: statistics.mean(v) for k, v in sorted(category_scores.items())
         },
@@ -459,6 +534,7 @@ The automated score is a pilot harness, not a replacement for human review.
 | Critical semantic failures | {summary['critical_failure_count']} |
 | Major semantic issues | {summary['major_issue_count']} |
 | Semantic pass rate | {summary['semantic_pass_rate']:.3f} |
+| Mean lexical reference token-F1 | {summary['mean_reference_token_f1'] if summary['mean_reference_token_f1'] is not None else 'N/A'} |
 
 ## Category Scores
 

@@ -1,3 +1,4 @@
+# Purpose: Creates physical depth-reduction candidates and verifies saved checkpoint reloadability.
 from __future__ import annotations
 
 """Create physically shallower decoder checkpoints for Phase 4B.

@@ -1,3 +1,4 @@
+# Purpose: Converts attribution traces into auditable structured-pruning plans and equal-size controls.
 from __future__ import annotations
 
 """Convert Phase 4B attribution statistics into a reloadable pruning plan.

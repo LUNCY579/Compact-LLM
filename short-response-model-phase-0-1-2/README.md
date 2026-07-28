@@ -1,65 +1,21 @@
-# Short-Response Model — Mature Phase Pipeline
+# Short-Response Model — runnable mature phase pipeline
 
-This repository implements the ordered short-response model program and integrates permanent architecture reduction as **Phase 4B**.
+This repository implements the ordered Phase 0–8 program plus **Phase 4B** permanent structural reduction. The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
-The production goal is not to force every experimental technique into the shipped model. The goal is to select the simplest checkpoint that proves useful quality, latency, memory, and maintenance characteristics on the target hardware.
+## Start here
 
-## Phase folders
+- `POST_PHASE_3_EXECUTION_GUIDE.md` — copy-paste execution order.
+- `Phases.md` — phase boundaries and handoffs.
+- Each Phase 4–8 folder contains `README.md`, `EXECUTION_MANUAL.md`, and `FILE_RESPONSIBILITIES.md`.
+- `install_post_phase_3.ps1` — installs/verifies required packages after the correct CUDA PyTorch build is installed.
+- `verify_post_phase_3.ps1` — compiles source, runs regression tests, checks all Phase 4–8 runner references, and optionally verifies dependency imports.
 
-- `phase_0_data`: schema validation, leakage checks, and human audit.
-- `phase_1_dense_sft`: dense baseline, concise-behavior SFT, and evaluation.
-- `phase_2_layer_selection`: one/two/four-layer training and module-group controls.
-- `phase_3_preference_alignment`: DPO for concise-correct behavior.
-- `phase_4_model_soups`: compatible adapter validation and delta-space soup construction.
-- `phase_4b_structural_reduction`: permanent MLP/head/layer reduction, common candidate evaluation, and downstream checkpoint selection.
-- `phase_5_context_system`: retrieval, context budgeting, and prefix/KV reuse.
-- `phase_6_sparse_simulation`: activation profiling and masked quality frontier.
-- `phase_7_sparse_runtime`: confidence-calibrated routing and measured sparse-decode reference.
-- `phase_8_release_candidate`: final ablations, hashes, safety review, and release decision.
+## Canonical handoffs
 
-Every phase is gated. Phase 4B may select the untouched dense Phase 4 model when reduced candidates do not create enough practical value.
+Phase 4 writes `artifacts/references/phase_4_reference.json`. Phase 4B writes `artifacts/references/selected_inference_reference.json`. Phases 5–8 resolve the latter automatically, preventing checkpoint drift.
 
-## Canonical model handoff
+## Production principle
 
-Phase 4B writes:
+A technique is shipped only when it creates measured value. The best release may use the dense Phase 4/4B reference, the context system, and short learned outputs while leaving custom sparsity disabled. Negative pruning/soup/sparse-runtime results are valid and retained.
 
-```text
-artifacts/references/selected_inference_reference.json
-```
-
-Phases 5–8 resolve this file by default. This prevents activation traces, routers, benchmarks, and release hashes from accidentally using different checkpoints.
-
-## Typical execution
-
-```powershell
-.\.venv\Scripts\Activate.ps1
-
-# Continue normal training/alignment.
-.\scripts\phase_3_preference_alignment\run_phase_3.ps1
-.\scripts\phase_4_model_soups\run_phase_4.ps1
-
-# Build and evaluate structural candidates after Phase 4 approval.
-.\scripts\phase_4b_structural_reduction\run_phase_4b.ps1 `
-  -Model artifacts\phase_4_soup\merged_model `
-  -Calibration data\phase_4b_structural_reduction\long_form_calibration.jsonl `
-  -Mode Pilot
-
-# After reviewing and approving Phase 4B, finalize the selected model.
-python .\scripts\phase_4b_structural_reduction\finalize_reference_selection.py `
-  --registry artifacts\phase_4b_structural_reduction\candidate_registry.json `
-  --candidate dense_reference `
-  --reason "Dense reference remains the best practical deployment checkpoint."
-
-# Later phases automatically use the selected model.
-.\scripts\phase_5_context_system\run_phase_5.ps1
-.\scripts\phase_6_sparse_simulation\run_phase_6.ps1 `
-  -Calibration data\calibration\calibration.jsonl
-.\scripts\phase_7_sparse_runtime\run_phase_7.ps1
-.\scripts\phase_8_release_candidate\run_phase_8.ps1
-```
-
-## Documentation map
-
-Each phase contains a README and execution manual. Phase 4B additionally includes `FILE_RESPONSIBILITIES.md`, which documents the owner, inputs, outputs, and prohibited claims for every file.
-
-Generated model checkpoints and benchmark artifacts are intentionally not included in this ZIP. They must be produced on your machine so measurements reflect your hardware and accepted prior-phase artifacts.
+Generated checkpoints and benchmark artifacts are not included in the source ZIP; they must be created on the target machine so the results reflect its actual model, CUDA stack, and hardware.

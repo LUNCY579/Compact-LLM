@@ -1,3 +1,4 @@
+# Purpose: Writes the canonical selected-reference manifest after explicit human approval.
 from __future__ import annotations
 
 """Finalize the checkpoint that downstream phases must use.

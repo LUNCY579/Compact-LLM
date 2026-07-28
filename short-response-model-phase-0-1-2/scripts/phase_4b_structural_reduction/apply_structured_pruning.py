@@ -1,3 +1,4 @@
+# Purpose: Physically slices compatible MLP and optional GQA attention tensors and reload-smoke-tests the result.
 from __future__ import annotations
 
 """Physically slice MLP channels and optional GQA head groups.

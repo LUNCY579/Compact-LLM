@@ -1,9 +1,3 @@
-# Additional packages used by Phase 4B structural reduction and Phases 6-7.
-# Prefer the repository's main environment installer when available so CUDA
-# PyTorch is selected intentionally before installing the remaining packages.
-torch>=2.7
-transformers>=4.57
-accelerate>=1.10
-peft
-bitsandbytes; platform_system != "Darwin"
-numpy
+# Compatibility alias for older commands.
+# The complete dependency list now lives in requirements.txt.
+-r requirements.txt

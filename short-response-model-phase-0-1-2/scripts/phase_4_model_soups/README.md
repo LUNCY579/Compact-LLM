@@ -1,33 +1,15 @@
-# Phase 4 — Selective Adapter Soups
+# Phase 4 — Real model-soup execution
 
-**Blueprint reference:** Pages 16–17. This folder is an executable research scaffold plus a verification manual. Generated metrics are never assumed; artifacts remain outside source control.
+This phase no longer prints a checklist. `run_phase_4.ps1` trains compatible additional DPO seeds, evaluates them, performs real reconstructed-delta FP32 merges, evaluates each greedy trial, and materializes the accepted standalone Transformers checkpoint.
 
-## Prerequisite
+## Normal command
 
-The preceding phase report must contain an explicit human `PASS`. The PowerShell runner checks this before continuing.
+```powershell
+.\scripts\phase_4_model_soups\run_phase_4.ps1 `
+  -ModelId "Qwen/Qwen3-0.6B" `
+  -PrimaryAdapter .\artifacts\phase_3_dpo\adapter
+```
 
-## Step-by-step execution
+Use `-ReuseExisting` to resume valid artifacts or `-SkipTraining` only when all requested seed adapters already exist. Outputs include `accepted_model`, raw ingredient/trial evaluations, `MODEL_SOUP_REPORT.md`, `PHASE_4_STOP_GATE.md`, and `artifacts/references/phase_4_reference.json`.
 
-1. Confirm Stop Gate 3. 2. Train 3–5 ingredients from the same base, tokenizer, selected layers, target modules, rank and objective; vary seed/data order first. 3. Validate compatibility. 4. Evaluate each ingredient. 5. Start greedy soup with the best. 6. Reconstruct each merged checkpoint and average FP32 deltas; never average quantized integers. 7. Evaluate every trial and reject any category regression. 8. Approve only if the accepted soup beats the best ingredient; otherwise keep the best individual. 9. Freeze the final dense reference and record hashes.
-
-## Verification checklist
-
-- [ ] Inputs, hashes, dataset versions, model/tokenizer versions and seed recorded.
-- [ ] Development/calibration data used only for the intended phase.
-- [ ] Sealed evaluation remains untouched until Phase 8.
-- [ ] Commands and raw outputs preserved under `artifacts/`.
-- [ ] Automated scores reviewed against raw generations/traces.
-- [ ] No theoretical memory, active-parameter, or speed claim is presented as measured.
-- [ ] Stop-gate report has evidence, risks, and a human decision.
-
-## Files in this folder
-
-Review every Python and PowerShell file before execution. Defaults are conservative examples; paths to winning adapters/models must be supplied from your actual reports. The scripts fail rather than fabricate missing results.
-
-## Manual approval
-
-Create or update `reports/PHASE_4_STOP_GATE.md` and use exactly `- Human decision: `PASS`` only after the checklist and blueprint gate are satisfied.
-
-## Phase 4B handoff
-
-After choosing the best individual or accepted soup, save it as a normal dense Transformers checkpoint, preserve it unchanged, and record its path in `reports/PHASE_4_STOP_GATE.md`. Phase 4B consumes that exact path and creates all reduced candidates in a separate artifact directory.
+The best individual is a valid result when no soup improves quality. See `FILE_RESPONSIBILITIES.md`.

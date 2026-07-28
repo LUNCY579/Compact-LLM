@@ -1,46 +1,88 @@
 <#
 .SYNOPSIS
-Build, evaluate, and rank structural-reduction candidates after Phase 4.
+Build, evaluate, and rank permanent structural-reduction candidates.
 
 .DESCRIPTION
-This runner integrates structural reduction into the main phase chain. It never
-overwrites the accepted Phase 4 checkpoint and never grants the Phase 4B human
-gate. Pilot mode creates a practical small matrix; Full mode expands ratios.
+Phase 4B consumes the exact full checkpoint accepted in Phase 4. When -Model is
+omitted, the runner resolves artifacts/references/phase_4_reference.json.
+When -Calibration is omitted, it creates matched short/long calibration records
+from real development prompts and generated long continuations.
+
+The runner creates practical pruning/depth candidates, evaluates all of them
+with one benchmark/configuration, writes a recommendation, and prepares the
+human stop-gate report. It never selects the downstream model automatically.
 #>
 param(
-    [Parameter(Mandatory=$true)][string]$Model,
-    [Parameter(Mandatory=$true)][string]$Calibration,
-    [string]$Benchmark = 'data\benchmark\shortchatbench_pilot.jsonl',
-    [ValidateSet('Pilot', 'Full')][string]$Mode = 'Pilot',
+    [string]$Model = "",
+    [string]$Calibration = ".\data\phase_4b_structural_reduction\long_form_calibration.jsonl",
+    [string]$CalibrationSource = ".\data\dev\dev.jsonl",
+    [string]$Benchmark = ".\data\benchmark\shortchatbench_pilot.jsonl",
+    [ValidateSet("Pilot", "Full")][string]$Mode = "Pilot",
     [switch]$EnableAttentionPruning,
     [switch]$ReuseExisting,
-    [int]$MaxNewTokens = 32
+    [int]$MaxNewTokens = 32,
+    [int]$CalibrationPairs = 128,
+    [int]$ShortCutoff = 24,
+    [int]$LateStart = 48
 )
 
-$ErrorActionPreference = 'Stop'
-$Root = (Resolve-Path (Join-Path $PSScriptRoot '..\..')).Path
+$ErrorActionPreference = "Stop"
+$Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
 
-# Phase 4B is downstream of the accepted Phase 4 model/soup decision.
-python .\scripts\common\check_human_gate.py --phase 4
+function Invoke-PythonStep {
+    param([string]$Name, [string[]]$Arguments)
+    Write-Host ""
+    Write-Host $Name
+    & python @Arguments
+    if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit code $LASTEXITCODE." }
+}
 
-$ArtifactRoot = 'artifacts\phase_4b_structural_reduction'
+Invoke-PythonStep "[1/8] Checking the Phase 4 human gate..." @(
+    ".\scripts\common\check_human_gate.py", "--phase", "4"
+)
 
-# Never silently overwrite a prior Phase 4B run. Archive/delete the artifact
-# directory for a clean rerun, or use -ReuseExisting only when all inputs and
-# code revisions still match.
+if ([string]::IsNullOrWhiteSpace($Model)) {
+    $Model = python .\scripts\phase_4_model_soups\resolve_phase_4_model.py
+    if ($LASTEXITCODE -ne 0) { throw "Could not resolve the accepted Phase 4 model." }
+}
+if (-not (Test-Path $Model)) { throw "Phase 4B requires a local full checkpoint directory: $Model" }
+if (-not (Test-Path $Benchmark)) { throw "Missing Phase 4B benchmark: $Benchmark" }
+
+$ArtifactRoot = ".\artifacts\phase_4b_structural_reduction"
 if ((Test-Path $ArtifactRoot) -and (-not $ReuseExisting)) {
-    throw "$ArtifactRoot already exists. Archive it, remove it, or rerun with -ReuseExisting after verifying provenance."
+    throw "$ArtifactRoot already exists. Archive/remove it or use -ReuseExisting only after verifying all provenance."
 }
 New-Item -ItemType Directory -Force -Path $ArtifactRoot | Out-Null
 
-$Profile = Join-Path $ArtifactRoot 'long_form_profile.pt'
-$CandidateSpecs = New-Object System.Collections.Generic.List[string]
+if (-not (Test-Path $Calibration)) {
+    if (-not (Test-Path $CalibrationSource)) { throw "Missing calibration source: $CalibrationSource" }
+    Invoke-PythonStep "[2/8] Building matched short/long calibration records..." @(
+        ".\scripts\phase_4b_structural_reduction\build_long_form_calibration.py",
+        "--model", $Model,
+        "--source", $CalibrationSource,
+        "--output", $Calibration,
+        "--max-records", "$CalibrationPairs",
+        "--minimum-long-tokens", "$([Math]::Max($LateStart + 8, 64))",
+        "--max-new-tokens", "$([Math]::Max($LateStart + 80, 128))"
+    )
+}
 
-# Pilot mode is intended to produce a useful answer quickly. Full mode is a
-# broader sweep for later optimization once the pipeline is already working.
-if ($Mode -eq 'Pilot') {
+$Profile = Join-Path $ArtifactRoot "long_form_profile.pt"
+if (-not ($ReuseExisting -and (Test-Path $Profile))) {
+    Invoke-PythonStep "[3/8] Profiling short-versus-long continuation components..." @(
+        ".\scripts\phase_4b_structural_reduction\profile_long_form_components.py",
+        "--model", $Model,
+        "--data", $Calibration,
+        "--output", $Profile,
+        "--short-cutoff", "$ShortCutoff",
+        "--late-start", "$LateStart"
+    )
+}
+
+$CandidateSpecs = New-Object System.Collections.Generic.List[string]
+if ($Mode -eq "Pilot") {
     $MlpRatios = @(0.10)
     $DepthDrops = @(2)
 } else {
@@ -48,103 +90,97 @@ if ($Mode -eq 'Pilot') {
     $DepthDrops = @(1, 2, 4)
 }
 
-if (-not ($ReuseExisting -and (Test-Path $Profile))) {
-    python .\scripts\phase_4b_structural_reduction\profile_long_form_components.py `
-      --model $Model --data $Calibration --output $Profile
-}
-
 foreach ($Ratio in $MlpRatios) {
     $Percent = [int][Math]::Round($Ratio * 100)
-
-    # Attribution-guided MLP pruning candidate.
-    $Plan = Join-Path $ArtifactRoot "plans\mlp_long_specific_${Percent}pct.json"
-    $Candidate = Join-Path $ArtifactRoot "candidates\mlp_long_specific_${Percent}pct"
-    if (-not ($ReuseExisting -and (Test-Path $Candidate))) {
-        python .\scripts\phase_4b_structural_reduction\build_pruning_plan.py `
-          --profile $Profile --mlp-prune-ratio $Ratio `
-          --attention-group-prune-ratio 0.0 --selection-method long-specific `
-          --output $Plan
-        python .\scripts\phase_4b_structural_reduction\apply_structured_pruning.py `
-          --model $Model --plan $Plan --skip-attention --output-dir $Candidate
+    foreach ($Method in @("long-specific", "random")) {
+        $SafeMethod = $Method.Replace("-", "_")
+        $Plan = Join-Path $ArtifactRoot "plans\mlp_${SafeMethod}_${Percent}pct.json"
+        $Candidate = Join-Path $ArtifactRoot "candidates\mlp_${SafeMethod}_${Percent}pct"
+        if (-not ($ReuseExisting -and (Test-Path (Join-Path $Candidate "config.json")))) {
+            Invoke-PythonStep "[4/8] Building $Method MLP pruning plan at $Percent%..." @(
+                ".\scripts\phase_4b_structural_reduction\build_pruning_plan.py",
+                "--profile", $Profile,
+                "--mlp-prune-ratio", "$Ratio",
+                "--attention-group-prune-ratio", "0.0",
+                "--selection-method", $Method,
+                "--output", $Plan
+            )
+            Invoke-PythonStep "[4/8] Applying $Method MLP pruning at $Percent%..." @(
+                ".\scripts\phase_4b_structural_reduction\apply_structured_pruning.py",
+                "--model", $Model,
+                "--plan", $Plan,
+                "--skip-attention",
+                "--output-dir", $Candidate
+            )
+        }
+        $CandidateSpecs.Add("mlp_${SafeMethod}_${Percent}pct=$Candidate") | Out-Null
     }
-    $CandidateSpecs.Add("mlp_long_specific_${Percent}pct=$Candidate") | Out-Null
-
-    # Equal-size random control. A guided candidate should beat this control to
-    # show that the attribution signal adds value beyond removing any channels.
-    $RandomPlan = Join-Path $ArtifactRoot "plans\mlp_random_${Percent}pct.json"
-    $RandomCandidate = Join-Path $ArtifactRoot "candidates\mlp_random_${Percent}pct"
-    if (-not ($ReuseExisting -and (Test-Path $RandomCandidate))) {
-        python .\scripts\phase_4b_structural_reduction\build_pruning_plan.py `
-          --profile $Profile --mlp-prune-ratio $Ratio `
-          --attention-group-prune-ratio 0.0 --selection-method random `
-          --output $RandomPlan
-        python .\scripts\phase_4b_structural_reduction\apply_structured_pruning.py `
-          --model $Model --plan $RandomPlan --skip-attention `
-          --output-dir $RandomCandidate
-    }
-    $CandidateSpecs.Add("mlp_random_${Percent}pct=$RandomCandidate") | Out-Null
 }
 
 foreach ($DropCount in $DepthDrops) {
-    # Suffix removal tests the late-layer hypothesis directly.
-    $DropCandidate = Join-Path $ArtifactRoot "candidates\drop_last_$DropCount"
-    if (-not ($ReuseExisting -and (Test-Path $DropCandidate))) {
-        python .\scripts\phase_4b_structural_reduction\reduce_depth.py `
-          --model $Model --mode drop-last --count $DropCount `
-          --output-dir $DropCandidate
+    foreach ($ModeName in @("drop-last", "uniform-drop")) {
+        $SafeMode = $ModeName.Replace("-", "_")
+        $Candidate = Join-Path $ArtifactRoot "candidates\${SafeMode}_$DropCount"
+        if (-not ($ReuseExisting -and (Test-Path (Join-Path $Candidate "config.json")))) {
+            Invoke-PythonStep "[5/8] Building depth candidate $ModeName ($DropCount layers)..." @(
+                ".\scripts\phase_4b_structural_reduction\reduce_depth.py",
+                "--model", $Model,
+                "--mode", $ModeName,
+                "--count", "$DropCount",
+                "--output-dir", $Candidate
+            )
+        }
+        $CandidateSpecs.Add("${SafeMode}_$DropCount=$Candidate") | Out-Null
     }
-    $CandidateSpecs.Add("drop_last_$DropCount=$DropCandidate") | Out-Null
-
-    # Uniform thinning removes the same number of layers but distributes the
-    # removals, providing an equal-layer-count control.
-    $UniformCandidate = Join-Path $ArtifactRoot "candidates\uniform_drop_$DropCount"
-    if (-not ($ReuseExisting -and (Test-Path $UniformCandidate))) {
-        python .\scripts\phase_4b_structural_reduction\reduce_depth.py `
-          --model $Model --mode uniform-drop --count $DropCount `
-          --output-dir $UniformCandidate
-    }
-    $CandidateSpecs.Add("uniform_drop_$DropCount=$UniformCandidate") | Out-Null
 }
 
 if ($EnableAttentionPruning) {
-    # Attention pruning is opt-in because grouped-query attention layouts are
-    # more architecture-sensitive than MLP channel slicing.
-    $AttentionPlan = Join-Path $ArtifactRoot 'plans\attention_groups_10pct.json'
-    $AttentionCandidate = Join-Path $ArtifactRoot 'candidates\attention_groups_10pct'
-    if (-not ($ReuseExisting -and (Test-Path $AttentionCandidate))) {
-        python .\scripts\phase_4b_structural_reduction\build_pruning_plan.py `
-          --profile $Profile --mlp-prune-ratio 0.0 `
-          --attention-group-prune-ratio 0.10 --selection-method long-specific `
-          --output $AttentionPlan
-        python .\scripts\phase_4b_structural_reduction\apply_structured_pruning.py `
-          --model $Model --plan $AttentionPlan --output-dir $AttentionCandidate
+    $AttentionPlan = Join-Path $ArtifactRoot "plans\attention_groups_10pct.json"
+    $AttentionCandidate = Join-Path $ArtifactRoot "candidates\attention_groups_10pct"
+    if (-not ($ReuseExisting -and (Test-Path (Join-Path $AttentionCandidate "config.json")))) {
+        Invoke-PythonStep "[5/8] Building grouped-attention pruning candidate..." @(
+            ".\scripts\phase_4b_structural_reduction\build_pruning_plan.py",
+            "--profile", $Profile,
+            "--mlp-prune-ratio", "0.0",
+            "--attention-group-prune-ratio", "0.10",
+            "--selection-method", "long-specific",
+            "--output", $AttentionPlan
+        )
+        Invoke-PythonStep "[5/8] Applying grouped-attention pruning candidate..." @(
+            ".\scripts\phase_4b_structural_reduction\apply_structured_pruning.py",
+            "--model", $Model,
+            "--plan", $AttentionPlan,
+            "--output-dir", $AttentionCandidate
+        )
     }
     $CandidateSpecs.Add("attention_groups_10pct=$AttentionCandidate") | Out-Null
 }
 
-# Build one argument list so every candidate uses the exact same evaluator,
-# benchmark, output cap, and evidence format.
 $EvalArgs = @(
-    '.\scripts\phase_4b_structural_reduction\evaluate_candidates.py',
-    '--dense-reference', $Model,
-    '--benchmark', $Benchmark,
-    '--output-root', $ArtifactRoot,
-    '--max-new-tokens', $MaxNewTokens
+    ".\scripts\phase_4b_structural_reduction\evaluate_candidates.py",
+    "--dense-reference", $Model,
+    "--benchmark", $Benchmark,
+    "--output-root", $ArtifactRoot,
+    "--max-new-tokens", "$MaxNewTokens"
 )
-foreach ($Spec in $CandidateSpecs) {
-    $EvalArgs += @('--candidate', $Spec)
-}
-if ($ReuseExisting) {
-    $EvalArgs += '--reuse-existing'
-}
-& python @EvalArgs
+foreach ($Spec in $CandidateSpecs) { $EvalArgs += @("--candidate", $Spec) }
+if ($ReuseExisting) { $EvalArgs += "--reuse-existing" }
+Invoke-PythonStep "[6/8] Evaluating dense and structural candidates..." $EvalArgs
 
-$Registry = Join-Path $ArtifactRoot 'candidate_registry.json'
-python .\scripts\phase_4b_structural_reduction\recommend_reference_candidate.py `
-  --registry $Registry
+$Registry = Join-Path $ArtifactRoot "candidate_registry.json"
+Invoke-PythonStep "[7/8] Applying practical deployment floors and ranking candidates..." @(
+    ".\scripts\phase_4b_structural_reduction\recommend_reference_candidate.py",
+    "--registry", $Registry
+)
+Invoke-PythonStep "[8/8] Creating the Phase 4B human stop-gate report..." @(
+    ".\scripts\phase_4b_structural_reduction\create_phase_4b_gate.py"
+)
 
-Write-Host ''
-Write-Host 'Phase 4B candidate generation and recommendation are complete.'
-Write-Host 'Review raw evaluations and reports/PHASE_4B_CANDIDATE_RECOMMENDATION.md.'
-Write-Host 'Do not run downstream phases until PHASE_4B_STOP_GATE.md is approved and'
-Write-Host 'finalize_reference_selection.py has written the selected-reference manifest.'
+Write-Host ""
+Write-Host "Phase 4B execution completed."
+Write-Host "Candidate registry: $Registry"
+Write-Host "Recommendation: reports\PHASE_4B_CANDIDATE_RECOMMENDATION.md"
+Write-Host "Stop gate: reports\PHASE_4B_STOP_GATE.md"
+Write-Host ""
+Write-Host "After review, set the selected candidate and Human decision to PASS, then run:"
+Write-Host "python .\scripts\phase_4b_structural_reduction\finalize_reference_selection.py --registry $Registry --candidate <name> --reason '<reason>'"

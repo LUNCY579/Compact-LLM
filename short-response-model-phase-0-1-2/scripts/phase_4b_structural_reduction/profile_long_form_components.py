@@ -1,3 +1,4 @@
+# Purpose: Measures attention-head and MLP-channel contribution across short and late continuation positions.
 from __future__ import annotations
 
 """Profile components that are disproportionately important late in responses.
@@ -47,15 +48,35 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def apply_chat_template(
+    tokenizer: Any,
+    messages: list[dict[str, Any]],
+    *,
+    add_generation_prompt: bool,
+) -> str:
+    """Render Qwen and generic chat templates without assuming a thinking flag."""
+
+    kwargs = {
+        "tokenize": False,
+        "add_generation_prompt": add_generation_prompt,
+    }
+    try:
+        return tokenizer.apply_chat_template(
+            messages, enable_thinking=False, **kwargs
+        )
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
+
+
 def render_record(tokenizer: Any, row: dict[str, Any], max_length: int) -> tuple[torch.Tensor, torch.Tensor]:
     messages = row.get("messages")
     if not isinstance(messages, list) or not messages or messages[-1].get("role") != "assistant":
         raise ValueError("Each profiling record must contain messages ending in an assistant target.")
-    prompt_text = tokenizer.apply_chat_template(
-        messages[:-1], tokenize=False, add_generation_prompt=True, enable_thinking=False
+    prompt_text = apply_chat_template(
+        tokenizer, messages[:-1], add_generation_prompt=True
     )
-    full_text = tokenizer.apply_chat_template(
-        messages, tokenize=False, add_generation_prompt=False, enable_thinking=False
+    full_text = apply_chat_template(
+        tokenizer, messages, add_generation_prompt=False
     )
     prompt_ids = tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
     full_ids = tokenizer(

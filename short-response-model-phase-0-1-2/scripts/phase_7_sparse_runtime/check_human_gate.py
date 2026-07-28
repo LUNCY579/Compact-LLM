@@ -1,3 +1,4 @@
+# Purpose: Compatibility wrapper that delegates human-gate validation to scripts/common.
 from __future__ import annotations
 import argparse, re
 from pathlib import Path

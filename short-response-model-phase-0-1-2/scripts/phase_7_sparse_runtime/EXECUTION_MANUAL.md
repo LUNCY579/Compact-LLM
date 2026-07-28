@@ -1,14 +1,9 @@
-# Phase 7 Execution Manual
+# Phase 7 execution manual
 
-1. Verify Phase 6 human `PASS` and the frozen model hash.
-2. Train routers from `router_dataset.pt`.
-3. Inspect per-layer validation BCE, weighted recall, accepted fraction, and confidence threshold.
-4. Run the dense-versus-routed benchmark with deterministic decoding.
-5. Review raw output pairs; runtime improvement cannot compensate for correctness or safety regression.
-6. Record active ratio and fallback rate by layer.
-7. Test multiple keep ratios and confidence thresholds without tuning on sealed evaluation.
-8. Preserve the PyTorch reference result, including negative speedups.
-9. Only after quality passes, implement the kernel contract in `KERNEL_CONTRACT.md`.
-10. Quantize the deployment checkpoint, retrain/recalibrate routers as needed, and repeat the full benchmark.
-
-Phase 7 passes only with preserved quality and either at least 1.20x measured decode speed or at least 20% lower measured peak VRAM in the exact target runtime.
+1. Approve Phase 6 and keep its router dataset immutable.
+2. Run `.\scripts\phase_7_sparse_runtime\run_phase_7.ps1`. The runner automatically chooses sparse benchmarking or a dense-only baseline from Phase 6 evidence.
+3. When routers are trained, inspect per-layer validation recall and confidence thresholds.
+4. Benchmark with no competing GPU workload; preserve hardware/software metadata.
+5. Review dense/routed outputs as well as timing.
+6. Select `SPARSE_FEATURE_FLAG` only if quality passes and measured speed or VRAM target passes; otherwise select `DENSE_RUNTIME`.
+7. A dense selection is a successful practical Phase 7 outcome and allows Phase 8 to continue after human approval.

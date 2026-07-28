@@ -1,23 +1,9 @@
-# Verified execution manual — Phase 5
+# Phase 5 execution manual
 
-“Verified” here means the procedure contains explicit preflight, evidence, and review steps. It does **not** claim that your hardware run has already passed.
-
-## Preflight
-
-1. Activate the same virtual environment used by earlier phases.
-2. Confirm the preceding human gate.
-3. Copy the current artifact tree or record its hashes before changing it.
-4. Confirm adequate free disk space and that no second GPU workload is running during latency/VRAM measurement.
-5. Open this phase README and replace placeholder paths with the accepted prior-phase artifacts.
-
-## Execution discipline
-
-Run one command at a time. Keep stdout/stderr. Do not overwrite a successful experiment without archiving its manifest. Use fixed seeds for comparisons. When rerunning only evaluation, preserve training adapters and record the evaluator revision.
-
-## Review discipline
-
-Inspect lowest-scoring and safety-sensitive cases, not only averages. Compare against the correct control. Record failures and negative findings. A human gate is mandatory; scripts never self-approve.
-
-## Recovery
-
-Completed model/adapters are reusable if training code, data, seed, and configuration match. Evaluation can be rerun without retraining. Never mix evaluator versions in one ranking; regenerate all comparable summaries when evaluator logic changes.
+1. Approve Phase 4B and finalize `selected_inference_reference.json`.
+2. Run `.\scripts\phase_5_context_system\run_phase_5.ps1`.
+3. Inspect `retrieval_traces.jsonl` for missing required facts, stale/contradicted selections, duplicates, and overly broad memories.
+4. Inspect compact/full raw replies; token reduction cannot compensate for lost correctness or context consistency.
+5. Confirm prefix-cache logits are numerically consistent before trusting timing.
+6. Adjust TopK and tier budgets only on development/context cases, not sealed data.
+7. Approve `PHASE_5_STOP_GATE.md` only after retrieval and generation review.

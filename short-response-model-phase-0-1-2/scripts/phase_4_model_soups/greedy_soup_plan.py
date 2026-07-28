@@ -1,3 +1,4 @@
+# Purpose: Legacy planning helper retained for dry-run inspection; the production runner uses build_greedy_soup.py.
 from __future__ import annotations
 import argparse
 from pathlib import Path

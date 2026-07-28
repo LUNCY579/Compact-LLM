@@ -21,16 +21,28 @@ from torch import nn
 
 @dataclass
 class SparseStats:
+    # ``calls`` counts decode-token decisions only. Prefill is tracked
+    # separately so it does not inflate the router fallback rate.
     calls: int = 0
     sparse_calls: int = 0
     dense_fallback_calls: int = 0
+    prefill_dense_calls: int = 0
     selected_blocks: int = 0
     total_blocks: int = 0
 
     def as_dict(self) -> dict[str, float | int]:
+        # Dense decode fallbacks count as 100% active so the reported ratio
+        # represents actual decode work rather than only successful routes.
         ratio = self.selected_blocks / self.total_blocks if self.total_blocks else 1.0
         fallback = self.dense_fallback_calls / self.calls if self.calls else 0.0
         return {
+            "decode_calls": self.calls,
+            "sparse_decode_calls": self.sparse_calls,
+            "dense_decode_fallback_calls": self.dense_fallback_calls,
+            "prefill_dense_calls": self.prefill_dense_calls,
+            "mean_decode_active_block_ratio": ratio,
+            "decode_dense_fallback_rate": fallback,
+            # Backward-compatible field names used by existing reports.
             "calls": self.calls,
             "sparse_calls": self.sparse_calls,
             "dense_fallback_calls": self.dense_fallback_calls,
@@ -146,16 +158,19 @@ class RoutedSparseGatedMLP(nn.Module):
 
     def _dense(self, hidden: torch.Tensor) -> torch.Tensor:
         self.stats.dense_fallback_calls += 1
+        blocks = (self.dense_mlp.gate_proj.out_features + self.block_size - 1) // self.block_size
+        self.stats.selected_blocks += blocks
+        self.stats.total_blocks += blocks
         return self.dense_mlp(hidden)
 
     def forward(self, hidden: torch.Tensor) -> torch.Tensor:
-        self.stats.calls += 1
-        # The reference sparse path is intentionally limited to batch=1,
-        # sequence=1 decode, where one mask can be applied without unions.
+        # The sparse reference supports only batch=1, sequence=1 decode.
+        # Prefill is intentionally dense and excluded from decode router stats.
         if hidden.ndim != 3 or hidden.shape[0] != 1 or hidden.shape[1] != 1:
-            return self._dense(hidden)
-        if self.dense_prefill and hidden.shape[1] > 1:
-            return self._dense(hidden)
+            self.stats.prefill_dense_calls += 1
+            return self.dense_mlp(hidden)
+
+        self.stats.calls += 1
 
         vector = hidden[:, -1, :]
         logits = self.router(vector)

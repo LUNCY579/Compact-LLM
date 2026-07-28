@@ -1,3 +1,4 @@
+# Purpose: Trains and calibrates one confidence-aware block router per decoder layer.
 from __future__ import annotations
 
 """Train one small block router per decoder layer from Phase 6 oracle labels."""
@@ -173,6 +174,7 @@ def main() -> None:
         "version": 2,
         "source_dataset": str(args.dataset),
         "source_model": dataset.get("model"),
+        "source_model_fingerprint": dataset.get("model_fingerprint"),
         "block_size": int(dataset["block_size"]),
         "target_ratio": args.target_ratio,
         "minimum_weighted_recall": args.minimum_weighted_recall,
@@ -190,6 +192,7 @@ def main() -> None:
             "version": payload["version"],
             "source_dataset": str(args.dataset),
             "source_model": payload["source_model"],
+            "source_model_fingerprint": payload["source_model_fingerprint"],
             "block_size": payload["block_size"],
             "target_ratio": args.target_ratio,
             "layers": metrics,

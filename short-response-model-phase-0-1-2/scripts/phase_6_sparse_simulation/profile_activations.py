@@ -1,3 +1,4 @@
+# Purpose: Collects per-layer decode hidden states, block contribution scores, and oracle masks.
 from __future__ import annotations
 
 """Collect router-training examples and oracle block contribution labels.
@@ -24,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_jsonl, write_json
+from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import block_scores_from_intermediate, top_block_mask
 
@@ -49,17 +50,37 @@ def parse_args() -> argparse.Namespace:
     return parser.parse_args()
 
 
+def apply_chat_template(
+    tokenizer: Any,
+    messages: list[dict[str, Any]],
+    *,
+    add_generation_prompt: bool,
+) -> str:
+    """Render Qwen and generic chat templates without assuming a thinking flag."""
+
+    kwargs = {
+        "tokenize": False,
+        "add_generation_prompt": add_generation_prompt,
+    }
+    try:
+        return tokenizer.apply_chat_template(
+            messages, enable_thinking=False, **kwargs
+        )
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
+
+
 def render_row(tokenizer: Any, row: dict[str, Any], max_length: int) -> tuple[torch.Tensor, torch.Tensor]:
     """Return token IDs and a boolean mask of positions eligible for tracing."""
 
     messages = row.get("messages")
     if isinstance(messages, list) and messages:
         if messages[-1].get("role") == "assistant":
-            prompt = tokenizer.apply_chat_template(
-                messages[:-1], tokenize=False, add_generation_prompt=True, enable_thinking=False
+            prompt = apply_chat_template(
+                tokenizer, messages[:-1], add_generation_prompt=True
             )
-            full = tokenizer.apply_chat_template(
-                messages, tokenize=False, add_generation_prompt=False, enable_thinking=False
+            full = apply_chat_template(
+                tokenizer, messages, add_generation_prompt=False
             )
             prompt_ids = tokenizer(prompt, add_special_tokens=False)["input_ids"]
             full_ids = tokenizer(
@@ -71,8 +92,8 @@ def render_row(tokenizer: Any, row: dict[str, Any], max_length: int) -> tuple[to
             mask = torch.zeros(len(full_ids), dtype=torch.bool)
             mask[min(len(prompt_ids), len(full_ids)) :] = True
             return torch.tensor(full_ids).unsqueeze(0), mask
-        text = tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True, enable_thinking=False
+        text = apply_chat_template(
+            tokenizer, messages, add_generation_prompt=True
         )
     else:
         text = row.get("text") or row.get("prompt")
@@ -202,6 +223,7 @@ def main() -> None:
     payload = {
         "version": 2,
         "model": args.model,
+        "model_fingerprint": sha256_tree(Path(args.model)),
         "calibration": str(args.calibration),
         "records_used": used,
         "block_size": args.block_size,
@@ -218,6 +240,7 @@ def main() -> None:
         {
             "version": payload["version"],
             "model": args.model,
+            "model_fingerprint": payload["model_fingerprint"],
             "calibration": str(args.calibration),
             "records_used": used,
             "block_size": args.block_size,

@@ -1,3 +1,4 @@
+# Purpose: Records parameter count, checkpoint bytes, architecture metadata, and generation smoke results.
 from __future__ import annotations
 
 """Measure real checkpoint size for a Phase 4B candidate.

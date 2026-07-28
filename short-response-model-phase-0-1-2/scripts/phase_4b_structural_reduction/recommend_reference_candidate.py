@@ -1,3 +1,4 @@
+# Purpose: Applies practical quality/size floors to recommend, not auto-approve, a downstream reference.
 from __future__ import annotations
 
 """Recommend a deployable Phase 4B reference from measured candidate results.

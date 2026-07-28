@@ -1,10 +1,13 @@
+# Purpose: Measures dense versus gathered sparse decode, VRAM, quality, active ratios, and fallback rates.
 from __future__ import annotations
 
-"""Benchmark dense versus routed sparse single-token decode on identical prompts.
+"""Benchmark dense versus routed sparse decode on identical prompts.
 
-The routed path is a PyTorch reference using gathered MLP rows/columns. It is
-expected to establish correctness and expose overhead; it is not a substitute
-for the later Triton/custom kernel prototype.
+The script validates model/router provenance, measures real wall-clock latency
+and peak allocated VRAM, scores dense and sparse replies with the same Phase 1
+quality harness, and records router active/fallback rates.  A slower gathered
+PyTorch reference is a valid negative result; the phase can still recommend a
+dense production runtime.
 """
 
 import argparse
@@ -21,23 +24,26 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
+from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import RoutedSparseGatedMLP, TinyBlockRouter
+from scripts.phase_1_dense_sft.evaluate_model import normalize_benchmark_record, score_case, semantic_audit
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Measure actual dense and routed-reference runtime.")
+    parser = argparse.ArgumentParser(description="Measure dense and routed-reference runtime.")
     parser.add_argument("--model", required=True)
-    parser.add_argument("--routers", type=Path, required=True)
+    parser.add_argument("--routers", type=Path, default=None)
+    parser.add_argument("--dense-only", action="store_true", help="Measure the dense deployment baseline when Phase 6 found no viable sparse ratio.")
     parser.add_argument("--benchmark", type=Path, required=True)
     parser.add_argument("--out", type=Path, default=ROOT / "artifacts/phase_7_router/runtime_comparison.json")
     parser.add_argument("--max-cases", type=int, default=50)
     parser.add_argument("--max-new-tokens", type=int, default=24)
     parser.add_argument("--warmup-cases", type=int, default=3)
     parser.add_argument("--repeats", type=int, default=3)
-    parser.add_argument("--keep-ratio", type=float, default=None, help="Override router checkpoint target ratio.")
+    parser.add_argument("--keep-ratio", type=float, default=None)
     parser.add_argument("--force-confidence-threshold", type=float, default=None)
+    parser.add_argument("--allow-provenance-mismatch", action="store_true")
     return parser.parse_args()
 
 
@@ -46,26 +52,25 @@ def synchronize() -> None:
         torch.cuda.synchronize()
 
 
+def apply_template(tokenizer: Any, messages: list[dict[str, Any]]) -> str:
+    kwargs = {"tokenize": False, "add_generation_prompt": True}
+    try:
+        return tokenizer.apply_chat_template(messages, enable_thinking=False, **kwargs)
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
+
+
 def prompt_from_row(tokenizer: Any, row: dict[str, Any]) -> str:
     messages = row.get("messages")
     if isinstance(messages, list):
-        if messages and messages[-1].get("role") == "assistant":
-            messages = messages[:-1]
-        return tokenizer.apply_chat_template(
-            messages, tokenize=False, add_generation_prompt=True, enable_thinking=False
-        )
+        return apply_template(tokenizer, messages)
     prompt = row.get("prompt") or row.get("text")
     if not isinstance(prompt, str):
         raise ValueError("Benchmark rows need messages, prompt, or text.")
     return prompt
 
 
-def greedy_timed(
-    model: Any,
-    tokenizer: Any,
-    prompt: str,
-    max_new_tokens: int,
-) -> dict[str, Any]:
+def greedy_timed(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -> dict[str, Any]:
     device = first_parameter_device(model)
     encoded = tokenizer(prompt, return_tensors="pt").to(device)
     input_ids = encoded["input_ids"]
@@ -74,11 +79,11 @@ def greedy_timed(
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
     synchronize()
-    start = time.perf_counter()
-    with torch.no_grad():
+    started = time.perf_counter()
+    with torch.inference_mode():
         output = model(input_ids=input_ids, attention_mask=attention_mask, use_cache=True)
     synchronize()
-    prefill_ms = (time.perf_counter() - start) * 1000
+    prefill_ms = (time.perf_counter() - started) * 1000
     next_token = output.logits[:, -1, :].argmax(dim=-1, keepdim=True)
     generated = [int(next_token.item())]
     past = output.past_key_values
@@ -89,12 +94,15 @@ def greedy_timed(
             break
         if attention_mask is not None:
             attention_mask = torch.cat(
-                [attention_mask, torch.ones((attention_mask.shape[0], 1), dtype=attention_mask.dtype, device=device)],
+                [
+                    attention_mask,
+                    torch.ones((attention_mask.shape[0], 1), dtype=attention_mask.dtype, device=device),
+                ],
                 dim=1,
             )
         synchronize()
-        start = time.perf_counter()
-        with torch.no_grad():
+        started = time.perf_counter()
+        with torch.inference_mode():
             output = model(
                 input_ids=next_token,
                 attention_mask=attention_mask,
@@ -102,12 +110,12 @@ def greedy_timed(
                 use_cache=True,
             )
         synchronize()
-        decode_times.append((time.perf_counter() - start) * 1000)
+        decode_times.append((time.perf_counter() - started) * 1000)
         next_token = output.logits[:, -1, :].argmax(dim=-1, keepdim=True)
         generated.append(int(next_token.item()))
         past = output.past_key_values
 
-    peak_vram = torch.cuda.max_memory_allocated() / 1024**3 if torch.cuda.is_available() else None
+    peak_vram = torch.cuda.max_memory_allocated() / 1024**3 if torch.cuda.is_available() else 0.0
     return {
         "prefill_ms": prefill_ms,
         "decode_ms": decode_times,
@@ -117,31 +125,53 @@ def greedy_timed(
     }
 
 
-def summarize(runs: list[dict[str, Any]]) -> dict[str, Any]:
+def summarize_runtime(runs: list[dict[str, Any]]) -> dict[str, Any]:
     decode = [value for run in runs for value in run["decode_ms"]]
     return {
         "median_prefill_ms": statistics.median(run["prefill_ms"] for run in runs),
         "median_decode_ms_per_token": statistics.median(decode) if decode else None,
         "median_total_decode_ms": statistics.median(sum(run["decode_ms"]) for run in runs),
         "median_generated_tokens": statistics.median(len(run["generated_ids"]) for run in runs),
-        "peak_vram_gb": max((run["peak_vram_gb"] or 0.0) for run in runs) if runs else None,
+        "peak_vram_gb": max(run["peak_vram_gb"] for run in runs),
+    }
+
+
+def score_outputs(records: list[dict[str, Any]], runs: list[dict[str, Any]]) -> dict[str, Any]:
+    scored: list[dict[str, Any]] = []
+    for record, run in zip(records, runs):
+        score = score_case(record, run["reply"], len(run["generated_ids"]))
+        audit = semantic_audit(record, run["reply"])
+        scored.append({**score, **audit})
+    return {
+        "mean_heuristic_score": statistics.fmean(float(row["heuristic_score"]) for row in scored),
+        "complete_utterance_rate": statistics.fmean(
+            1.0 if row["checks"].get("complete_utterance") else 0.0 for row in scored
+        ),
+        "critical_failure_count": sum(len(row["critical_failures"]) for row in scored),
+        "major_issue_count": sum(len(row["major_issues"]) for row in scored),
+        "semantic_pass_rate": statistics.fmean(1.0 if row["semantic_pass"] else 0.0 for row in scored),
     }
 
 
 def main() -> None:
     args = parse_args()
+    if "sealed" in args.benchmark.parts:
+        raise SystemExit("Phase 7 development benchmarking may not use sealed data.")
+    if not args.dense_only and args.routers is None:
+        raise SystemExit("--routers is required unless --dense-only is selected.")
+
+    model_fingerprint = sha256_tree(Path(args.model))
     tokenizer = AutoTokenizer.from_pretrained(args.model)
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
     model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype="auto", device_map="auto")
     model.eval()
-    router_data = torch.load(args.routers, map_location="cpu", weights_only=False)
-    rows = read_jsonl(args.benchmark)[: args.max_cases]
-    prompts = [prompt_from_row(tokenizer, row) for row in rows]
+
+    records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)[: args.max_cases]]
+    prompts = [prompt_from_row(tokenizer, row) for row in records]
     if not prompts:
         raise ValueError("Benchmark produced no prompts.")
 
-    # Warm the model/runtime before either measured mode.
     for prompt in prompts[: args.warmup_cases]:
         greedy_timed(model, tokenizer, prompt, min(4, args.max_new_tokens))
 
@@ -149,6 +179,63 @@ def main() -> None:
     for _ in range(args.repeats):
         for prompt in prompts:
             dense_runs.append(greedy_timed(model, tokenizer, prompt, args.max_new_tokens))
+    dense_summary = summarize_runtime(dense_runs)
+    dense_quality = score_outputs(records, dense_runs[: len(records)])
+
+    # A negative Phase 6 result is a valid mature-product outcome. Phase 7
+    # still records the real dense baseline so Phase 8 has measured runtime
+    # evidence, but it does not fabricate routers or sparse metrics.
+    if args.dense_only:
+        raw_path = args.out.with_name(args.out.stem + "_raw.jsonl")
+        write_jsonl(
+            raw_path,
+            [
+                {
+                    "run_index": index,
+                    "id": records[index % len(records)].get("id", index % len(records)),
+                    "category": records[index % len(records)].get("category"),
+                    "dense_reply": run["reply"],
+                    "dense_prefill_ms": run["prefill_ms"],
+                    "dense_decode_ms": run["decode_ms"],
+                }
+                for index, run in enumerate(dense_runs)
+            ],
+        )
+        write_json(
+            args.out,
+            {
+                "model": args.model,
+                "model_fingerprint": model_fingerprint,
+                "benchmark": str(args.benchmark),
+                "cases": len(prompts),
+                "repeats": args.repeats,
+                "sparse_attempted": False,
+                "dense": dense_summary,
+                "dense_quality": dense_quality,
+                "sparse_reference": None,
+                "sparse_quality": None,
+                "quality_score_loss": None,
+                "decode_speedup": None,
+                "peak_vram_reduction_fraction": None,
+                "exact_generation_match_rate": None,
+                "layer_router_stats": {},
+                "passes_quality_target": False,
+                "passes_runtime_target": False,
+                "raw_results": str(raw_path),
+                "warning": "Phase 6 found no viable sparse ratio; Phase 7 measured and selected the dense runtime baseline.",
+            },
+        )
+        print(args.out)
+        return
+
+    assert args.routers is not None
+    router_data = torch.load(args.routers, map_location="cpu", weights_only=False)
+    expected_fingerprint = router_data.get("source_model_fingerprint")
+    if expected_fingerprint and expected_fingerprint != model_fingerprint and not args.allow_provenance_mismatch:
+        raise SystemExit(
+            "Router/model provenance mismatch. Rebuild Phase 6 traces and Phase 7 routers for this exact model, "
+            "or use --allow-provenance-mismatch only for a labeled control."
+        )
 
     wrappers: list[RoutedSparseGatedMLP] = []
     keep_ratio = float(args.keep_ratio if args.keep_ratio is not None else router_data["target_ratio"])
@@ -183,16 +270,15 @@ def main() -> None:
 
     for prompt in prompts[: args.warmup_cases]:
         greedy_timed(model, tokenizer, prompt, min(4, args.max_new_tokens))
-    # Warmup calls are excluded from reported active-ratio/fallback telemetry.
     for wrapper in wrappers:
         wrapper.stats = type(wrapper.stats)()
+
     sparse_runs: list[dict[str, Any]] = []
     for _ in range(args.repeats):
         for prompt in prompts:
             sparse_runs.append(greedy_timed(model, tokenizer, prompt, args.max_new_tokens))
 
-    dense_summary = summarize(dense_runs)
-    sparse_summary = summarize(sparse_runs)
+    sparse_summary = summarize_runtime(sparse_runs)
     dense_decode = dense_summary["median_decode_ms_per_token"]
     sparse_decode = sparse_summary["median_decode_ms_per_token"]
     speedup = dense_decode / sparse_decode if dense_decode and sparse_decode else None
@@ -202,11 +288,16 @@ def main() -> None:
 
     paired = min(len(dense_runs), len(sparse_runs))
     exact = [dense_runs[index]["generated_ids"] == sparse_runs[index]["generated_ids"] for index in range(paired)]
-    raw_rows = []
+    sparse_quality = score_outputs(records, sparse_runs[: len(records)])
+
+    raw_rows: list[dict[str, Any]] = []
     for index in range(paired):
+        case_index = index % len(records)
         raw_rows.append(
             {
                 "run_index": index,
+                "id": records[case_index].get("id", case_index),
+                "category": records[case_index].get("category"),
                 "dense_reply": dense_runs[index]["reply"],
                 "sparse_reply": sparse_runs[index]["reply"],
                 "exact_token_match": exact[index],
@@ -220,27 +311,39 @@ def main() -> None:
     write_jsonl(raw_path, raw_rows)
 
     layer_stats = {str(index): wrapper.stats.as_dict() for index, wrapper in enumerate(wrappers)}
+    quality_loss = dense_quality["mean_heuristic_score"] - sparse_quality["mean_heuristic_score"]
     payload = {
         "model": args.model,
+        "model_fingerprint": model_fingerprint,
         "routers": str(args.routers),
+        "router_source_model_fingerprint": expected_fingerprint,
         "benchmark": str(args.benchmark),
         "cases": len(prompts),
         "repeats": args.repeats,
+        "sparse_attempted": True,
         "keep_ratio": keep_ratio,
         "dense": dense_summary,
         "sparse_reference": sparse_summary,
+        "dense_quality": dense_quality,
+        "sparse_quality": sparse_quality,
+        "quality_score_loss": quality_loss,
         "decode_speedup": speedup,
         "peak_vram_reduction_fraction": vram_reduction,
         "exact_generation_match_rate": statistics.fmean(exact) if exact else None,
         "layer_router_stats": layer_stats,
+        "passes_quality_target": bool(
+            quality_loss <= 0.01
+            and sparse_quality["critical_failure_count"] <= dense_quality["critical_failure_count"]
+            and sparse_quality["complete_utterance_rate"] >= 0.99
+        ),
         "passes_runtime_target": bool(
             (speedup is not None and speedup >= 1.20)
             or (vram_reduction is not None and vram_reduction >= 0.20)
         ),
         "raw_results": str(raw_path),
         "warning": (
-            "This is the PyTorch gather reference, not the final custom kernel. A slower result is a valid negative result. "
-            "Quality gates remain separate from speed/memory gates."
+            "This is the PyTorch gather reference, not a packed custom kernel. A slower result is valid and should "
+            "lead to dense deployment unless a later optimized kernel proves value."
         ),
     }
     write_json(args.out, payload)

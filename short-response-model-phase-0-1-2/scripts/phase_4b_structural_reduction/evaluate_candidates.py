@@ -1,3 +1,4 @@
+# Purpose: Evaluates every Phase 4B candidate with one benchmark and produces the candidate registry.
 from __future__ import annotations
 
 """Evaluate Phase 4B candidates with the repository's existing evaluator.
