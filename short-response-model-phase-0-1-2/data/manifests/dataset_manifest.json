@@ -1,0 +1,65 @@
+{
+  "dataset_name": "short_response_sft_pilot_v1",
+  "created_date": "2026-07-27",
+  "system_policy_version": "short_response_policy_v1",
+  "source_provenance": "synthetic_curated_template_v1",
+  "human_review_required": true,
+  "counts": {
+    "train": 550,
+    "dev": 110,
+    "sealed": 110
+  },
+  "category_counts": {
+    "train": {
+      "acknowledgment": 50,
+      "celebration": 50,
+      "clarification": 50,
+      "complex_escalation": 50,
+      "context_consistency": 50,
+      "empathy": 50,
+      "factual_compression": 50,
+      "follow_up": 50,
+      "naturalness": 50,
+      "safety_boundary": 50,
+      "uncertainty": 50
+    },
+    "dev": {
+      "acknowledgment": 10,
+      "celebration": 10,
+      "clarification": 10,
+      "complex_escalation": 10,
+      "context_consistency": 10,
+      "empathy": 10,
+      "factual_compression": 10,
+      "follow_up": 10,
+      "naturalness": 10,
+      "safety_boundary": 10,
+      "uncertainty": 10
+    },
+    "sealed": {
+      "acknowledgment": 10,
+      "celebration": 10,
+      "clarification": 10,
+      "complex_escalation": 10,
+      "context_consistency": 10,
+      "empathy": 10,
+      "factual_compression": 10,
+      "follow_up": 10,
+      "naturalness": 10,
+      "safety_boundary": 10,
+      "uncertainty": 10
+    }
+  },
+  "split_rules": {
+    "train_family_indices": "0-9",
+    "dev_family_indices": "10-11",
+    "sealed_family_indices": "12-13",
+    "cross_split_template_family_overlap": false
+  },
+  "intended_use": "Pilot all-layer LoRA/QLoRA SFT followed by controlled layer selection after human audit.",
+  "not_for": [
+    "Production release without human review",
+    "Training on the sealed split",
+    "Replacing ShortChatBench Pilot"
+  ]
+}
