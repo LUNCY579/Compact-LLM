@@ -1,25 +1,17 @@
-# PHASE 4 STOP GATE — MODEL SOUP / BEST INDIVIDUAL
+# PHASE 4 STOP GATE
 
-## Status
+## Automated result
 
-`PENDING HUMAN REVIEW`
+`PASS_PENDING_HUMAN_REVIEW`
 
-## Accepted dense Phase 4 checkpoint
+- Accepted model: `C:\Users\clclc\BusinessProject\Chat-Bubble\short-response-model-phase-0-1-2\artifacts\phase_4_model_soups\accepted_model`
+- Accepted type: `best_individual`
+- Score: `1.000000`
+- Critical failures: `0`
 
-- Decision: best individual / accepted soup / other
-- Model path:
-- Base model and tokenizer hashes:
-- Adapter/soup recipe:
-- Evaluation summary:
-- Critical regressions:
+## Human review
 
-## Phase 4B handoff
-
-- [ ] Checkpoint reloads in a fresh process.
-- [ ] Checkpoint is preserved and will not be overwritten by Phase 4B.
-- [ ] Exact path to pass as `-Model` is recorded above.
-
-## Human decision
+Review the raw accepted evaluation and every accepted/rejected greedy trial.
 
 - Human decision: `PENDING`
 - Reviewer:
