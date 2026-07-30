@@ -43,6 +43,21 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--minimum-improvement", type=float, default=0.0)
     parser.add_argument("--max-category-loss", type=float, default=0.01)
     parser.add_argument("--reuse-existing", action="store_true")
+    parser.add_argument(
+        "--reference-manifest",
+        type=Path,
+        default=ROOT / "artifacts/references/phase_4_reference.json",
+    )
+    parser.add_argument(
+        "--report",
+        type=Path,
+        default=ROOT / "reports/MODEL_SOUP_REPORT.md",
+    )
+    parser.add_argument(
+        "--gate-report",
+        type=Path,
+        default=ROOT / "reports/PHASE_4_STOP_GATE.md",
+    )
     return parser.parse_args()
 
 
@@ -198,7 +213,7 @@ def main() -> None:
         invoke_evaluation(accepted_model, args.benchmark, accepted_eval, args.max_new_tokens)
     accepted_summary = read_json(accepted_eval / "summary.json")
 
-    reference_manifest = ROOT / "artifacts/references/phase_4_reference.json"
+    reference_manifest = args.reference_manifest
     payload = {
         "manifest_version": 1,
         "source_base_model": args.model_id,
@@ -226,7 +241,8 @@ def main() -> None:
     if not iteration_lines:
         iteration_lines.append("| No additional candidate | - | - | Only the best eligible individual was available. |")
 
-    report = ROOT / "reports/MODEL_SOUP_REPORT.md"
+    report = args.report
+    report.parent.mkdir(parents=True, exist_ok=True)
     report.write_text(
         "\n".join(
             [
@@ -255,7 +271,8 @@ def main() -> None:
         encoding="utf-8",
     )
 
-    gate = ROOT / "reports/PHASE_4_STOP_GATE.md"
+    gate = args.gate_report
+    gate.parent.mkdir(parents=True, exist_ok=True)
     gate.write_text(
         "\n".join(
             [

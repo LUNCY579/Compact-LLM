@@ -1,6 +1,8 @@
-# Phase 4B — Structural reduction and reference selection
+# Phase 4B — Post-alignment structural reduction and reference selection
 
-Phase 4B tests permanent MLP pruning, optional grouped-query-attention pruning, and depth reduction after Phase 4 has finalized model weights. It always keeps the untouched dense reference as a candidate.
+Phase 4B tests permanent MLP pruning, optional grouped-query-attention pruning, and depth reduction after Phase 4 has finalized aligned model weights. It always keeps the untouched Phase 4 reference as a candidate.
+
+Phase 2B may already have selected a shallower architecture. In that case Phase 4B is a **revalidation/refinement stage**: it may keep that architecture, prune components further, or reject additional reduction. It must not discard the earlier Phase 2B lineage or compare models from incompatible profile branches.
 
 ## Normal command
 
@@ -8,15 +10,16 @@ Phase 4B tests permanent MLP pruning, optional grouped-query-attention pruning, 
 .\scripts\phase_4b_structural_reduction\run_phase_4b.ps1 -Mode Pilot
 ```
 
-The runner resolves the accepted Phase 4 model and generates long-form calibration data automatically when absent. `-Mode Full` expands the candidate sweep; `-EnableAttentionPruning` enables the riskier architecture-specific head/GQA experiment.
+After review, finalize one candidate with `finalize_reference_selection.py`. This writes `artifacts/references/selected_inference_reference.json`, which Phases 5–8 consume automatically.
 
-After reviewing `PHASE_4B_STOP_GATE.md`, finalize one candidate:
+
+## Named Phase 2B branch
 
 ```powershell
-python .\scripts\phase_4b_structural_reduction\finalize_reference_selection.py `
-  --registry .\artifacts\phase_4b_structural_reduction\candidate_registry.json `
-  --candidate dense_reference `
-  --reason "Best practical checkpoint after review."
+.\scripts\phase_4b_structural_reduction\run_phase_4b.ps1 `
+  -BranchName balanced `
+  -Mode Pilot
 ```
 
-This writes `artifacts/references/selected_inference_reference.json`; Phases 5–8 consume it automatically. See `FILE_RESPONSIBILITIES.md`.
+The branch name automatically resolves the matching Phase 4 stop gate and
+reference manifest and writes an isolated Phase 4B artifact/report tree.

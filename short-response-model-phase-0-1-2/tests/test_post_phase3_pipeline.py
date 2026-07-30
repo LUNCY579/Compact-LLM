@@ -82,6 +82,7 @@ class PostPhase3PipelineTests(unittest.TestCase):
     def test_all_post_phase3_runners_execute_python_steps(self) -> None:
         root = Path(__file__).resolve().parents[1]
         runners = [
+            root / "scripts/phase_2_layer_selection/run_phase_2_structural_reduction.ps1",
             root / "scripts/phase_4_model_soups/run_phase_4.ps1",
             root / "scripts/phase_4b_structural_reduction/run_phase_4b.ps1",
             root / "scripts/phase_5_context_system/run_phase_5.ps1",

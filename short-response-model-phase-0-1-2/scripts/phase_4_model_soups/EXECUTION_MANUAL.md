@@ -1,10 +1,10 @@
 # Phase 4 execution manual
 
-1. Confirm the Phase 3 report contains the exact line `- Human decision: PASS` (backticks around `PASS` are also accepted).
-2. Verify the Phase 2/SFT adapter and accepted Phase 3 DPO adapter paths.
-3. Run `run_phase_4.ps1`; do not launch each ingredient manually unless debugging.
-4. On interruption, rerun with `-ReuseExisting`; the runner reuses summaries/trials only when expected files exist.
-5. Inspect every ingredient and trial `generations.jsonl`, especially safety and low-score categories.
-6. Review `MODEL_SOUP_REPORT.md`. The selected best individual is acceptable when merging does not help.
-7. Change only the human-decision line in `PHASE_4_STOP_GATE.md` after review.
-8. Keep `accepted_model` immutable; Phase 4B resolves it through the manifest.
+1. Choose one Phase 3 profile branch and confirm its exact stop-gate report has a human PASS.
+2. Use `-BranchName balanced` or `-BranchName min_memory`; the runner derives the matching Phase 3 adapter, gate, and isolated output root. Explicit path overrides remain available.
+3. Never mix profile architectures or reuse another branch's gate/report.
+4. Run `run_phase_4.ps1`; additional seed adapters are initialized exactly like the primary branch.
+5. Inspect every ingredient and trial output, especially safety and low-score categories.
+6. Accept the best individual when no soup produces measurable improvement; a saturated 1.0 score does not justify inventing a difference.
+7. Record the human decision before Phase 4B.
+8. Keep the accepted model immutable; Phase 4B resolves it through the branch's reference manifest/output configuration.

@@ -14,6 +14,9 @@ human stop-gate report. It never selects the downstream model automatically.
 #>
 param(
     [string]$Model = "",
+    [string]$Phase4GateReport = ".\reports\PHASE_4_STOP_GATE.md",
+    [string]$Phase4ReferenceManifest = ".\artifacts\references\phase_4_reference.json",
+    [string]$BranchName = "full_quality",
     [string]$Calibration = ".\data\phase_4b_structural_reduction\long_form_calibration.jsonl",
     [string]$CalibrationSource = ".\data\dev\dev.jsonl",
     [string]$Benchmark = ".\data\benchmark\shortchatbench_pilot.jsonl",
@@ -31,6 +34,18 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
 
+# Keep profile branches isolated automatically. The full-quality defaults stay
+# unchanged, while a named branch resolves its matching Phase 4 gate/reference.
+if ($BranchName -ne "full_quality") {
+    $SafeBranchDefaults = $BranchName -replace '[^A-Za-z0-9_.-]', '_'
+    if (-not ($PSBoundParameters.ContainsKey('Phase4GateReport'))) {
+        $Phase4GateReport = ".\reports\PHASE_4_${SafeBranchDefaults}_STOP_GATE.md"
+    }
+    if (-not ($PSBoundParameters.ContainsKey('Phase4ReferenceManifest'))) {
+        $Phase4ReferenceManifest = ".\artifacts\references\phase_4_reference_${SafeBranchDefaults}.json"
+    }
+}
+
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
     Write-Host ""
@@ -40,17 +55,28 @@ function Invoke-PythonStep {
 }
 
 Invoke-PythonStep "[1/8] Checking the Phase 4 human gate..." @(
-    ".\scripts\common\check_human_gate.py", "--phase", "4"
+    ".\scripts\common\check_human_gate.py", "--phase", "4", "--report", $Phase4GateReport
 )
 
 if ([string]::IsNullOrWhiteSpace($Model)) {
-    $Model = python .\scripts\phase_4_model_soups\resolve_phase_4_model.py
+    $Model = python .\scripts\phase_4_model_soups\resolve_phase_4_model.py --manifest $Phase4ReferenceManifest
     if ($LASTEXITCODE -ne 0) { throw "Could not resolve the accepted Phase 4 model." }
 }
 if (-not (Test-Path $Model)) { throw "Phase 4B requires a local full checkpoint directory: $Model" }
 if (-not (Test-Path $Benchmark)) { throw "Missing Phase 4B benchmark: $Benchmark" }
 
-$ArtifactRoot = ".\artifacts\phase_4b_structural_reduction"
+if ($BranchName -eq "full_quality") {
+    $ArtifactRoot = ".\artifacts\phase_4b_structural_reduction"
+    $RecommendationOut = Join-Path $ArtifactRoot "candidate_recommendation.json"
+    $RecommendationReport = ".\reports\PHASE_4B_CANDIDATE_RECOMMENDATION.md"
+    $Phase4BGateReport = ".\reports\PHASE_4B_STOP_GATE.md"
+} else {
+    $SafeBranch = $BranchName -replace '[^A-Za-z0-9_.-]', '_'
+    $ArtifactRoot = ".\artifacts\phase_4b_structural_reduction_$SafeBranch"
+    $RecommendationOut = Join-Path $ArtifactRoot "candidate_recommendation.json"
+    $RecommendationReport = ".\reports\PHASE_4B_CANDIDATE_RECOMMENDATION_$SafeBranch.md"
+    $Phase4BGateReport = ".\reports\PHASE_4B_${SafeBranch}_STOP_GATE.md"
+}
 if ((Test-Path $ArtifactRoot) -and (-not $ReuseExisting)) {
     throw "$ArtifactRoot already exists. Archive/remove it or use -ReuseExisting only after verifying all provenance."
 }
@@ -170,17 +196,24 @@ Invoke-PythonStep "[6/8] Evaluating dense and structural candidates..." $EvalArg
 $Registry = Join-Path $ArtifactRoot "candidate_registry.json"
 Invoke-PythonStep "[7/8] Applying practical deployment floors and ranking candidates..." @(
     ".\scripts\phase_4b_structural_reduction\recommend_reference_candidate.py",
-    "--registry", $Registry
+    "--registry", $Registry,
+    "--out", $RecommendationOut,
+    "--report", $RecommendationReport
 )
 Invoke-PythonStep "[8/8] Creating the Phase 4B human stop-gate report..." @(
-    ".\scripts\phase_4b_structural_reduction\create_phase_4b_gate.py"
+    ".\scripts\phase_4b_structural_reduction\create_phase_4b_gate.py",
+    "--recommendation", $RecommendationOut,
+    "--out", $Phase4BGateReport
 )
 
 Write-Host ""
 Write-Host "Phase 4B execution completed."
+Write-Host "Branch: $BranchName"
+Write-Host "Artifact root: $ArtifactRoot"
+Write-Host "Stop gate: $Phase4BGateReport"
 Write-Host "Candidate registry: $Registry"
-Write-Host "Recommendation: reports\PHASE_4B_CANDIDATE_RECOMMENDATION.md"
-Write-Host "Stop gate: reports\PHASE_4B_STOP_GATE.md"
+Write-Host "Recommendation: $RecommendationReport"
+Write-Host "Stop gate: $Phase4BGateReport"
 Write-Host ""
 Write-Host "After review, set the selected candidate and Human decision to PASS, then run:"
 Write-Host "python .\scripts\phase_4b_structural_reduction\finalize_reference_selection.py --registry $Registry --candidate <name> --reason '<reason>'"

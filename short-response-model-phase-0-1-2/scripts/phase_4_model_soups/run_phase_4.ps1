@@ -21,6 +21,8 @@ param(
     [string]$ModelId = "Qwen/Qwen3-0.6B",
     [string]$SftAdapter = "",
     [string]$PrimaryAdapter = ".\artifacts\phase_3_dpo\adapter",
+    [string]$Phase3GateReport = ".\reports\PHASE_3_STOP_GATE.md",
+    [string]$BranchName = "full_quality",
     [string]$PrimarySummary = "", # Deprecated: Phase 4 re-evaluates the primary adapter with the common evaluator.
     [string]$PreferenceTrain = ".\data\preferences\train.jsonl",
     [string]$PreferenceDev = ".\data\preferences\dev.jsonl",
@@ -40,6 +42,22 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
 
+# Named Phase 2B/3 branches default to their matching adapter, gate, and output
+# tree. Explicit caller values still win. This prevents a balanced/min-memory
+# experiment from overwriting the accepted full-quality Phase 4 artifacts.
+if ($BranchName -ne "full_quality") {
+    $SafeBranchDefaults = $BranchName -replace '[^A-Za-z0-9_.-]', '_'
+    if (-not ($PSBoundParameters.ContainsKey('PrimaryAdapter'))) {
+        $PrimaryAdapter = ".\artifacts\phase_3_dpo_${SafeBranchDefaults}\adapter"
+    }
+    if (-not ($PSBoundParameters.ContainsKey('Phase3GateReport'))) {
+        $Phase3GateReport = ".\reports\PHASE_3_${SafeBranchDefaults}_STOP_GATE.md"
+    }
+    if (-not ($PSBoundParameters.ContainsKey('OutputRoot'))) {
+        $OutputRoot = ".\artifacts\phase_4_model_soups_${SafeBranchDefaults}"
+    }
+}
+
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
     Write-Host ""
@@ -51,7 +69,7 @@ function Invoke-PythonStep {
 }
 
 Invoke-PythonStep "[1/8] Checking the Phase 3 human gate..." @(
-    ".\scripts\common\check_human_gate.py", "--phase", "3"
+    ".\scripts\common\check_human_gate.py", "--phase", "3", "--report", $Phase3GateReport
 )
 
 # Resolve the exact SFT adapter used by Phase 3 when the caller does not
@@ -64,22 +82,34 @@ if ([string]::IsNullOrWhiteSpace($SftAdapter)) {
         throw "-SftAdapter was omitted and the Phase 3 training manifest is missing: $Phase3Manifest"
     }
     $ManifestObject = Get-Content $Phase3Manifest -Raw | ConvertFrom-Json
-    $SftAdapter = [string]$ManifestObject.sft_adapter
-    if ([string]::IsNullOrWhiteSpace($SftAdapter)) {
-        throw "Phase 3 training manifest has no sft_adapter field: $Phase3Manifest"
-    }
+    $SftAdapter = if ($null -eq $ManifestObject.sft_adapter) { "" } else { [string]$ManifestObject.sft_adapter }
+    # A Phase 2B reduced profile is already a materialized SFT checkpoint, so
+    # Phase 3 correctly records no predecessor adapter and attaches a fresh
+    # DPO LoRA. Additional Phase 4 seeds must follow that same initialization.
     if (($PSBoundParameters.ContainsKey('ModelId') -eq $false) -and $ManifestObject.model_id) {
         $ModelId = [string]$ManifestObject.model_id
     }
 }
 
-foreach ($Path in @($SftAdapter, $PrimaryAdapter, $PreferenceTrain, $PreferenceDev, $Benchmark)) {
+$RequiredPaths = @($PrimaryAdapter, $PreferenceTrain, $PreferenceDev, $Benchmark)
+if (-not [string]::IsNullOrWhiteSpace($SftAdapter)) { $RequiredPaths += $SftAdapter }
+foreach ($Path in $RequiredPaths) {
     if (-not (Test-Path $Path)) {
         throw "Required Phase 4 input does not exist: $Path"
     }
 }
 
 New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
+if ($BranchName -eq "full_quality") {
+    $SoupReport = ".\reports\MODEL_SOUP_REPORT.md"
+    $Phase4Gate = ".\reports\PHASE_4_STOP_GATE.md"
+    $ReferenceManifest = ".\artifacts\references\phase_4_reference.json"
+} else {
+    $SafeBranch = $BranchName -replace '[^A-Za-z0-9_.-]', '_'
+    $SoupReport = ".\reports\MODEL_SOUP_REPORT_$SafeBranch.md"
+    $Phase4Gate = ".\reports\PHASE_4_${SafeBranch}_STOP_GATE.md"
+    $ReferenceManifest = ".\artifacts\references\phase_4_reference_$SafeBranch.json"
+}
 $IngredientSpecs = New-Object System.Collections.Generic.List[string]
 $SummarySpecs = New-Object System.Collections.Generic.List[string]
 $AdapterPaths = New-Object System.Collections.Generic.List[string]
@@ -116,16 +146,19 @@ foreach ($Seed in $AdditionalSeeds) {
 
     if (-not $SkipTraining) {
         if (-not ($ReuseExisting -and (Test-Path (Join-Path $Adapter "adapter_config.json")))) {
-            Invoke-PythonStep "[4/8] Training compatible DPO ingredient seed $Seed..." @(
+            $TrainArgs = @(
                 ".\scripts\phase_3_preference_alignment\train_dpo.py",
                 "--model-id", $ModelId,
-                "--sft-adapter", $SftAdapter,
                 "--train-file", $PreferenceTrain,
                 "--dev-file", $PreferenceDev,
                 "--output-dir", $RunRoot,
                 "--max-steps", "$MaxSteps",
                 "--seed", "$Seed"
             )
+            if (-not [string]::IsNullOrWhiteSpace($SftAdapter)) {
+                $TrainArgs += @("--sft-adapter", $SftAdapter)
+            }
+            Invoke-PythonStep "[4/8] Training compatible DPO ingredient seed $Seed..." $TrainArgs
         }
     }
     elseif (-not (Test-Path (Join-Path $Adapter "adapter_config.json"))) {
@@ -162,7 +195,10 @@ $GreedyArgs = @(
     "--output-root", $OutputRoot,
     "--max-new-tokens", "$MaxNewTokens",
     "--minimum-improvement", "$MinimumSoupImprovement",
-    "--max-category-loss", "$MaximumCategoryLoss"
+    "--max-category-loss", "$MaximumCategoryLoss",
+    "--reference-manifest", $ReferenceManifest,
+    "--report", $SoupReport,
+    "--gate-report", $Phase4Gate
 )
 foreach ($Spec in $IngredientSpecs) { $GreedyArgs += @("--ingredient", $Spec) }
 foreach ($Spec in $SummarySpecs) { $GreedyArgs += @("--summary", $Spec) }
@@ -170,14 +206,15 @@ if ($ReuseExisting) { $GreedyArgs += "--reuse-existing" }
 Invoke-PythonStep "[7/8] Building and evaluating greedy FP32 delta soups..." $GreedyArgs
 
 Invoke-PythonStep "[8/8] Resolving the accepted Phase 4 full checkpoint..." @(
-    ".\scripts\phase_4_model_soups\resolve_phase_4_model.py"
+    ".\scripts\phase_4_model_soups\resolve_phase_4_model.py",
+    "--manifest", $ReferenceManifest
 )
 
 Write-Host ""
 Write-Host "Phase 4 execution completed."
-Write-Host "Report: reports\MODEL_SOUP_REPORT.md"
-Write-Host "Stop gate: reports\PHASE_4_STOP_GATE.md"
-Write-Host "Reference manifest: artifacts\references\phase_4_reference.json"
+Write-Host "Report: $SoupReport"
+Write-Host "Stop gate: $Phase4Gate"
+Write-Host "Reference manifest: $ReferenceManifest"
 Write-Host ""
 Write-Host "Review all ingredient and trial replies, then change the stop-gate line to:"
 Write-Host '  - Human decision: `PASS`'

@@ -54,6 +54,9 @@ def main() -> None:
         "C_best_single": evidence(first_existing(["artifacts/phase_2*/**/*single*/**/summary.json"])),
         "D_best_2_4": evidence(first_existing(["artifacts/phase_2*/**/*pair*/**/summary.json", "artifacts/phase_2*/**/*top4*/**/summary.json"])),
         "E_random_control": evidence(first_existing(["artifacts/phase_2*/**/*random*/**/summary.json"])),
+        "phase_2B_progressive_depth": evidence(
+            first_existing(["artifacts/phase_2_progressive_reduction/model_catalog.json"])
+        ),
         "F_selective_dpo": evidence(first_existing(["artifacts/phase_3_dpo_evaluation/summary.json"])),
         "G_phase_4_accepted": evidence(first_existing(["artifacts/phase_4_model_soups/accepted_evaluation/summary.json"])),
         "phase_4B_structural": evidence(first_existing(["artifacts/phase_4b_structural_reduction/candidate_registry.json"])),

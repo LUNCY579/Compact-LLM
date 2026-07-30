@@ -2,8 +2,8 @@ from __future__ import annotations
 
 """Require an explicit human PASS before advancing the pipeline.
 
-The official phases use numeric labels, while structural reduction is inserted
-as Phase 4B. Accepting a string label keeps all runners on one gate checker and
+The official phases use numeric labels, while structural studies are inserted
+as Phases 2B and 4B. Accepting a string label keeps all runners on one gate checker and
 prevents a second, slightly different approval implementation from drifting.
 """
 
@@ -46,9 +46,9 @@ def normalize_phase_label(value: str) -> str:
     """Normalize supported labels such as ``4b`` to the filename form ``4B``."""
 
     phase = value.strip().upper()
-    if not re.fullmatch(r"(?:[0-9]+|4B)", phase):
+    if not re.fullmatch(r"(?:[0-9]+|2B|4B)", phase):
         raise argparse.ArgumentTypeError(
-            "Phase must be a number such as 3, or the inserted structural phase 4B."
+            "Phase must be a number such as 3, or an inserted structural phase such as 2B/4B."
         )
     return phase
 
@@ -59,6 +59,12 @@ def main() -> None:
     )
     parser.add_argument("--phase", type=normalize_phase_label, required=True)
     parser.add_argument(
+        "--report",
+        type=Path,
+        default=None,
+        help="Optional explicit stop-gate report for a named model-profile branch.",
+    )
+    parser.add_argument(
         "--allow-deviation",
         action="store_true",
         help=(
@@ -68,11 +74,11 @@ def main() -> None:
     )
     args = parser.parse_args()
 
-    report = ROOT / "reports" / f"PHASE_{args.phase}_STOP_GATE.md"
+    report = args.report or (ROOT / "reports" / f"PHASE_{args.phase}_STOP_GATE.md")
 
     # Preserve the repository's existing Phase 2 negative-result/deviation
     # workflow. No other phase may bypass its own stop-gate report.
-    if args.phase == "2" and args.allow_deviation and automated_gate_failed(report):
+    if args.phase == "2" and args.allow_deviation and args.report is None and automated_gate_failed(report):
         deviation = ROOT / "reports" / "PHASE_2_DEVIATION_APPROVAL.md"
         if not deviation.exists():
             raise SystemExit(

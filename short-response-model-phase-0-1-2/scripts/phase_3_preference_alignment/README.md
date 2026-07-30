@@ -1,29 +1,36 @@
 # Phase 3 — Preference Alignment
 
-**Blueprint reference:** Pages 15–16. This folder is an executable research scaffold plus a verification manual. Generated metrics are never assumed; artifacts remain outside source control.
+Phase 3 trains DPO from one explicitly selected Phase 2 profile:
 
-## Prerequisite
+- `full_quality` — original all-layer SFT adapter;
+- `balanced` — deepest approved Phase 2B frontier model within the balanced score-loss ceiling;
+- `min_memory` — deepest approved Phase 2B frontier model that still passes the progression rule.
 
-The preceding phase report must contain an explicit human `PASS`. The PowerShell runner checks this before continuing.
+The default legacy command still uses the original all-layer SFT adapter. Reduced profiles require a Phase 2B human PASS and explicit listing in `Approved profiles`.
 
-## Step-by-step execution
+## Commands
 
-1. Confirm Stop Gate 2 human PASS. 2. Build versioned chosen/rejected pairs covering correctness, brevity, naturalness, context, clarification, safety, and variety. 3. Validate pairs. 4. Train DPO from the winning static selective adapter; do not start RL yet. 5. Evaluate with exactly the same ShortChatBench decoding and preserved capability checks. 6. Blind-review SFT versus DPO. 7. Approve only when short-correct preference improves with zero critical regression. Optional RL is allowed only after a documented DPO failure.
+Original branch:
 
-## Verification checklist
+```powershell
+.\scripts\phase_3_preference_alignment\run_phase_3.ps1
+```
 
-- [ ] Inputs, hashes, dataset versions, model/tokenizer versions and seed recorded.
-- [ ] Development/calibration data used only for the intended phase.
-- [ ] Sealed evaluation remains untouched until Phase 8.
-- [ ] Commands and raw outputs preserved under `artifacts/`.
-- [ ] Automated scores reviewed against raw generations/traces.
-- [ ] No theoretical memory, active-parameter, or speed claim is presented as measured.
-- [ ] Stop-gate report has evidence, risks, and a human decision.
+Approved profile branch:
 
-## Files in this folder
+```powershell
+.\scripts\phase_3_preference_alignment\run_phase_3.ps1 -Phase2Profile balanced
+```
 
-Review every Python and PowerShell file before execution. Defaults are conservative examples; paths to winning adapters/models must be supplied from your actual reports. The scripts fail rather than fabricate missing results.
+Profile branches write separate adapter, evaluation, and stop-gate paths. They do not overwrite the existing accepted Phase 3 result.
 
-## Manual approval
+## Initialization behavior
 
-Create or update `reports/PHASE_3_STOP_GATE.md` and use exactly `- Human decision: `PASS`` only after the checklist and blueprint gate are satisfied.
+- `full_quality` continues training the accepted SFT LoRA adapter.
+- A reduced profile is already a materialized recovered SFT checkpoint, so Phase 3 attaches a fresh all-remaining-layer LoRA adapter before DPO.
+
+Phase 4 ingredients remain compatible only when all seeds use the same selected profile, model architecture, adapter rank, target modules, and parameter shapes.
+
+## Gate
+
+DPO must improve concise-correct preference without material factual, context, safety, completion, or category regression. Scripts never record a human PASS automatically.

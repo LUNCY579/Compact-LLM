@@ -1,23 +1,25 @@
 # Verified execution manual — Phase 3
 
-“Verified” here means the procedure contains explicit preflight, evidence, and review steps. It does **not** claim that your hardware run has already passed.
-
 ## Preflight
 
-1. Activate the same virtual environment used by earlier phases.
-2. Confirm the preceding human gate.
-3. Copy the current artifact tree or record its hashes before changing it.
-4. Confirm adequate free disk space and that no second GPU workload is running during latency/VRAM measurement.
-5. Open this phase README and replace placeholder paths with the accepted prior-phase artifacts.
+1. Activate the same environment used by Phase 2.
+2. Choose exactly one profile for a comparable Phase 3/4 branch.
+3. For `balanced` or `min_memory`, confirm `PHASE_2B_STOP_GATE.md` contains `Human decision: PASS` and lists that exact profile under `Approved profiles`.
+4. Confirm the profile's ShortChatBench summary exists; Phase 3 must not compare DPO against the 50-case structural development probe.
+5. Record artifact hashes before training.
 
-## Execution discipline
+## Execution
 
-Run one command at a time. Keep stdout/stderr. Do not overwrite a successful experiment without archiving its manifest. Use fixed seeds for comparisons. When rerunning only evaluation, preserve training adapters and record the evaluator revision.
+```powershell
+.\scripts\phase_3_preference_alignment\run_phase_3.ps1 -Phase2Profile balanced
+```
 
-## Review discipline
+The runner resolves the model, predecessor adapter, and comparison summary from the Phase 2B catalog. Reduced branches attach a fresh LoRA; the full branch continues the accepted SFT adapter.
 
-Inspect lowest-scoring and safety-sensitive cases, not only averages. Compare against the correct control. Record failures and negative findings. A human gate is mandatory; scripts never self-approve.
+## Review
+
+Inspect correctness, naturalness, context, clarification, safety, and the semantic flags. Do not approve a reduced branch merely because Phase 2B saved more weight memory than score. DPO must be reviewed on its own outputs.
 
 ## Recovery
 
-Completed model/adapters are reusable if training code, data, seed, and configuration match. Evaluation can be rerun without retraining. Never mix evaluator versions in one ranking; regenerate all comparable summaries when evaluator logic changes.
+Rerun evaluation without retraining when only the evaluator output is missing. Do not mix profile adapters or use a Phase 3 stop gate from another profile.

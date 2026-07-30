@@ -17,7 +17,7 @@ Install the correct CUDA-enabled PyTorch wheel first, then:
 .\verify_post_phase_3.ps1 -VerifyImports
 ```
 
-The verification command compiles the source, runs the regression suite, checks every Phase 4–8 runner reference, and verifies the installed imports.
+The verification command compiles the source, runs the regression suite, checks the integrated Phase 2B and Phase 4–8 runner references, and verifies the installed imports.
 
 When your organization enforces a stricter PowerShell policy, run the commands in a process opened with the policy approved by your administrator rather than weakening the permanent machine policy.
 
@@ -31,10 +31,22 @@ When your organization enforces a stricter PowerShell policy, run the commands i
 
 Review and approve `reports/PHASE_4_STOP_GATE.md`.
 
+For an approved reduced branch, use the isolated branch command instead:
+
+```powershell
+.\scripts\phase_4_model_soups\run_phase_4.ps1 -BranchName balanced
+```
+
 ## 2. Phase 4B — create and evaluate permanent reduction candidates
 
 ```powershell
 .\scripts\phase_4b_structural_reduction\run_phase_4b.ps1 -Mode Pilot
+```
+
+For the same reduced branch:
+
+```powershell
+.\scripts\phase_4b_structural_reduction\run_phase_4b.ps1 -BranchName balanced -Mode Pilot
 ```
 
 Approve Phase 4B, then finalize the selected candidate using the exact candidate name from `candidate_registry.json`.

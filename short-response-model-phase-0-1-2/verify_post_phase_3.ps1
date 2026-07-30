@@ -4,7 +4,7 @@ Run source-level checks for the Phase 4 through Phase 8 pipeline.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
-runs the regression suite, verifies the six main PowerShell runners and their
+runs the regression suite, verifies the Phase 2B and Phase 4–8 PowerShell runners and their
 referenced local Python scripts, and optionally verifies heavyweight imports.
 #>
 param(
@@ -24,8 +24,9 @@ Write-Host "[2/4] Running regression tests..."
 python -m unittest discover -s tests -v
 if ($LASTEXITCODE -ne 0) { throw "Regression tests failed." }
 
-Write-Host "[3/4] Verifying post-Phase-3 runner references..."
+Write-Host "[3/4] Verifying integrated runner references..."
 $Runners = @(
+    ".\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1",
     ".\scripts\phase_4_model_soups\run_phase_4.ps1",
     ".\scripts\phase_4b_structural_reduction\run_phase_4b.ps1",
     ".\scripts\phase_5_context_system\run_phase_5.ps1",
@@ -56,4 +57,4 @@ if ($VerifyImports) {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Post-Phase-3 source verification: PASS"
+Write-Host "Integrated Phase 2B / post-Phase-3 source verification: PASS"

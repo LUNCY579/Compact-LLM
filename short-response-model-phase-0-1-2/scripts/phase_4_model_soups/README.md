@@ -1,15 +1,24 @@
 # Phase 4 — Real model-soup execution
 
-This phase no longer prints a checklist. `run_phase_4.ps1` trains compatible additional DPO seeds, evaluates them, performs real reconstructed-delta FP32 merges, evaluates each greedy trial, and materializes the accepted standalone Transformers checkpoint.
+`run_phase_4.ps1` trains compatible additional DPO seeds, evaluates them, performs reconstructed-delta FP32 merges, evaluates each greedy trial, and materializes the accepted standalone checkpoint.
 
-## Normal command
+## Full-quality branch
 
 ```powershell
 .\scripts\phase_4_model_soups\run_phase_4.ps1 `
-  -ModelId "Qwen/Qwen3-0.6B" `
   -PrimaryAdapter .\artifacts\phase_3_dpo\adapter
 ```
 
-Use `-ReuseExisting` to resume valid artifacts or `-SkipTraining` only when all requested seed adapters already exist. Outputs include `accepted_model`, raw ingredient/trial evaluations, `MODEL_SOUP_REPORT.md`, `PHASE_4_STOP_GATE.md`, and `artifacts/references/phase_4_reference.json`.
+## Phase 2B profile branch
 
-The best individual is a valid result when no soup improves quality. See `FILE_RESPONSIBILITIES.md`.
+```powershell
+.\scripts\phase_4_model_soups\run_phase_4.ps1 -BranchName balanced
+```
+
+For a named branch, the runner automatically selects the matching Phase 3
+adapter, branch stop gate, and isolated Phase 4 output tree unless you explicitly
+override them.
+
+The runner reads the Phase 3 training manifest. When `sft_adapter` is null, it correctly trains every additional ingredient as a fresh LoRA on the same materialized reduced model. Never mix ingredients from full-quality, balanced, and minimum-memory architectures in one soup.
+
+A best individual with score 1.0 is still a valid Phase 4 outcome. Soup contrast is limited when the benchmark saturates; Phase 2B's NLL and output-deviation evidence addresses structural contrast, while Phase 4 remains responsible for merge stability.

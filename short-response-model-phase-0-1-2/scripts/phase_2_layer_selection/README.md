@@ -1,56 +1,79 @@
-# Phase 2 — Layer Selection Study
+# Phase 2 — Layer Selection and Progressive Structural Reduction
 
-This folder now implements the blueprint's complete **mandatory static Phase 2** workflow and an explicit optional dynamic-selection plan.
+Phase 2 now contains two related but independent studies:
 
-## Before running
+- **Phase 2A — selective-layer tuning:** asks where concise behavior can be learned with fewer trainable layers. The current project result remains a valid negative finding: no one-, two-, or four-layer adapter matched the all-layer reference within the configured gate.
+- **Phase 2B — progressive structural reduction:** asks which complete inference layers can be physically removed, optionally recovery-tuned, and removed in combination while preserving a useful quality/weight-memory tradeoff.
 
-1. Phase 1 base and all-layer adapter evaluations must exist.
-2. `reports/PHASE_1_STOP_GATE.md` must contain `Human decision: PASS`.
-3. Do not include or inspect the sealed split during Phase 2 tuning.
+Training importance and inference-removal tolerance are not the same measurement. A failed Phase 2A gate does not imply that every layer is equally irreplaceable, and a successful Phase 2B deletion does not retroactively make selective tuning successful.
 
-## Main command
+## Commands
+
+Run both studies in order:
 
 ```powershell
-.\scripts\phase_2_layer_selection\run_phase_2.ps1
+.\scripts\phase_2_layer_selection\run_phase_2.ps1 -Mode All -Resume
 ```
 
-## What the runner does
+Run only the new structural study after the existing Phase 2A result:
 
-1. Runs a coarse early/middle/late single-layer scan.
-2. Refines neighboring layers around the strongest coarse regions.
-3. Computes the project contribution metric against the Phase 1 base/all-layer references.
-4. Trains adjacent/complementary pair candidates.
-5. Trains TOP4, RANDOM4, and BOTTOM4 controls.
-6. Repeats the strongest candidate with seeds 11, 23, and 37.
-7. Records quality, category scores, semantic hard-failure flags, training VRAM, runtime, and target-module count.
-8. Builds `reports/PHASE_2_HUMAN_REVIEW_PACKET.md` with prioritized risky and low-scoring outputs.
-9. Produces `reports/PHASE_2_STOP_GATE.md`; candidates with critical semantic failures are ineligible.
-10. Creates an optional IST-style dynamic-selection experiment plan.
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2.ps1 `
+  -Mode StructuralOnly `
+  -MaxDrops 6 `
+  -RecoveryTopK 3 `
+  -RecoverySteps 50 `
+  -Resume
+```
 
-## Files
+Direct Phase 2B command:
 
-- `run_static_layer_study.py` — complete coarse-to-fine scan, static controls, contribution metric, and repeated seeds.
-- `phase2_common.py` — shared subprocess, result, and metric helpers.
-- `collect_importance_signals.py` — records direct single-layer scores, contribution, VRAM, and runtime; explicitly labels unmeasured signals.
-- `check_phase_2_gate.py` — enforces quality, category, completion, length, resource, semantic-safety, and seed-stability checks.
-- `build_phase_2_human_review.py` — creates a focused human-review packet from finalist and control outputs.
-- `plan_dynamic_selection.py` — creates the optional dynamic IST-style comparison contract without making unsupported memory claims.
-- `run_phase_2.ps1` — ordered Windows runner.
-- `scan_layers.py` and `run_layer_scan.ps1` — retained legacy coarse-scan entry points; do not use them as the complete Phase 2 workflow.
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -MaxDrops 6 `
+  -RecoveryTopK 3 `
+  -RecoverySteps 50 `
+  -QLoRA `
+  -GradientCheckpointing
+```
 
-## Stop Gate 2
+Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion branch. The default recovers only the strongest three per stage because training every branch at every progressive step is extremely expensive.
 
-A one-, two-, or four-layer configuration must match the all-layer reference within the configured quality tolerance, pass category floors, and materially reduce training memory or time. The strongest configuration is repeated across at least three seeds before human approval.
+## Phase 2B procedure
 
-Dynamic selection is **not required** to pass Stop Gate 2. The blueprint says static first and dynamic later. A dynamic experiment is valid only after a stable ranking exists and must report optimizer-state memory separately.
+1. Materialize the accepted Phase 1 all-layer SFT adapter as an immutable full checkpoint.
+2. Build a deterministic, category-balanced 50-case probe from development data; sealed data is never used.
+3. Delete each current layer separately and physically save a temporary candidate.
+4. Generate and retain all 50 replies, common evaluator scores, category metrics, semantic flags, teacher-forced target NLL, output-deviation reports, latency, and model footprint.
+5. Recovery-train the strongest raw candidates with short all-remaining-layer LoRA/QLoRA SFT.
+6. Select the least damaging valid deletion and materialize it as the next preserved frontier checkpoint.
+7. Repeat the every-current-layer deletion study from that checkpoint.
+8. Stop when no next deletion keeps weight-memory reduction greater than relative heuristic-score loss while passing hard floors.
+9. Publish three retained profiles: `full_quality`, `balanced`, and `min_memory`.
 
+The 50-case probe detects trends and exposes score saturation; it is not a release benchmark. Retained profiles are separately re-evaluated on ShortChatBench Pilot for Phase 3 handoff.
 
-## Semantic evaluation update
+## Retention behavior
 
-`phase_1_dense_sft/evaluate_model.py` now preserves the original pilot heuristic and adds a separate conservative semantic audit. It flags generated placeholders, failed required clarifications, unsupported certainty, emotional contradiction, canned assistant phrasing, and narrowly defined critical gas/medication safety failures. These flags are recorded per case and aggregated into every Phase 2 result.
+Every accepted frontier checkpoint is preserved. Every rejected candidate's generated outputs, metrics, manifests, and recovery adapter are preserved. Large rejected full checkpoints are deleted by default because they can consume hundreds of gigabytes across a progressive sweep and can be regenerated from the preserved parent plus the recorded layer ID. Use `-KeepCandidateCheckpoints` only when sufficient disk space is available.
 
-The heuristic remains useful for broad scanning, but a candidate with a critical semantic failure cannot pass Stop Gate 2.
+## Main files
 
-## Module-group controls
+- `run_static_layer_study.py` — Phase 2A coarse-to-fine selected-layer tuning study.
+- `build_phase_2_human_review.py` — repairs the existing runner reference and builds the Phase 2A candidate/control review packet from raw outputs.
+- `progressive_reduction.py` — Phase 2B every-layer scan, recovery, progressive deletion, frontier selection, catalog, and reports.
+- `create_depth_candidate.py` — physically removes one current decoder block while preserving original layer lineage.
+- `build_structural_probe.py` — deterministic development-only 50-case probe.
+- `evaluate_teacher_forcing.py` — continuous target-NLL contrast when generated heuristic scores saturate.
+- `compare_outputs.py` — side-by-side reply changes, similarity, score deltas, and new semantic flags.
+- `resolve_phase_2_profile.py` — safely hands an approved profile to Phase 3.
+- `run_phase_2_structural_reduction.ps1` — Windows orchestration for Phase 2B.
+- `STRUCTURAL_REDUCTION_MANUAL.md` — execution and review details.
+- `FILE_RESPONSIBILITIES.md` — responsibility of every new file.
 
-The static study accepts `--target-module-group attention`, `mlp`, or `both`. Run separate output directories for each group so cached variant files are never mixed. Keep the all-layer reference consistent with the module group being claimed, or label the comparison as exploratory rather than a formal contribution ratio.
+## Gates
+
+- `reports/PHASE_2_STOP_GATE.md` remains the Phase 2A selective-tuning result.
+- `reports/PHASE_2B_STOP_GATE.md` governs reduced profile approval.
+- `full_quality` remains available even when Phase 2B is rejected.
+- `balanced` or `min_memory` may enter Phase 3 only after the Phase 2B report contains `Human decision: PASS` and explicitly lists the approved profile names.
