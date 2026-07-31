@@ -74,6 +74,11 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--eval-steps", type=int, default=100)
     p.add_argument("--seed", type=int, default=11)
     p.add_argument("--gradient-checkpointing", action="store_true")
+    p.add_argument(
+        "--run-label",
+        default="",
+        help="Optional provenance label recorded in the training manifest.",
+    )
     return p.parse_args()
 
 
@@ -354,6 +359,14 @@ def main() -> None:
     trainer.save_model(str(adapter_dir))
     tokenizer.save_pretrained(str(adapter_dir))
 
+    trainable_parameter_count = sum(
+        parameter.numel() for parameter in model.parameters() if parameter.requires_grad
+    )
+    total_parameter_count = sum(parameter.numel() for parameter in model.parameters())
+    adapter_bytes = sum(
+        child.stat().st_size for child in adapter_dir.rglob("*") if child.is_file()
+    )
+
     # Persist the model, data paths, selected layers, targets, seed, metrics,
     # and peak memory needed to reproduce and compare this run.
     manifest = {
@@ -365,6 +378,24 @@ def main() -> None:
         "target_module_group": args.target_module_group,
         "target_module_count": len(targets),
         "target_modules": targets,
+        "trainable_parameter_count": int(trainable_parameter_count),
+        "total_parameter_count_loaded": int(total_parameter_count),
+        "trainable_parameter_fraction": (
+            float(trainable_parameter_count) / max(float(total_parameter_count), 1.0)
+        ),
+        "adapter_serialized_bytes": int(adapter_bytes),
+        "lora_rank": args.lora_rank,
+        "lora_alpha": args.lora_alpha,
+        "lora_dropout": args.lora_dropout,
+        "learning_rate": args.learning_rate,
+        "max_steps": args.max_steps,
+        "epochs": args.epochs,
+        "per_device_batch_size": args.per_device_batch_size,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "effective_batch_size": args.per_device_batch_size * args.gradient_accumulation_steps,
+        "max_sequence_length": args.max_sequence_length,
+        "gradient_checkpointing": args.gradient_checkpointing,
+        "run_label": args.run_label,
         "seed": args.seed,
         "train_examples": len(train_data),
         "dev_examples": len(eval_data) if eval_data is not None else 0,

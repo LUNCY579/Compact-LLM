@@ -2,7 +2,7 @@
 
 | File | Responsibility | Must not claim/do |
 |---|---|---|
-| `run_phase_2.ps1` | Select Phase 2A, Phase 2B, or both. | Merge their gates into one ambiguous result. |
+| `run_phase_2.ps1` | Select Phase 2A, Phase 2B, or Phase 2C targeted-recovery execution. | Merge their gates into one ambiguous result. |
 | `run_phase_2_structural_reduction.ps1` | Validate inputs and launch the complete Phase 2B pipeline. | Auto-approve a reduced profile. |
 | `progressive_reduction.py` | Test every current layer, run focused recovery, build the progressive frontier, preserve profiles and evidence. | Use sealed data or treat a positive ratio as release approval. |
 | `create_depth_candidate.py` | Physically delete one block, reindex cache IDs, preserve original layer lineage, verify reload. | Modify the parent checkpoint in place. |
@@ -20,3 +20,6 @@
 - `scripts/common/depth_reduction.py` owns physical decoder removal, original-layer lineage, and cache-index reindexing shared with Phase 4B.
 - `scripts/common/materialize_model.py` merges an optional adapter into a reloadable full checkpoint without modifying its source.
 - `scripts/common/measure_model_footprint.py` measures parameter/tensor/serialized weight size and explicitly excludes KV cache and temporary runtime buffers.
+
+
+Phase 2C has a separate responsibility table at `scripts/phase_2c_targeted_recovery/FILE_RESPONSIBILITIES.md`.

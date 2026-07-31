@@ -7,7 +7,8 @@ Verified the source package for Phases 4, 4B, 5, 6, 7, and 8. The verification d
 ## Checks completed
 
 - Python compilation: `python -m compileall -q scripts tests` — **PASS**.
-- Unit tests: `python -m unittest discover -s tests -v` — **15 passed, 0 failed**.
+- Response-control contract: `verify_response_control.py` deterministic boundary/finalization checks — **PASS** in the v1.1 update.
+- Unit tests: `python -m unittest discover -s tests -v` — **41 passed, 0 failed**.
 - Runner existence: exactly one main runner exists for Phase 4, 4B, 5, 6, 7, and 8 — **PASS**.
 - Runner behavior regression test: every main runner invokes real Python executables rather than only printing instructions — **PASS**.
 - Referenced local Python paths in all six PowerShell runners exist — **PASS**.

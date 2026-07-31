@@ -27,6 +27,12 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import RoutedSparseGatedMLP, TinyBlockRouter
+from scripts.common.response_control import (
+    RESPONSE_CONTROL_MODES,
+    finalize_response,
+    first_sentence_boundary,
+    validate_response_control_mode,
+)
 from scripts.phase_1_dense_sft.evaluate_model import normalize_benchmark_record, score_case, semantic_audit
 
 
@@ -39,6 +45,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out", type=Path, default=ROOT / "artifacts/phase_7_router/runtime_comparison.json")
     parser.add_argument("--max-cases", type=int, default=50)
     parser.add_argument("--max-new-tokens", type=int, default=24)
+    parser.add_argument("--response-control", choices=RESPONSE_CONTROL_MODES, default="one_sentence")
+    parser.add_argument("--min-new-tokens-before-boundary", type=int, default=1)
     parser.add_argument("--warmup-cases", type=int, default=3)
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--keep-ratio", type=float, default=None)
@@ -70,7 +78,15 @@ def prompt_from_row(tokenizer: Any, row: dict[str, Any]) -> str:
     return prompt
 
 
-def greedy_timed(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -> dict[str, Any]:
+def greedy_timed(
+    model: Any,
+    tokenizer: Any,
+    prompt: str,
+    max_new_tokens: int,
+    response_control: str,
+    min_new_tokens_before_boundary: int,
+) -> dict[str, Any]:
+    response_control = validate_response_control_mode(response_control)
     device = first_parameter_device(model)
     encoded = tokenizer(prompt, return_tensors="pt").to(device)
     input_ids = encoded["input_ids"]
@@ -88,10 +104,22 @@ def greedy_timed(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -
     generated = [int(next_token.item())]
     past = output.past_key_values
     decode_times: list[float] = []
+    stop_reason = "unknown"
 
-    for _ in range(max_new_tokens - 1):
+    while True:
         if tokenizer.eos_token_id is not None and generated[-1] == tokenizer.eos_token_id:
+            stop_reason = "eos"
             break
+        if response_control == "one_sentence" and len(generated) >= max(1, min_new_tokens_before_boundary):
+            current_text = tokenizer.decode(generated, skip_special_tokens=True)
+            decision = first_sentence_boundary(current_text)
+            if decision.found:
+                stop_reason = decision.reason or "validated_sentence_boundary"
+                break
+        if len(generated) >= max_new_tokens:
+            stop_reason = "max_new_tokens"
+            break
+
         if attention_mask is not None:
             attention_mask = torch.cat(
                 [
@@ -115,12 +143,23 @@ def greedy_timed(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -
         generated.append(int(next_token.item()))
         past = output.past_key_values
 
+    raw_reply = tokenizer.decode(generated, skip_special_tokens=True).strip()
+    finalized = finalize_response(raw_reply, response_control)
     peak_vram = torch.cuda.max_memory_allocated() / 1024**3 if torch.cuda.is_available() else 0.0
     return {
         "prefill_ms": prefill_ms,
         "decode_ms": decode_times,
         "generated_ids": generated,
-        "reply": tokenizer.decode(generated, skip_special_tokens=True).strip(),
+        "generated_tokens": len(generated),
+        "visible_generated_tokens": len(
+            tokenizer(finalized.text, add_special_tokens=False)["input_ids"]
+        ),
+        "raw_reply": finalized.raw_text,
+        "reply": finalized.text,
+        "response_control_trimmed": finalized.trimmed,
+        "sentence_count": finalized.sentence_count,
+        "one_sentence_violation": finalized.sentence_count > 1,
+        "stop_reason": stop_reason,
         "peak_vram_gb": peak_vram,
     }
 
@@ -131,7 +170,18 @@ def summarize_runtime(runs: list[dict[str, Any]]) -> dict[str, Any]:
         "median_prefill_ms": statistics.median(run["prefill_ms"] for run in runs),
         "median_decode_ms_per_token": statistics.median(decode) if decode else None,
         "median_total_decode_ms": statistics.median(sum(run["decode_ms"]) for run in runs),
-        "median_generated_tokens": statistics.median(len(run["generated_ids"]) for run in runs),
+        "median_generated_tokens": statistics.median(run["generated_tokens"] for run in runs),
+        "median_visible_generated_tokens": statistics.median(run["visible_generated_tokens"] for run in runs),
+        "one_sentence_violation_rate": statistics.fmean(
+            1.0 if run["one_sentence_violation"] else 0.0 for run in runs
+        ),
+        "response_control_trim_rate": statistics.fmean(
+            1.0 if run["response_control_trimmed"] else 0.0 for run in runs
+        ),
+        "stop_reason_counts": {
+            reason: sum(1 for run in runs if run["stop_reason"] == reason)
+            for reason in sorted({run["stop_reason"] for run in runs})
+        },
         "peak_vram_gb": max(run["peak_vram_gb"] for run in runs),
     }
 
@@ -139,7 +189,7 @@ def summarize_runtime(runs: list[dict[str, Any]]) -> dict[str, Any]:
 def score_outputs(records: list[dict[str, Any]], runs: list[dict[str, Any]]) -> dict[str, Any]:
     scored: list[dict[str, Any]] = []
     for record, run in zip(records, runs):
-        score = score_case(record, run["reply"], len(run["generated_ids"]))
+        score = score_case(record, run["reply"], int(run["visible_generated_tokens"]))
         audit = semantic_audit(record, run["reply"])
         scored.append({**score, **audit})
     return {
@@ -173,12 +223,18 @@ def main() -> None:
         raise ValueError("Benchmark produced no prompts.")
 
     for prompt in prompts[: args.warmup_cases]:
-        greedy_timed(model, tokenizer, prompt, min(4, args.max_new_tokens))
+        greedy_timed(
+            model, tokenizer, prompt, min(4, args.max_new_tokens),
+            args.response_control, args.min_new_tokens_before_boundary
+        )
 
     dense_runs: list[dict[str, Any]] = []
     for _ in range(args.repeats):
         for prompt in prompts:
-            dense_runs.append(greedy_timed(model, tokenizer, prompt, args.max_new_tokens))
+            dense_runs.append(greedy_timed(
+                model, tokenizer, prompt, args.max_new_tokens,
+                args.response_control, args.min_new_tokens_before_boundary
+            ))
     dense_summary = summarize_runtime(dense_runs)
     dense_quality = score_outputs(records, dense_runs[: len(records)])
 
@@ -195,6 +251,8 @@ def main() -> None:
                     "id": records[index % len(records)].get("id", index % len(records)),
                     "category": records[index % len(records)].get("category"),
                     "dense_reply": run["reply"],
+                    "dense_raw_reply": run["raw_reply"],
+                    "dense_stop_reason": run["stop_reason"],
                     "dense_prefill_ms": run["prefill_ms"],
                     "dense_decode_ms": run["decode_ms"],
                 }
@@ -209,6 +267,8 @@ def main() -> None:
                 "benchmark": str(args.benchmark),
                 "cases": len(prompts),
                 "repeats": args.repeats,
+                "response_control_mode": args.response_control,
+                "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,
                 "sparse_attempted": False,
                 "dense": dense_summary,
                 "dense_quality": dense_quality,
@@ -219,6 +279,10 @@ def main() -> None:
                 "peak_vram_reduction_fraction": None,
                 "exact_generation_match_rate": None,
                 "layer_router_stats": {},
+                "passes_response_control_target": bool(
+                    args.response_control == "one_sentence"
+                    and dense_summary["one_sentence_violation_rate"] == 0.0
+                ),
                 "passes_quality_target": False,
                 "passes_runtime_target": False,
                 "raw_results": str(raw_path),
@@ -269,14 +333,20 @@ def main() -> None:
         wrappers.append(wrapper)
 
     for prompt in prompts[: args.warmup_cases]:
-        greedy_timed(model, tokenizer, prompt, min(4, args.max_new_tokens))
+        greedy_timed(
+            model, tokenizer, prompt, min(4, args.max_new_tokens),
+            args.response_control, args.min_new_tokens_before_boundary
+        )
     for wrapper in wrappers:
         wrapper.stats = type(wrapper.stats)()
 
     sparse_runs: list[dict[str, Any]] = []
     for _ in range(args.repeats):
         for prompt in prompts:
-            sparse_runs.append(greedy_timed(model, tokenizer, prompt, args.max_new_tokens))
+            sparse_runs.append(greedy_timed(
+                model, tokenizer, prompt, args.max_new_tokens,
+                args.response_control, args.min_new_tokens_before_boundary
+            ))
 
     sparse_summary = summarize_runtime(sparse_runs)
     dense_decode = dense_summary["median_decode_ms_per_token"]
@@ -300,6 +370,10 @@ def main() -> None:
                 "category": records[case_index].get("category"),
                 "dense_reply": dense_runs[index]["reply"],
                 "sparse_reply": sparse_runs[index]["reply"],
+                "dense_raw_reply": dense_runs[index]["raw_reply"],
+                "sparse_raw_reply": sparse_runs[index]["raw_reply"],
+                "dense_stop_reason": dense_runs[index]["stop_reason"],
+                "sparse_stop_reason": sparse_runs[index]["stop_reason"],
                 "exact_token_match": exact[index],
                 "dense_prefill_ms": dense_runs[index]["prefill_ms"],
                 "sparse_prefill_ms": sparse_runs[index]["prefill_ms"],
@@ -320,6 +394,8 @@ def main() -> None:
         "benchmark": str(args.benchmark),
         "cases": len(prompts),
         "repeats": args.repeats,
+        "response_control_mode": args.response_control,
+        "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,
         "sparse_attempted": True,
         "keep_ratio": keep_ratio,
         "dense": dense_summary,
@@ -331,10 +407,16 @@ def main() -> None:
         "peak_vram_reduction_fraction": vram_reduction,
         "exact_generation_match_rate": statistics.fmean(exact) if exact else None,
         "layer_router_stats": layer_stats,
+        "passes_response_control_target": bool(
+            args.response_control == "one_sentence"
+            and dense_summary["one_sentence_violation_rate"] == 0.0
+            and sparse_summary["one_sentence_violation_rate"] == 0.0
+        ),
         "passes_quality_target": bool(
             quality_loss <= 0.01
             and sparse_quality["critical_failure_count"] <= dense_quality["critical_failure_count"]
             and sparse_quality["complete_utterance_rate"] >= 0.99
+            and sparse_summary["one_sentence_violation_rate"] == 0.0
         ),
         "passes_runtime_target": bool(
             (speedup is not None and speedup >= 1.20)

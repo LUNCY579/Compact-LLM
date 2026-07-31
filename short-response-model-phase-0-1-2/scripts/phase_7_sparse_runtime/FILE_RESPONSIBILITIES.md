@@ -5,8 +5,10 @@ The PowerShell runner is the normal entry point. Python executables may be run i
 | File | Responsibility | Must not be treated as |
 |---|---|---|
 | `run_phase_7.ps1` | Resolves the Phase 6 decision, trains/benchmarks routers when viable, or measures dense-only runtime, then writes deployment evidence. | A requirement to use sparsity. |
+| `verify_response_control.py` | Runs deterministic boundary-contract cases before runtime benchmarking. | Semantic correctness evaluation. |
+| `RESPONSE_CONTROL_CONTRACT.md` | Defines EOS, validated-boundary, hard-cap, telemetry, and evidence boundaries. | A whole-layer early-exit implementation. |
 | `train_router.py` | Trains one validation-calibrated router per decoder layer and selects confidence thresholds for dense fallback. | A production kernel. |
-| `benchmark_runtime.py` | Measures identical dense/routed prompts or dense-only baseline, including latency, VRAM, output quality, active ratios, and fallbacks. | A theoretical FLOP estimator. |
+| `benchmark_runtime.py` | Measures identical dense/routed prompts or dense-only baseline, including latency, VRAM, output quality, visible/actual token counts, stop reasons, active ratios, and fallbacks. | A theoretical FLOP estimator. |
 | `resolve_phase_6_ratio.py` | Returns the approved active ratio or `NONE` for dense-only execution. | A gate checker. |
 | `check_phase_7_gate.py` | Recommends `DENSE_RUNTIME` or `SPARSE_FEATURE_FLAG` from measured results and writes the pending gate. | Human approval. |
 | `KERNEL_CONTRACT.md` | Defines correctness, layout, fallback, telemetry, and benchmarking requirements for a later packed GPU kernel. | An implemented Triton/CUDA kernel. |

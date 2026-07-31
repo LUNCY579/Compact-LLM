@@ -2,11 +2,23 @@ from __future__ import annotations
 
 import argparse
 import json
+import sys
 import time
 from pathlib import Path
 
 import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.common.response_control import (
+    RESPONSE_CONTROL_MODES,
+    build_stopping_criteria,
+    finalize_response,
+    infer_stop_reason,
+)
 
 # Default to the smallest Qwen3 checkpoint used for the first local
 # feasibility test. CLI arguments can override it.
@@ -27,6 +39,10 @@ def parse_args() -> argparse.Namespace:
         ),
     )
     parser.add_argument("--max-new-tokens", type=int, default=24)
+    parser.add_argument(
+        "--response-control", choices=RESPONSE_CONTROL_MODES, default="one_sentence"
+    )
+    parser.add_argument("--min-new-tokens-before-boundary", type=int, default=1)
     parser.add_argument("--output-json", type=Path, default=None)
     return parser.parse_args()
 
@@ -75,31 +91,55 @@ def main() -> None:
     # Convert text to tensors and move them to the model's device.
     inputs = tokenizer(rendered, return_tensors="pt").to(model.device)
 
+    stopping_criteria, boundary_criterion = build_stopping_criteria(
+        tokenizer,
+        int(inputs.input_ids.shape[1]),
+        args.response_control,
+        args.min_new_tokens_before_boundary,
+    )
+    generation_kwargs = {
+        "max_new_tokens": args.max_new_tokens,
+        "do_sample": False,
+        "pad_token_id": tokenizer.eos_token_id,
+        "eos_token_id": tokenizer.eos_token_id,
+    }
+    if stopping_criteria is not None:
+        generation_kwargs["stopping_criteria"] = stopping_criteria
+
     sync_cuda()
     started = time.perf_counter()
     # Inference mode avoids gradient tracking, reducing memory and overhead.
     with torch.inference_mode():
-        generated = model.generate(
-            **inputs,
-            max_new_tokens=args.max_new_tokens,
-            do_sample=False,
-            pad_token_id=tokenizer.eos_token_id,
-        )
+        generated = model.generate(**inputs, **generation_kwargs)
     sync_cuda()
     elapsed = time.perf_counter() - started
 
     # model.generate returns prompt + completion. Slice away the prompt so
     # decoding and token counts describe only the newly generated reply.
     new_tokens = generated[0, inputs.input_ids.shape[1] :]
-    reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    raw_reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+    finalized = finalize_response(raw_reply, args.response_control)
+    reply = finalized.text
+    stop_reason = infer_stop_reason(
+        new_tokens.tolist(),
+        eos_token_id=tokenizer.eos_token_id,
+        max_new_tokens=args.max_new_tokens,
+        criterion=boundary_criterion,
+    )
     # Capture enough metadata to confirm local execution and compare later
     # smoke tests.
     result = {
         "model_id": args.model_id,
         "prompt": args.prompt,
         "reply": reply,
+        "raw_reply": finalized.raw_text,
+        "response_control_mode": args.response_control,
+        "response_control_trimmed": finalized.trimmed,
+        "stop_reason": stop_reason,
+        "sentence_count": finalized.sentence_count,
         "prompt_tokens": int(inputs.input_ids.shape[1]),
         "generated_tokens": int(new_tokens.shape[0]),
+        "visible_generated_tokens": len(tokenizer(reply, add_special_tokens=False)["input_ids"]),
         "generation_seconds": elapsed,
         "peak_vram_gb": round(torch.cuda.max_memory_allocated() / 1024**3, 3),
         "cuda_device": torch.cuda.get_device_name(0),
@@ -108,6 +148,7 @@ def main() -> None:
     print(f"Reply: {reply}")
     print(f"Prompt tokens: {result['prompt_tokens']}")
     print(f"Generated tokens: {result['generated_tokens']}")
+    print(f"Stop reason: {result['stop_reason']}")
     print(f"Generation time: {elapsed:.3f} seconds")
     print(f"Peak allocated VRAM: {result['peak_vram_gb']} GB")
 

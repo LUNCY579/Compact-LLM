@@ -5,4 +5,5 @@ Set-Location $ProjectRoot
 python .\scripts\phase_1_dense_sft\evaluate_model.py `
   --model-id Qwen/Qwen3-0.6B `
   --benchmark .\data\benchmark\shortchatbench_pilot.jsonl `
+  --response-control eos_only `
   --output-dir .\artifacts\baseline_evaluation

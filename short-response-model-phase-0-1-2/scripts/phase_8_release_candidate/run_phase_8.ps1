@@ -15,6 +15,7 @@ param(
     [string]$SealedData = ".\data\sealed\sealed.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_8_release",
     [int]$MaxNewTokens = 32,
+    [ValidateSet("one_sentence")][string]$ResponseControl = "one_sentence",
     [ValidateSet("manifest", "copy")][string]$PackageMode = "manifest",
     [switch]$ReuseExisting
 )
@@ -51,7 +52,8 @@ if (-not ($ReuseExisting -and (Test-Path $SealedSummary))) {
         "--model-id", $ModelDir,
         "--benchmark", $SealedData,
         "--output-dir", $SealedEval,
-        "--max-new-tokens", "$MaxNewTokens"
+        "--max-new-tokens", "$MaxNewTokens",
+        "--response-control", $ResponseControl
     )
 }
 
@@ -73,6 +75,8 @@ Invoke-PythonStep "[5/6] Creating the release-candidate package..." @(
     "--model-dir", $ModelDir,
     "--audit", ".\reports\RELEASE_CANDIDATE_AUDIT.md",
     "--reference-manifest", ".\artifacts\references\selected_inference_reference.json",
+    "--response-policy", ".\configs\response_control.json",
+    "--response-contract", ".\scripts\phase_7_sparse_runtime\RESPONSE_CONTROL_CONTRACT.md",
     "--output-dir", (Join-Path $OutputRoot "package"),
     "--mode", $PackageMode
 )

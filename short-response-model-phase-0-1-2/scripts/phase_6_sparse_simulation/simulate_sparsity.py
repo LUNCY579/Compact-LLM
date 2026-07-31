@@ -22,6 +22,12 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import OracleMaskedGatedMLP
+from scripts.common.response_control import (
+    RESPONSE_CONTROL_MODES,
+    build_stopping_criteria,
+    finalize_response,
+    infer_stop_reason,
+)
 
 
 def parse_args() -> argparse.Namespace:
@@ -33,6 +39,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--benchmark", type=Path, default=None, help="Development benchmark only; sealed data is forbidden.")
     parser.add_argument("--max-cases", type=int, default=100)
     parser.add_argument("--max-new-tokens", type=int, default=32)
+    parser.add_argument("--response-control", choices=RESPONSE_CONTROL_MODES, default="one_sentence")
+    parser.add_argument("--min-new-tokens-before-boundary", type=int, default=1)
     return parser.parse_args()
 
 
@@ -56,19 +64,49 @@ def prompt_from_row(tokenizer: Any, row: dict[str, Any]) -> str:
     return text
 
 
-def generation(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -> tuple[str, list[int]]:
+def generation(
+    model: Any,
+    tokenizer: Any,
+    prompt: str,
+    max_new_tokens: int,
+    response_control: str,
+    min_new_tokens_before_boundary: int,
+) -> dict[str, Any]:
     device = first_parameter_device(model)
     encoded = tokenizer(prompt, return_tensors="pt").to(device)
+    stopping_criteria, boundary_criterion = build_stopping_criteria(
+        tokenizer,
+        int(encoded["input_ids"].shape[1]),
+        response_control,
+        min_new_tokens_before_boundary,
+    )
+    kwargs: dict[str, Any] = {
+        "max_new_tokens": max_new_tokens,
+        "do_sample": False,
+        "pad_token_id": tokenizer.pad_token_id,
+        "eos_token_id": tokenizer.eos_token_id,
+    }
+    if stopping_criteria is not None:
+        kwargs["stopping_criteria"] = stopping_criteria
     with torch.inference_mode():
-        output = model.generate(
-            **encoded,
-            max_new_tokens=max_new_tokens,
-            do_sample=False,
-            pad_token_id=tokenizer.pad_token_id,
-            eos_token_id=tokenizer.eos_token_id,
-        )
+        output = model.generate(**encoded, **kwargs)
     continuation = output[0, encoded["input_ids"].shape[1] :].tolist()
-    return tokenizer.decode(continuation, skip_special_tokens=True).strip(), continuation
+    raw_reply = tokenizer.decode(continuation, skip_special_tokens=True).strip()
+    finalized = finalize_response(raw_reply, response_control)
+    return {
+        "reply": finalized.text,
+        "raw_reply": finalized.raw_text,
+        "ids": continuation,
+        "visible_token_count": len(tokenizer(finalized.text, add_special_tokens=False)["input_ids"]),
+        "stop_reason": infer_stop_reason(
+            continuation,
+            eos_token_id=tokenizer.eos_token_id,
+            max_new_tokens=max_new_tokens,
+            criterion=boundary_criterion,
+        ),
+        "trimmed": finalized.trimmed,
+        "sentence_count": finalized.sentence_count,
+    }
 
 
 def common_prefix_fraction(left: list[int], right: list[int]) -> float:
@@ -139,13 +177,31 @@ def main() -> None:
         model.eval()
         rows = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)[: args.max_cases]]
         prompts = [prompt_from_row(tokenizer, row) for row in rows]
-        dense_outputs = [generation(model, tokenizer, prompt, args.max_new_tokens) for prompt in prompts]
+        dense_outputs = [
+            generation(
+                model,
+                tokenizer,
+                prompt,
+                args.max_new_tokens,
+                args.response_control,
+                args.min_new_tokens_before_boundary,
+            )
+            for prompt in prompts
+        ]
 
         dense_scored: list[dict[str, Any]] = []
-        for row, (reply, ids) in zip(rows, dense_outputs):
-            dense_scored.append({**score_case(row, reply, len(ids)), **semantic_audit(row, reply)})
+        for row, generated in zip(rows, dense_outputs):
+            reply = generated["reply"]
+            dense_scored.append(
+                {
+                    **score_case(row, reply, int(generated["visible_token_count"])),
+                    **semantic_audit(row, reply),
+                }
+            )
         dense_metrics = aggregate_scored(dense_scored)
         payload["dense_quality"] = dense_metrics
+        payload["response_control_mode"] = args.response_control
+        payload["min_new_tokens_before_boundary"] = args.min_new_tokens_before_boundary
 
         wrappers: list[OracleMaskedGatedMLP] = []
         for layer in find_decoder_stack(model).layers:
@@ -160,12 +216,27 @@ def main() -> None:
             for wrapper in wrappers:
                 wrapper.keep_ratio = ratio
                 wrapper.stats = type(wrapper.stats)()
-            sparse_outputs = [generation(model, tokenizer, prompt, args.max_new_tokens) for prompt in prompts]
-            exact = [dense[1] == sparse[1] for dense, sparse in zip(dense_outputs, sparse_outputs)]
-            prefixes = [common_prefix_fraction(dense[1], sparse[1]) for dense, sparse in zip(dense_outputs, sparse_outputs)]
+            sparse_outputs = [
+                generation(
+                    model, tokenizer, prompt, args.max_new_tokens,
+                    args.response_control, args.min_new_tokens_before_boundary
+                )
+                for prompt in prompts
+            ]
+            exact = [dense["ids"] == sparse["ids"] for dense, sparse in zip(dense_outputs, sparse_outputs)]
+            prefixes = [
+                common_prefix_fraction(dense["ids"], sparse["ids"])
+                for dense, sparse in zip(dense_outputs, sparse_outputs)
+            ]
             sparse_scored: list[dict[str, Any]] = []
-            for row, (reply, ids) in zip(rows, sparse_outputs):
-                sparse_scored.append({**score_case(row, reply, len(ids)), **semantic_audit(row, reply)})
+            for row, generated in zip(rows, sparse_outputs):
+                reply = generated["reply"]
+                sparse_scored.append(
+                    {
+                        **score_case(row, reply, int(generated["visible_token_count"])),
+                        **semantic_audit(row, reply),
+                    }
+                )
             quality = aggregate_scored(sparse_scored)
             comparisons.append(
                 {
@@ -181,7 +252,7 @@ def main() -> None:
                     "speed_claim_allowed": False,
                 }
             )
-            for index, ((dense_text, _), (sparse_text, _), scored) in enumerate(
+            for index, (dense_generated, sparse_generated, scored) in enumerate(
                 zip(dense_outputs, sparse_outputs, sparse_scored)
             ):
                 raw_rows.append(
@@ -190,8 +261,10 @@ def main() -> None:
                         "category": rows[index].get("category"),
                         "active_ratio": ratio,
                         "prompt": prompts[index],
-                        "dense_reply": dense_text,
-                        "masked_reply": sparse_text,
+                        "dense_reply": dense_generated["reply"],
+                        "masked_reply": sparse_generated["reply"],
+                        "dense_stop_reason": dense_generated["stop_reason"],
+                        "masked_stop_reason": sparse_generated["stop_reason"],
                         "masked_heuristic_score": scored["heuristic_score"],
                         "critical_failures": scored["critical_failures"],
                         "major_issues": scored["major_issues"],

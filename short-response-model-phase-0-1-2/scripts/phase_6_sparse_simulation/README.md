@@ -7,3 +7,5 @@ Phase 6 automatically builds non-sealed calibration data, records real decoder-l
 ```
 
 This phase measures quality tolerance only; it must not claim speed or VRAM savings because gate/up projections are still computed densely. When no sparse ratio passes, the gate records `DENSE_ONLY` rather than blocking the commercial pipeline. Outputs include `router_dataset.pt`, human-readable trace metadata, `frontier_with_generations.json`, raw replies, `SPARSITY_CALIBRATION_REPORT.md`, and `PHASE_6_STOP_GATE.md`. See `FILE_RESPONSIBILITIES.md`.
+
+Dense and masked candidates use the same response-control mode (`one_sentence` by default), so a sparse candidate cannot appear better merely because it was allowed a different stopping rule. This phase still makes no runtime claim.

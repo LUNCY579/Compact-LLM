@@ -3,10 +3,9 @@ from __future__ import annotations
 """Train Phase 3 DPO from either an SFT adapter or a materialized reduced model.
 
 The original all-layer branch continues training its accepted SFT adapter. A
-Phase 2B reduced profile has its SFT recovery already merged into a full
-checkpoint, so this script attaches a fresh LoRA adapter with the same default
-projection coverage before DPO. Both paths produce ordinary compatible PEFT
-adapters for Phase 4 soups.
+Phase 2B reduced profile attaches a fresh LoRA to its materialized checkpoint.
+A Phase 2C profile continues the selected targeted SFT adapter on the same
+reduced checkpoint. All paths produce ordinary PEFT adapters for Phase 4 soups.
 """
 
 import argparse
@@ -35,7 +34,7 @@ def parse_args() -> argparse.Namespace:
         type=Path,
         default=None,
         help=(
-            "Existing trainable SFT adapter. Omit for a materialized Phase 2B "
+            "Existing trainable SFT adapter, including a Phase 2C targeted adapter. Omit for a materialized Phase 2B "
             "checkpoint; a fresh LoRA adapter will be attached."
         ),
     )

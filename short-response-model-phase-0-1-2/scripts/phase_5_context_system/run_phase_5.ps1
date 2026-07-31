@@ -16,6 +16,7 @@ param(
     [int]$MemoryBudget = 160,
     [int]$RecentBudget = 256,
     [int]$MaxNewTokens = 32,
+    [ValidateSet("eos_only", "one_sentence")][string]$ResponseControl = "one_sentence",
     [int]$PrefixRepeats = 3
 )
 
@@ -52,7 +53,8 @@ Invoke-PythonStep "[2/4] Evaluating retrieval, budgets, and compact-context gene
     "--total-budget", "$TotalBudget",
     "--memory-budget", "$MemoryBudget",
     "--recent-budget", "$RecentBudget",
-    "--max-new-tokens", "$MaxNewTokens"
+    "--max-new-tokens", "$MaxNewTokens",
+    "--response-control", $ResponseControl
 )
 
 $PrefixResult = Join-Path $OutputRoot "prefix_cache.json"

@@ -16,6 +16,12 @@ if str(ROOT) not in sys.path:
 
 from context_system import Budget, assemble, memory_text, retrieve_with_trace, tokens
 from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
+from scripts.common.response_control import (
+    RESPONSE_CONTROL_MODES,
+    build_stopping_criteria,
+    finalize_response,
+    infer_stop_reason,
+)
 
 DEFAULT_POLICY = (
     "Reply naturally in a few words or one short sentence. Use supplied memory only when relevant. "
@@ -33,6 +39,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--memory-budget", type=int, default=160)
     parser.add_argument("--recent-budget", type=int, default=256)
     parser.add_argument("--max-new-tokens", type=int, default=32)
+    parser.add_argument("--response-control", choices=RESPONSE_CONTROL_MODES, default="one_sentence")
+    parser.add_argument("--min-new-tokens-before-boundary", type=int, default=1)
     parser.add_argument("--max-cases", type=int, default=None)
     return parser.parse_args()
 
@@ -61,17 +69,49 @@ def score_reply(reply: str, expected: dict[str, Any]) -> float:
     return statistics.fmean(checks) if checks else 1.0
 
 
-def generate(model: Any, tokenizer: Any, prompt: str, max_new_tokens: int) -> str:
+def generate(
+    model: Any,
+    tokenizer: Any,
+    prompt: str,
+    max_new_tokens: int,
+    response_control: str,
+    min_new_tokens_before_boundary: int,
+) -> dict[str, Any]:
     encoded = tokenizer(prompt, return_tensors="pt").to(model.device)
-    output = model.generate(
-        **encoded,
-        max_new_tokens=max_new_tokens,
-        do_sample=False,
-        pad_token_id=tokenizer.pad_token_id,
-        eos_token_id=tokenizer.eos_token_id,
+    stopping_criteria, boundary_criterion = build_stopping_criteria(
+        tokenizer,
+        int(encoded["input_ids"].shape[1]),
+        response_control,
+        min_new_tokens_before_boundary,
     )
+    kwargs: dict[str, Any] = {
+        "max_new_tokens": max_new_tokens,
+        "do_sample": False,
+        "pad_token_id": tokenizer.pad_token_id,
+        "eos_token_id": tokenizer.eos_token_id,
+    }
+    if stopping_criteria is not None:
+        kwargs["stopping_criteria"] = stopping_criteria
+    output = model.generate(**encoded, **kwargs)
     continuation = output[0, encoded["input_ids"].shape[1] :]
-    return tokenizer.decode(continuation, skip_special_tokens=True).strip()
+    raw_reply = tokenizer.decode(continuation, skip_special_tokens=True).strip()
+    finalized = finalize_response(raw_reply, response_control)
+    return {
+        "reply": finalized.text,
+        "raw_reply": finalized.raw_text,
+        "trimmed": finalized.trimmed,
+        "sentence_count": finalized.sentence_count,
+        "generated_tokens": int(continuation.shape[0]),
+        "visible_generated_tokens": len(
+            tokenizer(finalized.text, add_special_tokens=False)["input_ids"]
+        ),
+        "stop_reason": infer_stop_reason(
+            continuation.tolist(),
+            eos_token_id=tokenizer.eos_token_id,
+            max_new_tokens=max_new_tokens,
+            criterion=boundary_criterion,
+        ),
+    }
 
 
 def main() -> None:
@@ -106,6 +146,8 @@ def main() -> None:
     assembly_ms: list[float] = []
     compact_quality: list[float] = []
     full_quality: list[float] = []
+    compact_stop_reasons: list[str] = []
+    full_stop_reasons: list[str] = []
 
     for case_index, row in enumerate(rows):
         memories = row.get("memories", [])
@@ -166,15 +208,35 @@ def main() -> None:
             "full_prompt_tokens": full_count,
         }
         if model is not None and tokenizer is not None:
-            compact_reply = generate(model, tokenizer, prompt, args.max_new_tokens)
-            full_reply = generate(model, tokenizer, full_prompt, args.max_new_tokens)
+            compact_generation = generate(
+                model,
+                tokenizer,
+                prompt,
+                args.max_new_tokens,
+                args.response_control,
+                args.min_new_tokens_before_boundary,
+            )
+            full_generation = generate(
+                model,
+                tokenizer,
+                full_prompt,
+                args.max_new_tokens,
+                args.response_control,
+                args.min_new_tokens_before_boundary,
+            )
+            compact_reply = compact_generation["reply"]
+            full_reply = full_generation["reply"]
             compact_score = score_reply(compact_reply, row.get("expected", {}))
             full_score = score_reply(full_reply, row.get("expected", {}))
+            compact_stop_reasons.append(str(compact_generation["stop_reason"]))
+            full_stop_reasons.append(str(full_generation["stop_reason"]))
             compact_quality.append(compact_score)
             full_quality.append(full_score)
             trace_row.update(
                 compact_reply=compact_reply,
                 full_reply=full_reply,
+                compact_generation=compact_generation,
+                full_generation=full_generation,
                 compact_reply_score=compact_score,
                 full_reply_score=full_score,
             )
@@ -185,6 +247,10 @@ def main() -> None:
     summary = {
         "cases": len(rows),
         "model": args.model,
+        "response_control_mode": args.response_control,
+        "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,
+        "compact_stop_reason_counts": {reason: compact_stop_reasons.count(reason) for reason in sorted(set(compact_stop_reasons))},
+        "full_stop_reason_counts": {reason: full_stop_reasons.count(reason) for reason in sorted(set(full_stop_reasons))},
         "relevant_memory_recall": statistics.fmean(recall_values),
         "relevant_memory_precision": statistics.fmean(precision_values),
         "forbidden_memory_selection_count": forbidden_selected,

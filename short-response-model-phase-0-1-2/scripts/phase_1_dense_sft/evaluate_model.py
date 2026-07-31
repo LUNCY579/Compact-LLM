@@ -5,6 +5,7 @@ import json
 import math
 import re
 import statistics
+import sys
 import time
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -13,6 +14,17 @@ from typing import Any
 import torch
 from rapidfuzz.fuzz import ratio as fuzzy_ratio
 from transformers import AutoModelForCausalLM, AutoTokenizer
+
+ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.common.response_control import (
+    RESPONSE_CONTROL_MODES,
+    build_stopping_criteria,
+    finalize_response,
+    infer_stop_reason,
+)
 
 # PEFT is optional for base-model evaluation. When an adapter path is
 # supplied later, the same evaluator can attach the LoRA/QLoRA adapter.
@@ -23,7 +35,6 @@ except ImportError:
 
 # Shared default for the untouched baseline and adapted comparisons.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
-ROOT = Path(__file__).resolve().parents[2]
 # Resolve the pilot benchmark relative to the project root so the command
 # works regardless of the caller's current directory.
 DEFAULT_BENCHMARK = (
@@ -50,6 +61,21 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--benchmark", type=Path, default=DEFAULT_BENCHMARK)
     p.add_argument("--output-dir", type=Path, default=ROOT / "artifacts" / "baseline_evaluation")
     p.add_argument("--max-new-tokens", type=int, default=32)
+    p.add_argument(
+        "--response-control",
+        choices=RESPONSE_CONTROL_MODES,
+        default="eos_only",
+        help=(
+            "eos_only measures learned behavior without an external sentence boundary; "
+            "one_sentence adds the production runtime guarantee."
+        ),
+    )
+    p.add_argument(
+        "--min-new-tokens-before-boundary",
+        type=int,
+        default=1,
+        help="Do not allow punctuation-based stopping before this many generated tokens.",
+    )
     p.add_argument("--limit", type=int, default=None)
     p.add_argument("--system-prompt", default=DEFAULT_SYSTEM_PROMPT)
     p.add_argument("--do-sample", action="store_true")
@@ -149,7 +175,10 @@ def complete_utterance(reply: str) -> bool:
     value = reply.strip()
     if not value:
         return False
-    if len(words(value)) <= 4:
+    units = words(value)
+    if not units and not any(char.isalnum() for char in value):
+        return False
+    if len(units) <= 4:
         return True
     if value.endswith((".", "!", "?", "…", "😊", "😭", "🙂", "👍")):
         return True
@@ -378,11 +407,20 @@ def main() -> None:
             torch.cuda.reset_peak_memory_stats()
         sync_cuda()
         started = time.perf_counter()
+        stopping_criteria, boundary_criterion = build_stopping_criteria(
+            tokenizer,
+            int(inputs.input_ids.shape[1]),
+            args.response_control,
+            args.min_new_tokens_before_boundary,
+        )
         kwargs: dict[str, Any] = {
             "max_new_tokens": args.max_new_tokens,
             "do_sample": args.do_sample,
             "pad_token_id": tokenizer.eos_token_id,
+            "eos_token_id": tokenizer.eos_token_id,
         }
+        if stopping_criteria is not None:
+            kwargs["stopping_criteria"] = stopping_criteria
         if args.do_sample:
             kwargs.update(temperature=args.temperature, top_p=args.top_p)
         # Evaluation never needs gradients.
@@ -392,11 +430,20 @@ def main() -> None:
         elapsed = time.perf_counter() - started
         # Remove the input portion before decoding and counting the reply.
         new_tokens = generated[0, inputs.input_ids.shape[1] :]
-        reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+        raw_reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+        finalized = finalize_response(raw_reply, args.response_control)
+        reply = finalized.text
+        visible_token_count = len(tokenizer(reply, add_special_tokens=False)["input_ids"])
+        stop_reason = infer_stop_reason(
+            new_tokens.tolist(),
+            eos_token_id=tokenizer.eos_token_id,
+            max_new_tokens=args.max_new_tokens,
+            criterion=boundary_criterion,
+        )
         # Apply deterministic expected-property checks and a separate
         # conservative semantic audit. The raw heuristic remains available
         # so changes in the semantic rules do not erase prior measurements.
-        scored = score_case(record, reply, int(new_tokens.shape[0]))
+        scored = score_case(record, reply, visible_token_count)
         audited = semantic_audit(record, reply)
         row = {
             "id": record["id"],
@@ -405,8 +452,15 @@ def main() -> None:
             "reference": record.get("reference"),
             "reference_token_f1": reference_token_f1(record.get("reference"), reply),
             "reply": reply,
+            "raw_reply": finalized.raw_text,
+            "response_control_mode": args.response_control,
+            "response_control_trimmed": finalized.trimmed,
+            "stop_reason": stop_reason,
+            "sentence_count": finalized.sentence_count,
+            "one_sentence_violation": finalized.sentence_count > 1,
             "prompt_tokens": int(inputs.input_ids.shape[1]),
             "generated_tokens": int(new_tokens.shape[0]),
+            "visible_generated_tokens": visible_token_count,
             "elapsed_seconds": elapsed,
             "peak_vram_gb": (
                 torch.cuda.max_memory_allocated() / 1024**3
@@ -438,12 +492,30 @@ def main() -> None:
 
     # Aggregate reply length, latency, heuristic quality, category scores,
     # and exact duplicate replies.
-    token_counts = [float(r["generated_tokens"]) for r in outputs]
+    token_counts = [float(r["visible_generated_tokens"]) for r in outputs]
+    actual_token_counts = [float(r["generated_tokens"]) for r in outputs]
+    stop_reasons = Counter(str(r["stop_reason"]) for r in outputs)
     times = [float(r["elapsed_seconds"]) for r in outputs]
     scores = [float(r["heuristic_score"]) for r in outputs]
     category_scores: dict[str, list[float]] = defaultdict(list)
+    category_semantic_pass: dict[str, list[float]] = defaultdict(list)
+    category_reference_f1: dict[str, list[float]] = defaultdict(list)
+    category_completion: dict[str, list[float]] = defaultdict(list)
+    category_critical_cases: Counter[str] = Counter()
+    category_major_cases: Counter[str] = Counter()
     for row in outputs:
-        category_scores[row["category"]].append(float(row["heuristic_score"]))
+        category = str(row["category"])
+        category_scores[category].append(float(row["heuristic_score"]))
+        category_semantic_pass[category].append(1.0 if row["semantic_pass"] else 0.0)
+        category_completion[category].append(
+            1.0 if row["checks"].get("complete_utterance") else 0.0
+        )
+        if row.get("reference_token_f1") is not None:
+            category_reference_f1[category].append(float(row["reference_token_f1"]))
+        if row["critical_failures"]:
+            category_critical_cases[category] += 1
+        if row["major_issues"]:
+            category_major_cases[category] += 1
     # Repeated exact normalized replies are a simple warning for canned
     # response behavior or template collapse.
     repeats = Counter(normalize(r["reply"]) for r in outputs)
@@ -454,8 +526,20 @@ def main() -> None:
     ]
     summary = {
         "case_count": len(outputs),
+        "response_control_mode": args.response_control,
+        "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,
+        "max_new_tokens": args.max_new_tokens,
         "median_reply_tokens": statistics.median(token_counts),
         "p90_reply_tokens": percentile(token_counts, 0.90),
+        "median_actual_generated_tokens": statistics.median(actual_token_counts),
+        "p90_actual_generated_tokens": percentile(actual_token_counts, 0.90),
+        "one_sentence_violation_rate": statistics.mean(
+            1.0 if r["one_sentence_violation"] else 0.0 for r in outputs
+        ),
+        "response_control_trim_rate": statistics.mean(
+            1.0 if r["response_control_trimmed"] else 0.0 for r in outputs
+        ),
+        "stop_reason_counts": dict(sorted(stop_reasons.items())),
         "mean_heuristic_score": statistics.mean(scores),
         "complete_utterance_rate": statistics.mean(
             1.0 if r["checks"].get("complete_utterance") else 0.0 for r in outputs
@@ -474,13 +558,37 @@ def main() -> None:
         "category_scores": {
             k: statistics.mean(v) for k, v in sorted(category_scores.items())
         },
+        "category_semantic_pass_rates": {
+            k: statistics.mean(category_semantic_pass[k]) for k in sorted(category_scores)
+        },
+        "category_reference_token_f1": {
+            k: (statistics.mean(category_reference_f1[k]) if category_reference_f1[k] else None)
+            for k in sorted(category_scores)
+        },
+        "category_complete_utterance_rates": {
+            k: statistics.mean(category_completion[k]) for k in sorted(category_scores)
+        },
+        "category_critical_case_counts": {
+            k: int(category_critical_cases[k]) for k in sorted(category_scores)
+        },
+        "category_major_case_counts": {
+            k: int(category_major_cases[k]) for k in sorted(category_scores)
+        },
     }
     (args.output_dir / "summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
     # Render category metrics and the lowest-scoring cases into Markdown.
-    cat_rows = "\n".join(f"| {k} | {v:.3f} |" for k, v in summary["category_scores"].items())
+    cat_rows = "\n".join(
+        f"| {category} | {score:.3f} | "
+        f"{summary['category_semantic_pass_rates'][category]:.3f} | "
+        f"{summary['category_reference_token_f1'][category] if summary['category_reference_token_f1'][category] is not None else 'N/A'} | "
+        f"{summary['category_complete_utterance_rates'][category]:.3f} | "
+        f"{summary['category_critical_case_counts'][category]} | "
+        f"{summary['category_major_case_counts'][category]} |"
+        for category, score in summary["category_scores"].items()
+    )
     worst = sorted(outputs, key=lambda r: r["heuristic_score"])[:10]
     # Escape Markdown table separators before embedding model replies.
     worst_row_lines: list[str] = []
@@ -518,13 +626,20 @@ The automated score is a pilot harness, not a replacement for human review.
 - Benchmark: `{args.benchmark}`
 - Cases: {summary['case_count']}
 - Deterministic decoding: {not args.do_sample}
+- Response control: `{args.response_control}`
+- Minimum generated tokens before boundary stop: {args.min_new_tokens_before_boundary}
 
 ## Aggregate Results
 
 | Metric | Value |
 |---|---:|
-| Median generated tokens | {summary['median_reply_tokens']} |
-| P90 generated tokens | {summary['p90_reply_tokens']} |
+| Median visible reply tokens | {summary['median_reply_tokens']} |
+| P90 visible reply tokens | {summary['p90_reply_tokens']} |
+| Median actual generated tokens | {summary['median_actual_generated_tokens']} |
+| P90 actual generated tokens | {summary['p90_actual_generated_tokens']} |
+| One-sentence violation rate | {summary['one_sentence_violation_rate']:.3f} |
+| Runtime trim rate | {summary['response_control_trim_rate']:.3f} |
+| Stop reasons | `{summary['stop_reason_counts']}` |
 | Mean heuristic score | {summary['mean_heuristic_score']:.3f} |
 | Complete-utterance rate | {summary['complete_utterance_rate']:.3f} |
 | Mean generation time (s) | {summary['mean_generation_seconds']:.3f} |
@@ -538,8 +653,8 @@ The automated score is a pilot harness, not a replacement for human review.
 
 ## Category Scores
 
-| Category | Mean heuristic score |
-|---|---:|
+| Category | Heuristic | Semantic pass | Reference F1 | Complete | Critical cases | Major cases |
+|---|---:|---:|---:|---:|---:|---:|
 {cat_rows}
 
 ## Lowest-Scoring Cases

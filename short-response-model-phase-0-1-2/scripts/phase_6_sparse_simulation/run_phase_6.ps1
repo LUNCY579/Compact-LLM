@@ -13,6 +13,7 @@ param(
     [int]$MaxCalibrationRecords = 1000,
     [int]$MaxBenchmarkCases = 100,
     [int]$MaxNewTokens = 32,
+    [ValidateSet("eos_only", "one_sentence")][string]$ResponseControl = "one_sentence",
     [switch]$ReuseExisting
 )
 
@@ -72,6 +73,7 @@ if (-not ($ReuseExisting -and (Test-Path $Frontier))) {
         "--benchmark", $Benchmark,
         "--max-cases", "$MaxBenchmarkCases",
         "--max-new-tokens", "$MaxNewTokens",
+        "--response-control", $ResponseControl,
         "--ratios", "1.0", "0.8", "0.65", "0.5", "0.35",
         "--out", $Frontier
     )

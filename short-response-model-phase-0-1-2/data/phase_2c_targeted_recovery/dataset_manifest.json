@@ -1,0 +1,37 @@
+{
+  "manifest_version": 1,
+  "sealed_data_used": false,
+  "base_train": "data/train/train.jsonl",
+  "base_dev": "data/dev/dev.jsonl",
+  "train_output": "data/phase_2c_targeted_recovery/train.jsonl",
+  "dev_output": "data/phase_2c_targeted_recovery/dev.jsonl",
+  "base_train_sha256": "82c1cfbfad0e2343b64559b2e5d62badb8165967525aad12f5daa41b0e4701df",
+  "base_dev_sha256": "e059e548f684c76e1520d98fb4184ea7b8eda2053c3c23eed46794bcadfef954",
+  "train_output_sha256": "b8440e3f501727669c1833220f66aa77cf9a2abace3bb7de28b0fef5b63b7400",
+  "dev_output_sha256": "8ab54fd2e4cf25509a95fe7d6bc8a84fa5a230f0d57fdae5a50eb0e559063095",
+  "base_train_count": 2950,
+  "base_dev_count": 510,
+  "added_train_count": 124,
+  "added_dev_count": 60,
+  "final_train_count": 3074,
+  "final_dev_count": 570,
+  "exact_prompt_target_overlap": 0,
+  "added_category_counts": {
+    "concise_arithmetic": 24,
+    "concise_clarification_logic": 24,
+    "concise_comparison_logic": 20,
+    "concise_contradiction_detection": 24,
+    "concise_logic_implication": 24,
+    "concise_ordering_logic": 20,
+    "concise_set_membership": 24,
+    "concise_temporal_reasoning": 24
+  },
+  "generation_method": "deterministic rule templates with mechanically verified answers",
+  "ordering": {
+    "train": "8 base records then 1 added record while available",
+    "dev": "2 base records then 1 added record while available",
+    "reason": "limited-prefix calibration/evaluation must include both original and Phase 2C categories",
+    "added_rows_shuffled_deterministically": true
+  },
+  "evidence_boundary": "These records strengthen concise local reasoning and do not claim to add broad world knowledge or general reasoning beyond the base model."
+}

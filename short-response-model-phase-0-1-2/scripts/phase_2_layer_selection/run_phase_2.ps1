@@ -1,22 +1,26 @@
 <#
 .SYNOPSIS
 Run Phase 2A selective-layer tuning, Phase 2B progressive structural reduction,
-or both in the ordered repository workflow.
+or Phase 2C targeted recovery in the ordered repository workflow.
 
 .DESCRIPTION
 Phase 2A asks where adaptation can be trained cheaply. Phase 2B asks which
-complete inference layers can be removed and recovered. They are related but
-not interchangeable experiments; the existing negative Phase 2A result remains
-valid even when Phase 2B finds a useful reduced frontier.
+complete inference layers can be removed and recovered. Phase 2C asks which
+surviving layers can be updated for the best quality per training resource.
+These are related but non-interchangeable experiments.
 #>
 param(
-    [ValidateSet("All", "StaticOnly", "StructuralOnly")]
+    [ValidateSet("All", "StaticOnly", "StructuralOnly", "TargetedRecoveryOnly")]
     [string]$Mode = "All",
     [switch]$Resume,
     [int]$MaxDrops = 6,
     [int]$RecoveryTopK = 3,
     [int]$RecoverySteps = 50,
-    [switch]$KeepCandidateCheckpoints
+    [switch]$KeepCandidateCheckpoints,
+    [ValidateSet("balanced", "min_memory")]
+    [string]$Phase2CSourceProfile = "balanced",
+    [int]$Phase2CMaxSteps = 200,
+    [string]$Phase2CRepeatSeeds = "23,37"
 )
 
 $ErrorActionPreference = "Stop"
@@ -31,7 +35,7 @@ if ($GateText -notmatch '(?im)^\s*-\s*Human decision:\s*`?PASS`?\s*$') {
   throw "Phase 1 needs an explicit human PASS before Phase 2."
 }
 
-if ($Mode -ne "StructuralOnly") {
+if ($Mode -notin @("StructuralOnly", "TargetedRecoveryOnly")) {
     $StaticArgs = @(
         ".\scripts\phase_2_layer_selection\run_static_layer_study.py",
         "--model-id", "Qwen/Qwen3-0.6B",
@@ -69,7 +73,7 @@ if ($Mode -ne "StructuralOnly") {
     if ($LASTEXITCODE -ne 0) { throw "Phase 2A dynamic-selection planning failed." }
 }
 
-if ($Mode -ne "StaticOnly") {
+if ($Mode -notin @("StaticOnly", "TargetedRecoveryOnly")) {
     $StructuralParams = @{
         MaxDrops = $MaxDrops
         RecoveryTopK = $RecoveryTopK
@@ -83,7 +87,21 @@ if ($Mode -ne "StaticOnly") {
     if ($LASTEXITCODE -ne 0) { throw "Phase 2B structural reduction failed." }
 }
 
+if ($Mode -eq "TargetedRecoveryOnly") {
+    $Phase2CParams = @{
+        Phase2BProfile = $Phase2CSourceProfile
+        MaxSteps = $Phase2CMaxSteps
+        RepeatSeeds = $Phase2CRepeatSeeds
+        QLoRA = $true
+        GradientCheckpointing = $true
+    }
+    if ($Resume) { $Phase2CParams["Resume"] = $true }
+    & .\scripts\phase_2c_targeted_recovery\run_phase_2c.ps1 @Phase2CParams
+    if ($LASTEXITCODE -ne 0) { throw "Phase 2C targeted recovery failed." }
+}
+
 Write-Host ""
 Write-Host "Phase 2 workflow finished."
-if ($Mode -ne "StructuralOnly") { Write-Host "Phase 2A gate: reports\PHASE_2_STOP_GATE.md" }
-if ($Mode -ne "StaticOnly") { Write-Host "Phase 2B gate: reports\PHASE_2B_STOP_GATE.md" }
+if ($Mode -notin @("StructuralOnly", "TargetedRecoveryOnly")) { Write-Host "Phase 2A gate: reports\PHASE_2_STOP_GATE.md" }
+if ($Mode -notin @("StaticOnly", "TargetedRecoveryOnly")) { Write-Host "Phase 2B gate: reports\PHASE_2B_STOP_GATE.md" }
+if ($Mode -eq "TargetedRecoveryOnly") { Write-Host "Phase 2C gate: reports\PHASE_2C_STOP_GATE.md" }

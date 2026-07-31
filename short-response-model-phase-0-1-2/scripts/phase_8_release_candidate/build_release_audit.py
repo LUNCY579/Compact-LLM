@@ -61,6 +61,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--out", type=Path, default=ROOT / "reports/RELEASE_CANDIDATE_AUDIT.md")
     parser.add_argument("--min-sealed-score", type=float, default=0.80)
     parser.add_argument("--min-complete-rate", type=float, default=0.99)
+    parser.add_argument("--required-response-control", default="one_sentence")
+    parser.add_argument("--max-one-sentence-violation-rate", type=float, default=0.0)
     return parser.parse_args()
 
 
@@ -91,6 +93,12 @@ def main() -> None:
         reasons.append("sealed mean score is below the release floor")
     if float(sealed.get("complete_utterance_rate", 0.0)) < args.min_complete_rate:
         reasons.append("sealed complete-utterance rate is below the release floor")
+    if sealed.get("response_control_mode") != args.required_response_control:
+        reasons.append(
+            f"sealed evaluation did not use required response control {args.required_response_control!r}"
+        )
+    if float(sealed.get("one_sentence_violation_rate", 1.0)) > args.max_one_sentence_violation_rate:
+        reasons.append("sealed one-sentence violation rate exceeds the release floor")
     if mode not in {"DENSE_RUNTIME", "SPARSE_FEATURE_FLAG"}:
         reasons.append("Phase 7 deployment mode is not finalized")
 
@@ -106,6 +114,14 @@ def main() -> None:
         "status": automated,
         "model_dir": str(args.model_dir.resolve()),
         "deployment_mode": mode,
+        "response_control": {
+            "required_mode": args.required_response_control,
+            "observed_mode": sealed.get("response_control_mode"),
+            "one_sentence_violation_rate": sealed.get("one_sentence_violation_rate"),
+            "max_allowed_violation_rate": args.max_one_sentence_violation_rate,
+            "max_new_tokens": sealed.get("max_new_tokens"),
+            "stop_reason_counts": sealed.get("stop_reason_counts"),
+        },
         "reference_manifest": str(args.reference_manifest),
         "selected_candidate": reference.get("selected_candidate"),
         "gates": gates,
@@ -143,6 +159,10 @@ def main() -> None:
         f"- Semantic pass rate: `{sealed.get('semantic_pass_rate')}`",
         f"- Critical failures: `{sealed.get('critical_failure_count')}`",
         f"- Major issues: `{sealed.get('major_issue_count')}`",
+        f"- Response-control mode: `{sealed.get('response_control_mode')}`",
+        f"- One-sentence violation rate: `{sealed.get('one_sentence_violation_rate')}`",
+        f"- Runtime trim rate: `{sealed.get('response_control_trim_rate')}`",
+        f"- Stop reasons: `{sealed.get('stop_reason_counts')}`",
         f"- Lexical reference token-F1: `{sealed.get('mean_reference_token_f1')}`",
         "",
         "## Ablation evidence coverage",

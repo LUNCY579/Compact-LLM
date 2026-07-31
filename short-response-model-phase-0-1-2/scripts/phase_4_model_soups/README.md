@@ -15,10 +15,20 @@
 .\scripts\phase_4_model_soups\run_phase_4.ps1 -BranchName balanced
 ```
 
-For a named branch, the runner automatically selects the matching Phase 3
-adapter, branch stop gate, and isolated Phase 4 output tree unless you explicitly
-override them.
+## Phase 2C profile branch
 
-The runner reads the Phase 3 training manifest. When `sft_adapter` is null, it correctly trains every additional ingredient as a fresh LoRA on the same materialized reduced model. Never mix ingredients from full-quality, balanced, and minimum-memory architectures in one soup.
+```powershell
+.\scripts\phase_4_model_soups\run_phase_4.ps1 -BranchName phase2c_balanced_training
+```
 
-A best individual with score 1.0 is still a valid Phase 4 outcome. Soup contrast is limited when the benchmark saturates; Phase 2B's NLL and output-deviation evidence addresses structural contrast, while Phase 4 remains responsible for merge stability.
+Other valid Phase 2C branch names follow the Phase 3 output label:
+
+- `phase2c_maximum_quality`
+- `phase2c_balanced_training`
+- `phase2c_minimum_training_memory`
+
+For a named branch, the runner derives the matching Phase 3 adapter, branch stop gate, and isolated Phase 4 output tree unless explicitly overridden.
+
+The runner reads the Phase 3 training manifest. A Phase 2B reduced profile with no predecessor adapter trains each ingredient as a fresh LoRA on the same materialized checkpoint. A Phase 2C branch continues the exact targeted SFT adapter recorded by Phase 3. Never mix full-quality, Phase 2B, or Phase 2C branches—or different Phase 2C placements—in one soup.
+
+A best individual with score 1.0 remains a valid Phase 4 outcome. Soup contrast is limited when the benchmark saturates; NLL, category metrics, semantic flags, and raw output review remain necessary.

@@ -1,0 +1,49 @@
+phase: 2C
+name: importance_guided_targeted_recovery
+source:
+  phase2b_profile: balanced
+  catalog: artifacts/phase_2_progressive_reduction/model_catalog.json
+  gate: reports/PHASE_2B_STOP_GATE.md
+  registry: artifacts/phase_2_progressive_reduction/candidate_registry.json
+data:
+  train: data/phase_2c_targeted_recovery/train.jsonl
+  dev: data/phase_2c_targeted_recovery/dev.jsonl
+  sealed_used: false
+ranking:
+  calibration_limit: 64
+  gradient_taylor_weight: 0.35
+  temporary_ablation_nll_weight: 0.45
+  phase2b_structural_weight: 0.20
+training:
+  method: qlora
+  max_steps: 200
+  lora_rank: 16
+  base_seed: 11
+  repeat_seeds: [23, 37]
+  repeat_top_k: 2
+  gradient_checkpointing: true
+candidates:
+  - all_remaining
+  - top1
+  - top2
+  - top4
+  - top8
+  - complementary4
+  - random4
+  - low4
+  - top4_attention
+  - top4_mlp
+gates:
+  max_quality_index_loss: 0.02
+  max_quality_index_loss_vs_reduced_frozen: 0.01
+  max_heuristic_loss: 0.02
+  max_semantic_pass_loss: 0.02
+  max_reference_f1_loss: 0.03
+  max_category_loss: 0.05
+  max_category_loss_vs_reduced_frozen: 0.03
+  max_relative_nll_increase: 0.10
+  min_complete_utterance_rate: 0.99
+  minimum_trainable_parameter_reduction: 0.25
+  max_new_major_issues_vs_reduced_frozen: 0
+  require_same_seed_all_remaining_controls: true
+  balanced_quality_tolerance: 0.01

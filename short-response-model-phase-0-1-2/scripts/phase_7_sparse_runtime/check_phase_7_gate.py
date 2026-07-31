@@ -25,7 +25,14 @@ def main() -> None:
     sparse_attempted = bool(data.get("sparse_attempted", True))
     quality_ok = bool(data.get("passes_quality_target"))
     runtime_ok = bool(data.get("passes_runtime_target"))
-    if not sparse_attempted:
+    response_control_ok = bool(data.get("passes_response_control_target"))
+    if not response_control_ok:
+        recommendation = "BLOCKED"
+        automated = "BLOCKED_RESPONSE_CONTROL_NOT_MEASURED"
+        explanation = (
+            "Phase 7 did not measure the strict one-sentence runtime contract, or a controlled output violated it."
+        )
+    elif not sparse_attempted:
         recommendation = "DENSE_RUNTIME"
         automated = "PASS_WITH_DENSE_DEPLOYMENT_PENDING_HUMAN_REVIEW"
         explanation = "Phase 6 selected dense-only deployment; Phase 7 measured the dense runtime baseline."
@@ -59,6 +66,10 @@ def main() -> None:
                 f"- Quality score loss: `{data.get('quality_score_loss')}`",
                 f"- Exact generation match: `{data.get('exact_generation_match_rate')}`",
                 f"- Mean dense fallback rate: `{mean_fallback:.4f}`",
+                f"- Response-control mode: `{data.get('response_control_mode')}`",
+                f"- Response-control target passed: `{response_control_ok}`",
+                f"- Dense one-sentence violation rate: `{(data.get('dense') or {}).get('one_sentence_violation_rate')}`",
+                f"- Sparse one-sentence violation rate: `{(data.get('sparse_reference') or {}).get('one_sentence_violation_rate')}`",
                 "",
                 explanation,
                 "",
@@ -80,7 +91,7 @@ def main() -> None:
                 f"- Reason: {explanation}",
                 "",
                 "A negative sparse result does not block a mature dense release. Human reviewers may PASS Phase 7 "
-                "with DENSE_RUNTIME selected.",
+                "with DENSE_RUNTIME selected only when the strict response-control target also passed.",
                 "",
                 "## Human decision",
                 "",
