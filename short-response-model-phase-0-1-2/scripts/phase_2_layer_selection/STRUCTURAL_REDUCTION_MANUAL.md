@@ -90,3 +90,49 @@ Profile-specific Phase 3 outputs are written side by side so the original accept
 ## Failure and rollback
 
 A failed structural sweep is still useful evidence. Keep the reports, leave reduced profiles unapproved, and continue with `full_quality`. The original base model, SFT adapter, full materialized reference, and every accepted frontier model are never modified in place.
+
+## Continuation behavior after a completed catalog
+
+The continuation runner treats the accepted frontier as durable experiment state. With `-Resume`, it does not replay completed stages merely to reconstruct their parent. It reads `model_catalog.json`, verifies provenance, restores the final accepted `inference_model`, restores the original-layer lineage, and begins at `max(frontier.stage) + 1`.
+
+For the existing Stage 10 run, the expected console message is similar to:
+
+```text
+[resume] continuing from accepted stage 10; next stage is 11; parent=...stage_10...\model
+```
+
+A candidate is promotable only when both comparisons pass:
+
+```text
+cumulative memory gain from full reference > cumulative quality opportunity loss
+AND
+incremental memory gain from immediate parent > incremental quality opportunity loss
+```
+
+This prevents a poor late deletion from consuming margin earned by earlier successful deletions.
+
+### Recovery-on-stall
+
+Each stage still recovery-trains only the configured top `RecoveryTopK` raw candidates first. If neither a raw candidate nor one of those focused recovery candidates is eligible, the runner recovery-trains every remaining raw candidate once. Only after this exhaustive fallback also fails does it record:
+
+```text
+no_marginally_worthwhile_deletion_after_exhaustive_recovery
+```
+
+If recovery is disabled, the distinct terminal reason is:
+
+```text
+no_marginally_worthwhile_deletion_recovery_disabled
+```
+
+### Resume safety
+
+A post-hotfix catalog stores file and adapter fingerprints plus recovery, evaluator, data, and quality-policy settings. A later `-Resume` refuses to mix changed evidence in the same output root. Increasing only `MaxDrops` is allowed. Use a new `OutputRoot` when changing the probe, training data, recovery settings, evaluator, policy, adapter, or model.
+
+The first resume from a pre-hotfix catalog cannot retroactively verify settings the old catalog never stored. Those fields are listed transparently in:
+
+```text
+<OutputRoot>\resume_validation.json
+```
+
+The runner also audits every previously accepted frontier transition with the incremental rule before beginning the next stage. If a historical accepted transition fails that audit, continuation stops rather than silently building on a subsidized deletion.

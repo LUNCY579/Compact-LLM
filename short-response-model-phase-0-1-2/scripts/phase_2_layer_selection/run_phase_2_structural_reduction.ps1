@@ -3,11 +3,13 @@
 Run Phase 2B progressive structural reduction under Evaluation v3.
 
 .DESCRIPTION
-Every current layer is tested as a reversible physical deletion. Candidate
-promotion uses the repository-wide relative opportunity rule: proportional
-loaded weight-tensor memory reduction must be strictly greater than combined
-proportional quality opportunity loss. No absolute quality floor, pass-rate
-floor, issue-count veto, or fixed maximum quality loss controls promotion.
+Every current layer is tested as a reversible physical deletion. A candidate
+must be worthwhile both cumulatively against the full reference and
+incrementally against its immediate accepted parent. With -Resume, a completed
+catalog is restored directly from its last accepted frontier stage instead of
+replaying earlier stages. If focused recovery cannot find an eligible branch,
+the runner recovery-tests all remaining raw branches before declaring a terminal
+frontier. No absolute quality floor or issue-count veto controls promotion.
 #>
 param(
     [string]$ModelId = "Qwen/Qwen3-0.6B",
@@ -116,7 +118,9 @@ Write-Host "  Python:          $PythonExecutable"
 Write-Host "  Probe:           $ProbeFile (cases: $ProbeLimit)"
 Write-Host "  Output root:     $OutputRoot"
 Write-Host "  Quality profile: $QualityProfile"
-Write-Host "  Decision:        weight-memory gain > combined proportional quality loss"
+Write-Host "  Decision:        cumulative AND incremental weight-memory gain > quality loss"
+Write-Host "  Recovery:        top-$RecoveryTopK first; exhaustive recovery only if the stage stalls"
+if ($Resume) { Write-Host "  Resume:          continue directly from the last accepted frontier stage" }
 
 Invoke-PythonStep "[2/2] Running every-layer and progressive structural reduction..." $Arguments
 

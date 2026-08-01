@@ -125,3 +125,38 @@ Phase 2C writes its own catalog and stop gate. It preserves the Phase 2B structu
 
 This phase uses Quality Evaluator `3.0` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
 
+
+## Phase 2B continuation hotfix — direct Stage 10+ resume
+
+A completed `model_catalog.json` no longer causes `-Resume` to exit. The runner now:
+
+1. validates the persisted model, adapter, probe, benchmark, evaluator, quality profile, and every available run setting;
+2. loads the existing `candidate_registry.json` and accepted frontier;
+3. restores the last accepted frontier checkpoint as the parent model;
+4. starts from the next stage rather than rebuilding Stages 1 through 10;
+5. audits legacy accepted frontier stages under the new parent-relative rule;
+6. requires both cumulative and incremental opportunity margins to be positive;
+7. runs focused recovery first and recovery-tests every remaining branch only when the stage would otherwise stop;
+8. records an explicit terminal reason in the catalog, report, and stop gate;
+9. keys downstream profile-validation folders by model path so a later frontier cannot reuse an older profile summary.
+
+The pre-hotfix catalog did not persist every recovery and fingerprint field. During its first continuation, the runner verifies all fields the catalog contains and writes the unavailable legacy fields to `resume_validation.json` as explicit assumptions. After that migration, future resumes require exact matching settings and fingerprints except that `MaxDrops` may be increased.
+
+Continue the established August 1 thorough run with:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ProbeLimit 150 `
+  -OutputRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -Report .\reports\PHASE_2B_phase_2b_quality_v3_thorough_20260801_REPORT.md `
+  -GateReport .\reports\PHASE_2B_phase_2b_quality_v3_thorough_20260801_STOP_GATE.md `
+  -MaxDrops 27 `
+  -RecoveryTopK 6 `
+  -RecoverySteps 50 `
+  -QLoRA `
+  -GradientCheckpointing `
+  -Resume
+```
+
+`MaxDrops 27` is only an upper bound. The two-layer safety guard means a 28-layer source can accept at most 26 deletions, and the run normally stops earlier when no remaining deletion is worthwhile under both opportunity comparisons.

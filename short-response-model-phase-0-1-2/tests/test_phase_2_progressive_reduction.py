@@ -12,7 +12,12 @@ from scripts.common.depth_reduction import choose_layers, reduce_model_depth
 from scripts.phase_2_layer_selection.build_structural_probe import select_balanced
 from scripts.phase_2_layer_selection.progressive_reduction import (
     assess_candidate,
+    build_run_configuration,
+    combine_progression_assessments,
+    profile_validation_dir,
+    restore_resume_state,
     select_profiles,
+    validate_resume_catalog,
 )
 from scripts.phase_2_layer_selection.resolve_phase_2_profile import resolve_profile
 
@@ -99,6 +104,108 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "severe_issue_case_rate": 0.0,
         }
 
+
+    @staticmethod
+    def phase2b_args(**overrides):
+        values = {
+            "model_id": "Qwen/Qwen3-0.6B",
+            "sft_adapter": Path("artifacts/dense_sft/adapter"),
+            "train_file": Path("data/train/train.jsonl"),
+            "dev_file": Path("data/dev/dev.jsonl"),
+            "probe_file": Path("data/phase_2_structural_reduction/probe_150_thorough_v2.jsonl"),
+            "phase_benchmark": Path("data/benchmark/shortchatbench_pilot.jsonl"),
+            "probe_limit": 150,
+            "probe_seed": 20260728,
+            "quality_profile": "balanced",
+            "recovery_top_k": 6,
+            "recovery_steps": 50,
+            "recovery_seed": 11,
+            "max_new_tokens": 32,
+            "qlora": True,
+            "gradient_checkpointing": True,
+            "skip_recovery": False,
+            "max_drops": 27,
+        }
+        values.update(overrides)
+        return SimpleNamespace(**values)
+
+    def test_progression_requires_positive_incremental_margin(self) -> None:
+        cumulative = {
+            "eligible_for_progression": True,
+            "rejection_reasons": [],
+            "weight_memory_reduction_fraction": 0.30,
+            "quality_opportunity_loss_fraction": 0.10,
+            "opportunity_margin": 0.20,
+        }
+        incremental = {
+            "eligible_for_progression": False,
+            "rejection_reasons": ["incremental quality cost exceeds gain"],
+            "weight_memory_reduction_fraction": 0.04,
+            "quality_opportunity_loss_fraction": 0.08,
+            "opportunity_margin": -0.04,
+        }
+        combined = combine_progression_assessments(cumulative, incremental)
+        self.assertFalse(combined["eligible_for_progression"])
+        self.assertTrue(combined["cumulative_eligible_for_progression"])
+        self.assertFalse(combined["incremental_eligible_for_progression"])
+        self.assertAlmostEqual(combined["incremental_opportunity_margin"], -0.04)
+        self.assertTrue(any(reason.startswith("incremental:") for reason in combined["rejection_reasons"]))
+
+    def test_resume_restores_last_frontier_without_replaying_prior_stages(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            stage_model = root / "frontier" / "stage_10" / "model"
+            stage_model.mkdir(parents=True)
+            registry = root / "candidate_registry.json"
+            registry.write_text('{"candidates": [{"stage": 1, "variant_id": "old"}]}', encoding="utf-8")
+            catalog = {
+                "frontier": [
+                    {
+                        "stage": 10,
+                        "inference_model": str(stage_model),
+                        "dropped_original_layer_ids": [16, 26, 7, 21, 17, 13, 3, 15, 6, 11],
+                    }
+                ]
+            }
+            current, dropped, candidates, frontier, start_stage = restore_resume_state(
+                catalog,
+                reference_model=root / "reference",
+                candidate_registry_path=registry,
+            )
+            self.assertEqual(current, stage_model)
+            self.assertEqual(start_stage, 11)
+            self.assertEqual(len(dropped), 10)
+            self.assertEqual(len(candidates), 1)
+            self.assertEqual(len(frontier), 1)
+
+    def test_resume_validation_allows_only_maxdrops_extension(self) -> None:
+        first = self.phase2b_args(max_drops=10)
+        catalog = {
+            "source_model_id": first.model_id,
+            "source_sft_adapter": str(first.sft_adapter),
+            "probe_file": str(first.probe_file),
+            "phase_benchmark": str(first.phase_benchmark),
+            "probe_case_count": first.probe_limit,
+            "opportunity_policy": {
+                "quality_profile": first.quality_profile,
+                "quality_evaluation_version": "3.0",
+            },
+            "run_configuration": build_run_configuration(first),
+        }
+        extended = self.phase2b_args(max_drops=27)
+        result = validate_resume_catalog(catalog, extended)
+        self.assertEqual(result["status"], "fully_verified")
+
+        changed = self.phase2b_args(max_drops=27, recovery_seed=99)
+        with self.assertRaises(RuntimeError):
+            validate_resume_catalog(catalog, changed)
+
+    def test_profile_validation_cache_is_model_keyed(self) -> None:
+        root = Path("artifacts/test")
+        first = profile_validation_dir(root, "balanced", "frontier/stage_10/model")
+        second = profile_validation_dir(root, "balanced", "frontier/stage_11/model")
+        self.assertNotEqual(first, second)
+
     def test_memory_reduction_must_exceed_combined_quality_loss(self) -> None:
         baseline_generation = self.quality_summary(1.0)
         candidate_generation = self.quality_summary(0.97)
@@ -159,7 +266,11 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
         wrapper = (root / "scripts" / "phase_2_layer_selection" / "run_phase_2_structural_reduction.ps1").read_text(encoding="utf-8")
         self.assertIn('[string]$QualityProfile = "balanced"', wrapper)
         self.assertIn('"--quality-profile", $QualityProfile', wrapper)
-        self.assertIn("weight-memory gain > combined proportional quality loss", wrapper)
+        self.assertIn("cumulative AND incremental weight-memory gain > quality loss", wrapper)
+        runner = (root / "scripts" / "phase_2_layer_selection" / "progressive_reduction.py").read_text(encoding="utf-8")
+        self.assertIn("focused recovery found no eligible deletion", runner)
+        self.assertIn("continuing from accepted stage", runner)
+        self.assertIn("incremental parent-relative", runner)
         for forbidden in (
             "MinQualityPassRate", "MinCompleteUtteranceRate", "MaxScoreLoss",
             "MaxCategoryLoss", "MaxNllIncrease", "MaxNewMajorIssues",

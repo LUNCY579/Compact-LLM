@@ -4,7 +4,7 @@
 |---|---|---|
 | `run_phase_2.ps1` | Select Phase 2A, Phase 2B, or Phase 2C targeted-recovery execution. | Merge their gates into one ambiguous result. |
 | `run_phase_2_structural_reduction.ps1` | Validate inputs and launch the complete Phase 2B pipeline. | Auto-approve a reduced profile. |
-| `progressive_reduction.py` | Test every current layer, run focused recovery, build the progressive frontier, preserve profiles and evidence. | Use sealed data or treat a positive ratio as release approval. |
+| `progressive_reduction.py` | Test every current layer; resume directly from the last accepted frontier; enforce cumulative and parent-relative opportunity; escalate from focused to exhaustive recovery on stall; preserve profiles, provenance, termination evidence, and model-keyed validation results. | Replay completed stages, let earlier gains subsidize a damaging deletion, use sealed data, or treat a positive ratio as release approval. |
 | `create_depth_candidate.py` | Physically delete one block, reindex cache IDs, preserve original layer lineage, verify reload. | Modify the parent checkpoint in place. |
 | `build_structural_probe.py` | Select 50 balanced development records deterministically. | Draw from sealed data. |
 | `evaluate_teacher_forcing.py` | Measure target-token NLL as a continuous sensitivity signal. | Present NLL as a complete human-quality metric. |

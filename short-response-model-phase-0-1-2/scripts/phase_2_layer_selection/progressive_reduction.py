@@ -5,18 +5,21 @@ from __future__ import annotations
 Design principles:
 - Every current layer is tested as a one-layer deletion at each stage.
 - The first pass is cheap, reversible, and uses the configured development probe.
-- Only the strongest raw deletions receive short recovery fine-tuning by default.
+- Only the strongest raw deletions receive short recovery fine-tuning initially;
+  every remaining branch is recovered once if the focused search would stop.
 - Every accepted frontier stage is materialized and preserved; rejected full
   checkpoints may be regenerated from their parent plus recorded drop ID.
-- Progress continues only while proportional loaded weight-memory reduction exceeds
-  combined proportional quality opportunity loss. No absolute quality floor is used.
+- Resume restores the last accepted frontier directly instead of replaying it.
+- Progress requires positive cumulative and immediate-parent opportunity margins.
+  No absolute quality floor is used.
 """
 
 import argparse
-import json
+import hashlib
 import math
 import shutil
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -24,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_json, run, write_json
+from scripts.common.experiment_utils import read_json, run, sha256, sha256_tree, write_json
 from scripts.phase_2_layer_selection.create_depth_candidate import lineage_for_model
 from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference
@@ -84,6 +87,328 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--keep-candidate-checkpoints", action="store_true")
     parser.add_argument("--resume", action="store_true")
     return parser.parse_args()
+
+
+
+RESUME_SCHEMA_VERSION = 2
+TERMINAL_NO_PROGRESS_REASONS = {
+    "no_marginally_worthwhile_deletion_after_exhaustive_recovery",
+    "no_marginally_worthwhile_deletion_recovery_disabled",
+    "minimum_layer_guard_reached",
+}
+
+
+def utc_now() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _normal_path(value: str | Path) -> str:
+    """Return a stable comparison token for repository paths.
+
+    Existing Phase 2B catalogs can contain relative paths, absolute paths, or
+    Windows-style separators. Resolution is intentionally anchored at the
+    repository root so continuation does not depend on the caller's cwd.
+    """
+
+    raw = str(value).strip().replace("\\", "/")
+    candidate = Path(raw)
+    if not candidate.is_absolute():
+        candidate = ROOT / candidate
+    try:
+        candidate = candidate.resolve(strict=False)
+    except OSError:
+        pass
+    return candidate.as_posix().rstrip("/").casefold()
+
+
+def _repo_path(value: str | Path) -> Path:
+    raw = str(value).replace("\\", "/")
+    candidate = Path(raw)
+    return candidate if candidate.is_absolute() else ROOT / candidate
+
+
+def _file_fingerprint(value: str | Path) -> str:
+    path = _repo_path(value)
+    return sha256(path) if path.is_file() else "missing"
+
+
+def _tree_fingerprint(value: str | Path) -> str:
+    path = _repo_path(value)
+    return sha256_tree(path) if path.exists() else "missing"
+
+
+def build_run_configuration(args: argparse.Namespace) -> dict[str, Any]:
+    """Persist every setting that can alter resumed Phase 2B evidence.
+
+    ``max_drops`` is recorded but deliberately excluded from strict resume
+    equality because increasing it is the supported way to extend a completed
+    frontier.
+    """
+
+    return {
+        "resume_schema_version": RESUME_SCHEMA_VERSION,
+        "model_id": str(args.model_id),
+        "sft_adapter": str(args.sft_adapter),
+        "train_file": str(args.train_file),
+        "dev_file": str(args.dev_file),
+        "probe_file": str(args.probe_file),
+        "phase_benchmark": str(args.phase_benchmark),
+        "probe_limit": int(args.probe_limit),
+        "probe_seed": int(args.probe_seed),
+        "quality_profile": str(args.quality_profile),
+        "recovery_top_k": int(args.recovery_top_k),
+        "recovery_steps": int(args.recovery_steps),
+        "recovery_seed": int(args.recovery_seed),
+        "max_new_tokens": int(args.max_new_tokens),
+        "qlora": bool(args.qlora),
+        "gradient_checkpointing": bool(args.gradient_checkpointing),
+        "skip_recovery": bool(args.skip_recovery),
+        "sft_adapter_fingerprint": _tree_fingerprint(args.sft_adapter),
+        "train_file_sha256": _file_fingerprint(args.train_file),
+        "dev_file_sha256": _file_fingerprint(args.dev_file),
+        "probe_file_sha256": _file_fingerprint(args.probe_file),
+        "phase_benchmark_sha256": _file_fingerprint(args.phase_benchmark),
+        "quality_evaluation_config_sha256": _file_fingerprint(ROOT / "configs/quality_evaluation.json"),
+        "opportunity_policy_config_sha256": _file_fingerprint(ROOT / "configs/relative_opportunity_evaluation.json"),
+        "evaluator_script_sha256": _file_fingerprint(EVALUATOR),
+        "requested_max_drops": int(args.max_drops),
+    }
+
+
+def validate_resume_catalog(catalog: dict[str, Any], args: argparse.Namespace) -> dict[str, Any]:
+    """Reject continuation when persisted provenance conflicts with this run.
+
+    Catalogs produced before this hotfix did not persist every recovery flag.
+    For those legacy catalogs, all fields that *were* persisted are verified and
+    the unavailable fields are explicitly reported as assumptions. They are not
+    silently claimed to have been verified.
+    """
+
+    mismatches: list[str] = []
+    verified: list[str] = []
+    assumptions: list[str] = []
+
+    scalar_checks = {
+        "source_model_id": (catalog.get("source_model_id"), str(args.model_id)),
+        "probe_case_count": (catalog.get("probe_case_count"), int(args.probe_limit)),
+    }
+    for name, (existing, requested) in scalar_checks.items():
+        if existing is None:
+            assumptions.append(name)
+        elif str(existing) != str(requested):
+            mismatches.append(f"{name}: catalog={existing!r}, requested={requested!r}")
+        else:
+            verified.append(name)
+
+    path_checks = {
+        "source_sft_adapter": (catalog.get("source_sft_adapter"), args.sft_adapter),
+        "probe_file": (catalog.get("probe_file"), args.probe_file),
+        "phase_benchmark": (catalog.get("phase_benchmark"), args.phase_benchmark),
+    }
+    for name, (existing, requested) in path_checks.items():
+        if existing is None:
+            assumptions.append(name)
+        elif _normal_path(existing) != _normal_path(requested):
+            mismatches.append(f"{name}: catalog={existing!r}, requested={str(requested)!r}")
+        else:
+            verified.append(name)
+
+    existing_profile = (catalog.get("opportunity_policy") or {}).get("quality_profile")
+    if existing_profile is None:
+        assumptions.append("quality_profile")
+    elif str(existing_profile) != str(args.quality_profile):
+        mismatches.append(
+            f"quality_profile: catalog={existing_profile!r}, requested={args.quality_profile!r}"
+        )
+    else:
+        verified.append("quality_profile")
+
+    evaluator_version = (catalog.get("opportunity_policy") or {}).get("quality_evaluation_version")
+    if evaluator_version is None:
+        assumptions.append("quality_evaluation_version")
+    elif str(evaluator_version) != "3.0":
+        mismatches.append(
+            f"quality_evaluation_version: catalog={evaluator_version!r}, requested='3.0'"
+        )
+    else:
+        verified.append("quality_evaluation_version")
+
+    previous = catalog.get("run_configuration")
+    current = build_run_configuration(args)
+    if isinstance(previous, dict):
+        path_fields = {"sft_adapter", "train_file", "dev_file", "probe_file", "phase_benchmark"}
+        ignored = {"requested_max_drops", "resume_schema_version"}
+        for name, requested in current.items():
+            if name in ignored:
+                continue
+            if name not in previous:
+                assumptions.append(f"run_configuration.{name}")
+                continue
+            existing = previous[name]
+            equal = _normal_path(existing) == _normal_path(requested) if name in path_fields else existing == requested
+            if not equal:
+                mismatches.append(
+                    f"run_configuration.{name}: catalog={existing!r}, requested={requested!r}"
+                )
+            else:
+                verified.append(f"run_configuration.{name}")
+    else:
+        assumptions.extend(
+            f"legacy_unpersisted.{name}"
+            for name in (
+                "train_file", "dev_file", "probe_seed", "recovery_top_k",
+                "recovery_steps", "recovery_seed", "max_new_tokens", "qlora",
+                "gradient_checkpointing", "skip_recovery", "data_fingerprints",
+                "adapter_fingerprint", "evaluator_and_policy_fingerprints",
+            )
+        )
+
+    if mismatches:
+        detail = "\n  - ".join(mismatches)
+        raise RuntimeError(
+            "Refusing to resume Phase 2B because experiment provenance changed. "
+            "Use the original settings or a new OutputRoot.\n  - " + detail
+        )
+    return {
+        "validated_at": utc_now(),
+        "verified_fields": sorted(set(verified)),
+        "legacy_assumptions": sorted(set(assumptions)),
+        "status": "verified_with_legacy_assumptions" if assumptions else "fully_verified",
+    }
+
+
+def load_candidate_registry(path: Path) -> list[dict[str, Any]]:
+    if not path.exists():
+        return []
+    payload = read_json(path)
+    rows = payload.get("candidates", []) if isinstance(payload, dict) else []
+    if not isinstance(rows, list):
+        raise ValueError(f"Malformed Phase 2B candidate registry: {path}")
+    return list(rows)
+
+
+def restore_resume_state(
+    catalog: dict[str, Any],
+    *,
+    reference_model: Path,
+    candidate_registry_path: Path,
+) -> tuple[Path, list[int], list[dict[str, Any]], list[dict[str, Any]], int]:
+    """Restore the exact accepted frontier parent without replaying old stages."""
+
+    frontier = list(catalog.get("frontier") or [])
+    candidates = load_candidate_registry(candidate_registry_path)
+    if not frontier:
+        return reference_model, [], candidates, [], 1
+
+    last = max(frontier, key=lambda row: int(row.get("stage", 0)))
+    current_model = _repo_path(last["inference_model"])
+    if not current_model.exists():
+        raise FileNotFoundError(
+            f"Cannot resume Phase 2B: accepted frontier parent is missing: {current_model}"
+        )
+    dropped = [int(value) for value in last.get("dropped_original_layer_ids", [])]
+    if len(dropped) != int(last.get("stage", len(dropped))):
+        raise ValueError("Phase 2B frontier lineage is inconsistent with its stage number.")
+    start_stage = max(int(row.get("stage", 0)) for row in frontier) + 1
+    return current_model, dropped, candidates, frontier, start_stage
+
+
+def combine_progression_assessments(
+    cumulative: dict[str, Any],
+    incremental: dict[str, Any],
+) -> dict[str, Any]:
+    """Require both full-reference and parent-relative opportunity to be positive."""
+
+    cumulative_ok = bool(cumulative.get("eligible_for_progression"))
+    incremental_ok = bool(incremental.get("eligible_for_progression"))
+    reasons: list[str] = []
+    if not cumulative_ok:
+        reasons.extend(f"cumulative: {reason}" for reason in cumulative.get("rejection_reasons", []))
+    if not incremental_ok:
+        reasons.extend(f"incremental: {reason}" for reason in incremental.get("rejection_reasons", []))
+
+    combined = dict(cumulative)
+    combined.update(
+        {
+            "eligible_for_progression": cumulative_ok and incremental_ok,
+            "cumulative_eligible_for_progression": cumulative_ok,
+            "incremental_eligible_for_progression": incremental_ok,
+            "rejection_reasons": reasons,
+            "decision_rule": (
+                "cumulative weight-memory gain > cumulative quality opportunity loss AND "
+                "incremental parent-relative weight-memory gain > incremental quality opportunity loss"
+            ),
+            "incremental_weight_memory_reduction_fraction": incremental.get(
+                "weight_memory_reduction_fraction", 0.0
+            ),
+            "incremental_quality_opportunity_loss_fraction": incremental.get(
+                "quality_opportunity_loss_fraction", 0.0
+            ),
+            "incremental_opportunity_margin": incremental.get("opportunity_margin", 0.0),
+            "cumulative_assessment": cumulative,
+            "incremental_assessment": incremental,
+        }
+    )
+    return combined
+
+
+def parent_reference_from_baseline(baseline: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "generation_summary": baseline["generation_summary"],
+        "nll_summary": baseline["nll_summary"],
+        "footprint": baseline["footprint"],
+        "results": baseline["results"],
+        "label": "full_reference",
+    }
+
+
+def parent_reference_from_frontier(row: dict[str, Any]) -> dict[str, Any]:
+    evidence_dir = _repo_path(row["evidence_dir"])
+    return {
+        "generation_summary": row["generation_summary"],
+        "nll_summary": row["nll_summary"],
+        "footprint": row["footprint"],
+        "results": str(evidence_dir / "generation" / "results.jsonl"),
+        "label": f"frontier_stage_{row.get('stage')}",
+    }
+
+
+def audit_existing_frontier_incrementally(
+    baseline: dict[str, Any],
+    frontier: list[dict[str, Any]],
+    *,
+    quality_profile: str,
+) -> None:
+    """Backfill and verify the marginal rule on legacy accepted stages."""
+
+    parent = parent_reference_from_baseline(baseline)
+    for row in sorted(frontier, key=lambda item: int(item.get("stage", 0))):
+        incremental = assess_candidate(
+            baseline_generation=parent["generation_summary"],
+            candidate_generation=row["generation_summary"],
+            baseline_nll=parent["nll_summary"],
+            candidate_nll=row["nll_summary"],
+            baseline_footprint=parent["footprint"],
+            candidate_footprint=row["footprint"],
+            output_deviation={},
+            quality_profile=quality_profile,
+        )
+        cumulative = row["assessment"].get("cumulative_assessment", row["assessment"])
+        row["assessment"] = combine_progression_assessments(cumulative, incremental)
+        if not row["assessment"]["eligible_for_progression"]:
+            raise RuntimeError(
+                "The existing accepted Phase 2B frontier fails the new parent-relative rule at "
+                f"stage {row.get('stage')}. Do not continue from a subsidized deletion; review or "
+                "rollback to the preceding accepted stage."
+            )
+        parent = parent_reference_from_frontier(row)
+
+
+def profile_validation_dir(output_root: Path, name: str, inference_model: str) -> Path:
+    """Use model-keyed profile folders so resumed runs never reuse stale summaries."""
+
+    token = hashlib.sha256(_normal_path(inference_model).encode("utf-8")).hexdigest()[:12]
+    return output_root / "profile_validation" / f"{name}_{token}" / "generation"
 
 
 def relative_loss(reference: float, candidate: float) -> float:
@@ -204,6 +529,7 @@ def ranking_key(row: dict[str, Any]) -> tuple[Any, ...]:
     return (
         bool(assessment["eligible_for_progression"]),
         float(assessment.get("opportunity_margin", float("-inf"))),
+        float(assessment.get("incremental_opportunity_margin", float("-inf"))),
         float(assessment.get("weight_memory_reduction_fraction", 0.0)),
         -float(assessment.get("quality_opportunity_loss_fraction", float("inf"))),
         float(generation.get("worst_decile_mean_quality_score", 0.0)),
@@ -228,6 +554,7 @@ def evaluate_variant(
     baseline_generation: dict[str, Any],
     baseline_nll: dict[str, Any],
     baseline_footprint: dict[str, Any],
+    parent_reference: dict[str, Any],
     args: argparse.Namespace,
 ) -> dict[str, Any]:
     generation_dir = evidence_dir / "generation"
@@ -235,6 +562,8 @@ def evaluate_variant(
     footprint_path = evidence_dir / "footprint.json"
     deviation_json = evidence_dir / "output_deviation.json"
     deviation_report = evidence_dir / "OUTPUT_DEVIATION.md"
+    parent_deviation_json = evidence_dir / "parent_output_deviation.json"
+    parent_deviation_report = evidence_dir / "PARENT_OUTPUT_DEVIATION.md"
 
     summary_sentinel = generation_dir / "summary.json"
     if args.resume and summary_sentinel.exists():
@@ -295,13 +624,35 @@ def evaluate_variant(
         deviation_json,
         args.resume,
     )
+    parent_results = Path(str(parent_reference["results"]))
+    if _normal_path(parent_results) == _normal_path(baseline_results):
+        parent_deviation_json = deviation_json
+    else:
+        run_if_needed(
+            [
+                PYTHON,
+                str(COMPARE),
+                "--reference",
+                str(parent_results),
+                "--candidate",
+                str(generation_dir / "results.jsonl"),
+                "--out-json",
+                str(parent_deviation_json),
+                "--out-report",
+                str(parent_deviation_report),
+            ],
+            parent_deviation_json,
+            args.resume,
+        )
 
     generation_summary = read_json(generation_dir / "summary.json")
     nll_summary = read_json(nll_dir / "summary.json")
     footprint = read_json(footprint_path)
     deviation_payload = read_json(deviation_json)
     deviation_summary = deviation_payload["summary"]
-    assessment = assess_candidate(
+    parent_deviation_payload = read_json(parent_deviation_json)
+    parent_deviation_summary = parent_deviation_payload["summary"]
+    cumulative_assessment = assess_candidate(
         baseline_generation=baseline_generation,
         candidate_generation=generation_summary,
         baseline_nll=baseline_nll,
@@ -311,6 +662,17 @@ def evaluate_variant(
         output_deviation=deviation_summary,
         quality_profile=args.quality_profile,
     )
+    incremental_assessment = assess_candidate(
+        baseline_generation=parent_reference["generation_summary"],
+        candidate_generation=generation_summary,
+        baseline_nll=parent_reference["nll_summary"],
+        candidate_nll=nll_summary,
+        baseline_footprint=parent_reference["footprint"],
+        candidate_footprint=footprint,
+        output_deviation=parent_deviation_summary,
+        quality_profile=args.quality_profile,
+    )
+    assessment = combine_progression_assessments(cumulative_assessment, incremental_assessment)
     payload = {
         "model_id": model_id,
         "adapter_path": str(adapter_path) if adapter_path else None,
@@ -318,6 +680,8 @@ def evaluate_variant(
         "nll_summary": nll_summary,
         "footprint": footprint,
         "output_deviation_summary": deviation_summary,
+        "parent_output_deviation_summary": parent_deviation_summary,
+        "parent_reference_label": parent_reference.get("label"),
         "assessment": assessment,
         "evidence_dir": str(evidence_dir),
     }
@@ -358,6 +722,59 @@ def recover_candidate(
         command.append("--gradient-checkpointing")
     run_if_needed(command, recovery_root / "adapter/adapter_config.json", args.resume)
     return recovery_root / "adapter"
+
+
+
+def recover_rows(
+    *,
+    raw_rows: list[dict[str, Any]],
+    stage: int,
+    evidence_root: Path,
+    baseline_generation_dir: Path,
+    baseline_generation: dict[str, Any],
+    baseline_nll: dict[str, Any],
+    baseline_footprint: dict[str, Any],
+    parent_reference: dict[str, Any],
+    args: argparse.Namespace,
+) -> list[dict[str, Any]]:
+    """Recovery-train and evaluate the requested raw deletion branches."""
+
+    recovered: list[dict[str, Any]] = []
+    for raw_row in raw_rows:
+        variant_id = raw_row["variant_id"].replace("_raw", "_recovered")
+        candidate_evidence = evidence_root / f"stage_{stage:02d}" / variant_id
+        adapter = recover_candidate(
+            raw_model=Path(raw_row["raw_model"]),
+            candidate_evidence=candidate_evidence,
+            args=args,
+        )
+        metrics = evaluate_variant(
+            model_id=raw_row["raw_model"],
+            adapter_path=adapter,
+            evidence_dir=candidate_evidence,
+            probe_file=args.probe_file,
+            baseline_results=baseline_generation_dir / "results.jsonl",
+            baseline_generation=baseline_generation,
+            baseline_nll=baseline_nll,
+            baseline_footprint=baseline_footprint,
+            parent_reference=parent_reference,
+            args=args,
+        )
+        recovered.append(
+            {
+                **metrics,
+                "variant_id": variant_id,
+                "variant_kind": "deletion + recovery SFT",
+                "stage": stage,
+                "parent_model": raw_row["parent_model"],
+                "raw_model": raw_row["raw_model"],
+                "adapter_path": str(adapter),
+                "drop_current_layer_id": raw_row["drop_current_layer_id"],
+                "dropped_original_layer_id": raw_row["dropped_original_layer_id"],
+                "retained_original_layer_ids": raw_row["retained_original_layer_ids"],
+            }
+        )
+    return recovered
 
 
 def copy_or_materialize_selected(
@@ -446,6 +863,7 @@ def render_report(
     stages: list[dict[str, Any]],
     candidates: list[dict[str, Any]],
     profiles: dict[str, dict[str, Any]],
+    termination: dict[str, Any],
     args: argparse.Namespace,
 ) -> str:
     first_stage = [row for row in candidates if row["stage"] == 1]
@@ -476,12 +894,18 @@ def render_report(
             f"{a['weight_memory_reduction_fraction']:.2%} | "
             f"{a['quality_opportunity_loss_fraction']:.2%} | "
             f"{a['opportunity_margin']:+.2%} | "
+            f"{float(a.get('incremental_weight_memory_reduction_fraction', 0.0)):.2%} | "
+            f"{float(a.get('incremental_quality_opportunity_loss_fraction', 0.0)):.2%} | "
+            f"{float(a.get('incremental_opportunity_margin', 0.0)):+.2%} | "
             f"{format_optional_percent(a.get('peak_evaluation_vram_reduction_fraction'))} | "
             f"{format_optional_percent(a.get('mean_generation_latency_reduction_fraction'))} | "
             f"{row['variant_kind']} |"
         )
     if not stage_lines:
-        stage_lines.append("| 0 | [] | - | - | - | - | - | - | - | no proportionally worthwhile reduction |")
+        stage_lines.append(
+            "| 0 | [] | - | - | - | - | - | - | - | - | - | - | "
+            "no proportionally worthwhile reduction |"
+        )
 
     def profile_line(name: str, row: dict[str, Any]) -> str:
         if name == "full_quality" or "assessment" not in row:
@@ -512,7 +936,9 @@ training.
 - Full-reference quality: {baseline['generation_summary']['mean_quality_score']:.3f}.
 - Full-reference target NLL: {baseline['nll_summary']['mean_target_nll']:.4f}.
 - Every current layer is tested as a raw deletion at each progressive stage.
-- Recovery fine-tuning is limited to the strongest {args.recovery_top_k} raw candidates per stage unless configured otherwise.
+- Recovery first evaluates the strongest {args.recovery_top_k} raw candidates per stage.
+- If focused recovery finds no eligible candidate, every remaining raw branch is recovery-tested once before the frontier is declared terminal.
+- Resume continues directly from the last accepted frontier model; completed stages are not reconstructed.
 
 ## Stage 1 individual-layer results
 
@@ -522,9 +948,16 @@ training.
 
 ## Accepted progressive frontier
 
-| Stage | Original layers dropped so far | Remaining layers | Quality | Weight-memory gain | Quality opportunity loss | Opportunity margin | Eval VRAM change | Generation latency change | Selected form |
-|---:|---|---:|---:|---:|---:|---:|---:|---:|---|
+| Stage | Original layers dropped so far | Remaining layers | Quality | Cumulative memory gain | Cumulative quality loss | Cumulative margin | Incremental memory gain | Incremental quality loss | Incremental margin | Eval VRAM change | Generation latency change | Selected form |
+|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
 {chr(10).join(stage_lines)}
+
+## Terminal condition
+
+- Reason: `{termination.get('reason')}`
+- Terminal stage attempted: `{termination.get('terminal_stage_attempted')}`
+- Accepted frontier stages: **{termination.get('accepted_frontier_stages', len(stages))}**
+- Exhaustive recovery triggered at terminal/last stage: **{termination.get('exhaustive_recovery_triggered', False)}**
 
 ## Retained deployment/training profiles
 
@@ -534,14 +967,18 @@ training.
 
 ## Decision rule
 
-A technically comparable candidate enters the frontier when its measured
-proportional loaded weight-tensor memory reduction is **strictly greater** than
-its combined proportional quality opportunity loss. Mean quality, tail quality,
-category behavior, comprehensibility, task adequacy, logic, safety, context,
-completeness, content anchors, issue cost, severe-collapse rate, and target NLL
-contribute continuously according to the selected profile. None is an independent
-absolute floor or issue-count veto. Latency and evaluation VRAM remain secondary
-measured evidence and do not silently replace the declared primary resource.
+A technically comparable candidate enters the frontier only when **both** are true:
+
+1. Its cumulative loaded weight-tensor memory reduction from the full reference is strictly greater than its cumulative combined quality opportunity loss.
+2. Its incremental loaded weight-tensor memory reduction from the immediate accepted parent is strictly greater than its incremental combined quality opportunity loss.
+
+The second condition prevents a later damaging deletion from being subsidized by
+the large positive margin accumulated by earlier successful deletions. Mean
+quality, tail quality, category behavior, comprehensibility, task adequacy,
+logic, safety, context, completeness, content anchors, issue cost,
+severe-collapse rate, and target NLL contribute continuously according to the
+selected profile. None is an independent absolute floor or issue-count veto.
+Latency and evaluation VRAM remain secondary measured evidence.
 
 Human review and later phase controls remain mandatory. Technical invalidity—such
 as missing evidence, a corrupt checkpoint, mismatched evaluator versions, or
@@ -551,8 +988,9 @@ calculation exists.
 ## Workflow handoff
 
 - `full_quality` preserves the original all-layer SFT reference.
-- `balanced` selects the eligible frontier point with the largest opportunity margin.
+- `balanced` selects the eligible frontier point with the largest cumulative opportunity margin.
 - `min_memory` selects the eligible frontier point with the largest weight-memory gain.
+- Phase 2C should begin only after a reduced profile receives explicit human approval.
 - Phase 4 soups must use ingredients from the same selected architecture profile.
 """
 
@@ -561,9 +999,25 @@ def main() -> None:
     args = parse_args()
     args.output_root.mkdir(parents=True, exist_ok=True)
     catalog_path = args.output_root / "model_catalog.json"
+    candidate_registry_path = args.output_root / "candidate_registry.json"
+    existing_catalog: dict[str, Any] | None = None
+    resume_validation: dict[str, Any] | None = None
+
+    if catalog_path.exists() and not args.resume:
+        raise FileExistsError(
+            f"Phase 2B output already contains a completed catalog: {catalog_path}. "
+            "Use --resume to extend it or choose a new --output-root for a fresh run."
+        )
+
     if args.resume and catalog_path.exists():
-        print(f"Completed catalog already exists: {catalog_path}")
-        return
+        existing_catalog = read_json(catalog_path)
+        resume_validation = validate_resume_catalog(existing_catalog, args)
+        if resume_validation["legacy_assumptions"]:
+            print(
+                "[resume warning] Legacy Phase 2B catalog lacks some settings that cannot be "
+                "retroactively verified. They are recorded as explicit assumptions in the new catalog."
+            )
+        write_json(args.output_root / "resume_validation.json", resume_validation)
 
     if not args.sft_adapter.exists():
         raise FileNotFoundError(args.sft_adapter)
@@ -659,143 +1113,240 @@ def main() -> None:
         "results": str(baseline_generation_dir / "results.jsonl"),
     }
 
-    current_model = reference_model
-    dropped_original: list[int] = []
-    all_candidate_rows: list[dict[str, Any]] = []
-    frontier_rows: list[dict[str, Any]] = []
+    if existing_catalog is not None:
+        current_model, dropped_original, all_candidate_rows, frontier_rows, start_stage = restore_resume_state(
+            existing_catalog,
+            reference_model=reference_model,
+            candidate_registry_path=candidate_registry_path,
+        )
+        audit_existing_frontier_incrementally(
+            baseline,
+            frontier_rows,
+            quality_profile=args.quality_profile,
+        )
+        parent_reference = (
+            parent_reference_from_frontier(frontier_rows[-1])
+            if frontier_rows
+            else parent_reference_from_baseline(baseline)
+        )
+        print(
+            f"[resume] continuing from accepted stage {start_stage - 1}; "
+            f"next stage is {start_stage}; parent={current_model}"
+        )
+    else:
+        current_model = reference_model
+        dropped_original = []
+        all_candidate_rows = []
+        frontier_rows = []
+        start_stage = 1
+        parent_reference = parent_reference_from_baseline(baseline)
+
     work_root = args.output_root / "work_models"
     evidence_root = args.output_root / "evidence"
     frontier_root = args.output_root / "frontier"
+    prior_termination = (existing_catalog or {}).get("termination") or {}
+    termination: dict[str, Any] = {
+        "reason": "max_drops_reached",
+        "terminal_stage_attempted": None,
+        "accepted_frontier_stages": len(frontier_rows),
+        "exhaustive_recovery_triggered": False,
+    }
 
-    for stage in range(1, args.max_drops + 1):
-        from transformers import AutoConfig
+    skip_stage_loop = False
+    if prior_termination.get("reason") in TERMINAL_NO_PROGRESS_REASONS:
+        termination = dict(prior_termination)
+        skip_stage_loop = True
+        print(
+            "[resume] the catalog already records a terminal no-progress condition; "
+            "no stage will be replayed."
+        )
 
-        config = AutoConfig.from_pretrained(current_model)
-        current_count = int(config.num_hidden_layers)
-        if current_count <= 2:
-            break
-        original_ids = lineage_for_model(current_model, current_count)
-        stage_raw_rows: list[dict[str, Any]] = []
+    if not skip_stage_loop:
+        for stage in range(start_stage, args.max_drops + 1):
+            from transformers import AutoConfig
 
-        for current_index, original_id in enumerate(original_ids):
-            variant_id = f"stage_{stage:02d}_drop_original_{original_id:02d}_raw"
-            raw_model = work_root / variant_id
-            candidate_evidence = evidence_root / f"stage_{stage:02d}" / variant_id
-            run_if_needed(
-                [
-                    PYTHON,
-                    str(CREATE_CANDIDATE),
-                    "--model",
-                    str(current_model),
-                    "--drop-current-layer",
-                    str(current_index),
-                    "--output-dir",
-                    str(raw_model),
-                ],
-                raw_model / "depth_reduction_manifest.json",
-                args.resume,
-            )
-            metrics = evaluate_variant(
-                model_id=str(raw_model),
-                adapter_path=None,
-                evidence_dir=candidate_evidence,
-                probe_file=args.probe_file,
-                baseline_results=baseline_generation_dir / "results.jsonl",
-                baseline_generation=baseline_generation,
-                baseline_nll=baseline_nll,
-                baseline_footprint=baseline_footprint,
-                args=args,
-            )
-            row = {
-                **metrics,
-                "variant_id": variant_id,
-                "variant_kind": "raw deletion",
-                "stage": stage,
-                "parent_model": str(current_model),
-                "raw_model": str(raw_model),
-                "adapter_path": None,
-                "drop_current_layer_id": current_index,
-                "dropped_original_layer_id": original_id,
-                "retained_original_layer_ids": [value for value in original_ids if value != original_id],
-            }
-            stage_raw_rows.append(row)
-            all_candidate_rows.append(row)
+            config = AutoConfig.from_pretrained(current_model)
+            current_count = int(config.num_hidden_layers)
+            if current_count <= 2:
+                termination = {
+                    "reason": "minimum_layer_guard_reached",
+                    "terminal_stage_attempted": stage,
+                    "accepted_frontier_stages": len(frontier_rows),
+                    "exhaustive_recovery_triggered": False,
+                }
+                break
+            original_ids = lineage_for_model(current_model, current_count)
+            stage_raw_rows: list[dict[str, Any]] = []
 
-        # Recovery is intentionally focused by default. Set recovery-top-k to
-        # the current layer count to fine-tune every raw deletion branch.
-        recovered_rows: list[dict[str, Any]] = []
-        if not args.skip_recovery and args.recovery_steps > 0 and args.recovery_top_k > 0:
-            recovery_targets = sorted(stage_raw_rows, key=ranking_key, reverse=True)[: args.recovery_top_k]
-            for raw_row in recovery_targets:
-                variant_id = raw_row["variant_id"].replace("_raw", "_recovered")
+            for current_index, original_id in enumerate(original_ids):
+                variant_id = f"stage_{stage:02d}_drop_original_{original_id:02d}_raw"
+                raw_model = work_root / variant_id
                 candidate_evidence = evidence_root / f"stage_{stage:02d}" / variant_id
-                adapter = recover_candidate(
-                    raw_model=Path(raw_row["raw_model"]),
-                    candidate_evidence=candidate_evidence,
-                    args=args,
+                run_if_needed(
+                    [
+                        PYTHON,
+                        str(CREATE_CANDIDATE),
+                        "--model",
+                        str(current_model),
+                        "--drop-current-layer",
+                        str(current_index),
+                        "--output-dir",
+                        str(raw_model),
+                    ],
+                    raw_model / "depth_reduction_manifest.json",
+                    args.resume,
                 )
                 metrics = evaluate_variant(
-                    model_id=raw_row["raw_model"],
-                    adapter_path=adapter,
+                    model_id=str(raw_model),
+                    adapter_path=None,
                     evidence_dir=candidate_evidence,
                     probe_file=args.probe_file,
                     baseline_results=baseline_generation_dir / "results.jsonl",
                     baseline_generation=baseline_generation,
                     baseline_nll=baseline_nll,
                     baseline_footprint=baseline_footprint,
+                    parent_reference=parent_reference,
                     args=args,
                 )
                 row = {
                     **metrics,
                     "variant_id": variant_id,
-                    "variant_kind": "deletion + recovery SFT",
+                    "variant_kind": "raw deletion",
                     "stage": stage,
                     "parent_model": str(current_model),
-                    "raw_model": raw_row["raw_model"],
-                    "adapter_path": str(adapter),
-                    "drop_current_layer_id": raw_row["drop_current_layer_id"],
-                    "dropped_original_layer_id": raw_row["dropped_original_layer_id"],
-                    "retained_original_layer_ids": raw_row["retained_original_layer_ids"],
+                    "raw_model": str(raw_model),
+                    "adapter_path": None,
+                    "drop_current_layer_id": current_index,
+                    "dropped_original_layer_id": original_id,
+                    "retained_original_layer_ids": [value for value in original_ids if value != original_id],
                 }
-                recovered_rows.append(row)
+                stage_raw_rows.append(row)
                 all_candidate_rows.append(row)
 
-        stage_options = stage_raw_rows + recovered_rows
-        eligible = [row for row in stage_options if row["assessment"]["eligible_for_progression"]]
-        if not eligible:
-            print(f"Stopping at stage {stage}: no deletion satisfies the reduction/quality rule.")
-            break
-        selected = max(eligible, key=ranking_key)
-        dropped_original.append(int(selected["dropped_original_layer_id"]))
-        stage_dir = frontier_root / f"stage_{stage:02d}_drop_{'_'.join(map(str, dropped_original))}"
-        stage_model = stage_dir / "model"
-        copy_or_materialize_selected(
-            selected=selected,
-            stage_model_dir=stage_model,
-            retained_original_ids=selected["retained_original_layer_ids"],
-            parent_model=str(current_model),
-        )
+            recovered_rows: list[dict[str, Any]] = []
+            focused_targets: list[dict[str, Any]] = []
+            if not args.skip_recovery and args.recovery_steps > 0 and args.recovery_top_k > 0:
+                focused_targets = sorted(stage_raw_rows, key=ranking_key, reverse=True)[: args.recovery_top_k]
+                recovered_rows.extend(
+                    recover_rows(
+                        raw_rows=focused_targets,
+                        stage=stage,
+                        evidence_root=evidence_root,
+                        baseline_generation_dir=baseline_generation_dir,
+                        baseline_generation=baseline_generation,
+                        baseline_nll=baseline_nll,
+                        baseline_footprint=baseline_footprint,
+                        parent_reference=parent_reference,
+                        args=args,
+                    )
+                )
+                all_candidate_rows.extend(recovered_rows)
 
-        frontier_row = {
-            **selected,
-            "stage": stage,
-            "inference_model": str(stage_model),
-            "training_model_id": str(stage_model),
-            "training_adapter": None,
-            "evaluation_summary": str(Path(selected["evidence_dir"]) / "generation/summary.json"),
-            "dropped_original_layer_ids": list(dropped_original),
-            "remaining_layer_count": len(selected["retained_original_layer_ids"]),
-        }
-        write_json(stage_dir / "stage_result.json", frontier_row)
-        frontier_rows.append(frontier_row)
-        current_model = stage_model
+            stage_options = stage_raw_rows + recovered_rows
+            eligible = [row for row in stage_options if row["assessment"]["eligible_for_progression"]]
+            exhaustive_triggered = False
 
-        if not args.keep_candidate_checkpoints:
-            # Evidence, recovery adapters, and selected frontier checkpoints are
-            # retained. Rejected full checkpoints are reproducible from the
-            # preserved parent model and recorded drop-current-layer ID.
-            if work_root.exists():
+            if (
+                not eligible
+                and not args.skip_recovery
+                and args.recovery_steps > 0
+                and args.recovery_top_k > 0
+                and len(focused_targets) < len(stage_raw_rows)
+            ):
+                recovered_original_ids = {
+                    int(row["dropped_original_layer_id"]) for row in focused_targets
+                }
+                remaining_targets = [
+                    row for row in stage_raw_rows
+                    if int(row["dropped_original_layer_id"]) not in recovered_original_ids
+                ]
+                if remaining_targets:
+                    exhaustive_triggered = True
+                    print(
+                        f"[stage {stage}] focused recovery found no eligible deletion; "
+                        f"recovery-testing all {len(remaining_targets)} remaining branches before stopping."
+                    )
+                    exhaustive_rows = recover_rows(
+                        raw_rows=remaining_targets,
+                        stage=stage,
+                        evidence_root=evidence_root,
+                        baseline_generation_dir=baseline_generation_dir,
+                        baseline_generation=baseline_generation,
+                        baseline_nll=baseline_nll,
+                        baseline_footprint=baseline_footprint,
+                        parent_reference=parent_reference,
+                        args=args,
+                    )
+                    recovered_rows.extend(exhaustive_rows)
+                    all_candidate_rows.extend(exhaustive_rows)
+                    stage_options.extend(exhaustive_rows)
+                    eligible = [
+                        row for row in stage_options
+                        if row["assessment"]["eligible_for_progression"]
+                    ]
+
+            if not eligible:
+                reason = (
+                    "no_marginally_worthwhile_deletion_recovery_disabled"
+                    if args.skip_recovery or args.recovery_steps <= 0 or args.recovery_top_k <= 0
+                    else "no_marginally_worthwhile_deletion_after_exhaustive_recovery"
+                )
+                termination = {
+                    "reason": reason,
+                    "terminal_stage_attempted": stage,
+                    "accepted_frontier_stages": len(frontier_rows),
+                    "exhaustive_recovery_triggered": exhaustive_triggered,
+                    "raw_candidates_tested": len(stage_raw_rows),
+                    "recovered_candidates_tested": len(recovered_rows),
+                }
+                print(
+                    f"Stopping at stage {stage}: no candidate satisfies both the cumulative "
+                    "and parent-relative opportunity rules."
+                )
+                break
+
+            selected = max(eligible, key=ranking_key)
+            dropped_original.append(int(selected["dropped_original_layer_id"]))
+            stage_dir = frontier_root / f"stage_{stage:02d}_drop_{'_'.join(map(str, dropped_original))}"
+            stage_model = stage_dir / "model"
+            copy_or_materialize_selected(
+                selected=selected,
+                stage_model_dir=stage_model,
+                retained_original_ids=selected["retained_original_layer_ids"],
+                parent_model=str(current_model),
+            )
+
+            frontier_row = {
+                **selected,
+                "stage": stage,
+                "inference_model": str(stage_model),
+                "training_model_id": str(stage_model),
+                "training_adapter": None,
+                "evaluation_summary": str(Path(selected["evidence_dir"]) / "generation/summary.json"),
+                "dropped_original_layer_ids": list(dropped_original),
+                "remaining_layer_count": len(selected["retained_original_layer_ids"]),
+                "exhaustive_recovery_triggered": exhaustive_triggered,
+            }
+            write_json(stage_dir / "stage_result.json", frontier_row)
+            frontier_rows.append(frontier_row)
+            current_model = stage_model
+            parent_reference = parent_reference_from_frontier(frontier_row)
+            termination = {
+                "reason": "max_drops_reached",
+                "terminal_stage_attempted": stage,
+                "accepted_frontier_stages": len(frontier_rows),
+                "exhaustive_recovery_triggered": exhaustive_triggered,
+            }
+
+            if not args.keep_candidate_checkpoints and work_root.exists():
                 shutil.rmtree(work_root)
+
+    # A resumed run can reconstruct a partially completed terminal stage. Keep
+    # only the latest durable row for each stage/variant pair.
+    deduplicated: dict[tuple[int, str], dict[str, Any]] = {}
+    for row in all_candidate_rows:
+        deduplicated[(int(row.get("stage", 0)), str(row.get("variant_id", "")))] = row
+    all_candidate_rows = list(deduplicated.values())
 
     baseline_profile = {
         "profile": "full_quality",
@@ -813,23 +1364,21 @@ def main() -> None:
             "opportunity_margin": 0.0,
             "reduction_minus_quality_loss": 0.0,
             "reduction_minus_score_loss": 0.0,
+            "incremental_weight_memory_reduction_fraction": 0.0,
+            "incremental_quality_opportunity_loss_fraction": 0.0,
+            "incremental_opportunity_margin": 0.0,
         },
     }
-    profiles = select_profiles(
-        baseline_profile,
-        frontier_rows,
-    )
+    profiles = select_profiles(baseline_profile, frontier_rows)
     for name, profile in profiles.items():
         profile["profile"] = name
 
-    # Phase 3 gates compare against ShortChatBench Pilot, not the development
-    # structural probe. Re-evaluate each retained profile on that common
-    # benchmark so downstream comparisons remain apples-to-apples.
     profile_eval_cache: dict[str, str] = {}
     for name, profile in profiles.items():
         inference_model = str(profile["inference_model"])
-        if inference_model not in profile_eval_cache:
-            profile_eval_dir = args.output_root / "profile_validation" / name / "generation"
+        cache_key = _normal_path(inference_model)
+        if cache_key not in profile_eval_cache:
+            profile_eval_dir = profile_validation_dir(args.output_root, name, inference_model)
             run_if_needed(
                 [
                     PYTHON,
@@ -846,12 +1395,25 @@ def main() -> None:
                 profile_eval_dir / "summary.json",
                 args.resume,
             )
-            profile_eval_cache[inference_model] = str(profile_eval_dir / "summary.json")
-        profile["evaluation_summary"] = profile_eval_cache[inference_model]
+            profile_eval_cache[cache_key] = str(profile_eval_dir / "summary.json")
+        profile["evaluation_summary"] = profile_eval_cache[cache_key]
         profile["phase_benchmark"] = str(args.phase_benchmark)
 
+    history = list((existing_catalog or {}).get("resume_history") or [])
+    if existing_catalog is not None:
+        history.append(
+            {
+                "resumed_at": utc_now(),
+                "accepted_stages_before": start_stage - 1,
+                "accepted_stages_after": len(frontier_rows),
+                "resume_parent": str(_repo_path((existing_catalog.get("frontier") or [{}])[-1].get("inference_model", reference_model))),
+                "requested_max_drops": int(args.max_drops),
+                "validation": resume_validation,
+            }
+        )
+
     catalog = {
-        "manifest_version": 1,
+        "manifest_version": 2,
         "status": "PENDING_HUMAN_REVIEW",
         "source_model_id": args.model_id,
         "source_sft_adapter": str(args.sft_adapter),
@@ -859,22 +1421,29 @@ def main() -> None:
         "phase_benchmark": str(args.phase_benchmark),
         "probe_case_count": args.probe_limit,
         "baseline": baseline,
+        "run_configuration": build_run_configuration(args),
+        "resume_validation": resume_validation,
+        "resume_history": history,
         "opportunity_policy": {
-            "decision_rule": "loaded weight-tensor reduction > combined proportional quality opportunity loss",
+            "decision_rule": (
+                "cumulative loaded weight-tensor reduction > cumulative quality opportunity loss AND "
+                "incremental parent-relative reduction > incremental quality opportunity loss"
+            ),
             "quality_profile": args.quality_profile,
             "absolute_promotion_thresholds": "prohibited",
             "quality_evaluation_version": "3.0",
         },
         "frontier": frontier_rows,
         "profiles": profiles,
-        "all_candidate_registry": str(args.output_root / "candidate_registry.json"),
+        "termination": termination,
+        "all_candidate_registry": str(candidate_registry_path),
         "gate_report": str(args.gate_report),
         "downstream_rule": (
             "Phase 3 may use full_quality, balanced, or min_memory only after "
             "the non-full profile receives explicit Phase 2B human approval."
         ),
     }
-    write_json(args.output_root / "candidate_registry.json", {"candidates": all_candidate_rows})
+    write_json(candidate_registry_path, {"candidates": all_candidate_rows})
     write_json(catalog_path, catalog)
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(
@@ -883,11 +1452,35 @@ def main() -> None:
             stages=frontier_rows,
             candidates=all_candidate_rows,
             profiles=profiles,
+            termination=termination,
             args=args,
         ),
         encoding="utf-8",
     )
-    gate = f"""# PHASE 2B STOP GATE\n\n## Automated status\n\n`PENDING_HUMAN_REVIEW`\n\n- Model catalog: `{catalog_path}`\n- Progressive report: `{args.report}`\n- Accepted frontier stages: {len(frontier_rows)}\n- Recommended balanced profile: `{profiles['balanced']['inference_model']}`\n- Recommended minimum-memory profile: `{profiles['min_memory']['inference_model']}`\n\n## Required human decision\n\nReview the configured probe side-by-side outputs for every accepted stage and the lowest-scoring rejected neighbors. Confirm that the chosen profile preserves meaning, tone, context, clarification, and safety. The automated rule is relative opportunity only: weight-memory reduction must exceed combined proportional quality opportunity loss. Human review remains required before downstream use.\n\n- Human decision: `PENDING`\n- Reviewer:\n- Date:\n- Approved profiles: `full_quality`\n- Notes:\n"""
+    gate = f"""# PHASE 2B STOP GATE
+
+## Automated status
+
+`PENDING_HUMAN_REVIEW`
+
+- Model catalog: `{catalog_path}`
+- Progressive report: `{args.report}`
+- Accepted frontier stages: {len(frontier_rows)}
+- Termination reason: `{termination.get('reason')}`
+- Terminal stage attempted: `{termination.get('terminal_stage_attempted')}`
+- Recommended balanced profile: `{profiles['balanced']['inference_model']}`
+- Recommended minimum-memory profile: `{profiles['min_memory']['inference_model']}`
+
+## Required human decision
+
+Review the configured probe side-by-side outputs for every accepted stage and the lowest-scoring rejected neighbors. A new frontier stage must be worthwhile both cumulatively against the full reference and incrementally against its immediate parent. When focused recovery cannot find an eligible candidate, the runner recovery-tests every remaining raw branch before declaring the frontier terminal. Human review remains required before downstream use.
+
+- Human decision: `PENDING`
+- Reviewer:
+- Date:
+- Approved profiles: `full_quality`
+- Notes:
+"""
     args.gate_report.parent.mkdir(parents=True, exist_ok=True)
     args.gate_report.write_text(gate, encoding="utf-8")
     print(catalog_path)

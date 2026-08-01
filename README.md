@@ -6,10 +6,7 @@ Start the environment:
 
 Zip the folder without artifacts or other non-trivial documents
 ```
-tar.exe -a -c -f "..\short-response-model-phase-0-1-2_without_artifacts_$(Get-Date -Format yyyyMMdd_HHmmss).zip" `
-  --exclude="./artifacts" `
-  --exclude="./playground_artifacts" `
-  .
+$zip = "..\short-response-model_without_artifacts_$(Get-Date -Format 'yyyyMMdd_HHmmss').zip"; tar.exe -a -c -f $zip --exclude="artifacts" --exclude="artifacts/*" --exclude="playground_artifacts" --exclude="playground_artifacts/*" .
 ```
 
 Phase 2B command:
