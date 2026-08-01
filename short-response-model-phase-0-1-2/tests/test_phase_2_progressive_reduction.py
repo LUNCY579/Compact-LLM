@@ -189,6 +189,49 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
         self.assertIs(profiles["min_memory"], stage2)
         self.assertIs(profiles["full_quality"], baseline)
 
+    def test_phase2b_powershell_wrapper_matches_quality_v2_contract(self) -> None:
+        root = Path(__file__).resolve().parents[1]
+        wrapper = (
+            root
+            / "scripts"
+            / "phase_2_layer_selection"
+            / "run_phase_2_structural_reduction.ps1"
+        ).read_text(encoding="utf-8")
+
+        expected_defaults = [
+            '[int]$ProbeLimit = 50',
+            '[double]$MaxScoreLoss = 0.05',
+            '[double]$BalancedMaxScoreLoss = 0.02',
+            '[double]$MaxSemanticPassLoss = 0.02',
+            '[double]$MaxCategoryLoss = 0.08',
+            '[double]$MaxNllIncrease = 0.15',
+            '[double]$MinCompleteUtteranceRate = 0.99',
+            '[double]$MaxWorstDecileLoss = 0.05',
+            '[double]$MinQualityPassRate = 0.95',
+            '[double]$MinIntelligibilityPassRate = 1.0',
+            '[double]$MaxReferenceAlignmentLoss = 0.08',
+            '[int]$MaxNewMajorIssues = 0',
+        ]
+        for expected in expected_defaults:
+            self.assertIn(expected, wrapper)
+
+        forwarded_flags = [
+            '"--probe-limit", "$ProbeLimit"',
+            '"--phase-benchmark", $PhaseBenchmark',
+            '"--report", $Report',
+            '"--gate-report", $GateReport',
+            '"--max-semantic-pass-loss", "$MaxSemanticPassLoss"',
+            '"--max-category-loss", "$MaxCategoryLoss"',
+            '"--max-nll-increase", "$MaxNllIncrease"',
+            '"--max-worst-decile-loss", "$MaxWorstDecileLoss"',
+            '"--min-quality-pass-rate", "$MinQualityPassRate"',
+            '"--min-intelligibility-pass-rate", "$MinIntelligibilityPassRate"',
+            '"--max-reference-alignment-loss", "$MaxReferenceAlignmentLoss"',
+            '"--max-new-major-issues", "$MaxNewMajorIssues"',
+        ]
+        for expected in forwarded_flags:
+            self.assertIn(expected, wrapper)
+
     def test_reduced_profile_requires_explicit_approval(self) -> None:
         catalog = {
             "profiles": {

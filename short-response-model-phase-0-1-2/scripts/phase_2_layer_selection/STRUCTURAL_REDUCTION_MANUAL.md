@@ -25,7 +25,25 @@ Phase 2A found no selective one-, two-, or four-layer adapter that recovered the
   -GradientCheckpointing
 ```
 
-Increase `MaxDrops` only after reviewing the first frontier. Use `-Resume` only when code, evaluator, probe, model, and data have not changed.
+The wrapper defaults are synchronized with the Quality Evaluation v2.0 Python/YAML contract. In particular, `MaxScoreLoss=0.05`, `BalancedMaxScoreLoss=0.02`, and `ProbeLimit=50`. Every remaining quality threshold is also forwarded explicitly instead of being inherited invisibly from Python defaults.
+
+For the established thorough probe, use an isolated run:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ProbeLimit 150 `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_2_thorough `
+  -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
+  -GateReport .\reports\PHASE_2B_V1_2_THOROUGH_STOP_GATE.md `
+  -MaxDrops 10 `
+  -RecoveryTopK 6 `
+  -RecoverySteps 50 `
+  -QLoRA `
+  -GradientCheckpointing
+```
+
+Increase `MaxDrops` only after reviewing the first frontier. Use `-Resume` only when code, evaluator, probe, model, data, and thresholds have not changed. `ProbeLimit` controls probe creation and provenance metadata; supplying `150` avoids a 150-row probe being reported as a 50-case configuration. Custom output roots derive unique report names automatically, but explicit report paths are preferred for important experiments.
 
 ## Review order
 

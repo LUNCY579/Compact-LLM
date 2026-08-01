@@ -46,7 +46,7 @@ The dedicated runner exposes the complete settings:
   -GradientCheckpointing
 ```
 
-Direct Phase 2B command:
+Direct Phase 2B command using the synchronized Quality Evaluation v2.0 defaults:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
@@ -56,6 +56,24 @@ Direct Phase 2B command:
   -QLoRA `
   -GradientCheckpointing
 ```
+
+Thorough 150-case run with isolated artifacts and reports:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ProbeLimit 150 `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_2_thorough `
+  -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
+  -GateReport .\reports\PHASE_2B_V1_2_THOROUGH_STOP_GATE.md `
+  -MaxDrops 10 `
+  -RecoveryTopK 6 `
+  -RecoverySteps 50 `
+  -QLoRA `
+  -GradientCheckpointing
+```
+
+The dedicated wrapper now exposes and forwards every Phase 2B quality-v2 threshold, `ProbeLimit`, probe/recovery seeds, phase benchmark, response length, and report paths. Its defaults match `progressive_reduction.py` and `configs/phase_2_progressive_reduction.yaml`: mean quality loss `0.05`, balanced-profile loss `0.02`, semantic loss `0.02`, category loss `0.08`, target-NLL increase `0.15`, completion `0.99`, quality-pass `0.95`, intelligibility `1.00`, alignment loss `0.08`, and zero new major issues. A custom `OutputRoot` automatically receives unique report names unless `Report` and `GateReport` are supplied explicitly.
 
 Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion branch. The default recovers only the strongest three per stage because training every branch at every progressive step is extremely expensive.
 

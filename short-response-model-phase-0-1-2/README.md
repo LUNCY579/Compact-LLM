@@ -8,6 +8,10 @@ This repository implements the ordered Phase 0–8 program plus two structural b
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
+## v1.2.1 Phase 2B wrapper synchronization
+
+The Phase 2B PowerShell runner now matches the Quality Evaluation v2.0 Python/YAML defaults, exposes `ProbeLimit` and every promotion threshold, forwards reproducibility/report options explicitly, and derives unique report names for custom output roots. This is an orchestration-only maintenance change: it does not alter model weights or prior evidence. See `PHASE_2B_WRAPPER_HOTFIX_v1.2.1.md`.
+
 ## Start here
 
 - `Phases.md` — phase boundaries and handoffs.
