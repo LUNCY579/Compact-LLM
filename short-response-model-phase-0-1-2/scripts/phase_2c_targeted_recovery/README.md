@@ -63,3 +63,8 @@ Every recommended profile receives repeated-seed evidence. Selective repeats are
 - `reports/PHASE_2C_STOP_GATE.md`
 
 No profile enters Phase 3 until the stop gate says `Human decision: PASS` and the exact profile is listed in `Approved profiles`.
+
+## Quality evaluator v2.0
+
+This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+

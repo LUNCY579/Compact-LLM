@@ -4,11 +4,11 @@ from __future__ import annotations
 
 Design principles:
 - Every current layer is tested as a one-layer deletion at each stage.
-- The first pass is cheap, reversible, and uses a 50-case development probe.
+- The first pass is cheap, reversible, and uses the configured development probe.
 - Only the strongest raw deletions receive short recovery fine-tuning by default.
 - Every accepted frontier stage is materialized and preserved; rejected full
   checkpoints may be regenerated from their parent plus recorded drop ID.
-- Progress continues only while weight-memory reduction exceeds heuristic-score
+- Progress continues only while weight-memory reduction exceeds quality-score
   reduction and hard semantic/category floors remain satisfied.
 """
 
@@ -26,6 +26,8 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_json, run, write_json
 from scripts.phase_2_layer_selection.create_depth_candidate import lineage_for_model
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries, relative_loss as quality_relative_loss
 
 PYTHON = sys.executable
 EVALUATOR = ROOT / "scripts/phase_1_dense_sft/evaluate_model.py"
@@ -57,12 +59,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--recovery-seed", type=int, default=11)
     parser.add_argument("--max-new-tokens", type=int, default=32)
     parser.add_argument("--minimum-reduction-advantage", type=float, default=0.0)
-    parser.add_argument("--max-score-loss", type=float, default=0.10)
-    parser.add_argument("--balanced-max-score-loss", type=float, default=0.03)
-    parser.add_argument("--max-semantic-pass-loss", type=float, default=0.05)
-    parser.add_argument("--max-category-loss", type=float, default=0.15)
-    parser.add_argument("--max-nll-increase", type=float, default=0.50)
-    parser.add_argument("--min-complete-utterance-rate", type=float, default=0.98)
+    parser.add_argument("--max-score-loss", type=float, default=0.05, help="Maximum relative mean quality-score loss.")
+    parser.add_argument("--balanced-max-score-loss", type=float, default=0.02)
+    parser.add_argument("--max-semantic-pass-loss", type=float, default=0.02)
+    parser.add_argument("--max-category-loss", type=float, default=0.08)
+    parser.add_argument("--max-nll-increase", type=float, default=0.15)
+    parser.add_argument("--min-complete-utterance-rate", type=float, default=0.99)
+    parser.add_argument("--max-worst-decile-loss", type=float, default=0.05)
+    parser.add_argument("--min-quality-pass-rate", type=float, default=0.95)
+    parser.add_argument("--min-intelligibility-pass-rate", type=float, default=1.0)
+    parser.add_argument("--max-reference-alignment-loss", type=float, default=0.08)
+    parser.add_argument("--max-new-major-issues", type=int, default=0)
     parser.add_argument("--qlora", action="store_true")
     parser.add_argument("--gradient-checkpointing", action="store_true")
     parser.add_argument("--skip-recovery", action="store_true")
@@ -78,13 +85,16 @@ def relative_loss(reference: float, candidate: float) -> float:
 
 
 def max_category_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> tuple[float, dict[str, float]]:
+    """Compatibility helper backed by quality-v2 category scores."""
+
+    require_quality_v2(reference, "reference category summary")
+    require_quality_v2(candidate, "candidate category summary")
+    ref_scores = reference.get("category_quality_scores") or {}
+    cand_scores = candidate.get("category_quality_scores") or {}
     losses: dict[str, float] = {}
-    for category, ref_score in reference.get("category_scores", {}).items():
-        cand_score = candidate.get("category_scores", {}).get(category)
-        if cand_score is None:
-            losses[category] = 1.0
-        else:
-            losses[category] = max(0.0, float(ref_score) - float(cand_score))
+    for category, ref_score in ref_scores.items():
+        cand_score = cand_scores.get(category)
+        losses[str(category)] = 1.0 if cand_score is None else max(0.0, float(ref_score) - float(cand_score))
     return (max(losses.values()) if losses else 0.0), losses
 
 
@@ -103,83 +113,90 @@ def assess_candidate(
     max_category_loss_allowed: float,
     max_nll_increase: float,
     min_complete_utterance_rate: float,
+    max_worst_decile_loss: float = 0.05,
+    min_quality_pass_rate: float = 0.95,
+    min_intelligibility_pass_rate: float = 1.0,
+    max_reference_alignment_loss: float = 0.08,
+    max_new_major_issues: int = 0,
 ) -> dict[str, Any]:
-    """Apply the user's reduction-vs-score rule plus non-negotiable floors."""
+    """Apply structural-efficiency and independent quality-v2 floors."""
 
-    base_score = float(baseline_generation["mean_heuristic_score"])
-    cand_score = float(candidate_generation["mean_heuristic_score"])
-    score_loss = relative_loss(base_score, cand_score)
-
+    comparison = compare_quality_summaries(
+        baseline_generation,
+        candidate_generation,
+        max_mean_quality_loss=1.0,
+        max_quality_index_loss=1.0,
+        max_worst_decile_loss=max_worst_decile_loss,
+        max_category_quality_loss_allowed=max_category_loss_allowed,
+        max_semantic_pass_loss=max_semantic_pass_loss,
+        max_reference_alignment_loss=max_reference_alignment_loss,
+        min_quality_pass_rate=min_quality_pass_rate,
+        min_intelligibility_pass_rate=min_intelligibility_pass_rate,
+        min_semantic_pass_rate=max(0.0, float(baseline_generation.get("semantic_pass_rate", 1.0)) - max_semantic_pass_loss),
+        min_complete_utterance_rate=min_complete_utterance_rate,
+        max_hard_failure_cases=0,
+        max_critical_failures=0,
+        max_major_issue_cases=int(baseline_generation.get("major_case_count", 0)) + max_new_major_issues,
+    )
+    base_score = summary_quality_score(baseline_generation)
+    cand_score = summary_quality_score(candidate_generation)
+    score_loss = quality_relative_loss(base_score, cand_score)
     base_bytes = float(baseline_footprint["parameter_tensor_bytes_loaded"])
     cand_bytes = float(candidate_footprint["parameter_tensor_bytes_loaded"])
     weight_reduction = max(0.0, 1.0 - cand_bytes / max(base_bytes, 1.0))
     advantage = weight_reduction - score_loss
-    efficiency_ratio = (
-        weight_reduction / score_loss if score_loss > 1e-12 else math.inf
-    )
+    efficiency_ratio = weight_reduction / score_loss if score_loss > 1e-12 else math.inf
 
     base_eval_vram = float(baseline_generation.get("peak_vram_gb", 0.0))
     cand_eval_vram = float(candidate_generation.get("peak_vram_gb", 0.0))
-    eval_vram_reduction = (
-        max(0.0, 1.0 - cand_eval_vram / base_eval_vram)
-        if base_eval_vram > 0.0
-        else None
-    )
+    eval_vram_reduction = max(0.0, 1.0 - cand_eval_vram / base_eval_vram) if base_eval_vram > 0 else None
     base_latency = float(baseline_generation.get("mean_generation_seconds", 0.0))
     cand_latency = float(candidate_generation.get("mean_generation_seconds", 0.0))
-    latency_reduction = (
-        1.0 - cand_latency / base_latency if base_latency > 0.0 else None
-    )
+    latency_reduction = 1.0 - cand_latency / base_latency if base_latency > 0 else None
     base_parameters = float(baseline_footprint.get("parameters", {}).get("total", 0.0))
     cand_parameters = float(candidate_footprint.get("parameters", {}).get("total", 0.0))
-    parameter_reduction = (
-        max(0.0, 1.0 - cand_parameters / base_parameters)
-        if base_parameters > 0.0
-        else None
-    )
-
-    base_semantic = float(baseline_generation.get("semantic_pass_rate", 1.0))
-    cand_semantic = float(candidate_generation.get("semantic_pass_rate", 1.0))
-    semantic_loss = max(0.0, base_semantic - cand_semantic)
-    category_loss, category_losses = max_category_loss(
-        baseline_generation, candidate_generation
-    )
+    parameter_reduction = max(0.0, 1.0 - cand_parameters / base_parameters) if base_parameters > 0 else None
 
     base_nll_value = float(baseline_nll["mean_target_nll"])
     cand_nll_value = float(candidate_nll["mean_target_nll"])
     nll_increase = max(0.0, cand_nll_value - base_nll_value) / max(base_nll_value, 1e-12)
-
-    reasons: list[str] = []
-    if int(candidate_generation.get("critical_failure_count", 0)) != 0:
-        reasons.append("critical semantic failures are nonzero")
-    if int(output_deviation.get("new_critical_failure_count", 0)) != 0:
-        reasons.append("new critical failures appeared relative to the full reference")
+    reasons = list(comparison["reasons"])
     if score_loss > max_score_loss:
-        reasons.append("heuristic-score loss exceeds the exploratory ceiling")
-    if semantic_loss > max_semantic_pass_loss:
-        reasons.append("semantic-pass loss exceeds the configured ceiling")
-    if category_loss > max_category_loss_allowed:
-        reasons.append("at least one category exceeds the configured loss ceiling")
+        reasons.append("relative mean quality-score loss exceeds the exploratory ceiling")
     if nll_increase > max_nll_increase:
         reasons.append("teacher-forced NLL increase exceeds the sensitivity ceiling")
-    if float(candidate_generation.get("complete_utterance_rate", 0.0)) < min_complete_utterance_rate:
-        reasons.append("complete-utterance rate is below the configured floor")
+    if int(output_deviation.get("new_critical_failure_count", 0)) != 0:
+        reasons.append("new critical failures appeared relative to the full reference")
+    if int(output_deviation.get("new_major_issue_count", 0)) > max_new_major_issues:
+        reasons.append("new major issues appeared relative to the full reference")
+    if int(output_deviation.get("new_hard_failure_count", 0)) != 0:
+        reasons.append("new hard intelligibility failures appeared relative to the full reference")
     if advantage <= minimum_reduction_advantage:
-        reasons.append("weight-memory reduction does not exceed heuristic-score reduction")
+        reasons.append("weight-memory reduction does not exceed mean quality-score reduction")
 
     return {
         "eligible_for_progression": not reasons,
-        "rejection_reasons": reasons,
+        "rejection_reasons": sorted(set(reasons)),
         "weight_memory_reduction_fraction": weight_reduction,
         "parameter_count_reduction_fraction": parameter_reduction,
         "peak_evaluation_vram_reduction_fraction": eval_vram_reduction,
         "mean_generation_latency_reduction_fraction": latency_reduction,
+        "quality_score_loss_fraction": score_loss,
         "heuristic_score_loss_fraction": score_loss,
+        "reduction_minus_quality_loss": advantage,
         "reduction_minus_score_loss": advantage,
+        "memory_to_quality_loss_ratio": efficiency_ratio,
         "memory_to_score_loss_ratio": efficiency_ratio,
-        "semantic_pass_loss": semantic_loss,
-        "maximum_category_score_loss": category_loss,
-        "category_score_losses": category_losses,
+        "semantic_pass_loss": comparison["semantic_pass_loss"],
+        "worst_decile_quality_loss": comparison["worst_decile_quality_loss"],
+        "maximum_category_quality_loss": comparison["maximum_category_quality_loss"],
+        "maximum_category_score_loss": comparison["maximum_category_quality_loss"],
+        "category_quality_losses": comparison["category_quality_losses"],
+        "category_score_losses": comparison["category_quality_losses"],
+        "reference_alignment_loss": comparison["reference_alignment_loss"],
+        "quality_pass_rate": comparison["quality_pass_rate"],
+        "intelligibility_pass_rate": comparison["intelligibility_pass_rate"],
+        "hard_failure_case_count": comparison["hard_failure_case_count"],
         "target_nll_increase_fraction": nll_increase,
         "exact_reply_match_rate": float(output_deviation.get("exact_reply_match_rate", 0.0)),
         "mean_fuzzy_reply_similarity": float(output_deviation.get("mean_fuzzy_reply_similarity", 0.0)),
@@ -187,17 +204,19 @@ def assess_candidate(
 
 
 def ranking_key(row: dict[str, Any]) -> tuple[Any, ...]:
-    assessment = row["assessment"]
-    generation = row["generation_summary"]
+    a = row["assessment"]
+    g = row["generation_summary"]
     nll = row["nll_summary"]
     deviation = row["output_deviation_summary"]
     return (
-        bool(assessment["eligible_for_progression"]),
-        -int(generation.get("critical_failure_count", 0)),
-        -float(assessment["heuristic_score_loss_fraction"]),
-        -float(assessment["semantic_pass_loss"]),
-        -float(assessment["maximum_category_score_loss"]),
-        -float(assessment["target_nll_increase_fraction"]),
+        bool(a["eligible_for_progression"]),
+        -int(g.get("hard_failure_case_count", 0)),
+        -int(g.get("critical_failure_count", 0)),
+        -int(g.get("major_case_count", 0)),
+        float(g.get("worst_decile_mean_quality_score", 0.0)),
+        float(g.get("quality_pass_rate", 0.0)),
+        -float(a["quality_score_loss_fraction"]),
+        -float(a["target_nll_increase_fraction"]),
         float(deviation.get("mean_fuzzy_reply_similarity", 0.0)),
         -float(nll["mean_target_nll"]),
     )
@@ -227,6 +246,14 @@ def evaluate_variant(
     footprint_path = evidence_dir / "footprint.json"
     deviation_json = evidence_dir / "output_deviation.json"
     deviation_report = evidence_dir / "OUTPUT_DEVIATION.md"
+
+    summary_sentinel = generation_dir / "summary.json"
+    if args.resume and summary_sentinel.exists():
+        try:
+            require_quality_v2(read_json(summary_sentinel), str(summary_sentinel))
+        except ValueError:
+            print(f"[stale evaluator] rebuilding {generation_dir}")
+            shutil.rmtree(generation_dir, ignore_errors=True)
 
     eval_cmd = [
         PYTHON,
@@ -299,6 +326,11 @@ def evaluate_variant(
         max_category_loss_allowed=args.max_category_loss,
         max_nll_increase=args.max_nll_increase,
         min_complete_utterance_rate=args.min_complete_utterance_rate,
+        max_worst_decile_loss=args.max_worst_decile_loss,
+        min_quality_pass_rate=args.min_quality_pass_rate,
+        min_intelligibility_pass_rate=args.min_intelligibility_pass_rate,
+        max_reference_alignment_loss=args.max_reference_alignment_loss,
+        max_new_major_issues=args.max_new_major_issues,
     )
     payload = {
         "model_id": model_id,
@@ -414,7 +446,7 @@ def select_profiles(
     balanced_candidates = [
         row
         for row in frontier
-        if float(row["assessment"]["heuristic_score_loss_fraction"])
+        if float(row["assessment"].get("quality_score_loss_fraction", row["assessment"].get("heuristic_score_loss_fraction", 1.0)))
         <= balanced_max_score_loss
         and bool(row["assessment"]["eligible_for_progression"])
     ]
@@ -454,8 +486,8 @@ def render_report(
         a = row["assessment"]
         first_lines.append(
             f"| {row['dropped_original_layer_id']} | {row['variant_kind']} | "
-            f"{row['generation_summary']['mean_heuristic_score']:.3f} | "
-            f"{a['heuristic_score_loss_fraction']:.2%} | "
+            f"{row['generation_summary']['mean_quality_score']:.3f} | "
+            f"{a['quality_score_loss_fraction']:.2%} | "
             f"{a['weight_memory_reduction_fraction']:.2%} | "
             f"{a['reduction_minus_score_loss']:+.2%} | "
             f"{format_optional_percent(a.get('peak_evaluation_vram_reduction_fraction'))} | "
@@ -471,8 +503,8 @@ def render_report(
         a = row["assessment"]
         stage_lines.append(
             f"| {row['stage']} | {row['dropped_original_layer_ids']} | "
-            f"{row['remaining_layer_count']} | {row['generation_summary']['mean_heuristic_score']:.3f} | "
-            f"{a['heuristic_score_loss_fraction']:.2%} | {a['weight_memory_reduction_fraction']:.2%} | "
+            f"{row['remaining_layer_count']} | {row['generation_summary']['mean_quality_score']:.3f} | "
+            f"{a['quality_score_loss_fraction']:.2%} | {a['weight_memory_reduction_fraction']:.2%} | "
             f"{a['reduction_minus_score_loss']:+.2%} | "
             f"{format_optional_percent(a.get('peak_evaluation_vram_reduction_fraction'))} | "
             f"{format_optional_percent(a.get('mean_generation_latency_reduction_fraction'))} | "
@@ -488,11 +520,11 @@ def render_report(
         return (
             f"| {name} | {row['remaining_layer_count']} | "
             f"{a['weight_memory_reduction_fraction']:.2%} | "
-            f"{a['heuristic_score_loss_fraction']:.2%} | `{row['inference_model']}` |"
+            f"{a['quality_score_loss_fraction']:.2%} | `{row['inference_model']}` |"
         )
 
     profile_lines = [profile_line(name, row) for name, row in profiles.items()]
-    return f"""# PHASE 2B — PROGRESSIVE STRUCTURAL REDUCTION REPORT\n\n## Purpose\n\nExtend the negative Phase 2 selective-tuning result with a different question:\n**which complete layers can be removed, optionally recovered, and combined progressively?**\nThis does not reinterpret the failed one-layer tuning gate as a success.\n\n## Evidence boundary\n\n- Probe cases: {args.probe_limit}, selected deterministically from development data.\n- Sealed evaluation used: **No**.\n- Full-reference heuristic score: {baseline['generation_summary']['mean_heuristic_score']:.3f}.\n- Full-reference target NLL: {baseline['nll_summary']['mean_target_nll']:.4f}.\n- Every current layer is tested as a raw deletion at each progressive stage.\n- Recovery fine-tuning is limited to the strongest {args.recovery_top_k} raw candidates per stage unless configured otherwise.\n\nThe automated score previously saturated at 1.0, so this study also records target-token NLL and side-by-side generated-output deviation.\n\n## Stage 1 individual-layer results\n\n| Dropped original layer | Variant | Score | Score loss | Weight-memory reduction | Reduction advantage | Eval VRAM reduction | Generation latency reduction | Target NLL | Rule |\n|---:|---|---:|---:|---:|---:|---:|---:|---:|---|\n{chr(10).join(first_lines)}\n\n## Accepted progressive frontier\n\n| Stage | Original layers dropped so far | Remaining layers | Score | Score loss | Weight-memory reduction | Reduction advantage | Eval VRAM reduction | Generation latency reduction | Selected form |\n|---:|---|---:|---:|---:|---:|---:|---:|---:|---|\n{chr(10).join(stage_lines)}\n\n## Retained deployment/training profiles\n\n| Profile | Remaining layers | Weight-memory reduction | Score loss | Model |\n|---|---:|---:|---:|---|\n{chr(10).join(profile_lines)}\n\n## Decision rule\n\nA step can enter the frontier only when:\n\n1. measured loaded weight-tensor reduction is greater than relative heuristic-score loss;\n2. measured evaluation VRAM and generation latency are recorded as secondary evidence (they may be noisy and are not substituted for the stable weight-tensor rule);\n3. no critical semantic failures appear;\n4. semantic, category, completion, and target-NLL ceilings pass; and\n5. all evidence and the parent checkpoint remain reproducible.\n\nA positive ratio is **not** enough for release by itself. The 50-case probe is for trend discovery; human review and later phase controls remain mandatory.\n\n## Workflow handoff\n\n- `full_quality` continues Phase 3 from the original all-layer SFT adapter.\n- `balanced` and `min_memory` use materialized reduced checkpoints and attach a fresh compatible DPO LoRA adapter in Phase 3.\n- Phase 4 soups must use ingredients from the same selected profile and architecture.\n- Phase 4B remains a post-alignment revalidation/refinement stage, not a reason to discard this Phase 2 evidence.\n"""
+    return f"""# PHASE 2B — PROGRESSIVE STRUCTURAL REDUCTION REPORT\n\n## Purpose\n\nExtend the negative Phase 2 selective-tuning result with a different question:\n**which complete layers can be removed, optionally recovered, and combined progressively?**\nThis does not reinterpret the failed one-layer tuning gate as a success.\n\n## Evidence boundary\n\n- Probe cases: {args.probe_limit}, selected deterministically from development data.\n- Sealed evaluation used: **No**.\n- Full-reference heuristic score: {baseline['generation_summary']['mean_quality_score']:.3f}.\n- Full-reference target NLL: {baseline['nll_summary']['mean_target_nll']:.4f}.\n- Every current layer is tested as a raw deletion at each progressive stage.\n- Recovery fine-tuning is limited to the strongest {args.recovery_top_k} raw candidates per stage unless configured otherwise.\n\nThe legacy three-check score saturated at 1.0, so this study also records target-token NLL and side-by-side generated-output deviation.\n\n## Stage 1 individual-layer results\n\n| Dropped original layer | Variant | Quality | Quality loss | Weight-memory reduction | Reduction advantage | Eval VRAM reduction | Generation latency reduction | Target NLL | Rule |\n|---:|---|---:|---:|---:|---:|---:|---:|---:|---|\n{chr(10).join(first_lines)}\n\n## Accepted progressive frontier\n\n| Stage | Original layers dropped so far | Remaining layers | Quality | Quality loss | Weight-memory reduction | Reduction advantage | Eval VRAM reduction | Generation latency reduction | Selected form |\n|---:|---|---:|---:|---:|---:|---:|---:|---:|---|\n{chr(10).join(stage_lines)}\n\n## Retained deployment/training profiles\n\n| Profile | Remaining layers | Weight-memory reduction | Quality loss | Model |\n|---|---:|---:|---:|---|\n{chr(10).join(profile_lines)}\n\n## Decision rule\n\nA step can enter the frontier only when:\n\n1. measured loaded weight-tensor reduction is greater than relative quality-score loss;\n2. measured evaluation VRAM and generation latency are recorded as secondary evidence (they may be noisy and are not substituted for the stable weight-tensor rule);\n3. no critical semantic failures appear;\n4. semantic, category, completion, and target-NLL ceilings pass; and\n5. all evidence and the parent checkpoint remain reproducible.\n\nA positive ratio is **not** enough for release by itself. The configured development probe is for trend discovery; human review and later phase controls remain mandatory.\n\n## Workflow handoff\n\n- `full_quality` continues Phase 3 from the original all-layer SFT adapter.\n- `balanced` and `min_memory` use materialized reduced checkpoints and attach a fresh compatible DPO LoRA adapter in Phase 3.\n- Phase 4 soups must use ingredients from the same selected profile and architecture.\n- Phase 4B remains a post-alignment revalidation/refinement stage, not a reason to discard this Phase 2 evidence.\n"""
 
 
 def main() -> None:
@@ -544,6 +576,12 @@ def main() -> None:
     baseline_generation_dir = reference_evidence / "generation"
     baseline_nll_dir = reference_evidence / "teacher_forcing"
     baseline_footprint_path = reference_evidence / "footprint.json"
+    if args.resume and (baseline_generation_dir / "summary.json").exists():
+        try:
+            require_quality_v2(read_json(baseline_generation_dir / "summary.json"), "Phase 2B reference evaluation")
+        except ValueError:
+            print(f"[stale evaluator] rebuilding {baseline_generation_dir}")
+            shutil.rmtree(baseline_generation_dir, ignore_errors=True)
     run_if_needed(
         [
             PYTHON,
@@ -580,6 +618,8 @@ def main() -> None:
         args.resume,
     )
     baseline_generation = read_json(baseline_generation_dir / "summary.json")
+    require_quality_v2(baseline_generation, "Phase 2B reference evaluation")
+    assert_valid_reference(baseline_generation, label="Phase 2B full reference")
     baseline_nll = read_json(baseline_nll_dir / "summary.json")
     baseline_footprint = read_json(baseline_footprint_path)
     baseline = {
@@ -737,6 +777,7 @@ def main() -> None:
         "assessment": {
             "eligible_for_progression": True,
             "weight_memory_reduction_fraction": 0.0,
+            "quality_score_loss_fraction": 0.0,
             "heuristic_score_loss_fraction": 0.0,
             "reduction_minus_score_loss": 0.0,
         },
@@ -794,6 +835,11 @@ def main() -> None:
             "max_category_loss": args.max_category_loss,
             "max_nll_increase": args.max_nll_increase,
             "min_complete_utterance_rate": args.min_complete_utterance_rate,
+            "max_worst_decile_loss": args.max_worst_decile_loss,
+            "min_quality_pass_rate": args.min_quality_pass_rate,
+            "min_intelligibility_pass_rate": args.min_intelligibility_pass_rate,
+            "max_reference_alignment_loss": args.max_reference_alignment_loss,
+            "max_new_major_issues": args.max_new_major_issues,
         },
         "frontier": frontier_rows,
         "profiles": profiles,
@@ -817,7 +863,7 @@ def main() -> None:
         ),
         encoding="utf-8",
     )
-    gate = f"""# PHASE 2B STOP GATE\n\n## Automated status\n\n`PENDING_HUMAN_REVIEW`\n\n- Model catalog: `{catalog_path}`\n- Progressive report: `{args.report}`\n- Accepted frontier stages: {len(frontier_rows)}\n- Recommended balanced profile: `{profiles['balanced']['inference_model']}`\n- Recommended minimum-memory profile: `{profiles['min_memory']['inference_model']}`\n\n## Required human decision\n\nReview the 50-case side-by-side outputs for every accepted stage and the lowest-scoring rejected neighbors. Confirm that the chosen profile preserves meaning, tone, context, clarification, and safety. The weight-reduction-versus-score-loss ratio is necessary for this experiment but is not sufficient for release.\n\n- Human decision: `PENDING`\n- Reviewer:\n- Date:\n- Approved profiles: `full_quality`\n- Notes:\n"""
+    gate = f"""# PHASE 2B STOP GATE\n\n## Automated status\n\n`PENDING_HUMAN_REVIEW`\n\n- Model catalog: `{catalog_path}`\n- Progressive report: `{args.report}`\n- Accepted frontier stages: {len(frontier_rows)}\n- Recommended balanced profile: `{profiles['balanced']['inference_model']}`\n- Recommended minimum-memory profile: `{profiles['min_memory']['inference_model']}`\n\n## Required human decision\n\nReview the configured probe side-by-side outputs for every accepted stage and the lowest-scoring rejected neighbors. Confirm that the chosen profile preserves meaning, tone, context, clarification, and safety. The weight-reduction-versus-score-loss ratio is necessary for this experiment but is not sufficient for release.\n\n- Human decision: `PENDING`\n- Reviewer:\n- Date:\n- Approved profiles: `full_quality`\n- Notes:\n"""
     args.gate_report.parent.mkdir(parents=True, exist_ok=True)
     args.gate_report.write_text(gate, encoding="utf-8")
     print(catalog_path)

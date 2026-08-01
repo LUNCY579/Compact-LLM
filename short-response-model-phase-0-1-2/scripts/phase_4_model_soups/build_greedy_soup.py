@@ -21,6 +21,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, run, sha256_tree, write_json
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_gate import compare_quality_summaries, quality_index
 
 
 def parse_named_path(value: str) -> tuple[str, Path]:
@@ -62,7 +64,14 @@ def parse_args() -> argparse.Namespace:
 
 
 def eligible(summary: dict[str, Any]) -> bool:
-    return int(summary.get("critical_failure_count", 0)) == 0
+    require_quality_v2(summary)
+    return (
+        int(summary.get("hard_failure_case_count", 0)) == 0
+        and int(summary.get("critical_failure_count", 0)) == 0
+        and float(summary.get("intelligibility_pass_rate", 0.0)) == 1.0
+        and float(summary.get("quality_pass_rate", 0.0)) >= 0.95
+        and float(summary.get("semantic_pass_rate", 0.0)) >= 0.98
+    )
 
 
 def accepted_trial(
@@ -71,22 +80,35 @@ def accepted_trial(
     minimum_improvement: float,
     max_category_loss: float,
 ) -> tuple[bool, list[str]]:
-    """Apply practical quality floors before accepting a soup ingredient."""
-
-    reasons: list[str] = []
-    if int(trial.get("critical_failure_count", 0)) > int(current.get("critical_failure_count", 0)):
-        reasons.append("critical failures increased")
-    if float(trial.get("semantic_pass_rate", 0.0)) + 1e-12 < float(current.get("semantic_pass_rate", 0.0)):
-        reasons.append("semantic pass rate decreased")
-    improvement = float(trial["mean_heuristic_score"]) - float(current["mean_heuristic_score"])
+    comparison = compare_quality_summaries(
+        current, trial,
+        max_mean_quality_loss=max(0.0, -minimum_improvement),
+        max_quality_index_loss=max(0.0, -minimum_improvement),
+        max_worst_decile_loss=0.02,
+        max_category_quality_loss_allowed=max_category_loss,
+        max_semantic_pass_loss=0.0,
+        max_reference_alignment_loss=0.03,
+        min_quality_pass_rate=float(current.get("quality_pass_rate", 0.95)),
+        min_intelligibility_pass_rate=1.0,
+        min_semantic_pass_rate=float(current.get("semantic_pass_rate", 0.98)),
+        min_complete_utterance_rate=0.99,
+        max_hard_failure_cases=0,
+        max_critical_failures=0,
+        max_major_issue_cases=int(current.get("major_case_count", 0)),
+    )
+    reasons = list(comparison["reasons"])
+    # Surface the concrete category names so a human reviewer can immediately
+    # see whether safety, context, factuality, or another slice regressed.
+    for category, loss in sorted(comparison.get("category_quality_losses", {}).items()):
+        if float(loss) > max_category_loss:
+            reasons.append(
+                f"category {category} quality loss {float(loss):.4f} exceeds "
+                f"{max_category_loss:.4f}"
+            )
+    improvement = quality_index(trial) - quality_index(current)
     if improvement + 1e-12 < minimum_improvement:
-        reasons.append(f"mean score improvement {improvement:.6f} < {minimum_improvement:.6f}")
-    current_categories = current.get("category_scores", {})
-    trial_categories = trial.get("category_scores", {})
-    for category, baseline_score in current_categories.items():
-        if category in trial_categories and float(baseline_score) - float(trial_categories[category]) > max_category_loss:
-            reasons.append(f"category {category!r} regressed by more than {max_category_loss:.3f}")
-    return not reasons, reasons
+        reasons.append(f"quality-index improvement {improvement:.6f} < {minimum_improvement:.6f}")
+    return not reasons, sorted(set(reasons))
 
 
 def invoke_merge(model_id: str, adapters: list[Path], output: Path) -> None:
@@ -149,11 +171,14 @@ def main() -> None:
         }
         for name in adapters
     ]
+    for row in rows:
+        require_quality_v2(row["summary"], f"Phase 4 ingredient {row['name']}")
     rows.sort(
         key=lambda row: (
             not eligible(row["summary"]),
-            -float(row["summary"].get("semantic_pass_rate", 0.0)),
-            -float(row["summary"]["mean_heuristic_score"]),
+            -float(row["summary"].get("worst_decile_mean_quality_score", 0.0)),
+            -quality_index(row["summary"]),
+            -summary_quality_score(row["summary"]),
         )
     )
     if not rows or not eligible(rows[0]["summary"]):
@@ -197,7 +222,7 @@ def main() -> None:
                 "trial_summary": str(trial_eval / "summary.json"),
                 "accepted": accept,
                 "reasons": reasons,
-                "score": trial_summary["mean_heuristic_score"],
+                "score": summary_quality_score(trial_summary),
             }
         )
         if accept:
@@ -253,7 +278,10 @@ def main() -> None:
                 f"- Accepted type: `{payload['accepted_type']}`",
                 f"- Selected ingredients: `{', '.join(payload['selected_ingredients'])}`",
                 f"- Full checkpoint: `{payload['selected_model']}`",
-                f"- Mean heuristic score: `{accepted_summary['mean_heuristic_score']:.6f}`",
+                f"- Mean quality score: `{accepted_summary.get('mean_quality_score', accepted_summary['mean_heuristic_score']):.6f}`",
+                f"- Quality pass rate: `{accepted_summary.get('quality_pass_rate')}`",
+                f"- Worst-decile quality: `{accepted_summary.get('worst_decile_mean_quality_score')}`",
+                f"- Hard-failure cases: `{accepted_summary.get('hard_failure_case_count', 0)}`",
                 f"- Critical failures: `{accepted_summary.get('critical_failure_count', 0)}`",
                 "",
                 "## Greedy trials",
@@ -281,12 +309,15 @@ def main() -> None:
                 "## Automated result",
                 "",
                 "`PASS_PENDING_HUMAN_REVIEW`"
-                if int(accepted_summary.get("critical_failure_count", 0)) == 0
+                if eligible(accepted_summary)
                 else "`FAIL`",
                 "",
                 f"- Accepted model: `{payload['selected_model']}`",
                 f"- Accepted type: `{payload['accepted_type']}`",
-                f"- Score: `{accepted_summary['mean_heuristic_score']:.6f}`",
+                f"- Score: `{accepted_summary.get('mean_quality_score', accepted_summary['mean_heuristic_score']):.6f}`",
+                f"- Quality pass rate: `{accepted_summary.get('quality_pass_rate')}`",
+                f"- Worst-decile quality: `{accepted_summary.get('worst_decile_mean_quality_score')}`",
+                f"- Hard-failure cases: `{accepted_summary.get('hard_failure_case_count', 0)}`",
                 f"- Critical failures: `{accepted_summary.get('critical_failure_count', 0)}`",
                 "",
                 "## Human review",

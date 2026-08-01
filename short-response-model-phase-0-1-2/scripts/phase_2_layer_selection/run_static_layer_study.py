@@ -9,6 +9,7 @@ from typing import Any
 from transformers import AutoConfig
 
 from phase2_common import ROOT, contribution, load_json, train_and_evaluate, write_json
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
 
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
 
@@ -56,7 +57,10 @@ def run_variant(args: argparse.Namespace, name: str, layers: list[int] | None, s
     destination = args.output_dir / "variants" / name / f"seed_{seed}"
     cached = destination / "variant_result.json"
     if args.resume and cached.exists():
-        return load_json(cached)
+        cached_row = load_json(cached)
+        if str(cached_row.get("quality_evaluation_version")) == "2.0":
+            return cached_row
+        print(f"[stale evaluator] rebuilding {cached}")
     selected = "all" if layers is None else ",".join(str(x) for x in sorted(layers))
     result = train_and_evaluate(
         model_id=args.model_id,
@@ -85,8 +89,11 @@ def rank_single(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
         key=lambda x: (
             -int(x.get("critical_failure_count", 0)),
             -int(x.get("major_issue_count", 0)),
+            float(x.get("intelligibility_pass_rate", 0.0)),
+            float(x.get("quality_pass_rate", 0.0)),
             float(x.get("semantic_pass_rate", 1.0)),
-            float(x["mean_heuristic_score"]),
+            float(x.get("worst_decile_mean_quality_score", 0.0)),
+            float(x.get("mean_quality_score", x["mean_heuristic_score"])),
             -float(x["peak_train_vram_gb"]),
         ),
         reverse=True,
@@ -109,8 +116,10 @@ def main() -> None:
             f"{args.target_module_group!r}. Train/evaluate a matching all-layer reference or pass "
             "--allow-mismatched-all-layer-reference for a clearly labeled exploratory run."
         )
-    base_score = float(base["mean_heuristic_score"])
-    all_score = float(all_summary["mean_heuristic_score"])
+    require_quality_v2(base, "Phase 1 base summary")
+    require_quality_v2(all_summary, "Phase 1 all-layer summary")
+    base_score = summary_quality_score(base)
+    all_score = summary_quality_score(all_summary)
 
     # 1) Coarse scan across early, middle, and late layers.
     coarse = coarse_candidates(n)
@@ -156,11 +165,20 @@ def main() -> None:
         "variant": "all_layers_phase1_reference",
         "layers": "all",
         "seed": all_manifest.get("seed", args.seed),
+        "quality_evaluation_version": all_summary.get("quality_evaluation_version"),
+        "mean_quality_score": all_score,
         "mean_heuristic_score": all_score,
+        "quality_pass_rate": float(all_summary.get("quality_pass_rate", 0.0)),
+        "intelligibility_pass_rate": float(all_summary.get("intelligibility_pass_rate", 0.0)),
+        "hard_failure_case_count": int(all_summary.get("hard_failure_case_count", 0)),
+        "worst_decile_mean_quality_score": float(all_summary.get("worst_decile_mean_quality_score", 0.0)),
+        "p10_quality_score": float(all_summary.get("p10_quality_score", 0.0)),
+        "mean_reference_alignment_score": all_summary.get("mean_reference_alignment_score"),
         "median_reply_tokens": float(all_summary["median_reply_tokens"]),
         "p90_reply_tokens": float(all_summary["p90_reply_tokens"]),
         "complete_utterance_rate": float(all_summary["complete_utterance_rate"]),
-        "category_scores": all_summary.get("category_scores", {}),
+        "category_scores": all_summary.get("category_quality_scores", all_summary.get("category_scores", {})),
+        "category_quality_scores": all_summary.get("category_quality_scores", all_summary.get("category_scores", {})),
         "critical_failure_count": int(all_summary.get("critical_failure_count", 0)),
         "critical_case_count": int(all_summary.get("critical_case_count", 0)),
         "major_issue_count": int(all_summary.get("major_issue_count", 0)),
@@ -175,8 +193,8 @@ def main() -> None:
 
     all_rows = [*ranked_singles, *pair_results, *controls]
     for row in all_rows:
-        row["contribution"] = contribution(float(row["mean_heuristic_score"]), base_score, all_score)
-        row["quality_gap_from_all"] = all_score - float(row["mean_heuristic_score"])
+        row["contribution"] = contribution(float(row.get("mean_quality_score", row["mean_heuristic_score"])), base_score, all_score)
+        row["quality_gap_from_all"] = all_score - float(row.get("mean_quality_score", row["mean_heuristic_score"]))
         row["vram_reduction_vs_all"] = 1.0 - float(row["peak_train_vram_gb"]) / float(all_row["peak_train_vram_gb"])
         if all_row["train_runtime_seconds"] > 0 and row["train_runtime_seconds"] > 0:
             row["runtime_reduction_vs_all"] = 1.0 - float(row["train_runtime_seconds"]) / float(all_row["train_runtime_seconds"])
@@ -187,8 +205,10 @@ def main() -> None:
     candidates = [ranked_singles[0], best_pair, controls[0]]
     candidates = [
         r for r in candidates
-        if all_score - float(r["mean_heuristic_score"]) <= args.quality_tolerance
+        if all_score - float(r.get("mean_quality_score", r["mean_heuristic_score"])) <= args.quality_tolerance
         and int(r.get("critical_failure_count", 0)) == 0
+        and int(r.get("hard_failure_case_count", 0)) == 0
+        and float(r.get("intelligibility_pass_rate", 0.0)) == 1.0
     ]
     strongest = rank_single(candidates)[0] if candidates else rank_single([ranked_singles[0], best_pair, controls[0]])[0]
     strongest_layers = [int(x) for x in strongest["layers"]]
@@ -200,6 +220,8 @@ def main() -> None:
         "model_id": args.model_id,
         "target_module_group": args.target_module_group,
         "num_hidden_layers": n,
+        "base_quality_score": base_score,
+        "all_layer_quality_score": all_score,
         "base_score": base_score,
         "all_layer_score": all_score,
         "coarse_layers": coarse,
@@ -221,14 +243,14 @@ def main() -> None:
     def fmt_ratio(value: Any) -> str:
         return "n/a" if value is None else f"{float(value):.3f}"
     rows = []
-    for row in sorted(all_rows, key=lambda x: x["mean_heuristic_score"], reverse=True):
+    for row in sorted(all_rows, key=lambda x: x.get("mean_quality_score", x["mean_heuristic_score"]), reverse=True):
         rows.append(
-            f"| {row['variant']} | {row['layers']} | {row['mean_heuristic_score']:.3f} | "
+            f"| {row['variant']} | {row['layers']} | {row.get('mean_quality_score', row['mean_heuristic_score']):.3f} | "
             f"{fmt_ratio(row['contribution'])} | {row.get('critical_failure_count', 0)} | "
             f"{row.get('major_issue_count', 0)} | {row.get('semantic_pass_rate', 1.0):.3f} | "
             f"{row['peak_train_vram_gb']:.3f} | {100*row['vram_reduction_vs_all']:.1f}% |"
         )
-    report = f"""# PHASE 2 LAYER STUDY REPORT\n\n## Scope\n\nCoarse-to-fine static layer study for `{args.model_id}` using fixed data, training budget, benchmark, and decoding.\n\n## Scan Design\n\n- Coarse layers: {coarse}\n- Fine layers: {fine}\n- Best single layer: {best_single}\n- Pair candidates: {pair_sets}\n- Top four: {top4}\n- Random four: {random4}\n- Bottom four: {bottom4}\n- Repeat seeds: {args.repeat_seeds}\n\n## Static Results\n\n| Variant | Layers | Score | Contribution | Peak train VRAM | VRAM reduction vs all |\n|---|---|---:|---:|---:|---:|\n""" + "\n".join(rows) + f"""\n\n## Interpretation\n\nContribution uses `C_short(K) = (S_K - S_base) / (S_all - S_base)`. Raw scores remain authoritative because ratios can be unstable when the all-layer gain is small.\n\nThe selected training layers still do **not** imply that other layers can be skipped at inference.\n\n## Next Required Action\n\nRun `check_phase_2_gate.py`, review category-level outputs and repeated-seed stability, then record the human decision. Dynamic IST-style selection is an optional comparison after a stable static ranking exists; it is not required to pass Stop Gate 2.\n"""
+    report = f"""# PHASE 2 LAYER STUDY REPORT\n\n## Scope\n\nCoarse-to-fine static layer study for `{args.model_id}` using fixed data, training budget, benchmark, and decoding.\n\n## Scan Design\n\n- Coarse layers: {coarse}\n- Fine layers: {fine}\n- Best single layer: {best_single}\n- Pair candidates: {pair_sets}\n- Top four: {top4}\n- Random four: {random4}\n- Bottom four: {bottom4}\n- Repeat seeds: {args.repeat_seeds}\n\n## Static Results\n\n| Variant | Layers | Quality | Contribution | Critical | Major | Semantic pass | Peak train VRAM | VRAM reduction vs all |\n|---|---|---:|---:|---:|---:|---:|---:|---:|\n""" + "\n".join(rows) + f"""\n\n## Interpretation\n\nContribution uses `C_short(K) = (S_K - S_base) / (S_all - S_base)`. Raw scores remain authoritative because ratios can be unstable when the all-layer gain is small.\n\nThe selected training layers still do **not** imply that other layers can be skipped at inference.\n\n## Next Required Action\n\nRun `check_phase_2_gate.py`, review category-level outputs and repeated-seed stability, then record the human decision. Dynamic IST-style selection is an optional comparison after a stable static ranking exists; it is not required to pass Stop Gate 2.\n"""
     (args.output_dir / "PHASE_2_LAYER_STUDY_REPORT.md").write_text(report, encoding="utf-8")
     print(f"\nPhase 2 report: {args.output_dir / 'PHASE_2_LAYER_STUDY_REPORT.md'}")
 

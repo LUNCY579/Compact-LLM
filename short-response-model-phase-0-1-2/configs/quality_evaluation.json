@@ -1,0 +1,212 @@
+{
+  "schema_version": "2.0",
+  "description": "Quality-oriented deterministic evaluation contract for short-response model phases and playground experiments.",
+  "case_pass_threshold": 0.8,
+  "weights": {
+    "intelligibility": 0.3,
+    "task_compliance": 0.2,
+    "semantic_safety": 0.2,
+    "reference_alignment": 0.1,
+    "completeness": 0.08,
+    "brevity": 0.06,
+    "non_echo": 0.03,
+    "surface_naturalness": 0.03
+  },
+  "category_weight_overrides": {
+    "factual_compression": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.23,
+      "semantic_safety": 0.2,
+      "reference_alignment": 0.15,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.02
+    },
+    "context_consistency": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.23,
+      "semantic_safety": 0.2,
+      "reference_alignment": 0.15,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.02
+    },
+    "memory_recall": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.23,
+      "semantic_safety": 0.2,
+      "reference_alignment": 0.15,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.02
+    },
+    "safety_boundary": {
+      "intelligibility": 0.25,
+      "task_compliance": 0.2,
+      "semantic_safety": 0.3,
+      "reference_alignment": 0.12,
+      "completeness": 0.07,
+      "brevity": 0.03,
+      "non_echo": 0.01,
+      "surface_naturalness": 0.02
+    },
+    "empathy": {
+      "intelligibility": 0.3,
+      "task_compliance": 0.15,
+      "semantic_safety": 0.18,
+      "reference_alignment": 0.06,
+      "completeness": 0.08,
+      "brevity": 0.07,
+      "non_echo": 0.04,
+      "surface_naturalness": 0.12
+    },
+    "naturalness": {
+      "intelligibility": 0.3,
+      "task_compliance": 0.14,
+      "semantic_safety": 0.14,
+      "reference_alignment": 0.05,
+      "completeness": 0.08,
+      "brevity": 0.07,
+      "non_echo": 0.05,
+      "surface_naturalness": 0.17
+    },
+    "playful_banter": {
+      "intelligibility": 0.3,
+      "task_compliance": 0.14,
+      "semantic_safety": 0.14,
+      "reference_alignment": 0.05,
+      "completeness": 0.08,
+      "brevity": 0.07,
+      "non_echo": 0.05,
+      "surface_naturalness": 0.17
+    },
+    "clarification": {
+      "intelligibility": 0.28,
+      "task_compliance": 0.3,
+      "semantic_safety": 0.16,
+      "reference_alignment": 0.08,
+      "completeness": 0.08,
+      "brevity": 0.05,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.03
+    },
+    "concise_clarification": {
+      "intelligibility": 0.28,
+      "task_compliance": 0.3,
+      "semantic_safety": 0.16,
+      "reference_alignment": 0.08,
+      "completeness": 0.08,
+      "brevity": 0.05,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.03
+    },
+    "knowledge_boundary": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.2,
+      "semantic_safety": 0.25,
+      "reference_alignment": 0.13,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.02
+    },
+    "uncertainty": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.2,
+      "semantic_safety": 0.25,
+      "reference_alignment": 0.13,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.02
+    },
+    "complex_escalation": {
+      "intelligibility": 0.25,
+      "task_compliance": 0.25,
+      "semantic_safety": 0.25,
+      "reference_alignment": 0.1,
+      "completeness": 0.08,
+      "brevity": 0.03,
+      "non_echo": 0.01,
+      "surface_naturalness": 0.03
+    },
+    "conflict_deescalation": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.18,
+      "semantic_safety": 0.25,
+      "reference_alignment": 0.08,
+      "completeness": 0.08,
+      "brevity": 0.05,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.07
+    },
+    "role_identity_adherence": {
+      "intelligibility": 0.28,
+      "task_compliance": 0.18,
+      "semantic_safety": 0.2,
+      "reference_alignment": 0.07,
+      "completeness": 0.07,
+      "brevity": 0.05,
+      "non_echo": 0.03,
+      "surface_naturalness": 0.12
+    },
+    "acknowledgment": {
+      "intelligibility": 0.3,
+      "task_compliance": 0.18,
+      "semantic_safety": 0.14,
+      "reference_alignment": 0.05,
+      "completeness": 0.08,
+      "brevity": 0.08,
+      "non_echo": 0.05,
+      "surface_naturalness": 0.12
+    },
+    "celebration": {
+      "intelligibility": 0.3,
+      "task_compliance": 0.16,
+      "semantic_safety": 0.14,
+      "reference_alignment": 0.05,
+      "completeness": 0.08,
+      "brevity": 0.07,
+      "non_echo": 0.04,
+      "surface_naturalness": 0.16
+    },
+    "trust_and_secrets": {
+      "intelligibility": 0.27,
+      "task_compliance": 0.2,
+      "semantic_safety": 0.24,
+      "reference_alignment": 0.1,
+      "completeness": 0.07,
+      "brevity": 0.04,
+      "non_echo": 0.02,
+      "surface_naturalness": 0.06
+    }
+  },
+  "hard_failure_thresholds": {
+    "consecutive_token_run": 4,
+    "max_token_share": 0.45,
+    "repeated_bigram_fraction": 0.55,
+    "repeated_trigram_fraction": 0.45,
+    "replacement_character_count": 1,
+    "control_character_count": 1,
+    "maximum_symbol_ratio": 0.45,
+    "maximum_model_tokens_per_word": 3.2,
+    "minimum_words_for_fragmentation_gate": 8,
+    "maximum_nonempty_lines": 8
+  },
+  "aggregate_gate_defaults": {
+    "minimum_mean_quality_score": 0.8,
+    "minimum_quality_pass_rate": 0.95,
+    "minimum_intelligibility_pass_rate": 1.0,
+    "minimum_semantic_pass_rate": 0.98,
+    "minimum_complete_utterance_rate": 0.99,
+    "minimum_worst_decile_quality": 0.7,
+    "maximum_hard_failure_cases": 0,
+    "maximum_new_major_issue_cases": 0,
+    "maximum_category_quality_loss": 0.08,
+    "maximum_reference_alignment_loss": 0.08,
+    "maximum_relative_target_nll_increase": 0.15
+  }
+}

@@ -98,7 +98,7 @@ def unique_rows(rows: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
 def case_priority(row: dict[str, Any]) -> tuple[int, int, float, str]:
     critical = len(row.get("critical_failures") or [])
     major = len(row.get("major_issues") or [])
-    score = float(row.get("heuristic_score", 1.0))
+    score = float(row.get("quality_score", row.get("heuristic_score", 1.0)))
     # Flagged cases first, then low scores, with stable ID ordering.
     return (-critical, -major, score, str(row.get("id", "")))
 
@@ -108,15 +108,17 @@ def case_table(rows: list[dict[str, Any]], limit: int) -> str:
         return "_Raw case-level output was not found. Re-run the associated evaluation before human approval._"
     selected = sorted(rows, key=case_priority)[: max(1, limit)]
     lines = [
-        "| ID | Category | Score | Reply | Critical | Major | Warnings |",
-        "|---|---|---:|---|---|---|---|",
+        "| ID | Category | Quality | Intelligibility | Pass | Reply | Critical/hard | Major | Warnings |",
+        "|---|---|---:|---:|---:|---|---|---|---|",
     ]
     for row in selected:
         lines.append(
-            "| {id} | {category} | {score:.3f} | {reply} | {critical} | {major} | {warnings} |".format(
+            "| {id} | {category} | {score:.3f} | {intelligibility:.3f} | {quality_pass} | {reply} | {critical} | {major} | {warnings} |".format(
                 id=escape(row.get("id")),
                 category=escape(row.get("category")),
-                score=float(row.get("heuristic_score", 0.0)),
+                score=float(row.get("quality_score", row.get("heuristic_score", 0.0))),
+                intelligibility=float(row.get("intelligibility_score", 0.0)),
+                quality_pass="YES" if row.get("quality_pass") else "NO",
                 reply=escape(row.get("reply")),
                 critical=escape(", ".join(row.get("critical_failures") or []) or "-"),
                 major=escape(", ".join(row.get("major_issues") or []) or "-"),
@@ -132,9 +134,12 @@ def summary_row(label: str, row: dict[str, Any]) -> str:
     vram_text = "reference" if vram_reduction is None else f"{100.0 * float(vram_reduction):.1f}%"
     return (
         f"| {escape(label)} | {escape(row.get('variant', label))} | {escape(layers)} | "
-        f"{float(row.get('mean_heuristic_score', 0.0)):.3f} | "
-        f"{int(row.get('critical_failure_count', 0))} | "
-        f"{int(row.get('major_issue_count', 0))} | "
+        f"{float(row.get('mean_quality_score', row.get('mean_heuristic_score', 0.0))):.3f} | "
+        f"{float(row.get('worst_decile_mean_quality_score', 0.0)):.3f} | "
+        f"{float(row.get('quality_pass_rate', 0.0)):.3f} | "
+        f"{float(row.get('intelligibility_pass_rate', 0.0)):.3f} | "
+        f"{int(row.get('hard_failure_case_count', 0))} | {int(row.get('critical_failure_count', 0))} | "
+        f"{int(row.get('major_case_count', row.get('major_issue_count', 0)))} | "
         f"{float(row.get('semantic_pass_rate', 1.0)):.3f} | {vram_text} |"
     )
 
@@ -161,8 +166,8 @@ def main() -> None:
     )
 
     summary_lines = [
-        "| Role | Variant | Layers | Score | Critical failures | Major issues | Semantic pass | Train VRAM reduction |",
-        "|---|---|---|---:|---:|---:|---:|---:|",
+        "| Role | Variant | Layers | Mean quality | Worst decile | Quality pass | Intelligibility | Hard cases | Critical | Major cases | Semantic pass | Train VRAM reduction |",
+        "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
         summary_row("All-layer reference", all_reference),
     ]
     role_names = {
@@ -208,7 +213,7 @@ removal and recovery are evaluated separately in Phase 2B.
 
 ## Human Review Checklist
 
-- Confirm that the strongest candidate's score is not driven by canned or incomplete replies.
+- Confirm the strongest candidate has zero hard failures and no low-tail collapse; do not rely on the mean alone.
 - Inspect every critical or major semantic flag.
 - Compare factual compression, clarification, context references, uncertainty, and safety.
 - Confirm RANDOM4 and BOTTOM4 behave worse when the ranking says they should.

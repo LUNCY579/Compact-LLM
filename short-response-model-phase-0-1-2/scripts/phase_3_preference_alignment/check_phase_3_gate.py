@@ -1,127 +1,90 @@
 from __future__ import annotations
 
 import argparse
-from pathlib import Path
 import sys
-from typing import Any
+from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json
-
-
-def number(record: dict[str, Any], key: str, default: float = 0.0) -> float:
-    value = record.get(key, default)
-    return float(value)
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_gate import compare_quality_summaries, quality_index
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(
-        description="Compare the accepted SFT reference with the Phase 3 DPO candidate."
-    )
+    parser = argparse.ArgumentParser(description="Compare accepted SFT reference with Phase 3 DPO using quality v2.")
     parser.add_argument("--sft-summary", type=Path, required=True)
     parser.add_argument("--dpo-summary", type=Path, required=True)
-    parser.add_argument(
-        "--out",
-        type=Path,
-        default=ROOT / "reports" / "PHASE_3_STOP_GATE.md",
-    )
+    parser.add_argument("--out", type=Path, default=ROOT / "reports/PHASE_3_STOP_GATE.md")
     args = parser.parse_args()
-
     sft = read_json(args.sft_summary)
     dpo = read_json(args.dpo_summary)
-
-    sft_score = number(sft, "mean_heuristic_score")
-    dpo_score = number(dpo, "mean_heuristic_score")
-    sft_median = number(sft, "median_reply_tokens")
-    dpo_median = number(dpo, "median_reply_tokens")
-    sft_p90 = number(sft, "p90_reply_tokens")
-    dpo_p90 = number(dpo, "p90_reply_tokens")
-    sft_completion = number(sft, "complete_utterance_rate")
-    dpo_completion = number(dpo, "complete_utterance_rate")
-    sft_critical = int(sft.get("critical_failure_count", 0))
-    dpo_critical = int(dpo.get("critical_failure_count", 0))
-    sft_major = int(sft.get("major_issue_count", 0))
-    dpo_major = int(dpo.get("major_issue_count", 0))
-
+    require_quality_v2(sft, "Phase 3 SFT summary")
+    require_quality_v2(dpo, "Phase 3 DPO summary")
+    comparison = compare_quality_summaries(
+        sft, dpo,
+        max_mean_quality_loss=0.01,
+        max_quality_index_loss=0.01,
+        max_worst_decile_loss=0.03,
+        max_category_quality_loss_allowed=0.05,
+        max_semantic_pass_loss=0.01,
+        max_reference_alignment_loss=0.05,
+        min_quality_pass_rate=0.95,
+        min_intelligibility_pass_rate=1.0,
+        min_semantic_pass_rate=0.98,
+        min_complete_utterance_rate=0.99,
+        max_hard_failure_cases=0,
+        max_critical_failures=0,
+        max_major_issue_cases=int(sft.get("major_case_count", 0)),
+    )
     checks = {
-        "score_not_regressed_more_than_0.02": dpo_score >= sft_score - 0.02,
-        "no_critical_failures": dpo_critical == 0,
-        "critical_failures_not_increased": dpo_critical <= sft_critical,
-        "major_issues_not_increased": dpo_major <= sft_major,
-        "complete_utterance_rate": dpo_completion >= 0.99,
-        "p90_reply_tokens": dpo_p90 <= 24,
+        "quality_v2": True,
+        "quality_comparison": comparison["eligible"],
+        "p90_reply_tokens": float(dpo.get("p90_reply_tokens", 999)) <= 24,
+        "major_issues_not_increased": int(dpo.get("major_case_count", 0)) <= int(sft.get("major_case_count", 0)),
     }
     status = "PASS_PENDING_HUMAN_REVIEW" if all(checks.values()) else "FAIL"
+    rows = "\n".join(f"| {k} | {'PASS' if v else 'FAIL'} |" for k,v in checks.items())
+    reasons = "\n".join(f"- {r}" for r in comparison["reasons"]) or "- None."
+    text=f"""# PHASE 3 STOP GATE
 
-    lines = [
-        "# PHASE 3 STOP GATE",
-        "",
-        "## Purpose",
-        "",
-        "Compare the accepted dense SFT reference with the DPO candidate. "
-        "The automated checks are evidence for human review; they do not "
-        "approve Phase 4 by themselves.",
-        "",
-        "## Inputs",
-        "",
-        f"- SFT summary: `{args.sft_summary}`",
-        f"- DPO summary: `{args.dpo_summary}`",
-        "",
-        "## Comparison",
-        "",
-        "| Metric | SFT | DPO | Difference |",
-        "|---|---:|---:|---:|",
-        f"| Mean heuristic score | {sft_score:.3f} | {dpo_score:.3f} | {dpo_score - sft_score:+.3f} |",
-        f"| Median reply tokens | {sft_median:.1f} | {dpo_median:.1f} | {dpo_median - sft_median:+.1f} |",
-        f"| P90 reply tokens | {sft_p90:.1f} | {dpo_p90:.1f} | {dpo_p90 - sft_p90:+.1f} |",
-        f"| Complete utterance rate | {sft_completion:.3f} | {dpo_completion:.3f} | {dpo_completion - sft_completion:+.3f} |",
-        f"| Critical semantic failures | {sft_critical} | {dpo_critical} | {dpo_critical - sft_critical:+d} |",
-        f"| Major semantic issues | {sft_major} | {dpo_major} | {dpo_major - sft_major:+d} |",
-        "",
-        "## Automated Checks",
-        "",
-        "| Check | Result |",
-        "|---|---|",
-    ]
+## Quality comparison
 
-    for name, passed in checks.items():
-        lines.append(f"| {name} | {'PASS' if passed else 'FAIL'} |")
+| Metric | SFT | DPO | Difference |
+|---|---:|---:|---:|
+| Mean quality | {summary_quality_score(sft):.3f} | {summary_quality_score(dpo):.3f} | {summary_quality_score(dpo)-summary_quality_score(sft):+.3f} |
+| Quality index | {quality_index(sft):.3f} | {quality_index(dpo):.3f} | {quality_index(dpo)-quality_index(sft):+.3f} |
+| Worst-decile quality | {float(sft.get('worst_decile_mean_quality_score',0)):.3f} | {float(dpo.get('worst_decile_mean_quality_score',0)):.3f} | {float(dpo.get('worst_decile_mean_quality_score',0))-float(sft.get('worst_decile_mean_quality_score',0)):+.3f} |
+| Quality pass rate | {float(sft.get('quality_pass_rate',0)):.3f} | {float(dpo.get('quality_pass_rate',0)):.3f} | {float(dpo.get('quality_pass_rate',0))-float(sft.get('quality_pass_rate',0)):+.3f} |
+| Hard-failure cases | {int(sft.get('hard_failure_case_count',0))} | {int(dpo.get('hard_failure_case_count',0))} | {int(dpo.get('hard_failure_case_count',0))-int(sft.get('hard_failure_case_count',0)):+d} |
+| P90 tokens | {float(sft.get('p90_reply_tokens',0)):.1f} | {float(dpo.get('p90_reply_tokens',0)):.1f} | {float(dpo.get('p90_reply_tokens',0))-float(sft.get('p90_reply_tokens',0)):+.1f} |
 
-    lines.extend(
-        [
-            "",
-            "## Automated Gate Status",
-            "",
-            f"`{status}`",
-            "",
-            "## Required Human Review",
-            "",
-            "Before Phase 4, inspect blinded SFT-versus-DPO outputs and confirm:",
-            "",
-            "- concise-correct replies improve over verbose or inaccurate replies;",
-            "- role-playing voice, persona, mood, and relationship context remain consistent;",
-            "- responses remain natural and varied rather than becoming canned;",
-            "- clarification behavior is appropriate when information is missing;",
-            "- factual, context, and safety behavior do not materially regress;",
-            "- low-scoring and semantically flagged cases are acceptable.",
-            "",
-            "DPO must improve preference behavior rather than merely shorten replies.",
-            "",
-            "- Human decision: `PENDING`",
-            "- Reviewer:",
-            "- Date:",
-            "- Notes:",
-        ]
-    )
+## Checks
 
+| Check | Result |
+|---|---|
+{rows}
+
+## Rejection reasons
+
+{reasons}
+
+## Automated Gate Status
+
+`{status}`
+
+DPO must improve preference behavior without intelligibility, factual, context,
+role, or safety collapse. Review blinded outputs and every flagged case.
+
+- Human decision: `PENDING`
+- Reviewer:
+- Date:
+- Notes:
+"""
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text("\n".join(lines) + "\n", encoding="utf-8")
-    print(f"Phase 3 stop-gate report: {args.out}")
-    print(f"Automated status: {status}")
+    args.out.write_text(text,encoding='utf-8')
+    print(args.out)
 
-
-if __name__ == "__main__":
-    main()
+if __name__=='__main__': main()

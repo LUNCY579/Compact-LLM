@@ -27,13 +27,15 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import RoutedSparseGatedMLP, TinyBlockRouter
+from scripts.common.quality_evaluation import aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
+from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries
 from scripts.common.response_control import (
     RESPONSE_CONTROL_MODES,
     finalize_response,
     first_sentence_boundary,
     validate_response_control_mode,
 )
-from scripts.phase_1_dense_sft.evaluate_model import normalize_benchmark_record, score_case, semantic_audit
+from scripts.phase_1_dense_sft.evaluate_model import normalize_benchmark_record
 
 
 def parse_args() -> argparse.Namespace:
@@ -51,6 +53,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--repeats", type=int, default=3)
     parser.add_argument("--keep-ratio", type=float, default=None)
     parser.add_argument("--force-confidence-threshold", type=float, default=None)
+    parser.add_argument("--quality-config", type=Path, default=ROOT / "configs/quality_evaluation.json")
     parser.add_argument("--allow-provenance-mismatch", action="store_true")
     return parser.parse_args()
 
@@ -186,21 +189,22 @@ def summarize_runtime(runs: list[dict[str, Any]]) -> dict[str, Any]:
     }
 
 
-def score_outputs(records: list[dict[str, Any]], runs: list[dict[str, Any]]) -> dict[str, Any]:
+def score_outputs(
+    records: list[dict[str, Any]],
+    runs: list[dict[str, Any]],
+    *,
+    quality_config: Any,
+    corpus_profile: dict[str, Any],
+) -> dict[str, Any]:
     scored: list[dict[str, Any]] = []
-    for record, run in zip(records, runs):
-        score = score_case(record, run["reply"], int(run["visible_generated_tokens"]))
-        audit = semantic_audit(record, run["reply"])
-        scored.append({**score, **audit})
-    return {
-        "mean_heuristic_score": statistics.fmean(float(row["heuristic_score"]) for row in scored),
-        "complete_utterance_rate": statistics.fmean(
-            1.0 if row["checks"].get("complete_utterance") else 0.0 for row in scored
-        ),
-        "critical_failure_count": sum(len(row["critical_failures"]) for row in scored),
-        "major_issue_count": sum(len(row["major_issues"]) for row in scored),
-        "semantic_pass_rate": statistics.fmean(1.0 if row["semantic_pass"] else 0.0 for row in scored),
-    }
+    for index, (record, run) in enumerate(zip(records, runs)):
+        assessment = evaluate_response(
+            record, run["reply"], int(run["visible_generated_tokens"]),
+            visible_model_tokens=int(run["visible_generated_tokens"]),
+            config=quality_config, corpus_profile=corpus_profile,
+        )
+        scored.append({"id": record.get("id", index), "category": record.get("category"), **assessment})
+    return aggregate_quality_rows(scored)
 
 
 def main() -> None:
@@ -218,6 +222,8 @@ def main() -> None:
     model.eval()
 
     records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)[: args.max_cases]]
+    quality_config = load_quality_config(args.quality_config)
+    corpus_profile = build_corpus_profile(records)
     prompts = [prompt_from_row(tokenizer, row) for row in records]
     if not prompts:
         raise ValueError("Benchmark produced no prompts.")
@@ -236,7 +242,8 @@ def main() -> None:
                 args.response_control, args.min_new_tokens_before_boundary
             ))
     dense_summary = summarize_runtime(dense_runs)
-    dense_quality = score_outputs(records, dense_runs[: len(records)])
+    dense_quality = score_outputs(records, dense_runs[: len(records)], quality_config=quality_config, corpus_profile=corpus_profile)
+    assert_valid_reference(dense_quality, label="Phase 7 dense reference")
 
     # A negative Phase 6 result is a valid mature-product outcome. Phase 7
     # still records the real dense baseline so Phase 8 has measured runtime
@@ -283,7 +290,8 @@ def main() -> None:
                     args.response_control == "one_sentence"
                     and dense_summary["one_sentence_violation_rate"] == 0.0
                 ),
-                "passes_quality_target": False,
+                "quality_evaluation_version": "2.0",
+                "passes_quality_target": True,
                 "passes_runtime_target": False,
                 "raw_results": str(raw_path),
                 "warning": "Phase 6 found no viable sparse ratio; Phase 7 measured and selected the dense runtime baseline.",
@@ -358,11 +366,21 @@ def main() -> None:
 
     paired = min(len(dense_runs), len(sparse_runs))
     exact = [dense_runs[index]["generated_ids"] == sparse_runs[index]["generated_ids"] for index in range(paired)]
-    sparse_quality = score_outputs(records, sparse_runs[: len(records)])
+    sparse_quality = score_outputs(records, sparse_runs[: len(records)], quality_config=quality_config, corpus_profile=corpus_profile)
 
     raw_rows: list[dict[str, Any]] = []
     for index in range(paired):
         case_index = index % len(records)
+        dense_case_quality = evaluate_response(
+            records[case_index], dense_runs[index]["reply"], int(dense_runs[index]["visible_generated_tokens"]),
+            visible_model_tokens=int(dense_runs[index]["visible_generated_tokens"]),
+            config=quality_config, corpus_profile=corpus_profile,
+        )
+        sparse_case_quality = evaluate_response(
+            records[case_index], sparse_runs[index]["reply"], int(sparse_runs[index]["visible_generated_tokens"]),
+            visible_model_tokens=int(sparse_runs[index]["visible_generated_tokens"]),
+            config=quality_config, corpus_profile=corpus_profile,
+        )
         raw_rows.append(
             {
                 "run_index": index,
@@ -374,6 +392,9 @@ def main() -> None:
                 "sparse_raw_reply": sparse_runs[index]["raw_reply"],
                 "dense_stop_reason": dense_runs[index]["stop_reason"],
                 "sparse_stop_reason": sparse_runs[index]["stop_reason"],
+                "dense_quality": dense_case_quality,
+                "sparse_quality": sparse_case_quality,
+                "quality_score_delta": sparse_case_quality["quality_score"] - dense_case_quality["quality_score"],
                 "exact_token_match": exact[index],
                 "dense_prefill_ms": dense_runs[index]["prefill_ms"],
                 "sparse_prefill_ms": sparse_runs[index]["prefill_ms"],
@@ -385,7 +406,16 @@ def main() -> None:
     write_jsonl(raw_path, raw_rows)
 
     layer_stats = {str(index): wrapper.stats.as_dict() for index, wrapper in enumerate(wrappers)}
-    quality_loss = dense_quality["mean_heuristic_score"] - sparse_quality["mean_heuristic_score"]
+    quality_comparison = compare_quality_summaries(
+        dense_quality, sparse_quality,
+        max_mean_quality_loss=0.01, max_quality_index_loss=0.015,
+        max_worst_decile_loss=0.03, max_category_quality_loss_allowed=0.04,
+        max_semantic_pass_loss=0.01, max_reference_alignment_loss=0.05,
+        min_quality_pass_rate=0.98, min_intelligibility_pass_rate=1.0,
+        min_semantic_pass_rate=0.98, min_complete_utterance_rate=0.99,
+        max_hard_failure_cases=0, max_critical_failures=0, max_major_issue_cases=0,
+    )
+    quality_loss = quality_comparison["mean_quality_loss"]
     payload = {
         "model": args.model,
         "model_fingerprint": model_fingerprint,
@@ -402,7 +432,9 @@ def main() -> None:
         "sparse_reference": sparse_summary,
         "dense_quality": dense_quality,
         "sparse_quality": sparse_quality,
+        "quality_evaluation_version": "2.0",
         "quality_score_loss": quality_loss,
+        "quality_comparison": quality_comparison,
         "decode_speedup": speedup,
         "peak_vram_reduction_fraction": vram_reduction,
         "exact_generation_match_rate": statistics.fmean(exact) if exact else None,
@@ -413,9 +445,7 @@ def main() -> None:
             and sparse_summary["one_sentence_violation_rate"] == 0.0
         ),
         "passes_quality_target": bool(
-            quality_loss <= 0.01
-            and sparse_quality["critical_failure_count"] <= dense_quality["critical_failure_count"]
-            and sparse_quality["complete_utterance_rate"] >= 0.99
+            quality_comparison["eligible"]
             and sparse_summary["one_sentence_violation_rate"] == 0.0
         ),
         "passes_runtime_target": bool(

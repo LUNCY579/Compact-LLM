@@ -22,6 +22,8 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import OracleMaskedGatedMLP
+from scripts.common.quality_evaluation import aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
+from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries
 from scripts.common.response_control import (
     RESPONSE_CONTROL_MODES,
     build_stopping_criteria,
@@ -119,15 +121,8 @@ def common_prefix_fraction(left: list[int], right: list[int]) -> float:
 
 
 def aggregate_scored(rows: list[dict[str, Any]]) -> dict[str, Any]:
-    return {
-        "mean_heuristic_score": statistics.fmean(float(row["heuristic_score"]) for row in rows),
-        "complete_utterance_rate": statistics.fmean(
-            1.0 if row["checks"].get("complete_utterance") else 0.0 for row in rows
-        ),
-        "critical_failure_count": sum(len(row["critical_failures"]) for row in rows),
-        "major_issue_count": sum(len(row["major_issues"]) for row in rows),
-        "semantic_pass_rate": statistics.fmean(1.0 if row["semantic_pass"] else 0.0 for row in rows),
-    }
+    """Compatibility wrapper around the shared evaluator-v2 aggregator."""
+    return aggregate_quality_rows(rows)
 
 
 def main() -> None:
@@ -164,11 +159,7 @@ def main() -> None:
 
     if args.model and args.benchmark:
         from transformers import AutoModelForCausalLM, AutoTokenizer
-        from scripts.phase_1_dense_sft.evaluate_model import (
-            normalize_benchmark_record,
-            score_case,
-            semantic_audit,
-        )
+        from scripts.phase_1_dense_sft.evaluate_model import normalize_benchmark_record
 
         tokenizer = AutoTokenizer.from_pretrained(args.model)
         if tokenizer.pad_token_id is None:
@@ -176,6 +167,8 @@ def main() -> None:
         model = AutoModelForCausalLM.from_pretrained(args.model, torch_dtype="auto", device_map="auto")
         model.eval()
         rows = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)[: args.max_cases]]
+        quality_config = load_quality_config()
+        corpus_profile = build_corpus_profile(rows)
         prompts = [prompt_from_row(tokenizer, row) for row in rows]
         dense_outputs = [
             generation(
@@ -190,15 +183,15 @@ def main() -> None:
         ]
 
         dense_scored: list[dict[str, Any]] = []
-        for row, generated in zip(rows, dense_outputs):
-            reply = generated["reply"]
-            dense_scored.append(
-                {
-                    **score_case(row, reply, int(generated["visible_token_count"])),
-                    **semantic_audit(row, reply),
-                }
+        for index, (row, generated) in enumerate(zip(rows, dense_outputs)):
+            assessed = evaluate_response(
+                row, generated["reply"], int(generated["visible_token_count"]),
+                visible_model_tokens=int(generated["visible_token_count"]),
+                config=quality_config, corpus_profile=corpus_profile,
             )
+            dense_scored.append({"id": row.get("id", index), "category": row.get("category"), **assessed})
         dense_metrics = aggregate_scored(dense_scored)
+        assert_valid_reference(dense_metrics, label="Phase 6 dense reference")
         payload["dense_quality"] = dense_metrics
         payload["response_control_mode"] = args.response_control
         payload["min_new_tokens_before_boundary"] = args.min_new_tokens_before_boundary
@@ -229,15 +222,23 @@ def main() -> None:
                 for dense, sparse in zip(dense_outputs, sparse_outputs)
             ]
             sparse_scored: list[dict[str, Any]] = []
-            for row, generated in zip(rows, sparse_outputs):
-                reply = generated["reply"]
-                sparse_scored.append(
-                    {
-                        **score_case(row, reply, int(generated["visible_token_count"])),
-                        **semantic_audit(row, reply),
-                    }
+            for index, (row, generated) in enumerate(zip(rows, sparse_outputs)):
+                assessed = evaluate_response(
+                    row, generated["reply"], int(generated["visible_token_count"]),
+                    visible_model_tokens=int(generated["visible_token_count"]),
+                    config=quality_config, corpus_profile=corpus_profile,
                 )
+                sparse_scored.append({"id": row.get("id", index), "category": row.get("category"), **assessed})
             quality = aggregate_scored(sparse_scored)
+            comparison = compare_quality_summaries(
+                dense_metrics, quality,
+                max_mean_quality_loss=0.01, max_quality_index_loss=0.015,
+                max_worst_decile_loss=0.03, max_category_quality_loss_allowed=0.04,
+                max_semantic_pass_loss=0.01, max_reference_alignment_loss=0.05,
+                min_quality_pass_rate=0.98, min_intelligibility_pass_rate=1.0,
+                min_semantic_pass_rate=0.98, min_complete_utterance_rate=0.99,
+                max_hard_failure_cases=0, max_critical_failures=0, max_major_issue_cases=0,
+            )
             comparisons.append(
                 {
                     "active_ratio": ratio,
@@ -247,8 +248,13 @@ def main() -> None:
                         wrapper.stats.as_dict()["mean_active_block_ratio"] for wrapper in wrappers
                     ),
                     **quality,
-                    "mean_score_loss_from_dense": dense_metrics["mean_heuristic_score"] - quality["mean_heuristic_score"],
-                    "semantic_pass_loss_from_dense": dense_metrics["semantic_pass_rate"] - quality["semantic_pass_rate"],
+                    "quality_comparison": comparison,
+                    "quality_eligible": comparison["eligible"],
+                    "mean_quality_loss_from_dense": comparison["mean_quality_loss"],
+                    "mean_score_loss_from_dense": comparison["mean_quality_loss"],
+                    "quality_index_loss_from_dense": comparison["quality_index_loss"],
+                    "worst_decile_quality_loss_from_dense": comparison["worst_decile_quality_loss"],
+                    "semantic_pass_loss_from_dense": comparison["semantic_pass_loss"],
                     "speed_claim_allowed": False,
                 }
             )
@@ -265,7 +271,11 @@ def main() -> None:
                         "masked_reply": sparse_generated["reply"],
                         "dense_stop_reason": dense_generated["stop_reason"],
                         "masked_stop_reason": sparse_generated["stop_reason"],
-                        "masked_heuristic_score": scored["heuristic_score"],
+                        "masked_quality_score": scored["quality_score"],
+                        "masked_heuristic_score": scored["quality_score"],
+                        "quality_pass": scored["quality_pass"],
+                        "quality_hard_fail": scored["quality_hard_fail"],
+                        "intelligibility_diagnostics": scored["intelligibility_diagnostics"],
                         "critical_failures": scored["critical_failures"],
                         "major_issues": scored["major_issues"],
                     }

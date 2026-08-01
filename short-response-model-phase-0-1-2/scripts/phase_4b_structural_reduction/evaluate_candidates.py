@@ -21,6 +21,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, write_json
+from scripts.common.quality_evaluation import require_quality_v2
 
 DEFAULT_OUTPUT_ROOT = ROOT / "artifacts" / "phase_4b_structural_reduction"
 
@@ -132,6 +133,7 @@ def evaluate_one(
     # Read the generated files now so a partial or malformed run fails before
     # the candidate registry is presented as complete.
     summary = read_json(summary_path)
+    require_quality_v2(summary, f"Phase 4B evaluation {name}")
     footprint = read_json(footprint_path)
     return {
         "name": name,
@@ -141,8 +143,14 @@ def evaluate_one(
         "results": str(evaluation_dir / "results.jsonl"),
         "footprint": str(footprint_path),
         "measured": {
+            "mean_quality_score": summary.get("mean_quality_score"),
             "mean_heuristic_score": summary.get("mean_heuristic_score"),
+            "quality_pass_rate": summary.get("quality_pass_rate"),
+            "intelligibility_pass_rate": summary.get("intelligibility_pass_rate"),
+            "worst_decile_mean_quality_score": summary.get("worst_decile_mean_quality_score"),
+            "hard_failure_case_count": summary.get("hard_failure_case_count"),
             "critical_failure_count": summary.get("critical_failure_count"),
+            "major_case_count": summary.get("major_case_count"),
             "parameters_total": footprint.get("parameters", {}).get("total"),
             "local_directory_bytes": footprint.get("local_directory_bytes"),
         },
@@ -177,7 +185,8 @@ def main() -> None:
     write_json(
         registry_path,
         {
-            "registry_version": 1,
+            "registry_version": 2,
+            "quality_evaluation_version": "2.0",
             "phase": "4B",
             "dense_reference_name": "dense_reference",
             "dense_reference_model": args.dense_reference,

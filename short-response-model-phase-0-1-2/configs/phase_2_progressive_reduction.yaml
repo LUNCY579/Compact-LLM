@@ -3,8 +3,8 @@ phase:
   name: progressive_structural_reduction
   purpose: >-
     Test every current decoder layer as a reversible physical deletion, recover
-    the strongest candidates with short SFT, and preserve a progressive model
-    frontier while weight-memory reduction exceeds heuristic-score loss.
+    the strongest candidates with short SFT, and preserve a progressive frontier
+    only while weight reduction is justified by quality-v2 evidence.
 
 probe:
   source: data/dev/dev.jsonl
@@ -16,28 +16,29 @@ search:
   max_progressive_drops: 6
   recovery_top_k_per_stage: 3
   recovery_steps: 50
-  # Set recovery_top_k_per_stage to the current layer count to recovery-train
-  # every raw deletion branch. The default avoids an unnecessarily huge sweep.
 
 validity_rule:
-  minimum_reduction_minus_score_loss: 0.0
-  maximum_relative_heuristic_score_loss: 0.10
-  balanced_profile_maximum_score_loss: 0.03
-  maximum_semantic_pass_loss: 0.05
-  maximum_category_score_loss: 0.15
-  maximum_target_nll_increase: 0.50
-  minimum_complete_utterance_rate: 0.98
+  quality_evaluation_version: "2.0"
+  minimum_reduction_minus_quality_loss: 0.0
+  maximum_relative_mean_quality_loss: 0.05
+  balanced_profile_maximum_quality_loss: 0.02
+  maximum_quality_index_loss: 0.05
+  maximum_worst_decile_quality_loss: 0.05
+  minimum_quality_pass_rate: 0.95
+  minimum_intelligibility_pass_rate: 1.0
+  maximum_semantic_pass_loss: 0.02
+  maximum_category_quality_loss: 0.08
+  maximum_reference_alignment_loss: 0.08
+  maximum_target_nll_increase: 0.15
+  minimum_complete_utterance_rate: 0.99
+  hard_failure_case_count: 0
   critical_failure_count: 0
+  maximum_new_major_issue_count: 0
 
 retention:
   preserve_full_reference: true
   preserve_each_accepted_frontier_checkpoint: true
   preserve_all_outputs_and_metrics: true
   preserve_rejected_full_checkpoints: false
-  # Rejected checkpoints are reproducible from the parent checkpoint and the
-  # recorded layer ID. Enable KeepCandidateCheckpoints only with ample disk.
 
-profiles:
-  - full_quality
-  - balanced
-  - min_memory
+profiles: [full_quality, balanced, min_memory]

@@ -6,6 +6,9 @@ import math
 from pathlib import Path
 from typing import Any, Iterable
 
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_gate import quality_index as shared_quality_index
+
 
 def minmax(values: dict[int, float]) -> dict[int, float]:
     if not values:
@@ -136,16 +139,9 @@ def candidate_specs(ranking: list[dict[str, Any]], seed: int = 11) -> list[dict[
 
 
 def quality_index(summary: dict[str, Any]) -> float:
-    """Transparent development ranking score; hard gates remain separate."""
+    """Tail-aware development ranking; hard gates remain separate."""
 
-    reference_f1 = summary.get("mean_reference_token_f1")
-    reference_component = float(reference_f1) if reference_f1 is not None else float(summary.get("mean_heuristic_score", 0.0))
-    return (
-        0.35 * float(summary.get("mean_heuristic_score", 0.0))
-        + 0.30 * float(summary.get("semantic_pass_rate", 0.0))
-        + 0.20 * reference_component
-        + 0.15 * float(summary.get("complete_utterance_rate", 0.0))
-    )
+    return shared_quality_index(summary)
 
 
 def relative_loss(reference: float, candidate: float) -> float:
@@ -153,27 +149,11 @@ def relative_loss(reference: float, candidate: float) -> float:
 
 
 def category_quality_scores(summary: dict[str, Any]) -> dict[str, float]:
-    """Build category-level quality using the same components as quality_index.
-
-    New evaluator summaries expose category semantic, lexical-reference, and
-    completion values. Older summaries remain readable by falling back to the
-    heuristic category score instead of inventing a perfect value.
-    """
-
-    heuristic = summary.get("category_scores") or {}
-    semantic = summary.get("category_semantic_pass_rates") or {}
-    reference_f1 = summary.get("category_reference_token_f1") or {}
-    completion = summary.get("category_complete_utterance_rates") or {}
-    categories = sorted(set(heuristic) | set(semantic) | set(reference_f1) | set(completion))
-    scores: dict[str, float] = {}
-    for category in categories:
-        h = float(heuristic.get(category, 0.0))
-        sem = float(semantic.get(category, h))
-        f1_value = reference_f1.get(category)
-        f1 = h if f1_value is None else float(f1_value)
-        complete = float(completion.get(category, h))
-        scores[category] = 0.35 * h + 0.30 * sem + 0.20 * f1 + 0.15 * complete
-    return scores
+    require_quality_v2(summary)
+    return {
+        str(key): float(value)
+        for key, value in (summary.get("category_quality_scores") or summary.get("category_scores") or {}).items()
+    }
 
 
 def max_category_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> tuple[float, dict[str, float]]:
@@ -182,6 +162,24 @@ def max_category_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> t
     candidate_scores = category_quality_scores(candidate)
     for category, ref_score in reference_scores.items():
         cand_score = candidate_scores.get(category)
+        losses[category] = 1.0 if cand_score is None else max(0.0, ref_score - cand_score)
+    return (max(losses.values()) if losses else 0.0), losses
+
+
+
+
+def max_category_metric_loss(
+    reference: dict[str, Any],
+    candidate: dict[str, Any],
+    field: str,
+) -> tuple[float, dict[str, float]]:
+    """Return per-category absolute loss for an independent metric slice."""
+
+    ref_scores = {str(key): float(value) for key, value in (reference.get(field) or {}).items()}
+    cand_scores = {str(key): float(value) for key, value in (candidate.get(field) or {}).items()}
+    losses: dict[str, float] = {}
+    for category, ref_score in ref_scores.items():
+        cand_score = cand_scores.get(category)
         losses[category] = 1.0 if cand_score is None else max(0.0, ref_score - cand_score)
     return (max(losses.values()) if losses else 0.0), losses
 
@@ -205,20 +203,52 @@ def assess_training_candidate(
 ) -> dict[str, Any]:
     cand_summary = candidate["generation_summary"]
     all_summary = all_remaining["generation_summary"]
+    require_quality_v2(cand_summary, f"Phase 2C candidate {candidate.get('name')}")
+    require_quality_v2(all_summary, "Phase 2C all-remaining reference")
+    require_quality_v2(reduced_frozen["generation_summary"], "Phase 2C reduced-frozen reference")
     cand_quality = quality_index(cand_summary)
     all_quality = quality_index(all_summary)
     frozen_quality = quality_index(reduced_frozen["generation_summary"])
     quality_loss = max(0.0, all_quality - cand_quality)
     frozen_quality_loss = max(0.0, frozen_quality - cand_quality)
-    heuristic_loss = max(0.0, float(all_summary["mean_heuristic_score"]) - float(cand_summary["mean_heuristic_score"]))
+    mean_quality_loss = max(0.0, summary_quality_score(all_summary) - summary_quality_score(cand_summary))
     semantic_loss = max(0.0, float(all_summary.get("semantic_pass_rate", 1.0)) - float(cand_summary.get("semantic_pass_rate", 1.0)))
     all_f1 = all_summary.get("mean_reference_token_f1")
     cand_f1 = cand_summary.get("mean_reference_token_f1")
     reference_f1_loss = 0.0 if all_f1 is None or cand_f1 is None else max(0.0, float(all_f1) - float(cand_f1))
-    category_loss, category_losses = max_category_loss(all_summary, cand_summary)
-    frozen_category_loss, frozen_category_losses = max_category_loss(
-        reduced_frozen["generation_summary"], cand_summary
+    category_quality_loss, category_quality_losses = max_category_loss(all_summary, cand_summary)
+    category_semantic_loss, category_semantic_losses = max_category_metric_loss(
+        all_summary, cand_summary, "category_semantic_pass_rates"
     )
+    category_completion_loss, category_completion_losses = max_category_metric_loss(
+        all_summary, cand_summary, "category_complete_utterance_rates"
+    )
+    category_loss = max(category_quality_loss, category_semantic_loss, category_completion_loss)
+    category_losses = {
+        category: max(
+            category_quality_losses.get(category, 0.0),
+            category_semantic_losses.get(category, 0.0),
+            category_completion_losses.get(category, 0.0),
+        )
+        for category in set(category_quality_losses) | set(category_semantic_losses) | set(category_completion_losses)
+    }
+    frozen_summary = reduced_frozen["generation_summary"]
+    frozen_quality_loss, frozen_quality_losses = max_category_loss(frozen_summary, cand_summary)
+    frozen_semantic_loss, frozen_semantic_losses = max_category_metric_loss(
+        frozen_summary, cand_summary, "category_semantic_pass_rates"
+    )
+    frozen_completion_loss, frozen_completion_losses = max_category_metric_loss(
+        frozen_summary, cand_summary, "category_complete_utterance_rates"
+    )
+    frozen_category_loss = max(frozen_quality_loss, frozen_semantic_loss, frozen_completion_loss)
+    frozen_category_losses = {
+        category: max(
+            frozen_quality_losses.get(category, 0.0),
+            frozen_semantic_losses.get(category, 0.0),
+            frozen_completion_losses.get(category, 0.0),
+        )
+        for category in set(frozen_quality_losses) | set(frozen_semantic_losses) | set(frozen_completion_losses)
+    }
     all_nll = float(all_remaining["nll_summary"]["mean_target_nll"])
     cand_nll = float(candidate["nll_summary"]["mean_target_nll"])
     nll_increase = max(0.0, cand_nll - all_nll) / max(abs(all_nll), 1e-12)
@@ -236,8 +266,16 @@ def assess_training_candidate(
 
     deviation = candidate.get("output_deviation") or {}
     reasons: list[str] = []
+    if int(cand_summary.get("hard_failure_case_count", 0)) > 0:
+        reasons.append("hard intelligibility failures are nonzero")
+    if float(cand_summary.get("intelligibility_pass_rate", 0.0)) < 1.0:
+        reasons.append("intelligibility pass rate is below 1.0")
+    if float(cand_summary.get("quality_pass_rate", 0.0)) < 0.95:
+        reasons.append("quality pass rate is below 0.95")
+    if float(cand_summary.get("worst_decile_mean_quality_score", 0.0)) < 0.70:
+        reasons.append("worst-decile quality is below 0.70")
     if int(cand_summary.get("critical_failure_count", 0)) > 0:
-        reasons.append("critical semantic failures are nonzero")
+        reasons.append("critical failures are nonzero")
     if quality_loss > max_quality_index_loss:
         reasons.append(f"quality-index loss {quality_loss:.4f} exceeds {max_quality_index_loss:.4f}")
     if frozen_quality_loss > max_frozen_quality_loss:
@@ -245,8 +283,8 @@ def assess_training_candidate(
             f"quality-index loss vs reduced frozen {frozen_quality_loss:.4f} exceeds "
             f"{max_frozen_quality_loss:.4f}"
         )
-    if heuristic_loss > max_heuristic_loss:
-        reasons.append(f"heuristic loss {heuristic_loss:.4f} exceeds {max_heuristic_loss:.4f}")
+    if mean_quality_loss > max_heuristic_loss:
+        reasons.append(f"mean quality loss {mean_quality_loss:.4f} exceeds {max_heuristic_loss:.4f}")
     if semantic_loss > max_semantic_pass_loss:
         reasons.append(f"semantic-pass loss {semantic_loss:.4f} exceeds {max_semantic_pass_loss:.4f}")
     if reference_f1_loss > max_reference_f1_loss:
@@ -277,11 +315,17 @@ def assess_training_candidate(
         "eligible": not reasons,
         "rejection_reasons": reasons,
         "quality_index": cand_quality,
+        "mean_quality_score": float(cand_summary.get("mean_quality_score", cand_summary.get("mean_heuristic_score", 0.0))),
+        "quality_pass_rate": float(cand_summary.get("quality_pass_rate", 0.0)),
+        "intelligibility_pass_rate": float(cand_summary.get("intelligibility_pass_rate", 0.0)),
+        "hard_failure_case_count": int(cand_summary.get("hard_failure_case_count", 0)),
+        "worst_decile_mean_quality_score": float(cand_summary.get("worst_decile_mean_quality_score", 0.0)),
         "quality_index_loss_vs_all_remaining": quality_loss,
         "quality_index_loss_vs_reduced_frozen": frozen_quality_loss,
         "quality_gain_vs_reduced_frozen": cand_quality - frozen_quality,
         "fraction_of_all_remaining_gain_recovered": recovered_fraction,
-        "heuristic_loss_vs_all_remaining": heuristic_loss,
+        "mean_quality_loss_vs_all_remaining": mean_quality_loss,
+        "heuristic_loss_vs_all_remaining": mean_quality_loss,
         "semantic_pass_loss_vs_all_remaining": semantic_loss,
         "reference_f1_loss_vs_all_remaining": reference_f1_loss,
         "worst_category_loss_vs_all_remaining": category_loss,

@@ -1,11 +1,12 @@
 <#
 .SYNOPSIS
-Run source-level checks for the Phase 4 through Phase 8 pipeline.
+Run source-level checks for the integrated Phase 2B through Phase 8 pipeline.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
-runs the regression suite, verifies the Phase 2B/2C and Phase 4–8 PowerShell runners and their
-referenced local Python scripts, and optionally verifies heavyweight imports.
+runs the full pytest regression suite, verifies the quality-v2 and response-control
+contracts, checks the PowerShell runners and their referenced Python scripts, and
+optionally verifies heavyweight imports.
 #>
 param(
     [switch]$VerifyImports
@@ -16,15 +17,20 @@ $Root = (Resolve-Path $PSScriptRoot).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
 
-Write-Host "[1/5] Compiling Python source..."
-python -m compileall -q .\scripts .\tests
+Write-Host "[1/6] Compiling Python source..."
+python -m compileall -q .\scripts .\tests .\Phase2B_Layer_Combination_Playground_v1.0
 if ($LASTEXITCODE -ne 0) { throw "Python compilation failed." }
 
-Write-Host "[2/5] Running regression tests..."
-python -m unittest discover -s tests -v
+Write-Host "[2/6] Running the complete regression suite..."
+python -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "Regression tests failed." }
 
-Write-Host "[3/5] Verifying integrated runner references..."
+Write-Host "[3/6] Verifying the quality-evaluation v2 contract..."
+$QualityVerification = Join-Path ([System.IO.Path]::GetTempPath()) "short_response_model_quality_v2_verification.md"
+python .\scripts\common\verify_quality_evaluation.py --report $QualityVerification
+if ($LASTEXITCODE -ne 0) { throw "Quality-evaluation contract verification failed." }
+
+Write-Host "[4/6] Verifying integrated runner references..."
 $Runners = @(
     ".\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1",
     ".\scripts\phase_2c_targeted_recovery\run_phase_2c.ps1",
@@ -50,12 +56,12 @@ foreach ($Runner in $Runners) {
     }
 }
 
-Write-Host "[4/5] Verifying the strict response-control contract..."
+Write-Host "[5/6] Verifying the strict response-control contract..."
 $ResponseVerification = Join-Path ([System.IO.Path]::GetTempPath()) "short_response_model_response_control_verification.json"
 python .\scripts\phase_7_sparse_runtime\verify_response_control.py --out $ResponseVerification
 if ($LASTEXITCODE -ne 0) { throw "Response-control contract verification failed." }
 
-Write-Host "[5/5] Checking optional dependency imports..."
+Write-Host "[6/6] Checking optional dependency imports..."
 if ($VerifyImports) {
     python -c "import torch, transformers, peft, trl, datasets, safetensors, rapidfuzz, jsonschema; print('Dependency imports: PASS'); print('CUDA available:', torch.cuda.is_available())"
     if ($LASTEXITCODE -ne 0) { throw "Dependency import verification failed." }
@@ -63,4 +69,4 @@ if ($VerifyImports) {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Integrated Phase 2B/2C / post-Phase-3 source verification: PASS"
+Write-Host "Integrated quality-v2 / Phase 2B-8 source verification: PASS"

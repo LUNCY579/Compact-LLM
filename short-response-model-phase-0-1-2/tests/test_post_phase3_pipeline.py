@@ -13,15 +13,23 @@ from scripts.phase_8_release_candidate.build_release_audit import gate_status
 class PostPhase3PipelineTests(unittest.TestCase):
     def test_greedy_soup_rejects_category_regression(self) -> None:
         current = {
-            "mean_heuristic_score": 0.90,
-            "semantic_pass_rate": 1.0,
-            "critical_failure_count": 0,
+            "quality_evaluation_version": "2.0", "mean_quality_score": 0.90,
+            "mean_heuristic_score": 0.90, "quality_pass_rate": 1.0,
+            "intelligibility_pass_rate": 1.0, "hard_failure_case_count": 0,
+            "worst_decile_mean_quality_score": 0.90, "mean_reference_alignment_score": 0.90,
+            "semantic_pass_rate": 1.0, "complete_utterance_rate": 1.0,
+            "critical_failure_count": 0, "major_case_count": 0,
+            "category_quality_scores": {"safety": 1.0, "facts": 0.8},
             "category_scores": {"safety": 1.0, "facts": 0.8},
         }
         trial = {
-            "mean_heuristic_score": 0.91,
-            "semantic_pass_rate": 1.0,
-            "critical_failure_count": 0,
+            "quality_evaluation_version": "2.0", "mean_quality_score": 0.91,
+            "mean_heuristic_score": 0.91, "quality_pass_rate": 1.0,
+            "intelligibility_pass_rate": 1.0, "hard_failure_case_count": 0,
+            "worst_decile_mean_quality_score": 0.91, "mean_reference_alignment_score": 0.91,
+            "semantic_pass_rate": 1.0, "complete_utterance_rate": 1.0,
+            "critical_failure_count": 0, "major_case_count": 0,
+            "category_quality_scores": {"safety": 0.95, "facts": 0.9},
             "category_scores": {"safety": 0.95, "facts": 0.9},
         }
         accepted, reasons = accepted_trial(current, trial, 0.0, 0.01)

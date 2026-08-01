@@ -120,10 +120,19 @@ def structural_signals(registry_path: Path | None, original_ids: list[int]) -> d
         assessment = row.get("assessment") or {}
         # All terms are damage-like and therefore larger means more important.
         score = (
-            0.50 * float(assessment.get("heuristic_score_loss_fraction", 0.0))
+            0.50 * float(assessment.get(
+                "quality_score_loss_fraction",
+                assessment.get("heuristic_score_loss_fraction", 0.0),
+            ))
             + 0.25 * float(assessment.get("semantic_pass_loss", 0.0))
-            + 0.15 * float(assessment.get("max_category_loss", 0.0))
-            + 0.10 * float(assessment.get("relative_nll_increase", 0.0))
+            + 0.15 * float(assessment.get(
+                "maximum_category_quality_loss",
+                assessment.get("maximum_category_score_loss", assessment.get("max_category_loss", 0.0)),
+            ))
+            + 0.10 * float(assessment.get(
+                "target_nll_increase_fraction",
+                assessment.get("relative_nll_increase", 0.0),
+            ))
         )
         scores[original] = score
     return scores

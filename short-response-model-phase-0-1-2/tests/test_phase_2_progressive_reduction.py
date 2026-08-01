@@ -77,6 +77,15 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
 
     def test_memory_reduction_must_exceed_score_loss(self) -> None:
         baseline_generation = {
+            "quality_evaluation_version": "2.0",
+            "mean_quality_score": 1.0,
+            "quality_pass_rate": 1.0,
+            "intelligibility_pass_rate": 1.0,
+            "hard_failure_case_count": 0,
+            "worst_decile_mean_quality_score": 1.0,
+            "mean_reference_alignment_score": 1.0,
+            "major_case_count": 0,
+            "category_quality_scores": {"facts": 1.0},
             "mean_heuristic_score": 1.0,
             "semantic_pass_rate": 1.0,
             "complete_utterance_rate": 1.0,
@@ -84,6 +93,15 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "category_scores": {"facts": 1.0},
         }
         candidate_generation = {
+            "quality_evaluation_version": "2.0",
+            "mean_quality_score": 0.97,
+            "quality_pass_rate": 1.0,
+            "intelligibility_pass_rate": 1.0,
+            "hard_failure_case_count": 0,
+            "worst_decile_mean_quality_score": 0.97,
+            "mean_reference_alignment_score": 0.97,
+            "major_case_count": 0,
+            "category_quality_scores": {"facts": 0.97},
             "mean_heuristic_score": 0.97,
             "semantic_pass_rate": 1.0,
             "complete_utterance_rate": 1.0,
@@ -113,7 +131,13 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
         self.assertAlmostEqual(assessment["weight_memory_reduction_fraction"], 0.10)
         self.assertAlmostEqual(assessment["heuristic_score_loss_fraction"], 0.03)
 
-        candidate_generation["mean_heuristic_score"] = 0.85
+        candidate_generation.update({
+            "mean_quality_score": 0.85,
+            "worst_decile_mean_quality_score": 0.85,
+            "mean_reference_alignment_score": 0.85,
+            "category_quality_scores": {"facts": 0.85},
+            "mean_heuristic_score": 0.85,
+        })
         rejected = assess_candidate(
             baseline_generation=baseline_generation,
             candidate_generation=candidate_generation,

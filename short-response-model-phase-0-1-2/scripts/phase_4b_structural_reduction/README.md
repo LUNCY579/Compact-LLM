@@ -24,3 +24,8 @@ After review, finalize one candidate with `finalize_reference_selection.py`. Thi
 The branch name automatically resolves the matching Phase 4 stop gate and
 reference manifest and writes an isolated Phase 4B artifact/report tree. For a
 Phase 2C branch, use a name such as `phase2c_balanced_training`.
+
+## Quality evaluator v2.0
+
+This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+

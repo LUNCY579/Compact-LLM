@@ -4,6 +4,22 @@
   "probe_file": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_2_structural_reduction\\probe_150_thorough_v2.jsonl",
   "output_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\playground_artifacts\\phase2b_layer_combinations",
   "suite": "all",
+  "playground_version": "1.1",
+  "quality_evaluation_version": "2.0",
+  "quality_thresholds": {
+    "max_mean_quality_loss": 0.02,
+    "max_quality_index_loss": 0.025,
+    "max_worst_decile_loss": 0.05,
+    "max_category_quality_loss": 0.06,
+    "max_semantic_pass_loss": 0.02,
+    "max_reference_alignment_loss": 0.08,
+    "min_quality_pass_rate": 0.95,
+    "min_semantic_pass_rate": 0.98,
+    "min_complete_utterance_rate": 0.99,
+    "max_major_issue_cases": 0,
+    "max_new_major_issues": 0,
+    "max_nll_increase": 0.15
+  },
   "quick_drops": [
     6,
     10,

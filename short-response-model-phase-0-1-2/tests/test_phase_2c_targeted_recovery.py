@@ -78,6 +78,16 @@ class Phase2CTargetedRecoveryTests(unittest.TestCase):
     @staticmethod
     def candidate(name: str, trainable: int, quality: float, nll: float = 1.0) -> dict:
         summary = {
+            "quality_evaluation_version": "2.0",
+            "mean_quality_score": quality,
+            "quality_pass_rate": 1.0,
+            "intelligibility_pass_rate": 1.0,
+            "hard_failure_case_count": 0,
+            "worst_decile_mean_quality_score": quality,
+            "p10_quality_score": quality,
+            "mean_reference_alignment_score": quality,
+            "major_case_count": 0,
+            "category_quality_scores": {"logic": quality},
             "mean_heuristic_score": quality,
             "semantic_pass_rate": quality,
             "mean_reference_token_f1": quality,

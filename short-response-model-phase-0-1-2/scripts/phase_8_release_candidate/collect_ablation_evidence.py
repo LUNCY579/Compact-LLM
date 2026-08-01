@@ -63,12 +63,19 @@ def main() -> None:
         "H_sparse_quality": evidence(first_existing(["artifacts/phase_6_sparse/frontier_with_generations.json"])),
         "I_full_runtime": evidence(first_existing(["artifacts/phase_7_router/runtime_comparison.json"])),
     }
+    stale_quality = [
+        name for name, row in matrix.items()
+        if row.get("status") == "AVAILABLE" and isinstance(row.get("summary"), dict)
+        and "mean_heuristic_score" in row["summary"]
+        and str(row["summary"].get("quality_evaluation_version")) != "2.0"
+    ]
     write_json(
         args.out,
         {
             "matrix": matrix,
             "available": sum(1 for row in matrix.values() if row["status"] == "AVAILABLE"),
             "missing": [name for name, row in matrix.items() if row["status"] != "AVAILABLE"],
+            "stale_quality_evidence": stale_quality,
             "interpretation": (
                 "Missing research controls are reported honestly. They do not automatically block a commercial dense "
                 "release when the final quality/safety gates pass, but they limit causal claims about which experiment helped."

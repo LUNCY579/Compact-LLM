@@ -32,3 +32,8 @@ For a named branch, the runner derives the matching Phase 3 adapter, branch stop
 The runner reads the Phase 3 training manifest. A Phase 2B reduced profile with no predecessor adapter trains each ingredient as a fresh LoRA on the same materialized checkpoint. A Phase 2C branch continues the exact targeted SFT adapter recorded by Phase 3. Never mix full-quality, Phase 2B, or Phase 2C branches—or different Phase 2C placements—in one soup.
 
 A best individual with score 1.0 remains a valid Phase 4 outcome. Soup contrast is limited when the benchmark saturates; NLL, category metrics, semantic flags, and raw output review remain necessary.
+
+## Quality evaluator v2.0
+
+This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+

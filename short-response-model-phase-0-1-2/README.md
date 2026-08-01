@@ -33,6 +33,12 @@ The repository now separates learned brevity from the deployable hard boundary:
 
 See `RESPONSE_CONTROL_AND_EARLY_EXIT_AUDIT.md` and `scripts/phase_7_sparse_runtime/RESPONSE_CONTROL_CONTRACT.md`. This controller avoids decode work; it does not remove model weights or turn selective training into inference-time layer skipping.
 
+## Quality evaluation v2.0
+
+All generation-based phases and the independent Phase 2B playground use the shared quality-v2 evaluator in `scripts/common/quality_evaluation.py`. Unintelligible or corrupted output is a hard zero rather than a partially correct length/completion score. Gates independently review mean quality, worst-decile quality, pass and intelligibility rates, semantics, categories, completion, reference alignment, critical/major issues, and target NLL where available.
+
+The editable weights and thresholds are in `configs/quality_evaluation.json`. See `QUALITY_EVALUATION_V2_AUDIT.md` for the full review and `QUALITY_EVALUATION_V2_MIGRATION.md` before reusing older artifacts. Legacy summaries are deliberately rejected; checkpoints do not require retraining solely because their evaluation evidence is stale.
+
 ## Production principle
 
 A technique ships only when it creates measured value. The best release may be the full dense model, a shallower recovered model, or a dense quantized model with context engineering while custom sparsity remains disabled. Negative selective-tuning, deletion, soup, and sparse-runtime results are valid and retained.

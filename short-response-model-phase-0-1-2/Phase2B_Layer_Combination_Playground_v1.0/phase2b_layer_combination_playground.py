@@ -23,6 +23,14 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Iterable, Sequence
 
+PACKAGED_REPO_ROOT = Path(__file__).resolve().parent.parent
+if str(PACKAGED_REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(PACKAGED_REPO_ROOT))
+
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries, quality_index
+
+PLAYGROUND_VERSION = "1.1"
 DEFAULT_QUICK_DROPS = [26, 13, 14, 10, 6, 19]
 DEFAULT_THOROUGH_DROPS = [24, 23, 14, 19, 3, 13, 10, 21, 22, 5]
 SOURCE_FINGERPRINT_CACHE: dict[str, str] = {}
@@ -79,10 +87,9 @@ def relative_increase(reference: float, candidate: float) -> float:
 
 
 def max_category_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> float:
-    losses: list[float] = []
-    for category, ref_score in reference.get("category_scores", {}).items():
-        cand_score = candidate.get("category_scores", {}).get(category)
-        losses.append(1.0 if cand_score is None else max(0.0, float(ref_score) - float(cand_score)))
+    ref = reference.get("category_quality_scores", reference.get("category_scores", {}))
+    cand = candidate.get("category_quality_scores", candidate.get("category_scores", {}))
+    losses = [1.0 if category not in cand else max(0.0, float(score) - float(cand[category])) for category, score in ref.items()]
     return max(losses, default=0.0)
 
 
@@ -546,7 +553,14 @@ def evaluate_one(
         eval_cmd += ["--limit", str(case_limit)]
     if require_cuda:
         eval_cmd.append("--require-cuda")
-    run_command(eval_cmd, repo_root, generation_dir / "summary.json", resume)
+    generation_summary_path = generation_dir / "summary.json"
+    if resume and generation_summary_path.exists():
+        try:
+            require_quality_v2(json_read(generation_summary_path), f"cached playground evaluation {name}")
+        except ValueError:
+            print(f"[stale evaluator] rebuilding {generation_summary_path}")
+            shutil.rmtree(generation_dir, ignore_errors=True)
+    run_command(eval_cmd, repo_root, generation_summary_path, resume)
 
     nll_dir = evidence_dir / "teacher_forcing"
     if not skip_nll:
@@ -614,8 +628,10 @@ def metric_row(
     spec: VariantSpec | None,
     payload: dict[str, Any],
     baseline: dict[str, Any],
+    thresholds: dict[str, Any],
 ) -> dict[str, Any]:
     generation = payload["generation_summary"]
+    require_quality_v2(generation, f"playground evaluation {payload['name']}")
     footprint = payload["footprint"]
     nll = payload.get("nll_summary")
     base_generation = baseline["generation_summary"]
@@ -632,11 +648,47 @@ def metric_row(
     base_vram = float(base_generation.get("peak_vram_gb", 0.0))
     candidate_vram = float(generation.get("peak_vram_gb", 0.0))
     vram_reduction = None if base_vram <= 0 else 1.0 - candidate_vram / base_vram
-
     nll_value = None if nll is None else float(nll["mean_target_nll"])
     nll_increase = None
     if nll_value is not None and base_nll is not None:
         nll_increase = relative_increase(float(base_nll["mean_target_nll"]), nll_value)
+
+    if spec is None:
+        comparison = {
+            "eligible": True, "reasons": [], "mean_quality_loss": 0.0,
+            "quality_index_loss": 0.0, "worst_decile_quality_loss": 0.0,
+            "maximum_category_quality_loss": 0.0, "semantic_pass_loss": 0.0,
+            "reference_alignment_loss": 0.0,
+        }
+        status = "REFERENCE"
+    else:
+        comparison = compare_quality_summaries(
+            base_generation, generation,
+            max_mean_quality_loss=float(thresholds["max_mean_quality_loss"]),
+            max_quality_index_loss=float(thresholds["max_quality_index_loss"]),
+            max_worst_decile_loss=float(thresholds["max_worst_decile_loss"]),
+            max_category_quality_loss_allowed=float(thresholds["max_category_quality_loss"]),
+            max_semantic_pass_loss=float(thresholds["max_semantic_pass_loss"]),
+            max_reference_alignment_loss=float(thresholds["max_reference_alignment_loss"]),
+            min_quality_pass_rate=float(thresholds["min_quality_pass_rate"]),
+            min_intelligibility_pass_rate=1.0,
+            min_semantic_pass_rate=float(thresholds["min_semantic_pass_rate"]),
+            min_complete_utterance_rate=float(thresholds["min_complete_utterance_rate"]),
+            max_hard_failure_cases=0, max_critical_failures=0,
+            max_major_issue_cases=int(thresholds["max_major_issue_cases"]),
+        )
+        extra_reasons: list[str] = []
+        if int(deviation.get("new_critical_failure_count", 0) or 0) > 0:
+            extra_reasons.append("new critical failures relative to reference")
+        if int(deviation.get("new_major_issue_count", 0) or 0) > int(thresholds["max_new_major_issues"]):
+            extra_reasons.append("new major issues relative to reference")
+        if nll_increase is not None and nll_increase > float(thresholds["max_nll_increase"]):
+            extra_reasons.append(
+                f"target-NLL increase {nll_increase:.4f} exceeds {float(thresholds['max_nll_increase']):.4f}"
+            )
+        comparison["reasons"] = [*comparison["reasons"], *extra_reasons]
+        comparison["eligible"] = not comparison["reasons"]
+        status = "PASS" if comparison["eligible"] else "FAIL"
 
     return {
         "variant": payload["name"],
@@ -645,23 +697,30 @@ def metric_row(
         "additional_drops": [] if spec is None else list(spec.additional_drops),
         "total_drops": [] if spec is None else list(spec.total_drops),
         "existing_model": False if spec is None else spec.existing_model,
+        "status": status, "eligible": bool(comparison["eligible"]),
+        "rejection_reasons": list(comparison["reasons"]),
         "remaining_layers": int(footprint["num_hidden_layers"]),
         "loaded_weight_bytes": int(footprint["parameter_tensor_bytes_loaded"]),
         "weight_reduction_fraction": weight_reduction,
-        "mean_heuristic_score": float(generation["mean_heuristic_score"]),
-        "heuristic_score_loss_fraction": relative_loss(
-            float(base_generation["mean_heuristic_score"]),
-            float(generation["mean_heuristic_score"]),
-        ),
+        "mean_quality_score": summary_quality_score(generation),
+        "mean_heuristic_score": summary_quality_score(generation),
+        "quality_index": quality_index(generation),
+        "mean_quality_loss": float(comparison["mean_quality_loss"]),
+        "heuristic_score_loss_fraction": float(comparison["mean_quality_loss"]),
+        "quality_index_loss": float(comparison["quality_index_loss"]),
+        "worst_decile_mean_quality_score": float(generation.get("worst_decile_mean_quality_score", 0.0)),
+        "worst_decile_quality_loss": float(comparison["worst_decile_quality_loss"]),
+        "quality_pass_rate": float(generation.get("quality_pass_rate", 0.0)),
+        "intelligibility_pass_rate": float(generation.get("intelligibility_pass_rate", 0.0)),
+        "hard_failure_case_count": int(generation.get("hard_failure_case_count", 0)),
         "semantic_pass_rate": float(generation.get("semantic_pass_rate", 0.0)),
-        "semantic_pass_loss": max(
-            0.0,
-            float(base_generation.get("semantic_pass_rate", 1.0))
-            - float(generation.get("semantic_pass_rate", 0.0)),
-        ),
-        "maximum_category_score_loss": max_category_loss(base_generation, generation),
+        "semantic_pass_loss": float(comparison["semantic_pass_loss"]),
+        "maximum_category_quality_loss": float(comparison["maximum_category_quality_loss"]),
+        "maximum_category_score_loss": float(comparison["maximum_category_quality_loss"]),
+        "reference_alignment_loss": float(comparison["reference_alignment_loss"]),
         "complete_utterance_rate": float(generation.get("complete_utterance_rate", 0.0)),
         "critical_failure_count": int(generation.get("critical_failure_count", 0)),
+        "major_case_count": int(generation.get("major_case_count", 0)),
         "major_issue_count": int(generation.get("major_issue_count", 0)),
         "mean_target_nll": nll_value,
         "target_nll_increase_fraction": nll_increase,
@@ -673,52 +732,49 @@ def metric_row(
         "latency_reduction_fraction": latency_reduction,
         "peak_vram_gb": candidate_vram,
         "vram_reduction_fraction": vram_reduction,
+        "quality_comparison": comparison,
     }
 
 
 def render_report(
-    rows: list[dict[str, Any]],
-    quick: set[int],
-    thorough: set[int],
-    probe_file: Path,
-    case_limit: int | None,
-    suite: str,
+    rows: list[dict[str, Any]], quick: set[int], thorough: set[int],
+    probe_file: Path, case_limit: int | None, suite: str,
+    thresholds: dict[str, Any],
 ) -> str:
     lines: list[str] = []
     for row in rows:
         nll = "n/a" if row["mean_target_nll"] is None else f"{row['mean_target_nll']:.4f}"
-        fuzzy = (
-            "n/a"
-            if row["mean_fuzzy_reply_similarity"] is None
-            else f"{float(row['mean_fuzzy_reply_similarity']):.3f}"
-        )
+        reasons = "; ".join(row["rejection_reasons"]) if row["rejection_reasons"] else "-"
         lines.append(
-            f"| {row['variant']} | {row['remaining_layers']} | `{row['total_drops']}` | "
-            f"{percent(row['weight_reduction_fraction'])} | {row['mean_heuristic_score']:.3f} | "
-            f"{percent(row['heuristic_score_loss_fraction'])} | {row['semantic_pass_rate']:.3f} | "
-            f"{row['complete_utterance_rate']:.3f} | {nll} | {fuzzy} | "
-            f"{row['critical_failure_count']} | {row['major_issue_count']} | "
-            f"{percent(row['latency_reduction_fraction'], signed=True)} |"
+            f"| {row['variant']} | {row['status']} | {row['remaining_layers']} | `{row['total_drops']}` | "
+            f"{percent(row['weight_reduction_fraction'])} | {row['mean_quality_score']:.3f} | "
+            f"{row['quality_index']:.3f} | {row['worst_decile_mean_quality_score']:.3f} | "
+            f"{row['quality_pass_rate']:.3f} | {row['intelligibility_pass_rate']:.3f} | "
+            f"{row['hard_failure_case_count']} | {row['major_case_count']} | {nll} | {reasons} |"
         )
-
-    quick_only = sorted(quick - thorough)
-    thorough_only = sorted(thorough - quick)
-    common = sorted(quick & thorough)
-    union = sorted(quick | thorough)
-    limit_text = "all available cases" if case_limit is None else str(case_limit)
+    quick_only=sorted(quick-thorough); thorough_only=sorted(thorough-quick); common=sorted(quick&thorough); union=sorted(quick|thorough)
+    limit_text="all available cases" if case_limit is None else str(case_limit)
+    eligible=[row for row in rows if row["status"]=="PASS"]
+    eligible.sort(key=lambda row:(row["weight_reduction_fraction"],row["quality_index"],row["worst_decile_mean_quality_score"]),reverse=True)
+    recommendations = "\n".join(
+        f"- `{row['variant']}`: {percent(row['weight_reduction_fraction'])} weight reduction, quality index {row['quality_index']:.3f}"
+        for row in eligible[:5]
+    ) or "- No experimental variant passed all automatic exploratory floors."
     return f"""# PHASE 2B LAYER-COMBINATION PLAYGROUND REPORT
 
 ## Experiment boundary
 
 This is an independent exploratory experiment. It does **not** modify or approve
-Phase 2B, does not overwrite either frontier, and does not create a downstream
-profile. Raw combination variants are rebuilt from the same full SFT reference
-without recovery so that layer-set effects are easier to interpret.
+Phase 2B. Version `{PLAYGROUND_VERSION}` requires quality-evaluator v2 evidence,
+aborts when the full reference itself is unintelligible, and applies an explicit
+exploratory PASS/FAIL assessment to each variant.
 
 - Suite: `{suite}`
 - Probe: `{probe_file}`
 - Cases requested: {limit_text}
 - Response control: `eos_only`
+- Quality evaluator: `2.0`
+- Thresholds: `{thresholds}`
 - Quick drops: `{sorted(quick)}`
 - Thorough drops: `{sorted(thorough)}`
 - Shared drops: `{common}`
@@ -728,26 +784,18 @@ without recovery so that layer-set effects are easier to interpret.
 
 ## Results
 
-| Variant | Remaining layers | Total original layers dropped | Weight reduction | Heuristic score | Score loss | Semantic pass | Complete utterance | Target NLL | Fuzzy similarity to reference | Critical | Major | Measured latency reduction |
-|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Variant | Status | Remaining | Drops | Weight reduction | Mean quality | Quality index | Worst decile | Quality pass | Intelligibility | Hard cases | Major cases | Target NLL | Rejection reasons |
+|---|---|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|
 {chr(10).join(lines)}
 
-## How to interpret the key controls
+## Highest-reduction passing candidates
 
-- `common_only` tests the four layers that both searches repeatedly selected.
-- `nonoverlap_all` tests only the disagreement set.
-- `quick_set_raw` and `thorough_set_raw` remove recovery as a confounder.
-- `union_all` asks whether every layer selected by either greedy path can be
-  removed simultaneously. Failure here would show interaction, not that either
-  original path was invalid.
-- `thorough_plus_drop_26`, when included, isolates the marginal effect of adding
-  layer 26 to the thorough structural set.
-- Variants whose names contain `actual` preserve recovery updates from the saved
-  endpoint and should not be treated as raw structural controls.
+{recommendations}
 
-Measured latency is secondary and noisy. The playground does not use latency to
-rank or accept candidates. Inspect each variant's `OUTPUT_DEVIATION.md` and
-case-level `generation/results.jsonl` before drawing a quality conclusion.
+`PASS` here means only that the variant passed the configured exploratory floors.
+It is not an official phase gate. Inspect each candidate's `OUTPUT_DEVIATION.md`,
+all hard/major/low-tail cases, category losses, and generation results before any
+human conclusion. Runtime remains secondary and is never used to accept a model.
 """
 
 
@@ -793,6 +841,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-reload-check", action="store_true")
     parser.add_argument("--require-cuda", action="store_true")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument("--max-mean-quality-loss", type=float, default=0.02)
+    parser.add_argument("--max-quality-index-loss", type=float, default=0.025)
+    parser.add_argument("--max-worst-decile-loss", type=float, default=0.05)
+    parser.add_argument("--max-category-quality-loss", type=float, default=0.06)
+    parser.add_argument("--max-semantic-pass-loss", type=float, default=0.02)
+    parser.add_argument("--max-reference-alignment-loss", type=float, default=0.08)
+    parser.add_argument("--min-quality-pass-rate", type=float, default=0.95)
+    parser.add_argument("--min-semantic-pass-rate", type=float, default=0.98)
+    parser.add_argument("--min-complete-utterance-rate", type=float, default=0.99)
+    parser.add_argument("--max-major-issue-cases", type=int, default=0)
+    parser.add_argument("--max-new-major-issues", type=int, default=0)
+    parser.add_argument("--max-nll-increase", type=float, default=0.15)
     parser.add_argument("--plan-only", action="store_true")
     return parser.parse_args()
 
@@ -805,6 +865,20 @@ def main() -> None:
     quick_catalog = resolve_recorded_path(args.quick_catalog, repo_root)
     thorough_catalog = resolve_recorded_path(args.thorough_catalog, repo_root)
     reference_model = auto_reference_model(repo_root, args.reference_model)
+    thresholds = {
+        "max_mean_quality_loss": args.max_mean_quality_loss,
+        "max_quality_index_loss": args.max_quality_index_loss,
+        "max_worst_decile_loss": args.max_worst_decile_loss,
+        "max_category_quality_loss": args.max_category_quality_loss,
+        "max_semantic_pass_loss": args.max_semantic_pass_loss,
+        "max_reference_alignment_loss": args.max_reference_alignment_loss,
+        "min_quality_pass_rate": args.min_quality_pass_rate,
+        "min_semantic_pass_rate": args.min_semantic_pass_rate,
+        "min_complete_utterance_rate": args.min_complete_utterance_rate,
+        "max_major_issue_cases": args.max_major_issue_cases,
+        "max_new_major_issues": args.max_new_major_issues,
+        "max_nll_increase": args.max_nll_increase,
+    }
 
     if not probe_file.exists():
         raise FileNotFoundError(f"Probe file does not exist: {probe_file}")
@@ -837,6 +911,9 @@ def main() -> None:
         "probe_file": str(probe_file),
         "output_root": str(output_root),
         "suite": args.suite,
+        "playground_version": PLAYGROUND_VERSION,
+        "quality_evaluation_version": "2.0",
+        "quality_thresholds": thresholds,
         "quick_drops": sorted(quick),
         "thorough_drops": sorted(thorough),
         "shared_drops": sorted(quick & thorough),
@@ -872,8 +949,9 @@ def main() -> None:
         skip_nll=args.skip_nll,
     )
     baseline_results = baseline_evidence / "generation/results.jsonl"
+    assert_valid_reference(baseline["generation_summary"], label="playground full reference")
 
-    rows = [metric_row(None, baseline, baseline)]
+    rows = [metric_row(None, baseline, baseline, thresholds)]
     raw_payloads: list[dict[str, Any]] = []
     for index, spec in enumerate(specs, 1):
         print(f"\n=== [{index}/{len(specs)}] {spec.name} ===")
@@ -900,10 +978,15 @@ def main() -> None:
             skip_nll=args.skip_nll,
         )
         raw_payloads.append(payload)
-        rows.append(metric_row(spec, payload, baseline))
+        rows.append(metric_row(spec, payload, baseline, thresholds))
 
-    json_write(output_root / "summary.json", {"plan": plan, "results": rows})
-    report = render_report(rows, quick, thorough, probe_file, args.case_limit, args.suite)
+    json_write(output_root / "summary.json", {
+        "schema_version": 2, "playground_version": PLAYGROUND_VERSION,
+        "quality_evaluation_version": "2.0", "plan": plan, "results": rows,
+        "passing_variants": [row["variant"] for row in rows if row["status"] == "PASS"],
+        "failing_variants": [row["variant"] for row in rows if row["status"] == "FAIL"],
+    })
+    report = render_report(rows, quick, thorough, probe_file, args.case_limit, args.suite, thresholds)
     (output_root / "PLAYGROUND_REPORT.md").write_text(report, encoding="utf-8")
     print(f"\nSummary: {output_root / 'summary.json'}")
     print(f"Report:  {output_root / 'PLAYGROUND_REPORT.md'}")

@@ -36,3 +36,8 @@ generated replies and record a human decision in `reports/PHASE_1_STOP_GATE.md`.
 ## Learned behavior versus hard boundary
 
 `evaluate_model.py` supports `--response-control eos_only|one_sentence`. The Phase 1 base and adapter scripts explicitly use `eos_only`; otherwise an external boundary could hide whether SFT actually learned to finish naturally. The smoke test uses `one_sentence` to verify the deployable controller. Later release-oriented phases use the same strict controller and retain raw output plus stop-reason telemetry for audit.
+
+## Quality evaluator v2.0
+
+This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+

@@ -49,3 +49,8 @@ Phase 4 ingredients remain compatible only when every seed uses the same source 
 ## Gate
 
 DPO must improve concise-correct preference without material factual, context, safety, completion, or category regression. Scripts never record a human PASS automatically.
+
+## Quality evaluator v2.0
+
+This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+

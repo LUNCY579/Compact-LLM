@@ -18,14 +18,14 @@ def main() -> None:
     for row in data["ranked_single_layers"]:
         rows.append({
             "layer": int(row["layers"][0]),
-            "direct_single_layer_score": float(row["mean_heuristic_score"]),
-            "contribution": contribution(float(row["mean_heuristic_score"]), base, all_score),
+            "direct_single_layer_score": float(row.get("mean_quality_score", row["mean_heuristic_score"])),
+            "contribution": contribution(float(row.get("mean_quality_score", row["mean_heuristic_score"])), base, all_score),
             "peak_train_vram_gb": float(row["peak_train_vram_gb"]),
             "train_runtime_seconds": float(row.get("train_runtime_seconds", 0.0)),
             "signal_status": "measured",
         })
     write_json(args.output, {
-        "measured_signals": ["single_layer_training_score", "project_contribution", "training_vram", "training_runtime"],
+        "measured_signals": ["single_layer_training_quality_score", "project_contribution", "training_vram", "training_runtime"],
         "not_yet_measured": ["gradient_norm", "adapter_ablation", "fisher_style_score"],
         "warning": "Training-layer importance is not inference-layer sensitivity.",
         "layers": rows,

@@ -9,6 +9,8 @@ from typing import Any
 
 from transformers import AutoConfig
 
+from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+
 # Default model for the first static layer-selection experiment.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
 ROOT = Path(__file__).resolve().parents[2]
@@ -138,12 +140,22 @@ def main() -> None:
         # Combine behavioral metrics with the trainer's measured memory and
         # target-module count.
         summary = load_json(eval_dir / "summary.json")
+        require_quality_v2(summary, f"layer scan {variant}")
         manifest = load_json(train_dir / "training_manifest.json")
         results.append(
             {
                 "variant": variant,
                 "selected_layers": selected_layers,
-                "mean_heuristic_score": summary["mean_heuristic_score"],
+                "quality_evaluation_version": summary.get("quality_evaluation_version"),
+                "mean_quality_score": summary_quality_score(summary),
+                "mean_heuristic_score": summary_quality_score(summary),
+                "quality_pass_rate": summary.get("quality_pass_rate"),
+                "intelligibility_pass_rate": summary.get("intelligibility_pass_rate"),
+                "hard_failure_case_count": summary.get("hard_failure_case_count"),
+                "worst_decile_mean_quality_score": summary.get("worst_decile_mean_quality_score"),
+                "semantic_pass_rate": summary.get("semantic_pass_rate"),
+                "critical_failure_count": summary.get("critical_failure_count"),
+                "major_case_count": summary.get("major_case_count"),
                 "median_reply_tokens": summary["median_reply_tokens"],
                 "p90_reply_tokens": summary["p90_reply_tokens"],
                 "complete_utterance_rate": summary["complete_utterance_rate"],
@@ -158,7 +170,13 @@ def main() -> None:
     ranked = sorted(
         results,
         key=lambda row: (
-            float(row["mean_heuristic_score"]),
+            -int(row.get("hard_failure_case_count", 0)),
+            -int(row.get("critical_failure_count", 0)),
+            -int(row.get("major_case_count", 0)),
+            float(row.get("intelligibility_pass_rate", 0.0)),
+            float(row.get("quality_pass_rate", 0.0)),
+            float(row.get("worst_decile_mean_quality_score", 0.0)),
+            float(row["mean_quality_score"]),
             -float(row["peak_train_vram_gb"]),
         ),
         reverse=True,
@@ -177,13 +195,13 @@ def main() -> None:
     )
 
     # Produce a human-readable comparison while warning that one seed and
-    # one heuristic score cannot establish scientific layer importance.
+    # one aggregate quality score cannot establish scientific layer importance.
     rows = "\n".join(
         "| {rank} | {variant} | {layers} | {score:.3f} | {median} | {p90} | {vram:.3f} |".format(
             rank=i,
             variant=row["variant"],
             layers=row["selected_layers"],
-            score=row["mean_heuristic_score"],
+            score=row["mean_quality_score"],
             median=row["median_reply_tokens"],
             p90=row["p90_reply_tokens"],
             vram=row["peak_train_vram_gb"],
@@ -207,7 +225,7 @@ training data, step budget, seed, benchmark, and evaluation configuration.
 
 ## Ranked Results
 
-| Rank | Variant | Layers | Mean heuristic score | Median tokens | P90 tokens | Peak train VRAM (GB) |
+| Rank | Variant | Layers | Mean quality score | Median tokens | P90 tokens | Peak train VRAM (GB) |
 |---:|---|---|---:|---:|---:|---:|
 {rows}
 

@@ -1,4 +1,4 @@
-# Phase 2B Layer-Combination Playground v1.0
+# Phase 2B Layer-Combination Playground v1.1
 
 This is an **independent experiment**, not another project phase. It never edits
 Phase 2B reports, gates, catalogs, accepted frontier checkpoints, or downstream
@@ -133,6 +133,36 @@ powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
 ```
 
 Resume reuses completed model manifests and evidence summaries.
+
+## Run every playground mode and generate the report
+
+From the repository root:
+
+```powershell
+powershell.exe -NoProfile -ExecutionPolicy Bypass -File `
+  .\Phase2B_Layer_Combination_Playground_v1.0\run_playground.ps1 `
+  -Suite all `
+  -CaseLimit 150 `
+  -IncludeExistingEndpoints `
+  -IncludeRecoveredExtensions `
+  -LeaveOneInAblation
+```
+
+The final report is written to:
+
+```text
+playground_artifacts/phase2b_layer_combinations/PLAYGROUND_REPORT.md
+```
+
+Use the identical command with `-Resume` after an interruption. Completed v2 evidence is reused; stale legacy summaries are automatically regenerated.
+
+## Quality-v2 interpretation
+
+Version 1.1 uses the repository-wide evaluator schema `2.0`. It refuses to compare variants when the full reference contains hard intelligibility collapse or was evaluated with the legacy scorer. Each variant receives an exploratory `PASS` or `FAIL` plus exact reasons. The decision uses independent mean, quality-index, worst-decile, category, semantic, completion, alignment, hard/critical/major, target-NLL, and new-issue checks.
+
+A hard corruption case forces that case's quality score to zero. The weighted mean cannot rescue repetition loops, Unicode corruption, mixed-script word salad, prompt leakage, or other hard failure types. Runtime remains diagnostic and is never used to overrule quality.
+
+The report is still not an official phase gate. A passing result requires independent confirmation and human review before it influences a canonical profile.
 
 ## Outputs
 

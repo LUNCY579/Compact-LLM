@@ -36,7 +36,8 @@ candidates:
 gates:
   max_quality_index_loss: 0.02
   max_quality_index_loss_vs_reduced_frozen: 0.01
-  max_heuristic_loss: 0.02
+  max_mean_quality_loss: 0.02
+  max_heuristic_loss: 0.02  # compatibility alias; evaluated as mean quality loss
   max_semantic_pass_loss: 0.02
   max_reference_f1_loss: 0.03
   max_category_loss: 0.05
