@@ -1,4 +1,4 @@
-# Phase 2B Layer-Combination Playground v1.1
+# Phase 2B Layer-Combination Playground v1.2
 
 This is an **independent experiment**, not another project phase. It never edits
 Phase 2B reports, gates, catalogs, accepted frontier checkpoints, or downstream
@@ -154,15 +154,15 @@ The final report is written to:
 playground_artifacts/phase2b_layer_combinations/PLAYGROUND_REPORT.md
 ```
 
-Use the identical command with `-Resume` after an interruption. Completed v2 evidence is reused; stale legacy summaries are automatically regenerated.
+Use the identical command with `-Resume` after an interruption. Completed v3 evidence is reused; summaries from older evaluators are automatically regenerated.
 
-## Quality-v2 interpretation
+## Evaluation v3 interpretation
 
-Version 1.1 uses the repository-wide evaluator schema `2.0`. It refuses to compare variants when the full reference contains hard intelligibility collapse or was evaluated with the legacy scorer. Each variant receives an exploratory `PASS` or `FAIL` plus exact reasons. The decision uses independent mean, quality-index, worst-decile, category, semantic, completion, alignment, hard/critical/major, target-NLL, and new-issue checks.
+Version 1.2 uses evaluator schema `3.0` and the repository-wide relative-opportunity engine. Every candidate is compared with the full reference using loaded weight-tensor memory reduction as the primary benefit. Mean and tail quality, comprehensibility, task adequacy, logic, safety, context, completeness, brevity, content anchors, issue costs, severe-collapse rate, category behavior, and target NLL contribute proportionally to quality opportunity loss.
 
-A hard corruption case forces that case's quality score to zero. The weighted mean cannot rescue repetition loops, Unicode corruption, mixed-script word salad, prompt leakage, or other hard failure types. Runtime remains diagnostic and is never used to overrule quality.
+A candidate is marked `WORTHWHILE` only when its proportional memory benefit is strictly greater than its combined proportional quality loss. There are no absolute score, pass-rate, completion, semantic, category, NLL, or issue-count floors. Informal but understandable wording and natural follow-up questions are permitted unless an explicit response contract forbids them. Actual corruption and repetition still receive severe case costs.
 
-The report is still not an official phase gate. A passing result requires independent confirmation and human review before it influences a canonical profile.
+The report is exploratory and not an official phase gate. Human review of raw generations and `OUTPUT_DEVIATION.md` remains required.
 
 ## Outputs
 

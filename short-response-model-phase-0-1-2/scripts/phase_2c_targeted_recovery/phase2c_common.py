@@ -6,8 +6,9 @@ import math
 from pathlib import Path
 from typing import Any, Iterable
 
-from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
 from scripts.common.quality_gate import quality_index as shared_quality_index
+from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
 
 
 def minmax(values: dict[int, float]) -> dict[int, float]:
@@ -149,7 +150,7 @@ def relative_loss(reference: float, candidate: float) -> float:
 
 
 def category_quality_scores(summary: dict[str, Any]) -> dict[str, float]:
-    require_quality_v2(summary)
+    require_quality_v3(summary)
     return {
         str(key): float(value)
         for key, value in (summary.get("category_quality_scores") or summary.get("category_scores") or {}).items()
@@ -189,191 +190,115 @@ def assess_training_candidate(
     candidate: dict[str, Any],
     all_remaining: dict[str, Any],
     reduced_frozen: dict[str, Any],
-    max_quality_index_loss: float,
-    max_frozen_quality_loss: float,
-    max_heuristic_loss: float,
-    max_semantic_pass_loss: float,
-    max_reference_f1_loss: float,
-    max_category_loss_allowed: float,
-    max_frozen_category_loss: float,
-    max_nll_increase: float,
-    min_complete_utterance_rate: float,
-    minimum_trainable_reduction: float,
-    max_new_major_issues: int,
+    quality_profile: str = "balanced",
+    **deprecated_thresholds: Any,
 ) -> dict[str, Any]:
+    """Compare trainable-state saving with continuous quality opportunity loss.
+
+    Historical threshold keyword arguments remain accepted for command
+    compatibility and are intentionally ignored.
+    """
+
     cand_summary = candidate["generation_summary"]
     all_summary = all_remaining["generation_summary"]
-    require_quality_v2(cand_summary, f"Phase 2C candidate {candidate.get('name')}")
-    require_quality_v2(all_summary, "Phase 2C all-remaining reference")
-    require_quality_v2(reduced_frozen["generation_summary"], "Phase 2C reduced-frozen reference")
-    cand_quality = quality_index(cand_summary)
-    all_quality = quality_index(all_summary)
-    frozen_quality = quality_index(reduced_frozen["generation_summary"])
-    quality_loss = max(0.0, all_quality - cand_quality)
-    frozen_quality_loss = max(0.0, frozen_quality - cand_quality)
-    mean_quality_loss = max(0.0, summary_quality_score(all_summary) - summary_quality_score(cand_summary))
-    semantic_loss = max(0.0, float(all_summary.get("semantic_pass_rate", 1.0)) - float(cand_summary.get("semantic_pass_rate", 1.0)))
-    all_f1 = all_summary.get("mean_reference_token_f1")
-    cand_f1 = cand_summary.get("mean_reference_token_f1")
-    reference_f1_loss = 0.0 if all_f1 is None or cand_f1 is None else max(0.0, float(all_f1) - float(cand_f1))
-    category_quality_loss, category_quality_losses = max_category_loss(all_summary, cand_summary)
-    category_semantic_loss, category_semantic_losses = max_category_metric_loss(
-        all_summary, cand_summary, "category_semantic_pass_rates"
-    )
-    category_completion_loss, category_completion_losses = max_category_metric_loss(
-        all_summary, cand_summary, "category_complete_utterance_rates"
-    )
-    category_loss = max(category_quality_loss, category_semantic_loss, category_completion_loss)
-    category_losses = {
-        category: max(
-            category_quality_losses.get(category, 0.0),
-            category_semantic_losses.get(category, 0.0),
-            category_completion_losses.get(category, 0.0),
-        )
-        for category in set(category_quality_losses) | set(category_semantic_losses) | set(category_completion_losses)
-    }
     frozen_summary = reduced_frozen["generation_summary"]
-    frozen_quality_loss, frozen_quality_losses = max_category_loss(frozen_summary, cand_summary)
-    frozen_semantic_loss, frozen_semantic_losses = max_category_metric_loss(
-        frozen_summary, cand_summary, "category_semantic_pass_rates"
-    )
-    frozen_completion_loss, frozen_completion_losses = max_category_metric_loss(
-        frozen_summary, cand_summary, "category_complete_utterance_rates"
-    )
-    frozen_category_loss = max(frozen_quality_loss, frozen_semantic_loss, frozen_completion_loss)
-    frozen_category_losses = {
-        category: max(
-            frozen_quality_losses.get(category, 0.0),
-            frozen_semantic_losses.get(category, 0.0),
-            frozen_completion_losses.get(category, 0.0),
-        )
-        for category in set(frozen_quality_losses) | set(frozen_semantic_losses) | set(frozen_completion_losses)
-    }
-    all_nll = float(all_remaining["nll_summary"]["mean_target_nll"])
-    cand_nll = float(candidate["nll_summary"]["mean_target_nll"])
-    nll_increase = max(0.0, cand_nll - all_nll) / max(abs(all_nll), 1e-12)
+    require_quality_v3(cand_summary, f"Phase 2C candidate {candidate.get('name')}")
+    require_quality_v3(all_summary, "Phase 2C all-remaining reference")
+    require_quality_v3(frozen_summary, "Phase 2C reduced-frozen reference")
+
     all_trainable = int(all_remaining["training_manifest"].get("trainable_parameter_count", 0))
     cand_trainable = int(candidate["training_manifest"].get("trainable_parameter_count", 0))
-    trainable_reduction = 0.0 if all_trainable <= 0 else max(0.0, 1.0 - cand_trainable / all_trainable)
+    trainable_reduction = resource_reduction(all_trainable, cand_trainable)
+    all_nll = float(all_remaining["nll_summary"]["mean_target_nll"])
+    cand_nll = float(candidate["nll_summary"]["mean_target_nll"])
+    opportunity = evaluate_opportunity(
+        all_summary,
+        cand_summary,
+        resource_gain=trainable_reduction,
+        resource_name="trainable_parameter_reduction",
+        profile=quality_profile,
+        reference_target_nll=all_nll,
+        candidate_target_nll=cand_nll,
+    )
+    if candidate.get("name") == "all_remaining":
+        # This row is the same-seed quality control, not an efficiency
+        # candidate. Mark it usable when technically valid so it can anchor
+        # repeated comparisons without pretending a zero-saving model won an
+        # opportunity trade-off.
+        opportunity["eligible"] = bool(opportunity["technical_valid"])
+        opportunity["decision"] = "REFERENCE_CONTROL"
+        opportunity["decision_explanation"] = "same-seed all-remaining control is technically valid"
+        opportunity["opportunity_margin"] = 0.0
+
     all_runtime = float(all_remaining["training_manifest"].get("train_metrics", {}).get("train_runtime", 0.0))
     cand_runtime = float(candidate["training_manifest"].get("train_metrics", {}).get("train_runtime", 0.0))
-    runtime_reduction = None if all_runtime <= 0 or cand_runtime <= 0 else 1.0 - cand_runtime / all_runtime
+    runtime_reduction = resource_reduction(all_runtime, cand_runtime)
     all_vram = float(all_remaining["training_manifest"].get("peak_allocated_vram_gb", 0.0))
     cand_vram = float(candidate["training_manifest"].get("peak_allocated_vram_gb", 0.0))
-    vram_reduction = None if all_vram <= 0 or cand_vram <= 0 else 1.0 - cand_vram / all_vram
+    vram_reduction = resource_reduction(all_vram, cand_vram)
+    all_quality = quality_index(all_summary)
+    frozen_quality = quality_index(frozen_summary)
+    candidate_quality = quality_index(cand_summary)
     denominator = all_quality - frozen_quality
-    recovered_fraction = None if denominator <= 1e-8 else (cand_quality - frozen_quality) / denominator
-
+    recovered_fraction = None if denominator <= 1e-12 else (candidate_quality - frozen_quality) / denominator
     deviation = candidate.get("output_deviation") or {}
-    reasons: list[str] = []
-    if int(cand_summary.get("hard_failure_case_count", 0)) > 0:
-        reasons.append("hard intelligibility failures are nonzero")
-    if float(cand_summary.get("intelligibility_pass_rate", 0.0)) < 1.0:
-        reasons.append("intelligibility pass rate is below 1.0")
-    if float(cand_summary.get("quality_pass_rate", 0.0)) < 0.95:
-        reasons.append("quality pass rate is below 0.95")
-    if float(cand_summary.get("worst_decile_mean_quality_score", 0.0)) < 0.70:
-        reasons.append("worst-decile quality is below 0.70")
-    if int(cand_summary.get("critical_failure_count", 0)) > 0:
-        reasons.append("critical failures are nonzero")
-    if quality_loss > max_quality_index_loss:
-        reasons.append(f"quality-index loss {quality_loss:.4f} exceeds {max_quality_index_loss:.4f}")
-    if frozen_quality_loss > max_frozen_quality_loss:
-        reasons.append(
-            f"quality-index loss vs reduced frozen {frozen_quality_loss:.4f} exceeds "
-            f"{max_frozen_quality_loss:.4f}"
-        )
-    if mean_quality_loss > max_heuristic_loss:
-        reasons.append(f"mean quality loss {mean_quality_loss:.4f} exceeds {max_heuristic_loss:.4f}")
-    if semantic_loss > max_semantic_pass_loss:
-        reasons.append(f"semantic-pass loss {semantic_loss:.4f} exceeds {max_semantic_pass_loss:.4f}")
-    if reference_f1_loss > max_reference_f1_loss:
-        reasons.append(f"reference-F1 loss {reference_f1_loss:.4f} exceeds {max_reference_f1_loss:.4f}")
-    if category_loss > max_category_loss_allowed:
-        reasons.append(f"worst category loss {category_loss:.4f} exceeds {max_category_loss_allowed:.4f}")
-    if frozen_category_loss > max_frozen_category_loss:
-        reasons.append(
-            f"worst category loss vs reduced frozen {frozen_category_loss:.4f} exceeds "
-            f"{max_frozen_category_loss:.4f}"
-        )
-    if nll_increase > max_nll_increase:
-        reasons.append(f"target-NLL increase {nll_increase:.4f} exceeds {max_nll_increase:.4f}")
-    if float(cand_summary.get("complete_utterance_rate", 0.0)) < min_complete_utterance_rate:
-        reasons.append("complete-utterance rate is below the floor")
-    if int(deviation.get("new_critical_failure_count", 0)) > 0:
-        reasons.append("new critical failures appeared relative to the reduced frozen model")
-    if int(deviation.get("new_major_issue_count", 0)) > max_new_major_issues:
-        reasons.append(
-            f"new major issues {int(deviation.get('new_major_issue_count', 0))} exceed "
-            f"{max_new_major_issues}"
-        )
-    if candidate["name"] != "all_remaining" and trainable_reduction < minimum_trainable_reduction:
-        reasons.append(
-            f"trainable-parameter reduction {trainable_reduction:.4f} is below {minimum_trainable_reduction:.4f}"
-        )
+
     return {
-        "eligible": not reasons,
-        "rejection_reasons": reasons,
-        "quality_index": cand_quality,
-        "mean_quality_score": float(cand_summary.get("mean_quality_score", cand_summary.get("mean_heuristic_score", 0.0))),
+        **opportunity,
+        "rejection_reasons": list(opportunity["technical_invalidity_reasons"]) + ([] if opportunity["eligible"] else [opportunity["decision_explanation"]]),
+        "quality_index": candidate_quality,
+        "mean_quality_score": summary_quality_score(cand_summary),
         "quality_pass_rate": float(cand_summary.get("quality_pass_rate", 0.0)),
         "intelligibility_pass_rate": float(cand_summary.get("intelligibility_pass_rate", 0.0)),
         "hard_failure_case_count": int(cand_summary.get("hard_failure_case_count", 0)),
         "worst_decile_mean_quality_score": float(cand_summary.get("worst_decile_mean_quality_score", 0.0)),
-        "quality_index_loss_vs_all_remaining": quality_loss,
-        "quality_index_loss_vs_reduced_frozen": frozen_quality_loss,
-        "quality_gain_vs_reduced_frozen": cand_quality - frozen_quality,
+        "quality_gain_vs_reduced_frozen": candidate_quality - frozen_quality,
         "fraction_of_all_remaining_gain_recovered": recovered_fraction,
-        "mean_quality_loss_vs_all_remaining": mean_quality_loss,
-        "heuristic_loss_vs_all_remaining": mean_quality_loss,
-        "semantic_pass_loss_vs_all_remaining": semantic_loss,
-        "reference_f1_loss_vs_all_remaining": reference_f1_loss,
-        "worst_category_loss_vs_all_remaining": category_loss,
-        "category_losses": category_losses,
-        "worst_category_loss_vs_reduced_frozen": frozen_category_loss,
-        "frozen_category_losses": frozen_category_losses,
-        "new_critical_failures_vs_reduced_frozen": int(deviation.get("new_critical_failure_count", 0)),
-        "new_major_issues_vs_reduced_frozen": int(deviation.get("new_major_issue_count", 0)),
-        "relative_nll_increase_vs_all_remaining": nll_increase,
-        "trainable_parameter_reduction_vs_all_remaining": trainable_reduction,
+        "trainable_parameter_reduction_vs_all_remaining": float(trainable_reduction or 0.0),
         "training_runtime_reduction_vs_all_remaining": runtime_reduction,
         "peak_training_vram_reduction_vs_all_remaining": vram_reduction,
+        "new_critical_failures_vs_reduced_frozen": int(deviation.get("new_critical_failure_count", 0)),
+        "new_major_issues_vs_reduced_frozen": int(deviation.get("new_major_issue_count", 0)),
+        "deprecated_threshold_arguments_ignored": sorted(deprecated_thresholds),
     }
 
 
-def select_profiles(rows: list[dict[str, Any]], *, balanced_tolerance: float) -> dict[str, dict[str, Any]]:
-    eligible = [row for row in rows if row.get("assessment", {}).get("eligible")]
-    if not eligible:
-        raise ValueError("No Phase 2C candidate passed the automated eligibility gates.")
+def select_profiles(rows: list[dict[str, Any]], *, balanced_tolerance: float | None = None) -> dict[str, dict[str, Any]]:
+    """Select quality, opportunity-margin, and minimum-state profiles.
+
+    ``balanced_tolerance`` is a deprecated compatibility argument and does not
+    control selection.
+    """
+
+    valid = [row for row in rows if (row.get("assessment") or {}).get("technical_valid", True)]
+    if not valid:
+        raise ValueError("No technically valid Phase 2C candidates are available.")
+    worthwhile = [row for row in valid if (row.get("assessment") or {}).get("eligible")]
     maximum = max(
-        eligible,
+        valid,
         key=lambda row: (
-            float(row["assessment"]["quality_index"]),
-            -float(row["nll_summary"]["mean_target_nll"]),
-            -int(row["training_manifest"].get("trainable_parameter_count", 0)),
+            float((row.get("assessment") or {}).get("quality_index", 0.0)),
+            -float(row["nll_summary"].get("mean_target_nll", float("inf"))),
         ),
     )
-    max_quality = float(maximum["assessment"]["quality_index"])
-    near_max = [
-        row for row in eligible
-        if max_quality - float(row["assessment"]["quality_index"]) <= balanced_tolerance
-    ]
-    balanced = min(
-        near_max,
-        key=lambda row: (
-            int(row["training_manifest"].get("trainable_parameter_count", 0)),
-            float(row["nll_summary"]["mean_target_nll"]),
-            -float(row["assessment"]["quality_index"]),
-        ),
-    )
-    minimum = min(
-        eligible,
-        key=lambda row: (
-            int(row["training_manifest"].get("trainable_parameter_count", 0)),
-            -float(row["assessment"]["quality_index"]),
-            float(row["nll_summary"]["mean_target_nll"]),
-        ),
-    )
+    if worthwhile:
+        balanced = max(
+            worthwhile,
+            key=lambda row: (
+                float(row["assessment"].get("opportunity_margin", float("-inf"))),
+                float(row["assessment"].get("resource_gain_fraction", 0.0)),
+            ),
+        )
+        minimum = max(
+            worthwhile,
+            key=lambda row: (
+                float(row["assessment"].get("resource_gain_fraction", 0.0)),
+                float(row["assessment"].get("opportunity_margin", float("-inf"))),
+            ),
+        )
+    else:
+        balanced = maximum
+        minimum = maximum
     return {
         "maximum_quality": maximum,
         "balanced_training": balanced,

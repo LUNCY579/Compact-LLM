@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+"""Phase 2 selective-tuning gate using relative opportunity cost only."""
+
 import argparse
 import statistics
 import sys
@@ -11,128 +13,122 @@ from phase2_common import ROOT, load_json
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.quality_evaluation import require_quality_v2
-from scripts.common.quality_gate import compare_quality_summaries, summary_quality_score
+from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier
+from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
 
 
 def parse_args() -> argparse.Namespace:
-    p = argparse.ArgumentParser(description="Evaluate Stop Gate 2 with quality-v2 evidence.")
-    p.add_argument("--results", type=Path, default=ROOT / "artifacts/phase_2_layer_study/phase_2_results.json")
-    p.add_argument("--output-report", type=Path, default=ROOT / "reports/PHASE_2_STOP_GATE.md")
-    p.add_argument("--quality-tolerance", type=float, default=0.02)
-    p.add_argument("--minimum-vram-reduction", type=float, default=0.15)
-    p.add_argument("--maximum-category-regression", type=float, default=0.08)
-    p.add_argument("--minimum-complete-rate", type=float, default=0.99)
-    p.add_argument("--maximum-p90-tokens", type=float, default=24.0)
-    p.add_argument("--minimum-repeat-seeds", type=int, default=3)
-    p.add_argument("--maximum-repeat-score-stdev", type=float, default=0.03)
-    p.add_argument("--minimum-quality-pass-rate", type=float, default=0.95)
-    p.add_argument("--minimum-semantic-pass-rate", type=float, default=0.98)
-    p.add_argument("--minimum-worst-decile-quality", type=float, default=0.70)
-    return p.parse_args()
-
-
-def as_summary(row: dict[str, Any]) -> dict[str, Any]:
-    require_quality_v2(row, str(row.get("variant", "candidate")))
-    return row
+    parser = argparse.ArgumentParser(description="Evaluate Phase 2 by training-resource gain versus quality opportunity loss.")
+    parser.add_argument("--results", type=Path, default=ROOT / "artifacts/phase_2_layer_study/phase_2_results.json")
+    parser.add_argument("--output-report", type=Path, default=ROOT / "reports/PHASE_2_STOP_GATE.md")
+    parser.add_argument("--quality-profile", choices=("balanced", "logic_oriented", "conversational_permissive"), default="balanced")
+    # Deprecated aliases remain accepted so old commands do not break. They do not control selection.
+    for flag in (
+        "--quality-tolerance", "--minimum-vram-reduction", "--maximum-category-regression",
+        "--minimum-complete-rate", "--maximum-p90-tokens", "--minimum-repeat-seeds",
+        "--maximum-repeat-score-stdev", "--minimum-quality-pass-rate",
+        "--minimum-semantic-pass-rate", "--minimum-worst-decile-quality",
+    ):
+        parser.add_argument(flag, type=float, default=None, help=argparse.SUPPRESS)
+    return parser.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     data = load_json(args.results)
-    all_ref = as_summary(data["all_layer_reference"])
-    rows = [*data["ranked_single_layers"], *data["pair_results"], *data["controls"]]
-    eligible: list[dict[str, Any]] = []
+    reference = data["all_layer_reference"]
+    require_quality_v3(reference, "Phase 2 all-layer reference")
+    rows = [*data.get("ranked_single_layers", []), *data.get("pair_results", []), *data.get("controls", [])]
+    assessed: list[dict[str, Any]] = []
     for row in rows:
         layers = row.get("layers")
         if not isinstance(layers, list) or len(layers) not in (1, 2, 4):
             continue
-        as_summary(row)
-        comparison = compare_quality_summaries(
-            all_ref,
+        require_quality_v3(row, str(row.get("variant", "Phase 2 candidate")))
+        resource_gain = row.get("vram_reduction_vs_all")
+        if resource_gain is None:
+            all_trainable = data.get("all_layer_reference", {}).get("trainable_parameter_count")
+            candidate_trainable = row.get("trainable_parameter_count")
+            if all_trainable and candidate_trainable is not None:
+                resource_gain = max(0.0, 1.0 - float(candidate_trainable) / float(all_trainable))
+        assessment = evaluate_opportunity(
+            reference,
             row,
-            max_mean_quality_loss=args.quality_tolerance,
-            max_quality_index_loss=args.quality_tolerance,
-            max_worst_decile_loss=0.05,
-            max_category_quality_loss_allowed=args.maximum_category_regression,
-            max_semantic_pass_loss=0.02,
-            max_reference_alignment_loss=0.08,
-            min_quality_pass_rate=args.minimum_quality_pass_rate,
-            min_intelligibility_pass_rate=1.0,
-            min_semantic_pass_rate=args.minimum_semantic_pass_rate,
-            min_complete_utterance_rate=args.minimum_complete_rate,
-            max_hard_failure_cases=0,
-            max_critical_failures=0,
-            max_major_issue_cases=int(all_ref.get("major_case_count", 0)),
+            resource_gain=None if resource_gain is None else float(resource_gain),
+            resource_name="training_resource_reduction",
+            profile=args.quality_profile,
         )
-        passes = (
-            comparison["eligible"]
-            and float(row["vram_reduction_vs_all"]) >= args.minimum_vram_reduction
-            and float(row["p90_reply_tokens"]) <= args.maximum_p90_tokens
-            and float(row.get("worst_decile_mean_quality_score", 0.0)) >= args.minimum_worst_decile_quality
-        )
-        row["gate_assessment"] = comparison
-        row["gate_eligible"] = passes
-        if passes:
-            eligible.append(row)
+        row["gate_assessment"] = assessment
+        row["gate_eligible"] = assessment["eligible"]
+        assessed.append(row)
 
-    repeats = [as_summary(row) for row in data.get("repeat_results", [])]
-    repeat_scores = [summary_quality_score(row) for row in repeats]
-    repeat_stdev = statistics.pstdev(repeat_scores) if len(repeat_scores) > 1 else float("inf")
-    stability_pass = len(repeats) >= args.minimum_repeat_seeds and repeat_stdev <= args.maximum_repeat_score_stdev
-    automated_pass = bool(eligible) and stability_pass
-    status = "PASS_PENDING_HUMAN_REVIEW" if automated_pass else "FAIL"
+    eligible = [row for row in assessed if row["gate_eligible"]]
+    frontier_ids = {id(row) for row in pareto_frontier([
+        {**row, **row["gate_assessment"]} for row in assessed
+    ])}
+    # Recompute membership by (variant, margin) because merged dictionaries have new identities.
+    frontier_keys = {
+        (str(row.get("variant")), float(row.get("opportunity_margin", 0.0)))
+        for row in pareto_frontier([{**row, **row["gate_assessment"]} for row in assessed])
+    }
+    for row in assessed:
+        row["pareto_frontier"] = (
+            str(row.get("variant")), float(row["gate_assessment"].get("opportunity_margin", 0.0))
+        ) in frontier_keys
+
+    repeats = data.get("repeat_results", [])
+    repeat_scores: list[float] = []
+    for row in repeats:
+        require_quality_v3(row, "Phase 2 repeated-seed evidence")
+        repeat_scores.append(summary_quality_score(row))
+    repeat_stdev = statistics.pstdev(repeat_scores) if len(repeat_scores) > 1 else None
     best = max(
         eligible,
         key=lambda row: (
-            float(row.get("worst_decile_mean_quality_score", 0.0)),
-            summary_quality_score(row),
-            float(row.get("quality_pass_rate", 0.0)),
-            float(row.get("vram_reduction_vs_all", 0.0)),
+            float(row["gate_assessment"]["opportunity_margin"]),
+            float(row["gate_assessment"]["resource_gain_fraction"]),
+            -float(row["gate_assessment"]["quality_opportunity_loss_fraction"]),
         ),
         default=None,
     )
-
-    candidate_rows = "\n".join(
-        f"| {r['variant']} | {r['layers']} | {summary_quality_score(r):.3f} | "
-        f"{float(r.get('worst_decile_mean_quality_score', 0.0)):.3f} | "
-        f"{float(r.get('quality_pass_rate', 0.0)):.3f} | "
-        f"{int(r.get('hard_failure_case_count', 0))} | {int(r.get('major_case_count', 0))} | "
-        f"{100*float(r['vram_reduction_vs_all']):.1f}% | {'PASS' if r.get('gate_eligible') else 'FAIL'} |"
-        for r in sorted(rows, key=lambda x: summary_quality_score(x), reverse=True)
+    status = "PASS_PENDING_HUMAN_REVIEW" if best else "NO_PROPORTIONALLY_WORTHWHILE_CANDIDATE"
+    table = "\n".join(
+        f"| {row.get('variant')} | {row.get('layers')} | {summary_quality_score(row):.4f} | "
+        f"{float(row['gate_assessment']['resource_gain_fraction']):.3%} | "
+        f"{float(row['gate_assessment']['quality_opportunity_loss_fraction']):.3%} | "
+        f"{float(row['gate_assessment']['opportunity_margin']):+.3%} | "
+        f"{'YES' if row.get('pareto_frontier') else 'NO'} | "
+        f"{'WORTHWHILE' if row.get('gate_eligible') else 'NOT WORTHWHILE'} |"
+        for row in sorted(assessed, key=lambda item: float(item["gate_assessment"]["opportunity_margin"]), reverse=True)
     )
+    deprecated = [name for name, value in vars(args).items() if name not in {"results", "output_report", "quality_profile"} and value is not None]
     report = f"""# PHASE 2 STOP GATE
 
-## Purpose
+## Governing rule
 
-Advance only when a one-, two-, or four-layer configuration preserves mean,
-tail, category, semantic, intelligibility, and completion quality while reducing
-training resources.
+Selective tuning advances only when proportional training-resource reduction is greater than combined proportional quality opportunity loss. No absolute quality floor controls promotion.
 
-## Candidate Checks
+| Variant | Layers | Quality | Resource gain | Quality opportunity loss | Opportunity margin | Pareto | Decision |
+|---|---|---:|---:|---:|---:|---:|---|
+{table}
 
-| Variant | Layers | Quality | Worst decile | Pass rate | Hard fails | Major cases | VRAM reduction | Result |
-|---|---|---:|---:|---:|---:|---:|---:|---|
-{candidate_rows}
+## Repeated-seed evidence
 
-## Repeated-Seed Stability
+- Repeat runs recorded: `{len(repeat_scores)}`
+- Mean quality: `{statistics.mean(repeat_scores) if repeat_scores else 'N/A'}`
+- Quality standard deviation (diagnostic only): `{repeat_stdev if repeat_stdev is not None else 'N/A'}`
 
-- Repeat runs: {len(repeats)}
-- Mean quality: {statistics.mean(repeat_scores) if repeat_scores else float('nan'):.3f}
-- Quality-score standard deviation: {repeat_stdev:.4f}
-- Stability check: {'PASS' if stability_pass else 'FAIL'}
+Repeated seeds inform uncertainty and human review; no fixed repeat-count or standard-deviation threshold accepts or rejects a candidate.
 
-## Automated Gate Status
+## Automated status
 
 `{status}`
 
-## Recommended Static Candidate
+- Recommended candidate: `{best.get('variant') if best else 'NONE'}`
+- Quality profile: `{args.quality_profile}`
+- Deprecated threshold arguments supplied and ignored: `{deprecated or 'None'}`
 
-{('`' + best['variant'] + '`') if best else 'None passed all quality-v2 floors.'}
-
-## Human Decision
-
-Inspect all hard/major flags, low-tail cases, and repeat-seed differences.
+## Human decision
 
 - Human decision: `PENDING`
 - Reviewer:
@@ -142,7 +138,7 @@ Inspect all hard/major flags, low-tail cases, and repeat-seed differences.
     args.output_report.parent.mkdir(parents=True, exist_ok=True)
     args.output_report.write_text(report, encoding="utf-8")
     print(args.output_report)
-    if not automated_pass:
+    if not best:
         raise SystemExit(1)
 
 

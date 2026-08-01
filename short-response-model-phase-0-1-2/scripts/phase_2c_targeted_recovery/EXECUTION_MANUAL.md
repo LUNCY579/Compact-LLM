@@ -26,7 +26,7 @@
   -GradientCheckpointing
 ```
 
-The default strict gates require zero critical failures, zero new major issues versus the frozen reduced model, at least 99% complete utterances, bounded quality/category losses against both references, no more than 10% relative NLL increase, and at least 25% trainable-parameter reduction for selective candidates.
+The gate compares proportional trainable-state/training-memory savings with combined proportional quality opportunity loss. Critical and major issues, completion, categories, and target NLL contribute continuously; none is an independent absolute veto or floor.
 
 ## Alternate isolated run
 

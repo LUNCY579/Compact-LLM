@@ -1,4 +1,4 @@
-# Purpose: Measures retrieval quality, token reduction, traces, and compact/full response quality-v2.
+# Purpose: Measures retrieval quality, token reduction, traces, and compact/full response quality-v3.
 from __future__ import annotations
 
 """Evaluate retrieval, budgeting, contradiction filtering, and model context use.

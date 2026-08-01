@@ -36,8 +36,11 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--calibration", type=Path, required=True)
     parser.add_argument("--out", type=Path, default=ROOT / "artifacts/phase_6_sparse/router_dataset.pt")
     parser.add_argument("--block-size", type=int, default=128)
-    parser.add_argument("--retain-contribution", type=float, default=0.95)
-    parser.add_argument("--fixed-active-ratio", type=float, default=None)
+    parser.add_argument(
+        "--fixed-active-ratio", type=float, default=0.65,
+        help="Experimental oracle compute budget used to create router labels; not a quality gate.",
+    )
+    parser.add_argument("--retain-contribution", type=float, default=None, help=argparse.SUPPRESS)
     parser.add_argument("--max-records", type=int, default=1000)
     parser.add_argument("--max-samples-per-layer", type=int, default=20000)
     parser.add_argument("--max-sequence-length", type=int, default=2048)
@@ -153,10 +156,11 @@ def main() -> None:
             positions = current["positions_cpu"].to(z.device)
             selected_z = z.index_select(0, positions)
             scores = block_scores_from_intermediate(selected_z, module.weight, args.block_size).cpu()
-            if args.fixed_active_ratio is not None:
-                oracle = top_block_mask(scores, args.fixed_active_ratio).cpu()
-            else:
+            if args.retain_contribution is not None:
+                # Deprecated compatibility path for historical datasets only.
                 oracle = smallest_prefix_mask(scores, args.retain_contribution).cpu()
+            else:
+                oracle = top_block_mask(scores, args.fixed_active_ratio).cpu()
             hidden = pending_hidden.pop(layer_key).cpu()
             remaining = args.max_samples_per_layer - len(datasets[layer_key]["hidden"])
             for row_index in range(min(remaining, hidden.shape[0])):

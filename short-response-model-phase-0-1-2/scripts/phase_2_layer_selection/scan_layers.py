@@ -9,6 +9,7 @@ from typing import Any
 
 from transformers import AutoConfig
 
+from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
 from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
 
 # Default model for the first static layer-selection experiment.
@@ -150,6 +151,7 @@ def main() -> None:
                 "mean_quality_score": summary_quality_score(summary),
                 "mean_heuristic_score": summary_quality_score(summary),
                 "quality_pass_rate": summary.get("quality_pass_rate"),
+                "quality_pass_rate_is_diagnostic_only": True,
                 "intelligibility_pass_rate": summary.get("intelligibility_pass_rate"),
                 "hard_failure_case_count": summary.get("hard_failure_case_count"),
                 "worst_decile_mean_quality_score": summary.get("worst_decile_mean_quality_score"),
@@ -162,25 +164,65 @@ def main() -> None:
                 "peak_eval_vram_gb": summary["peak_vram_gb"],
                 "peak_train_vram_gb": manifest["peak_allocated_vram_gb"],
                 "target_module_count": manifest["target_module_count"],
+                "_quality_summary": summary,
             }
         )
 
-    # Rank primarily by heuristic quality; use lower peak training VRAM as
-    # a tie-breaker rather than allowing efficiency to hide quality loss.
-    ranked = sorted(
-        results,
-        key=lambda row: (
-            -int(row.get("hard_failure_case_count", 0)),
-            -int(row.get("critical_failure_count", 0)),
-            -int(row.get("major_case_count", 0)),
-            float(row.get("intelligibility_pass_rate", 0.0)),
-            float(row.get("quality_pass_rate", 0.0)),
-            float(row.get("worst_decile_mean_quality_score", 0.0)),
-            float(row["mean_quality_score"]),
-            -float(row["peak_train_vram_gb"]),
-        ),
-        reverse=True,
-    )
+    # When the all-layer control is present, compare every selective adapter
+    # to it using the same central opportunity engine as the official Phase 2
+    # gate. Otherwise this scan remains descriptive and ranks by continuous
+    # quality only; it does not manufacture a promotion decision without a
+    # resource/quality reference.
+    all_layer_row = next((row for row in results if row["variant"] == "all_layers"), None)
+    if all_layer_row is not None:
+        reference_summary = all_layer_row["_quality_summary"]
+        reference_vram = float(all_layer_row["peak_train_vram_gb"])
+        for row in results:
+            if row is all_layer_row:
+                row.update({
+                    "resource_gain_fraction": 0.0,
+                    "quality_opportunity_loss_fraction": 0.0,
+                    "opportunity_margin": 0.0,
+                    "opportunity_decision": "REFERENCE",
+                    "technical_valid": True,
+                })
+                continue
+            opportunity = evaluate_opportunity(
+                reference_summary,
+                row["_quality_summary"],
+                resource_gain=resource_reduction(reference_vram, row["peak_train_vram_gb"]),
+                resource_name="peak training VRAM reduction",
+            )
+            row.update({
+                "resource_gain_fraction": opportunity["resource_gain_fraction"],
+                "quality_opportunity_loss_fraction": opportunity["quality_opportunity_loss_fraction"],
+                "opportunity_margin": opportunity["opportunity_margin"],
+                "opportunity_decision": opportunity["decision"],
+                "technical_valid": opportunity["technical_valid"],
+            })
+        ranked = sorted(
+            results,
+            key=lambda row: (
+                float(row.get("opportunity_margin", float("-inf"))),
+                float(row.get("mean_quality_score", 0.0)),
+                -float(row.get("peak_train_vram_gb", float("inf"))),
+            ),
+            reverse=True,
+        )
+    else:
+        ranked = sorted(
+            results,
+            key=lambda row: (
+                float(row.get("mean_quality_score", 0.0)),
+                float(row.get("worst_decile_mean_quality_score", 0.0)),
+                -float(row.get("mean_issue_cost", 0.0)),
+                -float(row.get("peak_train_vram_gb", float("inf"))),
+            ),
+            reverse=True,
+        )
+
+    for row in results:
+        row.pop("_quality_summary", None)
     # Preserve both original execution order and ranked results in JSON.
     payload = {
         "model_id": args.model_id,
@@ -197,13 +239,14 @@ def main() -> None:
     # Produce a human-readable comparison while warning that one seed and
     # one aggregate quality score cannot establish scientific layer importance.
     rows = "\n".join(
-        "| {rank} | {variant} | {layers} | {score:.3f} | {median} | {p90} | {vram:.3f} |".format(
+        "| {rank} | {variant} | {layers} | {score:.3f} | {gain} | {loss} | {margin} | {vram:.3f} |".format(
             rank=i,
             variant=row["variant"],
             layers=row["selected_layers"],
             score=row["mean_quality_score"],
-            median=row["median_reply_tokens"],
-            p90=row["p90_reply_tokens"],
+            gain=(f"{100.0 * row['resource_gain_fraction']:.2f}%" if "resource_gain_fraction" in row else "diagnostic"),
+            loss=(f"{100.0 * row['quality_opportunity_loss_fraction']:.2f}%" if "quality_opportunity_loss_fraction" in row else "diagnostic"),
+            margin=(f"{100.0 * row['opportunity_margin']:+.2f}%" if "opportunity_margin" in row else "diagnostic"),
             vram=row["peak_train_vram_gb"],
         )
         for i, row in enumerate(ranked, 1)
@@ -225,15 +268,18 @@ training data, step budget, seed, benchmark, and evaluation configuration.
 
 ## Ranked Results
 
-| Rank | Variant | Layers | Mean quality score | Median tokens | P90 tokens | Peak train VRAM (GB) |
-|---:|---|---|---:|---:|---:|---:|
+| Rank | Variant | Layers | Mean quality | Resource gain | Quality opportunity loss | Opportunity margin | Peak train VRAM (GB) |
+|---:|---|---|---:|---:|---:|---:|---:|
 {rows}
 
 ## Interpretation Boundary
 
-This pilot score is not enough to declare a layer scientifically important.
-Review raw category scores, human judgments, multiple seeds, and controls.
-Training-layer importance is also not inference-layer importance.
+This scan never promotes a layer from an absolute score. With the all-layer
+control present, ranking uses proportional training-memory benefit versus
+combined proportional quality opportunity loss. Without that control, the
+ranking is descriptive only. Review raw dimensions, human judgments, multiple
+seeds, and controls. Training-layer importance is also not inference-layer
+importance.
 
 ## Gate Status
 

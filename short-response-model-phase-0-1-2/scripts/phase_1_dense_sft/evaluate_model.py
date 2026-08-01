@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 import re
@@ -375,7 +376,9 @@ def main() -> None:
     summary = {
         "case_count": len(outputs),
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "quality_policy_name": quality_config.raw.get("policy_name"),
         "quality_config": str(args.quality_config),
+        "quality_config_sha256": hashlib.sha256(args.quality_config.read_bytes()).hexdigest(),
         "response_control_mode": args.response_control,
         "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,
         "max_new_tokens": args.max_new_tokens,

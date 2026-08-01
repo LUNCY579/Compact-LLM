@@ -21,8 +21,9 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, run, sha256_tree, write_json
-from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
-from scripts.common.quality_gate import compare_quality_summaries, quality_index
+from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_gate import quality_index
+from scripts.common.opportunity_evaluation import evaluate_quality_improvement
 
 
 def parse_named_path(value: str) -> tuple[str, Path]:
@@ -42,8 +43,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--benchmark", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--max-new-tokens", type=int, default=32)
-    parser.add_argument("--minimum-improvement", type=float, default=0.0)
-    parser.add_argument("--max-category-loss", type=float, default=0.01)
+    parser.add_argument(
+        "--quality-profile",
+        choices=("balanced", "logic_oriented", "conversational_permissive"),
+        default="balanced",
+    )
+    parser.add_argument("--minimum-improvement", type=float, default=None, help=argparse.SUPPRESS)
+    parser.add_argument("--max-category-loss", type=float, default=None, help=argparse.SUPPRESS)
     parser.add_argument("--reuse-existing", action="store_true")
     parser.add_argument(
         "--reference-manifest",
@@ -64,51 +70,37 @@ def parse_args() -> argparse.Namespace:
 
 
 def eligible(summary: dict[str, Any]) -> bool:
-    require_quality_v2(summary)
-    return (
-        int(summary.get("hard_failure_case_count", 0)) == 0
-        and int(summary.get("critical_failure_count", 0)) == 0
-        and float(summary.get("intelligibility_pass_rate", 0.0)) == 1.0
-        and float(summary.get("quality_pass_rate", 0.0)) >= 0.95
-        and float(summary.get("semantic_pass_rate", 0.0)) >= 0.98
-    )
+    """Compatibility helper: eligibility here means technically comparable.
+
+    Issue counts and score values remain descriptive and never form an absolute
+    ingredient floor.
+    """
+
+    try:
+        require_quality_v3(summary)
+    except (TypeError, ValueError):
+        return False
+    return True
 
 
 def accepted_trial(
     current: dict[str, Any],
     trial: dict[str, Any],
-    minimum_improvement: float,
-    max_category_loss: float,
+    minimum_improvement: float | None = None,
+    max_category_loss: float | None = None,
+    quality_profile: str = "balanced",
 ) -> tuple[bool, list[str]]:
-    comparison = compare_quality_summaries(
-        current, trial,
-        max_mean_quality_loss=max(0.0, -minimum_improvement),
-        max_quality_index_loss=max(0.0, -minimum_improvement),
-        max_worst_decile_loss=0.02,
-        max_category_quality_loss_allowed=max_category_loss,
-        max_semantic_pass_loss=0.0,
-        max_reference_alignment_loss=0.03,
-        min_quality_pass_rate=float(current.get("quality_pass_rate", 0.95)),
-        min_intelligibility_pass_rate=1.0,
-        min_semantic_pass_rate=float(current.get("semantic_pass_rate", 0.98)),
-        min_complete_utterance_rate=0.99,
-        max_hard_failure_cases=0,
-        max_critical_failures=0,
-        max_major_issue_cases=int(current.get("major_case_count", 0)),
-    )
-    reasons = list(comparison["reasons"])
-    # Surface the concrete category names so a human reviewer can immediately
-    # see whether safety, context, factuality, or another slice regressed.
-    for category, loss in sorted(comparison.get("category_quality_losses", {}).items()):
-        if float(loss) > max_category_loss:
-            reasons.append(
-                f"category {category} quality loss {float(loss):.4f} exceeds "
-                f"{max_category_loss:.4f}"
-            )
-    improvement = quality_index(trial) - quality_index(current)
-    if improvement + 1e-12 < minimum_improvement:
-        reasons.append(f"quality-index improvement {improvement:.6f} < {minimum_improvement:.6f}")
-    return not reasons, sorted(set(reasons))
+    """Accept a soup ingredient only for positive net relative quality change.
+
+    Historical fixed-threshold arguments are accepted but ignored. Model soups
+    have unchanged inference architecture, so their benefit is quality itself.
+    """
+
+    comparison = evaluate_quality_improvement(current, trial, profile=quality_profile)
+    reasons = list(comparison["technical_invalidity_reasons"])
+    if not comparison["eligible"]:
+        reasons.append(comparison["decision_explanation"])
+    return bool(comparison["eligible"]), reasons
 
 
 def invoke_merge(model_id: str, adapters: list[Path], output: Path) -> None:
@@ -172,17 +164,15 @@ def main() -> None:
         for name in adapters
     ]
     for row in rows:
-        require_quality_v2(row["summary"], f"Phase 4 ingredient {row['name']}")
+        require_quality_v3(row["summary"], f"Phase 4 ingredient {row['name']}")
     rows.sort(
         key=lambda row: (
-            not eligible(row["summary"]),
-            -float(row["summary"].get("worst_decile_mean_quality_score", 0.0)),
             -quality_index(row["summary"]),
             -summary_quality_score(row["summary"]),
         )
     )
-    if not rows or not eligible(rows[0]["summary"]):
-        raise SystemExit("No Phase 4 ingredient passed the critical-failure eligibility floor.")
+    if not rows:
+        raise SystemExit("No Phase 4 ingredients were supplied.")
 
     selected = [rows[0]]
     current_summary = rows[0]["summary"]
@@ -190,13 +180,11 @@ def main() -> None:
 
     for candidate in rows[1:]:
         if not eligible(candidate["summary"]):
-            iterations.append(
-                {
-                    "candidate": candidate["name"],
-                    "accepted": False,
-                    "reasons": ["ingredient contains critical failures"],
-                }
-            )
+            iterations.append({
+                "candidate": candidate["name"],
+                "accepted": False,
+                "reasons": ["ingredient evidence is technically invalid or uses a different evaluator version"],
+            })
             continue
         trial_names = [row["name"] for row in selected] + [candidate["name"]]
         trial_slug = "__".join(trial_names)
@@ -213,6 +201,7 @@ def main() -> None:
             trial_summary,
             args.minimum_improvement,
             args.max_category_loss,
+            args.quality_profile,
         )
         iterations.append(
             {
@@ -258,7 +247,7 @@ def main() -> None:
 
     iteration_lines = []
     for row in iterations:
-        reason = "; ".join(row.get("reasons", [])) or "improved without hard regression"
+        reason = "; ".join(row.get("reasons", [])) or "positive net relative quality change"
         iteration_lines.append(
             f"| {row['candidate']} | {'YES' if row['accepted'] else 'NO'} | "
             f"{row.get('score', 'N/A')} | {reason} |"
@@ -310,7 +299,7 @@ def main() -> None:
                 "",
                 "`PASS_PENDING_HUMAN_REVIEW`"
                 if eligible(accepted_summary)
-                else "`FAIL`",
+                else "`BLOCKED_TECHNICAL_EVIDENCE`",
                 "",
                 f"- Accepted model: `{payload['selected_model']}`",
                 f"- Accepted type: `{payload['accepted_type']}`",

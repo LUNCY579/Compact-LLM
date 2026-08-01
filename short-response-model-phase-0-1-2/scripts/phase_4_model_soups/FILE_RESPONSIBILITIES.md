@@ -15,4 +15,4 @@ The PowerShell runner is the normal entry point. Python executables may be run i
 | `EXECUTION_MANUAL.md` | Provides normal/resume commands and human review procedure. | Evidence that a run completed. |
 | `FILE_RESPONSIBILITIES.md` | Documents ownership and boundaries for every file in this folder. | Runtime code. |
 
-Generated reports are evidence, not automatic approval. Do not edit a gate to `PASS` until raw outputs and the stated quality/safety floors have been reviewed.
+Generated reports are evidence, not automatic approval. Review raw outputs, proportional opportunity evidence, and technical validity before recording a human `PASS`.

@@ -3,7 +3,8 @@ phase:
   name: structural_reduction_and_reference_selection
   purpose: >-
     Build physically smaller candidates from the accepted Phase 4 checkpoint,
-    evaluate them with quality evaluator v2, and recommend one downstream model.
+    evaluate them with Quality Evaluator v3, and recommend a Pareto-efficient
+    downstream model using proportional opportunity cost.
 inputs:
   accepted_phase_4_model: artifacts/phase_4_soup/merged_model
   calibration: data/phase_4b_structural_reduction/long_form_calibration.jsonl
@@ -22,22 +23,13 @@ pruning:
   mlp_multiple: 64
   short_importance_quantile: 0.60
   default_selection_method: long-specific
-selection_floors:
-  quality_evaluation_version: "2.0"
-  max_mean_quality_loss: 0.01
-  max_quality_index_loss: 0.015
-  max_worst_decile_quality_loss: 0.03
-  max_category_quality_loss: 0.04
-  max_semantic_pass_loss: 0.01
-  max_reference_alignment_loss: 0.05
-  min_quality_pass_rate: 0.98
-  min_intelligibility_pass_rate: 1.0
-  min_semantic_pass_rate: 0.98
-  min_complete_utterance_rate: 0.99
-  max_hard_failure_cases: 0
-  max_critical_failures: 0
-  max_major_issue_cases: 0
-  min_parameter_reduction: 0.03
+relative_opportunity_policy:
+  quality_evaluation_version: "3.0"
+  policy_file: configs/relative_opportunity_evaluation.json
+  quality_profile: balanced
+  primary_resource: structural_weight_memory_reduction
+  decision_rule: resource_gain_strictly_greater_than_quality_opportunity_loss
+  absolute_quality_floors: prohibited
 outputs:
   artifact_root: artifacts/phase_4b_structural_reduction
   selected_reference_manifest: artifacts/references/selected_inference_reference.json

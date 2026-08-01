@@ -1,0 +1,72 @@
+{
+  "schema_version": "1.0",
+  "policy_name": "relative_opportunity_evaluation",
+  "default_profile": "balanced",
+  "decision_rule": "eligible when proportional primary resource benefit is strictly greater than proportional combined quality opportunity loss; technical validity is the only binary prerequisite",
+  "profiles": {
+    "balanced": {
+      "mean_quality": 0.18,
+      "worst_decile_quality": 0.10,
+      "comprehensibility": 0.12,
+      "task_adequacy": 0.12,
+      "logic_factual_consistency": 0.12,
+      "safety_boundary": 0.10,
+      "context_consistency": 0.06,
+      "response_completeness": 0.04,
+      "brevity_appropriateness": 0.02,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.04,
+      "category_tail": 0.04,
+      "issue_cost": 0.03,
+      "severe_issue_rate": 0.01,
+      "target_nll": 0.01
+    },
+    "logic_oriented": {
+      "mean_quality": 0.14,
+      "worst_decile_quality": 0.10,
+      "comprehensibility": 0.10,
+      "task_adequacy": 0.12,
+      "logic_factual_consistency": 0.18,
+      "safety_boundary": 0.16,
+      "context_consistency": 0.08,
+      "response_completeness": 0.03,
+      "brevity_appropriateness": 0.01,
+      "conversation_naturalness": 0.00,
+      "content_anchor_preservation": 0.05,
+      "category_tail": 0.05,
+      "issue_cost": 0.04,
+      "severe_issue_rate": 0.02,
+      "target_nll": 0.02
+    },
+    "conversational_permissive": {
+      "mean_quality": 0.20,
+      "worst_decile_quality": 0.10,
+      "comprehensibility": 0.16,
+      "task_adequacy": 0.15,
+      "logic_factual_consistency": 0.10,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.05,
+      "response_completeness": 0.04,
+      "brevity_appropriateness": 0.03,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.02,
+      "category_tail": 0.02,
+      "issue_cost": 0.02,
+      "severe_issue_rate": 0.01,
+      "target_nll": 0.01
+    }
+  },
+  "phase_primary_benefits": {
+    "phase_1": "relative net quality improvement over the untouched base",
+    "phase_2": "relative training-memory or trainable-state reduction",
+    "phase_2b": "relative loaded weight-tensor memory reduction",
+    "phase_2c": "relative trainable-state and training-memory reduction",
+    "phase_3": "relative net alignment-quality improvement",
+    "phase_4": "relative net quality improvement at unchanged inference cost",
+    "phase_4b": "relative structural weight-memory or measured-compute reduction",
+    "phase_5": "relative context-token or KV-memory reduction",
+    "phase_6": "relative active-compute reduction",
+    "phase_7": "relative measured latency or peak-VRAM reduction",
+    "phase_8": "Pareto selection among release candidates plus explicit human approval"
+  }
+}

@@ -31,8 +31,8 @@ param(
     [int[]]$AdditionalSeeds = @(23, 37, 49),
     [int]$MaxSteps = 200,
     [int]$MaxNewTokens = 32,
-    [double]$MinimumSoupImprovement = 0.000001,
-    [double]$MaximumCategoryLoss = 0.01,
+    [ValidateSet("balanced", "logic_oriented", "conversational_permissive")]
+    [string]$QualityProfile = "balanced",
     [switch]$SkipTraining,
     [switch]$ReuseExisting
 )
@@ -194,8 +194,7 @@ $GreedyArgs = @(
     "--benchmark", $Benchmark,
     "--output-root", $OutputRoot,
     "--max-new-tokens", "$MaxNewTokens",
-    "--minimum-improvement", "$MinimumSoupImprovement",
-    "--max-category-loss", "$MaximumCategoryLoss",
+    "--quality-profile", $QualityProfile,
     "--reference-manifest", $ReferenceManifest,
     "--report", $SoupReport,
     "--gate-report", $Phase4Gate

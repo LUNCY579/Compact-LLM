@@ -1,32 +1,24 @@
 reference:
   selected_reference_manifest: artifacts/references/selected_inference_reference.json
 quality:
-  evaluation_version: "2.0"
-  maximum_mean_quality_loss: 0.01
-  maximum_quality_index_loss: 0.015
-  maximum_worst_decile_quality_loss: 0.03
-  maximum_category_quality_loss: 0.04
-  maximum_semantic_pass_loss: 0.01
-  maximum_reference_alignment_loss: 0.05
-  minimum_quality_pass_rate: 0.98
-  minimum_intelligibility_pass_rate: 1.0
-  minimum_semantic_pass_rate: 0.98
-  minimum_complete_utterance_rate: 0.99
-  maximum_hard_failure_cases: 0
-  maximum_major_issue_cases: 0
+  evaluation_version: "3.0"
+  opportunity_policy: configs/relative_opportunity_evaluation.json
+  quality_profile: balanced
+  absolute_quality_floors: prohibited
 phase_6:
   calibration: data/calibration/calibration.jsonl
   benchmark: data/benchmark/shortchatbench_pilot.jsonl
   block_size: 128
   positions: last
   active_ratios: [1.0, 0.8, 0.65, 0.5, 0.35]
+  primary_resource: active_compute_reduction
+  selection: maximum_positive_opportunity_margin_on_pareto_frontier
 phase_7:
-  target_ratio: 0.65
-  minimum_weighted_recall: 0.95
   dense_fallback: true
   benchmark: data/benchmark/shortchatbench_pilot.jsonl
-release_targets:
-  minimum_decode_speedup: 1.20
-  minimum_peak_vram_reduction: 0.20
-  require_no_critical_regression: true
-  require_zero_hard_failure_cases: true
+  router_calibration: maximize_proxy_opportunity_margin
+  primary_resource: best_measured_decode_latency_or_peak_vram_reduction
+release_policy:
+  decision_rule: measured_resource_gain_strictly_greater_than_quality_opportunity_loss
+  technical_validity_required: true
+  human_release_approval_required: true

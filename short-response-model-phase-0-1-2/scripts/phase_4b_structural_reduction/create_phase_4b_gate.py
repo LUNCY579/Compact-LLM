@@ -1,7 +1,6 @@
-# Purpose: Turns Phase 4B candidate evidence into a pending human stop-gate report.
 from __future__ import annotations
 
-"""Create a review-ready Phase 4B stop-gate report from measured candidates."""
+"""Create the pending Phase 4B human gate from opportunity evidence."""
 
 import argparse
 import sys
@@ -16,53 +15,31 @@ from scripts.common.experiment_utils import read_json
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Write the Phase 4B human gate template.")
-    parser.add_argument(
-        "--recommendation",
-        type=Path,
-        default=ROOT / "artifacts/phase_4b_structural_reduction/candidate_recommendation.json",
-    )
-    parser.add_argument(
-        "--out",
-        type=Path,
-        default=ROOT / "reports/PHASE_4B_STOP_GATE.md",
-    )
+    parser.add_argument("--recommendation", type=Path, default=ROOT / "artifacts/phase_4b_structural_reduction/candidate_recommendation.json")
+    parser.add_argument("--out", type=Path, default=ROOT / "reports/PHASE_4B_STOP_GATE.md")
     args = parser.parse_args()
     payload = read_json(args.recommendation)
     recommended = payload["recommended_candidate"]
-    assessment = next(row for row in payload["assessments"] if row["name"] == recommended)
+    if isinstance(recommended, str):
+        assessment = next(row for row in payload["assessments"] if row["name"] == recommended)
+    else:
+        assessment = recommended
+        recommended = assessment["name"]
     args.out.parent.mkdir(parents=True, exist_ok=True)
-    args.out.write_text(
-        "\n".join(
-            [
-                "# PHASE 4B STOP GATE",
-                "",
-                "## Automated recommendation",
-                "",
-                f"- Candidate: `{recommended}`",
-                f"- Model: `{assessment['model']}`",
-                f"- Eligible under configured floors: `{assessment['eligible']}`",
-                f"- Parameter reduction: `{assessment['parameter_reduction_fraction']:.3%}`",
-                f"- Mean-score delta: `{assessment['mean_score_delta']:+.6f}`",
-                "",
-                "## Required review",
-                "",
-                "Inspect candidate_registry.json, every MODEL_EVALUATION.md, raw replies, reload checks, "
-                "and measured latency/VRAM. You may choose dense_reference even when a reduced candidate is eligible.",
-                "",
-                "## Human decision",
-                "",
-                "- Selected candidate: `PENDING`",
-                "- Human decision: `PENDING`",
-                "- Reviewer:",
-                "- Date:",
-                "- Reason:",
-                "",
-                "After changing the human decision to PASS, run finalize_reference_selection.py "
-                "with the exact selected candidate name.",
-            ]
-        ),
-        encoding="utf-8",
-    )
+    args.out.write_text("\n".join([
+        "# PHASE 4B STOP GATE", "", "## Automated recommendation", "",
+        f"- Candidate: `{recommended}`", f"- Model: `{assessment['model']}`",
+        f"- Proportionally worthwhile: `{assessment['eligible']}`",
+        f"- Resource gain: `{assessment['resource_gain_fraction']:.3%}`",
+        f"- Quality opportunity loss: `{assessment['quality_opportunity_loss_fraction']:.3%}`",
+        f"- Opportunity margin: `{assessment['opportunity_margin']:+.3%}`", "",
+        "No absolute quality or parameter-reduction floor controls this recommendation.", "",
+        "## Required review", "",
+        "Inspect the candidate registry, raw replies, reload checks, opportunity dimensions, and measured runtime evidence. The dense reference remains a valid choice.", "",
+        "## Human decision", "", "- Selected candidate: `PENDING`", "- Human decision: `PENDING`",
+        "- Reviewer:", "- Date:", "- Reason:", "",
+        "After an explicit human PASS, run finalize_reference_selection.py with the selected candidate name.",
+    ]), encoding="utf-8")
     print(args.out)
 
 

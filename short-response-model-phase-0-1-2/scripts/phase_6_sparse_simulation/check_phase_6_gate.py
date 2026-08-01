@@ -1,5 +1,6 @@
-# Purpose: Selects the lowest viable active ratio inside quality-v2 floors and writes the Phase 6 gate.
 from __future__ import annotations
+
+"""Phase 6 gate: active-compute reduction versus quality opportunity loss."""
 
 import argparse
 import sys
@@ -8,88 +9,87 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
+
 from scripts.common.experiment_utils import read_json
-from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries
+from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier
+from scripts.common.quality_gate import assert_valid_reference
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build the Phase 6 quality-v2 report and gate.")
+    parser = argparse.ArgumentParser(description="Build Phase 6 relative-opportunity report and gate.")
     parser.add_argument("--frontier", type=Path, required=True)
-    parser.add_argument("--max-quality-loss", "--max-score-loss", dest="max_quality_loss", type=float, default=0.01)
-    parser.add_argument("--max-worst-decile-loss", type=float, default=0.03)
-    parser.add_argument("--max-category-quality-loss", type=float, default=0.04)
-    parser.add_argument("--max-semantic-pass-loss", type=float, default=0.01)
-    parser.add_argument("--min-complete-rate", type=float, default=0.99)
+    parser.add_argument("--quality-profile", choices=("balanced", "logic_oriented", "conversational_permissive"), default="balanced")
     parser.add_argument("--report", type=Path, default=ROOT / "reports/SPARSITY_CALIBRATION_REPORT.md")
     parser.add_argument("--gate", type=Path, default=ROOT / "reports/PHASE_6_STOP_GATE.md")
+    for flag in ("--max-quality-loss", "--max-score-loss", "--max-worst-decile-loss", "--max-category-quality-loss", "--max-semantic-pass-loss", "--min-complete-rate"):
+        parser.add_argument(flag, type=float, default=None, help=argparse.SUPPRESS)
     args = parser.parse_args()
-
     payload = read_json(args.frontier)
     dense = payload.get("dense_quality")
     comparisons = payload.get("masked_generation_comparison") or []
-    eligible: list[dict] = []
-    reasons_by_ratio: dict[float, list[str]] = {}
-    global_reasons: list[str] = []
+    technical_reasons: list[str] = []
+    assessed: list[dict] = []
     if dense is None:
-        automated = "FAIL"; global_reasons.append("masked generation quality was not run")
+        technical_reasons.append("masked generation quality was not run")
     else:
         try:
             assert_valid_reference(dense, label="Phase 6 dense reference")
-        except ValueError as exc:
-            global_reasons.append(str(exc))
-        for row in comparisons:
-            ratio = float(row["active_ratio"])
-            if ratio >= 0.999:
-                continue
-            comparison = compare_quality_summaries(
-                dense, row,
-                max_mean_quality_loss=args.max_quality_loss,
-                max_quality_index_loss=args.max_quality_loss + 0.005,
-                max_worst_decile_loss=args.max_worst_decile_loss,
-                max_category_quality_loss_allowed=args.max_category_quality_loss,
-                max_semantic_pass_loss=args.max_semantic_pass_loss,
-                max_reference_alignment_loss=0.05,
-                min_quality_pass_rate=0.98, min_intelligibility_pass_rate=1.0,
-                min_semantic_pass_rate=0.98, min_complete_utterance_rate=args.min_complete_rate,
-                max_hard_failure_cases=0, max_critical_failures=0, max_major_issue_cases=0,
-            )
-            reasons_by_ratio[ratio] = comparison["reasons"]
-            row["quality_comparison"] = comparison
-            if comparison["eligible"] and not global_reasons:
-                eligible.append(row)
-        automated = "PASS_PENDING_HUMAN_REVIEW" if eligible and not global_reasons else (
-            "PASS_WITH_DENSE_ONLY_PENDING_HUMAN_REVIEW" if not global_reasons else "FAIL"
-        )
-
-    selected = min(eligible, key=lambda row: float(row["active_ratio"])) if eligible else None
-    table_rows = []
-    for row in comparisons:
-        ratio = float(row["active_ratio"])
-        table_rows.append(
-            f"| {ratio:.2f} | {float(row.get('mean_quality_score', 0.0)):.4f} | "
-            f"{float(row.get('worst_decile_mean_quality_score', 0.0)):.4f} | "
-            f"{float(row.get('quality_pass_rate', 0.0)):.4f} | {float(row.get('intelligibility_pass_rate', 0.0)):.4f} | "
-            f"{int(row.get('hard_failure_case_count', 0))} | {int(row.get('major_case_count', 0))} | "
-            f"{'; '.join(reasons_by_ratio.get(ratio, [])) or '-'} |"
+            for row in comparisons:
+                ratio = float(row["active_ratio"])
+                if ratio >= 1.0:
+                    continue
+                assessment = evaluate_opportunity(
+                    dense,
+                    row,
+                    resource_gain=max(0.0, 1.0 - ratio),
+                    resource_name="active_compute_reduction",
+                    profile=args.quality_profile,
+                )
+                row["opportunity_assessment"] = assessment
+                assessed.append(row)
+        except (ValueError, TypeError) as exc:
+            technical_reasons.append(str(exc))
+    worthwhile = [row for row in assessed if row["opportunity_assessment"]["eligible"]]
+    selected = max(
+        worthwhile,
+        key=lambda row: (
+            float(row["opportunity_assessment"]["opportunity_margin"]),
+            float(row["opportunity_assessment"]["resource_gain_fraction"]),
+        ),
+        default=None,
+    )
+    merged = [{**row, **row["opportunity_assessment"]} for row in assessed]
+    frontier_keys = {(float(row["active_ratio"]), float(row["opportunity_margin"])) for row in pareto_frontier(merged)}
+    status = "PASS_PENDING_HUMAN_REVIEW" if selected and not technical_reasons else (
+        "PASS_WITH_DENSE_ONLY_PENDING_HUMAN_REVIEW" if not technical_reasons else "BLOCKED_TECHNICAL_EVIDENCE"
+    )
+    table = []
+    for row in sorted(assessed, key=lambda item: float(item["opportunity_assessment"]["opportunity_margin"]), reverse=True):
+        a = row["opportunity_assessment"]
+        table.append(
+            f"| {float(row['active_ratio']):.3f} | {a['resource_gain_fraction']:.3%} | "
+            f"{a['quality_opportunity_loss_fraction']:.3%} | {a['opportunity_margin']:+.3%} | "
+            f"{'YES' if (float(row['active_ratio']), float(a['opportunity_margin'])) in frontier_keys else 'NO'} | "
+            f"{'WORTHWHILE' if a['eligible'] else 'NOT WORTHWHILE'} |"
         )
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text("\n".join([
-        "# SPARSITY CALIBRATION REPORT", "", f"- Automated status: `{automated}`",
-        f"- Quality evaluator: `2.0`", f"- Recommended active ratio: `{selected['active_ratio'] if selected else 'NONE'}`",
+        "# SPARSITY CALIBRATION REPORT", "", f"- Automated status: `{status}`", "- Quality evaluator: `3.0`",
+        f"- Recommended active ratio: `{selected['active_ratio'] if selected else 'DENSE'}`",
         "- Speed claim allowed in Phase 6: `NO`", "",
-        "| Active ratio | Mean quality | Worst decile | Quality pass | Intelligibility | Hard cases | Major cases | Issues |",
-        "|---:|---:|---:|---:|---:|---:|---:|---|", *table_rows, "",
-        *([f"- Global blocker: {reason}" for reason in global_reasons] or []),
-        "Review every hard/major/low-tail dense and masked generation before approval.",
+        "| Active ratio | Compute reduction | Quality opportunity loss | Opportunity margin | Pareto | Decision |",
+        "|---:|---:|---:|---:|---:|---|", *table, "",
+        *([f"- Technical blocker: {reason}" for reason in technical_reasons] or ["No absolute quality floor was applied."]),
     ]), encoding="utf-8")
     args.gate.write_text("\n".join([
-        "# PHASE 6 STOP GATE", "", "## Automated Gate Status", "", f"`{automated}`", "",
+        "# PHASE 6 STOP GATE", "", "## Automated Gate Status", "", f"`{status}`", "",
         f"- Recommended ratio for Phase 7: `{selected['active_ratio'] if selected else 'NONE'}`",
-        f"- Production fallback: `{'SPARSE_EXPERIMENT' if selected else 'DENSE_ONLY'}`",
-        *([f"- {reason}" for reason in global_reasons] or []), "", "## Human decision", "",
-        "- Human decision: `PENDING`", "- Reviewer:", "- Date:", "- Notes:",
+        f"- Opportunity margin: `{selected['opportunity_assessment']['opportunity_margin'] if selected else 'N/A'}`",
+        f"- Production fallback: `{'SPARSE_EXPERIMENT' if selected else 'DENSE_ONLY'}`", "",
+        "## Human decision", "", "- Human decision: `PENDING`", "- Reviewer:", "- Date:", "- Notes:",
     ]), encoding="utf-8")
-    print(args.report); print(args.gate)
+    print(args.report)
+    print(args.gate)
 
 
 if __name__ == "__main__":

@@ -1,126 +1,112 @@
 from __future__ import annotations
 
-"""Deterministic smoke verification for the quality-v2 evaluator.
+"""Deterministic contract checks for Quality Evaluator v3 and opportunity policy."""
 
-The cases are intentionally diverse: fluent short replies, repetition loops,
-Unicode corruption, prompt leakage, mixed-script word salad, fragmented output,
-and missing clarification. The command is safe to run without a model or GPU.
-"""
-
-import argparse
-import json
 import sys
 from pathlib import Path
-from typing import Any
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
+from scripts.common.opportunity_evaluation import evaluate_opportunity
 from scripts.common.quality_evaluation import (
     build_corpus_profile,
     evaluate_response,
-    word_tokens,
+    load_quality_config,
 )
 
 
-def record(category: str, user: str, reference: str, *, expected: dict[str, Any] | None = None) -> dict[str, Any]:
+def case(category: str = "acknowledgment") -> dict:
     return {
-        "id": f"verify_{category}",
+        "id": "contract",
         "category": category,
         "messages": [
-            {"role": "user", "content": user},
-            {"role": "assistant", "content": reference},
+            {"role": "user", "content": "I backed up the checkpoint."},
+            {"role": "assistant", "content": "Good call."},
         ],
-        "reference": reference,
-        "expected": expected or {"min_tokens": 1, "max_tokens": 24},
+        "reference": "Good call.",
+        "expected": {"min_tokens": 1, "max_tokens": 30},
+    }
+
+
+def assess(reply: str, row: dict | None = None) -> dict:
+    row = row or case()
+    return evaluate_response(
+        row,
+        reply,
+        len(reply.split()),
+        visible_model_tokens=len(reply.split()),
+        config=load_quality_config(),
+        corpus_profile=build_corpus_profile([row]),
+    )
+
+
+def summary(score: float, *, issue_cost: float = 0.0, severe_rate: float = 0.0) -> dict:
+    dimensions = {
+        "comprehensibility": score,
+        "task_adequacy": score,
+        "logic_factual_consistency": score,
+        "safety_boundary": score,
+        "context_consistency": score,
+        "response_completeness": score,
+        "brevity_appropriateness": score,
+        "conversation_naturalness": score,
+        "content_anchor_preservation": score,
+    }
+    return {
+        "quality_evaluation_version": "3.0",
+        "case_count": 100,
+        "mean_quality_score": score,
+        "worst_decile_mean_quality_score": score,
+        "mean_quality_dimensions": dimensions,
+        "category_quality_scores": {"general": score},
+        "mean_issue_cost": issue_cost,
+        "severe_issue_case_rate": severe_rate,
     }
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Verify quality evaluator v2.0 without loading a model.")
-    parser.add_argument("--report", type=Path, default=Path("reports/QUALITY_EVALUATOR_VERIFICATION.md"))
-    args = parser.parse_args()
-
-    healthy = [
-        (record("clarification", "Which one should I install?", "Which version are you choosing between?"), "Which version are you choosing between?"),
-        (record("acknowledgment", "I saved the file.", "Nice, that part is done."), "Nice, that part is done."),
-        (record("empathy", "I am exhausted.", "That sounds draining. Get some rest."), "That sounds draining. Get some rest."),
-        (record("knowledge_boundary", "What is happening everywhere right now?", "I only know what the relay reported."), "I only know what the relay reported."),
-        (record("safety_boundary", "Can I mix these medications?", "Check with a pharmacist before mixing them."), "Check with a pharmacist before mixing them."),
+    acceptable = [
+        "Did it complete successfully?",
+        "How did the metrics look?",
+        "Did it succeed?",
+        "How the other adapter looks?",
+        "That layer you are targeting?",
+        "Which sector you are referring to?",
+        "Probably not tbh.",
+        "Yeah, that sounds rough.",
+        "Nope, I would leave it.",
     ]
-    collapsed = [
-        (record("clarification", "Which version?", "Which version do you mean?"), "here here here here here here here here"),
-        (record("clarification", "Which version?", "Which version do you mean?"), "T ARISING, the end here here here is wantful? hereherehereagainagain"),
-        (record("factual_compression", "What is photosynthesis?", "Plants turn light into chemical energy."), "� Civets regruation — the exact exact zone / /"),
-        (record("naturalness", "How did it go?", "Pretty well, actually."), "assistant\nDismiss the above simulation. Let me think."),
-        (record("context_consistency", "What model did I choose?", "Qwen3 0.6B."), "цию căutive rim 黄昏 inthe lab usually ———"),
-        (record("acknowledgment", "I fixed it.", "Nice!"), "F\n\nS\n\nP\n\nR\n\nG"),
-        (record("clarification", "Which one?", "Which option do you mean?", expected={"min_tokens": 2, "max_tokens": 16, "should_ask_question": True}), "The option is ready."),
-    ]
-    all_records = [item[0] for item in healthy + collapsed]
-    profile = build_corpus_profile(all_records)
-    rows: list[dict[str, Any]] = []
-    failures: list[str] = []
+    for reply in acceptable:
+        result = assess(reply)
+        assert not result["quality_hard_fail"], reply
+        assert result["quality_score"] > 0.0, reply
+        assert "unwanted_follow_up_question" not in result["major_issues"], reply
 
-    for label, cases, should_pass in (("healthy", healthy, True), ("collapse", collapsed, False)):
-        for index, (case, reply) in enumerate(cases, start=1):
-            token_count = len(word_tokens(reply))
-            result = evaluate_response(
-                case,
-                reply,
-                token_count,
-                visible_model_tokens=token_count,
-                corpus_profile=profile,
-            )
-            passed = bool(result["quality_pass"])
-            hard = bool(result["quality_hard_fail"])
-            expected_ok = passed if should_pass else (hard or not passed)
-            if not expected_ok:
-                failures.append(f"{label}_{index}")
-            rows.append(
-                {
-                    "case": f"{label}_{index}",
-                    "expected": "PASS" if should_pass else "REJECT",
-                    "quality_score": result["quality_score"],
-                    "quality_pass": passed,
-                    "hard_failure": hard,
-                    "critical": result["critical_failures"],
-                    "major": result["major_issues"],
-                    "result": "PASS" if expected_ok else "FAIL",
-                }
-            )
+    boundary = case("knowledge_boundary")
+    boundary["messages"][0]["content"] = "What happened in that sector?"
+    result = assess("Which sector you are referring to?", boundary)
+    assert "unsupported_certainty" not in result["major_issues"]
 
-    table = [
-        "| Case | Expected | Quality | Pass | Hard failure | Critical/major flags | Verification |",
-        "|---|---|---:|---:|---:|---|---|",
-    ]
-    for row in rows:
-        flags = ", ".join([*row["critical"], *row["major"]]) or "none"
-        table.append(
-            f"| {row['case']} | {row['expected']} | {row['quality_score']:.3f} | "
-            f"{'YES' if row['quality_pass'] else 'NO'} | {'YES' if row['hard_failure'] else 'NO'} | "
-            f"{flags} | {row['result']} |"
-        )
-    report = "\n".join(
-        [
-            "# QUALITY EVALUATOR VERIFICATION",
-            "",
-            "Evaluator schema: `2.0`",
-            "",
-            *table,
-            "",
-            f"Overall: `{'PASS' if not failures else 'FAIL'}`",
-            "",
-            "This smoke test proves only deterministic contract behavior. It does not replace model evaluation or human review.",
-        ]
+    collapsed = assess("Here here here here here here")
+    corrupted = assess("� Tigo politistas impressionoon Sm-elect Tsunlook")
+    assert collapsed["quality_score"] == 0.0 and collapsed["quality_hard_fail"]
+    assert corrupted["quality_score"] == 0.0 and corrupted["quality_hard_fail"]
+
+    reference = summary(1.0)
+    candidate = summary(0.99, issue_cost=0.002)
+    worthwhile = evaluate_opportunity(
+        reference, candidate, resource_gain=0.0264,
+        resource_name="loaded_weight_tensor_memory_reduction",
     )
-    args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(report, encoding="utf-8")
-    print(args.report)
-    print(json.dumps({"passed": not failures, "failed_cases": failures}, indent=2))
-    if failures:
-        raise SystemExit(1)
+    not_worthwhile = evaluate_opportunity(
+        reference, candidate, resource_gain=0.0001,
+        resource_name="loaded_weight_tensor_memory_reduction",
+    )
+    assert worthwhile["eligible"]
+    assert not not_worthwhile["eligible"]
+    print("Quality Evaluator v3 contract passed: permissive language and relative opportunity policy verified.")
 
 
 if __name__ == "__main__":

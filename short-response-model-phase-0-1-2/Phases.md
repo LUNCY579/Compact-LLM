@@ -28,3 +28,8 @@ A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 re
 
 - Learned short behavior and hard response control are measured separately: Phase 1 uses `eos_only`, while production-oriented Phases 5–8 default to `one_sentence`.
 - The strict boundary is an output/runtime mechanism. It does not authorize whole-layer early exit or reduce checkpoint weight memory.
+
+
+## Shared evaluation and promotion rule
+
+Every phase uses Quality Evaluator v3 and the same relative-opportunity engine. Each phase declares one primary proportional benefit—training state, loaded weight memory, context/KV tokens, active compute, measured latency/VRAM, or net quality improvement. A technically comparable candidate advances only when that benefit is strictly greater than its combined proportional quality opportunity loss. No phase may add a private absolute score, pass-rate, completion, category, NLL, recall, speedup, or issue-count floor. Informal understandable replies and natural follow-up questions remain valid unless an explicit response contract says otherwise. Human review remains mandatory at stop gates.

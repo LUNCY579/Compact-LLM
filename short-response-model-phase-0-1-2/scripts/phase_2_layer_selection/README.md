@@ -4,7 +4,7 @@ Phase 2 now contains three related but independent studies:
 
 - **Phase 2A — selective-layer tuning:** asks where concise behavior can be learned with fewer trainable layers. The current project result remains a valid negative finding: no one-, two-, or four-layer adapter matched the all-layer reference within the configured gate.
 - **Phase 2B — progressive structural reduction:** asks which complete inference layers can be physically removed, optionally recovery-tuned, and removed in combination while preserving a useful quality/weight-memory tradeoff.
-- **Phase 2C — targeted recovery:** starts from an approved reduced model, ranks surviving layers, and tests the smallest selected-layer adapters that match all-surviving-layer recovery within strict quality floors.
+- **Phase 2C — targeted recovery:** starts from an approved reduced model, ranks surviving layers, and tests selected-layer adapters using proportional training-resource benefit versus proportional quality opportunity loss.
 
 Training importance and inference-removal tolerance are not the same measurement. A failed Phase 2A gate does not imply that every layer is equally irreplaceable, and a successful Phase 2B deletion does not retroactively make selective tuning successful.
 
@@ -46,7 +46,7 @@ The dedicated runner exposes the complete settings:
   -GradientCheckpointing
 ```
 
-Direct Phase 2B command using the synchronized Quality Evaluation v2.0 defaults:
+Direct Phase 2B command using the shared Evaluation v3 relative-opportunity policy:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
@@ -63,9 +63,9 @@ Thorough 150-case run with isolated artifacts and reports:
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
   -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
   -ProbeLimit 150 `
-  -OutputRoot .\artifacts\phase_2b_quality_v2_thorough_20260731 `
-  -Report .\reports\PHASE_2B_QUALITY_V2_THOROUGH_20260731_REPORT.md `
-  -GateReport .\reports\PHASE_2B_QUALITY_V2_THOROUGH_20260731_STOP_GATE.md `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_3_relative `
+  -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
+  -GateReport .\reports\PHASE_2B_V1_2_THOROUGH_STOP_GATE.md `
   -MaxDrops 10 `
   -RecoveryTopK 6 `
   -RecoverySteps 50 `
@@ -73,7 +73,7 @@ Thorough 150-case run with isolated artifacts and reports:
   -GradientCheckpointing
 ```
 
-The dedicated wrapper now exposes and forwards every Phase 2B quality-v2 threshold, `ProbeLimit`, probe/recovery seeds, phase benchmark, response length, and report paths. Its defaults match `progressive_reduction.py` and `configs/phase_2_progressive_reduction.yaml`: mean quality loss `0.05`, balanced-profile loss `0.02`, semantic loss `0.02`, category loss `0.08`, target-NLL increase `0.15`, completion `0.99`, quality-pass `0.95`, intelligibility `1.00`, alignment loss `0.08`, and zero new major issues. A custom `OutputRoot` automatically receives unique report names unless `Report` and `GateReport` are supplied explicitly.
+The dedicated wrapper exposes search, reproducibility, output, and quality-profile settings. It does not expose absolute promotion thresholds. A custom `OutputRoot` automatically receives unique report names unless `Report` and `GateReport` are supplied explicitly.
 
 Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion branch. The default recovers only the strongest three per stage because training every branch at every progressive step is extremely expensive.
 
@@ -86,7 +86,7 @@ Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion
 5. Recovery-train the strongest raw candidates with short all-remaining-layer LoRA/QLoRA SFT.
 6. Select the least damaging valid deletion and materialize it as the next preserved frontier checkpoint.
 7. Repeat the every-current-layer deletion study from that checkpoint.
-8. Stop when no next deletion keeps weight-memory reduction greater than relative heuristic-score loss while passing hard floors.
+8. Stop when no next deletion has loaded weight-memory gain strictly greater than combined proportional quality opportunity loss.
 9. Publish three retained profiles: `full_quality`, `balanced`, and `min_memory`.
 
 The 50-case probe detects trends and exposes score saturation; it is not a release benchmark. Retained profiles are separately re-evaluated on ShortChatBench Pilot for Phase 3 handoff.
@@ -121,7 +121,7 @@ Phase 2C writes its own catalog and stop gate. It preserves the Phase 2B structu
 - `full_quality` remains available even when Phase 2B is rejected.
 - `balanced` or `min_memory` may enter Phase 3 only after the Phase 2B report contains `Human decision: PASS` and explicitly lists the approved profile names.
 
-## Quality evaluator v2.0
+## Quality evaluator v3.0
 
-This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+This phase uses Quality Evaluator `3.0` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
 

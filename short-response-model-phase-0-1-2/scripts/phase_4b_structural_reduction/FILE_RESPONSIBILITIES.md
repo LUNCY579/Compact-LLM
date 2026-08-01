@@ -12,7 +12,7 @@ The PowerShell runner is the normal entry point. Python executables may be run i
 | `reduce_depth.py` | Physically creates suffix-drop and equal-layer-count uniform depth candidates and verifies reloadability. | Evidence that training-selected layers are the only inference-critical layers. |
 | `measure_checkpoint.py` | Measures parameters/checkpoint bytes and records checkpoint metadata. | A latency or VRAM benchmark. |
 | `evaluate_candidates.py` | Runs the common behavior evaluator and size measurement for dense and every structural candidate. | The final human choice. |
-| `recommend_reference_candidate.py` | Applies practical quality floors and recommends a reduction or dense fallback. | Automatic reference finalization. |
+| `recommend_reference_candidate.py` | Compares structural memory benefit with proportional quality opportunity loss and recommends a Pareto-efficient reduction or dense fallback. | Automatic reference finalization. |
 | `create_phase_4b_gate.py` | Creates the recommendation report and pending Phase 4B human stop gate. | Human approval. |
 | `finalize_reference_selection.py` | After explicit approval, writes `selected_inference_reference.json` for Phases 5–8. | Candidate evaluation. |
 | `__init__.py` | Marks the folder as an importable Python package for tests/helpers. | An executable phase step. |

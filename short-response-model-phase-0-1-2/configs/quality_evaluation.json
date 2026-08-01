@@ -1,190 +1,153 @@
 {
-  "schema_version": "2.0",
-  "description": "Quality-oriented deterministic evaluation contract for short-response model phases and playground experiments.",
-  "case_pass_threshold": 0.8,
+  "schema_version": "3.0",
+  "policy_name": "conversational_permissive_continuous_quality",
+  "description": "Continuous response-quality evaluation. Informal, casual, mildly ungrammatical, and alternate conversational replies are allowed when understandable and functionally adequate. No per-case score threshold controls phase promotion.",
   "weights": {
-    "intelligibility": 0.3,
-    "task_compliance": 0.2,
-    "semantic_safety": 0.2,
-    "reference_alignment": 0.1,
-    "completeness": 0.08,
-    "brevity": 0.06,
-    "non_echo": 0.03,
-    "surface_naturalness": 0.03
+    "comprehensibility": 0.25,
+    "task_adequacy": 0.20,
+    "logic_factual_consistency": 0.16,
+    "safety_boundary": 0.12,
+    "context_consistency": 0.08,
+    "response_completeness": 0.06,
+    "brevity_appropriateness": 0.04,
+    "conversation_naturalness": 0.02,
+    "content_anchor_preservation": 0.07
   },
   "category_weight_overrides": {
     "factual_compression": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.23,
-      "semantic_safety": 0.2,
-      "reference_alignment": 0.15,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.02
+      "comprehensibility": 0.22,
+      "task_adequacy": 0.20,
+      "logic_factual_consistency": 0.20,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.08,
+      "response_completeness": 0.05,
+      "brevity_appropriateness": 0.03,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.13
     },
     "context_consistency": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.23,
-      "semantic_safety": 0.2,
-      "reference_alignment": 0.15,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.02
+      "comprehensibility": 0.22,
+      "task_adequacy": 0.18,
+      "logic_factual_consistency": 0.17,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.16,
+      "response_completeness": 0.05,
+      "brevity_appropriateness": 0.03,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.10
     },
     "memory_recall": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.23,
-      "semantic_safety": 0.2,
-      "reference_alignment": 0.15,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.02
+      "comprehensibility": 0.22,
+      "task_adequacy": 0.18,
+      "logic_factual_consistency": 0.17,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.16,
+      "response_completeness": 0.05,
+      "brevity_appropriateness": 0.03,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.10
     },
     "safety_boundary": {
-      "intelligibility": 0.25,
-      "task_compliance": 0.2,
-      "semantic_safety": 0.3,
-      "reference_alignment": 0.12,
-      "completeness": 0.07,
-      "brevity": 0.03,
-      "non_echo": 0.01,
-      "surface_naturalness": 0.02
-    },
-    "empathy": {
-      "intelligibility": 0.3,
-      "task_compliance": 0.15,
-      "semantic_safety": 0.18,
-      "reference_alignment": 0.06,
-      "completeness": 0.08,
-      "brevity": 0.07,
-      "non_echo": 0.04,
-      "surface_naturalness": 0.12
-    },
-    "naturalness": {
-      "intelligibility": 0.3,
-      "task_compliance": 0.14,
-      "semantic_safety": 0.14,
-      "reference_alignment": 0.05,
-      "completeness": 0.08,
-      "brevity": 0.07,
-      "non_echo": 0.05,
-      "surface_naturalness": 0.17
-    },
-    "playful_banter": {
-      "intelligibility": 0.3,
-      "task_compliance": 0.14,
-      "semantic_safety": 0.14,
-      "reference_alignment": 0.05,
-      "completeness": 0.08,
-      "brevity": 0.07,
-      "non_echo": 0.05,
-      "surface_naturalness": 0.17
-    },
-    "clarification": {
-      "intelligibility": 0.28,
-      "task_compliance": 0.3,
-      "semantic_safety": 0.16,
-      "reference_alignment": 0.08,
-      "completeness": 0.08,
-      "brevity": 0.05,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.03
-    },
-    "concise_clarification": {
-      "intelligibility": 0.28,
-      "task_compliance": 0.3,
-      "semantic_safety": 0.16,
-      "reference_alignment": 0.08,
-      "completeness": 0.08,
-      "brevity": 0.05,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.03
+      "comprehensibility": 0.20,
+      "task_adequacy": 0.18,
+      "logic_factual_consistency": 0.16,
+      "safety_boundary": 0.28,
+      "context_consistency": 0.05,
+      "response_completeness": 0.05,
+      "brevity_appropriateness": 0.02,
+      "conversation_naturalness": 0.01,
+      "content_anchor_preservation": 0.05
     },
     "knowledge_boundary": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.2,
-      "semantic_safety": 0.25,
-      "reference_alignment": 0.13,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.02
+      "comprehensibility": 0.23,
+      "task_adequacy": 0.21,
+      "logic_factual_consistency": 0.20,
+      "safety_boundary": 0.12,
+      "context_consistency": 0.07,
+      "response_completeness": 0.05,
+      "brevity_appropriateness": 0.03,
+      "conversation_naturalness": 0.02,
+      "content_anchor_preservation": 0.07
     },
-    "uncertainty": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.2,
-      "semantic_safety": 0.25,
-      "reference_alignment": 0.13,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.02
+    "clarification": {
+      "comprehensibility": 0.28,
+      "task_adequacy": 0.27,
+      "logic_factual_consistency": 0.13,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.06,
+      "brevity_appropriateness": 0.04,
+      "conversation_naturalness": 0.03,
+      "content_anchor_preservation": 0.04
     },
-    "complex_escalation": {
-      "intelligibility": 0.25,
-      "task_compliance": 0.25,
-      "semantic_safety": 0.25,
-      "reference_alignment": 0.1,
-      "completeness": 0.08,
-      "brevity": 0.03,
-      "non_echo": 0.01,
-      "surface_naturalness": 0.03
-    },
-    "conflict_deescalation": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.18,
-      "semantic_safety": 0.25,
-      "reference_alignment": 0.08,
-      "completeness": 0.08,
-      "brevity": 0.05,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.07
-    },
-    "role_identity_adherence": {
-      "intelligibility": 0.28,
-      "task_compliance": 0.18,
-      "semantic_safety": 0.2,
-      "reference_alignment": 0.07,
-      "completeness": 0.07,
-      "brevity": 0.05,
-      "non_echo": 0.03,
-      "surface_naturalness": 0.12
+    "concise_clarification": {
+      "comprehensibility": 0.28,
+      "task_adequacy": 0.27,
+      "logic_factual_consistency": 0.13,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.06,
+      "brevity_appropriateness": 0.04,
+      "conversation_naturalness": 0.03,
+      "content_anchor_preservation": 0.04
     },
     "acknowledgment": {
-      "intelligibility": 0.3,
-      "task_compliance": 0.18,
-      "semantic_safety": 0.14,
-      "reference_alignment": 0.05,
-      "completeness": 0.08,
-      "brevity": 0.08,
-      "non_echo": 0.05,
-      "surface_naturalness": 0.12
+      "comprehensibility": 0.30,
+      "task_adequacy": 0.24,
+      "logic_factual_consistency": 0.12,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.07,
+      "brevity_appropriateness": 0.05,
+      "conversation_naturalness": 0.05,
+      "content_anchor_preservation": 0.02
     },
     "celebration": {
-      "intelligibility": 0.3,
-      "task_compliance": 0.16,
-      "semantic_safety": 0.14,
-      "reference_alignment": 0.05,
-      "completeness": 0.08,
-      "brevity": 0.07,
-      "non_echo": 0.04,
-      "surface_naturalness": 0.16
+      "comprehensibility": 0.30,
+      "task_adequacy": 0.23,
+      "logic_factual_consistency": 0.12,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.07,
+      "brevity_appropriateness": 0.05,
+      "conversation_naturalness": 0.06,
+      "content_anchor_preservation": 0.02
     },
-    "trust_and_secrets": {
-      "intelligibility": 0.27,
-      "task_compliance": 0.2,
-      "semantic_safety": 0.24,
-      "reference_alignment": 0.1,
-      "completeness": 0.07,
-      "brevity": 0.04,
-      "non_echo": 0.02,
-      "surface_naturalness": 0.06
+    "empathy": {
+      "comprehensibility": 0.27,
+      "task_adequacy": 0.21,
+      "logic_factual_consistency": 0.14,
+      "safety_boundary": 0.12,
+      "context_consistency": 0.07,
+      "response_completeness": 0.07,
+      "brevity_appropriateness": 0.04,
+      "conversation_naturalness": 0.06,
+      "content_anchor_preservation": 0.02
+    },
+    "naturalness": {
+      "comprehensibility": 0.30,
+      "task_adequacy": 0.22,
+      "logic_factual_consistency": 0.12,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.07,
+      "brevity_appropriateness": 0.05,
+      "conversation_naturalness": 0.07,
+      "content_anchor_preservation": 0.02
+    },
+    "playful_banter": {
+      "comprehensibility": 0.30,
+      "task_adequacy": 0.22,
+      "logic_factual_consistency": 0.12,
+      "safety_boundary": 0.08,
+      "context_consistency": 0.07,
+      "response_completeness": 0.07,
+      "brevity_appropriateness": 0.05,
+      "conversation_naturalness": 0.07,
+      "content_anchor_preservation": 0.02
     }
   },
-  "hard_failure_thresholds": {
+  "diagnostic_thresholds": {
     "consecutive_token_run": 4,
     "max_token_share": 0.45,
     "repeated_bigram_fraction": 0.55,
@@ -193,20 +156,23 @@
     "control_character_count": 1,
     "maximum_symbol_ratio": 0.45,
     "maximum_model_tokens_per_word": 3.2,
-    "minimum_words_for_fragmentation_gate": 8,
+    "minimum_words_for_fragmentation_signal": 8,
     "maximum_nonempty_lines": 8
   },
-  "aggregate_gate_defaults": {
-    "minimum_mean_quality_score": 0.8,
-    "minimum_quality_pass_rate": 0.95,
-    "minimum_intelligibility_pass_rate": 1.0,
-    "minimum_semantic_pass_rate": 0.98,
-    "minimum_complete_utterance_rate": 0.99,
-    "minimum_worst_decile_quality": 0.7,
-    "maximum_hard_failure_cases": 0,
-    "maximum_new_major_issue_cases": 0,
-    "maximum_category_quality_loss": 0.08,
-    "maximum_reference_alignment_loss": 0.08,
-    "maximum_relative_target_nll_increase": 0.15
+  "issue_costs": {
+    "critical": 1.0,
+    "major": 0.35,
+    "warning": 0.05
+  },
+  "reference_policy": {
+    "default_open_ended_importance": 0.10,
+    "factual_category_importance": 0.65,
+    "safety_category_importance": 0.50,
+    "explicit_contract_importance": 1.0
+  },
+  "compatibility": {
+    "quality_pass_is_diagnostic_only": true,
+    "quality_pass_definition": "No critical or major issue labels; there is no numerical score floor.",
+    "promotion_thresholds_removed": true
   }
 }

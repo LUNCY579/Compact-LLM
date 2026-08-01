@@ -9,7 +9,7 @@ param(
     [string]$Benchmark = ".\data\benchmark\shortchatbench_pilot.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_6_sparse",
     [int]$BlockSize = 128,
-    [double]$RetainContribution = 0.95,
+    [double]$OracleActiveRatio = 0.65,
     [int]$MaxCalibrationRecords = 1000,
     [int]$MaxBenchmarkCases = 100,
     [int]$MaxNewTokens = 32,
@@ -57,7 +57,7 @@ if (-not ($ReuseExisting -and (Test-Path $Dataset))) {
         "--model", $Model,
         "--calibration", $Calibration,
         "--block-size", "$BlockSize",
-        "--retain-contribution", "$RetainContribution",
+        "--fixed-active-ratio", "$OracleActiveRatio",
         "--max-records", "$MaxCalibrationRecords",
         "--positions", "last",
         "--out", $Dataset

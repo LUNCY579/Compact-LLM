@@ -10,7 +10,7 @@ Use `-PackageMode copy` only when you intentionally want model bytes duplicated 
 
 The sealed run is forced to `one_sentence`. The release audit blocks if that mode is missing or any user-visible reply exceeds the validated first-sentence boundary. The package includes `response_control.json` and `RESPONSE_CONTROL_CONTRACT.md` so the application runtime has an explicit launch contract.
 
-## Quality evaluator v2.0
+## Quality evaluator v3.0
 
-This phase consumes or produces evaluator schema `2.0`. The main score is not a length/completion average: hard intelligibility collapse receives zero, and phase gates separately enforce tail quality, category behavior, semantic and completion floors, reference alignment, and critical/major issue limits. Evidence created by the legacy evaluator must be regenerated before this phase can automatically pass. See the repository-root `QUALITY_EVALUATION_V2_AUDIT.md` and `QUALITY_EVALUATION_V2_MIGRATION.md`.
+This phase uses Quality Evaluator `3.0` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
 

@@ -76,27 +76,27 @@ class Phase2CTargetedRecoveryTests(unittest.TestCase):
         self.assertEqual(len(complementary_layers(list(range(12)), 12, 4)), 4)
 
     @staticmethod
-    def candidate(name: str, trainable: int, quality: float, nll: float = 1.0) -> dict:
+    def candidate(name: str, trainable: int, quality: float, nll: float = 1.0, *, issue_cost: float = 0.0) -> dict:
+        dimensions = {
+            "comprehensibility": quality,
+            "task_adequacy": quality,
+            "logic_factual_consistency": quality,
+            "safety_boundary": quality,
+            "context_consistency": quality,
+            "response_completeness": quality,
+            "brevity_appropriateness": quality,
+            "conversation_naturalness": quality,
+            "content_anchor_preservation": quality,
+        }
         summary = {
-            "quality_evaluation_version": "2.0",
+            "quality_evaluation_version": "3.0",
+            "case_count": 100,
             "mean_quality_score": quality,
-            "quality_pass_rate": 1.0,
-            "intelligibility_pass_rate": 1.0,
-            "hard_failure_case_count": 0,
             "worst_decile_mean_quality_score": quality,
-            "p10_quality_score": quality,
-            "mean_reference_alignment_score": quality,
-            "major_case_count": 0,
+            "mean_quality_dimensions": dimensions,
             "category_quality_scores": {"logic": quality},
-            "mean_heuristic_score": quality,
-            "semantic_pass_rate": quality,
-            "mean_reference_token_f1": quality,
-            "complete_utterance_rate": 1.0,
-            "critical_failure_count": 0,
-            "category_scores": {"logic": quality},
-            "category_semantic_pass_rates": {"logic": quality},
-            "category_reference_token_f1": {"logic": quality},
-            "category_complete_utterance_rates": {"logic": 1.0},
+            "mean_issue_cost": issue_cost,
+            "severe_issue_case_rate": 0.0,
         }
         return {
             "name": name,
@@ -118,77 +118,55 @@ class Phase2CTargetedRecoveryTests(unittest.TestCase):
         all_remaining = self.candidate("all_remaining", 1000, 1.0, 1.0)
         selective = self.candidate("top4", 200, 0.995, 1.03)
         assessment = assess_training_candidate(
-            candidate=selective,
-            all_remaining=all_remaining,
-            reduced_frozen=frozen,
-            max_quality_index_loss=0.02,
-            max_frozen_quality_loss=0.01,
-            max_heuristic_loss=0.02,
-            max_semantic_pass_loss=0.02,
-            max_reference_f1_loss=0.03,
-            max_category_loss_allowed=0.05,
-            max_frozen_category_loss=0.03,
-            max_nll_increase=0.10,
-            min_complete_utterance_rate=0.99,
-            minimum_trainable_reduction=0.25,
-            max_new_major_issues=0,
+            candidate=selective, all_remaining=all_remaining, reduced_frozen=frozen
         )
         self.assertTrue(assessment["eligible"])
         self.assertAlmostEqual(assessment["trainable_parameter_reduction_vs_all_remaining"], 0.8)
-        self.assertGreater(assessment["fraction_of_all_remaining_gain_recovered"], 0.9)
+        self.assertGreater(assessment["opportunity_margin"], 0.0)
 
-    def test_category_semantic_collapse_fails_even_when_heuristic_is_high(self) -> None:
-        frozen = self.candidate("reduced_frozen", 0, 1.0, 1.0)
+    def test_quality_collapse_is_a_proportional_cost_not_hidden_veto(self) -> None:
+        frozen = self.candidate("reduced_frozen", 0, 0.50, 1.5)
         all_remaining = self.candidate("all_remaining", 1000, 1.0, 1.0)
-        selective = self.candidate("top4", 200, 1.0, 1.0)
-        selective["generation_summary"]["category_semantic_pass_rates"]["logic"] = 0.0
+        selective = self.candidate("top4", 900, 0.20, 2.0)
         assessment = assess_training_candidate(
-            candidate=selective,
-            all_remaining=all_remaining,
-            reduced_frozen=frozen,
-            max_quality_index_loss=0.50,
-            max_frozen_quality_loss=0.50,
-            max_heuristic_loss=0.02,
-            max_semantic_pass_loss=0.50,
-            max_reference_f1_loss=0.50,
-            max_category_loss_allowed=0.05,
-            max_frozen_category_loss=0.05,
-            max_nll_increase=0.10,
-            min_complete_utterance_rate=0.99,
-            minimum_trainable_reduction=0.25,
-            max_new_major_issues=0,
+            candidate=selective, all_remaining=all_remaining, reduced_frozen=frozen
         )
+        self.assertGreater(assessment["quality_opportunity_loss_fraction"], 0.0)
         self.assertFalse(assessment["eligible"])
-        self.assertGreater(assessment["worst_category_loss_vs_all_remaining"], 0.05)
+        self.assertLessEqual(assessment["opportunity_margin"], 0.0)
 
-    def test_new_major_issue_fails_strict_gate(self) -> None:
+    def test_new_major_issue_is_diagnostic_not_independent_veto(self) -> None:
         frozen = self.candidate("reduced_frozen", 0, 0.90, 1.2)
         all_remaining = self.candidate("all_remaining", 1000, 1.0, 1.0)
-        selective = self.candidate("top4", 200, 0.995, 1.03)
+        selective = self.candidate("top4", 200, 0.995, 1.03, issue_cost=0.01)
         selective["output_deviation"]["new_major_issue_count"] = 1
         assessment = assess_training_candidate(
-            candidate=selective, all_remaining=all_remaining, reduced_frozen=frozen,
-            max_quality_index_loss=0.02, max_frozen_quality_loss=0.01,
-            max_heuristic_loss=0.02, max_semantic_pass_loss=0.02,
-            max_reference_f1_loss=0.03, max_category_loss_allowed=0.05,
-            max_frozen_category_loss=0.03, max_nll_increase=0.10,
-            min_complete_utterance_rate=0.99, minimum_trainable_reduction=0.25,
-            max_new_major_issues=0,
+            candidate=selective, all_remaining=all_remaining, reduced_frozen=frozen
         )
-        self.assertFalse(assessment["eligible"])
-        self.assertTrue(any("new major issues" in reason for reason in assessment["rejection_reasons"]))
+        self.assertEqual(assessment["new_major_issues_vs_reduced_frozen"], 1)
+        self.assertTrue(assessment["eligible"])
+        self.assertGreater(assessment["quality_opportunity_loss_fraction"], 0.0)
 
-    def test_profile_selection_can_choose_one_efficient_candidate_for_two_profiles(self) -> None:
+    def test_profile_selection_uses_quality_margin_and_resource_gain(self) -> None:
         all_remaining = self.candidate("all_remaining", 1000, 1.0)
-        all_remaining["assessment"] = {"eligible": True, "quality_index": 1.0}
+        all_remaining["assessment"] = {
+            "eligible": True, "technical_valid": True, "quality_index": 1.0,
+            "opportunity_margin": 0.0, "resource_gain_fraction": 0.0,
+        }
         top4 = self.candidate("top4", 200, 0.995)
-        top4["assessment"] = {"eligible": True, "quality_index": 0.995}
+        top4["assessment"] = {
+            "eligible": True, "technical_valid": True, "quality_index": 0.995,
+            "opportunity_margin": 0.70, "resource_gain_fraction": 0.80,
+        }
         top1 = self.candidate("top1", 80, 0.95)
-        top1["assessment"] = {"eligible": False, "quality_index": 0.95}
-        profiles = select_profiles([all_remaining, top4, top1], balanced_tolerance=0.01)
+        top1["assessment"] = {
+            "eligible": True, "technical_valid": True, "quality_index": 0.95,
+            "opportunity_margin": 0.60, "resource_gain_fraction": 0.92,
+        }
+        profiles = select_profiles([all_remaining, top4, top1])
         self.assertIs(profiles["maximum_quality"], all_remaining)
         self.assertIs(profiles["balanced_training"], top4)
-        self.assertIs(profiles["minimum_training_memory"], top4)
+        self.assertIs(profiles["minimum_training_memory"], top1)
 
     def test_phase2c_profile_requires_pass_and_explicit_name(self) -> None:
         catalog = {

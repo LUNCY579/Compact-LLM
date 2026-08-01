@@ -118,23 +118,21 @@ def structural_signals(registry_path: Path | None, original_ids: list[int]) -> d
         if original not in original_ids:
             continue
         assessment = row.get("assessment") or {}
-        # All terms are damage-like and therefore larger means more important.
-        score = (
-            0.50 * float(assessment.get(
-                "quality_score_loss_fraction",
-                assessment.get("heuristic_score_loss_fraction", 0.0),
-            ))
-            + 0.25 * float(assessment.get("semantic_pass_loss", 0.0))
-            + 0.15 * float(assessment.get(
-                "maximum_category_quality_loss",
-                assessment.get("maximum_category_score_loss", assessment.get("max_category_loss", 0.0)),
-            ))
-            + 0.10 * float(assessment.get(
-                "target_nll_increase_fraction",
-                assessment.get("relative_nll_increase", 0.0),
-            ))
+        # The current Phase 2B registry already combines all continuous quality
+        # dimensions through the central opportunity engine. Reuse that single
+        # proportional damage signal rather than rebuilding an independent set
+        # of absolute or ad-hoc semantic/category gates here. The fallback keeps
+        # old registries readable until they are rescored under Evaluator v3.
+        score = float(
+            assessment.get(
+                "quality_opportunity_loss_fraction",
+                assessment.get(
+                    "quality_score_loss_fraction",
+                    assessment.get("heuristic_score_loss_fraction", 0.0),
+                ),
+            )
         )
-        scores[original] = score
+        scores[original] = max(0.0, score)
     return scores
 
 

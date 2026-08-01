@@ -3,6 +3,8 @@ param(
     [ValidateSet("core", "layer26", "all")]
     [string]$Suite = "core",
     [int]$CaseLimit = 150,
+    [ValidateSet("balanced", "logic_oriented", "conversational_permissive")]
+    [string]$QualityProfile = "balanced",
     [switch]$IncludeExistingEndpoints,
     [switch]$IncludeRecoveredExtensions,
     [switch]$LeaveOneInAblation,
@@ -23,6 +25,7 @@ $Arguments = @(
     "--repo-root", $RepoRoot,
     "--suite", $Suite,
     "--case-limit", $CaseLimit,
+    "--quality-profile", $QualityProfile,
     "--require-cuda"
 )
 if ($IncludeExistingEndpoints) { $Arguments += "--include-existing-endpoints" }

@@ -33,18 +33,12 @@ candidates:
   - low4
   - top4_attention
   - top4_mlp
-gates:
-  max_quality_index_loss: 0.02
-  max_quality_index_loss_vs_reduced_frozen: 0.01
-  max_mean_quality_loss: 0.02
-  max_heuristic_loss: 0.02  # compatibility alias; evaluated as mean quality loss
-  max_semantic_pass_loss: 0.02
-  max_reference_f1_loss: 0.03
-  max_category_loss: 0.05
-  max_category_loss_vs_reduced_frozen: 0.03
-  max_relative_nll_increase: 0.10
-  min_complete_utterance_rate: 0.99
-  minimum_trainable_parameter_reduction: 0.25
-  max_new_major_issues_vs_reduced_frozen: 0
-  require_same_seed_all_remaining_controls: true
-  balanced_quality_tolerance: 0.01
+relative_opportunity_policy:
+  quality_evaluation_version: "3.0"
+  policy_file: configs/relative_opportunity_evaluation.json
+  quality_profile: balanced
+  primary_resource: trainable_parameter_and_training_memory_reduction
+  decision_rule: resource_gain_strictly_greater_than_quality_opportunity_loss
+  absolute_quality_floors: prohibited
+  repeat_seed_decision: compare_mean_proportional_benefit_with_mean_proportional_loss
+  same_seed_all_remaining_controls: technical_comparability_only

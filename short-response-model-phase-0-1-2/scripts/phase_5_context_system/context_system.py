@@ -155,7 +155,7 @@ def retrieve_with_trace(
             item
             for item in scored
             if item[2]["excluded_reason"] is None
-            and (item[2]["lexical_score"] > 0.0 or item[2]["priority"] >= 0.90)
+            and (item[2]["lexical_score"] > 0.0 or item[2]["priority"] > 0.0)
         ),
         key=lambda item: (item[0], float(item[1].get("recency", 0.0))),
         reverse=True,

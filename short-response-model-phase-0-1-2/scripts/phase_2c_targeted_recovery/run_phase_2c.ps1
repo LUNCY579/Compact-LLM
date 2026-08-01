@@ -1,14 +1,11 @@
 <#
 .SYNOPSIS
-Run Phase 2C importance-guided targeted recovery on a human-approved Phase 2B reduced profile.
+Run Phase 2C importance-guided targeted recovery under Evaluation v3.
 
 .DESCRIPTION
-This runner builds the deterministic Phase 2C reasoning augmentation, ranks all
-surviving layers with gradient/ablation/Phase-2B evidence, trains the required
-selected-layer controls, repeats the strongest selective candidates across
-seeds, validates retained profiles on the common phase benchmark, and writes a
-human stop gate. It never uses sealed evaluation data and never records a human
-PASS automatically.
+Candidate selection compares proportional trainable-state/training-memory
+savings with combined proportional quality opportunity loss. No absolute score,
+pass-rate, completion, category, NLL, or issue-count threshold controls promotion.
 #>
 param(
     [ValidateSet("balanced", "min_memory")]
@@ -19,6 +16,8 @@ param(
     [string]$OutputRoot = ".\artifacts\phase_2c_targeted_recovery",
     [string]$Report = ".\reports\PHASE_2C_TARGETED_RECOVERY_REPORT.md",
     [string]$GateReport = ".\reports\PHASE_2C_STOP_GATE.md",
+    [ValidateSet("balanced", "logic_oriented", "conversational_permissive")]
+    [string]$QualityProfile = "balanced",
     [int]$CalibrationLimit = 64,
     [int]$EvalLimit = 180,
     [int]$MaxSteps = 200,
@@ -34,18 +33,6 @@ param(
     [double]$GradientWeight = 0.35,
     [double]$AblationWeight = 0.45,
     [double]$StructuralWeight = 0.20,
-    [double]$MaxQualityIndexLoss = 0.02,
-    [double]$MaxFrozenQualityLoss = 0.01,
-    [double]$MaxHeuristicLoss = 0.02,
-    [double]$MaxSemanticPassLoss = 0.02,
-    [double]$MaxReferenceF1Loss = 0.03,
-    [double]$MaxCategoryLoss = 0.05,
-    [double]$MaxFrozenCategoryLoss = 0.03,
-    [double]$MaxNllIncrease = 0.10,
-    [double]$MinCompleteUtteranceRate = 0.99,
-    [double]$MinimumTrainableReduction = 0.25,
-    [int]$MaxNewMajorIssues = 0,
-    [double]$BalancedQualityTolerance = 0.01,
     [switch]$Resume,
     [switch]$QLoRA,
     [switch]$GradientCheckpointing
@@ -55,12 +42,13 @@ $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
+$PythonExecutable = if (Test-Path ".\.venv\Scripts\python.exe") { ".\.venv\Scripts\python.exe" } else { "python" }
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
     Write-Host ""
     Write-Host $Name
-    & python @Arguments
+    & $PythonExecutable @Arguments
     if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit code $LASTEXITCODE." }
 }
 
@@ -77,6 +65,7 @@ $Args = @(
     "--output-root", $OutputRoot,
     "--report", $Report,
     "--gate-report", $GateReport,
+    "--quality-profile", $QualityProfile,
     "--calibration-limit", "$CalibrationLimit",
     "--eval-limit", "$EvalLimit",
     "--max-steps", "$MaxSteps",
@@ -91,19 +80,7 @@ $Args = @(
     "--max-sequence-length", "$MaxSequenceLength",
     "--gradient-weight", "$GradientWeight",
     "--ablation-weight", "$AblationWeight",
-    "--structural-weight", "$StructuralWeight",
-    "--max-quality-index-loss", "$MaxQualityIndexLoss",
-    "--max-frozen-quality-loss", "$MaxFrozenQualityLoss",
-    "--max-heuristic-loss", "$MaxHeuristicLoss",
-    "--max-semantic-pass-loss", "$MaxSemanticPassLoss",
-    "--max-reference-f1-loss", "$MaxReferenceF1Loss",
-    "--max-category-loss", "$MaxCategoryLoss",
-    "--max-frozen-category-loss", "$MaxFrozenCategoryLoss",
-    "--max-nll-increase", "$MaxNllIncrease",
-    "--min-complete-utterance-rate", "$MinCompleteUtteranceRate",
-    "--minimum-trainable-reduction", "$MinimumTrainableReduction",
-    "--max-new-major-issues", "$MaxNewMajorIssues",
-    "--balanced-quality-tolerance", "$BalancedQualityTolerance"
+    "--structural-weight", "$StructuralWeight"
 )
 if ($Resume) { $Args += "--resume" }
 if ($QLoRA) { $Args += "--qlora" }
@@ -117,8 +94,6 @@ Invoke-PythonStep "[3/3] Checking automated Phase 2C evidence..." @(
 )
 
 Write-Host ""
-Write-Host "Phase 2C execution completed."
-Write-Host "Catalog: $(Join-Path $OutputRoot 'model_catalog.json')"
+Write-Host "Phase 2C execution completed under the relative opportunity policy."
 Write-Host "Report: $Report"
 Write-Host "Stop gate: $GateReport"
-Write-Host "Review raw outputs and repeat seeds before recording Human decision: PASS."

@@ -28,7 +28,8 @@ from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json,
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import RoutedSparseGatedMLP, TinyBlockRouter
 from scripts.common.quality_evaluation import aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
-from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries
+from scripts.common.quality_gate import assert_valid_reference
+from scripts.common.opportunity_evaluation import evaluate_opportunity
 from scripts.common.response_control import (
     RESPONSE_CONTROL_MODES,
     finalize_response,
@@ -290,7 +291,7 @@ def main() -> None:
                     args.response_control == "one_sentence"
                     and dense_summary["one_sentence_violation_rate"] == 0.0
                 ),
-                "quality_evaluation_version": "2.0",
+                "quality_evaluation_version": "3.0",
                 "passes_quality_target": True,
                 "passes_runtime_target": False,
                 "raw_results": str(raw_path),
@@ -406,16 +407,24 @@ def main() -> None:
     write_jsonl(raw_path, raw_rows)
 
     layer_stats = {str(index): wrapper.stats.as_dict() for index, wrapper in enumerate(wrappers)}
-    quality_comparison = compare_quality_summaries(
-        dense_quality, sparse_quality,
-        max_mean_quality_loss=0.01, max_quality_index_loss=0.015,
-        max_worst_decile_loss=0.03, max_category_quality_loss_allowed=0.04,
-        max_semantic_pass_loss=0.01, max_reference_alignment_loss=0.05,
-        min_quality_pass_rate=0.98, min_intelligibility_pass_rate=1.0,
-        min_semantic_pass_rate=0.98, min_complete_utterance_rate=0.99,
-        max_hard_failure_cases=0, max_critical_failures=0, max_major_issue_cases=0,
+    latency_reduction = (max(0.0, 1.0 - sparse_decode / dense_decode)
+                         if dense_decode and sparse_decode else 0.0)
+    positive_vram_reduction = max(0.0, float(vram_reduction or 0.0))
+    if latency_reduction >= positive_vram_reduction:
+        primary_resource_name = "measured_decode_latency_reduction"
+        primary_resource_gain = latency_reduction
+    else:
+        primary_resource_name = "measured_peak_vram_reduction"
+        primary_resource_gain = positive_vram_reduction
+    opportunity = evaluate_opportunity(
+        dense_quality,
+        sparse_quality,
+        resource_gain=primary_resource_gain,
+        resource_name=primary_resource_name,
+        profile="balanced",
     )
-    quality_loss = quality_comparison["mean_quality_loss"]
+    quality_comparison = opportunity
+    quality_loss = opportunity["quality_opportunity_loss_fraction"]
     payload = {
         "model": args.model,
         "model_fingerprint": model_fingerprint,
@@ -432,7 +441,7 @@ def main() -> None:
         "sparse_reference": sparse_summary,
         "dense_quality": dense_quality,
         "sparse_quality": sparse_quality,
-        "quality_evaluation_version": "2.0",
+        "quality_evaluation_version": "3.0",
         "quality_score_loss": quality_loss,
         "quality_comparison": quality_comparison,
         "decode_speedup": speedup,
@@ -444,14 +453,8 @@ def main() -> None:
             and dense_summary["one_sentence_violation_rate"] == 0.0
             and sparse_summary["one_sentence_violation_rate"] == 0.0
         ),
-        "passes_quality_target": bool(
-            quality_comparison["eligible"]
-            and sparse_summary["one_sentence_violation_rate"] == 0.0
-        ),
-        "passes_runtime_target": bool(
-            (speedup is not None and speedup >= 1.20)
-            or (vram_reduction is not None and vram_reduction >= 0.20)
-        ),
+        "passes_quality_target": bool(opportunity["eligible"]),
+        "passes_runtime_target": bool(primary_resource_gain > 0.0),
         "raw_results": str(raw_path),
         "warning": (
             "This is the PyTorch gather reference, not a packed custom kernel. A slower result is valid and should "

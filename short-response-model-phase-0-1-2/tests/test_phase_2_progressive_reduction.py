@@ -75,105 +75,70 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
         self.assertEqual(sum(row["category"] == "a" for row in first), 3)
         self.assertEqual(sum(row["category"] == "b" for row in first), 3)
 
-    def test_memory_reduction_must_exceed_score_loss(self) -> None:
-        baseline_generation = {
-            "quality_evaluation_version": "2.0",
-            "mean_quality_score": 1.0,
-            "quality_pass_rate": 1.0,
-            "intelligibility_pass_rate": 1.0,
-            "hard_failure_case_count": 0,
-            "worst_decile_mean_quality_score": 1.0,
-            "mean_reference_alignment_score": 1.0,
-            "major_case_count": 0,
-            "category_quality_scores": {"facts": 1.0},
-            "mean_heuristic_score": 1.0,
-            "semantic_pass_rate": 1.0,
-            "complete_utterance_rate": 1.0,
-            "critical_failure_count": 0,
-            "category_scores": {"facts": 1.0},
+    @staticmethod
+    def quality_summary(score: float) -> dict:
+        dimensions = {
+            "comprehensibility": score,
+            "task_adequacy": score,
+            "logic_factual_consistency": score,
+            "safety_boundary": score,
+            "context_consistency": score,
+            "response_completeness": score,
+            "brevity_appropriateness": score,
+            "conversation_naturalness": score,
+            "content_anchor_preservation": score,
         }
-        candidate_generation = {
-            "quality_evaluation_version": "2.0",
-            "mean_quality_score": 0.97,
-            "quality_pass_rate": 1.0,
-            "intelligibility_pass_rate": 1.0,
-            "hard_failure_case_count": 0,
-            "worst_decile_mean_quality_score": 0.97,
-            "mean_reference_alignment_score": 0.97,
-            "major_case_count": 0,
-            "category_quality_scores": {"facts": 0.97},
-            "mean_heuristic_score": 0.97,
-            "semantic_pass_rate": 1.0,
-            "complete_utterance_rate": 1.0,
-            "critical_failure_count": 0,
-            "category_scores": {"facts": 0.97},
+        return {
+            "quality_evaluation_version": "3.0",
+            "case_count": 100,
+            "mean_quality_score": score,
+            "worst_decile_mean_quality_score": score,
+            "mean_quality_dimensions": dimensions,
+            "category_quality_scores": {"facts": score},
+            "mean_issue_cost": 0.0,
+            "severe_issue_case_rate": 0.0,
         }
+
+    def test_memory_reduction_must_exceed_combined_quality_loss(self) -> None:
+        baseline_generation = self.quality_summary(1.0)
+        candidate_generation = self.quality_summary(0.97)
         assessment = assess_candidate(
             baseline_generation=baseline_generation,
             candidate_generation=candidate_generation,
             baseline_nll={"mean_target_nll": 1.0},
-            candidate_nll={"mean_target_nll": 1.05},
+            candidate_nll={"mean_target_nll": 1.02},
             baseline_footprint={"parameter_tensor_bytes_loaded": 1000},
             candidate_footprint={"parameter_tensor_bytes_loaded": 900},
-            output_deviation={
-                "new_critical_failure_count": 0,
-                "exact_reply_match_rate": 0.8,
-                "mean_fuzzy_reply_similarity": 0.9,
-            },
-            minimum_reduction_advantage=0.0,
-            max_score_loss=0.10,
-            max_semantic_pass_loss=0.05,
-            max_category_loss_allowed=0.15,
-            max_nll_increase=0.50,
-            min_complete_utterance_rate=0.98,
+            output_deviation={},
         )
         self.assertTrue(assessment["eligible_for_progression"])
         self.assertAlmostEqual(assessment["weight_memory_reduction_fraction"], 0.10)
-        self.assertAlmostEqual(assessment["heuristic_score_loss_fraction"], 0.03)
+        self.assertGreater(assessment["opportunity_margin"], 0.0)
 
-        candidate_generation.update({
-            "mean_quality_score": 0.85,
-            "worst_decile_mean_quality_score": 0.85,
-            "mean_reference_alignment_score": 0.85,
-            "category_quality_scores": {"facts": 0.85},
-            "mean_heuristic_score": 0.85,
-        })
         rejected = assess_candidate(
             baseline_generation=baseline_generation,
-            candidate_generation=candidate_generation,
+            candidate_generation=self.quality_summary(0.70),
             baseline_nll={"mean_target_nll": 1.0},
-            candidate_nll={"mean_target_nll": 1.05},
+            candidate_nll={"mean_target_nll": 1.20},
             baseline_footprint={"parameter_tensor_bytes_loaded": 1000},
             candidate_footprint={"parameter_tensor_bytes_loaded": 900},
-            output_deviation={"new_critical_failure_count": 0},
-            minimum_reduction_advantage=0.0,
-            max_score_loss=0.20,
-            max_semantic_pass_loss=0.05,
-            max_category_loss_allowed=0.20,
-            max_nll_increase=0.50,
-            min_complete_utterance_rate=0.98,
+            output_deviation={},
         )
         self.assertFalse(rejected["eligible_for_progression"])
-        self.assertTrue(
-            any("does not exceed" in reason for reason in rejected["rejection_reasons"])
-        )
+        self.assertLessEqual(rejected["opportunity_margin"], 0.0)
 
-    def test_profile_selection_preserves_full_balanced_and_minimum(self) -> None:
+    def test_profile_selection_uses_margin_and_resource_gain(self) -> None:
         baseline = {
             "profile": "full_quality",
             "remaining_layer_count": 28,
-            "assessment": {
-                "eligible_for_progression": True,
-                "weight_memory_reduction_fraction": 0.0,
-                "heuristic_score_loss_fraction": 0.0,
-            },
+            "assessment": {"eligible_for_progression": True},
         }
         stage1 = {
             "remaining_layer_count": 27,
             "assessment": {
                 "eligible_for_progression": True,
                 "weight_memory_reduction_fraction": 0.04,
-                "heuristic_score_loss_fraction": 0.01,
+                "opportunity_margin": 0.03,
             },
         }
         stage2 = {
@@ -181,56 +146,25 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "assessment": {
                 "eligible_for_progression": True,
                 "weight_memory_reduction_fraction": 0.08,
-                "heuristic_score_loss_fraction": 0.05,
+                "opportunity_margin": 0.02,
             },
         }
-        profiles = select_profiles(baseline, [stage1, stage2], 0.03)
+        profiles = select_profiles(baseline, [stage1, stage2])
         self.assertIs(profiles["balanced"], stage1)
         self.assertIs(profiles["min_memory"], stage2)
         self.assertIs(profiles["full_quality"], baseline)
 
-    def test_phase2b_powershell_wrapper_matches_quality_v2_contract(self) -> None:
+    def test_phase2b_wrapper_exposes_only_relative_policy_controls(self) -> None:
         root = Path(__file__).resolve().parents[1]
-        wrapper = (
-            root
-            / "scripts"
-            / "phase_2_layer_selection"
-            / "run_phase_2_structural_reduction.ps1"
-        ).read_text(encoding="utf-8")
-
-        expected_defaults = [
-            '[int]$ProbeLimit = 50',
-            '[double]$MaxScoreLoss = 0.05',
-            '[double]$BalancedMaxScoreLoss = 0.02',
-            '[double]$MaxSemanticPassLoss = 0.02',
-            '[double]$MaxCategoryLoss = 0.08',
-            '[double]$MaxNllIncrease = 0.15',
-            '[double]$MinCompleteUtteranceRate = 0.99',
-            '[double]$MaxWorstDecileLoss = 0.05',
-            '[double]$MinQualityPassRate = 0.95',
-            '[double]$MinIntelligibilityPassRate = 1.0',
-            '[double]$MaxReferenceAlignmentLoss = 0.08',
-            '[int]$MaxNewMajorIssues = 0',
-        ]
-        for expected in expected_defaults:
-            self.assertIn(expected, wrapper)
-
-        forwarded_flags = [
-            '"--probe-limit", "$ProbeLimit"',
-            '"--phase-benchmark", $PhaseBenchmark',
-            '"--report", $Report',
-            '"--gate-report", $GateReport',
-            '"--max-semantic-pass-loss", "$MaxSemanticPassLoss"',
-            '"--max-category-loss", "$MaxCategoryLoss"',
-            '"--max-nll-increase", "$MaxNllIncrease"',
-            '"--max-worst-decile-loss", "$MaxWorstDecileLoss"',
-            '"--min-quality-pass-rate", "$MinQualityPassRate"',
-            '"--min-intelligibility-pass-rate", "$MinIntelligibilityPassRate"',
-            '"--max-reference-alignment-loss", "$MaxReferenceAlignmentLoss"',
-            '"--max-new-major-issues", "$MaxNewMajorIssues"',
-        ]
-        for expected in forwarded_flags:
-            self.assertIn(expected, wrapper)
+        wrapper = (root / "scripts" / "phase_2_layer_selection" / "run_phase_2_structural_reduction.ps1").read_text(encoding="utf-8")
+        self.assertIn('[string]$QualityProfile = "balanced"', wrapper)
+        self.assertIn('"--quality-profile", $QualityProfile', wrapper)
+        self.assertIn("weight-memory gain > combined proportional quality loss", wrapper)
+        for forbidden in (
+            "MinQualityPassRate", "MinCompleteUtteranceRate", "MaxScoreLoss",
+            "MaxCategoryLoss", "MaxNllIncrease", "MaxNewMajorIssues",
+        ):
+            self.assertNotIn(forbidden, wrapper)
 
     def test_reduced_profile_requires_explicit_approval(self) -> None:
         catalog = {

@@ -4,7 +4,8 @@ phase:
   purpose: >-
     Test every current decoder layer as a reversible physical deletion, recover
     the strongest candidates with short SFT, and preserve a progressive frontier
-    only while weight reduction is justified by quality-v2 evidence.
+    while proportional loaded weight-memory savings exceed proportional combined
+    quality opportunity loss.
 
 probe:
   source: data/dev/dev.jsonl
@@ -17,23 +18,15 @@ search:
   recovery_top_k_per_stage: 3
   recovery_steps: 50
 
-validity_rule:
-  quality_evaluation_version: "2.0"
-  minimum_reduction_minus_quality_loss: 0.0
-  maximum_relative_mean_quality_loss: 0.05
-  balanced_profile_maximum_quality_loss: 0.02
-  maximum_quality_index_loss: 0.05
-  maximum_worst_decile_quality_loss: 0.05
-  minimum_quality_pass_rate: 0.95
-  minimum_intelligibility_pass_rate: 1.0
-  maximum_semantic_pass_loss: 0.02
-  maximum_category_quality_loss: 0.08
-  maximum_reference_alignment_loss: 0.08
-  maximum_target_nll_increase: 0.15
-  minimum_complete_utterance_rate: 0.99
-  hard_failure_case_count: 0
-  critical_failure_count: 0
-  maximum_new_major_issue_count: 0
+relative_opportunity_policy:
+  quality_evaluation_version: "3.0"
+  policy_file: configs/relative_opportunity_evaluation.json
+  quality_profile: balanced
+  primary_resource: loaded_weight_tensor_memory_reduction
+  decision_rule: resource_gain_strictly_greater_than_quality_opportunity_loss
+  absolute_quality_floors: prohibited
+  issue_counts: proportional_quality_costs_not_vetoes
+  technical_invalidity_remains_binary: true
 
 retention:
   preserve_full_reference: true

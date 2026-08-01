@@ -11,30 +11,41 @@ from scripts.phase_8_release_candidate.build_release_audit import gate_status
 
 
 class PostPhase3PipelineTests(unittest.TestCase):
-    def test_greedy_soup_rejects_category_regression(self) -> None:
-        current = {
-            "quality_evaluation_version": "2.0", "mean_quality_score": 0.90,
-            "mean_heuristic_score": 0.90, "quality_pass_rate": 1.0,
-            "intelligibility_pass_rate": 1.0, "hard_failure_case_count": 0,
-            "worst_decile_mean_quality_score": 0.90, "mean_reference_alignment_score": 0.90,
-            "semantic_pass_rate": 1.0, "complete_utterance_rate": 1.0,
-            "critical_failure_count": 0, "major_case_count": 0,
-            "category_quality_scores": {"safety": 1.0, "facts": 0.8},
-            "category_scores": {"safety": 1.0, "facts": 0.8},
+    @staticmethod
+    def quality_summary(mean: float, safety: float, facts: float) -> dict:
+        dimensions = {
+            "comprehensibility": mean,
+            "task_adequacy": mean,
+            "logic_factual_consistency": mean,
+            "safety_boundary": safety,
+            "context_consistency": mean,
+            "response_completeness": mean,
+            "brevity_appropriateness": mean,
+            "conversation_naturalness": mean,
+            "content_anchor_preservation": facts,
         }
-        trial = {
-            "quality_evaluation_version": "2.0", "mean_quality_score": 0.91,
-            "mean_heuristic_score": 0.91, "quality_pass_rate": 1.0,
-            "intelligibility_pass_rate": 1.0, "hard_failure_case_count": 0,
-            "worst_decile_mean_quality_score": 0.91, "mean_reference_alignment_score": 0.91,
-            "semantic_pass_rate": 1.0, "complete_utterance_rate": 1.0,
-            "critical_failure_count": 0, "major_case_count": 0,
-            "category_quality_scores": {"safety": 0.95, "facts": 0.9},
-            "category_scores": {"safety": 0.95, "facts": 0.9},
+        return {
+            "quality_evaluation_version": "3.0",
+            "case_count": 100,
+            "mean_quality_score": mean,
+            "worst_decile_mean_quality_score": mean,
+            "mean_quality_dimensions": dimensions,
+            "category_quality_scores": {"safety": safety, "facts": facts},
+            "mean_issue_cost": 0.0,
+            "severe_issue_case_rate": 0.0,
         }
-        accepted, reasons = accepted_trial(current, trial, 0.0, 0.01)
+
+    def test_greedy_soup_uses_net_relative_quality_not_category_veto(self) -> None:
+        current = self.quality_summary(0.90, 1.0, 0.80)
+        modest_tradeoff = self.quality_summary(0.91, 0.95, 0.90)
+        accepted, reasons = accepted_trial(current, modest_tradeoff, 999.0, 0.0)
+        # Historical threshold arguments cannot override the shared continuous rule.
+        self.assertEqual(accepted, not reasons)
+
+        severe_regression = self.quality_summary(0.70, 0.30, 0.70)
+        accepted, reasons = accepted_trial(current, severe_regression)
         self.assertFalse(accepted)
-        self.assertTrue(any("safety" in reason for reason in reasons))
+        self.assertTrue(reasons)
 
     def test_retrieval_excludes_stale_contradicted_and_duplicate(self) -> None:
         memories = [

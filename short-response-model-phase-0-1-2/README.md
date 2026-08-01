@@ -3,14 +3,16 @@
 This repository implements the ordered Phase 0–8 program plus two structural branches and one targeted-recovery branch:
 
 - **Phase 2B progressive reduction** tests every current layer, recovery-tunes promising deletions, and preserves full-quality/balanced/minimum-memory model profiles before DPO.
-- **Phase 2C targeted recovery** ranks the surviving Phase 2B layers and trains the smallest selected-layer adapters that remain within strict quality floors of all-surviving-layer recovery.
+- **Phase 2C targeted recovery** ranks surviving Phase 2B layers and trains selected-layer adapters whose proportional training-resource savings exceed their proportional quality opportunity loss.
 - **Phase 4B post-alignment structural reduction** revalidates or further refines the accepted Phase 4 architecture before context/sparsity calibration.
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
-## v1.2.1 Phase 2B wrapper synchronization
+## v1.3 relative-opportunity evaluation
 
-The Phase 2B PowerShell runner now matches the Quality Evaluation v2.0 Python/YAML defaults, exposes `ProbeLimit` and every promotion threshold, forwards reproducibility/report options explicitly, and derives unique report names for custom output roots. This is an orchestration-only maintenance change: it does not alter model weights or prior evidence. See `PHASE_2B_WRAPPER_HOTFIX_v1.2.1.md`.
+Quality Evaluator v3 treats understandable conversational language as acceptable even when grammar or vocabulary is informal. References are examples, follow-up questions are permitted unless explicitly forbidden, and questions do not count as unsupported certainty. All official phases and the independent playground use one shared opportunity engine: the phase's proportional primary resource benefit must be strictly greater than combined proportional quality opportunity loss. Absolute score floors and zero-issue vetoes are prohibited. Technical invalidity and human gates remain binary prerequisites.
+
+The historical blueprint targets are preserved and amended by `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`. The authoritative implementation policy is `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`.
 
 ## Start here
 
@@ -33,15 +35,15 @@ The repository now separates learned brevity from the deployable hard boundary:
 - Phase 1 base/adapted evaluations use `eos_only` so weight-learning effects remain measurable.
 - The smoke test and Phases 5–8 use `one_sentence`, which stops after model-native EOS or the first validated sentence boundary and retains `max_new_tokens` as a fail-safe.
 - The controller protects decimals, versions, abbreviations, URLs/domains, Markdown code, ordered-list markers, internal ellipses, and unmatched quotes/brackets.
-- Phase 8 refuses packaging unless sealed evaluation used strict mode with zero one-sentence violations.
+- Phase 8 records the strict response-control mode and its observed violation rate for human release review; no absolute numerical violation floor independently promotes or rejects the model.
 
 See `RESPONSE_CONTROL_AND_EARLY_EXIT_AUDIT.md` and `scripts/phase_7_sparse_runtime/RESPONSE_CONTROL_CONTRACT.md`. This controller avoids decode work; it does not remove model weights or turn selective training into inference-time layer skipping.
 
-## Quality evaluation v2.0
+## Quality evaluation v3.0
 
-All generation-based phases and the independent Phase 2B playground use the shared quality-v2 evaluator in `scripts/common/quality_evaluation.py`. Unintelligible or corrupted output is a hard zero rather than a partially correct length/completion score. Gates independently review mean quality, worst-decile quality, pass and intelligibility rates, semantics, categories, completion, reference alignment, critical/major issues, and target NLL where available.
+All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py` plus `scripts/common/opportunity_evaluation.py`. Case-level analysis is continuous across comprehensibility, task adequacy, logic/factual consistency, safety, context consistency, completeness, brevity, conversational naturalness, and explicit content anchors. Severe corruption still receives a severe case cost, but candidate promotion is proportional rather than controlled by hidden absolute vetoes.
 
-The editable weights and thresholds are in `configs/quality_evaluation.json`. See `QUALITY_EVALUATION_V2_AUDIT.md` for the full review and `QUALITY_EVALUATION_V2_MIGRATION.md` before reusing older artifacts. Legacy summaries are deliberately rejected; checkpoints do not require retraining solely because their evaluation evidence is stale.
+Existing v2 generation evidence can be rescored with `scripts/common/rescore_quality_artifacts.py`; Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py`. Run `scripts/common/verify_quality_evaluation.py` and `scripts/common/audit_relative_opportunity_policy.py` after modifications.
 
 ## Production principle
 

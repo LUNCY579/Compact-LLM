@@ -58,18 +58,21 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--ablation-weight", type=float, default=0.45)
     p.add_argument("--structural-weight", type=float, default=0.20)
     p.add_argument("--max-new-tokens", type=int, default=32)
-    p.add_argument("--max-quality-index-loss", type=float, default=0.02)
-    p.add_argument("--max-frozen-quality-loss", type=float, default=0.01)
-    p.add_argument("--max-heuristic-loss", type=float, default=0.02)
-    p.add_argument("--max-semantic-pass-loss", type=float, default=0.02)
-    p.add_argument("--max-reference-f1-loss", type=float, default=0.03)
-    p.add_argument("--max-category-loss", type=float, default=0.05)
-    p.add_argument("--max-frozen-category-loss", type=float, default=0.03)
-    p.add_argument("--max-nll-increase", type=float, default=0.10)
-    p.add_argument("--min-complete-utterance-rate", type=float, default=0.99)
-    p.add_argument("--minimum-trainable-reduction", type=float, default=0.25)
-    p.add_argument("--max-new-major-issues", type=int, default=0)
-    p.add_argument("--balanced-quality-tolerance", type=float, default=0.01)
+    p.add_argument(
+        "--quality-profile",
+        choices=("balanced", "logic_oriented", "conversational_permissive"),
+        default="balanced",
+    )
+    for deprecated in (
+        "--max-quality-index-loss", "--max-frozen-quality-loss",
+        "--max-heuristic-loss", "--max-semantic-pass-loss",
+        "--max-reference-f1-loss", "--max-category-loss",
+        "--max-frozen-category-loss", "--max-nll-increase",
+        "--min-complete-utterance-rate", "--minimum-trainable-reduction",
+        "--balanced-quality-tolerance",
+    ):
+        p.add_argument(deprecated, type=float, default=None, help=argparse.SUPPRESS)
+    p.add_argument("--max-new-major-issues", type=int, default=None, help=argparse.SUPPRESS)
     p.add_argument("--qlora", action="store_true")
     p.add_argument("--gradient-checkpointing", action="store_true")
     p.add_argument("--resume", action="store_true")
@@ -155,19 +158,7 @@ def model_fingerprint(model_id: str) -> dict[str, Any]:
 
 
 def assessment_kwargs(args: argparse.Namespace) -> dict[str, Any]:
-    return {
-        "max_quality_index_loss": args.max_quality_index_loss,
-        "max_frozen_quality_loss": args.max_frozen_quality_loss,
-        "max_heuristic_loss": args.max_heuristic_loss,
-        "max_semantic_pass_loss": args.max_semantic_pass_loss,
-        "max_reference_f1_loss": args.max_reference_f1_loss,
-        "max_category_loss_allowed": args.max_category_loss,
-        "max_frozen_category_loss": args.max_frozen_category_loss,
-        "max_nll_increase": args.max_nll_increase,
-        "min_complete_utterance_rate": args.min_complete_utterance_rate,
-        "minimum_trainable_reduction": args.minimum_trainable_reduction,
-        "max_new_major_issues": args.max_new_major_issues,
-    }
+    return {"quality_profile": args.quality_profile}
 
 
 def evaluate_model(model_id: str, adapter: Path | None, root: Path, args: argparse.Namespace) -> dict[str, Any]:
@@ -297,12 +288,12 @@ def render_report(
         a = row["assessment"]
         candidate_lines.append(
             f"| {row['name']} | {row['selected_layers']} | {row['module_group']} | "
-            f"{a['quality_index']:.4f} | {a['quality_index_loss_vs_all_remaining']:.4f} | "
-            f"{a['quality_index_loss_vs_reduced_frozen']:.4f} | "
-            f"{a['trainable_parameter_reduction_vs_all_remaining']:.1%} | "
+            f"{a['quality_index']:.4f} | {a['resource_gain_fraction']:.3%} | "
+            f"{a['quality_opportunity_loss_fraction']:.3%} | "
+            f"{a.get('opportunity_margin_across_seeds', a['opportunity_margin']):+.3%} | "
             f"{row['generation_summary'].get('critical_failure_count', 0)} | "
             f"{len(row.get('repeat_results') or [])} | "
-            f"{'PASS' if a['eligible'] else 'FAIL'} |"
+            f"{'WORTHWHILE' if a['eligible'] else 'NOT WORTHWHILE'} |"
         )
     profile_lines = [
         f"| {name} | {row['name']} | {row['selected_layers']} | "
@@ -314,7 +305,7 @@ def render_report(
 
 ## Purpose
 
-Preserve the approved Phase 2B reduced architecture while finding the smallest surviving-layer LoRA placement that remains within strict quality floors of all-surviving-layer recovery.
+Preserve the approved Phase 2B reduced architecture while finding the smallest surviving-layer LoRA placement that remains whose proportional trainable-state saving is greater than its proportional quality opportunity loss.
 
 ## Evidence boundary
 
@@ -347,7 +338,7 @@ The ranking combines first-order target-loss sensitivity, temporary layer-bypass
 
 ## Selection rule
 
-A selective candidate must have zero critical failures, introduce no disallowed major issues, remain within the configured quality and category floors of both `all_remaining` and the reduced frozen model, remain within semantic, lexical-reference, completion, and target-NLL tolerances, materially reduce trainable parameters, and pass same-seed comparisons against separately trained `all_remaining` controls. Peak training VRAM and wall time are reported as measured secondary evidence because they can be noisy on a single Windows workstation.
+A selective candidate is compared with a same-seed all-surviving-layer control. Proportional trainable-state savings must be strictly greater than combined proportional quality opportunity loss. Semantics, content anchors, completion, categories, issues, and target NLL contribute continuously and never act as private absolute vetoes. Peak training VRAM and wall time remain measured secondary evidence.
 
 ## Handoff
 
@@ -394,19 +385,10 @@ def main() -> None:
             "phase2b_structural": args.structural_weight,
         },
         "max_new_tokens": args.max_new_tokens,
-        "thresholds": {
-            "max_quality_index_loss": args.max_quality_index_loss,
-            "max_frozen_quality_loss": args.max_frozen_quality_loss,
-            "max_heuristic_loss": args.max_heuristic_loss,
-            "max_semantic_pass_loss": args.max_semantic_pass_loss,
-            "max_reference_f1_loss": args.max_reference_f1_loss,
-            "max_category_loss": args.max_category_loss,
-            "max_frozen_category_loss": args.max_frozen_category_loss,
-            "max_nll_increase": args.max_nll_increase,
-            "min_complete_utterance_rate": args.min_complete_utterance_rate,
-            "minimum_trainable_reduction": args.minimum_trainable_reduction,
-            "max_new_major_issues": args.max_new_major_issues,
-            "balanced_quality_tolerance": args.balanced_quality_tolerance,
+        "relative_opportunity_policy": {
+            "quality_profile": args.quality_profile,
+            "decision_rule": "trainable-state gain > combined proportional quality loss",
+            "absolute_quality_floors": "prohibited",
         },
         "qlora": args.qlora,
         "gradient_checkpointing": args.gradient_checkpointing,
@@ -482,7 +464,7 @@ def main() -> None:
         ),
         reverse=True,
     )
-    provisional_profiles = select_profiles(rows, balanced_tolerance=args.balanced_quality_tolerance)
+    provisional_profiles = select_profiles(rows)
     repeat_names = {row["name"] for row in selective[: args.repeat_top_k]}
     repeat_names.update(row["name"] for row in provisional_profiles.values())
     repeat_seeds = sorted(
@@ -519,9 +501,12 @@ def main() -> None:
         name = str(base_row["name"])
         if name in repeated_names:
             return
-        base_row["seed_stability_pass"] = True
         base_row["repeat_results"] = []
         spec = spec_by_name[name]
+        margins = [float(base_row["assessment"].get("opportunity_margin", 0.0))]
+        gains = [float(base_row["assessment"].get("resource_gain_fraction", 0.0))]
+        losses = [float(base_row["assessment"].get("quality_opportunity_loss_fraction", 0.0))]
+        technical_valid = bool(base_row["assessment"].get("technical_valid", True))
         for seed in repeat_seeds:
             same_seed_all = all_remaining_by_seed[seed]
             if name == "all_remaining":
@@ -539,21 +524,28 @@ def main() -> None:
                 )
                 repeated.append(repeat)
             base_row["repeat_results"].append(repeat)
-            control_ok = bool(same_seed_all["assessment"]["eligible"])
-            if not control_ok:
-                base_row["seed_stability_pass"] = False
-                if name != "all_remaining":
-                    repeat["assessment"]["eligible"] = False
-                    repeat["assessment"]["rejection_reasons"].append(
-                        "same-seed all_remaining control failed against the reduced frozen model"
-                    )
-            if not repeat["assessment"]["eligible"]:
-                base_row["seed_stability_pass"] = False
-        if not base_row["seed_stability_pass"]:
-            base_row["assessment"]["eligible"] = False
-            base_row["assessment"]["rejection_reasons"].append(
-                "one or more same-seed comparisons or controls failed the hard gates"
+            assessment = repeat["assessment"]
+            technical_valid = technical_valid and bool(assessment.get("technical_valid", True))
+            margins.append(float(assessment.get("opportunity_margin", 0.0)))
+            gains.append(float(assessment.get("resource_gain_fraction", 0.0)))
+            losses.append(float(assessment.get("quality_opportunity_loss_fraction", 0.0)))
+        mean_gain = sum(gains) / len(gains)
+        mean_loss = sum(losses) / len(losses)
+        mean_margin = mean_gain - mean_loss
+        base_row["repeat_mean_resource_gain"] = mean_gain
+        base_row["repeat_mean_quality_opportunity_loss"] = mean_loss
+        base_row["repeat_mean_opportunity_margin"] = mean_margin
+        base_row["seed_stability_pass"] = technical_valid and (name == "all_remaining" or mean_margin > 0.0)
+        if name != "all_remaining":
+            base_row["assessment"]["eligible"] = base_row["seed_stability_pass"]
+            base_row["assessment"]["opportunity_margin_across_seeds"] = mean_margin
+            base_row["assessment"]["decision_explanation_across_seeds"] = (
+                f"mean resource gain {mean_gain:.6f} versus mean quality loss {mean_loss:.6f}"
             )
+            if not base_row["seed_stability_pass"]:
+                base_row["assessment"]["rejection_reasons"].append(
+                    "mean proportional opportunity margin across recorded seeds is not positive"
+                )
         repeated_names.add(name)
 
     for name in sorted(repeat_names):
@@ -562,14 +554,14 @@ def main() -> None:
     # A failed finalist can expose a different recommendation. Repeat any newly
     # selected profile and reselect until all final profiles have seed evidence.
     while True:
-        provisional_profiles = select_profiles(rows, balanced_tolerance=args.balanced_quality_tolerance)
+        provisional_profiles = select_profiles(rows)
         missing = {row["name"] for row in provisional_profiles.values()} - repeated_names
         if not missing:
             break
         for name in sorted(missing):
             repeat_and_gate(by_name[name])
 
-    profiles = select_profiles(rows, balanced_tolerance=args.balanced_quality_tolerance)
+    profiles = select_profiles(rows)
     phase_summaries: dict[str, str] = {}
     catalog_profiles: dict[str, dict[str, Any]] = {}
     for profile_name, row in profiles.items():

@@ -8,7 +8,7 @@ The PowerShell runner is the normal entry point. Python executables may be run i
 | `context_system.py` | Implements deterministic relevance/salience/recency scoring, stale/contradicted/duplicate filtering, tier budgets, and prefix keys. | A vector database or persistent production storage layer. |
 | `evaluate_context_system.py` | Produces retrieval traces and metrics and optionally compares actual compact-versus-full model generations. | A hidden semantic judge. Its rules are explicit and auditable. |
 | `benchmark_prefix_cache.py` | Measures full prefill versus exact stable-prefix KV reuse and checks next-token logits consistency. | Cross-model or stale-prefix cache reuse. |
-| `check_phase_5_gate.py` | Applies recall, forbidden-selection, memory-reduction, quality, and cache-consistency floors and writes the pending gate. | Human approval. |
+| `check_phase_5_gate.py` | Converts retrieval quality and context-token/KV savings into a proportional opportunity comparison and writes the pending gate. | Human approval. |
 | `check_human_gate.py` | Backward-compatible Phase 5 gate wrapper. | The canonical multi-phase gate checker. |
 | `README.md` | Explains architecture, required case schema, artifacts, and production boundaries. | An execution log. |
 | `EXECUTION_MANUAL.md` | Provides normal/resume commands and trace-review procedure. | Evidence that retrieval is correct. |

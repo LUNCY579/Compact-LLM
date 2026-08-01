@@ -32,7 +32,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--learning-rate", type=float, default=1e-3)
     parser.add_argument("--target-ratio", type=float, default=0.65)
     parser.add_argument("--validation-fraction", type=float, default=0.15)
-    parser.add_argument("--minimum-weighted-recall", type=float, default=0.95)
+    parser.add_argument("--minimum-weighted-recall", type=float, default=None, help="Deprecated; accepted for compatibility and ignored.")
     parser.add_argument("--budget-weight", type=float, default=0.10)
     parser.add_argument("--missed-contribution-weight", type=float, default=0.50)
     parser.add_argument("--seed", type=int, default=11)
@@ -66,28 +66,52 @@ def calibrate_threshold(
     logits: torch.Tensor,
     scores: torch.Tensor,
     ratio: float,
-    minimum_recall: float,
+    minimum_recall: float | None = None,
 ) -> tuple[float, dict[str, float]]:
+    """Choose dense-fallback confidence by proxy opportunity margin.
+
+    Expected active-compute reduction is compared with expected missed
+    contribution. No fixed recall floor controls calibration.
+    ``minimum_recall`` is a deprecated compatibility argument.
+    """
+
     conf = confidence(logits)
     mask = predicted_mask(logits, ratio)
     recall = weighted_recall(mask, scores)
-    best = (1.0, {"accepted_fraction": 0.0, "accepted_weighted_recall": 1.0})
+    best_threshold = 1.0
+    best_metrics = {
+        "accepted_fraction": 0.0,
+        "accepted_weighted_recall": 1.0,
+        "overall_weighted_recall": float(recall.mean().item()),
+        "proxy_resource_gain": 0.0,
+        "proxy_quality_opportunity_loss": 0.0,
+        "proxy_opportunity_margin": 0.0,
+    }
     for threshold in torch.linspace(0.0, 1.0, steps=101).tolist():
         accepted = conf >= threshold
-        if not accepted.any():
-            continue
-        accepted_recall = float(recall[accepted].mean().item())
         accepted_fraction = float(accepted.float().mean().item())
-        if accepted_recall >= minimum_recall and accepted_fraction >= best[1]["accepted_fraction"]:
-            best = (
-                float(threshold),
-                {
-                    "accepted_fraction": accepted_fraction,
-                    "accepted_weighted_recall": accepted_recall,
-                    "overall_weighted_recall": float(recall.mean().item()),
-                },
-            )
-    return best
+        accepted_recall = float(recall[accepted].mean().item()) if accepted.any() else 1.0
+        resource_gain = accepted_fraction * max(0.0, 1.0 - ratio)
+        # Dense-fallback samples have no sparse approximation loss.
+        quality_loss = float(((1.0 - recall) * accepted.float()).mean().item())
+        margin = resource_gain - quality_loss
+        candidate = {
+            "accepted_fraction": accepted_fraction,
+            "accepted_weighted_recall": accepted_recall,
+            "overall_weighted_recall": float(recall.mean().item()),
+            "proxy_resource_gain": resource_gain,
+            "proxy_quality_opportunity_loss": quality_loss,
+            "proxy_opportunity_margin": margin,
+        }
+        if (margin, resource_gain, accepted_recall) > (
+            best_metrics["proxy_opportunity_margin"],
+            best_metrics["proxy_resource_gain"],
+            best_metrics["accepted_weighted_recall"],
+        ):
+            best_threshold = float(threshold)
+            best_metrics = candidate
+    best_metrics["deprecated_minimum_recall_argument_ignored"] = minimum_recall
+    return best_threshold, best_metrics
 
 
 def main() -> None:
@@ -177,7 +201,8 @@ def main() -> None:
         "source_model_fingerprint": dataset.get("model_fingerprint"),
         "block_size": int(dataset["block_size"]),
         "target_ratio": args.target_ratio,
-        "minimum_weighted_recall": args.minimum_weighted_recall,
+        "calibration_policy": "maximize proxy active-compute gain minus proxy missed-contribution loss",
+        "deprecated_minimum_weighted_recall_ignored": args.minimum_weighted_recall,
         "routers": checkpoints,
         "warning": (
             "These routers are validated against oracle contribution labels. Runtime quality and wall-clock behavior "

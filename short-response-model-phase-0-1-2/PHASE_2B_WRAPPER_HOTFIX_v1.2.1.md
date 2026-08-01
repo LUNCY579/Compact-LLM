@@ -31,9 +31,9 @@ This maintenance update synchronizes the Phase 2B PowerShell entry point with th
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
   -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
   -ProbeLimit 150 `
-  -OutputRoot .\artifacts\phase_2b_quality_v2_thorough_20260731 `
-  -Report .\reports\PHASE_2B_QUALITY_V2_THOROUGH_20260731_REPORT.md `
-  -GateReport .\reports\PHASE_2B_QUALITY_V2_THOROUGH_20260731_STOP_GATE.md `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_2_thorough `
+  -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
+  -GateReport .\reports\PHASE_2B_V1_2_THOROUGH_STOP_GATE.md `
   -MaxDrops 10 `
   -RecoveryTopK 6 `
   -RecoverySteps 50 `

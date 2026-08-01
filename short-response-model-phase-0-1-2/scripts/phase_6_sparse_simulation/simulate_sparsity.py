@@ -23,7 +23,8 @@ from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import OracleMaskedGatedMLP
 from scripts.common.quality_evaluation import aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
-from scripts.common.quality_gate import assert_valid_reference, compare_quality_summaries
+from scripts.common.quality_gate import assert_valid_reference
+from scripts.common.opportunity_evaluation import evaluate_opportunity
 from scripts.common.response_control import (
     RESPONSE_CONTROL_MODES,
     build_stopping_criteria,
@@ -230,14 +231,12 @@ def main() -> None:
                 )
                 sparse_scored.append({"id": row.get("id", index), "category": row.get("category"), **assessed})
             quality = aggregate_scored(sparse_scored)
-            comparison = compare_quality_summaries(
-                dense_metrics, quality,
-                max_mean_quality_loss=0.01, max_quality_index_loss=0.015,
-                max_worst_decile_loss=0.03, max_category_quality_loss_allowed=0.04,
-                max_semantic_pass_loss=0.01, max_reference_alignment_loss=0.05,
-                min_quality_pass_rate=0.98, min_intelligibility_pass_rate=1.0,
-                min_semantic_pass_rate=0.98, min_complete_utterance_rate=0.99,
-                max_hard_failure_cases=0, max_critical_failures=0, max_major_issue_cases=0,
+            comparison = evaluate_opportunity(
+                dense_metrics,
+                quality,
+                resource_gain=max(0.0, 1.0 - float(ratio)),
+                resource_name="active_compute_reduction",
+                profile="balanced",
             )
             comparisons.append(
                 {
@@ -250,11 +249,11 @@ def main() -> None:
                     **quality,
                     "quality_comparison": comparison,
                     "quality_eligible": comparison["eligible"],
-                    "mean_quality_loss_from_dense": comparison["mean_quality_loss"],
-                    "mean_score_loss_from_dense": comparison["mean_quality_loss"],
-                    "quality_index_loss_from_dense": comparison["quality_index_loss"],
-                    "worst_decile_quality_loss_from_dense": comparison["worst_decile_quality_loss"],
-                    "semantic_pass_loss_from_dense": comparison["semantic_pass_loss"],
+                    "mean_quality_loss_from_dense": comparison["quality_opportunity_loss_fraction"],
+                    "mean_score_loss_from_dense": comparison["quality_opportunity_loss_fraction"],
+                    "quality_index_loss_from_dense": comparison["quality_opportunity_loss_fraction"],
+                    "worst_decile_quality_loss_from_dense": comparison["quality_dimension_losses"].get("worst_decile_quality", 0.0),
+                    "semantic_pass_loss_from_dense": comparison["quality_dimension_losses"].get("logic_factual_consistency", 0.0),
                     "speed_claim_allowed": False,
                 }
             )

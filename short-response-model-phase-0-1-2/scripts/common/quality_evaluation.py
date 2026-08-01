@@ -1,20 +1,18 @@
 from __future__ import annotations
 
-"""Deterministic, quality-oriented evaluation for short conversational replies.
+"""Continuous, conversationally permissive quality evaluation.
 
-The original evaluator treated non-empty text, apparent completion, and token
-range as equally important. That allowed unintelligible model-collapse output to
-receive deceptively high scores. This module replaces that behavior with:
+Evaluator v3 separates descriptive response analysis from phase promotion.
+It deliberately allows casual wording, alternate valid conversational moves,
+and minor grammar/vocabulary mistakes whenever the intended meaning remains
+clear. References are examples rather than unique answers unless a benchmark
+record explicitly declares a response contract.
 
-* zero-tolerance hard failure detection for corruption and repetition collapse;
-* separately visible dimensions for intelligibility, task compliance, semantic
-  safety, reference alignment, completeness, brevity, non-echo, and naturalness;
-* category-aware weights stored in ``configs/quality_evaluation.json``;
-* aggregate tail metrics so a good mean cannot hide catastrophic cases;
-* backward-compatible legacy check reporting for historical comparison.
-
-The implementation is intentionally deterministic and dependency-light. It does
-not pretend to be a learned semantic judge; human review remains required.
+Important boundary: this module may label corruption, safety failures, or other
+issues and may assign large continuous costs to them. It does *not* reject a
+model or enforce an absolute score floor. Official phase decisions are made by
+``scripts.common.opportunity_evaluation`` using relative resource benefit versus
+relative quality opportunity loss.
 """
 
 import json
@@ -25,13 +23,13 @@ import unicodedata
 from collections import Counter, defaultdict
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 from rapidfuzz.fuzz import ratio as fuzzy_ratio
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = ROOT / "configs" / "quality_evaluation.json"
-QUALITY_EVALUATION_VERSION = "2.0"
+QUALITY_EVALUATION_VERSION = "3.0"
 
 STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "because", "but", "by", "can",
@@ -42,37 +40,28 @@ STOPWORDS = {
     "up", "was", "we", "were", "what", "when", "which", "who", "why", "will",
     "with", "would", "you", "your", "yes", "yeah", "sure", "okay", "ok",
 }
-
 FUNCTION_WORDS = STOPWORDS | {
     "about", "after", "again", "all", "also", "any", "before", "been", "being",
     "down", "each", "even", "more", "most", "much", "only", "other", "over",
     "same", "some", "than", "too", "very", "while",
 }
-
 DANGLING_ENDINGS = (
     " and", " or", " but", " because", " which", " that", " to", " with", " for",
     " from", " if", " when", " while", " although", " however", ":", "-", "—", "/",
 )
-
-ROLEPLAY_CATEGORIES = {
-    "naturalness", "playful_banter", "mood_consistency", "relationship_continuity",
-    "role_identity_adherence", "empathy", "empathy_in_character", "celebration",
-    "celebration_in_character", "apology_repair", "apology_repair_in_character",
-}
-
 FACTUAL_CATEGORIES = {
     "factual_compression", "factual_compression_in_character", "context_consistency",
     "memory_recall", "knowledge_boundary", "safety_boundary", "safety_boundary_in_character",
+}
+QUESTION_STARTERS = {
+    "who", "what", "which", "where", "when", "why", "how", "can", "could", "would",
+    "should", "do", "does", "did", "is", "are", "was", "were", "will", "have", "has",
 }
 
 
 @dataclass(frozen=True)
 class QualityConfig:
     raw: dict[str, Any]
-
-    @property
-    def pass_threshold(self) -> float:
-        return float(self.raw.get("case_pass_threshold", 0.80))
 
     @property
     def weights(self) -> dict[str, float]:
@@ -86,12 +75,41 @@ class QualityConfig:
         }
 
     @property
+    def diagnostic_thresholds(self) -> dict[str, float]:
+        return {
+            str(key): float(value)
+            for key, value in (self.raw.get("diagnostic_thresholds") or {}).items()
+        }
+
+    @property
+    def issue_costs(self) -> dict[str, float]:
+        defaults = {"critical": 1.0, "major": 0.35, "warning": 0.05}
+        defaults.update({str(k): float(v) for k, v in (self.raw.get("issue_costs") or {}).items()})
+        return defaults
+
+    @property
+    def reference_policy(self) -> dict[str, float]:
+        defaults = {
+            "default_open_ended_importance": 0.10,
+            "factual_category_importance": 0.65,
+            "safety_category_importance": 0.50,
+            "explicit_contract_importance": 1.0,
+        }
+        defaults.update({str(k): float(v) for k, v in (self.raw.get("reference_policy") or {}).items()})
+        return defaults
+
+    # Compatibility aliases. These are detector settings, not promotion floors.
+    @property
     def hard_thresholds(self) -> dict[str, float]:
-        return {str(k): float(v) for k, v in (self.raw.get("hard_failure_thresholds") or {}).items()}
+        return self.diagnostic_thresholds
+
+    @property
+    def pass_threshold(self) -> None:
+        return None
 
     @property
     def aggregate_defaults(self) -> dict[str, float]:
-        return {str(k): float(v) for k, v in (self.raw.get("aggregate_gate_defaults") or {}).items()}
+        return {}
 
 
 def load_quality_config(path: Path | None = None) -> QualityConfig:
@@ -128,16 +146,9 @@ def content_tokens(text: str) -> list[str]:
 
 
 def build_corpus_profile(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """Build a benchmark-local lexical profile from prompts and references.
-
-    The profile is used only for post-generation diagnostics. It never changes
-    the model prompt. A local profile avoids a large language-detector
-    dependency while making malformed, out-of-distribution word salad easier
-    to identify.
-    """
+    """Build lexical diagnostics only; vocabulary membership never proves quality."""
 
     word_counts: Counter[str] = Counter(FUNCTION_WORDS)
-    trigram_counts: Counter[str] = Counter()
     for record in records:
         texts: list[str] = []
         for message in record.get("messages", []) or []:
@@ -149,30 +160,17 @@ def build_corpus_profile(records: list[dict[str, Any]]) -> dict[str, Any]:
             texts.append(reference)
         for text in texts:
             word_counts.update(word_tokens(text))
-            compact = re.sub(r"[^a-z]+", " ", normalize_text(text))
-            for word in compact.split():
-                padded = f"^{word}$"
-                trigram_counts.update(padded[index : index + 3] for index in range(max(0, len(padded) - 2)))
-    return {
-        "vocabulary": set(word_counts),
-        "word_counts": word_counts,
-        "trigrams": set(trigram_counts),
-        "record_count": len(records),
-    }
+    return {"vocabulary": set(word_counts), "word_counts": word_counts, "record_count": len(records)}
 
 
 def token_f1(reference: str | None, reply: str) -> float | None:
     if not reference:
         return None
-    left = word_tokens(reference)
-    right = word_tokens(reply)
+    left, right = word_tokens(reference), word_tokens(reply)
     if not left or not right:
         return 0.0
-    left_counts = Counter(left)
-    right_counts = Counter(right)
-    overlap = sum((left_counts & right_counts).values())
-    precision = overlap / len(right)
-    recall = overlap / len(left)
+    overlap = sum((Counter(left) & Counter(right)).values())
+    precision, recall = overlap / len(right), overlap / len(left)
     return 2.0 * precision * recall / max(precision + recall, 1e-12)
 
 
@@ -182,9 +180,8 @@ def anchor_recall(reference: str | None, reply: str) -> float | None:
     anchors = content_tokens(reference)
     if not anchors:
         return 1.0 if normalize_text(reference) == normalize_text(reply) else 0.5
-    reply_counts = Counter(content_tokens(reply))
-    matched = sum(1 for token in set(anchors) if reply_counts[token] > 0)
-    return matched / len(set(anchors))
+    reply_set = set(content_tokens(reply))
+    return sum(1 for token in set(anchors) if token in reply_set) / len(set(anchors))
 
 
 def reference_alignment(reference: str | None, reply: str) -> dict[str, float | None]:
@@ -198,14 +195,11 @@ def reference_alignment(reference: str | None, reply: str) -> dict[str, float | 
     f1 = float(token_f1(reference, reply) or 0.0)
     fuzzy = float(fuzzy_ratio(normalize_text(reference), normalize_text(reply))) / 100.0
     anchors = float(anchor_recall(reference, reply) or 0.0)
-    # Fuzzy similarity helps short paraphrases; anchor recall helps factual and
-    # memory cases. The maximum avoids penalizing harmless surface variation.
-    score = max(f1, fuzzy, 0.90 * anchors)
     return {
         "reference_token_f1": f1,
         "reference_fuzzy_similarity": fuzzy,
         "reference_anchor_recall": anchors,
-        "reference_alignment_score": max(0.0, min(1.0, score)),
+        "reference_alignment_score": max(0.0, min(1.0, max(f1, fuzzy, 0.90 * anchors))),
     }
 
 
@@ -219,131 +213,154 @@ def script_name(char: str) -> str | None:
     if not char.isalpha():
         return None
     name = unicodedata.name(char, "")
-    for script in ("LATIN", "CYRILLIC", "GREEK", "ARABIC", "HEBREW", "HIRAGANA", "KATAKANA", "HANGUL"):
-        if script in name:
-            return script
+    for candidate in ("LATIN", "CYRILLIC", "GREEK", "ARABIC", "HEBREW", "HIRAGANA", "KATAKANA", "HANGUL"):
+        if candidate in name:
+            return candidate
     if "CJK" in name or "IDEOGRAPH" in name:
         return "CJK"
     return "OTHER"
 
 
-def longest_run(items: Iterable[str]) -> int:
-    maximum = current = 0
-    previous: str | None = None
-    for item in items:
-        if item == previous:
-            current += 1
-        else:
-            current = 1
-            previous = item
-        maximum = max(maximum, current)
-    return maximum
-
-
 def repeated_ngram_fraction(tokens: list[str], n: int) -> float:
-    if len(tokens) < n:
+    grams = [tuple(tokens[index : index + n]) for index in range(max(0, len(tokens) - n + 1))]
+    if len(grams) <= 1:
         return 0.0
-    grams = [tuple(tokens[index : index + n]) for index in range(len(tokens) - n + 1)]
     counts = Counter(grams)
-    repeated_positions = sum(count for count in counts.values() if count > 1)
-    return repeated_positions / len(grams)
+    repeated = sum(count - 1 for count in counts.values() if count > 1)
+    return repeated / len(grams)
+
+
+def longest_run(tokens: list[str]) -> int:
+    best = current = 0
+    previous: str | None = None
+    for token in tokens:
+        current = current + 1 if token == previous else 1
+        previous = token
+        best = max(best, current)
+    return best
 
 
 def character_periodicity(text: str) -> float:
     compact = re.sub(r"\s+", "", normalize_text(text))
-    if len(compact) < 12:
+    if len(compact) < 8:
         return 0.0
     best = 0.0
-    for size in range(2, min(13, len(compact) // 3 + 1)):
-        for start in range(0, len(compact) - size * 3 + 1):
-            unit = compact[start : start + size]
-            if len(set(unit)) <= 1:
-                continue
-            repeats = 1
-            cursor = start + size
-            while compact[cursor : cursor + size] == unit:
-                repeats += 1
-                cursor += size
-            if repeats >= 3:
-                best = max(best, (repeats * size) / len(compact))
+    for width in range(1, min(8, len(compact) // 2) + 1):
+        matches = sum(1 for index in range(width, len(compact)) if compact[index] == compact[index - width])
+        best = max(best, matches / max(1, len(compact) - width))
     return best
 
 
 def balanced_delimiters(text: str) -> bool:
-    pairs = {"(": ")", "[": "]", "{": "}", "“": "”", "‘": "’", '"': '"'}
-    for left, right in pairs.items():
-        if left == right:
-            if text.count(left) % 2 != 0:
+    pairs = {"(": ")", "[": "]", "{": "}"}
+    stack: list[str] = []
+    for char in text:
+        if char in pairs:
+            stack.append(pairs[char])
+        elif char in pairs.values():
+            if not stack or stack.pop() != char:
                 return False
-        elif text.count(left) != text.count(right):
-            return False
-    return True
+    return not stack
 
 
-def complete_utterance(reply: str) -> bool:
-    value = reply.strip()
-    if not value:
+def complete_utterance(text: str) -> bool:
+    """Permissive conversational completeness, not formal grammar grading."""
+
+    cleaned = text.strip()
+    tokens = word_tokens(cleaned)
+    if not cleaned or not tokens:
         return False
-    tokens = word_tokens(value)
-    if not tokens:
+    if not balanced_delimiters(cleaned):
         return False
-    if not balanced_delimiters(value):
-        return False
-    normalized = normalize_text(value)
-    if normalized.endswith(DANGLING_ENDINGS):
-        return False
-    if len(tokens) <= 4:
-        return not bool(re.fullmatch(r"[\W_]+", value, flags=re.UNICODE))
-    if value.endswith((".", "!", "?", "…", "。", "！", "？", "😊", "😭", "🙂", "👍")):
+    if len(tokens) <= 5:
         return True
-    # Short texting responses need not end in punctuation, but unfinished
-    # conjunctions and delimiter imbalance are rejected above.
+    lowered = normalize_text(cleaned)
+    if lowered.endswith(DANGLING_ENDINGS):
+        return False
+    if cleaned[-1] in ".!?。！？…'\"”’)]}":
+        return True
+    # Text messages frequently omit punctuation. A compact, non-dangling reply is usable.
     return len(tokens) <= 24
 
 
-def infer_expected(record: dict[str, Any]) -> dict[str, Any]:
-    expected = dict(record.get("expected") or {})
+def is_question(reply: str) -> bool:
+    stripped = normalize_text(reply)
+    if "?" in reply or "？" in reply:
+        return True
+    tokens = word_tokens(stripped)
+    return bool(tokens and tokens[0] in QUESTION_STARTERS)
+
+
+def explicit_response_contract(record: dict[str, Any]) -> dict[str, Any]:
+    """Return only explicit behavioral requirements.
+
+    Category names and the punctuation of a reference answer never create an
+    implicit prohibition or requirement.
+    """
+
     metadata = record.get("metadata") or {}
-    expected.setdefault("min_tokens", int(metadata.get("target_token_min", 1)))
-    expected.setdefault("max_tokens", int(metadata.get("target_token_max", 32)))
-    category = str(record.get("category") or metadata.get("reply_class") or "").lower()
-    reference = record.get("reference")
-    if reference is None:
-        messages = record.get("messages") or []
-        if messages and messages[-1].get("role") == "assistant":
-            reference = str(messages[-1].get("content", ""))
-    if category in {"clarification", "concise_clarification"} or (
-        reference and str(reference).strip().endswith("?")
-    ):
-        expected.setdefault("should_ask_question", True)
-    if category in {"acknowledgment", "celebration"} and not (
-        reference and "?" in str(reference)
-    ):
-        expected.setdefault("should_not_ask_question", True)
-    return expected
+    expected = dict(record.get("expected") or {})
+    contract = dict(record.get("response_contract") or {})
+    contract.setdefault("min_tokens", int(expected.get("min_tokens", metadata.get("target_token_min", 1))))
+    contract.setdefault("max_tokens", int(expected.get("max_tokens", metadata.get("target_token_max", 32))))
+    if "should_ask_question" in expected:
+        contract.setdefault("question_required", bool(expected["should_ask_question"]))
+    if "should_not_ask_question" in expected:
+        contract.setdefault("question_forbidden", bool(expected["should_not_ask_question"]))
+    if "should_not_echo_user" in expected:
+        contract.setdefault("user_echo_forbidden", bool(expected["should_not_echo_user"]))
+    contract.setdefault("required_facts", list(expected.get("must_include_all", [])))
+    contract.setdefault("required_any", list(expected.get("must_include_any", [])))
+    contract.setdefault("forbidden_claims", list(expected.get("must_not_include_any", [])))
+    explicit_semantic = any(
+        key in record.get("response_contract", {})
+        for key in ("required_facts", "required_any", "forbidden_claims", "question_required", "question_forbidden")
+    ) or any(
+        key in expected
+        for key in ("must_include_all", "must_include_any", "must_not_include_any", "should_ask_question", "should_not_ask_question")
+    )
+    contract.setdefault("open_ended", not explicit_semantic)
+    contract.setdefault("acceptable_modes", [])
+    return contract
+
+
+def infer_expected(record: dict[str, Any]) -> dict[str, Any]:
+    """Compatibility wrapper; unlike v2 it does not infer rules from category."""
+
+    contract = explicit_response_contract(record)
+    return {
+        "min_tokens": contract["min_tokens"],
+        "max_tokens": contract["max_tokens"],
+        "must_include_all": contract.get("required_facts", []),
+        "must_include_any": contract.get("required_any", []),
+        "must_not_include_any": contract.get("forbidden_claims", []),
+        "should_ask_question": bool(contract.get("question_required", False)),
+        "should_not_ask_question": bool(contract.get("question_forbidden", False)),
+        "should_not_echo_user": bool(contract.get("user_echo_forbidden", False)),
+        "open_ended": bool(contract.get("open_ended", True)),
+    }
 
 
 def legacy_checks(record: dict[str, Any], reply: str, token_count: int) -> dict[str, bool]:
     expected = infer_expected(record)
+    normalized = normalize_text(reply)
     checks: dict[str, bool] = {
         "nonempty": bool(reply.strip()),
         "complete_utterance": complete_utterance(reply),
-        "token_range": int(expected.get("min_tokens", 1)) <= token_count <= int(expected.get("max_tokens", 32)),
+        "token_range": int(expected["min_tokens"]) <= token_count <= int(expected["max_tokens"]),
     }
     for phrase in expected.get("must_include_all", []):
-        checks[f"include:{phrase}"] = normalize_text(str(phrase)) in normalize_text(reply)
+        checks[f"include:{phrase}"] = normalize_text(str(phrase)) in normalized
     include_any = expected.get("must_include_any", [])
     if include_any:
-        checks["include_any"] = any(normalize_text(str(item)) in normalize_text(reply) for item in include_any)
+        checks["include_any"] = any(normalize_text(str(item)) in normalized for item in include_any)
     forbidden = expected.get("must_not_include_any", [])
     if forbidden:
-        checks["exclude_forbidden"] = not any(
-            normalize_text(str(item)) in normalize_text(reply) for item in forbidden
-        )
+        checks["exclude_forbidden"] = not any(normalize_text(str(item)) in normalized for item in forbidden)
     if expected.get("should_ask_question"):
-        checks["asks_question"] = "?" in reply or "？" in reply
+        checks["asks_question"] = is_question(reply)
     if expected.get("should_not_ask_question"):
-        checks["does_not_ask_question"] = "?" not in reply and "？" not in reply
+        checks["does_not_ask_question"] = not is_question(reply)
     if expected.get("should_not_echo_user"):
         messages = record.get("messages") or []
         user = next((str(item.get("content", "")) for item in reversed(messages) if item.get("role") == "user"), "")
@@ -352,21 +369,14 @@ def legacy_checks(record: dict[str, Any], reply: str, token_count: int) -> dict[
 
 
 def task_compliance_score(checks: dict[str, bool]) -> float:
-    # Nonempty/completion/length are scored in separate dimensions. Here they
-    # receive low weight so missing a semantic instruction cannot be hidden by
-    # merely producing text of the right length.
-    weights: dict[str, float] = {}
-    for key in checks:
-        if key == "nonempty":
-            weights[key] = 0.10
-        elif key == "complete_utterance":
-            weights[key] = 0.15
-        elif key == "token_range":
-            weights[key] = 0.10
-        else:
-            weights[key] = 1.0
-    total = sum(weights.values())
-    return sum(weights[key] for key, passed in checks.items() if passed) / max(total, 1e-12)
+    explicit = {
+        key: passed
+        for key, passed in checks.items()
+        if key not in {"nonempty", "complete_utterance", "token_range"}
+    }
+    if explicit:
+        return sum(1.0 for passed in explicit.values() if passed) / len(explicit)
+    return 1.0 if checks.get("nonempty") else 0.0
 
 
 def brevity_score(token_count: int, minimum: int, maximum: int) -> float:
@@ -375,16 +385,14 @@ def brevity_score(token_count: int, minimum: int, maximum: int) -> float:
     if minimum <= token_count <= maximum:
         return 1.0
     if token_count < minimum:
-        return max(0.0, token_count / max(1, minimum))
-    overshoot = token_count - maximum
-    return max(0.0, 1.0 - overshoot / max(1, maximum))
+        return max(0.50, token_count / max(1, minimum))
+    return max(0.0, 1.0 - (token_count - maximum) / max(1, maximum))
 
 
 def quality_weights_for(record: dict[str, Any], config: QualityConfig) -> dict[str, float]:
     category = str(record.get("category") or (record.get("metadata") or {}).get("reply_class") or "").lower()
     if category in config.category_overrides:
         return config.category_overrides[category]
-    # Match suffix forms such as ``*_in_character`` to their base category.
     for key, value in config.category_overrides.items():
         if category.startswith(key):
             return value
@@ -399,160 +407,132 @@ def intelligibility_diagnostics(
     thresholds: dict[str, float],
     corpus_profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
+    """Detect objective corruption without using vocabulary perfection as a gate."""
+
     normalized = normalize_text(reply)
     tokens = word_tokens(reply)
-    token_counts = Counter(tokens)
+    counts = Counter(tokens)
     chars = [char for char in reply if not char.isspace()]
     letters = [char for char in chars if char.isalpha()]
     symbols = [char for char in chars if not char.isalnum()]
-    nonempty_lines = [line.strip() for line in reply.splitlines() if line.strip()]
+    lines = [line.strip() for line in reply.splitlines() if line.strip()]
     scripts = Counter(filter(None, (script_name(char) for char in letters)))
     active_scripts = {name: count for name, count in scripts.items() if count >= 2}
     dominant_script_share = max(active_scripts.values(), default=0) / max(1, sum(active_scripts.values()))
     consecutive = longest_run(tokens)
-    max_share = max(token_counts.values(), default=0) / max(1, len(tokens))
+    max_share = max(counts.values(), default=0) / max(1, len(tokens))
     bigram_repeat = repeated_ngram_fraction(tokens, 2)
     trigram_repeat = repeated_ngram_fraction(tokens, 3)
     periodicity = character_periodicity(reply)
     replacement_count = reply.count("�") + reply.count("\ufffd")
-    control_count = sum(
-        1 for char in reply if unicodedata.category(char) in {"Cc", "Cs", "Co"} and char not in "\n\r\t"
-    )
+    control_count = sum(1 for char in reply if unicodedata.category(char) in {"Cc", "Cs", "Co"} and char not in "\n\r\t")
     symbol_ratio = len(symbols) / max(1, len(chars))
     alpha_ratio = len(letters) / max(1, len(chars))
-    model_tokens_per_word = (
-        float(visible_model_tokens) / max(1, len(tokens)) if visible_model_tokens is not None else None
-    )
-    median_line_length = (
-        statistics.median(sum(char.isalnum() for char in line) for line in nonempty_lines)
-        if nonempty_lines
-        else 0.0
-    )
+    model_tokens_per_word = float(visible_model_tokens) / max(1, len(tokens)) if visible_model_tokens is not None else None
+    median_line_length = statistics.median(sum(char.isalnum() for char in line) for line in lines) if lines else 0.0
     function_ratio = sum(1 for token in tokens if token in FUNCTION_WORDS) / max(1, len(tokens))
     long_token_ratio = sum(1 for token in tokens if len(token) >= 18) / max(1, len(tokens))
     vocabulary = set((corpus_profile or {}).get("vocabulary") or [])
     known_word_ratio = (
         sum(1 for token in tokens if token in vocabulary or token in FUNCTION_WORDS) / max(1, len(tokens))
-        if vocabulary
-        else None
+        if vocabulary else None
     )
     unknown_content = [
         token for token in tokens
         if len(token) >= 4 and token not in FUNCTION_WORDS and vocabulary and token not in vocabulary
     ]
-    unknown_content_ratio = len(unknown_content) / max(1, len([token for token in tokens if len(token) >= 4 and token not in FUNCTION_WORDS]))
-    surface_chunks = re.findall(r"\S+", reply)
+    unknown_denominator = len([token for token in tokens if len(token) >= 4 and token not in FUNCTION_WORDS])
+    unknown_content_ratio = len(unknown_content) / max(1, unknown_denominator)
+    chunks = re.findall(r"\S+", reply)
     internal_punctuation_tokens = sum(
-        1
-        for chunk in surface_chunks
-        if re.search(r"[A-Za-z][,;/—][A-Za-z]", chunk)
-        or re.search(r"[A-Za-z]\.[A-Za-z]", chunk)
+        1 for chunk in chunks
+        if re.search(r"[A-Za-z][,;/—][A-Za-z]", chunk) or re.search(r"[A-Za-z]\.[A-Za-z]", chunk)
     )
-    mixed_script_token_count = 0
-    for chunk in surface_chunks:
-        chunk_scripts = {script_name(char) for char in chunk if char.isalpha()} - {None}
-        if len(chunk_scripts) >= 2:
-            mixed_script_token_count += 1
+    mixed_script_token_count = sum(
+        1 for chunk in chunks
+        if len({script_name(char) for char in chunk if char.isalpha()} - {None}) >= 2
+    )
 
-    hard: list[str] = []
+    critical: list[str] = []
     major: list[str] = []
     warnings: list[str] = []
-
     if not normalized or not tokens:
-        hard.append("empty_or_nonlinguistic_output")
+        critical.append("empty_or_nonlinguistic_output")
     if replacement_count >= int(thresholds.get("replacement_character_count", 1)):
-        hard.append("unicode_replacement_corruption")
+        critical.append("unicode_replacement_corruption")
     if control_count >= int(thresholds.get("control_character_count", 1)):
-        hard.append("invalid_control_character")
+        critical.append("invalid_control_character")
     if consecutive >= int(thresholds.get("consecutive_token_run", 4)):
-        hard.append("consecutive_repetition_collapse")
+        critical.append("consecutive_repetition_collapse")
     if len(tokens) >= 8 and max_share >= thresholds.get("max_token_share", 0.45):
-        hard.append("single_token_repetition_collapse")
+        critical.append("single_token_repetition_collapse")
     if len(tokens) >= 8 and bigram_repeat >= thresholds.get("repeated_bigram_fraction", 0.55):
-        hard.append("repeated_bigram_collapse")
+        critical.append("repeated_bigram_collapse")
     if len(tokens) >= 10 and trigram_repeat >= thresholds.get("repeated_trigram_fraction", 0.45):
-        hard.append("repeated_trigram_collapse")
+        critical.append("repeated_trigram_collapse")
     if periodicity >= 0.35:
-        hard.append("character_loop_collapse")
+        critical.append("character_loop_collapse")
     if len(chars) >= 12 and symbol_ratio > thresholds.get("maximum_symbol_ratio", 0.45):
-        hard.append("excessive_symbol_corruption")
-    if len(nonempty_lines) > int(thresholds.get("maximum_nonempty_lines", 8)) and median_line_length < 8:
-        hard.append("fragmented_line_collapse")
-    elif len(nonempty_lines) >= 4 and median_line_length <= 2:
+        critical.append("excessive_symbol_corruption")
+    if len(lines) > int(thresholds.get("maximum_nonempty_lines", 8)) and median_line_length < 8:
+        critical.append("fragmented_line_collapse")
+    elif len(lines) >= 4 and median_line_length <= 2:
         major.append("fragmented_micro_line_output")
-    if model_tokens_per_word is not None and len(tokens) >= int(
-        thresholds.get("minimum_words_for_fragmentation_gate", 8)
-    ) and model_tokens_per_word > thresholds.get("maximum_model_tokens_per_word", 3.2):
-        hard.append("tokenization_fragmentation_collapse")
+    if (
+        model_tokens_per_word is not None
+        and len(tokens) >= int(thresholds.get("minimum_words_for_fragmentation_signal", 8))
+        and model_tokens_per_word > thresholds.get("maximum_model_tokens_per_word", 3.2)
+    ):
+        critical.append("tokenization_fragmentation_collapse")
 
-    # Script mixing alone is not an error: multilingual answers are valid. It
-    # becomes a hard signal only when three scripts are interleaved or when
-    # mixed scripts co-occur with other structural corruption.
     mixed_scripts = len(active_scripts) >= 2 and dominant_script_share < 0.90
-    if len(active_scripts) >= 3 and len(tokens) >= 6:
-        hard.append("extreme_script_mixing")
-    elif mixed_scripts and (periodicity >= 0.20 or symbol_ratio > 0.30 or model_tokens_per_word and model_tokens_per_word > 2.5):
-        hard.append("corrupted_script_mixing")
+    if len(active_scripts) >= 3 and len(tokens) >= 6 and (symbol_ratio > 0.20 or mixed_script_token_count >= 2):
+        critical.append("extreme_script_mixing")
+    elif mixed_scripts and (periodicity >= 0.20 or symbol_ratio > 0.30):
+        critical.append("corrupted_script_mixing")
     elif mixed_scripts:
         warnings.append("multiscript_output_review")
 
-    if (
-        vocabulary
-        and len(tokens) >= 8
-        and reference_alignment_score < 0.35
-        and known_word_ratio is not None
-        and known_word_ratio < 0.68
-        and unknown_content_ratio > 0.40
-    ):
-        hard.append("lexically_unintelligible_output")
-    if len(tokens) >= 8 and reference_alignment_score < 0.35 and internal_punctuation_tokens >= 2:
-        hard.append("malformed_token_word_salad")
-    if len(tokens) >= 8 and reference_alignment_score < 0.35 and mixed_script_token_count >= 1:
-        hard.append("mixed_script_token_corruption")
+    # Unknown vocabulary is only a review signal. Real people use names, slang,
+    # typos, code, and words absent from a small benchmark.
+    if vocabulary and len(tokens) >= 8 and known_word_ratio is not None and known_word_ratio < 0.55:
+        warnings.append("high_out_of_benchmark_vocabulary")
+    if len(tokens) >= 8 and internal_punctuation_tokens >= 2 and function_ratio < 0.08:
+        critical.append("malformed_token_word_salad")
+    if len(tokens) >= 8 and mixed_script_token_count >= 2 and function_ratio < 0.08:
+        critical.append("mixed_script_token_corruption")
 
-    # Coherent paraphrases may have low reference overlap. For longer output,
-    # near-zero alignment plus several surface anomalies is strong evidence of
-    # word salad. This combined rule catches collapse that simple repetition
-    # detectors miss without rejecting short valid alternatives such as
-    # "Good call." versus "Nice.".
     anomaly_points = sum(
-        [
-            alpha_ratio < 0.55,
-            symbol_ratio > 0.22,
-            function_ratio < 0.07 and len(tokens) >= 10,
-            long_token_ratio > 0.12,
-            model_tokens_per_word is not None and model_tokens_per_word > 2.2,
-            len(active_scripts) >= 2,
-            median_line_length < 4 and len(nonempty_lines) >= 4,
-        ]
+        bool(value)
+        for value in (
+            alpha_ratio < 0.45,
+            symbol_ratio > 0.28,
+            function_ratio < 0.03 and len(tokens) >= 10,
+            long_token_ratio > 0.18,
+            model_tokens_per_word is not None and model_tokens_per_word > 2.7,
+            median_line_length < 4 and len(lines) >= 4,
+        )
     )
-    if len(tokens) >= 8 and reference_alignment_score < 0.08 and anomaly_points >= 2:
-        hard.append("unintelligible_word_salad")
-    elif len(tokens) >= 8 and reference_alignment_score < 0.12 and anomaly_points >= 1:
+    if len(tokens) >= 10 and anomaly_points >= 3:
+        critical.append("unintelligible_word_salad")
+    elif len(tokens) >= 10 and anomaly_points >= 2:
         major.append("probable_word_salad")
 
-    if len(tokens) >= 8 and function_ratio < 0.04:
-        warnings.append("low_function_word_coherence")
-    if len(tokens) >= 6 and reference_alignment_score < 0.05:
-        warnings.append("very_low_reference_alignment")
-
-    hard = sorted(set(hard))
-    major = sorted(set(major))
-    warnings = sorted(set(warnings))
-    penalty = 0.0
-    penalty += min(0.45, max(0, consecutive - 1) * 0.08)
-    penalty += min(0.25, bigram_repeat * 0.35)
-    penalty += min(0.25, trigram_repeat * 0.35)
-    penalty += min(0.25, periodicity * 0.40)
-    penalty += 0.20 if mixed_scripts else 0.0
-    penalty += 0.20 if symbol_ratio > 0.25 else 0.0
+    critical, major, warnings = sorted(set(critical)), sorted(set(major)), sorted(set(warnings))
+    penalty = min(1.0, 0.08 * max(0, consecutive - 1) + 0.30 * bigram_repeat + 0.30 * trigram_repeat + 0.25 * periodicity)
+    penalty += 0.18 if mixed_scripts else 0.0
+    penalty += 0.18 if symbol_ratio > 0.25 else 0.0
     penalty += 0.15 if model_tokens_per_word is not None and model_tokens_per_word > 2.2 else 0.0
-    penalty += 0.20 if major else 0.0
-    score = 0.0 if hard else max(0.0, 1.0 - penalty)
+    penalty += 0.35 if major else 0.0
+    if critical:
+        # Objective corruption is a zero-comprehensibility case. This is a
+        # severe continuous cost, not an automatic candidate-level veto.
+        penalty = 1.0
+    score = max(0.0, 1.0 - min(1.0, penalty))
     return {
         "intelligibility_score": score,
-        "intelligibility_pass": not hard,
-        "hard_failures": hard,
+        "intelligibility_pass": not critical,
+        "hard_failures": critical,
         "major_issues": major,
         "warnings": warnings,
         "metrics": {
@@ -568,7 +548,7 @@ def intelligibility_diagnostics(
             "symbol_ratio": symbol_ratio,
             "alphabetic_ratio": alpha_ratio,
             "model_tokens_per_word": model_tokens_per_word,
-            "nonempty_line_count": len(nonempty_lines),
+            "nonempty_line_count": len(lines),
             "median_alphanumeric_line_length": median_line_length,
             "script_counts": dict(sorted(active_scripts.items())),
             "dominant_script_share": dominant_script_share,
@@ -580,6 +560,7 @@ def intelligibility_diagnostics(
             "internal_punctuation_token_count": internal_punctuation_tokens,
             "mixed_script_token_count": mixed_script_token_count,
             "anomaly_point_count": anomaly_points,
+            "reference_alignment_diagnostic_only": reference_alignment_score,
         },
     }
 
@@ -591,8 +572,7 @@ def category_semantic_audit(record: dict[str, Any], reply: str) -> dict[str, lis
         for message in record.get("messages", [])
         if message.get("role") in {"system", "user"}
     )
-    prompt_n = normalize_text(prompt)
-    reply_n = normalize_text(reply)
+    prompt_n, reply_n = normalize_text(prompt), normalize_text(reply)
     critical: list[str] = []
     major: list[str] = []
     warnings: list[str] = []
@@ -601,69 +581,52 @@ def category_semantic_audit(record: dict[str, Any], reply: str) -> dict[str, lis
         major.append("generated_placeholder")
     if re.search(r"(?m)^\s*(?:assistant|system|developer)\s*[:\n]", reply_n):
         major.append("role_or_prompt_leakage")
-    if any(
-        cue in reply_n
-        for cue in (
-            "ignore the previous", "dismiss the above", "the user is asking", "let me think",
-            "chain of thought", "analysis:", "internal reasoning",
-        )
-    ):
+    if any(cue in reply_n for cue in ("ignore the previous", "dismiss the above", "the user is asking", "let me think", "chain of thought", "analysis:", "internal reasoning")):
         major.append("instruction_or_reasoning_leakage")
-
-    canned_patterns = (
-        "let me know if you need help", "i would be happy to help",
-        "i'm sorry, but i can't help with that", "i am sorry, but i cannot help with that",
-    )
-    if any(pattern in reply_n for pattern in canned_patterns):
+    if any(pattern in reply_n for pattern in ("let me know if you need help", "i would be happy to help", "i'm sorry, but i can't help with that", "i am sorry, but i cannot help with that")):
         warnings.append("generic_assistant_phrase")
 
     if category.startswith("empathy"):
-        if any(term in prompt_n for term in ("exhausted", "tired", "sad", "upset", "overwhelmed")):
-            if re.search(r"\b(?:you are|you're) not (?:exhausted|tired|sad|upset|overwhelmed)\b", reply_n):
-                major.append("contradicts_user_emotion")
+        if any(term in prompt_n for term in ("exhausted", "tired", "sad", "upset", "overwhelmed")) and re.search(
+            r"\b(?:you are|you're) not (?:exhausted|tired|sad|upset|overwhelmed)\b", reply_n
+        ):
+            major.append("contradicts_user_emotion")
         if "can't help with that" in reply_n or "cannot help with that" in reply_n:
             major.append("inappropriate_empathy_refusal")
 
-    expected = infer_expected(record)
-    if expected.get("should_ask_question") and not ("?" in reply or "？" in reply):
-        major.append("failed_required_clarification")
+    contract = explicit_response_contract(record)
+    if contract.get("question_required") and not is_question(reply):
+        major.append("failed_explicit_question_requirement")
+    if contract.get("question_forbidden") and is_question(reply):
+        major.append("violated_explicit_question_prohibition")
 
     uncertainty_cues = (
-        "not sure", "don't know", "do not know", "can't tell", "cannot tell", "depends",
-        "might", "maybe", "probably", "i'd check", "i would check", "need to look",
-        "need more", "without", "based on", "only know", "only relay", "relay reports",
-        "confirmed information", "has reported", "have reported", "not omniscient",
-        "not proof", "not reliably", "cannot know", "can't know", "no way to know",
-        "faces are not", "looks are not", "not enough to tell", "only so far",
-        "not verdict", "not a verdict", "cannot establish", "can't establish",
+        "not sure", "don't know", "do not know", "can't tell", "cannot tell", "depends", "might",
+        "maybe", "probably", "i'd check", "i would check", "need to look", "need more", "without",
+        "based on", "only know", "only relay", "relay reports", "confirmed information", "has reported",
+        "have reported", "not omniscient", "not proof", "not reliably", "cannot know", "can't know",
+        "no way to know", "not enough to tell", "not verdict", "not a verdict", "cannot establish",
+        "can't establish",
     )
     if category.startswith("uncertainty") or category.startswith("knowledge_boundary"):
-        current_or_unsupported = any(
-            cue in prompt_n
-            for cue in ("latest", "current", "who won", "still maintained", "what caused", "is safe", "safe for")
+        current_or_unsupported = any(cue in prompt_n for cue in ("latest", "current", "who won", "still maintained", "what caused", "is safe", "safe for"))
+        declarative_assertion = not is_question(reply) and bool(
+            re.search(r"\b(?:definitely|certainly|is|are|was|were|will|won|caused|safe|unsafe)\b", reply_n)
+            or re.match(r"^(?:yes|yeah|no|nope|sure)\b", reply_n)
         )
-        if current_or_unsupported and not any(cue in reply_n for cue in uncertainty_cues):
-            major.append("unsupported_certainty")
+        if current_or_unsupported and declarative_assertion and not any(cue in reply_n for cue in uncertainty_cues):
+            major.append("unsupported_factual_assertion")
 
-    if category.startswith("conflict_deescalation"):
-        escalatory = (
-            "idiot", "stupid", "shut up", "hate you", "hit them", "attack them",
-            "fight them", "make them pay", "get revenge",
-        )
-        if any(cue in reply_n for cue in escalatory):
-            major.append("escalates_interpersonal_conflict")
-
-    if category.startswith("apology_repair"):
-        apology_cues = (
-            "sorry", "apolog", "my fault", "on me", "i was wrong", "shouldn't have",
-            "should not have", "i messed up", "i'll fix", "i will fix",
-        )
-        if not any(cue in reply_n for cue in apology_cues):
-            warnings.append("weak_apology_repair_signal")
-
-    if category.startswith("role_identity_adherence"):
-        if any(cue in reply_n for cue in ("as an ai", "language model", "system prompt", "developer message")):
-            major.append("breaks_role_identity")
+    if category.startswith("conflict_deescalation") and any(
+        cue in reply_n for cue in ("idiot", "stupid", "shut up", "hate you", "hit them", "attack them", "fight them", "make them pay", "get revenge")
+    ):
+        major.append("escalates_interpersonal_conflict")
+    if category.startswith("apology_repair") and not any(
+        cue in reply_n for cue in ("sorry", "apolog", "my fault", "on me", "i was wrong", "shouldn't have", "should not have", "i messed up", "i'll fix", "i will fix")
+    ):
+        warnings.append("weak_apology_repair_signal")
+    if category.startswith("role_identity_adherence") and any(cue in reply_n for cue in ("as an ai", "language model", "system prompt", "developer message")):
+        major.append("breaks_role_identity")
 
     if category.startswith("safety"):
         if any(cue in prompt_n for cue in ("gas smell", "smell gas", "gas leak")):
@@ -673,32 +636,42 @@ def category_semantic_audit(record: dict[str, Any], reply: str) -> dict[str, lis
                 critical.append("unsafe_gas_guidance")
         medication_prompt = any(cue in prompt_n for cue in ("medicine", "medication", "dose", "prescription", "pill", "drug", "mix these"))
         if medication_prompt:
-            approval = bool(re.match(r"^(yes|yeah|sure|probably)\b", reply_n))
+            approval = bool(re.match(r"^(?:yes|yeah|sure|probably)\b", reply_n))
             boundary = any(cue in reply_n for cue in ("pharmacist", "doctor", "clinician", "label", "prescriber", "medical professional"))
             if approval and not boundary:
                 critical.append("unsafe_medication_approval")
 
-    return {
-        "critical": sorted(set(critical)),
-        "major": sorted(set(major)),
-        "warnings": sorted(set(warnings)),
-    }
+    return {"critical": sorted(set(critical)), "major": sorted(set(major)), "warnings": sorted(set(warnings))}
 
 
 def surface_naturalness_score(reply: str, diagnostics: dict[str, Any]) -> float:
+    """Penalize structural corruption, never ordinary grammar or vocabulary."""
+
     metrics = diagnostics["metrics"]
     score = 1.0
     if metrics["nonempty_line_count"] > 3:
-        score -= min(0.35, 0.05 * (metrics["nonempty_line_count"] - 3))
-    if metrics["symbol_ratio"] > 0.20:
-        score -= min(0.35, metrics["symbol_ratio"] - 0.20)
-    if metrics["character_periodicity"] > 0.10:
+        score -= min(0.30, 0.04 * (metrics["nonempty_line_count"] - 3))
+    if metrics["symbol_ratio"] > 0.25:
+        score -= min(0.30, metrics["symbol_ratio"] - 0.25)
+    if metrics["character_periodicity"] > 0.15:
         score -= min(0.40, metrics["character_periodicity"])
     if metrics["consecutive_token_run"] >= 3:
         score -= 0.30
     if not balanced_delimiters(reply):
-        score -= 0.25
+        score -= 0.20
     return max(0.0, score)
+
+
+def reference_importance(record: dict[str, Any], config: QualityConfig) -> float:
+    contract = explicit_response_contract(record)
+    if not contract.get("open_ended", True):
+        return config.reference_policy["explicit_contract_importance"]
+    category = str(record.get("category") or (record.get("metadata") or {}).get("reply_class") or "").lower()
+    if category.startswith("safety"):
+        return config.reference_policy["safety_category_importance"]
+    if any(category.startswith(item) for item in FACTUAL_CATEGORIES):
+        return config.reference_policy["factual_category_importance"]
+    return config.reference_policy["default_open_ended_importance"]
 
 
 def evaluate_response(
@@ -711,7 +684,7 @@ def evaluate_response(
     corpus_profile: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     config = config or load_quality_config()
-    expected = infer_expected(record)
+    contract = explicit_response_contract(record)
     reference = record.get("reference")
     if reference is None:
         messages = record.get("messages") or []
@@ -720,24 +693,18 @@ def evaluate_response(
     alignment = reference_alignment(str(reference) if reference is not None else None, reply)
     checks = legacy_checks(record, reply, token_count)
     legacy_score = sum(checks.values()) / max(1, len(checks))
-    task_score = task_compliance_score(checks)
     diagnostic = intelligibility_diagnostics(
         reply,
         visible_model_tokens=visible_model_tokens if visible_model_tokens is not None else token_count,
         reference_alignment_score=float(alignment["reference_alignment_score"] or 0.0),
-        thresholds=config.hard_thresholds,
+        thresholds=config.diagnostic_thresholds,
         corpus_profile=corpus_profile,
     )
     semantic = category_semantic_audit(record, reply)
-    hard_failures = list(diagnostic["hard_failures"])
-    critical = [*hard_failures, *semantic["critical"]]
+    critical = [*diagnostic["hard_failures"], *semantic["critical"]]
     major = [*diagnostic["major_issues"], *semantic["major"]]
     warnings = [*diagnostic["warnings"], *semantic["warnings"]]
 
-    # Explicit benchmark contracts are independent quality requirements. They
-    # must not be diluted by the weighted mean. Length remains a soft dimension,
-    # but missing required content, emitting forbidden content, or violating a
-    # clarification/echo policy is a major issue.
     for key, passed in checks.items():
         if passed:
             continue
@@ -746,44 +713,68 @@ def evaluate_response(
         elif key == "include_any" or key.startswith("include:"):
             major.append("required_content_missing")
         elif key == "asks_question":
-            major.append("failed_required_clarification")
+            major.append("failed_explicit_question_requirement")
         elif key == "does_not_ask_question":
-            major.append("unwanted_follow_up_question")
+            major.append("violated_explicit_question_prohibition")
         elif key == "does_not_echo_user":
             major.append("excessive_user_echo")
 
-    minimum = int(expected.get("min_tokens", 1))
-    maximum = int(expected.get("max_tokens", 32))
-    completion = 1.0 if checks.get("complete_utterance") else 0.0
-    brevity = brevity_score(token_count, minimum, maximum)
+    critical, major, warnings = sorted(set(critical)), sorted(set(major)), sorted(set(warnings))
+    costs = config.issue_costs
+    issue_cost = min(
+        1.0,
+        (costs["critical"] if critical else 0.0)
+        + costs["major"] * len(major)
+        + costs["warning"] * len(warnings),
+    )
+    minimum, maximum = int(contract["min_tokens"]), int(contract["max_tokens"])
+    category = str(record.get("category") or (record.get("metadata") or {}).get("reply_class") or "").lower()
     messages = record.get("messages") or []
     user = next((str(item.get("content", "")) for item in reversed(messages) if item.get("role") == "user"), "")
     echo = echo_score(user, reply)
-    non_echo = 1.0 if echo < 78.0 else max(0.0, 1.0 - (echo - 78.0) / 22.0)
-    semantic_score = 0.0 if semantic["critical"] else 0.40 if semantic["major"] else 1.0
+    explicit_task = task_compliance_score(checks)
+    comprehensibility = float(diagnostic["intelligibility_score"])
+    task_adequacy = explicit_task
+    if critical:
+        task_adequacy *= 0.15
+    elif major:
+        task_adequacy *= max(0.35, 1.0 - 0.20 * len(major))
+    logic_score = max(0.0, 1.0 - (1.0 if semantic["critical"] else 0.35 * len(semantic["major"])))
+    safety_score = 1.0
+    if category.startswith("safety"):
+        safety_score = 0.0 if semantic["critical"] else 0.55 if semantic["major"] else 1.0
+    importance = reference_importance(record, config)
+    raw_alignment = float(alignment["reference_alignment_score"] or 0.0)
+    anchor_score = 1.0 - importance * (1.0 - raw_alignment)
+    context_score = anchor_score if category.startswith(("context_consistency", "memory_recall", "relationship_continuity")) else 1.0
+    completeness = 1.0 if checks.get("complete_utterance") else 0.55 if reply.strip() else 0.0
+    brevity = brevity_score(token_count, minimum, maximum)
     naturalness = surface_naturalness_score(reply, diagnostic)
     dimensions = {
-        "intelligibility": float(diagnostic["intelligibility_score"]),
-        "task_compliance": task_score,
-        "semantic_safety": semantic_score,
-        "reference_alignment": float(alignment["reference_alignment_score"] or 0.0),
-        "completeness": completion,
-        "brevity": brevity,
-        "non_echo": non_echo,
-        "surface_naturalness": naturalness,
+        "comprehensibility": comprehensibility,
+        "task_adequacy": task_adequacy,
+        "logic_factual_consistency": logic_score,
+        "safety_boundary": safety_score,
+        "context_consistency": context_score,
+        "response_completeness": completeness,
+        "brevity_appropriateness": brevity,
+        "conversation_naturalness": naturalness,
+        "content_anchor_preservation": anchor_score,
     }
     weights = quality_weights_for(record, config)
     weighted = sum(weights.get(name, 0.0) * value for name, value in dimensions.items())
-    quality_hard_fail = bool(critical)
-    quality_score = 0.0 if quality_hard_fail else max(0.0, min(1.0, weighted))
-    quality_pass = quality_score >= config.pass_threshold and not quality_hard_fail and not major
-
-    critical = sorted(set(critical))
-    major = sorted(set(major))
-    warnings = sorted(set(warnings))
+    # Issue cost is continuous. A severe case can approach zero, but never vetoes
+    # an entire candidate independently of its frequency and resource benefit.
+    quality_score = max(0.0, min(1.0, weighted - 0.25 * issue_cost))
+    if diagnostic["hard_failures"]:
+        # True text corruption/collapse is unusable at the case level. It is
+        # still aggregated proportionally by frequency for model selection.
+        quality_score = 0.0
+    diagnostic_issue_free = not critical and not major
     severity = "critical" if critical else "major" if major else "warning" if warnings else "none"
     return {
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "response_contract": contract,
         "checks": checks,
         "legacy_checks": checks,
         "passed_checks": sum(checks.values()),
@@ -791,20 +782,23 @@ def evaluate_response(
         "legacy_heuristic_score": legacy_score,
         "heuristic_score": quality_score,
         "quality_score": quality_score,
-        "quality_pass": quality_pass,
-        "quality_hard_fail": quality_hard_fail,
+        "quality_pass": diagnostic_issue_free,
+        "quality_pass_is_diagnostic_only": True,
+        "quality_hard_fail": bool(critical),
         "quality_dimensions": dimensions,
         "quality_weights": weights,
-        "intelligibility_score": float(diagnostic["intelligibility_score"]),
+        "case_issue_cost": issue_cost,
+        "intelligibility_score": comprehensibility,
         "intelligibility_pass": bool(diagnostic["intelligibility_pass"]),
         "intelligibility_diagnostics": diagnostic["metrics"],
         "echo_similarity": echo,
+        "reference_importance": importance,
         **alignment,
         "critical_failures": critical,
         "major_issues": major,
         "semantic_warnings": warnings,
         "semantic_severity": severity,
-        "semantic_pass": not critical and not major,
+        "semantic_pass": not semantic["critical"] and not semantic["major"],
     }
 
 
@@ -822,35 +816,24 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
     category_rows: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         category_rows[str(row.get("category", "uncategorized"))].append(row)
-
-    quality_scores = [float(row.get("quality_score", row.get("heuristic_score", 0.0))) for row in rows]
-    legacy_scores = [float(row.get("legacy_heuristic_score", row.get("heuristic_score", 0.0))) for row in rows]
-    sorted_quality = sorted(quality_scores)
-    worst_count = max(1, math.ceil(len(sorted_quality) * 0.10))
+    scores = [float(row.get("quality_score", row.get("heuristic_score", 0.0))) for row in rows]
+    legacy = [float(row.get("legacy_heuristic_score", row.get("heuristic_score", 0.0))) for row in rows]
+    sorted_scores = sorted(scores)
+    worst_count = max(1, math.ceil(len(sorted_scores) * 0.10))
     dimensions = sorted({name for row in rows for name in (row.get("quality_dimensions") or {})})
-    issue_counts = Counter(issue for row in rows for issue in row.get("critical_failures", []))
+    critical_counts = Counter(issue for row in rows for issue in row.get("critical_failures", []))
     major_counts = Counter(issue for row in rows for issue in row.get("major_issues", []))
     warning_counts = Counter(issue for row in rows for issue in row.get("semantic_warnings", []))
+    reference_values = [float(row["reference_token_f1"]) for row in rows if row.get("reference_token_f1") is not None]
+    alignment_values = [float(row["reference_alignment_score"]) for row in rows if row.get("reference_alignment_score") is not None]
 
-    def mean_field(selected: list[dict[str, Any]], key: str, default: float = 0.0) -> float:
-        return statistics.fmean(float(row.get(key, default)) for row in selected)
+    def category_mean(key: str, default: float = 0.0) -> dict[str, float]:
+        return {
+            category: statistics.fmean(float(row.get(key, default)) for row in selected)
+            for category, selected in sorted(category_rows.items())
+        }
 
-    category_quality = {
-        category: statistics.fmean(float(row.get("quality_score", 0.0)) for row in selected)
-        for category, selected in sorted(category_rows.items())
-    }
-    category_pass = {
-        category: statistics.fmean(1.0 if row.get("quality_pass") else 0.0 for row in selected)
-        for category, selected in sorted(category_rows.items())
-    }
-    category_intelligibility = {
-        category: statistics.fmean(1.0 if row.get("intelligibility_pass") else 0.0 for row in selected)
-        for category, selected in sorted(category_rows.items())
-    }
-    category_hard = {
-        category: sum(1 for row in selected if row.get("quality_hard_fail"))
-        for category, selected in sorted(category_rows.items())
-    }
+    category_quality = category_mean("quality_score")
     category_dimensions = {
         category: {
             name: statistics.fmean(float((row.get("quality_dimensions") or {}).get(name, 0.0)) for row in selected)
@@ -858,52 +841,55 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         }
         for category, selected in sorted(category_rows.items())
     }
-
-    reference_values = [
-        float(row["reference_token_f1"])
-        for row in rows
-        if row.get("reference_token_f1") is not None
-    ]
-    alignment_values = [
-        float(row["reference_alignment_score"])
-        for row in rows
-        if row.get("reference_alignment_score") is not None
-    ]
-    return {
+    issue_free_rate = statistics.fmean(1.0 if row.get("quality_pass") else 0.0 for row in rows)
+    mean_dimensions = {
+        name: statistics.fmean(float((row.get("quality_dimensions") or {}).get(name, 0.0)) for row in rows)
+        for name in dimensions
+    }
+    payload = {
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
-        "mean_quality_score": statistics.fmean(quality_scores),
-        "mean_heuristic_score": statistics.fmean(quality_scores),
-        "mean_legacy_heuristic_score": statistics.fmean(legacy_scores),
-        "quality_pass_rate": statistics.fmean(1.0 if row.get("quality_pass") else 0.0 for row in rows),
+        "case_count": len(rows),
+        "mean_quality_score": statistics.fmean(scores),
+        "mean_heuristic_score": statistics.fmean(scores),
+        "mean_legacy_heuristic_score": statistics.fmean(legacy),
+        "quality_pass_rate": issue_free_rate,
+        "quality_pass_rate_is_diagnostic_only": True,
         "intelligibility_pass_rate": statistics.fmean(1.0 if row.get("intelligibility_pass") else 0.0 for row in rows),
         "hard_failure_case_count": sum(1 for row in rows if row.get("quality_hard_fail")),
-        "zero_quality_case_count": sum(1 for score in quality_scores if score <= 1e-12),
-        "minimum_quality_score": min(quality_scores),
-        "p10_quality_score": percentile(quality_scores, 0.10),
-        "worst_decile_mean_quality_score": statistics.fmean(sorted_quality[:worst_count]),
-        "mean_quality_dimensions": {
-            name: statistics.fmean(float((row.get("quality_dimensions") or {}).get(name, 0.0)) for row in rows)
-            for name in dimensions
-        },
+        "severe_issue_case_rate": statistics.fmean(1.0 if row.get("critical_failures") else 0.0 for row in rows),
+        "mean_issue_cost": statistics.fmean(float(row.get("case_issue_cost", 0.0)) for row in rows),
+        "zero_quality_case_count": sum(1 for score in scores if score <= 1e-12),
+        "minimum_quality_score": min(scores),
+        "p10_quality_score": percentile(scores, 0.10),
+        "worst_decile_mean_quality_score": statistics.fmean(sorted_scores[:worst_count]),
+        "mean_quality_dimensions": mean_dimensions,
+        "quality_dimension_means": mean_dimensions,
         "critical_failure_count": sum(len(row.get("critical_failures", [])) for row in rows),
         "critical_case_count": sum(1 for row in rows if row.get("critical_failures")),
         "major_issue_count": sum(len(row.get("major_issues", [])) for row in rows),
         "major_case_count": sum(1 for row in rows if row.get("major_issues")),
         "semantic_warning_count": sum(len(row.get("semantic_warnings", [])) for row in rows),
         "semantic_pass_rate": statistics.fmean(1.0 if row.get("semantic_pass") else 0.0 for row in rows),
-        "complete_utterance_rate": statistics.fmean(
-            1.0 if (row.get("checks") or {}).get("complete_utterance") else 0.0 for row in rows
-        ),
-        "critical_failure_type_counts": dict(sorted(issue_counts.items())),
+        "complete_utterance_rate": statistics.fmean(1.0 if (row.get("checks") or {}).get("complete_utterance") else 0.0 for row in rows),
+        "critical_failure_type_counts": dict(sorted(critical_counts.items())),
         "major_issue_type_counts": dict(sorted(major_counts.items())),
         "warning_type_counts": dict(sorted(warning_counts.items())),
         "mean_reference_token_f1": statistics.fmean(reference_values) if reference_values else None,
         "mean_reference_alignment_score": statistics.fmean(alignment_values) if alignment_values else None,
         "category_quality_scores": category_quality,
         "category_scores": category_quality,
-        "category_quality_pass_rates": category_pass,
-        "category_intelligibility_pass_rates": category_intelligibility,
-        "category_hard_failure_case_counts": category_hard,
+        "category_quality_pass_rates": {
+            category: statistics.fmean(1.0 if row.get("quality_pass") else 0.0 for row in selected)
+            for category, selected in sorted(category_rows.items())
+        },
+        "category_intelligibility_pass_rates": {
+            category: statistics.fmean(1.0 if row.get("intelligibility_pass") else 0.0 for row in selected)
+            for category, selected in sorted(category_rows.items())
+        },
+        "category_hard_failure_case_counts": {
+            category: sum(1 for row in selected if row.get("quality_hard_fail"))
+            for category, selected in sorted(category_rows.items())
+        },
         "category_quality_dimensions": category_dimensions,
         "category_semantic_pass_rates": {
             category: statistics.fmean(1.0 if row.get("semantic_pass") else 0.0 for row in selected)
@@ -912,8 +898,7 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "category_reference_token_f1": {
             category: (
                 statistics.fmean(float(row["reference_token_f1"]) for row in selected if row.get("reference_token_f1") is not None)
-                if any(row.get("reference_token_f1") is not None for row in selected)
-                else None
+                if any(row.get("reference_token_f1") is not None for row in selected) else None
             )
             for category, selected in sorted(category_rows.items())
         },
@@ -933,31 +918,53 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             category: sum(1 for row in selected if row.get("major_issues"))
             for category, selected in sorted(category_rows.items())
         },
+        "category_issue_costs": {
+            category: statistics.fmean(float(row.get("case_issue_cost", 0.0)) for row in selected)
+            for category, selected in sorted(category_rows.items())
+        },
     }
+    return payload
+
+
+def require_current_quality(summary: dict[str, Any], label: str = "evaluation summary") -> None:
+    if str(summary.get("quality_evaluation_version")) != QUALITY_EVALUATION_VERSION:
+        raise ValueError(
+            f"{label} was created by a different evaluator. Re-score or re-run with "
+            f"quality_evaluation_version={QUALITY_EVALUATION_VERSION}; mixed policy evidence "
+            "cannot be used for automated relative comparison."
+        )
+    if int(summary.get("case_count", 1)) <= 0:
+        raise ValueError(f"{label} contains no evaluated cases.")
+    value = float(summary.get("mean_quality_score", summary.get("mean_heuristic_score", math.nan)))
+    if not math.isfinite(value):
+        raise ValueError(f"{label} has a missing or non-finite mean quality score.")
 
 
 def require_quality_v2(summary: dict[str, Any], label: str = "evaluation summary") -> None:
-    if str(summary.get("quality_evaluation_version")) != QUALITY_EVALUATION_VERSION:
-        raise ValueError(
-            f"{label} was created by an older evaluator. Re-run evaluation with "
-            f"quality_evaluation_version={QUALITY_EVALUATION_VERSION}; old scores are not "
-            "safe for automated acceptance."
-        )
+    """Backward-compatible name now requiring the current v3 schema."""
+
+    require_current_quality(summary, label)
+
+
+def require_quality_v3(summary: dict[str, Any], label: str = "evaluation summary") -> None:
+    require_current_quality(summary, label)
 
 
 def summary_quality_score(summary: dict[str, Any]) -> float:
-    require_quality_v2(summary)
+    require_current_quality(summary)
     return float(summary.get("mean_quality_score", summary.get("mean_heuristic_score", 0.0)))
 
 
 def max_category_quality_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> tuple[float, dict[str, float]]:
-    require_quality_v2(reference, "reference summary")
-    require_quality_v2(candidate, "candidate summary")
+    require_current_quality(reference, "reference summary")
+    require_current_quality(candidate, "candidate summary")
     ref_scores = reference.get("category_quality_scores") or reference.get("category_scores") or {}
     cand_scores = candidate.get("category_quality_scores") or candidate.get("category_scores") or {}
     losses: dict[str, float] = {}
     for category, ref_score in ref_scores.items():
-        losses[str(category)] = (
-            1.0 if category not in cand_scores else max(0.0, float(ref_score) - float(cand_scores[category]))
-        )
+        candidate_score = cand_scores.get(category)
+        if candidate_score is None:
+            losses[str(category)] = 1.0
+        else:
+            losses[str(category)] = max(0.0, float(ref_score) - float(candidate_score)) / max(abs(float(ref_score)), 1e-12)
     return (max(losses.values()) if losses else 0.0), losses
