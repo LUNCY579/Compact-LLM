@@ -25,7 +25,7 @@ class PostPhase3PipelineTests(unittest.TestCase):
             "content_anchor_preservation": facts,
         }
         return {
-            "quality_evaluation_version": "3.1",
+            "quality_evaluation_version": "4.3",
             "case_count": 100,
             "mean_quality_score": mean,
             "worst_decile_mean_quality_score": mean,

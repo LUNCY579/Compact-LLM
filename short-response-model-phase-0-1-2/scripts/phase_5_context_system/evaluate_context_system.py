@@ -216,7 +216,7 @@ def main() -> None:
     compact_summary = aggregate_quality_rows(compact_quality_rows) if compact_quality_rows else None
     full_summary = aggregate_quality_rows(full_quality_rows) if full_quality_rows else None
     summary: dict[str, Any] = {
-        "quality_evaluation_version": "2.0" if compact_summary else None,
+        "quality_evaluation_version": compact_summary.get("quality_evaluation_version") if compact_summary else None,
         "cases": len(rows), "model": args.model,
         "response_control_mode": args.response_control,
         "min_new_tokens_before_boundary": args.min_new_tokens_before_boundary,

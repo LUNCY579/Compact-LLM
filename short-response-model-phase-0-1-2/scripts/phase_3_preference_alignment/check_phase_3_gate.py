@@ -12,7 +12,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_json
 from scripts.common.opportunity_evaluation import evaluate_quality_improvement
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import quality_index
 
 
@@ -25,8 +25,8 @@ def main() -> None:
     args = parser.parse_args()
     sft = read_json(args.sft_summary)
     dpo = read_json(args.dpo_summary)
-    require_quality_v3(sft, "Phase 3 SFT summary")
-    require_quality_v3(dpo, "Phase 3 DPO summary")
+    require_quality_v4(sft, "Phase 3 SFT summary")
+    require_quality_v4(dpo, "Phase 3 DPO summary")
     comparison = evaluate_quality_improvement(sft, dpo, profile=args.quality_profile)
     status = "PASS_PENDING_HUMAN_REVIEW" if comparison["eligible"] else "NO_NET_RELATIVE_ALIGNMENT_GAIN"
     loss_rows = "\n".join(

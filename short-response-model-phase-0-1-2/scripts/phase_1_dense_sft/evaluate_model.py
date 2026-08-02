@@ -97,7 +97,7 @@ def parse_args() -> argparse.Namespace:
         "--quality-config",
         type=Path,
         default=ROOT / "configs" / "quality_evaluation.json",
-        help="Versioned weighting and hard-failure contract for response quality.",
+        help="Versioned observable-defect and explicit response-contract policy.",
     )
     p.add_argument(
         "--require-cuda",
@@ -404,12 +404,12 @@ def main() -> None:
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
 
-    # Render category quality, semantic, intelligibility, and tail failures.
+    # Render category quality, observable-defect, contract, and tail evidence.
     cat_rows = "\n".join(
         f"| {category} | {score:.3f} | "
         f"{summary['category_quality_pass_rates'][category]:.3f} | "
         f"{summary['category_intelligibility_pass_rates'][category]:.3f} | "
-        f"{summary['category_semantic_pass_rates'][category]:.3f} | "
+        f"{summary.get('category_observable_quality_pass_rates', summary.get('category_semantic_pass_rates', {}))[category]:.3f} | "
         f"{summary['category_reference_alignment_scores'][category]:.3f} | "
         f"{summary['category_complete_utterance_rates'][category]:.3f} | "
         f"{summary['category_hard_failure_case_counts'][category]} | "
@@ -426,16 +426,16 @@ def main() -> None:
             f"{row['quality_score']:.3f} | {row['legacy_heuristic_score']:.3f} | {escaped_reply} |"
         )
     worst_rows = "\n".join(worst_row_lines)
-    flagged = [r for r in outputs if r["semantic_severity"] != "none"]
-    semantic_row_lines: list[str] = []
+    flagged = [r for r in outputs if r["semantic_severity"] != "none" or r.get("review_diagnostics")]
+    defect_row_lines: list[str] = []
     for row in flagged:
-        semantic_row_lines.append(
+        defect_row_lines.append(
             f"| {row['id']} | {row['semantic_severity']} | "
             f"{', '.join(row['critical_failures']) or '-'} | "
             f"{', '.join(row['major_issues']) or '-'} | "
             f"{', '.join(row['semantic_warnings']) or '-'} |"
         )
-    semantic_rows = "\n".join(semantic_row_lines) if semantic_row_lines else "| None | none | - | - | - |"
+    defect_rows = "\n".join(defect_row_lines) if defect_row_lines else "| None | none | - | - | - |"
 
     # State the evaluator's limits in the generated report: automated
     # checks still require human review for meaning, tone, and safety.
@@ -444,9 +444,7 @@ def main() -> None:
 ## Scope
 
 Evaluate the unchanged base model or one PEFT adapter with the versioned
-quality-oriented evaluator. Hard corruption and repetition-collapse signals
-force a case score of zero; aggregate tail metrics prevent a good mean from
-hiding catastrophic replies. Human review remains required.
+quality-oriented evaluator. Concrete mechanical corruption and explicit response-contract violations are recorded with reproducible labels. Critical mechanical corruption receives a zero case score, while all candidate decisions remain proportional. Human review remains required.
 
 ## Inputs
 
@@ -472,7 +470,7 @@ hiding catastrophic replies. Human review remains required.
 | Minimum case quality | {summary['minimum_quality_score']:.3f} |
 | P10 case quality | {summary['p10_quality_score']:.3f} |
 | Worst-decile mean quality | {summary['worst_decile_mean_quality_score']:.3f} |
-| Semantic pass rate | {summary['semantic_pass_rate']:.3f} |
+| Observable defect-free rate | {summary.get('observable_quality_pass_rate', summary.get('semantic_pass_rate', 0.0)):.3f} |
 | Critical failures | {summary['critical_failure_count']} |
 | Major issues | {summary['major_issue_count']} |
 | Complete-utterance rate | {summary['complete_utterance_rate']:.3f} |
@@ -502,7 +500,7 @@ hiding catastrophic replies. Human review remains required.
 
 ## Category Quality
 
-| Category | Quality | Quality pass | Intelligible | Semantic pass | Reference alignment | Complete | Hard-fail cases | Major cases |
+| Category | Quality | Quality pass | Intelligible | Observable defect-free | Reference alignment | Complete | Hard-fail cases | Major cases |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|
 {cat_rows}
 
@@ -512,11 +510,11 @@ hiding catastrophic replies. Human review remains required.
 |---|---|---:|---:|---|
 {worst_rows}
 
-## Quality and Semantic Flags
+## Concrete Defects and Review Diagnostics
 
-| ID | Severity | Critical failures | Major issues | Warnings |
+| ID | Severity | Critical defects | Major defects/contract violations | Review diagnostics |
 |---|---|---|---|---|
-{semantic_rows}
+{defect_rows}
 
 ### Failure type counts
 
@@ -528,9 +526,7 @@ hiding catastrophic replies. Human review remains required.
 
 `HUMAN REVIEW REQUIRED`
 
-Any hard-failure case is an automatic rejection signal for official gates.
-Review raw outputs for correctness, relevance, tone, context, and safety before
-using this evaluation as project evidence.
+Critical cases carry the maximum case-level quality cost but do not create a hidden candidate-level veto. Review raw outputs, contract evidence, correctness, tone, context, and safety before using this evaluation as project evidence.
 """
     report_path = args.output_dir / "MODEL_EVALUATION.md"
     report_path.write_text(report, encoding="utf-8")

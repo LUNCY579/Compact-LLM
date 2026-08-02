@@ -1,3 +1,5 @@
+> **Historical/superseded:** Evaluator v4.0 is authoritative. Do not use the commands or quality labels in this document for new official evidence. See `EVALUATION_V4_MIGRATION.md`.
+
 # Quality Evaluator v3.1 — Semantic Integrity Hotfix
 
 **Repository release:** v1.3.2  

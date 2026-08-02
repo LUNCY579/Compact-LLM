@@ -21,7 +21,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, run, sha256_tree, write_json
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import quality_index
 from scripts.common.opportunity_evaluation import evaluate_quality_improvement
 
@@ -77,7 +77,7 @@ def eligible(summary: dict[str, Any]) -> bool:
     """
 
     try:
-        require_quality_v3(summary)
+        require_quality_v4(summary)
     except (TypeError, ValueError):
         return False
     return True
@@ -164,7 +164,7 @@ def main() -> None:
         for name in adapters
     ]
     for row in rows:
-        require_quality_v3(row["summary"], f"Phase 4 ingredient {row['name']}")
+        require_quality_v4(row["summary"], f"Phase 4 ingredient {row['name']}")
     rows.sort(
         key=lambda row: (
             -quality_index(row["summary"]),

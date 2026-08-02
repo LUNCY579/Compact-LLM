@@ -46,7 +46,7 @@ The dedicated runner exposes the complete settings:
   -GradientCheckpointing
 ```
 
-Direct Phase 2B command using the shared Evaluation v3 relative-opportunity policy:
+Direct Phase 2B command using the shared Evaluator v4.3 relative-opportunity policy:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
@@ -61,7 +61,7 @@ Thorough 150-case run with isolated artifacts and reports:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
-  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl `
   -ProbeLimit 150 `
   -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_3_relative `
   -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
@@ -73,6 +73,8 @@ Thorough 150-case run with isolated artifacts and reports:
   -GradientCheckpointing
 ```
 
+Evaluator v4.3 requires every Phase 2B probe row to contain an explicit `response_contract`; legacy probes are rejected rather than treated as silently open-ended. Use `probe_50_v4_3.jsonl` or `probe_150_thorough_v4_3.jsonl`.
+
 The dedicated wrapper exposes search, reproducibility, output, and quality-profile settings. It does not expose absolute promotion thresholds. A custom `OutputRoot` automatically receives unique report names unless `Report` and `GateReport` are supplied explicitly.
 
 Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion branch. The default recovers only the strongest three per stage because training every branch at every progressive step is extremely expensive.
@@ -82,7 +84,7 @@ Set `-RecoveryTopK 28` for a 28-layer model to recovery-train every raw deletion
 1. Materialize the accepted Phase 1 all-layer SFT adapter as an immutable full checkpoint.
 2. Build a deterministic, category-balanced 50-case probe from development data; sealed data is never used.
 3. Delete each current layer separately and physically save a temporary candidate.
-4. Generate and retain all 50 replies, common evaluator scores, category metrics, semantic flags, teacher-forced target NLL, output-deviation reports, latency, and model footprint.
+4. Generate and retain all 50 replies, common evaluator scores, category metrics, concrete defect labels, contract results, teacher-forced target NLL, output-deviation reports, latency, and model footprint.
 5. Recovery-train the strongest raw candidates with short all-remaining-layer LoRA/QLoRA SFT.
 6. Select the least damaging valid deletion and materialize it as the next preserved frontier checkpoint.
 7. Repeat the every-current-layer deletion study from that checkpoint.
@@ -103,7 +105,7 @@ Every accepted frontier checkpoint is preserved. Every rejected candidate's gene
 - `create_depth_candidate.py` — physically removes one current decoder block while preserving original layer lineage.
 - `build_structural_probe.py` — deterministic development-only 50-case probe.
 - `evaluate_teacher_forcing.py` — continuous target-NLL contrast when generated heuristic scores saturate.
-- `compare_outputs.py` — side-by-side reply changes, similarity, score deltas, and new semantic flags.
+- `compare_outputs.py` — side-by-side reply changes, similarity, score deltas, and new concrete defect/contract labels.
 - `resolve_phase_2_profile.py` — safely hands an approved profile to Phase 3.
 - `run_phase_2_structural_reduction.ps1` — Windows orchestration for Phase 2B.
 - `STRUCTURAL_REDUCTION_MANUAL.md` — execution and review details.
@@ -146,7 +148,7 @@ Continue the established August 1 thorough run with:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
-  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl `
   -ProbeLimit 150 `
   -OutputRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
   -Report .\reports\PHASE_2B_phase_2b_quality_v3_thorough_20260801_REPORT.md `
@@ -161,14 +163,14 @@ Continue the established August 1 thorough run with:
 
 `MaxDrops 27` is only an upper bound. The two-layer safety guard means a 28-layer source can accept at most 26 deletions, and the run normally stops earlier when no remaining deletion is worthwhile under both opportunity comparisons.
 
-## Evaluator v3.1 rescoring and corrected-frontier replay
+## Evaluator v4.3 rescoring and corrected-frontier replay
 
 Pause an active v3.0 run before migration. To re-score all preserved Phase 2B replies without model inference and prepare the corrected frontier replay:
 
 ```powershell
-.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v3_1.ps1 `
+.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v4_3.ps1 `
   -RunRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
-  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl
+  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl
 ```
 
-Then rerun the exact original structural-reduction command with `-Resume`. Stored generation, NLL, and footprint evidence is reused while the corrected frontier follows the same parent lineage. If v3.1 changes a stage winner, only the downstream branch created from the superseded parent is regenerated. Timestamped pre-v3.1 backups and `PHASE2B_QUALITY_V3_1_MIGRATION.json` preserve the migration audit trail.
+Then rerun the exact original structural-reduction command with `-Resume`. Stored generation, NLL, and footprint evidence is reused while the corrected frontier follows the same parent lineage. If v4.3 changes a stage winner, only the downstream branch created from the superseded parent is regenerated. Timestamped pre-v4.3 backups and `PHASE2B_QUALITY_V4_3_MIGRATION.json` preserve the migration audit trail.

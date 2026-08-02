@@ -31,7 +31,7 @@ reports\PHASE_3_phase2c_balanced_training_STOP_GATE.md
 
 ## Review
 
-Inspect correctness, naturalness, context, clarification, safety, malformed outputs, and semantic flags. Do not approve a branch merely because it uses fewer trainable parameters. DPO must be reviewed on its own outputs.
+Inspect correctness, naturalness, context, clarification, safety, malformed outputs, and concrete defect and contract labels. Do not approve a branch merely because it uses fewer trainable parameters. DPO must be reviewed on its own outputs.
 
 ## Phase 4 handoff
 

@@ -19,6 +19,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
+from scripts.common.build_v4_3_response_contract_benchmark import migrate_record as normalize_record
 
 
 def category_of(row: dict[str, Any]) -> str:
@@ -59,8 +61,8 @@ def select_balanced(rows: list[dict[str, Any]], limit: int, seed: int) -> list[d
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build the Phase 2B structural probe.")
     parser.add_argument("--input", type=Path, default=ROOT / "data/dev/dev.jsonl")
-    parser.add_argument("--output", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50.jsonl")
-    parser.add_argument("--manifest", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_manifest.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3.jsonl")
+    parser.add_argument("--manifest", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3_manifest.json")
     parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--seed", type=int, default=20260728)
     return parser.parse_args()
@@ -69,7 +71,7 @@ def parse_args() -> argparse.Namespace:
 def main() -> None:
     args = parse_args()
     rows = read_jsonl(args.input)
-    selected = select_balanced(rows, args.limit, args.seed)
+    selected = [normalize_record(row) for row in select_balanced(rows, args.limit, args.seed)]
     write_jsonl(args.output, selected)
     counts: dict[str, int] = defaultdict(int)
     for row in selected:
@@ -84,7 +86,9 @@ def main() -> None:
             "selected_count": len(selected),
             "category_counts": dict(sorted(counts.items())),
             "sealed_data_used": False,
-            "purpose": "Fast trend detection for every-layer and progressive depth reduction.",
+            "response_contract_schema_version": QUALITY_EVALUATION_VERSION,
+            "all_cases_have_explicit_response_contracts": all(isinstance(row.get("response_contract"), dict) for row in selected),
+            "purpose": "Fast trend detection for every-layer and progressive depth reduction under Evaluator v4.3 focused prompt-adequacy policy.",
         },
     )
     print(args.output)

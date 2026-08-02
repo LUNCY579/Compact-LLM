@@ -8,11 +8,15 @@ This repository implements the ordered Phase 0–8 program plus two structural b
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
-## v1.3.2 semantic-integrity evaluation
+## v1.4.3 focused prompt-adequacy evaluation
 
-Quality Evaluator v3.1 treats understandable conversational language as acceptable even when grammar or vocabulary is informal. References are examples, follow-up questions are permitted unless explicitly forbidden, and questions do not count as unsupported certainty. All official phases and the independent playground use one shared opportunity engine: the phase's proportional primary resource benefit must be strictly greater than combined proportional quality opportunity loss. Absolute score floors and zero-issue vetoes are prohibited. Technical invalidity and human gates remain binary prerequisites.
+Quality Evaluator v4.3 removes category from contract inference, scoring weights, case decisions, and promotion. Categories remain only as reporting tags for benchmark balancing and regression analysis. Open conversational quality is estimated continuously from the actual system/user messages; strict facts and boundaries must be authored in the individual case contract.
 
-The historical blueprint targets are preserved and amended by `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`. The authoritative implementation policy is `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`.
+The decoding-integrity detector now combines reproducible surface signals instead of relying on narrow single-pattern rules. The supplied 150 collapsed Phase 2B outputs are a mandatory regression corpus: all 150 receive zero quality and a critical concrete corruption result. False-positive guards cover multilingual text, technical identifiers, versions, measurements, paths, code, arithmetic, emoji, informal grammar, alternate replies, and valid one-word responses.
+
+The calibration packet contains 611 cases covering all 31 reporting categories, all 150 official references, all 60 scored labels, all 150 real collapsed outputs, 150 human-adjudicated coherent outputs, and 17 targeted v4.3 regressions, explicit-contract partial credit, category invariance, and every supported response surface. Run `python .\scripts\common\verify_quality_evaluation_v4_3.py` before official rescoring.
+
+The governing files are `EVALUATION_V4_3_FOCUSED_PROMPT_ADEQUACY.md`, `configs/quality_issue_taxonomy_v4_3.json`, `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`, and `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`.
 
 ## Start here
 
@@ -39,11 +43,21 @@ The repository now separates learned brevity from the deployable hard boundary:
 
 See `RESPONSE_CONTROL_AND_EARLY_EXIT_AUDIT.md` and `scripts/phase_7_sparse_runtime/RESPONSE_CONTROL_CONTRACT.md`. This controller avoids decode work; it does not remove model weights or turn selective training into inference-time layer skipping.
 
-## Quality evaluation v3.1
+## Quality evaluation v4.3
 
-All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py` plus `scripts/common/opportunity_evaluation.py`. Case-level analysis is continuous across mechanical integrity, semantic coherence, prompt relevance, intent fulfillment, task adequacy, logic/factual consistency, safety, context consistency, completeness, brevity, conversational naturalness, and explicit content anchors. Severe corruption still receives a severe case cost, but candidate promotion is proportional rather than controlled by hidden absolute vetoes.
+All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py`, `scripts/common/observable_quality.py`, and `scripts/common/opportunity_evaluation.py`.
 
-Existing generation evidence can be rescored with `scripts/common/rescore_quality_artifacts.py`; Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py`. Run `scripts/common/verify_quality_evaluation.py` and `scripts/common/audit_relative_opportunity_policy.py` after modifications. See `EVALUATION_V3_1_SEMANTIC_INTEGRITY_HOTFIX.md` for Phase 2B migration and replay commands.
+The evaluator separates universal decoding/mechanical integrity, explicit case-level contract fulfillment, category-neutral prompt-function alignment, and proportional candidate comparison. Category statistics and review-only diagnostics never reduce the score or affect promotion. Existing generations can be rescored without model inference using `scripts/common/rescore_quality_artifacts.py`; complete Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_3.ps1`. The official contracted probes are `probe_50_v4_3.jsonl` and `probe_150_thorough_v4_3.jsonl`.
+
+Verification commands:
+
+```powershell
+python .\scripts\common\verify_quality_evaluation_v4_3.py
+pytest -q
+python .\scripts\common\audit_relative_opportunity_policy.py
+```
+
+See `EVALUATION_V4_3_MIGRATION.md` for review-only rescoring, official in-place migration, corrected-frontier replay, and clean-run commands.
 
 ## Production principle
 

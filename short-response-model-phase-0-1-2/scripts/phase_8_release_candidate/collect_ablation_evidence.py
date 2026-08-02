@@ -18,6 +18,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, sha256, write_json
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
 
 
 def first_existing(patterns: list[str]) -> Path | None:
@@ -67,7 +68,7 @@ def main() -> None:
         name for name, row in matrix.items()
         if row.get("status") == "AVAILABLE" and isinstance(row.get("summary"), dict)
         and "mean_heuristic_score" in row["summary"]
-        and str(row["summary"].get("quality_evaluation_version")) != "3.1"
+        and str(row["summary"].get("quality_evaluation_version")) != QUALITY_EVALUATION_VERSION
     ]
     write_json(
         args.out,

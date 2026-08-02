@@ -21,7 +21,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, write_json
-from scripts.common.quality_evaluation import require_quality_v3
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4
 
 DEFAULT_OUTPUT_ROOT = ROOT / "artifacts" / "phase_4b_structural_reduction"
 
@@ -133,7 +133,7 @@ def evaluate_one(
     # Read the generated files now so a partial or malformed run fails before
     # the candidate registry is presented as complete.
     summary = read_json(summary_path)
-    require_quality_v3(summary, f"Phase 4B evaluation {name}")
+    require_quality_v4(summary, f"Phase 4B evaluation {name}")
     footprint = read_json(footprint_path)
     return {
         "name": name,
@@ -186,7 +186,7 @@ def main() -> None:
         registry_path,
         {
             "registry_version": 3,
-            "quality_evaluation_version": "3.1",
+            "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
             "phase": "4B",
             "dense_reference_name": "dense_reference",
             "dense_reference_model": args.dense_reference,

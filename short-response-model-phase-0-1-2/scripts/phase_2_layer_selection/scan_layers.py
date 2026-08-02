@@ -10,7 +10,7 @@ from typing import Any
 from transformers import AutoConfig
 
 from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
-from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v4, summary_quality_score
 
 # Default model for the first static layer-selection experiment.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
@@ -141,7 +141,7 @@ def main() -> None:
         # Combine behavioral metrics with the trainer's measured memory and
         # target-module count.
         summary = load_json(eval_dir / "summary.json")
-        require_quality_v2(summary, f"layer scan {variant}")
+        require_quality_v4(summary, f"layer scan {variant}")
         manifest = load_json(train_dir / "training_manifest.json")
         results.append(
             {
@@ -155,7 +155,7 @@ def main() -> None:
                 "intelligibility_pass_rate": summary.get("intelligibility_pass_rate"),
                 "hard_failure_case_count": summary.get("hard_failure_case_count"),
                 "worst_decile_mean_quality_score": summary.get("worst_decile_mean_quality_score"),
-                "semantic_pass_rate": summary.get("semantic_pass_rate"),
+                "observable_quality_pass_rate": summary.get("observable_quality_pass_rate", summary.get("semantic_pass_rate")),
                 "critical_failure_count": summary.get("critical_failure_count"),
                 "major_case_count": summary.get("major_case_count"),
                 "median_reply_tokens": summary["median_reply_tokens"],

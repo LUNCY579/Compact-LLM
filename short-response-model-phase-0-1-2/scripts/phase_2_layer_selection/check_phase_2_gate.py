@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v4, summary_quality_score
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,14 +37,14 @@ def main() -> None:
     args = parse_args()
     data = load_json(args.results)
     reference = data["all_layer_reference"]
-    require_quality_v3(reference, "Phase 2 all-layer reference")
+    require_quality_v4(reference, "Phase 2 all-layer reference")
     rows = [*data.get("ranked_single_layers", []), *data.get("pair_results", []), *data.get("controls", [])]
     assessed: list[dict[str, Any]] = []
     for row in rows:
         layers = row.get("layers")
         if not isinstance(layers, list) or len(layers) not in (1, 2, 4):
             continue
-        require_quality_v3(row, str(row.get("variant", "Phase 2 candidate")))
+        require_quality_v4(row, str(row.get("variant", "Phase 2 candidate")))
         resource_gain = row.get("vram_reduction_vs_all")
         if resource_gain is None:
             all_trainable = data.get("all_layer_reference", {}).get("trainable_parameter_count")
@@ -79,7 +79,7 @@ def main() -> None:
     repeats = data.get("repeat_results", [])
     repeat_scores: list[float] = []
     for row in repeats:
-        require_quality_v3(row, "Phase 2 repeated-seed evidence")
+        require_quality_v4(row, "Phase 2 repeated-seed evidence")
         repeat_scores.append(summary_quality_score(row))
     repeat_stdev = statistics.pstdev(repeat_scores) if len(repeat_scores) > 1 else None
     best = max(

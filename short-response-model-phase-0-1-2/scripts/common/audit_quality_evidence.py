@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Read-only audit for stale or incomplete Evaluation v3 evidence."""
+"""Read-only audit for stale or incomplete Evaluator v4 evidence."""
 
 import argparse
 import json
@@ -17,17 +17,18 @@ REQUIRED_FIELDS = {
     "mean_quality_dimensions",
     "category_quality_scores",
     "mean_issue_cost",
-    "severe_issue_case_rate",
-    "semantic_collapse_case_rate",
-    "semantic_unresponsive_case_rate",
-    "mean_semantic_coherence_score",
-    "mean_prompt_relevance_score",
-    "mean_intent_fulfillment_score",
+    "critical_defect_case_rate",
+    "observable_defect_case_rate",
+    "contract_violation_case_rate",
+    "mechanical_failure_case_rate",
+    "mean_mechanical_integrity_score",
+    "mean_contract_fulfillment_score",
 }
 
 
+
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v3.1.")
+    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v4.3.")
     parser.add_argument(
         "roots", nargs="*", type=Path,
         default=[Path("artifacts"), Path("playground_artifacts")],
@@ -110,7 +111,7 @@ def main() -> None:
         *[f"- {key}: `{value}`" for key, value in sorted(counts.items())],
         "" if counts else "- No evaluation-like JSON summaries found.",
         "", "## Files", "", *table, "", "## Interpretation", "",
-        "- `VALID_CURRENT`: current continuous quality evidence with semantic integrity fields.",
+        "- `VALID_CURRENT`: current quality evidence with observable-defect and explicit-contract fields.",
         "- `STALE_POLICY`: rescore preserved generation results or rerun evaluation.",
         "- `INCOMPLETE_CURRENT`: producer did not write all opportunity-comparison fields.",
         "- `INVALID_JSON`: repair the evidence before any phase consumes it.",

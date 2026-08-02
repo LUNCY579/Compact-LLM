@@ -13,7 +13,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, sha256, sha256_tree, write_json
-from scripts.common.quality_evaluation import require_quality_v3
+from scripts.common.quality_evaluation import require_quality_v4
+from scripts.common.opportunity_evaluation import OPPORTUNITY_POLICY_VERSION
 from scripts.common.reference_selection import DEFAULT_REFERENCE_MANIFEST
 
 GATE_LABELS = ("1", "2", "3", "4", "4B", "5", "6", "7")
@@ -82,7 +83,7 @@ def main() -> None:
     mode = deployment_mode(ROOT / "reports/PHASE_7_STOP_GATE.md")
     reasons: list[str] = []
     try:
-        require_quality_v3(sealed, "sealed release evaluation")
+        require_quality_v4(sealed, "sealed release evaluation")
     except (ValueError, TypeError) as exc:
         reasons.append(str(exc))
     if any(value not in {"PASS", "PASS_BY_DEVIATION"} for value in gates.values()):
@@ -100,8 +101,8 @@ def main() -> None:
     dense_runtime_quality = runtime.get("dense_quality") or {}
     sparse_runtime_quality = runtime.get("sparse_quality") or {}
     try:
-        require_quality_v3(dense_runtime_quality, "Phase 7 dense runtime quality")
-        require_quality_v3(sparse_runtime_quality, "Phase 7 sparse runtime quality")
+        require_quality_v4(dense_runtime_quality, "Phase 7 dense runtime quality")
+        require_quality_v4(sparse_runtime_quality, "Phase 7 sparse runtime quality")
     except (ValueError, TypeError) as exc:
         reasons.append(str(exc))
     if not isinstance(runtime_opportunity, dict) or not runtime_opportunity.get("technical_valid", False):
@@ -124,7 +125,7 @@ def main() -> None:
     payload: dict[str, Any] = {
         "status": automated,
         "quality_evaluation_version": sealed.get("quality_evaluation_version"),
-        "opportunity_policy_version": "1.0",
+        "opportunity_policy_version": OPPORTUNITY_POLICY_VERSION,
         "model_dir": str(args.model_dir.resolve()),
         "deployment_mode": mode,
         "response_control": {

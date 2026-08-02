@@ -108,7 +108,7 @@ def train_and_evaluate(
         "major_issue_count": int(summary.get("major_issue_count", 0)),
         "major_case_count": int(summary.get("major_case_count", 0)),
         "semantic_warning_count": int(summary.get("semantic_warning_count", 0)),
-        "semantic_pass_rate": float(summary.get("semantic_pass_rate", 1.0)),
+        "observable_quality_pass_rate": float(summary.get("observable_quality_pass_rate", summary.get("semantic_pass_rate", 1.0))),
         "peak_eval_vram_gb": float(summary["peak_vram_gb"]),
         "peak_train_vram_gb": float(manifest["peak_allocated_vram_gb"]),
         "train_runtime_seconds": float(metrics.get("train_runtime", 0.0)),

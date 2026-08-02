@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Compatibility facade for the relative-opportunity policy.
 
-The old repository routed absolute floors through this module. Version 1.3
+The old repository routed absolute floors through this module. Evaluator v4
 keeps the public function names so existing phase scripts and user commands do
 not break, but all numerical floor/ceiling keyword arguments are deprecated and
 ignored. Official decisions must combine the returned relative quality loss
@@ -12,6 +12,7 @@ with a phase-specific proportional resource benefit.
 from typing import Any
 
 from scripts.common.opportunity_evaluation import (
+    OPPORTUNITY_POLICY_VERSION,
     evaluate_opportunity,
     higher_is_better_loss,
     quality_opportunity_components,
@@ -73,22 +74,28 @@ def compare_quality_summaries(
         "category_quality_relative_losses": {},
         "maximum_category_relative_loss": float("inf"),
         "quality_profile": "balanced",
-        "opportunity_policy_version": "1.0",
+        "opportunity_policy_version": OPPORTUNITY_POLICY_VERSION,
     }
     mean_loss = relative_loss(summary_quality_score(reference), summary_quality_score(candidate)) if not technical_reasons else float("inf")
     ref_worst = float(reference.get("worst_decile_mean_quality_score", summary_quality_score(reference)))
     cand_worst = float(candidate.get("worst_decile_mean_quality_score", summary_quality_score(candidate)))
     worst_loss = relative_loss(ref_worst, cand_worst)
-    semantic_loss = relative_loss(
-        float(reference.get("semantic_pass_rate", 1.0)),
-        float(candidate.get("semantic_pass_rate", 1.0)),
+    observable_pass_loss = relative_loss(
+        float(reference.get("observable_quality_pass_rate", reference.get("semantic_pass_rate", 1.0))),
+        float(candidate.get("observable_quality_pass_rate", candidate.get("semantic_pass_rate", 1.0))),
     )
     alignment_loss = relative_loss(
         float(reference.get("mean_reference_alignment_score", 1.0) or 1.0),
         float(candidate.get("mean_reference_alignment_score", 1.0) or 1.0),
     )
     category_quality_losses = dict(components.get("category_quality_relative_losses", {}))
-    category_semantic_loss, category_semantic_losses = category_metric_losses(reference, candidate, "category_semantic_pass_rates")
+    category_observable_loss, category_observable_losses = category_metric_losses(
+        reference, candidate, "category_observable_quality_pass_rates"
+    )
+    if not category_observable_losses:
+        category_observable_loss, category_observable_losses = category_metric_losses(
+            reference, candidate, "category_semantic_pass_rates"
+        )
     category_completion_loss, category_completion_losses = category_metric_losses(reference, candidate, "category_complete_utterance_rates")
     category_quality_pass_loss, category_quality_pass_losses = category_metric_losses(reference, candidate, "category_quality_pass_rates")
     category_alignment_loss, category_alignment_losses = category_metric_losses(reference, candidate, "category_reference_alignment_scores")
@@ -107,19 +114,19 @@ def compare_quality_summaries(
         "worst_decile_quality_loss": worst_loss,
         "maximum_category_quality_loss": float(components.get("maximum_category_relative_loss", 0.0)),
         "category_quality_losses": category_quality_losses,
-        "maximum_category_semantic_pass_loss": category_semantic_loss,
-        "category_semantic_pass_losses": category_semantic_losses,
+        "maximum_category_observable_quality_pass_loss": category_observable_loss,
+        "category_observable_quality_pass_losses": category_observable_losses,
         "maximum_category_completion_loss": category_completion_loss,
         "category_completion_losses": category_completion_losses,
         "maximum_category_quality_pass_loss": category_quality_pass_loss,
         "category_quality_pass_losses": category_quality_pass_losses,
         "maximum_category_reference_alignment_loss": category_alignment_loss,
         "category_reference_alignment_losses": category_alignment_losses,
-        "semantic_pass_loss": semantic_loss,
+        "observable_quality_pass_loss": observable_pass_loss,
         "reference_alignment_loss": alignment_loss,
         "quality_pass_rate": float(candidate.get("quality_pass_rate", 0.0)),
         "intelligibility_pass_rate": float(candidate.get("intelligibility_pass_rate", 0.0)),
-        "semantic_pass_rate": float(candidate.get("semantic_pass_rate", 0.0)),
+        "observable_quality_pass_rate": float(candidate.get("observable_quality_pass_rate", candidate.get("semantic_pass_rate", 0.0))),
         "complete_utterance_rate": float(candidate.get("complete_utterance_rate", 0.0)),
         "hard_failure_case_count": int(candidate.get("hard_failure_case_count", 0)),
         "critical_failure_count": int(candidate.get("critical_failure_count", 0)),

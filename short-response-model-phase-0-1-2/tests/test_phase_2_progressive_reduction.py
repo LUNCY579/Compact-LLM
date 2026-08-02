@@ -96,7 +96,7 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "content_anchor_preservation": score,
         }
         return {
-            "quality_evaluation_version": "3.1",
+            "quality_evaluation_version": "4.3",
             "case_count": 100,
             "mean_quality_score": score,
             "worst_decile_mean_quality_score": score,
@@ -190,7 +190,7 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "probe_case_count": first.probe_limit,
             "opportunity_policy": {
                 "quality_profile": first.quality_profile,
-                "quality_evaluation_version": "3.1",
+                "quality_evaluation_version": "4.3",
             },
             "run_configuration": build_run_configuration(first),
         }

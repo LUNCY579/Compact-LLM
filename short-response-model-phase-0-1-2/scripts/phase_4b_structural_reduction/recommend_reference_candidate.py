@@ -13,8 +13,8 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, write_json
-from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier, resource_reduction
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.opportunity_evaluation import OPPORTUNITY_POLICY_VERSION, evaluate_opportunity, pareto_frontier, resource_reduction
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference, quality_index
 
 
@@ -52,7 +52,7 @@ def load_candidate(candidate: dict[str, Any]) -> dict[str, Any]:
 def assess_candidate(candidate: dict[str, Any], dense: dict[str, Any], *, quality_profile: str = "balanced", **deprecated: Any) -> dict[str, Any]:
     summary = candidate["summary_data"]
     dense_summary = dense["summary_data"]
-    require_quality_v3(summary, f"Phase 4B candidate {candidate['name']}")
+    require_quality_v4(summary, f"Phase 4B candidate {candidate['name']}")
     dense_params = float(dense["footprint_data"]["parameters"]["total"])
     params = float(candidate["footprint_data"]["parameters"]["total"])
     reduction = resource_reduction(dense_params, params)
@@ -162,8 +162,8 @@ def main() -> None:
     selected = recommend(assessments)
     payload = {
         "schema_version": 3,
-        "quality_evaluation_version": "3.1",
-        "opportunity_policy_version": "1.0",
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "opportunity_policy_version": OPPORTUNITY_POLICY_VERSION,
         "registry": str(args.registry),
         "quality_profile": args.quality_profile,
         "deprecated_threshold_arguments_ignored": sorted(deprecated),

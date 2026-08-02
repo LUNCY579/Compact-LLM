@@ -6,7 +6,7 @@ The migration performs no model inference.  In ``--in-place --prepare-resume``
 mode it:
 
 1. backs up every existing generation result and summary;
-2. re-scores the stored replies under Evaluator v3.1;
+2. re-scores the stored replies under Evaluator v4.3;
 3. rebuilds full-reference output deviations;
 4. archives stale parent deviations, combined metrics, catalogs, registries, and
    stage decisions;
@@ -44,6 +44,39 @@ OPPORTUNITY_CONFIG = ROOT / "configs/relative_opportunity_evaluation.json"
 def read_json(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
 
+
+
+def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
+    """Require a complete Evaluator-v4.3 contract on every Phase 2B case."""
+
+    case_count = 0
+    missing: list[str] = []
+    invalid: list[str] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            case_count += 1
+            row = json.loads(line)
+            case_id = str(row.get("id", f"line-{line_number}"))
+            contract = row.get("response_contract")
+            if not isinstance(contract, dict):
+                missing.append(case_id)
+            elif str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION:
+                invalid.append(case_id)
+    if case_count == 0:
+        raise ValueError(f"Benchmark contains no cases: {path}")
+    if missing or invalid:
+        parts = []
+        if missing:
+            parts.append(f"missing response_contract: {missing[:8]}")
+        if invalid:
+            parts.append(f"wrong schema version: {invalid[:8]}")
+        raise ValueError(
+            f"Official Phase 2B rescoring requires an explicit Evaluator-v4.3 benchmark ({'; '.join(parts)}). "
+            "Use probe_150_thorough_v4_3.jsonl or author a contracted benchmark first."
+        )
+    return {"case_count": case_count, "contracted_case_count": case_count}
 
 def sha256(path: Path) -> str:
     digest = hashlib.sha256()
@@ -157,6 +190,7 @@ def main() -> None:
         raise FileNotFoundError(run_root)
     if not benchmark.exists():
         raise FileNotFoundError(benchmark)
+    benchmark_contract_audit = validate_explicit_contract_benchmark(benchmark)
 
     catalog_path = run_root / "model_catalog.json"
     registry_path = run_root / "candidate_registry.json"
@@ -251,6 +285,7 @@ def main() -> None:
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "run_root": str(run_root),
         "benchmark": str(benchmark),
+        "benchmark_contract_audit": benchmark_contract_audit,
         "quality_config": str(quality_config),
         "in_place": args.in_place,
         "prepare_resume": args.prepare_resume,

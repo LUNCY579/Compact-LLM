@@ -16,6 +16,7 @@ Design principles:
 
 import argparse
 import hashlib
+import json
 import math
 import shutil
 import sys
@@ -29,7 +30,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_json, run, sha256, sha256_tree, write_json
 from scripts.phase_2_layer_selection.create_depth_candidate import lineage_for_model
-from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v2, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference
 from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
 
@@ -50,7 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sft-adapter", type=Path, default=ROOT / "artifacts/dense_sft/adapter")
     parser.add_argument("--train-file", type=Path, default=ROOT / "data/train/train.jsonl")
     parser.add_argument("--dev-file", type=Path, default=ROOT / "data/dev/dev.jsonl")
-    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50.jsonl")
+    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3.jsonl")
     parser.add_argument("--phase-benchmark", type=Path, default=ROOT / "data/benchmark/shortchatbench_pilot.jsonl")
     parser.add_argument("--output-root", type=Path, default=ROOT / "artifacts/phase_2_progressive_reduction")
     parser.add_argument("--report", type=Path, default=ROOT / "reports/PHASE_2B_PROGRESSIVE_REDUCTION_REPORT.md")
@@ -481,8 +482,8 @@ def relative_loss(reference: float, candidate: float) -> float:
 def max_category_loss(reference: dict[str, Any], candidate: dict[str, Any]) -> tuple[float, dict[str, float]]:
     """Compatibility helper backed by current continuous category scores."""
 
-    require_quality_v2(reference, "reference category summary")
-    require_quality_v2(candidate, "candidate category summary")
+    require_quality_v4(reference, "reference category summary")
+    require_quality_v4(candidate, "candidate category summary")
     ref_scores = reference.get("category_quality_scores") or {}
     cand_scores = candidate.get("category_quality_scores") or {}
     losses: dict[str, float] = {}
@@ -598,6 +599,42 @@ def ranking_key(row: dict[str, Any]) -> tuple[Any, ...]:
     )
 
 
+
+def require_explicit_v4_contracts(path: Path) -> None:
+    """Reject Phase 2B probes that would force the evaluator to guess intent.
+
+    Evaluator v4 can score mechanical integrity without a contract, but official
+    architecture selection also needs case-level requirements for factual,
+    context, safety, and strict task cases.  Phase 2B therefore refuses legacy
+    probes rather than silently treating every reply as open-ended.
+    """
+
+    missing: list[str] = []
+    invalid: list[str] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            row = json.loads(line)
+            case_id = str(row.get("id", f"line-{line_number}"))
+            contract = row.get("response_contract")
+            if not isinstance(contract, dict):
+                missing.append(case_id)
+            elif str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION:
+                invalid.append(case_id)
+    if missing or invalid:
+        details = []
+        if missing:
+            details.append(f"missing contracts: {missing[:8]}")
+        if invalid:
+            details.append(f"wrong contract schema: {invalid[:8]}")
+        raise ValueError(
+            f"Phase 2B requires an explicit Evaluator-v4 response-contract probe ({'; '.join(details)}). "
+            "Use data/phase_2_structural_reduction/probe_50_v4_3.jsonl or "
+            "probe_150_thorough_v4_3.jsonl, or author a new contracted probe with "
+            "scripts/common/build_v4_response_contract_benchmark.py."
+        )
+
 def run_if_needed(command: list[str], sentinel: Path, resume: bool) -> None:
     if resume and sentinel.exists():
         print(f"[reuse] {sentinel}")
@@ -629,7 +666,7 @@ def evaluate_variant(
     summary_sentinel = generation_dir / "summary.json"
     if args.resume and summary_sentinel.exists():
         try:
-            require_quality_v2(read_json(summary_sentinel), str(summary_sentinel))
+            require_quality_v4(read_json(summary_sentinel), str(summary_sentinel))
         except ValueError:
             print(f"[stale evaluator] rebuilding {generation_dir}")
             shutil.rmtree(generation_dir, ignore_errors=True)
@@ -1111,6 +1148,8 @@ def main() -> None:
             cwd=ROOT,
         )
 
+    require_explicit_v4_contracts(args.probe_file)
+
     reference_model = args.output_root / "reference/full_model"
     run_if_needed(
         [
@@ -1135,7 +1174,7 @@ def main() -> None:
     baseline_footprint_path = reference_evidence / "footprint.json"
     if args.resume and (baseline_generation_dir / "summary.json").exists():
         try:
-            require_quality_v2(read_json(baseline_generation_dir / "summary.json"), "Phase 2B reference evaluation")
+            require_quality_v4(read_json(baseline_generation_dir / "summary.json"), "Phase 2B reference evaluation")
         except ValueError:
             print(f"[stale evaluator] rebuilding {baseline_generation_dir}")
             shutil.rmtree(baseline_generation_dir, ignore_errors=True)
@@ -1175,7 +1214,7 @@ def main() -> None:
         args.resume,
     )
     baseline_generation = read_json(baseline_generation_dir / "summary.json")
-    require_quality_v2(baseline_generation, "Phase 2B reference evaluation")
+    require_quality_v4(baseline_generation, "Phase 2B reference evaluation")
     assert_valid_reference(baseline_generation, label="Phase 2B full reference")
     baseline_nll = read_json(baseline_nll_dir / "summary.json")
     baseline_footprint = read_json(baseline_footprint_path)

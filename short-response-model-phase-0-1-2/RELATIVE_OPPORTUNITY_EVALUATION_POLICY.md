@@ -152,23 +152,28 @@ Every official comparison should report:
 
 Legacy absolute thresholds may be accepted as deprecated command-line aliases for compatibility, but they must be ignored and clearly identified as non-controlling.
 
-## Semantic-integrity amendment — Evaluator v3.1
+## Observable-defect amendment — Evaluator v4.0
 
-Conversational permissiveness does not mean that any nonempty sequence of ordinary words is understandable. Evaluator v3.1 explicitly measures semantic coherence, prompt relevance, and intent fulfillment. Unrecoverable word salad, semantically unresponsive output, and lost required meaning receive substantial continuous cost even when the reply contains no Unicode corruption or exact repeated-token run.
+Evaluator v4.0 removes subjective catch-all labels from official scoring. The evaluator must not emit or score labels whose meaning is merely that a reply seems unresponsive, weakly relevant, lexically unusual, or polarity-mismatched.
 
-The following remain acceptable when their intent is clear:
+A scored issue is valid only when it is one of the following:
 
-```text
-How the other adapter looks?
-That layer you are targeting?
-Probably not tbh.
-```
+1. a concrete visible mechanical/structural defect with reproducible evidence;
+2. an explicit response-contract violation stored in the benchmark record; or
+3. a directly observable leakage, contradiction, or safety defect whose triggering evidence is stated.
 
-The following are not acceptable merely because they contain familiar English words:
+Examples of valid concrete labels include `encoding_replacement_character`, `repeated_token_loop`, `broken_clause_sequence`, `internal_reasoning_leakage`, `peak_vram_fact_missing_or_wrong`, and `consent_requirement_missing`.
 
-```text
-You gives. you gives. You can you is the duplicate.
-I: the is you's size, and you, the amount.
-```
+The following are review-only and have zero score cost: reference wording dissimilarity, low lexical overlap, uncommon vocabulary, alternate conversational mode, minor grammar, and script/language differences that do not create objective corruption.
 
-The additional summary evidence is `semantic_collapse_case_rate`, `semantic_unresponsive_case_rate`, `mean_semantic_coherence_score`, `mean_prompt_relevance_score`, and `mean_intent_fulfillment_score`. These fields enter the same proportional opportunity calculation; they do not create hidden absolute promotion floors.
+Category names and reference answers do not create requirements. Strict cases must declare `response_contract.requirements`, `response_contract.prohibitions`, question constraints, and domain mappings directly in the JSONL. A legacy benchmark without those contracts is not valid official Phase 2B selection evidence.
+
+Evaluator v4 summary evidence includes `critical_defect_case_rate`, `observable_defect_case_rate`, `mechanical_failure_case_rate`, `contract_violation_case_rate`, `mean_mechanical_integrity_score`, and `mean_contract_fulfillment_score`. These enter the same proportional opportunity calculation and do not create hidden absolute promotion floors.
+
+Any new scored label requires a versioned definition, positive and negative regression examples, human adjudication, and inclusion in `configs/quality_issue_taxonomy_v4.json` before it can affect official candidate selection.
+
+## Continuous-function amendment — Evaluator v4.1
+
+Evaluator v4.1 preserves the v4.0 ban on subjective catch-all defect labels and adds two official continuous dimensions: explicit response-mode fulfillment and requirement-level partial contract fulfillment. Mechanically valid text no longer receives perfect task adequacy merely because it avoids a concrete defect. Conversely, a substantially correct short answer is not treated the same as an unrelated or entirely wrong answer because one optional detail is absent.
+
+The shared opportunity profile now includes `response_mode_fulfillment`. All new Phase 1–8 summaries must use quality evaluator `4.1` and opportunity policy `1.3`; mixed-version evidence must be rescored rather than compared automatically. The authoritative calibration packet must cover every declared benchmark category, every scored label, every authored response mode, partial answers, and adversarial keyword traps before evaluator changes are accepted.

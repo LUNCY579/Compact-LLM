@@ -1,0 +1,327 @@
+{
+  "schema_version": 1,
+  "package_name": "Short Response Model Evaluator v4.1 Hotfix",
+  "repository_version": "1.4.1",
+  "quality_evaluator_version": "4.1",
+  "relative_opportunity_policy_version": "1.3",
+  "generated_at_utc": "2026-08-02T18:24:53+00:00",
+  "basis_repository": "Short_Response_Model_Full_Integrated_v1.4.0_Evaluator_v4(1).zip",
+  "scope": {
+    "description": "Continuous functional fulfillment, explicit observable defects, partial response-contract credit, comprehensive supported-surface calibration, and Phase 2B no-inference migration.",
+    "changed_files_including_this_manifest": 59,
+    "hashed_files_excluding_self": 58,
+    "self_hash_note": "This manifest intentionally excludes its own hash to avoid recursive content."
+  },
+  "verification": {
+    "repository_tests": "68 passed",
+    "comprehensive_calibration": "276/276 passed",
+    "official_categories_covered": "31/31",
+    "scored_taxonomy_labels_covered": "54/54",
+    "authored_response_modes_covered": "9/9",
+    "response_control_cases": "12/12 passed",
+    "relative_opportunity_audit": "passed",
+    "python_compilation": "passed",
+    "git_diff_check": "passed"
+  },
+  "commands": {
+    "verify": [
+      "python .\\scripts\\common\\verify_quality_evaluation_v4_1.py",
+      "pytest -q",
+      "python .\\scripts\\common\\audit_relative_opportunity_policy.py"
+    ],
+    "phase_2b_review_only": ".\\scripts\\phase_2_layer_selection\\run_phase_2b_rescore_v4_1.ps1 -RunRoot .\\artifacts\\phase_2b_quality_v3_thorough_20260801 -Benchmark .\\data\\phase_2_structural_reduction\\probe_150_thorough_v4_1.jsonl -ReviewOnly",
+    "phase_2b_in_place": ".\\scripts\\phase_2_layer_selection\\run_phase_2b_rescore_v4_1.ps1 -RunRoot .\\artifacts\\phase_2b_quality_v3_thorough_20260801 -Benchmark .\\data\\phase_2_structural_reduction\\probe_150_thorough_v4_1.jsonl"
+  },
+  "files": [
+    {
+      "path": "CHANGED_FILES_EVALUATION_V4_1.md",
+      "bytes": 5973,
+      "sha256": "2c1b38bbf7ddfd7dacba966c2ab8d3d672674288eef5403c5423898011fb6742"
+    },
+    {
+      "path": "EVALUATION_V4_1_CONTINUOUS_FUNCTION_AND_PARTIAL_CREDIT.md",
+      "bytes": 6696,
+      "sha256": "1303aaeb7e8690b2b78659ab24a71ced73828606e21e942512cdc05059b03780"
+    },
+    {
+      "path": "EVALUATION_V4_1_MIGRATION.md",
+      "bytes": 3167,
+      "sha256": "b495badb261282b6dcd3204f745d2b21c59eb425bcde304662c64ccccd302e33"
+    },
+    {
+      "path": "Phase2B_Layer_Combination_Playground_v1.0/phase2b_layer_combination_playground.py",
+      "bytes": 38878,
+      "sha256": "d5a1991a72e8c20c8c34c0540cf363e5d21cbccd45b314c656c57946f8171586"
+    },
+    {
+      "path": "README.md",
+      "bytes": 5745,
+      "sha256": "795c7e2f999333c074b59a04bab8f9d45e30119fefc025595d573a8ff954424c"
+    },
+    {
+      "path": "RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md",
+      "bytes": 8941,
+      "sha256": "4760ee0acd581ae442e4a28bb7570edec96b663abd607cbc310949e594b73e4d"
+    },
+    {
+      "path": "configs/phase_2_progressive_reduction.yaml",
+      "bytes": 1220,
+      "sha256": "a33cfd1fa56f2a8885d14d1a09c19eff98f764b863fb34cfbf0b86edb6b95fa0"
+    },
+    {
+      "path": "configs/phase_2c_targeted_recovery.yaml",
+      "bytes": 1314,
+      "sha256": "fa6b96f25b624f4a1f09675d605e800c5d4f90f7f6e97178ece37c350f257137"
+    },
+    {
+      "path": "configs/phase_4b_structural_reduction.yaml",
+      "bytes": 1427,
+      "sha256": "5565c919ee8a33ff10d46eebdd69a11074a2b16e61b32f5c6b9b20e37eaf8d88"
+    },
+    {
+      "path": "configs/quality_evaluation.json",
+      "bytes": 3646,
+      "sha256": "90aaef2a14ba691028214c2f9ac3ecf0ea7a266385495b153091a24cb4d2d56a"
+    },
+    {
+      "path": "configs/quality_issue_taxonomy_v4_1.json",
+      "bytes": 8260,
+      "sha256": "2d5a64f3f637abd1dd68f641f561f708b6b9c6b17c92eee013f21d7b232985a0"
+    },
+    {
+      "path": "configs/relative_opportunity_evaluation.json",
+      "bytes": 3503,
+      "sha256": "983151f8c65c181ab21f9aaeba796de12c4c2a8f6821f14761c1b6d131dacb57"
+    },
+    {
+      "path": "configs/sparse_runtime_pilot.yaml",
+      "bytes": 969,
+      "sha256": "20069b3a44af9688c6790ea08ae8615d70e21882a898bf3e5575e50d13454697"
+    },
+    {
+      "path": "data/evaluation/quality_v4_1_comprehensive_calibration.jsonl",
+      "bytes": 704808,
+      "sha256": "b61e288471f0428b402f791a287b0dfe4f12ef79c3e7b7cbd56b49151ac717c9"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_150_thorough_v4_1.jsonl",
+      "bytes": 343722,
+      "sha256": "fd74e7e525427e2c9cb3d073703330c81d5ce7a805e04de891511bdbbe0a763e"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_150_thorough_v4_1_manifest.json",
+      "bytes": 1383,
+      "sha256": "ef29fdca7aab530196193448d299b5bc0e731888175828b21e0b70f5653cc934"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_50_v4_1.jsonl",
+      "bytes": 113164,
+      "sha256": "4c283c978ec465e0b851880793c876465f50b58fffccddb99e5e031cfbd4d2c3"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_50_v4_1_manifest.json",
+      "bytes": 1372,
+      "sha256": "7147878a9840df47818e4688749d8f8016b12ca8d7b5d8aafb83168b73f29fde"
+    },
+    {
+      "path": "reports/QUALITY_V4_1_COMPREHENSIVE_CALIBRATION_REPORT.md",
+      "bytes": 32383,
+      "sha256": "02899a5edaf2d86758e8d8dc849dc5eef25d53e558935f431182662528a935f8"
+    },
+    {
+      "path": "reports/QUALITY_V4_1_REAL_PHASE2B_REGRESSION_REVIEW.md",
+      "bytes": 2329,
+      "sha256": "34824bdca78c13cc5478c625fa762e01fdc14d844b68a56f243e715116ff4926"
+    },
+    {
+      "path": "reports/QUALITY_V4_ADJUDICATION_REPORT.md",
+      "bytes": 3941,
+      "sha256": "34d8aab5433db6143a0716be437f58e726d74d3463f43e5aac74433e7d69b13a"
+    },
+    {
+      "path": "scripts/common/audit_quality_evidence.py",
+      "bytes": 4851,
+      "sha256": "32c2ca89a792dabd41be9158dcc42b49386b72e9c074d1481d5a94abe2eba5f4"
+    },
+    {
+      "path": "scripts/common/build_v4_1_comprehensive_calibration.py",
+      "bytes": 16637,
+      "sha256": "039eaff8ba64185ab174439a02dd4cb01fcb5f2ad44763f608d4671738f346be"
+    },
+    {
+      "path": "scripts/common/build_v4_1_response_contract_benchmark.py",
+      "bytes": 24154,
+      "sha256": "8763f4ae8b7149eb70386d757064f35be0e1e2b8734c30b34e588ba9ea49ca31"
+    },
+    {
+      "path": "scripts/common/calibrate_quality_profiles.py",
+      "bytes": 5258,
+      "sha256": "46554823cd401610ea5c2304d9e9594daf37decd1a642ec1200308a84e273934"
+    },
+    {
+      "path": "scripts/common/observable_quality.py",
+      "bytes": 29226,
+      "sha256": "1c95095db93795cf73e36d07a4fbbf0e9922a72eaf582f562f0e934e95e4b5e4"
+    },
+    {
+      "path": "scripts/common/opportunity_evaluation.py",
+      "bytes": 20344,
+      "sha256": "d329828299640fd7c5d7b4fef40c4d5b778b8ceef8eba7c079f9a9b09320a70a"
+    },
+    {
+      "path": "scripts/common/quality_evaluation.py",
+      "bytes": 45147,
+      "sha256": "aed47a4daae5aced805a1b9ddbc360d8d6fb8b489ba2d2600193441fac28b8a6"
+    },
+    {
+      "path": "scripts/common/quality_gate.py",
+      "bytes": 8458,
+      "sha256": "1ed611023afd34440334024ed4f24d4f10cce4b56593e476428a7d7d92e791ed"
+    },
+    {
+      "path": "scripts/common/rescore_quality_artifacts.py",
+      "bytes": 9912,
+      "sha256": "574a037e99f5d076ebf2d9a458bc0b2138518b82847dc414892ce647f70853a4"
+    },
+    {
+      "path": "scripts/common/semantic_quality.py",
+      "bytes": 1900,
+      "sha256": "36f6b025de13e1a3bb00de9416c7d3f57120835a7ff1fdf5877c4bb7dbc9002d"
+    },
+    {
+      "path": "scripts/common/verify_quality_evaluation.py",
+      "bytes": 219,
+      "sha256": "05fdc5d5e2394e503ddda29475d1c4ddfa69af4b0206e4150d352ba9c86fb355"
+    },
+    {
+      "path": "scripts/common/verify_quality_evaluation_v4_1.py",
+      "bytes": 7681,
+      "sha256": "d0fc7ff40bdef8d4dac5e44d6c676ff85ee42854807dec137f499bb4023b65ae"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/README.md",
+      "bytes": 10650,
+      "sha256": "cbabe3f1d73eba723ad0e2127acfec527bf0004a8c427689e8bb3b5eae1d0b5b"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/STRUCTURAL_REDUCTION_MANUAL.md",
+      "bytes": 7196,
+      "sha256": "da95d4ae4fa10976918980927256309114ca9ecff8fc7894d8d691154f27459e"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/build_structural_probe.py",
+      "bytes": 3676,
+      "sha256": "29928b299facc170b0ce67c6d1d37c26839ecda579de83ec11991b6b5a1cfd4b"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/progressive_reduction.py",
+      "bytes": 70202,
+      "sha256": "38fc3c1cf53313d665745a8f426d9299bfe970cc7c66a6a6b1aa3094ea17806e"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py",
+      "bytes": 13417,
+      "sha256": "9b938a17dc304858987a55e3638553698a551958247febb2efda4aac6d71023c"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2_structural_reduction.ps1",
+      "bytes": 5576,
+      "sha256": "e9c9638cc17c87ba377957b6513994cc9ead3454dd7d5f244a26a738a988d3bf"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v3_1.ps1",
+      "bytes": 758,
+      "sha256": "36fa515749d7a1021eba5d076f7c2b9dcf711b6b385998c64877ab5a7a05805b"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4.ps1",
+      "bytes": 585,
+      "sha256": "7004b89c4496d15de34e10fdca2ac3fd2365f8680f78800579108810c94745fa"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_1.ps1",
+      "bytes": 2262,
+      "sha256": "8c68cd0be57f627fc899932746adf9e3686a5faaf605c63cecb3d0974da59a0e"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_static_layer_study.py",
+      "bytes": 16026,
+      "sha256": "847a981d3d37754abd38870f97590000327f15f240f2e4ce82123000cd273cf6"
+    },
+    {
+      "path": "scripts/phase_4_model_soups/greedy_soup_plan.py",
+      "bytes": 2041,
+      "sha256": "999d8cad43fbabc28c9a7f21535236dd888a6f32e9cc775719ae507e99d58117"
+    },
+    {
+      "path": "scripts/phase_4b_structural_reduction/evaluate_candidates.py",
+      "bytes": 7228,
+      "sha256": "6de2edb4ead58bad50d5d34d2fcd9fa2fa5d56a4bba63aa9c20e0d32b4036ff5"
+    },
+    {
+      "path": "scripts/phase_4b_structural_reduction/recommend_reference_candidate.py",
+      "bytes": 8304,
+      "sha256": "aa3eeb22943f92f6d607cec3c5f055e888a1f886c47e2840f4beeff476624728"
+    },
+    {
+      "path": "scripts/phase_7_sparse_runtime/benchmark_runtime.py",
+      "bytes": 21205,
+      "sha256": "5258ecd170217b17d973d43fdcf0d9ac765f18de94fe14d8ca0494ad49bc154c"
+    },
+    {
+      "path": "scripts/phase_8_release_candidate/build_release_audit.py",
+      "bytes": 11181,
+      "sha256": "f5795f82960d4092601ba32f81f3b1ebebb75e6eb64b33bd1c9df9258ecf41f2"
+    },
+    {
+      "path": "scripts/phase_8_release_candidate/collect_ablation_evidence.py",
+      "bytes": 3952,
+      "sha256": "2b533e04de6bda076a460f7b497344af86c480bb67fe4f3c4d529da1c33c57c2"
+    },
+    {
+      "path": "tests/test_phase_2_progressive_reduction.py",
+      "bytes": 14274,
+      "sha256": "ec3ef2a1ed7162efd669ff4ddfcdc8434d30996782be7ae3ab4d5eff800c9935"
+    },
+    {
+      "path": "tests/test_phase_2c_targeted_recovery.py",
+      "bytes": 8471,
+      "sha256": "e6e337dcb03bdcbc595b5b6ee15af4f6d6c7cb71f578c79580e6192557c1a470"
+    },
+    {
+      "path": "tests/test_post_phase3_pipeline.py",
+      "bytes": 5467,
+      "sha256": "9a13623632f1024da3191c037356fa497647bcc400b294e933053053c5aba3e5"
+    },
+    {
+      "path": "tests/test_quality_evaluation.py",
+      "bytes": 11903,
+      "sha256": "45d5d62a3793924dab1ff35164e7e6243d24569aaf49018ba4548cec5236e2b7"
+    },
+    {
+      "path": "tests/test_quality_v31_rescore.py",
+      "bytes": 3208,
+      "sha256": "bcc3aa3025d8d13825510cd19fa0bf79652abb04cd78a4683e0d51edffc31ec9"
+    },
+    {
+      "path": "tests/test_quality_v41_comprehensive.py",
+      "bytes": 1418,
+      "sha256": "ff25fbdf66187e77fe7893f54501c67fe1712d0b31e068a06f9801c1ca2bbf2c"
+    },
+    {
+      "path": "tests/test_quality_v4_phase2b_migration.py",
+      "bytes": 4934,
+      "sha256": "079fcae844e527f55fe325d28604f32f4e24c676d4b11874ea5c6c3857b49a85"
+    },
+    {
+      "path": "tests/test_relative_opportunity_policy.py",
+      "bytes": 1763,
+      "sha256": "e3281666739f36543e41f1a84588dfba780bd88e5f6f9a19f530e2443ef67d7f"
+    },
+    {
+      "path": "verify_post_phase_3.ps1",
+      "bytes": 3343,
+      "sha256": "ca25024719899e75f016ecdd15f279229ca670f8fb932709507ecdd24bc4b2a3"
+    }
+  ]
+}

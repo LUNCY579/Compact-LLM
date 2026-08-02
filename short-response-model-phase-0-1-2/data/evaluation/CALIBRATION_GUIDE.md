@@ -1,15 +1,14 @@
-# Quality Evaluator v3 calibration packet
+# Evaluator v4 human-adjudication guide
 
-This packet separates policy regression examples from future human calibration.
-`policy_expectation` records the approved behavioral contract; `human_rank` is
-left `PENDING` so the repository does not fabricate human judgments.
+`quality_v4_adjudication.jsonl` is the mandatory deterministic regression packet for the official evaluator.
 
-Reviewers should rank replies within and across groups according to functional
-adequacy, comprehensibility, logic/context, and safety. Minor grammar, slang,
-ellipsis, and natural follow-up questions must not be downgraded merely for not
-matching textbook English or one reference answer.
+Each row contains the prompt, generated reply, explicit response contract, approved scored labels, and any review-only diagnostics that should appear. A scored label is allowed only when it describes a concrete visible defect or an explicitly authored contract violation. Reference mismatch, unusual vocabulary, alternate conversational strategy, and minor grammar are not scored defects.
 
-After human rankings are collected, adjust only the versioned proportions in
-`configs/quality_evaluation.json` and
-`configs/relative_opportunity_evaluation.json`, rerun the sensitivity report,
-and increment the policy version when rankings materially change.
+Run:
+
+```powershell
+python .\scripts\common\calibrate_quality_profiles.py --strict
+python .\scripts\common\verify_quality_evaluation.py
+```
+
+Adding or changing a label requires updating its definition in `configs/quality_issue_taxonomy_v4.json`, adding positive and negative examples here, and obtaining human approval before official Phase 2B evidence is migrated.

@@ -140,7 +140,7 @@ def summary_row(label: str, row: dict[str, Any]) -> str:
         f"{float(row.get('intelligibility_pass_rate', 0.0)):.3f} | "
         f"{int(row.get('hard_failure_case_count', 0))} | {int(row.get('critical_failure_count', 0))} | "
         f"{int(row.get('major_case_count', row.get('major_issue_count', 0)))} | "
-        f"{float(row.get('semantic_pass_rate', 1.0)):.3f} | {vram_text} |"
+        f"{float(row.get('observable_quality_pass_rate', row.get('semantic_pass_rate', 1.0))):.3f} | {vram_text} |"
     )
 
 
@@ -166,7 +166,7 @@ def main() -> None:
     )
 
     summary_lines = [
-        "| Role | Variant | Layers | Mean quality | Worst decile | Quality pass | Intelligibility | Hard cases | Critical | Major cases | Semantic pass | Train VRAM reduction |",
+        "| Role | Variant | Layers | Mean quality | Worst decile | Quality pass | Intelligibility | Hard cases | Critical | Major cases | Observable defect-free | Train VRAM reduction |",
         "|---|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|",
         summary_row("All-layer reference", all_reference),
     ]
@@ -214,7 +214,7 @@ removal and recovery are evaluated separately in Phase 2B.
 ## Human Review Checklist
 
 - Confirm the strongest candidate has zero hard failures and no low-tail collapse; do not rely on the mean alone.
-- Inspect every critical or major semantic flag.
+- Inspect every critical or major concrete defect/contract label.
 - Compare factual compression, clarification, context references, uncertainty, and safety.
 - Confirm RANDOM4 and BOTTOM4 behave worse when the ranking says they should.
 - Keep the negative result when no selective candidate satisfies the formal gate.

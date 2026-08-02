@@ -9,7 +9,7 @@ from typing import Any
 from transformers import AutoConfig
 
 from phase2_common import ROOT, contribution, load_json, train_and_evaluate, write_json
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.opportunity_evaluation import evaluate_opportunity
 from scripts.common.quality_gate import quality_index
 
@@ -60,7 +60,7 @@ def run_variant(args: argparse.Namespace, name: str, layers: list[int] | None, s
     cached = destination / "variant_result.json"
     if args.resume and cached.exists():
         cached_row = load_json(cached)
-        if str(cached_row.get("quality_evaluation_version")) == "3.1":
+        if str(cached_row.get("quality_evaluation_version")) == QUALITY_EVALUATION_VERSION:
             return cached_row
         print(f"[stale evaluator] rebuilding {cached}")
     selected = "all" if layers is None else ",".join(str(x) for x in sorted(layers))
@@ -113,8 +113,8 @@ def main() -> None:
             f"{args.target_module_group!r}. Train/evaluate a matching all-layer reference or pass "
             "--allow-mismatched-all-layer-reference for a clearly labeled exploratory run."
         )
-    require_quality_v3(base, "Phase 1 base summary")
-    require_quality_v3(all_summary, "Phase 1 all-layer summary")
+    require_quality_v4(base, "Phase 1 base summary")
+    require_quality_v4(all_summary, "Phase 1 all-layer summary")
     base_score = summary_quality_score(base)
     all_score = summary_quality_score(all_summary)
 
@@ -187,7 +187,7 @@ def main() -> None:
         "major_issue_count": int(all_summary.get("major_issue_count", 0)),
         "major_case_count": int(all_summary.get("major_case_count", 0)),
         "semantic_warning_count": int(all_summary.get("semantic_warning_count", 0)),
-        "semantic_pass_rate": float(all_summary.get("semantic_pass_rate", 1.0)),
+        "observable_quality_pass_rate": float(all_summary.get("observable_quality_pass_rate", all_summary.get("semantic_pass_rate", 1.0))),
         "peak_eval_vram_gb": float(all_summary["peak_vram_gb"]),
         "peak_train_vram_gb": float(all_manifest["peak_allocated_vram_gb"]),
         "train_runtime_seconds": float(all_manifest.get("train_metrics", {}).get("train_runtime", 0.0)),

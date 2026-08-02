@@ -6,7 +6,7 @@ import math
 from pathlib import Path
 from typing import Any, Iterable
 
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import quality_index as shared_quality_index
 from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
 
@@ -150,7 +150,7 @@ def relative_loss(reference: float, candidate: float) -> float:
 
 
 def category_quality_scores(summary: dict[str, Any]) -> dict[str, float]:
-    require_quality_v3(summary)
+    require_quality_v4(summary)
     return {
         str(key): float(value)
         for key, value in (summary.get("category_quality_scores") or summary.get("category_scores") or {}).items()
@@ -202,9 +202,9 @@ def assess_training_candidate(
     cand_summary = candidate["generation_summary"]
     all_summary = all_remaining["generation_summary"]
     frozen_summary = reduced_frozen["generation_summary"]
-    require_quality_v3(cand_summary, f"Phase 2C candidate {candidate.get('name')}")
-    require_quality_v3(all_summary, "Phase 2C all-remaining reference")
-    require_quality_v3(frozen_summary, "Phase 2C reduced-frozen reference")
+    require_quality_v4(cand_summary, f"Phase 2C candidate {candidate.get('name')}")
+    require_quality_v4(all_summary, "Phase 2C all-remaining reference")
+    require_quality_v4(frozen_summary, "Phase 2C reduced-frozen reference")
 
     all_trainable = int(all_remaining["training_manifest"].get("trainable_parameter_count", 0))
     cand_trainable = int(candidate["training_manifest"].get("trainable_parameter_count", 0))

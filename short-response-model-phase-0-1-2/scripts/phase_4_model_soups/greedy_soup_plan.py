@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json, write_json
-from scripts.common.quality_evaluation import require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import quality_index
 
 
@@ -23,7 +23,7 @@ def main() -> None:
     rows = []
     for summary_path in args.summaries:
         summary = read_json(summary_path)
-        require_quality_v3(summary, str(summary_path))
+        require_quality_v4(summary, str(summary_path))
         rows.append({
             "summary": str(summary_path),
             "mean_quality": summary_quality_score(summary),
@@ -35,7 +35,7 @@ def main() -> None:
         })
     rows.sort(key=lambda row: (-row["quality_index"], -row["worst_decile"], -row["mean_quality"]))
     write_json(args.out, {
-        "quality_evaluation_version": "3.1",
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "ranked_ingredients": rows,
         "procedure": (
             "Start with the highest continuous-quality ingredient. Add one compatible ingredient, "

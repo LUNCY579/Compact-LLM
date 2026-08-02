@@ -30,17 +30,33 @@ from scripts.common.quality_evaluation import (
 )
 
 QUALITY_ROW_KEYS = {
+    # Current Evaluator-v4.3 fields. Remove them before each re-score so repeated
+    # migrations cannot preserve stale quality evidence.
     "quality_evaluation_version", "response_contract", "checks", "legacy_checks",
     "passed_checks", "total_checks", "legacy_heuristic_score", "heuristic_score",
     "quality_score", "quality_pass", "quality_pass_is_diagnostic_only",
     "quality_hard_fail", "quality_dimensions", "quality_weights", "case_issue_cost",
     "intelligibility_score", "intelligibility_pass", "intelligibility_diagnostics",
+    "mechanical_integrity_score", "contract_fulfillment_score", "contract_validation",
+    "scoring_issue_cost", "contract_issue_cost", "non_contract_issue_cost",
+    "functional_fulfillment_score", "response_mode_fulfillment_score",
+    "prompt_function_alignment_score", "prompt_function_expectations",
+    "category_scoring_used", "category_contract_inference_used",
+    "detected_response_mode_confidences",
+    "contract_domain_scores", "detected_response_modes", "observable_quality_pass",
     "echo_similarity", "reference_importance", "reference_token_f1",
     "reference_fuzzy_similarity", "reference_anchor_recall", "reference_alignment_score",
-    "critical_failures", "major_issues", "semantic_warnings", "semantic_severity",
-    "semantic_pass", "semantic_integrity_diagnostics", "semantic_coherence_score",
+    "quality_defects", "critical_failures", "major_issues", "minor_issues",
+    "review_diagnostics", "semantic_warnings", "semantic_severity", "semantic_pass",
+    # Superseded v2/v3/v3.1 fields. These are stripped rather than translated;
+    # v4.3 recomputes all official evidence from the stored reply and explicit contract.
+    "semantic_integrity_diagnostics", "semantic_coherence_score",
     "prompt_relevance_score", "intent_fulfillment_score",
+    "semantic_task_adequacy_score", "semantic_logic_score", "semantic_context_score",
+    "semantic_safety_score", "semantic_anchor_preservation_score",
+    "content_anchor_score", "task_compliance_score", "surface_naturalness_score",
 }
+
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:

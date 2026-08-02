@@ -27,7 +27,7 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, sha256_tree, write_json, write_jsonl
 from scripts.common.model_introspection import find_decoder_stack, first_parameter_device, get_gated_mlp
 from scripts.common.sparse_mlp import RoutedSparseGatedMLP, TinyBlockRouter
-from scripts.common.quality_evaluation import aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, aggregate_quality_rows, build_corpus_profile, evaluate_response, load_quality_config
 from scripts.common.quality_gate import assert_valid_reference
 from scripts.common.opportunity_evaluation import evaluate_opportunity
 from scripts.common.response_control import (
@@ -291,7 +291,7 @@ def main() -> None:
                     args.response_control == "one_sentence"
                     and dense_summary["one_sentence_violation_rate"] == 0.0
                 ),
-                "quality_evaluation_version": "3.1",
+                "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
                 "passes_quality_target": True,
                 "passes_runtime_target": False,
                 "raw_results": str(raw_path),
@@ -441,7 +441,7 @@ def main() -> None:
         "sparse_reference": sparse_summary,
         "dense_quality": dense_quality,
         "sparse_quality": sparse_quality,
-        "quality_evaluation_version": "3.1",
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "quality_score_loss": quality_loss,
         "quality_comparison": quality_comparison,
         "decode_speedup": speedup,

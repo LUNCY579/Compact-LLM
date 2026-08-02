@@ -1,0 +1,257 @@
+{
+  "hotfix_name": "Short Response Model Evaluator v4.3 focused prompt adequacy",
+  "source_repository_version": "v1.4.2 / Evaluator v4.2",
+  "target_repository_version": "v1.4.3 / Evaluator v4.3",
+  "quality_evaluation_version": "4.3",
+  "installation": "Extract at repository root and replace included files.",
+  "changed_file_count": 47,
+  "package_file_count": 48,
+  "deleted_file_count": 0,
+  "files": [
+    {
+      "path": "CHANGED_FILES_EVALUATION_V4_3.md",
+      "sha256": "903a567fa00b5e2104fdda4cb58ce710e9fef4f55670a3f0a2bbca1cb05b9480",
+      "status": "added"
+    },
+    {
+      "path": "EVALUATION_V4_3_FOCUSED_PROMPT_ADEQUACY.md",
+      "sha256": "6cd9b64c0e4ef3f8aeca3076043962327c6da5df686cce079444e709d245f946",
+      "status": "added"
+    },
+    {
+      "path": "EVALUATION_V4_3_MIGRATION.md",
+      "sha256": "7d51326692a5062147e57243032440c0fcb8f64d734c51967b75a30af192e501",
+      "status": "added"
+    },
+    {
+      "path": "README.md",
+      "sha256": "601dc0e76c7d2893fc66eb450135bc563fc1a6a1017d555c992ab16b46fcb9db",
+      "status": "modified"
+    },
+    {
+      "path": "configs/phase_2_progressive_reduction.yaml",
+      "sha256": "300cb3e72619003367f705e2be0afe08105d2ee678dcb3257dde3cff08f84400",
+      "status": "modified"
+    },
+    {
+      "path": "configs/phase_2c_targeted_recovery.yaml",
+      "sha256": "6653ad585ce58e00cd97058e24fccdb9236a2ff273e927222d8035de6f6c8f5d",
+      "status": "modified"
+    },
+    {
+      "path": "configs/phase_4b_structural_reduction.yaml",
+      "sha256": "26591762e934d03631a892427797696ca770722b7dd1e0cea20a4c08827e3bb7",
+      "status": "modified"
+    },
+    {
+      "path": "configs/quality_evaluation.json",
+      "sha256": "80be07b547cea4ab03966cbaf13487322fbc9c2df1f88fd5a2ef9c7f86933433",
+      "status": "modified"
+    },
+    {
+      "path": "configs/quality_issue_taxonomy_v4_3.json",
+      "sha256": "de3973c86729068298c9f88730e3f4116063f9e0a85c05047ebbd554ba6e1df9",
+      "status": "added"
+    },
+    {
+      "path": "data/evaluation/phase2b_v4_2_coherent_outputs_150_human_adjudication.jsonl",
+      "sha256": "040f783878e7ef947b838949f0675fd22d1419541cb56a0b2875b47da9a153fb",
+      "status": "added"
+    },
+    {
+      "path": "data/evaluation/quality_v4_3_comprehensive_calibration.jsonl",
+      "sha256": "51dc6097f0474868a077e2aad4aa41dd01e5942236082e7cb71345501b614746",
+      "status": "added"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_150_thorough_v4_3.jsonl",
+      "sha256": "ed203d307e5801c45445ccb11e2c2ad075d39b40e5348e8fb6a422c55de37db4",
+      "status": "added"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_150_thorough_v4_3_manifest.json",
+      "sha256": "91c67f4392bf95261f005617dbd7c86aef3c4c781edb2944772d33efc012c7c8",
+      "status": "added"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_50_v4_3.jsonl",
+      "sha256": "922cfbdc9d6236bf3d524f6bcdcea164c596ebea2cdd11e7bb9d2ef411aa4483",
+      "status": "added"
+    },
+    {
+      "path": "data/phase_2_structural_reduction/probe_50_v4_3_manifest.json",
+      "sha256": "f69255e42bc495975fe699456d93b75f91d1bff121486fe25b3856c570b5ec9e",
+      "status": "added"
+    },
+    {
+      "path": "reports/QUALITY_V4_3_COMPREHENSIVE_CALIBRATION_REPORT.md",
+      "sha256": "c749bf0d91bb5c1b79ec946cf542cdbcff35bd229c12140be285ac48915e5c6b",
+      "status": "added"
+    },
+    {
+      "path": "reports/QUALITY_V4_3_REAL_COHERENT_REGRESSION_REPORT.md",
+      "sha256": "3a0dba188c36ee4c0ca3fa9bcc2ecd4186c1fc3ab817635effee9325b41a0355",
+      "status": "added"
+    },
+    {
+      "path": "scripts/common/audit_quality_evidence.py",
+      "sha256": "3caba11ade26c141e9018141231bb4f3b794b7c8659e0ed9936ab6462bb50f96",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/build_v4_3_comprehensive_calibration.py",
+      "sha256": "381637b6c2e943059756e38c35099ead1608e6fad7446a765bf28d2bb2d11578",
+      "status": "added"
+    },
+    {
+      "path": "scripts/common/build_v4_3_response_contract_benchmark.py",
+      "sha256": "4bc2e0bdcaefdccbce1356e93c4ae6f070be578885d6a764478a834335d36df9",
+      "status": "added"
+    },
+    {
+      "path": "scripts/common/observable_quality.py",
+      "sha256": "0a7744a969dd759e8067a0618b23a67da41cf888c5bf9b67f8ce1d65974d147b",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/quality_evaluation.py",
+      "sha256": "526cfe4e05b2e53ec00cc0d55f666d2e583341b370ddcf6b746a6c4e7ef6e8d4",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/rescore_quality_artifacts.py",
+      "sha256": "899542aa2df179f4c2d7bbcbc4d4d629fd03dfa021dcc11aaee176e7a93961c8",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/verify_quality_evaluation.py",
+      "sha256": "8fa5958fc21d4a4fdede2627f38db1f4fcb59d987db5f01dc93a3e6ee6322403",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/verify_quality_evaluation_v4_2.py",
+      "sha256": "36474e219ae59e14f14fa41b7c2921c83aa16051217549207534ee08d72e3223",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/common/verify_quality_evaluation_v4_3.py",
+      "sha256": "a19af9060b63bf452d5aeb5895a5788ec1f920ea21bb7c528c7c605f716d2386",
+      "status": "added"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/README.md",
+      "sha256": "608c15bcc2eb79fa10474f7632811c6a648334963b419f81a267ae8461e4094b",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/STRUCTURAL_REDUCTION_MANUAL.md",
+      "sha256": "d105f7a216db8aed9f40ba62f55e93a8760b71850a3d697af42e27b1e93d6cb6",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/build_structural_probe.py",
+      "sha256": "5978f3c3791295da9c8712768e865d7061760b18dc3207fa6a4a40e3971c5174",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/progressive_reduction.py",
+      "sha256": "4696a784c599ef496025e671105a653f3d8f6b98f45960e8f3391416e4917afe",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py",
+      "sha256": "f1f0a904b4014a4229d063ed89087d6fade5ff33255b45882c99db153ef16ba2",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2_structural_reduction.ps1",
+      "sha256": "27c2592f375d9f440be4c3c8cdf218b7122575d526858de222d41cab75617174",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v3_1.ps1",
+      "sha256": "fecfc0f3e0b3cbc652aec9c9da0fd14e9e9d4814501b07e242413d2ad51aa4f6",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4.ps1",
+      "sha256": "068bef03ca28934cce079ceda69c00d357ee5c226ace8829ebee1c21c73ce760",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_1.ps1",
+      "sha256": "068bef03ca28934cce079ceda69c00d357ee5c226ace8829ebee1c21c73ce760",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_2.ps1",
+      "sha256": "068bef03ca28934cce079ceda69c00d357ee5c226ace8829ebee1c21c73ce760",
+      "status": "modified"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_3.ps1",
+      "sha256": "1f7285cc1f095c582dd870ec2cf891df992bf4012175d16bffa69b700dd24a38",
+      "status": "added"
+    },
+    {
+      "path": "tests/test_phase_2_progressive_reduction.py",
+      "sha256": "a90ec2615d33a2f1752279760c05358ff420fee2bb5ae9234a7c81b43271830f",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_phase_2c_targeted_recovery.py",
+      "sha256": "8d3b3e92c8398e269d56fa02c36d9e57e8d9626799cef1f323f38a45ea25f552",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_post_phase3_pipeline.py",
+      "sha256": "b9b33155954566aeaaf536296594d1736a59d596ac2685fd88e15286af9402fd",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_quality_evaluation.py",
+      "sha256": "45d0eb18019e82232390dd76b095b8ca3917ca075ddd5af93f60726072afdd33",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_quality_v31_rescore.py",
+      "sha256": "b82c335633c4c5144708d39b8a0db5c33a5c91c0bb9b053c41a1b70bad9747fd",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_quality_v41_comprehensive.py",
+      "sha256": "eb4ac6e316ed8d21a6ef204096689504e3145e4b23eeb01f8687d431162f65c5",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_quality_v42_comprehensive.py",
+      "sha256": "8d0a33614c0d7e2c2f59574e61b049e991e71f97207a52a55c6d4537ab4cf6d9",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_quality_v43_focused.py",
+      "sha256": "f625534f9cd297b81578d72c10237bcdf15d98c1f6f85138b83c6df536aab1bd",
+      "status": "added"
+    },
+    {
+      "path": "tests/test_quality_v4_phase2b_migration.py",
+      "sha256": "7f40763fd9879eff1a4dde78f034332aa041f6b1dfa0691819a55d6efece7726",
+      "status": "modified"
+    },
+    {
+      "path": "tests/test_relative_opportunity_policy.py",
+      "sha256": "d8b7274b158939ffeb2024f22fb5bfbaac74f0f375098ad80848663a0634f512",
+      "status": "modified"
+    }
+  ],
+  "deleted_files": [],
+  "verification": {
+    "pytest": "76 passed",
+    "unittest": "47 passed",
+    "calibration": "611/611 passed",
+    "real_collapsed_outputs": "150/150 zero-quality critical",
+    "real_coherent_outputs": "150/150 within human-authored score bands",
+    "relative_opportunity_policy_audit": "passed",
+    "python_compileall": "passed"
+  }
+}

@@ -27,7 +27,7 @@ PACKAGED_REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(PACKAGED_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGED_REPO_ROOT))
 
-from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v3, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference, quality_index
 from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier, resource_reduction
 
@@ -557,7 +557,7 @@ def evaluate_one(
     generation_summary_path = generation_dir / "summary.json"
     if resume and generation_summary_path.exists():
         try:
-            require_quality_v3(json_read(generation_summary_path), f"cached playground evaluation {name}")
+            require_quality_v4(json_read(generation_summary_path), f"cached playground evaluation {name}")
         except ValueError:
             print(f"[stale evaluator] rebuilding {generation_summary_path}")
             shutil.rmtree(generation_dir, ignore_errors=True)
@@ -632,7 +632,7 @@ def metric_row(
     policy: dict[str, Any],
 ) -> dict[str, Any]:
     generation = payload["generation_summary"]
-    require_quality_v3(generation, f"playground evaluation {payload['name']}")
+    require_quality_v4(generation, f"playground evaluation {payload['name']}")
     footprint = payload["footprint"]
     nll = payload.get("nll_summary")
     base_generation = baseline["generation_summary"]
@@ -706,7 +706,7 @@ def metric_row(
         "quality_pass_rate": float(generation.get("quality_pass_rate", 0.0)),
         "intelligibility_pass_rate": float(generation.get("intelligibility_pass_rate", 0.0)),
         "hard_failure_case_count": int(generation.get("hard_failure_case_count", 0)),
-        "semantic_pass_rate": float(generation.get("semantic_pass_rate", 0.0)),
+        "observable_quality_pass_rate": float(generation.get("observable_quality_pass_rate", generation.get("semantic_pass_rate", 0.0))),
         "complete_utterance_rate": float(generation.get("complete_utterance_rate", 0.0)),
         "critical_failure_count": int(generation.get("critical_failure_count", 0)),
         "major_case_count": int(generation.get("major_case_count", 0)),
@@ -805,7 +805,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--probe-file",
         type=Path,
-        default=Path("data/phase_2_structural_reduction/probe_150_thorough_v2.jsonl"),
+        default=Path("data/phase_2_structural_reduction/probe_150_thorough_v4_1.jsonl"),
     )
     parser.add_argument(
         "--output-root",

@@ -11,7 +11,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_json
-from scripts.common.quality_evaluation import require_quality_v3
+from scripts.common.quality_evaluation import require_quality_v4
 
 
 def main() -> None:
@@ -24,11 +24,11 @@ def main() -> None:
     dense_quality = data.get("dense_quality")
     if dense_quality is None:
         raise SystemExit("Phase 7 comparison has no dense quality evidence.")
-    require_quality_v3(dense_quality, "Phase 7 dense quality")
+    require_quality_v4(dense_quality, "Phase 7 dense quality")
     sparse_attempted = bool(data.get("sparse_attempted", True))
     sparse_quality = data.get("sparse_quality")
     if sparse_attempted and sparse_quality is not None:
-        require_quality_v3(sparse_quality, "Phase 7 sparse quality")
+        require_quality_v4(sparse_quality, "Phase 7 sparse quality")
     response_control_ok = bool(data.get("passes_response_control_target"))
     opportunity = data.get("opportunity_assessment") or data.get("quality_comparison") or {}
     if not response_control_ok:

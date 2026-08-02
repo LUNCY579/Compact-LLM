@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Relative opportunity-cost comparison shared by every official phase.
 
-No absolute quality score, pass-rate, category floor, NLL ceiling, or issue-count
+No absolute quality score, pass-rate, category floor, NLL ceiling, issue-count, or category-tail
 veto appears here. A candidate is technically comparable first, then its
 proportional primary resource benefit is compared with its proportional combined
 quality opportunity loss. The strict decision is:
@@ -23,7 +23,7 @@ from scripts.common.quality_evaluation import require_current_quality, summary_q
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_POLICY_PATH = ROOT / "configs" / "relative_opportunity_evaluation.json"
-OPPORTUNITY_POLICY_VERSION = "1.1"
+OPPORTUNITY_POLICY_VERSION = "1.4"
 EPSILON = 1e-12
 
 
@@ -154,22 +154,23 @@ def quality_opportunity_components(
             candidate.get("worst_decile_mean_quality_score"),
         ),
         "comprehensibility": higher_is_better_loss(_dimension(reference, "comprehensibility"), _dimension(candidate, "comprehensibility")),
-        "semantic_coherence": higher_is_better_loss(_dimension(reference, "semantic_coherence"), _dimension(candidate, "semantic_coherence")),
-        "prompt_relevance": higher_is_better_loss(_dimension(reference, "prompt_relevance"), _dimension(candidate, "prompt_relevance")),
-        "intent_fulfillment": higher_is_better_loss(_dimension(reference, "intent_fulfillment"), _dimension(candidate, "intent_fulfillment")),
+        "mechanical_integrity": higher_is_better_loss(_dimension(reference, "mechanical_integrity"), _dimension(candidate, "mechanical_integrity")),
+        "contract_fulfillment": higher_is_better_loss(_dimension(reference, "contract_fulfillment"), _dimension(candidate, "contract_fulfillment")),
+        "prompt_function_alignment": higher_is_better_loss(_dimension(reference, "prompt_function_alignment"), _dimension(candidate, "prompt_function_alignment")),
         "task_adequacy": higher_is_better_loss(_dimension(reference, "task_adequacy"), _dimension(candidate, "task_adequacy")),
+        "factual_correctness": higher_is_better_loss(_dimension(reference, "factual_correctness"), _dimension(candidate, "factual_correctness")),
         "logic_factual_consistency": higher_is_better_loss(_dimension(reference, "logic_factual_consistency"), _dimension(candidate, "logic_factual_consistency")),
         "safety_boundary": higher_is_better_loss(_dimension(reference, "safety_boundary"), _dimension(candidate, "safety_boundary")),
         "context_consistency": higher_is_better_loss(_dimension(reference, "context_consistency"), _dimension(candidate, "context_consistency")),
         "response_completeness": higher_is_better_loss(_dimension(reference, "response_completeness"), _dimension(candidate, "response_completeness")),
         "brevity_appropriateness": higher_is_better_loss(_dimension(reference, "brevity_appropriateness"), _dimension(candidate, "brevity_appropriateness")),
         "conversation_naturalness": higher_is_better_loss(_dimension(reference, "conversation_naturalness"), _dimension(candidate, "conversation_naturalness")),
-        "content_anchor_preservation": higher_is_better_loss(_dimension(reference, "content_anchor_preservation"), _dimension(candidate, "content_anchor_preservation")),
-        "category_tail": category_tail,
+        "category_tail": category_tail,  # diagnostic-only; no v1.4 profile assigns weight
         "issue_cost": bounded_rate_increase(reference.get("mean_issue_cost", 0.0), candidate.get("mean_issue_cost", 0.0)),
-        "severe_issue_rate": bounded_rate_increase(reference.get("severe_issue_case_rate", 0.0), candidate.get("severe_issue_case_rate", 0.0)),
-        "semantic_collapse_rate": bounded_rate_increase(reference.get("semantic_collapse_case_rate", 0.0), candidate.get("semantic_collapse_case_rate", 0.0)),
-        "semantic_unresponsive_rate": bounded_rate_increase(reference.get("semantic_unresponsive_case_rate", 0.0), candidate.get("semantic_unresponsive_case_rate", 0.0)),
+        "critical_defect_rate": bounded_rate_increase(reference.get("critical_defect_case_rate", 0.0), candidate.get("critical_defect_case_rate", 0.0)),
+        "observable_defect_rate": bounded_rate_increase(reference.get("observable_defect_case_rate", 0.0), candidate.get("observable_defect_case_rate", 0.0)),
+        "contract_violation_rate": bounded_rate_increase(reference.get("contract_violation_case_rate", 0.0), candidate.get("contract_violation_case_rate", 0.0)),
+        "mechanical_failure_rate": bounded_rate_increase(reference.get("mechanical_failure_case_rate", 0.0), candidate.get("mechanical_failure_case_rate", 0.0)),
         "target_nll": lower_is_better_loss(reference_target_nll, candidate_target_nll),
     }
     gains: dict[str, float | None] = {
@@ -180,10 +181,10 @@ def quality_opportunity_components(
         ),
     }
     for name in (
-        "comprehensibility", "semantic_coherence", "prompt_relevance", "intent_fulfillment",
-        "task_adequacy", "logic_factual_consistency", "safety_boundary",
-        "context_consistency", "response_completeness", "brevity_appropriateness",
-        "conversation_naturalness", "content_anchor_preservation",
+        "comprehensibility", "mechanical_integrity", "contract_fulfillment", "prompt_function_alignment",
+        "task_adequacy", "factual_correctness", "logic_factual_consistency",
+        "safety_boundary", "context_consistency", "response_completeness",
+        "brevity_appropriateness", "conversation_naturalness",
     ):
         gains[name] = higher_is_better_gain(_dimension(reference, name), _dimension(candidate, name))
 
@@ -221,6 +222,8 @@ def quality_opportunity_components(
         "net_quality_change": combined_gain - combined_loss,
         "category_quality_relative_losses": category_losses,
         "maximum_category_relative_loss": category_tail or 0.0,
+        "category_statistics_are_diagnostic_only": True,
+        "category_statistics_contribute_to_combined_loss": False,
     }
 
 

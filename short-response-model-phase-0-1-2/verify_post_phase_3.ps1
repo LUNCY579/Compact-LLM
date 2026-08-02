@@ -4,7 +4,7 @@ Run source-level checks for the integrated Phase 2B through Phase 8 pipeline.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
-runs the full pytest regression suite, verifies the quality-v2 and response-control
+runs the full pytest regression suite, verifies the Evaluator-v4.1 and response-control
 contracts, checks the PowerShell runners and their referenced Python scripts, and
 optionally verifies heavyweight imports.
 #>
@@ -25,10 +25,11 @@ Write-Host "[2/6] Running the complete regression suite..."
 python -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "Regression tests failed." }
 
-Write-Host "[3/6] Verifying the quality-evaluation v2 contract..."
-$QualityVerification = Join-Path ([System.IO.Path]::GetTempPath()) "short_response_model_quality_v2_verification.md"
-python .\scripts\common\verify_quality_evaluation.py --report $QualityVerification
-if ($LASTEXITCODE -ne 0) { throw "Quality-evaluation contract verification failed." }
+Write-Host "[3/6] Verifying the Evaluator v4.1 comprehensive calibration..."
+python .\scripts\common\verify_quality_evaluation_v4_1.py
+if ($LASTEXITCODE -ne 0) { throw "Evaluator v4.1 comprehensive calibration failed." }
+python .\scripts\common\audit_relative_opportunity_policy.py
+if ($LASTEXITCODE -ne 0) { throw "Relative-opportunity policy audit failed." }
 
 Write-Host "[4/6] Verifying integrated runner references..."
 $Runners = @(
@@ -69,4 +70,4 @@ if ($VerifyImports) {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Integrated quality-v2 / Phase 2B-8 source verification: PASS"
+Write-Host "Integrated Evaluator-v4.1 / Phase 2B-8 source verification: PASS"
