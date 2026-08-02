@@ -8,6 +8,9 @@ Zip the folder without artifacts or other non-trivial documents
 ```
 $zip = "..\short-response-model_without_artifacts_$(Get-Date -Format 'yyyyMMdd_HHmmss').zip"; tar.exe -a -c -f $zip --exclude="artifacts" --exclude="artifacts/*" --exclude="playground_artifacts" --exclude="playground_artifacts/*" .
 ```
+```
+Get-ChildItem -Exclude "artifacts", "playground_artifacts" | Compress-Archive -DestinationPath "..\Output.zip"
+```
 
 Phase 2B command:
 ```

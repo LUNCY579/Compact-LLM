@@ -35,7 +35,7 @@ def main() -> None:
         })
     rows.sort(key=lambda row: (-row["quality_index"], -row["worst_decile"], -row["mean_quality"]))
     write_json(args.out, {
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "ranked_ingredients": rows,
         "procedure": (
             "Start with the highest continuous-quality ingredient. Add one compatible ingredient, "

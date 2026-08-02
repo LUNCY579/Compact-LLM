@@ -17,7 +17,7 @@ def summary(score: float, *, issue_cost: float = 0.0) -> dict:
         "content_anchor_preservation": score,
     }
     return {
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "case_count": 100,
         "mean_quality_score": score,
         "mean_heuristic_score": score,

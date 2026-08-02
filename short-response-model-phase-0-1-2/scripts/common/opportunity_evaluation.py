@@ -23,7 +23,7 @@ from scripts.common.quality_evaluation import require_current_quality, summary_q
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_POLICY_PATH = ROOT / "configs" / "relative_opportunity_evaluation.json"
-OPPORTUNITY_POLICY_VERSION = "1.0"
+OPPORTUNITY_POLICY_VERSION = "1.1"
 EPSILON = 1e-12
 
 
@@ -154,6 +154,9 @@ def quality_opportunity_components(
             candidate.get("worst_decile_mean_quality_score"),
         ),
         "comprehensibility": higher_is_better_loss(_dimension(reference, "comprehensibility"), _dimension(candidate, "comprehensibility")),
+        "semantic_coherence": higher_is_better_loss(_dimension(reference, "semantic_coherence"), _dimension(candidate, "semantic_coherence")),
+        "prompt_relevance": higher_is_better_loss(_dimension(reference, "prompt_relevance"), _dimension(candidate, "prompt_relevance")),
+        "intent_fulfillment": higher_is_better_loss(_dimension(reference, "intent_fulfillment"), _dimension(candidate, "intent_fulfillment")),
         "task_adequacy": higher_is_better_loss(_dimension(reference, "task_adequacy"), _dimension(candidate, "task_adequacy")),
         "logic_factual_consistency": higher_is_better_loss(_dimension(reference, "logic_factual_consistency"), _dimension(candidate, "logic_factual_consistency")),
         "safety_boundary": higher_is_better_loss(_dimension(reference, "safety_boundary"), _dimension(candidate, "safety_boundary")),
@@ -165,6 +168,8 @@ def quality_opportunity_components(
         "category_tail": category_tail,
         "issue_cost": bounded_rate_increase(reference.get("mean_issue_cost", 0.0), candidate.get("mean_issue_cost", 0.0)),
         "severe_issue_rate": bounded_rate_increase(reference.get("severe_issue_case_rate", 0.0), candidate.get("severe_issue_case_rate", 0.0)),
+        "semantic_collapse_rate": bounded_rate_increase(reference.get("semantic_collapse_case_rate", 0.0), candidate.get("semantic_collapse_case_rate", 0.0)),
+        "semantic_unresponsive_rate": bounded_rate_increase(reference.get("semantic_unresponsive_case_rate", 0.0), candidate.get("semantic_unresponsive_case_rate", 0.0)),
         "target_nll": lower_is_better_loss(reference_target_nll, candidate_target_nll),
     }
     gains: dict[str, float | None] = {
@@ -175,7 +180,8 @@ def quality_opportunity_components(
         ),
     }
     for name in (
-        "comprehensibility", "task_adequacy", "logic_factual_consistency", "safety_boundary",
+        "comprehensibility", "semantic_coherence", "prompt_relevance", "intent_fulfillment",
+        "task_adequacy", "logic_factual_consistency", "safety_boundary",
         "context_consistency", "response_completeness", "brevity_appropriateness",
         "conversation_naturalness", "content_anchor_preservation",
     ):

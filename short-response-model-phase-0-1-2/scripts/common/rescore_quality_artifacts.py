@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Re-score existing generated replies under evaluator v3 without regeneration.
+"""Re-score existing generated replies under the current evaluator without regeneration.
 
 The utility joins benchmark records by id, preserves runtime/generation fields,
 replaces only quality-derived fields, and writes a fresh results.jsonl and
@@ -38,7 +38,8 @@ QUALITY_ROW_KEYS = {
     "echo_similarity", "reference_importance", "reference_token_f1",
     "reference_fuzzy_similarity", "reference_anchor_recall", "reference_alignment_score",
     "critical_failures", "major_issues", "semantic_warnings", "semantic_severity",
-    "semantic_pass",
+    "semantic_pass", "semantic_integrity_diagnostics", "semantic_coherence_score",
+    "prompt_relevance_score", "intent_fulfillment_score",
 }
 
 
@@ -169,7 +170,7 @@ def rescore(
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Re-score stored generations with conversational quality evaluator v3.")
+    parser = argparse.ArgumentParser(description=f"Re-score stored generations with Quality Evaluator v{QUALITY_EVALUATION_VERSION}.")
     parser.add_argument("--benchmark", type=Path, required=True)
     parser.add_argument("--results", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path)
@@ -178,7 +179,7 @@ def main() -> None:
     args = parser.parse_args()
     if args.in_place and args.output_dir:
         raise SystemExit("Use either --in-place or --output-dir, not both.")
-    output = args.results.parent if args.in_place else (args.output_dir or args.results.parent.with_name(args.results.parent.name + "_quality_v3"))
+    output = args.results.parent if args.in_place else (args.output_dir or args.results.parent.with_name(args.results.parent.name + f"_quality_v{QUALITY_EVALUATION_VERSION.replace(chr(46), chr(95))}"))
     result_out, summary_out = rescore(args.benchmark, args.results, output, args.quality_config)
     print(result_out)
     print(summary_out)

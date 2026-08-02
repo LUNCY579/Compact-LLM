@@ -121,9 +121,9 @@ Phase 2C writes its own catalog and stop gate. It preserves the Phase 2B structu
 - `full_quality` remains available even when Phase 2B is rejected.
 - `balanced` or `min_memory` may enter Phase 3 only after the Phase 2B report contains `Human decision: PASS` and explicitly lists the approved profile names.
 
-## Quality evaluator v3.0
+## Quality evaluator v3.1
 
-This phase uses Quality Evaluator `3.0` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
+This phase uses Quality Evaluator `3.1` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
 
 
 ## Phase 2B continuation hotfix — direct Stage 10+ resume
@@ -160,3 +160,15 @@ Continue the established August 1 thorough run with:
 ```
 
 `MaxDrops 27` is only an upper bound. The two-layer safety guard means a 28-layer source can accept at most 26 deletions, and the run normally stops earlier when no remaining deletion is worthwhile under both opportunity comparisons.
+
+## Evaluator v3.1 rescoring and corrected-frontier replay
+
+Pause an active v3.0 run before migration. To re-score all preserved Phase 2B replies without model inference and prepare the corrected frontier replay:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v3_1.ps1 `
+  -RunRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl
+```
+
+Then rerun the exact original structural-reduction command with `-Resume`. Stored generation, NLL, and footprint evidence is reused while the corrected frontier follows the same parent lineage. If v3.1 changes a stage winner, only the downstream branch created from the superseded parent is regenerated. Timestamped pre-v3.1 backups and `PHASE2B_QUALITY_V3_1_MIGRATION.json` preserve the migration audit trail.

@@ -27,7 +27,7 @@ PACKAGED_REPO_ROOT = Path(__file__).resolve().parent.parent
 if str(PACKAGED_REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(PACKAGED_REPO_ROOT))
 
-from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v3, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference, quality_index
 from scripts.common.opportunity_evaluation import evaluate_opportunity, pareto_frontier, resource_reduction
 
@@ -557,7 +557,7 @@ def evaluate_one(
     generation_summary_path = generation_dir / "summary.json"
     if resume and generation_summary_path.exists():
         try:
-            require_quality_v2(json_read(generation_summary_path), f"cached playground evaluation {name}")
+            require_quality_v3(json_read(generation_summary_path), f"cached playground evaluation {name}")
         except ValueError:
             print(f"[stale evaluator] rebuilding {generation_summary_path}")
             shutil.rmtree(generation_dir, ignore_errors=True)
@@ -632,7 +632,7 @@ def metric_row(
     policy: dict[str, Any],
 ) -> dict[str, Any]:
     generation = payload["generation_summary"]
-    require_quality_v2(generation, f"playground evaluation {payload['name']}")
+    require_quality_v3(generation, f"playground evaluation {payload['name']}")
     footprint = payload["footprint"]
     nll = payload.get("nll_summary")
     base_generation = baseline["generation_summary"]
@@ -900,7 +900,7 @@ def main() -> None:
         "output_root": str(output_root),
         "suite": args.suite,
         "playground_version": PLAYGROUND_VERSION,
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "relative_opportunity_policy": policy,
         "quick_drops": sorted(quick),
         "thorough_drops": sorted(thorough),
@@ -970,7 +970,7 @@ def main() -> None:
 
     json_write(output_root / "summary.json", {
         "schema_version": 3, "playground_version": PLAYGROUND_VERSION,
-        "quality_evaluation_version": "3.0", "plan": plan, "results": rows,
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION, "plan": plan, "results": rows,
         "worthwhile_variants": [row["variant"] for row in rows if row["status"] == "WORTHWHILE"],
         "not_worthwhile_variants": [row["variant"] for row in rows if row["status"] == "NOT_WORTHWHILE"],
     })

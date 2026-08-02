@@ -60,7 +60,7 @@ def run_variant(args: argparse.Namespace, name: str, layers: list[int] | None, s
     cached = destination / "variant_result.json"
     if args.resume and cached.exists():
         cached_row = load_json(cached)
-        if str(cached_row.get("quality_evaluation_version")) == "3.0":
+        if str(cached_row.get("quality_evaluation_version")) == "3.1":
             return cached_row
         print(f"[stale evaluator] rebuilding {cached}")
     selected = "all" if layers is None else ",".join(str(x) for x in sorted(layers))

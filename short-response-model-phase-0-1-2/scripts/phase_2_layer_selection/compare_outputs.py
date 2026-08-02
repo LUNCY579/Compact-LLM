@@ -17,6 +17,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, write_json
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
 
 
 def normalize(text: str) -> str:
@@ -60,7 +61,7 @@ def compare_rows(reference: list[dict[str, Any]], candidate: list[dict[str, Any]
         )
 
     summary = {
-        "quality_evaluation_version": "2.0",
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "case_count": len(rows),
         "changed_reply_count": sum(1 for row in rows if not row["exact_match"]),
         "exact_reply_match_rate": statistics.mean(1.0 if row["exact_match"] else 0.0 for row in rows),

@@ -8,9 +8,9 @@ This repository implements the ordered Phase 0–8 program plus two structural b
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
-## v1.3 relative-opportunity evaluation
+## v1.3.2 semantic-integrity evaluation
 
-Quality Evaluator v3 treats understandable conversational language as acceptable even when grammar or vocabulary is informal. References are examples, follow-up questions are permitted unless explicitly forbidden, and questions do not count as unsupported certainty. All official phases and the independent playground use one shared opportunity engine: the phase's proportional primary resource benefit must be strictly greater than combined proportional quality opportunity loss. Absolute score floors and zero-issue vetoes are prohibited. Technical invalidity and human gates remain binary prerequisites.
+Quality Evaluator v3.1 treats understandable conversational language as acceptable even when grammar or vocabulary is informal. References are examples, follow-up questions are permitted unless explicitly forbidden, and questions do not count as unsupported certainty. All official phases and the independent playground use one shared opportunity engine: the phase's proportional primary resource benefit must be strictly greater than combined proportional quality opportunity loss. Absolute score floors and zero-issue vetoes are prohibited. Technical invalidity and human gates remain binary prerequisites.
 
 The historical blueprint targets are preserved and amended by `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`. The authoritative implementation policy is `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`.
 
@@ -39,11 +39,11 @@ The repository now separates learned brevity from the deployable hard boundary:
 
 See `RESPONSE_CONTROL_AND_EARLY_EXIT_AUDIT.md` and `scripts/phase_7_sparse_runtime/RESPONSE_CONTROL_CONTRACT.md`. This controller avoids decode work; it does not remove model weights or turn selective training into inference-time layer skipping.
 
-## Quality evaluation v3.0
+## Quality evaluation v3.1
 
-All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py` plus `scripts/common/opportunity_evaluation.py`. Case-level analysis is continuous across comprehensibility, task adequacy, logic/factual consistency, safety, context consistency, completeness, brevity, conversational naturalness, and explicit content anchors. Severe corruption still receives a severe case cost, but candidate promotion is proportional rather than controlled by hidden absolute vetoes.
+All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py` plus `scripts/common/opportunity_evaluation.py`. Case-level analysis is continuous across mechanical integrity, semantic coherence, prompt relevance, intent fulfillment, task adequacy, logic/factual consistency, safety, context consistency, completeness, brevity, conversational naturalness, and explicit content anchors. Severe corruption still receives a severe case cost, but candidate promotion is proportional rather than controlled by hidden absolute vetoes.
 
-Existing v2 generation evidence can be rescored with `scripts/common/rescore_quality_artifacts.py`; Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py`. Run `scripts/common/verify_quality_evaluation.py` and `scripts/common/audit_relative_opportunity_policy.py` after modifications.
+Existing generation evidence can be rescored with `scripts/common/rescore_quality_artifacts.py`; Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/rescore_phase_2b_artifacts.py`. Run `scripts/common/verify_quality_evaluation.py` and `scripts/common/audit_relative_opportunity_policy.py` after modifications. See `EVALUATION_V3_1_SEMANTIC_INTEGRITY_HOTFIX.md` for Phase 2B migration and replay commands.
 
 ## Production principle
 

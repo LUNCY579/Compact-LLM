@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run Phase 2B progressive structural reduction under Evaluation v3.
+Run Phase 2B progressive structural reduction under Quality Evaluator v3.1.
 
 .DESCRIPTION
 Every current layer is tested as a reversible physical deletion. A candidate

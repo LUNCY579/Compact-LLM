@@ -13,6 +13,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.quality_evaluation import (
+    QUALITY_EVALUATION_VERSION,
     build_corpus_profile,
     evaluate_response,
     load_quality_config,
@@ -24,9 +25,9 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Create a Quality Evaluator v3 calibration report.")
-    parser.add_argument("--packet", type=Path, default=ROOT / "data/evaluation/quality_v3_calibration.jsonl")
-    parser.add_argument("--out", type=Path, default=ROOT / "reports/QUALITY_V3_CALIBRATION_REPORT.md")
+    parser = argparse.ArgumentParser(description=f"Create a Quality Evaluator v{QUALITY_EVALUATION_VERSION} calibration report.")
+    parser.add_argument("--packet", type=Path, default=ROOT / "data/evaluation/quality_v3_1_calibration.jsonl")
+    parser.add_argument("--out", type=Path, default=ROOT / "reports/QUALITY_V3_1_CALIBRATION_REPORT.md")
     args = parser.parse_args()
     rows = read_jsonl(args.packet)
     records = []
@@ -51,16 +52,20 @@ def main() -> None:
         evaluated.append({**source, "result": result})
 
     lines = [
-        "# Quality Evaluator v3 calibration report", "",
+        f"# Quality Evaluator v{QUALITY_EVALUATION_VERSION} calibration report", "",
         "This report is deterministic policy evidence, not a substitute for pending human ranks.", "",
-        "| ID | Group | Policy expectation | Score | Severity | Reply |", "|---|---|---|---:|---|---|",
+        "| ID | Group | Policy expectation | Score | Coherence | Relevance | Intent | Severity | Issues | Reply |", "|---|---|---|---:|---:|---:|---:|---|---|---|",
     ]
     for row in evaluated:
         result = row["result"]
         reply = str(row["reply"]).replace("|", "\\|")
+        issues = ", ".join(result.get("critical_failures", []) + result.get("major_issues", []) + result.get("semantic_warnings", []))
+        issues = issues.replace("|", "\\|")
         lines.append(
             f"| {row['id']} | {row['group']} | {row['policy_expectation']} | "
-            f"{result['quality_score']:.3f} | {result['semantic_severity']} | {reply} |"
+            f"{result['quality_score']:.3f} | {result.get('semantic_coherence_score', 0.0):.3f} | "
+            f"{result.get('prompt_relevance_score', 0.0):.3f} | {result.get('intent_fulfillment_score', 0.0):.3f} | "
+            f"{result['semantic_severity']} | {issues} | {reply} |"
         )
     lines.extend(["", "## Pending human calibration", "", "All `human_rank` values remain `PENDING` until a reviewer records them."])
     args.out.parent.mkdir(parents=True, exist_ok=True)

@@ -162,7 +162,7 @@ def main() -> None:
     selected = recommend(assessments)
     payload = {
         "schema_version": 3,
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "opportunity_policy_version": "1.0",
         "registry": str(args.registry),
         "quality_profile": args.quality_profile,

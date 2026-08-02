@@ -1,49 +1,57 @@
-# Evaluation v3 Migration Guide
+# Evaluation v3.1 Migration Guide
 
 ## What changed
 
-Evaluator v3 is conversationally permissive and continuous. Official phase decisions use `scripts/common/opportunity_evaluation.py` rather than fixed quality floors.
+Evaluator v3.1 keeps the permissive conversational policy introduced in v3.0, but adds explicit semantic coherence, prompt relevance, intent fulfillment, and required-meaning preservation. Nonempty word salad can no longer inherit perfect task adequacy merely because it avoids a narrow mechanical corruption rule.
+
+Official phase decisions still use `scripts/common/opportunity_evaluation.py` rather than fixed quality floors. The detailed design is in `EVALUATION_V3_1_SEMANTIC_INTEGRITY_HOTFIX.md`.
 
 ## Existing checkpoints
 
-A scoring-policy change does not require retraining a checkpoint. Existing generated replies can be rescored with:
+A scoring-policy change does not require checkpoint retraining. Existing generated replies can be rescored with:
 
 ```powershell
 python .\scripts\common\rescore_quality_artifacts.py `
   --benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
   --results .\path\to\generation\results.jsonl `
-  --output-dir .\path\to\generation_v3
+  --output-dir .\path\to\generation_quality_v3_1
 ```
 
-The tool preserves generation text and recomputes case-level quality fields and `summary.json`.
+The tool preserves generation text and runtime fields while recomputing case-level quality evidence and `summary.json`.
 
 ## Phase 2B tree migration
 
-First create non-destructive sibling evidence for inspection:
+Non-destructive review:
 
 ```powershell
-python .\scripts\phase_2_layer_selection\rescore_phase_2b_artifacts.py `
-  --run-root .\artifacts\phase_2b_quality_v2_thorough_20260731 `
-  --benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl
+.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v3_1.ps1 `
+  -RunRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
+  -ReviewOnly
 ```
 
-When ready to continue the official run, migrate in place and prepare resume:
+Official in-place migration and replay preparation:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v3_1.ps1 `
+  -RunRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl
+```
+
+Equivalent Python command:
 
 ```powershell
 python .\scripts\phase_2_layer_selection\rescore_phase_2b_artifacts.py `
-  --run-root .\artifacts\phase_2b_quality_v2_thorough_20260731 `
+  --run-root .\artifacts\phase_2b_quality_v3_thorough_20260801 `
   --benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v2.jsonl `
   --in-place `
   --prepare-resume
 ```
 
-The utility creates timestamped backups, rescoring stored replies without model
-inference, rebuilds output-deviation evidence against the rescored full
-reference, and archives the superseded derived catalog. Then rerun the exact
-original Phase 2B command with `-Resume`. Model checkpoints, NLL, footprints,
-and generations are reused; opportunity assessments and the progressive parent
-are recalculated under Evaluator v3 before later stages continue.
+The utility creates timestamped backups, re-scores stored replies without model inference, rebuilds full-reference output deviations, writes evidence-lineage manifests, and archives superseded parent-relative decisions and catalogs. Then rerun the exact original Phase 2B command with `-Resume`.
+
+Stored generations, teacher-forced NLL, footprint evidence, and compatible checkpoints are reused while the corrected frontier follows the same parent lineage. If v3.1 changes the accepted parent at a stage, only downstream work from that divergence must be regenerated.
 
 ## Resume safety
 
-Do not use `-Resume` to mix v2 summaries with v3 decisions. The current code fingerprints evaluator version and requires current-schema summaries for relative comparison.
+Do not mix 3.0 and 3.1 summaries in one official comparison. The current code fingerprints evaluator configuration, opportunity policy, benchmark, parent model, dropped layer, recovery settings, and retained layer lineage. Evidence with mismatched provenance is removed before reuse.

@@ -186,7 +186,7 @@ def main() -> None:
         registry_path,
         {
             "registry_version": 3,
-            "quality_evaluation_version": "3.0",
+            "quality_evaluation_version": "3.1",
             "phase": "4B",
             "dense_reference_name": "dense_reference",
             "dense_reference_model": args.dense_reference,

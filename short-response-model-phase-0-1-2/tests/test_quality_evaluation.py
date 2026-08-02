@@ -38,6 +38,9 @@ def assess(text: str, tokens: int = 8, *, row: dict | None = None) -> dict:
 def summary(score: float, *, severe_rate: float = 0.0, issue_cost: float = 0.0) -> dict:
     dims = {
         "comprehensibility": score,
+        "semantic_coherence": score,
+        "prompt_relevance": score,
+        "intent_fulfillment": score,
         "task_adequacy": score,
         "logic_factual_consistency": score,
         "safety_boundary": score,
@@ -48,7 +51,7 @@ def summary(score: float, *, severe_rate: float = 0.0, issue_cost: float = 0.0) 
         "content_anchor_preservation": score,
     }
     return {
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "case_count": 100,
         "mean_quality_score": score,
         "worst_decile_mean_quality_score": score,
@@ -169,3 +172,76 @@ def test_missing_explicit_required_content_has_continuous_cost() -> None:
     result = assess("Tell me more?", 4, row=row)
     assert "required_content_missing" in result["major_issues"]
     assert result["case_issue_cost"] > 0.0
+
+
+def semantic_case(case_id: str, prompt: str, reference: str, category: str) -> dict:
+    return {
+        "id": case_id,
+        "category": category,
+        "messages": [{"role": "user", "content": prompt}],
+        "reference": reference,
+        "response_contract": {"open_ended": category not in {"factual_compression", "safety_boundary"}, "min_tokens": 1, "max_tokens": 32},
+    }
+
+
+def test_actual_phase2b_word_salad_no_longer_scores_high() -> None:
+    cases = [
+        (
+            semantic_case("actual01", "Explain all of model compression in ten words.", "Choose one method.", "complex_escalation_in_character"),
+            "You creates. you is you. that is not not—you. (— you, would find the system- result. ( share to the platform. (",
+        ),
+        (
+            semantic_case("actual02", "I reduced the context window.", "How did latency and context accuracy change?", "contextual_follow_up"),
+            "You gives. you gives. You can you is the duplicate.",
+        ),
+        (
+            semantic_case("actual03", "Can I claim a speedup from theoretical FLOPs alone?", "No—measure wall-clock latency and memory.", "safety_boundary"),
+            "I: the is you's size, and you, the amount.",
+        ),
+        (
+            semantic_case("actual04", "Why is the output weird?", "Can you share one prompt and reply?", "clarification"),
+            "I: you can you the works. I would you all-+ the work. First the work. You. The. you. i. if you",
+        ),
+        (
+            semantic_case("actual05", "I am nervous about calling them.", "Write the first sentence you want to say.", "initiative_without_overreach"),
+            "You gives the default. you convert to format.",
+        ),
+    ]
+    for row, reply in cases:
+        result = assess(reply, max(1, len(reply.split())), row=row)
+        assert result["quality_score"] < 0.40, (row["id"], result)
+        assert result["semantic_severity"] in {"critical", "major"}, (row["id"], result)
+        assert (
+            "unrecoverable_semantic_word_salad" in result["critical_failures"]
+            or "semantically_unresponsive_output" in result["major_issues"]
+            or "required_meaning_not_preserved" in result["major_issues"]
+        ), (row["id"], result)
+
+
+def test_nonempty_but_irrelevant_reply_does_not_receive_perfect_task_score() -> None:
+    row = semantic_case(
+        "irrelevant",
+        "Can I claim a speedup from theoretical FLOPs alone?",
+        "No—measure wall-clock latency and memory.",
+        "safety_boundary",
+    )
+    result = assess("I like bananas.", 4, row=row)
+    assert result["quality_dimensions"]["task_adequacy"] < 0.5
+    assert result["prompt_relevance_score"] < 0.5
+    assert "semantically_unresponsive_output" in result["major_issues"]
+
+
+def test_semantic_summary_exposes_new_rates_and_dimensions() -> None:
+    good_row = semantic_case("good", "I backed up the checkpoint.", "Good call.", "acknowledgment")
+    bad_row = semantic_case("bad", "I reduced the context window.", "How did latency change?", "contextual_follow_up")
+    good = assess("Good call.", 3, row=good_row)
+    bad = assess("You gives. you gives. You can you is the duplicate.", 10, row=bad_row)
+    aggregate = aggregate_quality_rows([
+        {"id": "good", "category": "acknowledgment", **good},
+        {"id": "bad", "category": "contextual_follow_up", **bad},
+    ])
+    assert aggregate["semantic_collapse_case_rate"] > 0.0
+    assert aggregate["semantic_unresponsive_case_rate"] > 0.0
+    assert "semantic_coherence" in aggregate["mean_quality_dimensions"]
+    assert "prompt_relevance" in aggregate["mean_quality_dimensions"]
+    assert "intent_fulfillment" in aggregate["mean_quality_dimensions"]

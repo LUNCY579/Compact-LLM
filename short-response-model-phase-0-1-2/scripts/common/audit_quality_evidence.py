@@ -7,6 +7,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
+
 REQUIRED_FIELDS = {
     "quality_evaluation_version",
     "case_count",
@@ -16,11 +18,16 @@ REQUIRED_FIELDS = {
     "category_quality_scores",
     "mean_issue_cost",
     "severe_issue_case_rate",
+    "semantic_collapse_case_rate",
+    "semantic_unresponsive_case_rate",
+    "mean_semantic_coherence_score",
+    "mean_prompt_relevance_score",
+    "mean_intent_fulfillment_score",
 }
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v3.0.")
+    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v3.1.")
     parser.add_argument(
         "roots", nargs="*", type=Path,
         default=[Path("artifacts"), Path("playground_artifacts")],
@@ -57,14 +64,14 @@ def classify(path: Path) -> dict[str, Any] | None:
         return None
     version = str(payload.get("quality_evaluation_version", "legacy/absent"))
     missing = sorted(REQUIRED_FIELDS.difference(payload))
-    if version != "3.0":
+    if version != QUALITY_EVALUATION_VERSION:
         status = "STALE_POLICY"
         details = f"quality_evaluation_version={version}"
     elif missing:
-        status = "INCOMPLETE_V3"
+        status = "INCOMPLETE_CURRENT"
         details = "missing: " + ", ".join(missing)
     else:
-        status = "VALID_V3"
+        status = "VALID_CURRENT"
         details = (
             f"mean={float(payload.get('mean_quality_score', 0.0)):.3f}; "
             f"issue_cost={float(payload.get('mean_issue_cost', 0.0)):.3f}; "
@@ -98,20 +105,20 @@ def main() -> None:
 
     report = "\n".join([
         "# QUALITY EVIDENCE AUDIT", "",
-        "This is a read-only inventory. Summaries from earlier policies cannot be mixed with Evaluation v3 in automated comparisons.",
+        "This is a read-only inventory. Summaries from earlier policies cannot be mixed with the current evaluator in automated comparisons.",
         "", "## Counts", "",
         *[f"- {key}: `{value}`" for key, value in sorted(counts.items())],
         "" if counts else "- No evaluation-like JSON summaries found.",
         "", "## Files", "", *table, "", "## Interpretation", "",
-        "- `VALID_V3`: current continuous quality evidence.",
+        "- `VALID_CURRENT`: current continuous quality evidence with semantic integrity fields.",
         "- `STALE_POLICY`: rescore preserved generation results or rerun evaluation.",
-        "- `INCOMPLETE_V3`: producer did not write all opportunity-comparison fields.",
+        "- `INCOMPLETE_CURRENT`: producer did not write all opportunity-comparison fields.",
         "- `INVALID_JSON`: repair the evidence before any phase consumes it.",
     ])
     args.report.parent.mkdir(parents=True, exist_ok=True)
     args.report.write_text(report, encoding="utf-8")
     print(args.report)
-    problematic = sum(counts.get(key, 0) for key in ("STALE_POLICY", "INCOMPLETE_V3", "INVALID_JSON"))
+    problematic = sum(counts.get(key, 0) for key in ("STALE_POLICY", "INCOMPLETE_CURRENT", "INVALID_JSON"))
     if args.strict and problematic:
         raise SystemExit(1)
 

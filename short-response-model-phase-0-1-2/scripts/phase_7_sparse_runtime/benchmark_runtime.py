@@ -291,7 +291,7 @@ def main() -> None:
                     args.response_control == "one_sentence"
                     and dense_summary["one_sentence_violation_rate"] == 0.0
                 ),
-                "quality_evaluation_version": "3.0",
+                "quality_evaluation_version": "3.1",
                 "passes_quality_target": True,
                 "passes_runtime_target": False,
                 "raw_results": str(raw_path),
@@ -441,7 +441,7 @@ def main() -> None:
         "sparse_reference": sparse_summary,
         "dense_quality": dense_quality,
         "sparse_quality": sparse_quality,
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "quality_score_loss": quality_loss,
         "quality_comparison": quality_comparison,
         "decode_speedup": speedup,

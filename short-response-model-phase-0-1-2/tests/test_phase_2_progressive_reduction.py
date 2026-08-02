@@ -13,7 +13,9 @@ from scripts.phase_2_layer_selection.build_structural_probe import select_balanc
 from scripts.phase_2_layer_selection.progressive_reduction import (
     assess_candidate,
     build_run_configuration,
+    build_variant_provenance,
     combine_progression_assessments,
+    prepare_variant_evidence,
     profile_validation_dir,
     restore_resume_state,
     select_profiles,
@@ -94,7 +96,7 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "content_anchor_preservation": score,
         }
         return {
-            "quality_evaluation_version": "3.0",
+            "quality_evaluation_version": "3.1",
             "case_count": 100,
             "mean_quality_score": score,
             "worst_decile_mean_quality_score": score,
@@ -188,7 +190,7 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
             "probe_case_count": first.probe_limit,
             "opportunity_policy": {
                 "quality_profile": first.quality_profile,
-                "quality_evaluation_version": "3.0",
+                "quality_evaluation_version": "3.1",
             },
             "run_configuration": build_run_configuration(first),
         }
@@ -199,6 +201,30 @@ class Phase2ProgressiveReductionTests(unittest.TestCase):
         changed = self.phase2b_args(max_drops=27, recovery_seed=99)
         with self.assertRaises(RuntimeError):
             validate_resume_catalog(catalog, changed)
+
+    def test_evidence_provenance_invalidates_changed_parent_and_records_recovery(self) -> None:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            evidence = Path(temp_dir) / "evidence"
+            evidence.mkdir()
+            (evidence / "stale.txt").write_text("old branch", encoding="utf-8")
+            args = self.phase2b_args()
+            expected = build_variant_provenance(
+                stage=11,
+                variant_id="stage_11_drop_original_12_recovered",
+                variant_kind="deletion + recovery SFT",
+                parent_model="frontier/stage_10/model",
+                dropped_original_layer_id=12,
+                retained_original_layer_ids=[0, 1, 2],
+                args=args,
+            )
+            self.assertEqual(expected["recovery_steps"], 50)
+            self.assertEqual(expected["recovery_seed"], 11)
+            self.assertTrue(expected["qlora"])
+            removed = prepare_variant_evidence(evidence, expected)
+            self.assertTrue(removed)
+            self.assertFalse((evidence / "stale.txt").exists())
+            self.assertTrue((evidence / "evidence_provenance.json").exists())
+            self.assertFalse(prepare_variant_evidence(evidence, expected))
 
     def test_profile_validation_cache_is_model_keyed(self) -> None:
         root = Path("artifacts/test")

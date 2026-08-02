@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Continuous, conversationally permissive quality evaluation.
 
-Evaluator v3 separates descriptive response analysis from phase promotion.
+Evaluator v3.1 separates descriptive response analysis from phase promotion.
 It deliberately allows casual wording, alternate valid conversational moves,
 and minor grammar/vocabulary mistakes whenever the intended meaning remains
 clear. References are examples rather than unique answers unless a benchmark
@@ -27,9 +27,11 @@ from typing import Any
 
 from rapidfuzz.fuzz import ratio as fuzzy_ratio
 
+from scripts.common.semantic_quality import content_concepts, semantic_integrity_analysis
+
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = ROOT / "configs" / "quality_evaluation.json"
-QUALITY_EVALUATION_VERSION = "3.0"
+QUALITY_EVALUATION_VERSION = "3.1"
 
 STOPWORDS = {
     "a", "an", "and", "are", "as", "at", "be", "because", "but", "by", "can",
@@ -98,6 +100,19 @@ class QualityConfig:
         defaults.update({str(k): float(v) for k, v in (self.raw.get("reference_policy") or {}).items()})
         return defaults
 
+    @property
+    def semantic_integrity(self) -> dict[str, float]:
+        defaults = {
+            "critical_coherence": 0.18,
+            "major_coherence": 0.48,
+            "major_task_adequacy": 0.34,
+            "warning_prompt_relevance": 0.42,
+            "major_anchor_preservation": 0.12,
+            "warning_anchor_preservation": 0.28,
+        }
+        defaults.update({str(k): float(v) for k, v in (self.raw.get("semantic_integrity") or {}).items()})
+        return defaults
+
     # Compatibility aliases. These are detector settings, not promotion floors.
     @property
     def hard_thresholds(self) -> dict[str, float]:
@@ -146,9 +161,16 @@ def content_tokens(text: str) -> list[str]:
 
 
 def build_corpus_profile(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """Build lexical diagnostics only; vocabulary membership never proves quality."""
+    """Build lexical and concept-frequency diagnostics for deterministic scoring.
+
+    Vocabulary membership remains diagnostic only.  Concept document frequency
+    supplies IDF weights so prompt/reply relevance is not dominated by generic
+    words such as ``result`` or ``system``.
+    """
 
     word_counts: Counter[str] = Counter(FUNCTION_WORDS)
+    concept_document_frequency: Counter[str] = Counter()
+    document_count = 0
     for record in records:
         texts: list[str] = []
         for message in record.get("messages", []) or []:
@@ -158,9 +180,20 @@ def build_corpus_profile(records: list[dict[str, Any]]) -> dict[str, Any]:
         reference = record.get("reference")
         if isinstance(reference, str):
             texts.append(reference)
-        for text in texts:
-            word_counts.update(word_tokens(text))
-    return {"vocabulary": set(word_counts), "word_counts": word_counts, "record_count": len(records)}
+        if texts:
+            document_count += 1
+            concepts: set[str] = set()
+            for text in texts:
+                word_counts.update(word_tokens(text))
+                concepts.update(content_concepts(text))
+            concept_document_frequency.update(concepts)
+    return {
+        "vocabulary": set(word_counts),
+        "word_counts": word_counts,
+        "record_count": len(records),
+        "document_count": document_count,
+        "concept_document_frequency": dict(concept_document_frequency),
+    }
 
 
 def token_f1(reference: str | None, reply: str) -> float | None:
@@ -701,9 +734,16 @@ def evaluate_response(
         corpus_profile=corpus_profile,
     )
     semantic = category_semantic_audit(record, reply)
-    critical = [*diagnostic["hard_failures"], *semantic["critical"]]
-    major = [*diagnostic["major_issues"], *semantic["major"]]
-    warnings = [*diagnostic["warnings"], *semantic["warnings"]]
+    integrity = semantic_integrity_analysis(
+        record,
+        reply,
+        reference=str(reference) if reference is not None else None,
+        corpus_profile=corpus_profile,
+        settings=config.semantic_integrity,
+    )
+    critical = [*diagnostic["hard_failures"], *semantic["critical"], *integrity["critical"]]
+    major = [*diagnostic["major_issues"], *semantic["major"], *integrity["major"]]
+    warnings = [*diagnostic["warnings"], *semantic["warnings"], *integrity["warnings"]]
 
     for key, passed in checks.items():
         if passed:
@@ -733,25 +773,38 @@ def evaluate_response(
     user = next((str(item.get("content", "")) for item in reversed(messages) if item.get("role") == "user"), "")
     echo = echo_score(user, reply)
     explicit_task = task_compliance_score(checks)
-    comprehensibility = float(diagnostic["intelligibility_score"])
-    task_adequacy = explicit_task
+    mechanical_intelligibility = float(diagnostic["intelligibility_score"])
+    semantic_coherence = float(integrity["semantic_coherence_score"])
+    comprehensibility = min(mechanical_intelligibility, 0.20 + 0.80 * semantic_coherence)
+    task_adequacy = float(integrity["semantic_task_adequacy_score"]) * explicit_task
     if critical:
-        task_adequacy *= 0.15
+        task_adequacy *= 0.10
     elif major:
-        task_adequacy *= max(0.35, 1.0 - 0.20 * len(major))
-    logic_score = max(0.0, 1.0 - (1.0 if semantic["critical"] else 0.35 * len(semantic["major"])))
-    safety_score = 1.0
+        task_adequacy *= max(0.30, 1.0 - 0.12 * len(major))
+    logic_score = float(integrity["semantic_logic_score"])
+    if semantic["critical"]:
+        logic_score = 0.0
+    elif semantic["major"]:
+        logic_score *= max(0.30, 1.0 - 0.25 * len(semantic["major"]))
+    safety_score = float(integrity["semantic_safety_score"])
     if category.startswith("safety"):
-        safety_score = 0.0 if semantic["critical"] else 0.55 if semantic["major"] else 1.0
+        safety_score = 0.0 if semantic["critical"] else safety_score * (0.55 if semantic["major"] else 1.0)
     importance = reference_importance(record, config)
     raw_alignment = float(alignment["reference_alignment_score"] or 0.0)
-    anchor_score = 1.0 - importance * (1.0 - raw_alignment)
-    context_score = anchor_score if category.startswith(("context_consistency", "memory_recall", "relationship_continuity")) else 1.0
+    semantic_anchor = float(integrity["semantic_anchor_preservation_score"])
+    blended_alignment = max(semantic_anchor, 0.55 * raw_alignment)
+    anchor_score = 1.0 - importance * (1.0 - blended_alignment)
+    context_score = float(integrity["semantic_context_score"])
+    if not category.startswith(("context_consistency", "memory_recall", "relationship_continuity", "scene_grounding")):
+        context_score = 1.0
     completeness = 1.0 if checks.get("complete_utterance") else 0.55 if reply.strip() else 0.0
     brevity = brevity_score(token_count, minimum, maximum)
-    naturalness = surface_naturalness_score(reply, diagnostic)
+    naturalness = min(surface_naturalness_score(reply, diagnostic), 0.25 + 0.75 * semantic_coherence)
     dimensions = {
         "comprehensibility": comprehensibility,
+        "semantic_coherence": semantic_coherence,
+        "prompt_relevance": float(integrity["prompt_relevance_score"]),
+        "intent_fulfillment": float(integrity["intent_fulfillment_score"]),
         "task_adequacy": task_adequacy,
         "logic_factual_consistency": logic_score,
         "safety_boundary": safety_score,
@@ -765,8 +818,8 @@ def evaluate_response(
     weighted = sum(weights.get(name, 0.0) * value for name, value in dimensions.items())
     # Issue cost is continuous. A severe case can approach zero, but never vetoes
     # an entire candidate independently of its frequency and resource benefit.
-    quality_score = max(0.0, min(1.0, weighted - 0.25 * issue_cost))
-    if diagnostic["hard_failures"]:
+    quality_score = max(0.0, min(1.0, weighted - 0.40 * issue_cost))
+    if diagnostic["hard_failures"] or integrity["critical"]:
         # True text corruption/collapse is unusable at the case level. It is
         # still aggregated proportionally by frequency for model selection.
         quality_score = 0.0
@@ -791,6 +844,10 @@ def evaluate_response(
         "intelligibility_score": comprehensibility,
         "intelligibility_pass": bool(diagnostic["intelligibility_pass"]),
         "intelligibility_diagnostics": diagnostic["metrics"],
+        "semantic_integrity_diagnostics": integrity["metrics"],
+        "semantic_coherence_score": semantic_coherence,
+        "prompt_relevance_score": float(integrity["prompt_relevance_score"]),
+        "intent_fulfillment_score": float(integrity["intent_fulfillment_score"]),
         "echo_similarity": echo,
         "reference_importance": importance,
         **alignment,
@@ -798,7 +855,7 @@ def evaluate_response(
         "major_issues": major,
         "semantic_warnings": warnings,
         "semantic_severity": severity,
-        "semantic_pass": not semantic["critical"] and not semantic["major"],
+        "semantic_pass": not semantic["critical"] and not semantic["major"] and not integrity["critical"] and not integrity["major"],
     }
 
 
@@ -857,6 +914,17 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "intelligibility_pass_rate": statistics.fmean(1.0 if row.get("intelligibility_pass") else 0.0 for row in rows),
         "hard_failure_case_count": sum(1 for row in rows if row.get("quality_hard_fail")),
         "severe_issue_case_rate": statistics.fmean(1.0 if row.get("critical_failures") else 0.0 for row in rows),
+        "semantic_collapse_case_rate": statistics.fmean(
+            1.0 if "unrecoverable_semantic_word_salad" in row.get("critical_failures", []) else 0.0
+            for row in rows
+        ),
+        "semantic_unresponsive_case_rate": statistics.fmean(
+            1.0 if "semantically_unresponsive_output" in row.get("major_issues", []) else 0.0
+            for row in rows
+        ),
+        "mean_semantic_coherence_score": statistics.fmean(float(row.get("semantic_coherence_score", 0.0)) for row in rows),
+        "mean_prompt_relevance_score": statistics.fmean(float(row.get("prompt_relevance_score", 0.0)) for row in rows),
+        "mean_intent_fulfillment_score": statistics.fmean(float(row.get("intent_fulfillment_score", 0.0)) for row in rows),
         "mean_issue_cost": statistics.fmean(float(row.get("case_issue_cost", 0.0)) for row in rows),
         "zero_quality_case_count": sum(1 for score in scores if score <= 1e-12),
         "minimum_quality_score": min(scores),
@@ -941,7 +1009,7 @@ def require_current_quality(summary: dict[str, Any], label: str = "evaluation su
 
 
 def require_quality_v2(summary: dict[str, Any], label: str = "evaluation summary") -> None:
-    """Backward-compatible name now requiring the current v3 schema."""
+    """Backward-compatible name now requiring the current evaluator schema."""
 
     require_current_quality(summary, label)
 

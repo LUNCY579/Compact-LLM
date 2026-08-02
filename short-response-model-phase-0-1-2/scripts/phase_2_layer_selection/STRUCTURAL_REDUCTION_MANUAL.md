@@ -136,3 +136,9 @@ The first resume from a pre-hotfix catalog cannot retroactively verify settings 
 ```
 
 The runner also audits every previously accepted frontier transition with the incremental rule before beginning the next stage. If a historical accepted transition fails that audit, continuation stops rather than silently building on a subsidized deletion.
+
+## Re-score a pre-v3.1 run
+
+Use `run_phase_2b_rescore_v3_1.ps1` to re-score stored generations without loading a model. Official migration mode backs up old result files, rebuilds full-reference deviations, archives stale parent-relative decisions, and prepares a Stage-1 decision replay. Run the original Phase 2B command with `-Resume` afterward. Evidence is reused only when its parent-model lineage, retained layer IDs, benchmark, evaluator configuration, and recovery settings match.
+
+A changed evaluator can select a different parent. Downstream checkpoints produced from the old parent cannot be made valid through scoring alone, so the runner regenerates only that divergent suffix of the search tree.

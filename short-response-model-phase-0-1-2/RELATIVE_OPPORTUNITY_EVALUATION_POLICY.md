@@ -131,7 +131,7 @@ balanced, logic-oriented, and conversational-permissive profile sensitivity.
 The selected profile controls the official calculation, while disagreement
 across profiles is visible for human review rather than hidden in code.
 
-`data/evaluation/quality_v3_calibration.jsonl` contains approved policy examples
+`data/evaluation/quality_v3_1_calibration.jsonl` contains approved policy examples
 and leaves human rankings explicitly `PENDING`. Run
 `scripts/common/calibrate_quality_profiles.py` to generate the deterministic
 calibration report before changing weights.
@@ -151,3 +151,24 @@ Every official comparison should report:
 - human decision status.
 
 Legacy absolute thresholds may be accepted as deprecated command-line aliases for compatibility, but they must be ignored and clearly identified as non-controlling.
+
+## Semantic-integrity amendment — Evaluator v3.1
+
+Conversational permissiveness does not mean that any nonempty sequence of ordinary words is understandable. Evaluator v3.1 explicitly measures semantic coherence, prompt relevance, and intent fulfillment. Unrecoverable word salad, semantically unresponsive output, and lost required meaning receive substantial continuous cost even when the reply contains no Unicode corruption or exact repeated-token run.
+
+The following remain acceptable when their intent is clear:
+
+```text
+How the other adapter looks?
+That layer you are targeting?
+Probably not tbh.
+```
+
+The following are not acceptable merely because they contain familiar English words:
+
+```text
+You gives. you gives. You can you is the duplicate.
+I: the is you's size, and you, the amount.
+```
+
+The additional summary evidence is `semantic_collapse_case_rate`, `semantic_unresponsive_case_rate`, `mean_semantic_coherence_score`, `mean_prompt_relevance_score`, and `mean_intent_fulfillment_score`. These fields enter the same proportional opportunity calculation; they do not create hidden absolute promotion floors.

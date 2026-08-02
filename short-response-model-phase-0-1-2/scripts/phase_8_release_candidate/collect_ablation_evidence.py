@@ -67,7 +67,7 @@ def main() -> None:
         name for name, row in matrix.items()
         if row.get("status") == "AVAILABLE" and isinstance(row.get("summary"), dict)
         and "mean_heuristic_score" in row["summary"]
-        and str(row["summary"].get("quality_evaluation_version")) != "3.0"
+        and str(row["summary"].get("quality_evaluation_version")) != "3.1"
     ]
     write_json(
         args.out,

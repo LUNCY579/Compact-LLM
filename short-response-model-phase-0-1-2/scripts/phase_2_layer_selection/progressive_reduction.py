@@ -29,7 +29,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_json, run, sha256, sha256_tree, write_json
 from scripts.phase_2_layer_selection.create_depth_candidate import lineage_for_model
-from scripts.common.quality_evaluation import require_quality_v2, summary_quality_score
+from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v2, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference
 from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
 
@@ -90,7 +90,8 @@ def parse_args() -> argparse.Namespace:
 
 
 
-RESUME_SCHEMA_VERSION = 2
+RESUME_SCHEMA_VERSION = 3
+EVIDENCE_PROVENANCE_SCHEMA_VERSION = 1
 TERMINAL_NO_PROGRESS_REASONS = {
     "no_marginally_worthwhile_deletion_after_exhaustive_recovery",
     "no_marginally_worthwhile_deletion_recovery_disabled",
@@ -135,6 +136,66 @@ def _file_fingerprint(value: str | Path) -> str:
 def _tree_fingerprint(value: str | Path) -> str:
     path = _repo_path(value)
     return sha256_tree(path) if path.exists() else "missing"
+
+
+def build_variant_provenance(
+    *,
+    stage: int,
+    variant_id: str,
+    variant_kind: str,
+    parent_model: str | Path,
+    dropped_original_layer_id: int,
+    retained_original_layer_ids: list[int],
+    args: argparse.Namespace,
+) -> dict[str, Any]:
+    """Describe the exact lineage and evaluator context behind reusable evidence."""
+
+    recovered_variant = "recover" in str(variant_kind).casefold()
+    return {
+        "schema_version": EVIDENCE_PROVENANCE_SCHEMA_VERSION,
+        "stage": int(stage),
+        "variant_id": str(variant_id),
+        "variant_kind": str(variant_kind),
+        "parent_model": _normal_path(parent_model),
+        "dropped_original_layer_id": int(dropped_original_layer_id),
+        "retained_original_layer_ids": [int(value) for value in retained_original_layer_ids],
+        "probe_file": _normal_path(args.probe_file),
+        "probe_file_sha256": _file_fingerprint(args.probe_file),
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "quality_config_sha256": _file_fingerprint(ROOT / "configs/quality_evaluation.json"),
+        "opportunity_policy_sha256": _file_fingerprint(ROOT / "configs/relative_opportunity_evaluation.json"),
+        "max_new_tokens": int(args.max_new_tokens),
+        "recovery_steps": int(args.recovery_steps) if recovered_variant else 0,
+        "recovery_seed": int(args.recovery_seed) if recovered_variant else None,
+        "qlora": bool(args.qlora) if recovered_variant else False,
+        "gradient_checkpointing": bool(args.gradient_checkpointing) if recovered_variant else False,
+    }
+
+
+def prepare_variant_evidence(evidence_dir: Path, expected: dict[str, Any]) -> bool:
+    """Keep reusable evidence only when its exact parent lineage still matches.
+
+    Returns ``True`` when stale evidence was removed.  This is essential after
+    rescoring: if the corrected evaluator selects a different Stage-N parent,
+    Stage-(N+1) generations from the old branch must never be silently reused.
+    """
+
+    manifest = evidence_dir / "evidence_provenance.json"
+    stale = False
+    if manifest.exists():
+        try:
+            existing = read_json(manifest)
+        except Exception:
+            existing = {}
+        stale = existing != expected
+    elif evidence_dir.exists() and any(evidence_dir.iterdir()):
+        stale = True
+    if stale:
+        print(f"[stale lineage] removing evidence from a different parent: {evidence_dir}")
+        shutil.rmtree(evidence_dir, ignore_errors=True)
+    evidence_dir.mkdir(parents=True, exist_ok=True)
+    write_json(manifest, expected)
+    return stale
 
 
 def build_run_configuration(args: argparse.Namespace) -> dict[str, Any]:
@@ -226,9 +287,9 @@ def validate_resume_catalog(catalog: dict[str, Any], args: argparse.Namespace) -
     evaluator_version = (catalog.get("opportunity_policy") or {}).get("quality_evaluation_version")
     if evaluator_version is None:
         assumptions.append("quality_evaluation_version")
-    elif str(evaluator_version) != "3.0":
+    elif str(evaluator_version) != QUALITY_EVALUATION_VERSION:
         mismatches.append(
-            f"quality_evaluation_version: catalog={evaluator_version!r}, requested='3.0'"
+            f"quality_evaluation_version: catalog={evaluator_version!r}, requested={QUALITY_EVALUATION_VERSION!r}"
         )
     else:
         verified.append("quality_evaluation_version")
@@ -743,6 +804,18 @@ def recover_rows(
     for raw_row in raw_rows:
         variant_id = raw_row["variant_id"].replace("_raw", "_recovered")
         candidate_evidence = evidence_root / f"stage_{stage:02d}" / variant_id
+        prepare_variant_evidence(
+            candidate_evidence,
+            build_variant_provenance(
+                stage=stage,
+                variant_id=variant_id,
+                variant_kind="deletion + recovery SFT",
+                parent_model=raw_row["parent_model"],
+                dropped_original_layer_id=int(raw_row["dropped_original_layer_id"]),
+                retained_original_layer_ids=[int(value) for value in raw_row["retained_original_layer_ids"]],
+                args=args,
+            ),
+        )
         adapter = recover_candidate(
             raw_model=Path(raw_row["raw_model"]),
             candidate_evidence=candidate_evidence,
@@ -1182,6 +1255,21 @@ def main() -> None:
                 variant_id = f"stage_{stage:02d}_drop_original_{original_id:02d}_raw"
                 raw_model = work_root / variant_id
                 candidate_evidence = evidence_root / f"stage_{stage:02d}" / variant_id
+                retained_ids = [value for value in original_ids if value != original_id]
+                stale_lineage = prepare_variant_evidence(
+                    candidate_evidence,
+                    build_variant_provenance(
+                        stage=stage,
+                        variant_id=variant_id,
+                        variant_kind="raw deletion",
+                        parent_model=current_model,
+                        dropped_original_layer_id=original_id,
+                        retained_original_layer_ids=retained_ids,
+                        args=args,
+                    ),
+                )
+                if stale_lineage and raw_model.exists():
+                    shutil.rmtree(raw_model, ignore_errors=True)
                 run_if_needed(
                     [
                         PYTHON,
@@ -1218,7 +1306,7 @@ def main() -> None:
                     "adapter_path": None,
                     "drop_current_layer_id": current_index,
                     "dropped_original_layer_id": original_id,
-                    "retained_original_layer_ids": [value for value in original_ids if value != original_id],
+                    "retained_original_layer_ids": retained_ids,
                 }
                 stage_raw_rows.append(row)
                 all_candidate_rows.append(row)
@@ -1431,7 +1519,7 @@ def main() -> None:
             ),
             "quality_profile": args.quality_profile,
             "absolute_promotion_thresholds": "prohibited",
-            "quality_evaluation_version": "3.0",
+            "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         },
         "frontier": frontier_rows,
         "profiles": profiles,

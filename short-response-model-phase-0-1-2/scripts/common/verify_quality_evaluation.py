@@ -45,6 +45,9 @@ def assess(reply: str, row: dict | None = None) -> dict:
 def summary(score: float, *, issue_cost: float = 0.0, severe_rate: float = 0.0) -> dict:
     dimensions = {
         "comprehensibility": score,
+        "semantic_coherence": score,
+        "prompt_relevance": score,
+        "intent_fulfillment": score,
         "task_adequacy": score,
         "logic_factual_consistency": score,
         "safety_boundary": score,
@@ -55,7 +58,7 @@ def summary(score: float, *, issue_cost: float = 0.0, severe_rate: float = 0.0) 
         "content_anchor_preservation": score,
     }
     return {
-        "quality_evaluation_version": "3.0",
+        "quality_evaluation_version": "3.1",
         "case_count": 100,
         "mean_quality_score": score,
         "worst_decile_mean_quality_score": score,
@@ -94,6 +97,23 @@ def main() -> None:
     assert collapsed["quality_score"] == 0.0 and collapsed["quality_hard_fail"]
     assert corrupted["quality_score"] == 0.0 and corrupted["quality_hard_fail"]
 
+    semantic_failures = [
+        ("I reduced the context window.", "How did latency change?", "You gives. you gives. You can you is the duplicate.", "contextual_follow_up"),
+        ("Can I claim a speedup from theoretical FLOPs alone?", "No—measure wall-clock latency and memory.", "I: the is you's size, and you, the amount.", "safety_boundary"),
+        ("Why is the output weird?", "Can you share one prompt and reply?", "I: you can you the works. I would you all-+ the work. First the work. You. The. you.", "clarification"),
+    ]
+    for index, (prompt, reference_text, reply, category) in enumerate(semantic_failures):
+        row = {
+            "id": f"semantic-failure-{index}",
+            "category": category,
+            "messages": [{"role": "user", "content": prompt}],
+            "reference": reference_text,
+            "response_contract": {"open_ended": category != "safety_boundary", "min_tokens": 1, "max_tokens": 32},
+        }
+        result = assess(reply, row)
+        assert result["quality_score"] < 0.40, (reply, result)
+        assert result["semantic_severity"] in {"major", "critical"}, (reply, result)
+
     reference = summary(1.0)
     candidate = summary(0.99, issue_cost=0.002)
     worthwhile = evaluate_opportunity(
@@ -106,7 +126,7 @@ def main() -> None:
     )
     assert worthwhile["eligible"]
     assert not not_worthwhile["eligible"]
-    print("Quality Evaluator v3 contract passed: permissive language and relative opportunity policy verified.")
+    print("Quality Evaluator v3.1 contract passed: permissive language and relative opportunity policy verified.")
 
 
 if __name__ == "__main__":
