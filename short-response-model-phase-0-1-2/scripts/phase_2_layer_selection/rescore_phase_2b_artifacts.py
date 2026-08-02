@@ -6,7 +6,7 @@ The migration performs no model inference.  In ``--in-place --prepare-resume``
 mode it:
 
 1. backs up every existing generation result and summary;
-2. re-scores the stored replies under Evaluator v4.3;
+2. re-scores the stored replies under Evaluator v4.4;
 3. rebuilds full-reference output deviations;
 4. archives stale parent deviations, combined metrics, catalogs, registries, and
    stage decisions;
@@ -47,7 +47,7 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
-    """Require a complete Evaluator-v4.3 contract on every Phase 2B case."""
+    """Require a complete Evaluator-v4.4 contract on every Phase 2B case."""
 
     case_count = 0
     missing: list[str] = []
@@ -73,8 +73,8 @@ def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
         if invalid:
             parts.append(f"wrong schema version: {invalid[:8]}")
         raise ValueError(
-            f"Official Phase 2B rescoring requires an explicit Evaluator-v4.3 benchmark ({'; '.join(parts)}). "
-            "Use probe_150_thorough_v4_3.jsonl or author a contracted benchmark first."
+            f"Official Phase 2B rescoring requires an explicit Evaluator-v4.4 benchmark ({'; '.join(parts)}). "
+            "Use probe_150_thorough_v4_4.jsonl or author a contracted benchmark first."
         )
     return {"case_count": case_count, "contracted_case_count": case_count}
 

@@ -20,7 +20,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_jsonl, write_json, write_jsonl
 from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
-from scripts.common.build_v4_3_response_contract_benchmark import migrate_record as normalize_record
+from scripts.common.build_v4_4_response_contract_benchmark import migrate_record as normalize_record
 
 
 def category_of(row: dict[str, Any]) -> str:
@@ -61,8 +61,8 @@ def select_balanced(rows: list[dict[str, Any]], limit: int, seed: int) -> list[d
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Build the Phase 2B structural probe.")
     parser.add_argument("--input", type=Path, default=ROOT / "data/dev/dev.jsonl")
-    parser.add_argument("--output", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3.jsonl")
-    parser.add_argument("--manifest", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3_manifest.json")
+    parser.add_argument("--output", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_4.jsonl")
+    parser.add_argument("--manifest", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_4_manifest.json")
     parser.add_argument("--limit", type=int, default=50)
     parser.add_argument("--seed", type=int, default=20260728)
     return parser.parse_args()
@@ -88,7 +88,7 @@ def main() -> None:
             "sealed_data_used": False,
             "response_contract_schema_version": QUALITY_EVALUATION_VERSION,
             "all_cases_have_explicit_response_contracts": all(isinstance(row.get("response_contract"), dict) for row in selected),
-            "purpose": "Fast trend detection for every-layer and progressive depth reduction under Evaluator v4.3 focused prompt-adequacy policy.",
+            "purpose": "Fast trend detection for every-layer and progressive depth reduction under Evaluator v4.4 focused prompt-adequacy policy.",
         },
     )
     print(args.output)

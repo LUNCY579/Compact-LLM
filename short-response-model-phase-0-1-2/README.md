@@ -8,15 +8,15 @@ This repository implements the ordered Phase 0–8 program plus two structural b
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
-## v1.4.3 focused prompt-adequacy evaluation
+## v1.4.4 focused prompt-adequacy evaluation
 
-Quality Evaluator v4.3 removes category from contract inference, scoring weights, case decisions, and promotion. Categories remain only as reporting tags for benchmark balancing and regression analysis. Open conversational quality is estimated continuously from the actual system/user messages; strict facts and boundaries must be authored in the individual case contract.
+Quality Evaluator v4.4 removes category from contract inference, scoring weights, case decisions, and promotion. Categories remain only as reporting tags for benchmark balancing and regression analysis. Open conversational quality is estimated continuously from the actual system/user messages; strict facts and boundaries must be authored in the individual case contract.
 
 The decoding-integrity detector now combines reproducible surface signals instead of relying on narrow single-pattern rules. The supplied 150 collapsed Phase 2B outputs are a mandatory regression corpus: all 150 receive zero quality and a critical concrete corruption result. False-positive guards cover multilingual text, technical identifiers, versions, measurements, paths, code, arithmetic, emoji, informal grammar, alternate replies, and valid one-word responses.
 
-The calibration packet contains 611 cases covering all 31 reporting categories, all 150 official references, all 60 scored labels, all 150 real collapsed outputs, 150 human-adjudicated coherent outputs, and 17 targeted v4.3 regressions, explicit-contract partial credit, category invariance, and every supported response surface. Run `python .\scripts\common\verify_quality_evaluation_v4_3.py` before official rescoring.
+The calibration packet contains 620 cases covering all 31 reporting categories, all 150 official references, all 61 scored labels, all 150 real collapsed outputs, 150 human-adjudicated coherent outputs, and 25 targeted v4.4 regressions, including the final uncertainty, rejection, visibility, scope-limitation, update-fabrication, and compression-trade-off edge cases. Run `python .\scripts\common\verify_quality_evaluation_v4_4.py` before official rescoring.
 
-The governing files are `EVALUATION_V4_3_FOCUSED_PROMPT_ADEQUACY.md`, `configs/quality_issue_taxonomy_v4_3.json`, `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`, and `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`.
+The governing files are `EVALUATION_V4_4_FINAL_EDGE_REFINEMENT.md`, `configs/quality_issue_taxonomy_v4_4.json`, `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md`, and `BLUEPRINT_AMENDMENT_RELATIVE_OPPORTUNITY_v1.0.md`.
 
 ## Start here
 
@@ -43,21 +43,21 @@ The repository now separates learned brevity from the deployable hard boundary:
 
 See `RESPONSE_CONTROL_AND_EARLY_EXIT_AUDIT.md` and `scripts/phase_7_sparse_runtime/RESPONSE_CONTROL_CONTRACT.md`. This controller avoids decode work; it does not remove model weights or turn selective training into inference-time layer skipping.
 
-## Quality evaluation v4.3
+## Quality evaluation v4.4
 
 All generation-based phases and the independent Phase 2B playground use `scripts/common/quality_evaluation.py`, `scripts/common/observable_quality.py`, and `scripts/common/opportunity_evaluation.py`.
 
-The evaluator separates universal decoding/mechanical integrity, explicit case-level contract fulfillment, category-neutral prompt-function alignment, and proportional candidate comparison. Category statistics and review-only diagnostics never reduce the score or affect promotion. Existing generations can be rescored without model inference using `scripts/common/rescore_quality_artifacts.py`; complete Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_3.ps1`. The official contracted probes are `probe_50_v4_3.jsonl` and `probe_150_thorough_v4_3.jsonl`.
+The evaluator separates universal decoding/mechanical integrity, explicit case-level contract fulfillment, category-neutral prompt-function alignment, and proportional candidate comparison. Category statistics and review-only diagnostics never reduce the score or affect promotion. Existing generations can be rescored without model inference using `scripts/common/rescore_quality_artifacts.py`; complete Phase 2B trees can be migrated with `scripts/phase_2_layer_selection/run_phase_2b_rescore_v4_4.ps1`. The official contracted probes are `probe_50_v4_4.jsonl` and `probe_150_thorough_v4_4.jsonl`.
 
 Verification commands:
 
 ```powershell
-python .\scripts\common\verify_quality_evaluation_v4_3.py
+python .\scripts\common\verify_quality_evaluation_v4_4.py
 pytest -q
 python .\scripts\common\audit_relative_opportunity_policy.py
 ```
 
-See `EVALUATION_V4_3_MIGRATION.md` for review-only rescoring, official in-place migration, corrected-frontier replay, and clean-run commands.
+See `EVALUATION_V4_4_MIGRATION.md` for review-only rescoring, official in-place migration, corrected-frontier replay, and clean-run commands.
 
 ## Production principle
 

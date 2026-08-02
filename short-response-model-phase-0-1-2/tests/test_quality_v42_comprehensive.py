@@ -6,9 +6,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-PACKET = ROOT / "data/evaluation/quality_v4_3_comprehensive_calibration.jsonl"
-BENCHMARK = ROOT / "data/phase_2_structural_reduction/probe_150_thorough_v4_3.jsonl"
-VERIFIER = ROOT / "scripts/common/verify_quality_evaluation_v4_3.py"
+PACKET = ROOT / "data/evaluation/quality_v4_4_comprehensive_calibration.jsonl"
+BENCHMARK = ROOT / "data/phase_2_structural_reduction/probe_150_thorough_v4_4.jsonl"
+VERIFIER = ROOT / "scripts/common/verify_quality_evaluation_v4_4.py"
 
 
 def read_jsonl(path: Path) -> list[dict]:
@@ -25,7 +25,7 @@ def test_v43_comprehensive_packet_covers_supported_surface_and_passes() -> None:
         for tag in item.get("coverage_tags", [])
         if tag.startswith("category:")
     }
-    assert len(packet) == 611
+    assert len(packet) == 620
     assert len(official_categories) == 31
     assert official_categories <= covered_categories
     completed = subprocess.run(
@@ -35,6 +35,6 @@ def test_v43_comprehensive_packet_covers_supported_surface_and_passes() -> None:
         text=True,
     )
     assert completed.returncode == 0, completed.stdout + completed.stderr
-    assert "611/611 cases" in completed.stdout
-    assert "60 scored labels" in completed.stdout
+    assert "620/620 cases" in completed.stdout
+    assert "61 scored labels" in completed.stdout
     assert "150/150 real collapses" in completed.stdout

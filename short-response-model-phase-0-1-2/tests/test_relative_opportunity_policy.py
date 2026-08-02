@@ -20,7 +20,7 @@ def summary(score: float, *, issue_cost: float = 0.0) -> dict:
         "conversation_naturalness": score,
     }
     return {
-        "quality_evaluation_version": "4.3",
+        "quality_evaluation_version": "4.4",
         "case_count": 100,
         "mean_quality_score": score,
         "mean_heuristic_score": score,

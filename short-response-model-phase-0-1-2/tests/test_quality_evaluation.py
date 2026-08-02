@@ -37,7 +37,7 @@ def record(
         "reference": reference,
         "response_contract": contract
         or {
-            "schema_version": "4.3",
+            "schema_version": "4.4",
             "open_ended": True,
             "min_tokens": 1,
             "max_tokens": 32,
@@ -50,7 +50,7 @@ def record(
 
 def requirement_contract(label: str, description: str, pattern: str, *, severity: str = "major") -> dict:
     return {
-        "schema_version": "4.3",
+        "schema_version": "4.4",
         "open_ended": False,
         "min_tokens": 1,
         "max_tokens": 32,
@@ -99,7 +99,7 @@ def summary(score: float, *, critical_rate: float = 0.0, defect_rate: float = 0.
         "conversation_naturalness": score,
     }
     return {
-        "quality_evaluation_version": "4.3",
+        "quality_evaluation_version": "4.4",
         "case_count": 100,
         "mean_quality_score": score,
         "worst_decile_mean_quality_score": score,
@@ -197,7 +197,7 @@ def test_question_rule_exists_only_when_explicitly_declared() -> None:
     open_result = assess("Did it work?")
     strict_row = record(
         contract={
-            "schema_version": "4.3",
+            "schema_version": "4.4",
             "open_ended": False,
             "min_tokens": 1,
             "max_tokens": 20,

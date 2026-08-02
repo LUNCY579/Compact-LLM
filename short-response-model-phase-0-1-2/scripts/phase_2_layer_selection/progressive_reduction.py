@@ -51,7 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sft-adapter", type=Path, default=ROOT / "artifacts/dense_sft/adapter")
     parser.add_argument("--train-file", type=Path, default=ROOT / "data/train/train.jsonl")
     parser.add_argument("--dev-file", type=Path, default=ROOT / "data/dev/dev.jsonl")
-    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_3.jsonl")
+    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_4.jsonl")
     parser.add_argument("--phase-benchmark", type=Path, default=ROOT / "data/benchmark/shortchatbench_pilot.jsonl")
     parser.add_argument("--output-root", type=Path, default=ROOT / "artifacts/phase_2_progressive_reduction")
     parser.add_argument("--report", type=Path, default=ROOT / "reports/PHASE_2B_PROGRESSIVE_REDUCTION_REPORT.md")
@@ -630,8 +630,8 @@ def require_explicit_v4_contracts(path: Path) -> None:
             details.append(f"wrong contract schema: {invalid[:8]}")
         raise ValueError(
             f"Phase 2B requires an explicit Evaluator-v4 response-contract probe ({'; '.join(details)}). "
-            "Use data/phase_2_structural_reduction/probe_50_v4_3.jsonl or "
-            "probe_150_thorough_v4_3.jsonl, or author a new contracted probe with "
+            "Use data/phase_2_structural_reduction/probe_50_v4_4.jsonl or "
+            "probe_150_thorough_v4_4.jsonl, or author a new contracted probe with "
             "scripts/common/build_v4_response_contract_benchmark.py."
         )
 

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Observable defect detection and explicit response-contract validation.
 
-Evaluator v4.3 avoids catch-all semantic verdicts and adds prompt-grounded continuous functional scoring.  This module
+Evaluator v4.4 avoids catch-all semantic verdicts and adds prompt-grounded continuous functional scoring.  This module
 only emits scored defect labels when the generated text contains a concrete,
 reproducible problem or violates an explicit benchmark requirement.  Broader
 signals such as low lexical overlap or unusual vocabulary are review-only and
@@ -31,6 +31,54 @@ FUNCTION_WORDS = {
 }
 
 SEVERITY_COST = {"critical": 1.0, "major": 0.35, "minor": 0.10}
+
+
+SEMANTIC_CUE_PATTERNS: dict[str, tuple[str, ...]] = {
+    "uncertainty": (
+        r"\bnot necessarily\b", r"\b(?:may|might|could|possibly|perhaps|probably)\b",
+        r"\b(?:uncertain|unclear|not sure|cannot be sure|can't be sure|no guarantee|not guaranteed)\b",
+        r"\bdepends on\b",
+    ),
+    "rejection": (
+        r"^(?:no|do not|don't|cannot|can't|avoid|reject|refuse)\b",
+        r"\b(?:must not|should not|will not|won't|not acceptable|unacceptable|not permitted|not allowed)\b",
+    ),
+    "capability_limit": (
+        r"\b(?:cannot|can't|unable to|not able to|no way to)\b.{0,40}\b(?:see|verify|identify|tell|know|determine|confirm|observe)\b",
+    ),
+    "scope_limit": (
+        r"\b(?:not realistic|unrealistic|not feasible|impossible|too broad|beyond (?:the )?scope|exceeds? (?:the )?scope)\b",
+        r"\b(?:cannot|can't)\b.{0,35}\b(?:every|all)\b",
+        r"\bnot (?:a )?(?:realistic )?one[- ]step replacement\b",
+    ),
+    "unqualified_compression_accuracy_loss": (
+        r"\b(?:reduces?|lowers?|hurts?|decreases?)\b.{0,45}\baccuracy\b",
+        r"\baccuracy\b.{0,25}\b(?:drops?|decreases?|falls?)\b",
+    ),
+    "unsupported_update_status": (
+        r"\b(?:not (?:fully )?ready|not available|unavailable|closed|unsafe|cancelled|canceled|delayed|not open)\b",
+    ),
+}
+
+
+def semantic_cue_score(reply: str, cue: str) -> float:
+    """Return a transparent binary score for a narrowly defined semantic cue.
+
+    Cues are only used inside a human-authored case rule. They are not global
+    judgments and never create category-driven expectations.
+    """
+
+    text = normalize(reply)
+    patterns = SEMANTIC_CUE_PATTERNS.get(str(cue), ())
+    matched = any(re.search(pattern, text, flags=re.IGNORECASE) for pattern in patterns)
+    if not matched:
+        return 0.0
+    if cue == "unqualified_compression_accuracy_loss":
+        # Qualified trade-off language is valid: compression can or may reduce
+        # accuracy, but it does not inherently do so in every case.
+        if re.search(r"\b(?:may|might|can|could|sometimes|possibly|risk(?:s| of)?)\b", text):
+            return 0.0
+    return 1.0
 
 
 def normalize(text: str) -> str:
@@ -139,7 +187,7 @@ def detect_observable_defects(
 ) -> dict[str, Any]:
     """Detect concrete mechanical, decoding, or surface-structure corruption.
 
-    v4.3 does not use category, reference similarity, uncommon vocabulary, or a
+    v4.4 does not use category, reference similarity, uncommon vocabulary, or a
     semantic catch-all label.  A severe corruption result must be supported by
     independently measurable surface evidence such as fragmented layout,
     digit-letter fusion, abnormal tokenizer fragmentation, punctuation damage,
@@ -690,7 +738,7 @@ def prompt_function_alignment(
 ) -> dict[str, Any]:
     """Return continuous prompt-function alignment without a defect label.
 
-    Evaluator v4.3 first uses an optional human-authored ``prompt_adequacy``
+    Evaluator v4.4 first uses an optional human-authored ``prompt_adequacy``
     rule stored in the individual response contract.  That rule is based on the
     actual prompt/context and can provide task, factual, context, and safety
     dimension scores.  Category and reference text are never consulted.
@@ -753,6 +801,17 @@ def _score_rule(reply: str, rule: dict[str, Any]) -> float:
     token_set = set(words(reply))
     mode_scores = detect_response_mode_confidences(reply)
 
+    if "any_cues" in rule:
+        cue_values = [semantic_cue_score(reply, str(cue)) for cue in rule.get("any_cues") or []]
+        cue_score = max(cue_values, default=0.0)
+    else:
+        cue_score = None
+    if "all_cues" in rule:
+        cue_values_all = [semantic_cue_score(reply, str(cue)) for cue in rule.get("all_cues") or []]
+        all_cue_score = min(cue_values_all, default=0.0)
+    else:
+        all_cue_score = None
+
     if rule.get("evidence_options"):
         base = float(rule.get("default_score", 0.0))
         for option in rule.get("evidence_options") or []:
@@ -784,6 +843,10 @@ def _score_rule(reply: str, rule: dict[str, Any]) -> float:
             checks.append(sum(1.0 for group in groups if token_set & {normalize(term) for term in group}) / max(1, len(groups)))
         if "any_modes" in rule:
             checks.append(max((mode_scores.get(str(mode), 0.0) for mode in rule.get("any_modes") or []), default=0.0))
+        if cue_score is not None:
+            checks.append(cue_score)
+        if all_cue_score is not None:
+            checks.append(all_cue_score)
         if "question" in rule:
             checks.append(1.0 if is_question(reply) is bool(rule["question"]) else 0.0)
         if "concept_groups" in rule:
@@ -904,7 +967,7 @@ def validate_response_contract(contract: dict[str, Any], reply: str, *, mechanic
                 "The benchmark explicitly forbids a follow-up question for this case.", "response_contract",
             ))
 
-    # v4.3 does not score or restrict replies using category-authored
+    # v4.4 does not score or restrict replies using category-authored
     # ``expected_modes``.  Legacy fields are ignored.  Prompt-function scoring
     # is computed separately from the actual messages.
     mode_confidences = detect_response_mode_confidences(reply) if mechanical_integrity_score >= 0.75 else {}
@@ -914,7 +977,7 @@ def validate_response_contract(contract: dict[str, Any], reply: str, *, mechanic
         diagnostics.append({
             "label": "legacy_expected_modes_ignored",
             "evidence": "The record contains an old expected_modes field.",
-            "definition": "Evaluator v4.3 ignores category-authored response-mode restrictions; this diagnostic has zero score cost.",
+            "definition": "Evaluator v4.4 ignores category-authored response-mode restrictions; this diagnostic has zero score cost.",
         })
 
     for item in contract.get("recommended") or []:

@@ -46,7 +46,7 @@ The dedicated runner exposes the complete settings:
   -GradientCheckpointing
 ```
 
-Direct Phase 2B command using the shared Evaluator v4.3 relative-opportunity policy:
+Direct Phase 2B command using the shared Evaluator v4.4 relative-opportunity policy:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
@@ -61,7 +61,7 @@ Thorough 150-case run with isolated artifacts and reports:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
-  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_4.jsonl `
   -ProbeLimit 150 `
   -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_3_relative `
   -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
@@ -73,7 +73,7 @@ Thorough 150-case run with isolated artifacts and reports:
   -GradientCheckpointing
 ```
 
-Evaluator v4.3 requires every Phase 2B probe row to contain an explicit `response_contract`; legacy probes are rejected rather than treated as silently open-ended. Use `probe_50_v4_3.jsonl` or `probe_150_thorough_v4_3.jsonl`.
+Evaluator v4.4 requires every Phase 2B probe row to contain an explicit `response_contract`; legacy probes are rejected rather than treated as silently open-ended. Use `probe_50_v4_4.jsonl` or `probe_150_thorough_v4_4.jsonl`.
 
 The dedicated wrapper exposes search, reproducibility, output, and quality-profile settings. It does not expose absolute promotion thresholds. A custom `OutputRoot` automatically receives unique report names unless `Report` and `GateReport` are supplied explicitly.
 
@@ -148,7 +148,7 @@ Continue the established August 1 thorough run with:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
-  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_4.jsonl `
   -ProbeLimit 150 `
   -OutputRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
   -Report .\reports\PHASE_2B_phase_2b_quality_v3_thorough_20260801_REPORT.md `
@@ -163,14 +163,14 @@ Continue the established August 1 thorough run with:
 
 `MaxDrops 27` is only an upper bound. The two-layer safety guard means a 28-layer source can accept at most 26 deletions, and the run normally stops earlier when no remaining deletion is worthwhile under both opportunity comparisons.
 
-## Evaluator v4.3 rescoring and corrected-frontier replay
+## Evaluator v4.4 rescoring and corrected-frontier replay
 
 Pause an active v3.0 run before migration. To re-score all preserved Phase 2B replies without model inference and prepare the corrected frontier replay:
 
 ```powershell
-.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v4_3.ps1 `
+.\scripts\phase_2_layer_selection\run_phase_2b_rescore_v4_4.ps1 `
   -RunRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
-  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v4_3.jsonl
+  -Benchmark .\data\phase_2_structural_reduction\probe_150_thorough_v4_4.jsonl
 ```
 
-Then rerun the exact original structural-reduction command with `-Resume`. Stored generation, NLL, and footprint evidence is reused while the corrected frontier follows the same parent lineage. If v4.3 changes a stage winner, only the downstream branch created from the superseded parent is regenerated. Timestamped pre-v4.3 backups and `PHASE2B_QUALITY_V4_3_MIGRATION.json` preserve the migration audit trail.
+Then rerun the exact original structural-reduction command with `-Resume`. Stored generation, NLL, and footprint evidence is reused while the corrected frontier follows the same parent lineage. If v4.4 changes a stage winner, only the downstream branch created from the superseded parent is regenerated. Timestamped pre-v4.4 backups and `PHASE2B_QUALITY_V4_4_MIGRATION.json` preserve the migration audit trail.

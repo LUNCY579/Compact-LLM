@@ -22,7 +22,7 @@ def test_rescore_replaces_stale_v3_fields_without_generation(tmp_path: Path) -> 
                 "messages": [{"role": "user", "content": "I reduced the context window."}],
                 "reference": "How did latency change?",
                 "response_contract": {
-                    "schema_version": "4.3",
+                    "schema_version": "4.4",
                     "open_ended": False,
                     "min_tokens": 1,
                     "max_tokens": 20,
@@ -71,7 +71,7 @@ def test_rescore_replaces_stale_v3_fields_without_generation(tmp_path: Path) -> 
     row = json.loads(result_out.read_text(encoding="utf-8").splitlines()[0])
     summary = json.loads(summary_out.read_text(encoding="utf-8"))
 
-    assert row["quality_evaluation_version"] == "4.3"
+    assert row["quality_evaluation_version"] == "4.4"
     assert row["quality_score"] == 0.0
     assert "semantic_integrity_diagnostics" not in row
     assert "prompt_relevance_score" not in row
@@ -79,7 +79,7 @@ def test_rescore_replaces_stale_v3_fields_without_generation(tmp_path: Path) -> 
     assert "semantically_unresponsive_output" not in row["major_issues"]
     assert "broken_clause_sequence" in row["critical_failures"]
     assert row["elapsed_seconds"] == 0.2
-    assert summary["quality_evaluation_version"] == "4.3"
+    assert summary["quality_evaluation_version"] == "4.4"
     assert summary["critical_defect_case_rate"] == 1.0
     assert summary["mechanical_failure_case_rate"] == 1.0
     assert summary["rescored_from_quality_evaluation_version"] == "3.1"
