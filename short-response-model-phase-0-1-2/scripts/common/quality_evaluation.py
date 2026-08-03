@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""Quality Evaluator v4.4: observable defects plus explicit contracts.
+"""Quality Evaluator v4.5: observable defects plus explicit contracts.
 
 The evaluator does not decide whether an answer is generically "responsive" or
 whether its vocabulary resembles a reference.  Scored labels are limited to:
@@ -39,7 +39,7 @@ from scripts.common.observable_quality import (
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_CONFIG_PATH = ROOT / "configs" / "quality_evaluation.json"
-QUALITY_EVALUATION_VERSION = "4.4"
+QUALITY_EVALUATION_VERSION = "4.5"
 
 _TAXONOMY_CACHE: dict[Path, dict[str, Any]] = {}
 
@@ -75,7 +75,7 @@ class QualityConfig:
     def category_overrides(self) -> dict[str, dict[str, float]]:
         """Deprecated compatibility view.
 
-        Evaluator v4.4 forbids category-specific scoring.  Categories are
+        Evaluator v4.5 forbids category-specific scoring.  Categories are
         retained only in aggregate reporting tables.
         """
 
@@ -105,7 +105,7 @@ class QualityConfig:
 
     @property
     def issue_taxonomy_path(self) -> Path:
-        value = Path(str(self.raw.get("issue_taxonomy_path", "configs/quality_issue_taxonomy_v4_4.json")))
+        value = Path(str(self.raw.get("issue_taxonomy_path", "configs/quality_issue_taxonomy_v4_5.json")))
         return value if value.is_absolute() else ROOT / value
 
     @property
@@ -386,7 +386,7 @@ def explicit_response_contract(record: dict[str, Any]) -> dict[str, Any]:
     contract["requirements"] = requirements
     contract["prohibitions"] = prohibitions
     contract.setdefault("open_ended", not bool(requirements or prohibitions or contract.get("question_required") or contract.get("question_forbidden")))
-    # Category-authored response modes are non-normative in v4.4.  Keep a
+    # Category-authored response modes are non-normative in v4.5.  Keep a
     # marker only so old artifacts can be audited; the evaluator ignores them.
     if contract.get("expected_modes"):
         contract["legacy_expected_modes"] = list(contract.get("expected_modes") or [])
@@ -481,6 +481,17 @@ def _content_defects(record: dict[str, Any], reply: str) -> tuple[list[dict[str,
         r"\b(?:you are|you're) not (?:exhausted|tired|sad|upset|overwhelmed|disappointed)\b", text
     ):
         add("explicit_user_state_contradiction", "major", "The reply directly negates the emotional state stated by the user.", "The response explicitly contradicts a user-provided state rather than acknowledging it.")
+    contradiction_patterns = (
+        r"\bthat is not (?:a )?([a-z][a-z -]{1,24})[.;,!-]+\s*(?:it|that) is (?:a )?\1\b",
+        r"\b(?:it|that) is (?:a )?([a-z][a-z -]{1,24})[.;,!-]+\s*(?:it|that) is not (?:a )?\1\b",
+    )
+    if any(re.search(pattern, text) for pattern in contradiction_patterns):
+        add(
+            "direct_self_contradiction", "major",
+            "The reply directly asserts and negates the same short proposition.",
+            "A response contains an explicit internal contradiction that materially harms logical consistency.",
+        )
+
     if any(cue in text for cue in ("idiot", "stupid", "shut up", "hit them", "attack them", "fight them", "make them pay", "get revenge")):
         add("interpersonal_escalation", "major", "The reply contains an insult, threat, or revenge instruction.", "The response escalates interpersonal conflict through directly hostile language or advice.")
 
@@ -558,7 +569,7 @@ def surface_naturalness_score(reply: str, diagnostics: dict[str, Any]) -> float:
 
 
 def reference_importance(record: dict[str, Any], config: QualityConfig) -> float:
-    """References are always diagnostic-only in v4.4."""
+    """References are always diagnostic-only in v4.5."""
 
     return 0.0
 
@@ -634,13 +645,13 @@ def evaluate_response(
     unknown = sorted(emitted_labels - config.allowed_scored_labels)
     if forbidden:
         raise ValueError(
-            "Evaluator v4.4 emitted forbidden catch-all label(s): " + ", ".join(forbidden)
+            "Evaluator v4.5 emitted forbidden catch-all label(s): " + ", ".join(forbidden)
         )
     if unknown:
         raise ValueError(
-            "Evaluator v4.4 emitted undocumented scored label(s): " + ", ".join(unknown) +
+            "Evaluator v4.5 emitted undocumented scored label(s): " + ", ".join(unknown) +
             ". Add a human-approved definition and regression examples to "
-            "configs/quality_issue_taxonomy_v4_4.json before using the label."
+            "configs/quality_issue_taxonomy_v4_5.json before using the label."
         )
 
     diagnostics = [

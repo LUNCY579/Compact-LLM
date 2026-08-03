@@ -51,7 +51,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--sft-adapter", type=Path, default=ROOT / "artifacts/dense_sft/adapter")
     parser.add_argument("--train-file", type=Path, default=ROOT / "data/train/train.jsonl")
     parser.add_argument("--dev-file", type=Path, default=ROOT / "data/dev/dev.jsonl")
-    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_4.jsonl")
+    parser.add_argument("--probe-file", type=Path, default=ROOT / "data/phase_2_structural_reduction/probe_50_v4_5.jsonl")
     parser.add_argument("--phase-benchmark", type=Path, default=ROOT / "data/benchmark/shortchatbench_pilot.jsonl")
     parser.add_argument("--output-root", type=Path, default=ROOT / "artifacts/phase_2_progressive_reduction")
     parser.add_argument("--report", type=Path, default=ROOT / "reports/PHASE_2B_PROGRESSIVE_REDUCTION_REPORT.md")
@@ -620,19 +620,25 @@ def require_explicit_v4_contracts(path: Path) -> None:
             contract = row.get("response_contract")
             if not isinstance(contract, dict):
                 missing.append(case_id)
-            elif str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION:
+            elif (
+                str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION
+                or contract.get("contract_origin") != "freshly_authored_from_visible_messages_v4_5"
+                or contract.get("contract_category_used") is not False
+                or contract.get("contract_reference_used") is not False
+                or contract.get("contract_inherited_requirements_used") is not False
+            ):
                 invalid.append(case_id)
     if missing or invalid:
         details = []
         if missing:
             details.append(f"missing contracts: {missing[:8]}")
         if invalid:
-            details.append(f"wrong contract schema: {invalid[:8]}")
+            details.append(f"wrong schema or contract provenance: {invalid[:8]}")
         raise ValueError(
-            f"Phase 2B requires an explicit Evaluator-v4 response-contract probe ({'; '.join(details)}). "
-            "Use data/phase_2_structural_reduction/probe_50_v4_4.jsonl or "
-            "probe_150_thorough_v4_4.jsonl, or author a new contracted probe with "
-            "scripts/common/build_v4_response_contract_benchmark.py."
+            f"Phase 2B requires an explicit Evaluator-v4.5 fresh-message response-contract probe ({'; '.join(details)}). "
+            "Use data/phase_2_structural_reduction/probe_50_v4_5.jsonl or "
+            "probe_150_thorough_v4_5.jsonl, or author a new contracted probe with "
+            "scripts/common/build_v4_5_response_contract_benchmark.py."
         )
 
 def run_if_needed(command: list[str], sentinel: Path, resume: bool) -> None:

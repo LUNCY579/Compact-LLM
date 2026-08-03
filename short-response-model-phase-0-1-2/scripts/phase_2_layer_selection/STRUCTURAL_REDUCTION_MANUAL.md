@@ -25,13 +25,13 @@ Phase 2A found no selective one-, two-, or four-layer adapter that recovered the
   -GradientCheckpointing
 ```
 
-The wrapper uses Quality Evaluator v4.4 and exposes search, provenance, output, and quality-profile controls. It does not expose absolute promotion thresholds. `ProbeLimit=50` remains a workload setting, not a quality standard. The default `probe_50_v4_4.jsonl` and the thorough `probe_150_thorough_v4_4.jsonl` contain explicit case-level response contracts; legacy uncontracted probes are rejected for official Phase 2B selection.
+The wrapper uses Quality Evaluator v4.5 and exposes search, provenance, output, and quality-profile controls. It does not expose absolute promotion thresholds. `ProbeLimit=50` remains a workload setting, not a quality standard. The default `probe_50_v4_5.jsonl` and the thorough `probe_150_thorough_v4_5.jsonl` contain explicit case-level response contracts; legacy uncontracted probes are rejected for official Phase 2B selection.
 
 For the established thorough probe, use an isolated run:
 
 ```powershell
 .\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
-  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_4.jsonl `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_5.jsonl `
   -ProbeLimit 150 `
   -OutputRoot .\artifacts\phase_2_progressive_reduction_v1_3_relative `
   -Report .\reports\PHASE_2B_V1_2_THOROUGH_REPORT.md `
@@ -137,8 +137,8 @@ The first resume from a pre-hotfix catalog cannot retroactively verify settings 
 
 The runner also audits every previously accepted frontier transition with the incremental rule before beginning the next stage. If a historical accepted transition fails that audit, continuation stops rather than silently building on a subsidized deletion.
 
-## Re-score a pre-v4.4 run
+## Re-score a pre-v4.5 run
 
-Use `run_phase_2b_rescore_v4_4.ps1` to re-score stored generations without loading a model. Official migration mode backs up old result files, rebuilds full-reference deviations, archives stale parent-relative decisions, and prepares a Stage-1 decision replay. Run the original Phase 2B command with `-Resume` afterward. Evidence is reused only when its parent-model lineage, retained layer IDs, benchmark, evaluator configuration, and recovery settings match.
+Use `run_phase_2b_rescore_v4_5.ps1` to re-score stored generations without loading a model. Official migration mode backs up old result files, rebuilds full-reference deviations, archives stale parent-relative decisions, and prepares a Stage-1 decision replay. Run the original Phase 2B command with `-Resume` afterward. Evidence is reused only when its parent-model lineage, retained layer IDs, benchmark, evaluator configuration, and recovery settings match.
 
 A changed evaluator can select a different parent. Downstream checkpoints produced from the old parent cannot be made valid through scoring alone, so the runner regenerates only that divergent suffix of the search tree.

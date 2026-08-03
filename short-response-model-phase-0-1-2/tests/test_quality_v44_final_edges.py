@@ -7,7 +7,7 @@ from pathlib import Path
 from scripts.common.quality_evaluation import evaluate_response, load_quality_config
 
 ROOT = Path(__file__).resolve().parents[1]
-BENCHMARK = ROOT / "data/phase_2_structural_reduction/probe_150_thorough_v4_4.jsonl"
+BENCHMARK = ROOT / "data/phase_2_structural_reduction/probe_150_thorough_v4_5.jsonl"
 
 
 def _rows() -> dict[str, dict]:
@@ -105,7 +105,7 @@ def test_final_paraphrase_and_keyword_trap_regressions() -> None:
     assert uncertainty["quality_score"] >= 0.80
 
     assert "leaked_evaluation_training_not_rejected" not in rejection["major_issues"]
-    assert "evaluation_integrity_boundary_missing" in rejection["major_issues"]
+    assert "evaluation_integrity_boundary_missing" in rejection["minor_issues"]
 
     assert "visibility_limit_missing" not in visibility["major_issues"]
     assert visibility["quality_score"] >= 0.75

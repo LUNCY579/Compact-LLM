@@ -42,7 +42,11 @@ def test_phase2b_in_place_migration_reuses_replies_and_archives_decisions(tmp_pa
             "messages": [{"role": "user", "content": "I reduced the context window."}],
             "reference": "Did it improve?",
             "response_contract": {
-                "schema_version": "4.4", "open_ended": False,
+                "schema_version": "4.5", "open_ended": False,
+                "contract_origin": "freshly_authored_from_visible_messages_v4_5",
+                "contract_category_used": False,
+                "contract_reference_used": False,
+                "contract_inherited_requirements_used": False,
                 "min_tokens": 1, "max_tokens": 20,
                 "question_required": True,
                 "question_missing_label": "required_follow_up_question_missing",
@@ -91,14 +95,14 @@ def test_phase2b_in_place_migration_reuses_replies_and_archives_decisions(tmp_pa
     candidate_row = json.loads((candidate_generation / "results.jsonl").read_text().splitlines()[0])
     assert reference_row["reply"] == "Did it improve?"
     assert candidate_row["reply"] == "Did it improve?"
-    assert reference_row["quality_evaluation_version"] == "4.4"
-    assert candidate_row["quality_evaluation_version"] == "4.4"
+    assert reference_row["quality_evaluation_version"] == "4.5"
+    assert candidate_row["quality_evaluation_version"] == "4.5"
     assert candidate_row["major_issues"] == []
     assert (candidate_evidence / "output_deviation.json").exists()
     assert (candidate_evidence / "evidence_provenance.json").exists()
     assert not (run_root / "model_catalog.json").exists()
     assert not (run_root / "candidate_registry.json").exists()
-    manifest = json.loads((run_root / "PHASE2B_QUALITY_V4_4_MIGRATION.json").read_text())
+    manifest = json.loads((run_root / "PHASE2B_QUALITY_V4_5_MIGRATION.json").read_text())
     assert manifest["benchmark_contract_audit"] == {"case_count": 1, "contracted_case_count": 1}
     assert manifest["rescored_count"] == 2
 
@@ -115,4 +119,4 @@ def test_phase2b_migration_rejects_legacy_uncontracted_benchmark(tmp_path: Path)
         text=True,
     )
     assert completed.returncode != 0
-    assert "explicit Evaluator-v4.4 benchmark" in (completed.stderr + completed.stdout)
+    assert "explicit Evaluator-v4.5 benchmark" in (completed.stderr + completed.stdout)

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run Phase 2B progressive structural reduction under Quality Evaluator v4.4.
+Run Phase 2B progressive structural reduction under Quality Evaluator v4.5.
 
 .DESCRIPTION
 Every current layer is tested as a reversible physical deletion. A candidate
@@ -16,7 +16,7 @@ param(
     [string]$SftAdapter = ".\artifacts\dense_sft\adapter",
     [string]$TrainFile = ".\data\train\train.jsonl",
     [string]$DevFile = ".\data\dev\dev.jsonl",
-    [string]$ProbeFile = ".\data\phase_2_structural_reduction\probe_50_v4_4.jsonl",
+    [string]$ProbeFile = ".\data\phase_2_structural_reduction\probe_50_v4_5.jsonl",
     [string]$PhaseBenchmark = ".\data\benchmark\shortchatbench_pilot.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_2_progressive_reduction",
     [string]$Report = "",

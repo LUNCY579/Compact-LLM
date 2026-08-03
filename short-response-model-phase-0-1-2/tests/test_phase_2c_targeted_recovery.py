@@ -89,7 +89,7 @@ class Phase2CTargetedRecoveryTests(unittest.TestCase):
             "content_anchor_preservation": quality,
         }
         summary = {
-            "quality_evaluation_version": "4.4",
+            "quality_evaluation_version": "4.5",
             "case_count": 100,
             "mean_quality_score": quality,
             "worst_decile_mean_quality_score": quality,

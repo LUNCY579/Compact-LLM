@@ -28,7 +28,7 @@ REQUIRED_FIELDS = {
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v4.4.")
+    parser = argparse.ArgumentParser(description="Audit evaluation JSON evidence for quality schema v4.5.")
     parser.add_argument(
         "roots", nargs="*", type=Path,
         default=[Path("artifacts"), Path("playground_artifacts")],

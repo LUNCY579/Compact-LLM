@@ -6,7 +6,7 @@ The migration performs no model inference.  In ``--in-place --prepare-resume``
 mode it:
 
 1. backs up every existing generation result and summary;
-2. re-scores the stored replies under Evaluator v4.4;
+2. re-scores the stored replies under Evaluator v4.5;
 3. rebuilds full-reference output deviations;
 4. archives stale parent deviations, combined metrics, catalogs, registries, and
    stage decisions;
@@ -47,7 +47,7 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
-    """Require a complete Evaluator-v4.4 contract on every Phase 2B case."""
+    """Require a complete Evaluator-v4.5 contract on every Phase 2B case."""
 
     case_count = 0
     missing: list[str] = []
@@ -62,7 +62,13 @@ def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
             contract = row.get("response_contract")
             if not isinstance(contract, dict):
                 missing.append(case_id)
-            elif str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION:
+            elif (
+                str(contract.get("schema_version")) != QUALITY_EVALUATION_VERSION
+                or contract.get("contract_origin") != "freshly_authored_from_visible_messages_v4_5"
+                or contract.get("contract_category_used") is not False
+                or contract.get("contract_reference_used") is not False
+                or contract.get("contract_inherited_requirements_used") is not False
+            ):
                 invalid.append(case_id)
     if case_count == 0:
         raise ValueError(f"Benchmark contains no cases: {path}")
@@ -71,10 +77,10 @@ def validate_explicit_contract_benchmark(path: Path) -> dict[str, int]:
         if missing:
             parts.append(f"missing response_contract: {missing[:8]}")
         if invalid:
-            parts.append(f"wrong schema version: {invalid[:8]}")
+            parts.append(f"wrong schema or contract provenance: {invalid[:8]}")
         raise ValueError(
-            f"Official Phase 2B rescoring requires an explicit Evaluator-v4.4 benchmark ({'; '.join(parts)}). "
-            "Use probe_150_thorough_v4_4.jsonl or author a contracted benchmark first."
+            f"Official Phase 2B rescoring requires an explicit Evaluator-v4.5 benchmark ({'; '.join(parts)}). "
+            "Use probe_150_thorough_v4_5.jsonl or author a contracted benchmark first."
         )
     return {"case_count": case_count, "contracted_case_count": case_count}
 

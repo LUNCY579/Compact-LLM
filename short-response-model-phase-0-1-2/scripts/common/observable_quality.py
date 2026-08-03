@@ -2,7 +2,7 @@ from __future__ import annotations
 
 """Observable defect detection and explicit response-contract validation.
 
-Evaluator v4.4 avoids catch-all semantic verdicts and adds prompt-grounded continuous functional scoring.  This module
+Evaluator v4.5 avoids catch-all semantic verdicts and adds prompt-grounded continuous functional scoring.  This module
 only emits scored defect labels when the generated text contains a concrete,
 reproducible problem or violates an explicit benchmark requirement.  Broader
 signals such as low lexical overlap or unusual vocabulary are review-only and
@@ -36,12 +36,12 @@ SEVERITY_COST = {"critical": 1.0, "major": 0.35, "minor": 0.10}
 SEMANTIC_CUE_PATTERNS: dict[str, tuple[str, ...]] = {
     "uncertainty": (
         r"\bnot necessarily\b", r"\b(?:may|might|could|possibly|perhaps|probably)\b",
-        r"\b(?:uncertain|unclear|not sure|cannot be sure|can't be sure|no guarantee|not guaranteed)\b",
+        r"\b(?:uncertain|unclear|not sure|cannot be sure|can't be sure|no guarantee|not guaranteed|not a guarantee|not certain|not definitive|not conclusive)\b",
         r"\bdepends on\b",
     ),
     "rejection": (
         r"^(?:no|do not|don't|cannot|can't|avoid|reject|refuse)\b",
-        r"\b(?:must not|should not|will not|won't|not acceptable|unacceptable|not permitted|not allowed)\b",
+        r"\b(?:must not|should not|will not|won't|not acceptable|unacceptable|not permitted|not allowed|not safe|unsafe)\b",
     ),
     "capability_limit": (
         r"\b(?:cannot|can't|unable to|not able to|no way to)\b.{0,40}\b(?:see|verify|identify|tell|know|determine|confirm|observe)\b",
@@ -187,7 +187,7 @@ def detect_observable_defects(
 ) -> dict[str, Any]:
     """Detect concrete mechanical, decoding, or surface-structure corruption.
 
-    v4.4 does not use category, reference similarity, uncommon vocabulary, or a
+    v4.5 does not use category, reference similarity, uncommon vocabulary, or a
     semantic catch-all label.  A severe corruption result must be supported by
     independently measurable surface evidence such as fragmented layout,
     digit-letter fusion, abnormal tokenizer fragmentation, punctuation damage,
@@ -317,11 +317,24 @@ def detect_observable_defects(
     )
     micro_fragmentation = bool(len(lines) >= 3 and micro_line_count >= 2)
     internal_token_fragmentation = bool(internal_punctuation_tokens or abnormal_camel_tokens)
-    dominant_token_repetition = bool(
+    content_token_list = [token for token in token_list if token not in FUNCTION_WORDS]
+    content_counts = Counter(content_token_list)
+    max_content_token_share = max(content_counts.values(), default=0) / max(1, len(content_token_list))
+    dominant_content_token_repetition = bool(
         len(token_list) >= 8
-        and max(counts.values(), default=0) >= 4
-        and max_token_share >= 0.25
+        and len(content_token_list) >= 4
+        and max(content_counts.values(), default=0) >= 4
+        and max_content_token_share >= 0.40
     )
+    top_token, top_token_count = counts.most_common(1)[0] if counts else ("", 0)
+    dominant_function_word_collapse = bool(
+        len(token_list) >= 10
+        and top_token in FUNCTION_WORDS
+        and top_token_count >= 6
+        and max_token_share >= 0.50
+        and (longest_run >= 3 or bigram_repeat >= 0.30)
+    )
+    dominant_token_repetition = dominant_content_token_repetition or dominant_function_word_collapse
     isolated_fragment = bool(
         expected_english
         and len(token_list) <= 2
@@ -357,11 +370,19 @@ def detect_observable_defects(
             "repeated_token_loop", "critical", f"The same token repeats {longest_run} consecutive times.",
             "A token is repeated in a loop that makes the utterance unusable.", "mechanical",
         ))
-    if len(token_list) >= 8 and (max_token_share >= 0.45 or dominant_token_repetition):
-        token, count = counts.most_common(1)[0]
+    if dominant_token_repetition:
+        if dominant_content_token_repetition:
+            token, count = content_counts.most_common(1)[0]
+            evidence = f"Content token {token!r} occupies {count}/{len(content_token_list)} content words."
+        else:
+            token, count = top_token, top_token_count
+            evidence = (
+                f"Function token {token!r} occupies {count}/{len(token_list)} words with "
+                f"corroborating repetition structure."
+            )
         defects.append(_issue(
-            "single_token_loop", "critical", f"Token {token!r} occupies {count}/{len(token_list)} words.",
-            "One token dominates a multiword response, indicating repetition collapse.", "mechanical",
+            "single_token_loop", "critical", evidence,
+            "One token dominates a multiword response with corroborating repetition evidence, indicating generation collapse.", "mechanical",
         ))
     if len(token_list) >= 8 and bigram_repeat >= 0.55:
         defects.append(_issue(
@@ -531,6 +552,9 @@ def detect_observable_defects(
             "unique_word_ratio": len(set(token_list)) / max(1, len(token_list)),
             "consecutive_token_run": longest_run,
             "max_token_share": max_token_share,
+            "max_content_token_share": max_content_token_share,
+            "dominant_content_token_repetition": dominant_content_token_repetition,
+            "dominant_function_word_collapse": dominant_function_word_collapse,
             "repeated_bigram_fraction": bigram_repeat,
             "repeated_trigram_fraction": trigram_repeat,
             "replacement_character_count": replacement_count,
@@ -738,7 +762,7 @@ def prompt_function_alignment(
 ) -> dict[str, Any]:
     """Return continuous prompt-function alignment without a defect label.
 
-    Evaluator v4.4 first uses an optional human-authored ``prompt_adequacy``
+    Evaluator v4.5 first uses an optional human-authored ``prompt_adequacy``
     rule stored in the individual response contract.  That rule is based on the
     actual prompt/context and can provide task, factual, context, and safety
     dimension scores.  Category and reference text are never consulted.
@@ -967,7 +991,7 @@ def validate_response_contract(contract: dict[str, Any], reply: str, *, mechanic
                 "The benchmark explicitly forbids a follow-up question for this case.", "response_contract",
             ))
 
-    # v4.4 does not score or restrict replies using category-authored
+    # v4.5 does not score or restrict replies using category-authored
     # ``expected_modes``.  Legacy fields are ignored.  Prompt-function scoring
     # is computed separately from the actual messages.
     mode_confidences = detect_response_mode_confidences(reply) if mechanical_integrity_score >= 0.75 else {}
@@ -977,7 +1001,7 @@ def validate_response_contract(contract: dict[str, Any], reply: str, *, mechanic
         diagnostics.append({
             "label": "legacy_expected_modes_ignored",
             "evidence": "The record contains an old expected_modes field.",
-            "definition": "Evaluator v4.4 ignores category-authored response-mode restrictions; this diagnostic has zero score cost.",
+            "definition": "Evaluator v4.5 ignores category-authored response-mode restrictions; this diagnostic has zero score cost.",
         })
 
     for item in contract.get("recommended") or []:

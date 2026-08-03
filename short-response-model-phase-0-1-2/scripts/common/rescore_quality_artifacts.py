@@ -30,7 +30,7 @@ from scripts.common.quality_evaluation import (
 )
 
 QUALITY_ROW_KEYS = {
-    # Current Evaluator-v4.4 fields. Remove them before each re-score so repeated
+    # Current Evaluator-v4.5 fields. Remove them before each re-score so repeated
     # migrations cannot preserve stale quality evidence.
     "quality_evaluation_version", "response_contract", "checks", "legacy_checks",
     "passed_checks", "total_checks", "legacy_heuristic_score", "heuristic_score",
@@ -49,7 +49,7 @@ QUALITY_ROW_KEYS = {
     "quality_defects", "critical_failures", "major_issues", "minor_issues",
     "review_diagnostics", "semantic_warnings", "semantic_severity", "semantic_pass",
     # Superseded v2/v3/v3.1 fields. These are stripped rather than translated;
-    # v4.4 recomputes all official evidence from the stored reply and explicit contract.
+    # v4.5 recomputes all official evidence from the stored reply and explicit contract.
     "semantic_integrity_diagnostics", "semantic_coherence_score",
     "prompt_relevance_score", "intent_fulfillment_score",
     "semantic_task_adequacy_score", "semantic_logic_score", "semantic_context_score",
