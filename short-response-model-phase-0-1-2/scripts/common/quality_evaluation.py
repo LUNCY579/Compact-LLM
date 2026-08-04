@@ -934,7 +934,18 @@ def aggregate_quality_rows(rows: list[dict[str, Any]]) -> dict[str, Any]:
             for category, selected in sorted(category_rows.items())
         },
         "category_reference_alignment_scores": {
-            category: statistics.fmean(float(row.get("reference_alignment_score", 0.0)) for row in selected)
+            category: (
+                statistics.fmean(
+                    float(row["reference_alignment_score"])
+                    for row in selected
+                    if row.get("reference_alignment_score") is not None
+                )
+                if any(
+                    row.get("reference_alignment_score") is not None
+                    for row in selected
+                )
+                else None
+            )
             for category, selected in sorted(category_rows.items())
         },
         "category_complete_utterance_rates": {
