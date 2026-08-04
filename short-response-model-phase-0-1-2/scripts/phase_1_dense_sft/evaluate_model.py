@@ -270,7 +270,10 @@ def build_evaluation_summary(outputs: list[dict[str, Any]], args: argparse.Names
         "duplicate_reply_rate": sum(c - 1 for c in repeats.values() if c > 1) / max(1, len(outputs)),
         **quality_summary,
     }
-
+    
+def escape_markdown_cell(value: Any) -> str:
+    """Make arbitrary text safe for a single Markdown table cell."""
+    return str(value).replace("|", "\\|").replace("\r", " ").replace("\n", " ")
 
 def render_evaluation_report(args: argparse.Namespace, summary: dict[str, Any], outputs: list[dict[str, Any]]) -> str:
     cat_rows = "\n".join(
@@ -287,7 +290,7 @@ def render_evaluation_report(args: argparse.Namespace, summary: dict[str, Any], 
     worst = sorted(outputs, key=lambda r: (r.get("quality_score", 0.0), r.get("semantic_pass", False)))[:15]
     worst_rows = "\n".join(
         f"| {row['id']} | {row['category']} | {row['quality_score']:.3f} | "
-        f"{row['legacy_heuristic_score']:.3f} | {str(row['reply']).replace('|', '\\|').replace(chr(10), ' ')} |"
+        f"{row['legacy_heuristic_score']:.3f} | {escape_markdown_cell(row['reply'])} |"
         for row in worst
     )
     flagged = [r for r in outputs if r["semantic_severity"] != "none" or r.get("review_diagnostics")]
