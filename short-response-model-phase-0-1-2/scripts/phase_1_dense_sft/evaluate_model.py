@@ -26,6 +26,8 @@ from scripts.common.response_control import (
     finalize_response,
     infer_stop_reason,
 )
+from scripts.common.experiment_utils import atomic_write_text, read_json, sha256, write_json
+from scripts.common.incremental_results import DurableJsonlStore
 from scripts.common.quality_evaluation import (
     QUALITY_EVALUATION_VERSION,
     aggregate_quality_rows,
@@ -104,6 +106,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Fail instead of using CPU when CUDA is unavailable.",
     )
+    p.add_argument("--resume", action="store_true", help="Reuse durable completed example rows by stable benchmark ID.")
+    p.add_argument("--run-root", type=Path, default=None, help="Optional Phase 2B run root for LIVE_PROGRESS files.")
+    p.add_argument("--progress-context", type=Path, default=None, help="JSON context merged into Phase 2B live progress.")
+    p.add_argument("--candidate-status", type=Path, default=None, help="Candidate status file updated during evaluation.")
+    p.add_argument("--progress-update-interval", type=int, default=5, help="Refresh live Markdown every N completed examples; JSON updates every example.")
+    p.add_argument("--disable-live-markdown", action="store_true", help="Disable LIVE_PROGRESS.md updates while retaining JSON progress.")
     return p.parse_args()
 
 
@@ -228,152 +236,18 @@ def apply_chat_template(tokenizer: Any, messages: list[dict[str, Any]]) -> str:
         return tokenizer.apply_chat_template(messages, **kwargs)
 
 
-# Generate one reply for every benchmark record, score it, and write
-# raw results plus aggregate JSON and Markdown reports.
-def main() -> None:
-    args = parse_args()
-    if args.require_cuda and not torch.cuda.is_available():
-        raise RuntimeError("CUDA is unavailable and --require-cuda was requested.")
-    if not torch.cuda.is_available():
-        print("WARNING: CUDA is unavailable; evaluation will run on CPU and VRAM metrics will be 0.")
-
-    # Keep each evaluation run in an explicit artifact directory.
-    args.output_dir.mkdir(parents=True, exist_ok=True)
-    quality_config = load_quality_config(args.quality_config)
-    records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)]
-    if args.limit is not None:
-        records = records[: args.limit]
-    corpus_profile = build_corpus_profile(records)
-
-    # The same base tokenizer is used whether or not a PEFT adapter is loaded.
-    tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-    model = AutoModelForCausalLM.from_pretrained(
-        args.model_id,
-        torch_dtype="auto",
-        device_map="auto",
-    )
-    # Attach a saved PEFT adapter to the frozen base model for post-training
-    # evaluation; omit this argument for the untouched baseline.
-    if args.adapter_path is not None:
-        if PeftModel is None:
-            raise RuntimeError("Install peft before loading an adapter.")
-        model = PeftModel.from_pretrained(model, args.adapter_path)
-    model.eval()
-
-    # Preserve every case-level result so aggregate scores remain auditable.
-    outputs: list[dict[str, Any]] = []
-    for index, record in enumerate(records, 1):
-        messages = record["messages"]
-        # Inject the common policy only when the benchmark case does not
-        # already provide its own system message.
-        if not messages or messages[0].get("role") != "system":
-            messages = [{"role": "system", "content": args.system_prompt}, *messages]
-        # Convert role-structured messages into the model's native chat prompt.
-        rendered = apply_chat_template(tokenizer, messages)
-        inputs = tokenizer(rendered, return_tensors="pt").to(model.device)
-        # Measure per-case peak allocated VRAM.
-        if torch.cuda.is_available():
-            torch.cuda.reset_peak_memory_stats()
-        sync_cuda()
-        started = time.perf_counter()
-        stopping_criteria, boundary_criterion = build_stopping_criteria(
-            tokenizer,
-            int(inputs.input_ids.shape[1]),
-            args.response_control,
-            args.min_new_tokens_before_boundary,
-        )
-        kwargs: dict[str, Any] = {
-            "max_new_tokens": args.max_new_tokens,
-            "do_sample": args.do_sample,
-            "pad_token_id": tokenizer.eos_token_id,
-            "eos_token_id": tokenizer.eos_token_id,
-        }
-        if stopping_criteria is not None:
-            kwargs["stopping_criteria"] = stopping_criteria
-        if args.do_sample:
-            kwargs.update(temperature=args.temperature, top_p=args.top_p)
-        # Evaluation never needs gradients.
-        with torch.inference_mode():
-            generated = model.generate(**inputs, **kwargs)
-        sync_cuda()
-        elapsed = time.perf_counter() - started
-        # Remove the input portion before decoding and counting the reply.
-        new_tokens = generated[0, inputs.input_ids.shape[1] :]
-        raw_reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
-        finalized = finalize_response(raw_reply, args.response_control)
-        reply = finalized.text
-        visible_token_count = len(tokenizer(reply, add_special_tokens=False)["input_ids"])
-        stop_reason = infer_stop_reason(
-            new_tokens.tolist(),
-            eos_token_id=tokenizer.eos_token_id,
-            max_new_tokens=args.max_new_tokens,
-            criterion=boundary_criterion,
-        )
-        # Apply deterministic expected-property checks and a separate
-        # conservative semantic audit. The raw heuristic remains available
-        # so changes in the semantic rules do not erase prior measurements.
-        quality = evaluate_response(
-            record,
-            reply,
-            visible_token_count,
-            visible_model_tokens=visible_token_count,
-            config=quality_config,
-            corpus_profile=corpus_profile,
-        )
-        row = {
-            "id": record["id"],
-            "category": record["category"],
-            "messages": record["messages"],
-            "reference": record.get("reference"),
-            "reference_token_f1": reference_token_f1(record.get("reference"), reply),
-            "reply": reply,
-            "raw_reply": finalized.raw_text,
-            "response_control_mode": args.response_control,
-            "response_control_trimmed": finalized.trimmed,
-            "stop_reason": stop_reason,
-            "sentence_count": finalized.sentence_count,
-            "one_sentence_violation": finalized.sentence_count > 1,
-            "prompt_tokens": int(inputs.input_ids.shape[1]),
-            "generated_tokens": int(new_tokens.shape[0]),
-            "visible_generated_tokens": visible_token_count,
-            "elapsed_seconds": elapsed,
-            "peak_vram_gb": (
-                torch.cuda.max_memory_allocated() / 1024**3
-                if torch.cuda.is_available()
-                else 0.0
-            ),
-            **quality,
-        }
-        outputs.append(row)
-        flag_text = ""
-        if row["critical_failures"]:
-            flag_text = f" CRITICAL={row['critical_failures']}"
-        elif row["major_issues"]:
-            flag_text = f" MAJOR={row['major_issues']}"
-        elif row["semantic_warnings"]:
-            flag_text = f" WARN={row['semantic_warnings']}"
-        print(
-            f"[{index:03d}/{len(records):03d}] {record['id']}: {reply!r} "
-            f"quality={row['quality_score']:.3f} legacy={row['legacy_heuristic_score']:.3f}{flag_text}"
-        )
-
-    # Save raw case-level outputs first; this is the evidence behind every
-    # aggregate metric in the report.
-    result_path = args.output_dir / "results.jsonl"
-    with result_path.open("w", encoding="utf-8", newline="\n") as f:
-        for row in outputs:
-            f.write(json.dumps(row, ensure_ascii=False) + "\n")
-
-    # Aggregate independent quality dimensions and tail metrics. A high mean
-    # can no longer hide catastrophic outputs because hard-failure, minimum,
-    # p10, and worst-decile measurements are all preserved.
+# Generate one reply for every benchmark record, score it, and write raw
+# results plus aggregate JSON and Markdown reports. Results are appended and
+# fsynced per example so interruption never leaves completed evidence only in
+# memory.
+def build_evaluation_summary(outputs: list[dict[str, Any]], args: argparse.Namespace, quality_config: Any) -> dict[str, Any]:
     token_counts = [float(r["visible_generated_tokens"]) for r in outputs]
     actual_token_counts = [float(r["generated_tokens"]) for r in outputs]
     stop_reasons = Counter(str(r["stop_reason"]) for r in outputs)
     times = [float(r["elapsed_seconds"]) for r in outputs]
     repeats = Counter(normalize(r["reply"]) for r in outputs)
     quality_summary = aggregate_quality_rows(outputs)
-    summary = {
+    return {
         "case_count": len(outputs),
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "quality_policy_name": quality_config.raw.get("policy_name"),
@@ -386,12 +260,8 @@ def main() -> None:
         "p90_reply_tokens": percentile(token_counts, 0.90),
         "median_actual_generated_tokens": statistics.median(actual_token_counts),
         "p90_actual_generated_tokens": percentile(actual_token_counts, 0.90),
-        "one_sentence_violation_rate": statistics.mean(
-            1.0 if r["one_sentence_violation"] else 0.0 for r in outputs
-        ),
-        "response_control_trim_rate": statistics.mean(
-            1.0 if r["response_control_trimmed"] else 0.0 for r in outputs
-        ),
+        "one_sentence_violation_rate": statistics.mean(1.0 if r["one_sentence_violation"] else 0.0 for r in outputs),
+        "response_control_trim_rate": statistics.mean(1.0 if r["response_control_trimmed"] else 0.0 for r in outputs),
         "stop_reason_counts": dict(sorted(stop_reasons.items())),
         "mean_generation_seconds": statistics.mean(times),
         "p90_generation_seconds": percentile(times, 0.90),
@@ -400,11 +270,9 @@ def main() -> None:
         "duplicate_reply_rate": sum(c - 1 for c in repeats.values() if c > 1) / max(1, len(outputs)),
         **quality_summary,
     }
-    (args.output_dir / "summary.json").write_text(
-        json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
-    )
 
-    # Render category quality, observable-defect, contract, and tail evidence.
+
+def render_evaluation_report(args: argparse.Namespace, summary: dict[str, Any], outputs: list[dict[str, Any]]) -> str:
     cat_rows = "\n".join(
         f"| {category} | {score:.3f} | "
         f"{summary['category_quality_pass_rates'][category]:.3f} | "
@@ -417,34 +285,28 @@ def main() -> None:
         for category, score in summary["category_quality_scores"].items()
     )
     worst = sorted(outputs, key=lambda r: (r.get("quality_score", 0.0), r.get("semantic_pass", False)))[:15]
-    # Escape Markdown table separators before embedding model replies.
-    worst_row_lines: list[str] = []
-    for row in worst:
-        escaped_reply = str(row["reply"]).replace("|", "\\|").replace("\n", " ")
-        worst_row_lines.append(
-            f"| {row['id']} | {row['category']} | "
-            f"{row['quality_score']:.3f} | {row['legacy_heuristic_score']:.3f} | {escaped_reply} |"
-        )
-    worst_rows = "\n".join(worst_row_lines)
+    worst_rows = "\n".join(
+        f"| {row['id']} | {row['category']} | {row['quality_score']:.3f} | "
+        f"{row['legacy_heuristic_score']:.3f} | {str(row['reply']).replace('|', '\\|').replace(chr(10), ' ')} |"
+        for row in worst
+    )
     flagged = [r for r in outputs if r["semantic_severity"] != "none" or r.get("review_diagnostics")]
-    defect_row_lines: list[str] = []
-    for row in flagged:
-        defect_row_lines.append(
-            f"| {row['id']} | {row['semantic_severity']} | "
-            f"{', '.join(row['critical_failures']) or '-'} | "
-            f"{', '.join(row['major_issues']) or '-'} | "
-            f"{', '.join(row['semantic_warnings']) or '-'} |"
-        )
-    defect_rows = "\n".join(defect_row_lines) if defect_row_lines else "| None | none | - | - | - |"
-
-    # State the evaluator's limits in the generated report: automated
-    # checks still require human review for meaning, tone, and safety.
-    report = f"""# MODEL EVALUATION
+    defect_rows = "\n".join(
+        f"| {row['id']} | {row['semantic_severity']} | "
+        f"{', '.join(row['critical_failures']) or '-'} | "
+        f"{', '.join(row['major_issues']) or '-'} | "
+        f"{', '.join(row['semantic_warnings']) or '-'} |"
+        for row in flagged
+    ) or "| None | none | - | - | - |"
+    return f"""# MODEL EVALUATION
 
 ## Scope
 
 Evaluate the unchanged base model or one PEFT adapter with the versioned
-quality-oriented evaluator. Concrete mechanical corruption and explicit response-contract violations are recorded with reproducible labels. Critical mechanical corruption receives a zero case score, while all candidate decisions remain proportional. Human review remains required.
+quality-oriented evaluator. Case results are durably appended as soon as each
+example completes and can be resumed by stable benchmark ID. Concrete
+mechanical corruption and explicit response-contract violations are recorded
+with reproducible labels. Human review remains required.
 
 ## Inputs
 
@@ -526,17 +388,253 @@ quality-oriented evaluator. Concrete mechanical corruption and explicit response
 
 `HUMAN REVIEW REQUIRED`
 
-Critical cases carry the maximum case-level quality cost but do not create a hidden candidate-level veto. Review raw outputs, contract evidence, correctness, tone, context, and safety before using this evaluation as project evidence.
+Critical cases carry the maximum case-level quality cost but do not create a
+hidden candidate-level veto. Review raw outputs, contract evidence,
+correctness, tone, context, and safety before using this evaluation as project
+evidence.
 """
+
+
+def evaluation_manifest(args: argparse.Namespace) -> dict[str, Any]:
+    return {
+        "schema_version": 1,
+        "model_id": str(args.model_id),
+        "adapter_path": str(args.adapter_path) if args.adapter_path else None,
+        "benchmark": str(args.benchmark.resolve()),
+        "benchmark_sha256": sha256(args.benchmark),
+        "quality_config_sha256": sha256(args.quality_config),
+        "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "max_new_tokens": int(args.max_new_tokens),
+        "response_control": args.response_control,
+        "min_new_tokens_before_boundary": int(args.min_new_tokens_before_boundary),
+        "do_sample": bool(args.do_sample),
+        "system_prompt": args.system_prompt,
+    }
+
+
+def update_incremental_progress(
+    args: argparse.Namespace,
+    outputs: list[dict[str, Any]],
+    *,
+    total: int,
+    status: str,
+    force_markdown: bool = False,
+    error: str | None = None,
+) -> None:
+    from scripts.phase_2_layer_selection.incremental_reporting import (
+        provisional_metrics,
+        transition_candidate_status,
+        write_live_progress,
+    )
+
+    metrics = provisional_metrics(outputs)
+    candidate_state = "evaluation_complete" if len(outputs) == total and status == "complete" else (
+        "interrupted" if status == "interrupted" else "failed" if status == "failed" else "evaluating"
+    )
+    progress = {
+        "schema_version": 1,
+        "status": status,
+        "examples_completed": len(outputs),
+        "examples_total": total,
+        "metrics_are_provisional": len(outputs) < total,
+        "critical_count": metrics["critical_count"],
+        "major_count": metrics["major_count"],
+        "warning_count": metrics["warning_count"],
+        "mean_quality_score": metrics["mean_quality_score"],
+        "recent_defects": metrics["recent_defects"],
+        "last_error": error,
+        "last_update_time": time.time(),
+    }
+    write_json(args.output_dir / "evaluation_progress.json", progress)
+    if args.candidate_status is not None:
+        transition_candidate_status(
+            args.candidate_status,
+            candidate_state,
+            examples_completed=len(outputs),
+            examples_total=total,
+            critical_defects=metrics["critical_count"],
+            major_defect_count=metrics["major_count"],
+            warning_count=metrics["warning_count"],
+            quality_metrics={"mean_quality_score": metrics["mean_quality_score"]},
+            interruption=error if status == "interrupted" else None,
+            failure=error if status == "failed" else None,
+        )
+    if args.run_root is not None:
+        context = read_json(args.progress_context) if args.progress_context and args.progress_context.exists() else {}
+        markdown_due = force_markdown or len(outputs) == total or len(outputs) % max(1, args.progress_update_interval) == 0
+        write_live_progress(
+            args.run_root,
+            markdown=(not args.disable_live_markdown) and markdown_due,
+            **context,
+            examples_completed=len(outputs),
+            examples_total=total,
+            current_critical_count=metrics["critical_count"],
+            current_major_count=metrics["major_count"],
+            current_warning_count=metrics["warning_count"],
+            provisional_mean_quality=metrics["mean_quality_score"],
+            recent_defects=metrics["recent_defects"],
+            metrics_are_provisional=len(outputs) < total,
+            candidate_status=("evaluation_complete" if len(outputs) == total else candidate_state),
+            most_recent_error=error,
+        )
+
+
+def finalize_evaluation(args: argparse.Namespace, outputs: list[dict[str, Any]], quality_config: Any) -> None:
+    summary = build_evaluation_summary(outputs, args, quality_config)
+    write_json(args.output_dir / "summary.json", summary)
+    report = render_evaluation_report(args, summary, outputs)
     report_path = args.output_dir / "MODEL_EVALUATION.md"
-    report_path.write_text(report, encoding="utf-8")
-    # Preserve the historical filename for existing automation and links.
-    (args.output_dir / "BASELINE_EVALUATION.md").write_text(report, encoding="utf-8")
-    print(f"\nResults: {result_path}")
+    atomic_write_text(report_path, report)
+    atomic_write_text(args.output_dir / "BASELINE_EVALUATION.md", report)
+    print(f"\nResults: {args.output_dir / 'results.jsonl'}")
     print(f"Summary: {args.output_dir / 'summary.json'}")
     print(f"Report: {report_path}")
 
 
-# Standard script entry point.
+def main() -> None:
+    args = parse_args()
+    if args.progress_update_interval <= 0:
+        raise ValueError("--progress-update-interval must be positive")
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    quality_config = load_quality_config(args.quality_config)
+    records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)]
+    if args.limit is not None:
+        records = records[: args.limit]
+    record_ids = [str(record["id"]) for record in records]
+    if len(record_ids) != len(set(record_ids)):
+        raise ValueError("Benchmark contains duplicate stable example IDs.")
+    corpus_profile = build_corpus_profile(records)
+
+    manifest_path = args.output_dir / "evaluation_manifest.json"
+    expected_manifest = evaluation_manifest(args)
+    if args.resume and manifest_path.exists():
+        existing_manifest = read_json(manifest_path)
+        if existing_manifest != expected_manifest:
+            raise RuntimeError("Evaluation artifacts are incompatible with the requested model, benchmark, or policy.")
+    elif args.resume and (args.output_dir / "results.jsonl").exists():
+        print("[resume warning] Legacy results have no evaluation manifest; stable IDs will be validated.")
+    write_json(manifest_path, expected_manifest)
+
+    store = DurableJsonlStore.open(args.output_dir / "results.jsonl", resume=args.resume)
+    unknown_ids = sorted(set(store.rows_by_id) - set(record_ids))
+    if unknown_ids:
+        raise RuntimeError(f"Existing results contain IDs not present in this benchmark: {unknown_ids[:8]}")
+    for warning in store.recovery_warnings:
+        print(f"[jsonl recovery] {warning}")
+    outputs = store.rows_in_order(record_ids)
+    update_incremental_progress(args, outputs, total=len(records), status="running", force_markdown=True)
+
+    if len(outputs) == len(records):
+        outputs = store.finalize_order(record_ids)
+        finalize_evaluation(args, outputs, quality_config)
+        update_incremental_progress(args, outputs, total=len(records), status="complete", force_markdown=True)
+        return
+
+    try:
+        if args.require_cuda and not torch.cuda.is_available():
+            raise RuntimeError("CUDA is unavailable and --require-cuda was requested.")
+        if not torch.cuda.is_available():
+            print("WARNING: CUDA is unavailable; evaluation will run on CPU and VRAM metrics will be 0.")
+        tokenizer = AutoTokenizer.from_pretrained(args.model_id)
+        model = AutoModelForCausalLM.from_pretrained(args.model_id, torch_dtype="auto", device_map="auto")
+        if args.adapter_path is not None:
+            if PeftModel is None:
+                raise RuntimeError("Install peft before loading an adapter.")
+            model = PeftModel.from_pretrained(model, args.adapter_path)
+        model.eval()
+
+        for index, record in enumerate(records, 1):
+            if store.contains(str(record["id"])):
+                print(f"[{index:03d}/{len(records):03d}] {record['id']}: [resume reuse]")
+                continue
+            messages = record["messages"]
+            if not messages or messages[0].get("role") != "system":
+                messages = [{"role": "system", "content": args.system_prompt}, *messages]
+            rendered = apply_chat_template(tokenizer, messages)
+            inputs = tokenizer(rendered, return_tensors="pt").to(model.device)
+            if torch.cuda.is_available():
+                torch.cuda.reset_peak_memory_stats()
+            sync_cuda()
+            started = time.perf_counter()
+            stopping_criteria, boundary_criterion = build_stopping_criteria(
+                tokenizer, int(inputs.input_ids.shape[1]), args.response_control, args.min_new_tokens_before_boundary
+            )
+            kwargs: dict[str, Any] = {
+                "max_new_tokens": args.max_new_tokens,
+                "do_sample": args.do_sample,
+                "pad_token_id": tokenizer.eos_token_id,
+                "eos_token_id": tokenizer.eos_token_id,
+            }
+            if stopping_criteria is not None:
+                kwargs["stopping_criteria"] = stopping_criteria
+            if args.do_sample:
+                kwargs.update(temperature=args.temperature, top_p=args.top_p)
+            with torch.inference_mode():
+                generated = model.generate(**inputs, **kwargs)
+            sync_cuda()
+            elapsed = time.perf_counter() - started
+            new_tokens = generated[0, inputs.input_ids.shape[1] :]
+            raw_reply = tokenizer.decode(new_tokens, skip_special_tokens=True).strip()
+            finalized = finalize_response(raw_reply, args.response_control)
+            reply = finalized.text
+            visible_token_count = len(tokenizer(reply, add_special_tokens=False)["input_ids"])
+            stop_reason = infer_stop_reason(
+                new_tokens.tolist(), eos_token_id=tokenizer.eos_token_id,
+                max_new_tokens=args.max_new_tokens, criterion=boundary_criterion,
+            )
+            quality = evaluate_response(
+                record, reply, visible_token_count, visible_model_tokens=visible_token_count,
+                config=quality_config, corpus_profile=corpus_profile,
+            )
+            row = {
+                "id": record["id"], "category": record["category"], "messages": record["messages"],
+                "reference": record.get("reference"),
+                "reference_token_f1": reference_token_f1(record.get("reference"), reply),
+                "reply": reply, "raw_reply": finalized.raw_text,
+                "response_control_mode": args.response_control,
+                "response_control_trimmed": finalized.trimmed,
+                "stop_reason": stop_reason, "sentence_count": finalized.sentence_count,
+                "one_sentence_violation": finalized.sentence_count > 1,
+                "prompt_tokens": int(inputs.input_ids.shape[1]),
+                "generated_tokens": int(new_tokens.shape[0]),
+                "visible_generated_tokens": visible_token_count,
+                "elapsed_seconds": elapsed,
+                "peak_vram_gb": torch.cuda.max_memory_allocated() / 1024**3 if torch.cuda.is_available() else 0.0,
+                **quality,
+            }
+            store.append(row)
+            outputs = store.rows_in_order(record_ids)
+            update_incremental_progress(args, outputs, total=len(records), status="running")
+            flag_text = ""
+            if row["critical_failures"]:
+                flag_text = f" CRITICAL={row['critical_failures']}"
+            elif row["major_issues"]:
+                flag_text = f" MAJOR={row['major_issues']}"
+            elif row["semantic_warnings"]:
+                flag_text = f" WARN={row['semantic_warnings']}"
+            print(
+                f"[{index:03d}/{len(records):03d}] {record['id']}: {reply!r} "
+                f"quality={row['quality_score']:.3f} legacy={row['legacy_heuristic_score']:.3f}{flag_text}"
+            )
+
+        outputs = store.finalize_order(record_ids)
+        finalize_evaluation(args, outputs, quality_config)
+        update_incremental_progress(args, outputs, total=len(records), status="complete", force_markdown=True)
+    except KeyboardInterrupt:
+        outputs = store.rows_in_order(record_ids)
+        update_incremental_progress(
+            args, outputs, total=len(records), status="interrupted", force_markdown=True,
+            error="KeyboardInterrupt",
+        )
+        raise
+    except Exception as exc:
+        outputs = store.rows_in_order(record_ids)
+        update_incremental_progress(
+            args, outputs, total=len(records), status="failed", force_markdown=True,
+            error=f"{type(exc).__name__}: {exc}",
+        )
+        raise
+
+
 if __name__ == "__main__":
     main()

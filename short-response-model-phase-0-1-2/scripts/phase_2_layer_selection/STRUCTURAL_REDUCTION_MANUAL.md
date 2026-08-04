@@ -142,3 +142,104 @@ The runner also audits every previously accepted frontier transition with the in
 Use `run_phase_2b_rescore_v4_5.ps1` to re-score stored generations without loading a model. Official migration mode backs up old result files, rebuilds full-reference deviations, archives stale parent-relative decisions, and prepares a Stage-1 decision replay. Run the original Phase 2B command with `-Resume` afterward. Evidence is reused only when its parent-model lineage, retained layer IDs, benchmark, evaluator configuration, and recovery settings match.
 
 A changed evaluator can select a different parent. Downstream checkpoints produced from the old parent cannot be made valid through scoring alone, so the runner regenerates only that divergent suffix of the search tree.
+
+## Incremental evidence, interruption, and report recovery
+
+Phase 2B treats every completed example and candidate decision as durable experiment state. The generation evaluator appends one JSON object to `generation/results.jsonl` immediately after the case finishes, flushes it, and calls `fsync`. It is therefore safe to inspect partial evidence or interrupt the sweep without losing all completed cases.
+
+### Live files
+
+The run root is refreshed throughout the experiment:
+
+| File | Update cadence | Meaning |
+|---|---|---|
+| `LIVE_PROGRESS.json` | Every completed generation example | Atomic machine-readable current state and provisional metrics. |
+| `LIVE_PROGRESS.md` | Every `ProgressUpdateInterval` examples, default 5 | Human-readable view. Incomplete candidates display an explicit `PROVISIONAL` warning. |
+| `RUN_STATE.json` | Candidate/stage/orchestration transitions | Durable current frontier and last accepted checkpoint. |
+| `PARTIAL_RUN_REPORT.md` | After each gated candidate and completed stage | Cumulative completed/incomplete stages, candidates, gate reasons, progression, missing artifacts, and pending work. |
+
+Watch the Markdown safely with path polling because the file is atomically replaced:
+
+```powershell
+while ($true) {
+  Clear-Host
+  Get-Content .\artifacts\phase_2_progressive_reduction\LIVE_PROGRESS.md -Raw
+  Start-Sleep -Seconds 5
+}
+```
+
+### Candidate and stage durability
+
+Each candidate directory contains `candidate_status.json`. The lifecycle states are:
+
+- `pending`, `preparing`, `evaluating`
+- `evaluation_complete`
+- `recovering`, `recovery_complete`
+- `gating`
+- `accepted`, `rejected`
+- `interrupted`, `failed`
+
+A completed candidate also receives `candidate_row.json` and `CANDIDATE_REPORT.md`. The containing stage receives `stage_status.json` and `STAGE_XX_REPORT.md`. A stage report is generated independently of later stages.
+
+`accepted` means the existing relative quality-versus-resource gate found the candidate worthwhile. It does not itself prove the candidate was selected. `promoted=true` and `promoted_checkpoint` record that the candidate actually became the next parent.
+
+The orchestrator verifies both of these persisted conditions immediately before materialization:
+
+```text
+candidate_status.status == "accepted"
+candidate_status.promotion_allowed == true
+```
+
+A rejected candidate therefore cannot become the parent of the next pruning stage, even if an in-memory ranking row is malformed or stale.
+
+### Resume after interruption
+
+Use the exact original settings and add `-Resume`:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -ProbeFile .\data\phase_2_structural_reduction\probe_150_thorough_v4_5.jsonl `
+  -ProbeLimit 150 `
+  -OutputRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -MaxDrops 27 `
+  -RecoveryTopK 6 `
+  -RecoverySteps 50 `
+  -QLoRA `
+  -GradientCheckpointing `
+  -Resume
+```
+
+Resume validates the evaluation manifest and Phase 2B run provenance, repairs a malformed final JSONL line without deleting earlier valid rows, skips stable example IDs already completed, reuses fully gated candidates, and restores the last accepted frontier parent. A changed model, benchmark, evaluator policy, recovery setting, or data fingerprint requires a new output root.
+
+Ctrl+C and Python/subprocess failures mark the in-flight candidate and run, refresh both live files, rebuild the partial report when possible, and print a complete Python resume command. A report-generation failure after a candidate gate does not erase the already persisted accepted/rejected decision.
+
+### Rebuild reports without inference
+
+Use the normal wrapper:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -OutputRoot .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  -RebuildReport `
+  -AllowPartialReport
+```
+
+Or invoke the builder directly:
+
+```powershell
+python .\scripts\phase_2_layer_selection\build_phase_2b_report.py `
+  --run-root .\artifacts\phase_2b_quality_v3_thorough_20260801 `
+  --allow-partial `
+  --rebuild
+```
+
+The builder never runs model inference. It scans saved JSON/JSONL/status artifacts, repairs recoverable final JSONL tails, reconstructs missing generation aggregates where possible, writes candidate and stage reports, and regenerates `PARTIAL_RUN_REPORT.md`. It creates the canonical final report only when the run is durably marked complete and its final-report inputs exist.
+
+Older artifact folders are supported on a best-effort basis. When no saved gate assessment proves acceptance, the builder labels the status as inferred and leaves `promotion_allowed=false`. It does not invent a historical winner.
+
+### Limitations
+
+- Incremental per-example persistence applies to generation evaluation. Teacher-forcing NLL and footprint measurement remain candidate-level subprocess artifacts.
+- A hard machine power loss can leave an orphaned atomic temp sibling. JSON/JSONL readers recover a complete validated orphan only when the destination is absent and the original writer process is no longer alive.
+- Live quality and defect counts remain provisional until all required benchmark examples complete; they must not be used for promotion.
+- Final release approval still requires the existing human stop gate.

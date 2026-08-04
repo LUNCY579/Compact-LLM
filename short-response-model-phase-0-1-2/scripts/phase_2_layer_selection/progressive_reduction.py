@@ -28,11 +28,23 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_json, run, sha256, sha256_tree, write_json
+from scripts.common.experiment_utils import atomic_write_text, read_json, run, sha256, sha256_tree, write_json
 from scripts.phase_2_layer_selection.create_depth_candidate import lineage_for_model
 from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION, require_quality_v4, summary_quality_score
 from scripts.common.quality_gate import assert_valid_reference
 from scripts.common.opportunity_evaluation import evaluate_opportunity, resource_reduction
+from scripts.phase_2_layer_selection.incremental_reporting import (
+    candidate_gate_fields,
+    collect_stage_statuses,
+    initialize_candidate_status,
+    load_json_if_present,
+    transition_candidate_status,
+    write_candidate_report,
+    write_live_progress,
+    write_partial_run_report,
+    write_run_state,
+    write_stage_report,
+)
 
 PYTHON = sys.executable
 EVALUATOR = ROOT / "scripts/phase_1_dense_sft/evaluate_model.py"
@@ -87,6 +99,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--skip-recovery", action="store_true")
     parser.add_argument("--keep-candidate-checkpoints", action="store_true")
     parser.add_argument("--resume", action="store_true")
+    parser.add_argument(
+        "--progress-update-interval",
+        type=int,
+        default=5,
+        help="Update LIVE_PROGRESS.md every N completed examples; JSON is updated after each example.",
+    )
+    parser.add_argument(
+        "--disable-live-markdown",
+        action="store_true",
+        help="Keep LIVE_PROGRESS.json but disable live Markdown refreshes.",
+    )
     return parser.parse_args()
 
 
@@ -648,6 +671,246 @@ def run_if_needed(command: list[str], sentinel: Path, resume: bool) -> None:
     run(command, cwd=ROOT)
 
 
+def _parent_stage_number(parent_reference: dict[str, Any]) -> int:
+    label = str(parent_reference.get("label") or "")
+    if label.startswith("frontier_stage_"):
+        try:
+            return int(label.rsplit("_", 1)[-1])
+        except ValueError:
+            return 0
+    return 0
+
+
+def candidate_artifact_paths(evidence_dir: Path) -> dict[str, str]:
+    evidence_dir = evidence_dir.resolve()
+    return {
+        "candidate_dir": str(evidence_dir),
+        "stage_dir": str(evidence_dir.parent),
+        "results": str(evidence_dir / "generation/results.jsonl"),
+        "summary": str(evidence_dir / "generation/summary.json"),
+        "combined_metrics": str(evidence_dir / "combined_metrics.json"),
+        "candidate_row": str(evidence_dir / "candidate_row.json"),
+        "candidate_report": str(evidence_dir / "CANDIDATE_REPORT.md"),
+    }
+
+
+def prepare_candidate_status(
+    *,
+    evidence_dir: Path,
+    stage: int,
+    variant_id: str,
+    variant_kind: str,
+    parent_model: str | Path,
+    parent_reference: dict[str, Any],
+    removed_layers: list[int],
+    examples_total: int,
+    recovery: bool = False,
+) -> Path:
+    status_path = evidence_dir / "candidate_status.json"
+    initialize_candidate_status(
+        status_path,
+        stage=stage,
+        candidate_name=variant_id,
+        parent_stage=_parent_stage_number(parent_reference),
+        parent_candidate=parent_reference.get("label"),
+        parent_checkpoint=str(parent_model),
+        candidate_type=variant_kind,
+        removed_layers=removed_layers,
+        examples_total=examples_total,
+        artifact_paths=candidate_artifact_paths(evidence_dir),
+    )
+    current = load_json_if_present(status_path) or {}
+    if current.get("status") not in {"accepted", "rejected"}:
+        transition_candidate_status(
+            status_path,
+            "recovering" if recovery else "preparing",
+            artifacts=candidate_artifact_paths(evidence_dir),
+        )
+    return status_path
+
+
+def load_completed_candidate_row(evidence_dir: Path) -> dict[str, Any] | None:
+    status = load_json_if_present(evidence_dir / "candidate_status.json")
+    row = load_json_if_present(evidence_dir / "candidate_row.json")
+    if status and row and status.get("status") in {"accepted", "rejected"}:
+        print(f"[reuse gated candidate] {evidence_dir}")
+        return row
+    return None
+
+
+def persist_gated_candidate_row(evidence_dir: Path, row: dict[str, Any]) -> dict[str, Any]:
+    write_json(evidence_dir / "candidate_row.json", row)
+    status_path = evidence_dir / "candidate_status.json"
+    gate = candidate_gate_fields(row)
+    status = transition_candidate_status(
+        status_path,
+        "accepted" if gate["promotion_allowed"] else "rejected",
+        **gate,
+        examples_completed=int((row.get("generation_summary") or {}).get("case_count", 0)),
+        examples_total=int((row.get("generation_summary") or {}).get("case_count", 0)),
+        artifacts=candidate_artifact_paths(evidence_dir),
+    )
+    write_candidate_report(evidence_dir, status, row)
+    return status
+
+
+def persist_candidate_registry(path: Path, rows: list[dict[str, Any]]) -> None:
+    deduplicated: dict[tuple[int, str], dict[str, Any]] = {}
+    for row in rows:
+        deduplicated[(int(row.get("stage", 0)), str(row.get("variant_id", "")))] = row
+    write_json(path, {"candidates": list(deduplicated.values())})
+
+
+def persist_catalog_snapshot(
+    *,
+    args: argparse.Namespace,
+    catalog_path: Path,
+    candidate_registry_path: Path,
+    baseline: dict[str, Any],
+    frontier_rows: list[dict[str, Any]],
+    termination: dict[str, Any] | None,
+    status: str,
+    profiles: dict[str, dict[str, Any]] | None = None,
+    resume_validation: dict[str, Any] | None = None,
+    resume_history: list[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    payload = {
+        "manifest_version": 3,
+        "status": status,
+        "run_status": "COMPLETE" if status == "PENDING_HUMAN_REVIEW" else status,
+        "source_model_id": args.model_id,
+        "source_sft_adapter": str(args.sft_adapter),
+        "probe_file": str(args.probe_file),
+        "phase_benchmark": str(args.phase_benchmark),
+        "probe_case_count": args.probe_limit,
+        "baseline": baseline,
+        "run_configuration": build_run_configuration(args),
+        "resume_validation": resume_validation,
+        "resume_history": resume_history or [],
+        "opportunity_policy": {
+            "decision_rule": (
+                "cumulative loaded weight-tensor reduction > cumulative quality opportunity loss AND "
+                "incremental parent-relative reduction > incremental quality opportunity loss"
+            ),
+            "quality_profile": args.quality_profile,
+            "absolute_promotion_thresholds": "prohibited",
+            "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        },
+        "frontier": frontier_rows,
+        "profiles": profiles or {},
+        "termination": termination,
+        "all_candidate_registry": str(candidate_registry_path),
+        "canonical_report": str(args.report),
+        "gate_report": str(args.gate_report),
+        "partial_report": str(args.output_root / "PARTIAL_RUN_REPORT.md"),
+        "live_progress_json": str(args.output_root / "LIVE_PROGRESS.json"),
+        "live_progress_markdown": str(args.output_root / "LIVE_PROGRESS.md"),
+        "downstream_rule": (
+            "Phase 3 may use full_quality, balanced, or min_memory only after "
+            "the non-full profile receives explicit Phase 2B human approval."
+        ),
+    }
+    write_json(catalog_path, payload)
+    return payload
+
+
+def require_candidate_promotion_allowed(selected: dict[str, Any]) -> dict[str, Any]:
+    """Return persisted status only when this candidate may become a parent."""
+
+    status_path = Path(selected["evidence_dir"]) / "candidate_status.json"
+    status = load_json_if_present(status_path) or {}
+    if status.get("status") != "accepted" or not status.get("promotion_allowed"):
+        raise RuntimeError(
+            f"Refusing to promote {selected.get('variant_id')}: its persisted candidate gate does not allow promotion."
+        )
+    return status
+
+
+def checkpoint_completed_candidate(
+    *,
+    args: argparse.Namespace,
+    row: dict[str, Any],
+    evidence_dir: Path,
+    all_candidate_rows: list[dict[str, Any]],
+    candidate_registry_path: Path,
+    catalog_path: Path,
+    baseline: dict[str, Any],
+    frontier_rows: list[dict[str, Any]],
+    parent_model: str | Path,
+    resume_validation: dict[str, Any] | None,
+) -> dict[str, Any]:
+    """Persist one fully gated candidate and refresh every incremental report."""
+
+    status = persist_gated_candidate_row(evidence_dir, row)
+    key = (int(row.get("stage", 0)), str(row.get("variant_id", "")))
+    replaced = False
+    for index, existing in enumerate(all_candidate_rows):
+        if (int(existing.get("stage", 0)), str(existing.get("variant_id", ""))) == key:
+            all_candidate_rows[index] = row
+            replaced = True
+            break
+    if not replaced:
+        all_candidate_rows.append(row)
+    persist_candidate_registry(candidate_registry_path, all_candidate_rows)
+    stage = int(row.get("stage", 0))
+    write_stage_report(
+        args.output_root,
+        stage=stage,
+        parent_checkpoint=str(parent_model),
+        stage_status="IN PROGRESS",
+        accepted_candidate=None,
+        later_stages_pending=True,
+    )
+    completed_stages = [int(item.get("stage", 0)) for item in frontier_rows]
+    last = frontier_rows[-1] if frontier_rows else None
+    state = write_run_state(
+        args.output_root,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_candidate_gated",
+        current_stage=stage,
+        current_candidate=row.get("variant_id"),
+        last_accepted_stage=int(last.get("stage")) if last else None,
+        last_accepted_checkpoint=str(last.get("inference_model")) if last else str(parent_model),
+        frontier=frontier_rows,
+        final_report_available=False,
+    )
+    write_live_progress(
+        args.output_root,
+        markdown=not args.disable_live_markdown,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_candidate_gated",
+        current_stage=stage,
+        current_candidate=row.get("variant_id"),
+        parent_stage=_parent_stage_number({"label": row.get("parent_reference_label")}),
+        parent_candidate=row.get("parent_reference_label"),
+        last_accepted_stage=int(last.get("stage")) if last else None,
+        last_accepted_checkpoint=str(last.get("inference_model")) if last else str(parent_model),
+        completed_stages=completed_stages,
+        examples_completed=int((row.get("generation_summary") or {}).get("case_count", 0)),
+        examples_total=int((row.get("generation_summary") or {}).get("case_count", 0)),
+        current_critical_count=int((row.get("generation_summary") or {}).get("critical_failure_count", 0)),
+        current_major_count=int((row.get("generation_summary") or {}).get("major_issue_count", 0)),
+        current_warning_count=int((row.get("generation_summary") or {}).get("semantic_warning_count", 0)),
+        provisional_mean_quality=(row.get("generation_summary") or {}).get("mean_quality_score"),
+        candidate_status=status.get("status"),
+        stage_status="IN PROGRESS",
+        promotion_occurred=False,
+        metrics_are_provisional=False,
+    )
+    persist_catalog_snapshot(
+        args=args,
+        catalog_path=catalog_path,
+        candidate_registry_path=candidate_registry_path,
+        baseline=baseline,
+        frontier_rows=frontier_rows,
+        termination=None,
+        status="IN PROGRESS",
+        resume_validation=resume_validation,
+    )
+    write_partial_run_report(args.output_root, state)
+    return status
+
+
 def evaluate_variant(
     *,
     model_id: str,
@@ -668,8 +931,38 @@ def evaluate_variant(
     deviation_report = evidence_dir / "OUTPUT_DEVIATION.md"
     parent_deviation_json = evidence_dir / "parent_output_deviation.json"
     parent_deviation_report = evidence_dir / "PARENT_OUTPUT_DEVIATION.md"
+    status_path = evidence_dir / "candidate_status.json"
+    progress_context_path = evidence_dir / "progress_context.json"
+    status_payload = load_json_if_present(status_path) or {}
+    if not progress_context_path.exists():
+        write_json(
+            progress_context_path,
+            {
+                "run_status": "IN PROGRESS",
+                "current_phase": "phase_2b_candidate_evaluation",
+                "current_stage": status_payload.get("stage"),
+                "current_candidate": status_payload.get("candidate_name", evidence_dir.name),
+                "parent_candidate": status_payload.get("parent_candidate"),
+                "parent_stage": status_payload.get("parent_stage"),
+                "candidate_status": "evaluating",
+                "stage_status": "IN PROGRESS",
+                "promotion_occurred": False,
+            },
+        )
+    transition_candidate_status(status_path, "evaluating", artifacts=candidate_artifact_paths(evidence_dir))
 
     summary_sentinel = generation_dir / "summary.json"
+    if args.resume and summary_sentinel.exists():
+        durable_status = load_json_if_present(status_path) or {}
+        completed = int(durable_status.get("examples_completed", 0))
+        total = int(durable_status.get("examples_total", 0))
+        if total > 0 and completed < total:
+            # An offline partial-report rebuild may create only
+            # provisional_summary.json. A stray canonical summary from an
+            # older implementation must not cause resume to skip unfinished
+            # generation evidence.
+            print(f"[resume repair] removing incomplete canonical summary: {summary_sentinel}")
+            summary_sentinel.unlink()
     if args.resume and summary_sentinel.exists():
         try:
             require_quality_v4(read_json(summary_sentinel), str(summary_sentinel))
@@ -688,10 +981,30 @@ def evaluate_variant(
         str(generation_dir),
         "--max-new-tokens",
         str(args.max_new_tokens),
+        "--run-root",
+        str(args.output_root),
+        "--progress-context",
+        str(progress_context_path),
+        "--candidate-status",
+        str(status_path),
+        "--progress-update-interval",
+        str(args.progress_update_interval),
     ]
+    if args.resume:
+        eval_cmd.append("--resume")
+    if args.disable_live_markdown:
+        eval_cmd.append("--disable-live-markdown")
     if adapter_path is not None:
         eval_cmd += ["--adapter-path", str(adapter_path)]
     run_if_needed(eval_cmd, generation_dir / "summary.json", args.resume)
+    generation_completed = load_json_if_present(generation_dir / "summary.json") or {}
+    transition_candidate_status(
+        status_path,
+        "evaluation_complete",
+        examples_completed=int(generation_completed.get("case_count", 0)),
+        examples_total=int(generation_completed.get("case_count", 0)),
+        artifacts=candidate_artifact_paths(evidence_dir),
+    )
 
     nll_cmd = [
         PYTHON,
@@ -756,6 +1069,7 @@ def evaluate_variant(
     deviation_summary = deviation_payload["summary"]
     parent_deviation_payload = read_json(parent_deviation_json)
     parent_deviation_summary = parent_deviation_payload["summary"]
+    transition_candidate_status(status_path, "gating", artifacts=candidate_artifact_paths(evidence_dir))
     cumulative_assessment = assess_candidate(
         baseline_generation=baseline_generation,
         candidate_generation=generation_summary,
@@ -790,6 +1104,16 @@ def evaluate_variant(
         "evidence_dir": str(evidence_dir),
     }
     write_json(evidence_dir / "combined_metrics.json", payload)
+    gate = candidate_gate_fields(payload)
+    status = transition_candidate_status(
+        status_path,
+        "accepted" if gate["promotion_allowed"] else "rejected",
+        **gate,
+        examples_completed=int(generation_summary.get("case_count", 0)),
+        examples_total=int(generation_summary.get("case_count", 0)),
+        artifacts=candidate_artifact_paths(evidence_dir),
+    )
+    write_candidate_report(evidence_dir, status, payload)
     return payload
 
 
@@ -800,6 +1124,8 @@ def recover_candidate(
     args: argparse.Namespace,
 ) -> Path:
     recovery_root = candidate_evidence / "recovery_training"
+    status_path = candidate_evidence / "candidate_status.json"
+    transition_candidate_status(status_path, "recovering", artifacts=candidate_artifact_paths(candidate_evidence))
     command = [
         PYTHON,
         str(TRAIN_SFT),
@@ -825,6 +1151,11 @@ def recover_candidate(
     if args.gradient_checkpointing:
         command.append("--gradient-checkpointing")
     run_if_needed(command, recovery_root / "adapter/adapter_config.json", args.resume)
+    transition_candidate_status(
+        status_path,
+        "recovery_complete",
+        artifacts={**candidate_artifact_paths(candidate_evidence), "recovery_adapter": str(recovery_root / "adapter")},
+    )
     return recovery_root / "adapter"
 
 
@@ -840,6 +1171,12 @@ def recover_rows(
     baseline_footprint: dict[str, Any],
     parent_reference: dict[str, Any],
     args: argparse.Namespace,
+    all_candidate_rows: list[dict[str, Any]],
+    candidate_registry_path: Path,
+    catalog_path: Path,
+    baseline: dict[str, Any],
+    frontier_rows: list[dict[str, Any]],
+    resume_validation: dict[str, Any] | None,
 ) -> list[dict[str, Any]]:
     """Recovery-train and evaluate the requested raw deletion branches."""
 
@@ -859,25 +1196,56 @@ def recover_rows(
                 args=args,
             ),
         )
-        adapter = recover_candidate(
-            raw_model=Path(raw_row["raw_model"]),
-            candidate_evidence=candidate_evidence,
-            args=args,
-        )
-        metrics = evaluate_variant(
-            model_id=raw_row["raw_model"],
-            adapter_path=adapter,
+        prepare_candidate_status(
             evidence_dir=candidate_evidence,
-            probe_file=args.probe_file,
-            baseline_results=baseline_generation_dir / "results.jsonl",
-            baseline_generation=baseline_generation,
-            baseline_nll=baseline_nll,
-            baseline_footprint=baseline_footprint,
+            stage=stage,
+            variant_id=variant_id,
+            variant_kind="deletion + recovery SFT",
+            parent_model=raw_row["parent_model"],
             parent_reference=parent_reference,
-            args=args,
+            removed_layers=[int(raw_row["dropped_original_layer_id"])],
+            examples_total=int(args.probe_limit),
+            recovery=True,
         )
-        recovered.append(
+        write_json(
+            candidate_evidence / "progress_context.json",
             {
+                "run_status": "IN PROGRESS",
+                "current_phase": "phase_2b_recovery_candidate",
+                "current_stage": stage,
+                "current_candidate": variant_id,
+                "parent_candidate": parent_reference.get("label"),
+                "parent_stage": _parent_stage_number(parent_reference),
+                "last_accepted_stage": _parent_stage_number(parent_reference) or None,
+                "last_accepted_checkpoint": str(raw_row["parent_model"]),
+                "completed_stages": [int(item.get("stage", 0)) for item in frontier_rows],
+                "candidate_status": "recovering",
+                "stage_status": "IN PROGRESS",
+                "promotion_occurred": False,
+            },
+        )
+        existing_row = load_completed_candidate_row(candidate_evidence)
+        if existing_row is not None:
+            row = existing_row
+        else:
+            adapter = recover_candidate(
+                raw_model=Path(raw_row["raw_model"]),
+                candidate_evidence=candidate_evidence,
+                args=args,
+            )
+            metrics = evaluate_variant(
+                model_id=raw_row["raw_model"],
+                adapter_path=adapter,
+                evidence_dir=candidate_evidence,
+                probe_file=args.probe_file,
+                baseline_results=baseline_generation_dir / "results.jsonl",
+                baseline_generation=baseline_generation,
+                baseline_nll=baseline_nll,
+                baseline_footprint=baseline_footprint,
+                parent_reference=parent_reference,
+                args=args,
+            )
+            row = {
                 **metrics,
                 "variant_id": variant_id,
                 "variant_kind": "deletion + recovery SFT",
@@ -889,7 +1257,19 @@ def recover_rows(
                 "dropped_original_layer_id": raw_row["dropped_original_layer_id"],
                 "retained_original_layer_ids": raw_row["retained_original_layer_ids"],
             }
+        checkpoint_completed_candidate(
+            args=args,
+            row=row,
+            evidence_dir=candidate_evidence,
+            all_candidate_rows=all_candidate_rows,
+            candidate_registry_path=candidate_registry_path,
+            catalog_path=catalog_path,
+            baseline=baseline,
+            frontier_rows=frontier_rows,
+            parent_model=raw_row["parent_model"],
+            resume_validation=resume_validation,
         )
+        recovered.append(row)
     return recovered
 
 
@@ -1047,7 +1427,7 @@ training.
 
 - Probe cases: {args.probe_limit}, selected deterministically from development data.
 - Sealed evaluation used: **No**.
-- Quality evaluator: **3.0**.
+- Quality evaluator: **{QUALITY_EVALUATION_VERSION}**.
 - Relative opportunity profile: **{args.quality_profile}**.
 - Full-reference quality: {baseline['generation_summary']['mean_quality_score']:.3f}.
 - Full-reference target NLL: {baseline['nll_summary']['mean_target_nll']:.4f}.
@@ -1111,9 +1491,28 @@ calculation exists.
 """
 
 
-def main() -> None:
-    args = parse_args()
+def run_phase2b(args: argparse.Namespace) -> None:
+    if args.progress_update_interval <= 0:
+        raise ValueError("--progress-update-interval must be positive")
     args.output_root.mkdir(parents=True, exist_ok=True)
+    write_live_progress(
+        args.output_root,
+        markdown=not args.disable_live_markdown,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_initialization",
+        candidate_status="preparing",
+        stage_status="PENDING",
+        metrics_are_provisional=True,
+        most_recent_error=None,
+    )
+    write_run_state(
+        args.output_root,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_initialization",
+        current_stage=None,
+        current_candidate=None,
+        final_report_available=False,
+    )
     catalog_path = args.output_root / "model_catalog.json"
     candidate_registry_path = args.output_root / "candidate_registry.json"
     existing_catalog: dict[str, Any] | None = None
@@ -1184,19 +1583,48 @@ def main() -> None:
         except ValueError:
             print(f"[stale evaluator] rebuilding {baseline_generation_dir}")
             shutil.rmtree(baseline_generation_dir, ignore_errors=True)
+    reference_progress_context = reference_evidence / "progress_context.json"
+    write_json(
+        reference_progress_context,
+        {
+            "run_status": "IN PROGRESS",
+            "current_phase": "phase_2b_reference_evaluation",
+            "current_stage": 0,
+            "current_candidate": "full_reference",
+            "parent_candidate": None,
+            "parent_stage": None,
+            "last_accepted_stage": None,
+            "last_accepted_checkpoint": str(reference_model),
+            "completed_stages": [],
+            "candidate_status": "evaluating",
+            "stage_status": "REFERENCE",
+            "promotion_occurred": False,
+        },
+    )
+    reference_eval_cmd = [
+        PYTHON,
+        str(EVALUATOR),
+        "--model-id",
+        str(reference_model),
+        "--benchmark",
+        str(args.probe_file),
+        "--output-dir",
+        str(baseline_generation_dir),
+        "--max-new-tokens",
+        str(args.max_new_tokens),
+        "--run-root",
+        str(args.output_root),
+        "--progress-context",
+        str(reference_progress_context),
+        "--progress-update-interval",
+        str(args.progress_update_interval),
+    ]
+    if args.resume:
+        reference_eval_cmd.append("--resume")
+    if args.disable_live_markdown:
+        reference_eval_cmd.append("--disable-live-markdown")
     run_if_needed(
-        [
-            PYTHON,
-            str(EVALUATOR),
-            "--model-id",
-            str(reference_model),
-            "--benchmark",
-            str(args.probe_file),
-            "--output-dir",
-            str(baseline_generation_dir),
-            "--max-new-tokens",
-            str(args.max_new_tokens),
-        ],
+        reference_eval_cmd,
         baseline_generation_dir / "summary.json",
         args.resume,
     )
@@ -1270,6 +1698,50 @@ def main() -> None:
         "exhaustive_recovery_triggered": False,
     }
 
+    persist_candidate_registry(candidate_registry_path, all_candidate_rows)
+    persist_catalog_snapshot(
+        args=args,
+        catalog_path=catalog_path,
+        candidate_registry_path=candidate_registry_path,
+        baseline=baseline,
+        frontier_rows=frontier_rows,
+        termination=None,
+        status="IN PROGRESS",
+        resume_validation=resume_validation,
+    )
+    completed_stage_ids = [int(row.get("stage", 0)) for row in frontier_rows]
+    last_accepted_stage = completed_stage_ids[-1] if completed_stage_ids else None
+    last_accepted_checkpoint = str(current_model)
+    state = write_run_state(
+        args.output_root,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_progressive_reduction",
+        current_stage=start_stage,
+        current_candidate=None,
+        last_accepted_stage=last_accepted_stage,
+        last_accepted_checkpoint=last_accepted_checkpoint,
+        frontier=frontier_rows,
+        final_report_available=False,
+    )
+    write_live_progress(
+        args.output_root,
+        markdown=not args.disable_live_markdown,
+        run_status="IN PROGRESS",
+        current_phase="phase_2b_progressive_reduction",
+        current_stage=start_stage,
+        current_candidate=None,
+        parent_stage=last_accepted_stage,
+        parent_candidate=parent_reference.get("label"),
+        last_accepted_stage=last_accepted_stage,
+        last_accepted_checkpoint=last_accepted_checkpoint,
+        completed_stages=completed_stage_ids,
+        candidate_status="pending",
+        stage_status="PENDING",
+        promotion_occurred=False,
+        metrics_are_provisional=True,
+    )
+    write_partial_run_report(args.output_root, state)
+
     skip_stage_loop = False
     if prior_termination.get("reason") in TERMINAL_NO_PROGRESS_REASONS:
         termination = dict(prior_termination)
@@ -1283,6 +1755,38 @@ def main() -> None:
         for stage in range(start_stage, args.max_drops + 1):
             from transformers import AutoConfig
 
+            completed_stage_ids = [int(row.get("stage", 0)) for row in frontier_rows]
+            state = write_run_state(
+                args.output_root,
+                run_status="IN PROGRESS",
+                current_phase="phase_2b_stage",
+                current_stage=stage,
+                current_candidate=None,
+                last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                last_accepted_checkpoint=str(current_model),
+                frontier=frontier_rows,
+                final_report_available=False,
+            )
+            write_live_progress(
+                args.output_root,
+                markdown=not args.disable_live_markdown,
+                run_status="IN PROGRESS",
+                current_phase="phase_2b_stage",
+                current_stage=stage,
+                current_candidate=None,
+                parent_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                parent_candidate=parent_reference.get("label"),
+                last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                last_accepted_checkpoint=str(current_model),
+                completed_stages=completed_stage_ids,
+                examples_completed=0,
+                examples_total=args.probe_limit,
+                candidate_status="pending",
+                stage_status="IN PROGRESS",
+                promotion_occurred=False,
+                metrics_are_provisional=True,
+            )
+            write_partial_run_report(args.output_root, state)
             config = AutoConfig.from_pretrained(current_model)
             current_count = int(config.num_hidden_layers)
             if current_count <= 2:
@@ -1292,6 +1796,52 @@ def main() -> None:
                     "accepted_frontier_stages": len(frontier_rows),
                     "exhaustive_recovery_triggered": False,
                 }
+                write_stage_report(
+                    args.output_root,
+                    stage=stage,
+                    parent_checkpoint=str(current_model),
+                    stage_status="COMPLETE_GUARD_STOP",
+                    accepted_candidate=None,
+                    later_stages_pending=False,
+                )
+                state = write_run_state(
+                    args.output_root,
+                    run_status="IN PROGRESS",
+                    current_phase="phase_2b_minimum_layer_guard",
+                    current_stage=stage,
+                    current_candidate=None,
+                    last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                    last_accepted_checkpoint=str(current_model),
+                    frontier=frontier_rows,
+                    termination=termination,
+                    final_report_available=False,
+                )
+                write_live_progress(
+                    args.output_root,
+                    markdown=not args.disable_live_markdown,
+                    run_status="IN PROGRESS",
+                    current_phase="phase_2b_minimum_layer_guard",
+                    current_stage=stage,
+                    current_candidate=None,
+                    last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                    last_accepted_checkpoint=str(current_model),
+                    completed_stages=sorted(set(completed_stage_ids + [stage])),
+                    candidate_status=None,
+                    stage_status="COMPLETE_GUARD_STOP",
+                    promotion_occurred=False,
+                    metrics_are_provisional=False,
+                )
+                persist_catalog_snapshot(
+                    args=args,
+                    catalog_path=catalog_path,
+                    candidate_registry_path=candidate_registry_path,
+                    baseline=baseline,
+                    frontier_rows=frontier_rows,
+                    termination=termination,
+                    status="IN PROGRESS",
+                    resume_validation=resume_validation,
+                )
+                write_partial_run_report(args.output_root, state)
                 break
             original_ids = lineage_for_model(current_model, current_count)
             stage_raw_rows: list[dict[str, Any]] = []
@@ -1315,46 +1865,107 @@ def main() -> None:
                 )
                 if stale_lineage and raw_model.exists():
                     shutil.rmtree(raw_model, ignore_errors=True)
-                run_if_needed(
-                    [
-                        PYTHON,
-                        str(CREATE_CANDIDATE),
-                        "--model",
-                        str(current_model),
-                        "--drop-current-layer",
-                        str(current_index),
-                        "--output-dir",
-                        str(raw_model),
-                    ],
-                    raw_model / "depth_reduction_manifest.json",
-                    args.resume,
-                )
-                metrics = evaluate_variant(
-                    model_id=str(raw_model),
-                    adapter_path=None,
+                prepare_candidate_status(
                     evidence_dir=candidate_evidence,
-                    probe_file=args.probe_file,
-                    baseline_results=baseline_generation_dir / "results.jsonl",
-                    baseline_generation=baseline_generation,
-                    baseline_nll=baseline_nll,
-                    baseline_footprint=baseline_footprint,
+                    stage=stage,
+                    variant_id=variant_id,
+                    variant_kind="raw deletion",
+                    parent_model=current_model,
                     parent_reference=parent_reference,
-                    args=args,
+                    removed_layers=[int(original_id)],
+                    examples_total=int(args.probe_limit),
                 )
-                row = {
-                    **metrics,
-                    "variant_id": variant_id,
-                    "variant_kind": "raw deletion",
-                    "stage": stage,
-                    "parent_model": str(current_model),
-                    "raw_model": str(raw_model),
-                    "adapter_path": None,
-                    "drop_current_layer_id": current_index,
-                    "dropped_original_layer_id": original_id,
-                    "retained_original_layer_ids": retained_ids,
-                }
+                write_json(
+                    candidate_evidence / "progress_context.json",
+                    {
+                        "run_status": "IN PROGRESS",
+                        "current_phase": "phase_2b_raw_candidate",
+                        "current_stage": stage,
+                        "current_candidate": variant_id,
+                        "parent_candidate": parent_reference.get("label"),
+                        "parent_stage": _parent_stage_number(parent_reference),
+                        "last_accepted_stage": completed_stage_ids[-1] if completed_stage_ids else None,
+                        "last_accepted_checkpoint": str(current_model),
+                        "completed_stages": completed_stage_ids,
+                        "candidate_status": "preparing",
+                        "stage_status": "IN PROGRESS",
+                        "promotion_occurred": False,
+                    },
+                )
+                write_live_progress(
+                    args.output_root,
+                    markdown=not args.disable_live_markdown,
+                    run_status="IN PROGRESS",
+                    current_phase="phase_2b_raw_candidate",
+                    current_stage=stage,
+                    current_candidate=variant_id,
+                    parent_stage=_parent_stage_number(parent_reference),
+                    parent_candidate=parent_reference.get("label"),
+                    last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                    last_accepted_checkpoint=str(current_model),
+                    completed_stages=completed_stage_ids,
+                    examples_completed=0,
+                    examples_total=args.probe_limit,
+                    candidate_status="preparing",
+                    stage_status="IN PROGRESS",
+                    promotion_occurred=False,
+                    metrics_are_provisional=True,
+                )
+                existing_row = load_completed_candidate_row(candidate_evidence)
+                if existing_row is not None:
+                    row = existing_row
+                else:
+                    run_if_needed(
+                        [
+                            PYTHON,
+                            str(CREATE_CANDIDATE),
+                            "--model",
+                            str(current_model),
+                            "--drop-current-layer",
+                            str(current_index),
+                            "--output-dir",
+                            str(raw_model),
+                        ],
+                        raw_model / "depth_reduction_manifest.json",
+                        args.resume,
+                    )
+                    metrics = evaluate_variant(
+                        model_id=str(raw_model),
+                        adapter_path=None,
+                        evidence_dir=candidate_evidence,
+                        probe_file=args.probe_file,
+                        baseline_results=baseline_generation_dir / "results.jsonl",
+                        baseline_generation=baseline_generation,
+                        baseline_nll=baseline_nll,
+                        baseline_footprint=baseline_footprint,
+                        parent_reference=parent_reference,
+                        args=args,
+                    )
+                    row = {
+                        **metrics,
+                        "variant_id": variant_id,
+                        "variant_kind": "raw deletion",
+                        "stage": stage,
+                        "parent_model": str(current_model),
+                        "raw_model": str(raw_model),
+                        "adapter_path": None,
+                        "drop_current_layer_id": current_index,
+                        "dropped_original_layer_id": original_id,
+                        "retained_original_layer_ids": retained_ids,
+                    }
+                checkpoint_completed_candidate(
+                    args=args,
+                    row=row,
+                    evidence_dir=candidate_evidence,
+                    all_candidate_rows=all_candidate_rows,
+                    candidate_registry_path=candidate_registry_path,
+                    catalog_path=catalog_path,
+                    baseline=baseline,
+                    frontier_rows=frontier_rows,
+                    parent_model=current_model,
+                    resume_validation=resume_validation,
+                )
                 stage_raw_rows.append(row)
-                all_candidate_rows.append(row)
 
             recovered_rows: list[dict[str, Any]] = []
             focused_targets: list[dict[str, Any]] = []
@@ -1371,9 +1982,14 @@ def main() -> None:
                         baseline_footprint=baseline_footprint,
                         parent_reference=parent_reference,
                         args=args,
+                        all_candidate_rows=all_candidate_rows,
+                        candidate_registry_path=candidate_registry_path,
+                        catalog_path=catalog_path,
+                        baseline=baseline,
+                        frontier_rows=frontier_rows,
+                        resume_validation=resume_validation,
                     )
                 )
-                all_candidate_rows.extend(recovered_rows)
 
             stage_options = stage_raw_rows + recovered_rows
             eligible = [row for row in stage_options if row["assessment"]["eligible_for_progression"]]
@@ -1409,9 +2025,14 @@ def main() -> None:
                         baseline_footprint=baseline_footprint,
                         parent_reference=parent_reference,
                         args=args,
+                        all_candidate_rows=all_candidate_rows,
+                        candidate_registry_path=candidate_registry_path,
+                        catalog_path=catalog_path,
+                        baseline=baseline,
+                        frontier_rows=frontier_rows,
+                        resume_validation=resume_validation,
                     )
                     recovered_rows.extend(exhaustive_rows)
-                    all_candidate_rows.extend(exhaustive_rows)
                     stage_options.extend(exhaustive_rows)
                     eligible = [
                         row for row in stage_options
@@ -1432,6 +2053,52 @@ def main() -> None:
                     "raw_candidates_tested": len(stage_raw_rows),
                     "recovered_candidates_tested": len(recovered_rows),
                 }
+                write_stage_report(
+                    args.output_root,
+                    stage=stage,
+                    parent_checkpoint=str(current_model),
+                    stage_status="COMPLETE_REJECTED",
+                    accepted_candidate=None,
+                    later_stages_pending=False,
+                )
+                state = write_run_state(
+                    args.output_root,
+                    run_status="IN PROGRESS",
+                    current_phase="phase_2b_stage_rejected",
+                    current_stage=stage,
+                    current_candidate=None,
+                    last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                    last_accepted_checkpoint=str(current_model),
+                    frontier=frontier_rows,
+                    termination=termination,
+                    final_report_available=False,
+                )
+                write_live_progress(
+                    args.output_root,
+                    markdown=not args.disable_live_markdown,
+                    run_status="IN PROGRESS",
+                    current_phase="phase_2b_stage_rejected",
+                    current_stage=stage,
+                    current_candidate=None,
+                    last_accepted_stage=completed_stage_ids[-1] if completed_stage_ids else None,
+                    last_accepted_checkpoint=str(current_model),
+                    completed_stages=sorted(set(completed_stage_ids + [stage])),
+                    candidate_status="rejected",
+                    stage_status="COMPLETE_REJECTED",
+                    promotion_occurred=False,
+                    metrics_are_provisional=False,
+                )
+                persist_catalog_snapshot(
+                    args=args,
+                    catalog_path=catalog_path,
+                    candidate_registry_path=candidate_registry_path,
+                    baseline=baseline,
+                    frontier_rows=frontier_rows,
+                    termination=termination,
+                    status="IN PROGRESS",
+                    resume_validation=resume_validation,
+                )
+                write_partial_run_report(args.output_root, state)
                 print(
                     f"Stopping at stage {stage}: no candidate satisfies both the cumulative "
                     "and parent-relative opportunity rules."
@@ -1439,6 +2106,8 @@ def main() -> None:
                 break
 
             selected = max(eligible, key=ranking_key)
+            selected_status = require_candidate_promotion_allowed(selected)
+            selected_status_path = Path(selected["evidence_dir"]) / "candidate_status.json"
             dropped_original.append(int(selected["dropped_original_layer_id"]))
             stage_dir = frontier_root / f"stage_{stage:02d}_drop_{'_'.join(map(str, dropped_original))}"
             stage_model = stage_dir / "model"
@@ -1462,6 +2131,23 @@ def main() -> None:
             }
             write_json(stage_dir / "stage_result.json", frontier_row)
             frontier_rows.append(frontier_row)
+            promoted_status = transition_candidate_status(
+                selected_status_path,
+                "accepted",
+                promoted=True,
+                promoted_checkpoint=str(stage_model),
+                promotion_allowed=True,
+                gate_decision="ACCEPTED",
+            )
+            write_candidate_report(Path(selected["evidence_dir"]), promoted_status, selected)
+            write_stage_report(
+                args.output_root,
+                stage=stage,
+                parent_checkpoint=str(selected.get("parent_model", current_model)),
+                stage_status="COMPLETE_ACCEPTED",
+                accepted_candidate=str(selected.get("variant_id")),
+                later_stages_pending=stage < args.max_drops,
+            )
             current_model = stage_model
             parent_reference = parent_reference_from_frontier(frontier_row)
             termination = {
@@ -1470,6 +2156,47 @@ def main() -> None:
                 "accepted_frontier_stages": len(frontier_rows),
                 "exhaustive_recovery_triggered": exhaustive_triggered,
             }
+            completed_stage_ids = [int(row.get("stage", 0)) for row in frontier_rows]
+            state = write_run_state(
+                args.output_root,
+                run_status="IN PROGRESS",
+                current_phase="phase_2b_stage_promoted",
+                current_stage=stage,
+                current_candidate=str(selected.get("variant_id")),
+                last_accepted_stage=stage,
+                last_accepted_checkpoint=str(stage_model),
+                frontier=frontier_rows,
+                termination=termination,
+                final_report_available=False,
+            )
+            write_live_progress(
+                args.output_root,
+                markdown=not args.disable_live_markdown,
+                run_status="IN PROGRESS",
+                current_phase="phase_2b_stage_promoted",
+                current_stage=stage,
+                current_candidate=str(selected.get("variant_id")),
+                parent_stage=stage - 1 if stage > 1 else 0,
+                parent_candidate=selected.get("parent_reference_label"),
+                last_accepted_stage=stage,
+                last_accepted_checkpoint=str(stage_model),
+                completed_stages=completed_stage_ids,
+                candidate_status="accepted",
+                stage_status="COMPLETE_ACCEPTED",
+                promotion_occurred=True,
+                metrics_are_provisional=False,
+            )
+            persist_catalog_snapshot(
+                args=args,
+                catalog_path=catalog_path,
+                candidate_registry_path=candidate_registry_path,
+                baseline=baseline,
+                frontier_rows=frontier_rows,
+                termination=termination,
+                status="IN PROGRESS",
+                resume_validation=resume_validation,
+            )
+            write_partial_run_report(args.output_root, state)
 
             if not args.keep_candidate_checkpoints and work_root.exists():
                 shutil.rmtree(work_root)
@@ -1512,19 +2239,48 @@ def main() -> None:
         cache_key = _normal_path(inference_model)
         if cache_key not in profile_eval_cache:
             profile_eval_dir = profile_validation_dir(args.output_root, name, inference_model)
+            profile_progress_context = profile_eval_dir.parent / "progress_context.json"
+            write_json(
+                profile_progress_context,
+                {
+                    "run_status": "IN PROGRESS",
+                    "current_phase": "phase_2b_profile_validation",
+                    "current_stage": termination.get("terminal_stage_attempted"),
+                    "current_candidate": f"profile:{name}",
+                    "parent_candidate": None,
+                    "parent_stage": frontier_rows[-1].get("stage") if frontier_rows else None,
+                    "last_accepted_stage": frontier_rows[-1].get("stage") if frontier_rows else None,
+                    "last_accepted_checkpoint": inference_model,
+                    "completed_stages": [int(row.get("stage", 0)) for row in frontier_rows],
+                    "candidate_status": "evaluating",
+                    "stage_status": "PROFILE VALIDATION",
+                    "promotion_occurred": False,
+                },
+            )
+            profile_eval_cmd = [
+                PYTHON,
+                str(EVALUATOR),
+                "--model-id",
+                inference_model,
+                "--benchmark",
+                str(args.phase_benchmark),
+                "--output-dir",
+                str(profile_eval_dir),
+                "--max-new-tokens",
+                str(args.max_new_tokens),
+                "--run-root",
+                str(args.output_root),
+                "--progress-context",
+                str(profile_progress_context),
+                "--progress-update-interval",
+                str(args.progress_update_interval),
+            ]
+            if args.resume:
+                profile_eval_cmd.append("--resume")
+            if args.disable_live_markdown:
+                profile_eval_cmd.append("--disable-live-markdown")
             run_if_needed(
-                [
-                    PYTHON,
-                    str(EVALUATOR),
-                    "--model-id",
-                    inference_model,
-                    "--benchmark",
-                    str(args.phase_benchmark),
-                    "--output-dir",
-                    str(profile_eval_dir),
-                    "--max-new-tokens",
-                    str(args.max_new_tokens),
-                ],
+                profile_eval_cmd,
                 profile_eval_dir / "summary.json",
                 args.resume,
             )
@@ -1545,41 +2301,22 @@ def main() -> None:
             }
         )
 
-    catalog = {
-        "manifest_version": 2,
-        "status": "PENDING_HUMAN_REVIEW",
-        "source_model_id": args.model_id,
-        "source_sft_adapter": str(args.sft_adapter),
-        "probe_file": str(args.probe_file),
-        "phase_benchmark": str(args.phase_benchmark),
-        "probe_case_count": args.probe_limit,
-        "baseline": baseline,
-        "run_configuration": build_run_configuration(args),
-        "resume_validation": resume_validation,
-        "resume_history": history,
-        "opportunity_policy": {
-            "decision_rule": (
-                "cumulative loaded weight-tensor reduction > cumulative quality opportunity loss AND "
-                "incremental parent-relative reduction > incremental quality opportunity loss"
-            ),
-            "quality_profile": args.quality_profile,
-            "absolute_promotion_thresholds": "prohibited",
-            "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
-        },
-        "frontier": frontier_rows,
-        "profiles": profiles,
-        "termination": termination,
-        "all_candidate_registry": str(candidate_registry_path),
-        "gate_report": str(args.gate_report),
-        "downstream_rule": (
-            "Phase 3 may use full_quality, balanced, or min_memory only after "
-            "the non-full profile receives explicit Phase 2B human approval."
-        ),
-    }
-    write_json(candidate_registry_path, {"candidates": all_candidate_rows})
-    write_json(catalog_path, catalog)
+    persist_candidate_registry(candidate_registry_path, all_candidate_rows)
+    catalog = persist_catalog_snapshot(
+        args=args,
+        catalog_path=catalog_path,
+        candidate_registry_path=candidate_registry_path,
+        baseline=baseline,
+        frontier_rows=frontier_rows,
+        termination=termination,
+        status="PENDING_HUMAN_REVIEW",
+        profiles=profiles,
+        resume_validation=resume_validation,
+        resume_history=history,
+    )
     args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(
+    atomic_write_text(
+        args.report,
         render_report(
             baseline=baseline,
             stages=frontier_rows,
@@ -1588,7 +2325,6 @@ def main() -> None:
             termination=termination,
             args=args,
         ),
-        encoding="utf-8",
     )
     gate = f"""# PHASE 2B STOP GATE
 
@@ -1615,10 +2351,148 @@ Review the configured probe side-by-side outputs for every accepted stage and th
 - Notes:
 """
     args.gate_report.parent.mkdir(parents=True, exist_ok=True)
-    args.gate_report.write_text(gate, encoding="utf-8")
+    atomic_write_text(args.gate_report, gate)
+    accepted_stage_ids = [int(row.get("stage", 0)) for row in frontier_rows]
+    completed_stage_ids = sorted(
+        {
+            int(item.get("stage", 0))
+            for item in collect_stage_statuses(args.output_root)
+            if str(item.get("status", "")).startswith("COMPLETE")
+        }
+        | {int(row.get("stage", 0)) for row in frontier_rows}
+    )
+    final_checkpoint = str(frontier_rows[-1]["inference_model"]) if frontier_rows else str(reference_model)
+    state = write_run_state(
+        args.output_root,
+        run_status="COMPLETE",
+        current_phase="phase_2b_complete",
+        current_stage=termination.get("terminal_stage_attempted"),
+        current_candidate=None,
+        last_accepted_stage=accepted_stage_ids[-1] if accepted_stage_ids else None,
+        last_accepted_checkpoint=final_checkpoint,
+        frontier=frontier_rows,
+        termination=termination,
+        final_report_available=True,
+        final_report=str(args.report),
+        gate_report=str(args.gate_report),
+    )
+    write_live_progress(
+        args.output_root,
+        markdown=not args.disable_live_markdown,
+        run_status="COMPLETE",
+        current_phase="phase_2b_complete",
+        current_stage=termination.get("terminal_stage_attempted"),
+        current_candidate=None,
+        last_accepted_stage=accepted_stage_ids[-1] if accepted_stage_ids else None,
+        last_accepted_checkpoint=final_checkpoint,
+        completed_stages=completed_stage_ids,
+        candidate_status="complete",
+        stage_status="COMPLETE",
+        promotion_occurred=bool(frontier_rows),
+        metrics_are_provisional=False,
+        most_recent_error=None,
+    )
+    write_partial_run_report(args.output_root, state)
     print(catalog_path)
     print(args.report)
     print(args.gate_report)
+
+
+def _resume_command(args: argparse.Namespace) -> str:
+    parts = [
+        sys.executable,
+        str(Path(__file__).resolve()),
+        "--model-id", str(args.model_id),
+        "--sft-adapter", str(args.sft_adapter),
+        "--train-file", str(args.train_file),
+        "--dev-file", str(args.dev_file),
+        "--probe-file", str(args.probe_file),
+        "--phase-benchmark", str(args.phase_benchmark),
+        "--output-root", str(args.output_root),
+        "--report", str(args.report),
+        "--gate-report", str(args.gate_report),
+        "--probe-limit", str(args.probe_limit),
+        "--probe-seed", str(args.probe_seed),
+        "--max-drops", str(args.max_drops),
+        "--recovery-top-k", str(args.recovery_top_k),
+        "--recovery-steps", str(args.recovery_steps),
+        "--recovery-seed", str(args.recovery_seed),
+        "--max-new-tokens", str(args.max_new_tokens),
+        "--quality-profile", str(args.quality_profile),
+        "--progress-update-interval", str(args.progress_update_interval),
+        "--resume",
+    ]
+    if args.qlora:
+        parts.append("--qlora")
+    if args.gradient_checkpointing:
+        parts.append("--gradient-checkpointing")
+    if args.skip_recovery:
+        parts.append("--skip-recovery")
+    if args.keep_candidate_checkpoints:
+        parts.append("--keep-candidate-checkpoints")
+    if args.disable_live_markdown:
+        parts.append("--disable-live-markdown")
+    import subprocess
+    return subprocess.list2cmdline(parts)
+
+
+def _mark_run_failure(args: argparse.Namespace, *, interrupted: bool, error: BaseException) -> None:
+    live = load_json_if_present(args.output_root / "LIVE_PROGRESS.json") or {}
+    stage = live.get("current_stage")
+    candidate = live.get("current_candidate")
+    status_path = None
+    if stage is not None and candidate:
+        candidate_path = args.output_root / "evidence" / f"stage_{int(stage):02d}" / str(candidate)
+        status_path = candidate_path / "candidate_status.json"
+        if status_path.exists():
+            status = load_json_if_present(status_path) or {}
+            # A report or orchestration failure after gating must not erase a
+            # durable accepted/rejected decision. Only an in-flight candidate
+            # transitions to interrupted/failed.
+            if status.get("status") not in {"accepted", "rejected"}:
+                status = transition_candidate_status(
+                    status_path,
+                    "interrupted" if interrupted else "failed",
+                    interruption=str(error) if interrupted else None,
+                    failure=None if interrupted else f"{type(error).__name__}: {error}",
+                )
+            write_candidate_report(candidate_path, status, load_json_if_present(candidate_path / "candidate_row.json"))
+    run_status = "INTERRUPTED" if interrupted else "FAILED"
+    write_live_progress(
+        args.output_root,
+        markdown=not args.disable_live_markdown,
+        run_status=run_status,
+        candidate_status="interrupted" if interrupted else "failed",
+        stage_status=run_status,
+        metrics_are_provisional=True,
+        most_recent_error=f"{type(error).__name__}: {error}",
+    )
+    state = write_run_state(
+        args.output_root,
+        run_status=run_status,
+        current_stage=stage,
+        current_candidate=candidate,
+        final_report_available=False,
+        most_recent_error=f"{type(error).__name__}: {error}",
+    )
+    try:
+        write_partial_run_report(args.output_root, state)
+    except Exception as report_error:
+        print(f"[warning] Could not rebuild partial report after failure: {report_error}", file=sys.stderr)
+    print("Resume with:", file=sys.stderr)
+    print(_resume_command(args), file=sys.stderr)
+
+
+def main() -> None:
+    args = parse_args()
+    try:
+        run_phase2b(args)
+    except KeyboardInterrupt as exc:
+        _mark_run_failure(args, interrupted=True, error=exc)
+        raise
+    except Exception as exc:
+        _mark_run_failure(args, interrupted=False, error=exc)
+        raise
 
 
 if __name__ == "__main__":

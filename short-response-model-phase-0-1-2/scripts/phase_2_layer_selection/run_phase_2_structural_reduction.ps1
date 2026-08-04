@@ -35,7 +35,11 @@ param(
     [switch]$GradientCheckpointing,
     [switch]$SkipRecovery,
     [switch]$KeepCandidateCheckpoints,
-    [switch]$Resume
+    [switch]$Resume,
+    [int]$ProgressUpdateInterval = 5,
+    [switch]$DisableLiveMarkdown,
+    [switch]$RebuildReport,
+    [switch]$AllowPartialReport
 )
 
 $ErrorActionPreference = "Stop"
@@ -70,6 +74,7 @@ if ($MaxDrops -lt 0) { throw "MaxDrops cannot be negative." }
 if ($RecoveryTopK -lt 0) { throw "RecoveryTopK cannot be negative." }
 if ($RecoverySteps -lt 0) { throw "RecoverySteps cannot be negative." }
 if ($MaxNewTokens -le 0) { throw "MaxNewTokens must be positive." }
+if ($ProgressUpdateInterval -le 0) { throw "ProgressUpdateInterval must be positive." }
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
@@ -77,6 +82,17 @@ function Invoke-PythonStep {
     Write-Host $Name
     & $PythonExecutable @Arguments
     if ($LASTEXITCODE -ne 0) { throw "$Name failed with exit code $LASTEXITCODE." }
+}
+
+if ($RebuildReport) {
+    $RebuildArguments = @(
+        ".\scripts\phase_2_layer_selection\build_phase_2b_report.py",
+        "--run-root", $OutputRoot,
+        "--rebuild"
+    )
+    if ($AllowPartialReport) { $RebuildArguments += "--allow-partial" }
+    Invoke-PythonStep "Rebuilding Phase 2B reports from saved artifacts..." $RebuildArguments
+    exit 0
 }
 
 Invoke-PythonStep "[1/2] Checking the Phase 1 human gate..." @(
@@ -104,13 +120,15 @@ $Arguments = @(
     "--recovery-top-k", "$RecoveryTopK",
     "--recovery-steps", "$RecoverySteps",
     "--recovery-seed", "$RecoverySeed",
-    "--max-new-tokens", "$MaxNewTokens"
+    "--max-new-tokens", "$MaxNewTokens",
+    "--progress-update-interval", "$ProgressUpdateInterval"
 )
 if ($QLoRA) { $Arguments += "--qlora" }
 if ($GradientCheckpointing) { $Arguments += "--gradient-checkpointing" }
 if ($SkipRecovery) { $Arguments += "--skip-recovery" }
 if ($KeepCandidateCheckpoints) { $Arguments += "--keep-candidate-checkpoints" }
 if ($Resume) { $Arguments += "--resume" }
+if ($DisableLiveMarkdown) { $Arguments += "--disable-live-markdown" }
 
 Write-Host ""
 Write-Host "Phase 2B resolved configuration:"
@@ -120,12 +138,16 @@ Write-Host "  Output root:     $OutputRoot"
 Write-Host "  Quality profile: $QualityProfile"
 Write-Host "  Decision:        cumulative AND incremental weight-memory gain > quality loss"
 Write-Host "  Recovery:        top-$RecoveryTopK first; exhaustive recovery only if the stage stalls"
+Write-Host "  Live progress:   $OutputRoot\LIVE_PROGRESS.json (Markdown every $ProgressUpdateInterval examples)"
 if ($Resume) { Write-Host "  Resume:          continue directly from the last accepted frontier stage" }
 
 Invoke-PythonStep "[2/2] Running every-layer and progressive structural reduction..." $Arguments
 
 Write-Host ""
 Write-Host "Phase 2B completed. Review:"
+Write-Host "  $OutputRoot\LIVE_PROGRESS.json"
+Write-Host "  $OutputRoot\LIVE_PROGRESS.md"
+Write-Host "  $OutputRoot\PARTIAL_RUN_REPORT.md"
 Write-Host "  $Report"
 Write-Host "  $GateReport"
 Write-Host "Human review remains required before downstream promotion."

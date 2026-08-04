@@ -8,6 +8,30 @@ This repository implements the ordered Phase 0–8 program plus two structural b
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
+## v1.4.6 Phase 2B incremental evidence and reporting
+
+Phase 2B no longer waits for the entire progressive sweep before producing useful evidence. Generation rows are appended and flushed after every completed benchmark example, live JSON is replaced atomically after every example, live Markdown is refreshed at a configurable interval, and every fully evaluated candidate is gated before it can participate in parent selection.
+
+The run root now contains:
+
+- `LIVE_PROGRESS.json` — machine-readable current stage, candidate, parent, counts, provisional quality, defects, and interruption/error state.
+- `LIVE_PROGRESS.md` — human-readable polling view with an explicit provisional warning while evaluation is incomplete.
+- `RUN_STATE.json` — durable orchestration/frontier state used by partial reporting.
+- `PARTIAL_RUN_REPORT.md` — cumulative accepted/rejected candidate and completed/incomplete stage history before the final report exists.
+- `evidence/stage_XX/stage_status.json` and `STAGE_XX_REPORT.md` — durable stage state and immediately available stage report.
+- `evidence/stage_XX/<candidate>/candidate_status.json` and `CANDIDATE_REPORT.md` — candidate lifecycle, gate decision, promotion permission, metrics, errors, and artifact paths.
+
+Reports can be rebuilt without loading a model:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -OutputRoot .\artifacts\<run-name> `
+  -RebuildReport `
+  -AllowPartialReport
+```
+
+The persisted promotion contract is strict: a candidate must have `status=accepted` and `promotion_allowed=true` before `progressive_reduction.py` can materialize it as the next parent. A rejected candidate cannot become the next pruning-stage parent.
+
 ## v1.4.5 fresh-message contract evaluation
 
 Quality Evaluator v4.5 rebuilds every official Phase 2B response contract from the visible system and user messages. It does not consult `category`, the reference answer, or inherited v4.1–v4.4 contracts. Categories remain reporting-only tags for benchmark coverage and regression analysis.

@@ -57,6 +57,45 @@ Direct Phase 2B command using the shared Evaluator v4.5 relative-opportunity pol
   -GradientCheckpointing
 ```
 
+The normal runner writes durable example evidence and live reports throughout the command. To refresh the human-readable view in another PowerShell window without relying on a file handle that may be replaced atomically:
+
+```powershell
+while ($true) {
+  Clear-Host
+  Get-Content .\artifacts\phase_2_progressive_reduction\LIVE_PROGRESS.md -Raw
+  Start-Sleep -Seconds 5
+}
+```
+
+Resume an interrupted run with the same experiment settings and output root:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction `
+  -MaxDrops 6 `
+  -RecoveryTopK 3 `
+  -RecoverySteps 50 `
+  -Resume
+```
+
+Rebuild candidate, stage, and partial reports without model inference:
+
+```powershell
+.\scripts\phase_2_layer_selection\run_phase_2_structural_reduction.ps1 `
+  -OutputRoot .\artifacts\phase_2_progressive_reduction `
+  -RebuildReport `
+  -AllowPartialReport
+```
+
+The direct Python equivalent is:
+
+```powershell
+python .\scripts\phase_2_layer_selection\build_phase_2b_report.py `
+  --run-root .\artifacts\phase_2_progressive_reduction `
+  --allow-partial `
+  --rebuild
+```
+
 Thorough 150-case run with isolated artifacts and reports:
 
 ```powershell
@@ -97,11 +136,48 @@ The 50-case probe detects trends and exposes score saturation; it is not a relea
 
 Every accepted frontier checkpoint is preserved. Every rejected candidate's generated outputs, metrics, manifests, and recovery adapter are preserved. Large rejected full checkpoints are deleted by default because they can consume hundreds of gigabytes across a progressive sweep and can be regenerated from the preserved parent plus the recorded layer ID. Use `-KeepCandidateCheckpoints` only when sufficient disk space is available.
 
+## Incremental artifact contract
+
+```text
+<OutputRoot>/
+├── LIVE_PROGRESS.json
+├── LIVE_PROGRESS.md
+├── RUN_STATE.json
+├── PARTIAL_RUN_REPORT.md
+├── model_catalog.json
+├── candidate_registry.json
+└── evidence/
+    └── stage_06/
+        ├── stage_status.json
+        ├── STAGE_06_REPORT.md
+        └── stage_06_drop_original_17_raw/
+            ├── candidate_status.json
+            ├── candidate_row.json
+            ├── CANDIDATE_REPORT.md
+            ├── combined_metrics.json
+            ├── progress_context.json
+            └── generation/
+                ├── evaluation_manifest.json
+                ├── evaluation_progress.json
+                ├── results.jsonl
+                └── summary.json
+```
+
+`results.jsonl` is append-only while evaluation is running. Each completed example is flushed and fsynced immediately. Resume loads valid rows, repairs only a malformed final line, deduplicates by stable benchmark `id`, and skips IDs already present. Once all examples are complete, the file is atomically rewritten into deterministic benchmark order.
+
+`LIVE_PROGRESS.json` is updated after each example. `LIVE_PROGRESS.md` defaults to every five examples and can be changed with `-ProgressUpdateInterval`; use `-DisableLiveMarkdown` when only machine-readable progress is needed. Partial metrics are explicitly provisional and never authorize promotion.
+
+Candidate states are `pending`, `preparing`, `evaluating`, `evaluation_complete`, `recovering`, `recovery_complete`, `gating`, `accepted`, `rejected`, `interrupted`, and `failed`. A gate-accepted candidate is still not the next parent until its status records `promoted=true` and a preserved frontier checkpoint path.
+
+The offline builder supports older folders containing only `results.jsonl`, `summary.json`, stage evidence, and old reports. It marks inferred legacy fields, reconstructs only what the artifacts prove, and keeps promotion disabled when no saved gate decision exists.
+
 ## Main files
 
 - `run_static_layer_study.py` — Phase 2A coarse-to-fine selected-layer tuning study.
 - `build_phase_2_human_review.py` — repairs the existing runner reference and builds the Phase 2A candidate/control review packet from raw outputs.
 - `progressive_reduction.py` — Phase 2B every-layer scan, recovery, progressive deletion, frontier selection, catalog, and reports.
+- `incremental_reporting.py` — model-free live status, candidate/stage/partial reports, legacy inference, and offline artifact reconstruction.
+- `build_phase_2b_report.py` — runnable no-inference report rebuild command.
 - `create_depth_candidate.py` — physically removes one current decoder block while preserving original layer lineage.
 - `build_structural_probe.py` — deterministic development-only 50-case probe.
 - `evaluate_teacher_forcing.py` — continuous target-NLL contrast when generated heuristic scores saturate.
@@ -123,9 +199,9 @@ Phase 2C writes its own catalog and stop gate. It preserves the Phase 2B structu
 - `full_quality` remains available even when Phase 2B is rejected.
 - `balanced` or `min_memory` may enter Phase 3 only after the Phase 2B report contains `Human decision: PASS` and explicitly lists the approved profile names.
 
-## Quality evaluator v3.1
+## Quality evaluator v4.5
 
-This phase uses Quality Evaluator `3.1` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V3_MIGRATION.md`.
+This phase uses Quality Evaluator `4.5` and the shared relative-opportunity engine. Informal or mildly ungrammatical language is permitted when understandable; references are examples rather than unique answers; and behavioral restrictions are enforced only when explicitly present in the fresh-message response contract. Promotion never depends on an absolute score, pass-rate, completion, category, NLL, or issue-count floor. The declared proportional resource benefit must be strictly greater than combined proportional quality opportunity loss. See `RELATIVE_OPPORTUNITY_EVALUATION_POLICY.md` and `EVALUATION_V4_5_MIGRATION.md`.
 
 
 ## Phase 2B continuation hotfix — direct Stage 10+ resume
