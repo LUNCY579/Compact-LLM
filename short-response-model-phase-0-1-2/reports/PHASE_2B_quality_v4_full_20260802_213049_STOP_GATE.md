@@ -16,8 +16,8 @@
 
 Review the configured probe side-by-side outputs for every accepted stage and the lowest-scoring rejected neighbors. A new frontier stage must be worthwhile both cumulatively against the full reference and incrementally against its immediate parent. When focused recovery cannot find an eligible candidate, the runner recovery-tests every remaining raw branch before declaring the frontier terminal. Human review remains required before downstream use.
 
-- Human decision: `PENDING`
-- Reviewer:
-- Date:
-- Approved profiles: `full_quality`
-- Notes:
+- Human decision: `PASS`
+- Reviewer: Cheng Li
+- Date: 2026-08-04
+- Approved profiles: `full_quality,balanced,min_memory`
+- Notes: Reviewed and approved the Stage 9 reduced frontier for Phase 2C.
