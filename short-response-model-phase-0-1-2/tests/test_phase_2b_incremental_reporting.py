@@ -157,7 +157,10 @@ class Phase2BIncrementalReportingTests(unittest.TestCase):
             )
             self.assertEqual(payload["examples_completed"], 3)
             self.assertEqual(read_json(root / "LIVE_PROGRESS.json")["current_stage"], 2)
-            self.assertIn("PROVISIONAL — 3 of 10", (root / "LIVE_PROGRESS.md").read_text())
+            self.assertIn(
+                "PROVISIONAL — 3 of 10",
+                (root / "LIVE_PROGRESS.md").read_text(encoding="utf-8"),
+            )
 
     def test_candidate_state_transitions_are_durable(self) -> None:
         with tempfile.TemporaryDirectory() as temp:

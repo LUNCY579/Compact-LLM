@@ -463,12 +463,22 @@ def update_incremental_progress(
             failure=error if status == "failed" else None,
         )
     if args.run_root is not None:
-        context = read_json(args.progress_context) if args.progress_context and args.progress_context.exists() else {}
-        markdown_due = force_markdown or len(outputs) == total or len(outputs) % max(1, args.progress_update_interval) == 0
-        write_live_progress(
-            args.run_root,
-            markdown=(not args.disable_live_markdown) and markdown_due,
-            **context,
+        context = (
+            read_json(args.progress_context)
+            if args.progress_context and args.progress_context.exists()
+            else {}
+        )
+        markdown_due = (
+            force_markdown
+            or len(outputs) == total
+            or len(outputs) % max(1, args.progress_update_interval) == 0
+        )
+
+        # Merge context and current evaluation data before expanding keyword
+        # arguments. Current evaluator state intentionally overrides stale
+        # values from progress_context.json.
+        live_updates = dict(context)
+        live_updates.update(
             examples_completed=len(outputs),
             examples_total=total,
             current_critical_count=metrics["critical_count"],
@@ -477,11 +487,19 @@ def update_incremental_progress(
             provisional_mean_quality=metrics["mean_quality_score"],
             recent_defects=metrics["recent_defects"],
             metrics_are_provisional=len(outputs) < total,
-            candidate_status=("evaluation_complete" if len(outputs) == total else candidate_state),
+            candidate_status=(
+                "evaluation_complete"
+                if len(outputs) == total
+                else candidate_state
+            ),
             most_recent_error=error,
         )
 
-
+        write_live_progress(
+            args.run_root,
+            markdown=(not args.disable_live_markdown) and markdown_due,
+            **live_updates,
+        )
 def finalize_evaluation(args: argparse.Namespace, outputs: list[dict[str, Any]], quality_config: Any) -> None:
     summary = build_evaluation_summary(outputs, args, quality_config)
     write_json(args.output_dir / "summary.json", summary)
