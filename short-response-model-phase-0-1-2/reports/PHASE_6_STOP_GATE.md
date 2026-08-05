@@ -1,23 +1,16 @@
 # PHASE 6 STOP GATE
 
-## Evidence
+## Automated Gate Status
 
-- Primary artifacts:
-- Commands/configuration:
-- Quality results:
-- Efficiency results:
-- Critical regressions:
-- Human review notes:
+`PASS_PENDING_HUMAN_REVIEW`
 
-## Risks and rollback
-
-- Remaining risks:
-- Rollback path:
-- Next allowed phase:
+- Recommended ratio for Phase 7: `0.5`
+- Opportunity margin: `0.28642847074679556`
+- Production fallback: `SPARSE_EXPERIMENT`
 
 ## Human decision
 
-- Human decision: `PENDING`
-- Reviewer:
-- Date:
-- Notes:
+- Human decision: `PASS`
+- Reviewer: Cheng Li 
+- Date: 2026-08-05
+- Notes: Approved the 0.5 active-ratio candidate for measured Phase 7 runtime testing. Phase 6 shows a positive simulated opportunity margin, but no runtime, VRAM, or production speed claim is approved until Phase 7 measurement. Dense deployment remains the rollback path.
