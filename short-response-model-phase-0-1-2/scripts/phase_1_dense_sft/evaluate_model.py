@@ -26,7 +26,15 @@ from scripts.common.response_control import (
     finalize_response,
     infer_stop_reason,
 )
-from scripts.common.experiment_utils import atomic_write_text, read_json, sha256, write_json
+from scripts.common.experiment_utils import (
+    approved_content_only_migration,
+    atomic_write_text,
+    read_json,
+    sha256,
+    write_json,
+    write_json_best_effort,
+    write_jsonl,
+)
 from scripts.common.incremental_results import DurableJsonlStore
 from scripts.common.quality_evaluation import (
     QUALITY_EVALUATION_VERSION,
@@ -273,32 +281,72 @@ def build_evaluation_summary(outputs: list[dict[str, Any]], args: argparse.Names
     
 def escape_markdown_cell(value: Any) -> str:
     """Make arbitrary text safe for a single Markdown table cell."""
+
     return str(value).replace("|", "\\|").replace("\r", " ").replace("\n", " ")
 
+
+def format_optional_number(value: Any, format_spec: str = ".3f", *, fallback: str = "N/A") -> str:
+    """Format numeric evidence without crashing when a metric is unavailable."""
+
+    if value is None:
+        return fallback
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    if not math.isfinite(number):
+        return fallback
+    return format(number, format_spec)
+
+
 def render_evaluation_report(args: argparse.Namespace, summary: dict[str, Any], outputs: list[dict[str, Any]]) -> str:
+    category_quality = summary.get("category_quality_scores") or {}
+    category_quality_pass = summary.get("category_quality_pass_rates") or {}
+    category_intelligibility = summary.get("category_intelligibility_pass_rates") or {}
+    category_observable = summary.get(
+        "category_observable_quality_pass_rates",
+        summary.get("category_semantic_pass_rates") or {},
+    ) or {}
+    category_alignment = summary.get("category_reference_alignment_scores") or {}
+    category_complete = summary.get("category_complete_utterance_rates") or {}
+    category_hard = summary.get("category_hard_failure_case_counts") or {}
+    category_major = summary.get("category_major_case_counts") or {}
     cat_rows = "\n".join(
-        f"| {category} | {score:.3f} | "
-        f"{summary['category_quality_pass_rates'][category]:.3f} | "
-        f"{summary['category_intelligibility_pass_rates'][category]:.3f} | "
-        f"{summary.get('category_observable_quality_pass_rates', summary.get('category_semantic_pass_rates', {}))[category]:.3f} | "
-        f"{summary['category_reference_alignment_scores'][category]:.3f} | "
-        f"{summary['category_complete_utterance_rates'][category]:.3f} | "
-        f"{summary['category_hard_failure_case_counts'][category]} | "
-        f"{summary['category_major_case_counts'][category]} |"
-        for category, score in summary["category_quality_scores"].items()
-    )
-    worst = sorted(outputs, key=lambda r: (r.get("quality_score", 0.0), r.get("semantic_pass", False)))[:15]
+        f"| {escape_markdown_cell(category)} | {format_optional_number(score)} | "
+        f"{format_optional_number(category_quality_pass.get(category))} | "
+        f"{format_optional_number(category_intelligibility.get(category))} | "
+        f"{format_optional_number(category_observable.get(category))} | "
+        f"{format_optional_number(category_alignment.get(category))} | "
+        f"{format_optional_number(category_complete.get(category))} | "
+        f"{category_hard.get(category, 0)} | {category_major.get(category, 0)} |"
+        for category, score in category_quality.items()
+    ) or "| None | N/A | N/A | N/A | N/A | N/A | N/A | 0 | 0 |"
+    worst = sorted(
+        outputs,
+        key=lambda row: (
+            float(row.get("quality_score") or 0.0),
+            bool(row.get("semantic_pass", row.get("quality_pass", False))),
+        ),
+    )[:15]
     worst_rows = "\n".join(
-        f"| {row['id']} | {row['category']} | {row['quality_score']:.3f} | "
-        f"{row['legacy_heuristic_score']:.3f} | {escape_markdown_cell(row['reply'])} |"
+        f"| {escape_markdown_cell(row.get('id', 'unknown'))} | "
+        f"{escape_markdown_cell(row.get('category', 'uncategorized'))} | "
+        f"{format_optional_number(row.get('quality_score'))} | "
+        f"{format_optional_number(row.get('legacy_heuristic_score'))} | "
+        f"{escape_markdown_cell(row.get('reply', ''))} |"
         for row in worst
-    )
-    flagged = [r for r in outputs if r["semantic_severity"] != "none" or r.get("review_diagnostics")]
+    ) or "| None | - | N/A | N/A | - |"
+    flagged = [
+        row
+        for row in outputs
+        if row.get("semantic_severity", "none") != "none" or row.get("review_diagnostics")
+    ]
     defect_rows = "\n".join(
-        f"| {row['id']} | {row['semantic_severity']} | "
-        f"{', '.join(row['critical_failures']) or '-'} | "
-        f"{', '.join(row['major_issues']) or '-'} | "
-        f"{', '.join(row['semantic_warnings']) or '-'} |"
+        f"| {escape_markdown_cell(row.get('id', 'unknown'))} | "
+        f"{escape_markdown_cell(row.get('semantic_severity', 'none'))} | "
+        f"{escape_markdown_cell(', '.join(map(str, row.get('critical_failures') or [])) or '-')} | "
+        f"{escape_markdown_cell(', '.join(map(str, row.get('major_issues') or [])) or '-')} | "
+        f"{escape_markdown_cell(', '.join(map(str, row.get('semantic_warnings') or row.get('review_diagnostics') or [])) or '-')} |"
         for row in flagged
     ) or "| None | none | - | - | - |"
     return f"""# MODEL EVALUATION
@@ -339,8 +387,8 @@ with reproducible labels. Human review remains required.
 | Critical failures | {summary['critical_failure_count']} |
 | Major issues | {summary['major_issue_count']} |
 | Complete-utterance rate | {summary['complete_utterance_rate']:.3f} |
-| Mean reference alignment | {summary['mean_reference_alignment_score'] if summary['mean_reference_alignment_score'] is not None else 'N/A'} |
-| Mean lexical reference token-F1 | {summary['mean_reference_token_f1'] if summary['mean_reference_token_f1'] is not None else 'N/A'} |
+| Mean reference alignment | {format_optional_number(summary.get('mean_reference_alignment_score'))} |
+| Mean lexical reference token-F1 | {format_optional_number(summary.get('mean_reference_token_f1'))} |
 
 ## Length and Runtime
 
@@ -398,21 +446,157 @@ evidence.
 """
 
 
-def evaluation_manifest(args: argparse.Namespace) -> dict[str, Any]:
+def _canonical_manifest_identifier(value: Any) -> str | None:
+    """Normalize local paths while preserving Hub/external model identifiers."""
+
+    if value is None:
+        return None
+    text = str(value)
+    candidate = Path(text)
+    resolved = candidate if candidate.is_absolute() else ROOT / candidate
+    if resolved.exists():
+        try:
+            return str(resolved.resolve()).casefold()
+        except OSError:
+            return str(resolved.absolute()).casefold()
+    return text
+
+
+def evaluation_manifest(args: argparse.Namespace, record_ids: list[str]) -> dict[str, Any]:
+    ids_digest = hashlib.sha256("\n".join(record_ids).encode("utf-8")).hexdigest()
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "model_id": str(args.model_id),
         "adapter_path": str(args.adapter_path) if args.adapter_path else None,
         "benchmark": str(args.benchmark.resolve()),
         "benchmark_sha256": sha256(args.benchmark),
         "quality_config_sha256": sha256(args.quality_config),
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+        "evaluator_script_sha256": sha256(Path(__file__)),
+        "quality_evaluation_script_sha256": sha256(ROOT / "scripts/common/quality_evaluation.py"),
+        "requested_limit": args.limit,
+        "case_count": len(record_ids),
+        "record_ids_sha256": ids_digest,
         "max_new_tokens": int(args.max_new_tokens),
         "response_control": args.response_control,
         "min_new_tokens_before_boundary": int(args.min_new_tokens_before_boundary),
         "do_sample": bool(args.do_sample),
+        "temperature": float(args.temperature) if args.do_sample else None,
+        "top_p": float(args.top_p) if args.do_sample else None,
         "system_prompt": args.system_prompt,
     }
+
+
+def evaluation_manifest_mismatches(
+    existing: dict[str, Any], requested: dict[str, Any]
+) -> list[str]:
+    """Compare manifests while accepting path spelling and legacy schema fields."""
+
+    path_fields = {"model_id", "adapter_path", "benchmark"}
+    optional_legacy_fields = {
+        "requested_limit",
+        "case_count",
+        "record_ids_sha256",
+        "temperature",
+        "top_p",
+        "evaluator_script_sha256",
+        "quality_evaluation_script_sha256",
+    }
+    mismatches: list[str] = []
+    for key, requested_value in requested.items():
+        if key == "schema_version":
+            continue
+        if key not in existing:
+            if key in optional_legacy_fields:
+                continue
+            mismatches.append(f"{key}: missing from existing manifest")
+            continue
+        existing_value = existing.get(key)
+        if key in path_fields:
+            equal = _canonical_manifest_identifier(existing_value) == _canonical_manifest_identifier(
+                requested_value
+            )
+        else:
+            equal = existing_value == requested_value
+        if not equal:
+            mismatches.append(
+                f"{key}: existing={existing_value!r}, requested={requested_value!r}"
+            )
+    return mismatches
+
+
+def rescore_migrated_rows(
+    *,
+    records: list[dict[str, Any]],
+    store: DurableJsonlStore,
+    quality_config: Any,
+    corpus_profile: dict[str, Any],
+    migration: dict[str, Any],
+    output_dir: Path,
+) -> list[dict[str, Any]]:
+    """Rescore durable replies after an approved contract-only data migration."""
+
+    records_by_id = {str(record["id"]): record for record in records}
+    rescored: list[dict[str, Any]] = []
+    for stable_id, row in store.rows_by_id.items():
+        record = records_by_id.get(stable_id)
+        if record is None:
+            raise RuntimeError(f"Contract migration cannot map existing result ID {stable_id!r}.")
+        if row.get("messages") != record.get("messages"):
+            raise RuntimeError(
+                f"Contract migration rejected: generation messages changed for {stable_id!r}."
+            )
+        if row.get("reference") != record.get("reference"):
+            raise RuntimeError(
+                f"Contract migration rejected: assistant target/reference changed for {stable_id!r}."
+            )
+        visible_tokens = row.get("visible_generated_tokens")
+        try:
+            visible_tokens = int(visible_tokens)
+        except (TypeError, ValueError) as exc:
+            raise RuntimeError(
+                f"Contract migration cannot rescore {stable_id!r}: visible token count is missing."
+            ) from exc
+        reply = str(row.get("reply", ""))
+        quality = evaluate_response(
+            record,
+            reply,
+            visible_tokens,
+            visible_model_tokens=visible_tokens,
+            config=quality_config,
+            corpus_profile=corpus_profile,
+        )
+        updated = dict(row)
+        updated.update(
+            category=record.get("category", "uncategorized"),
+            messages=record.get("messages") or [],
+            reference=record.get("reference"),
+            reference_token_f1=reference_token_f1(record.get("reference"), reply),
+        )
+        updated.update(quality)
+        rescored.append(updated)
+
+    ordered_ids = [str(record["id"]) for record in records]
+    rescored_by_id = {str(row["id"]): row for row in rescored}
+    ordered = [rescored_by_id[stable_id] for stable_id in ordered_ids if stable_id in rescored_by_id]
+    write_jsonl(store.path, ordered)
+    store.rows_by_id = rescored_by_id
+    write_json(
+        output_dir / "QUALITY_CONTRACT_MIGRATION.json",
+        {
+            "schema_version": 1,
+            "migration_type": "approved_contract_only_dataset_migration",
+            "previous_benchmark_sha256": migration["previous_sha256"],
+            "current_benchmark_sha256": migration["current_sha256"],
+            "dataset_manifest": migration["manifest_path"],
+            "stable_ids_messages_targets_unchanged": True,
+            "rescored_existing_case_count": len(ordered),
+            "generation_was_not_repeated": True,
+            "migrated_at_unix": time.time(),
+        },
+    )
+    print(f"[quality contract migration] rescored {len(ordered)} durable replies under current contracts")
+    return ordered
 
 
 def update_incremental_progress(
@@ -448,20 +632,32 @@ def update_incremental_progress(
         "last_error": error,
         "last_update_time": time.time(),
     }
-    write_json(args.output_dir / "evaluation_progress.json", progress)
+    write_json_best_effort(
+        args.output_dir / "evaluation_progress.json",
+        progress,
+        label="evaluation progress",
+    )
     if args.candidate_status is not None:
-        transition_candidate_status(
-            args.candidate_status,
-            candidate_state,
-            examples_completed=len(outputs),
-            examples_total=total,
-            critical_defects=metrics["critical_count"],
-            major_defect_count=metrics["major_count"],
-            warning_count=metrics["warning_count"],
-            quality_metrics={"mean_quality_score": metrics["mean_quality_score"]},
-            interruption=error if status == "interrupted" else None,
-            failure=error if status == "failed" else None,
-        )
+        try:
+            transition_candidate_status(
+                args.candidate_status,
+                candidate_state,
+                examples_completed=len(outputs),
+                examples_total=total,
+                critical_defects=metrics["critical_count"],
+                major_defect_count=metrics["major_count"],
+                warning_count=metrics["warning_count"],
+                quality_metrics={"mean_quality_score": metrics["mean_quality_score"]},
+                interruption=error if status == "interrupted" else None,
+                failure=error if status == "failed" else None,
+            )
+        except OSError as exc:
+            print(
+                f"[warning] unable to update candidate status {args.candidate_status}: "
+                f"{type(exc).__name__}: {exc}",
+                file=sys.stderr,
+                flush=True,
+            )
     if args.run_root is not None:
         context = (
             read_json(args.progress_context)
@@ -495,11 +691,21 @@ def update_incremental_progress(
             most_recent_error=error,
         )
 
-        write_live_progress(
-            args.run_root,
-            markdown=(not args.disable_live_markdown) and markdown_due,
-            **live_updates,
-        )
+        try:
+            write_live_progress(
+                args.run_root,
+                markdown=(not args.disable_live_markdown) and markdown_due,
+                **live_updates,
+            )
+        except OSError as exc:
+            print(
+                f"[warning] unable to update live progress under {args.run_root}: "
+                f"{type(exc).__name__}: {exc}",
+                file=sys.stderr,
+                flush=True,
+            )
+
+
 def finalize_evaluation(args: argparse.Namespace, outputs: list[dict[str, Any]], quality_config: Any) -> None:
     summary = build_evaluation_summary(outputs, args, quality_config)
     write_json(args.output_dir / "summary.json", summary)
@@ -521,20 +727,44 @@ def main() -> None:
     records = [normalize_benchmark_record(row) for row in read_jsonl(args.benchmark)]
     if args.limit is not None:
         records = records[: args.limit]
+    if not records:
+        raise ValueError("The selected benchmark slice contains no evaluation records.")
     record_ids = [str(record["id"]) for record in records]
     if len(record_ids) != len(set(record_ids)):
         raise ValueError("Benchmark contains duplicate stable example IDs.")
     corpus_profile = build_corpus_profile(records)
 
     manifest_path = args.output_dir / "evaluation_manifest.json"
-    expected_manifest = evaluation_manifest(args)
+    expected_manifest = evaluation_manifest(args, record_ids)
+    contract_migration: dict[str, Any] | None = None
     if args.resume and manifest_path.exists():
         existing_manifest = read_json(manifest_path)
-        if existing_manifest != expected_manifest:
-            raise RuntimeError("Evaluation artifacts are incompatible with the requested model, benchmark, or policy.")
+        mismatches = evaluation_manifest_mismatches(existing_manifest, expected_manifest)
+        if mismatches:
+            migration = approved_content_only_migration(
+                args.benchmark,
+                previous_sha256=existing_manifest.get("benchmark_sha256"),
+                current_sha256=expected_manifest.get("benchmark_sha256"),
+            )
+            remaining = [item for item in mismatches if not item.startswith("benchmark_sha256:")]
+            if migration is not None and not remaining:
+                contract_migration = migration
+                print(
+                    "[approved benchmark migration] generation inputs are unchanged; "
+                    "durable replies will be rescored under the new explicit contracts"
+                )
+            else:
+                detail = "\n  - ".join(mismatches)
+                raise RuntimeError(
+                    "Evaluation artifacts are incompatible with the requested model, benchmark, or policy.\n  - "
+                    + detail
+                )
     elif args.resume and (args.output_dir / "results.jsonl").exists():
-        print("[resume warning] Legacy results have no evaluation manifest; stable IDs will be validated.")
-    write_json(manifest_path, expected_manifest)
+        raise RuntimeError(
+            "Existing generation rows have no evaluation manifest and cannot be reused safely. "
+            "Preserve them for manual review, but start a new output directory or use a versioned "
+            "migration utility that can prove the model, adapter, benchmark, and policy provenance."
+        )
 
     store = DurableJsonlStore.open(args.output_dir / "results.jsonl", resume=args.resume)
     unknown_ids = sorted(set(store.rows_by_id) - set(record_ids))
@@ -542,6 +772,16 @@ def main() -> None:
         raise RuntimeError(f"Existing results contain IDs not present in this benchmark: {unknown_ids[:8]}")
     for warning in store.recovery_warnings:
         print(f"[jsonl recovery] {warning}")
+    if contract_migration is not None:
+        rescore_migrated_rows(
+            records=records,
+            store=store,
+            quality_config=quality_config,
+            corpus_profile=corpus_profile,
+            migration=contract_migration,
+            output_dir=args.output_dir,
+        )
+    write_json(manifest_path, expected_manifest)
     outputs = store.rows_in_order(record_ids)
     update_incremental_progress(args, outputs, total=len(records), status="running", force_markdown=True)
 

@@ -1018,6 +1018,8 @@ def evaluate_variant(
     ]
     if adapter_path is not None:
         nll_cmd += ["--adapter-path", str(adapter_path)]
+    if args.resume:
+        nll_cmd.append("--resume")
     run_if_needed(nll_cmd, nll_dir / "summary.json", args.resume)
 
     run_if_needed(

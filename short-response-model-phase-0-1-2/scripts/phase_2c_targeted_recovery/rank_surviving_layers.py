@@ -122,7 +122,7 @@ def structural_signals(registry_path: Path | None, original_ids: list[int]) -> d
         # dimensions through the central opportunity engine. Reuse that single
         # proportional damage signal rather than rebuilding an independent set
         # of absolute or ad-hoc semantic/category gates here. The fallback keeps
-        # old registries readable until they are rescored under Evaluator v3.
+        # old registries readable until they are rescored under the current evaluator.
         score = float(
             assessment.get(
                 "quality_opportunity_loss_fraction",
@@ -155,6 +155,15 @@ def main() -> None:
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
     args = parse_args()
+    if args.limit <= 0:
+        raise ValueError("--limit must be positive")
+    if args.max_sequence_length <= 1:
+        raise ValueError("--max-sequence-length must be greater than 1")
+    weights = (args.gradient_weight, args.ablation_weight, args.structural_weight)
+    if any(not math.isfinite(value) or value < 0.0 for value in weights):
+        raise ValueError("importance weights must be finite and non-negative")
+    if sum(weights) <= 0.0:
+        raise ValueError("at least one importance weight must be positive")
     if args.require_cuda and not torch.cuda.is_available():
         raise RuntimeError("CUDA is unavailable and --require-cuda was requested.")
     rows = read_jsonl(args.calibration_file)[: args.limit]

@@ -8,6 +8,7 @@ JSONL recovery, reproducible hashing, environment capture, and checked
 subprocess execution so individual phase scripts do not silently drift.
 """
 
+import errno
 import hashlib
 import json
 import os
@@ -15,9 +16,153 @@ import platform
 import re
 import subprocess
 import sys
+import time
 import uuid
 from pathlib import Path
 from typing import Any, Iterable
+
+
+def _env_int(name: str, default: int, *, minimum: int) -> int:
+    try:
+        return max(minimum, int(os.environ.get(name, str(default))))
+    except (TypeError, ValueError):
+        return default
+
+
+def _env_float(name: str, default: float, *, minimum: float) -> float:
+    try:
+        return max(minimum, float(os.environ.get(name, str(default))))
+    except (TypeError, ValueError):
+        return default
+
+
+_ATOMIC_REPLACE_ATTEMPTS = _env_int("SRM_ATOMIC_REPLACE_ATTEMPTS", 60, minimum=1)
+_ATOMIC_REPLACE_INITIAL_DELAY = _env_float("SRM_ATOMIC_REPLACE_INITIAL_DELAY", 0.05, minimum=0.0)
+_ATOMIC_REPLACE_MAX_DELAY = _env_float("SRM_ATOMIC_REPLACE_MAX_DELAY", 0.50, minimum=0.0)
+
+
+def _is_retryable_replace_error(exc: OSError) -> bool:
+    """Return whether a failed atomic replacement may be a transient file lock.
+
+    Windows Defender, Explorer preview handlers, editors, and sync/indexing tools
+    can briefly hold a destination open.  WinError 5/32/33 are the common
+    access/sharing/lock violations.  EACCES/EPERM/EBUSY cover equivalent
+    transient behavior exposed through portable ``errno`` values.
+    """
+
+    winerror = getattr(exc, "winerror", None)
+    return isinstance(exc, PermissionError) or winerror in {5, 32, 33} or exc.errno in {
+        errno.EACCES,
+        errno.EPERM,
+        errno.EBUSY,
+    }
+
+
+def _replace_with_retry(source: Path, destination: Path) -> None:
+    """Atomically replace *destination*, retrying transient Windows locks.
+
+    The source and destination must be on the same volume.  Non-transient
+    failures are raised immediately; a persistent lock is raised after a bounded
+    wait rather than silently falling back to a non-atomic write.
+    """
+
+    delay = _ATOMIC_REPLACE_INITIAL_DELAY
+    for attempt in range(_ATOMIC_REPLACE_ATTEMPTS):
+        try:
+            os.replace(source, destination)
+            return
+        except OSError as exc:
+            if not _is_retryable_replace_error(exc) or attempt + 1 >= _ATOMIC_REPLACE_ATTEMPTS:
+                raise
+            if delay > 0:
+                time.sleep(delay)
+            delay = min(_ATOMIC_REPLACE_MAX_DELAY, max(delay * 1.35, _ATOMIC_REPLACE_INITIAL_DELAY))
+
+
+def replace_path_with_retry(source: Path, destination: Path) -> None:
+    """Public wrapper for atomic file or directory replacement with retries."""
+
+    _replace_with_retry(source, destination)
+
+
+
+
+
+def _id_messages_sha256_for_jsonl(path: Path) -> str:
+    """Hash stable IDs and complete message arrays for migration verification."""
+
+    digest = hashlib.sha256()
+    with path.open("r", encoding="utf-8") as handle:
+        for line_number, line in enumerate(handle, 1):
+            if not line.strip():
+                continue
+            value = json.loads(line)
+            if not isinstance(value, dict):
+                raise ValueError(f"{path}:{line_number}: dataset row is not an object")
+            if value.get("id") is None or not isinstance(value.get("messages"), list):
+                raise ValueError(f"{path}:{line_number}: dataset row lacks id/messages")
+            payload = {"id": value.get("id"), "messages": value.get("messages")}
+            digest.update(
+                json.dumps(
+                    payload,
+                    ensure_ascii=False,
+                    sort_keys=True,
+                    separators=(",", ":"),
+                ).encode("utf-8")
+            )
+            digest.update(b"\n")
+    return digest.hexdigest()
+
+def approved_content_only_migration(
+    data_path: Path,
+    *,
+    previous_sha256: str | None,
+    current_sha256: str | None = None,
+) -> dict[str, Any] | None:
+    """Return a verified dataset migration that preserves IDs/messages/targets.
+
+    A sibling ``dataset_manifest.json`` may explicitly authorize a prior file
+    hash as content-equivalent for model execution while adding or correcting
+    evaluation-only response contracts. This never accepts an arbitrary hash:
+    the current file hash, predecessor hash, filename, and unchanged semantic
+    digest declaration must all match the versioned manifest.
+    """
+
+    if not previous_sha256 or not data_path.exists() or not data_path.is_file():
+        return None
+    current_sha256 = current_sha256 or sha256(data_path)
+    manifest_path = data_path.parent / "dataset_manifest.json"
+    if not manifest_path.exists():
+        return None
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return None
+    migrations = manifest.get("content_only_migrations") or {}
+    entry = migrations.get(data_path.name)
+    if not isinstance(entry, dict):
+        return None
+    predecessors = {str(value) for value in (entry.get("compatible_predecessor_sha256") or [])}
+    if str(previous_sha256) not in predecessors:
+        return None
+    if str(entry.get("current_sha256")) != str(current_sha256):
+        return None
+    if not entry.get("stable_ids_messages_targets_unchanged"):
+        return None
+    semantic_digest = entry.get("id_messages_sha256")
+    if not isinstance(semantic_digest, str) or not semantic_digest:
+        return None
+    try:
+        if _id_messages_sha256_for_jsonl(data_path) != semantic_digest:
+            return None
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError, ValueError, TypeError):
+        return None
+    return {
+        **entry,
+        "manifest_path": str(manifest_path),
+        "previous_sha256": str(previous_sha256),
+        "current_sha256": str(current_sha256),
+    }
 
 
 def read_json(path: Path) -> Any:
@@ -113,7 +258,7 @@ def recover_atomic_write(path: Path, *, validator: str | None = None) -> bool:
         try:
             data = candidate.read_bytes()
             _validate_recovery_bytes(data, validator)
-            os.replace(candidate, path)
+            _replace_with_retry(candidate, path)
             for stale in candidates:
                 if stale == candidate or _temporary_writer_is_alive(stale):
                     continue
@@ -146,7 +291,7 @@ def atomic_write_bytes(path: Path, data: bytes) -> None:
             handle.write(data)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temporary, path)
+        _replace_with_retry(temporary, path)
     finally:
         try:
             temporary.unlink(missing_ok=True)
@@ -164,6 +309,27 @@ def write_json(path: Path, obj: Any) -> None:
     """Atomically write stable, human-readable UTF-8 JSON."""
 
     atomic_write_text(path, json.dumps(obj, indent=2, ensure_ascii=False) + "\n")
+
+
+def write_json_best_effort(path: Path, obj: Any, *, label: str = "progress") -> bool:
+    """Write non-authoritative JSON without letting a sidecar lock abort work.
+
+    Durable scientific evidence must continue to use :func:`write_json`.  This
+    helper is only for reconstructible progress/status sidecars whose failure
+    should be reported but must not discard an already completed model result.
+    """
+
+    try:
+        write_json(path, obj)
+        return True
+    except OSError as exc:
+        print(
+            f"[warning] unable to update {label} file {path}: "
+            f"{type(exc).__name__}: {exc}",
+            file=sys.stderr,
+            flush=True,
+        )
+        return False
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:

@@ -18,6 +18,7 @@ from scripts.phase_2c_targeted_recovery.phase2c_common import (
     select_profiles,
 )
 from scripts.phase_2c_targeted_recovery.resolve_phase_2c_profile import resolve_profile
+from scripts.common.quality_evaluation import build_corpus_profile, evaluate_response, load_quality_config
 
 
 class Phase2CTargetedRecoveryTests(unittest.TestCase):
@@ -28,6 +29,61 @@ class Phase2CTargetedRecoveryTests(unittest.TestCase):
         self.assertGreaterEqual(len(dev), 50)
         self.assertFalse({prompt_target_key(row) for row in train} & {prompt_target_key(row) for row in dev})
         self.assertTrue(all(row["messages"][-1]["role"] == "assistant" for row in train + dev))
+
+    def test_generated_reasoning_rows_have_strict_correctness_contracts(self) -> None:
+        rows = generated_rows("p2c_dev", train=False)
+        self.assertTrue(rows)
+        for row in rows:
+            contract = row.get("response_contract") or {}
+            self.assertFalse(contract.get("open_ended", True), row["id"])
+            self.assertTrue(contract.get("requirements") or contract.get("question_required"), row["id"])
+
+    def test_every_generated_objective_target_satisfies_its_contract(self) -> None:
+        rows = [
+            *generated_rows("p2c_train", train=True),
+            *generated_rows("p2c_dev", train=False),
+        ]
+        config = load_quality_config()
+        profile = build_corpus_profile(rows)
+        failures = []
+        for row in rows:
+            target = row["messages"][-1]["content"]
+            visible_tokens = max(1, len(target.split()))
+            result = evaluate_response(
+                row,
+                target,
+                visible_tokens,
+                visible_model_tokens=visible_tokens,
+                config=config,
+                corpus_profile=profile,
+            )
+            if result["quality_score"] < 0.95 or result["critical_failures"] or result["major_issues"]:
+                failures.append((row["id"], result))
+        self.assertEqual(failures, [])
+
+    def test_arithmetic_contract_rejects_fluent_wrong_answer(self) -> None:
+        row = next(
+            item for item in generated_rows("p2c_dev", train=False)
+            if item["id"] == "p2c_dev_arithmetic_03"
+        )
+        correct = evaluate_response(row, "18 clips remain.", 3)
+        wrong = evaluate_response(row, "I need a full tray first.", 6)
+        numeric_wrong = evaluate_response(row, "20 clips remain.", 3)
+        self.assertGreater(correct["quality_score"], 0.95)
+        self.assertLess(wrong["quality_score"], 0.50)
+        self.assertLess(numeric_wrong["quality_score"], 0.50)
+        self.assertIn("explicit_required_content_missing", wrong["major_issues"])
+
+    def test_logic_contract_rejects_wrong_named_answer(self) -> None:
+        row = next(
+            item for item in generated_rows("p2c_dev", train=False)
+            if item["id"] == "p2c_dev_comparison_02"
+        )
+        correct = evaluate_response(row, "Vera is shortest.", 3)
+        wrong = evaluate_response(row, "Uma is shorter than Uma.", 5)
+        self.assertGreater(correct["quality_score"], 0.95)
+        self.assertLess(wrong["quality_score"], 0.30)
+        self.assertIn("explicit_forbidden_content_present", wrong["major_issues"])
 
     def test_limited_dev_prefix_contains_original_and_phase2c_cases(self) -> None:
         base = [{"id": f"base_{index}"} for index in range(100)]

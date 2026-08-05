@@ -1,5 +1,13 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.4.7 Phase 2C reliability and correctness hotfix
+
+v1.4.7 fixes the repeated Windows file-lock failures and closes a Phase 2C evaluation-validity gap. Phase 2C deterministic reasoning rows now carry explicit prompt-grounded correctness contracts, so fluent but wrong arithmetic, ordering, comparison, implication, contradiction, set-membership, and temporal answers cannot receive high scores merely for being short and well formed.
+
+Existing v1.4.6 Phase 2C work is preserved through a narrowly authorized migration: completed adapters and raw generated replies are reused, replies are rescored under the corrected contracts, teacher-forced NLL rows are reused, partial evaluations continue by stable ID, and affected output comparisons are rebuilt. Run the original Phase 2C wrapper with identical settings plus `-Resume`; do not delete the current artifact root or run child evaluators manually.
+
+Reliability hardening also includes bounded atomic-replace retries for transient Windows locks, best-effort progress sidecars, resumable generation and teacher forcing, normalized manifest paths, strict stable-ID coverage, corrupt-sentinel quarantine, safer staged adapter publication, default suppression of intermediate checkpoints, free-disk checks, stronger Phase 2C artifact/gate audits, and `None`-safe report rendering. See `PHASE_2C_RELIABILITY_AND_CORRECTNESS_HOTFIX_v1.4.7.md`.
+
 This repository implements the ordered Phase 0–8 program plus two structural branches and one targeted-recovery branch:
 
 - **Phase 2B progressive reduction** tests every current layer, recovery-tunes promising deletions, and preserves full-quality/balanced/minimum-memory model profiles before DPO.

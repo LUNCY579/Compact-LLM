@@ -1,0 +1,133 @@
+{
+  "hotfix": "v1.4.7_Phase2C_Reliability_and_Correctness",
+  "base_repository": "Output(6).zip / v1.4.6 Incremental Reporting",
+  "base_zip_sha256": "b8d53ed7f5c82d17405a51e88f1f88375338be6c9dd924be2f63d094056c48f1",
+  "contains_artifacts": false,
+  "installation": "Extract over the existing repository root while preserving artifacts, then rerun the original Phase 2C command with -Resume.",
+  "files": [
+    {
+      "path": "CHANGED_FILES_v1.4.7.md",
+      "size_bytes": 3748,
+      "sha256": "d580f7867ed20486c3c62a54f08387af7e9f8bbff9f4e0b1f972a7a6d901cb79"
+    },
+    {
+      "path": "PHASE_2C_RELIABILITY_AND_CORRECTNESS_HOTFIX_v1.4.7.md",
+      "size_bytes": 5173,
+      "sha256": "eeaab477bebc23d67b274aa048dc9e8c3c2bd83055f5556fc7f45a5831e0a346"
+    },
+    {
+      "path": "README.md",
+      "size_bytes": 9173,
+      "sha256": "f6cd5aca12c2d4c94884024551022b3b857bf138c108c56481f28bfc5d0b17cf"
+    },
+    {
+      "path": "RELEASE_VERIFICATION_v1.4.7.md",
+      "size_bytes": 2312,
+      "sha256": "957072beb0eac7fcd60801ca50a667f618eb1618a48c0e65f320ec218782d885"
+    },
+    {
+      "path": "data/phase_2c_targeted_recovery/dataset_manifest.json",
+      "size_bytes": 2844,
+      "sha256": "26ef1b6c4994280141bf614c83a0776ef3fe468a489ef4f6c4799965f59324a7"
+    },
+    {
+      "path": "data/phase_2c_targeted_recovery/dev.jsonl",
+      "size_bytes": 813550,
+      "sha256": "de33b0411cb41a69977f13f39b68931feec983c6c68885d71224ec34e1d41ccf"
+    },
+    {
+      "path": "data/phase_2c_targeted_recovery/train.jsonl",
+      "size_bytes": 4396048,
+      "sha256": "65072c78c58d19ab69ba36839afa07202ee7ecbf90270bf8fb440f8c97f29601"
+    },
+    {
+      "path": "scripts/common/experiment_utils.py",
+      "size_bytes": 16844,
+      "sha256": "a50830bee1c6e5a252c6499a10e738e49bdf7a5fad2cd6cb029c554c461246aa"
+    },
+    {
+      "path": "scripts/phase_1_dense_sft/evaluate_model.py",
+      "size_bytes": 38921,
+      "sha256": "d5251d82ba6f4940ff7b116d3795979e548b231df838543ed0f96c1f4faf4a5d"
+    },
+    {
+      "path": "scripts/phase_1_dense_sft/train_dense_sft.py",
+      "size_bytes": 23320,
+      "sha256": "711a3b760d7f1899264bbad89f885cc499d737edd229e677c23cc024968fab56"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/compare_outputs.py",
+      "size_bytes": 7674,
+      "sha256": "291c1f52b8312739b146f41cca97fe3f060cd7b6b415d98ccc0c99f7c2c8df0c"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/evaluate_teacher_forcing.py",
+      "size_bytes": 15574,
+      "sha256": "d80ffb8cb0d4e5a64e994f5562630c12c744c35b9cd295fd439c475a1dd1aa04"
+    },
+    {
+      "path": "scripts/phase_2_layer_selection/progressive_reduction.py",
+      "size_bytes": 109109,
+      "sha256": "3ad2e3c7fa1341209b5d2e5676be782ac875d6f25a6ccc6d8fbd3221e91eedec"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/EXECUTION_MANUAL.md",
+      "size_bytes": 8378,
+      "sha256": "74a5965bb4f19be52b1a19198d688c7f001fc746750f3b1cb65f0ca457e3c08a"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/README.md",
+      "size_bytes": 6426,
+      "sha256": "b47ea79a8f2d06de036556662c4ffb3f0de9808cc650b4f9adfaaf46ad7887e6"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/audit_phase_2c_artifacts.py",
+      "size_bytes": 12767,
+      "sha256": "38d9d5695991a234e3d28d2d88bd1c8ce98cce9d62cee1453f0153e8fa838f64"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/build_phase_2c_dataset.py",
+      "size_bytes": 23420,
+      "sha256": "c5d4370941c9842532df1320b259318e595b685a195242ac2b9400018b34b7cb"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/check_phase_2c_gate.py",
+      "size_bytes": 5661,
+      "sha256": "f2d5442a2fa81032ebd60025733722911a2544b5bab8567a186fc095460db75c"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/rank_surviving_layers.py",
+      "size_bytes": 13084,
+      "sha256": "03fba518385f181fa1aaa27957317d31fbe8dd342945f2ef7b97aeed8d413e81"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/run_phase_2c.ps1",
+      "size_bytes": 5074,
+      "sha256": "118ee0865d852c7874cad407cf552fcb1cbde30a0b34f49e43cbb6ef7014ba14"
+    },
+    {
+      "path": "scripts/phase_2c_targeted_recovery/targeted_recovery.py",
+      "size_bytes": 42201,
+      "sha256": "472ee1aeb10c5337243872354f16e29843500e8e2b6405ef14a7d281cb506d65"
+    },
+    {
+      "path": "tests/test_phase_2c_targeted_recovery.py",
+      "size_bytes": 11166,
+      "sha256": "1aa98facf5b7a1ae9da8e7e3896be64bbcdc34ccb266601d2db4928141a5dc8e"
+    },
+    {
+      "path": "tests/test_reliability_v147.py",
+      "size_bytes": 21659,
+      "sha256": "7ceeaf35f56401b1e140b615e8ea881b7dc734faaaa79af65c8099f01e89f944"
+    }
+  ],
+  "verification": {
+    "python_compileall": "passed",
+    "full_pytest_suite": "132 passed",
+    "quality_evaluator_v4_5": "639/639 passed; 31 categories; 63 labels; 150/150 real collapses",
+    "relative_opportunity_policy_audit": "passed",
+    "phase2c_dataset_build_and_reuse": "passed",
+    "package_validation": "full extraction and hotfix-over-v1.4.6 extraction both tested"
+  },
+  "evidence_boundary": "No GPU candidate was trained in the packaging environment; existing Phase 2C artifacts are migrated/rescored on the user machine during identical -Resume execution."
+}

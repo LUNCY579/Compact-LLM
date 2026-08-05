@@ -2,7 +2,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 import random
+import re
+import shutil
+import sys
+import uuid
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -23,6 +28,10 @@ from transformers import (
 # Default base checkpoint for the first dense-inference SFT reference.
 DEFAULT_MODEL_ID = "Qwen/Qwen3-0.6B"
 ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
+from scripts.common.experiment_utils import atomic_write_text, replace_path_with_retry
 # LoRA may be attached to attention projections (q/k/v/o) and gated-MLP
 # projections (gate/up/down), matching the project's initial experiment.
 ATTENTION_TARGET_SUFFIXES = ("q_proj", "k_proj", "v_proj", "o_proj")
@@ -72,6 +81,23 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--logging-steps", type=int, default=5)
     p.add_argument("--save-steps", type=int, default=100)
     p.add_argument("--eval-steps", type=int, default=100)
+    p.add_argument(
+        "--disable-intermediate-checkpoints",
+        action="store_true",
+        help="Do not write Trainer checkpoint-* directories; the final adapter is still saved.",
+    )
+    p.add_argument(
+        "--save-total-limit",
+        type=int,
+        default=1,
+        help="Maximum retained Trainer checkpoints when intermediate saving is enabled.",
+    )
+    p.add_argument(
+        "--minimum-free-disk-gb",
+        type=float,
+        default=0.0,
+        help="Fail before training when less free disk space is available under the output volume.",
+    )
     p.add_argument("--seed", type=int, default=11)
     p.add_argument("--gradient-checkpointing", action="store_true")
     p.add_argument(
@@ -158,6 +184,18 @@ def discover_target_modules(
             if not any(f".layers.{layer_id}." in wrapped for layer_id in selected_layers):
                 continue
         targets.append(name)
+    if selected_layers is not None:
+        matched_layers: set[int] = set()
+        for name in targets:
+            match = re.search(r"(?:^|\.)layers\.(\d+)(?:\.|$)", name)
+            if match is not None:
+                matched_layers.add(int(match.group(1)))
+        missing = sorted(set(selected_layers) - matched_layers)
+        if missing:
+            raise ValueError(
+                "Requested selected layers have no matching LoRA projection modules: "
+                f"{missing}. Available/matched layer IDs: {sorted(matched_layers)}"
+            )
     if not targets:
         raise RuntimeError(
             "No LoRA target modules were found. Inspect model.named_modules() and "
@@ -165,6 +203,104 @@ def discover_target_modules(
         )
     return targets
 
+
+
+
+def apply_chat_template(
+    tokenizer: Any,
+    messages: list[dict[str, Any]],
+    *,
+    add_generation_prompt: bool,
+) -> str:
+    """Render Qwen and generic chat templates without assuming thinking support."""
+
+    kwargs = {
+        "tokenize": False,
+        "add_generation_prompt": add_generation_prompt,
+    }
+    try:
+        return tokenizer.apply_chat_template(messages, enable_thinking=False, **kwargs)
+    except TypeError:
+        return tokenizer.apply_chat_template(messages, **kwargs)
+
+
+def validate_adapter_directory(path: Path) -> None:
+    """Reject incomplete adapter serialization before publishing it as final."""
+
+    config = path / "adapter_config.json"
+    weights = [path / "adapter_model.safetensors", path / "adapter_model.bin"]
+    if not config.exists():
+        raise RuntimeError(f"Adapter save is incomplete; missing {config}")
+    if not any(candidate.exists() and candidate.stat().st_size > 0 for candidate in weights):
+        raise RuntimeError(
+            f"Adapter save is incomplete; no non-empty adapter_model.safetensors/bin exists under {path}"
+        )
+
+
+def publish_adapter_directory(staging_dir: Path, adapter_dir: Path) -> None:
+    """Publish a validated adapter without discarding an older valid adapter.
+
+    Windows cannot atomically replace a non-empty directory in place. Move an
+    existing adapter to a sibling backup first, publish the staging directory,
+    and restore the backup if publication fails.
+    """
+
+    backup_dir = adapter_dir.with_name(f".{adapter_dir.name}.backup-{os.getpid()}-{uuid.uuid4().hex}")
+    moved_existing = False
+    try:
+        if adapter_dir.exists():
+            replace_path_with_retry(adapter_dir, backup_dir)
+            moved_existing = True
+        replace_path_with_retry(staging_dir, adapter_dir)
+    except BaseException:
+        if moved_existing and backup_dir.exists() and not adapter_dir.exists():
+            replace_path_with_retry(backup_dir, adapter_dir)
+        raise
+    finally:
+        if backup_dir.exists():
+            shutil.rmtree(backup_dir, ignore_errors=True)
+
+
+def validate_args(args: argparse.Namespace) -> None:
+    positive = {
+        "--lora-rank": args.lora_rank,
+        "--lora-alpha": args.lora_alpha,
+        "--per-device-batch-size": args.per_device_batch_size,
+        "--gradient-accumulation-steps": args.gradient_accumulation_steps,
+        "--max-sequence-length": args.max_sequence_length,
+        "--logging-steps": args.logging_steps,
+        "--save-steps": args.save_steps,
+        "--eval-steps": args.eval_steps,
+        "--save-total-limit": args.save_total_limit,
+    }
+    for name, value in positive.items():
+        if int(value) <= 0:
+            raise ValueError(f"{name} must be positive; received {value!r}")
+    if args.max_steps == 0 or args.max_steps < -1:
+        raise ValueError("--max-steps must be -1 or a positive integer")
+    if args.epochs <= 0:
+        raise ValueError("--epochs must be positive")
+    if args.learning_rate <= 0:
+        raise ValueError("--learning-rate must be positive")
+    if not 0.0 <= args.lora_dropout < 1.0:
+        raise ValueError("--lora-dropout must be in [0, 1)")
+    if not 0.0 <= args.warmup_ratio <= 1.0:
+        raise ValueError("--warmup-ratio must be in [0, 1]")
+    if args.minimum_free_disk_gb < 0:
+        raise ValueError("--minimum-free-disk-gb cannot be negative")
+
+
+def check_free_disk(output_dir: Path, minimum_gb: float) -> None:
+    if minimum_gb <= 0:
+        return
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    free_bytes = shutil.disk_usage(output_dir.parent).free
+    required = int(minimum_gb * 1024**3)
+    if free_bytes < required:
+        raise RuntimeError(
+            f"Insufficient free disk space for training under {output_dir.parent}: "
+            f"{free_bytes / 1024**3:.2f} GiB available, {minimum_gb:.2f} GiB required."
+        )
 
 # Convert chat records into causal-language-model tensors while training
 # only on the final assistant answer.
@@ -177,17 +313,11 @@ class ChatSFTDataset(Dataset[dict[str, torch.Tensor]]):
             prompt_messages = messages[:-1]
             # Render the prompt with a generation marker, then render the
             # complete conversation containing the target answer.
-            prompt_text = tokenizer.apply_chat_template(
-                prompt_messages,
-                tokenize=False,
-                add_generation_prompt=True,
-                enable_thinking=False,
+            prompt_text = apply_chat_template(
+                tokenizer, prompt_messages, add_generation_prompt=True
             )
-            full_text = tokenizer.apply_chat_template(
-                messages,
-                tokenize=False,
-                add_generation_prompt=False,
-                enable_thinking=False,
+            full_text = apply_chat_template(
+                tokenizer, messages, add_generation_prompt=False
             )
             prompt_ids = tokenizer(
                 prompt_text,
@@ -304,6 +434,8 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
 # reproducibility-artifact output.
 def main() -> None:
     args = parse_args()
+    validate_args(args)
+    check_free_disk(args.output_dir, args.minimum_free_disk_gb)
     seed_everything(args.seed)
     if not torch.cuda.is_available():
         raise RuntimeError("CUDA is unavailable. Fix PyTorch/GPU setup first.")
@@ -332,7 +464,8 @@ def main() -> None:
         save_steps=args.save_steps,
         eval_steps=args.eval_steps,
         eval_strategy="steps" if eval_data is not None else "no",
-        save_strategy="steps",
+        save_strategy="no" if args.disable_intermediate_checkpoints else "steps",
+        save_total_limit=None if args.disable_intermediate_checkpoints else args.save_total_limit,
         report_to=[],
         remove_unused_columns=False,
         fp16=not torch.cuda.is_bf16_supported(),
@@ -354,10 +487,19 @@ def main() -> None:
     torch.cuda.reset_peak_memory_stats()
     result = trainer.train()
     # Save only the PEFT adapter and tokenizer, not another full copy of the
-    # frozen base checkpoint.
+    # frozen base checkpoint.  Publish through a sibling staging directory so
+    # a disk-full or interrupted serialization never masquerades as a complete
+    # final adapter.
     adapter_dir = args.output_dir / "adapter"
-    trainer.save_model(str(adapter_dir))
-    tokenizer.save_pretrained(str(adapter_dir))
+    staging_dir = args.output_dir / f".adapter.tmp-{os.getpid()}-{uuid.uuid4().hex}"
+    try:
+        trainer.save_model(str(staging_dir))
+        tokenizer.save_pretrained(str(staging_dir))
+        validate_adapter_directory(staging_dir)
+        publish_adapter_directory(staging_dir, adapter_dir)
+    finally:
+        if staging_dir.exists():
+            shutil.rmtree(staging_dir, ignore_errors=True)
 
     trainable_parameter_count = sum(
         parameter.numel() for parameter in model.parameters() if parameter.requires_grad
@@ -395,6 +537,9 @@ def main() -> None:
         "effective_batch_size": args.per_device_batch_size * args.gradient_accumulation_steps,
         "max_sequence_length": args.max_sequence_length,
         "gradient_checkpointing": args.gradient_checkpointing,
+        "intermediate_checkpoints_disabled": args.disable_intermediate_checkpoints,
+        "save_total_limit": args.save_total_limit,
+        "minimum_free_disk_gb": args.minimum_free_disk_gb,
         "run_label": args.run_label,
         "seed": args.seed,
         "train_examples": len(train_data),
@@ -402,9 +547,9 @@ def main() -> None:
         "train_metrics": result.metrics,
         "peak_allocated_vram_gb": torch.cuda.max_memory_allocated() / 1024**3,
     }
-    (args.output_dir / "training_manifest.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2, default=str),
-        encoding="utf-8",
+    atomic_write_text(
+        args.output_dir / "training_manifest.json",
+        json.dumps(manifest, ensure_ascii=False, indent=2, default=str) + "\n",
     )
     print(f"Adapter saved to: {adapter_dir}")
     print(f"Manifest saved to: {args.output_dir / 'training_manifest.json'}")

@@ -4,7 +4,10 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import math
+import shutil
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -12,7 +15,14 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_json, run, write_json
+from scripts.common.experiment_utils import (
+    approved_content_only_migration,
+    atomic_write_text,
+    read_json,
+    replace_path_with_retry,
+    run,
+    write_json,
+)
 from scripts.phase_2_layer_selection.resolve_phase_2_profile import resolve_profile
 from scripts.phase_2c_targeted_recovery.phase2c_common import (
     assess_training_candidate,
@@ -75,15 +85,127 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--max-new-major-issues", type=int, default=None, help=argparse.SUPPRESS)
     p.add_argument("--qlora", action="store_true")
     p.add_argument("--gradient-checkpointing", action="store_true")
+    p.add_argument(
+        "--keep-training-checkpoints",
+        action="store_true",
+        help="Retain Trainer checkpoint-* directories after a candidate finishes.",
+    )
+    p.add_argument(
+        "--minimum-free-disk-gb",
+        type=float,
+        default=1.0,
+        help="Minimum free space required before starting a fresh candidate training run.",
+    )
     p.add_argument("--resume", action="store_true")
     return p.parse_args()
 
 
-def run_if_needed(command: list[str], sentinel: Path, resume: bool) -> None:
-    if resume and sentinel.exists():
-        print(f"[reuse] {sentinel}")
+def _valid_json_sentinel(path: Path, required_keys: tuple[str, ...] = ()) -> bool:
+    if not path.exists() or path.stat().st_size <= 0:
+        return False
+    try:
+        payload = read_json(path)
+    except (OSError, ValueError):
+        return False
+    if not isinstance(payload, dict):
+        return False
+    return all(key in payload for key in required_keys)
+
+
+def _quarantine_invalid_sentinel(path: Path) -> None:
+    if not path.exists():
         return
+    stamp = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%SZ")
+    quarantine = path.with_name(f"{path.name}.invalid-{stamp}")
+    try:
+        replace_path_with_retry(path, quarantine)
+        print(f"[quarantine invalid sentinel] {path} -> {quarantine}")
+    except OSError:
+        path.unlink(missing_ok=True)
+        print(f"[remove invalid sentinel] {path}")
+
+
+def run_if_needed(
+    command: list[str],
+    sentinel: Path,
+    resume: bool,
+    *,
+    required_json_keys: tuple[str, ...] = (),
+) -> None:
+    if resume and sentinel.exists():
+        valid = (
+            _valid_json_sentinel(sentinel, required_json_keys)
+            if sentinel.suffix.lower() == ".json"
+            else sentinel.stat().st_size > 0
+        )
+        if valid:
+            print(f"[reuse] {sentinel}")
+            return
+        _quarantine_invalid_sentinel(sentinel)
     run(command, cwd=ROOT)
+
+
+def validate_args(args: argparse.Namespace) -> None:
+    """Fail early on invalid or internally inconsistent experiment settings."""
+
+    positive_ints = {
+        "--calibration-limit": args.calibration_limit,
+        "--eval-limit": args.eval_limit,
+        "--max-steps": args.max_steps,
+        "--repeat-top-k": args.repeat_top_k,
+        "--lora-rank": args.lora_rank,
+        "--lora-alpha": args.lora_alpha,
+        "--gradient-accumulation-steps": args.gradient_accumulation_steps,
+        "--max-sequence-length": args.max_sequence_length,
+        "--max-new-tokens": args.max_new_tokens,
+    }
+    for name, value in positive_ints.items():
+        if int(value) <= 0:
+            raise ValueError(f"{name} must be positive; received {value!r}")
+    if not 0.0 <= args.lora_dropout < 1.0:
+        raise ValueError("--lora-dropout must be in [0, 1)")
+    if args.learning_rate <= 0.0:
+        raise ValueError("--learning-rate must be positive")
+    if args.minimum_free_disk_gb < 0.0:
+        raise ValueError("--minimum-free-disk-gb cannot be negative")
+
+    weights = {
+        "gradient": float(args.gradient_weight),
+        "ablation": float(args.ablation_weight),
+        "structural": float(args.structural_weight),
+    }
+    if any(not math.isfinite(value) or value < 0.0 for value in weights.values()):
+        raise ValueError(f"importance weights must be finite and non-negative: {weights}")
+    if sum(weights.values()) <= 0.0:
+        raise ValueError("at least one importance weight must be positive")
+
+    repeat_values: list[int] = []
+    for raw in args.repeat_seeds.split(","):
+        raw = raw.strip()
+        if not raw:
+            continue
+        try:
+            repeat_values.append(int(raw))
+        except ValueError as exc:
+            raise ValueError(f"invalid integer in --repeat-seeds: {raw!r}") from exc
+    if not repeat_values:
+        raise ValueError("--repeat-seeds must contain at least one integer")
+    if len(repeat_values) != len(set(repeat_values)):
+        raise ValueError("--repeat-seeds contains duplicate values")
+    if set(repeat_values) == {int(args.base_seed)}:
+        raise ValueError("--repeat-seeds must include a seed different from --base-seed")
+
+    for label, path in {
+        "Phase 2B catalog": args.phase2b_catalog,
+        "Phase 2B gate": args.phase2b_gate,
+        "Phase 2B registry": args.phase2b_registry,
+        "training data": args.train_file,
+        "development data": args.dev_file,
+        "phase benchmark": args.phase_benchmark,
+    }.items():
+        resolved = resolved_repo_path(path)
+        if not resolved.exists() or not resolved.is_file():
+            raise FileNotFoundError(f"{label} is missing: {resolved}")
 
 
 def resolved_repo_path(path: Path) -> Path:
@@ -107,6 +229,56 @@ def file_fingerprint(path: Path) -> dict[str, Any]:
         "bytes": resolved.stat().st_size,
         "sha256": sha256_file(resolved),
     }
+
+
+def config_differences(previous: Any, requested: Any, prefix: str = "") -> list[str]:
+    """Return precise nested differences for a rejected resume request."""
+
+    if isinstance(previous, dict) and isinstance(requested, dict):
+        differences: list[str] = []
+        for key in sorted(set(previous) | set(requested)):
+            path = f"{prefix}.{key}" if prefix else str(key)
+            if key not in previous:
+                differences.append(f"{path}: missing from recorded run")
+            elif key not in requested:
+                differences.append(f"{path}: no longer present in requested run")
+            else:
+                differences.extend(config_differences(previous[key], requested[key], path))
+        return differences
+    if previous != requested:
+        return [f"{prefix}: recorded={previous!r}, requested={requested!r}"]
+    return []
+
+
+def approved_run_config_contract_migration(
+    previous: dict[str, Any],
+    requested: dict[str, Any],
+    args: argparse.Namespace,
+) -> dict[str, Any] | None:
+    """Approve the v1.4.6→v1.4.7 contract-only Phase 2C data migration."""
+
+    previous_normalized = dict(previous)
+    migrations: dict[str, Any] = {}
+    for key, path in (("train_file", args.train_file), ("dev_file", args.dev_file)):
+        old_fingerprint = previous.get(key)
+        new_fingerprint = requested.get(key)
+        if old_fingerprint == new_fingerprint:
+            continue
+        if not isinstance(old_fingerprint, dict) or not isinstance(new_fingerprint, dict):
+            return None
+        migration = approved_content_only_migration(
+            path,
+            previous_sha256=old_fingerprint.get("sha256"),
+            current_sha256=new_fingerprint.get("sha256"),
+        )
+        if migration is None:
+            return None
+        previous_normalized[key] = new_fingerprint
+        migrations[key] = migration
+
+    if not migrations or config_differences(previous_normalized, requested):
+        return None
+    return migrations
 
 
 def model_fingerprint(model_id: str) -> dict[str, Any]:
@@ -157,8 +329,69 @@ def model_fingerprint(model_id: str) -> dict[str, Any]:
     }
 
 
+def adapter_directory_complete(path: Path) -> bool:
+    if not (path / "adapter_config.json").exists():
+        return False
+    weights = (path / "adapter_model.safetensors", path / "adapter_model.bin")
+    return any(candidate.exists() and candidate.stat().st_size > 0 for candidate in weights)
+
+
+def cleanup_intermediate_checkpoints(training: Path, *, keep: bool) -> None:
+    if keep or not training.exists():
+        return
+    removed = 0
+    for checkpoint in training.glob("checkpoint-*"):
+        if checkpoint.is_dir():
+            shutil.rmtree(checkpoint, ignore_errors=True)
+            removed += 1
+    if removed:
+        print(f"[cleanup] removed {removed} intermediate checkpoint director{'y' if removed == 1 else 'ies'} under {training}")
+
+
+def format_optional(value: Any, spec: str, fallback: str = "N/A") -> str:
+    if value is None:
+        return fallback
+    try:
+        number = float(value)
+    except (TypeError, ValueError):
+        return fallback
+    if not math.isfinite(number):
+        return fallback
+    return format(number, spec)
+
+
 def assessment_kwargs(args: argparse.Namespace) -> dict[str, Any]:
     return {"quality_profile": args.quality_profile}
+
+
+def prepare_contract_migration_resume(
+    *,
+    data_path: Path,
+    manifest_path: Path,
+    summary_path: Path,
+    hash_field: str,
+) -> None:
+    """Force a cheap child resume when a completed sentinel predates contracts."""
+
+    if not manifest_path.exists() or not summary_path.exists():
+        return
+    try:
+        manifest = read_json(manifest_path)
+    except (OSError, ValueError):
+        return
+    previous_hash = manifest.get(hash_field)
+    current_hash = sha256_file(data_path)
+    migration = approved_content_only_migration(
+        data_path,
+        previous_sha256=previous_hash,
+        current_sha256=current_hash,
+    )
+    if migration is not None:
+        _quarantine_invalid_sentinel(summary_path)
+        print(
+            f"[contract migration resume] final sentinel moved so {manifest_path.parent} "
+            "can update/rescore durable rows"
+        )
 
 
 def evaluate_model(model_id: str, adapter: Path | None, root: Path, args: argparse.Namespace) -> dict[str, Any]:
@@ -177,13 +410,66 @@ def evaluate_model(model_id: str, adapter: Path | None, root: Path, args: argpar
     if adapter is not None:
         eval_cmd += ["--adapter-path", str(adapter)]
         nll_cmd += ["--adapter-path", str(adapter)]
-    run_if_needed(eval_cmd, generation / "summary.json", args.resume)
-    run_if_needed(nll_cmd, nll / "summary.json", args.resume)
+    legacy_dev_input_sha256 = getattr(args, "legacy_dev_input_sha256", None)
+    if legacy_dev_input_sha256:
+        nll_cmd += ["--legacy-input-sha256", str(legacy_dev_input_sha256)]
+    if args.resume:
+        eval_cmd.append("--resume")
+        nll_cmd.append("--resume")
+        prepare_contract_migration_resume(
+            data_path=args.dev_file,
+            manifest_path=generation / "evaluation_manifest.json",
+            summary_path=generation / "summary.json",
+            hash_field="benchmark_sha256",
+        )
+        prepare_contract_migration_resume(
+            data_path=args.dev_file,
+            manifest_path=nll / "evaluation_manifest.json",
+            summary_path=nll / "summary.json",
+            hash_field="input_sha256",
+        )
+    run_if_needed(
+        eval_cmd,
+        generation / "summary.json",
+        args.resume,
+        required_json_keys=("case_count", "mean_quality_score"),
+    )
+    legacy_nll_without_manifest = (
+        args.resume
+        and (nll / "summary.json").exists()
+        and (nll / "results.jsonl").exists()
+        and not (nll / "evaluation_manifest.json").exists()
+    )
+    if legacy_nll_without_manifest:
+        if not legacy_dev_input_sha256:
+            raise RuntimeError(
+                f"Legacy NLL evidence lacks a manifest and no approved dataset migration is recorded: {nll}"
+            )
+        print(f"[legacy NLL migration] validating and manifesting durable rows under {nll}")
+        run(nll_cmd, cwd=ROOT)
+    else:
+        run_if_needed(
+            nll_cmd,
+            nll / "summary.json",
+            args.resume,
+            required_json_keys=("case_count", "mean_target_nll"),
+        )
     return {
         "generation_summary": read_json(generation / "summary.json"),
         "nll_summary": read_json(nll / "summary.json"),
         "generation_results": generation / "results.jsonl",
     }
+
+
+def deviation_sentinel_current(path: Path, reference_results: Path, candidate_results: Path) -> bool:
+    if not _valid_json_sentinel(path, ("summary",)):
+        return False
+    payload = read_json(path)
+    summary = payload.get("summary") or {}
+    return (
+        summary.get("reference_results_sha256") == sha256_file(reference_results)
+        and summary.get("candidate_results_sha256") == sha256_file(candidate_results)
+    )
 
 
 def train_candidate(
@@ -216,16 +502,34 @@ def train_candidate(
         command.append("--qlora")
     if args.gradient_checkpointing:
         command.append("--gradient-checkpointing")
+    if not args.keep_training_checkpoints:
+        command.append("--disable-intermediate-checkpoints")
+    command += ["--minimum-free-disk-gb", str(args.minimum_free_disk_gb)]
     training_manifest_path = training / "training_manifest.json"
-    if args.resume and training.exists() and not training_manifest_path.exists():
-        import shutil
-
-        print(f"[clean incomplete] {training}")
+    complete_training = (
+        _valid_json_sentinel(training_manifest_path, ("trainable_parameter_count",))
+        and adapter_directory_complete(adapter)
+    )
+    if args.resume and training.exists() and not complete_training:
+        print(f"[clean incomplete training] {training}")
         shutil.rmtree(training)
-    run_if_needed(command, training_manifest_path, args.resume)
+    run_if_needed(
+        command,
+        training_manifest_path,
+        args.resume,
+        required_json_keys=("trainable_parameter_count",),
+    )
+    if not adapter_directory_complete(adapter):
+        raise RuntimeError(f"Candidate training did not produce a complete adapter: {adapter}")
+    cleanup_intermediate_checkpoints(training, keep=args.keep_training_checkpoints)
     evidence = evaluate_model(model_id, adapter, root / "evaluation", args)
     baseline_results = args.output_root / "reference/reduced_frozen/generation/results.jsonl"
     deviation_json = root / "evaluation/output_deviation.json"
+    candidate_results = Path(evidence["generation_results"])
+    if args.resume and deviation_json.exists() and not deviation_sentinel_current(
+        deviation_json, baseline_results, candidate_results
+    ):
+        _quarantine_invalid_sentinel(deviation_json)
     run_if_needed(
         [
             PYTHON, str(COMPARE), "--reference", str(baseline_results),
@@ -235,6 +539,7 @@ def train_candidate(
         ],
         deviation_json,
         args.resume,
+        required_json_keys=("summary",),
     )
     manifest = read_json(training / "training_manifest.json")
     row = {
@@ -279,8 +584,9 @@ def render_report(
 ) -> str:
     rank_lines = [
         f"| {r['importance_rank']} | {r['current_layer_id']} | {r['original_layer_id']} | "
-        f"{r['combined_importance_score']:.4f} | {r['gradient_taylor_score']:.3e} | "
-        f"{r['ablation_nll_increase']:+.4f} |"
+        f"{format_optional(r.get('combined_importance_score'), '.4f')} | "
+        f"{format_optional(r.get('gradient_taylor_score'), '.3e')} | "
+        f"{format_optional(r.get('ablation_nll_increase'), '+.4f')} |"
         for r in ranking["ranking"]
     ]
     candidate_lines = []
@@ -288,9 +594,10 @@ def render_report(
         a = row["assessment"]
         candidate_lines.append(
             f"| {row['name']} | {row['selected_layers']} | {row['module_group']} | "
-            f"{a['quality_index']:.4f} | {a['resource_gain_fraction']:.3%} | "
-            f"{a['quality_opportunity_loss_fraction']:.3%} | "
-            f"{a.get('opportunity_margin_across_seeds', a['opportunity_margin']):+.3%} | "
+            f"{format_optional(a.get('quality_index'), '.4f')} | "
+            f"{format_optional(a.get('resource_gain_fraction'), '.3%')} | "
+            f"{format_optional(a.get('quality_opportunity_loss_fraction'), '.3%')} | "
+            f"{format_optional(a.get('opportunity_margin_across_seeds', a.get('opportunity_margin')), '+.3%')} | "
             f"{row['generation_summary'].get('critical_failure_count', 0)} | "
             f"{len(row.get('repeat_results') or [])} | "
             f"{'WORTHWHILE' if a['eligible'] else 'NOT WORTHWHILE'} |"
@@ -298,14 +605,14 @@ def render_report(
     profile_lines = [
         f"| {name} | {row['name']} | {row['selected_layers']} | "
         f"{row['training_manifest'].get('trainable_parameter_count', 0):,} | "
-        f"{row['assessment']['quality_index']:.4f} |"
+        f"{format_optional((row.get('assessment') or {}).get('quality_index'), '.4f')} |"
         for name, row in profiles.items()
     ]
     return f"""# PHASE 2C — IMPORTANCE-GUIDED TARGETED RECOVERY REPORT
 
 ## Purpose
 
-Preserve the approved Phase 2B reduced architecture while finding the smallest surviving-layer LoRA placement that remains whose proportional trainable-state saving is greater than its proportional quality opportunity loss.
+Preserve the approved Phase 2B reduced architecture while finding the smallest surviving-layer LoRA placement whose proportional trainable-state saving is greater than its proportional quality opportunity loss.
 
 ## Evidence boundary
 
@@ -326,7 +633,7 @@ The ranking combines first-order target-loss sensitivity, temporary layer-bypass
 
 ## Candidate frontier
 
-| Candidate | Current layers trained | Modules | Quality index | Loss vs all | Loss vs frozen | Trainable reduction | Critical | Repeat seeds | Gate |
+| Candidate | Current layers trained | Modules | Quality index | Trainable reduction | Quality opportunity loss | Opportunity margin | Critical | Repeat seeds | Gate |
 |---|---|---|---:|---:|---:|---:|---:|---:|---|
 {chr(10).join(candidate_lines)}
 
@@ -348,14 +655,14 @@ After human approval, Phase 3 loads the same reduced Phase 2B checkpoint plus th
 
 def main() -> None:
     args = parse_args()
+    if not args.train_file.exists() or not args.dev_file.exists():
+        run([PYTHON, str(BUILD_DATA)], cwd=ROOT)
+    validate_args(args)
     if not args.phase2b_catalog.exists():
         raise FileNotFoundError(args.phase2b_catalog)
     gate_text = args.phase2b_gate.read_text(encoding="utf-8") if args.phase2b_gate.exists() else ""
     source_profile = resolve_profile(read_json(args.phase2b_catalog), args.phase2b_profile, gate_text)
     source_model = str(source_profile["training_model_id"])
-
-    if not args.train_file.exists() or not args.dev_file.exists():
-        run([PYTHON, str(BUILD_DATA)], cwd=ROOT)
 
     run_config = {
         "manifest_version": 1,
@@ -398,11 +705,35 @@ def main() -> None:
         if not config_path.exists():
             raise RuntimeError(f"--resume requested but run configuration is missing: {config_path}")
         previous_config = read_json(config_path)
-        if previous_config != run_config:
-            raise RuntimeError(
-                "Resume settings differ from the recorded Phase 2C run. Use the original settings "
-                "or choose a new output root for a different experiment."
-            )
+        differences = config_differences(previous_config, run_config)
+        if differences:
+            migrations = approved_run_config_contract_migration(previous_config, run_config, args)
+            if migrations is not None:
+                write_json(
+                    args.output_root / "RUN_CONFIG_CONTRACT_MIGRATION_v1.4.7.json",
+                    {
+                        "schema_version": 1,
+                        "migration_type": "phase2c_contract_only_dataset_upgrade",
+                        "migrations": migrations,
+                        "training_and_generation_messages_unchanged": True,
+                        "existing_adapters_and_raw_replies_reusable": True,
+                        "existing_generation_quality_rows_require_rescore": True,
+                    },
+                )
+                write_json(config_path, run_config)
+                print(
+                    "[approved Phase 2C migration] dataset messages/targets are unchanged; "
+                    "existing adapters and raw replies will be reused and rescored"
+                )
+            else:
+                detail = "\n  - ".join(differences[:40])
+                suffix = "\n  - ... additional differences omitted" if len(differences) > 40 else ""
+                raise RuntimeError(
+                    "Resume settings differ from the recorded Phase 2C run. Use the original settings "
+                    "or choose a new output root for a different experiment.\n  - "
+                    + detail
+                    + suffix
+                )
     elif args.output_root.exists() and any(args.output_root.iterdir()):
         raise RuntimeError(
             f"Output root already contains files: {args.output_root}. Use --resume for the exact "
@@ -411,6 +742,16 @@ def main() -> None:
     args.output_root.mkdir(parents=True, exist_ok=True)
     if not args.resume:
         write_json(config_path, run_config)
+
+    migration_audit_path = args.output_root / "RUN_CONFIG_CONTRACT_MIGRATION_v1.4.7.json"
+    args.legacy_dev_input_sha256 = None
+    if migration_audit_path.exists():
+        migration_audit = read_json(migration_audit_path)
+        dev_migration = (migration_audit.get("migrations") or {}).get("dev_file") or {}
+        previous_hash = dev_migration.get("previous_sha256")
+        current_hash = dev_migration.get("current_sha256")
+        if previous_hash and current_hash == run_config["dev_file"]["sha256"]:
+            args.legacy_dev_input_sha256 = str(previous_hash)
 
     ranking_path = args.output_root / "importance/combined_layer_ranking.json"
     run_if_needed(
@@ -426,6 +767,7 @@ def main() -> None:
         ],
         ranking_path,
         args.resume,
+        required_json_keys=("ranking", "layer_count"),
     )
     ranking = read_json(ranking_path)
 
@@ -568,14 +910,18 @@ def main() -> None:
         eval_root = args.output_root / "profile_validation" / profile_name
         adapter = Path(row["adapter"])
         generation = eval_root / "generation"
+        profile_command = [
+            PYTHON, str(EVALUATE), "--model-id", source_model,
+            "--adapter-path", str(adapter), "--benchmark", str(args.phase_benchmark),
+            "--output-dir", str(generation), "--max-new-tokens", str(args.max_new_tokens),
+        ]
+        if args.resume:
+            profile_command.append("--resume")
         run_if_needed(
-            [
-                PYTHON, str(EVALUATE), "--model-id", source_model,
-                "--adapter-path", str(adapter), "--benchmark", str(args.phase_benchmark),
-                "--output-dir", str(generation), "--max-new-tokens", str(args.max_new_tokens),
-            ],
+            profile_command,
             generation / "summary.json",
             args.resume,
+            required_json_keys=("case_count", "mean_quality_score"),
         )
         phase_summaries[profile_name] = str(generation / "summary.json")
         catalog_profiles[profile_name] = profile_payload(profile_name, row, source_model, phase_summaries[profile_name])
@@ -602,8 +948,9 @@ def main() -> None:
     }
     write_json(args.output_root / "model_catalog.json", catalog)
     args.report.parent.mkdir(parents=True, exist_ok=True)
-    args.report.write_text(render_report(source_profile, ranking, rows, profiles, args), encoding="utf-8")
-    args.gate_report.write_text(
+    atomic_write_text(args.report, render_report(source_profile, ranking, rows, profiles, args))
+    atomic_write_text(
+        args.gate_report,
         "\n".join(
             [
                 "# PHASE 2C STOP GATE", "", "## Automated status", "", "`PENDING_HUMAN_REVIEW`", "",
@@ -618,7 +965,6 @@ def main() -> None:
                 "- Approved profiles: `maximum_quality`", "- Notes:", "",
             ]
         ),
-        encoding="utf-8",
     )
     print(args.output_root / "model_catalog.json")
     print(args.report)

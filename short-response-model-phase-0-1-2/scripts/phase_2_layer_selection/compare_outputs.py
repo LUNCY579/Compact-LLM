@@ -16,7 +16,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import read_jsonl, write_json
+from scripts.common.experiment_utils import atomic_write_text, read_jsonl, sha256, write_json
 from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
 
 
@@ -24,12 +24,34 @@ def normalize(text: str) -> str:
     return " ".join(text.lower().split())
 
 
+def _index_unique(rows: list[dict[str, Any]], *, label: str) -> dict[str, dict[str, Any]]:
+    indexed: dict[str, dict[str, Any]] = {}
+    for position, row in enumerate(rows, 1):
+        if "id" not in row:
+            raise ValueError(f"{label} row {position} has no stable id")
+        case_id = str(row["id"])
+        if case_id in indexed:
+            raise ValueError(f"{label} results contain duplicate id {case_id!r}")
+        indexed[case_id] = row
+    return indexed
+
+
 def compare_rows(reference: list[dict[str, Any]], candidate: list[dict[str, Any]]) -> tuple[dict[str, Any], list[dict[str, Any]]]:
-    ref_by_id = {str(row["id"]): row for row in reference}
-    cand_by_id = {str(row["id"]): row for row in candidate}
-    common = sorted(set(ref_by_id) & set(cand_by_id))
+    ref_by_id = _index_unique(reference, label="reference")
+    cand_by_id = _index_unique(candidate, label="candidate")
+    ref_ids = set(ref_by_id)
+    cand_ids = set(cand_by_id)
+    missing_from_candidate = sorted(ref_ids - cand_ids)
+    extra_in_candidate = sorted(cand_ids - ref_ids)
+    if missing_from_candidate or extra_in_candidate:
+        raise ValueError(
+            "Reference and candidate evidence do not cover the same stable IDs. "
+            f"Missing from candidate: {missing_from_candidate[:8]}; "
+            f"extra in candidate: {extra_in_candidate[:8]}"
+        )
+    common = sorted(ref_ids)
     if not common:
-        raise ValueError("Reference and candidate results have no shared IDs.")
+        raise ValueError("Reference and candidate results are empty.")
 
     rows: list[dict[str, Any]] = []
     for case_id in common:
@@ -63,6 +85,11 @@ def compare_rows(reference: list[dict[str, Any]], candidate: list[dict[str, Any]
     summary = {
         "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
         "case_count": len(rows),
+        "technical_valid": True,
+        "reference_case_count": len(reference),
+        "candidate_case_count": len(candidate),
+        "missing_candidate_ids": [],
+        "extra_candidate_ids": [],
         "changed_reply_count": sum(1 for row in rows if not row["exact_match"]),
         "exact_reply_match_rate": statistics.mean(1.0 if row["exact_match"] else 0.0 for row in rows),
         "mean_fuzzy_reply_similarity": statistics.mean(float(row["fuzzy_similarity"]) for row in rows),
@@ -92,6 +119,8 @@ def escape_cell(value: Any) -> str:
 def main() -> None:
     args = parse_args()
     summary, rows = compare_rows(read_jsonl(args.reference), read_jsonl(args.candidate))
+    summary["reference_results_sha256"] = sha256(args.reference)
+    summary["candidate_results_sha256"] = sha256(args.candidate)
     write_json(args.out_json, {"summary": summary, "cases": rows})
 
     changed = [row for row in rows if not row["exact_match"]]
@@ -110,7 +139,7 @@ def main() -> None:
     report = f"""# PHASE 2B OUTPUT DEVIATION\n\n## Summary\n\n- Cases compared: {summary['case_count']}\n- Changed replies: {summary['changed_reply_count']}\n- Exact-reply match rate: {summary['exact_reply_match_rate']:.3f}\n- Mean fuzzy similarity: {summary['mean_fuzzy_reply_similarity']:.3f}\n- Mean quality-score delta: {summary['mean_quality_score_delta']:+.4f}\n- New hard failures: {summary['new_hard_failure_count']}
 - New critical failures: {summary['new_critical_failure_count']}\n- New major issues: {summary['new_major_issue_count']}\n\nThis report is a trend diagnostic. Different wording is not automatically a regression.\n\n## Changed cases\n\n| ID | Category | Quality delta | Similarity | Full reference | Candidate | New flags |\n|---|---|---:|---:|---|---|---|\n{chr(10).join(lines)}\n"""
     args.out_report.parent.mkdir(parents=True, exist_ok=True)
-    args.out_report.write_text(report, encoding="utf-8")
+    atomic_write_text(args.out_report, report)
     print(args.out_json)
     print(args.out_report)
 

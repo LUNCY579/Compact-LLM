@@ -39,6 +39,15 @@ DEV_OBJECTS = [
     "violet token", "white pass", "yellow ticket",
 ]
 
+# v1.4.6 generated exactly the same IDs, prompts, and assistant targets but did
+# not attach correctness contracts to deterministic Phase 2C reasoning cases.
+# These hashes authorize a one-time evidence-only migration without retraining
+# or regenerating model replies; all existing replies must be rescored.
+V146_DATASET_SHA256 = {
+    "train.jsonl": "b8440e3f501727669c1833220f66aa77cf9a2abace3bb7de28b0fef5b63b7400",
+    "dev.jsonl": "8ab54fd2e4cf25509a95fe7d6bc8a84fa5a230f0d57fdae5a50eb0e559063095",
+}
+
 
 def indefinite_article(phrase: str) -> str:
     return "an" if phrase[:1].lower() in {"a", "e", "i", "o", "u"} else "a"
@@ -58,6 +67,62 @@ def pluralize(phrase: str) -> str:
     return " ".join([*words[:-1], noun])
 
 
+def strict_answer_contract(
+    *,
+    rule: dict[str, Any],
+    description: str,
+    wrong_start_regex: list[str] | None = None,
+    question_required: bool = False,
+    domain: str = "factual",
+) -> dict[str, Any]:
+    """Create an explicit prompt-grounded contract for deterministic tasks.
+
+    The evaluator is intentionally category-neutral and does not treat the
+    example reference as a unique answer. These generated tasks therefore carry
+    a transparent semantic rule for the objectively required answer content.
+    """
+
+    requirement_id = "phase2c_correct_answer"
+    contract: dict[str, Any] = {
+        "schema_version": "4.5",
+        "open_ended": False,
+        "requirements": [
+            {
+                "id": requirement_id,
+                "label": "explicit_required_content_missing",
+                "severity": "major",
+                "strict_severity": True,
+                "description": description,
+                "failure_evidence": description,
+                "minimum_score": 1.0,
+                "match": rule,
+            }
+        ],
+        "prohibitions": [],
+        "question_required": question_required,
+        "question_missing_label": "required_clarification_question_missing",
+        "domains": {domain: [requirement_id]},
+        "prompt_adequacy": {
+            "task": rule,
+            domain: rule,
+        },
+        "contract_source": "deterministic_phase2c_rule_template_v2",
+    }
+    if wrong_start_regex:
+        contract["prohibitions"].append(
+            {
+                "id": "phase2c_direct_wrong_answer",
+                "label": "explicit_forbidden_content_present",
+                "severity": "major",
+                "strict_severity": True,
+                "description": "The reply directly names a known incorrect answer option.",
+                "minimum_score": 1.0,
+                "match": {"any_regex": wrong_start_regex},
+            }
+        )
+    return contract
+
+
 def record(
     identifier: str,
     prompt: str,
@@ -66,8 +131,9 @@ def record(
     *,
     reasoning_steps: int = 1,
     target_max: int = 12,
+    response_contract: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
-    return {
+    output = {
         "id": identifier,
         "system_policy_version": "v1",
         "messages": [
@@ -83,9 +149,15 @@ def record(
             "safety_tier": "normal",
             "tone": ["direct", "concise"],
             "reasoning_steps": reasoning_steps,
-            "source_provenance": "deterministic_rule_template_phase2c_v1",
+            "source_provenance": "deterministic_rule_template_phase2c_v2",
         },
     }
+    if response_contract is not None:
+        response_contract = dict(response_contract)
+        response_contract.setdefault("min_tokens", 1)
+        response_contract.setdefault("max_tokens", target_max)
+        output["response_contract"] = response_contract
+    return output
 
 
 def implication_rows(prefix: str, names: list[str], objects: list[str]) -> list[dict[str, Any]]:
@@ -95,7 +167,28 @@ def implication_rows(prefix: str, names: list[str], objects: list[str]) -> list[
         room = rooms[index % len(rooms)]
         article = indefinite_article(obj)
         prompt = f"Every {obj} opens the {room}. {name} has {article} {obj}. What can it open?"
-        rows.append(record(f"{prefix}_implication_{index:02d}", prompt, f"The {room}.", "concise_logic_implication", reasoning_steps=2))
+        wrong_rooms = [value for value in rooms if value != room]
+
+        # Construct regex fragments before using them in f-strings.
+        # Python 3.11 does not permit backslashes inside f-string expressions.
+        room_regex = room.replace(" ", r"\s+")
+        wrong_room_regexes = [
+            value.replace(" ", r"\s+")
+            for value in wrong_rooms
+        ]
+
+        contract = strict_answer_contract(
+            rule={"any_regex": [rf"\b{room_regex}\b"]},
+            description=f"The reply must identify the {room} as what the pass opens.",
+            wrong_start_regex=[
+                rf"^\s*(?:the\s+)?{value_regex}\b"
+                for value_regex in wrong_room_regexes
+            ],
+        )
+        rows.append(record(
+            f"{prefix}_implication_{index:02d}", prompt, f"The {room}.",
+            "concise_logic_implication", reasoning_steps=2, response_contract=contract,
+        ))
     return rows
 
 
@@ -104,7 +197,15 @@ def ordering_rows(prefix: str, names: list[str]) -> list[dict[str, Any]]:
     for index in range(0, len(names) - 2):
         a, b, c = names[index : index + 3]
         prompt = f"{a} arrived before {b}, and {b} arrived before {c}. Who arrived first?"
-        rows.append(record(f"{prefix}_ordering_{index:02d}", prompt, f"{a} arrived first.", "concise_ordering_logic", reasoning_steps=2))
+        contract = strict_answer_contract(
+            rule={"any_terms": [a]},
+            description=f"The reply must identify {a} as the first arrival.",
+            wrong_start_regex=[rf"^\s*{name}\b" for name in (b, c)],
+        )
+        rows.append(record(
+            f"{prefix}_ordering_{index:02d}", prompt, f"{a} arrived first.",
+            "concise_ordering_logic", reasoning_steps=2, response_contract=contract,
+        ))
     return rows
 
 
@@ -113,7 +214,15 @@ def comparison_rows(prefix: str, names: list[str]) -> list[dict[str, Any]]:
     for index in range(0, len(names) - 2):
         a, b, c = names[index : index + 3]
         prompt = f"{a} is taller than {b}, and {b} is taller than {c}. Who is shortest?"
-        rows.append(record(f"{prefix}_comparison_{index:02d}", prompt, f"{c} is shortest.", "concise_comparison_logic", reasoning_steps=2))
+        contract = strict_answer_contract(
+            rule={"any_terms": [c]},
+            description=f"The reply must identify {c} as the shortest person.",
+            wrong_start_regex=[rf"^\s*{name}\b" for name in (a, b)],
+        )
+        rows.append(record(
+            f"{prefix}_comparison_{index:02d}", prompt, f"{c} is shortest.",
+            "concise_comparison_logic", reasoning_steps=2, response_contract=contract,
+        ))
     return rows
 
 
@@ -126,7 +235,15 @@ def arithmetic_rows(prefix: str, count: int, seed: int) -> list[dict[str, Any]]:
         removed = rng.randint(1, min(added + 2, start + added - 1))
         result = start + added - removed
         prompt = f"A tray had {start} clips, gained {added}, then lost {removed}. How many remain?"
-        rows.append(record(f"{prefix}_arithmetic_{index:02d}", prompt, f"{result} clips remain.", "concise_arithmetic", reasoning_steps=2, target_max=7))
+        contract = strict_answer_contract(
+            rule={"any_regex": [rf"(?<!\d){result}(?!\d)"]},
+            description=f"The reply must give the computed result {result}.",
+        )
+        rows.append(record(
+            f"{prefix}_arithmetic_{index:02d}", prompt, f"{result} clips remain.",
+            "concise_arithmetic", reasoning_steps=2, target_max=7,
+            response_contract=contract,
+        ))
     return rows
 
 
@@ -135,7 +252,16 @@ def contradiction_rows(prefix: str, names: list[str]) -> list[dict[str, Any]]:
     for index, name in enumerate(names):
         item = ["report", "package", "message", "reservation", "invoice", "ticket", "draft", "backup"][index % 8]
         prompt = f"The note says {name} submitted the {item}. Another line says {name} never submitted it. Can both claims be true as written?"
-        rows.append(record(f"{prefix}_contradiction_{index:02d}", prompt, "No, they contradict each other.", "concise_contradiction_detection", reasoning_steps=1, target_max=8))
+        contract = strict_answer_contract(
+            rule={"any_regex": [r"^\s*no\b", r"\bcontradict(?:s|ory|ion)?\b", r"\b(?:cannot|can't)\s+both\b", r"\bnot\s+both\b"]},
+            description="The reply must state that the two claims cannot both be true.",
+            wrong_start_regex=[r"^\s*yes\b"],
+        )
+        rows.append(record(
+            f"{prefix}_contradiction_{index:02d}", prompt, "No, they contradict each other.",
+            "concise_contradiction_detection", reasoning_steps=1, target_max=8,
+            response_contract=contract,
+        ))
     return rows
 
 
@@ -148,7 +274,15 @@ def set_rows(prefix: str, names: list[str], objects: list[str]) -> list[dict[str
             f"All {pluralize(obj)} are {group}. {name}'s item is {article} {obj}. "
             f"Is it one of the {group}?"
         )
-        rows.append(record(f"{prefix}_set_{index:02d}", prompt, "Yes.", "concise_set_membership", reasoning_steps=2, target_max=4))
+        contract = strict_answer_contract(
+            rule={"any_regex": [r"^\s*yes\b", r"^\s*it\s+is\b", r"^\s*correct\b"]},
+            description=f"The reply must affirm that the item belongs to {group}.",
+            wrong_start_regex=[r"^\s*no\b"],
+        )
+        rows.append(record(
+            f"{prefix}_set_{index:02d}", prompt, "Yes.", "concise_set_membership",
+            reasoning_steps=2, target_max=4, response_contract=contract,
+        ))
     return rows
 
 
@@ -159,7 +293,16 @@ def temporal_rows(prefix: str, names: list[str]) -> list[dict[str, Any]]:
         first = days[index % 4]
         second = days[(index % 4) + 1]
         prompt = f"{name} finished the outline on {first} and the draft on {second}. Which was finished later?"
-        rows.append(record(f"{prefix}_temporal_{index:02d}", prompt, "The draft was finished later.", "concise_temporal_reasoning", reasoning_steps=1, target_max=8))
+        contract = strict_answer_contract(
+            rule={"any_terms": ["draft"]},
+            description="The reply must identify the draft as the item finished later.",
+            wrong_start_regex=[r"^\s*(?:the\s+)?outline\b"],
+        )
+        rows.append(record(
+            f"{prefix}_temporal_{index:02d}", prompt, "The draft was finished later.",
+            "concise_temporal_reasoning", reasoning_steps=1, target_max=8,
+            response_contract=contract,
+        ))
     return rows
 
 
@@ -167,7 +310,23 @@ def clarification_rows(prefix: str, names: list[str]) -> list[dict[str, Any]]:
     rows: list[dict[str, Any]] = []
     for index, name in enumerate(names):
         prompt = f"{name} said, 'Can you change it?' No object was mentioned. What should you ask?"
-        rows.append(record(f"{prefix}_clarification_{index:02d}", prompt, "What should I change?", "concise_clarification_logic", reasoning_steps=1, target_max=7))
+        rule = {
+            "any_regex": [
+                r"\b(?:what|which)\b.{0,40}\b(?:change|item|object|thing|one)\b",
+                r"\b(?:item|object|thing|one)\b.{0,40}\b(?:mean|refer|change)\b",
+            ]
+        }
+        contract = strict_answer_contract(
+            rule=rule,
+            description="The reply must ask which unspecified item or object should be changed.",
+            question_required=True,
+            domain="context",
+        )
+        rows.append(record(
+            f"{prefix}_clarification_{index:02d}", prompt, "What should I change?",
+            "concise_clarification_logic", reasoning_steps=1, target_max=7,
+            response_contract=contract,
+        ))
     return rows
 
 
@@ -228,6 +387,22 @@ def sha256_file(path: Path) -> str:
             digest.update(chunk)
     return digest.hexdigest()
 
+def id_messages_sha256(rows: Iterable[dict[str, Any]]) -> str:
+    digest = hashlib.sha256()
+    for row in rows:
+        payload = {"id": row.get("id"), "messages": row.get("messages")}
+        digest.update(
+            json.dumps(
+                payload,
+                ensure_ascii=False,
+                sort_keys=True,
+                separators=(",", ":"),
+            ).encode("utf-8")
+        )
+        digest.update(b"\n")
+    return digest.hexdigest()
+
+
 def prompt_target_key(row: dict[str, Any]) -> tuple[str, str]:
     messages = row.get("messages") or []
     prompt = "\n".join(str(message.get("content", "")) for message in messages[:-1]).strip().lower()
@@ -246,6 +421,14 @@ def validate(rows: Iterable[dict[str, Any]], label: str) -> None:
         messages = row.get("messages")
         if not isinstance(messages, list) or len(messages) < 2 or messages[-1].get("role") != "assistant":
             raise ValueError(f"{label}:{identifier}: invalid SFT messages")
+        metadata = row.get("metadata") or {}
+        provenance = str(metadata.get("source_provenance", ""))
+        if provenance.startswith("deterministic_rule_template_phase2c_"):
+            contract = row.get("response_contract")
+            if not isinstance(contract, dict) or contract.get("open_ended", True):
+                raise ValueError(f"{label}:{identifier}: deterministic Phase 2C row lacks a strict response contract")
+            if not (contract.get("requirements") or contract.get("question_required")):
+                raise ValueError(f"{label}:{identifier}: response contract has no scored requirement")
         pair = prompt_target_key(row)
         if pair in seen_pairs:
             raise ValueError(f"{label}:{identifier}: duplicate prompt/target pair")
@@ -268,29 +451,32 @@ def main() -> None:
     manifest_path = args.output_dir / "dataset_manifest.json"
     if not args.force and train_path.exists() and dev_path.exists() and manifest_path.exists():
         manifest = read_json(manifest_path)
-        expected_hashes = {
-            "base_train_sha256": sha256_file(args.base_train),
-            "base_dev_sha256": sha256_file(args.base_dev),
-            "train_output_sha256": sha256_file(train_path),
-            "dev_output_sha256": sha256_file(dev_path),
-        }
-        mismatches = [
-            key for key, value in expected_hashes.items()
-            if manifest.get(key) != value
-        ]
-        if mismatches:
-            raise RuntimeError(
-                "Existing Phase 2C dataset does not match its source/output hashes "
-                f"({', '.join(mismatches)}). Review the changes, then regenerate with --force."
-            )
-        train_rows = read_jsonl(train_path)
-        dev_rows = read_jsonl(dev_path)
-        validate(train_rows, "train")
-        validate(dev_rows, "dev")
-        if {prompt_target_key(row) for row in train_rows} & {prompt_target_key(row) for row in dev_rows}:
-            raise RuntimeError("Existing Phase 2C train/dev files contain exact prompt-target overlap.")
-        print(manifest_path)
-        return
+        if int(manifest.get("manifest_version", 0)) < 2:
+            print("[dataset upgrade] rebuilding Phase 2C data with explicit correctness contracts")
+        else:
+            expected_hashes = {
+                "base_train_sha256": sha256_file(args.base_train),
+                "base_dev_sha256": sha256_file(args.base_dev),
+                "train_output_sha256": sha256_file(train_path),
+                "dev_output_sha256": sha256_file(dev_path),
+            }
+            mismatches = [
+                key for key, value in expected_hashes.items()
+                if manifest.get(key) != value
+            ]
+            if mismatches:
+                raise RuntimeError(
+                    "Existing Phase 2C dataset does not match its source/output hashes "
+                    f"({', '.join(mismatches)}). Review the changes, then regenerate with --force."
+                )
+            train_rows = read_jsonl(train_path)
+            dev_rows = read_jsonl(dev_path)
+            validate(train_rows, "train")
+            validate(dev_rows, "dev")
+            if {prompt_target_key(row) for row in train_rows} & {prompt_target_key(row) for row in dev_rows}:
+                raise RuntimeError("Existing Phase 2C train/dev files contain exact prompt-target overlap.")
+            print(manifest_path)
+            return
 
     base_train = read_jsonl(args.base_train)
     base_dev = read_jsonl(args.base_dev)
@@ -317,7 +503,7 @@ def main() -> None:
     write_json(
         manifest_path,
         {
-            "manifest_version": 1,
+            "manifest_version": 2,
             "sealed_data_used": False,
             "base_train": relative_to_root(args.base_train, ROOT),
             "base_dev": relative_to_root(args.base_dev, ROOT),
@@ -335,7 +521,26 @@ def main() -> None:
             "final_dev_count": len(dev_rows),
             "exact_prompt_target_overlap": 0,
             "added_category_counts": dict(sorted(categories.items())),
-            "generation_method": "deterministic rule templates with mechanically verified answers",
+            "generation_method": "deterministic rule templates with mechanically verified answers and explicit v4.5 response contracts",
+            "generated_response_contract_version": 2,
+            "content_only_migrations": {
+                "train.jsonl": {
+                    "compatible_predecessor_sha256": [V146_DATASET_SHA256["train.jsonl"]],
+                    "current_sha256": sha256_file(train_path),
+                    "id_messages_sha256": id_messages_sha256(train_rows),
+                    "stable_ids_messages_targets_unchanged": True,
+                    "change_scope": "added explicit evaluator response contracts only",
+                    "requires_generation_rescore": True,
+                },
+                "dev.jsonl": {
+                    "compatible_predecessor_sha256": [V146_DATASET_SHA256["dev.jsonl"]],
+                    "current_sha256": sha256_file(dev_path),
+                    "id_messages_sha256": id_messages_sha256(dev_rows),
+                    "stable_ids_messages_targets_unchanged": True,
+                    "change_scope": "added explicit evaluator response contracts only",
+                    "requires_generation_rescore": True,
+                },
+            },
             "ordering": {
                 "train": "8 base records then 1 added record while available",
                 "dev": "2 base records then 1 added record while available",
