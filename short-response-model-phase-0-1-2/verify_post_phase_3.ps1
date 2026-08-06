@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run source-level checks for the integrated Phase 2B through appended Phase 9–11 pipeline.
+Run source-level checks for the integrated Phase 2B through appended Phase 9–11 pipeline, including Phase 9B.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
@@ -42,6 +42,7 @@ $Runners = @(
     ".\scripts\phase_7_sparse_runtime\run_phase_7.ps1",
     ".\scripts\phase_8_release_candidate\run_phase_8.ps1",
     ".\scripts\phase_9_student_distillation\run_phase_9.ps1",
+    ".\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1",
     ".\scripts\phase_10_student_architecture\run_phase_10.ps1",
     ".\scripts\phase_11_production_rag\run_phase_11.ps1"
 )
@@ -75,6 +76,20 @@ foreach ($Path in $Phase9BehaviorFiles) {
     }
 }
 
+$Phase9BFiles = @(
+    ".\configs\phase_9b_memory_reconstruction.json",
+    ".\scripts\phase_9b_memory_reconstruction\phase9b_common.py",
+    ".\scripts\phase_9b_memory_reconstruction\build_reconstruction_dataset.py",
+    ".\scripts\phase_9b_memory_reconstruction\evaluate_memory_reconstruction.py",
+    ".\data\phase_9b_memory_reconstruction\reviewed.sample.jsonl",
+    ".\MEMORY_RECONSTRUCTION_PIPELINE.md"
+)
+foreach ($Path in $Phase9BFiles) {
+    if (-not (Test-Path $Path)) {
+        throw "Missing Phase 9B memory reconstruction asset: $Path"
+    }
+}
+
 Write-Host "[5/6] Verifying the strict response-control contract..."
 $ResponseVerification = Join-Path ([System.IO.Path]::GetTempPath()) "short_response_model_response_control_verification.json"
 python .\scripts\phase_7_sparse_runtime\verify_response_control.py --out $ResponseVerification
@@ -88,4 +103,4 @@ if ($VerifyImports) {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Integrated Evaluator-v4.5 / Phase 2B-11 source verification: PASS"
+Write-Host "Integrated Evaluator-v4.5 / Phase 2B-11 + Phase 9B source verification: PASS"

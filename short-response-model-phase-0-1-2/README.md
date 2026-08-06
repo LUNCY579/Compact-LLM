@@ -1,5 +1,11 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.7.0 Phase 9B contextual memory reconstruction
+
+Phase 9B is now inserted between Phase 9 student distillation and Phase 10 architecture reduction. It upgrades retrieved evidence into source-state-aware memory records, generates human-reviewable ACCEPT/ADAPT/REJECT/CONFLICT/INSUFFICIENT targets, builds leakage-safe reconstruction/answer/direct-distillation curricula, trains a low-memory LoRA reconstruction adapter, and compares memory-off, naive raw replay, prompted reconstruction, trained two-pass reconstruction, and a one-pass distilled candidate.
+
+The production RAG process can enable the same inference-time protocol with `--memory-reconstruction-mode prompted` or `trained`. Invalid reconstruction JSON falls back to insufficient evidence and abstention. Phase 10 automatically prefers the human-approved `phase_9b_student_reference.json` when it exists, while retaining the accepted Phase 9 student as rollback. See `MEMORY_RECONSTRUCTION_PIPELINE.md` and `scripts/phase_9b_memory_reconstruction/EXECUTION_MANUAL.md`.
+
 ## v1.6.1 Phase 9 Behavior Curriculum v2
 
 Phase 9 now treats the earlier six-row hybrid result as an execution smoke test rather than learning evidence. The refined pipeline requires class-covered, leakage-safe real data; supplements it with a 336-row fictional authored behavior foundation; expands only human-approved targets through controlled curriculum transforms; trains curriculum SFT before confidence-filtered progressive KD; emphasizes EOS/end-of-turn targets; and keeps direct KD from initialization as an optional ablation.
@@ -34,6 +40,7 @@ This repository implements the ordered Phase 0–8 teacher program, two structur
 - **Phase 2C targeted recovery** ranks surviving Phase 2B layers and trains selected-layer adapters whose proportional training-resource savings exceed their proportional quality opportunity loss.
 - **Phase 4B post-alignment structural reduction** revalidates or further refines the accepted Phase 4 architecture before context/sparsity calibration.
 - **Phase 9 student distillation** proves evidence-conditioned SFT/KD transfer into a warm-started student.
+- **Phase 9B memory reconstruction** teaches the student to judge whether retrieved memory still applies before answering.
 - **Phase 10 student architecture search** creates and recovers physically smaller dense students and compact challengers.
 - **Phase 11 production RAG** measures and packages the complete grounded local runtime.
 
@@ -80,6 +87,7 @@ The governing files are `EVALUATION_V4_5_FRESH_MESSAGE_CONTRACTS.md`, `configs/q
 - `scripts/phase_2c_targeted_recovery/EXECUTION_MANUAL.md` — targeted recovery, review, resume, and handoff.
 - `POST_PHASE_3_EXECUTION_GUIDE.md` — Phase 4–11 execution order, including single and hybrid Phase 9 handoffs.
 - `STUDENT_DISTILLATION_PIPELINE.md` — Phase 9 distillation foundation.
+- `MEMORY_RECONSTRUCTION_PIPELINE.md` — Phase 9B source-state reconstruction design, commands, and gates.
 - `PHASE_10_11_ARCHITECTURE_REVIEW.md` — codebase review, corrected defects, boundaries, and Phase 10/11 architecture.
 - `PHASE_10_11_WORKFLOW.md` — runnable Phase 10/11 commands and human handoffs.
 - `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md` — runnable Phase 9 commands and gates.

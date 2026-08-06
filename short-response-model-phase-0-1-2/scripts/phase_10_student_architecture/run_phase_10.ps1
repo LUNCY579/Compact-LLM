@@ -14,6 +14,7 @@ param(
     [ValidateSet("Plan", "Pilot", "Full", "Evaluate")][string]$Mode = "Pilot",
     [string]$StudentModel = "",
     [string]$Phase9ReferenceManifest = ".\artifacts\references\phase_9_student_reference.json",
+    [string]$Phase9BReferenceManifest = ".\artifacts\references\phase_9b_student_reference.json",
     [string]$TeacherModel = "",
     [string]$Config = ".\configs\phase_10_student_architecture.json",
     [string]$DatasetRoot = ".\artifacts\phase_9_student_distillation\pilot_dataset",
@@ -52,10 +53,17 @@ function Get-PropertyOrDefault {
     return $Property.Value
 }
 
+$UsePhase9BReference = [string]::IsNullOrWhiteSpace($StudentModel) -and (Test-Path $Phase9BReferenceManifest)
 if (-not $AllowUnapprovedPhase9) {
-    Invoke-PythonStep "[Gate] Requiring the accepted Phase 9 student..." @(
-        ".\scripts\common\check_human_gate.py", "--phase", "9"
-    )
+    if ($UsePhase9BReference) {
+        Invoke-PythonStep "[Gate] Requiring the accepted Phase 9B reconstruction student..." @(
+            ".\scripts\common\check_human_gate.py", "--phase", "9B"
+        )
+    } else {
+        Invoke-PythonStep "[Gate] Requiring the accepted Phase 9 student..." @(
+            ".\scripts\common\check_human_gate.py", "--phase", "9"
+        )
+    }
 }
 if (-not (Test-Path $Config)) { throw "Missing Phase 10 config: $Config" }
 $Phase10Config = Get-Content $Config -Raw | ConvertFrom-Json
@@ -64,12 +72,13 @@ $CandidateRows = $Phase10Config.candidate_sets.$CandidateMode
 if (-not $CandidateRows) { throw "No candidate set found for mode $CandidateMode in $Config" }
 
 if ([string]::IsNullOrWhiteSpace($StudentModel)) {
-    $StudentModel = python .\scripts\phase_10_student_architecture\resolve_phase_9_student.py --manifest $Phase9ReferenceManifest
+    $SelectedStudentManifest = if ($UsePhase9BReference) { $Phase9BReferenceManifest } else { $Phase9ReferenceManifest }
+    $StudentModel = python .\scripts\phase_10_student_architecture\resolve_phase_9_student.py --manifest $SelectedStudentManifest
     if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($StudentModel)) {
-        throw "Could not resolve the selected Phase 9 student. Finalize Phase 9 or pass -StudentModel."
+        throw "Could not resolve the selected Phase 9/9B student. Finalize the prior phase or pass -StudentModel."
     }
 }
-if (-not (Test-Path $StudentModel)) { throw "Missing selected Phase 9 student checkpoint: $StudentModel" }
+if (-not (Test-Path $StudentModel)) { throw "Missing selected Phase 9/9B student checkpoint: $StudentModel" }
 if ([string]::IsNullOrWhiteSpace($TeacherModel)) {
     $TeacherModel = python .\scripts\common\resolve_reference_model.py
     if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($TeacherModel)) {
@@ -110,7 +119,7 @@ function Invoke-RagEvaluation {
     Invoke-PythonStep $Name $Args
 }
 
-Invoke-RagEvaluation "[1] Evaluating the selected Phase 9 reference student..." $StudentModel "" $ReferenceEval
+Invoke-RagEvaluation "[1] Evaluating the selected Phase 9/9B reference student..." $StudentModel "" $ReferenceEval
 
 if ($Mode -ne "Evaluate") {
     if (-not ($ReuseExisting -and (Test-Path $Profile))) {

@@ -15,6 +15,7 @@
 | 7 | `phase_7_sparse_runtime` | Strict response control, routers, dense fallback, measured runtime. | Response-control verification, runtime comparison, and optional router checkpoint. |
 | 8 | `phase_8_release_candidate` | Strict sealed evaluation, full release audit, and human decision. | Release package with response-control policy. |
 | 9 | `phase_9_student_distillation` | Build a leakage-safe real pilot, supplement it with an authored fictional behavior foundation, train curriculum SFT then progressive KD, and compare warm versus narrow research tracks under five RAG conditions. | Named accepted student/intermediate/control classification plus Phase 9 assessment and gate. |
+| 9B | `phase_9b_memory_reconstruction` | Add source-state-aware applicability reconstruction between retrieval and answer generation; train and compare two-pass and one-pass behavior. | Accepted reconstruction-aware student/runtime policy plus Phase 9 rollback. |
 | 10 | `phase_10_student_architecture` | Physically reduce the approved student, recover promising candidates under the original teacher, and compare compact challengers. | Accepted Phase 10 checkpoint/reference plus rollback. |
 | 11 | `phase_11_production_rag` | Build the immutable RAG runtime, calibrate answerability, quantize/benchmark, and package the approved deployment. | Measured production release package and manifest. |
 
@@ -27,10 +28,11 @@
 - Phase 6 asks **what can be temporarily masked** while preserving dense computation for scientific validation.
 - Phase 7 asks **what can be dynamically skipped in the measured runtime**.
 - Phase 9 asks **whether a warm depth-copy student can learn evidence use through reviewed curriculum SFT and confidence-filtered progressive KD, while narrow same-tokenizer students remain explicit research controls**.
+- Phase 9B asks **whether judging, adapting, or rejecting retrieved memory reduces negative transfer enough to justify its full runtime cost**.
 - Phase 10 asks **which physically smaller architecture or compact challenger gives the best measured quality per deployed byte**.
 - Phase 11 asks **whether the selected student and RAG stack produce a measured, grounded, rollback-safe local release**.
 
-A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 resolves exactly one named, human-approved branch, and profile-specific artifacts are written side by side. Phase 5 still requires an approved Phase 4B selected-reference manifest. Phase 9 requires an explicitly approved teacher and keeps all student artifacts isolated from the teacher catalog. Phase 10 requires a materialized Phase 9 student reference, and Phase 11 requires a materialized Phase 10 student reference.
+A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 resolves exactly one named, human-approved branch, and profile-specific artifacts are written side by side. Phase 5 still requires an approved Phase 4B selected-reference manifest. Phase 9 requires an explicitly approved teacher and keeps all student artifacts isolated from the teacher catalog. Phase 10 prefers a materialized Phase 9B reference when one exists and otherwise uses the Phase 9 reference; Phase 11 requires a materialized Phase 10 student reference.
 
 - Learned short behavior and hard response control are measured separately: Phase 1 uses `eos_only`, while production-oriented Phases 5–11 default to `one_sentence` where generation is model-controlled; deterministic external abstention may bypass generation.
 - The strict boundary is an output/runtime mechanism. It does not authorize whole-layer early exit or reduce checkpoint weight memory.

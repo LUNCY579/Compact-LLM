@@ -2,8 +2,8 @@ from __future__ import annotations
 
 """Require an explicit human PASS before advancing the pipeline.
 
-The official phases use numeric labels, while structural studies are inserted
-as Phases 2B and 4B. Accepting a string label keeps all runners on one gate checker and
+The official phases use numeric labels, while inserted studies use labels
+such as Phases 2B, 4B, and 9B. Accepting a string label keeps all runners on one gate checker and
 prevents a second, slightly different approval implementation from drifting.
 """
 
@@ -46,9 +46,9 @@ def normalize_phase_label(value: str) -> str:
     """Normalize supported labels such as ``4b`` to the filename form ``4B``."""
 
     phase = value.strip().upper()
-    if not re.fullmatch(r"(?:[0-9]+|2B|4B)", phase):
+    if not re.fullmatch(r"(?:[0-9]+|2B|4B|9B)", phase):
         raise argparse.ArgumentTypeError(
-            "Phase must be a number such as 3, or an inserted structural phase such as 2B/4B."
+            "Phase must be a number such as 3, or an inserted phase such as 2B/4B/9B."
         )
     return phase
 

@@ -23,7 +23,7 @@ For GGUF, provide the exact llama.cpp conversion, quantizer, and runtime executa
 
 ## Production process
 
-Use `serve_production_rag.py` for one-shot, interactive, input JSONL, or persistent stdin JSONL operation. It returns route, provenance, gate, grounding, timing, and memory evidence. Application-specific IPC wrappers may sit around this stable process boundary.
+Use `serve_production_rag.py` for one-shot, interactive, input JSONL, or persistent stdin JSONL operation. It returns route, provenance, gate, grounding, timing, and memory evidence. Add `--memory-reconstruction-mode prompted` for a training-free Phase 9B experiment or `trained` for an approved reconstruction checkpoint. JSONL requests may include `current_state`; invalid reconstruction output safely becomes insufficient evidence and abstention. Application-specific IPC wrappers may sit around this stable process boundary.
 
 ## Release
 

@@ -1,5 +1,22 @@
 # Complete Phase 10–11 workflow
 
+## Phase 9B handoff amendment
+
+Phase 10 now prefers `artifacts/references/phase_9b_student_reference.json` when it exists and has an explicit Phase 9B human PASS. Otherwise it continues to use the Phase 9 reference. The Phase 9B manifest preserves the Phase 9 model as rollback.
+
+Phase 11 can run source-state reconstruction before final answer generation:
+
+```powershell
+python .\scripts\phase_11_production_rag\serve_production_rag.py `
+  --model .\artifacts\phase_11_production_rag\deployment_artifact `
+  --knowledge-db .\artifacts\phase_11_production_rag\knowledge_snapshot\knowledge.sqlite3 `
+  --answerability-calibration .\artifacts\phase_11_production_rag\answerability_calibration.json `
+  --memory-reconstruction-mode trained
+```
+
+Each JSONL request may include a structured `current_state` object. The result records reconstruction validity, decision payload, source IDs, extra prompt/generated tokens, and two-pass latency. `off` remains the backward-compatible default.
+
+
 Run from the repository root in the activated Python 3.11 environment.
 
 ## Prerequisite: finish and approve Phase 9

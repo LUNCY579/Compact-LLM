@@ -128,9 +128,36 @@ To compare the warm 344M depth-copy student with the 100M/130M/170M narrow same-
 
 Hybrid assessment keys are profile-qualified, such as `sft_warm_344m`, `progressive_kd_warm_344m`, and `progressive_kd_narrow_130m`. Narrow profiles are research controls and are not automatically production-eligible. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
 
+## 7B. Phase 9B — contextual memory reconstruction
+
+After Phase 9 has an explicit human PASS and its exact student has been materialized, prepare source-state reconstruction candidates:
+
+```powershell
+.\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1 `
+  -Mode Prepare `
+  -Teacher4Bit
+```
+
+Human-review the generated packet, save accepted rows, then train and evaluate the low-memory adapter:
+
+```powershell
+.\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1 `
+  -Mode Train `
+  -ReviewedReconstructions .\artifacts\phase_9b_memory_reconstruction\teacher_reconstruction_candidates.reviewed.jsonl `
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 400
+
+.\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1 `
+  -Mode Evaluate `
+  -ReviewedReconstructions .\artifacts\phase_9b_memory_reconstruction\teacher_reconstruction_candidates.reviewed.jsonl
+```
+
+Review `reports/PHASE_9B_STOP_GATE.md`. After explicit PASS, run `finalize_phase_9b_selection.py` with the exact accepted strategy. A `phase10_candidate` handoff normally requires the one-pass `direct_candidate` to be proportionally eligible; a two-pass-only runtime can instead be classified `runtime_only`.
+
 ## 8. Phase 10 — student architecture reduction and challengers
 
-After Phase 9 human approval, materialize its exact candidate and run the pilot:
+After Phase 9 human approval, materialize its exact candidate. Phase 10 automatically uses a finalized Phase 9B reference when present; otherwise it uses the Phase 9 reference. Then run the pilot:
 
 ```powershell
 python .\scripts\phase_10_student_architecture\finalize_phase_9_selection.py `

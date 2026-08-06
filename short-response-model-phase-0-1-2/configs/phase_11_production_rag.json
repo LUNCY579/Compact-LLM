@@ -27,6 +27,22 @@
     "false_abstention_cost": 1.0,
     "calibration_policy": "development_set_only_recalibrate_after_any_index_or_retriever_change"
   },
+  "memory_reconstruction": {
+    "default_mode": "off",
+    "supported_modes": [
+      "off",
+      "prompted",
+      "trained"
+    ],
+    "reconstruction_max_new_tokens": 128,
+    "invalid_json_policy": "insufficient_then_abstain",
+    "source_state_field": "metadata.source_state",
+    "validity_conditions_field": "metadata.validity_conditions",
+    "current_state_request_field": "current_state",
+    "preserve_source_ids": true,
+    "evidence_is_data_not_instruction": true,
+    "measure_full_two_pass_cost": true
+  },
   "generation": {
     "max_sequence_length": 1024,
     "max_new_tokens": 32,

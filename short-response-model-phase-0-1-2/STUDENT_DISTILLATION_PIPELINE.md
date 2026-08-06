@@ -21,6 +21,13 @@ The first hybrid smoke run proved that the pipeline executed but did not prove t
 
 The bundled synthetic foundation contains fictional, authored evidence/answer pairs. It teaches reusable evidence behavior and concise conversation, not broad language competence. Narrow randomly initialized students remain research controls until separate pretraining or language-readiness evidence exists.
 
+
+## Phase 9B extension — source-state-aware memory reconstruction
+
+Phase 9 proves that the student can answer from supplied evidence. Phase 9B tests a stricter capability: whether the student can compare the historical state and validity conditions of a retrieved memory with the current state, then accept, adapt, reject, flag conflict, or abstain before answering. Semantic retrieval remains external; reconstruction is an inference-time model operation that can be taught through reviewed SFT/KD and later distilled into one pass.
+
+Phase 9B does not alter the accepted Phase 9 artifacts. It writes a separate reference manifest and retains the exact Phase 9 student as rollback. See `MEMORY_RECONSTRUCTION_PIPELINE.md`.
+
 ## 1. Relationship to the official teacher pipeline
 
 The official Phase 0–8 pipeline remains the authoritative teacher-development program:

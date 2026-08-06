@@ -37,6 +37,12 @@ from scripts.phase_11_production_rag.benchmark_production_runtime import (
     load_transformers_model,
     process_memory_packet,
 )
+from scripts.phase_9b_memory_reconstruction.phase9b_common import (
+    build_answer_messages,
+    build_reconstruction_messages,
+    memory_from_phase9_passage,
+    parse_reconstruction_output,
+)
 from scripts.phase_11_production_rag.phase11_common import (
     answerability_gate,
     passage_id,
@@ -64,11 +70,26 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-sequence-length", type=int, default=1024)
     parser.add_argument("--max-new-tokens", type=int, default=32)
     parser.add_argument("--response-control", choices=("eos_only", "one_sentence"), default="one_sentence")
+    parser.add_argument(
+        "--memory-reconstruction-mode",
+        choices=("off", "prompted", "trained"),
+        default="off",
+        help=(
+            "Insert a Phase 9B source-state reconstruction pass before the final answer. "
+            "prompted uses the protocol without claiming specialized training; trained is for an approved Phase 9B checkpoint."
+        ),
+    )
+    parser.add_argument("--reconstruction-max-new-tokens", type=int, default=128)
     parser.add_argument("--load-in-4bit", action="store_true")
     parser.add_argument("--load-in-8bit", action="store_true")
     parser.add_argument("--question", default=None, help="Run one request and exit.")
     parser.add_argument("--mode", default=None, help="Optional explicit route for --question.")
     parser.add_argument("--system-prompt", default=None)
+    parser.add_argument(
+        "--current-state-json",
+        default=None,
+        help="Optional JSON object used by Phase 9B reconstruction for a one-shot --question.",
+    )
     parser.add_argument("--input-jsonl", type=Path, default=None)
     parser.add_argument("--output-jsonl", type=Path, default=None)
     parser.add_argument("--plain", action="store_true", help="Print only answer text for one-shot/interactive use.")
@@ -259,32 +280,93 @@ class ProductionRAGRuntime:
 
         selected_tokenizer = self.tokenizer
         generation_source = self.tokenizer_source
-        if external_answer is None:
-            selected_model = self.model
-            if used_fallback:
-                selected_model, selected_tokenizer = self._fallback()
-                generation_source = self.args.fallback_model
+        selected_model = self.model
+        if used_fallback:
+            selected_model, selected_tokenizer = self._fallback()
+            generation_source = self.args.fallback_model
+
+        def run_generation(
+            prompt_messages: list[dict[str, str]],
+            *,
+            max_new_tokens: int,
+            response_control: str,
+        ) -> dict[str, Any]:
             if self.args.runtime_backend == "transformers":
                 if selected_model is None:
                     raise RuntimeError("Transformers runtime model was not loaded")
-                generated = generate_transformers(
+                return generate_transformers(
                     selected_model,
                     selected_tokenizer,
-                    messages,
+                    prompt_messages,
                     max_sequence_length=self.args.max_sequence_length,
-                    max_new_tokens=self.args.max_new_tokens,
-                    response_control=self.args.response_control,
+                    max_new_tokens=max_new_tokens,
+                    response_control=response_control,
                 )
-            else:
-                generated = generate_llama_cpp(
-                    self.args.llama_cli,
-                    Path(self.args.model),
-                    self.tokenizer,
-                    messages,
-                    max_new_tokens=self.args.max_new_tokens,
-                    response_control=self.args.response_control,
-                    extra_args=self.args.llama_cli_arg,
-                )
+            return generate_llama_cpp(
+                self.args.llama_cli,
+                Path(self.args.model),
+                self.tokenizer,
+                prompt_messages,
+                max_new_tokens=max_new_tokens,
+                response_control=response_control,
+                extra_args=self.args.llama_cli_arg,
+            )
+
+        reconstruction_packet: dict[str, Any] | None = None
+        reconstruction_generated: dict[str, Any] | None = None
+        reconstruction_memories: list[dict[str, Any]] = []
+        if procedures:
+            reconstruction_memories.extend(
+                memory_from_phase9_passage(item, default_type="procedure") for item in procedures
+            )
+        if evidence:
+            default_type = "conversation" if route.mode == "social_roleplay" else "factual"
+            reconstruction_memories.extend(
+                memory_from_phase9_passage(item, default_type=default_type) for item in evidence
+            )
+
+        if (
+            external_answer is None
+            and not used_fallback
+            and self.args.memory_reconstruction_mode != "off"
+            and reconstruction_memories
+        ):
+            current_state = request.get("current_state")
+            if not isinstance(current_state, dict):
+                current_state = {}
+            current_state = {"route": route.mode, **current_state}
+            reconstruction_messages = build_reconstruction_messages(
+                question=question,
+                current_state=current_state,
+                memories=reconstruction_memories,
+                mode=(route.mode if route.mode in {"grounded_factual", "procedure", "social_roleplay"} else None),
+            )
+            reconstruction_generated = run_generation(
+                reconstruction_messages,
+                max_new_tokens=self.args.reconstruction_max_new_tokens,
+                response_control="eos_only",
+            )
+            parsed = parse_reconstruction_output(str(reconstruction_generated.get("answer") or ""))
+            reconstruction_packet = {
+                "mode": self.args.memory_reconstruction_mode,
+                "valid": parsed.valid,
+                "error": parsed.error,
+                "payload": parsed.payload,
+                "memory_ids": [item["memory_id"] for item in reconstruction_memories],
+            }
+            messages = build_answer_messages(
+                question=question,
+                reconstruction=parsed.payload,
+                mode=(route.mode if route.mode in {"grounded_factual", "procedure", "social_roleplay"} else None),
+                system_prompt=request.get("system_prompt"),
+            )
+
+        if external_answer is None:
+            generated = run_generation(
+                messages,
+                max_new_tokens=self.args.max_new_tokens,
+                response_control=self.args.response_control,
+            )
         else:
             visible = len(selected_tokenizer(external_answer, add_special_tokens=False)["input_ids"])
             generated = {
@@ -342,15 +424,22 @@ class ProductionRAGRuntime:
                 for item in rejected
             ],
             "grounding": grounding_packet,
+            "reconstruction": reconstruction_packet,
             "timing": {
                 "retrieval_seconds": retrieval_seconds,
+                "reconstruction_seconds": (reconstruction_generated or {}).get("generation_seconds", 0.0),
                 "generation_seconds": generated.get("generation_seconds"),
                 "prefill_probe_seconds": generated.get("prefill_probe_seconds"),
+                "total_generation_seconds": float((reconstruction_generated or {}).get("generation_seconds") or 0.0) + float(generated.get("generation_seconds") or 0.0),
                 "total_seconds": time.perf_counter() - started_total,
             },
             "generation": {
+                "reconstruction_prompt_tokens": (reconstruction_generated or {}).get("prompt_tokens", 0),
+                "reconstruction_generated_tokens": (reconstruction_generated or {}).get("generated_tokens", 0),
                 "prompt_tokens": generated.get("prompt_tokens"),
+                "total_prompt_tokens": int((reconstruction_generated or {}).get("prompt_tokens") or 0) + int(generated.get("prompt_tokens") or 0),
                 "generated_tokens": generated.get("generated_tokens"),
+                "total_generated_tokens": int((reconstruction_generated or {}).get("generated_tokens") or 0) + int(generated.get("generated_tokens") or 0),
                 "visible_tokens": generated.get("visible_tokens"),
                 "stop_reason": generated.get("stop_reason"),
                 "response_control_trimmed": generated.get("response_control_trimmed"),
@@ -370,12 +459,22 @@ def emit(result: dict[str, Any], *, plain: bool, stream: TextIO) -> None:
 
 def iter_requests(args: argparse.Namespace) -> list[dict[str, Any]] | None:
     if args.question is not None:
+        current_state: dict[str, Any] = {}
+        if args.current_state_json:
+            try:
+                value = json.loads(args.current_state_json)
+            except json.JSONDecodeError as exc:
+                raise ValueError(f"--current-state-json is invalid JSON: {exc}") from exc
+            if not isinstance(value, dict):
+                raise ValueError("--current-state-json must decode to an object")
+            current_state = value
         return [
             {
                 "id": "one_shot",
                 "question": args.question,
                 "mode": args.mode,
                 "system_prompt": args.system_prompt,
+                "current_state": current_state,
             }
         ]
     if args.input_jsonl is not None:

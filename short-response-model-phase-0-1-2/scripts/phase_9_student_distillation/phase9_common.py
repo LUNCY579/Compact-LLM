@@ -159,6 +159,16 @@ def validate_knowledge_record(row: dict[str, Any], *, kind: str) -> dict[str, An
         raise ValueError(f"{kind} record is missing {id_field}")
     if not text:
         raise ValueError(f"{kind} record {record_id} has empty text")
+    metadata = dict(row.get("metadata")) if isinstance(row.get("metadata"), dict) else {}
+    # Phase 9B-compatible source-state fields remain inside the existing metadata
+    # column, so old SQLite snapshots stay readable while new snapshots can
+    # reconstruct applicability at inference time.
+    if isinstance(row.get("source_state"), dict):
+        metadata.setdefault("source_state", dict(row["source_state"]))
+    if isinstance(row.get("validity_conditions"), dict):
+        metadata.setdefault("validity_conditions", dict(row["validity_conditions"]))
+    if row.get("memory_type"):
+        metadata.setdefault("memory_type", str(row["memory_type"]))
     return {
         "record_id": record_id,
         "kind": kind,
@@ -170,7 +180,7 @@ def validate_knowledge_record(row: dict[str, Any], *, kind: str) -> dict[str, An
         "trust_level": str(row.get("trust_level") or ("trusted" if kind == "procedure" else "standard")),
         "claim_key": str(row.get("claim_key") or ""),
         "claim_value": str(row.get("claim_value") or ""),
-        "metadata": row.get("metadata") if isinstance(row.get("metadata"), dict) else {},
+        "metadata": metadata,
     }
 
 

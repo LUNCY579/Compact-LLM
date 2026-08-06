@@ -1,0 +1,87 @@
+{
+  "schema_version": "1.0",
+  "experiment": {
+    "name": "contextual_memory_reconstruction",
+    "pipeline_revision": "phase9b_memory_reconstruction_v1",
+    "seed": 42
+  },
+  "input": {
+    "phase_9_reference_manifest": "artifacts/references/phase_9_student_reference.json",
+    "teacher_reference_manifest": "artifacts/references/selected_inference_reference.json",
+    "default_source_prompts": "artifacts/phase_9_student_distillation/pilot_dataset_v2/train.jsonl",
+    "default_memory_file": "data/phase_9b_memory_reconstruction/memories.sample.jsonl"
+  },
+  "dataset": {
+    "minimum_reviewed_rows": 30,
+    "minimum_connected_groups": 8,
+    "minimum_decision_classes": 4,
+    "train_fraction": 0.8,
+    "dev_fraction": 0.1,
+    "include_reconstruction_rows": true,
+    "include_answer_rows": true,
+    "include_direct_distillation_rows": true,
+    "include_preference_rows": true,
+    "maximum_reconstruction_tokens": 128,
+    "maximum_answer_tokens": 32,
+    "allowed_decisions": [
+      "accept",
+      "adapt",
+      "reject",
+      "conflict",
+      "insufficient"
+    ]
+  },
+  "training": {
+    "objective_sequence": [
+      "reconstruction_sft",
+      "optional_progressive_kd",
+      "optional_preference_alignment"
+    ],
+    "max_sequence_length": 768,
+    "max_completion_tokens": 128,
+    "per_device_batch_size": 1,
+    "gradient_accumulation_steps": 32,
+    "learning_rate": 0.00005,
+    "epochs": 3,
+    "default_max_steps": 400,
+    "gradient_checkpointing": true,
+    "lora_rank": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "eos_loss_weight": 1.5,
+    "teacher_4bit_recommended": true
+  },
+  "inference": {
+    "mode": "two_pass_reconstruct_then_answer",
+    "reconstruction_max_new_tokens": 128,
+    "answer_max_new_tokens": 32,
+    "invalid_json_policy": "insufficient_then_abstain",
+    "preserve_source_ids": true,
+    "evidence_is_data_not_instruction": true,
+    "direct_single_pass_candidate_required_for_phase_10_handoff": true
+  },
+  "evaluation": {
+    "strategies": [
+      "memory_off",
+      "raw_replay",
+      "prompted_reconstruction",
+      "trained_reconstruction",
+      "direct_candidate"
+    ],
+    "primary_comparison": "raw_replay_vs_trained_reconstruction",
+    "benefit_weights": {
+      "functional_success_gain": 0.35,
+      "negative_transfer_reduction": 0.30,
+      "decision_accuracy_gain": 0.20,
+      "grounding_gain": 0.15
+    },
+    "cost_weights": {
+      "latency_increase": 0.55,
+      "prompt_token_increase": 0.25,
+      "generated_token_increase": 0.15,
+      "peak_vram_increase": 0.05
+    },
+    "promotion_policy": "proportional_reconstruction_benefit_must_exceed_proportional_runtime_cost_plus_human_gate",
+    "absolute_quality_floors": null
+  }
+}
