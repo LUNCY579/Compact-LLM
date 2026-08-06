@@ -14,7 +14,7 @@
 | 6 | `phase_6_sparse_simulation` | Activation traces, oracle masks, quality frontier. | Router dataset and frontier. |
 | 7 | `phase_7_sparse_runtime` | Strict response control, routers, dense fallback, measured runtime. | Response-control verification, runtime comparison, and optional router checkpoint. |
 | 8 | `phase_8_release_candidate` | Strict sealed evaluation, full release audit, and human decision. | Release package with response-control policy. |
-| 9 | `phase_9_student_distillation` | Build and compare warm and narrow RAG-specialized students from the accepted teacher, including single or hybrid SFT/KD suites. | Named accepted student/intermediate/control classification plus Phase 9 assessment and gate. |
+| 9 | `phase_9_student_distillation` | Build a leakage-safe real pilot, supplement it with an authored fictional behavior foundation, train curriculum SFT then progressive KD, and compare warm versus narrow research tracks under five RAG conditions. | Named accepted student/intermediate/control classification plus Phase 9 assessment and gate. |
 | 10 | `phase_10_student_architecture` | Physically reduce the approved student, recover promising candidates under the original teacher, and compare compact challengers. | Accepted Phase 10 checkpoint/reference plus rollback. |
 | 11 | `phase_11_production_rag` | Build the immutable RAG runtime, calibrate answerability, quantize/benchmark, and package the approved deployment. | Measured production release package and manifest. |
 
@@ -26,7 +26,7 @@
 - Phase 4B asks **whether the aligned checkpoint should keep, refine, or reject structural reduction**.
 - Phase 6 asks **what can be temporarily masked** while preserving dense computation for scientific validation.
 - Phase 7 asks **what can be dynamically skipped in the measured runtime**.
-- Phase 9 asks **whether evidence-conditioned SFT/KD can transfer the teacher into a warm depth-copy student and how narrow same-tokenizer research controls compare in one auditable gate**.
+- Phase 9 asks **whether a warm depth-copy student can learn evidence use through reviewed curriculum SFT and confidence-filtered progressive KD, while narrow same-tokenizer students remain explicit research controls**.
 - Phase 10 asks **which physically smaller architecture or compact challenger gives the best measured quality per deployed byte**.
 - Phase 11 asks **whether the selected student and RAG stack produce a measured, grounded, rollback-safe local release**.
 

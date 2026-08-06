@@ -21,7 +21,9 @@ from scripts.phase_9_student_distillation.phase9_common import (
     is_abstention,
     normalize_response_contract,
     split_by_group,
+    connected_component_groups,
 )
+from scripts.phase_9_student_distillation.phase9_metrics import decision_class
 
 
 def parse_args() -> argparse.Namespace:
@@ -32,6 +34,16 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--train-fraction", type=float, default=0.80)
     parser.add_argument("--dev-fraction", type=float, default=0.10)
     parser.add_argument("--allow-pending-for-smoke-test", action="store_true")
+    parser.add_argument("--minimum-reviewed-rows", type=int, default=30)
+    parser.add_argument("--minimum-connected-groups", type=int, default=8)
+    parser.add_argument("--minimum-dev-rows", type=int, default=3)
+    parser.add_argument("--minimum-test-rows", type=int, default=4)
+    parser.add_argument("--minimum-dev-supported", type=int, default=2)
+    parser.add_argument("--minimum-dev-unsupported", type=int, default=2)
+    parser.add_argument("--minimum-test-supported", type=int, default=1)
+    parser.add_argument("--minimum-test-unsupported", type=int, default=1)
+    parser.add_argument("--smoke-test", action="store_true", help="Permit a tiny packet but mark it non-research-ready.")
+    parser.add_argument("--require-research-ready", action="store_true")
     return parser.parse_args()
 
 
@@ -144,6 +156,7 @@ def main() -> None:
             raise ValueError(f"Duplicate reviewed ID: {converted['id']}")
         ids.add(converted["id"])
         normalized.append(converted)
+    groups = connected_component_groups(normalized)
     splits = split_by_group(
         normalized,
         seed=args.seed,
@@ -151,12 +164,51 @@ def main() -> None:
         dev_fraction=args.dev_fraction,
     )
     assert_no_group_leakage(splits)
+    readiness_reasons: list[str] = []
+    if len(normalized) < args.minimum_reviewed_rows:
+        readiness_reasons.append(
+            f"reviewed rows {len(normalized)} < required {args.minimum_reviewed_rows}"
+        )
+    if len(groups) < args.minimum_connected_groups:
+        readiness_reasons.append(
+            f"connected groups {len(groups)} < required {args.minimum_connected_groups}"
+        )
+    if len(splits["dev"]) < args.minimum_dev_rows:
+        readiness_reasons.append(
+            f"dev rows {len(splits['dev'])} < required {args.minimum_dev_rows}"
+        )
+    if len(splits["test"]) < args.minimum_test_rows:
+        readiness_reasons.append(
+            f"test rows {len(splits['test'])} < required {args.minimum_test_rows}"
+        )
+    class_counts = {
+        split: Counter(decision_class(row) for row in rows)
+        for split, rows in splits.items()
+    }
+    class_requirements = {
+        "dev": {"supported": args.minimum_dev_supported, "unsupported": args.minimum_dev_unsupported},
+        "test": {"supported": args.minimum_test_supported, "unsupported": args.minimum_test_unsupported},
+    }
+    for split, requirements in class_requirements.items():
+        for klass, minimum in requirements.items():
+            actual = int(class_counts[split].get(klass, 0))
+            if actual < minimum:
+                readiness_reasons.append(
+                    f"{split} {klass} rows {actual} < required {minimum}"
+                )
+    research_ready = not readiness_reasons and not args.smoke_test
+    if args.require_research_ready and not research_ready:
+        raise ValueError(
+            "Phase 9 dataset is not research-ready: " + "; ".join(readiness_reasons)
+            + ". Add independent reviewed topics/documents; repeated variants do not replace held-out groups."
+        )
     args.output_dir.mkdir(parents=True, exist_ok=True)
     for split, rows in splits.items():
         write_jsonl(args.output_dir / f"{split}.jsonl", rows)
 
     manifest = {
         "schema_version": "1.0",
+        "pipeline_revision": "phase9_behavior_curriculum_v2",
         "source": str(args.reviewed_input),
         "source_sha256": sha256(args.reviewed_input),
         "seed": args.seed,
@@ -165,9 +217,27 @@ def main() -> None:
             "no topic or document is split across train/dev/test"
         ),
         "counts": {split: len(rows) for split, rows in splits.items()},
+        "connected_group_count": len(groups),
+        "research_ready": research_ready,
+        "research_readiness_reasons": readiness_reasons,
+        "smoke_test": args.smoke_test,
+        "minimum_requirements": {
+            "reviewed_rows": args.minimum_reviewed_rows,
+            "connected_groups": args.minimum_connected_groups,
+            "dev_rows": args.minimum_dev_rows,
+            "test_rows": args.minimum_test_rows,
+            "dev_supported": args.minimum_dev_supported,
+            "dev_unsupported": args.minimum_dev_unsupported,
+            "test_supported": args.minimum_test_supported,
+            "test_unsupported": args.minimum_test_unsupported,
+        },
         "decision_counts": {
             split: dict(Counter(str(row.get("decision")) for row in rows))
             for split, rows in splits.items()
+        },
+        "decision_class_counts": {
+            split: dict(class_counts[split])
+            for split in splits
         },
         "category_counts": {
             split: dict(Counter(str(row.get("category")) for row in rows))

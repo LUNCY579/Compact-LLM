@@ -1,149 +1,158 @@
-# Phase 9 execution manual
+# Phase 9 execution manual — Behavior Curriculum v2
 
 ## Prerequisites
 
-1. Complete the teacher Phase 0–8 pipeline and identify the exact accepted full checkpoint.
-2. Preserve the teacher evaluation, selected-reference manifest, tokenizer, and response-control contract.
-3. Prepare versioned knowledge, procedure, and prompt JSONL files.
-4. Install the repository requirements with a CUDA-enabled PyTorch build appropriate for the target computer.
-5. Run `python -m pytest -q` and `python -m compileall -q scripts tests`.
+1. Phase 8 has explicit human PASS and an exact local teacher checkpoint.
+2. The reviewed JSONL contains accepted real rows with `approved_answer` or `selected_candidate_index`.
+3. Real rows span independent topics/documents. The default research gate requires at least 30 rows and eight connected components.
+4. CUDA PyTorch, Transformers, PEFT, and the repository requirements are installed.
+5. `python -m compileall -q scripts tests` and `pytest -q` pass.
 
-## D0 — Baseline and initialization
-
-Create a warm-started intermediate first:
+## D0 — Bootstrap and review
 
 ```powershell
-python .\scripts\phase_9_student_distillation\create_student.py `
-  --source .\artifacts\<accepted-teacher> `
-  --output .\artifacts\phase_9_student_distillation\student_initialization `
-  --mode depth_copy `
-  --num-hidden-layers 12
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Bootstrap `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model
 ```
 
-The aggressive narrow Qwen track is an explicit control:
+Review `artifacts\phase_9_student_distillation\teacher_candidates.review.md`. Reject unsupported, verbose, unsafe, corrupted, role-breaking, or incomplete generations. Human-authored prompt answers appear with candidate source `authoritative_prompt_target` so they can be selected directly when correct.
 
-```powershell
-python .\scripts\phase_9_student_distillation\create_student.py `
-  --source .\artifacts\<accepted-teacher> `
-  --output .\artifacts\phase_9_student_distillation\tiny_random_control `
-  --mode custom_qwen_random `
-  --num-hidden-layers 16 `
-  --hidden-size 384 `
-  --intermediate-size 1024 `
-  --num-attention-heads 6 `
-  --num-key-value-heads 2 `
-  --head-dim 64 `
-  --acknowledge-random-control
-```
-
-Do not promote a random-control checkpoint without substantial language-readiness evidence.
-
-## D1 — Knowledge/procedure index
-
-```powershell
-python .\scripts\phase_9_student_distillation\build_knowledge_index.py `
-  --knowledge .\data\phase_9_student_distillation\knowledge.sample.jsonl `
-  --procedures .\data\phase_9_student_distillation\procedures.sample.jsonl `
-  --output .\artifacts\phase_9_student_distillation\knowledge.sqlite3
-```
-
-## D2 — Teacher-data generation and human review
-
-```powershell
-python .\scripts\phase_9_student_distillation\generate_teacher_data.py `
-  --teacher .\artifacts\<accepted-teacher> `
-  --prompts .\data\phase_9_student_distillation\prompts.sample.jsonl `
-  --knowledge-db .\artifacts\phase_9_student_distillation\knowledge.sqlite3 `
-  --retrieval-mode oracle `
-  --output .\artifacts\phase_9_student_distillation\teacher_candidates.jsonl
-```
-
-Review every row. Set `review_status` to `accepted` and either `selected_candidate_index` or `approved_answer`. Preserve rejected candidates for auditability.
-
-## D3 — Document/topic-disjoint pilot
+## D1 — Build a research-ready real split
 
 ```powershell
 python .\scripts\phase_9_student_distillation\build_pilot_dataset.py `
   --reviewed-input .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  --output-dir .\artifacts\phase_9_student_distillation\pilot_dataset `
-  --seed 42
+  --output-dir .\artifacts\phase_9_student_distillation\pilot_dataset_v2 `
+  --require-research-ready
 ```
 
-Confirm train/dev/test groups and support-document IDs do not overlap.
+The splitter preserves connected topic/document components and balances supported/unsupported coverage. Development requires at least two supported and two unsupported rows so evidence-threshold calibration is not based on one example.
 
-## D4 — Calibrate the external evidence pre-gate
+For code-path testing only, replace `--require-research-ready` with `--smoke-test`.
+
+## D2 — Build curricula
+
+The runner performs these steps automatically. Manual equivalents are:
+
+```powershell
+python .\scripts\phase_9_student_distillation\build_curriculum_dataset.py `
+  --input .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train.jsonl `
+  --output .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train_curriculum.jsonl
+
+python .\scripts\phase_9_student_distillation\build_foundation_dataset.py `
+  --prompts .\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl `
+  --output .\artifacts\phase_9_student_distillation\pilot_dataset_v2\foundation_train.jsonl
+
+python .\scripts\phase_9_student_distillation\build_curriculum_dataset.py `
+  --input .\artifacts\phase_9_student_distillation\pilot_dataset_v2\foundation_train.jsonl `
+  --output .\artifacts\phase_9_student_distillation\pilot_dataset_v2\foundation_curriculum.jsonl `
+  --canonical-repeats 1 `
+  --prompt-variants 1 `
+  --distractor-variants 1 `
+  --missing-evidence-variants 1 `
+  --injection-variants 1 `
+  --social-repeats 2
+
+python .\scripts\phase_9_student_distillation\merge_training_data.py `
+  --primary .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train_curriculum.jsonl `
+  --foundation .\artifacts\phase_9_student_distillation\pilot_dataset_v2\foundation_curriculum.jsonl `
+  --output .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train_mixed_curriculum.jsonl `
+  --primary-repeat 3 `
+  --foundation-repeat 1
+```
+
+The real curriculum is repeated more heavily than the synthetic foundation. Change the ratio only as an explicit ablation.
+
+## D3 — Calibrate retrieval on development data
 
 ```powershell
 python .\scripts\phase_9_student_distillation\calibrate_evidence_gate.py `
-  --benchmark .\artifacts\phase_9_student_distillation\pilot_dataset\dev.jsonl `
+  --benchmark .\artifacts\phase_9_student_distillation\pilot_dataset_v2\dev.jsonl `
   --knowledge-db .\artifacts\phase_9_student_distillation\knowledge.sqlite3 `
-  --output .\artifacts\phase_9_student_distillation\evidence_gate_calibration.json
+  --output .\artifacts\phase_9_student_distillation\evidence_gate_calibration_v2.json `
+  --require-research-ready
 ```
 
-The selected threshold is tied to this retriever, index, query normalization, and development distribution. Recalibrate after any of those change.
+The calibration report now records explicit positive/negative denominators. Recalibrate after changing the index, retriever, tokenization, or document distribution.
 
-## D5 — Matched SFT versus completion-only KD
-
-Ordinary SFT:
+## D4 — Curriculum SFT
 
 ```powershell
 python .\scripts\phase_9_student_distillation\train_student.py `
   --student .\artifacts\phase_9_student_distillation\student_initialization `
   --objective sft `
-  --train-file .\artifacts\phase_9_student_distillation\pilot_dataset\train.jsonl `
-  --dev-file .\artifacts\phase_9_student_distillation\pilot_dataset\dev.jsonl `
-  --output-dir .\artifacts\phase_9_student_distillation\student_sft `
-  --max-steps 200
+  --train-file .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train_mixed_curriculum.jsonl `
+  --dev-file .\artifacts\phase_9_student_distillation\pilot_dataset_v2\dev.jsonl `
+  --output-dir .\artifacts\phase_9_student_distillation\student_sft_v2 `
+  --max-steps 600 `
+  --lora `
+  --eos-loss-weight 1.5
 ```
 
-Same-initialization KD:
+Targets longer than the completion budget are skipped rather than mechanically truncated. The final completion boundary receives additional loss weight so incomplete continuation is not rewarded.
+
+## D5 — Progressive KD from SFT
+
+For LoRA continuation:
 
 ```powershell
 python .\scripts\phase_9_student_distillation\train_student.py `
   --student .\artifacts\phase_9_student_distillation\student_initialization `
-  --teacher .\artifacts\<accepted-teacher> `
+  --initial-adapter .\artifacts\phase_9_student_distillation\student_sft_v2\adapter `
+  --teacher .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   --objective kd `
-  --train-file .\artifacts\phase_9_student_distillation\pilot_dataset\train.jsonl `
-  --dev-file .\artifacts\phase_9_student_distillation\pilot_dataset\dev.jsonl `
-  --output-dir .\artifacts\phase_9_student_distillation\student_kd `
-  --max-steps 200
+  --train-file .\artifacts\phase_9_student_distillation\pilot_dataset_v2\train_mixed_curriculum.jsonl `
+  --dev-file .\artifacts\phase_9_student_distillation\pilot_dataset_v2\dev.jsonl `
+  --output-dir .\artifacts\phase_9_student_distillation\student_progressive_kd_v2 `
+  --max-steps 600 `
+  --teacher-4bit `
+  --kd-hard-weight-start 0.75 `
+  --kd-hard-weight-end 0.25 `
+  --kd-warmup-ratio 0.15 `
+  --teacher-confidence-floor 0.02 `
+  --eos-loss-weight 1.5
 ```
 
-Direct KL refuses tokenizer mismatch. For a SmolLM challenger, use sequence-level SFT first; a cross-tokenizer span-alignment experiment remains separate from the official primary gate.
+The KD warmup initially uses hard labels only. KL is applied only where the frozen teacher assigns sufficient probability to the approved target token. When no token passes, training falls back to hard labels rather than imitating a teacher that disagrees with the accepted answer.
 
-## D6 — Four-condition evaluation
+Direct KD from initialization is an optional ablation and should not replace this sequence.
 
-Run each candidate with:
+## D6 — Five-condition evaluation
 
 ```powershell
 python .\scripts\phase_9_student_distillation\evaluate_rag.py `
-  --model .\artifacts\phase_9_student_distillation\student_kd\model `
-  --benchmark .\artifacts\phase_9_student_distillation\pilot_dataset\test.jsonl `
+  --model .\artifacts\phase_9_student_distillation\student_initialization `
+  --adapter .\artifacts\phase_9_student_distillation\student_progressive_kd_v2\adapter `
+  --benchmark .\artifacts\phase_9_student_distillation\pilot_dataset_v2\test.jsonl `
   --knowledge-db .\artifacts\phase_9_student_distillation\knowledge.sqlite3 `
-  --gate-calibration .\artifacts\phase_9_student_distillation\evidence_gate_calibration.json `
-  --conditions closed_book,oracle_rag,real_rag,adversarial_rag `
-  --output-dir .\artifacts\phase_9_student_distillation\evaluation_kd
+  --gate-calibration .\artifacts\phase_9_student_distillation\evidence_gate_calibration_v2.json `
+  --conditions closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag `
+  --output-dir .\artifacts\phase_9_student_distillation\evaluation_progressive_kd_v2 `
+  --require-research-ready
 ```
 
-## D7 — Optional on-policy KD
+Inspect every metric denominator. `null` means the condition contained no applicable rows; it is not zero performance.
 
-Generate mixed trajectories and then run KD again. Student-generated rows carry hard-label weight zero. Begin around 20% student trajectories, then increase only if evaluation improves.
+## D7 — Optional on-policy recovery
 
-## D8 — Preference alignment
+Run only after progressive KD improves or exposes a trajectory-specific failure such as repetition or poor EOS. Begin around 20% student trajectories. Student-generated rows carry no hard-label CE target; the teacher distribution remains the supervisor.
 
-Use the existing Phase 3 DPO implementation only after evidence-conditioned SFT/KD is stable. Evaluate the aligned adapter with `evaluate_rag.py` and include its summary in `check_phase_9_gate.py`.
-
-## D9 — Gate and handoff
+## D8 — Assessment and human gate
 
 ```powershell
 python .\scripts\phase_9_student_distillation\check_phase_9_gate.py `
-  --teacher-summary .\artifacts\phase_9_student_distillation\evaluation_teacher\summary.json `
-  --sft-summary .\artifacts\phase_9_student_distillation\evaluation_sft\summary.json `
-  --kd-summary .\artifacts\phase_9_student_distillation\evaluation_kd\summary.json
+  --teacher-summary .\artifacts\phase_9_student_distillation\evaluation_teacher_v2\summary.json `
+  --candidate sft=.\artifacts\phase_9_student_distillation\evaluation_sft_v2\summary.json `
+  --candidate progressive_kd=.\artifacts\phase_9_student_distillation\evaluation_progressive_kd_v2\summary.json
 ```
 
-Human review must name the exact selected artifact and classify it as production candidate, intermediate teacher, or research-only control.
+A candidate with zero correct supported answers, zero safe abstentions, invalid denominators, non-finite metrics, or `research_ready: false` cannot be recommended for production. Human PASS must name the exact artifact and classify it as production candidate, intermediate teacher, or research-only control.
 
-## D10 — Quantization and total-process measurement
+## D9 — Operational advice
 
-Quantize only the accepted dense/full student or merged adapter checkpoint. Measure generator weights, KV cache, retriever, reranker if any, index, application overhead, prompt latency, generation latency, and total process RSS. An idealized INT4 parameter estimate is not a measured deployment footprint.
+- Start with `Single`, `-UseLora`, and `-Teacher4Bit` on an 8 GB RTX 4070.
+- Do not use `-ReuseExisting` after changing data, config, or scripts unless the manifests show `phase9_behavior_curriculum_v2`.
+- Preserve old failed artifacts for comparison, but use the `_v2` directories for refined runs.
+- More KD is not automatically better. Keep SFT when KD does not improve oracle/real behavior.
+- Phase 9 is complete only when real held-out evidence proves learning; successful training logs alone are not a PASS.

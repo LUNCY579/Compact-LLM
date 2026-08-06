@@ -104,10 +104,12 @@ After human-reviewing the generated candidates:
   -Mode Pilot `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -MaxSteps 200
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 600
 ```
 
-The single-student pilot compares ordinary RAG SFT with same-initialization completion-only logit KD, evaluates closed/oracle/real/adversarial RAG, and writes a pending Phase 9 human gate.
+The single-student pilot builds a human-approved real curriculum, mixes it with the versioned fictional behavior foundation, trains curriculum SFT, continues with confidence-filtered progressive KD, evaluates closed/oracle/real/filtered-adversarial/passthrough-adversarial RAG, and writes a pending Phase 9 human gate. The default path requires research-ready real data; use `-SmokeTest` only to prove execution.
 
 To compare the warm 344M depth-copy student with the 100M/130M/170M narrow same-tokenizer research controls in one gate, use:
 
@@ -117,11 +119,14 @@ To compare the warm 344M depth-copy student with the 100M/130M/170M narrow same-
   -StudentSuite Hybrid `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -MaxSteps 200 `
+  -AcknowledgeRandomControl `
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 600 `
   -ReuseExisting
 ```
 
-Hybrid assessment keys are profile-qualified, such as `sft_warm_344m`, `kd_warm_344m`, and `kd_narrow_130m`. Narrow profiles are research controls and are not automatically production-eligible. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
+Hybrid assessment keys are profile-qualified, such as `sft_warm_344m`, `progressive_kd_warm_344m`, and `progressive_kd_narrow_130m`. Narrow profiles are research controls and are not automatically production-eligible. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
 
 ## 8. Phase 10 — student architecture reduction and challengers
 
@@ -129,7 +134,7 @@ After Phase 9 human approval, materialize its exact candidate and run the pilot:
 
 ```powershell
 python .\scripts\phase_10_student_architecture\finalize_phase_9_selection.py `
-  --candidate kd_warm_344m `
+  --candidate progressive_kd_warm_344m `
   --role intermediate_teacher `
   --reason "Approved Phase 9 warm KD student for architecture reduction."
 

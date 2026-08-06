@@ -24,6 +24,7 @@ from scripts.common.experiment_utils import (
     read_jsonl,
     read_jsonl_recover,
     sha256,
+    sha256_tree,
     write_json,
 )
 from scripts.common.quality_evaluation import (
@@ -48,13 +49,19 @@ from scripts.phase_9_student_distillation.phase9_common import (
     sanitize_passages,
     tree_bytes,
 )
+from scripts.phase_9_student_distillation.phase9_metrics import (
+    decision_class,
+    functional_answer_correct,
+    safe_rate,
+    social_response_usable,
+)
 
 try:
     from peft import PeftModel
 except ImportError:
     PeftModel = None  # type: ignore[assignment]
 
-CONDITIONS = ("closed_book", "oracle_rag", "real_rag", "adversarial_rag")
+CONDITIONS = ("closed_book", "oracle_rag", "real_rag", "adversarial_rag", "adversarial_passthrough_rag")
 
 
 def parse_args() -> argparse.Namespace:
@@ -75,6 +82,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--require-cuda", action="store_true")
     parser.add_argument("--allow-uncalibrated-real-rag", action="store_true")
+    parser.add_argument("--minimum-cases-per-condition", type=int, default=1)
+    parser.add_argument("--minimum-supported-cases", type=int, default=1)
+    parser.add_argument("--minimum-unsupported-cases", type=int, default=1)
+    parser.add_argument("--minimum-social-cases", type=int, default=0)
+    parser.add_argument("--smoke-test", action="store_true", help="Allow small diagnostic packets while explicitly marking them non-research-ready.")
+    parser.add_argument("--require-research-ready", action="store_true")
     return parser.parse_args()
 
 
@@ -128,11 +141,17 @@ def prepare_evidence(
         evidence, rejected_evidence = sanitize_passages(passage_list(row, "evidence"))
         procedures, rejected_procedures = sanitize_passages(passage_list(row, "procedures"))
         rejected = [*rejected_evidence, *rejected_procedures]
-    elif condition == "adversarial_rag":
+    elif condition in {"adversarial_rag", "adversarial_passthrough_rag"}:
         source = row.get("adversarial_evidence") if row.get("adversarial_evidence") is not None else row.get("evidence")
         adversarial_row = {**row, "evidence": source or []}
-        evidence, rejected_evidence = sanitize_passages(passage_list(adversarial_row, "evidence"))
-        procedures, rejected_procedures = sanitize_passages(passage_list(row, "procedures"))
+        evidence, rejected_evidence = sanitize_passages(
+            passage_list(adversarial_row, "evidence"),
+            drop_injection_risk=(condition == "adversarial_rag"),
+        )
+        procedures, rejected_procedures = sanitize_passages(
+            passage_list(row, "procedures"),
+            drop_injection_risk=(condition == "adversarial_rag"),
+        )
         rejected = [*rejected_evidence, *rejected_procedures]
     else:
         if retriever is None:
@@ -233,40 +252,83 @@ def row_quality_record(row: dict[str, Any], messages: list[dict[str, Any]]) -> d
 
 def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     if not rows:
-        return {"case_count": 0}
+        return {
+            "case_count": 0,
+            "supported_case_count": 0,
+            "unsupported_case_count": 0,
+            "conflict_case_count": 0,
+            "social_case_count": 0,
+            "unknown_case_count": 0,
+            "supported_answer_correctness": None,
+            "correct_abstention_rate": None,
+            "unsupported_confident_answer_rate": None,
+            "evidence_faithfulness": None,
+            "social_usable_rate": None,
+        }
     quality = aggregate_quality_rows([row["quality"] for row in rows])
-    supported = [row for row in rows if row["answer_expected"]]
-    unsupported = [row for row in rows if not row["answer_expected"] and not row["conflict_expected"]]
-    conflicts = [row for row in rows if row["conflict_expected"]]
+    supported = [row for row in rows if row.get("case_class") == "supported"]
+    unsupported = [row for row in rows if row.get("case_class") == "unsupported"]
+    conflicts = [row for row in rows if row.get("case_class") == "conflict"]
+    social = [row for row in rows if row.get("case_class") == "social"]
+    unknown = [row for row in rows if row.get("case_class") == "unknown"]
     retrieval_cases = [row for row in rows if row.get("retrieval_applicable")]
     retrieval_hits = [row for row in retrieval_cases if row.get("support_retrieved")]
     generation_times = [float(row["generation_seconds"]) for row in rows]
     retrieval_times = [float(row["retrieval_seconds"]) for row in rows]
     visible_tokens = [int(row["visible_tokens"]) for row in rows]
+
     correct_supported = [row for row in supported if row.get("supported_answer_correct")]
     correct_abstentions = [row for row in unsupported if row.get("abstained")]
     unnecessary = [row for row in supported if row.get("abstained")]
     unsupported_confident = [row for row in unsupported if not row.get("abstained")]
-    faithful = [row for row in rows if row.get("grounding_supported")]
     conflict_detected = [row for row in conflicts if row.get("conflict_response")]
+    social_usable = [row for row in social if row.get("social_usable")]
+    faithfulness_cases = [
+        row for row in rows
+        if row.get("grounding_applicable") and not row.get("abstained")
+    ]
+    faithful = [row for row in faithfulness_cases if row.get("grounding_supported")]
+
     return {
         **quality,
+        "case_count": len(rows),
         "supported_case_count": len(supported),
         "unsupported_case_count": len(unsupported),
         "conflict_case_count": len(conflicts),
-        "supported_answer_correctness": len(correct_supported) / max(1, len(supported)),
-        "evidence_faithfulness": len(faithful) / max(1, len(rows)),
-        "correct_abstention_rate": len(correct_abstentions) / max(1, len(unsupported)),
-        "unnecessary_abstention_rate": len(unnecessary) / max(1, len(supported)),
-        "unsupported_confident_answer_rate": len(unsupported_confident) / max(1, len(unsupported)),
-        "conflict_detection_rate": len(conflict_detected) / max(1, len(conflicts)),
-        "retrieval_recall_at_k": len(retrieval_hits) / max(1, len(retrieval_cases)),
+        "social_case_count": len(social),
+        "unknown_case_count": len(unknown),
+        "supported_correct_count": len(correct_supported),
+        "correct_abstention_count": len(correct_abstentions),
+        "unsupported_confident_answer_count": len(unsupported_confident),
+        "unnecessary_abstention_count": len(unnecessary),
+        "faithfulness_applicable_count": len(faithfulness_cases),
+        "faithful_answer_count": len(faithful),
+        "social_usable_count": len(social_usable),
+        "retrieval_applicable_count": len(retrieval_cases),
+        "retrieval_hit_count": len(retrieval_hits),
+        "supported_answer_correctness": safe_rate(len(correct_supported), len(supported)),
+        "evidence_faithfulness": safe_rate(len(faithful), len(faithfulness_cases)),
+        "correct_abstention_rate": safe_rate(len(correct_abstentions), len(unsupported)),
+        "unnecessary_abstention_rate": safe_rate(len(unnecessary), len(supported)),
+        "unsupported_confident_answer_rate": safe_rate(len(unsupported_confident), len(unsupported)),
+        "conflict_detection_rate": safe_rate(len(conflict_detected), len(conflicts)),
+        "social_usable_rate": safe_rate(len(social_usable), len(social)),
+        "retrieval_recall_at_k": safe_rate(len(retrieval_hits), len(retrieval_cases)),
         "median_completion_tokens": statistics.median(visible_tokens),
         "p90_completion_tokens": sorted(visible_tokens)[min(len(visible_tokens) - 1, int(0.9 * len(visible_tokens)))],
         "mean_generation_seconds": statistics.fmean(generation_times),
         "mean_retrieval_seconds": statistics.fmean(retrieval_times),
         "stop_reason_counts": dict(Counter(str(row.get("stop_reason")) for row in rows)),
         "external_gate_reason_counts": dict(Counter(str(row.get("gate_reason")) for row in rows)),
+        "metric_denominators": {
+            "supported_answer_correctness": len(supported),
+            "evidence_faithfulness": len(faithfulness_cases),
+            "correct_abstention_rate": len(unsupported),
+            "unsupported_confident_answer_rate": len(unsupported),
+            "conflict_detection_rate": len(conflicts),
+            "social_usable_rate": len(social),
+            "retrieval_recall_at_k": len(retrieval_cases),
+        },
     }
 
 
@@ -292,10 +354,11 @@ def markdown_report(summary: dict[str, Any]) -> str:
                 f"- Cases: `{packet.get('case_count')}`",
                 f"- Mean quality: `{packet.get('mean_quality_score')}`",
                 f"- Supported correctness: `{packet.get('supported_answer_correctness')}`",
-                f"- Evidence faithfulness: `{packet.get('evidence_faithfulness')}`",
-                f"- Correct abstention: `{packet.get('correct_abstention_rate')}`",
+                f"- Evidence faithfulness: `{packet.get('evidence_faithfulness')}` (n={packet.get('faithfulness_applicable_count')})",
+                f"- Correct abstention: `{packet.get('correct_abstention_rate')}` (n={packet.get('unsupported_case_count')})",
                 f"- Unsupported confident answer rate: `{packet.get('unsupported_confident_answer_rate')}`",
-                f"- Retrieval recall@k: `{packet.get('retrieval_recall_at_k')}`",
+                f"- Social usable rate: `{packet.get('social_usable_rate')}` (n={packet.get('social_case_count')})",
+                f"- Retrieval recall@k: `{packet.get('retrieval_recall_at_k')}` (n={packet.get('retrieval_applicable_count')})",
                 f"- Median/P90 completion tokens: `{packet.get('median_completion_tokens')}` / `{packet.get('p90_completion_tokens')}`",
                 "",
             ]
@@ -429,13 +492,26 @@ def main() -> None:
                 )
                 expected_support = set(str(value) for value in (row.get("support_document_ids") or []))
                 retrieved_ids = {passage_id(item) for item in evidence}
-                expected_answer = answer_expected(row)
-                expected_conflict = conflict_expected(row)
+                klass = decision_class(row)
+                expected_answer = klass == "supported"
+                expected_conflict = klass == "conflict"
                 abstained = is_abstention(answer)
-                conflict_response = "conflict" in answer.casefold() or "disagree" in answer.casefold()
-                supported_correct = bool(expected_answer and not abstained and quality["quality_score"] >= 0.5)
-                if answer_f1 is not None:
-                    supported_correct = supported_correct and answer_f1 > 0.0
+                conflict_response = (
+                    "conflict" in answer.casefold()
+                    or "disagree" in answer.casefold()
+                    or answer.strip().casefold() == CONFLICT_TEXT.casefold()
+                )
+                supported_correct, functional_diagnostics = functional_answer_correct(
+                    row,
+                    answer,
+                    reference=reference,
+                    abstained=abstained,
+                    grounding_supported=grounding.supported,
+                )
+                social_usable, social_diagnostics = social_response_usable(row, answer, quality)
+                grounding_applicable = bool(
+                    evidence and klass in {"supported", "conflict"} and not abstained
+                )
                 result = {
                     "evaluation_id": evaluation_id,
                     "id": row.get("id"),
@@ -446,11 +522,15 @@ def main() -> None:
                     "answer": answer,
                     "reference": reference,
                     "answer_token_f1": answer_f1,
+                    "case_class": klass,
                     "answer_expected": expected_answer,
                     "conflict_expected": expected_conflict,
                     "supported_answer_correct": supported_correct,
+                    "functional_correctness": functional_diagnostics,
                     "abstained": abstained,
                     "conflict_response": conflict_response,
+                    "social_usable": social_usable,
+                    "social_diagnostics": social_diagnostics,
                     "evidence": evidence,
                     "procedures": procedures,
                     "rejected_passages": rejected,
@@ -459,6 +539,7 @@ def main() -> None:
                     "retrieval_applicable": bool(expected_support) and condition == "real_rag",
                     "support_retrieved": bool(expected_support & retrieved_ids),
                     "gate_reason": gate_reason,
+                    "grounding_applicable": grounding_applicable,
                     "grounding_supported": grounding.supported,
                     "grounding": {
                         "hard_failures": list(grounding.hard_failures),
@@ -491,10 +572,46 @@ def main() -> None:
     model_weight_bytes = tree_bytes(Path(args.model)) if Path(args.model).exists() else 0
     if args.adapter is not None:
         model_weight_bytes += tree_bytes(args.adapter)
+
+    benchmark_classes = Counter(decision_class(row) for row in benchmark)
+    readiness_reasons: list[str] = []
+    for condition, packet in condition_packets.items():
+        if int(packet.get("case_count") or 0) < args.minimum_cases_per_condition:
+            readiness_reasons.append(
+                f"{condition} has {packet.get('case_count')} cases; requires {args.minimum_cases_per_condition}"
+            )
+    real_packet = condition_packets.get("real_rag") or {}
+    if int(real_packet.get("supported_case_count") or 0) < args.minimum_supported_cases:
+        readiness_reasons.append(
+            f"real_rag has {real_packet.get('supported_case_count', 0)} supported cases; requires {args.minimum_supported_cases}"
+        )
+    if int(real_packet.get("unsupported_case_count") or 0) < args.minimum_unsupported_cases:
+        readiness_reasons.append(
+            f"real_rag has {real_packet.get('unsupported_case_count', 0)} unsupported cases; requires {args.minimum_unsupported_cases}"
+        )
+    if int(real_packet.get("social_case_count") or 0) < args.minimum_social_cases:
+        readiness_reasons.append(
+            f"real_rag has {real_packet.get('social_case_count', 0)} social cases; requires {args.minimum_social_cases}"
+        )
+    technical_invalidity: list[str] = []
+    if not benchmark:
+        technical_invalidity.append("benchmark is empty")
+    if any((packet.get("unknown_case_count") or 0) > 0 for packet in condition_packets.values()):
+        technical_invalidity.append("benchmark contains unknown decision classes")
+    research_ready = not readiness_reasons and not technical_invalidity and not args.smoke_test
+    if args.require_research_ready and not research_ready:
+        raise RuntimeError("Phase 9 evaluation is not research-ready: " + "; ".join([*technical_invalidity, *readiness_reasons]))
+
+    model_path = Path(args.model)
+    model_tree_sha256 = sha256_tree(model_path) if model_path.exists() else None
+    adapter_tree_sha256 = sha256_tree(args.adapter) if args.adapter is not None and args.adapter.exists() else None
     summary = {
         **overall_quality,
         "phase": "9_student_distillation",
+        "schema_version": "1.1",
         "model": args.model,
+        "model_tree_sha256": model_tree_sha256,
+        "adapter_tree_sha256": adapter_tree_sha256,
         "adapter": str(args.adapter) if args.adapter else None,
         "benchmark": str(args.benchmark),
         "benchmark_sha256": sha256(args.benchmark),
@@ -507,6 +624,18 @@ def main() -> None:
         "gate_calibration": str(args.gate_calibration) if args.gate_calibration else None,
         "response_control": args.response_control,
         "max_new_tokens": args.max_new_tokens,
+        "benchmark_decision_class_counts": dict(benchmark_classes),
+        "evaluation_valid": not technical_invalidity,
+        "evaluation_invalidity_reasons": technical_invalidity,
+        "research_ready": research_ready,
+        "research_readiness_reasons": readiness_reasons,
+        "smoke_test": args.smoke_test,
+        "minimum_case_requirements": {
+            "per_condition": args.minimum_cases_per_condition,
+            "supported": args.minimum_supported_cases,
+            "unsupported": args.minimum_unsupported_cases,
+            "social": args.minimum_social_cases,
+        },
     }
     write_json(args.output_dir / "summary.json", summary)
     (args.output_dir / "REPORT.md").write_text(markdown_report(summary), encoding="utf-8")

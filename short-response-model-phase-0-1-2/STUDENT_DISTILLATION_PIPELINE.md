@@ -1,6 +1,25 @@
 # Student Distillation Pipeline — appended Phase 9 workflow
 
-Version 1.5.0 | August 2026
+Version 1.6.1 | August 2026
+
+
+## Behavior Curriculum v2 amendment
+
+The first hybrid smoke run proved that the pipeline executed but did not prove that any student learned evidence use: every candidate reported zero supported Real-RAG successes, and the old cross-profile calculation became numerically unstable when a reference metric was zero. The official Phase 9 implementation is therefore amended as follows:
+
+- a minimum-size, class-covered real data gate precedes training;
+- a versioned fictional behavior foundation supplements—but never replaces—human-reviewed real rows;
+- curriculum SFT precedes KD;
+- progressive KD begins from the SFT artifact, uses a hard-label warmup, filters low-confidence teacher tokens, and emphasizes the completion boundary;
+- direct KD from initialization is an optional ablation;
+- social conversation is evaluated separately from unsupported factual questions;
+- zero denominators produce `null` metrics;
+- functional correctness uses explicit response contracts plus grounding;
+- bounded absolute deltas prevent division-by-zero explosions in training comparisons;
+- smoke evaluations are never production-recommendable;
+- adversarial evaluation distinguishes system-filtered evidence from malicious evidence passed through to the model.
+
+The bundled synthetic foundation contains fictional, authored evidence/answer pairs. It teaches reusable evidence behavior and concise conversation, not broad language competence. Narrow randomly initialized students remain research controls until separate pretraining or language-readiness evidence exists.
 
 ## 1. Relationship to the official teacher pipeline
 
@@ -186,35 +205,41 @@ Validate JSONL records, reject duplicate IDs, build the FTS5 index, and write an
 
 Generate multiple concise candidates with thinking disabled where supported. Evaluate evidence support, observable defects, EOS/response control, and provenance. Produce both JSONL evidence and a Markdown review packet. Human acceptance is mandatory.
 
-### D4 — disjoint pilot construction
+### D4 — disjoint pilot construction and readiness
 
-Convert accepted teacher rows into chat-formatted SFT/KD records. Create group-disjoint train/dev/test splits and verify no support-document leakage. The initial recommended experiment uses about 5,000 training examples, 500 development examples, and 1,000 test examples when sufficient reviewed data exists.
+Convert accepted teacher rows into chat-formatted records. Create connected-component train/dev/test splits over topics and support/retrieved documents, then verify no leakage. The research path requires at least 30 accepted rows, eight independent connected components, and development/test coverage for both supported and unsupported cases. A six-row packet is allowed only with an explicit smoke flag and cannot support promotion.
 
-### D5 — evidence-gate calibration
+### D5 — behavior curriculum and evidence-gate calibration
 
-Search the development records, sweep candidate thresholds, and report supported-question recall, unsupported rejection, false-answer risk, and unnecessary abstention. Product costs determine the selected operating point. No arbitrary score such as 0.72 is embedded in code.
+Create controlled variants from human-approved answers: concise prompt variants, distractors, missing-evidence abstentions, retrieval-injection examples, and social rehearsals. Materialize the bundled fictional behavior foundation, expand it with the same controlled transforms, then deterministically mix it with a higher repeat weight for real reviewed rows. The foundation is training-only.
 
-### D6 — controlled SFT versus KD experiment
+Search the real development records, sweep candidate thresholds, and report supported-question recall, unsupported rejection, false-answer risk, unnecessary abstention, and every denominator. Product costs determine the operating point. No arbitrary universal score is embedded in code.
 
-Train two candidates from the exact same student initialization, data, optimizer settings, seed, and budget:
+### D6 — curriculum SFT then progressive KD
+
+The official comparison is sequential rather than direct-KD-first:
 
 ```text
-Candidate A: ordinary completion-only RAG SFT
-Candidate B: hard labels + completion-only same-tokenizer logit KD
+Initialization
+   └─→ Candidate A: completion-only curriculum SFT
+                         └─→ Candidate B: confidence-filtered completion-only KD
+
+Optional ablation: direct KD from initialization
 ```
 
-The direct-KL path verifies exact tokenizer fingerprints. It uses completion prediction positions only when the model supports `logits_to_keep`, avoiding full vocabulary logits for prompt positions. Batch size one plus gradient accumulation is the official low-memory baseline.
+Progressive KD verifies exact tokenizer fingerprints, begins with a hard-label-only warmup, gradually shifts weight toward KL, ignores teacher tokens that assign insufficient probability to the approved target, and falls back to hard labels when the teacher disagrees. Completion positions use `logits_to_keep` where supported. Targets exceeding the completion budget are skipped rather than mechanically truncated. The EOS/end-of-turn boundary receives extra loss weight. Batch size one plus gradient accumulation remains the official low-memory baseline.
 
-### D7 — four-condition evaluation
+### D7 — five-condition evaluation
 
 Evaluate teacher and students under:
 
 - closed book;
 - oracle RAG;
 - real RAG;
-- adversarial RAG.
+- adversarial RAG with the sanitizer active;
+- adversarial passthrough RAG with malicious evidence retained.
 
-Report retrieval recall, reranker retention when applicable, evidence coverage, supported correctness, faithfulness, unsupported-claim rate, abstention precision/recall, conflict detection, distractor robustness, median/P90 completion tokens, EOS success, repetition, broken words, foreign-character leakage, latency, model bytes, peak generator memory, index bytes, and total process RSS.
+Report retrieval recall, evidence coverage, explicit numerator/denominator pairs, supported correctness, faithfulness, unsupported-confident-answer rate, abstention, conflict detection, social usability, distractor and injection robustness, median/P90 completion tokens, EOS success, repetition, broken words, foreign-character leakage, latency, model bytes, peak generator memory, index bytes, and total process RSS. Zero-applicability metrics are `null`; they are never fabricated by dividing by one.
 
 Interpret failures causally:
 

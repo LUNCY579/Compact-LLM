@@ -787,34 +787,222 @@ def split_by_group(
     train_fraction: float = 0.80,
     dev_fraction: float = 0.10,
 ) -> dict[str, list[dict[str, Any]]]:
+    """Split connected topic/document groups with class-aware balancing.
+
+    Random row splitting would leak documents.  Size-only group splitting can also
+    accidentally place every abstention or social case in one split.  This greedy
+    assignment minimizes a deterministic global objective over both split sizes and
+    decision-class counts while never breaking a connected component.
+    """
+
     if not rows:
         raise ValueError("Cannot split an empty Phase 9 dataset")
     if train_fraction <= 0 or dev_fraction < 0 or train_fraction + dev_fraction >= 1:
         raise ValueError("Expected train_fraction > 0, dev_fraction >= 0, and sum < 1")
 
-    groups = connected_component_groups(rows)
+    from scripts.phase_9_student_distillation.phase9_metrics import decision_class
 
-    def group_order(key: str) -> str:
-        return hashlib.sha256(f"{seed}:{key}".encode("utf-8")).hexdigest()
+    groups = connected_component_groups(rows)
+    fractions = {
+        "train": train_fraction,
+        "dev": dev_fraction,
+        "test": 1.0 - train_fraction - dev_fraction,
+    }
+    total_classes: dict[str, int] = {}
+    group_classes: dict[str, dict[str, int]] = {}
+    for key, items in groups.items():
+        counts: dict[str, int] = {}
+        for row in items:
+            klass = decision_class(row)
+            counts[klass] = counts.get(klass, 0) + 1
+            total_classes[klass] = total_classes.get(klass, 0) + 1
+        group_classes[key] = counts
+
+    def group_order(key: str) -> tuple[int, str]:
+        digest = hashlib.sha256(f"{seed}:{key}".encode("utf-8")).hexdigest()
+        return (-len(groups[key]), digest)
 
     ordered = sorted(groups, key=group_order)
-    targets = {
-        "train": len(rows) * train_fraction,
-        "dev": len(rows) * dev_fraction,
-        "test": len(rows) * (1.0 - train_fraction - dev_fraction),
-    }
     output = {"train": [], "dev": [], "test": []}
-    for key in ordered:
-        # Assign the next group to the most underfilled split relative to target.
-        scores = {
-            split: (len(output[split]) / max(1.0, target))
-            for split, target in targets.items()
-        }
-        chosen = min(scores, key=lambda split: (scores[split], split))
-        output[chosen].extend(groups[key])
+    split_class_counts = {split: {klass: 0 for klass in total_classes} for split in output}
 
-    # Tiny smoke packets can have fewer groups than splits. Preserve the
-    # non-overlap guarantee and report an empty split instead of splitting a group.
+    def objective(candidate_split: str, group_key: str) -> float:
+        score = 0.0
+        group_size = len(groups[group_key])
+        for split, fraction in fractions.items():
+            size = len(output[split]) + (group_size if split == candidate_split else 0)
+            size_target = max(1.0, len(rows) * fraction)
+            size_error = (size - size_target) / size_target
+            # Overfilling a small dev/test split is more damaging than modest
+            # underfilling, but both are visible in the objective.
+            score += size_error * size_error * (1.5 if size_error > 0 else 1.0)
+            for klass, total in total_classes.items():
+                count = split_class_counts[split][klass]
+                if split == candidate_split:
+                    count += group_classes[group_key].get(klass, 0)
+                target = max(0.5, total * fraction)
+                class_error = (count - target) / target
+                score += 0.55 * class_error * class_error
+        return score
+
+    split_order = {"train": 0, "dev": 1, "test": 2}
+    for key in ordered:
+        chosen = min(output, key=lambda split: (objective(split, key), split_order[split]))
+        output[chosen].extend(groups[key])
+        for klass, count in group_classes[key].items():
+            split_class_counts[chosen][klass] += count
+
+    # When at least three components exist, an empty split is almost never useful.
+    # Move one complete component from the largest donor only when doing so does not
+    # violate connectivity.  Rebuild from component ownership for determinism.
+    if len(groups) >= 3 and any(not output[split] for split in output):
+        ownership: dict[str, str] = {}
+        for split, split_rows in output.items():
+            row_ids = {str(row.get("id")) for row in split_rows}
+            for key, items in groups.items():
+                if any(str(row.get("id")) in row_ids for row in items):
+                    ownership[key] = split
+        for empty in [split for split in output if not output[split]]:
+            donors = sorted(output, key=lambda split: len(output[split]), reverse=True)
+            moved = False
+            for donor in donors:
+                donor_groups = [key for key, split in ownership.items() if split == donor]
+                if len(donor_groups) <= 1:
+                    continue
+                key = min(donor_groups, key=lambda item: (len(groups[item]), hashlib.sha256(item.encode()).hexdigest()))
+                for row in groups[key]:
+                    output[donor].remove(row)
+                output[empty].extend(groups[key])
+                ownership[key] = empty
+                moved = True
+                break
+            if not moved:
+                break
+
+    # Calibration and end-to-end evaluation both need answerable and
+    # unanswerable examples.  The size/class objective above can still choose a
+    # small all-procedure component for dev.  When the corpus has enough
+    # independent components, deterministically swap complete components so dev
+    # and test each retain supported and unsupported coverage.
+    ownership: dict[str, str] = {}
+    for split, split_rows in output.items():
+        row_ids = {str(row.get("id")) for row in split_rows}
+        for key, items in groups.items():
+            if any(str(row.get("id")) in row_ids for row in items):
+                ownership[key] = split
+
+    component_class_presence = {
+        key: {klass for klass, count in group_classes[key].items() if count > 0}
+        for key in groups
+    }
+    required_holdout_classes = [
+        klass
+        for klass in ("supported", "unsupported")
+        if sum(1 for key in groups if klass in component_class_presence[key]) >= 2
+    ]
+
+    def classes_for(split: str, assignment: dict[str, str]) -> set[str]:
+        present: set[str] = set()
+        for key, owner in assignment.items():
+            if owner == split:
+                present.update(component_class_presence[key])
+        return present
+
+    for target in ("dev", "test"):
+        missing = set(required_holdout_classes) - classes_for(target, ownership)
+        if not missing:
+            continue
+        target_groups = [key for key, owner in ownership.items() if owner == target]
+        donor_candidates = [
+            key
+            for key, owner in ownership.items()
+            if owner == "train" and missing <= component_class_presence[key]
+        ]
+        if not donor_candidates:
+            donor_candidates = [
+                key
+                for key, owner in ownership.items()
+                if owner != target and missing <= component_class_presence[key]
+            ]
+        if not donor_candidates:
+            continue
+        donor_key = min(
+            donor_candidates,
+            key=lambda key: (
+                min((abs(len(groups[key]) - len(groups[t])) for t in target_groups), default=len(groups[key])),
+                len(groups[key]),
+                hashlib.sha256(f"{seed}:{target}:{key}".encode("utf-8")).hexdigest(),
+            ),
+        )
+        donor_split = ownership[donor_key]
+        if target_groups:
+            # Prefer swapping a component that contributes none of the missing
+            # classes and has a similar size.  Connectivity remains intact.
+            swap_key = min(
+                target_groups,
+                key=lambda key: (
+                    0 if not (component_class_presence[key] & missing) else 1,
+                    abs(len(groups[key]) - len(groups[donor_key])),
+                    hashlib.sha256(f"{seed}:{target}:swap:{key}".encode("utf-8")).hexdigest(),
+                ),
+            )
+            ownership[swap_key] = donor_split
+        ownership[donor_key] = target
+
+    # Dev calibration needs more than one positive and one negative example to
+    # avoid a one-row threshold accident.  Add complete training components when
+    # the corpus has enough independent components.  Test only requires one of
+    # each class because it is not used to choose the threshold.
+    component_availability = {
+        klass: sum(1 for key in groups if klass in component_class_presence[key])
+        for klass in ("supported", "unsupported")
+    }
+    holdout_minimums = {
+        "dev": {
+            klass: (2 if component_availability[klass] >= 3 and total_classes.get(klass, 0) >= 3 else 1)
+            for klass in required_holdout_classes
+        },
+        "test": {klass: 1 for klass in required_holdout_classes},
+    }
+
+    def class_count(split: str, klass: str) -> int:
+        return sum(
+            group_classes[key].get(klass, 0)
+            for key, owner in ownership.items()
+            if owner == split
+        )
+
+    for target in ("dev", "test"):
+        while True:
+            deficits = {
+                klass: minimum - class_count(target, klass)
+                for klass, minimum in holdout_minimums[target].items()
+                if class_count(target, klass) < minimum
+            }
+            if not deficits:
+                break
+            candidates = [
+                key
+                for key, owner in ownership.items()
+                if owner == "train"
+                and any(group_classes[key].get(klass, 0) > 0 for klass in deficits)
+            ]
+            if not candidates:
+                break
+            donor_key = max(
+                candidates,
+                key=lambda key: (
+                    sum(min(deficits[klass], group_classes[key].get(klass, 0)) for klass in deficits),
+                    -len(groups[key]),
+                    hashlib.sha256(f"{seed}:{target}:coverage:{key}".encode("utf-8")).hexdigest(),
+                ),
+            )
+            ownership[donor_key] = target
+
+    rebuilt = {"train": [], "dev": [], "test": []}
+    for key in ordered:
+        rebuilt[ownership[key]].extend(groups[key])
+    output = rebuilt
     return output
 
 

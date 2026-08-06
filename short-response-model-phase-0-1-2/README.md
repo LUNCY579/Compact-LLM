@@ -1,5 +1,11 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.6.1 Phase 9 Behavior Curriculum v2
+
+Phase 9 now treats the earlier six-row hybrid result as an execution smoke test rather than learning evidence. The refined pipeline requires class-covered, leakage-safe real data; supplements it with a 336-row fictional authored behavior foundation; expands only human-approved targets through controlled curriculum transforms; trains curriculum SFT before confidence-filtered progressive KD; emphasizes EOS/end-of-turn targets; and keeps direct KD from initialization as an optional ablation.
+
+Evaluation now separates social conversation from unsupported factual questions, reports real denominators, returns `null` for inapplicable metrics, uses explicit response contracts plus grounding for functional correctness, blocks smoke/zero-success candidates from production recommendation, and uses bounded absolute deltas for SFT/KD comparisons. Filtered and passthrough adversarial conditions distinguish sanitizer strength from model-level injection resistance. See `scripts/phase_9_student_distillation/README.md` and `CHANGED_FILES_PHASE_9_BEHAVIOR_CURRICULUM_V2.md`.
+
 ## v1.6.0 appended Phase 10 architecture search and Phase 11 production RAG release
 
 Phase 10 now consumes the exact human-approved Phase 9 student, profiles residual/MLP/attention structure, creates physically smaller dense candidates across intermediate, small, and 80M–120M deployment target bands, performs fresh reload checks, recovery-distills a bounded set under the original teacher, optionally trains a compact pretrained challenger, and selects from a shared relative-opportunity frontier.
@@ -8,11 +14,11 @@ Phase 11 consumes the exact human-approved Phase 10 student and implements an im
 
 ## v1.5.0 appended Phase 9 student distillation pipeline
 
-The official Phase 0–8 program remains the teacher-development pipeline. Phase 9 now consumes an exact human-approved teacher and builds smaller RAG-specialized students through warm-started student construction, reviewed teacher-data generation, document/topic-disjoint pilot data, calibrated evidence gating, matched SFT versus completion-only logit distillation, optional on-policy recovery, four-condition RAG evaluation, and proportional human-gated selection.
+The official Phase 0–8 program remains the teacher-development pipeline. Phase 9 now consumes an exact human-approved teacher and builds smaller RAG-specialized students through warm-started student construction, reviewed teacher-data generation, document/topic-disjoint pilot data, calibrated evidence gating, curriculum SFT followed by confidence-filtered completion-only logit distillation, optional on-policy recovery, five-condition RAG evaluation, and proportional human-gated selection.
 
 The first retriever is SQLite FTS5 so generator savings are not silently offset by a neural retrieval stack. Direct vocabulary KL requires identical tokenizer fingerprints; cross-tokenizer challengers start with sequence-level SFT. Randomly initialized narrow-Qwen models are explicitly marked research controls. See `STUDENT_DISTILLATION_PIPELINE.md` and `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md`.
 
-The latest Phase 9 runner also supports `-StudentSuite Hybrid`, which evaluates one warm 344M depth-copy student and 100M/130M/170M narrow same-tokenizer research controls in a single assessment. Candidate keys are profile-qualified (`sft_warm_344m`, `kd_warm_344m`, and so on), and the Phase 10 handoff accepts the exact key recorded in `reports/PHASE_9_ASSESSMENT.json`. Narrow random-initialized profiles remain research controls unless a separate human language-readiness review explicitly authorizes promotion.
+The latest Phase 9 runner also supports `-StudentSuite Hybrid`, which evaluates one warm 344M depth-copy student and 100M/130M/170M narrow same-tokenizer research controls in a single assessment. Candidate keys are profile-qualified (`sft_warm_344m`, `progressive_kd_warm_344m`, and so on), and the Phase 10 handoff accepts the exact key recorded in `reports/PHASE_9_ASSESSMENT.json`. Narrow random-initialized profiles remain research controls unless a separate human language-readiness review explicitly authorizes promotion.
 
 ## v1.4.7 Phase 2C reliability and correctness hotfix
 

@@ -27,7 +27,7 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.common.experiment_utils import environment, read_jsonl, replace_path_with_retry, sha256, write_json
+from scripts.common.experiment_utils import environment, read_jsonl, replace_path_with_retry, sha256, sha256_tree, write_json
 from scripts.phase_1_dense_sft.train_dense_sft import discover_target_modules
 from scripts.phase_9_student_distillation.phase9_common import (
     model_parameter_breakdown,
@@ -64,7 +64,12 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--temperature", type=float, default=2.0)
-    parser.add_argument("--hard-label-weight", type=float, default=0.25)
+    parser.add_argument("--hard-label-weight", type=float, default=0.25, help="Legacy/default hard-label weight for rows that explicitly override the KD schedule.")
+    parser.add_argument("--kd-hard-weight-start", type=float, default=0.75, help="Hard-label weight after KD warmup begins.")
+    parser.add_argument("--kd-hard-weight-end", type=float, default=0.25, help="Hard-label weight at the end of KD training.")
+    parser.add_argument("--kd-warmup-ratio", type=float, default=0.15, help="Initial fraction of KD training that uses hard labels only.")
+    parser.add_argument("--teacher-confidence-floor", type=float, default=0.02, help="Ignore KL tokens when the teacher assigns less probability than this to the approved target token.")
+    parser.add_argument("--eos-loss-weight", type=float, default=1.5, help="Relative CE/KL weight for EOS/end-of-turn targets.")
     parser.add_argument("--gradient-checkpointing", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--lora", action="store_true")
     parser.add_argument("--initial-adapter", type=Path, default=None)
@@ -121,14 +126,18 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
                 # training on incorrectly masked system/user tokens.
                 raise ValueError(f"Tokenizer chat template is not prefix-stable for {row.get('id')}")
             completion_ids = full_ids[len(prompt_ids) :]
-            if max_completion_tokens > 0:
-                completion_ids = completion_ids[:max_completion_tokens]
+            if max_completion_tokens > 0 and len(completion_ids) > max_completion_tokens:
+                # Never train on a mechanically truncated target.  The project
+                # requires complete short utterances; incomplete targets teach
+                # exactly the failure mode Phase 9 is intended to remove.
+                self.skipped.append(f"{row.get('id')}:completion_exceeds_{max_completion_tokens}")
+                continue
             if not completion_ids:
-                self.skipped.append(str(row.get("id")))
+                self.skipped.append(f"{row.get('id')}:empty_completion")
                 continue
             prompt_budget = max_length - len(completion_ids)
             if prompt_budget <= 0:
-                self.skipped.append(str(row.get("id")))
+                self.skipped.append(f"{row.get('id')}:completion_exceeds_sequence_budget")
                 continue
             prompt_ids = prompt_ids[-prompt_budget:]
             input_ids = torch.tensor([*prompt_ids, *completion_ids], dtype=torch.long)
@@ -145,6 +154,7 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
                     "attention_mask": torch.ones_like(input_ids),
                     "labels": labels,
                     "hard_label_weight": torch.tensor(hard_weight, dtype=torch.float32),
+                    "hard_label_weight_overridden": torch.tensor(override is not None, dtype=torch.bool),
                 }
             )
         if not self.examples:
@@ -173,6 +183,7 @@ class CompletionCollator:
                 [row["labels"] for row in features], batch_first=True, padding_value=-100
             ),
             "hard_label_weight": torch.stack([row["hard_label_weight"] for row in features]),
+            "hard_label_weight_overridden": torch.stack([row["hard_label_weight_overridden"] for row in features]),
         }
 
 
@@ -230,6 +241,12 @@ class DistillationTrainer(Trainer):
         objective: str,
         temperature: float,
         memory_efficient_completion_logits: bool,
+        kd_hard_weight_start: float,
+        kd_hard_weight_end: float,
+        kd_warmup_ratio: float,
+        teacher_confidence_floor: float,
+        eos_token_id: int | None,
+        eos_loss_weight: float,
         **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
@@ -237,7 +254,23 @@ class DistillationTrainer(Trainer):
         self.objective = objective
         self.temperature = float(temperature)
         self.memory_efficient_completion_logits = memory_efficient_completion_logits
+        self.kd_hard_weight_start = float(kd_hard_weight_start)
+        self.kd_hard_weight_end = float(kd_hard_weight_end)
+        self.kd_warmup_ratio = float(kd_warmup_ratio)
+        self.teacher_confidence_floor = float(teacher_confidence_floor)
+        self.eos_token_id = eos_token_id
+        self.eos_loss_weight = float(eos_loss_weight)
+        self.last_loss_components: dict[str, float] = {}
         self.model_accepts_loss_kwargs = False
+
+    def scheduled_hard_weight(self) -> float:
+        total_steps = max(1, int(getattr(self.state, "max_steps", 0) or 1))
+        progress = min(1.0, max(0.0, float(getattr(self.state, "global_step", 0)) / total_steps))
+        if progress < self.kd_warmup_ratio:
+            return 1.0
+        denominator = max(1e-12, 1.0 - self.kd_warmup_ratio)
+        adjusted = min(1.0, max(0.0, (progress - self.kd_warmup_ratio) / denominator))
+        return self.kd_hard_weight_start + adjusted * (self.kd_hard_weight_end - self.kd_hard_weight_start)
 
     def compute_loss(
         self,
@@ -249,6 +282,7 @@ class DistillationTrainer(Trainer):
         del num_items_in_batch
         model_device = next(model.parameters()).device
         hard_weights = inputs.pop("hard_label_weight").to(model_device)
+        hard_weight_overrides = inputs.pop("hard_label_weight_overridden").to(model_device)
         labels = inputs.pop("labels").to(model_device)
         input_ids = inputs["input_ids"].to(model_device)
         attention_mask = inputs["attention_mask"].to(model_device)
@@ -261,10 +295,24 @@ class DistillationTrainer(Trainer):
         )
         if targets.numel() == 0:
             raise ValueError("Batch contains no supervised completion tokens")
-        hard_loss = F.cross_entropy(student_logits.float(), targets)
+        token_weights = torch.ones_like(targets, dtype=torch.float32, device=student_logits.device)
+        if self.eos_token_id is not None and self.eos_loss_weight != 1.0:
+            token_weights = torch.where(
+                targets.eq(int(self.eos_token_id)),
+                torch.full_like(token_weights, self.eos_loss_weight),
+                token_weights,
+            )
+        # Chat templates do not all expose the same EOS/end-of-turn token ID.
+        # Batch size one is the official low-memory path, so the final supervised
+        # target is always the completion boundary and receives the same emphasis.
+        if targets.numel() > 0 and self.eos_loss_weight != 1.0:
+            token_weights[-1] = max(float(token_weights[-1]), self.eos_loss_weight)
+        hard_token_loss = F.cross_entropy(student_logits.float(), targets, reduction="none")
+        hard_loss = (hard_token_loss * token_weights).sum() / token_weights.sum().clamp_min(1.0)
 
         if self.objective == "sft":
             loss = hard_loss
+            self.last_loss_components = {"hard_loss": float(hard_loss.detach().cpu())}
             output_packet = {"logits": student_logits, "hard_loss": hard_loss.detach()}
         else:
             if self.teacher is None:
@@ -281,15 +329,46 @@ class DistillationTrainer(Trainer):
             if not torch.equal(targets.detach().cpu(), teacher_targets.detach().cpu()):
                 raise RuntimeError("Teacher/student target positions are not aligned")
             temperature = self.temperature
-            teacher_probs = F.softmax(teacher_logits.float().to(student_logits.device) / temperature, dim=-1)
+            teacher_logits_local = teacher_logits.float().to(student_logits.device)
+            teacher_log_probs = F.log_softmax(teacher_logits_local / temperature, dim=-1)
+            teacher_probs = teacher_log_probs.exp()
             student_log_probs = F.log_softmax(student_logits.float() / temperature, dim=-1)
-            kd_loss = F.kl_div(student_log_probs, teacher_probs, reduction="batchmean") * (temperature**2)
-            hard_weight = float(hard_weights.mean().detach().cpu())
+            per_token_kl = (teacher_probs * (teacher_log_probs - student_log_probs)).sum(dim=-1) * (temperature**2)
+            teacher_target_confidence = F.softmax(teacher_logits_local, dim=-1).gather(
+                1, targets.unsqueeze(1)
+            ).squeeze(1)
+            confidence_mask = teacher_target_confidence.ge(self.teacher_confidence_floor)
+            kd_token_weights = token_weights * confidence_mask.to(token_weights.dtype)
+            if float(kd_token_weights.sum().detach().cpu()) > 0.0:
+                kd_loss = (per_token_kl * kd_token_weights).sum() / kd_token_weights.sum().clamp_min(1.0)
+            else:
+                kd_loss = torch.zeros((), device=student_logits.device, dtype=student_logits.dtype)
+
+            scheduled_weight = self.scheduled_hard_weight()
+            if bool(hard_weight_overrides.any().detach().cpu()):
+                hard_weight = float(hard_weights.mean().detach().cpu())
+                hard_weight_source = "row_override"
+            else:
+                hard_weight = scheduled_weight
+                hard_weight_source = "scheduled"
+            if not bool(confidence_mask.any().detach().cpu()):
+                hard_weight = 1.0
+                hard_weight_source = "teacher_confidence_fallback"
             loss = hard_weight * hard_loss + (1.0 - hard_weight) * kd_loss
+            self.last_loss_components = {
+                "hard_loss": float(hard_loss.detach().cpu()),
+                "kd_loss": float(kd_loss.detach().cpu()),
+                "hard_weight": float(hard_weight),
+                "scheduled_hard_weight": float(scheduled_weight),
+                "teacher_target_confidence_mean": float(teacher_target_confidence.mean().detach().cpu()),
+                "teacher_confident_token_fraction": float(confidence_mask.float().mean().detach().cpu()),
+                "hard_weight_source_row_override": 1.0 if hard_weight_source == "row_override" else 0.0,
+            }
             output_packet = {
                 "logits": student_logits,
                 "hard_loss": hard_loss.detach(),
                 "kd_loss": kd_loss.detach(),
+                "teacher_target_confidence": teacher_target_confidence.detach(),
             }
         return (loss, output_packet) if return_outputs else loss
 
@@ -305,6 +384,12 @@ def validate_args(args: argparse.Namespace) -> None:
         raise ValueError("--hard-label-weight must be in [0,1]")
     if args.temperature <= 0:
         raise ValueError("--temperature must be positive")
+    for name in ("kd_hard_weight_start", "kd_hard_weight_end", "kd_warmup_ratio", "teacher_confidence_floor"):
+        value = float(getattr(args, name))
+        if not 0.0 <= value <= 1.0:
+            raise ValueError(f"--{name.replace('_', '-')} must be in [0,1]")
+    if args.eos_loss_weight <= 0:
+        raise ValueError("--eos-loss-weight must be positive")
     if args.per_device_batch_size != 1 and args.memory_efficient_completion_logits:
         raise ValueError(
             "Memory-efficient completion-position logits currently require per-device batch size 1. "
@@ -507,6 +592,12 @@ def main() -> None:
         objective=args.objective,
         temperature=args.temperature,
         memory_efficient_completion_logits=args.memory_efficient_completion_logits,
+        kd_hard_weight_start=args.kd_hard_weight_start,
+        kd_hard_weight_end=args.kd_hard_weight_end,
+        kd_warmup_ratio=args.kd_warmup_ratio,
+        teacher_confidence_floor=args.teacher_confidence_floor,
+        eos_token_id=tokenizer.eos_token_id,
+        eos_loss_weight=args.eos_loss_weight,
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
@@ -522,9 +613,19 @@ def main() -> None:
     breakdown = model_parameter_breakdown(model)
     manifest = {
         "phase": "9_student_distillation",
+        "schema_version": "1.1",
+        "pipeline_revision": "phase9_behavior_curriculum_v2",
         "objective": args.objective,
+        "requested_max_steps": args.max_steps,
+        "requested_epochs": args.epochs,
+        "requested_learning_rate": args.learning_rate,
+        "requested_gradient_accumulation_steps": args.gradient_accumulation_steps,
         "student_initialization": args.student,
+        "student_initialization_tree_sha256": sha256_tree(Path(args.student)),
+        "initial_adapter": str(args.initial_adapter) if args.initial_adapter is not None else None,
+        "initial_adapter_tree_sha256": sha256_tree(args.initial_adapter) if args.initial_adapter is not None else None,
         "teacher": args.teacher,
+        "teacher_tree_sha256": sha256_tree(Path(args.teacher)) if args.teacher else None,
         "artifact_type": artifact_type,
         "artifact_path": str(artifact),
         "artifact_bytes": tree_bytes(artifact),
@@ -539,6 +640,12 @@ def main() -> None:
         "target_module_count": len(targets) if targets is not None else None,
         "temperature": args.temperature if args.objective == "kd" else None,
         "hard_label_weight": args.hard_label_weight,
+        "kd_hard_weight_start": args.kd_hard_weight_start if args.objective == "kd" else None,
+        "kd_hard_weight_end": args.kd_hard_weight_end if args.objective == "kd" else None,
+        "kd_warmup_ratio": args.kd_warmup_ratio if args.objective == "kd" else None,
+        "teacher_confidence_floor": args.teacher_confidence_floor if args.objective == "kd" else None,
+        "eos_loss_weight": args.eos_loss_weight,
+        "final_loss_components": trainer.last_loss_components,
         "memory_efficient_completion_logits": args.memory_efficient_completion_logits,
         "training_metrics": result.metrics,
         "peak_allocated_vram_bytes": peak_vram,

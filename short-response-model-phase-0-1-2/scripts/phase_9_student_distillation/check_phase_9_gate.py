@@ -16,8 +16,11 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_json, write_json
 from scripts.common.opportunity_evaluation import (
     evaluate_opportunity,
-    evaluate_quality_improvement,
     resource_reduction,
+)
+from scripts.phase_9_student_distillation.phase9_metrics import (
+    bounded_absolute_quality_comparison,
+    summary_readiness_issues,
 )
 
 
@@ -90,6 +93,12 @@ def assess_candidate(teacher: dict[str, Any], candidate: dict[str, Any]) -> dict
         "real_rag_unsupported_confident_answer_rate": real_rag_rate(
             candidate, "unsupported_confident_answer_rate"
         ),
+        "real_rag_supported_case_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("supported_case_count"),
+        "real_rag_supported_correct_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("supported_correct_count"),
+        "real_rag_unsupported_case_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("unsupported_case_count"),
+        "real_rag_correct_abstention_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("correct_abstention_count"),
+        "evaluation_valid": candidate.get("evaluation_valid", True),
+        "research_ready": candidate.get("research_ready", False),
     }
 
 
@@ -104,7 +113,7 @@ def fmt(value: Any) -> str:
 
 
 def objective_prefix(name: str) -> str | None:
-    for prefix in ("sft", "kd", "on_policy", "preference"):
+    for prefix in ("progressive_kd", "direct_kd", "on_policy", "preference", "sft", "kd"):
         if name == prefix or name.startswith(f"{prefix}_"):
             return prefix
     return None
@@ -129,15 +138,15 @@ def build_quality_comparisons(candidates: dict[str, dict[str, Any]]) -> dict[str
     quality_comparisons: dict[str, Any] = {}
     # Legacy single-profile comparisons.
     if "kd" in candidates and "sft" in candidates:
-        quality_comparisons["kd_vs_sft"] = evaluate_quality_improvement(candidates["sft"], candidates["kd"])
+        quality_comparisons["kd_vs_sft"] = bounded_absolute_quality_comparison(candidates["sft"], candidates["kd"])
     if "on_policy" in candidates and "kd" in candidates:
-        quality_comparisons["on_policy_vs_kd"] = evaluate_quality_improvement(
+        quality_comparisons["on_policy_vs_kd"] = bounded_absolute_quality_comparison(
             candidates["kd"], candidates["on_policy"]
         )
     if "preference" in candidates:
         predecessor = candidates.get("on_policy") or candidates.get("kd") or candidates.get("sft")
         if predecessor is not None:
-            quality_comparisons["preference_vs_predecessor"] = evaluate_quality_improvement(
+            quality_comparisons["preference_vs_predecessor"] = bounded_absolute_quality_comparison(
                 predecessor, candidates["preference"]
             )
 
@@ -151,13 +160,20 @@ def build_quality_comparisons(candidates: dict[str, dict[str, Any]]) -> dict[str
         by_objective.setdefault(objective, {})[profile] = name
 
     for profile, sft_name in by_objective.get("sft", {}).items():
-        kd_name = by_objective.get("kd", {}).get(profile)
-        if kd_name:
-            key = f"{kd_name}_vs_{sft_name}" if profile else "kd_vs_sft"
-            if key not in quality_comparisons:
-                quality_comparisons[key] = evaluate_quality_improvement(
-                    candidates[sft_name], candidates[kd_name]
-                )
+        for kd_objective in ("progressive_kd", "direct_kd", "kd"):
+            kd_name = by_objective.get(kd_objective, {}).get(profile)
+            if kd_name:
+                key = f"{kd_name}_vs_{sft_name}" if profile else f"{kd_objective}_vs_sft"
+                if key not in quality_comparisons:
+                    quality_comparisons[key] = bounded_absolute_quality_comparison(
+                        candidates[sft_name], candidates[kd_name]
+                    )
+        progressive_name = by_objective.get("progressive_kd", {}).get(profile)
+        direct_name = by_objective.get("direct_kd", {}).get(profile)
+        if progressive_name and direct_name:
+            quality_comparisons[f"{progressive_name}_vs_{direct_name}"] = bounded_absolute_quality_comparison(
+                candidates[direct_name], candidates[progressive_name]
+            )
 
     for objective, profile_map in by_objective.items():
         names = sorted(profile_map.items(), key=lambda item: item[0])
@@ -166,7 +182,7 @@ def build_quality_comparisons(candidates: dict[str, dict[str, Any]]) -> dict[str
                 if not left_profile or not right_profile:
                     continue
                 key = f"{right_name}_vs_{left_name}"
-                quality_comparisons[key] = evaluate_quality_improvement(
+                quality_comparisons[key] = bounded_absolute_quality_comparison(
                     candidates[left_name], candidates[right_name]
                 )
     return quality_comparisons
@@ -222,11 +238,17 @@ def main() -> None:
                 )
         safety_blockers[name] = blockers
 
+    readiness_blockers = {
+        name: summary_readiness_issues(summary)
+        for name, summary in candidates.items()
+    }
+
     production_eligible = [
         name
         for name, assessment in assessments.items()
         if assessment.get("eligible")
         and not safety_blockers[name]
+        and not readiness_blockers[name]
         and name not in research_controls
     ]
     research_eligible = [
@@ -257,6 +279,7 @@ def main() -> None:
         "quality_comparisons": quality_comparisons,
         "unsupported_confident_answer_cap": args.unsupported_confident_answer_cap,
         "safety_blockers": safety_blockers,
+        "readiness_blockers": readiness_blockers,
         "research_controls": sorted(research_controls),
         "recommended_candidate": recommended,
         "recommended_research_control": recommended_research,
@@ -274,6 +297,8 @@ def main() -> None:
         "- Human decision: `PENDING`",
         "- The recommendation uses the shared proportional resource-gain versus quality-opportunity-loss policy.",
         "- Narrow random-init profiles are research controls and are never auto-recommended for production.",
+        "- Production recommendation also requires non-degenerate functional evidence: applicable cases, at least one correct supported answer, and at least one correct abstention when those case types exist.",
+        "- Cross-candidate quality comparisons use bounded absolute deltas, preventing division-by-zero explosions when a reference metric is zero.",
         "- No universal grounding or unsupported-answer threshold is invented. A product safety cap is enforced only when explicitly calibrated and supplied.",
         "",
         "## Candidate assessments",
@@ -293,6 +318,10 @@ def main() -> None:
                 f"- Real-RAG supported correctness: `{fmt(assessment.get('real_rag_supported_correctness'))}`",
                 f"- Real-RAG evidence faithfulness: `{fmt(assessment.get('real_rag_faithfulness'))}`",
                 f"- Real-RAG unsupported confident answer rate: `{fmt(assessment.get('real_rag_unsupported_confident_answer_rate'))}`",
+                f"- Real-RAG supported successes/cases: `{assessment.get('real_rag_supported_correct_count')}` / `{assessment.get('real_rag_supported_case_count')}`",
+                f"- Real-RAG safe abstentions/cases: `{assessment.get('real_rag_correct_abstention_count')}` / `{assessment.get('real_rag_unsupported_case_count')}`",
+                f"- Evaluation research-ready: `{assessment.get('research_ready')}`",
+                f"- Functional readiness blockers: `{readiness_blockers[name] or 'none'}`",
                 f"- Product safety blockers: `{safety_blockers[name] or 'none'}`",
                 "",
             ]
@@ -302,7 +331,7 @@ def main() -> None:
         for name, comparison in quality_comparisons.items():
             lines.append(
                 f"- `{name}`: decision `{comparison.get('decision')}`, net quality change "
-                f"`{fmt(comparison.get('opportunity_margin'))}`"
+                f"`{fmt(comparison.get('opportunity_margin'))}` via `{comparison.get('comparison_method', 'shared')}`"
             )
         lines.append("")
     lines.extend(

@@ -60,6 +60,21 @@ foreach ($Runner in $Runners) {
     }
 }
 
+
+$Phase9BehaviorFiles = @(
+    ".\scripts\phase_9_student_distillation\phase9_metrics.py",
+    ".\scripts\phase_9_student_distillation\build_curriculum_dataset.py",
+    ".\scripts\phase_9_student_distillation\build_foundation_dataset.py",
+    ".\scripts\phase_9_student_distillation\merge_training_data.py",
+    ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
+    ".\data\phase_9_student_distillation\canary\prompts.canary.jsonl"
+)
+foreach ($Path in $Phase9BehaviorFiles) {
+    if (-not (Test-Path $Path)) {
+        throw "Missing Phase 9 Behavior Curriculum v2 asset: $Path"
+    }
+}
+
 Write-Host "[5/6] Verifying the strict response-control contract..."
 $ResponseVerification = Join-Path ([System.IO.Path]::GetTempPath()) "short_response_model_response_control_verification.json"
 python .\scripts\phase_7_sparse_runtime\verify_response_control.py --out $ResponseVerification

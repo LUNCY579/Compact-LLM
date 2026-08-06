@@ -1,8 +1,9 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "experiment": {
-    "name": "tiny_student_rag_distillation_v1",
-    "seed": 42
+    "name": "tiny_student_rag_distillation_behavior_curriculum_v2",
+    "seed": 42,
+    "pipeline_revision": "phase9_behavior_curriculum_v2"
   },
   "teacher": {
     "source": "resolve_from_phase_4b_selected_reference_or_supply_local_path",
@@ -97,7 +98,53 @@
     "learning_rate": 0.0001,
     "warmup_ratio": 0.05,
     "epochs": 3,
-    "gradient_checkpointing": true
+    "gradient_checkpointing": true,
+    "default_max_steps": 600,
+    "curriculum_enabled": true,
+    "curriculum": {
+      "canonical_repeats": 2,
+      "prompt_variants": 2,
+      "distractor_variants": 2,
+      "missing_evidence_variants": 2,
+      "injection_variants": 1,
+      "policy": "human-approved answers only; controlled evidence transformations; no invented facts",
+      "social_repeats": 2
+    },
+    "research_readiness": {
+      "minimum_reviewed_rows": 30,
+      "minimum_connected_groups": 8,
+      "minimum_dev_rows": 3,
+      "minimum_test_rows": 4,
+      "smoke_test_requires_explicit_flag": true
+    },
+    "progressive_sequence": [
+      "human_reviewed_split",
+      "real_behavior_curriculum",
+      "synthetic_behavior_foundation",
+      "deterministic_weighted_mix",
+      "curriculum_sft",
+      "confidence_filtered_completion_kd",
+      "optional_on_policy_kd"
+    ],
+    "direct_kd_from_initialization": "optional_ablation_only",
+    "synthetic_behavior_foundation": {
+      "enabled_by_default": true,
+      "path": "data/phase_9_student_distillation/foundation/prompts.foundation.jsonl",
+      "authored_prompt_rows": 336,
+      "primary_curriculum_repeat": 3,
+      "foundation_repeat": 1,
+      "policy": "training-only fictional evidence; never used as held-out quality evidence; supplements but does not replace human-reviewed real data or broad language pretraining",
+      "skills": [
+        "supported extraction",
+        "exact abstention",
+        "distractor resistance",
+        "retrieval injection resistance",
+        "conflict recognition",
+        "procedure application",
+        "concise social response",
+        "EOS behavior"
+      ]
+    }
   },
   "distillation": {
     "temperature": 2.0,
@@ -108,10 +155,27 @@
     "hidden_state_weight": 0.0,
     "attention_weight": 0.0,
     "on_policy_rounds": [
-      {"student_generated_fraction": 0.2, "teacher_reference_fraction": 0.8},
-      {"student_generated_fraction": 0.5, "teacher_reference_fraction": 0.5},
-      {"student_generated_fraction": 0.75, "teacher_reference_fraction": 0.25}
-    ]
+      {
+        "student_generated_fraction": 0.2,
+        "teacher_reference_fraction": 0.8
+      },
+      {
+        "student_generated_fraction": 0.5,
+        "teacher_reference_fraction": 0.5
+      },
+      {
+        "student_generated_fraction": 0.75,
+        "teacher_reference_fraction": 0.25
+      }
+    ],
+    "hard_label_weight_start": 0.75,
+    "hard_label_weight_end": 0.25,
+    "kd_warmup_ratio": 0.15,
+    "teacher_confidence_floor": 0.02,
+    "eos_loss_weight": 1.5,
+    "teacher_confidence_policy": "fall back to hard labels on low-confidence approved target tokens",
+    "primary_candidate": "progressive_kd_from_sft",
+    "direct_kd_candidate": "optional_ablation"
   },
   "rag": {
     "retrieval_top_k": 20,
@@ -128,8 +192,30 @@
     "response_control": "eos_only"
   },
   "evaluation": {
-    "conditions": ["closed_book", "oracle_rag", "real_rag", "adversarial_rag"],
+    "conditions": [
+      "closed_book",
+      "oracle_rag",
+      "real_rag",
+      "adversarial_rag",
+      "adversarial_passthrough_rag"
+    ],
     "unsupported_confident_answer_cap": null,
-    "promotion_policy": "shared_relative_opportunity_engine_plus_explicit_human_gate"
+    "promotion_policy": "shared_relative_opportunity_engine_plus_explicit_human_gate",
+    "schema_version": "1.1",
+    "case_classes": [
+      "supported",
+      "unsupported",
+      "conflict",
+      "social",
+      "unknown"
+    ],
+    "denominator_policy": "return null when a metric has zero applicable cases; never divide by max(1,n)",
+    "functional_correctness": "explicit response contract plus grounding; broad quality score remains diagnostic",
+    "comparison_policy": "shared relative opportunity for promotion plus bounded absolute delta for training comparisons",
+    "production_readiness": "requires non-degenerate functional evidence in addition to proportional opportunity",
+    "adversarial_conditions": {
+      "adversarial_rag": "system sanitizer active; measures complete-stack filtering",
+      "adversarial_passthrough_rag": "malicious evidence retained; measures model-level instruction resistance"
+    }
   }
 }

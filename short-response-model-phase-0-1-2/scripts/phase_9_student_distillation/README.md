@@ -1,112 +1,118 @@
-# Phase 9 — Tiny student distillation and RAG specialization
+# Phase 9 — Student distillation foundation
 
-Phase 9 begins only after the official Phase 0–8 teacher pipeline has produced an explicitly approved teacher checkpoint. It does not replace the teacher pipeline. It consumes the accepted teacher and builds smaller students whose main job is to understand questions, use supplied evidence, follow reusable procedures, respond naturally and briefly, and abstain when evidence is insufficient.
+Phase 9 consumes the explicitly accepted Phase 8 teacher and establishes whether a smaller student can use supplied evidence, abstain safely, remain concise, and preserve ordinary social conversation. It is a foundation phase, not the final 80M–120M deployment search; Phase 10 performs structural reduction after Phase 9 selects a valid intermediate student.
 
-## Why this phase exists
+## Behavior Curriculum v2
 
-Further pruning of the 0.6B teacher can reduce depth or width, but a much smaller deployment model needs a student-native architecture. Phase 9 separates factual memory from reusable behavior:
-
-```text
-Student weights                 External RAG
------------------------------   -----------------------------
-language/question understanding factual knowledge
-evidence use                    project documentation
-reusable procedures             character/world lore
-conversational behavior         user memories
-role-playing behavior           recent/changing information
-concise EOS behavior            long-tail entities
-abstention behavior             domain-specific procedures
-```
-
-## Official student tracks
-
-1. **Warm-started depth-copy intermediate** — copies complete teacher layers and preserves the teacher tokenizer/width. This is the default pipeline-validation track.
-2. **Aggressive same-tokenizer random control** — constructs the 80M–120M-style Qwen architecture. It is research-only until substantial training and the full gate prove language readiness.
-3. **Pretrained challenger** — clones a pretrained compact model such as SmolLM2. It uses sequence-level SFT first because direct Qwen vocabulary KL is invalid when tokenizers differ.
-
-The original teacher remains the authoritative supervisor at every compression rung. Intermediate students may assist later students but do not replace the teacher.
-
-## Two-stage runtime
+The original smoke run exposed three different problems: too little training data, direct KD before the student learned the task, and invalid evaluation denominators. Behavior Curriculum v2 changes the official sequence to:
 
 ```text
-User message
-  -> mode router
-     -> social/role-play: direct concise student response, optional memory/lore retrieval
-     -> factual/procedure: lexical retrieval -> filtering -> calibrated evidence pre-gate
-        -> insufficient: deterministic abstention
-        -> sufficient: tiny student -> grounding diagnostics -> answer or abstain
+accepted teacher + accepted real rows
+                ↓
+leakage-safe real train/dev/test split
+                ↓
+human-approved real curriculum
+                +
+versioned fictional behavior foundation (training only)
+                ↓
+weighted deterministic mixture
+                ↓
+curriculum SFT
+                ↓
+confidence-filtered progressive KD from the SFT artifact
+                ↓
+optional on-policy recovery
+                ↓
+closed / oracle / real / filtered-adversarial / passthrough-adversarial evaluation
 ```
 
-The first retriever is SQLite FTS5 so the retrieval stack does not silently consume more memory than the generator. Neural retrieval/reranking is a later measured challenger, not an assumed requirement.
+The bundled synthetic foundation contains 336 authored prompts covering supported extraction, exact abstention, distractors, retrieval injection, conflicting evidence, semantic-version procedures, concise social responses, and completion boundaries. Its facts are fictional and cannot leak real project answers. It supplements human-reviewed real rows; it does not replace broad language pretraining or held-out real-domain evaluation.
+
+## Student tracks
+
+1. **Warm depth-copy student** — exact complete teacher-layer inheritance; official production-foundation track.
+2. **Narrow same-tokenizer random students** — 100M/130M/170M research controls. The behavior foundation can teach task format, but it cannot create broad language competence from a small corpus.
+3. **Pretrained compact challenger** — sequence-level SFT first; direct Qwen-vocabulary KL is rejected when tokenizers differ.
+
+The original teacher remains authoritative at every compression rung.
+
+## What changed in evaluation
+
+- Social rows are no longer mislabeled as unsupported factual questions.
+- Every functional rate reports its actual numerator and denominator.
+- Zero-applicability metrics are `null`, never fake `0.0` or `1.0` values.
+- Supported correctness comes from explicit response contracts plus grounding, not a broad style score.
+- Training comparisons use bounded absolute deltas, so a zero reference cannot create changes on the order of `1e11`.
+- Smoke packets are never production-recommendable.
+- A production candidate must demonstrate at least one correct supported answer and one correct abstention whenever those case types exist.
+- `adversarial_rag` measures system filtering; `adversarial_passthrough_rag` retains malicious evidence and measures model-level resistance.
 
 ## Bootstrap
-
-Bootstrap creates the student initialization, knowledge index, teacher candidates, and human review packet:
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9.ps1 `
   -Mode Bootstrap `
-  -TeacherModel .\artifacts\<accepted-teacher-checkpoint> `
-  -AllowUnreleasedTeacher
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model
 ```
 
-Omit `-AllowUnreleasedTeacher` after Phase 8 is formally approved. Bootstrap never auto-approves teacher generations.
+Bootstrap creates the initialization, FTS5 index, teacher candidates, and the human-review packet. Authored answers in prompt records are included as clearly labeled candidates, but review remains mandatory for real project rows.
 
-## Pilot
-
-After editing the candidate JSONL so approved rows contain `review_status: accepted` and a selected/approved answer:
+## Research-ready Pilot
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9.ps1 `
   -Mode Pilot `
-  -TeacherModel .\artifacts\<accepted-teacher-checkpoint> `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -MaxSteps 200 `
-  -AllowUnreleasedTeacher
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 600
 ```
 
-The pilot builds document/topic-disjoint splits, calibrates the evidence threshold on development data, trains matched SFT and SFT+KD candidates from the same student initialization, evaluates teacher and students under four RAG conditions, and writes `reports/PHASE_9_STOP_GATE.md`.
+The default Pilot requires at least 30 accepted rows, eight independent connected topic/document groups, and development/test coverage for supported and unsupported cases. Add more independent prompts and documents when this gate fails; duplicated paraphrases do not create held-out evidence.
 
-## Hybrid multi-size compare
+The bundled foundation is included automatically. Use `-SkipFoundation` only for an ablation. Use `-SkipCurriculum` only for an ablation. Direct KD from initialization is disabled unless `-RunDirectKD` is supplied.
 
-`-StudentSuite Hybrid` keeps the warm ~344M depth-copy intermediate and trains three narrow same-tokenizer research controls (~100M / ~130M / ~170M), then compares all SFT/KD summaries in one Phase 9 gate. Narrow profiles are never auto-recommended for production.
+## Explicit smoke test
+
+A six-row packet can prove that the code runs, but not that a student learned the task:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Pilot `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
+  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -SmokeTest `
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 100
+```
+
+Smoke summaries carry `research_ready: false` and cannot be automatically recommended.
+
+## Hybrid comparison
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9.ps1 `
   -Mode Pilot `
   -StudentSuite Hybrid `
-  -TeacherModel .\artifacts\<accepted-teacher-checkpoint> `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
   -AcknowledgeRandomControl `
-  -MaxSteps 200 `
-  -ReuseExisting
+  -UseLora `
+  -Teacher4Bit `
+  -MaxSteps 600
 ```
 
-Artifacts land under `artifacts/phase_9_student_distillation/students/<profile>/`.
+Hybrid mode is expensive because every profile receives curriculum SFT and progressive KD. Run the warm `Single` track first. Narrow profiles remain research controls regardless of their apparent memory margin.
 
-## Optional on-policy round
+## Interpreting failures
 
-```powershell
-.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
-  -Mode Pilot `
-  -TeacherModel .\artifacts\<accepted-teacher-checkpoint> `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -RunOnPolicy `
-  -OnPolicyStudentFraction 0.20
-```
+- **Poor oracle RAG:** training, prompt use, checkpoint loading, or the evaluator is failing.
+- **Good oracle but poor real RAG:** retrieval or threshold calibration is failing.
+- **Good filtered adversarial but poor passthrough adversarial:** the sanitizer works, but the student still follows evidence-borne instructions.
+- **Correct answers but poor abstention:** increase real unsupported examples and inspect the external gate.
+- **SFT improves but KD regresses:** retain SFT; inspect teacher target confidence and KD loss components rather than forcing KD.
+- **Random narrow model remains incoherent:** expected; behavior data is not language pretraining.
 
-Student-generated trajectories use `hard_label_weight=0`, preventing hard-label cross-entropy from reinforcing the student's own mistakes. The frozen teacher still supplies the distribution target.
-
-## Preference alignment
-
-After RAG SFT/KD is stable, create RAG-specific preference files and reuse Phase 3's DPO trainer against the selected full student checkpoint or student adapter. Preference pairs should cover supported versus unsupported claims, concise versus verbose answers, correct abstention, clean EOS, in-character behavior, and prompt-injection resistance. Do not apply preference tuning before evidence use is stable.
-
-## Evaluation interpretation
-
-- Poor oracle RAG: generator cannot use supplied evidence.
-- Good oracle but poor real RAG: retrieval/filtering/gating is failing.
-- High correctness but poor abstention: sufficiency training or the external gate is failing.
-- Correct facts but excessive output: EOS/brevity training is failing.
-- Good generator footprint but high total process memory: retriever, index, KV cache, or runtime overhead is failing.
-
-No Phase 9 candidate advances solely because it is small. The shared relative-opportunity engine compares measured model-weight reduction with proportional quality loss, while human review inspects unsupported claims, false abstentions, role-play behavior, latency, total process memory, and quantized deployment evidence.
+No candidate advances only because it is small. Phase 9 still uses the shared proportional opportunity engine, plus functional-readiness blockers and an explicit human decision.

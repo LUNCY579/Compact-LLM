@@ -20,7 +20,10 @@ from pathlib import Path
 from typing import Any
 
 import torch
-from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+try:
+    from transformers import AutoConfig, AutoModelForCausalLM, AutoTokenizer
+except ImportError:  # Allows lightweight unit tests to import pure config helpers.
+    AutoConfig = AutoModelForCausalLM = AutoTokenizer = None  # type: ignore[assignment]
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -190,6 +193,8 @@ def publish_directory(staging: Path, destination: Path) -> None:
 
 
 def main() -> None:
+    if AutoConfig is None or AutoModelForCausalLM is None or AutoTokenizer is None:
+        raise RuntimeError("Phase 9 student creation requires a complete Transformers installation")
     args = parse_args()
     if args.output.exists() and not args.overwrite:
         raise FileExistsError(f"Output already exists; use --overwrite intentionally: {args.output}")

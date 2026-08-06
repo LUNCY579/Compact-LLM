@@ -190,6 +190,7 @@ def review_markdown(rows: list[dict[str, Any]]) -> str:
                     "",
                     f"- Grounding: `{candidate['grounding']['supported']}`",
                     f"- Quality: `{candidate['quality'].get('quality_score')}`",
+                    f"- Source: `{candidate.get('candidate_source', 'unknown')}`",
                     f"- Stop: `{candidate['stop_reason']}`",
                     "",
                 ]
@@ -294,7 +295,52 @@ def main() -> None:
                     "lexical_support_fraction": grounding.lexical_support_fraction,
                 }
                 candidate["quality"] = quality
+                candidate["candidate_source"] = "teacher_generation"
                 candidates.append(candidate)
+
+            authoritative_answer = str(row.get("answer") or row.get("reference") or "").strip()
+            if authoritative_answer and all(
+                authoritative_answer.casefold() != str(item.get("answer") or "").strip().casefold()
+                for item in candidates
+            ):
+                grounding = grounding_check(authoritative_answer, evidence)
+                quality_record = {
+                    "id": row["id"],
+                    "messages": messages,
+                    "reference": authoritative_answer,
+                    "category": row.get("category") or row.get("decision") or mode,
+                    "response_contract": row.get("response_contract") or {},
+                }
+                quality = evaluate_response(
+                    quality_record,
+                    authoritative_answer,
+                    max(1, len(tokenizer(authoritative_answer, add_special_tokens=False)["input_ids"])),
+                    visible_model_tokens=max(1, len(tokenizer(authoritative_answer, add_special_tokens=False)["input_ids"])),
+                    config=quality_config,
+                    corpus_profile=corpus_profile,
+                )
+                candidates.insert(
+                    0,
+                    {
+                        "answer": authoritative_answer,
+                        "raw_answer": authoritative_answer,
+                        "visible_token_count": len(tokenizer(authoritative_answer, add_special_tokens=False)["input_ids"]),
+                        "generated_token_count": 0,
+                        "stop_reason": "authoritative_target",
+                        "response_control_trimmed": False,
+                        "generation_seconds": 0.0,
+                        "sampled": False,
+                        "candidate_source": "authoritative_prompt_target",
+                        "grounding": {
+                            "supported": grounding.supported,
+                            "hard_failures": list(grounding.hard_failures),
+                            "diagnostics": list(grounding.diagnostics),
+                            "unsupported_numbers": list(grounding.unsupported_numbers),
+                            "lexical_support_fraction": grounding.lexical_support_fraction,
+                        },
+                        "quality": quality,
+                    },
+                )
 
             output_row = {
                 "id": row["id"],
@@ -311,7 +357,7 @@ def main() -> None:
                 "support_document_ids": row.get("support_document_ids") or [],
                 "rejected_passages": rejected,
                 "response_contract": row.get("response_contract") or {},
-                "authoritative_answer": row.get("answer") or row.get("reference"),
+                "authoritative_answer": authoritative_answer or None,
                 "candidates": candidates,
                 "review_status": "pending_human_review",
                 "selected_candidate_index": None,

@@ -15,6 +15,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json
 from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages
+from scripts.phase_9_student_distillation.phase9_metrics import decision_class, safe_rate
 
 
 def parse_args() -> argparse.Namespace:
@@ -26,6 +27,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reranked-top-k", type=int, default=3)
     parser.add_argument("--false-answer-cost", type=float, default=3.0)
     parser.add_argument("--unnecessary-abstention-cost", type=float, default=1.0)
+    parser.add_argument("--minimum-answerable-cases", type=int, default=2)
+    parser.add_argument("--minimum-unanswerable-cases", type=int, default=2)
+    parser.add_argument("--smoke-test", action="store_true")
+    parser.add_argument("--require-research-ready", action="store_true")
     return parser.parse_args()
 
 
@@ -42,9 +47,9 @@ def threshold_metrics(rows: list[dict[str, Any]], threshold: float) -> dict[str,
             tn += 1
         else:
             fn += 1
-    precision = tp / max(1, tp + fp)
-    recall = tp / max(1, tp + fn)
-    rejection = tn / max(1, tn + fp)
+    precision = safe_rate(tp, tp + fp)
+    recall = safe_rate(tp, tp + fn)
+    rejection = safe_rate(tn, tn + fp)
     return {
         "threshold": threshold,
         "true_positive": tp,
@@ -54,8 +59,10 @@ def threshold_metrics(rows: list[dict[str, Any]], threshold: float) -> dict[str,
         "supported_question_recall": recall,
         "unsupported_question_rejection": rejection,
         "answer_precision": precision,
-        "false_answer_rate": fp / max(1, fp + tn),
-        "unnecessary_abstention_rate": fn / max(1, fn + tp),
+        "false_answer_rate": safe_rate(fp, fp + tn),
+        "unnecessary_abstention_rate": safe_rate(fn, fn + tp),
+        "answerable_denominator": tp + fn,
+        "unanswerable_denominator": tn + fp,
     }
 
 
@@ -82,7 +89,7 @@ def choose_threshold(
         key=lambda item: (
             item["weighted_cost"],
             item["false_positive"],
-            -item["supported_question_recall"],
+            -(item["supported_question_recall"] if item["supported_question_recall"] is not None else -1.0),
             -item["threshold"],
         ),
     )
@@ -106,8 +113,10 @@ def main() -> None:
             )
             selected = retrieved[: args.reranked_top_k]
             best_score = max((float(item.get("normalized_score", 0.0)) for item in selected), default=0.0)
-            decision = str(row.get("decision") or "answer")
-            answerable = decision == "answer"
+            klass = decision_class(row)
+            if klass not in {"supported", "unsupported"}:
+                continue
+            answerable = klass == "supported"
             score_rows.append(
                 {
                     "id": row.get("id"),
@@ -116,6 +125,20 @@ def main() -> None:
                     "retrieved_ids": [item.get("record_id") for item in selected],
                 }
             )
+    answerable_count = sum(1 for row in score_rows if row["answerable"])
+    unanswerable_count = len(score_rows) - answerable_count
+    readiness_reasons: list[str] = []
+    if answerable_count < args.minimum_answerable_cases:
+        readiness_reasons.append(
+            f"answerable calibration cases {answerable_count} < required {args.minimum_answerable_cases}"
+        )
+    if unanswerable_count < args.minimum_unanswerable_cases:
+        readiness_reasons.append(
+            f"unanswerable calibration cases {unanswerable_count} < required {args.minimum_unanswerable_cases}"
+        )
+    research_ready = not readiness_reasons and not args.smoke_test
+    if args.require_research_ready and not research_ready:
+        raise ValueError("Evidence calibration is not research-ready: " + "; ".join(readiness_reasons))
     best, candidates = choose_threshold(
         score_rows,
         false_answer_cost=args.false_answer_cost,
@@ -124,11 +147,16 @@ def main() -> None:
     write_json(
         args.output,
         {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "benchmark": str(args.benchmark),
             "benchmark_sha256": sha256(args.benchmark),
             "knowledge_db": str(args.knowledge_db),
             "calibration_case_count": len(score_rows),
+            "answerable_case_count": answerable_count,
+            "unanswerable_case_count": unanswerable_count,
+            "research_ready": research_ready,
+            "research_readiness_reasons": readiness_reasons,
+            "smoke_test": args.smoke_test,
             "false_answer_cost": args.false_answer_cost,
             "unnecessary_abstention_cost": args.unnecessary_abstention_cost,
             "minimum_retrieval_score": best["threshold"],
