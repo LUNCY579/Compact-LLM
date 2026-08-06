@@ -43,6 +43,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     evidence_gate,
     grounding_check,
     is_abstention,
+    normalize_response_contract,
     passage_id,
     process_rss_bytes,
     route_mode,
@@ -241,12 +242,17 @@ def reference_answer(row: dict[str, Any]) -> str | None:
 
 
 def row_quality_record(row: dict[str, Any], messages: list[dict[str, Any]]) -> dict[str, Any]:
+    record_id = str(row.get("id") or "unknown")
     return {
         "id": row.get("id"),
         "messages": messages,
         "reference": reference_answer(row),
         "category": row.get("category") or row.get("decision") or row.get("mode") or "uncategorized",
-        "response_contract": row.get("response_contract") or {},
+        # Normalize at evaluation so legacy Phase 9 shorthand labels never reach Evaluator v4.5.
+        "response_contract": normalize_response_contract(
+            row.get("response_contract") or {},
+            record_id=record_id,
+        ),
     }
 
 

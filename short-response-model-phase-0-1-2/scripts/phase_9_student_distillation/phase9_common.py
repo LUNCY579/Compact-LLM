@@ -230,7 +230,7 @@ def _normalize_contract_requirement(
         )
     item.setdefault("id", f"phase9_requirement_{index}")
     # Map Phase 9 shorthand onto Evaluator v4.5's documented scored labels.
-    if item.get("label") in {None, "", "required_content_missing"}:
+    if item.get("label") in {None, "", "required_content_missing", "required_abstention_missing"}:
         item["label"] = "explicit_required_content_missing"
     item.setdefault("severity", "major")
     item.setdefault("weight", 1.0)

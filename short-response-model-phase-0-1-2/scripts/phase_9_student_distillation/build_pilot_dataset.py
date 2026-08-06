@@ -104,7 +104,7 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
                     *response_contract.get("requirements", []),
                     {
                         "id": "phase9_required_abstention",
-                        "label": "required_abstention_missing",
+                        "label": "explicit_required_content_missing",
                         "severity": "major",
                         "weight": 1.0,
                         "description": "The reply must use the approved Phase 9 abstention response.",

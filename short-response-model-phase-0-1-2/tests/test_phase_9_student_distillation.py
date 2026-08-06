@@ -240,8 +240,25 @@ def test_abstention_training_contract_is_v45_compatible() -> None:
     )
     requirements = converted["response_contract"]["requirements"]
     assert requirements and all(isinstance(item, dict) for item in requirements)
+    assert all(item.get("label") == "explicit_required_content_missing" for item in requirements)
     result = validate_response_contract(converted["response_contract"], ABSTENTION_TEXT)
     assert not result["defects"]
+    # Legacy shorthand still remaps before Evaluator v4.5.
+    remapped = normalize_response_contract(
+        {
+            "open_ended": False,
+            "requirements": [
+                {
+                    "id": "legacy_abstention",
+                    "label": "required_abstention_missing",
+                    "severity": "major",
+                    "match": {"any_phrases": [ABSTENTION_TEXT]},
+                }
+            ],
+        },
+        record_id="legacy_abstention",
+    )
+    assert remapped["requirements"][0]["label"] == "explicit_required_content_missing"
 
 def test_sample_teacher_answers_run_through_full_quality_evaluator() -> None:
     root = Path(__file__).resolve().parents[1]
