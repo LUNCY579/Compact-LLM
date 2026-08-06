@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import sys
 from pathlib import Path
 
 import pytest
@@ -175,7 +176,16 @@ def test_phase9_config_has_unset_uncalibrated_thresholds() -> None:
     assert "Invoke-PythonStep" in runner
     assert "train_student.py" in runner
     assert "--resume" in runner
-    assert 'TeacherArgs += "--resume"' in runner
+    assert "StudentSuite" in runner
+    assert "Hybrid" in runner
+    assert "students" in runner
+    assert "hybrid_compare" in json.dumps(config)
+    for name in ("warm_344m", "narrow_100m", "narrow_130m", "narrow_170m"):
+        assert name in json.dumps(config["student_tracks"]["hybrid_compare"]["profiles"])
+    assert "sft_$($result.Name)" in runner
+    assert "--candidate" in runner
+    assert "--research-control" in runner
+    assert "Get-HybridProfiles" in runner
 
 def test_phase9_legacy_contract_strings_are_normalized_for_v45() -> None:
     contract = normalize_response_contract(
@@ -265,4 +275,164 @@ def test_sample_teacher_answers_run_through_full_quality_evaluator() -> None:
         )
         assert isinstance(result["quality_score"], float)
         assert not result.get("defects"), row["id"]
+
+
+def _estimate_qwen_params(
+    *,
+    hidden_size: int,
+    intermediate_size: int,
+    num_hidden_layers: int,
+    num_attention_heads: int,
+    num_key_value_heads: int,
+    head_dim: int,
+    vocab_size: int = 151936,
+) -> int:
+    q_dim = num_attention_heads * head_dim
+    kv_dim = num_key_value_heads * head_dim
+    emb = vocab_size * hidden_size
+    attn = hidden_size * q_dim + hidden_size * kv_dim + hidden_size * kv_dim + q_dim * hidden_size
+    qk_norm = q_dim + kv_dim
+    mlp = hidden_size * intermediate_size + hidden_size * intermediate_size + intermediate_size * hidden_size
+    norms = 2 * hidden_size
+    layer = attn + qk_norm + mlp + norms
+    return emb + num_hidden_layers * layer + hidden_size
+
+
+def test_hybrid_compare_profiles_are_within_target_bands() -> None:
+    root = Path(__file__).resolve().parents[1]
+    config = json.loads((root / "configs/phase_9_student_distillation.json").read_text(encoding="utf-8"))
+    profiles = config["student_tracks"]["hybrid_compare"]["profiles"]
+    assert set(profiles) == {"warm_344m", "narrow_100m", "narrow_130m", "narrow_170m"}
+
+    warm = profiles["warm_344m"]
+    assert warm["mode"] == "depth_copy"
+    assert warm["production_eligible_by_default"] is True
+    assert warm["research_control"] is False
+
+    expected = {
+        "narrow_100m": (512, 1536, 8, 8, 2, 64),
+        "narrow_130m": (576, 1536, 12, 9, 3, 64),
+        "narrow_170m": (640, 1792, 16, 10, 2, 64),
+    }
+    for name, shape in expected.items():
+        profile = profiles[name]
+        assert profile["mode"] == "custom_qwen_random"
+        assert profile["production_eligible_by_default"] is False
+        assert profile["research_control"] is True
+        hidden, intermediate, layers, heads, kv, head_dim = shape
+        assert profile["hidden_size"] == hidden
+        assert profile["intermediate_size"] == intermediate
+        assert profile["num_hidden_layers"] == layers
+        assert profile["num_attention_heads"] == heads
+        assert profile["num_key_value_heads"] == kv
+        assert profile["head_dim"] == head_dim
+        estimate = _estimate_qwen_params(
+            hidden_size=hidden,
+            intermediate_size=intermediate,
+            num_hidden_layers=layers,
+            num_attention_heads=heads,
+            num_key_value_heads=kv,
+            head_dim=head_dim,
+        )
+        target = int(profile["target_params"])
+        tolerance = float(profile["target_params_tolerance"])
+        assert abs(estimate - target) / target <= tolerance
+
+
+def test_phase9_gate_accepts_multiple_candidates(tmp_path: Path) -> None:
+    from scripts.common.quality_evaluation import QUALITY_EVALUATION_VERSION
+    from scripts.phase_9_student_distillation import check_phase_9_gate as gate
+
+    def write_summary(path: Path, *, quality: float, weight_bytes: int) -> None:
+        path.write_text(
+            json.dumps(
+                {
+                    "quality_evaluation_version": QUALITY_EVALUATION_VERSION,
+                    "case_count": 2,
+                    "mean_quality_score": quality,
+                    "model_weight_bytes": weight_bytes,
+                    "mean_quality_dimensions": {
+                        "comprehensibility": quality,
+                        "mechanical_integrity": quality,
+                        "contract_fulfillment": quality,
+                        "prompt_function_alignment": quality,
+                        "task_adequacy": quality,
+                        "factual_correctness": quality,
+                        "logic_factual_consistency": quality,
+                        "safety_boundary": quality,
+                        "context_consistency": quality,
+                        "response_completeness": quality,
+                        "brevity_appropriateness": quality,
+                        "conversation_naturalness": quality,
+                    },
+                    "conditions": {
+                        "real_rag": {
+                            "supported_answer_correctness": quality,
+                            "evidence_faithfulness": quality,
+                            "unsupported_confident_answer_rate": 0.0,
+                        }
+                    },
+                }
+            ),
+            encoding="utf-8",
+        )
+
+    teacher = tmp_path / "teacher.json"
+    warm_sft = tmp_path / "warm_sft.json"
+    warm_kd = tmp_path / "warm_kd.json"
+    narrow_sft = tmp_path / "narrow_sft.json"
+    narrow_kd = tmp_path / "narrow_kd.json"
+    write_summary(teacher, quality=0.90, weight_bytes=1_000_000_000)
+    write_summary(warm_sft, quality=0.80, weight_bytes=700_000_000)
+    write_summary(warm_kd, quality=0.82, weight_bytes=700_000_000)
+    write_summary(narrow_sft, quality=0.70, weight_bytes=100_000_000)
+    write_summary(narrow_kd, quality=0.72, weight_bytes=100_000_000)
+
+    out_md = tmp_path / "gate.md"
+    out_json = tmp_path / "gate.json"
+    old_argv = list(sys.argv)
+    try:
+        sys.argv = [
+            "check_phase_9_gate.py",
+            "--teacher-summary",
+            str(teacher),
+            "--candidate",
+            f"sft_warm_344m={warm_sft}",
+            "--candidate",
+            f"kd_warm_344m={warm_kd}",
+            "--candidate",
+            f"sft_narrow_100m={narrow_sft}",
+            "--candidate",
+            f"kd_narrow_100m={narrow_kd}",
+            "--research-control",
+            "sft_narrow_100m",
+            "--research-control",
+            "kd_narrow_100m",
+            "--out",
+            str(out_md),
+            "--json-out",
+            str(out_json),
+        ]
+        gate.main()
+    finally:
+        sys.argv = old_argv
+
+    packet = json.loads(out_json.read_text(encoding="utf-8"))
+    assert set(packet["candidates"]) == {
+        "sft_warm_344m",
+        "kd_warm_344m",
+        "sft_narrow_100m",
+        "kd_narrow_100m",
+    }
+    assert packet["recommended_candidate"] in {"sft_warm_344m", "kd_warm_344m", None} or (
+        packet["recommended_candidate"] is not None
+        and "narrow_" not in packet["recommended_candidate"]
+    )
+    assert packet["recommended_candidate"] not in {"sft_narrow_100m", "kd_narrow_100m"}
+    assert "kd_narrow_100m_vs_kd_warm_344m" in packet["quality_comparisons"] or any(
+        "narrow_100m" in key and "warm_344m" in key for key in packet["quality_comparisons"]
+    )
+    text = out_md.read_text(encoding="utf-8")
+    assert "research_control" in text
+    assert "Recommended production candidate" in text
 

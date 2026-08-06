@@ -67,6 +67,23 @@ After editing the candidate JSONL so approved rows contain `review_status: accep
 
 The pilot builds document/topic-disjoint splits, calibrates the evidence threshold on development data, trains matched SFT and SFT+KD candidates from the same student initialization, evaluates teacher and students under four RAG conditions, and writes `reports/PHASE_9_STOP_GATE.md`.
 
+## Hybrid multi-size compare
+
+`-StudentSuite Hybrid` keeps the warm ~344M depth-copy intermediate and trains three narrow same-tokenizer research controls (~100M / ~130M / ~170M), then compares all SFT/KD summaries in one Phase 9 gate. Narrow profiles are never auto-recommended for production.
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Pilot `
+  -StudentSuite Hybrid `
+  -TeacherModel .\artifacts\<accepted-teacher-checkpoint> `
+  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -AcknowledgeRandomControl `
+  -MaxSteps 200 `
+  -ReuseExisting
+```
+
+Artifacts land under `artifacts/phase_9_student_distillation/students/<profile>/`.
+
 ## Optional on-policy round
 
 ```powershell

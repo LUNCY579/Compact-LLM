@@ -32,6 +32,61 @@
       "suggested_source": "HuggingFaceTB/SmolLM2-135M-Instruct",
       "direct_qwen_logit_kd": false,
       "initial_objective": "sequence_level_sft"
+    },
+    "hybrid_compare": {
+      "purpose": "One warm depth-copy intermediate plus three narrow same-tokenizer research controls compared in a single Phase 9 gate",
+      "profiles": {
+        "warm_344m": {
+          "mode": "depth_copy",
+          "num_hidden_layers": 12,
+          "target_params": 344000000,
+          "target_params_tolerance": 0.15,
+          "production_eligible_by_default": true,
+          "research_control": false
+        },
+        "narrow_100m": {
+          "mode": "custom_qwen_random",
+          "hidden_size": 512,
+          "intermediate_size": 1536,
+          "num_hidden_layers": 8,
+          "num_attention_heads": 8,
+          "num_key_value_heads": 2,
+          "head_dim": 64,
+          "max_position_embeddings": 1024,
+          "target_params": 102000000,
+          "target_params_tolerance": 0.12,
+          "production_eligible_by_default": false,
+          "research_control": true
+        },
+        "narrow_130m": {
+          "mode": "custom_qwen_random",
+          "hidden_size": 576,
+          "intermediate_size": 1536,
+          "num_hidden_layers": 12,
+          "num_attention_heads": 9,
+          "num_key_value_heads": 3,
+          "head_dim": 64,
+          "max_position_embeddings": 1024,
+          "target_params": 130000000,
+          "target_params_tolerance": 0.12,
+          "production_eligible_by_default": false,
+          "research_control": true
+        },
+        "narrow_170m": {
+          "mode": "custom_qwen_random",
+          "hidden_size": 640,
+          "intermediate_size": 1792,
+          "num_hidden_layers": 16,
+          "num_attention_heads": 10,
+          "num_key_value_heads": 2,
+          "head_dim": 64,
+          "max_position_embeddings": 1024,
+          "target_params": 168000000,
+          "target_params_tolerance": 0.12,
+          "production_eligible_by_default": false,
+          "research_control": true
+        }
+      }
     }
   },
   "training": {

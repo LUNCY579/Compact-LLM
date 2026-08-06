@@ -77,6 +77,23 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--torch-dtype", choices=("auto", "float32", "float16", "bfloat16"), default="auto")
     parser.add_argument("--overwrite", action="store_true")
+    parser.add_argument(
+        "--target-params",
+        type=int,
+        default=None,
+        help="Optional expected total parameter count. Fails if the created student is outside tolerance.",
+    )
+    parser.add_argument(
+        "--target-params-tolerance",
+        type=float,
+        default=0.12,
+        help="Relative tolerance for --target-params (default 0.12 = +/-12%).",
+    )
+    parser.add_argument(
+        "--profile-name",
+        default=None,
+        help="Optional profile label recorded in the creation manifest (for hybrid suites).",
+    )
     return parser.parse_args()
 
 
@@ -189,6 +206,21 @@ def main() -> None:
             initialization_state = "pretrained_challenger_clone"
 
     breakdown = model_parameter_breakdown(model)
+    if args.target_params is not None:
+        if args.target_params <= 0:
+            raise ValueError("--target-params must be positive")
+        if not 0.0 <= args.target_params_tolerance < 1.0:
+            raise ValueError("--target-params-tolerance must be in [0, 1)")
+        total = int(breakdown["total"])
+        target = int(args.target_params)
+        lower = int(target * (1.0 - args.target_params_tolerance))
+        upper = int(target * (1.0 + args.target_params_tolerance))
+        if total < lower or total > upper:
+            raise ValueError(
+                f"Student parameter count {total:,} is outside the target band "
+                f"[{lower:,}, {upper:,}] for --target-params {target:,} "
+                f"(tolerance={args.target_params_tolerance:.3f})"
+            )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     staging = args.output.with_name(f".{args.output.name}.tmp-{uuid.uuid4().hex}")
     try:
@@ -201,6 +233,7 @@ def main() -> None:
         manifest = {
             "phase": "9_student_distillation",
             "schema_version": "1.0",
+            "profile_name": args.profile_name,
             "source": args.source,
             "source_tree_sha256": sha256_tree(Path(args.source)) if Path(args.source).exists() else None,
             "mode": args.mode,
@@ -208,6 +241,8 @@ def main() -> None:
             "selected_teacher_layers": selected_layers,
             "architecture": model.config.to_dict(),
             "parameter_breakdown": breakdown,
+            "target_params": args.target_params,
+            "target_params_tolerance": args.target_params_tolerance if args.target_params is not None else None,
             "idealized_weight_bytes": {
                 "fp32": breakdown["total"] * 4,
                 "fp16_bf16": breakdown["total"] * 2,
@@ -232,6 +267,8 @@ def main() -> None:
             shutil.rmtree(staging, ignore_errors=True)
 
     print(f"Student checkpoint: {args.output}")
+    if args.profile_name:
+        print(f"Profile: {args.profile_name}")
     print(f"Initialization: {initialization_state}")
     print(f"Parameters: {breakdown['total']:,}")
     print(f"Checkpoint bytes: {tree_bytes(args.output):,}")
