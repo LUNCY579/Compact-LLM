@@ -155,23 +155,15 @@ def main() -> None:
     for split, rows in splits.items():
         write_jsonl(args.output_dir / f"{split}.jsonl", rows)
 
-    ownership: dict[str, str] = {}
-    for split, rows in splits.items():
-        for row in rows:
-            for document_id in row.get("support_document_ids") or row.get("retrieved_document_ids") or []:
-                document_id = str(document_id)
-                prior = ownership.setdefault(document_id, split)
-                if prior != split:
-                    raise ValueError(
-                        f"Document leakage: {document_id} appears in both {prior} and {split}"
-                    )
-
     manifest = {
         "schema_version": "1.0",
         "source": str(args.reviewed_input),
         "source_sha256": sha256(args.reviewed_input),
         "seed": args.seed,
-        "split_method": "topic_or_document_group_hash; no group is split across train/dev/test",
+        "split_method": (
+            "connected_components over topic_id and support/retrieved document IDs; "
+            "no topic or document is split across train/dev/test"
+        ),
         "counts": {split: len(rows) for split, rows in splits.items()},
         "decision_counts": {
             split: dict(Counter(str(row.get("decision")) for row in rows))

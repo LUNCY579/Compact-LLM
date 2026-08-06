@@ -78,6 +78,56 @@ def test_sqlite_retrieval_and_group_split(tmp_path: Path) -> None:
     assert sum(map(len, splits.values())) == len(records)
 
 
+def test_shared_documents_keep_different_topics_in_one_split() -> None:
+    records = [
+        {
+            "id": "sample_release_date",
+            "topic_id": "nookumi_release",
+            "support_document_ids": ["nookumi_release"],
+            "retrieved_document_ids": ["nookumi_release"],
+        },
+        {
+            "id": "sample_injection",
+            "topic_id": "adversarial_injection",
+            "support_document_ids": ["nookumi_release"],
+            "retrieved_document_ids": ["nookumi_release"],
+        },
+        {
+            "id": "sample_architecture",
+            "topic_id": "nookumi_architecture",
+            "support_document_ids": ["nookumi_architecture"],
+            "retrieved_document_ids": ["nookumi_architecture"],
+        },
+        {
+            "id": "sample_missing_soundtrack",
+            "topic_id": "nookumi_soundtrack",
+            "support_document_ids": [],
+            "retrieved_document_ids": ["nookumi_architecture"],
+        },
+        {
+            "id": "sample_social",
+            "topic_id": "social_greeting",
+            "support_document_ids": [],
+            "retrieved_document_ids": [],
+        },
+        {
+            "id": "sample_procedure",
+            "topic_id": "semantic_versions",
+            "support_document_ids": ["version_a"],
+            "retrieved_document_ids": ["version_a"],
+        },
+    ]
+    splits = split_by_group(records, seed=42)
+    assert_no_group_leakage(splits)
+    ownership = {
+        row["id"]: split
+        for split, rows in splits.items()
+        for row in rows
+    }
+    assert ownership["sample_release_date"] == ownership["sample_injection"]
+    assert ownership["sample_architecture"] == ownership["sample_missing_soundtrack"]
+
+
 def test_calibration_prefers_false_answer_safety() -> None:
     best, packets = choose_threshold(
         [
@@ -124,6 +174,8 @@ def test_phase9_config_has_unset_uncalibrated_thresholds() -> None:
     runner = (root / "scripts/phase_9_student_distillation/run_phase_9.ps1").read_text(encoding="utf-8")
     assert "Invoke-PythonStep" in runner
     assert "train_student.py" in runner
+    assert "--resume" in runner
+    assert 'TeacherArgs += "--resume"' in runner
 
 def test_phase9_legacy_contract_strings_are_normalized_for_v45() -> None:
     contract = normalize_response_contract(

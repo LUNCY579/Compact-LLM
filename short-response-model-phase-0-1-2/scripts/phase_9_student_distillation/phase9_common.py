@@ -678,15 +678,106 @@ class SQLiteFTSRetriever:
         return results
 
 
+def document_ids_for_record(row: dict[str, Any]) -> set[str]:
+    """Return document IDs that must stay inside one train/dev/test split.
+
+    Support IDs and retrieved IDs both count.  Adversarial and abstention rows often
+    reuse another topic's document under a different ``topic_id``; splitting by topic
+    alone would leak that document across splits.
+    """
+
+    documents: set[str] = set()
+    for field in ("support_document_ids", "retrieved_document_ids"):
+        for value in row.get(field) or []:
+            document_id = str(value).strip()
+            if document_id:
+                documents.add(document_id)
+    return documents
+
+
 def group_key_for_record(row: dict[str, Any]) -> str:
-    if row.get("topic_id"):
-        return f"topic:{row['topic_id']}"
-    support = row.get("support_document_ids") or []
-    if support:
-        return "documents:" + ",".join(sorted(str(value) for value in support))
+    """Return a provisional single-row key.
+
+    Prefer ``connected_component_groups`` / ``split_by_group`` for dataset splits.
+    Rows that share a document are merged there even when ``topic_id`` differs.
+    """
+
+    topic = str(row.get("topic_id") or "").strip()
+    documents = sorted(document_ids_for_record(row))
+    if topic and documents:
+        return f"topic:{topic}|documents:{','.join(documents)}"
+    if topic:
+        return f"topic:{topic}"
+    if documents:
+        return "documents:" + ",".join(documents)
     evidence = row.get("evidence") or []
-    ids = sorted(passage_id(item) for item in evidence)
+    ids = sorted(passage_id(item) for item in evidence if passage_id(item) != "unknown")
     return "documents:" + ",".join(ids) if ids else f"record:{row.get('id')}"
+
+
+def connected_component_groups(rows: Sequence[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    """Merge rows that share a topic or any support/retrieved document ID."""
+
+    parent: dict[str, str] = {}
+
+    def find(node: str) -> str:
+        parent.setdefault(node, node)
+        while parent[node] != node:
+            parent[node] = parent[parent[node]]
+            node = parent[node]
+        return node
+
+    def union(left: str, right: str) -> None:
+        root_left = find(left)
+        root_right = find(right)
+        if root_left == root_right:
+            return
+        if root_left < root_right:
+            parent[root_right] = root_left
+        else:
+            parent[root_left] = root_right
+
+    row_nodes = [f"row:{index}" for index in range(len(rows))]
+    for index, row in enumerate(rows):
+        node = row_nodes[index]
+        topic = str(row.get("topic_id") or "").strip()
+        documents = document_ids_for_record(row)
+        if topic:
+            union(node, f"topic:{topic}")
+        for document_id in documents:
+            union(node, f"doc:{document_id}")
+        if not topic and not documents:
+            union(node, f"record:{row.get('id') or index}")
+
+    buckets: dict[str, list[int]] = {}
+    for index, node in enumerate(row_nodes):
+        buckets.setdefault(find(node), []).append(index)
+
+    groups: dict[str, list[dict[str, Any]]] = {}
+    for indices in buckets.values():
+        topics = sorted(
+            {
+                str(rows[index].get("topic_id") or "").strip()
+                for index in indices
+                if str(rows[index].get("topic_id") or "").strip()
+            }
+        )
+        documents = sorted(
+            {
+                document_id
+                for index in indices
+                for document_id in document_ids_for_record(rows[index])
+            }
+        )
+        record_ids = sorted(str(rows[index].get("id") or index) for index in indices)
+        key = (
+            "component:"
+            f"topics={','.join(topics)}|"
+            f"documents={','.join(documents)}|"
+            f"ids={','.join(record_ids)}"
+        )
+        groups[key] = [dict(rows[index]) for index in indices]
+    return groups
 
 
 def split_by_group(
@@ -701,9 +792,7 @@ def split_by_group(
     if train_fraction <= 0 or dev_fraction < 0 or train_fraction + dev_fraction >= 1:
         raise ValueError("Expected train_fraction > 0, dev_fraction >= 0, and sum < 1")
 
-    groups: dict[str, list[dict[str, Any]]] = {}
-    for row in rows:
-        groups.setdefault(group_key_for_record(row), []).append(dict(row))
+    groups = connected_component_groups(rows)
 
     def group_order(key: str) -> str:
         return hashlib.sha256(f"{seed}:{key}".encode("utf-8")).hexdigest()
@@ -730,13 +819,21 @@ def split_by_group(
 
 
 def assert_no_group_leakage(splits: dict[str, Sequence[dict[str, Any]]]) -> None:
-    ownership: dict[str, str] = {}
+    topic_ownership: dict[str, str] = {}
+    document_ownership: dict[str, str] = {}
     for split, rows in splits.items():
         for row in rows:
-            key = group_key_for_record(row)
-            previous = ownership.setdefault(key, split)
-            if previous != split:
-                raise ValueError(f"Group leakage: {key} appears in both {previous} and {split}")
+            topic = str(row.get("topic_id") or "").strip()
+            if topic:
+                previous = topic_ownership.setdefault(topic, split)
+                if previous != split:
+                    raise ValueError(f"Topic leakage: {topic} appears in both {previous} and {split}")
+            for document_id in document_ids_for_record(row):
+                previous = document_ownership.setdefault(document_id, split)
+                if previous != split:
+                    raise ValueError(
+                        f"Document leakage: {document_id} appears in both {previous} and {split}"
+                    )
 
 
 def tokenizer_fingerprint(tokenizer: Any) -> str:

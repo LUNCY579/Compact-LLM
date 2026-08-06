@@ -134,7 +134,13 @@ if ($Mode -eq "Bootstrap") {
         "--samples-per-question", "2",
         "--max-new-tokens", "32"
     )
-    if ($ReuseExisting) { $TeacherArgs += "--resume" }
+    # Always resume when a prior Bootstrap left teacher_candidates.jsonl behind.
+    # generate_teacher_data.py treats --resume as a no-op if the file is absent,
+    # and skips already-completed record IDs when it is present.
+    $TeacherArgs += "--resume"
+    if ($ReuseExisting -and (Test-Path $TeacherCandidates)) {
+        Write-Host "Resuming teacher-candidate generation from existing $TeacherCandidates"
+    }
     Invoke-PythonStep "[3] Generating the teacher candidate/review packet..." $TeacherArgs
     Write-Host ""
     Write-Host "Bootstrap completed. Human-review $TeacherCandidates before Pilot mode."
