@@ -1,10 +1,18 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.6.0 appended Phase 10 architecture search and Phase 11 production RAG release
+
+Phase 10 now consumes the exact human-approved Phase 9 student, profiles residual/MLP/attention structure, creates physically smaller dense candidates across intermediate, small, and 80M–120M deployment target bands, performs fresh reload checks, recovery-distills a bounded set under the original teacher, optionally trains a compact pretrained challenger, and selects from a shared relative-opportunity frontier.
+
+Phase 11 consumes the exact human-approved Phase 10 student and implements an immutable knowledge snapshot, SQLite FTS5 retrieval, development-calibrated answerability, deterministic abstention/conflict handling, evidence-token budgeting, conservative post-generation grounding, dense/NF4/INT8/GGUF deployment candidates, total-process memory and end-to-end benchmarks, a persistent local JSONL runtime, human release gate, rollback evidence, and release packaging. See `PHASE_10_11_ARCHITECTURE_REVIEW.md` and `PHASE_10_11_WORKFLOW.md`.
+
 ## v1.5.0 appended Phase 9 student distillation pipeline
 
 The official Phase 0–8 program remains the teacher-development pipeline. Phase 9 now consumes an exact human-approved teacher and builds smaller RAG-specialized students through warm-started student construction, reviewed teacher-data generation, document/topic-disjoint pilot data, calibrated evidence gating, matched SFT versus completion-only logit distillation, optional on-policy recovery, four-condition RAG evaluation, and proportional human-gated selection.
 
 The first retriever is SQLite FTS5 so generator savings are not silently offset by a neural retrieval stack. Direct vocabulary KL requires identical tokenizer fingerprints; cross-tokenizer challengers start with sequence-level SFT. Randomly initialized narrow-Qwen models are explicitly marked research controls. See `STUDENT_DISTILLATION_PIPELINE.md` and `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md`.
+
+The latest Phase 9 runner also supports `-StudentSuite Hybrid`, which evaluates one warm 344M depth-copy student and 100M/130M/170M narrow same-tokenizer research controls in a single assessment. Candidate keys are profile-qualified (`sft_warm_344m`, `kd_warm_344m`, and so on), and the Phase 10 handoff accepts the exact key recorded in `reports/PHASE_9_ASSESSMENT.json`. Narrow random-initialized profiles remain research controls unless a separate human language-readiness review explicitly authorizes promotion.
 
 ## v1.4.7 Phase 2C reliability and correctness hotfix
 
@@ -14,12 +22,14 @@ Existing v1.4.6 Phase 2C work is preserved through a narrowly authorized migrati
 
 Reliability hardening also includes bounded atomic-replace retries for transient Windows locks, best-effort progress sidecars, resumable generation and teacher forcing, normalized manifest paths, strict stable-ID coverage, corrupt-sentinel quarantine, safer staged adapter publication, default suppression of intermediate checkpoints, free-disk checks, stronger Phase 2C artifact/gate audits, and `None`-safe report rendering. See `PHASE_2C_RELIABILITY_AND_CORRECTNESS_HOTFIX_v1.4.7.md`.
 
-This repository implements the ordered Phase 0–8 teacher program, two structural branches, one targeted-recovery branch, and an appended Phase 9 RAG-student distillation pipeline:
+This repository implements the ordered Phase 0–8 teacher program, two structural teacher branches, targeted recovery, and an appended Phase 9–11 student distillation, architecture-reduction, and production-RAG pipeline:
 
 - **Phase 2B progressive reduction** tests every current layer, recovery-tunes promising deletions, and preserves full-quality/balanced/minimum-memory model profiles before DPO.
 - **Phase 2C targeted recovery** ranks surviving Phase 2B layers and trains selected-layer adapters whose proportional training-resource savings exceed their proportional quality opportunity loss.
 - **Phase 4B post-alignment structural reduction** revalidates or further refines the accepted Phase 4 architecture before context/sparsity calibration.
-- **Phase 9 student distillation** converts an accepted teacher into smaller evidence-grounded students and measures total RAG-system value rather than weight size alone.
+- **Phase 9 student distillation** proves evidence-conditioned SFT/KD transfer into a warm-started student.
+- **Phase 10 student architecture search** creates and recovers physically smaller dense students and compact challengers.
+- **Phase 11 production RAG** measures and packages the complete grounded local runtime.
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
@@ -62,15 +72,19 @@ The governing files are `EVALUATION_V4_5_FRESH_MESSAGE_CONTRACTS.md`, `configs/q
 - `Phases.md` — phase boundaries and handoffs.
 - `scripts/phase_2_layer_selection/STRUCTURAL_REDUCTION_MANUAL.md` — every-layer/progressive deletion workflow.
 - `scripts/phase_2c_targeted_recovery/EXECUTION_MANUAL.md` — targeted recovery, review, resume, and handoff.
-- `POST_PHASE_3_EXECUTION_GUIDE.md` — Phase 4–9 execution order.
-- `STUDENT_DISTILLATION_PIPELINE.md` — complete relationship between the teacher phases and the appended student workflow.
+- `POST_PHASE_3_EXECUTION_GUIDE.md` — Phase 4–11 execution order, including single and hybrid Phase 9 handoffs.
+- `STUDENT_DISTILLATION_PIPELINE.md` — Phase 9 distillation foundation.
+- `PHASE_10_11_ARCHITECTURE_REVIEW.md` — codebase review, corrected defects, boundaries, and Phase 10/11 architecture.
+- `PHASE_10_11_WORKFLOW.md` — runnable Phase 10/11 commands and human handoffs.
 - `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md` — runnable Phase 9 commands and gates.
+- `scripts/phase_10_student_architecture/EXECUTION_MANUAL.md` — structural ladder, recovery, challenger, and selection.
+- `scripts/phase_11_production_rag/EXECUTION_MANUAL.md` — production snapshot, quantization, runtime, release, and packaging.
 - Each Phase 4–8 folder contains `README.md`, `EXECUTION_MANUAL.md`, and `FILE_RESPONSIBILITIES.md`.
 - `verify_post_phase_3.ps1` — compiles source, runs tests, and checks runner references.
 
 ## Canonical handoffs
 
-Phase 2B writes `artifacts/phase_2_progressive_reduction/model_catalog.json`. Phase 2C may start only from an approved reduced profile and writes `artifacts/phase_2c_targeted_recovery/model_catalog.json`. Phase 3 may consume either an approved Phase 2B profile or an approved Phase 2C model/adapter pair; the selectors are mutually exclusive. Phase 4 writes `artifacts/references/phase_4_reference.json`. Phase 4B writes `artifacts/references/selected_inference_reference.json`. Phases 5–8 consume the latter automatically. Phase 9 starts only from an explicitly accepted teacher checkpoint and writes isolated student artifacts under `artifacts/phase_9_student_distillation/`; it never overwrites the teacher reference.
+Phase 2B writes `artifacts/phase_2_progressive_reduction/model_catalog.json`. Phase 2C may start only from an approved reduced profile and writes `artifacts/phase_2c_targeted_recovery/model_catalog.json`. Phase 3 may consume either an approved Phase 2B profile or an approved Phase 2C model/adapter pair; the selectors are mutually exclusive. Phase 4 writes `artifacts/references/phase_4_reference.json`. Phase 4B writes `artifacts/references/selected_inference_reference.json`. Phases 5–8 consume the latter automatically. Phase 9 starts only from an explicitly accepted teacher checkpoint and writes isolated student artifacts under `artifacts/phase_9_student_distillation/`; it never overwrites the teacher reference. Human-approved Phase 9 selection writes `artifacts/references/phase_9_student_reference.json`; human-approved Phase 10 selection writes `artifacts/references/phase_10_student_reference.json`; Phase 11 packages only an explicitly approved registry candidate and preserves the Phase 10 rollback.
 
 
 ## Response-control architecture

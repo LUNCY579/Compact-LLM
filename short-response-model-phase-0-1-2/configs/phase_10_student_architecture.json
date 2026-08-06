@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "experiment": {
+    "name": "student_architecture_reduction_and_challenger_search_v1",
+    "seed": 42,
+    "governing_policy": "relative_resource_gain_must_exceed_proportional_quality_opportunity_loss"
+  },
+  "profiling": {
+    "max_records_pilot": 128,
+    "max_records_full": 512,
+    "max_sequence_length": 512,
+    "include_assistant_target": true
+  },
+  "candidate_sets": {
+    "pilot": [
+      {
+        "name": "depth_drop_1",
+        "description": "Remove one uniformly selected complete decoder layer.",
+        "depth_drop": 1,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.0,
+        "mlp_prune_ratio": 0.0,
+        "attention_group_prune_ratio": 0.0
+      },
+      {
+        "name": "mlp_prune_10",
+        "description": "Slice the lowest-activation 10 percent of gated-MLP channels in every layer.",
+        "depth_drop": 0,
+        "hidden_prune_ratio": 0.0,
+        "mlp_prune_ratio": 0.1,
+        "attention_group_prune_ratio": 0.0
+      },
+      {
+        "name": "hidden_prune_10",
+        "description": "Slice 10 percent of residual hidden coordinates using calibration activation magnitude.",
+        "depth_drop": 0,
+        "hidden_prune_ratio": 0.1,
+        "mlp_prune_ratio": 0.0,
+        "attention_group_prune_ratio": 0.0
+      },
+      {
+        "name": "combined_light",
+        "description": "A light combined candidate: one layer, 5 percent hidden width, and 10 percent MLP width.",
+        "depth_drop": 1,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.05,
+        "mlp_prune_ratio": 0.1,
+        "attention_group_prune_ratio": 0.0
+      }
+    ],
+    "full": [
+      {
+        "name": "depth_drop_1",
+        "description": "Remove one uniformly selected complete decoder layer.",
+        "depth_drop": 1,
+        "depth_mode": "uniform-drop"
+      },
+      {
+        "name": "depth_drop_2",
+        "description": "Remove two uniformly selected complete decoder layers.",
+        "depth_drop": 2,
+        "depth_mode": "uniform-drop"
+      },
+      {
+        "name": "mlp_prune_10",
+        "description": "Slice 10 percent of MLP channels.",
+        "mlp_prune_ratio": 0.1
+      },
+      {
+        "name": "mlp_prune_20",
+        "description": "Slice 20 percent of MLP channels.",
+        "mlp_prune_ratio": 0.2
+      },
+      {
+        "name": "hidden_prune_10",
+        "description": "Slice 10 percent of residual hidden coordinates.",
+        "hidden_prune_ratio": 0.1
+      },
+      {
+        "name": "hidden_prune_20",
+        "description": "Slice 20 percent of residual hidden coordinates.",
+        "hidden_prune_ratio": 0.2
+      },
+      {
+        "name": "attention_groups_25",
+        "description": "Remove one quarter of grouped-query attention KV groups where topology permits.",
+        "attention_group_prune_ratio": 0.25
+      },
+      {
+        "name": "combined_balanced",
+        "description": "Combined candidate with one layer, 10 percent hidden width, 20 percent MLP width, and 25 percent attention groups.",
+        "depth_drop": 1,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.1,
+        "mlp_prune_ratio": 0.2,
+        "attention_group_prune_ratio": 0.25
+      },
+      {
+        "name": "combined_intermediate_target",
+        "description": "Target the 180M-300M intermediate-teacher band with one layer removed and coordinated 20 percent hidden/MLP plus 25 percent GQA-group reduction.",
+        "target_role": "intermediate_teacher",
+        "target_parameter_min": 180000000,
+        "target_parameter_max": 300000000,
+        "depth_drop": 1,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.2,
+        "mlp_prune_ratio": 0.2,
+        "attention_group_prune_ratio": 0.25
+      },
+      {
+        "name": "combined_small_target",
+        "description": "Target the 100M-180M small-student band with two layers removed and coordinated 35 percent hidden/MLP plus 25 percent GQA-group reduction.",
+        "target_role": "small_student",
+        "target_parameter_min": 100000000,
+        "target_parameter_max": 180000000,
+        "depth_drop": 2,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.35,
+        "mlp_prune_ratio": 0.35,
+        "attention_group_prune_ratio": 0.25
+      },
+      {
+        "name": "combined_deployment_target",
+        "description": "Aggressive 80M-120M deployment-band experiment: four layers removed and 50 percent hidden/MLP/GQA-group reduction. It requires recovery and may validly fail quality review.",
+        "target_role": "deployment_candidate",
+        "target_parameter_min": 80000000,
+        "target_parameter_max": 120000000,
+        "depth_drop": 4,
+        "depth_mode": "uniform-drop",
+        "hidden_prune_ratio": 0.5,
+        "mlp_prune_ratio": 0.5,
+        "attention_group_prune_ratio": 0.5
+      }
+    ]
+  },
+  "recovery": {
+    "objective": "same_tokenizer_completion_only_kd",
+    "pilot_top_k": 2,
+    "full_top_k": 4,
+    "max_steps_pilot": 200,
+    "max_steps_full": 1000,
+    "teacher_remains_authoritative": true
+  },
+  "challenger": {
+    "enabled_only_when_source_is_supplied": true,
+    "initial_objective": "sequence_level_rag_sft",
+    "direct_qwen_logit_kd": false,
+    "suggested_sources": [
+      "HuggingFaceTB/SmolLM2-360M-Instruct",
+      "HuggingFaceTB/SmolLM2-135M-Instruct"
+    ]
+  },
+  "evaluation": {
+    "conditions": [
+      "closed_book",
+      "oracle_rag",
+      "real_rag",
+      "adversarial_rag"
+    ],
+    "response_control": "one_sentence",
+    "max_new_tokens": 32,
+    "unsupported_confident_answer_cap": null
+  }
+}

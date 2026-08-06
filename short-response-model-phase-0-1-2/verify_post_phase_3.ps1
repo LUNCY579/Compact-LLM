@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run source-level checks for the integrated Phase 2B through appended Phase 9 pipeline.
+Run source-level checks for the integrated Phase 2B through appended Phase 9–11 pipeline.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
@@ -41,7 +41,9 @@ $Runners = @(
     ".\scripts\phase_6_sparse_simulation\run_phase_6.ps1",
     ".\scripts\phase_7_sparse_runtime\run_phase_7.ps1",
     ".\scripts\phase_8_release_candidate\run_phase_8.ps1",
-    ".\scripts\phase_9_student_distillation\run_phase_9.ps1"
+    ".\scripts\phase_9_student_distillation\run_phase_9.ps1",
+    ".\scripts\phase_10_student_architecture\run_phase_10.ps1",
+    ".\scripts\phase_11_production_rag\run_phase_11.ps1"
 )
 foreach ($Runner in $Runners) {
     if (-not (Test-Path $Runner)) { throw "Missing main phase runner: $Runner" }
@@ -71,4 +73,4 @@ if ($VerifyImports) {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Integrated Evaluator-v4.5 / Phase 2B-8 source verification: PASS"
+Write-Host "Integrated Evaluator-v4.5 / Phase 2B-11 source verification: PASS"

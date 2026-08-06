@@ -1,0 +1,75 @@
+{
+  "schema_version": "1.0",
+  "experiment": {
+    "name": "production_rag_student_release_v1",
+    "seed": 42,
+    "primary_opportunity": "measured_total_process_memory_reduction"
+  },
+  "routing": {
+    "social_roleplay": "direct_student_with_optional_memory_or_lore",
+    "grounded_factual": "retrieval_answerability_student_grounding",
+    "procedure": "trusted_procedure_plus_factual_evidence",
+    "high_risk": "external_boundary_or_approved_fallback",
+    "complex": "clarify_abstain_or_approved_fallback"
+  },
+  "retrieval": {
+    "backend": "sqlite_fts5",
+    "retrieval_top_k": 20,
+    "selected_top_k": 3,
+    "maximum_evidence_tokens": 512,
+    "neural_retriever": "optional_challenger_only_after_measured_lexical_bottleneck",
+    "social_retrieval_top_k": 0
+  },
+  "answerability": {
+    "threshold": null,
+    "weights": null,
+    "false_answer_cost": 3.0,
+    "false_abstention_cost": 1.0,
+    "calibration_policy": "development_set_only_recalibrate_after_any_index_or_retriever_change"
+  },
+  "generation": {
+    "max_sequence_length": 1024,
+    "max_new_tokens": 32,
+    "response_control": "one_sentence",
+    "do_sample": false
+  },
+  "grounding": {
+    "unsupported_hard_claim_action": "replace_with_abstention",
+    "numeric_support_required": true,
+    "named_entity_support_required": true,
+    "negation_mismatch": "diagnostic_unless_other_hard_failure_exists"
+  },
+  "quantization": {
+    "default_backend": "dense_copy",
+    "supported_backends": [
+      "dense_copy",
+      "bitsandbytes_nf4",
+      "bitsandbytes_int8",
+      "llamacpp_gguf"
+    ],
+    "gguf_default_type": "Q4_K_M"
+  },
+  "evaluation": {
+    "unsupported_confident_answer_cap": null,
+    "measure": [
+      "serialized_model_bytes",
+      "knowledge_index_bytes",
+      "total_process_rss",
+      "peak_vram",
+      "retrieval_latency",
+      "prefill_probe_latency",
+      "generation_latency",
+      "end_to_end_latency",
+      "supported_correctness",
+      "faithfulness",
+      "abstention",
+      "routing",
+      "rollback"
+    ]
+  },
+  "release": {
+    "package_mode": "manifest",
+    "human_gate_required": true,
+    "dense_release_is_valid_when_quantization_has_no_net_measured_gain": true
+  }
+}

@@ -17,7 +17,7 @@ Install the correct CUDA-enabled PyTorch wheel first, then:
 .\verify_post_phase_3.ps1 -VerifyImports
 ```
 
-The verification command compiles the source, runs the regression suite, checks the integrated Phase 2B and Phase 4–8 runner references, and verifies the installed imports.
+The verification command compiles the source, runs the regression suite, checks the integrated Phase 2B and Phase 4–11 runner references, and verifies the installed imports.
 
 When your organization enforces a stricter PowerShell policy, run the commands in a process opened with the policy approved by your administrator rather than weakening the permanent machine policy.
 
@@ -107,4 +107,54 @@ After human-reviewing the generated candidates:
   -MaxSteps 200
 ```
 
-The pilot compares ordinary RAG SFT with same-initialization completion-only logit KD, evaluates closed/oracle/real/adversarial RAG, and writes a pending Phase 9 human gate. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
+The single-student pilot compares ordinary RAG SFT with same-initialization completion-only logit KD, evaluates closed/oracle/real/adversarial RAG, and writes a pending Phase 9 human gate.
+
+To compare the warm 344M depth-copy student with the 100M/130M/170M narrow same-tokenizer research controls in one gate, use:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Pilot `
+  -StudentSuite Hybrid `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
+  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -MaxSteps 200 `
+  -ReuseExisting
+```
+
+Hybrid assessment keys are profile-qualified, such as `sft_warm_344m`, `kd_warm_344m`, and `kd_narrow_130m`. Narrow profiles are research controls and are not automatically production-eligible. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
+
+## 8. Phase 10 — student architecture reduction and challengers
+
+After Phase 9 human approval, materialize its exact candidate and run the pilot:
+
+```powershell
+python .\scripts\phase_10_student_architecture\finalize_phase_9_selection.py `
+  --candidate kd_warm_344m `
+  --role intermediate_teacher `
+  --reason "Approved Phase 9 warm KD student for architecture reduction."
+
+.\scripts\phase_10_student_architecture\run_phase_10.ps1 `
+  -Mode Pilot `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model
+```
+
+Full mode adds the intermediate/small/deployment target bands and may add a pretrained compact challenger. Use the exact Phase 9 candidate key present in `reports/PHASE_9_ASSESSMENT.json`; legacy single-suite keys such as `kd` remain supported. Review `reports/PHASE_10_STOP_GATE.md`, then use `finalize_phase_10_selection.py` with the exact Phase 10 registry name.
+
+## 9. Phase 11 — production RAG runtime and release
+
+```powershell
+.\scripts\phase_11_production_rag\run_phase_11.ps1 `
+  -Mode Full `
+  -QuantizationBackend dense_copy
+```
+
+Repeat with NF4, INT8, or GGUF only when those runtimes are available. Phase 11 measures the complete route/retrieve/gate/generate/ground path and total process memory. After human approval, package the exact registry candidate:
+
+```powershell
+.\scripts\phase_11_production_rag\run_phase_11.ps1 `
+  -Mode Package `
+  -PackageCandidate <registry-name> `
+  -PackageMode copy
+```
+
+See `PHASE_10_11_WORKFLOW.md` for target bands, compact challenger, persistent JSONL runtime, GGUF requirements, and valid negative outcomes.
