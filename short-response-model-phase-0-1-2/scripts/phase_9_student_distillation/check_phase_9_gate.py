@@ -20,6 +20,8 @@ from scripts.common.opportunity_evaluation import (
 )
 from scripts.phase_9_student_distillation.phase9_metrics import (
     bounded_absolute_quality_comparison,
+    combine_phase9_quality_loss,
+    phase9_functional_deficiency,
     summary_readiness_issues,
 )
 
@@ -42,6 +44,13 @@ def parse_candidate_spec(value: str) -> tuple[str, Path]:
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Compare Phase 9 teacher/SFT/KD evaluations.")
     parser.add_argument("--teacher-summary", type=Path, required=True)
+    parser.add_argument(
+        "--initialization",
+        action="append",
+        default=[],
+        type=parse_candidate_spec,
+        help="Repeatable warm/random initialization reference as profile=summary.json.",
+    )
     parser.add_argument(
         "--candidate",
         action="append",
@@ -78,25 +87,81 @@ def real_rag_rate(summary: dict[str, Any], name: str) -> float | None:
 
 def assess_candidate(teacher: dict[str, Any], candidate: dict[str, Any]) -> dict[str, Any]:
     gain = resource_reduction(teacher.get("model_weight_bytes"), candidate.get("model_weight_bytes"))
-    assessment = evaluate_opportunity(
+    generic = evaluate_opportunity(
         teacher,
         candidate,
         resource_gain=gain,
         resource_name="deployed_model_weight_bytes",
     )
+    functional = phase9_functional_deficiency(candidate)
+    combined = combine_phase9_quality_loss(
+        float(generic.get("quality_opportunity_loss_fraction") or 0.0),
+        functional,
+    )
+    normalized_gain = float(generic.get("resource_gain_fraction") or 0.0)
+    combined_loss = float(combined["combined_phase9_quality_loss"])
+    margin = normalized_gain - combined_loss
+    eligible = bool(generic.get("technical_valid")) and margin > 0.0
+    phase9_sensitivity: dict[str, Any] = {}
+    for profile_name, packet in (generic.get("profile_sensitivity") or {}).items():
+        profile_generic_loss = float(packet.get("quality_opportunity_loss_fraction") or 0.0)
+        profile_loss = max(profile_generic_loss, float(functional.get("combined_functional_deficiency") or 0.0))
+        profile_margin = normalized_gain - profile_loss
+        phase9_sensitivity[str(profile_name)] = {
+            **packet,
+            "generic_relative_quality_loss": profile_generic_loss,
+            "phase9_functional_deficiency": functional.get("combined_functional_deficiency"),
+            "quality_opportunity_loss_fraction": profile_loss,
+            "opportunity_margin": profile_margin,
+            "eligible": bool(generic.get("technical_valid")) and profile_margin > 0.0,
+            "decision": "PROPORTIONALLY_WORTHWHILE" if bool(generic.get("technical_valid")) and profile_margin > 0.0 else "NOT_PROPORTIONALLY_WORTHWHILE",
+        }
+    real = ((candidate.get("conditions") or {}).get("real_rag") or {})
+    filtered = ((candidate.get("conditions") or {}).get("adversarial_rag") or {})
+    passthrough = ((candidate.get("conditions") or {}).get("adversarial_passthrough_rag") or {})
     return {
-        **assessment,
+        **generic,
+        **combined,
+        "phase9_functional_metrics": functional,
+        "generic_relative_eligible": generic.get("eligible"),
+        "generic_profile_sensitivity": generic.get("profile_sensitivity") or {},
+        "profile_sensitivity": phase9_sensitivity,
+        "decision_robust_across_profiles": bool(phase9_sensitivity) and len({row["eligible"] for row in phase9_sensitivity.values()}) == 1,
+        "eligible_profile_count": sum(1 for row in phase9_sensitivity.values() if row["eligible"]),
+        "quality_opportunity_loss_fraction": combined_loss,
+        "combined_quality_opportunity_loss": combined_loss,
+        "opportunity_margin": margin,
+        "eligible": eligible,
+        "decision": "PROPORTIONALLY_WORTHWHILE" if eligible else "NOT_PROPORTIONALLY_WORTHWHILE",
+        "decision_explanation": (
+            f"deployed_model_weight_bytes gain {normalized_gain:.6f} is greater than Phase 9 combined quality loss {combined_loss:.6f}"
+            if eligible else
+            f"deployed_model_weight_bytes gain {normalized_gain:.6f} is not greater than Phase 9 combined quality loss {combined_loss:.6f}"
+        ),
         "teacher_weight_bytes": teacher.get("model_weight_bytes"),
         "candidate_weight_bytes": candidate.get("model_weight_bytes"),
         "real_rag_supported_correctness": real_rag_rate(candidate, "supported_answer_correctness"),
         "real_rag_faithfulness": real_rag_rate(candidate, "evidence_faithfulness"),
-        "real_rag_unsupported_confident_answer_rate": real_rag_rate(
-            candidate, "unsupported_confident_answer_rate"
-        ),
-        "real_rag_supported_case_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("supported_case_count"),
-        "real_rag_supported_correct_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("supported_correct_count"),
-        "real_rag_unsupported_case_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("unsupported_case_count"),
-        "real_rag_correct_abstention_count": ((candidate.get("conditions") or {}).get("real_rag") or {}).get("correct_abstention_count"),
+        "real_rag_correct_abstention_rate": real_rag_rate(candidate, "correct_abstention_rate"),
+        "real_rag_unsupported_confident_answer_rate": real_rag_rate(candidate, "unsupported_confident_answer_rate"),
+        "real_rag_conflict_detection_rate": real_rag_rate(candidate, "conflict_detection_rate"),
+        "real_rag_procedure_correctness": real_rag_rate(candidate, "procedure_correctness"),
+        "real_rag_social_usable_rate": real_rag_rate(candidate, "social_usable_rate"),
+        "real_rag_prompt_support_recall": real_rag_rate(candidate, "prompt_support_recall_at_k"),
+        "real_rag_prompt_integrity_failure_rate": real_rag_rate(candidate, "prompt_integrity_failure_rate"),
+        "real_rag_decode_integrity_failure_rate": real_rag_rate(candidate, "decode_integrity_failure_rate"),
+        "filtered_injection_resistance_rate": None if filtered.get("injection_resistance_rate") is None else float(filtered["injection_resistance_rate"]),
+        "passthrough_injection_resistance_rate": None if passthrough.get("injection_resistance_rate") is None else float(passthrough["injection_resistance_rate"]),
+        "real_rag_supported_case_count": real.get("supported_case_count"),
+        "real_rag_supported_correct_count": real.get("supported_correct_count"),
+        "real_rag_unsupported_case_count": real.get("unsupported_case_count"),
+        "real_rag_correct_abstention_count": real.get("correct_abstention_count"),
+        "real_rag_conflict_case_count": real.get("conflict_case_count"),
+        "real_rag_conflict_detected_count": real.get("conflict_detected_count"),
+        "real_rag_procedure_case_count": real.get("procedure_case_count"),
+        "real_rag_procedure_correct_count": real.get("procedure_correct_count"),
+        "real_rag_social_case_count": real.get("social_case_count"),
+        "real_rag_social_usable_count": real.get("social_usable_count"),
         "evaluation_valid": candidate.get("evaluation_valid", True),
         "research_ready": candidate.get("research_ready", False),
     }
@@ -134,8 +199,37 @@ def is_research_control_name(name: str, explicit: set[str]) -> bool:
     return "narrow_" in name
 
 
-def build_quality_comparisons(candidates: dict[str, dict[str, Any]]) -> dict[str, Any]:
+def build_quality_comparisons(
+    candidates: dict[str, dict[str, Any]],
+    initializations: dict[str, dict[str, Any]] | None = None,
+    teacher: dict[str, Any] | None = None,
+) -> dict[str, Any]:
     quality_comparisons: dict[str, Any] = {}
+    initializations = initializations or {}
+    if teacher is not None:
+        for name, candidate in candidates.items():
+            quality_comparisons[f"{name}_vs_teacher"] = bounded_absolute_quality_comparison(teacher, candidate)
+
+    # Compare each trained objective against the matching untrained initialization.
+    for profile, initialization in initializations.items():
+        profile_key = profile or ""
+        for objective in ("sft", "progressive_kd", "direct_kd", "kd", "on_policy", "preference"):
+            name = objective if not profile_key else f"{objective}_{profile_key}"
+            if name in candidates:
+                quality_comparisons[f"{name}_vs_initialization_{profile_key or 'single'}"] = (
+                    bounded_absolute_quality_comparison(initialization, candidates[name])
+                )
+        sft_name = "sft" if not profile_key else f"sft_{profile_key}"
+        for kd_objective in ("progressive_kd", "direct_kd", "kd"):
+            kd_name = kd_objective if not profile_key else f"{kd_objective}_{profile_key}"
+            if sft_name in candidates and kd_name in candidates:
+                quality_comparisons[f"{kd_name}_vs_{sft_name}"] = bounded_absolute_quality_comparison(
+                    candidates[sft_name], candidates[kd_name]
+                )
+                quality_comparisons[f"{kd_name}_vs_initialization_{profile_key or 'single'}"] = (
+                    bounded_absolute_quality_comparison(initialization, candidates[kd_name])
+                )
+
     # Legacy single-profile comparisons.
     if "kd" in candidates and "sft" in candidates:
         quality_comparisons["kd_vs_sft"] = bounded_absolute_quality_comparison(candidates["sft"], candidates["kd"])
@@ -217,13 +311,15 @@ def main() -> None:
     teacher = read_json(args.teacher_summary)
     candidate_paths = collect_candidates(args)
     candidates = {name: read_json(path) for name, path in candidate_paths.items()}
+    initialization_paths = {name: path for name, path in args.initialization}
+    initializations = {name: read_json(path) for name, path in initialization_paths.items()}
     research_controls = {str(name) for name in args.research_control}
     for name in candidates:
         if is_research_control_name(name, research_controls):
             research_controls.add(name)
 
     assessments = {name: assess_candidate(teacher, summary) for name, summary in candidates.items()}
-    quality_comparisons = build_quality_comparisons(candidates)
+    quality_comparisons = build_quality_comparisons(candidates, initializations, teacher)
 
     safety_blockers: dict[str, list[str]] = {}
     for name, assessment in assessments.items():
@@ -275,6 +371,7 @@ def main() -> None:
     packet = {
         "teacher_summary": str(args.teacher_summary),
         "candidates": {name: str(path) for name, path in candidate_paths.items()},
+        "initializations": {name: str(path) for name, path in initialization_paths.items()},
         "assessments": assessments,
         "quality_comparisons": quality_comparisons,
         "unsupported_confident_answer_cap": args.unsupported_confident_answer_cap,
@@ -295,9 +392,11 @@ def main() -> None:
         f"- Recommended production candidate: `{recommended or 'none'}`",
         f"- Best research-control candidate: `{recommended_research or 'none'}`",
         "- Human decision: `PENDING`",
-        "- The recommendation uses the shared proportional resource-gain versus quality-opportunity-loss policy.",
+        "- The recommendation uses the shared proportional resource-gain policy plus a Phase 9 task-contract deficiency cost.",
+        "- Core RAG outcomes cannot be hidden by an equally broken teacher or by generic conversational quality scores.",
         "- Narrow random-init profiles are research controls and are never auto-recommended for production.",
         "- Production recommendation also requires non-degenerate functional evidence: applicable cases, at least one correct supported answer, and at least one correct abstention when those case types exist.",
+        "- Initialization→SFT, SFT→KD, initialization→KD, and candidate→teacher evidence are kept separate.",
         "- Cross-candidate quality comparisons use bounded absolute deltas, preventing division-by-zero explosions when a reference metric is zero.",
         "- No universal grounding or unsupported-answer threshold is invented. A product safety cap is enforced only when explicitly calibrated and supplied.",
         "",
@@ -312,17 +411,29 @@ def main() -> None:
                 "",
                 f"- Track class: `{control_note}`",
                 f"- Weight reduction versus teacher: `{fmt(assessment.get('resource_gain_fraction'))}`",
-                f"- Quality opportunity loss: `{fmt(assessment.get('quality_opportunity_loss_fraction'))}`",
+                f"- Generic relative quality loss: `{fmt(assessment.get('generic_relative_quality_loss'))}`",
+                f"- Phase 9 functional deficiency: `{fmt(assessment.get('phase9_functional_deficiency'))}`",
+                f"- Combined Phase 9 quality loss: `{fmt(assessment.get('quality_opportunity_loss_fraction'))}`",
                 f"- Opportunity margin: `{fmt(assessment.get('opportunity_margin'))}`",
                 f"- Proportionally worthwhile: `{assessment.get('eligible')}`",
                 f"- Real-RAG supported correctness: `{fmt(assessment.get('real_rag_supported_correctness'))}`",
                 f"- Real-RAG evidence faithfulness: `{fmt(assessment.get('real_rag_faithfulness'))}`",
+                f"- Real-RAG correct abstention: `{fmt(assessment.get('real_rag_correct_abstention_rate'))}`",
                 f"- Real-RAG unsupported confident answer rate: `{fmt(assessment.get('real_rag_unsupported_confident_answer_rate'))}`",
+                f"- Real-RAG conflict detection: `{fmt(assessment.get('real_rag_conflict_detection_rate'))}`",
+                f"- Real-RAG procedure correctness: `{fmt(assessment.get('real_rag_procedure_correctness'))}`",
+                f"- Real-RAG social usable rate: `{fmt(assessment.get('real_rag_social_usable_rate'))}`",
+                f"- Real-RAG prompt support recall: `{fmt(assessment.get('real_rag_prompt_support_recall'))}`",
+                f"- Real-RAG prompt/decode integrity failure rates: `{fmt(assessment.get('real_rag_prompt_integrity_failure_rate'))}` / `{fmt(assessment.get('real_rag_decode_integrity_failure_rate'))}`",
+                f"- Filtered/passthrough injection resistance: `{fmt(assessment.get('filtered_injection_resistance_rate'))}` / `{fmt(assessment.get('passthrough_injection_resistance_rate'))}`",
                 f"- Real-RAG supported successes/cases: `{assessment.get('real_rag_supported_correct_count')}` / `{assessment.get('real_rag_supported_case_count')}`",
                 f"- Real-RAG safe abstentions/cases: `{assessment.get('real_rag_correct_abstention_count')}` / `{assessment.get('real_rag_unsupported_case_count')}`",
+                f"- Real-RAG detected conflicts/cases: `{assessment.get('real_rag_conflict_detected_count')}` / `{assessment.get('real_rag_conflict_case_count')}`",
+                f"- Real-RAG correct procedures/cases: `{assessment.get('real_rag_procedure_correct_count')}` / `{assessment.get('real_rag_procedure_case_count')}`",
+                f"- Real-RAG usable social replies/cases: `{assessment.get('real_rag_social_usable_count')}` / `{assessment.get('real_rag_social_case_count')}`",
                 f"- Evaluation research-ready: `{assessment.get('research_ready')}`",
                 f"- Functional readiness blockers: `{readiness_blockers[name] or 'none'}`",
-                f"- Product safety blockers: `{safety_blockers[name] or 'none'}`",
+                f"- Product safety blockers: `{safety_blockers[name] or ('no configured cap; diagnostic only' if args.unsupported_confident_answer_cap is None else 'none')}`",
                 "",
             ]
         )

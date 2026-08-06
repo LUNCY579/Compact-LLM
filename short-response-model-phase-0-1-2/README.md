@@ -1,5 +1,17 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.7.2 Phase 9 grounded-recovery capability ladder
+
+Phase 9 now proves one warm 344M depth-copy student before permitting another broad architecture comparison. The official grounded-recovery runner separates teacher Oracle behavior, the untrained warm baseline, a 12–24-row deliberate overfit wiring test, a three-run warm-SFT sweep, full Oracle evidence use, Real-RAG retrieval, and only then progressive KD. A degenerate all-zero frontier is reported as `NO_VALID_QUALITY_FRONTIER`; it is never ranked as a successful compression result.
+
+The training view is deterministically rebalanced to approximately 45% supported extraction, 25% missing-evidence abstention, 10% conflict, 10% injection resistance, 5% procedures, and 5% social behavior. Completion loss now explicitly emphasizes the first answer token, required evidence anchors, the approved abstention sequence, and EOS/end-of-turn. Initialization→SFT, SFT→KD, initialization→KD, and candidate→teacher comparisons are reported separately. Hybrid 100M/130M/170M controls remain locked until the grounded-recovery ladder proves both overfit wiring and full Oracle improvement. See `PHASE_9_GROUNDED_RECOVERY_v1.7.2.md`.
+
+## v1.7.1 Phase 9 RAG integrity and diagnosis hotfix
+
+Phase 9 now fails closed when evidence, the grounding contract, or the final question would be silently truncated. Evaluation schema 1.2 records prompted support IDs, prompt hashes and token counts, decode-integrity diagnostics, conflict handling, and filtered/passthrough injection resistance. The opportunity gate now charges an explicit Phase 9 task-contract deficiency with a proportional core-metric bottleneck, so zero supported correctness and 100% unsupported confident answering produce a full functional cost instead of appearing lossless merely because the teacher or generic evaluator is also weak. Near-zero comparisons are bounded and finite.
+
+The official runner audits the teacher before student training, and `run_phase_9_diagnostics.ps1` can diagnose existing artifact trees without retraining. Old evaluations must be regenerated; old student artifacts remain useful research controls but are not silently reused for v1.7.1 training. See `PHASE_9_RAG_INTEGRITY_HOTFIX_v1.7.1.md` and the Phase 9 execution manual.
+
 ## v1.7.0 Phase 9B contextual memory reconstruction
 
 Phase 9B is now inserted between Phase 9 student distillation and Phase 10 architecture reduction. It upgrades retrieved evidence into source-state-aware memory records, generates human-reviewable ACCEPT/ADAPT/REJECT/CONFLICT/INSUFFICIENT targets, builds leakage-safe reconstruction/answer/direct-distillation curricula, trains a low-memory LoRA reconstruction adapter, and compares memory-off, naive raw replay, prompted reconstruction, trained two-pass reconstruction, and a one-pass distilled candidate.

@@ -1,8 +1,13 @@
 <#
 .SYNOPSIS
-Run the refined Phase 9 tiny-student/RAG distillation workflow.
+Run the general Phase 9 student/RAG workflow after the v1.7.2 grounded proof.
 
 .DESCRIPTION
+For a fresh recovery experiment, first use run_phase_9_grounded_recovery.ps1.
+This general runner retains the production Single track and the broader Hybrid
+research controls. Hybrid remains locked until the grounded-recovery ladder
+proves tiny-overfit wiring and full Oracle improvement.
+
 Bootstrap creates student initializations, the FTS5 knowledge index, and an
 explicit human-review packet. Pilot builds leakage-safe splits, refuses to call
 a tiny six-row packet research-ready unless -SmokeTest is explicit, creates a
@@ -34,6 +39,13 @@ param(
     [string]$ReviewedTeacherData = "",
     [string]$OutputRoot = ".\artifacts\phase_9_student_distillation",
     [int]$MaxSteps = 600,
+    [double]$LearningRate = 0.00005,
+    [int]$LoraRank = 16,
+    [double]$FirstAnswerTokenWeight = 2.0,
+    [double]$EvidenceAnchorTokenWeight = 1.75,
+    [double]$AbstentionTokenWeight = 2.0,
+    [double]$EosLossWeight = 1.5,
+    [int]$MaximumEvidenceTokens = 384,
     [int]$Seed = 42,
     [switch]$UseLora,
     [switch]$Teacher4Bit,
@@ -41,6 +53,7 @@ param(
     [switch]$RunDirectKD,
     [switch]$SkipCurriculum,
     [switch]$SkipFoundation,
+    [switch]$SkipBehaviorRebalance,
     [int]$PrimaryCurriculumRepeat = 3,
     [int]$FoundationRepeat = 1,
     [switch]$SmokeTest,
@@ -48,6 +61,9 @@ param(
     [double]$OnPolicyStudentFraction = 0.20,
     [switch]$AllowUnreleasedTeacher,
     [switch]$AcknowledgeRandomControl,
+    [switch]$AllowFailedTeacherPreflight,
+    [string]$GroundedRecoveryGate = "",
+    [switch]$AllowUnprovenArchitectureSweep,
     [switch]$ReuseExisting
 )
 
@@ -88,7 +104,7 @@ function Test-CurrentDerivedArtifact {
     param([string]$Artifact, [string]$ManifestPath, [string]$Source)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_behavior_curriculum_v2") { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_grounded_recovery_v1_7_2") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return [string]$manifest.source_sha256 -eq (Get-FileSha256 $Source)
 }
 
@@ -96,7 +112,7 @@ function Test-CurrentMixedCurriculum {
     param([string]$Artifact, [string]$ManifestPath, [string]$Primary, [string]$Foundation)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_behavior_curriculum_v2") { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_grounded_recovery_v1_7_2") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return (
         [string]$manifest.primary_sha256 -eq (Get-FileSha256 $Primary) -and
         [string]$manifest.foundation_sha256 -eq (Get-FileSha256 $Foundation) -and
@@ -130,16 +146,22 @@ function Test-CurrentTrainingArtifact {
     )
     if (-not $ReuseExisting) { return $false }
     $manifest = Read-JsonFile (Join-Path $Directory "training_manifest.json")
-    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_behavior_curriculum_v2") { return $false }
+    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_grounded_recovery_v1_7_2") { return $false }
+    if ($null -eq $manifest.maximum_evidence_tokens -or [int]$manifest.maximum_evidence_tokens -ne $MaximumEvidenceTokens) { return $false }
     if ([string]$manifest.objective -ne $Objective) { return $false }
     if ([string]$manifest.train_sha256 -ne (Get-FileSha256 $TrainingSource)) { return $false }
     if ($null -eq $manifest.requested_max_steps -or [int]$manifest.requested_max_steps -ne $MaxSteps) { return $false }
+    if ($null -eq $manifest.requested_learning_rate -or [double]$manifest.requested_learning_rate -ne $LearningRate) { return $false }
+    if ($null -eq $manifest.first_answer_token_weight -or [double]$manifest.first_answer_token_weight -ne $FirstAnswerTokenWeight) { return $false }
+    if ($null -eq $manifest.evidence_anchor_token_weight -or [double]$manifest.evidence_anchor_token_weight -ne $EvidenceAnchorTokenWeight) { return $false }
+    if ($null -eq $manifest.abstention_token_weight -or [double]$manifest.abstention_token_weight -ne $AbstentionTokenWeight) { return $false }
     if ([string]$manifest.student_initialization_tree_sha256 -ne (Get-TreeSha256 $ExpectedStudent)) { return $false }
     if ([string]::IsNullOrWhiteSpace($ExpectedInitialAdapter)) {
         if (-not [string]::IsNullOrWhiteSpace([string]$manifest.initial_adapter)) { return $false }
     } elseif ([string]$manifest.initial_adapter_tree_sha256 -ne (Get-TreeSha256 $ExpectedInitialAdapter)) {
         return $false
     }
+    if ($Objective -eq "sft" -and $UseLora -and ($null -eq $manifest.lora_rank -or [int]$manifest.lora_rank -ne $LoraRank)) { return $false }
     if ($Objective -eq "kd") {
         if ([string]$manifest.teacher_tree_sha256 -ne (Get-TreeSha256 $ExpectedTeacher)) { return $false }
     }
@@ -147,10 +169,11 @@ function Test-CurrentTrainingArtifact {
 }
 
 function Test-CurrentEvaluation {
-    param([string]$SummaryPath, [string]$Model, [string]$Adapter)
+    param([string]$SummaryPath, [string]$Model, [string]$Adapter, [string]$ExpectedConditions)
     if (-not $ReuseExisting -or -not (Test-Path $SummaryPath)) { return $false }
     $summary = Read-JsonFile $SummaryPath
-    if ($null -eq $summary -or [string]$summary.schema_version -ne "1.1") { return $false }
+    if ($null -eq $summary -or [string]$summary.schema_version -ne "1.3") { return $false }
+    if ($null -eq $summary.maximum_evidence_tokens -or [int]$summary.maximum_evidence_tokens -ne $MaximumEvidenceTokens) { return $false }
     if ([string]$summary.benchmark_sha256 -ne (Get-FileSha256 $TestFile)) { return $false }
     if ([string]$summary.model_tree_sha256 -ne (Get-TreeSha256 $Model)) { return $false }
     if ([string]::IsNullOrWhiteSpace($Adapter)) {
@@ -159,9 +182,11 @@ function Test-CurrentEvaluation {
         return $false
     }
     $conditionNames = @($summary.conditions.PSObject.Properties.Name | Sort-Object)
-    $expectedConditions = @("adversarial_passthrough_rag", "adversarial_rag", "closed_book", "oracle_rag", "real_rag")
-    if (($conditionNames -join ",") -ne ($expectedConditions -join ",")) { return $false }
-    if ([bool]$summary.smoke_test -ne [bool]$SmokeTest) { return $false }
+    $expectedConditionNames = @($ExpectedConditions.Split(",") | ForEach-Object { $_.Trim() } | Where-Object { $_ } | Sort-Object)
+    if (($conditionNames -join ",") -ne ($expectedConditionNames -join ",")) { return $false }
+    $diagnosticEvaluation = ($expectedConditionNames.Count -lt 5)
+    $expectedSmoke = [bool]$SmokeTest -or $diagnosticEvaluation
+    if ([bool]$summary.smoke_test -ne $expectedSmoke) { return $false }
     return $true
 }
 
@@ -213,6 +238,15 @@ if ($StudentSuite -eq "Hybrid") {
     $HybridProfiles = @(Get-HybridProfiles -ConfigPath $Config)
     if (-not $AcknowledgeRandomControl) {
         throw "Hybrid includes random narrow controls. Pass -AcknowledgeRandomControl explicitly."
+    }
+    if (-not $AllowUnprovenArchitectureSweep) {
+        if ([string]::IsNullOrWhiteSpace($GroundedRecoveryGate) -or -not (Test-Path $GroundedRecoveryGate)) {
+            throw "Hybrid architecture comparison is locked until the grounded-recovery ladder passes. Supply -GroundedRecoveryGate or use -AllowUnprovenArchitectureSweep for research-only diagnostics."
+        }
+        $recovery = Read-JsonFile $GroundedRecoveryGate
+        if ($null -eq $recovery -or -not [bool]$recovery.architecture_sweep_unlocked) {
+            throw "The supplied grounded-recovery gate does not unlock architecture comparison: $GroundedRecoveryGate"
+        }
     }
     if ($RunOnPolicy) { throw "-RunOnPolicy is supported only for -StudentSuite Single." }
 } elseif ($StudentMode -eq "custom_qwen_random" -and -not $AcknowledgeRandomControl) {
@@ -302,9 +336,15 @@ function Ensure-ProfileInitialization {
 }
 
 function Invoke-RagEvaluation {
-    param([string]$Name, [string]$Model, [string]$Adapter, [string]$Destination)
+    param(
+        [string]$Name,
+        [string]$Model,
+        [string]$Adapter,
+        [string]$Destination,
+        [string]$Conditions = "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag"
+    )
     $summaryPath = Join-Path $Destination "summary.json"
-    if (Test-CurrentEvaluation -SummaryPath $summaryPath -Model $Model -Adapter $Adapter) { return }
+    if (Test-CurrentEvaluation -SummaryPath $summaryPath -Model $Model -Adapter $Adapter -ExpectedConditions $Conditions) { return }
     if ($ReuseExisting -and (Test-Path $Destination)) {
         Write-Warning "Deleting stale or incompatible Phase 9 evaluation: $Destination"
         Remove-Item -Recurse -Force $Destination
@@ -316,13 +356,15 @@ function Invoke-RagEvaluation {
         "--output-dir", $Destination,
         "--knowledge-db", $Database,
         "--gate-calibration", $Calibration,
-        "--conditions", "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag",
+        "--conditions", $Conditions,
+        "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
         "--max-new-tokens", "32",
         "--minimum-cases-per-condition", "1",
         "--minimum-supported-cases", "1",
         "--minimum-unsupported-cases", "1"
     )
-    if ($SmokeTest) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
+    $diagnosticEvaluation = (@($Conditions.Split(",") | Where-Object { $_.Trim() }).Count -lt 5)
+    if ($SmokeTest -or $diagnosticEvaluation) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
     if (-not [string]::IsNullOrWhiteSpace($Adapter)) { $args += @("--adapter", $Adapter) }
     Invoke-PythonStep $Name $args
 }
@@ -334,6 +376,8 @@ function Train-Profile {
     $progressiveRoot = Join-Path $ProfileRoot "progressive_kd_v2"
     $directRoot = Join-Path $ProfileRoot "direct_kd_v2"
     Ensure-ProfileInitialization -Profile $Profile -Destination $studentRoot -Label "$Label Creating $($Profile.Name)..."
+    $evalInitialization = Join-Path $ProfileRoot "evaluation_initialization_oracle_v3"
+    Invoke-RagEvaluation "$Label Evaluating untrained initialization for $($Profile.Name)..." $studentRoot "" $evalInitialization "oracle_rag,adversarial_passthrough_rag"
 
     if ($Mode -eq "Pilot" -and -not (Test-CurrentTrainingArtifact -Directory $sftRoot -TrainingSource $TrainingFile -Objective "sft" -ExpectedStudent $studentRoot)) {
         $args = @(
@@ -342,10 +386,16 @@ function Train-Profile {
             "--objective", "sft",
             "--train-file", $TrainingFile,
             "--dev-file", $DevFile,
+            "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
             "--output-dir", $sftRoot,
             "--max-steps", "$MaxSteps",
+            "--learning-rate", "$LearningRate",
+            "--lora-rank", "$LoraRank",
             "--seed", "$Seed",
-            "--eos-loss-weight", "1.5"
+            "--first-answer-token-weight", "$FirstAnswerTokenWeight",
+            "--evidence-anchor-token-weight", "$EvidenceAnchorTokenWeight",
+            "--abstention-token-weight", "$AbstentionTokenWeight",
+            "--eos-loss-weight", "$EosLossWeight"
         )
         if ($UseLora) { $args += "--lora" }
         if ($Profile.ResearchControl) { $args += "--allow-random-control" }
@@ -362,14 +412,19 @@ function Train-Profile {
             "--objective", "kd",
             "--train-file", $TrainingFile,
             "--dev-file", $DevFile,
+            "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
             "--output-dir", $progressiveRoot,
             "--max-steps", "$MaxSteps",
+            "--learning-rate", "$LearningRate",
             "--seed", "$Seed",
             "--kd-hard-weight-start", "0.75",
             "--kd-hard-weight-end", "0.25",
             "--kd-warmup-ratio", "0.15",
             "--teacher-confidence-floor", "0.02",
-            "--eos-loss-weight", "1.5"
+            "--first-answer-token-weight", "$FirstAnswerTokenWeight",
+            "--evidence-anchor-token-weight", "$EvidenceAnchorTokenWeight",
+            "--abstention-token-weight", "$AbstentionTokenWeight",
+            "--eos-loss-weight", "$EosLossWeight"
         )
         if (-not [string]::IsNullOrWhiteSpace($sftAdapter)) { $args += @("--initial-adapter", $sftAdapter) }
         if ($Teacher4Bit) { $args += "--teacher-4bit" }
@@ -385,14 +440,19 @@ function Train-Profile {
             "--objective", "kd",
             "--train-file", $TrainingFile,
             "--dev-file", $DevFile,
+            "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
             "--output-dir", $directRoot,
             "--max-steps", "$MaxSteps",
+            "--learning-rate", "$LearningRate",
             "--seed", "$Seed",
             "--kd-hard-weight-start", "0.85",
             "--kd-hard-weight-end", "0.35",
             "--kd-warmup-ratio", "0.25",
             "--teacher-confidence-floor", "0.02",
-            "--eos-loss-weight", "1.5"
+            "--first-answer-token-weight", "$FirstAnswerTokenWeight",
+            "--evidence-anchor-token-weight", "$EvidenceAnchorTokenWeight",
+            "--abstention-token-weight", "$AbstentionTokenWeight",
+            "--eos-loss-weight", "$EosLossWeight"
         )
         if ($UseLora) { $args += "--lora" }
         if ($Teacher4Bit) { $args += "--teacher-4bit" }
@@ -405,6 +465,7 @@ function Train-Profile {
     $result = [ordered]@{
         Name = $Profile.Name
         ResearchControl = [bool]$Profile.ResearchControl
+        InitializationSummary = Join-Path $evalInitialization "summary.json"
         SftSummary = Join-Path $evalSft "summary.json"
     }
     if (-not $SkipKD) {
@@ -446,6 +507,7 @@ if ($Mode -eq "Bootstrap") {
         "--review-packet", $ReviewPacket,
         "--retrieval-mode", "oracle",
         "--samples-per-question", "2",
+        "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
         "--max-new-tokens", "32",
         "--resume"
     )
@@ -470,7 +532,8 @@ if ($Mode -eq "Pilot") {
             "--output-dir", $DatasetRoot,
             "--seed", "$Seed"
         )
-        if ($SmokeTest) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
+        $diagnosticEvaluation = (@($Conditions.Split(",") | Where-Object { $_.Trim() }).Count -lt 5)
+    if ($SmokeTest -or $diagnosticEvaluation) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
         Invoke-PythonStep "[Data] Building document/topic-disjoint, class-aware splits..." $args
     }
     $TrainingFile = $TrainFile
@@ -530,6 +593,18 @@ if ($Mode -eq "Pilot") {
             )
         }
         $TrainingFile = $MixedCurriculum
+        if (-not $SkipBehaviorRebalance) {
+            $balancedManifest = [System.IO.Path]::ChangeExtension($BalancedCurriculum, ".manifest.json")
+            if (-not (Test-CurrentDerivedArtifact -Artifact $BalancedCurriculum -ManifestPath $balancedManifest -Source $MixedCurriculum)) {
+                Invoke-PythonStep "[Data] Applying the grounded 45/25/10/10/5/5 behavior mixture..." @(
+                    ".\scripts\phase_9_student_distillation\rebalance_behavior_curriculum.py",
+                    "--input", $MixedCurriculum,
+                    "--output", $BalancedCurriculum,
+                    "--seed", "$Seed"
+                )
+            }
+            $TrainingFile = $BalancedCurriculum
+        }
     }
     $calibrationArgs = @(
         ".\scripts\phase_9_student_distillation\calibrate_evidence_gate.py",
@@ -540,7 +615,9 @@ if ($Mode -eq "Pilot") {
     if ($SmokeTest) { $calibrationArgs += "--smoke-test" } else { $calibrationArgs += "--require-research-ready" }
     Invoke-PythonStep "[Data] Calibrating the evidence pre-gate on dev only..." $calibrationArgs
 } else {
-    if (-not $SkipFoundation -and (Test-Path $MixedCurriculum)) {
+    if (-not $SkipBehaviorRebalance -and (Test-Path $BalancedCurriculum)) {
+        $TrainingFile = $BalancedCurriculum
+    } elseif (-not $SkipFoundation -and (Test-Path $MixedCurriculum)) {
         $TrainingFile = $MixedCurriculum
     } elseif (-not $SkipCurriculum -and (Test-Path $CurriculumTrain)) {
         $TrainingFile = $CurriculumTrain
@@ -553,6 +630,19 @@ if ($Mode -eq "Pilot") {
 }
 
 Invoke-RagEvaluation "[Teacher] Evaluating the teacher under identical conditions..." $TeacherModel "" $EvalTeacher
+$teacherAuditArgs = @(
+    ".\scripts\phase_9_student_distillation\audit_phase_9_results.py",
+    "--benchmark", $TestFile,
+    "--evaluation", "teacher=$EvalTeacher",
+    "--teacher-name", "teacher",
+    "--json-out", (Join-Path $OutputRoot "teacher_preflight_audit.json"),
+    "--out", (Join-Path $OutputRoot "teacher_preflight_audit.md")
+)
+if (-not $AllowFailedTeacherPreflight) { $teacherAuditArgs += "--require-usable-teacher" }
+Invoke-PythonStep "[Preflight] Verifying teacher grounding, prompt insertion, and decode integrity..." $teacherAuditArgs
+if ($AllowFailedTeacherPreflight) {
+    Write-Warning "Teacher preflight override enabled. Student results will remain research-only until the teacher path passes."
+}
 $GateArgs = @(
     ".\scripts\phase_9_student_distillation\check_phase_9_gate.py",
     "--teacher-summary", (Join-Path $EvalTeacher "summary.json")
@@ -563,6 +653,7 @@ if ($StudentSuite -eq "Hybrid") {
     foreach ($profile in $HybridProfiles) {
         $profileRoot = Join-Path $OutputRoot (Join-Path "students" $profile.Name)
         $result = Train-Profile -Profile $profile -ProfileRoot $profileRoot -TrainingFile $TrainingFile -Label "[Hybrid $index/$($HybridProfiles.Count)]"
+        $GateArgs += @("--initialization", "$($result.Name)=$($result.InitializationSummary)")
         $GateArgs += @("--candidate", "sft_$($result.Name)=$($result.SftSummary)")
         if (-not $SkipKD) { $GateArgs += @("--candidate", "progressive_kd_$($result.Name)=$($result.ProgressiveKdSummary)") }
         if ($RunDirectKD -and -not $SkipKD) { $GateArgs += @("--candidate", "direct_kd_$($result.Name)=$($result.DirectKdSummary)") }
@@ -607,6 +698,7 @@ if ($StudentSuite -eq "Hybrid") {
         ResearchControl = ($StudentMode -eq "custom_qwen_random")
     }
     $result = Train-Profile -Profile $singleProfile -ProfileRoot $profileRoot -TrainingFile $TrainingFile -Label "[Single]"
+    $GateArgs += @("--initialization", "single=$($result.InitializationSummary)")
     $GateArgs += @("--candidate", "sft=$($result.SftSummary)")
     if (-not $SkipKD) { $GateArgs += @("--candidate", "progressive_kd=$($result.ProgressiveKdSummary)") }
     if ($RunDirectKD -and -not $SkipKD) { $GateArgs += @("--candidate", "direct_kd=$($result.DirectKdSummary)") }
@@ -644,6 +736,7 @@ if ($StudentSuite -eq "Hybrid") {
                 "--objective", "kd",
                 "--train-file", $onPolicyData,
                 "--dev-file", $DevFile,
+                "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
                 "--output-dir", $onPolicyRoot,
                 "--max-steps", "$MaxSteps",
                 "--seed", "$Seed",
@@ -651,7 +744,10 @@ if ($StudentSuite -eq "Hybrid") {
                 "--kd-hard-weight-end", "0.10",
                 "--kd-warmup-ratio", "0.05",
                 "--teacher-confidence-floor", "0.02",
-                "--eos-loss-weight", "1.5"
+                "--first-answer-token-weight", "$FirstAnswerTokenWeight",
+                "--evidence-anchor-token-weight", "$EvidenceAnchorTokenWeight",
+                "--abstention-token-weight", "$AbstentionTokenWeight",
+                "--eos-loss-weight", "$EosLossWeight"
             )
             if (-not [string]::IsNullOrWhiteSpace($progressiveAdapter)) { $args += @("--initial-adapter", $progressiveAdapter) }
             if ($Teacher4Bit) { $args += "--teacher-4bit" }

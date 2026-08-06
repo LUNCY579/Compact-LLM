@@ -239,4 +239,4 @@ def test_runner_uses_progressive_kd_foundation_and_stale_artifact_revision() -> 
     assert "student_initialization_tree_sha256" in trainer
     assert "initial_adapter_tree_sha256" in trainer
     assert "teacher_tree_sha256" in trainer
-    assert runner.count('"--conditions", "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag"') == 1
+    assert '[string]$Conditions = "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag"' in runner

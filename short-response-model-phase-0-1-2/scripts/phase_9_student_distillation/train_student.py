@@ -31,9 +31,12 @@ from scripts.common.experiment_utils import environment, read_jsonl, replace_pat
 from scripts.phase_1_dense_sft.train_dense_sft import discover_target_modules
 from scripts.phase_9_student_distillation.phase9_common import (
     model_parameter_breakdown,
+    route_mode,
     tokenizer_fingerprint,
     tree_bytes,
 )
+from scripts.phase_9_student_distillation.phase9_training_weights import completion_loss_weights
+from scripts.phase_9_student_distillation.phase9_prompting import plan_grounded_prompt
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,6 +48,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--dev-file", type=Path, default=None)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--max-sequence-length", type=int, default=512)
+    parser.add_argument("--maximum-evidence-tokens", type=int, default=384)
     parser.add_argument("--max-completion-tokens", type=int, default=32)
     parser.add_argument("--per-device-batch-size", type=int, default=1)
     parser.add_argument("--gradient-accumulation-steps", type=int, default=32)
@@ -70,6 +74,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--kd-warmup-ratio", type=float, default=0.15, help="Initial fraction of KD training that uses hard labels only.")
     parser.add_argument("--teacher-confidence-floor", type=float, default=0.02, help="Ignore KL tokens when the teacher assigns less probability than this to the approved target token.")
     parser.add_argument("--eos-loss-weight", type=float, default=1.5, help="Relative CE/KL weight for EOS/end-of-turn targets.")
+    parser.add_argument("--first-answer-token-weight", type=float, default=2.0, help="Emphasize the initial answer/abstention decision token.")
+    parser.add_argument("--evidence-anchor-token-weight", type=float, default=1.75, help="Emphasize explicitly required names, numbers, dates, and answer anchors.")
+    parser.add_argument("--abstention-token-weight", type=float, default=2.0, help="Emphasize the approved abstention sequence on unsupported rows.")
     parser.add_argument("--gradient-checkpointing", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--lora", action="store_true")
     parser.add_argument("--initial-adapter", type=Path, default=None)
@@ -101,6 +108,9 @@ def apply_chat_template(tokenizer: Any, messages: list[dict[str, Any]], *, gener
         return tokenizer.apply_chat_template(messages, **kwargs)
 
 
+
+
+
 class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
     def __init__(
         self,
@@ -109,14 +119,44 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
         *,
         max_length: int,
         max_completion_tokens: int,
+        maximum_evidence_tokens: int,
         default_hard_weight: float,
+        first_answer_token_weight: float,
+        evidence_anchor_token_weight: float,
+        abstention_token_weight: float,
     ) -> None:
         self.examples: list[dict[str, torch.Tensor]] = []
         self.skipped: list[str] = []
+        self.prompt_packing: list[dict[str, Any]] = []
         for row in rows:
-            messages = row.get("messages") or []
+            messages = [dict(message) for message in (row.get("messages") or [])]
             if not messages or messages[-1].get("role") != "assistant":
                 raise ValueError(f"{row.get('id')} must end with an assistant training target")
+            if row.get("question") is not None:
+                # Rebuild Phase 9 prompts from structured fields so evidence is
+                # budgeted deliberately. Never preserve only the tail of an
+                # overlong prompt, because that can delete the grounding policy.
+                question = str(row.get("question") or "")
+                plan = plan_grounded_prompt(
+                    tokenizer,
+                    question=question,
+                    evidence=[dict(item) for item in (row.get("evidence") or [])],
+                    procedures=[dict(item) for item in (row.get("procedures") or [])],
+                    mode=route_mode(question, row.get("mode")),
+                    system_prompt=row.get("system_prompt"),
+                    max_sequence_length=max(1, max_length - max_completion_tokens),
+                    maximum_evidence_tokens=maximum_evidence_tokens,
+                )
+                if plan.integrity_issues:
+                    self.skipped.append(f"{row.get('id')}:prompt_integrity:" + "|".join(plan.integrity_issues))
+                    continue
+                expected_support = {str(value) for value in (row.get("support_document_ids") or [])}
+                prompted_support = {str(item.get("document_id") or item.get("record_id") or "") for item in plan.selected_evidence}
+                if expected_support and not (expected_support & prompted_support):
+                    self.skipped.append(f"{row.get('id')}:required_support_not_in_budgeted_prompt")
+                    continue
+                messages = [*plan.messages, messages[-1]]
+                self.prompt_packing.append({"id": row.get("id"), **plan.diagnostics()})
             prompt_text = apply_chat_template(tokenizer, messages[:-1], generation=True)
             full_text = apply_chat_template(tokenizer, messages, generation=False)
             prompt_ids = tokenizer(prompt_text, add_special_tokens=False)["input_ids"]
@@ -139,9 +179,20 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
             if prompt_budget <= 0:
                 self.skipped.append(f"{row.get('id')}:completion_exceeds_sequence_budget")
                 continue
-            prompt_ids = prompt_ids[-prompt_budget:]
+            if len(prompt_ids) > prompt_budget:
+                self.skipped.append(f"{row.get('id')}:prompt_exceeds_sequence_budget_without_safe_truncation")
+                continue
             input_ids = torch.tensor([*prompt_ids, *completion_ids], dtype=torch.long)
             labels = torch.tensor([-100] * len(prompt_ids) + completion_ids, dtype=torch.long)
+            completion_weights = completion_loss_weights(
+                row,
+                tokenizer,
+                completion_ids,
+                first_answer_token_weight=first_answer_token_weight,
+                evidence_anchor_token_weight=evidence_anchor_token_weight,
+                abstention_token_weight=abstention_token_weight,
+            )
+            token_loss_weights = torch.tensor([0.0] * len(prompt_ids) + completion_weights, dtype=torch.float32)
             override = row.get("hard_label_weight")
             if override is None:
                 override = (row.get("metadata") or {}).get("hard_label_weight")
@@ -155,6 +206,7 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
                     "labels": labels,
                     "hard_label_weight": torch.tensor(hard_weight, dtype=torch.float32),
                     "hard_label_weight_overridden": torch.tensor(override is not None, dtype=torch.bool),
+                    "token_loss_weights": token_loss_weights,
                 }
             )
         if not self.examples:
@@ -184,6 +236,9 @@ class CompletionCollator:
             ),
             "hard_label_weight": torch.stack([row["hard_label_weight"] for row in features]),
             "hard_label_weight_overridden": torch.stack([row["hard_label_weight_overridden"] for row in features]),
+            "token_loss_weights": pad_sequence(
+                [row["token_loss_weights"] for row in features], batch_first=True, padding_value=0.0
+            ),
         }
 
 
@@ -192,9 +247,10 @@ def selected_forward(
     input_ids: torch.Tensor,
     attention_mask: torch.Tensor,
     labels: torch.Tensor,
+    token_loss_weights: torch.Tensor | None = None,
     *,
     use_position_selection: bool = True,
-) -> tuple[torch.Tensor, torch.Tensor]:
+) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor]:
     """Return completion prediction logits and their target token IDs.
 
     For batch size one, Qwen3-style ``logits_to_keep`` prevents materializing a
@@ -222,7 +278,12 @@ def selected_forward(
                     "logits_to_keep returned an unexpected sequence dimension: "
                     f"{tuple(logits.shape)} for {targets.shape[0]} targets"
                 )
-            return logits, targets
+            selected_weights = (
+                token_loss_weights[0].index_select(0, target_positions).to(logits.device)
+                if token_loss_weights is not None
+                else torch.ones_like(targets, dtype=torch.float32, device=logits.device)
+            )
+            return logits, targets, selected_weights
         except TypeError:
             pass
 
@@ -230,7 +291,12 @@ def selected_forward(
     shifted_logits = outputs.logits[:, :-1, :]
     shifted_labels = labels[:, 1:]
     mask = shifted_labels.ne(-100)
-    return shifted_logits[mask], shifted_labels[mask]
+    if token_loss_weights is None:
+        selected_weights = torch.ones_like(shifted_labels[mask], dtype=torch.float32, device=shifted_logits.device)
+    else:
+        shifted_weights = token_loss_weights[:, 1:].to(shifted_logits.device)
+        selected_weights = shifted_weights[mask]
+    return shifted_logits[mask], shifted_labels[mask], selected_weights
 
 
 class DistillationTrainer(Trainer):
@@ -284,18 +350,20 @@ class DistillationTrainer(Trainer):
         hard_weights = inputs.pop("hard_label_weight").to(model_device)
         hard_weight_overrides = inputs.pop("hard_label_weight_overridden").to(model_device)
         labels = inputs.pop("labels").to(model_device)
+        token_loss_weights = inputs.pop("token_loss_weights").to(model_device)
         input_ids = inputs["input_ids"].to(model_device)
         attention_mask = inputs["attention_mask"].to(model_device)
-        student_logits, targets = selected_forward(
+        student_logits, targets, behavior_token_weights = selected_forward(
             model,
             input_ids,
             attention_mask,
             labels,
+            token_loss_weights,
             use_position_selection=self.memory_efficient_completion_logits,
         )
         if targets.numel() == 0:
             raise ValueError("Batch contains no supervised completion tokens")
-        token_weights = torch.ones_like(targets, dtype=torch.float32, device=student_logits.device)
+        token_weights = behavior_token_weights.to(student_logits.device, dtype=torch.float32).clamp_min(0.0)
         if self.eos_token_id is not None and self.eos_loss_weight != 1.0:
             token_weights = torch.where(
                 targets.eq(int(self.eos_token_id)),
@@ -319,11 +387,12 @@ class DistillationTrainer(Trainer):
                 raise RuntimeError("KD objective requires a teacher")
             teacher_device = next(self.teacher.parameters()).device
             with torch.no_grad():
-                teacher_logits, teacher_targets = selected_forward(
+                teacher_logits, teacher_targets, _teacher_token_weights = selected_forward(
                     self.teacher,
                     input_ids.to(teacher_device),
                     attention_mask.to(teacher_device),
                     labels.to(teacher_device),
+                    token_loss_weights.to(teacher_device),
                     use_position_selection=self.memory_efficient_completion_logits,
                 )
             if not torch.equal(targets.detach().cpu(), teacher_targets.detach().cpu()):
@@ -390,6 +459,9 @@ def validate_args(args: argparse.Namespace) -> None:
             raise ValueError(f"--{name.replace('_', '-')} must be in [0,1]")
     if args.eos_loss_weight <= 0:
         raise ValueError("--eos-loss-weight must be positive")
+    for name in ("first_answer_token_weight", "evidence_anchor_token_weight", "abstention_token_weight"):
+        if float(getattr(args, name)) <= 0:
+            raise ValueError(f"--{name.replace('_', '-')} must be positive")
     if args.per_device_batch_size != 1 and args.memory_efficient_completion_logits:
         raise ValueError(
             "Memory-efficient completion-position logits currently require per-device batch size 1. "
@@ -538,7 +610,11 @@ def main() -> None:
         tokenizer,
         max_length=args.max_sequence_length,
         max_completion_tokens=args.max_completion_tokens,
+        maximum_evidence_tokens=args.maximum_evidence_tokens,
         default_hard_weight=args.hard_label_weight,
+        first_answer_token_weight=args.first_answer_token_weight,
+        evidence_anchor_token_weight=args.evidence_anchor_token_weight,
+        abstention_token_weight=args.abstention_token_weight,
     )
     eval_dataset = (
         CompletionDataset(
@@ -546,7 +622,11 @@ def main() -> None:
             tokenizer,
             max_length=args.max_sequence_length,
             max_completion_tokens=args.max_completion_tokens,
+            maximum_evidence_tokens=args.maximum_evidence_tokens,
             default_hard_weight=args.hard_label_weight,
+            first_answer_token_weight=args.first_answer_token_weight,
+            evidence_anchor_token_weight=args.evidence_anchor_token_weight,
+            abstention_token_weight=args.abstention_token_weight,
         )
         if dev_rows
         else None
@@ -613,12 +693,15 @@ def main() -> None:
     breakdown = model_parameter_breakdown(model)
     manifest = {
         "phase": "9_student_distillation",
-        "schema_version": "1.1",
-        "pipeline_revision": "phase9_behavior_curriculum_v2",
+        "schema_version": "1.3",
+        "pipeline_revision": "phase9_grounded_recovery_v1_7_2",
         "objective": args.objective,
         "requested_max_steps": args.max_steps,
         "requested_epochs": args.epochs,
         "requested_learning_rate": args.learning_rate,
+        "max_sequence_length": args.max_sequence_length,
+        "maximum_evidence_tokens": args.maximum_evidence_tokens,
+        "prompt_truncation_policy": "budget structured evidence; skip rather than tail-truncate",
         "requested_gradient_accumulation_steps": args.gradient_accumulation_steps,
         "student_initialization": args.student,
         "student_initialization_tree_sha256": sha256_tree(Path(args.student)),
@@ -629,6 +712,8 @@ def main() -> None:
         "artifact_type": artifact_type,
         "artifact_path": str(artifact),
         "artifact_bytes": tree_bytes(artifact),
+        "artifact_tree_sha256": sha256_tree(artifact),
+        "optimizer_steps": int(trainer.state.global_step),
         "student_tokenizer_fingerprint": tokenizer_fingerprint(tokenizer),
         "teacher_tokenizer_fingerprint": teacher_fingerprint,
         "direct_logit_alignment_verified": args.objective != "kd" or teacher_fingerprint == tokenizer_fingerprint(tokenizer),
@@ -638,6 +723,8 @@ def main() -> None:
         "dev_sha256": sha256(args.dev_file) if args.dev_file and args.dev_file.exists() else None,
         "parameter_breakdown": breakdown,
         "target_module_count": len(targets) if targets is not None else None,
+        "lora_enabled": bool(args.lora or args.initial_adapter is not None),
+        "lora_rank": args.lora_rank if args.lora else None,
         "temperature": args.temperature if args.objective == "kd" else None,
         "hard_label_weight": args.hard_label_weight,
         "kd_hard_weight_start": args.kd_hard_weight_start if args.objective == "kd" else None,
@@ -645,11 +732,16 @@ def main() -> None:
         "kd_warmup_ratio": args.kd_warmup_ratio if args.objective == "kd" else None,
         "teacher_confidence_floor": args.teacher_confidence_floor if args.objective == "kd" else None,
         "eos_loss_weight": args.eos_loss_weight,
+        "first_answer_token_weight": args.first_answer_token_weight,
+        "evidence_anchor_token_weight": args.evidence_anchor_token_weight,
+        "abstention_token_weight": args.abstention_token_weight,
         "final_loss_components": trainer.last_loss_components,
         "memory_efficient_completion_logits": args.memory_efficient_completion_logits,
         "training_metrics": result.metrics,
         "peak_allocated_vram_bytes": peak_vram,
         "skipped_train_ids": train_dataset.skipped,
+        "train_prompt_packing": train_dataset.prompt_packing,
+        "dev_prompt_packing": eval_dataset.prompt_packing if eval_dataset is not None else [],
         "save_strategy": save_strategy,
         "checkpoints_retained": bool(args.keep_checkpoints),
         "environment": environment(),

@@ -87,46 +87,37 @@ When Phase 6 selected `DENSE_ONLY`, the runner skips router training and measure
 Each runner fails on missing prior gates or inputs, records outputs under `artifacts/`, and creates a pending report under `reports/`. It never fabricates benchmark results or self-approves a human gate.
 
 
-## 7. Phase 9 — appended tiny-student/RAG distillation
+## 7. Phase 9 — grounded student/RAG recovery
 
-Phase 9 begins after Phase 8 names the exact accepted teacher. Bootstrap creates a student initialization, low-memory knowledge index, and teacher-review packet:
-
-```powershell
-.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
-  -Mode Bootstrap `
-  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model
-```
-
-After human-reviewing the generated candidates:
+Phase 9 now proves the RAG teaching path on one inherited warm 344M student before permitting another broad architecture sweep. Begin with the grounded-recovery ladder rather than `-StudentSuite Hybrid`:
 
 ```powershell
-.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
-  -Mode Pilot `
+.\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
+  -Mode Full `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
   -UseLora `
-  -Teacher4Bit `
-  -MaxSteps 600
+  -Teacher4Bit
 ```
 
-The single-student pilot builds a human-approved real curriculum, mixes it with the versioned fictional behavior foundation, trains curriculum SFT, continues with confidence-filtered progressive KD, evaluates closed/oracle/real/filtered-adversarial/passthrough-adversarial RAG, and writes a pending Phase 9 human gate. The default path requires research-ready real data; use `-SmokeTest` only to prove execution.
-
-To compare the warm 344M depth-copy student with the 100M/130M/170M narrow same-tokenizer research controls in one gate, use:
+The runner executes teacher Oracle preflight, untrained warm Oracle baseline, a deliberate 12–24-row overfit wiring proof, and a compact three-run warm SFT sweep. It selects only from a non-degenerate Oracle frontier, then evaluates Real and adversarial retrieval. Run progressive KD only after SFT works:
 
 ```powershell
-.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
-  -Mode Pilot `
-  -StudentSuite Hybrid `
+.\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
+  -Mode Full `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
   -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -AcknowledgeRandomControl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
   -UseLora `
   -Teacher4Bit `
-  -MaxSteps 600 `
-  -ReuseExisting
+  -ReuseExisting `
+  -RunKD
 ```
 
-Hybrid assessment keys are profile-qualified, such as `sft_warm_344m`, `progressive_kd_warm_344m`, and `progressive_kd_narrow_130m`. Narrow profiles are research controls and are not automatically production-eligible. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.
+The training-only view targets 45% supported extraction, 25% missing-evidence abstention, 10% conflict, 10% injection resistance, 5% procedures, and 5% social behavior. Candidate reports compare teacher, exact untrained initialization, SFT, and KD separately.
+
+Hybrid 100M/130M/170M controls remain locked until `grounded_recovery_ladder.json` reports `architecture_sweep_unlocked=true`. Pass that artifact through `-GroundedRecoveryGate` when returning to the ordinary Hybrid runner. See `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md` for stage-by-stage commands and recovery interpretation.
 
 ## 7B. Phase 9B — contextual memory reconstruction
 

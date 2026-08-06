@@ -1,6 +1,20 @@
 # Student Distillation Pipeline — appended Phase 9 workflow
 
-Version 1.6.1 | August 2026
+Version 1.7.2 | August 2026
+
+
+
+## Phase 9 grounded-recovery amendment — v1.7.2
+
+The official recovery path is now capability-first rather than architecture-first. It evaluates the accepted teacher with Oracle evidence, records the untrained warm_344m Oracle baseline, requires a deliberate 12–24-row overfit wiring proof, runs only three warm SFT settings, and unlocks Real RAG and progressive KD only after Oracle capability improves. The narrow 100M/130M/170M profiles remain research controls and are blocked until the ladder JSON explicitly unlocks architecture comparison.
+
+Training uses a versioned 45/25/10/10/5/5 behavior mixture and simple completion-token emphasis for the first answer token, evidence anchors, abstention tokens, and the completion boundary. Evaluation keeps numerator/denominator evidence and reports candidate-versus-teacher, SFT-versus-initialization, KD-versus-SFT, and KD-versus-initialization separately.
+
+## Phase 9 RAG integrity amendment — v1.7.1
+
+The current gate treats prompt construction and decoding as measured parts of the experiment. Retrieved support and prompted support are separate metrics. Tokenizer truncation is forbidden for official Phase 9 generation; passages are budgeted before chat rendering, while the grounding contract and final question are preserved. Training uses the same rule and skips a row rather than retaining only an ungrounded tail.
+
+Promotion combines generic relative quality loss with a bounded task-contract deficiency. Core RAG dimensions use a proportional bottleneck cost, so complete failure on supported correctness or unsupported-answer control contributes a full functional cost rather than being averaged away by compression. This also adds direct cost for missing grounding, conflict failure, prompt/decode corruption, and adversarial instruction following. The teacher must pass a raw-output preflight before student training begins.
 
 
 ## Behavior Curriculum v2 amendment

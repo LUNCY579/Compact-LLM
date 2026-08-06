@@ -41,6 +41,9 @@ from scripts.phase_9_student_distillation.phase9_common import (
     sanitize_passages,
     validate_prompt_record,
 )
+from scripts.phase_9_student_distillation.phase9_prompting import plan_grounded_prompt, token_ids
+
+TEACHER_PIPELINE_REVISION = "phase9_grounded_recovery_v1_7_2"
 
 
 def parse_args() -> argparse.Namespace:
@@ -54,6 +57,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--reranked-top-k", type=int, default=3)
     parser.add_argument("--samples-per-question", type=int, default=2)
+    parser.add_argument("--max-sequence-length", type=int, default=1024)
+    parser.add_argument("--maximum-evidence-tokens", type=int, default=384)
     parser.add_argument("--max-new-tokens", type=int, default=32)
     parser.add_argument("--response-control", choices=("eos_only", "one_sentence"), default="eos_only")
     parser.add_argument("--temperature", type=float, default=0.6)
@@ -112,9 +117,17 @@ def generate_candidate(
     sample_index: int,
     temperature: float,
     top_p: float,
+    max_sequence_length: int,
+    prompt_text: str | None = None,
 ) -> dict[str, Any]:
-    prompt = apply_chat_template(tokenizer, messages)
-    encoded = tokenizer(prompt, return_tensors="pt", add_special_tokens=False)
+    prompt = prompt_text if prompt_text is not None else apply_chat_template(tokenizer, messages)
+    full_ids = token_ids(tokenizer, prompt)
+    if len(full_ids) > max_sequence_length:
+        raise ValueError(
+            f"Teacher prompt requires {len(full_ids)} tokens, exceeding max_sequence_length={max_sequence_length}; "
+            "evidence must be budgeted before generation."
+        )
+    encoded = tokenizer(prompt, return_tensors="pt", add_special_tokens=False, truncation=False)
     device = next(model.parameters()).device
     encoded = {key: value.to(device) for key, value in encoded.items()}
     prompt_length = int(encoded["input_ids"].shape[1])
@@ -213,7 +226,32 @@ def main() -> None:
     completed: dict[str, dict[str, Any]] = {}
     if args.resume and args.output.exists():
         existing, _ = read_jsonl_recover(args.output, id_field="id", repair_truncated_tail=True)
-        completed = {str(row["id"]): row for row in existing}
+        prompts_digest = sha256(args.prompts)
+        incompatible: list[str] = []
+        for prior in existing:
+            provenance = prior.get("teacher_provenance") or {}
+            prompt_integrity = prior.get("prompt_integrity") or {}
+            compatible = (
+                str(prior.get("schema_version") or "") == "1.3"
+                and str(provenance.get("pipeline_revision") or "") == TEACHER_PIPELINE_REVISION
+                and str(provenance.get("model") or "") == str(args.teacher)
+                and str(provenance.get("prompts_sha256") or "") == prompts_digest
+                and str(provenance.get("retrieval_mode") or "") == str(args.retrieval_mode)
+                and int(provenance.get("max_sequence_length") or -1) == int(args.max_sequence_length)
+                and int(provenance.get("maximum_evidence_tokens") or -1) == int(args.maximum_evidence_tokens)
+                and bool(prompt_integrity.get("integrity_ok"))
+                and not bool(prompt_integrity.get("hidden_truncation_used"))
+            )
+            if compatible:
+                completed[str(prior["id"])] = prior
+            else:
+                incompatible.append(str(prior.get("id") or "<missing-id>"))
+        if incompatible:
+            raise RuntimeError(
+                "Existing teacher candidates are incompatible with the Phase 9 v1.7.2 grounded-recovery "
+                "contract. Use a fresh OutputRoot or archive/remove the old candidate JSONL before "
+                f"Bootstrap. Incompatible IDs: {incompatible[:10]}"
+            )
     elif args.output.exists():
         raise FileExistsError(f"Output exists; use --resume or choose another path: {args.output}")
 
@@ -252,13 +290,30 @@ def main() -> None:
                     top_k=args.retrieval_top_k,
                     final_k=args.reranked_top_k,
                 )
-            messages = build_grounded_messages(
+            prompt_plan = plan_grounded_prompt(
+                tokenizer,
                 question=row["question"],
                 evidence=evidence,
                 procedures=procedures,
                 mode=mode,
                 system_prompt=row.get("system_prompt"),
+                max_sequence_length=args.max_sequence_length,
+                maximum_evidence_tokens=args.maximum_evidence_tokens,
             )
+            if prompt_plan.integrity_issues:
+                raise RuntimeError(
+                    f"Prompt integrity failure for {row['id']}: " + "; ".join(prompt_plan.integrity_issues)
+                )
+            expected_support = {str(value) for value in (row.get("support_document_ids") or [])}
+            prompted_support = {passage_id(item) for item in prompt_plan.selected_evidence}
+            if expected_support and not (expected_support & prompted_support):
+                raise RuntimeError(
+                    f"Required support was removed by the prompt budget for {row['id']}: "
+                    f"expected={sorted(expected_support)}, prompted={sorted(prompted_support)}"
+                )
+            messages = prompt_plan.messages
+            evidence = prompt_plan.selected_evidence
+            procedures = prompt_plan.selected_procedures
             candidates: list[dict[str, Any]] = []
             for sample_index in range(args.samples_per_question):
                 candidate = generate_candidate(
@@ -270,6 +325,8 @@ def main() -> None:
                     sample_index=sample_index,
                     temperature=args.temperature,
                     top_p=args.top_p,
+                    max_sequence_length=args.max_sequence_length,
+                    prompt_text=prompt_plan.prompt_text,
                 )
                 grounding = grounding_check(candidate["answer"], evidence)
                 quality_record = {
@@ -343,6 +400,7 @@ def main() -> None:
                 )
 
             output_row = {
+                "schema_version": "1.3",
                 "id": row["id"],
                 "topic_id": row["topic_id"],
                 "question": row["question"],
@@ -356,6 +414,7 @@ def main() -> None:
                 "retrieved_procedure_ids": [passage_id(item) for item in procedures],
                 "support_document_ids": row.get("support_document_ids") or [],
                 "rejected_passages": rejected,
+                "prompt_integrity": prompt_plan.diagnostics(),
                 "response_contract": row.get("response_contract") or {},
                 "authoritative_answer": authoritative_answer or None,
                 "candidates": candidates,
@@ -363,6 +422,7 @@ def main() -> None:
                 "selected_candidate_index": None,
                 "approved_answer": None,
                 "teacher_provenance": {
+                    "pipeline_revision": TEACHER_PIPELINE_REVISION,
                     "model": args.teacher,
                     "prompts_path": str(args.prompts),
                     "prompts_sha256": sha256(args.prompts),
@@ -370,6 +430,9 @@ def main() -> None:
                     "knowledge_db": str(args.knowledge_db) if args.knowledge_db else None,
                     "response_control": args.response_control,
                     "max_new_tokens": args.max_new_tokens,
+                    "max_sequence_length": args.max_sequence_length,
+                    "maximum_evidence_tokens": args.maximum_evidence_tokens,
+                    "prompt_truncation_policy": "budget passages then fail closed",
                     "environment": environment(),
                 },
             }
@@ -386,6 +449,10 @@ def main() -> None:
     write_json(
         args.output.with_suffix(".manifest.json"),
         {
+            "schema_version": "1.3",
+            "pipeline_revision": TEACHER_PIPELINE_REVISION,
+            "maximum_evidence_tokens": args.maximum_evidence_tokens,
+            "max_sequence_length": args.max_sequence_length,
             "record_count": len(ordered),
             "pending_human_review": sum(row.get("review_status") != "accepted" for row in ordered),
             "teacher": args.teacher,

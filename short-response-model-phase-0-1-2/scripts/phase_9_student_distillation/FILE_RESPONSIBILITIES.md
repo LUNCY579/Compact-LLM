@@ -1,8 +1,15 @@
-# File responsibilities — Phase 9 Behavior Curriculum v2
+# File responsibilities — Phase 9 grounded recovery v1.7.2
 
 | File | Responsibility | Boundary |
 |---|---|---|
 | `run_phase_9.ps1` | Orchestrates approval checks, data readiness, foundation mixing, SFT, progressive KD, optional on-policy recovery, five-condition evaluation, and the pending gate. | Does not make a human release decision. |
+| `run_phase_9_grounded_recovery.ps1` | Runs the teacher→warm baseline→overfit→Oracle SFT→Real RAG→optional KD capability ladder. | Does not run narrow architecture controls before the ladder passes. |
+| `rebalance_behavior_curriculum.py` | Creates the deterministic 45/25/10/10/5/5 training-only behavior view. | Does not modify reviewed source rows or held-out evaluation. |
+| `build_overfit_probe.py` | Builds a unique 12–24-row benchmark and repeated training view for wiring verification. | The same-row result is not held-out quality evidence. |
+| `phase9_training_weights.py` | Computes first-token, evidence-anchor, abstention, and completion-boundary emphasis. | Does not add hidden-state or representation losses. |
+| `grounded_recovery_metrics.py` | Computes bounded Oracle capability evidence with explicit applicability. | Does not replace case-level reports. |
+| `check_grounded_recovery_ladder.py` | Records stage status and unlocks Real RAG, KD, and architecture comparison only after prerequisites. | Human production approval remains separate. |
+| `select_grounded_sft_candidate.py` | Selects from the warm SFT Oracle frontier and emits `NO_VALID_QUALITY_FRONTIER` when degenerate. | Does not select narrow students or production-release artifacts. |
 | `phase9_common.py` | Validation, routing, prompts, FTS5 retrieval, evidence gates, grounding diagnostics, connected-component splitting, and class-aware holdout assignment. | Not a semantic entailment oracle. |
 | `phase9_metrics.py` | Explicit case classes, safe denominators, functional correctness, bounded training comparisons, and readiness blockers. | Does not replace the shared repository opportunity policy. |
 | `create_student.py` | Creates and verifies warm depth-copy, random-control, or pretrained-clone initializations. | Random initialization is not language inheritance. |

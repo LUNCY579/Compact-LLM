@@ -58,13 +58,28 @@ def load_opportunity_policy(path: Path | None = None) -> OpportunityPolicy:
     return OpportunityPolicy(payload)
 
 
+def _bounded_relative_change(reference: float, delta: float) -> float:
+    """Return a finite [0,1] change, including when the reference is zero.
+
+    Quality rates and evaluator dimensions are naturally bounded. Dividing by an
+    epsilon when the reference equals zero turns a normal 0.8-point change into
+    an absurd 8e11 result. Near zero we therefore report the bounded absolute
+    change; otherwise we report the bounded proportional change.
+    """
+
+    positive = max(0.0, float(delta))
+    if abs(reference) <= 1e-6:
+        return min(1.0, positive)
+    return min(1.0, positive / abs(reference))
+
+
 def higher_is_better_loss(reference: float | None, candidate: float | None) -> float | None:
     if reference is None or candidate is None:
         return None
     reference, candidate = float(reference), float(candidate)
     if not math.isfinite(reference) or not math.isfinite(candidate):
         return None
-    return max(0.0, reference - candidate) / max(abs(reference), EPSILON)
+    return _bounded_relative_change(reference, reference - candidate)
 
 
 def higher_is_better_gain(reference: float | None, candidate: float | None) -> float | None:
@@ -73,7 +88,7 @@ def higher_is_better_gain(reference: float | None, candidate: float | None) -> f
     reference, candidate = float(reference), float(candidate)
     if not math.isfinite(reference) or not math.isfinite(candidate):
         return None
-    return max(0.0, candidate - reference) / max(abs(reference), EPSILON)
+    return _bounded_relative_change(reference, candidate - reference)
 
 
 def lower_is_better_loss(reference: float | None, candidate: float | None) -> float | None:
@@ -82,7 +97,7 @@ def lower_is_better_loss(reference: float | None, candidate: float | None) -> fl
     reference, candidate = float(reference), float(candidate)
     if not math.isfinite(reference) or not math.isfinite(candidate):
         return None
-    return max(0.0, candidate - reference) / max(abs(reference), EPSILON)
+    return _bounded_relative_change(reference, candidate - reference)
 
 
 def bounded_rate_increase(reference: float | None, candidate: float | None) -> float | None:

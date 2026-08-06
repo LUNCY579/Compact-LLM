@@ -56,6 +56,11 @@ from scripts.phase_9_student_distillation.phase9_metrics import (
     safe_rate,
     social_response_usable,
 )
+from scripts.phase_9_student_distillation.phase9_prompting import (
+    apply_chat_template as render_chat_prompt,
+    plan_grounded_prompt,
+    token_ids,
+)
 
 try:
     from peft import PeftModel
@@ -77,6 +82,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--reranked-top-k", type=int, default=3)
     parser.add_argument("--max-sequence-length", type=int, default=1024)
+    parser.add_argument("--maximum-evidence-tokens", type=int, default=384)
     parser.add_argument("--max-new-tokens", type=int, default=32)
     parser.add_argument("--response-control", choices=("eos_only", "one_sentence"), default="eos_only")
     parser.add_argument("--limit", type=int, default=None)
@@ -167,6 +173,23 @@ def prepare_evidence(
     return evidence, procedures, rejected, time.perf_counter() - started
 
 
+def decode_integrity_diagnostics(*, answer: str, raw_answer: str, raw_with_special_tokens: str, generated_tokens: int) -> dict[str, Any]:
+    issues: list[str] = []
+    if generated_tokens > 0 and not (raw_answer or "").strip():
+        issues.append("generated tokens decode to an empty visible answer")
+    if "\ufffd" in (raw_answer or "") or "\ufffd" in (answer or ""):
+        issues.append("replacement character detected in decoded output")
+    lowered = (raw_with_special_tokens or "").casefold()
+    leaked = [token for token in ("<|assistant|>", "<|system|>", "<|user|>", "<|im_start|>") if token in lowered]
+    if leaked:
+        issues.append("chat-control token leaked into decoded completion: " + ", ".join(leaked))
+    return {
+        "integrity_ok": not issues,
+        "issues": issues,
+        "raw_with_special_tokens": raw_with_special_tokens,
+    }
+
+
 def generate_answer(
     *,
     model: Any,
@@ -175,15 +198,23 @@ def generate_answer(
     max_sequence_length: int,
     max_new_tokens: int,
     response_control: str,
+    prompt_text: str | None = None,
 ) -> dict[str, Any]:
-    prompt = apply_chat_template(tokenizer, messages)
-    encoded = tokenizer(
-        prompt,
-        return_tensors="pt",
-        add_special_tokens=False,
-        truncation=True,
-        max_length=max_sequence_length,
-    )
+    """Generate without silently truncating a Phase 9 grounding prompt.
+
+    Callers must budget evidence before this function. A prompt that still does
+    not fit is a technical-invalidity error, not permission to remove unknown
+    tokens from the left or right.
+    """
+
+    prompt = prompt_text if prompt_text is not None else render_chat_prompt(tokenizer, messages, generation=True)
+    full_prompt_ids = token_ids(tokenizer, prompt)
+    if len(full_prompt_ids) > max_sequence_length:
+        raise ValueError(
+            f"Rendered prompt requires {len(full_prompt_ids)} tokens, exceeding max_sequence_length={max_sequence_length}; "
+            "budget evidence before generation instead of using tokenizer truncation."
+        )
+    encoded = tokenizer(prompt, return_tensors="pt", add_special_tokens=False, truncation=False)
     device = next(model.parameters()).device
     encoded = {key: value.to(device) for key, value in encoded.items()}
     prompt_length = int(encoded["input_ids"].shape[1])
@@ -206,7 +237,17 @@ def generate_answer(
     elapsed = time.perf_counter() - started
     new_ids = generated[0, prompt_length:]
     raw = tokenizer.decode(new_ids, skip_special_tokens=True)
+    try:
+        raw_with_special = tokenizer.decode(new_ids, skip_special_tokens=False)
+    except TypeError:
+        raw_with_special = tokenizer.decode(new_ids)
     finalized = finalize_response(raw, response_control)
+    decode_integrity = decode_integrity_diagnostics(
+        answer=finalized.text,
+        raw_answer=finalized.raw_text,
+        raw_with_special_tokens=raw_with_special,
+        generated_tokens=int(new_ids.numel()),
+    )
     return {
         "answer": finalized.text,
         "raw_answer": finalized.raw_text,
@@ -221,6 +262,8 @@ def generate_answer(
         ),
         "response_control_trimmed": finalized.trimmed,
         "prompt_tokens": prompt_length,
+        "prompt_hidden_truncation_used": False,
+        "decode_integrity": decode_integrity,
     }
 
 
@@ -263,22 +306,44 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "supported_case_count": 0,
             "unsupported_case_count": 0,
             "conflict_case_count": 0,
+            "procedure_case_count": 0,
             "social_case_count": 0,
             "unknown_case_count": 0,
             "supported_answer_correctness": None,
             "correct_abstention_rate": None,
             "unsupported_confident_answer_rate": None,
             "evidence_faithfulness": None,
+            "procedure_correctness": None,
             "social_usable_rate": None,
+            "prompt_support_recall_at_k": None,
+            "prompt_integrity_failure_rate": None,
+            "decode_integrity_failure_rate": None,
+            "injection_resistance_rate": None,
         }
     quality = aggregate_quality_rows([row["quality"] for row in rows])
     supported = [row for row in rows if row.get("case_class") == "supported"]
     unsupported = [row for row in rows if row.get("case_class") == "unsupported"]
     conflicts = [row for row in rows if row.get("case_class") == "conflict"]
+    procedures = [
+        row for row in rows
+        if str(row.get("mode") or "").casefold() == "procedure"
+        or str(row.get("decision") or "").casefold() == "procedure"
+    ]
     social = [row for row in rows if row.get("case_class") == "social"]
     unknown = [row for row in rows if row.get("case_class") == "unknown"]
     retrieval_cases = [row for row in rows if row.get("retrieval_applicable")]
     retrieval_hits = [row for row in retrieval_cases if row.get("support_retrieved")]
+    prompt_support_cases = [row for row in rows if row.get("prompt_support_applicable")]
+    prompt_support_hits = [row for row in prompt_support_cases if row.get("support_in_prompt")]
+    prompt_integrity_failures = [
+        row for row in rows if not bool((row.get("prompt_integrity") or {}).get("integrity_ok", False))
+    ]
+    decode_integrity_cases = [row for row in rows if row.get("stop_reason") != "external_gate"]
+    decode_integrity_failures = [
+        row for row in decode_integrity_cases if not bool((row.get("decode_integrity") or {}).get("integrity_ok", False))
+    ]
+    adversarial_cases = [row for row in rows if row.get("adversarial_applicable")]
+    adversarial_successes = [row for row in adversarial_cases if row.get("adversarial_success")]
     generation_times = [float(row["generation_seconds"]) for row in rows]
     retrieval_times = [float(row["retrieval_seconds"]) for row in rows]
     visible_tokens = [int(row["visible_tokens"]) for row in rows]
@@ -288,6 +353,7 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     unnecessary = [row for row in supported if row.get("abstained")]
     unsupported_confident = [row for row in unsupported if not row.get("abstained")]
     conflict_detected = [row for row in conflicts if row.get("conflict_response")]
+    correct_procedures = [row for row in procedures if row.get("supported_answer_correct")]
     social_usable = [row for row in social if row.get("social_usable")]
     faithfulness_cases = [
         row for row in rows
@@ -301,25 +367,40 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "supported_case_count": len(supported),
         "unsupported_case_count": len(unsupported),
         "conflict_case_count": len(conflicts),
+        "procedure_case_count": len(procedures),
         "social_case_count": len(social),
         "unknown_case_count": len(unknown),
         "supported_correct_count": len(correct_supported),
         "correct_abstention_count": len(correct_abstentions),
         "unsupported_confident_answer_count": len(unsupported_confident),
         "unnecessary_abstention_count": len(unnecessary),
+        "conflict_detected_count": len(conflict_detected),
         "faithfulness_applicable_count": len(faithfulness_cases),
         "faithful_answer_count": len(faithful),
+        "procedure_correct_count": len(correct_procedures),
         "social_usable_count": len(social_usable),
         "retrieval_applicable_count": len(retrieval_cases),
         "retrieval_hit_count": len(retrieval_hits),
+        "prompt_support_applicable_count": len(prompt_support_cases),
+        "prompt_support_hit_count": len(prompt_support_hits),
+        "prompt_integrity_failure_count": len(prompt_integrity_failures),
+        "decode_integrity_applicable_count": len(decode_integrity_cases),
+        "decode_integrity_failure_count": len(decode_integrity_failures),
+        "adversarial_applicable_count": len(adversarial_cases),
+        "adversarial_success_count": len(adversarial_successes),
         "supported_answer_correctness": safe_rate(len(correct_supported), len(supported)),
         "evidence_faithfulness": safe_rate(len(faithful), len(faithfulness_cases)),
         "correct_abstention_rate": safe_rate(len(correct_abstentions), len(unsupported)),
         "unnecessary_abstention_rate": safe_rate(len(unnecessary), len(supported)),
         "unsupported_confident_answer_rate": safe_rate(len(unsupported_confident), len(unsupported)),
         "conflict_detection_rate": safe_rate(len(conflict_detected), len(conflicts)),
+        "procedure_correctness": safe_rate(len(correct_procedures), len(procedures)),
         "social_usable_rate": safe_rate(len(social_usable), len(social)),
         "retrieval_recall_at_k": safe_rate(len(retrieval_hits), len(retrieval_cases)),
+        "prompt_support_recall_at_k": safe_rate(len(prompt_support_hits), len(prompt_support_cases)),
+        "prompt_integrity_failure_rate": safe_rate(len(prompt_integrity_failures), len(rows)),
+        "decode_integrity_failure_rate": safe_rate(len(decode_integrity_failures), len(decode_integrity_cases)),
+        "injection_resistance_rate": safe_rate(len(adversarial_successes), len(adversarial_cases)),
         "median_completion_tokens": statistics.median(visible_tokens),
         "p90_completion_tokens": sorted(visible_tokens)[min(len(visible_tokens) - 1, int(0.9 * len(visible_tokens)))],
         "mean_generation_seconds": statistics.fmean(generation_times),
@@ -334,6 +415,10 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "conflict_detection_rate": len(conflicts),
             "social_usable_rate": len(social),
             "retrieval_recall_at_k": len(retrieval_cases),
+            "prompt_support_recall_at_k": len(prompt_support_cases),
+            "prompt_integrity_failure_rate": len(rows),
+            "decode_integrity_failure_rate": len(decode_integrity_cases),
+            "injection_resistance_rate": len(adversarial_cases),
         },
     }
 
@@ -363,8 +448,13 @@ def markdown_report(summary: dict[str, Any]) -> str:
                 f"- Evidence faithfulness: `{packet.get('evidence_faithfulness')}` (n={packet.get('faithfulness_applicable_count')})",
                 f"- Correct abstention: `{packet.get('correct_abstention_rate')}` (n={packet.get('unsupported_case_count')})",
                 f"- Unsupported confident answer rate: `{packet.get('unsupported_confident_answer_rate')}`",
+                f"- Procedure correctness: `{packet.get('procedure_correctness')}` (n={packet.get('procedure_case_count')})",
                 f"- Social usable rate: `{packet.get('social_usable_rate')}` (n={packet.get('social_case_count')})",
                 f"- Retrieval recall@k: `{packet.get('retrieval_recall_at_k')}` (n={packet.get('retrieval_applicable_count')})",
+                f"- Prompt support recall@k: `{packet.get('prompt_support_recall_at_k')}` (n={packet.get('prompt_support_applicable_count')})",
+                f"- Prompt integrity failure rate: `{packet.get('prompt_integrity_failure_rate')}`",
+                f"- Decode integrity failure rate: `{packet.get('decode_integrity_failure_rate')}`",
+                f"- Injection resistance: `{packet.get('injection_resistance_rate')}` (n={packet.get('adversarial_applicable_count')})",
                 f"- Median/P90 completion tokens: `{packet.get('median_completion_tokens')}` / `{packet.get('p90_completion_tokens')}`",
                 "",
             ]
@@ -457,18 +547,48 @@ def main() -> None:
                     else:
                         gate_reason = "oracle_or_adversarial_evidence_supplied"
 
-                messages = build_grounded_messages(
+                retrieved_evidence = [dict(item) for item in evidence]
+                retrieved_procedures = [dict(item) for item in procedures]
+                prompt_plan = plan_grounded_prompt(
+                    tokenizer,
                     question=question,
-                    evidence=evidence,
-                    procedures=procedures,
+                    evidence=retrieved_evidence,
+                    procedures=retrieved_procedures,
                     mode=mode,
                     system_prompt=row.get("system_prompt"),
+                    max_sequence_length=args.max_sequence_length,
+                    maximum_evidence_tokens=args.maximum_evidence_tokens,
                 )
+                if prompt_plan.integrity_issues:
+                    raise RuntimeError(
+                        f"Prompt integrity failure for {evaluation_id}: " + "; ".join(prompt_plan.integrity_issues)
+                    )
+                messages = prompt_plan.messages
+                evidence = prompt_plan.selected_evidence
+                procedures = prompt_plan.selected_procedures
+                # The real-RAG answerability decision must use the evidence that
+                # actually survived the prompt budget, not a larger retrieved set
+                # that the model never sees.
+                if mode != "social_roleplay" and condition == "real_rag":
+                    prompt_gate = evidence_gate(
+                        question,
+                        evidence,
+                        minimum_score=minimum_score,
+                        require_calibrated_threshold=not args.allow_uncalibrated_real_rag,
+                    )
+                    gate_reason = f"prompt_budget:{prompt_gate.reason}"
+                    if prompt_gate.conflict_detected:
+                        external_answer = CONFLICT_TEXT
+                    elif not prompt_gate.should_answer:
+                        external_answer = ABSTENTION_TEXT
+                    else:
+                        external_answer = None
                 if external_answer is None:
                     generated = generate_answer(
                         model=model,
                         tokenizer=tokenizer,
                         messages=messages,
+                        prompt_text=prompt_plan.prompt_text,
                         max_sequence_length=args.max_sequence_length,
                         max_new_tokens=args.max_new_tokens,
                         response_control=args.response_control,
@@ -482,7 +602,9 @@ def main() -> None:
                         "generation_seconds": 0.0,
                         "stop_reason": "external_gate",
                         "response_control_trimmed": False,
-                        "prompt_tokens": 0,
+                        "prompt_tokens": len(prompt_plan.prompt_token_ids),
+                        "prompt_hidden_truncation_used": False,
+                        "decode_integrity": {"integrity_ok": True, "issues": [], "raw_with_special_tokens": external_answer},
                     }
                 answer = generated["answer"]
                 grounding = grounding_check(answer, evidence)
@@ -497,7 +619,8 @@ def main() -> None:
                     corpus_profile=corpus_profile,
                 )
                 expected_support = set(str(value) for value in (row.get("support_document_ids") or []))
-                retrieved_ids = {passage_id(item) for item in evidence}
+                retrieved_ids = {passage_id(item) for item in retrieved_evidence}
+                prompted_ids = {passage_id(item) for item in evidence}
                 klass = decision_class(row)
                 expected_answer = klass == "supported"
                 expected_conflict = klass == "conflict"
@@ -518,6 +641,13 @@ def main() -> None:
                 grounding_applicable = bool(
                     evidence and klass in {"supported", "conflict"} and not abstained
                 )
+                adversarial_applicable = condition in {"adversarial_rag", "adversarial_passthrough_rag"}
+                adversarial_success = (
+                    supported_correct if klass == "supported" else
+                    abstained if klass == "unsupported" else
+                    conflict_response if klass == "conflict" else
+                    social_usable if klass == "social" else False
+                ) if adversarial_applicable else False
                 result = {
                     "evaluation_id": evaluation_id,
                     "id": row.get("id"),
@@ -539,11 +669,19 @@ def main() -> None:
                     "social_diagnostics": social_diagnostics,
                     "evidence": evidence,
                     "procedures": procedures,
+                    "retrieved_evidence": retrieved_evidence,
+                    "retrieved_procedures": retrieved_procedures,
                     "rejected_passages": rejected,
                     "retrieved_document_ids": sorted(retrieved_ids),
+                    "prompted_document_ids": sorted(prompted_ids),
                     "support_document_ids": sorted(expected_support),
                     "retrieval_applicable": bool(expected_support) and condition == "real_rag",
                     "support_retrieved": bool(expected_support & retrieved_ids),
+                    "prompt_support_applicable": bool(expected_support) and condition in {"oracle_rag", "real_rag", "adversarial_rag", "adversarial_passthrough_rag"},
+                    "support_in_prompt": bool(expected_support & prompted_ids),
+                    "prompt_integrity": prompt_plan.diagnostics(),
+                    "adversarial_applicable": adversarial_applicable,
+                    "adversarial_success": adversarial_success,
                     "gate_reason": gate_reason,
                     "grounding_applicable": grounding_applicable,
                     "grounding_supported": grounding.supported,
@@ -599,6 +737,11 @@ def main() -> None:
         readiness_reasons.append(
             f"real_rag has {real_packet.get('social_case_count', 0)} social cases; requires {args.minimum_social_cases}"
         )
+    for condition, packet in condition_packets.items():
+        if int(packet.get("prompt_integrity_failure_count") or 0) > 0:
+            readiness_reasons.append(f"{condition} contains prompt-integrity failures")
+        if int(packet.get("decode_integrity_failure_count") or 0) > 0:
+            readiness_reasons.append(f"{condition} contains decode-integrity failures")
     technical_invalidity: list[str] = []
     if not benchmark:
         technical_invalidity.append("benchmark is empty")
@@ -614,7 +757,8 @@ def main() -> None:
     summary = {
         **overall_quality,
         "phase": "9_student_distillation",
-        "schema_version": "1.1",
+        "schema_version": "1.3",
+        "pipeline_revision": "phase9_grounded_recovery_v1_7_2",
         "model": args.model,
         "model_tree_sha256": model_tree_sha256,
         "adapter_tree_sha256": adapter_tree_sha256,
@@ -630,6 +774,9 @@ def main() -> None:
         "gate_calibration": str(args.gate_calibration) if args.gate_calibration else None,
         "response_control": args.response_control,
         "max_new_tokens": args.max_new_tokens,
+        "max_sequence_length": args.max_sequence_length,
+        "maximum_evidence_tokens": args.maximum_evidence_tokens,
+        "prompt_truncation_policy": "budget_passages_then_fail_closed; no tokenizer truncation",
         "benchmark_decision_class_counts": dict(benchmark_classes),
         "evaluation_valid": not technical_invalidity,
         "evaluation_invalidity_reasons": technical_invalidity,

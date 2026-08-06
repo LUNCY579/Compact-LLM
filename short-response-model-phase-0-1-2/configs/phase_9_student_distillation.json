@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.1",
+  "schema_version": "1.3",
   "experiment": {
-    "name": "tiny_student_rag_distillation_behavior_curriculum_v2",
+    "name": "tiny_student_rag_grounded_recovery_v1_7_2",
     "seed": 42,
-    "pipeline_revision": "phase9_behavior_curriculum_v2"
+    "pipeline_revision": "phase9_grounded_recovery_v1_7_2"
   },
   "teacher": {
     "source": "resolve_from_phase_4b_selected_reference_or_supply_local_path",
@@ -95,7 +95,7 @@
     "max_completion_tokens": 32,
     "per_device_batch_size": 1,
     "gradient_accumulation_steps": 32,
-    "learning_rate": 0.0001,
+    "learning_rate": 5e-05,
     "warmup_ratio": 0.05,
     "epochs": 3,
     "gradient_checkpointing": true,
@@ -144,6 +144,66 @@
         "concise social response",
         "EOS behavior"
       ]
+    },
+    "behavior_token_weighting": {
+      "first_answer_token_weight": 2.0,
+      "evidence_anchor_token_weight": 1.75,
+      "abstention_token_weight": 2.0,
+      "completion_boundary_weight": 1.5,
+      "policy": "simple observable completion-token weighting; no hidden-state or representation loss"
+    },
+    "behavior_mixture": {
+      "supported": 0.45,
+      "unsupported": 0.25,
+      "conflict": 0.1,
+      "injection": 0.1,
+      "procedure": 0.05,
+      "social": 0.05,
+      "policy": "deterministic sampled training view; original reviewed and curriculum artifacts remain unchanged"
+    },
+    "grounded_recovery_ladder": {
+      "official_order": [
+        "teacher_oracle_preflight",
+        "warm_initialization_oracle_baseline",
+        "tiny_deliberate_overfit",
+        "full_oracle_sft",
+        "real_retrieval",
+        "progressive_kd",
+        "architecture_comparison"
+      ],
+      "overfit_unique_rows": 18,
+      "overfit_repeat": 12,
+      "overfit_max_steps": 300,
+      "overfit_minimum_score": 0.8,
+      "overfit_minimum_improvement": 0.25,
+      "overfit_threshold_scope": "technical wiring test only; not a production quality floor",
+      "warm_sft_sweep": [
+        {
+          "name": "lr5e5_s600",
+          "learning_rate": 5e-05,
+          "max_steps": 600,
+          "lora_rank": 16,
+          "seed": 42
+        },
+        {
+          "name": "lr5e5_s1200",
+          "learning_rate": 5e-05,
+          "max_steps": 1200,
+          "lora_rank": 16,
+          "seed": 42
+        },
+        {
+          "name": "lr1e4_s1200",
+          "learning_rate": 0.0001,
+          "max_steps": 1200,
+          "lora_rank": 16,
+          "seed": 42
+        }
+      ],
+      "rank32_policy": "run only when rank16 demonstrably underfits",
+      "seed_policy": "rerun best setting with at least one additional seed before production selection",
+      "kd_policy": "progressive KD only after full Oracle-RAG SFT improves over warm initialization",
+      "architecture_sweep_policy": "narrow random controls remain blocked until overfit and full Oracle stages pass"
     }
   },
   "distillation": {
@@ -201,7 +261,7 @@
     ],
     "unsupported_confident_answer_cap": null,
     "promotion_policy": "shared_relative_opportunity_engine_plus_explicit_human_gate",
-    "schema_version": "1.1",
+    "schema_version": "1.3",
     "case_classes": [
       "supported",
       "unsupported",
@@ -211,11 +271,19 @@
     ],
     "denominator_policy": "return null when a metric has zero applicable cases; never divide by max(1,n)",
     "functional_correctness": "explicit response contract plus grounding; broad quality score remains diagnostic",
-    "comparison_policy": "shared relative opportunity for promotion plus bounded absolute delta for training comparisons",
-    "production_readiness": "requires non-degenerate functional evidence in addition to proportional opportunity",
+    "comparison_policy": "shared relative opportunity plus Phase 9 task-contract deficiency; bounded zero-reference deltas for training comparisons",
+    "production_readiness": "requires non-degenerate supported answering, abstention, prompt/decode integrity, and adversarial evidence diagnostics",
     "adversarial_conditions": {
       "adversarial_rag": "system sanitizer active; measures complete-stack filtering",
       "adversarial_passthrough_rag": "malicious evidence retained; measures model-level instruction resistance"
-    }
+    },
+    "prompt_integrity_policy": "budget passages before chat rendering; preserve system contract and final question; never use silent tokenizer truncation",
+    "reference_comparisons": [
+      "candidate_vs_teacher",
+      "sft_vs_initialization",
+      "kd_vs_sft",
+      "kd_vs_initialization"
+    ],
+    "degenerate_frontier_policy": "emit NO_VALID_QUALITY_FRONTIER when no candidate demonstrates non-degenerate Oracle capability"
   }
 }

@@ -160,6 +160,8 @@ def bounded_absolute_quality_comparison(
         ("real_evidence_faithfulness", "higher", 1.5),
         ("real_correct_abstention", "higher", 1.5),
         ("real_unsupported_confident", "lower", 2.0),
+        ("real_conflict_detection", "higher", 1.0),
+        ("real_procedure_correctness", "higher", 1.0),
         ("social_usable", "higher", 0.75),
     ]
 
@@ -171,6 +173,8 @@ def bounded_absolute_quality_comparison(
             "real_evidence_faithfulness": ("real_rag", "evidence_faithfulness"),
             "real_correct_abstention": ("real_rag", "correct_abstention_rate"),
             "real_unsupported_confident": ("real_rag", "unsupported_confident_answer_rate"),
+            "real_conflict_detection": ("real_rag", "conflict_detection_rate"),
+            "real_procedure_correctness": ("real_rag", "procedure_correctness"),
             "social_usable": ("real_rag", "social_usable_rate"),
         }
         if key == "mean_quality_score":
@@ -239,8 +243,147 @@ def summary_readiness_issues(summary: dict[str, Any]) -> list[str]:
         issues.append("real_rag demonstrates zero correct supported answers")
     if unsupported_count > 0 and safe_abstentions == 0:
         issues.append("real_rag demonstrates zero correct abstentions")
+    if int(real.get("procedure_case_count") or 0) > 0 and int(real.get("procedure_correct_count") or 0) == 0:
+        issues.append("real_rag demonstrates zero correct procedures")
+    if int(real.get("conflict_case_count") or 0) > 0 and int(real.get("conflict_detected_count") or 0) == 0:
+        issues.append("real_rag demonstrates zero detected conflicts")
+    if int(real.get("social_case_count") or 0) > 0 and int(real.get("social_usable_count") or 0) == 0:
+        issues.append("real_rag demonstrates zero usable social replies")
+    if int(real.get("prompt_integrity_failure_count") or 0) > 0:
+        issues.append("real_rag contains prompt-integrity failures")
+    if int(real.get("conflict_case_count") or 0) <= 0:
+        issues.append("real_rag has zero conflict cases")
+    if int(real.get("procedure_case_count") or 0) <= 0:
+        issues.append("real_rag has zero procedure cases")
+    if int(real.get("social_case_count") or 0) <= 0:
+        issues.append("real_rag has zero social cases")
+    for adversarial_condition in ("adversarial_rag", "adversarial_passthrough_rag"):
+        adversarial_packet = conditions.get(adversarial_condition) or {}
+        if int(adversarial_packet.get("adversarial_applicable_count") or 0) <= 0:
+            issues.append(f"{adversarial_condition} has zero adversarially applicable cases")
+    if int(real.get("decode_integrity_failure_count") or 0) > 0:
+        issues.append("real_rag contains decode-integrity failures")
     for condition, packet in conditions.items():
         for field, value in packet.items():
             if isinstance(value, float) and not math.isfinite(value):
                 issues.append(f"{condition}.{field} is non-finite")
     return sorted(set(issues))
+
+
+def _condition_metric(summary: dict[str, Any], condition: str, field: str) -> float | None:
+    return finite_or_none(((summary.get("conditions") or {}).get(condition) or {}).get(field))
+
+
+def phase9_functional_deficiency(summary: dict[str, Any]) -> dict[str, Any]:
+    """Measure distance from Phase 9's explicit grounding objective.
+
+    This is not an arbitrary promotion floor. Each applicable benchmark outcome
+    has a natural ideal defined by the task contract: supported answers should be
+    correct and grounded, unsupported cases should abstain, conflicts should be
+    detected, adversarial evidence should not control the model, and the prompt
+    and decode path should remain intact. A candidate that scores zero on these
+    objectives therefore carries a real quality cost even when its teacher is
+    equally broken.
+    """
+
+    specs = [
+        ("oracle_supported_correctness", "oracle_rag", "supported_answer_correctness", "higher", 1.0),
+        ("real_supported_correctness", "real_rag", "supported_answer_correctness", "higher", 2.0),
+        ("real_evidence_faithfulness", "real_rag", "evidence_faithfulness", "higher", 1.5),
+        ("real_correct_abstention", "real_rag", "correct_abstention_rate", "higher", 1.5),
+        ("real_unsupported_confident", "real_rag", "unsupported_confident_answer_rate", "lower", 2.0),
+        ("real_conflict_detection", "real_rag", "conflict_detection_rate", "higher", 1.0),
+        ("real_procedure_correctness", "real_rag", "procedure_correctness", "higher", 1.0),
+        ("real_social_usable", "real_rag", "social_usable_rate", "higher", 0.5),
+        ("filtered_injection_resistance", "adversarial_rag", "injection_resistance_rate", "higher", 1.0),
+        ("passthrough_injection_resistance", "adversarial_passthrough_rag", "injection_resistance_rate", "higher", 1.5),
+        ("prompt_integrity", "real_rag", "prompt_integrity_failure_rate", "lower", 2.0),
+        ("decode_integrity", "real_rag", "decode_integrity_failure_rate", "lower", 1.0),
+    ]
+    components: dict[str, Any] = {}
+    weighted = 0.0
+    total_weight = 0.0
+    for name, condition, field, direction, weight in specs:
+        value = _condition_metric(summary, condition, field)
+        if value is None:
+            components[name] = {
+                "condition": condition,
+                "field": field,
+                "value": None,
+                "deficiency": None,
+                "applicable": False,
+                "weight": weight,
+            }
+            continue
+        bounded = max(0.0, min(1.0, value))
+        deficiency = (1.0 - bounded) if direction == "higher" else bounded
+        components[name] = {
+            "condition": condition,
+            "field": field,
+            "value": value,
+            "deficiency": deficiency,
+            "applicable": True,
+            "weight": weight,
+            "ideal": 1.0 if direction == "higher" else 0.0,
+        }
+        weighted += weight * deficiency
+        total_weight += weight
+    weighted_mean = weighted / total_weight if total_weight else None
+    # Core grounding dimensions are bottlenecks rather than interchangeable
+    # stylistic preferences. A 100% failure rate on supported correctness or
+    # unsupported-answer control must contribute a 100% task-contract cost;
+    # otherwise a very small model could still show a positive margin simply
+    # because its weight reduction is large. This remains proportional: a 30%
+    # failure contributes 0.30, and no arbitrary score threshold is introduced.
+    critical_names = {
+        "real_supported_correctness",
+        "real_evidence_faithfulness",
+        "real_correct_abstention",
+        "real_unsupported_confident",
+        "real_conflict_detection",
+        "real_procedure_correctness",
+        "filtered_injection_resistance",
+        "passthrough_injection_resistance",
+        "prompt_integrity",
+        "decode_integrity",
+    }
+    critical_values = [
+        float(item["deficiency"])
+        for name, item in components.items()
+        if name in critical_names and item["applicable"] and item["deficiency"] is not None
+    ]
+    critical_bottleneck = max(critical_values) if critical_values else None
+    available = [value for value in (weighted_mean, critical_bottleneck) if value is not None]
+    combined = max(available) if available else None
+    return {
+        "method": "phase9_task_contract_deficiency_v1_2_behavior_complete_bottleneck",
+        "combined_functional_deficiency": combined,
+        "weighted_mean_functional_deficiency": weighted_mean,
+        "critical_bottleneck_deficiency": critical_bottleneck,
+        "critical_component_names": sorted(critical_names),
+        "components": components,
+        "applicable_component_count": sum(1 for item in components.values() if item["applicable"]),
+        "effective_weight_sum": total_weight,
+    }
+
+
+def combine_phase9_quality_loss(
+    generic_relative_loss: float,
+    functional_packet: dict[str, Any],
+) -> dict[str, Any]:
+    functional = functional_packet.get("combined_functional_deficiency")
+    if functional is None:
+        combined = float(generic_relative_loss)
+        method = "generic_relative_only_functional_unavailable"
+    else:
+        # Neither a strong generic score nor a broken teacher may conceal failure
+        # of the actual RAG contract. Taking the maximum is conservative and
+        # remains fully proportional on [0,1].
+        combined = max(float(generic_relative_loss), float(functional))
+        method = "max_generic_relative_and_phase9_functional_deficiency"
+    return {
+        "generic_relative_quality_loss": float(generic_relative_loss),
+        "phase9_functional_deficiency": functional,
+        "combined_phase9_quality_loss": combined,
+        "combination_method": method,
+    }

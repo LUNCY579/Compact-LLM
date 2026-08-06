@@ -1,4 +1,29 @@
-# Phase 9 — Student distillation foundation
+# Phase 9 — grounded-recovery student proof
+
+## v1.7.2 governing order
+
+The primary question is no longer “which compressed student wins?” It is first:
+
+> Can the reviewed training and evaluation path teach one inherited warm student to use supplied evidence correctly?
+
+The official order is:
+
+```text
+A. accepted teacher + exact Oracle evidence
+B. untrained warm_344m + exact Oracle evidence
+C. 12–24-row deliberate overfit and saved/reloaded verification
+D. three-run warm_344m SFT sweep under Oracle evidence
+E. Real retrieval and adversarial evaluation
+F. progressive KD from the best proven SFT checkpoint
+G. only then narrow architecture comparison
+```
+
+Use `run_phase_9_grounded_recovery.ps1` for this sequence. The legacy/general `run_phase_9.ps1` remains available, but Hybrid mode now requires a grounded-recovery gate with `architecture_sweep_unlocked=true`, unless the user explicitly marks the run as research-only with `-AllowUnprovenArchitectureSweep`.
+
+The tiny overfit criterion is a technical wiring check, not a production quality floor. It verifies labels, completion masking, optimizer steps, adapter publication, checkpoint reload, prompt consistency, and measurable learning before expensive training.
+
+## Behavior Curriculum v2 foundation retained
+
 
 Phase 9 consumes the explicitly accepted Phase 8 teacher and establishes whether a smaller student can use supplied evidence, abstain safely, remain concise, and preserve ordinary social conversation. It is a foundation phase, not the final 80M–120M deployment search; Phase 10 performs structural reduction after Phase 9 selects a valid intermediate student.
 
