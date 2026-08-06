@@ -46,7 +46,7 @@ function Invoke-PythonStep {
 
 function Ensure-File {
     param([string]$Path, [string]$Description)
-    if (-not (Test-Path $Path)) { throw "Missing $Description: $Path" }
+    if (-not (Test-Path $Path)) { throw "Missing ${Description}: $Path" }
 }
 
 function Should-Run {
