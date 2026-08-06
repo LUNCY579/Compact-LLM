@@ -1,10 +1,10 @@
 <#
 .SYNOPSIS
-Run source-level checks for the integrated Phase 2B through Phase 8 pipeline.
+Run source-level checks for the integrated Phase 2B through appended Phase 9 pipeline.
 
 .DESCRIPTION
 This does not run model training or GPU benchmarks. It compiles Python source,
-runs the full pytest regression suite, verifies the Evaluator-v4.1 and response-control
+runs the full pytest regression suite, verifies the Evaluator-v4.5 and response-control
 contracts, checks the PowerShell runners and their referenced Python scripts, and
 optionally verifies heavyweight imports.
 #>
@@ -25,9 +25,9 @@ Write-Host "[2/6] Running the complete regression suite..."
 python -m pytest -q
 if ($LASTEXITCODE -ne 0) { throw "Regression tests failed." }
 
-Write-Host "[3/6] Verifying the Evaluator v4.1 comprehensive calibration..."
-python .\scripts\common\verify_quality_evaluation_v4_1.py
-if ($LASTEXITCODE -ne 0) { throw "Evaluator v4.1 comprehensive calibration failed." }
+Write-Host "[3/6] Verifying the Evaluator v4.5 comprehensive calibration..."
+python .\scripts\common\verify_quality_evaluation_v4_5.py
+if ($LASTEXITCODE -ne 0) { throw "Evaluator v4.5 comprehensive calibration failed." }
 python .\scripts\common\audit_relative_opportunity_policy.py
 if ($LASTEXITCODE -ne 0) { throw "Relative-opportunity policy audit failed." }
 
@@ -40,7 +40,8 @@ $Runners = @(
     ".\scripts\phase_5_context_system\run_phase_5.ps1",
     ".\scripts\phase_6_sparse_simulation\run_phase_6.ps1",
     ".\scripts\phase_7_sparse_runtime\run_phase_7.ps1",
-    ".\scripts\phase_8_release_candidate\run_phase_8.ps1"
+    ".\scripts\phase_8_release_candidate\run_phase_8.ps1",
+    ".\scripts\phase_9_student_distillation\run_phase_9.ps1"
 )
 foreach ($Runner in $Runners) {
     if (-not (Test-Path $Runner)) { throw "Missing main phase runner: $Runner" }
@@ -64,10 +65,10 @@ if ($LASTEXITCODE -ne 0) { throw "Response-control contract verification failed.
 
 Write-Host "[6/6] Checking optional dependency imports..."
 if ($VerifyImports) {
-    python -c "import torch, transformers, peft, trl, datasets, safetensors, rapidfuzz, jsonschema; print('Dependency imports: PASS'); print('CUDA available:', torch.cuda.is_available())"
+    python -c "import sqlite3, torch, transformers, peft, trl, datasets, safetensors, rapidfuzz, jsonschema; print('Dependency imports: PASS'); print('CUDA available:', torch.cuda.is_available())"
     if ($LASTEXITCODE -ne 0) { throw "Dependency import verification failed." }
 } else {
     Write-Host "Skipped. Rerun with -VerifyImports after installing requirements."
 }
 
-Write-Host "Integrated Evaluator-v4.1 / Phase 2B-8 source verification: PASS"
+Write-Host "Integrated Evaluator-v4.5 / Phase 2B-8 source verification: PASS"

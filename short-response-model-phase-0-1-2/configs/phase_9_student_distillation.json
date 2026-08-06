@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "experiment": {
+    "name": "tiny_student_rag_distillation_v1",
+    "seed": 42
+  },
+  "teacher": {
+    "source": "resolve_from_phase_4b_selected_reference_or_supply_local_path",
+    "accepted_phase_required": 8,
+    "enable_thinking": false,
+    "frozen": true
+  },
+  "student_tracks": {
+    "primary_pipeline_validation": {
+      "mode": "depth_copy",
+      "num_hidden_layers": 12,
+      "purpose": "warm-started exact-layer-copy intermediate that proves data, KD, and evaluation correctness"
+    },
+    "aggressive_same_tokenizer_control": {
+      "mode": "custom_qwen_random",
+      "hidden_size": 384,
+      "intermediate_size": 1024,
+      "num_hidden_layers": 16,
+      "num_attention_heads": 6,
+      "num_key_value_heads": 2,
+      "head_dim": 64,
+      "max_position_embeddings": 1024,
+      "production_eligible_by_default": false
+    },
+    "pretrained_challenger": {
+      "mode": "pretrained_clone",
+      "suggested_source": "HuggingFaceTB/SmolLM2-135M-Instruct",
+      "direct_qwen_logit_kd": false,
+      "initial_objective": "sequence_level_sft"
+    }
+  },
+  "training": {
+    "max_sequence_length": 512,
+    "max_completion_tokens": 32,
+    "per_device_batch_size": 1,
+    "gradient_accumulation_steps": 32,
+    "learning_rate": 0.0001,
+    "warmup_ratio": 0.05,
+    "epochs": 3,
+    "gradient_checkpointing": true
+  },
+  "distillation": {
+    "temperature": 2.0,
+    "hard_label_weight": 0.25,
+    "logit_weight": 0.75,
+    "completion_only": true,
+    "same_tokenizer_required": true,
+    "hidden_state_weight": 0.0,
+    "attention_weight": 0.0,
+    "on_policy_rounds": [
+      {"student_generated_fraction": 0.2, "teacher_reference_fraction": 0.8},
+      {"student_generated_fraction": 0.5, "teacher_reference_fraction": 0.5},
+      {"student_generated_fraction": 0.75, "teacher_reference_fraction": 0.25}
+    ]
+  },
+  "rag": {
+    "retrieval_top_k": 20,
+    "reranked_top_k": 3,
+    "maximum_evidence_tokens": 384,
+    "minimum_retrieval_score": null,
+    "minimum_coverage_score": null,
+    "abstention_text": "I don't know based on the available information.",
+    "threshold_policy": "calibrate_on_development_data; do_not_invent_universal_thresholds"
+  },
+  "generation": {
+    "do_sample": false,
+    "max_new_tokens": 32,
+    "response_control": "eos_only"
+  },
+  "evaluation": {
+    "conditions": ["closed_book", "oracle_rag", "real_rag", "adversarial_rag"],
+    "unsupported_confident_answer_cap": null,
+    "promotion_policy": "shared_relative_opportunity_engine_plus_explicit_human_gate"
+  }
+}

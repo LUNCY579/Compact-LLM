@@ -1,5 +1,11 @@
 # Short-Response Model — runnable mature phase pipeline
 
+## v1.5.0 appended Phase 9 student distillation pipeline
+
+The official Phase 0–8 program remains the teacher-development pipeline. Phase 9 now consumes an exact human-approved teacher and builds smaller RAG-specialized students through warm-started student construction, reviewed teacher-data generation, document/topic-disjoint pilot data, calibrated evidence gating, matched SFT versus completion-only logit distillation, optional on-policy recovery, four-condition RAG evaluation, and proportional human-gated selection.
+
+The first retriever is SQLite FTS5 so generator savings are not silently offset by a neural retrieval stack. Direct vocabulary KL requires identical tokenizer fingerprints; cross-tokenizer challengers start with sequence-level SFT. Randomly initialized narrow-Qwen models are explicitly marked research controls. See `STUDENT_DISTILLATION_PIPELINE.md` and `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md`.
+
 ## v1.4.7 Phase 2C reliability and correctness hotfix
 
 v1.4.7 fixes the repeated Windows file-lock failures and closes a Phase 2C evaluation-validity gap. Phase 2C deterministic reasoning rows now carry explicit prompt-grounded correctness contracts, so fluent but wrong arithmetic, ordering, comparison, implication, contradiction, set-membership, and temporal answers cannot receive high scores merely for being short and well formed.
@@ -8,11 +14,12 @@ Existing v1.4.6 Phase 2C work is preserved through a narrowly authorized migrati
 
 Reliability hardening also includes bounded atomic-replace retries for transient Windows locks, best-effort progress sidecars, resumable generation and teacher forcing, normalized manifest paths, strict stable-ID coverage, corrupt-sentinel quarantine, safer staged adapter publication, default suppression of intermediate checkpoints, free-disk checks, stronger Phase 2C artifact/gate audits, and `None`-safe report rendering. See `PHASE_2C_RELIABILITY_AND_CORRECTNESS_HOTFIX_v1.4.7.md`.
 
-This repository implements the ordered Phase 0–8 program plus two structural branches and one targeted-recovery branch:
+This repository implements the ordered Phase 0–8 teacher program, two structural branches, one targeted-recovery branch, and an appended Phase 9 RAG-student distillation pipeline:
 
 - **Phase 2B progressive reduction** tests every current layer, recovery-tunes promising deletions, and preserves full-quality/balanced/minimum-memory model profiles before DPO.
 - **Phase 2C targeted recovery** ranks surviving Phase 2B layers and trains selected-layer adapters whose proportional training-resource savings exceed their proportional quality opportunity loss.
 - **Phase 4B post-alignment structural reduction** revalidates or further refines the accepted Phase 4 architecture before context/sparsity calibration.
+- **Phase 9 student distillation** converts an accepted teacher into smaller evidence-grounded students and measures total RAG-system value rather than weight size alone.
 
 The post-Phase-3 runners execute training, merging, pruning, evaluation, profiling, router training, benchmarking, sealed evaluation, and packaging; they do not merely print instructions.
 
@@ -55,13 +62,15 @@ The governing files are `EVALUATION_V4_5_FRESH_MESSAGE_CONTRACTS.md`, `configs/q
 - `Phases.md` — phase boundaries and handoffs.
 - `scripts/phase_2_layer_selection/STRUCTURAL_REDUCTION_MANUAL.md` — every-layer/progressive deletion workflow.
 - `scripts/phase_2c_targeted_recovery/EXECUTION_MANUAL.md` — targeted recovery, review, resume, and handoff.
-- `POST_PHASE_3_EXECUTION_GUIDE.md` — Phase 4–8 execution order.
+- `POST_PHASE_3_EXECUTION_GUIDE.md` — Phase 4–9 execution order.
+- `STUDENT_DISTILLATION_PIPELINE.md` — complete relationship between the teacher phases and the appended student workflow.
+- `scripts/phase_9_student_distillation/EXECUTION_MANUAL.md` — runnable Phase 9 commands and gates.
 - Each Phase 4–8 folder contains `README.md`, `EXECUTION_MANUAL.md`, and `FILE_RESPONSIBILITIES.md`.
 - `verify_post_phase_3.ps1` — compiles source, runs tests, and checks runner references.
 
 ## Canonical handoffs
 
-Phase 2B writes `artifacts/phase_2_progressive_reduction/model_catalog.json`. Phase 2C may start only from an approved reduced profile and writes `artifacts/phase_2c_targeted_recovery/model_catalog.json`. Phase 3 may consume either an approved Phase 2B profile or an approved Phase 2C model/adapter pair; the selectors are mutually exclusive. Phase 4 writes `artifacts/references/phase_4_reference.json`. Phase 4B writes `artifacts/references/selected_inference_reference.json`. Phases 5–8 consume the latter automatically.
+Phase 2B writes `artifacts/phase_2_progressive_reduction/model_catalog.json`. Phase 2C may start only from an approved reduced profile and writes `artifacts/phase_2c_targeted_recovery/model_catalog.json`. Phase 3 may consume either an approved Phase 2B profile or an approved Phase 2C model/adapter pair; the selectors are mutually exclusive. Phase 4 writes `artifacts/references/phase_4_reference.json`. Phase 4B writes `artifacts/references/selected_inference_reference.json`. Phases 5–8 consume the latter automatically. Phase 9 starts only from an explicitly accepted teacher checkpoint and writes isolated student artifacts under `artifacts/phase_9_student_distillation/`; it never overwrites the teacher reference.
 
 
 ## Response-control architecture
@@ -93,6 +102,6 @@ See `EVALUATION_V4_4_MIGRATION.md` for review-only rescoring, official in-place 
 
 ## Production principle
 
-A technique ships only when it creates measured value. The best release may be the full dense model, a shallower recovered model, or a dense quantized model with context engineering while custom sparsity remains disabled. Negative selective-tuning, deletion, soup, and sparse-runtime results are valid and retained.
+A technique ships only when it creates measured value. The best release may be the full dense teacher, a shallower recovered teacher, a dense quantized teacher with context engineering, or an accepted RAG-specialized student while custom sparsity remains disabled. Negative selective-tuning, deletion, soup, and sparse-runtime results are valid and retained.
 
 Generated checkpoints and benchmark artifacts are not included in the source ZIP; they must be created on the target machine so results reflect its actual model, CUDA stack, and hardware.

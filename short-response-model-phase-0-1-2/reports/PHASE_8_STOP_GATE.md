@@ -10,7 +10,7 @@
 
 ## Human commercial release decision
 
-- Decision: `PASS`
+- Human decision: `PASS`
 - Reviewer: Cheng Li
 - Date: 2026-08-05
 - Version: `1.0.0-rc1`

@@ -85,3 +85,26 @@ When Phase 6 selected `DENSE_ONLY`, the runner skips router training and measure
 ```
 
 Each runner fails on missing prior gates or inputs, records outputs under `artifacts/`, and creates a pending report under `reports/`. It never fabricates benchmark results or self-approves a human gate.
+
+
+## 7. Phase 9 — appended tiny-student/RAG distillation
+
+Phase 9 begins after Phase 8 names the exact accepted teacher. Bootstrap creates a student initialization, low-memory knowledge index, and teacher-review packet:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Bootstrap `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model
+```
+
+After human-reviewing the generated candidates:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9.ps1 `
+  -Mode Pilot `
+  -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
+  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -MaxSteps 200
+```
+
+The pilot compares ordinary RAG SFT with same-initialization completion-only logit KD, evaluates closed/oracle/real/adversarial RAG, and writes a pending Phase 9 human gate. See `STUDENT_DISTILLATION_PIPELINE.md` for the complete workflow.

@@ -14,6 +14,7 @@
 | 6 | `phase_6_sparse_simulation` | Activation traces, oracle masks, quality frontier. | Router dataset and frontier. |
 | 7 | `phase_7_sparse_runtime` | Strict response control, routers, dense fallback, measured runtime. | Response-control verification, runtime comparison, and optional router checkpoint. |
 | 8 | `phase_8_release_candidate` | Strict sealed evaluation, full release audit, and human decision. | Release package with response-control policy. |
+| 9 | `phase_9_student_distillation` | Build and compare smaller RAG-specialized students from the accepted teacher. | Accepted student/intermediate/control classification plus Phase 9 gate. |
 
 ## Responsibility boundaries
 
@@ -23,10 +24,11 @@
 - Phase 4B asks **whether the aligned checkpoint should keep, refine, or reject structural reduction**.
 - Phase 6 asks **what can be temporarily masked** while preserving dense computation for scientific validation.
 - Phase 7 asks **what can be dynamically skipped in the measured runtime**.
+- Phase 9 asks **how much factual memory can move to RAG while a smaller student preserves evidence use, concise behavior, role-play, and abstention**.
 
-A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 resolves exactly one named, human-approved branch, and profile-specific artifacts are written side by side. Phase 5 still requires an approved Phase 4B selected-reference manifest.
+A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 resolves exactly one named, human-approved branch, and profile-specific artifacts are written side by side. Phase 5 still requires an approved Phase 4B selected-reference manifest. Phase 9 requires an explicitly approved teacher and keeps all student artifacts isolated from the teacher catalog.
 
-- Learned short behavior and hard response control are measured separately: Phase 1 uses `eos_only`, while production-oriented Phases 5–8 default to `one_sentence`.
+- Learned short behavior and hard response control are measured separately: Phase 1 uses `eos_only`, while production-oriented Phases 5–9 default to `one_sentence` where generation is model-controlled; deterministic external abstention may bypass generation.
 - The strict boundary is an output/runtime mechanism. It does not authorize whole-layer early exit or reduce checkpoint weight memory.
 
 
