@@ -3,6 +3,7 @@ from __future__ import annotations
 """Train a Phase 9 student with RAG-aware SFT or same-tokenizer online KD."""
 
 import argparse
+import inspect
 import json
 import math
 import os
@@ -53,9 +54,14 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--warmup-ratio", type=float, default=0.05)
     parser.add_argument("--weight-decay", type=float, default=0.0)
     parser.add_argument("--logging-steps", type=int, default=5)
-    parser.add_argument("--save-steps", type=int, default=100)
+    parser.add_argument("--save-steps", type=int, default=0, help="0 disables mid-run checkpoints; final weights are still published.")
     parser.add_argument("--eval-steps", type=int, default=100)
-    parser.add_argument("--save-total-limit", type=int, default=2)
+    parser.add_argument("--save-total-limit", type=int, default=1)
+    parser.add_argument(
+        "--keep-checkpoints",
+        action="store_true",
+        help="Keep the Trainer checkpoints/ directory after publishing the final artifact.",
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--temperature", type=float, default=2.0)
     parser.add_argument("--hard-label-weight", type=float, default=0.25)
@@ -461,30 +467,40 @@ def main() -> None:
         else None
     )
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    training_args = TrainingArguments(
-        output_dir=str(args.output_dir / "checkpoints"),
-        num_train_epochs=args.epochs,
-        max_steps=args.max_steps,
-        learning_rate=args.learning_rate,
-        per_device_train_batch_size=args.per_device_batch_size,
-        per_device_eval_batch_size=args.per_device_batch_size,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
-        warmup_ratio=args.warmup_ratio,
-        weight_decay=args.weight_decay,
-        logging_steps=args.logging_steps,
-        save_steps=args.save_steps,
-        eval_steps=args.eval_steps,
-        eval_strategy="steps" if eval_dataset is not None else "no",
-        save_strategy="steps",
-        save_total_limit=args.save_total_limit,
-        report_to="none",
-        remove_unused_columns=False,
-        fp16=torch.cuda.is_available() and not torch.cuda.is_bf16_supported(),
-        bf16=torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
-        seed=args.seed,
-        data_seed=args.seed,
-        gradient_checkpointing=args.gradient_checkpointing,
-    )
+    checkpoint_root = args.output_dir / "checkpoints"
+    # Hybrid Phase 9 keeps multiple students on disk. Mid-run Trainer checkpoints
+    # also store optimizer/scheduler state (~3-4x model size) and routinely fill
+    # the drive. Default to no intermediate saves; publish_saved_model still writes
+    # the final inference artifact.
+    save_strategy = "no" if args.save_steps <= 0 else "steps"
+    training_args_kwargs: dict[str, Any] = {
+        "output_dir": str(checkpoint_root),
+        "num_train_epochs": args.epochs,
+        "max_steps": args.max_steps,
+        "learning_rate": args.learning_rate,
+        "per_device_train_batch_size": args.per_device_batch_size,
+        "per_device_eval_batch_size": args.per_device_batch_size,
+        "gradient_accumulation_steps": args.gradient_accumulation_steps,
+        "warmup_ratio": args.warmup_ratio,
+        "weight_decay": args.weight_decay,
+        "logging_steps": args.logging_steps,
+        "save_steps": max(1, args.save_steps) if save_strategy == "steps" else 500,
+        "eval_steps": args.eval_steps,
+        "eval_strategy": "steps" if eval_dataset is not None else "no",
+        "save_strategy": save_strategy,
+        "save_total_limit": args.save_total_limit,
+        "report_to": "none",
+        "remove_unused_columns": False,
+        "fp16": torch.cuda.is_available() and not torch.cuda.is_bf16_supported(),
+        "bf16": torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
+        "seed": args.seed,
+        "data_seed": args.seed,
+        "gradient_checkpointing": args.gradient_checkpointing,
+    }
+    # Prefer model-only checkpoints when mid-run saves are enabled (no optimizer).
+    if "save_only_model" in inspect.signature(TrainingArguments.__init__).parameters:
+        training_args_kwargs["save_only_model"] = True
+    training_args = TrainingArguments(**training_args_kwargs)
     trainer = DistillationTrainer(
         model=model,
         teacher=teacher,
@@ -500,6 +516,8 @@ def main() -> None:
         torch.cuda.reset_peak_memory_stats()
     result = trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
     artifact = publish_saved_model(trainer, tokenizer, args.output_dir, artifact_type)
+    if not args.keep_checkpoints and checkpoint_root.exists():
+        shutil.rmtree(checkpoint_root, ignore_errors=True)
     peak_vram = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else None
     breakdown = model_parameter_breakdown(model)
     manifest = {
@@ -525,6 +543,8 @@ def main() -> None:
         "training_metrics": result.metrics,
         "peak_allocated_vram_bytes": peak_vram,
         "skipped_train_ids": train_dataset.skipped,
+        "save_strategy": save_strategy,
+        "checkpoints_retained": bool(args.keep_checkpoints),
         "environment": environment(),
     }
     write_json(args.output_dir / "training_manifest.json", manifest)

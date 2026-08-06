@@ -125,6 +125,53 @@ def validate_custom_shape(args: argparse.Namespace, config: Any) -> None:
         raise ValueError("custom_qwen_random currently requires a Qwen3 source config")
 
 
+def align_layer_types_for_depth(config: Any, num_hidden_layers: int) -> None:
+    """Resize Qwen3 ``layer_types`` to match a custom student depth.
+
+    ``custom_qwen_random`` deep-copies the teacher config, so ``layer_types`` still
+    has one entry per teacher layer. Recent Transformers rejects save/reload when
+    that length disagrees with ``num_hidden_layers``.
+    """
+
+    if num_hidden_layers <= 0:
+        raise ValueError("num_hidden_layers must be positive")
+    configs = [config]
+    for nested_name in ("text_config", "decoder", "language_config"):
+        nested = getattr(config, nested_name, None)
+        if nested is not None:
+            configs.append(nested)
+    for current in configs:
+        if not hasattr(current, "layer_types"):
+            continue
+        layer_types = getattr(current, "layer_types")
+        if layer_types is None:
+            continue
+        if not isinstance(layer_types, (list, tuple)):
+            raise TypeError(
+                "Expected config.layer_types to be a list or tuple, "
+                f"got {type(layer_types).__name__}"
+            )
+        if len(layer_types) == num_hidden_layers:
+            continue
+        if not layer_types:
+            resized = ["full_attention"] * num_hidden_layers
+        elif len(set(layer_types)) == 1:
+            resized = [layer_types[0]] * num_hidden_layers
+        elif num_hidden_layers == 1:
+            resized = [layer_types[len(layer_types) // 2]]
+        else:
+            # Evenly cover the teacher attention-pattern schedule.
+            resized = [
+                layer_types[round(index * (len(layer_types) - 1) / (num_hidden_layers - 1))]
+                for index in range(num_hidden_layers)
+            ]
+        setattr(
+            current,
+            "layer_types",
+            tuple(resized) if isinstance(layer_types, tuple) else list(resized),
+        )
+
+
 def publish_directory(staging: Path, destination: Path) -> None:
     backup = destination.with_name(f".{destination.name}.backup-{uuid.uuid4().hex}")
     moved = False
@@ -174,6 +221,10 @@ def main() -> None:
             ("use_cache", False),
         ):
             update_config_field(config, name, value)
+        # Teacher configs carry one layer_types entry per teacher block. A narrow
+        # random student changes depth without reduce_model_depth(), so resize
+        # that metadata before from_config/save_pretrained validation.
+        align_layer_types_for_depth(config, args.num_hidden_layers)
         model = AutoModelForCausalLM.from_config(config, trust_remote_code=True, torch_dtype=None if dtype == "auto" else dtype)
         initialization_state = "random_control_requires_language_readiness_proof"
     else:

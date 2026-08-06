@@ -277,6 +277,27 @@ def test_sample_teacher_answers_run_through_full_quality_evaluator() -> None:
         assert not result.get("defects"), row["id"]
 
 
+def test_align_layer_types_for_custom_qwen_depth() -> None:
+    from types import SimpleNamespace
+
+    from scripts.phase_9_student_distillation.create_student import align_layer_types_for_depth
+
+    config = SimpleNamespace(
+        layer_types=["full_attention"] * 19,
+        text_config=SimpleNamespace(layer_types=["full_attention"] * 19),
+    )
+    align_layer_types_for_depth(config, 8)
+    assert config.layer_types == ["full_attention"] * 8
+    assert config.text_config.layer_types == ["full_attention"] * 8
+
+    mixed = SimpleNamespace(
+        layer_types=["full_attention", "sliding_attention"] * 4,
+    )
+    align_layer_types_for_depth(mixed, 4)
+    assert len(mixed.layer_types) == 4
+    assert set(mixed.layer_types) <= {"full_attention", "sliding_attention"}
+
+
 def _estimate_qwen_params(
     *,
     hidden_size: int,
