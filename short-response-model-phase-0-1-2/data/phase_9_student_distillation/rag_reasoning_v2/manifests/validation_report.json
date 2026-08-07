@@ -1,0 +1,41 @@
+{
+  "checks": {
+    "abstentions_are_canonical": true,
+    "document_topic_mismatch": false,
+    "intended_splits_preserved": true,
+    "jsonl_parse": true,
+    "procedure_answer_decisions_normalized": true,
+    "prompt_count": 530,
+    "response_contract_schema": "4.5",
+    "topic_split_leakage": false,
+    "unique_document_ids": 464,
+    "unique_prompt_ids": 530
+  },
+  "file_row_counts": {
+    "evaluator/calibration_train_dev.jsonl": 1836,
+    "evaluator/candidate_judgments.jsonl": 530,
+    "evaluator/heldout_test_cases.jsonl": 284,
+    "knowledge.jsonl": 464,
+    "preferences/dev.jsonl": 201,
+    "preferences/train.jsonl": 1176,
+    "procedures.jsonl": 8,
+    "prompts.all.jsonl": 530,
+    "reviewed_splits/dev.reviewed.jsonl": 67,
+    "reviewed_splits/test.reviewed.jsonl": 71,
+    "reviewed_splits/train.reviewed.jsonl": 392,
+    "splits/dev.jsonl": 67,
+    "splits/test.jsonl": 71,
+    "splits/train.jsonl": 392,
+    "teacher_candidates.reviewed.jsonl": 530
+  },
+  "research_ready_minima": {
+    "conflict_rows_present": true,
+    "injection_rows_present": true,
+    "procedure_rows_present": true,
+    "prompt_rows_at_least_30": true,
+    "social_rows_present": true,
+    "stale_rows_present": true,
+    "supported_and_unsupported_present": true
+  },
+  "status": "PASS"
+}

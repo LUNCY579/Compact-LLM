@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run the general Phase 9 student/RAG workflow after the v1.7.2 grounded proof.
+Run the general Phase 9 student/RAG workflow under the v1.7.3 dev-first/sealed-test contract.
 
 .DESCRIPTION
 For a fresh recovery experiment, first use run_phase_9_grounded_recovery.ps1.
@@ -17,10 +17,13 @@ Direct KD from initialization is retained only as an optional ablation.
 
 Single is the recommended production-foundation track. Hybrid adds the warm
 student and narrow random-initialized research controls; those controls can never
-be recommended for production automatically.
+be recommended for production automatically. Candidate comparisons are performed
+on dev. Exactly one dev-frozen candidate (or research control for diagnostic evidence)
+is evaluated on sealed test; SmokeTest never touches sealed test.
 #>
 param(
     [ValidateSet("Bootstrap", "Pilot", "Evaluate")][string]$Mode = "Bootstrap",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
     [ValidateSet("Single", "Hybrid")][string]$StudentSuite = "Single",
     [string]$TeacherModel = "",
     [string]$StudentSource = "",
@@ -32,11 +35,11 @@ param(
     [int]$KvHeads = 2,
     [int]$HeadDim = 64,
     [string]$Config = ".\configs\phase_9_student_distillation.json",
-    [string]$Knowledge = ".\data\phase_9_student_distillation\knowledge.sample.jsonl",
-    [string]$Procedures = ".\data\phase_9_student_distillation\procedures.sample.jsonl",
-    [string]$Prompts = ".\data\phase_9_student_distillation\prompts.sample.jsonl",
+    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
+    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v2\procedures.jsonl",
+    [string]$Prompts = ".\data\phase_9_student_distillation\rag_reasoning_v2\prompts.all.jsonl",
     [string]$FoundationPrompts = ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
-    [string]$ReviewedTeacherData = "",
+    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_9_student_distillation",
     [int]$MaxSteps = 600,
     [double]$LearningRate = 0.00005,
@@ -72,6 +75,13 @@ $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
 
+if (Test-Path (Join-Path $RagReasoningCorpusRoot "manifests\dataset_manifest.json")) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the integrated RAG reasoning corpus..."
+    & python .\scripts\phase_9_student_distillation\validate_rag_reasoning_corpus.py --corpus-root $RagReasoningCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated RAG reasoning corpus validation failed." }
+}
+
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
     Write-Host ""
@@ -104,7 +114,7 @@ function Test-CurrentDerivedArtifact {
     param([string]$Artifact, [string]$ManifestPath, [string]$Source)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_grounded_recovery_v1_7_2") -notcontains [string]$manifest.pipeline_revision) { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return [string]$manifest.source_sha256 -eq (Get-FileSha256 $Source)
 }
 
@@ -112,7 +122,7 @@ function Test-CurrentMixedCurriculum {
     param([string]$Artifact, [string]$ManifestPath, [string]$Primary, [string]$Foundation)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_grounded_recovery_v1_7_2") -notcontains [string]$manifest.pipeline_revision) { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return (
         [string]$manifest.primary_sha256 -eq (Get-FileSha256 $Primary) -and
         [string]$manifest.foundation_sha256 -eq (Get-FileSha256 $Foundation) -and
@@ -146,7 +156,7 @@ function Test-CurrentTrainingArtifact {
     )
     if (-not $ReuseExisting) { return $false }
     $manifest = Read-JsonFile (Join-Path $Directory "training_manifest.json")
-    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_grounded_recovery_v1_7_2") { return $false }
+    if ($null -eq $manifest -or [string]$manifest.pipeline_revision -ne "phase9_rag_reasoning_integration_v1_7_3") { return $false }
     if ($null -eq $manifest.maximum_evidence_tokens -or [int]$manifest.maximum_evidence_tokens -ne $MaximumEvidenceTokens) { return $false }
     if ([string]$manifest.objective -ne $Objective) { return $false }
     if ([string]$manifest.train_sha256 -ne (Get-FileSha256 $TrainingSource)) { return $false }
@@ -169,12 +179,12 @@ function Test-CurrentTrainingArtifact {
 }
 
 function Test-CurrentEvaluation {
-    param([string]$SummaryPath, [string]$Model, [string]$Adapter, [string]$ExpectedConditions)
+    param([string]$SummaryPath, [string]$Model, [string]$Adapter, [string]$Benchmark, [string]$ExpectedConditions)
     if (-not $ReuseExisting -or -not (Test-Path $SummaryPath)) { return $false }
     $summary = Read-JsonFile $SummaryPath
-    if ($null -eq $summary -or [string]$summary.schema_version -ne "1.3") { return $false }
+    if ($null -eq $summary -or [string]$summary.schema_version -ne "1.4") { return $false }
     if ($null -eq $summary.maximum_evidence_tokens -or [int]$summary.maximum_evidence_tokens -ne $MaximumEvidenceTokens) { return $false }
-    if ([string]$summary.benchmark_sha256 -ne (Get-FileSha256 $TestFile)) { return $false }
+    if ([string]$summary.benchmark_sha256 -ne (Get-FileSha256 $Benchmark)) { return $false }
     if ([string]$summary.model_tree_sha256 -ne (Get-TreeSha256 $Model)) { return $false }
     if ([string]::IsNullOrWhiteSpace($Adapter)) {
         if (-not [string]::IsNullOrWhiteSpace([string]$summary.adapter)) { return $false }
@@ -268,7 +278,7 @@ $FoundationTrain = Join-Path $DatasetRoot "foundation_train.jsonl"
 $FoundationCurriculum = Join-Path $DatasetRoot "foundation_curriculum.jsonl"
 $MixedCurriculum = Join-Path $DatasetRoot "train_mixed_curriculum.jsonl"
 $Calibration = Join-Path $OutputRoot "evidence_gate_calibration_v2.json"
-$EvalTeacher = Join-Path $OutputRoot "evaluation_teacher_v2"
+$EvalTeacher = Join-Path $OutputRoot "evaluation_teacher_dev_v173"
 New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
 
 function Ensure-KnowledgeIndex {
@@ -341,10 +351,12 @@ function Invoke-RagEvaluation {
         [string]$Model,
         [string]$Adapter,
         [string]$Destination,
-        [string]$Conditions = "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag"
+        [string]$Conditions = "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag",
+        [string]$Benchmark = ""
     )
+    if ([string]::IsNullOrWhiteSpace($Benchmark)) { $Benchmark = $DevFile }
     $summaryPath = Join-Path $Destination "summary.json"
-    if (Test-CurrentEvaluation -SummaryPath $summaryPath -Model $Model -Adapter $Adapter -ExpectedConditions $Conditions) { return }
+    if (Test-CurrentEvaluation -SummaryPath $summaryPath -Model $Model -Adapter $Adapter -Benchmark $Benchmark -ExpectedConditions $Conditions) { return }
     if ($ReuseExisting -and (Test-Path $Destination)) {
         Write-Warning "Deleting stale or incompatible Phase 9 evaluation: $Destination"
         Remove-Item -Recurse -Force $Destination
@@ -352,7 +364,7 @@ function Invoke-RagEvaluation {
     $args = @(
         ".\scripts\phase_9_student_distillation\evaluate_rag.py",
         "--model", $Model,
-        "--benchmark", $TestFile,
+        "--benchmark", $Benchmark,
         "--output-dir", $Destination,
         "--knowledge-db", $Database,
         "--gate-calibration", $Calibration,
@@ -376,7 +388,7 @@ function Train-Profile {
     $progressiveRoot = Join-Path $ProfileRoot "progressive_kd_v2"
     $directRoot = Join-Path $ProfileRoot "direct_kd_v2"
     Ensure-ProfileInitialization -Profile $Profile -Destination $studentRoot -Label "$Label Creating $($Profile.Name)..."
-    $evalInitialization = Join-Path $ProfileRoot "evaluation_initialization_oracle_v3"
+    $evalInitialization = Join-Path $ProfileRoot "evaluation_initialization_oracle_dev_v173"
     Invoke-RagEvaluation "$Label Evaluating untrained initialization for $($Profile.Name)..." $studentRoot "" $evalInitialization "oracle_rag,adversarial_passthrough_rag"
 
     if ($Mode -eq "Pilot" -and -not (Test-CurrentTrainingArtifact -Directory $sftRoot -TrainingSource $TrainingFile -Objective "sft" -ExpectedStudent $studentRoot)) {
@@ -460,27 +472,33 @@ function Train-Profile {
         Invoke-PythonStep "$Label Direct-KD ablation for $($Profile.Name)..." $args
     }
 
-    $evalSft = Join-Path $ProfileRoot "evaluation_sft_v2"
+    $evalSft = Join-Path $ProfileRoot "evaluation_sft_dev_v173"
     Invoke-RagEvaluation "$Label Evaluating SFT for $($Profile.Name)..." $sftModel $sftAdapter $evalSft
     $result = [ordered]@{
         Name = $Profile.Name
         ResearchControl = [bool]$Profile.ResearchControl
         InitializationSummary = Join-Path $evalInitialization "summary.json"
         SftSummary = Join-Path $evalSft "summary.json"
+        SftModel = $sftModel
+        SftAdapter = $sftAdapter
     }
     if (-not $SkipKD) {
         $progressiveModel = if ($UseLora) { $studentRoot } else { Join-Path $progressiveRoot "model" }
         $progressiveAdapter = if ($UseLora) { Join-Path $progressiveRoot "adapter" } else { "" }
-        $evalProgressive = Join-Path $ProfileRoot "evaluation_progressive_kd_v2"
+        $evalProgressive = Join-Path $ProfileRoot "evaluation_progressive_kd_dev_v173"
         Invoke-RagEvaluation "$Label Evaluating progressive KD for $($Profile.Name)..." $progressiveModel $progressiveAdapter $evalProgressive
         $result.ProgressiveKdSummary = Join-Path $evalProgressive "summary.json"
+        $result.ProgressiveKdModel = $progressiveModel
+        $result.ProgressiveKdAdapter = $progressiveAdapter
     }
     if ($RunDirectKD -and -not $SkipKD) {
         $directModel = if ($UseLora) { $studentRoot } else { Join-Path $directRoot "model" }
         $directAdapter = if ($UseLora) { Join-Path $directRoot "adapter" } else { "" }
-        $evalDirect = Join-Path $ProfileRoot "evaluation_direct_kd_v2"
+        $evalDirect = Join-Path $ProfileRoot "evaluation_direct_kd_dev_v173"
         Invoke-RagEvaluation "$Label Evaluating direct KD for $($Profile.Name)..." $directModel $directAdapter $evalDirect
         $result.DirectKdSummary = Join-Path $evalDirect "summary.json"
+        $result.DirectKdModel = $directModel
+        $result.DirectKdAdapter = $directAdapter
     }
     return [pscustomobject]$result
 }
@@ -530,10 +548,10 @@ if ($Mode -eq "Pilot") {
             ".\scripts\phase_9_student_distillation\build_pilot_dataset.py",
             "--reviewed-input", $ReviewedTeacherData,
             "--output-dir", $DatasetRoot,
-            "--seed", "$Seed"
+            "--seed", "$Seed",
+            "--split-policy", "intended"
         )
-        $diagnosticEvaluation = (@($Conditions.Split(",") | Where-Object { $_.Trim() }).Count -lt 5)
-    if ($SmokeTest -or $diagnosticEvaluation) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
+        if ($SmokeTest) { $args += "--smoke-test" } else { $args += "--require-research-ready" }
         Invoke-PythonStep "[Data] Building document/topic-disjoint, class-aware splits..." $args
     }
     $TrainingFile = $TrainFile
@@ -589,6 +607,8 @@ if ($Mode -eq "Pilot") {
                 "--output", $MixedCurriculum,
                 "--primary-repeat", "$PrimaryCurriculumRepeat",
                 "--foundation-repeat", "$FoundationRepeat",
+                "--holdout", $DevFile,
+                "--holdout", $TestFile,
                 "--seed", "$Seed"
             )
         }
@@ -632,7 +652,7 @@ if ($Mode -eq "Pilot") {
 Invoke-RagEvaluation "[Teacher] Evaluating the teacher under identical conditions..." $TeacherModel "" $EvalTeacher
 $teacherAuditArgs = @(
     ".\scripts\phase_9_student_distillation\audit_phase_9_results.py",
-    "--benchmark", $TestFile,
+    "--benchmark", $DevFile,
     "--evaluation", "teacher=$EvalTeacher",
     "--teacher-name", "teacher",
     "--json-out", (Join-Path $OutputRoot "teacher_preflight_audit.json"),
@@ -643,10 +663,15 @@ Invoke-PythonStep "[Preflight] Verifying teacher grounding, prompt insertion, an
 if ($AllowFailedTeacherPreflight) {
     Write-Warning "Teacher preflight override enabled. Student results will remain research-only until the teacher path passes."
 }
+$DevAssessment = Join-Path $OutputRoot "phase_9_dev_assessment.json"
+$DevSelectionReport = Join-Path $OutputRoot "PHASE_9_DEV_SELECTION.md"
 $GateArgs = @(
     ".\scripts\phase_9_student_distillation\check_phase_9_gate.py",
-    "--teacher-summary", (Join-Path $EvalTeacher "summary.json")
+    "--teacher-summary", (Join-Path $EvalTeacher "summary.json"),
+    "--out", $DevSelectionReport,
+    "--json-out", $DevAssessment
 )
+$CandidateArtifacts = @{}
 
 if ($StudentSuite -eq "Hybrid") {
     $index = 1
@@ -655,8 +680,15 @@ if ($StudentSuite -eq "Hybrid") {
         $result = Train-Profile -Profile $profile -ProfileRoot $profileRoot -TrainingFile $TrainingFile -Label "[Hybrid $index/$($HybridProfiles.Count)]"
         $GateArgs += @("--initialization", "$($result.Name)=$($result.InitializationSummary)")
         $GateArgs += @("--candidate", "sft_$($result.Name)=$($result.SftSummary)")
-        if (-not $SkipKD) { $GateArgs += @("--candidate", "progressive_kd_$($result.Name)=$($result.ProgressiveKdSummary)") }
-        if ($RunDirectKD -and -not $SkipKD) { $GateArgs += @("--candidate", "direct_kd_$($result.Name)=$($result.DirectKdSummary)") }
+        $CandidateArtifacts["sft_$($result.Name)"] = [pscustomobject]@{ Model = $result.SftModel; Adapter = $result.SftAdapter; ResearchControl = [bool]$result.ResearchControl }
+        if (-not $SkipKD) {
+            $GateArgs += @("--candidate", "progressive_kd_$($result.Name)=$($result.ProgressiveKdSummary)")
+            $CandidateArtifacts["progressive_kd_$($result.Name)"] = [pscustomobject]@{ Model = $result.ProgressiveKdModel; Adapter = $result.ProgressiveKdAdapter; ResearchControl = [bool]$result.ResearchControl }
+        }
+        if ($RunDirectKD -and -not $SkipKD) {
+            $GateArgs += @("--candidate", "direct_kd_$($result.Name)=$($result.DirectKdSummary)")
+            $CandidateArtifacts["direct_kd_$($result.Name)"] = [pscustomobject]@{ Model = $result.DirectKdModel; Adapter = $result.DirectKdAdapter; ResearchControl = [bool]$result.ResearchControl }
+        }
         if ($result.ResearchControl) {
             $GateArgs += @("--research-control", "sft_$($result.Name)")
             if (-not $SkipKD) { $GateArgs += @("--research-control", "progressive_kd_$($result.Name)") }
@@ -700,8 +732,15 @@ if ($StudentSuite -eq "Hybrid") {
     $result = Train-Profile -Profile $singleProfile -ProfileRoot $profileRoot -TrainingFile $TrainingFile -Label "[Single]"
     $GateArgs += @("--initialization", "single=$($result.InitializationSummary)")
     $GateArgs += @("--candidate", "sft=$($result.SftSummary)")
-    if (-not $SkipKD) { $GateArgs += @("--candidate", "progressive_kd=$($result.ProgressiveKdSummary)") }
-    if ($RunDirectKD -and -not $SkipKD) { $GateArgs += @("--candidate", "direct_kd=$($result.DirectKdSummary)") }
+    $CandidateArtifacts["sft"] = [pscustomobject]@{ Model = $result.SftModel; Adapter = $result.SftAdapter; ResearchControl = [bool]$result.ResearchControl }
+    if (-not $SkipKD) {
+        $GateArgs += @("--candidate", "progressive_kd=$($result.ProgressiveKdSummary)")
+        $CandidateArtifacts["progressive_kd"] = [pscustomobject]@{ Model = $result.ProgressiveKdModel; Adapter = $result.ProgressiveKdAdapter; ResearchControl = [bool]$result.ResearchControl }
+    }
+    if ($RunDirectKD -and -not $SkipKD) {
+        $GateArgs += @("--candidate", "direct_kd=$($result.DirectKdSummary)")
+        $CandidateArtifacts["direct_kd"] = [pscustomobject]@{ Model = $result.DirectKdModel; Adapter = $result.DirectKdAdapter; ResearchControl = [bool]$result.ResearchControl }
+    }
     if ($singleProfile.ResearchControl) {
         $GateArgs += @("--research-control", "sft")
         if (-not $SkipKD) { $GateArgs += @("--research-control", "progressive_kd") }
@@ -756,15 +795,65 @@ if ($StudentSuite -eq "Hybrid") {
         }
         $onPolicyModel = if ($UseLora) { $profileInit } else { Join-Path $onPolicyRoot "model" }
         $onPolicyAdapter = if ($UseLora) { Join-Path $onPolicyRoot "adapter" } else { "" }
-        $evalOnPolicy = Join-Path $OutputRoot "evaluation_on_policy_v2"
+        $evalOnPolicy = Join-Path $OutputRoot "evaluation_on_policy_dev_v173"
         Invoke-RagEvaluation "[On-policy] Evaluating recovery candidate..." $onPolicyModel $onPolicyAdapter $evalOnPolicy
         $GateArgs += @("--candidate", "on_policy=$(Join-Path $evalOnPolicy 'summary.json')")
+        $CandidateArtifacts["on_policy"] = [pscustomobject]@{ Model = $onPolicyModel; Adapter = $onPolicyAdapter; ResearchControl = [bool]$singleProfile.ResearchControl }
     }
 }
 
-Invoke-PythonStep "[Final] Building the proportional Phase 9 assessment and human gate..." $GateArgs
+Invoke-PythonStep "[DEV selection] Building the proportional Phase 9 development assessment..." $GateArgs
+
+if ($SmokeTest) {
+    Write-Warning "SmokeTest does not touch the sealed test split. Publishing the dev packet as research-only gate evidence."
+    $SmokeGateArgs = @($GateArgs)
+    for ($i = 0; $i -lt $SmokeGateArgs.Count; $i++) {
+        if ($SmokeGateArgs[$i] -eq "--out") { $SmokeGateArgs[$i + 1] = ".\reports\PHASE_9_STOP_GATE.md" }
+        if ($SmokeGateArgs[$i] -eq "--json-out") { $SmokeGateArgs[$i + 1] = ".\reports\PHASE_9_ASSESSMENT.json" }
+    }
+    Invoke-PythonStep "[Smoke final] Writing research-only Phase 9 gate without sealed-test access..." $SmokeGateArgs
+} else {
+    $DevPacket = Read-JsonFile $DevAssessment
+    if ($null -eq $DevPacket) { throw "Missing Phase 9 dev assessment: $DevAssessment" }
+    $FinalCandidateName = [string]$DevPacket.recommended_candidate
+    $FinalIsResearchControl = $false
+    if ([string]::IsNullOrWhiteSpace($FinalCandidateName)) {
+        $FinalCandidateName = [string]$DevPacket.recommended_research_control
+        if (-not [string]::IsNullOrWhiteSpace($FinalCandidateName)) { $FinalIsResearchControl = $true }
+    }
+
+    $TeacherTest = Join-Path $OutputRoot "evaluation_teacher_test_final_v173"
+    Invoke-RagEvaluation "[Sealed TEST] Evaluating the teacher reference..." $TeacherModel "" $TeacherTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" $TestFile
+
+    $FinalGateArgs = @(
+        ".\scripts\phase_9_student_distillation\check_phase_9_gate.py",
+        "--teacher-summary", (Join-Path $TeacherTest "summary.json"),
+        "--out", ".\reports\PHASE_9_STOP_GATE.md",
+        "--json-out", ".\reports\PHASE_9_ASSESSMENT.json"
+    )
+
+    if (-not [string]::IsNullOrWhiteSpace($FinalCandidateName)) {
+        if (-not $CandidateArtifacts.ContainsKey($FinalCandidateName)) {
+            throw "Dev-selected candidate '$FinalCandidateName' has no artifact registry entry."
+        }
+        $FinalArtifact = $CandidateArtifacts[$FinalCandidateName]
+        $SafeName = $FinalCandidateName -replace '[^A-Za-z0-9_.-]', '_'
+        $FinalTest = Join-Path $OutputRoot "evaluation_final_${SafeName}_test_v173"
+        Invoke-RagEvaluation "[Sealed TEST] Evaluating frozen candidate $FinalCandidateName..." $FinalArtifact.Model $FinalArtifact.Adapter $FinalTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" $TestFile
+        $FinalGateArgs += @("--candidate", "$FinalCandidateName=$(Join-Path $FinalTest 'summary.json')")
+        if ($FinalIsResearchControl -or [bool]$FinalArtifact.ResearchControl) {
+            $FinalGateArgs += @("--research-control", $FinalCandidateName)
+        }
+    } else {
+        Write-Warning "No dev-eligible production or research candidate exists. The sealed gate will contain teacher evidence only and no production recommendation."
+    }
+
+    Invoke-PythonStep "[Final] Building the sealed-test Phase 9 assessment and human gate..." $FinalGateArgs
+}
+
 Write-Host ""
 Write-Host "Phase 9 $Mode ($StudentSuite) completed."
+Write-Host "Dev selection: $DevAssessment"
 Write-Host "Assessment: reports\PHASE_9_ASSESSMENT.json"
 Write-Host "Human gate: reports\PHASE_9_STOP_GATE.md"
 Write-Host "Smoke packets prove execution only; they cannot establish student readiness."

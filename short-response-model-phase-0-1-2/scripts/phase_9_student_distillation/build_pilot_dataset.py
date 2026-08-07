@@ -24,7 +24,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     split_by_group,
     connected_component_groups,
 )
-from scripts.phase_9_student_distillation.phase9_metrics import decision_class, is_conflict_response
+from scripts.phase_9_student_distillation.phase9_metrics import decision_class, is_safe_conflict_response
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,6 +45,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--minimum-test-unsupported", type=int, default=1)
     parser.add_argument("--smoke-test", action="store_true", help="Permit a tiny packet but mark it non-research-ready.")
     parser.add_argument("--require-research-ready", action="store_true")
+    parser.add_argument(
+        "--split-policy", choices=("auto", "intended", "connected"), default="auto",
+        help="Preserve authored intended_split labels when available, or use connected-component splitting.",
+    )
     return parser.parse_args()
 
 
@@ -82,9 +86,11 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
     if not messages or messages[-1].get("role") == "assistant":
         raise ValueError(f"{record_id} reviewed messages must contain prompt messages only")
     messages.append({"role": "assistant", "content": answer})
-    decision = str(row.get("decision") or ("abstain" if is_abstention(answer) else "answer"))
-    if decision_class({**row, "decision": decision}) == "conflict":
-        decision = "conflict"
+    decision = str(row.get("decision") or ("abstain" if is_abstention(answer) else "answer")).casefold()
+    # Preserve the authored answerability decision. Conflict is a scenario/class,
+    # not a requirement that user-visible text literally say "conflict".
+    if str(row.get("mode") or "").casefold() == "procedure" and decision == "procedure":
+        decision = "answer"  # backwards-compatible normalization
     evidence = [dict(item) for item in (row.get("evidence") or [])]
     grounding = grounding_check(answer, evidence)
     if decision == "answer" and not grounding.supported:
@@ -93,9 +99,9 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         )
     if decision == "abstain" and not is_abstention(answer):
         raise ValueError(f"{record_id} is decision=abstain but does not use the approved abstention response")
-    if decision == "conflict" and not is_conflict_response(answer):
+    if decision == "conflict" and not is_safe_conflict_response(answer):
         raise ValueError(
-            f"{record_id} is decision=conflict but the accepted answer does not acknowledge the conflict"
+            f"{record_id} is decision=conflict but the accepted answer neither acknowledges the conflict nor safely abstains"
         )
 
     response_contract = normalize_response_contract(
@@ -135,9 +141,9 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
                         "label": "explicit_required_content_missing",
                         "severity": "major",
                         "weight": 1.0,
-                        "description": "The reply must acknowledge conflicting evidence.",
-                        "failure_evidence": "A conflict acknowledgment was missing.",
-                        "match": {"any_phrases": ["conflict", "disagree", CONFLICT_TEXT]},
+                        "description": "The reply must safely handle unresolved conflicting evidence.",
+                        "failure_evidence": "Neither a conflict acknowledgment nor the approved evidence abstention was present.",
+                        "match": {"any_phrases": [ABSTENTION_TEXT, "conflict", "disagree", CONFLICT_TEXT]},
                     },
                 ],
                 "question_forbidden": True,
@@ -163,10 +169,17 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         "reference": answer,
         "scenario_flags": list(row.get("scenario_flags") or (["conflict"] if decision == "conflict" else [])),
         "metadata": {
+            **(row.get("metadata") or {}),
             "phase": "9_student_distillation",
             "teacher_provenance": row.get("teacher_provenance") or {},
             "review_status": row.get("review_status"),
             "trajectory_source": "human_approved_teacher",
+            "intended_split": row.get("intended_split") or (row.get("metadata") or {}).get("intended_split"),
+            "evidence_clarity": row.get("evidence_clarity"),
+            "answer_stance": row.get("answer_stance"),
+            "source": row.get("source"),
+            "retrieved_procedure_ids": row.get("retrieved_procedure_ids") or [],
+            "current_state": row.get("current_state") or {},
             "grounding": {
                 "supported": grounding.supported,
                 "unsupported_numbers": list(grounding.unsupported_numbers),
@@ -175,6 +188,24 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         },
     }
     return output
+
+
+def split_by_intended(rows: list[dict[str, Any]]) -> dict[str, list[dict[str, Any]]]:
+    splits = {"train": [], "dev": [], "test": []}
+    for row in rows:
+        intended = str((row.get("metadata") or {}).get("intended_split") or "").casefold()
+        if intended not in splits:
+            raise ValueError(f"{row.get('id')} is missing a valid intended_split")
+        splits[intended].append(row)
+    assert_no_group_leakage(splits)
+    return splits
+
+
+def has_complete_intended_splits(rows: list[dict[str, Any]]) -> bool:
+    return bool(rows) and all(
+        str((row.get("metadata") or {}).get("intended_split") or "").casefold() in {"train", "dev", "test"}
+        for row in rows
+    )
 
 
 def main() -> None:
@@ -189,13 +220,21 @@ def main() -> None:
         ids.add(converted["id"])
         normalized.append(converted)
     groups = connected_component_groups(normalized)
-    splits = split_by_group(
-        normalized,
-        seed=args.seed,
-        train_fraction=args.train_fraction,
-        dev_fraction=args.dev_fraction,
+    preserve_intended = args.split_policy == "intended" or (
+        args.split_policy == "auto" and has_complete_intended_splits(normalized)
     )
-    assert_no_group_leakage(splits)
+    if preserve_intended:
+        splits = split_by_intended(normalized)
+        split_method = "authored intended_split; validated topic/document connected-component disjointness"
+    else:
+        splits = split_by_group(
+            normalized,
+            seed=args.seed,
+            train_fraction=args.train_fraction,
+            dev_fraction=args.dev_fraction,
+        )
+        assert_no_group_leakage(splits)
+        split_method = "connected_components over topic_id and support/retrieved document IDs"
     readiness_reasons: list[str] = []
     if len(normalized) < args.minimum_reviewed_rows:
         readiness_reasons.append(
@@ -239,15 +278,14 @@ def main() -> None:
         write_jsonl(args.output_dir / f"{split}.jsonl", rows)
 
     manifest = {
-        "schema_version": "1.0",
-        "pipeline_revision": "phase9_behavior_curriculum_v2",
+        "schema_version": "1.1",
+        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
         "source": str(args.reviewed_input),
         "source_sha256": sha256(args.reviewed_input),
         "seed": args.seed,
-        "split_method": (
-            "connected_components over topic_id and support/retrieved document IDs; "
-            "no topic or document is split across train/dev/test"
-        ),
+        "split_method": split_method,
+        "split_policy_requested": args.split_policy,
+        "preserved_intended_splits": preserve_intended,
         "counts": {split: len(rows) for split, rows in splits.items()},
         "connected_group_count": len(groups),
         "research_ready": research_ready,

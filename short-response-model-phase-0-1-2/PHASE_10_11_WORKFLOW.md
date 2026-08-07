@@ -1,4 +1,26 @@
+## v1.7.4 reconstruction-corpus handoff
+
+The dedicated Phase 9B reconstruction corpus is now validated downstream whenever it is relevant. Phase 10 validates it when an approved `phase_9b_student_reference.json` is the architecture-reduction parent. Phase 11 validates it at startup and can benchmark the complete two-pass reconstruction runtime, not just the persistent service.
+
+For an approved Phase 9B-derived model, Phase 11 can measure trained reconstruction with:
+
+```powershell
+.\scripts\phase_11_production_rag\run_phase_11.ps1 `
+  -Mode Full `
+  -MemoryReconstructionMode trained `
+  -ReconstructionMaxNewTokens 128
+```
+
+Use `prompted` only as an inference-time protocol baseline; use `trained` only when the selected lineage actually includes approved Phase 9B reconstruction training. `off` remains the ordinary-RAG control. The production benchmark reports reconstruction validity, added tokens, added latency, and full end-to-end request cost.
+
 # Complete Phase 10–11 workflow
+
+
+## v1.7.3 shared corpus and sealed-test amendment
+
+Phase 10 and Phase 11 now default to the v1.7.3 Phase 9 grounded-recovery dataset and its shared `rag_reasoning_v2` knowledge/procedure corpus. Phase 10 profiles, screens, recovery-trains, and chooses the final architecture entirely on **dev**, freezes one candidate, and then evaluates exactly the reference and frozen candidate on the **sealed test**. Phase 11 calibrates answerability on dev and uses the test split for final runtime/release comparison only.
+
+Procedure answerability is derived from normalized decision semantics rather than `mode == procedure`; answerable procedures therefore count as supported behavior, while missing-input and genuine-conflict procedures remain abstention cases. Production metrics separately report supported correctness, safe conflict handling, procedure correctness, evidence calibration, stale/current precedence, prompt-injection task success, social usability, and their real denominators.
 
 ## Phase 9B handoff amendment
 

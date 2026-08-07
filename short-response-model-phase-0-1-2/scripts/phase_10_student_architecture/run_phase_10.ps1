@@ -12,14 +12,16 @@ relative-opportunity registry plus pending human gate.
 #>
 param(
     [ValidateSet("Plan", "Pilot", "Full", "Evaluate")][string]$Mode = "Pilot",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
+    [string]$MemoryReconstructionCorpusRoot = ".\data\phase_9b_memory_reconstruction\reconstruction_corpus_v1",
     [string]$StudentModel = "",
     [string]$Phase9ReferenceManifest = ".\artifacts\references\phase_9_student_reference.json",
     [string]$Phase9BReferenceManifest = ".\artifacts\references\phase_9b_student_reference.json",
     [string]$TeacherModel = "",
     [string]$Config = ".\configs\phase_10_student_architecture.json",
-    [string]$DatasetRoot = ".\artifacts\phase_9_student_distillation\pilot_dataset",
-    [string]$KnowledgeDb = ".\artifacts\phase_9_student_distillation\knowledge.sqlite3",
-    [string]$GateCalibration = ".\artifacts\phase_9_student_distillation\evidence_gate_calibration.json",
+    [string]$DatasetRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_3\dataset",
+    [string]$KnowledgeDb = ".\artifacts\phase_9_grounded_recovery_v1_7_3\knowledge.sqlite3",
+    [string]$GateCalibration = ".\artifacts\phase_9_grounded_recovery_v1_7_3\evidence_gate_calibration.json",
     [string]$OutputRoot = ".\artifacts\phase_10_student_architecture",
     [int]$MaxSteps = 0,
     [int]$RecoveryTopK = 0,
@@ -37,6 +39,20 @@ $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
+
+if (Test-Path (Join-Path $RagReasoningCorpusRoot "manifests\dataset_manifest.json")) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the integrated RAG reasoning corpus..."
+    & python .\scripts\phase_9_student_distillation\validate_rag_reasoning_corpus.py --corpus-root $RagReasoningCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated RAG reasoning corpus validation failed." }
+}
+
+if ((Test-Path $Phase9BReferenceManifest) -and (Test-Path (Join-Path $MemoryReconstructionCorpusRoot "manifests\dataset_manifest.json"))) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the Phase 9B reconstruction corpus retained by this student..."
+    & python .\scripts\phase_9b_memory_reconstruction\validate_memory_reconstruction_corpus.py --corpus-root $MemoryReconstructionCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated memory-reconstruction corpus validation failed." }
+}
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
@@ -95,18 +111,20 @@ foreach ($Path in @($TrainFile, $DevFile, $TestFile, $KnowledgeDb, $GateCalibrat
 }
 New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
 
-$ReferenceEval = Join-Path $OutputRoot "evaluation_reference"
+$ReferenceDevEval = Join-Path $OutputRoot "evaluation_reference_dev"
+$ReferenceTestEval = Join-Path $OutputRoot "evaluation_reference_test_final"
+$FinalDevSelection = Join-Path $OutputRoot "final_dev_selection.json"
 $Profile = Join-Path $OutputRoot "student_structure_profile.pt"
 $ProfileSummary = Join-Path $OutputRoot "student_structure_profile.json"
 $RecoverySelection = Join-Path $OutputRoot "recovery_selection.json"
 
 function Invoke-RagEvaluation {
-    param([string]$Name, [string]$Model, [string]$Adapter, [string]$Destination)
+    param([string]$Name, [string]$Model, [string]$Adapter, [string]$Benchmark, [string]$Destination)
     if ($ReuseExisting -and (Test-Path (Join-Path $Destination "summary.json"))) { return }
     $Args = @(
         ".\scripts\phase_9_student_distillation\evaluate_rag.py",
         "--model", $Model,
-        "--benchmark", $TestFile,
+        "--benchmark", $Benchmark,
         "--output-dir", $Destination,
         "--knowledge-db", $KnowledgeDb,
         "--gate-calibration", $GateCalibration,
@@ -119,7 +137,7 @@ function Invoke-RagEvaluation {
     Invoke-PythonStep $Name $Args
 }
 
-Invoke-RagEvaluation "[1] Evaluating the selected Phase 9/9B reference student..." $StudentModel "" $ReferenceEval
+Invoke-RagEvaluation "[1] Evaluating the selected Phase 9/9B reference student on DEV..." $StudentModel "" $DevFile $ReferenceDevEval
 
 if ($Mode -ne "Evaluate") {
     if (-not ($ReuseExisting -and (Test-Path $Profile))) {
@@ -173,8 +191,8 @@ foreach ($Candidate in $CandidateRows) {
     $Name = [string]$Candidate.name
     $RawPath = Join-Path $OutputRoot "candidates\$Name\raw"
     if (-not (Test-Path $RawPath)) { throw "Missing raw Phase 10 candidate: $RawPath" }
-    $RawEval = Join-Path $OutputRoot "candidates\$Name\evaluation_raw"
-    Invoke-RagEvaluation "[4] Evaluating raw candidate $Name..." $RawPath "" $RawEval
+    $RawEval = Join-Path $OutputRoot "candidates\$Name\evaluation_raw_dev"
+    Invoke-RagEvaluation "[4] Evaluating raw candidate $Name on DEV..." $RawPath "" $DevFile $RawEval
     $RawSummary = Join-Path $RawEval "summary.json"
     $RawCandidateSpecs.Add("$Name=$RawSummary") | Out-Null
     $FinalCandidateSpecs.Add("raw_${Name}=$RawSummary") | Out-Null
@@ -183,7 +201,7 @@ foreach ($Candidate in $CandidateRows) {
 if ($Mode -eq "Evaluate") {
     foreach ($Candidate in $CandidateRows) {
         $Name = [string]$Candidate.name
-        $RecoveredSummary = Join-Path $OutputRoot "candidates\$Name\evaluation_recovered\summary.json"
+        $RecoveredSummary = Join-Path $OutputRoot "candidates\$Name\evaluation_recovered_dev\summary.json"
         if (Test-Path $RecoveredSummary) {
             $FinalCandidateSpecs.Add("recovered_${Name}=$RecoveredSummary") | Out-Null
         }
@@ -191,7 +209,7 @@ if ($Mode -eq "Evaluate") {
     $ChallengerRoot = Join-Path $OutputRoot "challengers"
     if (Test-Path $ChallengerRoot) {
         foreach ($Directory in Get-ChildItem $ChallengerRoot -Directory) {
-            $ChallengerSummary = Join-Path $Directory.FullName "evaluation\summary.json"
+            $ChallengerSummary = Join-Path $Directory.FullName "evaluation_dev\summary.json"
             if (Test-Path $ChallengerSummary) {
                 $FinalCandidateSpecs.Add("$($Directory.Name)=$ChallengerSummary") | Out-Null
             }
@@ -215,7 +233,7 @@ if (-not $SkipRecovery -and $Mode -ne "Evaluate") {
     }
     $SelectArgs = @(
         ".\scripts\phase_10_student_architecture\select_recovery_candidates.py",
-        "--reference-summary", (Join-Path $ReferenceEval "summary.json"),
+        "--reference-summary", (Join-Path $ReferenceDevEval "summary.json"),
         "--top-k", "$RecoveryTopK",
         "--out", $RecoverySelection
     )
@@ -251,8 +269,8 @@ if (-not $SkipRecovery -and $Mode -ne "Evaluate") {
         }
         $RecoveredModel = if ($UseLora) { $RawPath } else { Join-Path $RecoveryRoot "model" }
         $RecoveredAdapter = if ($UseLora) { Join-Path $RecoveryRoot "adapter" } else { "" }
-        $RecoveredEval = Join-Path $OutputRoot "candidates\$Name\evaluation_recovered"
-        Invoke-RagEvaluation "[7] Evaluating recovered candidate $Name..." $RecoveredModel $RecoveredAdapter $RecoveredEval
+        $RecoveredEval = Join-Path $OutputRoot "candidates\$Name\evaluation_recovered_dev"
+        Invoke-RagEvaluation "[7] Evaluating recovered candidate $Name on DEV..." $RecoveredModel $RecoveredAdapter $DevFile $RecoveredEval
         $FinalCandidateSpecs.Add("recovered_${Name}=$(Join-Path $RecoveredEval 'summary.json')") | Out-Null
     }
 }
@@ -287,16 +305,39 @@ if (-not [string]::IsNullOrWhiteSpace($ChallengerSource) -and $Mode -ne "Evaluat
     }
     $ChallengerModel = if ($UseLora) { $ChallengerInit } else { Join-Path $ChallengerTrain "model" }
     $ChallengerAdapter = if ($UseLora) { Join-Path $ChallengerTrain "adapter" } else { "" }
-    $ChallengerEval = Join-Path $OutputRoot "challengers\$ChallengerName\evaluation"
-    Invoke-RagEvaluation "[10] Evaluating compact challenger..." $ChallengerModel $ChallengerAdapter $ChallengerEval
+    $ChallengerEval = Join-Path $OutputRoot "challengers\$ChallengerName\evaluation_dev"
+    Invoke-RagEvaluation "[10] Evaluating compact challenger on DEV..." $ChallengerModel $ChallengerAdapter $DevFile $ChallengerEval
     $FinalCandidateSpecs.Add("$ChallengerName=$(Join-Path $ChallengerEval 'summary.json')") | Out-Null
 }
 
+# Freeze exactly one final candidate using DEV evidence before touching TEST.
+$FinalSelectArgs = @(
+    ".\scripts\phase_10_student_architecture\select_recovery_candidates.py",
+    "--reference-summary", (Join-Path $ReferenceDevEval "summary.json"),
+    "--purpose", "final",
+    "--top-k", "1",
+    "--out", $FinalDevSelection
+)
+foreach ($Spec in $FinalCandidateSpecs) { $FinalSelectArgs += @("--candidate", $Spec) }
+Invoke-PythonStep "[11] Freezing the final Phase 10 candidate on DEV..." $FinalSelectArgs
+$FinalSelection = Get-Content $FinalDevSelection -Raw | ConvertFrom-Json
+$FinalName = [string]@($FinalSelection.selected_candidates)[0]
+if ([string]::IsNullOrWhiteSpace($FinalName)) { throw "No Phase 10 candidate could be frozen on dev." }
+$FinalPacket = @($FinalSelection.ranking | Where-Object { [string]$_.name -eq $FinalName })[0]
+$FinalModel = [string]$FinalPacket.model
+$FinalAdapter = [string]$FinalPacket.adapter
+
+# SEALED TEST: reference + already-frozen candidate only. No candidate can be
+# swapped after seeing these results.
+$FinalTestEval = Join-Path $OutputRoot "evaluation_final_selected_test"
+Invoke-RagEvaluation "[12] Sealed TEST reference evaluation..." $StudentModel "" $TestFile $ReferenceTestEval
+Invoke-RagEvaluation "[13] Sealed TEST evaluation for $FinalName..." $FinalModel $FinalAdapter $TestFile $FinalTestEval
+
 $GateArgs = @(
     ".\scripts\phase_10_student_architecture\check_phase_10_gate.py",
-    "--reference-summary", (Join-Path $ReferenceEval "summary.json")
+    "--reference-summary", (Join-Path $ReferenceTestEval "summary.json"),
+    "--candidate", "$FinalName=$(Join-Path $FinalTestEval 'summary.json')"
 )
-foreach ($Spec in $FinalCandidateSpecs) { $GateArgs += @("--candidate", $Spec) }
 Invoke-PythonStep "[Final] Building the Phase 10 registry and human stop gate..." $GateArgs
 
 Write-Host ""

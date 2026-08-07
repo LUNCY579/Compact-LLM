@@ -163,6 +163,7 @@ def build_candidates(source_rows: list[dict[str, Any]], catalog: dict[str, dict[
             "topic_id": row["topic_id"],
             "question": row["question"],
             "mode": row["mode"],
+            "intended_split": row.get("intended_split") or (row.get("metadata") or {}).get("intended_split"),
             "current_state": current_state,
             "memories": memories,
             "support_document_ids": list(row.get("support_document_ids") or []),

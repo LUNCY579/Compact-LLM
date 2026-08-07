@@ -27,6 +27,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--primary-repeat", type=int, default=3)
     parser.add_argument("--foundation-repeat", type=int, default=1)
     parser.add_argument("--seed", type=int, default=42)
+    parser.add_argument("--holdout", type=Path, action="append", default=[], help="Exclude foundation questions appearing in dev/test holdouts; repeatable.")
     return parser.parse_args()
 
 
@@ -50,10 +51,35 @@ def replicated(rows: list[dict[str, Any]], *, source: str, count: int) -> list[d
     return output
 
 
+
+def normalized_question(row: dict[str, Any]) -> str:
+    question = str(row.get("question") or "").casefold()
+    return " ".join(question.split()).strip(" .?!")
+
+
+def filter_foundation_against_holdouts(
+    rows: list[dict[str, Any]], holdout_paths: list[Path]
+) -> tuple[list[dict[str, Any]], list[str]]:
+    holdout_questions: set[str] = set()
+    for path in holdout_paths:
+        for row in read_jsonl(path):
+            value = normalized_question(row)
+            if value:
+                holdout_questions.add(value)
+    kept: list[dict[str, Any]] = []
+    excluded: list[str] = []
+    for row in rows:
+        if normalized_question(row) in holdout_questions:
+            excluded.append(str(row.get("id") or "unknown"))
+        else:
+            kept.append(row)
+    return kept, excluded
+
 def main() -> None:
     args = parse_args()
     primary = read_jsonl(args.primary)
     foundation = read_jsonl(args.foundation)
+    foundation, excluded_foundation_ids = filter_foundation_against_holdouts(foundation, args.holdout)
     if not primary:
         raise ValueError("Primary human-reviewed curriculum is empty")
     if not foundation:
@@ -70,15 +96,19 @@ def main() -> None:
     write_jsonl(args.output, rows)
     manifest_path = args.manifest or args.output.with_suffix(".manifest.json")
     manifest = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "phase": "9_student_distillation",
-        "pipeline_revision": "phase9_behavior_curriculum_v2",
+        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
         "primary": str(args.primary),
         "primary_sha256": sha256(args.primary),
         "foundation": str(args.foundation),
         "foundation_sha256": sha256(args.foundation),
         "primary_repeat": args.primary_repeat,
         "foundation_repeat": args.foundation_repeat,
+        "holdouts": [str(path) for path in args.holdout],
+        "holdout_sha256": {str(path): sha256(path) for path in args.holdout},
+        "excluded_foundation_ids": excluded_foundation_ids,
+        "excluded_foundation_count": len(excluded_foundation_ids),
         "seed": args.seed,
         "row_count": len(rows),
         "source_counts": dict(Counter(str((row.get("metadata") or {}).get("mixture_source")) for row in rows)),

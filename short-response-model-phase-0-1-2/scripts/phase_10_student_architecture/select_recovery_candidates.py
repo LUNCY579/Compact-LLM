@@ -23,6 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--reference-summary", type=Path, required=True)
     parser.add_argument("--candidate", action="append", default=[], help="name=summary.json")
     parser.add_argument("--top-k", type=int, default=2)
+    parser.add_argument("--purpose", choices=("recovery", "final"), default="recovery")
     parser.add_argument("--out", type=Path, required=True)
     return parser.parse_args()
 
@@ -72,18 +73,31 @@ def main() -> None:
         ),
         reverse=True,
     )
-    selected = [item["name"] for item in ranked[: min(args.top_k, len(ranked))]]
+    if args.purpose == "final":
+        # Final-test selection is frozen on dev. Prefer candidates already
+        # eligible under the relative-opportunity policy; if none are eligible,
+        # still freeze the least-bad research candidate so the sealed test can
+        # quantify the failure without using test to choose another model.
+        eligible = [item for item in ranked if bool((item.get("assessment") or {}).get("eligible"))]
+        selection_pool = eligible or ranked
+        selected = [item["name"] for item in selection_pool[:1]]
+        selection_status = "DEV_ELIGIBLE_CANDIDATE_SELECTED" if eligible else "NO_DEV_ELIGIBLE_CANDIDATE_RESEARCH_ONLY"
+    else:
+        selected = [item["name"] for item in ranked[: min(args.top_k, len(ranked))]]
+        selection_status = "RECOVERY_SET_SELECTED"
     write_json(
         args.out,
         {
-            "schema_version": "1.0",
+            "schema_version": "1.1",
             "reference_summary": str(args.reference_summary),
+            "purpose": args.purpose,
             "top_k": args.top_k,
+            "selection_status": selection_status,
             "selected_candidates": selected,
             "ranking": ranked,
             "interpretation": (
-                "Selection authorizes bounded recovery experiments only. It does not promote a candidate. "
-                "Final Phase 10 eligibility is recalculated after recovery and evaluation."
+                "Recovery selection authorizes bounded recovery experiments only. Final selection is frozen on dev before "
+                "the sealed test and does not use test metrics to choose a different candidate."
             ),
         },
     )

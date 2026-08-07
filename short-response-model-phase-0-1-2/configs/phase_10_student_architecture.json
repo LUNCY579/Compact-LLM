@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "experiment": {
     "name": "student_architecture_reduction_and_challenger_search_v1",
     "seed": 42,
@@ -160,5 +160,14 @@
     "response_control": "one_sentence",
     "max_new_tokens": 32,
     "unsupported_confident_answer_cap": null
+  },
+  "data_contract": {
+    "rag_reasoning_corpus_root": "data/phase_9_student_distillation/rag_reasoning_v2",
+    "phase9_dataset_root": "artifacts/phase_9_grounded_recovery_v1_7_3/dataset",
+    "selection_split": "dev",
+    "sealed_final_split": "test",
+    "test_selection_forbidden": true,
+    "memory_reconstruction_corpus_root": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1",
+    "phase9b_handoff_policy": "when Phase 9B is the accepted reference, validate its reconstruction corpus before structural reduction"
   }
 }

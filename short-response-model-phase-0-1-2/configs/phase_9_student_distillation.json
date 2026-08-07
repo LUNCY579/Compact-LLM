@@ -1,9 +1,9 @@
 {
-  "schema_version": "1.3",
+  "schema_version": "1.4",
   "experiment": {
-    "name": "tiny_student_rag_grounded_recovery_v1_7_2",
+    "name": "tiny_student_rag_reasoning_integration_v1_7_3",
     "seed": 42,
-    "pipeline_revision": "phase9_grounded_recovery_v1_7_2"
+    "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3"
   },
   "teacher": {
     "source": "resolve_from_phase_4b_selected_reference_or_supply_local_path",
@@ -203,7 +203,19 @@
       "rank32_policy": "run only when rank16 demonstrably underfits",
       "seed_policy": "rerun best setting with at least one additional seed before production selection",
       "kd_policy": "progressive KD only after full Oracle-RAG SFT improves over warm initialization",
-      "architecture_sweep_policy": "narrow random controls remain blocked until overfit and full Oracle stages pass"
+      "architecture_sweep_policy": "narrow random controls remain blocked until overfit and full Oracle stages pass",
+      "selection_benchmark": "dev",
+      "sealed_final_benchmark": "test",
+      "foundation_holdout_filtering": "exclude dev/test question overlaps before training mixture"
+    },
+    "evidence_preference_refinement": {
+      "enabled_by_default": false,
+      "when_allowed": "only after warm SFT demonstrates Oracle-RAG capability on dev",
+      "train_preferences": "data/phase_9_student_distillation/rag_reasoning_v2/preferences/train.jsonl",
+      "dev_preferences": "data/phase_9_student_distillation/rag_reasoning_v2/preferences/dev.jsonl",
+      "trainer": "scripts/phase_3_preference_alignment/train_dpo.py",
+      "wrapper": "scripts/phase_9_student_distillation/run_evidence_preference_refinement.ps1",
+      "selection_rule": "evaluate on dev; never choose DPO vs SFT using sealed test"
     }
   },
   "distillation": {
@@ -285,5 +297,18 @@
       "kd_vs_initialization"
     ],
     "degenerate_frontier_policy": "emit NO_VALID_QUALITY_FRONTIER when no candidate demonstrates non-degenerate Oracle capability"
+  },
+  "dataset": {
+    "default_corpus_root": "data/phase_9_student_distillation/rag_reasoning_v2",
+    "schema_version": "2.1",
+    "authored_split_policy": "preserve_intended_split",
+    "train_rows": 392,
+    "dev_rows": 67,
+    "test_rows": 71,
+    "sealed_test_policy": "all model/hyperparameter/recovery selection uses dev; test is evaluated only after final candidate freeze",
+    "preference_train_pairs": 1176,
+    "preference_dev_pairs": 201,
+    "evaluator_calibration_cases": 1836,
+    "heldout_evaluator_cases": 284
   }
 }

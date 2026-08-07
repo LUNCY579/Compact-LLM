@@ -1,15 +1,23 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "experiment": {
     "name": "contextual_memory_reconstruction",
-    "pipeline_revision": "phase9b_memory_reconstruction_v1",
+    "pipeline_revision": "phase9b_memory_reconstruction_v1_7_4",
     "seed": 42
   },
   "input": {
     "phase_9_reference_manifest": "artifacts/references/phase_9_student_reference.json",
     "teacher_reference_manifest": "artifacts/references/selected_inference_reference.json",
-    "default_source_prompts": "artifacts/phase_9_student_distillation/pilot_dataset_v2/train.jsonl",
-    "default_memory_file": "data/phase_9b_memory_reconstruction/memories.sample.jsonl"
+    "default_source_prompts": "data/phase_9_student_distillation/rag_reasoning_v2/prompts.all.jsonl",
+    "default_memory_file": "data/phase_9_student_distillation/rag_reasoning_v2/knowledge.jsonl",
+    "rag_reasoning_corpus_root": "data/phase_9_student_distillation/rag_reasoning_v2",
+    "memory_reconstruction_corpus_root": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1",
+    "default_reviewed_reconstructions": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/reviewed_memory_reconstruction.jsonl",
+    "default_curated_preferences_train": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/preferences/train.jsonl",
+    "default_curated_preferences_dev": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/preferences/dev.jsonl",
+    "default_counterfactual_pairs": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/counterfactuals/counterfactual_pairs.jsonl",
+    "default_evaluator_dev": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/evaluator/dev.candidate_reconstructions.jsonl",
+    "default_evaluator_test": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/evaluator/test.candidate_reconstructions.jsonl"
   },
   "dataset": {
     "minimum_reviewed_rows": 30,
@@ -29,19 +37,36 @@
       "reject",
       "conflict",
       "insufficient"
+    ],
+    "split_policy": "authored_intended_split_dev_first_sealed_test",
+    "source_state_resolution_order": [
+      "reject_untrusted",
+      "invalidate_superseded",
+      "check_validity_conditions",
+      "detect_remaining_conflict"
+    ],
+    "curated_preference_pairs_per_row": 3,
+    "counterfactual_pairs": 120,
+    "counterfactual_contract": "decisive_fields plus optional state-coherence fields",
+    "condition_dsl": [
+      "all",
+      "any",
+      "predicate",
+      "item",
+      "legacy_direct_mapping"
     ]
   },
   "training": {
     "objective_sequence": [
       "reconstruction_sft",
       "optional_progressive_kd",
-      "optional_preference_alignment"
+      "optional_reconstruction_preference_alignment"
     ],
     "max_sequence_length": 768,
     "max_completion_tokens": 128,
     "per_device_batch_size": 1,
     "gradient_accumulation_steps": 32,
-    "learning_rate": 0.00005,
+    "learning_rate": 5e-05,
     "epochs": 3,
     "default_max_steps": 400,
     "gradient_checkpointing": true,
@@ -70,10 +95,12 @@
     ],
     "primary_comparison": "raw_replay_vs_trained_reconstruction",
     "benefit_weights": {
-      "functional_success_gain": 0.35,
-      "negative_transfer_reduction": 0.30,
-      "decision_accuracy_gain": 0.20,
-      "grounding_gain": 0.15
+      "functional_success_gain": 0.25,
+      "negative_transfer_reduction": 0.25,
+      "decision_accuracy_gain": 0.15,
+      "grounding_gain": 0.1,
+      "counterfactual_success_gain": 0.15,
+      "negative_transfer_expected_gain": 0.1
     },
     "cost_weights": {
       "latency_increase": 0.55,
@@ -82,6 +109,11 @@
       "peak_vram_increase": 0.05
     },
     "promotion_policy": "proportional_reconstruction_benefit_must_exceed_proportional_runtime_cost_plus_human_gate",
-    "absolute_quality_floors": null
+    "absolute_quality_floors": null,
+    "selection_split": "dev",
+    "sealed_final_split": "test",
+    "test_selection_forbidden": true,
+    "conflict_policy": "safe abstention or explicit conflict acknowledgment; explicit recognition reported separately",
+    "reference_wording_policy": "canonical answer is an example; functional grounding and semantic anchors control factual/procedural correctness"
   }
 }

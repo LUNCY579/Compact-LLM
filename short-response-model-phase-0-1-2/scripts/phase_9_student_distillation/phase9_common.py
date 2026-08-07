@@ -428,6 +428,13 @@ def detect_structured_conflict(passages: Sequence[dict[str, Any]]) -> bool:
 
     values: dict[str, set[str]] = {}
     for row in passages:
+        # Superseded history and explicitly untrusted evidence may be useful to
+        # teach stale-memory handling or injection resistance, but they do not
+        # have equal authority with current/trusted evidence and therefore must
+        # not manufacture a production conflict.
+        trust = str(row.get("trust_level") or "standard").strip().casefold()
+        if trust in {"superseded", "untrusted"}:
+            continue
         key = str(row.get("claim_key") or "").strip().casefold()
         value = str(row.get("claim_value") or "").strip().casefold()
         if key and value:
@@ -503,12 +510,22 @@ def build_grounded_messages(
     if system_prompt:
         base_system = f"{system_prompt.strip()}\n\n{base_system}"
 
-    procedure_text = "\n\n".join(
-        f"[{passage_id(row)}]\n{_passage_text(row)}" for row in procedures
-    ) or "(none)"
-    evidence_text = "\n\n".join(
-        f"[{passage_id(row)}]\n{_passage_text(row)}" for row in evidence
-    ) or "(none)"
+    def render_passage(row: dict[str, Any]) -> str:
+        # Trust/version metadata is deliberately visible to the model. This lets
+        # the same prompt teach current-vs-superseded precedence while retaining
+        # historical evidence for Phase 9B reconstruction rather than silently
+        # deleting it before the model can learn the distinction.
+        metadata = row.get("metadata") or {}
+        source_state = metadata.get("source_state") if isinstance(metadata, dict) else {}
+        trust = str(row.get("trust_level") or (source_state or {}).get("trust_level") or "standard")
+        updated = str(row.get("updated_at") or (source_state or {}).get("updated_at") or "")
+        attrs = [f"trust={trust}"]
+        if updated:
+            attrs.append(f"updated_at={updated}")
+        return f"[{passage_id(row)} | {' | '.join(attrs)}]\n{_passage_text(row)}"
+
+    procedure_text = "\n\n".join(render_passage(row) for row in procedures) or "(none)"
+    evidence_text = "\n\n".join(render_passage(row) for row in evidence) or "(none)"
     user = (
         "<TRUSTED_PROCEDURES>\n"
         f"{procedure_text}\n"

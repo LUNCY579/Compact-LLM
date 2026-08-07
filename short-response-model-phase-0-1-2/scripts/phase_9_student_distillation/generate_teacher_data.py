@@ -43,7 +43,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
 )
 from scripts.phase_9_student_distillation.phase9_prompting import plan_grounded_prompt, token_ids
 
-TEACHER_PIPELINE_REVISION = "phase9_grounded_recovery_v1_7_2"
+TEACHER_PIPELINE_REVISION = "phase9_rag_reasoning_integration_v1_7_3"
 
 
 def parse_args() -> argparse.Namespace:
@@ -232,7 +232,7 @@ def main() -> None:
             provenance = prior.get("teacher_provenance") or {}
             prompt_integrity = prior.get("prompt_integrity") or {}
             compatible = (
-                str(prior.get("schema_version") or "") == "1.3"
+                str(prior.get("schema_version") or "") == "1.4"
                 and str(provenance.get("pipeline_revision") or "") == TEACHER_PIPELINE_REVISION
                 and str(provenance.get("model") or "") == str(args.teacher)
                 and str(provenance.get("prompts_sha256") or "") == prompts_digest
@@ -400,7 +400,7 @@ def main() -> None:
                 )
 
             output_row = {
-                "schema_version": "1.3",
+                "schema_version": "1.4",
                 "id": row["id"],
                 "topic_id": row["topic_id"],
                 "question": row["question"],
@@ -450,7 +450,7 @@ def main() -> None:
     write_json(
         args.output.with_suffix(".manifest.json"),
         {
-            "schema_version": "1.3",
+            "schema_version": "1.4",
             "pipeline_revision": TEACHER_PIPELINE_REVISION,
             "maximum_evidence_tokens": args.maximum_evidence_tokens,
             "max_sequence_length": args.max_sequence_length,

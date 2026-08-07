@@ -30,7 +30,7 @@ from scripts.common.quality_evaluation import (
 )
 from scripts.phase_9_student_distillation.evaluate_rag import generate_answer
 from scripts.phase_9_student_distillation.phase9_common import ABSTENTION_TEXT, grounding_check, is_abstention, tree_bytes
-from scripts.phase_9_student_distillation.phase9_metrics import functional_answer_correct
+from scripts.phase_9_student_distillation.phase9_metrics import functional_answer_correct, is_safe_conflict_response
 from scripts.phase_9b_memory_reconstruction.phase9b_common import (
     PIPELINE_REVISION,
     build_answer_messages,
@@ -120,6 +120,43 @@ def _expected_decision_class(record: dict[str, Any]) -> str:
 def _evaluation_row(record: dict[str, Any], prompt_messages: list[dict[str, str]]) -> dict[str, Any]:
     decision = _expected_decision_class(record)
     phase9_decision = "answer" if decision == "answer" else decision
+    # Phase 9B references are canonical examples, not mandatory surface forms.
+    # Keep strict behavioral contracts only where the behavior itself is the
+    # target (abstain/conflict); factual/procedural answers are judged by
+    # grounding + semantic/reference anchors in _functional_success.
+    requirements: list[dict[str, Any]] = []
+    if decision == "abstain":
+        requirements.append(
+            {
+                "id": "phase9b_required_abstention",
+                "label": "missing_required_abstention",
+                "severity": "major",
+                "weight": 1.0,
+                "description": "The reply must abstain because current state/memory is insufficient.",
+                "failure_evidence": "The model answered despite insufficient memory/state.",
+                "match": {"any_phrases": [ABSTENTION_TEXT]},
+            }
+        )
+    elif decision == "conflict":
+        requirements.append(
+            {
+                "id": "phase9b_safe_conflict",
+                "label": "unsafe_conflict_resolution",
+                "severity": "major",
+                "weight": 1.0,
+                "description": "The reply must not choose one side of unresolved equal-authority conflict.",
+                "failure_evidence": "The model resolved an unresolved conflict without support.",
+                "match": {
+                    "any_phrases": [
+                        ABSTENTION_TEXT,
+                        "conflict",
+                        "disagree",
+                        "can't give one",
+                        "cannot give one",
+                    ]
+                },
+            }
+        )
     return {
         "id": record["id"],
         "topic_id": record["topic_id"],
@@ -127,7 +164,13 @@ def _evaluation_row(record: dict[str, Any], prompt_messages: list[dict[str, str]
         "mode": record["mode"],
         "decision": phase9_decision,
         "messages": prompt_messages,
-        "response_contract": record.get("response_contract") or {},
+        "response_contract": {
+            "schema_version": "4.5",
+            "open_ended": False,
+            "requirements": requirements,
+            "prohibitions": [],
+            "reference_is_example": True,
+        },
         "category": f"phase9b_{record['approved_reconstruction']['decision']}",
     }
 
@@ -145,9 +188,12 @@ def _functional_success(record: dict[str, Any], answer: str, quality: dict[str, 
         success = is_abstention(answer)
         return success, {"reason": "correct_abstention" if success else "failed_to_abstain"}
     if expected == "conflict":
-        lowered = answer.casefold()
-        success = any(token in lowered for token in ("conflict", "disagree", "can't give one", "cannot give one"))
-        return success, {"reason": "conflict_detected" if success else "conflict_missed"}
+        success = is_safe_conflict_response(answer)
+        explicit = any(token in answer.casefold() for token in ("conflict", "disagree", "can't give one", "cannot give one"))
+        return success, {
+            "reason": "safe_conflict_handling" if success else "conflict_missed",
+            "explicit_conflict_recognition": explicit,
+        }
     grounding = grounding_check(answer, _grounding_passages(record))
     row = _evaluation_row(record, [])
     correct, details = functional_answer_correct(
@@ -275,6 +321,11 @@ def _run_strategy(
         "id": record["id"],
         "topic_id": record["topic_id"],
         "question": record["question"],
+        "scenario_type": (record.get("metadata") or {}).get("scenario_type"),
+        "difficulty": (record.get("metadata") or {}).get("difficulty"),
+        "counterfactual_pair_id": (record.get("metadata") or {}).get("counterfactual_pair_id"),
+        "counterfactual_role": (record.get("metadata") or {}).get("counterfactual_role"),
+        "negative_transfer_expected": bool((record.get("metadata") or {}).get("negative_transfer_expected")),
         "expected_reconstruction": record["approved_reconstruction"],
         "approved_answer": record["approved_answer"],
         "answer": answer,
@@ -304,11 +355,68 @@ def _run_strategy(
     }
 
 
+def _rate_packet(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    count = len(rows)
+    success = sum(1 for row in rows if row.get("functional_success"))
+    return {
+        "case_count": count,
+        "success_count": success,
+        "success_rate": success / count if count else None,
+    }
+
+
+def _counterfactual_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    by_pair: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        pair_id = str(row.get("counterfactual_pair_id") or "").strip()
+        if pair_id:
+            by_pair[pair_id].append(row)
+    complete = 0
+    both_functional = 0
+    decision_sensitive = 0
+    answer_sensitive = 0
+    for pair_rows in by_pair.values():
+        roles = {str(row.get("counterfactual_role") or ""): row for row in pair_rows}
+        if "s_plus" not in roles or "s_minus" not in roles:
+            continue
+        complete += 1
+        plus, minus = roles["s_plus"], roles["s_minus"]
+        if plus.get("functional_success") and minus.get("functional_success"):
+            both_functional += 1
+        plus_recon = (plus.get("reconstruction") or {}).get("payload") or {}
+        minus_recon = (minus.get("reconstruction") or {}).get("payload") or {}
+        if plus_recon and minus_recon and plus_recon.get("decision") != minus_recon.get("decision"):
+            decision_sensitive += 1
+        if str(plus.get("answer") or "").strip().casefold() != str(minus.get("answer") or "").strip().casefold():
+            answer_sensitive += 1
+    return {
+        "complete_pairs": complete,
+        "both_functional_count": both_functional,
+        "both_functional_rate": both_functional / complete if complete else None,
+        "decision_sensitivity_count": decision_sensitive,
+        "decision_sensitivity_rate": decision_sensitive / complete if complete else None,
+        "answer_sensitivity_count": answer_sensitive,
+        "answer_sensitivity_rate": answer_sensitive / complete if complete else None,
+    }
+
+
 def _strategy_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     quality_summary = aggregate_quality_rows([row["quality"] for row in rows])
     reconstruction_rows = [row for row in rows if row.get("reconstruction") is not None]
     decision_correct = [row for row in reconstruction_rows if row["reconstruction"]["decision_correct"]]
     parse_valid = [row for row in reconstruction_rows if row["reconstruction"]["valid"]]
+    by_decision: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    by_scenario: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        by_decision[str(row["expected_reconstruction"]["decision"])].append(row)
+        by_scenario[str(row.get("scenario_type") or "unknown")].append(row)
+    conflict_rows = by_decision.get("conflict", [])
+    explicit_conflicts = sum(
+        1
+        for row in conflict_rows
+        if bool((row.get("functional_diagnostics") or {}).get("explicit_conflict_recognition"))
+    )
+    negative_expected = [row for row in rows if row.get("negative_transfer_expected")]
     return {
         **quality_summary,
         "case_count": len(rows),
@@ -333,6 +441,17 @@ def _strategy_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "mean_total_generated_tokens": statistics.fmean(float(row["tokens"]["total_generated"]) for row in rows) if rows else None,
         "mean_answer_visible_tokens": statistics.fmean(float(row["tokens"]["answer_visible"]) for row in rows) if rows else None,
         "decision_counts": dict(Counter(row["expected_reconstruction"]["decision"] for row in rows)),
+        "decision_performance": {key: _rate_packet(value) for key, value in sorted(by_decision.items())},
+        "scenario_performance": {key: _rate_packet(value) for key, value in sorted(by_scenario.items())},
+        "safe_conflict_handling": _rate_packet(conflict_rows),
+        "explicit_conflict_recognition_count": explicit_conflicts,
+        "explicit_conflict_recognition_rate": explicit_conflicts / len(conflict_rows) if conflict_rows else None,
+        "negative_transfer_expected_cases": len(negative_expected),
+        "negative_transfer_expected_success_rate": (
+            sum(1 for row in negative_expected if row.get("functional_success")) / len(negative_expected)
+            if negative_expected else None
+        ),
+        "counterfactual": _counterfactual_summary(rows),
     }
 
 

@@ -285,7 +285,7 @@ def test_grounded_recovery_runner_locks_hybrid_and_orders_ladder() -> None:
 def test_v172_config_encodes_grounded_plan() -> None:
     root = Path(__file__).resolve().parents[1]
     config = json.loads((root / "configs/phase_9_student_distillation.json").read_text(encoding="utf-8"))
-    assert config["schema_version"] == "1.3"
+    assert config["schema_version"] == "1.4"
     ladder = config["training"]["grounded_recovery_ladder"]
     assert ladder["official_order"][0] == "teacher_oracle_preflight"
     assert ladder["official_order"].index("progressive_kd") > ladder["official_order"].index("full_oracle_sft")

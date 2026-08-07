@@ -26,6 +26,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--candidate", action="append", default=[], help="name=model_path[,adapter_path]")
     parser.add_argument("--assessment", type=Path, default=ROOT / "reports" / "PHASE_9B_ASSESSMENT.json")
     parser.add_argument("--gate", type=Path, default=ROOT / "reports" / "PHASE_9B_STOP_GATE.md")
+    parser.add_argument(
+        "--locked-strategy",
+        choices=("prompted_reconstruction", "trained_reconstruction", "direct_candidate"),
+        default=None,
+        help="After DEV selection, prevent sealed TEST evidence from switching to a different strategy.",
+    )
     return parser.parse_args()
 
 
@@ -99,7 +105,13 @@ def _artifact_assignments(values: list[str]) -> dict[str, dict[str, str | None]]
     return result
 
 
-def assess(summary: dict[str, Any], config: dict[str, Any], artifacts: dict[str, dict[str, str | None]]) -> dict[str, Any]:
+def assess(
+    summary: dict[str, Any],
+    config: dict[str, Any],
+    artifacts: dict[str, dict[str, str | None]],
+    *,
+    locked_strategy: str | None = None,
+) -> dict[str, Any]:
     strategies = summary.get("strategies") or {}
     pairwise = summary.get("pairwise") or {}
     raw = strategies.get("raw_replay") or {}
@@ -124,6 +136,14 @@ def assess(summary: dict[str, Any], config: dict[str, Any], artifacts: dict[str,
             ),
             "decision_accuracy_gain": _gain(decision_reference, candidate.get("reconstruction_decision_accuracy")),
             "grounding_gain": _gain(source_reference, candidate.get("source_id_recall")),
+            "counterfactual_success_gain": _gain(
+                (raw.get("counterfactual") or {}).get("both_functional_rate"),
+                (candidate.get("counterfactual") or {}).get("both_functional_rate"),
+            ),
+            "negative_transfer_expected_gain": _gain(
+                raw.get("negative_transfer_expected_success_rate"),
+                candidate.get("negative_transfer_expected_success_rate"),
+            ),
         }
         cost_components = {
             "latency_increase": _increase(
@@ -191,7 +211,12 @@ def assess(summary: dict[str, Any], config: dict[str, Any], artifacts: dict[str,
         ),
         reverse=True,
     )
-    recommended = ranked[0] if ranked and evaluations[ranked[0]]["eligible"] else None
+    if locked_strategy is not None:
+        if locked_strategy not in evaluations:
+            raise ValueError(f"Locked strategy {locked_strategy!r} is not present in the evaluation summary")
+        recommended = locked_strategy if evaluations[locked_strategy]["eligible"] else None
+    else:
+        recommended = ranked[0] if ranked and evaluations[ranked[0]]["eligible"] else None
     direct = evaluations.get("direct_candidate") or {}
     return {
         "schema_version": "1.0",
@@ -200,6 +225,7 @@ def assess(summary: dict[str, Any], config: dict[str, Any], artifacts: dict[str,
         "research_ready": bool(summary.get("research_ready")),
         "smoke_test": bool(summary.get("smoke_test")),
         "reference_strategy": "raw_replay",
+        "locked_strategy": locked_strategy,
         "strategies": evaluations,
         "ranked_candidates": ranked,
         "recommended_candidate": recommended,
@@ -273,7 +299,7 @@ def main() -> None:
     args = parse_args()
     summary = read_json(args.summary)
     config = read_json(args.config)
-    assessment = assess(summary, config, _artifact_assignments(args.candidate))
+    assessment = assess(summary, config, _artifact_assignments(args.candidate), locked_strategy=args.locked_strategy)
     assessment["evaluation_summary"] = str(args.summary)
     args.assessment.parent.mkdir(parents=True, exist_ok=True)
     write_json(args.assessment, assessment)

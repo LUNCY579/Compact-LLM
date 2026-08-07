@@ -146,8 +146,8 @@ def main() -> None:
     stage_e_status = "UNLOCKED" if stage_d.get("status") == "PASS" else "BLOCKED"
     packet = {
         "phase": "9_student_distillation",
-        "schema_version": "1.3",
-        "pipeline_revision": "phase9_grounded_recovery_v1_7_2",
+        "schema_version": "1.4",
+        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
         "stages": {
             "A": stage_a,
             "B": stage_b,

@@ -1,4 +1,17 @@
+## v1.7.4 dedicated reconstruction curriculum
+
+The default Phase 9B research corpus is now `data/phase_9b_memory_reconstruction/reconstruction_corpus_v1`. It supplies explicit `current_state`, memory `source_state`, validity conditions, five-way reconstruction targets, counterfactual pairs, curated DPO negatives, and evaluator calibration candidates. The authored 440/80/80 topic-family split is preserved: TRAIN supports SFT/KD/preference alignment, DEV selects and freezes one reconstruction strategy, and TEST is sealed until that freeze exists.
+
+Only approved reconstruction/answer targets are SFT data. Raw replay, over-rejection, wrong-source, and evaluator alternatives are negative examples for preference/evaluator work only. Unknown validity predicates fail closed rather than being executed. Full details are in `PHASE_9B_MEMORY_RECONSTRUCTION_CORPUS_INTEGRATION_v1.7.4.md`.
+
 # Contextual memory reconstruction — Phase 9B design
+
+
+## v1.7.3 corpus integration amendment
+
+`data/phase_9_student_distillation/rag_reasoning_v2` is the default Phase 9B source. Its stale/current, injection, conflict, missing-evidence, procedure, and ambiguity cases are converted into reconstruction candidates while preserving authored train/dev/test intent. Reconstruction first removes untrusted and superseded memories, evaluates `validity_conditions`, and only then detects unresolved conflicts among still-applicable sources. Consequently a superseded old fact plus a current replacement is normally `adapt`, not `conflict`.
+
+The integrated corpus is intentionally enriched with `current_state`, `source_state`, `validity_conditions`, `memory_type`, trust/version metadata, and source provenance where those concepts are applicable. Human-reviewed reconstruction JSON remains mandatory before training; the deterministic conversion is a conservative proposal, not an automatic label authority.
 
 ## Purpose
 

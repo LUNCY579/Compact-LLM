@@ -128,7 +128,7 @@ def test_phase9_functional_failure_has_cost_even_when_reference_is_equally_broke
 def test_runner_enforces_schema_12_and_teacher_preflight() -> None:
     root = Path(__file__).resolve().parents[1]
     runner = (root / "scripts/phase_9_student_distillation/run_phase_9.ps1").read_text(encoding="utf-8")
-    assert 'schema_version -ne "1.3"' in runner
+    assert 'schema_version -ne "1.4"' in runner
     assert "audit_phase_9_results.py" in runner
     assert "--require-usable-teacher" in runner
     assert "MaximumEvidenceTokens" in runner
@@ -139,9 +139,9 @@ def test_runner_enforces_schema_12_and_teacher_preflight() -> None:
 def test_teacher_candidate_resume_rejects_legacy_prompt_contract() -> None:
     root = Path(__file__).resolve().parents[1]
     source = (root / "scripts/phase_9_student_distillation/generate_teacher_data.py").read_text(encoding="utf-8")
-    assert 'TEACHER_PIPELINE_REVISION = "phase9_grounded_recovery_v1_7_2"' in source
+    assert 'TEACHER_PIPELINE_REVISION = "phase9_rag_reasoning_integration_v1_7_3"' in source
     assert "Existing teacher candidates are incompatible" in source
-    assert '"schema_version": "1.3"' in source
+    assert '"schema_version": "1.4"' in source
 
 
 def _quality_summary(score: float, weight_bytes: int, conditions: dict[str, object]) -> dict[str, object]:

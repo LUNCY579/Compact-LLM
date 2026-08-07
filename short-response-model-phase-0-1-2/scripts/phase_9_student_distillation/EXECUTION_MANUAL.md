@@ -1,4 +1,11 @@
-# Phase 9 execution manual — grounded recovery v1.7.2
+# Phase 9 execution manual — grounded recovery + RAG reasoning v1.7.3
+
+
+## v1.7.3 canonical corpus and sealed-test rule
+
+The official runner now defaults to `data/phase_9_student_distillation/rag_reasoning_v2`. The corpus validator must pass before the ladder starts. The authored split is preserved exactly: 392 train / 67 dev / 71 sealed test rows. Teacher preflight, warm initialization, the SFT sweep, Real-RAG diagnosis, and optional KD refinement all use **dev**. Only after a final SFT/KD artifact is selected on dev does the runner evaluate teacher, initialization, and the single frozen candidate on **test**.
+
+The integrated corpus includes supported extraction, multi-document support, tentative and ambiguous evidence, missing information, equal-authority conflicts, prompt injection, stale/current precedence, procedures, and social replies. Foundation rehearsal examples are deduplicated against both dev and test questions before mixing.
 
 ## Governing rule
 
@@ -33,8 +40,8 @@ Run the complete capability ladder without KD:
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Full `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit
 ```
@@ -49,8 +56,8 @@ After the overfit test and full Oracle SFT stage pass in the existing root:
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Full `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit `
   -ReuseExisting `
@@ -71,8 +78,8 @@ Use a fresh output root and do not pass `-ReuseExisting`:
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Preflight `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit
 ```
@@ -80,9 +87,9 @@ Use a fresh output root and do not pass `-ReuseExisting`:
 Inspect:
 
 ```text
-artifacts\phase_9_grounded_recovery_20260806\GROUNDED_RECOVERY_LADDER.md
-artifacts\phase_9_grounded_recovery_20260806\evaluation_teacher_oracle\summary.json
-artifacts\phase_9_grounded_recovery_20260806\evaluation_warm_initialization_oracle\summary.json
+artifacts\phase_9_grounded_recovery_v1_7_3\GROUNDED_RECOVERY_LADDER.md
+artifacts\phase_9_grounded_recovery_v1_7_3\evaluation_teacher_oracle\summary.json
+artifacts\phase_9_grounded_recovery_v1_7_3\evaluation_warm_initialization_oracle\summary.json
 ```
 
 The teacher must pass Stage A. A failure here means the prompt, evidence, answer contract, decoding path, teacher, or reviewed data must be corrected before student training.
@@ -95,8 +102,8 @@ Continue the same root deliberately:
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Overfit `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit `
   -ReuseExisting
@@ -120,8 +127,8 @@ These are **technical wiring criteria**, not universal production thresholds. Th
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Sweep `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit `
   -ReuseExisting
@@ -138,8 +145,8 @@ The official diagnostic sweep is intentionally small:
 Inspect:
 
 ```text
-artifacts\phase_9_grounded_recovery_20260806\warm_sft_sweep\SELECTION_REPORT.md
-artifacts\phase_9_grounded_recovery_20260806\warm_sft_sweep\selection.json
+artifacts\phase_9_grounded_recovery_v1_7_3\warm_sft_sweep\SELECTION_REPORT.md
+artifacts\phase_9_grounded_recovery_v1_7_3\warm_sft_sweep\selection.json
 ```
 
 Selection is based on Oracle capability relative to the **untrained warm initialization**, not on compression relative to a weak or zero-valued reference. An all-zero or denominator-invalid frontier produces `NO_VALID_QUALITY_FRONTIER`.
@@ -150,8 +157,8 @@ Selection is based on Oracle capability relative to the **untrained warm initial
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
   -Mode Full `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
-  -OutputRoot .\artifacts\phase_9_grounded_recovery_20260806 `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
+  -OutputRoot .\artifacts\phase_9_grounded_recovery_v1_7_3 `
   -UseLora `
   -Teacher4Bit `
   -ReuseExisting
@@ -200,9 +207,9 @@ The ordinary Phase 9 runner now locks `-StudentSuite Hybrid` until the grounded 
   -Mode Pilot `
   -StudentSuite Hybrid `
   -TeacherModel .\artifacts\phase_4_model_soups_phase2c_balanced_training\accepted_model `
-  -ReviewedTeacherData .\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl `
+  -ReviewedTeacherData .\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl `
   -OutputRoot .\artifacts\phase_9_hybrid_after_grounded_proof `
-  -GroundedRecoveryGate .\artifacts\phase_9_grounded_recovery_20260806\grounded_recovery_ladder.json `
+  -GroundedRecoveryGate .\artifacts\phase_9_grounded_recovery_v1_7_3\grounded_recovery_ladder.json `
   -AcknowledgeRandomControl `
   -UseLora `
   -Teacher4Bit

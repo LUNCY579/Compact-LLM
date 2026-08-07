@@ -1,3 +1,7 @@
+## v1.7.4 Phase 9B dedicated memory-reconstruction corpus
+
+Phase 9 remains the prerequisite evidence-use/abstention curriculum. Phase 9B now has a dedicated source-state reconstruction corpus with explicit current state and validity conditions. It trains and evaluates ACCEPT / ADAPT / REJECT / CONFLICT / INSUFFICIENT behavior, counterfactual state sensitivity, negative-transfer reduction, and optional reconstruction preference alignment. DEV freezes one strategy before sealed TEST. Phase 10 may consume the human-approved direct-compatible Phase 9B checkpoint; Phase 11 may execute and measure the approved reconstruction behavior at inference.
+
 # Project scripts by phase
 
 | Phase | Folder | Main responsibility | Downstream artifact |
@@ -18,6 +22,16 @@
 | 9B | `phase_9b_memory_reconstruction` | Add source-state-aware applicability reconstruction between retrieval and answer generation; train and compare two-pass and one-pass behavior. | Accepted reconstruction-aware student/runtime policy plus Phase 9 rollback. |
 | 10 | `phase_10_student_architecture` | Physically reduce the approved student, recover promising candidates under the original teacher, and compare compact challengers. | Accepted Phase 10 checkpoint/reference plus rollback. |
 | 11 | `phase_11_production_rag` | Build the immutable RAG runtime, calibrate answerability, quantize/benchmark, and package the approved deployment. | Measured production release package and manifest. |
+
+## v1.7.3 evidence-corpus contract
+
+Phases 9–11 share `data/phase_9_student_distillation/rag_reasoning_v2` as the canonical evidence-reasoning corpus. Its authored topic-family split is preserved: 392 training rows, 67 development rows, and 71 sealed test rows. Training/hyperparameter/retrieval calibration may use train/dev only. The sealed test cannot select SFT, KD, reconstruction, pruning, recovery, or answerability settings.
+
+- Phase 9 trains evidence use and abstention from the train split, selects on dev, and evaluates one frozen candidate on test.
+- Phase 9B derives source-state-aware ACCEPT/ADAPT/REJECT/CONFLICT/INSUFFICIENT examples from the same train/dev structure; untrusted and superseded memories are filtered before equal-authority conflict detection.
+- Phase 10 performs structure/recovery/challenger selection on dev, then evaluates one frozen final architecture on test.
+- Phase 11 calibrates the runtime answerability gate on dev and uses test only for the final production-runtime comparison.
+- Preference alternatives live under `rag_reasoning_v2/preferences`; evaluator calibration/heldout examples live under `rag_reasoning_v2/evaluator`. Neither is silently mixed into ordinary SFT.
 
 ## Responsibility boundaries
 

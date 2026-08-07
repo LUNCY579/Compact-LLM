@@ -1,4 +1,37 @@
+## v1.7.4 quick path
+
+The dedicated reconstruction corpus is now the default. A normal research run no longer requires manually supplying a reviewed reconstruction file.
+
+```powershell
+.\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1 `
+  -Mode Full `
+  -UseLora `
+  -Teacher4Bit `
+  -OutputRoot .\artifacts\phase_9b_memory_reconstruction_v1_7_4
+```
+
+Optional curated reconstruction preference alignment is enabled only after SFT/KD:
+
+```powershell
+.\scripts\phase_9b_memory_reconstruction\run_phase_9b.ps1 `
+  -Mode Full `
+  -UseLora `
+  -Teacher4Bit `
+  -RunPreferenceAlignment `
+  -ReuseExisting `
+  -OutputRoot .\artifacts\phase_9b_memory_reconstruction_v1_7_4
+```
+
+DEV selects the strategy. `phase_9b_dev_selection.json` freezes it before the runner touches the sealed TEST split. `Prepare` remains available when you want to create additional project-specific human-review candidates from Phase 9 RAG memories; it no longer replaces the integrated curriculum.
+
 # Phase 9B execution manual
+
+
+## v1.7.3 RAG-reasoning source corpus
+
+Phase 9B now defaults to the Phase 9 `rag_reasoning_v2` prompt/memory corpus. The candidate builder preserves authored `intended_split` metadata and performs applicability checks in this order: reject untrusted/injection memories, invalidate superseded memories for the current scope, apply explicit validity conditions, then detect conflicts among the remaining applicable memories. This prevents stale/current evidence from being mislabeled as an equal-authority conflict.
+
+The corpus is a reconstruction seed rather than an automatic ground-truth reconstruction set: generated ACCEPT/ADAPT/REJECT/CONFLICT/INSUFFICIENT targets still require human review before Phase 9B training.
 
 ## Prerequisites
 

@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run the Phase 9 grounded-recovery capability ladder introduced in v1.7.2.
+Run the Phase 9 grounded-recovery capability ladder integrated with RAG Reasoning Corpus v2.1 in v1.7.3.
 
 .DESCRIPTION
 The workflow proves one warm 344M depth-copy student before any narrow-model
@@ -11,12 +11,13 @@ locked until the ladder JSON reports architecture_sweep_unlocked=true.
 #>
 param(
     [ValidateSet("Preflight", "Overfit", "Sweep", "Full")][string]$Mode = "Preflight",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
     [string]$TeacherModel = "",
-    [string]$ReviewedTeacherData = "",
-    [string]$Knowledge = ".\data\phase_9_student_distillation\knowledge.sample.jsonl",
-    [string]$Procedures = ".\data\phase_9_student_distillation\procedures.sample.jsonl",
+    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl",
+    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
+    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v2\procedures.jsonl",
     [string]$FoundationPrompts = ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
-    [string]$OutputRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_2",
+    [string]$OutputRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_3",
     [int]$MaximumEvidenceTokens = 384,
     [int]$Seed = 42,
     [int]$OverfitRows = 18,
@@ -35,6 +36,13 @@ $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
+
+if (Test-Path (Join-Path $RagReasoningCorpusRoot "manifests\dataset_manifest.json")) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the integrated RAG reasoning corpus..."
+    & python .\scripts\phase_9_student_distillation\validate_rag_reasoning_corpus.py --corpus-root $RagReasoningCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated RAG reasoning corpus validation failed." }
+}
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
@@ -188,6 +196,7 @@ if (-not (Test-Path $TrainFile)) {
         "--reviewed-input", $ReviewedTeacherData,
         "--output-dir", $DatasetRoot,
         "--seed", "$Seed",
+        "--split-policy", "intended",
         "--require-research-ready"
     )
 }
@@ -234,6 +243,8 @@ if (-not (Test-Path $MixedCurriculum)) {
         "--output", $MixedCurriculum,
         "--primary-repeat", "3",
         "--foundation-repeat", "1",
+        "--holdout", $DevFile,
+        "--holdout", $TestFile,
         "--seed", "$Seed"
     )
 }
@@ -257,8 +268,10 @@ if (-not (Test-Path $Calibration)) {
 
 $TeacherOracle = Join-Path $OutputRoot "evaluation_teacher_oracle"
 $WarmOracle = Join-Path $OutputRoot "evaluation_warm_initialization_oracle"
-Invoke-RagEvaluation "[Stage A] Teacher with Oracle evidence..." $TeacherModel "" $TestFile $TeacherOracle "oracle_rag,adversarial_passthrough_rag"
-Invoke-RagEvaluation "[Stage B] Untrained warm student with Oracle evidence..." $WarmInitialization "" $TestFile $WarmOracle "oracle_rag,adversarial_passthrough_rag"
+# Dev is the only selection/preflight benchmark. Test remains sealed until a
+# final SFT/KD candidate has already been selected.
+Invoke-RagEvaluation "[Stage A] Teacher with Oracle evidence on dev..." $TeacherModel "" $DevFile $TeacherOracle "oracle_rag,adversarial_passthrough_rag"
+Invoke-RagEvaluation "[Stage B] Untrained warm student with Oracle evidence on dev..." $WarmInitialization "" $DevFile $WarmOracle "oracle_rag,adversarial_passthrough_rag"
 Invoke-PythonStep "[Ladder] Recording teacher and initialization stages..." @(
     ".\scripts\phase_9_student_distillation\check_grounded_recovery_ladder.py",
     "--teacher-summary", (Join-Path $TeacherOracle "summary.json"),
@@ -336,7 +349,7 @@ foreach ($Spec in $SweepSpecs) {
     Invoke-SftTraining "[Stage D] SFT sweep $($Spec.Name)..." $BalancedCurriculum $DevFile $TrainingRoot $Spec.LearningRate $Spec.Steps $Spec.Rank
     $Artifact = Get-TrainedArtifact $TrainingRoot
     $EvaluationRoot = Join-Path $CandidateRoot "evaluation_oracle"
-    Invoke-RagEvaluation "[Stage D] Oracle evaluation $($Spec.Name)..." $Artifact.Model $Artifact.Adapter $TestFile $EvaluationRoot "oracle_rag,adversarial_passthrough_rag"
+    Invoke-RagEvaluation "[Stage D] Dev Oracle evaluation $($Spec.Name)..." $Artifact.Model $Artifact.Adapter $DevFile $EvaluationRoot "oracle_rag,adversarial_passthrough_rag"
     $SelectionArgs += @("--candidate", "$($Spec.Name)=$(Join-Path $EvaluationRoot 'summary.json')")
 }
 if (Should-Run (Join-Path $SweepRoot "selection.json")) {
@@ -367,17 +380,22 @@ if ($Mode -eq "Sweep") {
 
 $SelectedModel = [string]$Selection.selected.model
 $SelectedAdapter = [string]$Selection.selected.adapter
-$TeacherFull = Join-Path $OutputRoot "evaluation_teacher_full"
-$SftFull = Join-Path $OutputRoot "evaluation_selected_sft_full"
-Invoke-RagEvaluation "[Stage E] Full teacher reference evaluation..." $TeacherModel "" $TestFile $TeacherFull "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
-Invoke-RagEvaluation "[Stage E] Full selected-SFT evaluation including Real RAG..." $SelectedModel $SelectedAdapter $TestFile $SftFull "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
 
-$GateArgs = @(
-    ".\scripts\phase_9_student_distillation\check_phase_9_gate.py",
-    "--teacher-summary", (Join-Path $TeacherFull "summary.json"),
-    "--initialization", "single=$(Join-Path $WarmOracle 'summary.json')",
-    "--candidate", "sft=$(Join-Path $SftFull 'summary.json')"
+# Stage E first compares refinements on DEV with the complete RAG path. This is
+# the last model-selection point; test remains untouched until after this block.
+$SftDevFull = Join-Path $OutputRoot "evaluation_selected_sft_dev_full"
+Invoke-RagEvaluation "[Stage E] Full selected-SFT evaluation on DEV including Real RAG..." $SelectedModel $SelectedAdapter $DevFile $SftDevFull "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+
+$FinalDevSelection = Join-Path $OutputRoot "final_dev_selection.json"
+$FinalDevReport = Join-Path $OutputRoot "FINAL_DEV_SELECTION.md"
+$FinalSelectionArgs = @(
+    ".\scripts\phase_9_student_distillation\select_grounded_sft_candidate.py",
+    "--initialization-summary", (Join-Path $WarmOracle "summary.json"),
+    "--candidate", "sft=$(Join-Path $SftDevFull 'summary.json')",
+    "--out", $FinalDevSelection,
+    "--report", $FinalDevReport
 )
+
 if ($RunKD) {
     $KdRoot = Join-Path $OutputRoot "progressive_kd_from_selected_sft"
     $KdManifest = Join-Path $KdRoot "training_manifest.json"
@@ -408,13 +426,39 @@ if ($RunKD) {
         Invoke-PythonStep "[KD] Progressive KD from the proven SFT artifact..." $args
     }
     $KdArtifact = Get-TrainedArtifact $KdRoot
-    $KdFull = Join-Path $OutputRoot "evaluation_progressive_kd_full"
-    Invoke-RagEvaluation "[KD] Full KD evaluation..." $KdArtifact.Model $KdArtifact.Adapter $TestFile $KdFull "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
-    $GateArgs += @("--candidate", "progressive_kd=$(Join-Path $KdFull 'summary.json')")
+    $KdDevFull = Join-Path $OutputRoot "evaluation_progressive_kd_dev_full"
+    Invoke-RagEvaluation "[KD] Full DEV KD evaluation..." $KdArtifact.Model $KdArtifact.Adapter $DevFile $KdDevFull "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+    $FinalSelectionArgs += @("--candidate", "progressive_kd=$(Join-Path $KdDevFull 'summary.json')")
 }
+
+if (Should-Run $FinalDevSelection) {
+    Invoke-PythonStep "[Stage E] Selecting the final refinement on DEV only..." $FinalSelectionArgs
+}
+$FinalSelection = Get-Content -Raw -Path $FinalDevSelection | ConvertFrom-Json
+if ($null -eq $FinalSelection.selected) { throw "No valid final Phase 9 candidate was selected on dev." }
+$FinalName = [string]$FinalSelection.selected.name
+$FinalModel = [string]$FinalSelection.selected.model
+$FinalAdapter = [string]$FinalSelection.selected.adapter
+
+# SEALED TEST: only now evaluate the already-selected final candidate. Teacher
+# and initialization are references, never tuning signals after this point.
+$TeacherTest = Join-Path $OutputRoot "evaluation_teacher_test_final"
+$WarmTest = Join-Path $OutputRoot "evaluation_warm_initialization_test_final"
+$FinalTest = Join-Path $OutputRoot "evaluation_selected_final_test"
+Invoke-RagEvaluation "[Sealed Test] Teacher reference..." $TeacherModel "" $TestFile $TeacherTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+Invoke-RagEvaluation "[Sealed Test] Warm initialization reference..." $WarmInitialization "" $TestFile $WarmTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+Invoke-RagEvaluation "[Sealed Test] Final selected candidate $FinalName..." $FinalModel $FinalAdapter $TestFile $FinalTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+
+$GateArgs = @(
+    ".\scripts\phase_9_student_distillation\check_phase_9_gate.py",
+    "--teacher-summary", (Join-Path $TeacherTest "summary.json"),
+    "--initialization", "warm=$(Join-Path $WarmTest 'summary.json')",
+    "--candidate", "$FinalName=$(Join-Path $FinalTest 'summary.json')"
+)
 Invoke-PythonStep "[Final] Building the Phase 9 assessment and pending human gate..." $GateArgs
 Write-Host ""
 Write-Host "Grounded recovery Full run completed."
 Write-Host "Ladder: $LadderReport"
-Write-Host "Selection: $(Join-Path $SweepRoot 'SELECTION_REPORT.md')"
+Write-Host "SFT sweep selection: $(Join-Path $SweepRoot 'SELECTION_REPORT.md')"
+Write-Host "Final dev selection: $FinalDevReport"
 Write-Host "Phase 9 gate: reports\PHASE_9_STOP_GATE.md"

@@ -24,8 +24,8 @@ from scripts.phase_9_student_distillation.phase9_common import (
     route_mode,
 )
 
-PHASE_9B_SCHEMA_VERSION = "1.0"
-PIPELINE_REVISION = "phase9b_memory_reconstruction_v1"
+PHASE_9B_SCHEMA_VERSION = "1.1"
+PIPELINE_REVISION = "phase9b_memory_reconstruction_v1_7_4"
 DECISIONS = ("accept", "adapt", "reject", "conflict", "insufficient")
 CONFIDENCE_LEVELS = ("high", "medium", "low")
 
@@ -40,6 +40,19 @@ class ParsedReconstruction:
     valid: bool
     error: str | None
     raw_text: str
+
+
+@dataclass(frozen=True)
+class ConditionEvaluation:
+    """Result of evaluating a memory's explicit applicability contract.
+
+    ``status`` is one of ``valid``, ``invalid``, or ``unknown``. Unknown is
+    intentionally distinct from invalid: missing current-state fields should
+    lead to insufficiency rather than a confident rejection.
+    """
+
+    status: str
+    reasons: tuple[str, ...]
 
 
 def _nonempty(value: Any) -> str:
@@ -386,34 +399,183 @@ def parse_reconstruction_output(text: str) -> ParsedReconstruction:
     return ParsedReconstruction(normalized, True, None, raw)
 
 
-def _condition_mismatches(memory: dict[str, Any], current_state: dict[str, Any]) -> list[str]:
-    mismatches: list[str] = []
-    conditions = memory.get("validity_conditions") or {}
-    for key, expected in conditions.items():
-        if key == "comparison":
-            if expected == "required_vram_gt_available_vram":
-                required = current_state.get("required_vram_gb")
-                available = current_state.get("available_vram_gb")
-                if required is None or available is None or not float(required) > float(available):
-                    mismatches.append("required_vram_gt_available_vram")
-            continue
-        if key not in current_state:
-            mismatches.append(f"missing_current_state:{key}")
-        elif current_state.get(key) != expected:
-            mismatches.append(f"{key}:{current_state.get(key)!r}!={expected!r}")
-    return mismatches
+def _compare_expected(current_state: dict[str, Any], key: str, expected: Any) -> ConditionEvaluation:
+    if key not in current_state:
+        return ConditionEvaluation("unknown", (f"missing_current_state:{key}",))
+    actual = current_state.get(key)
+    if actual == expected:
+        return ConditionEvaluation("valid", ())
+    return ConditionEvaluation("invalid", (f"{key}:{actual!r}!={expected!r}",))
 
+
+def _numeric_predicate(current_state: dict[str, Any], *, left: str, op: str, right: str) -> ConditionEvaluation:
+    missing = [key for key in (left, right) if key not in current_state]
+    if missing:
+        return ConditionEvaluation("unknown", tuple(f"missing_current_state:{key}" for key in missing))
+    try:
+        lhs = float(current_state[left])
+        rhs = float(current_state[right])
+    except (TypeError, ValueError):
+        return ConditionEvaluation("unknown", (f"non_numeric_predicate_inputs:{left},{right}",))
+    ok = {
+        "<": lhs < rhs,
+        "<=": lhs <= rhs,
+        ">": lhs > rhs,
+        ">=": lhs >= rhs,
+    }[op]
+    return ConditionEvaluation("valid" if ok else "invalid", (() if ok else (f"predicate_false:{left}{op}{right}",)))
+
+
+def _evaluate_named_predicate(predicate: str, current_state: dict[str, Any]) -> ConditionEvaluation:
+    normalized = " ".join(str(predicate or "").strip().split())
+    numeric = {
+        "candidate_price <= max_price": ("candidate_price", "<=", "max_price"),
+        "required_vram_gb > available_vram_gb": ("required_vram_gb", ">", "available_vram_gb"),
+        "required_vram_gb <= available_vram_gb": ("required_vram_gb", "<=", "available_vram_gb"),
+        "stock_count < reorder_point": ("stock_count", "<", "reorder_point"),
+        "stock_count >= reorder_point": ("stock_count", ">=", "reorder_point"),
+    }
+    if normalized in numeric:
+        left, op, right = numeric[normalized]
+        return _numeric_predicate(current_state, left=left, op=op, right=right)
+    if normalized == "all_required_attributes_match":
+        pairs: list[tuple[str, str]] = []
+        for key in sorted(current_state):
+            if not key.startswith("required_"):
+                continue
+            suffix = key[len("required_") :]
+            candidate_key = f"candidate_{suffix}"
+            if candidate_key in current_state:
+                pairs.append((key, candidate_key))
+        if not pairs:
+            return ConditionEvaluation("unknown", ("predicate_inputs_missing:all_required_attributes_match",))
+        mismatches = [
+            f"{candidate}!={required}"
+            for required, candidate in pairs
+            if current_state.get(candidate) != current_state.get(required)
+        ]
+        return ConditionEvaluation("invalid" if mismatches else "valid", tuple(mismatches))
+    # Unknown free-form predicates must never be silently executed. Treat them as
+    # unresolved so the caller fails closed to INSUFFICIENT rather than guessing.
+    return ConditionEvaluation("unknown", (f"unsupported_predicate:{normalized or '<empty>'}",))
+
+
+def _combine_all(results: Sequence[ConditionEvaluation]) -> ConditionEvaluation:
+    reasons = tuple(reason for result in results for reason in result.reasons)
+    if any(result.status == "invalid" for result in results):
+        return ConditionEvaluation("invalid", reasons)
+    if any(result.status == "unknown" for result in results):
+        return ConditionEvaluation("unknown", reasons)
+    return ConditionEvaluation("valid", reasons)
+
+
+def _combine_any(results: Sequence[ConditionEvaluation]) -> ConditionEvaluation:
+    if any(result.status == "valid" for result in results):
+        return ConditionEvaluation("valid", ())
+    reasons = tuple(reason for result in results for reason in result.reasons)
+    if any(result.status == "unknown" for result in results):
+        return ConditionEvaluation("unknown", reasons)
+    return ConditionEvaluation("invalid", reasons)
+
+
+def evaluate_validity_conditions(conditions: dict[str, Any], current_state: dict[str, Any]) -> ConditionEvaluation:
+    """Evaluate the bounded Phase 9B validity-condition DSL without ``eval``.
+
+    Supported forms:
+
+    * ``{"all": {field: value, ...}}``
+    * ``{"any": [{field: value}, ...]}``
+    * ``{"predicate": "candidate_price <= max_price"}`` and the other
+      repository-listed predicates
+    * ``{"item": "name"}`` as an additional equality constraint
+    * legacy direct equality mappings and the old ``comparison`` key
+
+    Missing state is ``unknown``. A false explicit premise is ``invalid``.
+    """
+
+    if not conditions:
+        return ConditionEvaluation("valid", ())
+    if not isinstance(conditions, dict):
+        return ConditionEvaluation("unknown", ("invalid_validity_conditions_schema",))
+
+    parts: list[ConditionEvaluation] = []
+    handled: set[str] = set()
+
+    if "all" in conditions:
+        handled.add("all")
+        mapping = conditions.get("all")
+        if not isinstance(mapping, dict):
+            parts.append(ConditionEvaluation("unknown", ("invalid_all_condition",)))
+        else:
+            parts.append(_combine_all([_compare_expected(current_state, key, expected) for key, expected in mapping.items()]))
+
+    if "any" in conditions:
+        handled.add("any")
+        options = conditions.get("any")
+        if not isinstance(options, list) or not options:
+            parts.append(ConditionEvaluation("unknown", ("invalid_any_condition",)))
+        else:
+            option_results: list[ConditionEvaluation] = []
+            for index, option in enumerate(options):
+                if not isinstance(option, dict):
+                    option_results.append(ConditionEvaluation("unknown", (f"invalid_any_option:{index}",)))
+                    continue
+                option_results.append(_combine_all([_compare_expected(current_state, key, expected) for key, expected in option.items()]))
+            parts.append(_combine_any(option_results))
+
+    if "predicate" in conditions:
+        handled.add("predicate")
+        parts.append(_evaluate_named_predicate(str(conditions.get("predicate") or ""), current_state))
+
+    if "item" in conditions:
+        handled.add("item")
+        parts.append(_compare_expected(current_state, "item", conditions.get("item")))
+
+    if "comparison" in conditions:
+        handled.add("comparison")
+        comparison = str(conditions.get("comparison") or "")
+        legacy = {
+            "required_vram_gt_available_vram": "required_vram_gb > available_vram_gb",
+            "required_vram_lte_available_vram": "required_vram_gb <= available_vram_gb",
+        }
+        parts.append(_evaluate_named_predicate(legacy.get(comparison, comparison), current_state))
+
+    # Backward compatibility for the pre-v1.7.4 direct-mapping schema.
+    for key, expected in conditions.items():
+        if key in handled:
+            continue
+        parts.append(_compare_expected(current_state, key, expected))
+
+    return _combine_all(parts)
+
+
+def _source_state_differences(memory: dict[str, Any], current_state: dict[str, Any]) -> list[str]:
+    """Return overlapping source/current fields whose values changed.
+
+    These differences do not automatically invalidate a memory. They are useful
+    evidence that an otherwise applicable principle may require ADAPT rather than
+    verbatim ACCEPT.
+    """
+
+    source_state = memory.get("source_state") or {}
+    return [
+        f"{key}:{source_state.get(key)!r}->{current_state.get(key)!r}"
+        for key in sorted(set(source_state) & set(current_state))
+        if source_state.get(key) != current_state.get(key)
+    ]
 
 def deterministic_reconstruction(
     *,
     current_state: dict[str, Any],
     memories: Sequence[dict[str, Any]],
 ) -> dict[str, Any]:
-    """Conservative metadata-only baseline used for corpus seeding and tests.
+    """Conservative metadata baseline used for seeding, smoke tests, and audit.
 
-    It is intentionally *not* a semantic reasoner. It can detect explicit
-    structured conflicts, trust/injection problems, and validity-condition
-    mismatches. A model or human must handle free-text applicability.
+    It deliberately remains weaker than the learned reconstructor. The baseline
+    is nevertheless state-aware in v1.7.4: it understands the repository's
+    bounded validity-condition DSL, distinguishes unknown state from false
+    premises, rejects untrusted/instruction-like memory, and detects conflict
+    only after applicability filtering.
     """
 
     normalized = [validate_memory_record(item) for item in memories]
@@ -428,32 +590,77 @@ def deterministic_reconstruction(
                 "confidence": "high",
             }
         )
-    if detect_structured_conflict(normalized):
+
+    valid: list[dict[str, Any]] = []
+    invalid: list[dict[str, Any]] = []
+    unknown: list[dict[str, Any]] = []
+    invalid_reasons: list[str] = []
+    unknown_reasons: list[str] = []
+    adaptation_reasons: list[str] = []
+
+    for memory in normalized:
+        injection = detect_prompt_injection(memory["text"])
+        trust = memory["trust_level"]
+        if trust == "untrusted" or injection:
+            invalid.append(memory)
+            invalid_reasons.append(f"{memory['memory_id']}:untrusted_or_instruction_like")
+            continue
+        if trust == "superseded" and current_state.get("requested_temporal_scope") != "historical":
+            invalid.append(memory)
+            invalid_reasons.append(f"{memory['memory_id']}:superseded_for_current_scope")
+            continue
+
+        # Goal is a high-value applicability precondition even when an older
+        # memory schema omitted it from validity_conditions. A changed goal is a
+        # classic negative-transfer case and should not be silently adapted.
+        source_goal = (memory.get("source_state") or {}).get("goal")
+        current_goal = current_state.get("goal")
+        if source_goal is not None and current_goal is not None and source_goal != current_goal:
+            invalid.append(memory)
+            invalid_reasons.append(
+                f"{memory['memory_id']}:goal:{current_goal!r}!={source_goal!r}"
+            )
+            continue
+
+        condition = evaluate_validity_conditions(memory.get("validity_conditions") or {}, current_state)
+        if condition.status == "invalid":
+            invalid.append(memory)
+            invalid_reasons.extend(f"{memory['memory_id']}:{reason}" for reason in condition.reasons)
+            continue
+        if condition.status == "unknown":
+            unknown.append(memory)
+            unknown_reasons.extend(f"{memory['memory_id']}:{reason}" for reason in condition.reasons)
+            continue
+
+        diffs = _source_state_differences(memory, current_state)
+        if diffs:
+            adaptation_reasons.extend(f"{memory['memory_id']}:source_state_changed:{reason}" for reason in diffs)
+        valid.append(memory)
+
+    if detect_structured_conflict(valid):
         return normalize_reconstruction_target(
             {
                 "decision": "conflict",
-                "source_ids": [item["memory_id"] for item in normalized],
+                "source_ids": [item["memory_id"] for item in valid],
                 "applicable_facts": [],
-                "invalid_assumptions": [],
-                "guidance": "The retrieved memories contain unresolved conflicting claims.",
+                "invalid_assumptions": [*invalid_reasons, *unknown_reasons],
+                "guidance": "The applicable retrieved memories contain unresolved conflicting claims.",
                 "confidence": "high",
             }
         )
 
-    valid: list[dict[str, Any]] = []
-    invalid_reasons: list[str] = []
-    for memory in normalized:
-        injection = detect_prompt_injection(memory["text"])
-        if memory["trust_level"] == "untrusted" or injection:
-            invalid_reasons.append(f"{memory['memory_id']}:untrusted_or_instruction_like")
-            continue
-        mismatches = _condition_mismatches(memory, current_state)
-        if mismatches:
-            invalid_reasons.extend(f"{memory['memory_id']}:{reason}" for reason in mismatches)
-            continue
-        valid.append(memory)
-
     if not valid:
+        if unknown:
+            return normalize_reconstruction_target(
+                {
+                    "decision": "insufficient",
+                    "source_ids": [],
+                    "applicable_facts": [],
+                    "invalid_assumptions": [*invalid_reasons, *unknown_reasons],
+                    "guidance": "",
+                    "confidence": "high",
+                }
+            )
         return normalize_reconstruction_target(
             {
                 "decision": "reject",
@@ -465,18 +672,20 @@ def deterministic_reconstruction(
             }
         )
 
-    decision = "adapt" if len(valid) < len(normalized) else "accept"
+    # Filtering a malicious/stale/inapplicable companion memory, or carrying a
+    # reusable principle across changed source-state values, means reconstruction
+    # performed work and is therefore ADAPT. Pure state match remains ACCEPT.
+    decision = "adapt" if invalid or unknown or adaptation_reasons else "accept"
     return normalize_reconstruction_target(
         {
             "decision": decision,
             "source_ids": [item["memory_id"] for item in valid],
             "applicable_facts": [item["text"] for item in valid],
-            "invalid_assumptions": invalid_reasons,
+            "invalid_assumptions": [*invalid_reasons, *unknown_reasons, *adaptation_reasons],
             "guidance": " ".join(item["text"] for item in valid),
-            "confidence": "medium",
+            "confidence": "medium" if decision == "adapt" else "high",
         }
     )
-
 
 def decision_accuracy(expected: dict[str, Any], predicted: dict[str, Any]) -> bool:
     return normalize_reconstruction_target(expected)["decision"] == normalize_reconstruction_target(predicted)["decision"]
@@ -496,6 +705,96 @@ def source_id_precision(expected: dict[str, Any], predicted: dict[str, Any]) -> 
     if not predicted_ids:
         return None
     return len(expected_ids & predicted_ids) / len(predicted_ids)
+
+
+def _token_set(value: Any) -> set[str]:
+    if isinstance(value, list):
+        text = " ".join(str(item) for item in value)
+    else:
+        text = str(value or "")
+    return set(re.findall(r"[a-z0-9_.:/+-]+", text.casefold()))
+
+
+def _set_f1(expected: set[str], predicted: set[str]) -> float:
+    if not expected and not predicted:
+        return 1.0
+    if not expected or not predicted:
+        return 0.0
+    overlap = len(expected & predicted)
+    precision = overlap / len(predicted)
+    recall = overlap / len(expected)
+    return 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+
+
+def reconstruction_candidate_score(
+    expected: dict[str, Any],
+    candidate: dict[str, Any],
+    *,
+    memories: Sequence[dict[str, Any]] | None = None,
+) -> dict[str, Any]:
+    """Bounded structural/semantic diagnostic for reconstruction candidates.
+
+    This is not a replacement for human/model-output evaluation. It provides a
+    deterministic calibration signal for the dedicated corpus's approved and
+    deliberately flawed candidate reconstructions.
+    """
+
+    exp = normalize_reconstruction_target(expected)
+    try:
+        pred = normalize_reconstruction_target(candidate)
+        parse_valid = True
+    except ValueError:
+        pred = normalize_reconstruction_target(
+            {
+                "decision": "insufficient",
+                "source_ids": [],
+                "applicable_facts": [],
+                "invalid_assumptions": [],
+                "guidance": "",
+                "confidence": "low",
+            }
+        )
+        parse_valid = False
+
+    decision = 1.0 if exp["decision"] == pred["decision"] else 0.0
+    source = _set_f1(set(exp["source_ids"]), set(pred["source_ids"]))
+    facts = _set_f1(_token_set(exp["applicable_facts"]), _token_set(pred["applicable_facts"]))
+    assumptions = _set_f1(_token_set(exp["invalid_assumptions"]), _token_set(pred["invalid_assumptions"]))
+    guidance = _set_f1(_token_set(exp["guidance"]), _token_set(pred["guidance"]))
+    confidence = 1.0 if exp["confidence"] == pred["confidence"] else 0.0
+
+    score = (
+        0.35 * decision
+        + 0.20 * source
+        + 0.15 * facts
+        + 0.10 * assumptions
+        + 0.15 * guidance
+        + 0.05 * confidence
+    )
+    replay_detected = False
+    if memories and pred["guidance"] and exp["guidance"] != pred["guidance"]:
+        normalized_guidance = " ".join(pred["guidance"].casefold().split())
+        memory_texts = {
+            " ".join(validate_memory_record(memory)["text"].casefold().split())
+            for memory in memories
+        }
+        if normalized_guidance in memory_texts:
+            replay_detected = True
+            score *= 0.6
+    if not parse_valid:
+        score *= 0.25
+    score = max(0.0, min(1.0, score))
+    return {
+        "score": score,
+        "parse_valid": parse_valid,
+        "decision_match": decision,
+        "source_id_f1": source,
+        "applicable_fact_f1": facts,
+        "invalid_assumption_f1": assumptions,
+        "guidance_f1": guidance,
+        "confidence_match": confidence,
+        "verbatim_replay_detected": replay_detected,
+    }
 
 
 def safe_mean(values: Iterable[float | None]) -> float | None:

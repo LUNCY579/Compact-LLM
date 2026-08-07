@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.2",
   "experiment": {
-    "name": "production_rag_student_release_v1",
+    "name": "production_rag_student_release_v1_7_4",
     "seed": 42,
     "primary_opportunity": "measured_total_process_memory_reduction"
   },
@@ -41,7 +41,17 @@
     "current_state_request_field": "current_state",
     "preserve_source_ids": true,
     "evidence_is_data_not_instruction": true,
-    "measure_full_two_pass_cost": true
+    "measure_full_two_pass_cost": true,
+    "training_corpus_root": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1",
+    "runtime_benchmark_policy": "measure reconstruction as a full additional inference pass when enabled",
+    "trained_mode_requires_approved_phase9b_behavior": "required by workflow/handoff, not inferred from a filename",
+    "validity_condition_dsl": [
+      "all",
+      "any",
+      "predicate",
+      "item",
+      "legacy_direct_mapping"
+    ]
   },
   "generation": {
     "max_sequence_length": 1024,
@@ -80,12 +90,24 @@
       "faithfulness",
       "abstention",
       "routing",
-      "rollback"
+      "rollback",
+      "memory_reconstruction_validity",
+      "memory_reconstruction_latency",
+      "memory_reconstruction_prompt_tokens",
+      "memory_reconstruction_generated_tokens"
     ]
   },
   "release": {
     "package_mode": "manifest",
     "human_gate_required": true,
     "dense_release_is_valid_when_quantization_has_no_net_measured_gain": true
+  },
+  "data_contract": {
+    "rag_reasoning_corpus_root": "data/phase_9_student_distillation/rag_reasoning_v2",
+    "knowledge_file": "data/phase_9_student_distillation/rag_reasoning_v2/knowledge.jsonl",
+    "procedures_file": "data/phase_9_student_distillation/rag_reasoning_v2/procedures.jsonl",
+    "answerability_calibration_split": "dev",
+    "sealed_runtime_benchmark_split": "test",
+    "memory_reconstruction_corpus_root": "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1"
   }
 }

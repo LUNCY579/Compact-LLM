@@ -12,13 +12,16 @@ release gate. Packaging is a separate post-approval action.
 #>
 param(
     [ValidateSet("Prepare", "Benchmark", "Full", "Package")][string]$Mode = "Full",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
+    [string]$MemoryReconstructionCorpusRoot = ".\data\phase_9b_memory_reconstruction\reconstruction_corpus_v1",
     [string]$StudentModel = "",
     [string]$Phase10ReferenceManifest = ".\artifacts\references\phase_10_student_reference.json",
+    [string]$Phase9BReferenceManifest = ".\artifacts\references\phase_9b_student_reference.json",
     [string]$Config = ".\configs\phase_11_production_rag.json",
-    [string]$Knowledge = ".\data\phase_9_student_distillation\knowledge.sample.jsonl",
-    [string]$Procedures = ".\data\phase_9_student_distillation\procedures.sample.jsonl",
-    [string]$DevBenchmark = ".\artifacts\phase_9_student_distillation\pilot_dataset\dev.jsonl",
-    [string]$Benchmark = ".\artifacts\phase_9_student_distillation\pilot_dataset\test.jsonl",
+    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
+    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v2\procedures.jsonl",
+    [string]$DevBenchmark = ".\artifacts\phase_9_grounded_recovery_v1_7_3\dataset\dev.jsonl",
+    [string]$Benchmark = ".\artifacts\phase_9_grounded_recovery_v1_7_3\dataset\test.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_11_production_rag",
     [ValidateSet("dense_copy", "bitsandbytes_nf4", "bitsandbytes_int8", "llamacpp_gguf")][string]$QuantizationBackend = "dense_copy",
     [string]$LlamaCppConvertScript = "",
@@ -34,18 +37,35 @@ param(
     [int]$MaxSequenceLength = 0,
     [int]$MaxNewTokens = 0,
     [string]$ResponseControl = "",
+    [ValidateSet("off", "prompted", "trained")][string]$MemoryReconstructionMode = "off",
+    [int]$ReconstructionMaxNewTokens = 128,
     [double]$UnsupportedConfidentAnswerCap = -1.0,
     [int]$Limit = 0,
     [string]$PackageCandidate = "",
     [ValidateSet("manifest", "copy")][string]$PackageMode = "manifest",
     [switch]$ReuseExisting,
-    [switch]$AllowUnapprovedPhase10
+    [switch]$AllowUnapprovedPhase10,
+    [switch]$AllowUnapprovedPhase9BReconstruction
 )
 
 $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
+
+if (Test-Path (Join-Path $RagReasoningCorpusRoot "manifests\dataset_manifest.json")) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the integrated RAG reasoning corpus..."
+    & python .\scripts\phase_9_student_distillation\validate_rag_reasoning_corpus.py --corpus-root $RagReasoningCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated RAG reasoning corpus validation failed." }
+}
+
+if (Test-Path (Join-Path $MemoryReconstructionCorpusRoot "manifests\dataset_manifest.json")) {
+    Write-Host ""
+    Write-Host "[Corpus] Validating the integrated memory-reconstruction corpus..."
+    & python .\scripts\phase_9b_memory_reconstruction\validate_memory_reconstruction_corpus.py --corpus-root $MemoryReconstructionCorpusRoot
+    if ($LASTEXITCODE -ne 0) { throw "Integrated memory-reconstruction corpus validation failed." }
+}
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
@@ -59,6 +79,16 @@ if (-not $AllowUnapprovedPhase10) {
     Invoke-PythonStep "[Gate] Requiring the accepted Phase 10 student..." @(
         ".\scripts\common\check_human_gate.py", "--phase", "10"
     )
+}
+if ($MemoryReconstructionMode -eq "trained") {
+    if (-not (Test-Path $Phase9BReferenceManifest)) {
+        throw "-MemoryReconstructionMode trained requires a materialized Phase 9B reference manifest. Use prompted for a protocol-only baseline."
+    }
+    if (-not $AllowUnapprovedPhase9BReconstruction) {
+        Invoke-PythonStep "[Gate] Requiring the accepted Phase 9B reconstruction behavior for trained runtime mode..." @(
+            ".\scripts\common\check_human_gate.py", "--phase", "9B"
+        )
+    }
 }
 if (-not (Test-Path $Config)) { throw "Missing Phase 11 config: $Config" }
 $Phase11Config = Get-Content $Config -Raw | ConvertFrom-Json
@@ -179,7 +209,9 @@ function Invoke-ProductionBenchmark {
         "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
         "--max-sequence-length", "$MaxSequenceLength",
         "--max-new-tokens", "$MaxNewTokens",
-        "--response-control", $ResponseControl
+        "--response-control", $ResponseControl,
+        "--memory-reconstruction-mode", $MemoryReconstructionMode,
+        "--reconstruction-max-new-tokens", "$ReconstructionMaxNewTokens"
     )
     if (-not [string]::IsNullOrWhiteSpace($TokenizerSource)) { $Args += @("--tokenizer-source", $TokenizerSource) }
     if (-not [string]::IsNullOrWhiteSpace($FallbackModel)) { $Args += @("--fallback-model", $FallbackModel) }

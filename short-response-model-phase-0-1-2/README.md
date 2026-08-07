@@ -1,4 +1,16 @@
+## v1.7.4 dedicated Phase 9B memory-reconstruction corpus
+
+Phase 9B now has a first-class 600-row source-state reconstruction curriculum rather than relying only on reconstruction examples derived from the Phase 9 evidence corpus. The integrated asset lives at `data/phase_9b_memory_reconstruction/reconstruction_corpus_v1` and contains 300 external memories, all five reconstruction decisions, 120 counterfactual state pairs, 1,800 curated preference pairs, and 2,400 evaluator candidates under a 440 train / 80 dev / 80 sealed-test topic-family split.
+
+v1.7.4 adds a bounded validity-condition DSL (`all`, `any`, named safe predicates, `item`, legacy mappings), audits counterfactual edit metadata, keeps known-wrong preference/evaluator alternatives out of SFT, selects reconstruction strategy entirely on DEV, freezes exactly one strategy before TEST, and evaluates safe conflict handling separately from explicit conflict wording. Phase 10 validates the reconstruction corpus when consuming an approved Phase 9B checkpoint. Phase 11 exposes the same `off` / `prompted` / `trained` reconstruction modes in both the service and measured production benchmark and records the extra two-pass cost. See `PHASE_9B_MEMORY_RECONSTRUCTION_CORPUS_INTEGRATION_v1.7.4.md`.
+
 # Short-Response Model — runnable mature phase pipeline
+
+## v1.7.3 Phase 9–11 RAG reasoning and memory-reconstruction integration
+
+The 530-row `rag_reasoning_v2` corpus is now a first-class Phase 9–11 research asset rather than an external optional dataset. Its authored topic-family split is preserved exactly at 392 train / 67 dev / 71 sealed test rows. Phase 9 uses the dev split for teacher/warm preflight, SFT selection, Real-RAG diagnosis, and optional KD selection; the sealed test is touched only after one final candidate is frozen. Phase 10 likewise performs structural/recovery selection on dev and evaluates exactly the reference plus one frozen final candidate on test. Phase 11 calibrates answerability on dev and benchmarks the final runtime on test.
+
+The integration normalizes procedure-answer semantics, accepts safe canonical abstention for genuine conflicts, distinguishes explicit conflict acknowledgment as a diagnostic, filters superseded and untrusted evidence before conflict resolution, and exposes trust/version metadata to the grounded prompt. Two procedure rows whose original conflict label contradicted the supplied comparison procedure are repaired to their objectively computable answers. Phase 9B now derives reconstruction candidates directly from the same corpus and treats stale/current or malicious retrieval as applicability adaptation rather than false equal-authority conflict. Optional DPO preference refinement and evaluator-calibration assets are included but remain separate from ordinary SFT. See `PHASE_9_11_RAG_REASONING_INTEGRATION_v1.7.3.md`.
 
 ## v1.7.2 Phase 9 grounded-recovery capability ladder
 

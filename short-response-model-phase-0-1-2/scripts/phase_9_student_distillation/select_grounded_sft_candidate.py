@@ -96,8 +96,8 @@ def main() -> None:
         status = "SFT_CANDIDATE_SELECTED"
     packet = {
         "phase": "9_student_distillation",
-        "schema_version": "1.3",
-        "pipeline_revision": "phase9_grounded_recovery_v1_7_2",
+        "schema_version": "1.4",
+        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
         "status": status,
         "initialization_summary": str(args.initialization_summary),
         "initialization_issues": initialization_issues,

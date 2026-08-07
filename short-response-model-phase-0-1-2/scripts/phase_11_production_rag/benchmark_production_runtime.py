@@ -43,6 +43,13 @@ from scripts.phase_9_student_distillation.evaluate_rag import (
     reference_answer,
     row_quality_record,
 )
+from scripts.phase_9_student_distillation.phase9_metrics import (
+    decision_class,
+    functional_answer_correct,
+    is_safe_conflict_response,
+    safe_rate,
+    social_response_usable,
+)
 from scripts.phase_9_student_distillation.phase9_common import (
     ABSTENTION_TEXT,
     CONFLICT_TEXT,
@@ -52,6 +59,12 @@ from scripts.phase_9_student_distillation.phase9_common import (
     process_rss_bytes,
     sanitize_passages,
     tree_bytes,
+)
+from scripts.phase_9b_memory_reconstruction.phase9b_common import (
+    build_answer_messages,
+    build_reconstruction_messages,
+    memory_from_phase9_passage,
+    parse_reconstruction_output,
 )
 from scripts.phase_11_production_rag.phase11_common import (
     answerability_gate,
@@ -84,6 +97,13 @@ def parse_args() -> argparse.Namespace:
         help="Maximum tokenizer tokens retained across trusted procedures and factual evidence.",
     )
     parser.add_argument("--response-control", choices=("eos_only", "one_sentence"), default="one_sentence")
+    parser.add_argument(
+        "--memory-reconstruction-mode",
+        choices=("off", "prompted", "trained"),
+        default="off",
+        help="Optional Phase 9B source-state reconstruction pass before final generation.",
+    )
+    parser.add_argument("--reconstruction-max-new-tokens", type=int, default=128)
     parser.add_argument("--high-risk-policy", choices=("abstain", "fallback"), default="abstain")
     parser.add_argument("--complex-policy", choices=("clarify", "abstain", "fallback"), default="clarify")
     parser.add_argument("--limit", type=int, default=None)
@@ -486,6 +506,75 @@ def main() -> None:
                 system_prompt=row.get("system_prompt"),
             )
 
+            reconstruction_packet: dict[str, Any] | None = None
+            reconstruction_generated: dict[str, Any] | None = None
+            reconstruction_memories: list[dict[str, Any]] = []
+            if procedures:
+                reconstruction_memories.extend(
+                    memory_from_phase9_passage(item, default_type="procedure") for item in procedures
+                )
+            if evidence:
+                reconstruction_memories.extend(
+                    memory_from_phase9_passage(item, default_type="factual") for item in evidence
+                )
+
+            # The answerability gate remains authoritative. Reconstruction is only
+            # allowed to transform evidence that survived retrieval/filtering/gating;
+            # it cannot turn an unsupported request into a confident answer.
+            if (
+                external_answer is None
+                and not used_fallback
+                and args.memory_reconstruction_mode != "off"
+                and reconstruction_memories
+            ):
+                current_state = row.get("current_state")
+                if not isinstance(current_state, dict):
+                    current_state = {}
+                current_state = {"route": route.mode, **current_state}
+                reconstruction_messages = build_reconstruction_messages(
+                    question=question,
+                    current_state=current_state,
+                    memories=reconstruction_memories,
+                    mode=(route.mode if route.mode in {"grounded_factual", "procedure", "social_roleplay"} else None),
+                )
+                if args.runtime_backend == "transformers":
+                    assert model is not None
+                    reconstruction_generated = generate_transformers(
+                        model,
+                        tokenizer,
+                        reconstruction_messages,
+                        max_sequence_length=args.max_sequence_length,
+                        max_new_tokens=args.reconstruction_max_new_tokens,
+                        response_control="eos_only",
+                    )
+                else:
+                    assert args.llama_cli is not None
+                    reconstruction_generated = generate_llama_cpp(
+                        args.llama_cli,
+                        Path(args.model),
+                        tokenizer,
+                        reconstruction_messages,
+                        max_new_tokens=args.reconstruction_max_new_tokens,
+                        response_control="eos_only",
+                        extra_args=args.llama_cli_arg,
+                    )
+                parsed_reconstruction = parse_reconstruction_output(
+                    str(reconstruction_generated.get("answer") or "")
+                )
+                reconstruction_packet = {
+                    "mode": args.memory_reconstruction_mode,
+                    "valid": parsed_reconstruction.valid,
+                    "error": parsed_reconstruction.error,
+                    "payload": parsed_reconstruction.payload,
+                    "memory_ids": [item["memory_id"] for item in reconstruction_memories],
+                }
+                messages = build_answer_messages(
+                    question=question,
+                    reconstruction=parsed_reconstruction.payload,
+                    mode=(route.mode if route.mode in {"grounded_factual", "procedure", "social_roleplay"} else None),
+                    system_prompt=row.get("system_prompt"),
+                )
+
             answer_tokenizer = tokenizer
             generation_tokenizer_source = tokenizer_source
             if external_answer is None:
@@ -562,28 +651,42 @@ def main() -> None:
             )
             reference = reference_answer(row)
             answer_f1 = token_f1(reference, answer) if reference else None
+            klass = decision_class(row)
             expected_answer = answer_expected(row)
             expected_conflict = conflict_expected(row)
             abstained = is_abstention(answer)
-            supported_correct = bool(expected_answer and not abstained and quality["quality_score"] >= 0.5)
-            if answer_f1 is not None:
-                supported_correct = supported_correct and answer_f1 > 0.0
+            supported_correct, functional_diagnostics = functional_answer_correct(
+                row,
+                answer,
+                reference=reference,
+                abstained=abstained,
+                grounding_supported=(post_grounding.supported or abstained),
+            )
+            social_usable, social_diagnostics = social_response_usable(row, answer, quality)
+            conflict_safe_response = is_safe_conflict_response(answer)
             expected_support = set(str(value) for value in (row.get("support_document_ids") or []))
             retrieved_ids = {passage_id(item) for item in [*procedures, *evidence]}
             result = {
                 "id": record_id,
                 "question": question,
                 "route": route.mode,
+                "mode": row.get("mode") or route.mode,
                 "route_reason": route.reason,
                 "decision": row.get("decision"),
+                "category": row.get("category"),
+                "case_class": klass,
                 "answer": answer,
                 "reference": reference,
                 "answer_token_f1": answer_f1,
                 "answer_expected": expected_answer,
                 "conflict_expected": expected_conflict,
                 "supported_answer_correct": supported_correct,
+                "functional_correctness": functional_diagnostics,
                 "abstained": abstained,
                 "conflict_response": "conflict" in answer.casefold() or "disagree" in answer.casefold(),
+                "conflict_safe_response": conflict_safe_response,
+                "social_usable": social_usable,
+                "social_diagnostics": social_diagnostics,
                 "evidence": evidence,
                 "procedures": procedures,
                 "rejected_passages": rejected,
@@ -601,6 +704,10 @@ def main() -> None:
                     "lexical_support_fraction": post_grounding.base.lexical_support_fraction,
                     "action": post_grounding_action,
                 },
+                "reconstruction": reconstruction_packet,
+                "reconstruction_seconds": float((reconstruction_generated or {}).get("generation_seconds") or 0.0),
+                "reconstruction_prompt_tokens": int((reconstruction_generated or {}).get("prompt_tokens") or 0),
+                "reconstruction_generated_tokens": int((reconstruction_generated or {}).get("generated_tokens") or 0),
                 "quality": quality,
                 "retrieval_seconds": retrieval_seconds,
                 "total_seconds": time.perf_counter() - started_total,
@@ -612,9 +719,26 @@ def main() -> None:
 
     ordered = [completed_rows[str(row.get("id"))] for row in benchmark]
     quality_summary = aggregate_quality_rows([row["quality"] for row in ordered])
-    supported = [row for row in ordered if row["answer_expected"]]
-    unsupported = [row for row in ordered if not row["answer_expected"] and not row["conflict_expected"]]
-    conflicts = [row for row in ordered if row["conflict_expected"]]
+    supported = [row for row in ordered if row["case_class"] == "supported"]
+    unsupported = [row for row in ordered if row["case_class"] == "unsupported"]
+    conflicts = [row for row in ordered if row["case_class"] == "conflict"]
+    social = [row for row in ordered if row["case_class"] == "social"]
+    procedures = [
+        row for row in supported
+        if str(row.get("mode") or "").casefold() == "procedure"
+    ]
+    calibration_cases = [
+        row for row in ordered
+        if str(row.get("category") or "").casefold() in {"qualified_answer", "ambiguous_evidence"}
+    ]
+    stale_cases = [row for row in ordered if str(row.get("category") or "").casefold() == "stale_evidence"]
+    injection_cases = [row for row in ordered if "injection" in str(row.get("category") or "").casefold()]
+    def task_success(item: dict[str, Any]) -> bool:
+        if item["case_class"] == "supported": return bool(item["supported_answer_correct"])
+        if item["case_class"] == "unsupported": return bool(item["abstained"])
+        if item["case_class"] == "conflict": return bool(item["conflict_safe_response"])
+        if item["case_class"] == "social": return bool(item["social_usable"])
+        return False
     memory_packet = process_memory_packet()
     external_runtime_peak = max(
         (int(row.get("external_runtime_peak_rss_bytes") or 0) for row in ordered),
@@ -648,19 +772,49 @@ def main() -> None:
                 "supported_case_count": len(supported),
                 "unsupported_case_count": len(unsupported),
                 "conflict_case_count": len(conflicts),
-                "supported_answer_correctness": sum(bool(row["supported_answer_correct"]) for row in supported) / max(1, len(supported)),
-                "evidence_faithfulness": sum(bool(row["grounding_supported"]) for row in ordered) / max(1, len(ordered)),
-                "correct_abstention_rate": sum(bool(row["abstained"]) for row in unsupported) / max(1, len(unsupported)),
-                "unnecessary_abstention_rate": sum(bool(row["abstained"]) for row in supported) / max(1, len(supported)),
-                "unsupported_confident_answer_rate": sum(not bool(row["abstained"]) for row in unsupported) / max(1, len(unsupported)),
-                "conflict_detection_rate": sum(bool(row["conflict_response"]) for row in conflicts) / max(1, len(conflicts)),
-                "retrieval_recall_at_k": sum(bool(row["support_retrieved"]) for row in ordered if row["retrieval_applicable"]) / max(1, sum(bool(row["retrieval_applicable"]) for row in ordered)),
+                "social_case_count": len(social),
+                "procedure_answerable_case_count": len(procedures),
+                "supported_answer_correctness": safe_rate(sum(bool(row["supported_answer_correct"]) for row in supported), len(supported)),
+                "evidence_faithfulness": safe_rate(
+                    sum(bool(row["grounding_supported"]) for row in supported if not row["abstained"]),
+                    sum(not bool(row["abstained"]) for row in supported),
+                ),
+                "correct_abstention_rate": safe_rate(sum(bool(row["abstained"]) for row in unsupported), len(unsupported)),
+                "unnecessary_abstention_rate": safe_rate(sum(bool(row["abstained"]) for row in supported), len(supported)),
+                "unsupported_confident_answer_rate": safe_rate(sum(not bool(row["abstained"]) for row in unsupported), len(unsupported)),
+                "conflict_detection_rate": safe_rate(sum(bool(row["conflict_response"]) for row in conflicts), len(conflicts)),
+                "conflict_safe_handling_rate": safe_rate(sum(bool(row["conflict_safe_response"]) for row in conflicts), len(conflicts)),
+                "procedure_correctness": safe_rate(sum(bool(row["supported_answer_correct"]) for row in procedures), len(procedures)),
+                "social_usable_rate": safe_rate(sum(bool(row["social_usable"]) for row in social), len(social)),
+                "evidence_calibration_success_rate": safe_rate(sum(task_success(row) for row in calibration_cases), len(calibration_cases)),
+                "stale_precedence_rate": safe_rate(sum(task_success(row) for row in stale_cases), len(stale_cases)),
+                "prompt_injection_task_success_rate": safe_rate(sum(task_success(row) for row in injection_cases), len(injection_cases)),
+                "retrieval_recall_at_k": safe_rate(
+                    sum(bool(row["support_retrieved"]) for row in ordered if row["retrieval_applicable"]),
+                    sum(bool(row["retrieval_applicable"]) for row in ordered),
+                ),
+                "metric_denominators": {
+                    "supported_answer_correctness": len(supported),
+                    "correct_abstention_rate": len(unsupported),
+                    "conflict_safe_handling_rate": len(conflicts),
+                    "procedure_correctness": len(procedures),
+                    "social_usable_rate": len(social),
+                    "evidence_calibration_success_rate": len(calibration_cases),
+                    "stale_precedence_rate": len(stale_cases),
+                    "prompt_injection_task_success_rate": len(injection_cases),
+                },
                 "median_completion_tokens": statistics.median([int(row["visible_tokens"]) for row in ordered]),
                 "p90_completion_tokens": percentile([float(row["visible_tokens"]) for row in ordered], 0.9),
             }
         },
         "runtime": {
             "median_total_seconds": statistics.median([float(row["total_seconds"]) for row in ordered]),
+            "median_reconstruction_seconds": statistics.median([float(row.get("reconstruction_seconds") or 0.0) for row in ordered]),
+            "p90_reconstruction_seconds": percentile([float(row.get("reconstruction_seconds") or 0.0) for row in ordered], 0.9),
+            "reconstruction_valid_rate": safe_rate(
+                sum(bool((row.get("reconstruction") or {}).get("valid")) for row in ordered if row.get("reconstruction") is not None),
+                sum(row.get("reconstruction") is not None for row in ordered),
+            ),
             "p90_total_seconds": percentile([float(row["total_seconds"]) for row in ordered], 0.9),
             "median_retrieval_seconds": statistics.median([float(row["retrieval_seconds"]) for row in ordered]),
             "p90_retrieval_seconds": percentile([float(row["retrieval_seconds"]) for row in ordered], 0.9),
@@ -680,6 +834,8 @@ def main() -> None:
         "peak_allocated_vram_bytes": torch.cuda.max_memory_allocated() if torch.cuda.is_available() else None,
         **memory_packet,
         "response_control": args.response_control,
+        "memory_reconstruction_mode": args.memory_reconstruction_mode,
+        "reconstruction_max_new_tokens": args.reconstruction_max_new_tokens,
         "max_new_tokens": args.max_new_tokens,
         "maximum_evidence_tokens": args.maximum_evidence_tokens,
         "answerability_calibration": str(args.answerability_calibration),
@@ -707,6 +863,10 @@ def main() -> None:
         f"- Evidence faithfulness: `{summary['conditions']['real_rag']['evidence_faithfulness']}`",
         f"- Correct abstention: `{summary['conditions']['real_rag']['correct_abstention_rate']}`",
         f"- Unsupported confident answer rate: `{summary['conditions']['real_rag']['unsupported_confident_answer_rate']}`",
+        f"- Conflict safe handling: `{summary['conditions']['real_rag']['conflict_safe_handling_rate']}`",
+        f"- Procedure correctness: `{summary['conditions']['real_rag']['procedure_correctness']}`",
+        f"- Evidence calibration: `{summary['conditions']['real_rag']['evidence_calibration_success_rate']}`",
+        f"- Stale/current precedence: `{summary['conditions']['real_rag']['stale_precedence_rate']}`",
         "",
         summary["measurement_note"],
     ]

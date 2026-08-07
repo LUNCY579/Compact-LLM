@@ -14,6 +14,7 @@ if str(ROOT) not in sys.path:
 
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json
 from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages
+from scripts.phase_9_student_distillation.phase9_metrics import decision_class
 from scripts.phase_11_production_rag.phase11_common import (
     answerability_features,
     calibrate_answerability,
@@ -61,7 +62,7 @@ def main() -> None:
             selected = [*selected_procedures, *selected_knowledge]
             features = answerability_features(question, selected)
             decision = str(row.get("decision") or "answer").lower()
-            answerable = decision == "answer"
+            answerable = decision_class(row) == "supported"
             feature_rows.append(
                 {
                     "id": row.get("id"),
@@ -93,7 +94,7 @@ def main() -> None:
         false_abstention_cost=args.false_abstention_cost,
     )
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "phase": "11_production_rag",
         "benchmark": str(args.benchmark),
         "benchmark_sha256": sha256(args.benchmark),

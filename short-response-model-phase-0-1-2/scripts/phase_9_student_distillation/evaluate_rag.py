@@ -55,6 +55,7 @@ from scripts.phase_9_student_distillation.phase9_metrics import (
     decision_class,
     functional_answer_correct,
     is_conflict_response,
+    is_safe_conflict_response,
     safe_rate,
     social_response_usable,
 )
@@ -270,11 +271,11 @@ def generate_answer(
 
 
 def answer_expected(row: dict[str, Any]) -> bool:
-    return str(row.get("decision") or "answer") == "answer"
+    return decision_class(row) == "supported"
 
 
 def conflict_expected(row: dict[str, Any]) -> bool:
-    return str(row.get("decision") or "") == "conflict"
+    return decision_class(row) == "conflict"
 
 
 def reference_answer(row: dict[str, Any]) -> str | None:
@@ -309,14 +310,20 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "unsupported_case_count": 0,
             "conflict_case_count": 0,
             "procedure_case_count": 0,
+            "procedure_answerable_case_count": 0,
             "social_case_count": 0,
             "unknown_case_count": 0,
             "supported_answer_correctness": None,
             "correct_abstention_rate": None,
             "unsupported_confident_answer_rate": None,
             "evidence_faithfulness": None,
+            "conflict_safe_handling_rate": None,
+            "conflict_explicit_acknowledgment_rate": None,
             "procedure_correctness": None,
             "social_usable_rate": None,
+            "evidence_calibration_success_rate": None,
+            "stale_precedence_rate": None,
+            "prompt_injection_task_success_rate": None,
             "prompt_support_recall_at_k": None,
             "prompt_integrity_failure_rate": None,
             "decode_integrity_failure_rate": None,
@@ -326,11 +333,15 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     supported = [row for row in rows if row.get("case_class") == "supported"]
     unsupported = [row for row in rows if row.get("case_class") == "unsupported"]
     conflicts = [row for row in rows if row.get("case_class") == "conflict"]
-    procedures = [
+    procedure_rows = [
         row for row in rows
         if str(row.get("mode") or "").casefold() == "procedure"
         or str(row.get("decision") or "").casefold() == "procedure"
     ]
+    # Procedure correctness applies only when the procedure task is actually
+    # answerable. Missing-input and unresolved-conflict procedure rows belong in
+    # their abstention/conflict metrics instead of diluting procedure accuracy.
+    procedures = [row for row in procedure_rows if row.get("case_class") == "supported"]
     social = [row for row in rows if row.get("case_class") == "social"]
     unknown = [row for row in rows if row.get("case_class") == "unknown"]
     retrieval_cases = [row for row in rows if row.get("retrieval_applicable")]
@@ -355,8 +366,36 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
     unnecessary = [row for row in supported if row.get("abstained")]
     unsupported_confident = [row for row in unsupported if not row.get("abstained")]
     conflict_detected = [row for row in conflicts if row.get("conflict_response")]
+    conflict_safe = [row for row in conflicts if row.get("conflict_safe_response")]
     correct_procedures = [row for row in procedures if row.get("supported_answer_correct")]
     social_usable = [row for row in social if row.get("social_usable")]
+
+    # Specialized RAG-reasoning families. These are reported independently so
+    # flexible language scoring cannot conceal a failure of the evidence policy.
+    calibration_cases = [
+        row for row in rows
+        if str(row.get("category") or "").casefold() in {"qualified_answer", "ambiguous_evidence"}
+    ]
+    stale_cases = [row for row in rows if str(row.get("category") or "").casefold() == "stale_evidence"]
+    injection_task_cases = [
+        row for row in rows if "injection" in str(row.get("category") or "").casefold()
+    ]
+
+    def task_success(row: dict[str, Any]) -> bool:
+        klass = row.get("case_class")
+        if klass == "supported":
+            return bool(row.get("supported_answer_correct"))
+        if klass == "unsupported":
+            return bool(row.get("abstained"))
+        if klass == "conflict":
+            return bool(row.get("conflict_safe_response"))
+        if klass == "social":
+            return bool(row.get("social_usable"))
+        return False
+
+    calibration_success = [row for row in calibration_cases if task_success(row)]
+    stale_success = [row for row in stale_cases if task_success(row)]
+    injection_task_success = [row for row in injection_task_cases if task_success(row)]
     faithfulness_cases = [
         row for row in rows
         if row.get("grounding_applicable") and not row.get("abstained")
@@ -377,9 +416,17 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "unsupported_confident_answer_count": len(unsupported_confident),
         "unnecessary_abstention_count": len(unnecessary),
         "conflict_detected_count": len(conflict_detected),
+        "conflict_safe_count": len(conflict_safe),
         "faithfulness_applicable_count": len(faithfulness_cases),
         "faithful_answer_count": len(faithful),
         "procedure_correct_count": len(correct_procedures),
+        "procedure_answerable_case_count": len(procedures),
+        "evidence_calibration_applicable_count": len(calibration_cases),
+        "evidence_calibration_success_count": len(calibration_success),
+        "stale_precedence_applicable_count": len(stale_cases),
+        "stale_precedence_success_count": len(stale_success),
+        "prompt_injection_task_applicable_count": len(injection_task_cases),
+        "prompt_injection_task_success_count": len(injection_task_success),
         "social_usable_count": len(social_usable),
         "retrieval_applicable_count": len(retrieval_cases),
         "retrieval_hit_count": len(retrieval_hits),
@@ -396,8 +443,13 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
         "unnecessary_abstention_rate": safe_rate(len(unnecessary), len(supported)),
         "unsupported_confident_answer_rate": safe_rate(len(unsupported_confident), len(unsupported)),
         "conflict_detection_rate": safe_rate(len(conflict_detected), len(conflicts)),
+        "conflict_explicit_acknowledgment_rate": safe_rate(len(conflict_detected), len(conflicts)),
+        "conflict_safe_handling_rate": safe_rate(len(conflict_safe), len(conflicts)),
         "procedure_correctness": safe_rate(len(correct_procedures), len(procedures)),
         "social_usable_rate": safe_rate(len(social_usable), len(social)),
+        "evidence_calibration_success_rate": safe_rate(len(calibration_success), len(calibration_cases)),
+        "stale_precedence_rate": safe_rate(len(stale_success), len(stale_cases)),
+        "prompt_injection_task_success_rate": safe_rate(len(injection_task_success), len(injection_task_cases)),
         "retrieval_recall_at_k": safe_rate(len(retrieval_hits), len(retrieval_cases)),
         "prompt_support_recall_at_k": safe_rate(len(prompt_support_hits), len(prompt_support_cases)),
         "prompt_integrity_failure_rate": safe_rate(len(prompt_integrity_failures), len(rows)),
@@ -415,7 +467,13 @@ def condition_summary(rows: list[dict[str, Any]]) -> dict[str, Any]:
             "correct_abstention_rate": len(unsupported),
             "unsupported_confident_answer_rate": len(unsupported),
             "conflict_detection_rate": len(conflicts),
+            "conflict_explicit_acknowledgment_rate": len(conflicts),
+            "conflict_safe_handling_rate": len(conflicts),
+            "procedure_correctness": len(procedures),
             "social_usable_rate": len(social),
+            "evidence_calibration_success_rate": len(calibration_cases),
+            "stale_precedence_rate": len(stale_cases),
+            "prompt_injection_task_success_rate": len(injection_task_cases),
             "retrieval_recall_at_k": len(retrieval_cases),
             "prompt_support_recall_at_k": len(prompt_support_cases),
             "prompt_integrity_failure_rate": len(rows),
@@ -450,8 +508,13 @@ def markdown_report(summary: dict[str, Any]) -> str:
                 f"- Evidence faithfulness: `{packet.get('evidence_faithfulness')}` (n={packet.get('faithfulness_applicable_count')})",
                 f"- Correct abstention: `{packet.get('correct_abstention_rate')}` (n={packet.get('unsupported_case_count')})",
                 f"- Unsupported confident answer rate: `{packet.get('unsupported_confident_answer_rate')}`",
-                f"- Procedure correctness: `{packet.get('procedure_correctness')}` (n={packet.get('procedure_case_count')})",
+                f"- Conflict safe handling: `{packet.get('conflict_safe_handling_rate')}` (n={packet.get('conflict_case_count')})",
+                f"- Conflict explicit acknowledgment (diagnostic): `{packet.get('conflict_explicit_acknowledgment_rate')}`",
+                f"- Procedure correctness: `{packet.get('procedure_correctness')}` (n={packet.get('procedure_answerable_case_count')})",
                 f"- Social usable rate: `{packet.get('social_usable_rate')}` (n={packet.get('social_case_count')})",
+                f"- Qualified/ambiguous evidence calibration: `{packet.get('evidence_calibration_success_rate')}` (n={packet.get('evidence_calibration_applicable_count')})",
+                f"- Stale/current precedence: `{packet.get('stale_precedence_rate')}` (n={packet.get('stale_precedence_applicable_count')})",
+                f"- Prompt-injection task success: `{packet.get('prompt_injection_task_success_rate')}` (n={packet.get('prompt_injection_task_applicable_count')})",
                 f"- Retrieval recall@k: `{packet.get('retrieval_recall_at_k')}` (n={packet.get('retrieval_applicable_count')})",
                 f"- Prompt support recall@k: `{packet.get('prompt_support_recall_at_k')}` (n={packet.get('prompt_support_applicable_count')})",
                 f"- Prompt integrity failure rate: `{packet.get('prompt_integrity_failure_rate')}`",
@@ -634,6 +697,7 @@ def main() -> None:
                 expected_conflict = klass == "conflict"
                 abstained = is_abstention(answer)
                 conflict_response = is_conflict_response(answer) or answer.strip().casefold() == CONFLICT_TEXT.casefold()
+                conflict_safe_response = is_safe_conflict_response(answer)
                 supported_correct, functional_diagnostics = functional_answer_correct(
                     row,
                     answer,
@@ -649,7 +713,7 @@ def main() -> None:
                 adversarial_success = (
                     supported_correct if klass == "supported" else
                     abstained if klass == "unsupported" else
-                    conflict_response if klass == "conflict" else
+                    conflict_safe_response if klass == "conflict" else
                     social_usable if klass == "social" else False
                 ) if adversarial_applicable else False
                 result = {
@@ -659,6 +723,9 @@ def main() -> None:
                     "question": question,
                     "mode": mode,
                     "decision": row.get("decision"),
+                    "category": row.get("category"),
+                    "evidence_clarity": row.get("evidence_clarity") or (row.get("metadata") or {}).get("evidence_clarity"),
+                    "answer_stance": row.get("answer_stance") or (row.get("metadata") or {}).get("answer_stance"),
                     "answer": answer,
                     "reference": reference,
                     "answer_token_f1": answer_f1,
@@ -669,6 +736,7 @@ def main() -> None:
                     "functional_correctness": functional_diagnostics,
                     "abstained": abstained,
                     "conflict_response": conflict_response,
+                    "conflict_safe_response": conflict_safe_response,
                     "social_usable": social_usable,
                     "social_diagnostics": social_diagnostics,
                     "evidence": evidence,
@@ -761,8 +829,8 @@ def main() -> None:
     summary = {
         **overall_quality,
         "phase": "9_student_distillation",
-        "schema_version": "1.3",
-        "pipeline_revision": "phase9_grounded_recovery_v1_7_2",
+        "schema_version": "1.4",
+        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
         "model": args.model,
         "model_tree_sha256": model_tree_sha256,
         "adapter_tree_sha256": adapter_tree_sha256,
