@@ -979,9 +979,17 @@ def split_by_group(
         ownership[donor_key] = target
 
     # Dev calibration needs more than one positive and one negative example to
-    # avoid a one-row threshold accident.  Add complete training components when
-    # the corpus has enough independent components.  Test only requires one of
-    # each class because it is not used to choose the threshold.
+    # avoid a one-row threshold accident.  Test must keep rare behaviors visible
+    # for Stage A; procedure gets a wider holdout whenever the pack has enough
+    # independent procedure components so one miss cannot zero the bucket.
+    def test_holdout_minimum(klass: str) -> int:
+        available = component_availability[klass]
+        if available <= 0:
+            return 0
+        if klass == "procedure" and available >= 2:
+            return min(2, available)
+        return 1
+
     holdout_minimums = {
         "dev": {
             klass: (
@@ -993,7 +1001,7 @@ def split_by_group(
             )
             for klass in required_dev_classes
         },
-        "test": {klass: 1 for klass in required_test_classes},
+        "test": {klass: test_holdout_minimum(klass) for klass in required_test_classes},
     }
 
     def class_count(split: str, klass: str) -> int:

@@ -158,14 +158,6 @@ def test_conflict_flags_and_split_behavior_cover_holdouts() -> None:
         "scenario_flags": ["conflict"],
         "support_document_ids": ["doc_a", "doc_b"],
     }
-    procedure = {
-        "id": "p1",
-        "topic_id": "procedure_topic",
-        "decision": "answer",
-        "category": "procedure",
-        "mode": "procedure",
-        "support_document_ids": ["proc_doc"],
-    }
     supported = {
         "id": "s1",
         "topic_id": "supported_topic",
@@ -192,10 +184,10 @@ def test_conflict_flags_and_split_behavior_cover_holdouts() -> None:
     }
     assert decision_class(conflict) == "conflict"
     assert split_behavior_class(conflict) == "conflict"
-    assert split_behavior_class(procedure) == "procedure"
     assert is_conflict_response("The available sources conflict, so I can't give one certain answer.")
 
     # Enough independent components that each holdout behavior can be reserved.
+    # Include multiple procedure topics so Stage A can keep a wider procedure eval set.
     extras = []
     for index in range(6):
         extras.append(
@@ -218,11 +210,24 @@ def test_conflict_flags_and_split_behavior_cover_holdouts() -> None:
                 "support_document_ids": [],
             }
         )
-    rows = [conflict, procedure, supported, unsupported, social, *extras]
+    procedures = [
+        {
+            "id": f"proc_{index}",
+            "topic_id": f"procedure_topic_{index}",
+            "decision": "answer",
+            "category": "procedure",
+            "mode": "procedure",
+            "support_document_ids": [f"proc_doc_{index}"],
+        }
+        for index in range(3)
+    ]
+    assert split_behavior_class(procedures[0]) == "procedure"
+    rows = [conflict, supported, unsupported, social, *procedures, *extras]
     splits = split_by_group(rows, seed=7)
     assert_no_group_leakage(splits)
     test_classes = {split_behavior_class(item) for item in splits["test"]}
     assert {"supported", "unsupported", "conflict", "procedure", "social"} <= test_classes
+    assert sum(1 for item in splits["test"] if split_behavior_class(item) == "procedure") >= 2
 
 
 def test_completion_weighting_emphasizes_decision_anchor_and_abstention() -> None:

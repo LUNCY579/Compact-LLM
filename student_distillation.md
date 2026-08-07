@@ -1,6 +1,6 @@
 Yes. Use the local Qwen3-0.6B snapshot as the temporary diagnostic teacher and run the grounded-recovery ladder from the beginning.
 
-The important change is to use a **fresh artifact root** and regenerate the teacher review packet with Qwen rather than reusing answers produced by the weak teacher.
+The important change is to use a **fresh artifact root** and a **human-reviewed** teacher packet. Do not reuse answers from the weak Phase 4 teacher.
 
 **Path audit (verified on this machine):** all commands below assume you `cd` into `short-response-model-phase-0-1-2` first. Relative `.\scripts\...` and `.\data\...` paths are correct from that directory. `$QwenBase` must be the local snapshot folder (not the Hub id `Qwen/Qwen3-0.6B`), because the runner checks `Test-Path` on `-TeacherModel`.
 
@@ -10,37 +10,44 @@ The important change is to use a **fresh artifact root** and regenerate the teac
 cd C:\Users\clclc\BusinessProject\Chat-Bubble\short-response-model-phase-0-1-2
 ```
 
-Set reusable variables:
+Set reusable variables (current working set):
 
 ```powershell
 $QwenBase = 'C:\Users\clclc\.cache\huggingface\hub\models--Qwen--Qwen3-0.6B\snapshots\c1899de289a04d12100db370d81485cdf75e47ca'
 
-$RunRoot = '.\artifacts\phase_9_qwen3_06b_grounded_20260806'
+# Active grounded-recovery root (Preflight / Overfit / Sweep / Full)
+$RunRoot = '.\artifacts\phase_9_qwen3_06b_grounded_20260806_v3'
 
-$ReviewedData = Join-Path $RunRoot 'teacher_candidates.reviewed.jsonl'
+# Stable reviewed packet (do not Join-Path $RunRoot; that old folder was deleted)
+$ReviewedData = '.\artifacts\phase_9_student_distillation\teacher_candidates.reviewed.jsonl'
 ```
 
-Verify the snapshot:
+Verify:
 
 ```powershell
 Test-Path $QwenBase
+Test-Path $ReviewedData
 ```
 
-It should print:
+Both should print:
 
 ```text
 True
 ```
 
-The scripts load this path locally through Hugging Face `from_pretrained()`. They also explicitly disable Qwen3 thinking mode for Phase 9 prompts, so the 32-token answer budget will not be consumed by `<think>` output.
+The scripts load `$QwenBase` locally through Hugging Face `from_pretrained()`. They also explicitly disable Qwen3 thinking mode for Phase 9 prompts, so the 32-token answer budget will not be consumed by `<think>` output.
+
+**Skip §1–§2** if `$ReviewedData` already exists and all rows are `review_status: accepted` (your current packet is). Jump to §3 Preflight on `$RunRoot`.
 
 ---
 
 # 1. Generate a new Qwen teacher review packet
 
-Use the expanded research corpus rather than the six-row sample corpus:
+Only needed when regenerating the review packet. Use a **new** bootstrap root so you do not overwrite the active `$RunRoot`:
 
 ```powershell
+$BootstrapRoot = '.\artifacts\phase_9_qwen3_06b_bootstrap_fresh'
+
 .\scripts\phase_9_student_distillation\run_phase_9.ps1 `
   -Mode Bootstrap `
   -StudentSuite Single `
@@ -49,7 +56,7 @@ Use the expanded research corpus rather than the six-row sample corpus:
   -Knowledge .\data\phase_9_student_distillation\expanded\knowledge.jsonl `
   -Procedures .\data\phase_9_student_distillation\expanded\procedures.jsonl `
   -Prompts .\data\phase_9_student_distillation\expanded\prompts.jsonl `
-  -OutputRoot $RunRoot `
+  -OutputRoot $BootstrapRoot `
   -MaximumEvidenceTokens 384 `
   -AllowUnreleasedTeacher
 ```
@@ -59,7 +66,7 @@ Use the expanded research corpus rather than the six-row sample corpus:
 This should produce:
 
 ```text
-artifacts\phase_9_qwen3_06b_grounded_20260806\
+artifacts\phase_9_qwen3_06b_bootstrap_fresh\
     teacher_candidates.jsonl
     teacher_candidates.review.md
     teacher_candidates.manifest.json
@@ -72,24 +79,24 @@ The expanded prompt corpus contains 36 prompts, unlike the six-row sample packet
 
 # 2. Human-review the Qwen outputs
 
-Create the reviewed copy:
+Create the reviewed copy (from the bootstrap root, then copy into the stable location if you want a durable packet):
 
 ```powershell
 Copy-Item `
-  "$RunRoot\teacher_candidates.jsonl" `
-  "$RunRoot\teacher_candidates.reviewed.jsonl"
+  "$BootstrapRoot\teacher_candidates.jsonl" `
+  "$BootstrapRoot\teacher_candidates.reviewed.jsonl"
 ```
 
 Open the review guide:
 
 ```powershell
-notepad "$RunRoot\teacher_candidates.review.md"
+notepad "$BootstrapRoot\teacher_candidates.review.md"
 ```
 
 Open the JSONL file in your editor:
 
 ```powershell
-code "$RunRoot\teacher_candidates.reviewed.jsonl"
+code "$BootstrapRoot\teacher_candidates.reviewed.jsonl"
 ```
 
 For every approved row, change:
@@ -118,6 +125,12 @@ or provide a corrected answer manually:
 
 When `approved_answer` is provided, it overrides the selected candidate.
 
+For conflict rows (`p025`, `p026`), preferred approved answer is:
+
+```text
+The available sources conflict, so I can't give one certain answer.
+```
+
 Reject or repair any answer that:
 
 * uses information outside the evidence;
@@ -125,6 +138,8 @@ Reject or repair any answer that:
 * follows instructions embedded inside retrieved evidence;
 * mishandles conflicting evidence;
 * produces incomplete or corrupted output.
+
+After review, point `$ReviewedData` at the accepted file (or copy it to the stable path used in §0).
 
 Do not continue until the reviewed JSONL is complete.
 
@@ -144,6 +159,8 @@ Do not continue until the reviewed JSONL is complete.
   -UseLora `
   -AllowUnreleasedTeacher
 ```
+
+If `$RunRoot` already has dataset/eval artifacts from a prior attempt and you changed split/labeling code, use a **new** `$RunRoot` name instead of `-ReuseExisting`.
 
 This performs:
 
@@ -172,34 +189,33 @@ The pipeline deliberately stops here when Qwen itself cannot demonstrate usable 
 
 ### If Preflight throws `Teacher Oracle preflight failed`
 
-This is **not** usually a wrong `$QwenBase` path. Confirm the model loaded and Stage A quality first:
+Confirm paths first:
 
 ```powershell
 Test-Path $QwenBase
+Test-Path $ReviewedData
 Get-Content "$RunRoot\GROUNDED_RECOVERY_LADDER.md"
 ```
 
-If Stage A shows a high score (for example `1.0`) with components like `supported_correctness: 1.0` but still `status: FAIL`, the teacher path is fine. The gate is failing on **missing test-set coverage**, commonly:
+After the coverage hotfix, missing `zero_conflict_cases` / `zero_procedure_cases` should be rare. The usual remaining failure is **teacher quality**, for example:
 
 ```text
-oracle_rag:zero_conflict_cases
-oracle_rag:zero_procedure_cases
+oracle_rag:zero_successful_procedure_cases
 ```
 
-That means the leakage-safe `test.jsonl` split did not contain rows the ladder counts as conflict/procedure. With the expanded 36-row pack, a 4-row test split can easily miss them even when Qwen answers the present cases correctly.
+That means procedure rows were present, but Qwen got them all wrong (often abstaining). Inspect:
 
-Do **not** proceed to Overfit / Sweep / Full until Stage A is `PASS`. Do **not** delete the artifact root and rerun Preflight expecting a different result unless you change the review packet, split policy, or conflict/procedure labeling.
+```text
+$RunRoot\evaluation_teacher_oracle\results.jsonl
+```
 
-Known labeling traps in the expanded pack:
-
-* conflict-style prompts (`p025`, `p026`) are currently `decision: abstain` / `category: missing_answer`, so the evaluator does **not** count them as `conflict`
-* procedure prompts need `mode: procedure` (or `decision: procedure`) **and** must land in the eval split
+Do **not** proceed to Overfit / Sweep / Full until Stage A is `PASS`.
 
 ---
 
 # 4. Stage C: prove the training wiring with deliberate overfitting
 
-Run this only after Preflight passes:
+Run this only after Preflight passes on the **same** `$RunRoot`:
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9_grounded_recovery.ps1 `
@@ -377,9 +393,9 @@ That loads the Qwen teacher without 4-bit quantization.
 ## Recommended order
 
 ```text
-Bootstrap with Qwen
+Bootstrap with Qwen   (skip if reviewed packet already accepted)
         ↓
-Human review
+Human review          (skip if already accepted)
         ↓
 Preflight
         ↓
@@ -396,6 +412,4 @@ Narrow 170M/130M/100M comparisons later
 
 Do not use the previous weak-teacher output root, do not add `-RunKD` to the first Full run, and do not return to the narrow random students until the warm inherited student proves that the evidence-use path works.
 
-If Stage A fails with a **perfect teacher score** but `zero_conflict_cases` / `zero_procedure_cases`, fix eval coverage or row labeling before deleting `$RunRoot` and starting over. That failure mode is data/gate coverage, not a bad `$QwenBase` path.
-
-After the v1.7.2 coverage hotfix (conflict rows labeled `decision=conflict`, stratified holdouts for procedure/conflict), rebuild Preflight on a clean root or delete the old `dataset/` plus Stage A/B evaluation folders before reusing `$RunRoot`. Do not pass `-ReuseExisting` until those artifacts are rebuilt.
+Safe to delete when unused: old `phase_9_qwen3_06b_grounded_20260806`, `..._v2`, and `phase_9_behavior_curriculum_v2_20260806` (only if you will not resume that Pilot). Keep `$ReviewedData` and the active `$RunRoot` (`..._v3`).
