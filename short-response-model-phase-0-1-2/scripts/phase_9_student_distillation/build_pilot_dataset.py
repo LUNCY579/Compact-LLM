@@ -16,6 +16,7 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json, write_jsonl
 from scripts.phase_9_student_distillation.phase9_common import (
     ABSTENTION_TEXT,
+    CONFLICT_TEXT,
     assert_no_group_leakage,
     grounding_check,
     is_abstention,
@@ -23,7 +24,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     split_by_group,
     connected_component_groups,
 )
-from scripts.phase_9_student_distillation.phase9_metrics import decision_class
+from scripts.phase_9_student_distillation.phase9_metrics import decision_class, is_conflict_response
 
 
 def parse_args() -> argparse.Namespace:
@@ -82,6 +83,8 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         raise ValueError(f"{record_id} reviewed messages must contain prompt messages only")
     messages.append({"role": "assistant", "content": answer})
     decision = str(row.get("decision") or ("abstain" if is_abstention(answer) else "answer"))
+    if decision_class({**row, "decision": decision}) == "conflict":
+        decision = "conflict"
     evidence = [dict(item) for item in (row.get("evidence") or [])]
     grounding = grounding_check(answer, evidence)
     if decision == "answer" and not grounding.supported:
@@ -90,6 +93,10 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         )
     if decision == "abstain" and not is_abstention(answer):
         raise ValueError(f"{record_id} is decision=abstain but does not use the approved abstention response")
+    if decision == "conflict" and not is_conflict_response(answer):
+        raise ValueError(
+            f"{record_id} is decision=conflict but the accepted answer does not acknowledge the conflict"
+        )
 
     response_contract = normalize_response_contract(
         row.get("response_contract") or {},
@@ -116,13 +123,37 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
             },
             record_id=record_id,
         )
+    if decision == "conflict":
+        response_contract = normalize_response_contract(
+            {
+                **response_contract,
+                "open_ended": False,
+                "requirements": [
+                    *response_contract.get("requirements", []),
+                    {
+                        "id": "phase9_required_conflict",
+                        "label": "explicit_required_content_missing",
+                        "severity": "major",
+                        "weight": 1.0,
+                        "description": "The reply must acknowledge conflicting evidence.",
+                        "failure_evidence": "A conflict acknowledgment was missing.",
+                        "match": {"any_phrases": ["conflict", "disagree", CONFLICT_TEXT]},
+                    },
+                ],
+                "question_forbidden": True,
+            },
+            record_id=record_id,
+        )
+    category = row.get("category") or decision
+    if decision == "conflict" and str(category).casefold() in {"missing_answer", "abstain", "unsupported"}:
+        category = "conflicting_evidence"
     output = {
         "id": record_id,
         "topic_id": str(row.get("topic_id") or record_id),
         "question": str(row.get("question") or ""),
         "mode": row.get("mode"),
         "decision": decision,
-        "category": row.get("category") or decision,
+        "category": category,
         "messages": messages,
         "evidence": evidence,
         "procedures": row.get("procedures") or [],
@@ -130,6 +161,7 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
         "retrieved_document_ids": row.get("retrieved_document_ids") or [],
         "response_contract": response_contract,
         "reference": answer,
+        "scenario_flags": list(row.get("scenario_flags") or (["conflict"] if decision == "conflict" else [])),
         "metadata": {
             "phase": "9_student_distillation",
             "teacher_provenance": row.get("teacher_provenance") or {},

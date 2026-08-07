@@ -40,6 +40,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     CONFLICT_TEXT,
     SQLiteFTSRetriever,
     build_grounded_messages,
+    detect_structured_conflict,
     evidence_gate,
     grounding_check,
     is_abstention,
@@ -53,6 +54,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
 from scripts.phase_9_student_distillation.phase9_metrics import (
     decision_class,
     functional_answer_correct,
+    is_conflict_response,
     safe_rate,
     social_response_usable,
 )
@@ -546,6 +548,12 @@ def main() -> None:
                             external_answer = ABSTENTION_TEXT
                     else:
                         gate_reason = "oracle_or_adversarial_evidence_supplied"
+                        # Oracle/adversarial evidence still uses the structured conflict
+                        # detector for rows labeled as conflicts. Injection rows keep
+                        # free generation even when attack passages reuse claim keys.
+                        if decision_class(row) == "conflict" and detect_structured_conflict(evidence):
+                            external_answer = CONFLICT_TEXT
+                            gate_reason = "oracle_structured_evidence_conflict"
 
                 retrieved_evidence = [dict(item) for item in evidence]
                 retrieved_procedures = [dict(item) for item in procedures]
@@ -625,11 +633,7 @@ def main() -> None:
                 expected_answer = klass == "supported"
                 expected_conflict = klass == "conflict"
                 abstained = is_abstention(answer)
-                conflict_response = (
-                    "conflict" in answer.casefold()
-                    or "disagree" in answer.casefold()
-                    or answer.strip().casefold() == CONFLICT_TEXT.casefold()
-                )
+                conflict_response = is_conflict_response(answer) or answer.strip().casefold() == CONFLICT_TEXT.casefold()
                 supported_correct, functional_diagnostics = functional_answer_correct(
                     row,
                     answer,

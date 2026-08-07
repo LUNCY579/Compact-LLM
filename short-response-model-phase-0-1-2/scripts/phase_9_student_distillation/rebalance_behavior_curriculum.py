@@ -21,7 +21,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json, write_jsonl
-from scripts.phase_9_student_distillation.phase9_metrics import decision_class
+from scripts.phase_9_student_distillation.phase9_metrics import split_behavior_class
 
 DEFAULT_TARGETS = {
     "supported": 0.45,
@@ -49,23 +49,7 @@ def parse_args() -> argparse.Namespace:
 
 
 def behavior_bucket(row: dict[str, Any]) -> str:
-    metadata = row.get("metadata") or {}
-    category = str(row.get("category") or "").casefold()
-    variant = str(metadata.get("curriculum_variant") or "").casefold()
-    mode = str(row.get("mode") or "").casefold()
-    decision = str(row.get("decision") or "").casefold()
-    if "injection" in category or "injection" in variant or row.get("adversarial_evidence"):
-        return "injection"
-    if mode == "procedure" or decision == "procedure" or "procedure" in category:
-        return "procedure"
-    klass = decision_class(row)
-    if klass == "social":
-        return "social"
-    if klass == "conflict":
-        return "conflict"
-    if klass == "unsupported":
-        return "unsupported"
-    return "supported"
+    return split_behavior_class(row)
 
 
 def normalize_ratios(raw: dict[str, Any], available: set[str]) -> dict[str, float]:

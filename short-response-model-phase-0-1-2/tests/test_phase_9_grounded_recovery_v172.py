@@ -140,6 +140,91 @@ def test_grounded_coverage_requires_all_behavior_denominators() -> None:
     packet["conditions"]["oracle_rag"]["procedure_case_count"] = 0
     assert "oracle_rag:zero_procedure_cases" in behavior_coverage_issues(packet)
 
+
+def test_conflict_flags_and_split_behavior_cover_holdouts() -> None:
+    from scripts.phase_9_student_distillation.phase9_common import assert_no_group_leakage, split_by_group
+    from scripts.phase_9_student_distillation.phase9_metrics import (
+        decision_class,
+        is_conflict_response,
+        split_behavior_class,
+    )
+
+    conflict = {
+        "id": "c1",
+        "topic_id": "conflict_topic",
+        "decision": "abstain",
+        "category": "missing_answer",
+        "mode": "grounded_factual",
+        "scenario_flags": ["conflict"],
+        "support_document_ids": ["doc_a", "doc_b"],
+    }
+    procedure = {
+        "id": "p1",
+        "topic_id": "procedure_topic",
+        "decision": "answer",
+        "category": "procedure",
+        "mode": "procedure",
+        "support_document_ids": ["proc_doc"],
+    }
+    supported = {
+        "id": "s1",
+        "topic_id": "supported_topic",
+        "decision": "answer",
+        "category": "supported",
+        "mode": "grounded_factual",
+        "support_document_ids": ["sup_doc"],
+    }
+    unsupported = {
+        "id": "u1",
+        "topic_id": "unsupported_topic",
+        "decision": "abstain",
+        "category": "missing_answer",
+        "mode": "grounded_factual",
+        "support_document_ids": [],
+    }
+    social = {
+        "id": "soc1",
+        "topic_id": "social_topic",
+        "decision": "social",
+        "category": "social",
+        "mode": "social_roleplay",
+        "support_document_ids": [],
+    }
+    assert decision_class(conflict) == "conflict"
+    assert split_behavior_class(conflict) == "conflict"
+    assert split_behavior_class(procedure) == "procedure"
+    assert is_conflict_response("The available sources conflict, so I can't give one certain answer.")
+
+    # Enough independent components that each holdout behavior can be reserved.
+    extras = []
+    for index in range(6):
+        extras.append(
+            {
+                "id": f"extra_supported_{index}",
+                "topic_id": f"extra_supported_{index}",
+                "decision": "answer",
+                "category": "supported",
+                "mode": "grounded_factual",
+                "support_document_ids": [f"extra_doc_{index}"],
+            }
+        )
+        extras.append(
+            {
+                "id": f"extra_missing_{index}",
+                "topic_id": f"extra_missing_{index}",
+                "decision": "abstain",
+                "category": "missing_answer",
+                "mode": "grounded_factual",
+                "support_document_ids": [],
+            }
+        )
+    rows = [conflict, procedure, supported, unsupported, social, *extras]
+    splits = split_by_group(rows, seed=7)
+    assert_no_group_leakage(splits)
+    test_classes = {split_behavior_class(item) for item in splits["test"]}
+    assert {"supported", "unsupported", "conflict", "procedure", "social"} <= test_classes
+
+
 def test_completion_weighting_emphasizes_decision_anchor_and_abstention() -> None:
     tokenizer = TinyTokenizer()
     supported = row("s", "answer", "supported", answer="42")

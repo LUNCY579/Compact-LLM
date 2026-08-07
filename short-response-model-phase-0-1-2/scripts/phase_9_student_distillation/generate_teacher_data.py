@@ -407,6 +407,7 @@ def main() -> None:
                 "mode": mode,
                 "decision": row.get("decision"),
                 "category": row.get("category"),
+                "scenario_flags": list(row.get("scenario_flags") or []),
                 "messages": messages,
                 "evidence": evidence,
                 "procedures": procedures,

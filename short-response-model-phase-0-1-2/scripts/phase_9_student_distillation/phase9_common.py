@@ -810,7 +810,10 @@ def split_by_group(
     if train_fraction <= 0 or dev_fraction < 0 or train_fraction + dev_fraction >= 1:
         raise ValueError("Expected train_fraction > 0, dev_fraction >= 0, and sum < 1")
 
-    from scripts.phase_9_student_distillation.phase9_metrics import decision_class
+    from scripts.phase_9_student_distillation.phase9_metrics import (
+        HOLDOUT_BEHAVIOR_CLASSES,
+        split_behavior_class,
+    )
 
     groups = connected_component_groups(rows)
     fractions = {
@@ -823,7 +826,7 @@ def split_by_group(
     for key, items in groups.items():
         counts: dict[str, int] = {}
         for row in items:
-            klass = decision_class(row)
+            klass = split_behavior_class(row)
             counts[klass] = counts.get(klass, 0) + 1
             total_classes[klass] = total_classes.get(klass, 0) + 1
         group_classes[key] = counts
@@ -905,11 +908,10 @@ def split_by_group(
         key: {klass for klass, count in group_classes[key].items() if count > 0}
         for key in groups
     }
-    required_holdout_classes = [
-        klass
-        for klass in ("supported", "unsupported")
-        if sum(1 for key in groups if klass in component_class_presence[key]) >= 2
-    ]
+    component_availability = {
+        klass: sum(1 for key in groups if klass in component_class_presence[key])
+        for klass in HOLDOUT_BEHAVIOR_CLASSES
+    }
 
     def classes_for(split: str, assignment: dict[str, str]) -> set[str]:
         present: set[str] = set()
@@ -918,8 +920,24 @@ def split_by_group(
                 present.update(component_class_presence[key])
         return present
 
-    for target in ("dev", "test"):
-        missing = set(required_holdout_classes) - classes_for(target, ownership)
+    # Stage A Oracle preflight evaluates the test split, so rare behaviors must
+    # land there whenever the corpus contains them. Dev only reserves rare
+    # behaviors when at least two independent components exist.
+    required_test_classes = [
+        klass for klass in HOLDOUT_BEHAVIOR_CLASSES if component_availability[klass] >= 1
+    ]
+    required_dev_classes = [
+        klass
+        for klass in ("supported", "unsupported")
+        if component_availability[klass] >= 2
+    ] + [
+        klass
+        for klass in ("conflict", "procedure", "social")
+        if component_availability[klass] >= 2
+    ]
+
+    for target, required in (("test", required_test_classes), ("dev", required_dev_classes)):
+        missing = set(required) - classes_for(target, ownership)
         if not missing:
             continue
         target_groups = [key for key, owner in ownership.items() if owner == target]
@@ -939,6 +957,7 @@ def split_by_group(
         donor_key = min(
             donor_candidates,
             key=lambda key: (
+                0 if ownership[key] == "train" else 1,
                 min((abs(len(groups[key]) - len(groups[t])) for t in target_groups), default=len(groups[key])),
                 len(groups[key]),
                 hashlib.sha256(f"{seed}:{target}:{key}".encode("utf-8")).hexdigest(),
@@ -963,16 +982,18 @@ def split_by_group(
     # avoid a one-row threshold accident.  Add complete training components when
     # the corpus has enough independent components.  Test only requires one of
     # each class because it is not used to choose the threshold.
-    component_availability = {
-        klass: sum(1 for key in groups if klass in component_class_presence[key])
-        for klass in ("supported", "unsupported")
-    }
     holdout_minimums = {
         "dev": {
-            klass: (2 if component_availability[klass] >= 3 and total_classes.get(klass, 0) >= 3 else 1)
-            for klass in required_holdout_classes
+            klass: (
+                2
+                if klass in {"supported", "unsupported"}
+                and component_availability[klass] >= 3
+                and total_classes.get(klass, 0) >= 3
+                else 1
+            )
+            for klass in required_dev_classes
         },
-        "test": {klass: 1 for klass in required_holdout_classes},
+        "test": {klass: 1 for klass in required_test_classes},
     }
 
     def class_count(split: str, klass: str) -> int:
@@ -982,7 +1003,9 @@ def split_by_group(
             if owner == split
         )
 
-    for target in ("dev", "test"):
+    # Prefer filling test first so Stage A coverage wins when a rare class has
+    # only one component. Allow borrowing from the other holdout only after train.
+    for target in ("test", "dev"):
         while True:
             deficits = {
                 klass: minimum - class_count(target, klass)
@@ -994,19 +1017,33 @@ def split_by_group(
             candidates = [
                 key
                 for key, owner in ownership.items()
-                if owner == "train"
+                if owner != target
                 and any(group_classes[key].get(klass, 0) > 0 for klass in deficits)
             ]
             if not candidates:
                 break
-            donor_key = max(
-                candidates,
-                key=lambda key: (
+
+            def donor_score(key: str) -> tuple:
+                owner = ownership[key]
+                # Never steal the last required instance from the other holdout.
+                if owner != "train":
+                    for klass in deficits:
+                        if group_classes[key].get(klass, 0) <= 0:
+                            continue
+                        other_minimum = holdout_minimums.get(owner, {}).get(klass, 0)
+                        if other_minimum and class_count(owner, klass) - group_classes[key].get(klass, 0) < other_minimum:
+                            return (-1, 0, 0, key)
+                return (
+                    2 if owner == "train" else 1,
                     sum(min(deficits[klass], group_classes[key].get(klass, 0)) for klass in deficits),
                     -len(groups[key]),
                     hashlib.sha256(f"{seed}:{target}:coverage:{key}".encode("utf-8")).hexdigest(),
-                ),
-            )
+                )
+
+            ranked = sorted(candidates, key=donor_score, reverse=True)
+            donor_key = ranked[0]
+            if donor_score(donor_key)[0] < 0:
+                break
             ownership[donor_key] = target
 
     rebuilt = {"train": [], "dev": [], "test": []}

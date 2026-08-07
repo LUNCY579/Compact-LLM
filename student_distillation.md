@@ -2,6 +2,8 @@ Yes. Use the local Qwen3-0.6B snapshot as the temporary diagnostic teacher and r
 
 The important change is to use a **fresh artifact root** and regenerate the teacher review packet with Qwen rather than reusing answers produced by the weak teacher.
 
+**Path audit (verified on this machine):** all commands below assume you `cd` into `short-response-model-phase-0-1-2` first. Relative `.\scripts\...` and `.\data\...` paths are correct from that directory. `$QwenBase` must be the local snapshot folder (not the Hub id `Qwen/Qwen3-0.6B`), because the runner checks `Test-Path` on `-TeacherModel`.
+
 ## 0. Open PowerShell in the repository root
 
 ```powershell
@@ -167,6 +169,31 @@ $RunRoot\evaluation_warm_initialization_oracle\results.jsonl
 ```
 
 The pipeline deliberately stops here when Qwen itself cannot demonstrate usable Oracle-RAG behavior. In that case, student training would not yet be meaningful.
+
+### If Preflight throws `Teacher Oracle preflight failed`
+
+This is **not** usually a wrong `$QwenBase` path. Confirm the model loaded and Stage A quality first:
+
+```powershell
+Test-Path $QwenBase
+Get-Content "$RunRoot\GROUNDED_RECOVERY_LADDER.md"
+```
+
+If Stage A shows a high score (for example `1.0`) with components like `supported_correctness: 1.0` but still `status: FAIL`, the teacher path is fine. The gate is failing on **missing test-set coverage**, commonly:
+
+```text
+oracle_rag:zero_conflict_cases
+oracle_rag:zero_procedure_cases
+```
+
+That means the leakage-safe `test.jsonl` split did not contain rows the ladder counts as conflict/procedure. With the expanded 36-row pack, a 4-row test split can easily miss them even when Qwen answers the present cases correctly.
+
+Do **not** proceed to Overfit / Sweep / Full until Stage A is `PASS`. Do **not** delete the artifact root and rerun Preflight expecting a different result unless you change the review packet, split policy, or conflict/procedure labeling.
+
+Known labeling traps in the expanded pack:
+
+* conflict-style prompts (`p025`, `p026`) are currently `decision: abstain` / `category: missing_answer`, so the evaluator does **not** count them as `conflict`
+* procedure prompts need `mode: procedure` (or `decision: procedure`) **and** must land in the eval split
 
 ---
 
@@ -368,3 +395,7 @@ Narrow 170M/130M/100M comparisons later
 ```
 
 Do not use the previous weak-teacher output root, do not add `-RunKD` to the first Full run, and do not return to the narrow random students until the warm inherited student proves that the evidence-use path works.
+
+If Stage A fails with a **perfect teacher score** but `zero_conflict_cases` / `zero_procedure_cases`, fix eval coverage or row labeling before deleting `$RunRoot` and starting over. That failure mode is data/gate coverage, not a bad `$QwenBase` path.
+
+After the v1.7.2 coverage hotfix (conflict rows labeled `decision=conflict`, stratified holdouts for procedure/conflict), rebuild Preflight on a clean root or delete the old `dataset/` plus Stage A/B evaluation folders before reusing `$RunRoot`. Do not pass `-ReuseExisting` until those artifacts are rebuilt.

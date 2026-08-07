@@ -19,7 +19,15 @@ from scripts.common.quality_evaluation import token_f1
 SUPPORTED_DECISIONS = {"answer", "procedure"}
 UNSUPPORTED_DECISIONS = {"abstain", "unsupported", "missing_answer", "insufficient_evidence"}
 CONFLICT_DECISIONS = {"conflict"}
+CONFLICT_CATEGORIES = {"conflict", "conflicting_evidence"}
 SOCIAL_DECISIONS = {"social", "roleplay", "social_roleplay"}
+HOLDOUT_BEHAVIOR_CLASSES = (
+    "supported",
+    "unsupported",
+    "conflict",
+    "procedure",
+    "social",
+)
 
 
 def normalized_text(value: str | None) -> str:
@@ -28,13 +36,23 @@ def normalized_text(value: str | None) -> str:
     return text.strip(" \t\r\n.,!?;:")
 
 
+def _scenario_flags(row: dict[str, Any]) -> set[str]:
+    return {str(flag).strip().casefold() for flag in (row.get("scenario_flags") or []) if str(flag).strip()}
+
+
+def is_conflict_response(answer: str | None) -> bool:
+    text = str(answer or "").casefold()
+    return "conflict" in text or "disagree" in text
+
+
 def decision_class(row: dict[str, Any]) -> str:
     decision = str(row.get("decision") or "").strip().casefold()
     mode = str(row.get("mode") or "").strip().casefold()
     category = str(row.get("category") or "").strip().casefold()
+    flags = _scenario_flags(row)
     if decision in SOCIAL_DECISIONS or mode == "social_roleplay" or category == "social":
         return "social"
-    if decision in CONFLICT_DECISIONS:
+    if decision in CONFLICT_DECISIONS or category in CONFLICT_CATEGORIES or "conflict" in flags:
         return "conflict"
     if decision in UNSUPPORTED_DECISIONS:
         return "unsupported"
@@ -43,6 +61,28 @@ def decision_class(row: dict[str, Any]) -> str:
     # Unknown decisions are reported separately instead of being silently counted
     # as unsupported confident-answer failures.
     return "unknown"
+
+
+def split_behavior_class(row: dict[str, Any]) -> str:
+    """Behavior label used for mixture sampling and holdout coverage.
+
+    Procedure and injection need their own buckets even when decision_class would
+    still treat the row as supported for answer-correctness accounting.
+    """
+
+    metadata = row.get("metadata") or {}
+    category = str(row.get("category") or "").casefold()
+    variant = str(metadata.get("curriculum_variant") or "").casefold()
+    mode = str(row.get("mode") or "").casefold()
+    decision = str(row.get("decision") or "").casefold()
+    if "injection" in category or "injection" in variant or row.get("adversarial_evidence"):
+        return "injection"
+    if mode == "procedure" or decision == "procedure" or "procedure" in category:
+        return "procedure"
+    klass = decision_class(row)
+    if klass in {"social", "conflict", "unsupported"}:
+        return klass
+    return "supported"
 
 
 def safe_rate(numerator: int, denominator: int) -> float | None:
