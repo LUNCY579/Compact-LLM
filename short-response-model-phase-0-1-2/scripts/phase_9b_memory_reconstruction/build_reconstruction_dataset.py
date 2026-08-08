@@ -70,7 +70,7 @@ def normalize_reviewed(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     seen: set[str] = set()
     for raw in rows:
         status = str(raw.get("review_status") or "").strip().lower()
-        if status not in {"accepted", "approved"}:
+        if status not in {"accepted", "approved", "auto_verified"}:
             continue
         row = {**raw, "approved_reconstruction": _selected_target(raw)}
         normalized = validate_reconstruction_record(row, require_reviewed=True)

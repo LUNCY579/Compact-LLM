@@ -147,7 +147,7 @@ def main() -> None:
     packet = {
         "phase": "9_student_distillation",
         "schema_version": "1.4",
-        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
+        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
         "stages": {
             "A": stage_a,
             "B": stage_b,

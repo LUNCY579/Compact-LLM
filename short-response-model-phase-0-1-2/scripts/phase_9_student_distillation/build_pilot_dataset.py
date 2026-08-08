@@ -54,10 +54,10 @@ def parse_args() -> argparse.Namespace:
 
 def selected_answer(row: dict[str, Any], *, allow_pending: bool) -> str:
     status = str(row.get("review_status") or "").strip().lower()
-    if status != "accepted" and not allow_pending:
+    if status not in {"accepted", "approved", "auto_verified"} and not allow_pending:
         raise ValueError(
-            f"{row.get('id')} is not human accepted (review_status={status!r}). "
-            "Teacher generation is a review packet, not automatically approved training data."
+            f"{row.get('id')} is not human accepted or auto-verified (review_status={status!r}). "
+            "Teacher generation is a review packet unless explicitly accepted or deterministically verified."
         )
     approved = str(row.get("approved_answer") or "").strip()
     if approved:
@@ -173,7 +173,7 @@ def normalize_training_row(row: dict[str, Any], *, allow_pending: bool) -> dict[
             "phase": "9_student_distillation",
             "teacher_provenance": row.get("teacher_provenance") or {},
             "review_status": row.get("review_status"),
-            "trajectory_source": "human_approved_teacher",
+            "trajectory_source": ("deterministic_auto_verified_gold" if str(row.get("review_status") or "").casefold() == "auto_verified" else "human_approved_teacher"),
             "intended_split": row.get("intended_split") or (row.get("metadata") or {}).get("intended_split"),
             "evidence_clarity": row.get("evidence_clarity"),
             "answer_stance": row.get("answer_stance"),
@@ -279,7 +279,7 @@ def main() -> None:
 
     manifest = {
         "schema_version": "1.1",
-        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
+        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
         "source": str(args.reviewed_input),
         "source_sha256": sha256(args.reviewed_input),
         "seed": args.seed,

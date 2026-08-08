@@ -1,12 +1,10 @@
 <#
 .SYNOPSIS
-Run Phase 9B contextual memory reconstruction under the v1.7.4 dedicated-corpus contract.
+Run Phase 9B contextual memory reconstruction under the v1.7.5 large corrective-corpus contract.
 
 .DESCRIPTION
 Phase 9B consumes the human-approved Phase 9 student and teaches source-state-
-conditioned memory use. v1.7.4 integrates a dedicated 600-row reconstruction
-corpus with ACCEPT/ADAPT/REJECT/CONFLICT/INSUFFICIENT labels, 120
-counterfactual pairs, curated DPO preferences, and evaluator calibration assets.
+conditioned memory use. v1.7.5 integrates a 3,600-row source-state reconstruction corpus with all five decisions, 600 counterfactual pairs, 10,800 curated DPO preferences, and 14,400 evaluator candidates.
 
 DEV is used for strategy selection. Exactly one strategy is frozen before sealed
 TEST is touched. Prepare remains available for generating project-specific
@@ -15,12 +13,12 @@ reviewed corpus is the default Train/Evaluate/Full input.
 #>
 param(
     [ValidateSet("Prepare", "Train", "Evaluate", "Full")][string]$Mode = "Prepare",
-    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
-    [string]$MemoryReconstructionCorpusRoot = ".\data\phase_9b_memory_reconstruction\reconstruction_corpus_v1",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v3_large",
+    [string]$MemoryReconstructionCorpusRoot = ".\data\phase_9b_memory_reconstruction\reconstruction_corpus_v2_large",
     [string]$Phase9ReferenceManifest = ".\artifacts\references\phase_9_student_reference.json",
     [string]$TeacherModel = "",
-    [string]$SourcePrompts = ".\data\phase_9_student_distillation\rag_reasoning_v2\prompts.all.jsonl",
-    [string]$MemoryFile = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
+    [string]$SourcePrompts = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\prompts.all.jsonl",
+    [string]$MemoryFile = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\knowledge.jsonl",
     [string]$ReviewedReconstructions = "",
     [string]$Config = ".\configs\phase_9b_memory_reconstruction.json",
     [string]$OutputRoot = ".\artifacts\phase_9b_memory_reconstruction",
@@ -41,6 +39,11 @@ $ErrorActionPreference = "Stop"
 $Root = (Resolve-Path (Join-Path $PSScriptRoot "..\..")).Path
 Set-Location $Root
 $env:PYTHONPATH = $Root
+
+# Backward-compatible manual overrides remain supported for prior experiments:
+# .\data\phase_9_student_distillation\rag_reasoning_v2\prompts.all.jsonl
+# .\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl
+# .\data\phase_9b_memory_reconstruction\reconstruction_corpus_v1
 
 function Invoke-PythonStep {
     param([string]$Name, [string[]]$Arguments)
@@ -346,7 +349,7 @@ if ($Mode -in @("Evaluate", "Full")) {
 }
 
 Write-Host ""
-Write-Host "Phase 9B v1.7.4 completed."
+Write-Host "Phase 9B v1.7.5 completed."
 Write-Host "DEV selection: $DevSelection"
 Write-Host "Assessment: reports\PHASE_9B_ASSESSMENT.json"
 Write-Host "Human gate: reports\PHASE_9B_STOP_GATE.md"

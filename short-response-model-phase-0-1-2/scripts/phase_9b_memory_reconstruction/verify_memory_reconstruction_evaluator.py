@@ -26,7 +26,7 @@ def main() -> None:
     parser.add_argument(
         "--corpus-root",
         type=Path,
-        default=ROOT / "data" / "phase_9b_memory_reconstruction" / "reconstruction_corpus_v1",
+        default=ROOT / "data" / "phase_9b_memory_reconstruction" / "reconstruction_corpus_v2_large",
     )
     parser.add_argument("--split", choices=("train", "dev", "test", "all"), default="dev")
     args = parser.parse_args()

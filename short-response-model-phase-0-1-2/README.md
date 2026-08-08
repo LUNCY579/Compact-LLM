@@ -1,3 +1,9 @@
+## v1.7.5 large corrective RAG and memory-reconstruction curricula
+
+v1.7.5 expands the evidence-specialization program specifically around the observed weak behaviors: supported factual answering and trusted-procedure application. Phase 9 now defaults to `rag_reasoning_v3_large` with 5,900 canonical rows, 6,000 factual documents, 200 trusted procedures, an answer-heavy 55% supported / 25% procedure corrective training profile, and a pre-evaluation FTS5 audit proving every supported DEV row can retrieve its authored support document in the top 3. Phase 9B now defaults to `reconstruction_corpus_v2_large` with 3,600 source-state reconstruction rows, 1,500 memories, all five reconstruction decisions, 600 counterfactual pairs, 10,800 curated preferences, and 14,400 evaluator candidates.
+
+Both corpora use authored topic-family train/dev/sealed-test splits and deterministic `auto_verified` gold rather than falsely claiming human review. Phase 10 and Phase 11 consume the same v1.7.5 assets. See `PHASE_9_9B_LARGE_CORRECTIVE_DATASETS_v1.7.5.md`.
+
 ## v1.7.4 dedicated Phase 9B memory-reconstruction corpus
 
 Phase 9B now has a first-class 600-row source-state reconstruction curriculum rather than relying only on reconstruction examples derived from the Phase 9 evidence corpus. The integrated asset lives at `data/phase_9b_memory_reconstruction/reconstruction_corpus_v1` and contains 300 external memories, all five reconstruction decisions, 120 counterfactual state pairs, 1,800 curated preference pairs, and 2,400 evaluator candidates under a 440 train / 80 dev / 80 sealed-test topic-family split.

@@ -830,7 +830,7 @@ def main() -> None:
         **overall_quality,
         "phase": "9_student_distillation",
         "schema_version": "1.4",
-        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
+        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
         "model": args.model,
         "model_tree_sha256": model_tree_sha256,
         "adapter_tree_sha256": adapter_tree_sha256,

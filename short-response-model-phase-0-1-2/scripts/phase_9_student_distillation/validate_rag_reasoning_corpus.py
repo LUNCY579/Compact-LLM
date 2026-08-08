@@ -1,24 +1,26 @@
 from __future__ import annotations
 
-"""Validate the repository-native Phase 9 RAG Reasoning Corpus v2.1.
+"""Strict model-free validation for repository-native Phase 9 RAG corpora.
 
-This validator is intentionally model-free. It verifies the invariants that must
-hold before Phase 9, 9B, 10, or 11 may consume the corpus: hashes, row counts,
-review status, authored split isolation, answerability ontology, canonical safe
-abstentions, and the two auditable procedure-resolution repairs.
+Supports the v1.7.3 530-row corpus and the v1.7.5 large corrective corpus.
+The validator checks hashes, authored split isolation, answerability ontology,
+review provenance, safe abstentions, document/procedure ownership, and duplicate
+question leakage without assuming one fixed corpus size.
 """
 
 import argparse
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any
 
 ABSTENTION_TEXT = "I don't know based on the available information."
-REPAIRS = {
+V173_REPAIRS = {
     "train_procedure_semver_family_04_conflicting_inputs": "Version 2.10.0.",
     "train_procedure_iso_date_family_04_conflicting_inputs": "2032-11-02.",
 }
+ACCEPTED_STATUSES = {"accepted", "approved", "auto_verified"}
 
 
 def read_json(path: Path) -> Any:
@@ -26,7 +28,7 @@ def read_json(path: Path) -> Any:
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
-    out = []
+    out: list[dict[str, Any]] = []
     with path.open("r", encoding="utf-8") as handle:
         for number, line in enumerate(handle, 1):
             if not line.strip():
@@ -39,102 +41,111 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
 
 
 def sha256(path: Path) -> str:
-    digest = hashlib.sha256()
-    with path.open("rb") as handle:
-        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
-            digest.update(chunk)
-    return digest.hexdigest()
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
 
 
 def referenced_ids(row: dict[str, Any]) -> set[str]:
-    ids = {
-        str(value)
-        for value in [
-            *(row.get("support_document_ids") or []),
-            *(row.get("retrieved_document_ids") or []),
-            *(row.get("retrieved_procedure_ids") or []),
-        ]
-        if value
-    }
+    ids = {str(v) for v in [*(row.get("support_document_ids") or []), *(row.get("retrieved_document_ids") or []), *(row.get("retrieved_procedure_ids") or [])] if v}
     for item in row.get("evidence") or []:
         value = item.get("document_id") or item.get("record_id")
-        if value:
-            ids.add(str(value))
+        if value: ids.add(str(value))
     for item in row.get("procedures") or []:
         value = item.get("procedure_id") or item.get("record_id")
-        if value:
-            ids.add(str(value))
+        if value: ids.add(str(value))
     return ids
+
+
+def norm_question(text: str) -> str:
+    return " ".join(re.sub(r"[^a-z0-9 ]+", " ", (text or "").casefold()).split())
 
 
 def validate(root: Path) -> dict[str, Any]:
     manifest = read_json(root / "manifests/dataset_manifest.json")
     hashes = read_json(root / "manifests/file_hashes.json")
     problems: list[str] = []
+    schema = str(manifest.get("schema_version") or "")
+    if schema not in {"2.1", "3.0"}:
+        problems.append(f"unsupported dataset schema_version: {schema}")
 
-    if str(manifest.get("schema_version")) != "2.1":
-        problems.append("dataset schema_version must be 2.1")
-    expected_counts = {"train": 392, "dev": 67, "test": 71}
-    if manifest.get("split_counts") != expected_counts:
-        problems.append(f"unexpected split counts: {manifest.get('split_counts')}")
-
-    for relative, expected in hashes.items():
+    for relative, expected_raw in hashes.items():
         path = root / relative
+        expected = expected_raw.get("sha256") if isinstance(expected_raw, dict) else expected_raw
         if not path.exists():
             problems.append(f"missing hashed file: {relative}")
         elif sha256(path) != expected:
             problems.append(f"hash mismatch: {relative}")
 
-    reviewed = read_jsonl(root / "teacher_candidates.reviewed.jsonl")
-    if len(reviewed) != 530:
-        problems.append(f"expected 530 reviewed rows, found {len(reviewed)}")
-    if any(str(row.get("review_status") or "").casefold() not in {"accepted", "approved"} for row in reviewed):
-        problems.append("all canonical reviewed rows must be accepted/approved")
-    if any(str(row.get("decision") or "").casefold() == "procedure" for row in reviewed):
+    candidates = [root / "teacher_candidates.reviewed.jsonl", root / "teacher_candidates.auto_verified.jsonl", root / "prompts.all.jsonl"]
+    canonical_path = next((p for p in candidates if p.exists()), None)
+    if canonical_path is None:
+        return {"status":"FAIL","root":str(root),"problems":["canonical Phase 9 JSONL is missing"]}
+    reviewed = read_jsonl(canonical_path)
+    expected_total = int(manifest.get("canonical_rows") or manifest.get("reviewed_rows") or len(reviewed))
+    if len(reviewed) != expected_total:
+        problems.append(f"expected {expected_total} canonical rows, found {len(reviewed)}")
+    if any(str(r.get("review_status") or "").casefold() not in ACCEPTED_STATUSES for r in reviewed):
+        problems.append("all canonical rows must be accepted/approved/auto_verified")
+    if any(str(r.get("decision") or "").casefold() == "procedure" for r in reviewed):
         problems.append("decision=procedure is forbidden; procedure is a mode, not answerability")
     for row in reviewed:
         if str(row.get("decision") or "").casefold() == "abstain":
             if str(row.get("approved_answer") or row.get("answer") or "") != ABSTENTION_TEXT:
                 problems.append(f"{row.get('id')}: noncanonical abstention")
+        if str(row.get("mode") or "").casefold() == "procedure" and not (row.get("procedures") or row.get("retrieved_procedure_ids")):
+            problems.append(f"{row.get('id')}: procedure row lacks a trusted procedure")
 
-    by_id = {str(row.get("id")): row for row in reviewed}
-    for row_id, expected in REPAIRS.items():
-        row = by_id.get(row_id)
-        if not row:
-            problems.append(f"missing repaired row: {row_id}")
-            continue
-        answer = str(row.get("approved_answer") or row.get("answer") or "")
-        if row.get("decision") != "answer" or answer != expected:
-            problems.append(f"{row_id}: procedure-resolution repair is not canonical")
+    if schema == "2.1":
+        by_id = {str(r.get("id")): r for r in reviewed}
+        for rid, expected in V173_REPAIRS.items():
+            row = by_id.get(rid)
+            if not row or row.get("decision") != "answer" or str(row.get("approved_answer") or row.get("answer") or "") != expected:
+                problems.append(f"{rid}: v1.7.3 procedure-resolution repair is not canonical")
 
+    expected_counts = manifest.get("split_counts") or {}
     topic_owner: dict[str, str] = {}
     record_owner: dict[str, str] = {}
     split_ids: dict[str, set[str]] = {}
-    for split, count in expected_counts.items():
-        rows = read_jsonl(root / f"reviewed_splits/{split}.reviewed.jsonl")
-        split_ids[split] = {str(row.get("id")) for row in rows}
-        if len(rows) != count:
-            problems.append(f"{split}: expected {count} rows, found {len(rows)}")
+    question_owner: dict[str, str] = {}
+    by_id = {str(r.get("id")): r for r in reviewed}
+    for split in ("train", "dev", "test"):
+        path = root / "reviewed_splits" / f"{split}.reviewed.jsonl"
+        rows = read_jsonl(path)
+        split_ids[split] = {str(r.get("id")) for r in rows}
+        expected = int(expected_counts.get(split, len(rows)))
+        if len(rows) != expected:
+            problems.append(f"{split}: expected {expected} rows, found {len(rows)}")
         for row in rows:
             if str(row.get("intended_split")) != split:
                 problems.append(f"{row.get('id')}: intended_split mismatch")
             topic = str(row.get("topic_id") or "")
             prior = topic_owner.setdefault(topic, split)
-            if prior != split:
-                problems.append(f"topic leakage: {topic} -> {prior}/{split}")
+            if prior != split: problems.append(f"topic leakage: {topic} -> {prior}/{split}")
+            q = norm_question(str(row.get("question") or ""))
+            if q:
+                qprior = question_owner.setdefault(q, split)
+                if qprior != split: problems.append(f"exact normalized question leakage: {q[:80]} -> {qprior}/{split}")
             for record_id in referenced_ids(row):
                 prior = record_owner.setdefault(record_id, split)
-                if prior != split:
-                    problems.append(f"document/procedure leakage: {record_id} -> {prior}/{split}")
-
-    if (split_ids["train"] & split_ids["dev"]) or (split_ids["train"] & split_ids["test"]) or (split_ids["dev"] & split_ids["test"]):
-        problems.append("row ID leakage across authored splits")
+                if prior != split: problems.append(f"document/procedure leakage: {record_id} -> {prior}/{split}")
     if set.union(*split_ids.values()) != set(by_id):
-        problems.append("authored splits do not exactly partition canonical reviewed rows")
+        problems.append("authored splits do not exactly partition canonical rows")
+    if any(split_ids[a] & split_ids[b] for a,b in (("train","dev"),("train","test"),("dev","test"))):
+        problems.append("row ID leakage across authored splits")
 
     knowledge = read_jsonl(root / "knowledge.jsonl")
-    if len(knowledge) != 464:
-        problems.append(f"expected 464 knowledge documents, found {len(knowledge)}")
+    procedures = read_jsonl(root / "procedures.jsonl")
+    expected_knowledge = int(manifest.get("knowledge_documents") or len(knowledge))
+    expected_procedures = int(manifest.get("procedures") or len(procedures))
+    if len(knowledge) != expected_knowledge: problems.append(f"expected {expected_knowledge} knowledge documents, found {len(knowledge)}")
+    if len(procedures) != expected_procedures: problems.append(f"expected {expected_procedures} procedures, found {len(procedures)}")
+    known_ids = {str(x.get("document_id")) for x in knowledge} | {str(x.get("procedure_id")) for x in procedures}
+    referenced = {x for r in reviewed for x in referenced_ids(r)}
+    missing = sorted(referenced - known_ids)
+    if missing: problems.append(f"canonical rows reference unknown records: {missing[:8]}")
     for row in knowledge:
         trust = str(row.get("trust_level") or "standard").casefold()
         if trust in {"superseded", "untrusted", "tentative"} and not isinstance(row.get("source_state"), dict):
@@ -143,29 +154,16 @@ def validate(root: Path) -> dict[str, Any]:
             problems.append(f"{row.get('document_id')}: superseded memory missing validity_conditions")
 
     return {
-        "status": "PASS" if not problems else "FAIL",
-        "root": str(root),
-        "reviewed_rows": len(reviewed),
-        "split_counts": {split: len(ids) for split, ids in split_ids.items()},
-        "knowledge_documents": len(knowledge),
-        "problems": problems,
+        "status":"PASS" if not problems else "FAIL", "root":str(root), "schema_version":schema,
+        "canonical_rows":len(reviewed), "reviewed_rows":len(reviewed), "split_counts":{k:len(v) for k,v in split_ids.items()},
+        "knowledge_documents":len(knowledge), "procedures":len(procedures), "problems":problems,
     }
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--corpus-root", type=Path, required=True)
-    parser.add_argument("--out", type=Path, default=None)
-    args = parser.parse_args()
-    packet = validate(args.corpus_root.resolve())
-    text = json.dumps(packet, indent=2)
-    print(text)
-    if args.out:
-        args.out.parent.mkdir(parents=True, exist_ok=True)
-        args.out.write_text(text + "\n", encoding="utf-8")
-    if packet["status"] != "PASS":
-        raise SystemExit(2)
+    p=argparse.ArgumentParser(); p.add_argument("--corpus-root",type=Path,required=True); p.add_argument("--out",type=Path,default=None)
+    args=p.parse_args(); packet=validate(args.corpus_root.resolve()); text=json.dumps(packet,indent=2); print(text)
+    if args.out: args.out.parent.mkdir(parents=True,exist_ok=True); args.out.write_text(text+"\n",encoding="utf-8")
+    if packet["status"]!="PASS": raise SystemExit(2)
 
-
-if __name__ == "__main__":
-    main()
+if __name__=="__main__": main()

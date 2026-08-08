@@ -25,7 +25,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
 )
 
 PHASE_9B_SCHEMA_VERSION = "1.1"
-PIPELINE_REVISION = "phase9b_memory_reconstruction_v1_7_4"
+PIPELINE_REVISION = "phase9b_memory_reconstruction_v1_7_5"
 DECISIONS = ("accept", "adapt", "reject", "conflict", "insufficient")
 CONFIDENCE_LEVELS = ("high", "medium", "low")
 
@@ -174,8 +174,8 @@ def validate_reconstruction_record(row: dict[str, Any], *, require_reviewed: boo
     if not question:
         raise ValueError(f"{record_id} is missing question")
     review_status = _nonempty(row.get("review_status") or "pending").lower()
-    if require_reviewed and review_status not in {"accepted", "approved"}:
-        raise ValueError(f"{record_id} is not human accepted")
+    if require_reviewed and review_status not in {"accepted", "approved", "auto_verified"}:
+        raise ValueError(f"{record_id} is not accepted or deterministically auto-verified")
     memories = [validate_memory_record(item) for item in (row.get("memories") or [])]
     current_state = _jsonable_mapping(row.get("current_state"), field=f"{record_id}.current_state")
     target_value = row.get("approved_reconstruction") or row.get("reconstruction")

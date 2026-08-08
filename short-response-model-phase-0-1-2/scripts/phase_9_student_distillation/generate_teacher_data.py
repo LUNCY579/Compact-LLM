@@ -43,7 +43,8 @@ from scripts.phase_9_student_distillation.phase9_common import (
 )
 from scripts.phase_9_student_distillation.phase9_prompting import plan_grounded_prompt, token_ids
 
-TEACHER_PIPELINE_REVISION = "phase9_rag_reasoning_integration_v1_7_3"
+LEGACY_TEACHER_PIPELINE_REVISION = "phase9_rag_reasoning_integration_v1_7_3"
+TEACHER_PIPELINE_REVISION = "phase9_large_corrective_curriculum_v1_7_5"
 
 
 def parse_args() -> argparse.Namespace:

@@ -23,7 +23,7 @@ if str(ROOT) not in sys.path:
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json, write_jsonl
 from scripts.phase_9_student_distillation.phase9_metrics import split_behavior_class
 
-DEFAULT_TARGETS = {
+BALANCED_TARGETS = {
     "supported": 0.45,
     "unsupported": 0.25,
     "conflict": 0.10,
@@ -31,6 +31,21 @@ DEFAULT_TARGETS = {
     "procedure": 0.05,
     "social": 0.05,
 }
+
+SUPPORT_PROCEDURE_RECOVERY_TARGETS = {
+    "supported": 0.55,
+    "procedure": 0.25,
+    "unsupported": 0.08,
+    "conflict": 0.04,
+    "injection": 0.05,
+    "social": 0.03,
+}
+
+PROFILES = {
+    "balanced": BALANCED_TARGETS,
+    "support_procedure_recovery": SUPPORT_PROCEDURE_RECOVERY_TARGETS,
+}
+DEFAULT_TARGETS = BALANCED_TARGETS
 
 
 def parse_args() -> argparse.Namespace:
@@ -41,9 +56,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-size", type=int, default=0, help="0 keeps the source row count.")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(
+        "--profile", choices=tuple(PROFILES), default="balanced",
+        help="Named behavior-mixture profile. v1.7.5 recovery emphasizes supported/procedural answering.",
+    )
+    parser.add_argument(
         "--ratios-json",
-        default=json.dumps(DEFAULT_TARGETS, sort_keys=True),
-        help="JSON object of behavior-class proportions.",
+        default="",
+        help="Optional JSON object overriding the named behavior-class proportions.",
     )
     return parser.parse_args()
 
@@ -79,7 +98,8 @@ def main() -> None:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         grouped[behavior_bucket(row)].append(row)
-    ratios = normalize_ratios(json.loads(args.ratios_json), set(grouped))
+    requested = json.loads(args.ratios_json) if args.ratios_json else PROFILES[args.profile]
+    ratios = normalize_ratios(requested, set(grouped))
     target_size = args.target_size if args.target_size > 0 else len(rows)
     if target_size < len(ratios):
         raise ValueError("target-size must be at least the number of available behavior classes")
@@ -111,7 +131,7 @@ def main() -> None:
     manifest = {
         "phase": "9_student_distillation",
         "schema_version": "1.4",
-        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
+        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
         "source": str(args.input),
         "source_sha256": sha256(args.input),
         "output": str(args.output),
@@ -120,7 +140,8 @@ def main() -> None:
         "source_row_count": len(rows),
         "output_row_count": len(sampled),
         "source_class_counts": dict(Counter(behavior_bucket(row) for row in rows)),
-        "requested_ratios": json.loads(args.ratios_json),
+        "profile": args.profile,
+        "requested_ratios": requested,
         "effective_ratios": ratios,
         "realized_counts": dict(realized),
         "realized_ratios": {name: count / len(sampled) for name, count in realized.items()},

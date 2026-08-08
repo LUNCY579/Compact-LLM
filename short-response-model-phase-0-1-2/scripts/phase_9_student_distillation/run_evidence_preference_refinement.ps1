@@ -12,9 +12,9 @@ selection to the same dev-first, sealed-test workflow.
 param(
     [string]$Model,
     [string]$SftAdapter,
-    [string]$TrainPreferences = ".\data\phase_9_student_distillation\rag_reasoning_v2\preferences\train.jsonl",
-    [string]$DevPreferences = ".\data\phase_9_student_distillation\rag_reasoning_v2\preferences\dev.jsonl",
-    [string]$OutputRoot = ".\artifacts\phase_9_evidence_preference_refinement_v1_7_3",
+    [string]$TrainPreferences = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\preferences\train.jsonl",
+    [string]$DevPreferences = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\preferences\dev.jsonl",
+    [string]$OutputRoot = ".\artifacts\phase_9_evidence_preference_refinement_v1_7_5",
     [int]$MaxSteps = 200,
     [int]$Seed = 42,
     [int]$LoraRank = 16

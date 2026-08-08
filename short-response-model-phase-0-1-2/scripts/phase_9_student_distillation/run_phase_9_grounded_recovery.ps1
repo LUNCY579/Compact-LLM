@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run the Phase 9 grounded-recovery capability ladder integrated with RAG Reasoning Corpus v2.1 in v1.7.3.
+Run the Phase 9 grounded-recovery capability ladder with the v1.7.5 large supported/procedural corrective corpus.
 
 .DESCRIPTION
 The workflow proves one warm 344M depth-copy student before any narrow-model
@@ -11,15 +11,16 @@ locked until the ladder JSON reports architecture_sweep_unlocked=true.
 #>
 param(
     [ValidateSet("Preflight", "Overfit", "Sweep", "Full")][string]$Mode = "Preflight",
-    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v3_large",
     [string]$TeacherModel = "",
-    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl",
-    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
-    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v2\procedures.jsonl",
+    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\teacher_candidates.auto_verified.jsonl",
+    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\knowledge.jsonl",
+    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\procedures.jsonl",
     [string]$FoundationPrompts = ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
-    [string]$OutputRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_3",
+    [string]$OutputRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_5",
     [int]$MaximumEvidenceTokens = 384,
     [int]$Seed = 42,
+    [ValidateSet("balanced", "support_procedure_recovery")][string]$BehaviorProfile = "support_procedure_recovery",
     [int]$OverfitRows = 18,
     [int]$OverfitRepeats = 12,
     [int]$OverfitSteps = 300,
@@ -28,6 +29,7 @@ param(
     [switch]$UseLora,
     [switch]$Teacher4Bit,
     [switch]$RunKD,
+    [switch]$SkipRetrievalCoverageAudit,
     [switch]$AllowUnreleasedTeacher,
     [switch]$ReuseExisting
 )
@@ -169,6 +171,7 @@ $FoundationCurriculum = Join-Path $DatasetRoot "foundation_curriculum.jsonl"
 $MixedCurriculum = Join-Path $DatasetRoot "train_mixed_curriculum.jsonl"
 $BalancedCurriculum = Join-Path $DatasetRoot "train_grounded_balanced.jsonl"
 $Calibration = Join-Path $OutputRoot "evidence_gate_calibration.json"
+$RetrievalAudit = Join-Path $OutputRoot "retrieval_support_audit.json"
 $LadderJson = Join-Path $OutputRoot "grounded_recovery_ladder.json"
 $LadderReport = Join-Path $OutputRoot "GROUNDED_RECOVERY_LADDER.md"
 
@@ -249,11 +252,21 @@ if (-not (Test-Path $MixedCurriculum)) {
     )
 }
 if (-not (Test-Path $BalancedCurriculum)) {
-    Invoke-PythonStep "[Data] Applying the 45/25/10/10/5/5 behavior mixture..." @(
+    Invoke-PythonStep "[Data] Applying the v1.7.5 supported/procedural recovery mixture..." @(
         ".\scripts\phase_9_student_distillation\rebalance_behavior_curriculum.py",
         "--input", $MixedCurriculum,
         "--output", $BalancedCurriculum,
+        "--profile", $BehaviorProfile,
         "--seed", "$Seed"
+    )
+}
+if (-not $SkipRetrievalCoverageAudit -and -not (Test-Path $RetrievalAudit)) {
+    Invoke-PythonStep "[Data] Auditing that DEV support is retrievable before model evaluation..." @(
+        ".\scripts\phase_9_student_distillation\audit_rag_retrieval_coverage.py",
+        "--benchmark", $DevFile,
+        "--knowledge-db", $Database,
+        "--output", $RetrievalAudit,
+        "--require-complete-support-recall"
     )
 }
 if (-not (Test-Path $Calibration)) {

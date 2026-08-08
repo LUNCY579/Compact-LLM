@@ -1,6 +1,6 @@
 <#
 .SYNOPSIS
-Run the general Phase 9 student/RAG workflow under the v1.7.3 dev-first/sealed-test contract.
+Run the general Phase 9 student/RAG workflow under the v1.7.5 large corrective-curriculum contract.
 
 .DESCRIPTION
 For a fresh recovery experiment, first use run_phase_9_grounded_recovery.ps1.
@@ -23,7 +23,7 @@ is evaluated on sealed test; SmokeTest never touches sealed test.
 #>
 param(
     [ValidateSet("Bootstrap", "Pilot", "Evaluate")][string]$Mode = "Bootstrap",
-    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v2",
+    [string]$RagReasoningCorpusRoot = ".\data\phase_9_student_distillation\rag_reasoning_v3_large",
     [ValidateSet("Single", "Hybrid")][string]$StudentSuite = "Single",
     [string]$TeacherModel = "",
     [string]$StudentSource = "",
@@ -35,11 +35,11 @@ param(
     [int]$KvHeads = 2,
     [int]$HeadDim = 64,
     [string]$Config = ".\configs\phase_9_student_distillation.json",
-    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v2\knowledge.jsonl",
-    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v2\procedures.jsonl",
-    [string]$Prompts = ".\data\phase_9_student_distillation\rag_reasoning_v2\prompts.all.jsonl",
+    [string]$Knowledge = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\knowledge.jsonl",
+    [string]$Procedures = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\procedures.jsonl",
+    [string]$Prompts = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\prompts.all.jsonl",
     [string]$FoundationPrompts = ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
-    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v2\teacher_candidates.reviewed.jsonl",
+    [string]$ReviewedTeacherData = ".\data\phase_9_student_distillation\rag_reasoning_v3_large\teacher_candidates.auto_verified.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_9_student_distillation",
     [int]$MaxSteps = 600,
     [double]$LearningRate = 0.00005,
@@ -50,6 +50,7 @@ param(
     [double]$EosLossWeight = 1.5,
     [int]$MaximumEvidenceTokens = 384,
     [int]$Seed = 42,
+    [ValidateSet("balanced", "support_procedure_recovery")][string]$BehaviorProfile = "support_procedure_recovery",
     [switch]$UseLora,
     [switch]$Teacher4Bit,
     [switch]$SkipKD,
@@ -114,7 +115,7 @@ function Test-CurrentDerivedArtifact {
     param([string]$Artifact, [string]$ManifestPath, [string]$Source)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3") -notcontains [string]$manifest.pipeline_revision) { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3", "phase9_large_corrective_curriculum_v1_7_5") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return [string]$manifest.source_sha256 -eq (Get-FileSha256 $Source)
 }
 
@@ -122,7 +123,7 @@ function Test-CurrentMixedCurriculum {
     param([string]$Artifact, [string]$ManifestPath, [string]$Primary, [string]$Foundation)
     if (-not $ReuseExisting -or -not (Test-Path $Artifact) -or -not (Test-Path $ManifestPath)) { return $false }
     $manifest = Read-JsonFile $ManifestPath
-    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3") -notcontains [string]$manifest.pipeline_revision) { return $false }
+    if ($null -eq $manifest -or @("phase9_behavior_curriculum_v2", "phase9_rag_reasoning_integration_v1_7_3", "phase9_large_corrective_curriculum_v1_7_5") -notcontains [string]$manifest.pipeline_revision) { return $false }
     return (
         [string]$manifest.primary_sha256 -eq (Get-FileSha256 $Primary) -and
         [string]$manifest.foundation_sha256 -eq (Get-FileSha256 $Foundation) -and
@@ -616,10 +617,11 @@ if ($Mode -eq "Pilot") {
         if (-not $SkipBehaviorRebalance) {
             $balancedManifest = [System.IO.Path]::ChangeExtension($BalancedCurriculum, ".manifest.json")
             if (-not (Test-CurrentDerivedArtifact -Artifact $BalancedCurriculum -ManifestPath $balancedManifest -Source $MixedCurriculum)) {
-                Invoke-PythonStep "[Data] Applying the grounded 45/25/10/10/5/5 behavior mixture..." @(
+                Invoke-PythonStep "[Data] Applying the v1.7.5 supported/procedural recovery mixture..." @(
                     ".\scripts\phase_9_student_distillation\rebalance_behavior_curriculum.py",
                     "--input", $MixedCurriculum,
                     "--output", $BalancedCurriculum,
+                    "--profile", $BehaviorProfile,
                     "--seed", "$Seed"
                 )
             }

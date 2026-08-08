@@ -98,7 +98,7 @@ def main() -> None:
     manifest = {
         "schema_version": "1.1",
         "phase": "9_student_distillation",
-        "pipeline_revision": "phase9_rag_reasoning_integration_v1_7_3",
+        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
         "primary": str(args.primary),
         "primary_sha256": sha256(args.primary),
         "foundation": str(args.foundation),
