@@ -2,6 +2,8 @@
 .SYNOPSIS
 Run the Phase 9 grounded-recovery capability ladder with the v1.7.5 large supported/procedural corrective corpus.
 
+v1.7.7 refreshes derived SFT selections under -ReuseExisting and prevents Stage-B baseline decode/prompt-integrity warnings from poisoning Stage-D candidate validity.
+
 .DESCRIPTION
 The workflow proves one warm 344M depth-copy student before any narrow-model
 sweep. The order is teacher Oracle preflight, untrained warm Oracle baseline,
@@ -365,10 +367,18 @@ foreach ($Spec in $SweepSpecs) {
     Invoke-RagEvaluation "[Stage D] Dev Oracle evaluation $($Spec.Name)..." $Artifact.Model $Artifact.Adapter $DevFile $EvaluationRoot "oracle_rag,adversarial_passthrough_rag"
     $SelectionArgs += @("--candidate", "$($Spec.Name)=$(Join-Path $EvaluationRoot 'summary.json')")
 }
-if (Should-Run (Join-Path $SweepRoot "selection.json")) {
+$SweepSelectionPath = Join-Path $SweepRoot "selection.json"
+if (Test-Path $SweepSelectionPath) {
+    if (-not $ReuseExisting) {
+        throw "Artifact already exists: $SweepSelectionPath. Use a fresh -OutputRoot or pass -ReuseExisting deliberately."
+    }
+    Write-Host "[Stage D] Recomputing the derived SFT selection from existing candidate summaries under the current selector policy..."
+    Invoke-PythonStep "[Stage D] Refreshing the non-degenerate Oracle frontier..." $SelectionArgs
+}
+else {
     Invoke-PythonStep "[Stage D] Selecting only from a non-degenerate Oracle frontier..." $SelectionArgs
 }
-$Selection = Get-Content -Raw -Path (Join-Path $SweepRoot "selection.json") | ConvertFrom-Json
+$Selection = Get-Content -Raw -Path $SweepSelectionPath | ConvertFrom-Json
 if ($null -eq $Selection.selected) { throw "No valid warm-SFT Oracle frontier was found." }
 $SelectedSftSummary = [string]$Selection.selected.summary
 Invoke-PythonStep "[Stage D] Requiring full Oracle capability improvement..." @(
@@ -444,7 +454,14 @@ if ($RunKD) {
     $FinalSelectionArgs += @("--candidate", "progressive_kd=$(Join-Path $KdDevFull 'summary.json')")
 }
 
-if (Should-Run $FinalDevSelection) {
+if (Test-Path $FinalDevSelection) {
+    if (-not $ReuseExisting) {
+        throw "Artifact already exists: $FinalDevSelection. Use a fresh -OutputRoot or pass -ReuseExisting deliberately."
+    }
+    Write-Host "[Stage E] Recomputing the derived DEV selection under the current selector policy..."
+    Invoke-PythonStep "[Stage E] Refreshing the final refinement selection on DEV only..." $FinalSelectionArgs
+}
+else {
     Invoke-PythonStep "[Stage E] Selecting the final refinement on DEV only..." $FinalSelectionArgs
 }
 $FinalSelection = Get-Content -Raw -Path $FinalDevSelection | ConvertFrom-Json

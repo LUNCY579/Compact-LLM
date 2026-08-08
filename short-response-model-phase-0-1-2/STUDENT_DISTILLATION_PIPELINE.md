@@ -1,8 +1,12 @@
 # Student Distillation Pipeline — appended Phase 9 workflow
 
-Version 1.7.2 | August 2026
+Version 1.7.6 | August 2026
 
+## v1.7.6 exploratory student playground amendment
 
+A separate `Student_Distillation_Playground_v1.0/` now provides non-gating logic, supplied-evidence, and source-state-aware memory demonstrations. It reuses the official Phase 9 generation path and Phase 9/9B prompt builders, but writes only to `playground_artifacts/` and explicitly marks every summary as `official_gate_evidence: false`.
+
+Recommended timing: first finish Phase 9 through the selected student's full Oracle/Real/adversarial evaluation and human selection, then record the playground before Phase 10. Memory reconstruction in two-pass mode is best demonstrated after Phase 9B training/evaluation. Playground cases must not be used to tune/select an official candidate and then be represented as held-out official evidence.
 
 ## Phase 9 grounded-recovery amendment — v1.7.2
 

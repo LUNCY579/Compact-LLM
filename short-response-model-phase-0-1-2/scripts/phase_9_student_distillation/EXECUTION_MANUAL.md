@@ -1,5 +1,14 @@
 # Phase 9 execution manual — grounded recovery + RAG reasoning v1.7.3
 
+## v1.7.7 Stage-B baseline / Stage-D selector policy
+
+Stage B is a diagnostic baseline, not a trained-candidate validity gate. The untrained warm initialization may produce broken generations and therefore report prompt/decode-integrity failures. Those Stage-B integrity findings are retained as **non-blocking warnings** during Stage-D selection. They do not add `initialization_reference_invalid` to trained candidates.
+
+The strict checks remain on the trained candidate itself: its own prompt/decode integrity, behavior coverage, non-degeneracy, behavior success, and positive Oracle capability improvement over the numeric initialization score must all hold. Initialization behavior-coverage failures remain blocking because the reference lacks required denominators.
+
+When continuing with `-ReuseExisting`, the runner now refreshes `warm_sft_sweep/selection.json` and the final DEV selection from existing summaries. Expensive training/evaluation artifacts are reused; derived selection metadata is deliberately recomputed. This is the intended migration path for v1.7.5/v1.7.6 roots affected by the old poison rule.
+
+
 
 ## v1.7.3 canonical corpus and sealed-test rule
 

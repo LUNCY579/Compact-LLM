@@ -1,0 +1,30 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Student Distillation Playground Case",
+  "type": "object",
+  "required": ["id", "task_type", "question", "expected"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "task_type": {"enum": ["logic", "evidence", "memory"]},
+    "difficulty": {"enum": ["easy", "medium", "hard"]},
+    "question": {"type": "string", "minLength": 1},
+    "context": {"type": "string"},
+    "mode": {"type": "string"},
+    "evidence": {"type": "array"},
+    "procedures": {"type": "array"},
+    "current_state": {"type": "object"},
+    "memories": {"type": "array"},
+    "expected": {
+      "type": "object",
+      "required": ["decision"],
+      "properties": {
+        "decision": {"enum": ["answer", "abstain", "conflict"]},
+        "answer": {"type": "string"},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "required_phrases": {"type": "array", "items": {"type": "string"}},
+        "forbidden_phrases": {"type": "array", "items": {"type": "string"}},
+        "reconstruction": {"type": "object"}
+      }
+    }
+  }
+}

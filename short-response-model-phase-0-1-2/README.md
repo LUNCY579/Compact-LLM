@@ -1,3 +1,9 @@
+## v1.7.7 Phase 9 Stage-B/SFT selection gate hotfix
+
+v1.7.7 fixes a policy mismatch in the Phase 9 grounded-recovery ladder. Stage B is an intentionally untrained warm-student baseline, so prompt/decode-integrity failures recorded there remain visible diagnostics but no longer invalidate every trained Stage D SFT candidate. Initialization behavior-coverage failures remain blocking because missing denominators make the numeric comparison unreliable. Every trained candidate is still required to pass its **own** integrity, behavior coverage, non-degeneracy, behavior-success, and positive Oracle-capability-improvement checks.
+
+The grounded-recovery PowerShell runner now treats Stage D and final DEV selections as cheap derived artifacts: when `-ReuseExisting` is supplied, it recomputes them from the already-existing evaluation summaries under the current selector policy instead of silently reusing a stale `selection.json`. This allows a v1.7.5/v1.7.6 run that already completed SFT training/evaluation to be repaired and continued without retraining. See `PHASE_9_SFT_SELECTION_GATE_HOTFIX_v1.7.7.md`.
+
 ## v1.7.5 large corrective RAG and memory-reconstruction curricula
 
 v1.7.5 expands the evidence-specialization program specifically around the observed weak behaviors: supported factual answering and trusted-procedure application. Phase 9 now defaults to `rag_reasoning_v3_large` with 5,900 canonical rows, 6,000 factual documents, 200 trusted procedures, an answer-heavy 55% supported / 25% procedure corrective training profile, and a pre-evaluation FTS5 audit proving every supported DEV row can retrieve its authored support document in the top 3. Phase 9B now defaults to `reconstruction_corpus_v2_large` with 3,600 source-state reconstruction rows, 1,500 memories, all five reconstruction decisions, 600 counterfactual pairs, 10,800 curated preferences, and 14,400 evaluator candidates.

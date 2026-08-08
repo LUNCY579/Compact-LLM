@@ -1,5 +1,10 @@
 # Phase 9 — grounded-recovery student proof
 
+## v1.7.7 selector-gate correction
+
+Stage B remains an intentionally weak, untrained baseline. Its prompt/decode-integrity failures are reported but are no longer allowed to poison all Stage D SFT candidates. Candidate-owned integrity remains strict, and initialization behavior-coverage failures can still invalidate the reference. Under `-ReuseExisting`, Stage D and final DEV selection files are recomputed from existing summaries so old blocked roots can continue without retraining.
+
+
 ## v1.7.2 governing order
 
 The primary question is no longer “which compressed student wins?” It is first:
