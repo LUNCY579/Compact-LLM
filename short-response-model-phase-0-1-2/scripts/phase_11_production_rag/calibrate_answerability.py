@@ -13,7 +13,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json
-from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages
+from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages, select_retrieved_passages
 from scripts.phase_9_student_distillation.phase9_metrics import decision_class
 from scripts.phase_11_production_rag.phase11_common import (
     answerability_features,
@@ -28,6 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--selected-top-k", type=int, default=3)
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="query_aware_v21")
     parser.add_argument("--false-answer-cost", type=float, default=3.0)
     parser.add_argument("--false-abstention-cost", type=float, default=1.0)
     return parser.parse_args()
@@ -48,7 +49,7 @@ def main() -> None:
             accepted, _ = sanitize_passages(
                 retriever.search(question, limit=args.retrieval_top_k, kind="knowledge")
             )
-            selected_knowledge = accepted[: args.selected_top_k]
+            selected_knowledge = select_retrieved_passages(question, accepted, selected_top_k=args.selected_top_k, kind="knowledge", policy=args.retrieval_selection_policy)
             selected_procedures: list[dict[str, Any]] = []
             if mode in {"procedure", "task"}:
                 procedure_rows, _ = sanitize_passages(
@@ -58,7 +59,7 @@ def main() -> None:
                         kind="procedure",
                     )
                 )
-                selected_procedures = procedure_rows[: min(2, args.selected_top_k)]
+                selected_procedures = select_retrieved_passages(question, procedure_rows, selected_top_k=min(2, args.selected_top_k), kind="procedure", policy=args.retrieval_selection_policy)
             selected = [*selected_procedures, *selected_knowledge]
             features = answerability_features(question, selected)
             decision = str(row.get("decision") or "answer").lower()
@@ -99,6 +100,7 @@ def main() -> None:
         "benchmark": str(args.benchmark),
         "benchmark_sha256": sha256(args.benchmark),
         "knowledge_db": str(args.knowledge_db),
+        "retrieval_selection_policy": args.retrieval_selection_policy,
         "case_count": len(feature_rows),
         "false_answer_cost": args.false_answer_cost,
         "false_abstention_cost": args.false_abstention_cost,

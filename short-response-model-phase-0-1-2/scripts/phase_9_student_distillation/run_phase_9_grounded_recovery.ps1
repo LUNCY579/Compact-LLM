@@ -21,6 +21,7 @@ param(
     [string]$FoundationPrompts = ".\data\phase_9_student_distillation\foundation\prompts.foundation.jsonl",
     [string]$OutputRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_5",
     [int]$MaximumEvidenceTokens = 384,
+    [ValidateSet("legacy", "query_aware_v21")][string]$RetrievalSelectionPolicy = "query_aware_v21",
     [int]$Seed = 42,
     [ValidateSet("balanced", "support_procedure_recovery")][string]$BehaviorProfile = "support_procedure_recovery",
     [int]$OverfitRows = 18,
@@ -81,7 +82,14 @@ function Invoke-RagEvaluation {
         [switch]$ResearchReady
     )
     $summary = Join-Path $Destination "summary.json"
-    if (-not (Should-Run $summary)) { return }
+    if ($ReuseExisting -and (Test-Path $summary)) {
+        $existing = Get-Content -Raw -Path $summary | ConvertFrom-Json
+        if ([string]$existing.retrieval_selection_policy -eq $RetrievalSelectionPolicy) { return }
+        Write-Warning "Deleting stale evaluation created with retrieval policy '$([string]$existing.retrieval_selection_policy)' (expected '$RetrievalSelectionPolicy'): $Destination"
+        Remove-Item -Recurse -Force $Destination
+    } elseif (-not (Should-Run $summary)) {
+        return
+    }
     $args = @(
         ".\scripts\phase_9_student_distillation\evaluate_rag.py",
         "--model", $Model,
@@ -91,6 +99,7 @@ function Invoke-RagEvaluation {
         "--gate-calibration", $Calibration,
         "--conditions", $Conditions,
         "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
+        "--retrieval-selection-policy", $RetrievalSelectionPolicy,
         "--max-new-tokens", "32",
         "--minimum-cases-per-condition", "1",
         "--minimum-supported-cases", "1",
@@ -268,6 +277,7 @@ if (-not $SkipRetrievalCoverageAudit -and -not (Test-Path $RetrievalAudit)) {
         "--benchmark", $DevFile,
         "--knowledge-db", $Database,
         "--output", $RetrievalAudit,
+        "--retrieval-selection-policy", $RetrievalSelectionPolicy,
         "--require-complete-support-recall"
     )
 }
@@ -277,6 +287,7 @@ if (-not (Test-Path $Calibration)) {
         "--benchmark", $DevFile,
         "--knowledge-db", $Database,
         "--output", $Calibration,
+        "--retrieval-selection-policy", $RetrievalSelectionPolicy,
         "--require-research-ready"
     )
 }

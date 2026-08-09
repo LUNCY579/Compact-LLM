@@ -29,6 +29,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     build_grounded_messages,
     is_abstention,
     sanitize_passages,
+    select_retrieved_passages,
 )
 from scripts.phase_11_production_rag.benchmark_production_runtime import (
     enforce_evidence_budget,
@@ -65,6 +66,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--complex-policy", choices=("clarify", "abstain", "fallback"), default="clarify")
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--selected-top-k", type=int, default=3)
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="query_aware_v21")
     parser.add_argument("--social-retrieval-top-k", type=int, default=0)
     parser.add_argument("--maximum-evidence-tokens", type=int, default=512)
     parser.add_argument("--max-sequence-length", type=int, default=1024)
@@ -196,14 +198,14 @@ class ProductionRAGRuntime:
                 question, limit=self.args.retrieval_top_k, kind="knowledge"
             )
             evidence, bad = sanitize_passages(raw)
-            evidence = evidence[: self.args.selected_top_k]
+            evidence = select_retrieved_passages(question, evidence, selected_top_k=self.args.selected_top_k, kind="knowledge", policy=self.args.retrieval_selection_policy)
             rejected.extend(bad)
             if route.mode == "procedure":
                 raw_proc = self.retriever.search(
                     question, limit=max(3, self.args.selected_top_k), kind="procedure"
                 )
                 procedures, bad_proc = sanitize_passages(raw_proc)
-                procedures = procedures[: min(2, self.args.selected_top_k)]
+                procedures = select_retrieved_passages(question, procedures, selected_top_k=min(2, self.args.selected_top_k), kind="procedure", policy=self.args.retrieval_selection_policy)
                 rejected.extend(bad_proc)
         elif route.mode == "social_roleplay" and self.args.social_retrieval_top_k > 0:
             raw = self.retriever.search(

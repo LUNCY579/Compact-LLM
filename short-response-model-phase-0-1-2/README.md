@@ -1,3 +1,19 @@
+# v2.1 — Procedural Transfer Recovery
+
+v2.1 is a focused recovery release for the Phase 9 student that is strong under Oracle evidence but collapses on Real-RAG procedure application. The v2.0 stop gate records a 52.0% weight reduction and only ~0.6% generic relative quality loss for the selected SFT student, yet Real-RAG procedure correctness is 0/150. A model-free postmortem found that all 150 answerable historical procedure cases retrieved the authored support and an equivalent trusted procedure, while all 150 legacy top-3 prompts also contained near-identical same-topic sibling records. v2.1 therefore diagnoses and repairs **evidence binding under retrieval collisions** before doing any further depth/width/sparsity optimization.
+
+The release adds a query-aware retrieval selector, a 6,120-row procedural recovery corpus spanning 14 deterministic procedure families, gold-consistency audits, Oracle→Real failure classification, a same-weight legacy/query-aware A/B, and one focused two-stage rank-16 LoRA recovery path rather than another broad LR/rank sweep. It also keeps Phase 11 calibration/runtime/service on the same retrieval-selection policy. See `PROCEDURAL_RECOVERY_V2_1.md`, `CHANGED_FILES_v2.1.md`, and `RELEASE_VERIFICATION_v2.1.md`.
+
+**Run recovery before v2.0 structural optimization:**
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v21.ps1 `
+  -StudentModel "C:\path\to\current_student_checkpoint" `
+  -RequireCuda
+```
+
+If the selected student is a base model plus an existing adapter, also pass `-StudentAdapter`. The runner performs DEV diagnosis and training first; use `-RunSealedTest` only after the DEV comparison is frozen and reviewed.
+
 # v2.0 — Automated Student Optimization Program
 
 v2.0 turns the accepted Phase 9/9B student into a first-class post-distillation optimization program. It preserves official Phases 9/9B/10/11, but adds a durable cross-phase orchestrator with an empirical every-layer deletion scan, importance-guided Phase 10 structural reduction/recovery, DEV-only context/KV budget selection, contextual-sparsity simulation and measured runtime, DEV-only quantization backend selection, human checkpoints, final Phase 11 runtime evaluation, and reproducible packaging.

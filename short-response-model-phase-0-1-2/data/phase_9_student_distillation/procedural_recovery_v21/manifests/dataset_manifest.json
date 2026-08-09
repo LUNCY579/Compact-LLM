@@ -1,0 +1,63 @@
+{
+  "canonical_rows": 6120,
+  "category_counts": {
+    "procedure_conflict": 360,
+    "procedure_missing_input": 360,
+    "procedure_supported_hard_collision": 3600,
+    "procedure_with_retrieval_distractor": 1800
+  },
+  "conflict_topic_groups": 180,
+  "decision_counts": {
+    "abstain": 360,
+    "answer": 5400,
+    "conflict": 360
+  },
+  "design": {
+    "answerable_prompt_shape": "target record plus shuffled sibling records; target position varies",
+    "gold_policy": "programmatically computed; no implicit ties; tie-breaks only where the procedure defines them",
+    "holdout_policy": "topic/document/procedure-disjoint dev/test; preservation examples are train-only",
+    "primary_failure_mode": "Oracle-correct / Real-RAG-wrong under near-identical sibling records",
+    "procedure_diversity": [
+      "semver",
+      "date",
+      "latency",
+      "priority",
+      "capacity",
+      "budget_quality",
+      "threshold",
+      "temperature",
+      "approval",
+      "backoff",
+      "deploy",
+      "tie_break",
+      "tolerance",
+      "quota"
+    ]
+  },
+  "knowledge_documents": 2880,
+  "missing_topic_groups": 180,
+  "mode_counts": {
+    "procedure": 6120
+  },
+  "name": "Phase 9 Procedural Transfer-Recovery Corpus v2.1",
+  "procedures": 1560,
+  "recovery_views": {
+    "answerable_hard_rows": 4104,
+    "negative_rows": 544,
+    "preservation_rows": 1162,
+    "recovery_mix_rows": 5810,
+    "v21_train_rows": 4648
+  },
+  "review_contract": "auto_verified deterministic gold; not represented as human review",
+  "schema_version": "3.0",
+  "sealed_test_policy": "test is not used for selection or hyperparameter tuning",
+  "seed": 21042,
+  "source": "deterministic_phase9_procedural_recovery_v21",
+  "split_counts": {
+    "dev": 736,
+    "test": 736,
+    "train": 4648
+  },
+  "supported_topic_groups": 600,
+  "topic_families": 960
+}

@@ -1,0 +1,90 @@
+{
+  "schema_version": "2.1",
+  "experiment": {
+    "name": "phase9_procedural_transfer_recovery_v2_1",
+    "primary_failure": "Oracle-RAG capable student fails answerable Real-RAG procedures",
+    "research_question": "How much of the Oracle-to-Real procedural gap is retrieval collision versus learned evidence-binding weakness?"
+  },
+  "diagnosis": {
+    "required_ab": [
+      "same weights + legacy Real RAG",
+      "same weights + query_aware_v21 Real RAG",
+      "recovered weights + query_aware_v21 Real RAG"
+    ],
+    "failure_classes": [
+      "support_retrieval_miss",
+      "prompt_budget_support_loss",
+      "procedure_retrieval_miss",
+      "retrieval_collision_or_evidence_binding",
+      "oracle_skill_failure",
+      "real_rag_generation_or_binding_failure"
+    ]
+  },
+  "retrieval": {
+    "selection_policy": "query_aware_v21",
+    "retrieval_top_k": 20,
+    "selected_top_k": 3,
+    "procedure_top_k": 2,
+    "explicit_locator_types": [
+      "record",
+      "item",
+      "case",
+      "entry",
+      "step",
+      "audit",
+      "batch",
+      "ticket",
+      "report",
+      "run"
+    ],
+    "policy": "When an explicit locator appears in the query, suppress passages with conflicting explicit locators when an exact match exists. Deduplicate identical procedure rules. Recalibrate answerability after changing selection."
+  },
+  "data": {
+    "corpus_root": "data/phase_9_student_distillation/procedural_recovery_v21",
+    "generator": "scripts/phase_9_student_distillation/generate_procedural_recovery_v21.py",
+    "canonical_rows": 6120,
+    "train_rows": 4648,
+    "dev_rows": 736,
+    "test_rows": 736,
+    "recovery_mix_rows": 5810,
+    "answerable_hard_train_rows": 4104,
+    "procedure_families": 14,
+    "primary_pattern": "target record + shuffled near-identical sibling records",
+    "gold_policy": "deterministic computed labels; implicit ties forbidden; explicit tie-break procedures tested separately",
+    "preservation_policy": "mix a deterministic train-only slice of the previous broad Phase 9 curriculum; never draw preservation examples from dev/test"
+  },
+  "training": {
+    "strategy": "two-stage focused recovery; no broad hyperparameter sweep",
+    "stage_a": {
+      "name": "collision_binding",
+      "train_view": "curriculum_views/train_answerable_hard.reviewed.jsonl",
+      "max_steps": 250,
+      "learning_rate": 3e-05,
+      "lora_rank_if_starting_from_full_checkpoint": 16,
+      "purpose": "teach exact record binding under sibling collisions"
+    },
+    "stage_b": {
+      "name": "consolidation",
+      "train_view": "curriculum_views/train_recovery_mix.reviewed.jsonl",
+      "max_steps": 350,
+      "learning_rate": 2e-05,
+      "purpose": "retain procedural recovery while preserving supported/unsupported/conflict/social behavior"
+    },
+    "gradient_accumulation_steps": 32,
+    "maximum_evidence_tokens": 384,
+    "first_answer_token_weight": 2.25,
+    "evidence_anchor_token_weight": 2.25,
+    "abstention_token_weight": 1.75,
+    "eos_loss_weight": 1.5,
+    "rank32_policy": "Do not run by default. Consider only after the focused rank-16 path shows genuine training underfit rather than a retrieval/prompt failure."
+  },
+  "selection": {
+    "selection_split": "dev",
+    "sealed_split": "test",
+    "release_policy": "Separate retrieval-policy gain from training-only gain. Prefer positive procedural gain with lower preservation loss. Human approval remains required.",
+    "blocker": "A student that remains at zero correct answerable procedures after query-aware retrieval and recovery training is not eligible for downstream structural optimization."
+  },
+  "other_students": {
+    "policy": "Do not retrain all students immediately. First establish the mechanism on the current high-value student. Afterward run one or two controlled replication students with the same fixed v2.1 recipe to test generality."
+  }
+}

@@ -14,7 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, sha256, write_json
-from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages
+from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages, select_retrieved_passages
 from scripts.phase_9_student_distillation.phase9_metrics import decision_class, safe_rate
 
 
@@ -25,6 +25,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--reranked-top-k", type=int, default=3)
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="legacy")
     parser.add_argument("--false-answer-cost", type=float, default=3.0)
     parser.add_argument("--unnecessary-abstention-cost", type=float, default=1.0)
     parser.add_argument("--minimum-answerable-cases", type=int, default=2)
@@ -111,7 +112,9 @@ def main() -> None:
             retrieved, _ = sanitize_passages(
                 retriever.search(question, limit=args.retrieval_top_k, kind="knowledge")
             )
-            selected = retrieved[: args.reranked_top_k]
+            selected = select_retrieved_passages(
+                question, retrieved, selected_top_k=args.reranked_top_k, kind="knowledge", policy=args.retrieval_selection_policy
+            )
             best_score = max((float(item.get("normalized_score", 0.0)) for item in selected), default=0.0)
             klass = decision_class(row)
             if klass not in {"supported", "unsupported"}:
@@ -151,6 +154,7 @@ def main() -> None:
             "benchmark": str(args.benchmark),
             "benchmark_sha256": sha256(args.benchmark),
             "knowledge_db": str(args.knowledge_db),
+            "retrieval_selection_policy": args.retrieval_selection_policy,
             "calibration_case_count": len(score_rows),
             "answerable_case_count": answerable_count,
             "unanswerable_case_count": unanswerable_count,

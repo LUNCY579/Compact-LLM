@@ -256,7 +256,9 @@
     "minimum_retrieval_score": null,
     "minimum_coverage_score": null,
     "abstention_text": "I don't know based on the available information.",
-    "threshold_policy": "calibrate_on_development_data; do_not_invent_universal_thresholds"
+    "threshold_policy": "calibrate_on_development_data; do_not_invent_universal_thresholds",
+    "retrieval_selection_policy": "query_aware_v21",
+    "retrieval_selection_policy_note": "v2.1 default for official Phase 9 runners; legacy remains available in lower-level tools for historical reproduction"
   },
   "generation": {
     "do_sample": false,

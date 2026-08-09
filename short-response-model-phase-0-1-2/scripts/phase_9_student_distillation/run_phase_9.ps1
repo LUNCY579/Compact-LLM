@@ -49,6 +49,7 @@ param(
     [double]$AbstentionTokenWeight = 2.0,
     [double]$EosLossWeight = 1.5,
     [int]$MaximumEvidenceTokens = 384,
+    [ValidateSet("legacy", "query_aware_v21")][string]$RetrievalSelectionPolicy = "query_aware_v21",
     [int]$Seed = 42,
     [ValidateSet("balanced", "support_procedure_recovery")][string]$BehaviorProfile = "support_procedure_recovery",
     [switch]$UseLora,
@@ -184,6 +185,7 @@ function Test-CurrentEvaluation {
     if (-not $ReuseExisting -or -not (Test-Path $SummaryPath)) { return $false }
     $summary = Read-JsonFile $SummaryPath
     if ($null -eq $summary -or [string]$summary.schema_version -ne "1.4") { return $false }
+    if ([string]$summary.retrieval_selection_policy -ne $RetrievalSelectionPolicy) { return $false }
     if ($null -eq $summary.maximum_evidence_tokens -or [int]$summary.maximum_evidence_tokens -ne $MaximumEvidenceTokens) { return $false }
     if ([string]$summary.benchmark_sha256 -ne (Get-FileSha256 $Benchmark)) { return $false }
     if ([string]$summary.model_tree_sha256 -ne (Get-TreeSha256 $Model)) { return $false }
@@ -371,6 +373,7 @@ function Invoke-RagEvaluation {
         "--gate-calibration", $Calibration,
         "--conditions", $Conditions,
         "--maximum-evidence-tokens", "$MaximumEvidenceTokens",
+        "--retrieval-selection-policy", $RetrievalSelectionPolicy,
         "--max-new-tokens", "32",
         "--minimum-cases-per-condition", "1",
         "--minimum-supported-cases", "1",
@@ -632,7 +635,8 @@ if ($Mode -eq "Pilot") {
         ".\scripts\phase_9_student_distillation\calibrate_evidence_gate.py",
         "--benchmark", $DevFile,
         "--knowledge-db", $Database,
-        "--output", $Calibration
+        "--output", $Calibration,
+        "--retrieval-selection-policy", $RetrievalSelectionPolicy
     )
     if ($SmokeTest) { $calibrationArgs += "--smoke-test" } else { $calibrationArgs += "--require-research-ready" }
     Invoke-PythonStep "[Data] Calibrating the evidence pre-gate on dev only..." $calibrationArgs

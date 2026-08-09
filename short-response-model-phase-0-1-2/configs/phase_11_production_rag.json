@@ -1,7 +1,7 @@
 {
-  "schema_version": "1.2",
+  "schema_version": "1.3",
   "experiment": {
-    "name": "production_rag_student_release_v1_7_4",
+    "name": "production_rag_student_release_v2_1",
     "seed": 42,
     "primary_opportunity": "measured_total_process_memory_reduction"
   },
@@ -18,7 +18,9 @@
     "selected_top_k": 3,
     "maximum_evidence_tokens": 512,
     "neural_retriever": "optional_challenger_only_after_measured_lexical_bottleneck",
-    "social_retrieval_top_k": 0
+    "social_retrieval_top_k": 0,
+    "selection_policy": "query_aware_v21",
+    "selection_policy_reason": "suppress explicit-locator sibling collisions and deduplicate equivalent procedures; recalibrate answerability after selection changes"
   },
   "answerability": {
     "threshold": null,

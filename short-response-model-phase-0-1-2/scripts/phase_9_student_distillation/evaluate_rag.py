@@ -49,6 +49,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     process_rss_bytes,
     route_mode,
     sanitize_passages,
+    select_retrieved_passages,
     tree_bytes,
 )
 from scripts.phase_9_student_distillation.phase9_metrics import (
@@ -84,6 +85,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--conditions", default=",".join(CONDITIONS))
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--reranked-top-k", type=int, default=3)
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="legacy")
     parser.add_argument("--max-sequence-length", type=int, default=1024)
     parser.add_argument("--maximum-evidence-tokens", type=int, default=384)
     parser.add_argument("--max-new-tokens", type=int, default=32)
@@ -141,6 +143,7 @@ def prepare_evidence(
     retriever: SQLiteFTSRetriever | None,
     retrieval_top_k: int,
     reranked_top_k: int,
+    retrieval_selection_policy: str = "legacy",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], float]:
     started = time.perf_counter()
     rejected: list[dict[str, Any]] = []
@@ -166,12 +169,17 @@ def prepare_evidence(
     else:
         if retriever is None:
             raise RuntimeError("real_rag requires --knowledge-db")
-        raw_evidence = retriever.search(str(row.get("question") or ""), limit=retrieval_top_k, kind="knowledge")
-        raw_procedures = retriever.search(str(row.get("question") or ""), limit=max(3, reranked_top_k), kind="procedure")
+        question = str(row.get("question") or "")
+        raw_evidence = retriever.search(question, limit=retrieval_top_k, kind="knowledge")
+        raw_procedures = retriever.search(question, limit=max(3, reranked_top_k), kind="procedure")
         evidence, rejected_evidence = sanitize_passages(raw_evidence)
         procedures, rejected_procedures = sanitize_passages(raw_procedures)
-        evidence = evidence[:reranked_top_k]
-        procedures = procedures[: min(2, reranked_top_k)]
+        evidence = select_retrieved_passages(
+            question, evidence, selected_top_k=reranked_top_k, kind="knowledge", policy=retrieval_selection_policy
+        )
+        procedures = select_retrieved_passages(
+            question, procedures, selected_top_k=min(2, reranked_top_k), kind="procedure", policy=retrieval_selection_policy
+        )
         rejected = [*rejected_evidence, *rejected_procedures]
     return evidence, procedures, rejected, time.perf_counter() - started
 
@@ -590,6 +598,7 @@ def main() -> None:
                     retriever=retriever,
                     retrieval_top_k=args.retrieval_top_k,
                     reranked_top_k=args.reranked_top_k,
+                    retrieval_selection_policy=args.retrieval_selection_policy,
                 )
                 gate_reason = "not_applicable"
                 external_answer: str | None = None
@@ -845,6 +854,7 @@ def main() -> None:
         "knowledge_db": str(args.knowledge_db) if args.knowledge_db else None,
         "gate_calibration": str(args.gate_calibration) if args.gate_calibration else None,
         "response_control": args.response_control,
+        "retrieval_selection_policy": args.retrieval_selection_policy,
         "max_new_tokens": args.max_new_tokens,
         "max_sequence_length": args.max_sequence_length,
         "maximum_evidence_tokens": args.maximum_evidence_tokens,

@@ -20,7 +20,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.common.experiment_utils import read_jsonl, write_json
-from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages
+from scripts.phase_9_student_distillation.phase9_common import SQLiteFTSRetriever, sanitize_passages, select_retrieved_passages
 from scripts.phase_9_student_distillation.phase9_metrics import decision_class
 
 
@@ -31,6 +31,7 @@ def main() -> None:
     p.add_argument("--output", type=Path, default=None)
     p.add_argument("--retrieval-top-k", type=int, default=20)
     p.add_argument("--selected-top-k", type=int, default=3)
+    p.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="legacy")
     p.add_argument("--require-complete-support-recall", action="store_true")
     args = p.parse_args()
 
@@ -47,7 +48,9 @@ def main() -> None:
             retrieved, _ = sanitize_passages(
                 retriever.search(str(row.get("question") or ""), limit=args.retrieval_top_k, kind="knowledge")
             )
-            selected = retrieved[: args.selected_top_k]
+            selected = select_retrieved_passages(
+                str(row.get("question") or ""), retrieved, selected_top_k=args.selected_top_k, kind="knowledge", policy=args.retrieval_selection_policy
+            )
             selected_ids = [str(x.get("record_id") or "") for x in selected]
             support_ids = {str(x) for x in row.get("support_document_ids") or []}
             hit = bool(support_ids & set(selected_ids))
@@ -70,6 +73,7 @@ def main() -> None:
         "supported_cases": supported,
         "support_hits": hits,
         "selected_top_k": args.selected_top_k,
+        "retrieval_selection_policy": args.retrieval_selection_policy,
         "support_recall": (hits / supported) if supported else None,
         "category_recall": {
             key: {"hits": value[0], "cases": value[1], "recall": value[0] / value[1]}

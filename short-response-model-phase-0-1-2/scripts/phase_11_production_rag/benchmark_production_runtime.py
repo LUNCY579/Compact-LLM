@@ -58,6 +58,7 @@ from scripts.phase_9_student_distillation.phase9_common import (
     is_abstention,
     process_rss_bytes,
     sanitize_passages,
+    select_retrieved_passages,
     tree_bytes,
 )
 from scripts.phase_9b_memory_reconstruction.phase9b_common import (
@@ -90,6 +91,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--max-new-tokens", type=int, default=32)
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--selected-top-k", type=int, default=3)
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="query_aware_v21")
     parser.add_argument(
         "--maximum-evidence-tokens",
         type=int,
@@ -456,12 +458,12 @@ def main() -> None:
             if route.mode in {"grounded_factual", "procedure"}:
                 raw_evidence = retriever.search(question, limit=args.retrieval_top_k, kind="knowledge")
                 evidence, rejected_evidence = sanitize_passages(raw_evidence)
-                evidence = evidence[: args.selected_top_k]
+                evidence = select_retrieved_passages(question, evidence, selected_top_k=args.selected_top_k, kind="knowledge", policy=args.retrieval_selection_policy)
                 rejected.extend(rejected_evidence)
                 if route.mode == "procedure":
                     raw_procedures = retriever.search(question, limit=max(3, args.selected_top_k), kind="procedure")
                     procedures, rejected_procedures = sanitize_passages(raw_procedures)
-                    procedures = procedures[: min(2, args.selected_top_k)]
+                    procedures = select_retrieved_passages(question, procedures, selected_top_k=min(2, args.selected_top_k), kind="procedure", policy=args.retrieval_selection_policy)
                     rejected.extend(rejected_procedures)
                 evidence, procedures, budget_rejected = enforce_evidence_budget(
                     tokenizer, evidence, procedures, args.maximum_evidence_tokens

@@ -1,3 +1,7 @@
+## v2.1 Phase 9 procedural transfer-recovery checkpoint
+
+Before Phase 9B/10/11 structural and runtime optimization, a Phase 9 student with a severe Oracle→Real procedural gap must run `run_phase_9_procedural_recovery_v21.ps1`. v2.1 first A/B tests the same weights under legacy versus query-aware retrieval, then performs focused collision-binding SFT and preservation consolidation. Retrieval-policy gain and learned training gain are reported separately. Other students are replication controls only after the primary student establishes the mechanism. The old v1.7.5 test is now postmortem/regression evidence; the new v2.1 test remains unused for selection.
+
 ## v1.7.4 Phase 9B dedicated memory-reconstruction corpus
 
 Phase 9 remains the prerequisite evidence-use/abstention curriculum. Phase 9B now has a dedicated source-state reconstruction corpus with explicit current state and validity conditions. It trains and evaluates ACCEPT / ADAPT / REJECT / CONFLICT / INSUFFICIENT behavior, counterfactual state sensitivity, negative-transfer reduction, and optional reconstruction preference alignment. DEV freezes one strategy before sealed TEST. Phase 10 may consume the human-approved direct-compatible Phase 9B checkpoint; Phase 11 may execute and measure the approved reconstruction behavior at inference.
@@ -18,7 +22,7 @@ Phase 9 remains the prerequisite evidence-use/abstention curriculum. Phase 9B no
 | 6 | `phase_6_sparse_simulation` | Activation traces, oracle masks, quality frontier. | Router dataset and frontier. |
 | 7 | `phase_7_sparse_runtime` | Strict response control, routers, dense fallback, measured runtime. | Response-control verification, runtime comparison, and optional router checkpoint. |
 | 8 | `phase_8_release_candidate` | Strict sealed evaluation, full release audit, and human decision. | Release package with response-control policy. |
-| 9 | `phase_9_student_distillation` | Prove the teacher/prompt path, warm initialization, tiny overfit wiring, and full Oracle-RAG SFT before Real RAG, progressive KD, or narrow architecture comparison. | Grounded-recovery ladder, non-degenerate warm-SFT selection, full Phase 9 assessment, and human gate. |
+| 9 | `phase_9_student_distillation` | Prove Oracle evidence use, diagnose Oracle→Real retrieval transfer, and recover exact evidence/procedure binding before progressive KD or architecture reduction. v2.1 adds a same-weight retrieval A/B and collision-aware procedural repair when a zero-procedure blocker appears. | Grounded-recovery ladder, v2.1 procedural-recovery evidence when needed, full Phase 9 assessment, and human gate. |
 | 9B | `phase_9b_memory_reconstruction` | Add source-state-aware applicability reconstruction between retrieval and answer generation; train and compare two-pass and one-pass behavior. | Accepted reconstruction-aware student/runtime policy plus Phase 9 rollback. |
 | 10 | `phase_10_student_architecture` | Physically reduce the approved student, recover promising candidates under the original teacher, and compare compact challengers. | Accepted Phase 10 checkpoint/reference plus rollback. |
 | 11 | `phase_11_production_rag` | Build the immutable RAG runtime, calibrate answerability, quantize/benchmark, and package the approved deployment. | Measured production release package and manifest. |
@@ -41,7 +45,7 @@ Phases 9–11 share `data/phase_9_student_distillation/rag_reasoning_v2` as the 
 - Phase 4B asks **whether the aligned checkpoint should keep, refine, or reject structural reduction**.
 - Phase 6 asks **what can be temporarily masked** while preserving dense computation for scientific validation.
 - Phase 7 asks **what can be dynamically skipped in the measured runtime**.
-- Phase 9 asks **whether one inherited warm depth-copy student can first prove Oracle evidence use and training wiring; only then may Real RAG, progressive KD, or narrow same-tokenizer research controls be evaluated**.
+- Phase 9 asks **whether one inherited warm depth-copy student can first prove Oracle evidence use and training wiring; if Oracle succeeds but Real RAG fails, v2.1 must separate retrieval/prompt collisions from learned evidence-binding weakness and recover the blocker before progressive KD, narrow controls, or downstream structural optimization**.
 - Phase 9B asks **whether judging, adapting, or rejecting retrieved memory reduces negative transfer enough to justify its full runtime cost**.
 - Phase 10 asks **which physically smaller architecture or compact challenger gives the best measured quality per deployed byte**.
 - Phase 11 asks **whether the selected student and RAG stack produce a measured, grounded, rollback-safe local release**.

@@ -113,6 +113,159 @@ def query_normalization(question: str) -> str:
     return " OR ".join(f'"{token}"' for token in tokens)
 
 
+
+
+_LOCATOR_PATTERNS = {
+    # Local record locators.
+    "record": re.compile(r"\brecord\s+([A-Za-z0-9_.-]+)", re.I),
+    "item": re.compile(r"\bitem\s+([A-Za-z0-9_.-]+)", re.I),
+    "case": re.compile(r"\bcase\s+([A-Za-z0-9_.-]+)", re.I),
+    "entry": re.compile(r"\bentry\s+([A-Za-z0-9_.-]+)", re.I),
+    "step": re.compile(r"\bstep\s+([A-Za-z0-9_.-]+)", re.I),
+    # Parent/container locators.  These are deliberately explicit words rather
+    # than generic numbers so dates, versions, prices, and measurements never
+    # become hard retrieval filters.
+    "audit": re.compile(r"\baudit\s+([A-Za-z0-9_.-]+)", re.I),
+    "batch": re.compile(r"\bbatch\s+([A-Za-z0-9_.-]+)", re.I),
+    "ticket": re.compile(r"\bticket\s+([A-Za-z0-9_.-]+)", re.I),
+    "report": re.compile(r"\breport\s+([A-Za-z0-9_.-]+)", re.I),
+    "run": re.compile(r"\brun\s+([A-Za-z0-9_.-]+)", re.I),
+}
+
+
+def explicit_locators(text: str) -> dict[str, set[str]]:
+    """Extract explicit record/item/case/entry/step locators from text.
+
+    The helper is intentionally conservative.  It only treats a value as a
+    locator when the user names the locator type explicitly, so ordinary
+    numbers (dates, budgets, versions, measurements) are never used as hard
+    retrieval filters.
+    """
+
+    locators: dict[str, set[str]] = {}
+    for name, pattern in _LOCATOR_PATTERNS.items():
+        values = {match.casefold().rstrip(".,;:!?)]}") for match in pattern.findall(text or "") if match}
+        if values:
+            locators[name] = values
+    return locators
+
+
+def _passage_locator_alignment(question: str, passage: dict[str, Any]) -> tuple[int, int, dict[str, Any]]:
+    requested = explicit_locators(question)
+    observed = explicit_locators(f"{passage.get('title', '')} {_passage_text(passage)}")
+    matches = 0
+    mismatches = 0
+    details: dict[str, Any] = {}
+    for name, requested_values in requested.items():
+        passage_values = observed.get(name) or set()
+        if not passage_values:
+            continue
+        overlap = requested_values & passage_values
+        if overlap:
+            matches += 1
+            details[name] = {
+                "requested": sorted(requested_values),
+                "observed": sorted(passage_values),
+                "status": "match",
+            }
+        elif requested_values.isdisjoint(passage_values):
+            mismatches += 1
+            details[name] = {
+                "requested": sorted(requested_values),
+                "observed": sorted(passage_values),
+                "status": "mismatch",
+            }
+    return matches, mismatches, details
+
+
+def select_retrieved_passages(
+    question: str,
+    passages: Sequence[dict[str, Any]],
+    *,
+    selected_top_k: int,
+    kind: str,
+    policy: str = "legacy",
+) -> list[dict[str, Any]]:
+    """Select retrieved passages with an auditable query-aware option.
+
+    ``legacy`` preserves the historical Phase 9 behavior exactly.
+
+    ``query_aware_v21`` addresses the failure mode discovered in the v2.0
+    procedural results: FTS correctly retrieves the requested record at rank 1
+    but also returns near-identical sibling records from the same audit.  Small
+    students that are perfect under Oracle RAG can bind to one of those sibling
+    values and fail every Real-RAG procedure.  The policy therefore:
+
+    * boosts passages that match explicit record/item/case/entry/step locators;
+    * suppresses locator-mismatched siblings when at least one exact locator
+      match exists; and
+    * deduplicates semantically identical procedure records so repeated copies
+      of one rule do not consume the procedure budget.
+
+    The original retrieval score is retained for answerability calibration; a
+    separate ``selection_score_v21`` is diagnostic ordering evidence only.
+    """
+
+    if selected_top_k <= 0:
+        return []
+    rows = [dict(item) for item in passages]
+    if policy == "legacy":
+        return rows[:selected_top_k]
+    if policy != "query_aware_v21":
+        raise ValueError(f"Unknown retrieval selection policy: {policy}")
+
+    requested = explicit_locators(question)
+    annotated: list[dict[str, Any]] = []
+    any_exact: dict[str, bool] = {name: False for name in requested}
+    for index, row in enumerate(rows):
+        matches, mismatches, details = _passage_locator_alignment(question, row)
+        for name, packet in details.items():
+            if packet.get("status") == "match":
+                any_exact[name] = True
+        base = float(row.get("normalized_score", 0.0) or 0.0)
+        # Locator evidence dominates only when the query explicitly supplied a
+        # locator.  Rank remains a tiny stable tie-breaker.
+        score = base + 1.0 * matches - 1.0 * mismatches - (index * 1e-6)
+        row["selection_score_v21"] = float(score)
+        row["selection_locator_matches"] = int(matches)
+        row["selection_locator_mismatches"] = int(mismatches)
+        row["selection_locator_details"] = details
+        annotated.append(row)
+
+    if kind == "knowledge" and requested and any(any_exact.values()):
+        filtered: list[dict[str, Any]] = []
+        for row in annotated:
+            details = row.get("selection_locator_details") or {}
+            hard_mismatch = any(
+                packet.get("status") == "mismatch" and any_exact.get(name, False)
+                for name, packet in details.items()
+            )
+            if not hard_mismatch:
+                filtered.append(row)
+        if filtered:
+            annotated = filtered
+
+    annotated.sort(
+        key=lambda row: (
+            -float(row.get("selection_score_v21", 0.0)),
+            int(row.get("rank", 10**9)),
+            passage_id(row),
+        )
+    )
+
+    if kind == "procedure":
+        deduped: list[dict[str, Any]] = []
+        seen_rules: set[str] = set()
+        for row in annotated:
+            rule = " ".join(normalized_tokens(_passage_text(row), drop_stopwords=False))
+            if rule in seen_rules:
+                continue
+            seen_rules.add(rule)
+            deduped.append(row)
+        annotated = deduped
+
+    return annotated[:selected_top_k]
+
 def detect_prompt_injection(text: str) -> list[str]:
     return [pattern.pattern for pattern in _INJECTION_PATTERNS if pattern.search(text or "")]
 
