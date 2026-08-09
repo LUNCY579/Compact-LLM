@@ -19,10 +19,15 @@ param(
     [string]$Phase9BReferenceManifest = ".\artifacts\references\phase_9b_student_reference.json",
     [string]$TeacherModel = "",
     [string]$Config = ".\configs\phase_10_student_architecture.json",
+    [string]$StructureProfile = "",
+    [string]$LayerSensitivityScan = "",
     [string]$DatasetRoot = ".\artifacts\phase_9_grounded_recovery_v1_7_5\dataset",
     [string]$KnowledgeDb = ".\artifacts\phase_9_grounded_recovery_v1_7_5\knowledge.sqlite3",
     [string]$GateCalibration = ".\artifacts\phase_9_grounded_recovery_v1_7_5\evidence_gate_calibration.json",
     [string]$OutputRoot = ".\artifacts\phase_10_student_architecture",
+    [string]$Registry = "",
+    [string]$CandidateReport = ".\reports\PHASE_10_CANDIDATE_REPORT.md",
+    [string]$GateReport = ".\reports\PHASE_10_STOP_GATE.md",
     [int]$MaxSteps = 0,
     [int]$RecoveryTopK = 0,
     [int]$Seed = 42,
@@ -110,12 +115,15 @@ foreach ($Path in @($TrainFile, $DevFile, $TestFile, $KnowledgeDb, $GateCalibrat
     if (-not (Test-Path $Path)) { throw "Missing Phase 10 input: $Path" }
 }
 New-Item -ItemType Directory -Force -Path $OutputRoot | Out-Null
+if ([string]::IsNullOrWhiteSpace($Registry)) { $Registry = Join-Path $OutputRoot "candidate_registry.json" }
 
 $ReferenceDevEval = Join-Path $OutputRoot "evaluation_reference_dev"
 $ReferenceTestEval = Join-Path $OutputRoot "evaluation_reference_test_final"
 $FinalDevSelection = Join-Path $OutputRoot "final_dev_selection.json"
-$Profile = Join-Path $OutputRoot "student_structure_profile.pt"
-$ProfileSummary = Join-Path $OutputRoot "student_structure_profile.json"
+$Profile = if ([string]::IsNullOrWhiteSpace($StructureProfile)) { Join-Path $OutputRoot "student_structure_profile.pt" } else { $StructureProfile }
+$ProfileSummary = if ([string]::IsNullOrWhiteSpace($StructureProfile)) { Join-Path $OutputRoot "student_structure_profile.json" } else { [System.IO.Path]::ChangeExtension($StructureProfile, ".json") }
+if (-not [string]::IsNullOrWhiteSpace($StructureProfile) -and -not (Test-Path $StructureProfile)) { throw "Missing external student structure profile: $StructureProfile" }
+if (-not [string]::IsNullOrWhiteSpace($LayerSensitivityScan) -and -not (Test-Path $LayerSensitivityScan)) { throw "Missing student layer-sensitivity scan: $LayerSensitivityScan" }
 $RecoverySelection = Join-Path $OutputRoot "recovery_selection.json"
 
 function Invoke-RagEvaluation {
@@ -140,7 +148,7 @@ function Invoke-RagEvaluation {
 Invoke-RagEvaluation "[1] Evaluating the selected Phase 9/9B reference student on DEV..." $StudentModel "" $DevFile $ReferenceDevEval
 
 if ($Mode -ne "Evaluate") {
-    if (-not ($ReuseExisting -and (Test-Path $Profile))) {
+    if ([string]::IsNullOrWhiteSpace($StructureProfile) -and -not ($ReuseExisting -and (Test-Path $Profile))) {
         $MaxProfileRecords = if ($Mode -eq "Full") {
             [int]$Phase10Config.profiling.max_records_full
         } else {
@@ -161,6 +169,22 @@ if ($Mode -ne "Evaluate") {
         $Name = [string]$Candidate.name
         $RawPath = Join-Path $OutputRoot "candidates\$Name\raw"
         if (-not ($ReuseExisting -and (Test-Path (Join-Path $RawPath "phase_10_candidate_manifest.json")))) {
+            $DepthDrop = [int](Get-PropertyOrDefault $Candidate "depth_drop" 0)
+            $RequestedDepthMode = [string](Get-PropertyOrDefault $Candidate "depth_mode" "uniform-drop")
+            $CreateDepthMode = $RequestedDepthMode
+            $ExplicitDropIds = @()
+            if ($RequestedDepthMode -eq "importance-drop") {
+                if ([string]::IsNullOrWhiteSpace($LayerSensitivityScan)) {
+                    throw "Candidate $Name requests importance-drop but -LayerSensitivityScan was not supplied."
+                }
+                $Sensitivity = Get-Content $LayerSensitivityScan -Raw | ConvertFrom-Json
+                $Order = @($Sensitivity.recommended_drop_order)
+                if ($DepthDrop -le 0 -or $Order.Count -lt $DepthDrop) {
+                    throw "Layer-sensitivity scan does not provide enough ranked layers for $Name (depth drop $DepthDrop)."
+                }
+                $ExplicitDropIds = @($Order | Select-Object -First $DepthDrop)
+                $CreateDepthMode = "explicit-drop"
+            }
             $Args = @(
                 ".\scripts\phase_10_student_architecture\create_structural_candidate.py",
                 "--model", $StudentModel,
@@ -169,12 +193,16 @@ if ($Mode -ne "Evaluate") {
                 "--name", $Name,
                 "--description", ([string]$Candidate.description),
                 "--target-role", ([string](Get-PropertyOrDefault $Candidate "target_role" "experimental_candidate")),
-                "--depth-drop", "$([int](Get-PropertyOrDefault $Candidate "depth_drop" 0))",
-                "--depth-mode", ([string](Get-PropertyOrDefault $Candidate "depth_mode" "uniform-drop")),
+                "--depth-drop", "$DepthDrop",
+                "--depth-mode", $CreateDepthMode,
                 "--hidden-prune-ratio", "$([double](Get-PropertyOrDefault $Candidate "hidden_prune_ratio" 0.0))",
                 "--mlp-prune-ratio", "$([double](Get-PropertyOrDefault $Candidate "mlp_prune_ratio" 0.0))",
                 "--attention-group-prune-ratio", "$([double](Get-PropertyOrDefault $Candidate "attention_group_prune_ratio" 0.0))"
             )
+            if ($ExplicitDropIds.Count -gt 0) {
+                $Args += "--drop-layer-ids"
+                foreach ($LayerId in $ExplicitDropIds) { $Args += "$LayerId" }
+            }
             $TargetMin = Get-PropertyOrDefault $Candidate "target_parameter_min" $null
             $TargetMax = Get-PropertyOrDefault $Candidate "target_parameter_max" $null
             if ($null -ne $TargetMin) { $Args += @("--target-parameter-min", "$([int64]$TargetMin)") }
@@ -336,13 +364,16 @@ Invoke-RagEvaluation "[13] Sealed TEST evaluation for $FinalName..." $FinalModel
 $GateArgs = @(
     ".\scripts\phase_10_student_architecture\check_phase_10_gate.py",
     "--reference-summary", (Join-Path $ReferenceTestEval "summary.json"),
-    "--candidate", "$FinalName=$(Join-Path $FinalTestEval 'summary.json')"
+    "--candidate", "$FinalName=$(Join-Path $FinalTestEval 'summary.json')",
+    "--registry", $Registry,
+    "--report", $CandidateReport,
+    "--gate", $GateReport
 )
 Invoke-PythonStep "[Final] Building the Phase 10 registry and human stop gate..." $GateArgs
 
 Write-Host ""
 Write-Host "Phase 10 completed."
-Write-Host "Registry: artifacts\phase_10_student_architecture\candidate_registry.json"
-Write-Host "Report: reports\PHASE_10_CANDIDATE_REPORT.md"
-Write-Host "Gate: reports\PHASE_10_STOP_GATE.md"
+Write-Host "Registry: $Registry"
+Write-Host "Report: $CandidateReport"
+Write-Host "Gate: $GateReport"
 Write-Host "After human PASS, run finalize_phase_10_selection.py with the exact selected candidate."

@@ -55,3 +55,21 @@ A reduced Phase 2B or Phase 2C profile is never silently substituted. Phase 3 re
 ## Shared evaluation and promotion rule
 
 Every phase uses Quality Evaluator v4.5 and the same relative-opportunity engine. Each phase declares one primary proportional benefit—training state, loaded weight memory, context/KV tokens, active compute, measured latency/VRAM, or net quality improvement. A technically comparable candidate advances only when that benefit is strictly greater than its combined proportional quality opportunity loss. No phase may add a private absolute score, pass-rate, completion, category, NLL, recall, speedup, or issue-count floor. Official response contracts are freshly authored from visible system/user messages; category, reference wording, and inherited contracts cannot create requirements. Informal understandable replies and natural follow-up questions remain valid unless the visible prompt creates a concrete requirement. Human review remains mandatory at stop gates.
+
+## v2.0 cross-phase student optimization orchestrator
+
+The official numeric phase boundaries remain 9 / 9B / 10 / 11. v2.0 adds a **meta-workflow**, not a competing set of official phases:
+
+| v2 stage | Responsibility | Official implementation boundary |
+|---|---|---|
+| S0 | Resolve the exact accepted student lineage and authoritative teacher. | Phase 9/9B handoff |
+| S1 | Physically delete every student layer once and rank DEV sensitivity. | New student optimization evidence |
+| S2 | Importance-guided depth + width/GQA structural search and recovery KD. | Phase 10 |
+| S3 | Human structural checkpoint and materialization. | Phase 10 gate/finalizer |
+| S4 | DEV-only retrieval/evidence token-budget optimization. | New pre-Phase-11 runtime selection |
+| S5 | DEV-only contextual sparsity simulation and measured router runtime. | Reuses Phase 6/7 primitives without overwriting teacher gates |
+| S6 | DEV-only dense/NF4/INT8/optional-GGUF runtime selection. | New pre-Phase-11 deployment selection |
+| S7 | Frozen context/backend production RAG comparison on sealed TEST. | Phase 11 Full |
+| S8 | Human release checkpoint and package. | Phase 11 Package |
+
+The meta-runner is `scripts/student_optimization_v2/run_student_optimization_v2.ps1`. It maintains `artifacts/student_optimization_v2/WORKFLOW_STATE.json` plus `reports/STUDENT_OPTIMIZATION_V2_MASTER_REPORT.md`, resumes automatically after human checkpoints, and cannot mark the workflow complete before the approved release package exists.

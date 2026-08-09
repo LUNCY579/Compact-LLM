@@ -1,0 +1,84 @@
+{
+  "schema_version": "2.0",
+  "release": "Short-Response Model v2.0 Student Optimization Automation",
+  "base_archive": "Short_Response_Model_Full_v1.7.7_Phase9_Selection_Gate_Hotfix.zip",
+  "base_archive_sha256": "ec64e7cf8b738bbc9b64f73abefcc465bbede7f0cc617541a145b675ede011f4",
+  "created_utc": "2026-08-08T21:07:35.560374+00:00",
+  "changed_or_new_files": [
+    {
+      "path": "CHANGED_FILES_v2.0.md",
+      "sha256": "6a8152d30a148c5174dc6e6c495894037ca99928bd9c39cee945338aee3ca725"
+    },
+    {
+      "path": "Phases.md",
+      "sha256": "22032d8c2ebf3e9753558c4d91647f561a1b5148df41bcf79d05cfe886fda61e"
+    },
+    {
+      "path": "README.md",
+      "sha256": "27954ce893e444e042d78f2f31a0a1517f415c4271a1ded1ef3ea0381e17a347"
+    },
+    {
+      "path": "RELEASE_VERIFICATION_v2.0.md",
+      "sha256": "decb7bd1209242411c62ee90daabc9332b5b82a672f165987b4175a60b9ad375"
+    },
+    {
+      "path": "STUDENT_OPTIMIZATION_V2_WORKFLOW.md",
+      "sha256": "a1d2f2bb330f0f183d3a9a9b7f33ac38f13ca184d301def416e2f5c0f6d71f66"
+    },
+    {
+      "path": "configs/phase_10_student_architecture_v2.json",
+      "sha256": "681e36af98818299f75f88789bdf719e1302a4fa1cbcba6f698e782cde0cd14a"
+    },
+    {
+      "path": "configs/student_optimization_v2.json",
+      "sha256": "44b2356c0957935c5629d633a1afef89659e7e89920f00599cf09fe6f5f1e73f"
+    },
+    {
+      "path": "scripts/phase_10_student_architecture/create_structural_candidate.py",
+      "sha256": "08982a114f89e0451653df3fe0cd3b376d661175d26f182a997f37512e3f2a0b"
+    },
+    {
+      "path": "scripts/phase_10_student_architecture/run_phase_10.ps1",
+      "sha256": "4d20d7a0baf7f5487da194b4d70b928b4d3ec758a98c93ca95d7368218173269"
+    },
+    {
+      "path": "scripts/student_optimization_v2/README.md",
+      "sha256": "430c10f5ea4c79d6bc068de8e4808ce83e64ba651b3402d0a4b966fd695bb784"
+    },
+    {
+      "path": "scripts/student_optimization_v2/context_budget_sweep.py",
+      "sha256": "3e778258f45fd762b2b06fae43c541c02bc954ed7b2529078e081d2f959e1412"
+    },
+    {
+      "path": "scripts/student_optimization_v2/quantization_sweep.py",
+      "sha256": "1a4a8cbc5b1c319c736dbf137080d32ed5ff334279af907b9b84d9cc79c7a7fc"
+    },
+    {
+      "path": "scripts/student_optimization_v2/run_student_optimization_v2.ps1",
+      "sha256": "75ddf69932285a701c5007e44df5c2dcd4ffd271e9033c695922632990aeac0a"
+    },
+    {
+      "path": "scripts/student_optimization_v2/scan_student_layer_sensitivity.py",
+      "sha256": "f94a59c1615034b0a8c1ae9ae35d5b6af8563cd90b3c624c7ee2ff4e7a5807c8"
+    },
+    {
+      "path": "scripts/student_optimization_v2/sparse_student_pipeline.py",
+      "sha256": "3589da9894268f62a0d836eafb4e0f6a5824eadfc802babc2d3c191471c6fd08"
+    },
+    {
+      "path": "scripts/student_optimization_v2/state_manager.py",
+      "sha256": "acb8af3dbe4f0517fdc792421683be30e436c45050633efb3fa78cd09f02c83d"
+    },
+    {
+      "path": "tests/test_student_optimization_v2.py",
+      "sha256": "99c8c82d9586d1d59de023335aa8c562bdb9bc530a5e7c34d1b022d1ee3361ba"
+    }
+  ],
+  "deleted_files": [],
+  "verification": {
+    "python_compileall": "PASS",
+    "pytest": "240 passed",
+    "powershell_native_execution": "NOT_AVAILABLE_IN_PACKAGING_ENVIRONMENT"
+  },
+  "completion_semantics": "Runtime workflow is COMPLETE only after Phase 11 human PASS and approved release ZIP exists."
+}

@@ -46,7 +46,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--target-parameter-min", type=int, default=None)
     parser.add_argument("--target-parameter-max", type=int, default=None)
     parser.add_argument("--depth-drop", type=int, default=0)
-    parser.add_argument("--depth-mode", choices=("uniform-drop", "drop-last"), default="uniform-drop")
+    parser.add_argument("--depth-mode", choices=("uniform-drop", "drop-last", "explicit-drop"), default="uniform-drop")
+    parser.add_argument("--drop-layer-ids", nargs="*", type=int, default=None, help="Explicit original layer IDs to delete when --depth-mode explicit-drop is used.")
     parser.add_argument("--hidden-prune-ratio", type=float, default=0.0)
     parser.add_argument("--mlp-prune-ratio", type=float, default=0.0)
     parser.add_argument("--attention-group-prune-ratio", type=float, default=0.0)
@@ -127,11 +128,26 @@ def main() -> None:
             f"Profile layer count {profile.get('layer_count')} does not match model {original_layer_count}"
         )
     before = count_parameters(model)
-    retained_current = retained_layer_indices(
-        original_layer_count,
-        drop_count=args.depth_drop,
-        mode=args.depth_mode,
-    )
+    if args.depth_mode == "explicit-drop":
+        explicit = list(args.drop_layer_ids or [])
+        if not explicit:
+            raise ValueError("--depth-mode explicit-drop requires --drop-layer-ids")
+        if len(set(explicit)) != len(explicit):
+            raise ValueError("--drop-layer-ids contains duplicates")
+        invalid = [index for index in explicit if index < 0 or index >= original_layer_count]
+        if invalid:
+            raise ValueError(f"Explicit drop layer IDs are out of range: {invalid}")
+        if args.depth_drop not in (0, len(explicit)):
+            raise ValueError("--depth-drop must be 0 or match the number of explicit drop IDs")
+        retained_current = [index for index in range(original_layer_count) if index not in set(explicit)]
+    else:
+        if args.drop_layer_ids:
+            raise ValueError("--drop-layer-ids may only be used with --depth-mode explicit-drop")
+        retained_current = retained_layer_indices(
+            original_layer_count,
+            drop_count=args.depth_drop,
+            mode=args.depth_mode,
+        )
     current_original_layer_ids = list(range(original_layer_count))
     depth_manifest: dict[str, Any] = {
         "original_layer_count": original_layer_count,
@@ -224,6 +240,7 @@ def main() -> None:
             "operations": {
                 "depth_drop": args.depth_drop,
                 "depth_mode": args.depth_mode,
+                "drop_layer_ids": list(args.drop_layer_ids or []),
                 "hidden_prune_ratio": args.hidden_prune_ratio,
                 "mlp_prune_ratio": args.mlp_prune_ratio,
                 "attention_group_prune_ratio": args.attention_group_prune_ratio,

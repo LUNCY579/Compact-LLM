@@ -1,3 +1,9 @@
+# v2.0 — Automated Student Optimization Program
+
+v2.0 turns the accepted Phase 9/9B student into a first-class post-distillation optimization program. It preserves official Phases 9/9B/10/11, but adds a durable cross-phase orchestrator with an empirical every-layer deletion scan, importance-guided Phase 10 structural reduction/recovery, DEV-only context/KV budget selection, contextual-sparsity simulation and measured runtime, DEV-only quantization backend selection, human checkpoints, final Phase 11 runtime evaluation, and reproducible packaging.
+
+The master runner is `scripts/student_optimization_v2/run_student_optimization_v2.ps1`. It writes `artifacts/student_optimization_v2/WORKFLOW_STATE.json` and incrementally rewrites `reports/STUDENT_OPTIMIZATION_V2_MASTER_REPORT.md`. A run is **not** labelled complete because a process exited; `COMPLETE` is reserved for the state in which the Phase 11 human gate is PASS and the approved release package exists. See `STUDENT_OPTIMIZATION_V2_WORKFLOW.md`, `CHANGED_FILES_v2.0.md`, and `RELEASE_VERIFICATION_v2.0.md`.
+
 ## v1.7.7 Phase 9 Stage-B/SFT selection gate hotfix
 
 v1.7.7 fixes a policy mismatch in the Phase 9 grounded-recovery ladder. Stage B is an intentionally untrained warm-student baseline, so prompt/decode-integrity failures recorded there remain visible diagnostics but no longer invalidate every trained Stage D SFT candidate. Initialization behavior-coverage failures remain blocking because missing denominators make the numeric comparison unreliable. Every trained candidate is still required to pass its **own** integrity, behavior coverage, non-degeneracy, behavior-success, and positive Oracle-capability-improvement checks.
@@ -169,3 +175,16 @@ See `EVALUATION_V4_4_MIGRATION.md` for review-only rescoring, official in-place 
 A technique ships only when it creates measured value. The best release may be the full dense teacher, a shallower recovered teacher, a dense quantized teacher with context engineering, or an accepted RAG-specialized student while custom sparsity remains disabled. Negative selective-tuning, deletion, soup, and sparse-runtime results are valid and retained.
 
 Generated checkpoints and benchmark artifacts are not included in the source ZIP; they must be created on the target machine so results reflect its actual model, CUDA stack, and hardware.
+
+## Student Optimization v2.0 — automated post-distillation efficiency ladder
+
+After a Phase 9/9B student has an explicit human PASS and is materialized, the new cross-phase runner can carry it through the remaining efficiency program with durable resume/checkpoint semantics:
+
+```powershell
+.\scripts\student_optimization_v2\run_student_optimization_v2.ps1 `
+  -TeacherModel C:\path\to\authoritative_teacher
+```
+
+It adds an empirical every-layer student deletion scan, importance-guided Phase 10 depth candidates, disjoint-DEV context/KV budget selection, student contextual-sparsity simulation/runtime measurement, and DEV-only quantization selection before the frozen Phase 11 sealed runtime experiment. It automatically stops at Phase 10 and Phase 11 human gates and resumes from those checkpoints when rerun. The workflow is only labelled `COMPLETE` after an approved Phase 11 release package exists.
+
+See `STUDENT_OPTIMIZATION_V2_WORKFLOW.md` and `scripts/student_optimization_v2/README.md`.

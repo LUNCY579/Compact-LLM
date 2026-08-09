@@ -168,15 +168,6 @@ def plan_grounded_prompt(
         tokenizer, raw_evidence, token_budget=evidence_budget
     )
 
-    # Social prompts intentionally omit evidence/procedure sections. Real RAG may
-    # still retrieve passages; drop them from the plan so diagnostics match what
-    # the model actually receives and integrity checks stay honest.
-    if mode == "social_roleplay":
-        dropped_evidence.extend(passage_id(item) for item in selected_evidence)
-        dropped_procedures.extend(passage_id(item) for item in selected_procedures)
-        selected_evidence = []
-        selected_procedures = []
-
     full_messages, full_prompt, full_ids = _render(
         tokenizer,
         question=question,
@@ -226,9 +217,9 @@ def plan_grounded_prompt(
         issues.append("final question is missing from rendered prompt")
     if mode != "social_roleplay" and not grounding_contract_present:
         issues.append("grounding contract is missing from rendered prompt")
-    if mode != "social_roleplay" and selected_evidence and not evidence_section_present:
+    if selected_evidence and not evidence_section_present:
         issues.append("selected factual evidence is missing from rendered prompt")
-    if mode != "social_roleplay" and selected_procedures and not procedure_section_present:
+    if selected_procedures and not procedure_section_present:
         issues.append("selected trusted procedures are missing from rendered prompt")
 
     return PromptPlan(

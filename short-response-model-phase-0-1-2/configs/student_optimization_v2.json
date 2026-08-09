@@ -1,0 +1,57 @@
+{
+  "schema_version": "2.0",
+  "workflow": "student_optimization_v2",
+  "principle": "Prove accepted student behavior first; then reduce architecture, context/KV cost, active compute, and deployment memory in that order. Every selection before final release uses non-sealed data.",
+  "layer_sensitivity": {
+    "enabled": true,
+    "dev_limit": 150,
+    "profile_records": 256,
+    "conditions": "oracle_rag,real_rag,adversarial_rag",
+    "keep_temporary_candidates": false
+  },
+  "phase10": {
+    "config": "configs/phase_10_student_architecture_v2.json",
+    "mode": "Full",
+    "max_steps": 1500,
+    "recovery_top_k": 5,
+    "use_lora": true
+  },
+  "context_sweep": {
+    "enabled": true,
+    "calibration_fraction": 0.5,
+    "profiles": [
+      {"name": "reference", "retrieval_top_k": 20, "selected_top_k": 3, "maximum_evidence_tokens": 512},
+      {"name": "balanced_384", "retrieval_top_k": 16, "selected_top_k": 3, "maximum_evidence_tokens": 384},
+      {"name": "lean_256", "retrieval_top_k": 12, "selected_top_k": 2, "maximum_evidence_tokens": 256},
+      {"name": "precision_384", "retrieval_top_k": 12, "selected_top_k": 3, "maximum_evidence_tokens": 384},
+      {"name": "ultra_lean_192", "retrieval_top_k": 8, "selected_top_k": 2, "maximum_evidence_tokens": 192}
+    ]
+  },
+  "sparse_runtime": {
+    "enabled": true,
+    "block_size": 128,
+    "oracle_label_ratio": 0.65,
+    "ratios": [1.0, 0.8, 0.65, 0.5, 0.35],
+    "max_calibration_records": 512,
+    "max_benchmark_cases": 150,
+    "router_epochs": 20,
+    "router_width": 128,
+    "runtime_repeats": 3,
+    "note": "This stage may recommend a sparse feature flag or dense runtime. It does not silently modify the Phase 11 packaged model."
+  },
+  "quantization_sweep": {
+    "enabled": true,
+    "backends": ["bitsandbytes_nf4", "bitsandbytes_int8"],
+    "dense_fallback": true,
+    "gguf_enabled_only_when_tool_paths_are_supplied": true,
+    "gguf_type": "Q4_K_M",
+    "selection_split": "DEV context-selection subset",
+    "final_test_policy": "Only the DEV-selected backend is run through the final Phase 11 sealed runtime comparison."
+  },
+  "release": {
+    "package_mode": "copy",
+    "require_phase10_human_pass": true,
+    "require_phase11_human_pass": true,
+    "complete_only_when_package_exists": true
+  }
+}
