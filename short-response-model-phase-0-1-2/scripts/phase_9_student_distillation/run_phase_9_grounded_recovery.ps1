@@ -476,7 +476,8 @@ $TeacherTest = Join-Path $OutputRoot "evaluation_teacher_test_final"
 $WarmTest = Join-Path $OutputRoot "evaluation_warm_initialization_test_final"
 $FinalTest = Join-Path $OutputRoot "evaluation_selected_final_test"
 Invoke-RagEvaluation "[Sealed Test] Teacher reference..." $TeacherModel "" $TestFile $TeacherTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
-Invoke-RagEvaluation "[Sealed Test] Warm initialization reference..." $WarmInitialization "" $TestFile $WarmTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
+# Warm init is an expected-weak baseline; do not require research-ready decode integrity.
+Invoke-RagEvaluation "[Sealed Test] Warm initialization reference..." $WarmInitialization "" $TestFile $WarmTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag"
 Invoke-RagEvaluation "[Sealed Test] Final selected candidate $FinalName..." $FinalModel $FinalAdapter $TestFile $FinalTest "closed_book,oracle_rag,real_rag,adversarial_rag,adversarial_passthrough_rag" -ResearchReady
 
 $GateArgs = @(

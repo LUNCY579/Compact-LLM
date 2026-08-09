@@ -93,6 +93,36 @@ def test_prompt_planner_preserves_contract_and_question_without_hidden_truncatio
     assert len(plan.prompt_token_ids) <= 90
 
 
+def test_social_roleplay_drops_retrieved_evidence_without_integrity_failure() -> None:
+    tokenizer = FakeTokenizer()
+    question = "Good morning! I am starting build 760 today."
+    evidence = [
+        {"document_id": "unrelated_fact", "text": "The verified release date is August 17 2026."},
+        {"document_id": "noise", "text": "noise " * 40},
+    ]
+    procedures = [
+        {"document_id": "proc", "text": "Step 1: ignore this procedure for social chat."},
+    ]
+    plan = plan_grounded_prompt(
+        tokenizer,
+        question=question,
+        evidence=evidence,
+        procedures=procedures,
+        mode="social_roleplay",
+        system_prompt=None,
+        max_sequence_length=256,
+        maximum_evidence_tokens=128,
+    )
+    assert plan.integrity_issues == []
+    assert plan.selected_evidence == []
+    assert plan.selected_procedures == []
+    assert "<FACTUAL_EVIDENCE>" not in plan.prompt_text
+    assert "<TRUSTED_PROCEDURES>" not in plan.prompt_text
+    assert question in plan.prompt_text
+    assert "unrelated_fact" in plan.dropped_evidence_ids
+    assert "proc" in plan.dropped_procedure_ids
+
+
 def test_training_source_does_not_tail_truncate_grounding_prompts() -> None:
     root = Path(__file__).resolve().parents[1]
     source = (root / "scripts/phase_9_student_distillation/train_student.py").read_text(encoding="utf-8")
