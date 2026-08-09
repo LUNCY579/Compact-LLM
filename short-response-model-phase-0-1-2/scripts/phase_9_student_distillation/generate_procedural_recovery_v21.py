@@ -523,13 +523,40 @@ def validate_semantics(rows: list[dict[str, Any]], knowledge: list[dict[str, Any
     return problems
 
 
+def with_assistant_training_target(row: dict[str, Any]) -> dict[str, Any]:
+    """Ensure SFT rows end with an assistant turn (Phase 9 train_student contract).
+
+    Original Phase 9 reviewed splits are prompt-only (system + user) with gold in
+    `approved_answer` / `answer`. v2.1 rows already include the assistant turn.
+    Preservation examples must be converted before they enter the recovery mix.
+    """
+    out = json.loads(json.dumps(row))
+    messages = [dict(message) for message in (out.get("messages") or [])]
+    if messages and messages[-1].get("role") == "assistant":
+        content = str(messages[-1].get("content") or "").strip()
+        if not content:
+            raise ValueError(f"{out.get('id')}: empty assistant training target")
+        out["messages"] = messages
+        out.setdefault("reference", content)
+        return out
+    answer = str(out.get("approved_answer") or out.get("answer") or out.get("reference") or "").strip()
+    if not answer:
+        raise ValueError(f"{out.get('id')}: missing approved_answer/answer for assistant training target")
+    if not messages:
+        raise ValueError(f"{out.get('id')}: missing prompt messages for assistant training target")
+    messages.append({"role": "assistant", "content": answer})
+    out["messages"] = messages
+    out["reference"] = answer
+    return out
+
+
 def materialize_preservation_mix(*, root: Path, original_train: Path | None, seed: int) -> dict[str, Any]:
     train_path = root / "reviewed_splits/train.reviewed.jsonl"
     v21_rows = [json.loads(x) for x in train_path.read_text(encoding="utf-8").splitlines() if x.strip()]
     hard = [r for r in v21_rows if r.get("decision") == "answer"]
     negative = [r for r in v21_rows if r.get("decision") != "answer"]
     write_jsonl(root / "curriculum_views/train_answerable_hard.reviewed.jsonl", hard)
-    mix = list(v21_rows)
+    mix = [with_assistant_training_target(r) for r in v21_rows]
     preservation = []
     if original_train is not None and original_train.exists():
         original_all = [json.loads(x) for x in original_train.read_text(encoding="utf-8").splitlines() if x.strip()]
@@ -560,8 +587,16 @@ def materialize_preservation_mix(*, root: Path, original_train: Path | None, see
         preservation.extend(remaining[: max(0, target - len(preservation))])
         preservation = preservation[:target]
         # Prefix IDs solely in the training view to prevent accidental duplicate
-        # identifiers when multiple curricula are later concatenated.
-        preservation = [{**r, "id": f"preserve_v21::{r.get('id')}", "source": f"{r.get('source','unknown')}+v21_preservation"} for r in preservation]
+        # identifiers when multiple curricula are later concatenated. Convert
+        # prompt-only reviewed rows into CompletionDataset-ready SFT targets.
+        preservation = [
+            with_assistant_training_target({
+                **r,
+                "id": f"preserve_v21::{r.get('id')}",
+                "source": f"{r.get('source', 'unknown')}+v21_preservation",
+            })
+            for r in preservation
+        ]
         mix.extend(preservation)
     random.Random(seed + 177).shuffle(mix)
     write_jsonl(root / "curriculum_views/train_recovery_mix.reviewed.jsonl", mix)

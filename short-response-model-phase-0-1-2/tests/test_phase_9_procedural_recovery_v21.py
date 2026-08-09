@@ -75,6 +75,10 @@ def test_v21_training_mix_uses_train_only_preservation_rows() -> None:
     assert len(preservation) == 1162
     assert all(row.get("intended_split") == "train" for row in preservation)
     assert all(str(row.get("mode") or "").casefold() != "procedure" for row in preservation)
+    # train_student.CompletionDataset requires every mix row to end with an
+    # assistant training target (original Phase 9 reviewed splits are prompt-only).
+    assert all((row.get("messages") or []) and row["messages"][-1].get("role") == "assistant" for row in mix)
+    assert all(str(row["messages"][-1].get("content") or "").strip() for row in preservation)
 
 
 def test_transfer_gap_diagnosis_identifies_collision_binding_failure() -> None:
