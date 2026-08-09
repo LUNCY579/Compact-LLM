@@ -1,3 +1,7 @@
+## v2.1.1 Phase 9 preservation-first procedural checkpoint
+
+When v2.1 same-weight `query_aware_v21` retrieval is strong but recovery training damages the original path, use `run_phase_9_procedural_recovery_v211.ps1`. Candidate zero is the unchanged query-aware student. Stage A/B1/B2 are short checkpoints evaluated on both original DEV and the new 24-family procedural challenge, and a trained adapter advances only when residual challenge gain exceeds weighted relative preservation loss. Otherwise the workflow deliberately selects `query_aware_only`. Sealed TEST is run only after one DEV path is frozen.
+
 ## v2.1 Phase 9 procedural transfer-recovery checkpoint
 
 Before Phase 9B/10/11 structural and runtime optimization, a Phase 9 student with a severe Oracle→Real procedural gap must run `run_phase_9_procedural_recovery_v21.ps1`. v2.1 first A/B tests the same weights under legacy versus query-aware retrieval, then performs focused collision-binding SFT and preservation consolidation. Retrieval-policy gain and learned training gain are reported separately. Other students are replication controls only after the primary student establishes the mechanism. The old v1.7.5 test is now postmortem/regression evidence; the new v2.1 test remains unused for selection.

@@ -1,3 +1,20 @@
+## v2.1.1 preservation-first procedural recovery
+
+The observed v2.1 DEV run established a crucial distinction: `query_aware_v21` retrieval restored the original student's procedural correctness with **unchanged weights**, while the tested recovery training improved the hard challenge but substantially damaged the strong original path. v2.1.1 therefore keeps the unchanged query-aware student as **candidate zero** and makes every weight-updated checkpoint earn its preservation cost.
+
+Use:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v211.ps1 `
+  -StudentModel <warm/base checkpoint> `
+  -StudentAdapter <current selected adapter> `
+  -RequireCuda
+```
+
+The dedicated path uses a 768-row hard Stage A burst, then two 60-step preservation-first consolidation checkpoints over a 4,820-row mix that is 64.7% original train-only replay. It evaluates original Phase 9 DEV and the new challenge after every checkpoint and may intentionally select `query_aware_only`. See the repository-root `PROCEDURAL_RECOVERY_V2_1_1.md`.
+
+---
+
 # Phase 9 — grounded-recovery student proof
 
 ## v1.7.7 selector-gate correction

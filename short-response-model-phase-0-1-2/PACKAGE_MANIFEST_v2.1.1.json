@@ -1,0 +1,251 @@
+{
+  "base_release": "v2.1",
+  "candidate_zero": "unchanged student weights + query_aware_v21 retrieval",
+  "dataset": {
+    "canonical_rows": 6560,
+    "category_counts": {
+      "procedure_conflict": 400,
+      "procedure_missing_input": 400,
+      "procedure_supported_clean": 1440,
+      "procedure_supported_hard": 1440,
+      "procedure_supported_hard_equiv": 1440,
+      "procedure_supported_moderate": 1440
+    },
+    "decision_counts": {
+      "abstain": 400,
+      "answer": 5760,
+      "conflict": 400
+    },
+    "design": {
+      "gold_policy": "programmatically computed; no implicit ties unless a procedure defines the tie break",
+      "historical_reproducibility": "original corpus unchanged; known bad procedure rows excluded from replay only",
+      "holdout_policy": "topic/document/procedure-disjoint v2.1.1 dev/test; preservation replay is train-only",
+      "primary_objective": "preserve query-aware original-path quality while improving residual Real-RAG procedure binding",
+      "real_world_reflection": "release, API, support, inventory, shipping, access, failover, deployment, retention, and operational-policy cases",
+      "stage_a_policy": "small stratified hard-collision burst only",
+      "stage_b_policy": "preservation-first replay dominated by original train-only factual/social/boundary behavior and verified original procedures",
+      "supported_profiles": [
+        "clean",
+        "moderate",
+        "hard",
+        "hard_equiv"
+      ]
+    },
+    "family_row_counts": {
+      "access": 272,
+      "approval": 276,
+      "backoff": 274,
+      "budget_quality": 274,
+      "capacity": 276,
+      "compatibility": 272,
+      "date": 274,
+      "deploy": 272,
+      "failover": 272,
+      "freshness": 276,
+      "incident": 274,
+      "inventory": 272,
+      "latency": 272,
+      "maintenance": 274,
+      "priority": 274,
+      "quota": 274,
+      "range": 272,
+      "rate_limit": 274,
+      "retention": 274,
+      "semver": 272,
+      "shipping": 272,
+      "threshold": 272,
+      "tie_break": 274,
+      "tolerance": 272
+    },
+    "knowledge_documents": 5040,
+    "name": "Phase 9 Procedural Transfer-Recovery Corpus v2.1.1",
+    "procedure_families": [
+      "semver",
+      "date",
+      "latency",
+      "priority",
+      "capacity",
+      "budget_quality",
+      "threshold",
+      "range",
+      "approval",
+      "backoff",
+      "deploy",
+      "tie_break",
+      "tolerance",
+      "quota",
+      "incident",
+      "rate_limit",
+      "inventory",
+      "shipping",
+      "freshness",
+      "compatibility",
+      "access",
+      "failover",
+      "maintenance",
+      "retention"
+    ],
+    "procedure_family_count": 24,
+    "procedures": 2320,
+    "profile_counts": {
+      "boundary": 800,
+      "clean_binding": 1440,
+      "hard_collision": 2880,
+      "moderate_distractor": 1440
+    },
+    "recovery_views": {
+      "dev_preservation_probe_rows": 512,
+      "excluded_historical_inconsistent_procedure_rows": 18,
+      "preservation_counts": {
+        "factual_answer": 1200,
+        "factual_boundary": 700,
+        "procedure_answer_verified": 800,
+        "procedure_boundary": 300,
+        "social": 120
+      },
+      "stage_a_rows": 768,
+      "stage_b_new_boundary_rows": 450,
+      "stage_b_new_clean_moderate_rows": 900,
+      "stage_b_new_hard_rows": 350,
+      "stage_b_new_rows": 1700,
+      "stage_b_preservation_rows": 3120,
+      "stage_b_rows": 4820
+    },
+    "review_contract": "auto_verified deterministic gold; not represented as human review",
+    "schema_version": "3.0",
+    "sealed_test_policy": "test is not used for training, candidate selection, or hyperparameter tuning",
+    "seed": 21142,
+    "source": "deterministic_phase9_procedural_recovery_v211",
+    "split_counts": {
+      "dev": 792,
+      "test": 792,
+      "train": 4976
+    }
+  },
+  "key_files": {
+    "CHANGED_FILES_v2.1.1.md": {
+      "bytes": 2985,
+      "sha256": "aa5b5cbe48861fcee5582a8d216c349645f15e0a0266c8f15486737c53f3563f"
+    },
+    "PROCEDURAL_RECOVERY_V2_1_1.md": {
+      "bytes": 10452,
+      "sha256": "9cf66e9739f0429e71992a0a2957b562bdc3711ca832fae4e48406322975813f"
+    },
+    "Phases.md": {
+      "bytes": 10795,
+      "sha256": "cef51b5faddd47bb390a38d139b9bf475c79458f301a0e67ae60b7f3013eea79"
+    },
+    "README.md": {
+      "bytes": 29099,
+      "sha256": "2da0949e6cab0be398411e321e2124deae06fb61234dd5a26d00c06ba1375c9b"
+    },
+    "RELEASE_VERIFICATION_v2.1.1.md": {
+      "bytes": 5472,
+      "sha256": "19b5a88b002930a83486fa254cc855d20ded7f29036bb8b789490addf6a457ec"
+    },
+    "configs/phase_9_procedural_recovery_v211.json": {
+      "bytes": 6172,
+      "sha256": "4afea5d01a206b82f96c05bff36c58ea9875b630a40d60f9c4c3610bb996f45e"
+    },
+    "data/phase_9_student_distillation/procedural_recovery_v211/curriculum_views/dev_preservation_probe.reviewed.jsonl": {
+      "bytes": 2055481,
+      "sha256": "3a03c8c5df390b0b40d6a94f7505b259299514f86b7899c42f9072eff4c32006"
+    },
+    "data/phase_9_student_distillation/procedural_recovery_v211/curriculum_views/train_stage_a_short_binding.reviewed.jsonl": {
+      "bytes": 3673874,
+      "sha256": "25b55690805d22eb1ed962c18585639b2d875691bb7bbee417df7404b6488589"
+    },
+    "data/phase_9_student_distillation/procedural_recovery_v211/curriculum_views/train_stage_b_preservation_first.reviewed.jsonl": {
+      "bytes": 18403294,
+      "sha256": "d5ab89424802ef60cb2b835932914c111a88ec9217be053d0c9b15fd22bdab25"
+    },
+    "data/phase_9_student_distillation/procedural_recovery_v211/manifests/dataset_manifest.json": {
+      "bytes": 3477,
+      "sha256": "0c1b9731d51abe6860436f51c423911959c3904880d934c3db740de7f256c5f7"
+    },
+    "data/phase_9_student_distillation/procedural_recovery_v211/manifests/file_hashes.json": {
+      "bytes": 1657,
+      "sha256": "f1188e7f3380fdf5fe8a64a319efc87c672745111bc111828d3eb12c113ce143"
+    },
+    "reports/PHASE_9_V211_DATASET_AUDIT.md": {
+      "bytes": 2346,
+      "sha256": "00e63d44277026b93fbfafc953df7defeb1e3b28a4d08ed0d5c2704a7d70e493"
+    },
+    "reports/PHASE_9_V211_GENERATED_GOLD_AUDIT.json": {
+      "bytes": 195,
+      "sha256": "d1c7007c3eed78d7e986132a3bc964daa66f392124f7a4525aa5faa15cebc253"
+    },
+    "reports/PHASE_9_V21_OBSERVED_PROCEDURAL_RECOVERY_COMPARISON.md": {
+      "bytes": 1490,
+      "sha256": "c8405df4150c14475e24dccd88085a7346ba0fe0e80d8f2a5b7b77b470b47d14"
+    },
+    "reports/PHASE_9_V21_ORIGINAL_DEV_PROCEDURAL_COLLISION_AUDIT.md": {
+      "bytes": 825,
+      "sha256": "8226c182f01d07ef08b7d2a13964c942811c43d749de2b841b187b6221980f64"
+    },
+    "scripts/phase_9_student_distillation/EXECUTION_MANUAL.md": {
+      "bytes": 12199,
+      "sha256": "b93c6e780497f1d4ee22dda7992fbe72f02c2dc72fe4fb6d2a650e6d41451ad5"
+    },
+    "scripts/phase_9_student_distillation/FILE_RESPONSIBILITIES.md": {
+      "bytes": 6864,
+      "sha256": "5abf531d9feb83469bf0b9e89c7f81d4bc4b1a831d9c29fba84e80fc290a49d1"
+    },
+    "scripts/phase_9_student_distillation/README.md": {
+      "bytes": 9103,
+      "sha256": "164bbae061d32dac34f757a3a70b3fc29ca27a278795c6d162bd323804f579b0"
+    },
+    "scripts/phase_9_student_distillation/generate_procedural_recovery_v211.py": {
+      "bytes": 52263,
+      "sha256": "9fc2319ece3cdde2ad047a5ede37ff8bad7fbbf9cd29edb4c00985ceffb3801b"
+    },
+    "scripts/phase_9_student_distillation/run_phase_9_procedural_recovery_v211.ps1": {
+      "bytes": 16289,
+      "sha256": "0f3645ccfa16e771ec1b30a15f48ffa9bec16080d6f205deef11b268dcdf7417"
+    },
+    "scripts/phase_9_student_distillation/select_procedural_recovery_v211.py": {
+      "bytes": 12997,
+      "sha256": "1e6e317f229769872967ac5f0496697d61a358504b49acc21db55a4da5303462"
+    },
+    "tests/test_phase_9_procedural_recovery_v211.py": {
+      "bytes": 7086,
+      "sha256": "f29d6b94924849f5de9a3a905518800bb09952ccb453b4cf810cc3bdbb92bc2e"
+    }
+  },
+  "name": "Preservation-First Procedural Recovery",
+  "package_inventory_excluding_this_manifest": {
+    "bytes": 589642164,
+    "file_count": 707
+  },
+  "purpose": "Preserve the unchanged-student query-aware Real-RAG path while learning only residual procedural binding failures.",
+  "release": "v2.1.1",
+  "selection": "DEV-only preservation-adjusted comparison across query-aware candidate zero, Stage A, Stage B1, and Stage B2; fallback to query-aware-only when no trained checkpoint has positive opportunity margin.",
+  "training_defaults": {
+    "lora_rank": 16,
+    "max_lr_without_explicit_override": 3e-05,
+    "max_total_steps_without_explicit_override": 400,
+    "stage_a": {
+      "learning_rate": 1e-05,
+      "role": "short hard-binding burst",
+      "steps": 60
+    },
+    "stage_b1": {
+      "learning_rate": 5e-06,
+      "role": "preservation-first consolidation",
+      "steps": 60
+    },
+    "stage_b2": {
+      "learning_rate": 3e-06,
+      "role": "second preservation checkpoint",
+      "steps": 60
+    }
+  },
+  "verification": {
+    "compileall": "PASS",
+    "corpus_validator": "PASS",
+    "generated_latency_gold_violations": 0,
+    "new_gpu_training_performed": false,
+    "powershell_runtime": "not available in packaging environment; workflow covered by static tests",
+    "pytest": "255 passed"
+  }
+}

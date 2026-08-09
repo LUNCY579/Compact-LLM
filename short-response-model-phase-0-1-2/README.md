@@ -1,3 +1,23 @@
+# v2.1.1 — Preservation-First Procedural Recovery
+
+v2.1.1 is the corrective follow-up to the mixed v2.1 recovery result. The key finding was that `query_aware_v21` retrieval restored original Phase 9 DEV procedure correctness to about **0.953 with unchanged weights**, while the tested recovery training reduced that strong path to about **0.227** even though it improved the synthetic collision challenge. v2.1.1 therefore treats the unchanged query-aware student as **candidate zero**, trains only a bounded residual-recovery ladder, and automatically falls back to the original adapter whenever learned challenge gain does not exceed preservation cost.
+
+The new corpus contains **6,560 rows**, **24 procedure families**, and a **64.7% preservation-first Stage B mixture** that explicitly replays verified original procedure answers, factual behavior, abstention/conflict behavior, and social responses. Stage A/B1/B2 default to only **60 + 60 + 60 steps** at `1e-5 / 5e-6 / 3e-6`, with an explicit safety override required for aggressive schedules. Every checkpoint is evaluated on both original Phase 9 DEV and the new procedural challenge before DEV-only selection. See `PROCEDURAL_RECOVERY_V2_1_1.md`, `CHANGED_FILES_v2.1.1.md`, and `RELEASE_VERIFICATION_v2.1.1.md`.
+
+**Recommended DEV-first command:**
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v211.ps1 `
+  -StudentModel .\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_344m_initialization `
+  -StudentAdapter .\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_sft_sweep\lr1e4_s1200\training\adapter `
+  -OutputRoot .\artifacts\phase_9_procedural_recovery_v211_lr1e4_s1200 `
+  -RequireCuda
+```
+
+Do not run sealed TEST on the first pass. Review `PROCEDURAL_RECOVERY_V211_SELECTION.md`; it may deliberately select `query_aware_only` if all trained checkpoints damage the strong original path.
+
+---
+
 # v2.1 — Procedural Transfer Recovery
 
 v2.1 is a focused recovery release for the Phase 9 student that is strong under Oracle evidence but collapses on Real-RAG procedure application. The v2.0 stop gate records a 52.0% weight reduction and only ~0.6% generic relative quality loss for the selected SFT student, yet Real-RAG procedure correctness is 0/150. A model-free postmortem found that all 150 answerable historical procedure cases retrieved the authored support and an equivalent trusted procedure, while all 150 legacy top-3 prompts also contained near-identical same-topic sibling records. v2.1 therefore diagnoses and repairs **evidence binding under retrieval collisions** before doing any further depth/width/sparsity optimization.

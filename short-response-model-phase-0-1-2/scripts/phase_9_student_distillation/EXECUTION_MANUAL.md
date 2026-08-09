@@ -1,3 +1,35 @@
+## v2.1.1 preservation-first procedural recovery ladder
+
+Use this path after the v2.1 result in which unchanged query-aware retrieval strongly restored original procedural behavior but recovery training overwrote it. The workflow is DEV-first and preserves the unchanged student as candidate zero.
+
+```text
+query-aware unchanged baseline
+        ↓
+Stage A: 60 steps @ 1e-5 on 768 hard residual rows
+        ↓ evaluate original DEV + v2.1.1 challenge DEV
+Stage B1: 60 steps @ 5e-6 on preservation-first mixture
+        ↓ evaluate both DEV sets
+Stage B2: 60 steps @ 3e-6 on preservation-first mixture
+        ↓ evaluate both DEV sets
+relative preservation-adjusted DEV selection
+        ↓
+optional sealed TEST of exactly one selected path
+```
+
+Primary command:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v211.ps1 `
+  -StudentModel <student base> `
+  -StudentAdapter <current selected adapter> `
+  -OutputRoot .\artifacts\phase_9_procedural_recovery_v211 `
+  -RequireCuda
+```
+
+The runner blocks recovery schedules above 400 total steps or LR above `3e-5` unless `-AllowAggressiveTraining` is explicitly supplied. This is a preservation guard, not a universal training rule. Do not run sealed TEST until `PROCEDURAL_RECOVERY_V211_SELECTION.md` has been reviewed.
+
+---
+
 # Phase 9 execution manual — grounded recovery + RAG reasoning v1.7.3
 
 ## v1.7.7 Stage-B baseline / Stage-D selector policy

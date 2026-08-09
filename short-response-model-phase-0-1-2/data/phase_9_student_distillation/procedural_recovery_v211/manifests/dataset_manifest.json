@@ -1,0 +1,121 @@
+{
+  "canonical_rows": 6560,
+  "category_counts": {
+    "procedure_conflict": 400,
+    "procedure_missing_input": 400,
+    "procedure_supported_clean": 1440,
+    "procedure_supported_hard": 1440,
+    "procedure_supported_hard_equiv": 1440,
+    "procedure_supported_moderate": 1440
+  },
+  "decision_counts": {
+    "abstain": 400,
+    "answer": 5760,
+    "conflict": 400
+  },
+  "design": {
+    "gold_policy": "programmatically computed; no implicit ties unless a procedure defines the tie break",
+    "historical_reproducibility": "original corpus unchanged; known bad procedure rows excluded from replay only",
+    "holdout_policy": "topic/document/procedure-disjoint v2.1.1 dev/test; preservation replay is train-only",
+    "primary_objective": "preserve query-aware original-path quality while improving residual Real-RAG procedure binding",
+    "real_world_reflection": "release, API, support, inventory, shipping, access, failover, deployment, retention, and operational-policy cases",
+    "stage_a_policy": "small stratified hard-collision burst only",
+    "stage_b_policy": "preservation-first replay dominated by original train-only factual/social/boundary behavior and verified original procedures",
+    "supported_profiles": [
+      "clean",
+      "moderate",
+      "hard",
+      "hard_equiv"
+    ]
+  },
+  "family_row_counts": {
+    "access": 272,
+    "approval": 276,
+    "backoff": 274,
+    "budget_quality": 274,
+    "capacity": 276,
+    "compatibility": 272,
+    "date": 274,
+    "deploy": 272,
+    "failover": 272,
+    "freshness": 276,
+    "incident": 274,
+    "inventory": 272,
+    "latency": 272,
+    "maintenance": 274,
+    "priority": 274,
+    "quota": 274,
+    "range": 272,
+    "rate_limit": 274,
+    "retention": 274,
+    "semver": 272,
+    "shipping": 272,
+    "threshold": 272,
+    "tie_break": 274,
+    "tolerance": 272
+  },
+  "knowledge_documents": 5040,
+  "name": "Phase 9 Procedural Transfer-Recovery Corpus v2.1.1",
+  "procedure_families": [
+    "semver",
+    "date",
+    "latency",
+    "priority",
+    "capacity",
+    "budget_quality",
+    "threshold",
+    "range",
+    "approval",
+    "backoff",
+    "deploy",
+    "tie_break",
+    "tolerance",
+    "quota",
+    "incident",
+    "rate_limit",
+    "inventory",
+    "shipping",
+    "freshness",
+    "compatibility",
+    "access",
+    "failover",
+    "maintenance",
+    "retention"
+  ],
+  "procedure_family_count": 24,
+  "procedures": 2320,
+  "profile_counts": {
+    "boundary": 800,
+    "clean_binding": 1440,
+    "hard_collision": 2880,
+    "moderate_distractor": 1440
+  },
+  "recovery_views": {
+    "dev_preservation_probe_rows": 512,
+    "excluded_historical_inconsistent_procedure_rows": 18,
+    "preservation_counts": {
+      "factual_answer": 1200,
+      "factual_boundary": 700,
+      "procedure_answer_verified": 800,
+      "procedure_boundary": 300,
+      "social": 120
+    },
+    "stage_a_rows": 768,
+    "stage_b_new_boundary_rows": 450,
+    "stage_b_new_clean_moderate_rows": 900,
+    "stage_b_new_hard_rows": 350,
+    "stage_b_new_rows": 1700,
+    "stage_b_preservation_rows": 3120,
+    "stage_b_rows": 4820
+  },
+  "review_contract": "auto_verified deterministic gold; not represented as human review",
+  "schema_version": "3.0",
+  "sealed_test_policy": "test is not used for training, candidate selection, or hyperparameter tuning",
+  "seed": 21142,
+  "source": "deterministic_phase9_procedural_recovery_v211",
+  "split_counts": {
+    "dev": 792,
+    "test": 792,
+    "train": 4976
+  }
+}

@@ -1,3 +1,14 @@
+## v2.1.1 additions
+
+| File | Responsibility | Boundary |
+|---|---|---|
+| `generate_procedural_recovery_v211.py` | Generates the 6,560-row, 24-family preservation-first procedural corpus, Stage-A hard view, Stage-B replay-dominated view, and DEV preservation probe. | Does not rewrite historical Phase 9 rows; known bad historical procedure rows are excluded only from replay. |
+| `select_procedural_recovery_v211.py` | Compares candidate zero, Stage A, B1, and B2 on DEV; computes relative preservation cost, challenge gain, Pareto frontier, and policy sensitivity. | Uses no sealed TEST data and falls back to unchanged query-aware weights when training does not earn its cost. |
+| `run_phase_9_procedural_recovery_v211.ps1` | Runs data validation, frozen query-aware calibration, baseline, bounded A/B1/B2 training, per-checkpoint dual-DEV evaluation, selection, and optional selected-candidate TEST. | Not a broad LR/rank sweep; aggressive schedules require explicit override. |
+| `data/.../procedural_recovery_v211/` | Canonical v2.1.1 procedure corpus plus preservation-first curriculum views and hashes. | TEST is sealed; original preservation rows are train-only. |
+
+---
+
 # File responsibilities — Phase 9 RAG reasoning integration v1.7.3
 
 | File | Responsibility | Boundary |
