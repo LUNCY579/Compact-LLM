@@ -239,34 +239,56 @@ Do not delete layers, shrink width, introduce contextual sparsity, or choose fin
 
 ## Main command
 
-For a full student checkpoint:
+Work from the package root with the CUDA venv active:
+
+```powershell
+cd C:\Users\clclc\BusinessProject\Chat-Bubble\short-response-model-phase-0-1-2
+..\ .venv\Scripts\Activate.ps1   # or .\.venv\Scripts\Activate.ps1 if the venv lives here
+```
+
+Primary student for this repo (Phase 9 grounded recovery `lr1e4_s1200` on warm 344M):
+
+```powershell
+$StudentBase = '.\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_344m_initialization'
+$StudentAdapter = '.\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_sft_sweep\lr1e4_s1200\training\adapter'
+$RecoveryRoot = '.\artifacts\phase_9_procedural_recovery_v21_lr1e4_s1200'
+
+Test-Path $StudentBase
+Test-Path $StudentAdapter
+```
+
+**Step 1 — DEV diagnosis + two-stage recovery** (do this first; no sealed test yet):
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v21.ps1 `
-  -StudentModel "C:\path\to\current_student_checkpoint" `
+  -StudentModel $StudentBase `
+  -StudentAdapter $StudentAdapter `
+  -OutputRoot $RecoveryRoot `
   -RequireCuda
 ```
 
-For a base checkpoint + existing selected student adapter:
+**Step 2 — after reviewing DEV A/B + recovery comparison**, continue the same root and run sealed tests:
 
 ```powershell
 .\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v21.ps1 `
-  -StudentModel "C:\path\to\student_base" `
-  -StudentAdapter "C:\path\to\selected_student_adapter" `
-  -RequireCuda
-```
-
-Do DEV diagnosis/recovery first. Only after the DEV comparison is reviewed:
-
-```powershell
-.\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v21.ps1 `
-  -StudentModel "C:\path\to\student_base_or_checkpoint" `
-  -StudentAdapter "C:\path\to\selected_student_adapter_if_any" `
-  -OutputRoot ".\artifacts\phase_9_procedural_recovery_v21_YYYYMMDD_HHMMSS" `
+  -StudentModel $StudentBase `
+  -StudentAdapter $StudentAdapter `
+  -OutputRoot $RecoveryRoot `
   -ReuseExisting `
   -RunSealedTest `
   -RequireCuda
 ```
+
+Inspect when Step 1 finishes:
+
+```text
+$RecoveryRoot\comparison_report.md   (or equivalent compare artifact)
+$RecoveryRoot\baseline_*             (legacy vs query_aware_v21, same weights)
+$RecoveryRoot\recovered_*            (after two-stage LoRA continuation)
+$RecoveryRoot\...\adapter            (recovered adapter)
+```
+
+Optional: diagnosis-only without training (`-SkipTraining`) or force corpus rebuild (`-RegenerateDataset`).
 
 The runner validates/generates the corpus, audits known historical gold defects, builds both indexes, performs the same-weight legacy/query-aware A/B, diagnoses Oracle→Real failures, trains the focused two-stage repair, reevaluates the original DEV and v2.1 challenge DEV, and writes a comparison that separates retrieval gain from training gain.
 

@@ -4,15 +4,22 @@ v2.1 is a focused recovery release for the Phase 9 student that is strong under 
 
 The release adds a query-aware retrieval selector, a 6,120-row procedural recovery corpus spanning 14 deterministic procedure families, gold-consistency audits, Oracle→Real failure classification, a same-weight legacy/query-aware A/B, and one focused two-stage rank-16 LoRA recovery path rather than another broad LR/rank sweep. It also keeps Phase 11 calibration/runtime/service on the same retrieval-selection policy. See `PROCEDURAL_RECOVERY_V2_1.md`, `CHANGED_FILES_v2.1.md`, and `RELEASE_VERIFICATION_v2.1.md`.
 
-**Run recovery before v2.0 structural optimization:**
+**Run recovery before v2.0 structural optimization** (selected Phase 9 student = warm 344M + `lr1e4_s1200`):
 
 ```powershell
+cd .\short-response-model-phase-0-1-2   # if starting from the repo root
+$StudentBase = '.\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_344m_initialization'
+$StudentAdapter = '.\artifacts\phase_9_grounded_recovery_v1_7_5_qwen\warm_sft_sweep\lr1e4_s1200\training\adapter'
+$RecoveryRoot = '.\artifacts\phase_9_procedural_recovery_v21_lr1e4_s1200'
+
 .\scripts\phase_9_student_distillation\run_phase_9_procedural_recovery_v21.ps1 `
-  -StudentModel "C:\path\to\current_student_checkpoint" `
+  -StudentModel $StudentBase `
+  -StudentAdapter $StudentAdapter `
+  -OutputRoot $RecoveryRoot `
   -RequireCuda
 ```
 
-If the selected student is a base model plus an existing adapter, also pass `-StudentAdapter`. The runner performs DEV diagnosis and training first; use `-RunSealedTest` only after the DEV comparison is frozen and reviewed.
+DEV diagnosis and two-stage recovery run first. After reviewing the DEV comparison, re-run the same command with `-ReuseExisting -RunSealedTest`. Full detail: `PROCEDURAL_RECOVERY_V2_1.md`.
 
 # v2.0 — Automated Student Optimization Program
 
