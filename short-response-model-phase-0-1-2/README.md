@@ -237,3 +237,18 @@ See `STUDENT_OPTIMIZATION_V2_WORKFLOW.md` and `scripts/student_optimization_v2/R
 v2.1.2 adds a broad, deterministic reasoning curriculum after v2.1.1 showed that narrow procedural tuning could preserve the strong query-aware path but yielded only a small challenge improvement. The new experiment trains prompt-contained arithmetic, temporal, logical, constraint, state, ranking, filtering, and insufficiency reasoning while preserving RAG grounding, abstention, faithfulness, social behavior, and concise output through mixed replay.
 
 The main runner is `scripts/phase_9_student_distillation/run_phase_9_general_reasoning_v212.ps1`. The design and commands are documented in `GENERAL_REASONING_RECOVERY_V2_1_2.md`.
+
+## v2.2 — multi-domain capability composition
+
+v2.2 turns the post-v2.1.2 capacity/interference result into a controlled capability-composition program. It adds a 40,500-row / 27-domain / 15-archetype prompt-contained reasoning corpus, a preservation-mixed + frozen-student behavioral-anchor objective, five parallel specialist LoRAs, exact weighted static LoRA-delta composition, a true DEV-probe greedy adapter soup, and a layer-separated specialist experiment. Protected Phase 9 metrics that are missing/null now invalidate official selection instead of silently becoming zero preservation cost.
+
+Start with `CAPABILITY_COMPOSITION_V2_2.md` and run:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_capability_composition_v22.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\input_adapter" `
+  -RequireCuda
+```
+
+The first execution is DEV-only. Review `CAPABILITY_COMPOSITION_V22_SELECTION.md` and the Pareto frontier before any sealed TEST or Student Optimization v2 work.

@@ -381,3 +381,53 @@ Deferred until baseline evidence justifies them:
 - automatic DPO pair generation;
 - production quantizer integration;
 - target-runtime native kernels.
+
+## 12. v2.2 capability-composition research branch
+
+After the v2.1.x procedural/reasoning experiments, v2.2 adds a governed capability-composition branch before Student Optimization v2. This branch does not overwrite the established Phase 9 release contract; it asks whether the same tiny student can retain specialized behavior while gaining broader prompt-contained reasoning.
+
+The branch is intentionally parallel rather than sequential:
+
+```text
+exact selected student
+        |
+        v
+materialized frozen anchor
+        |
+        +--> Track A: broad multi-domain LoRA
+        |
+        +--> Track B: broad + supervised preservation replay + frozen-anchor KL
+        |
+        +--> Track C: independent general / grounding / procedure / abstention / social LoRAs
+        |
+        +--> Track D: weighted / greedy / layer-separated compositions
+        |
+        v
+four-axis DEV capability matrix + Pareto frontier
+```
+
+The v2.2 canonical corpus contains 40,500 prompt-contained examples across 27 domains and 15 reasoning archetypes. It additionally includes 3,000 TRAIN-only conversational rehearsal rows used by the social specialist. No canonical DEV/TEST row enters any training or composition-search view.
+
+Every candidate is measured on:
+
+1. v2.2 27-domain direct reasoning;
+2. v2.1.2 general-reasoning continuity;
+3. original Phase 9 Real-RAG under `query_aware_v21`;
+4. v2.1.1 procedural challenge under `query_aware_v21`.
+
+Protected Phase 9 metrics must be present and non-null. Missing preservation evidence is technical invalidity, never zero quality loss. This strict rule is also backported to the v2.1.2 selector.
+
+Primary runner:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_capability_composition_v22.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\original_adapter" `
+  -RequireCuda
+```
+
+Track B defaults to `-AnchorDevice auto`; use `-AnchorDevice cpu` only when lower GPU pressure is worth the substantial speed cost.
+
+The first run is DEV-only. Sealed TEST may be run later with the same output root and `-ReuseExisting -RunSealedTest` only after the DEV-selected winner is frozen and policy sensitivity is resolved.
+
+See `CAPABILITY_COMPOSITION_V2_2.md` for the full experiment contract.

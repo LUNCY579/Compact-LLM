@@ -117,6 +117,18 @@ def packet(c: Candidate, bo: dict[str, Any], bc: dict[str, Any], br: dict[str, A
         invalid.append("challenge_invalid")
     if not bool(c.reasoning.get("evaluation_valid", True)):
         invalid.append("reasoning_invalid")
+    # v2.1.2 originally treated missing protected metrics as zero loss, which
+    # could falsely make preservation_cost=0.  v2.2 backports the strict
+    # evidence contract: a protected axis that was not measured is technical
+    # invalidity, not evidence of preservation.
+    for key in ORIGINAL_PROTECTED:
+        if f(co_m, key) is None:
+            invalid.append(f"missing_original_metric:{key}")
+    if f(cc_m, "procedure_correctness") is None:
+        invalid.append("missing_challenge_metric:procedure_correctness")
+    for key in REASONING_BENEFIT + REASONING_PROTECTED:
+        if f(c.reasoning, key) is None:
+            invalid.append(f"missing_reasoning_metric:{key}")
     policies = {}
     for name, pcfg in (cfg.get("selection", {}).get("policies", {}) or {}).items():
         ow = pcfg.get("original_preservation_weights", {})
@@ -153,6 +165,24 @@ def select(cfg:dict[str,Any],baseline:Candidate,trained:list[Candidate])->dict[s
     packets += [packet(c,baseline.original,baseline.challenge,baseline.reasoning,cfg) for c in trained]
     official=str(cfg.get("selection",{}).get("official_policy","preservation_guarded"))
     policy_names=list((cfg.get("selection",{}).get("policies",{}) or {}).keys())
+    # The baseline defines every preservation comparison. If its evidence is
+    # incomplete, no trained candidate can be selected responsibly.
+    if packets[0]["technical_invalidity"]:
+        return {
+            "schema_version":"2.1.2",
+            "status":"INVALID_BASELINE_EVIDENCE",
+            "official_policy":official,
+            "selected_candidate":"input_student",
+            "selected_adapter":packets[0]["adapter"],
+            "policy_selections":{name:"input_student" for name in policy_names},
+            "policy_sensitivity_disagreement":False,
+            "candidates":packets,
+            "interpretation":{
+                "general_reasoning_gain":"Mean positive absolute gain across overall, family-macro, and hard general-reasoning correctness.",
+                "preservation_cost":"Missing protected metrics are invalid evidence, never zero preservation loss.",
+                "fallback":"Re-run the missing DEV evaluations before selecting a trained checkpoint.",
+            },
+        }
     selections={}
     for pol in policy_names:
         eligible=[p for p in packets if not p["technical_invalidity"] and p["name"]!="input_student" and p["policies"][pol]["opportunity_margin"]>0]

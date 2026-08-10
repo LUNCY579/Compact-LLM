@@ -180,3 +180,18 @@ Run:
 The runner compares the unchanged input student, Stage A broad reasoning, Stage B1 mixed generalization/preservation, and Stage B2 lower-rate consolidation on three DEV axes: original Phase 9 RAG, v2.1.1 procedural challenge, and v2.1.2 general reasoning. Sealed TEST is optional and only runs after DEV selection.
 
 See `GENERAL_REASONING_RECOVERY_V2_1_2.md`.
+
+## v2.2 capability composition
+
+The v2.2 branch is documented in `../../CAPABILITY_COMPOSITION_V2_2.md`.
+
+Primary runner:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_capability_composition_v22.ps1 `
+  -StudentModel <student-or-base> `
+  -StudentAdapter <optional-input-adapter> `
+  -RequireCuda
+```
+
+It implements four tracks from one immutable anchor: broad reasoning, KL-anchored broad reasoning, parallel specialists, and weighted/greedy/layer-separated composition. All candidates use the same DEV evaluation axes and the exact same frozen query-aware retrieval calibrations.

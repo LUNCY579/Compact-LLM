@@ -84,6 +84,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--lora-alpha", type=int, default=32)
     parser.add_argument("--lora-dropout", type=float, default=0.05)
     parser.add_argument("--target-module-group", choices=("both", "attention", "mlp"), default="both")
+    parser.add_argument(
+        "--lora-layer-indices",
+        default="",
+        help="Optional comma-separated transformer layer IDs to receive fresh LoRA modules. Only valid with --lora.",
+    )
+    parser.add_argument(
+        "--anchor-model",
+        default=None,
+        help="Optional frozen same-tokenizer reference checkpoint for behavioral anchoring during SFT/KD.",
+    )
+    parser.add_argument(
+        "--anchor-kl-weight",
+        type=float,
+        default=0.0,
+        help="Add lambda * KL(anchor || student) on supervised completion positions. Zero disables anchoring.",
+    )
+    parser.add_argument("--anchor-temperature", type=float, default=1.0)
+    parser.add_argument("--anchor-device", choices=("auto", "cpu"), default="auto", help="Place the frozen behavioral anchor with device_map=auto by default; use cpu for lower VRAM at substantial speed cost.")
     parser.add_argument("--teacher-4bit", action="store_true")
     parser.add_argument("--memory-efficient-completion-logits", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--resume-from-checkpoint", default=None)
@@ -314,6 +332,9 @@ class DistillationTrainer(Trainer):
         teacher_confidence_floor: float,
         eos_token_id: int | None,
         eos_loss_weight: float,
+        anchor: Any | None,
+        anchor_kl_weight: float,
+        anchor_temperature: float,
         **kwargs: Any,
     ) -> None:
         super().__init__(*args, **kwargs)
@@ -327,6 +348,9 @@ class DistillationTrainer(Trainer):
         self.teacher_confidence_floor = float(teacher_confidence_floor)
         self.eos_token_id = eos_token_id
         self.eos_loss_weight = float(eos_loss_weight)
+        self.anchor = anchor
+        self.anchor_kl_weight = float(anchor_kl_weight)
+        self.anchor_temperature = float(anchor_temperature)
         self.last_loss_components: dict[str, float] = {}
         self.model_accepts_loss_kwargs = False
 
@@ -440,6 +464,36 @@ class DistillationTrainer(Trainer):
                 "kd_loss": kd_loss.detach(),
                 "teacher_target_confidence": teacher_target_confidence.detach(),
             }
+
+        if self.anchor_kl_weight > 0.0:
+            if self.anchor is None:
+                raise RuntimeError("anchor_kl_weight > 0 requires a loaded anchor model")
+            anchor_device = next(self.anchor.parameters()).device
+            with torch.no_grad():
+                anchor_logits, anchor_targets, _ = selected_forward(
+                    self.anchor,
+                    input_ids.to(anchor_device),
+                    attention_mask.to(anchor_device),
+                    labels.to(anchor_device),
+                    token_loss_weights.to(anchor_device),
+                    use_position_selection=self.memory_efficient_completion_logits,
+                )
+            if not torch.equal(targets.detach().cpu(), anchor_targets.detach().cpu()):
+                raise RuntimeError("Anchor/student target positions are not aligned")
+            anchor_temperature = self.anchor_temperature
+            anchor_logits_local = anchor_logits.float().to(student_logits.device)
+            anchor_log_probs = F.log_softmax(anchor_logits_local / anchor_temperature, dim=-1)
+            anchor_probs = anchor_log_probs.exp()
+            student_anchor_log_probs = F.log_softmax(student_logits.float() / anchor_temperature, dim=-1)
+            per_token_anchor_kl = (
+                anchor_probs * (anchor_log_probs - student_anchor_log_probs)
+            ).sum(dim=-1) * (anchor_temperature**2)
+            anchor_weights = token_weights
+            anchor_kl_loss = (per_token_anchor_kl * anchor_weights).sum() / anchor_weights.sum().clamp_min(1.0)
+            loss = loss + self.anchor_kl_weight * anchor_kl_loss
+            self.last_loss_components["anchor_kl_loss"] = float(anchor_kl_loss.detach().cpu())
+            self.last_loss_components["anchor_kl_weight"] = float(self.anchor_kl_weight)
+            output_packet["anchor_kl_loss"] = anchor_kl_loss.detach()
         return (loss, output_packet) if return_outputs else loss
 
 
@@ -450,6 +504,16 @@ def validate_args(args: argparse.Namespace) -> None:
         raise ValueError("Do not provide --teacher for objective=sft")
     if args.lora and args.initial_adapter is not None:
         raise ValueError("Use either --lora or --initial-adapter, not both")
+    if args.lora_layer_indices and not args.lora:
+        raise ValueError("--lora-layer-indices requires --lora so a fresh layer-scoped adapter can be created")
+    if args.anchor_kl_weight < 0:
+        raise ValueError("--anchor-kl-weight must be nonnegative")
+    if args.anchor_kl_weight > 0 and not args.anchor_model:
+        raise ValueError("--anchor-model is required when --anchor-kl-weight is positive")
+    if args.anchor_model and args.anchor_kl_weight <= 0:
+        raise ValueError("--anchor-kl-weight must be positive when --anchor-model is supplied")
+    if args.anchor_temperature <= 0:
+        raise ValueError("--anchor-temperature must be positive")
     if not 0.0 <= args.hard_label_weight <= 1.0:
         raise ValueError("--hard-label-weight must be in [0,1]")
     if args.temperature <= 0:
@@ -507,7 +571,12 @@ def build_student(args: argparse.Namespace) -> tuple[Any, Any, str, list[str] | 
         model = PeftModel.from_pretrained(model, str(args.initial_adapter), is_trainable=True)
         artifact_type = "continued_peft_adapter"
     elif args.lora:
-        targets = discover_target_modules(model, None, args.target_module_group)
+        selected_layers = None
+        if args.lora_layer_indices:
+            selected_layers = sorted({int(value.strip()) for value in args.lora_layer_indices.split(",") if value.strip()})
+            if not selected_layers:
+                raise ValueError("--lora-layer-indices did not contain any valid integer layer IDs")
+        targets = discover_target_modules(model, selected_layers, args.target_module_group)
         model = get_peft_model(
             model,
             LoraConfig(
@@ -563,6 +632,40 @@ def build_teacher(args: argparse.Namespace, student_tokenizer: Any) -> tuple[Any
     return teacher, teacher_fingerprint
 
 
+def build_anchor(args: argparse.Namespace, student_tokenizer: Any) -> tuple[Any | None, str | None]:
+    """Load a frozen same-tokenizer behavioral anchor for v2.2-style preservation.
+
+    This is intentionally distinct from KD: the supervised target remains the
+    primary objective, while KL(anchor || student) penalizes unnecessary drift
+    on those same completion positions.
+    """
+
+    if not args.anchor_model or args.anchor_kl_weight <= 0.0:
+        return None, None
+    anchor_tokenizer = AutoTokenizer.from_pretrained(args.anchor_model, trust_remote_code=True)
+    anchor_tokenizer.pad_token = anchor_tokenizer.pad_token or anchor_tokenizer.eos_token
+    student_fingerprint = tokenizer_fingerprint(student_tokenizer)
+    anchor_fingerprint = tokenizer_fingerprint(anchor_tokenizer)
+    if anchor_fingerprint != student_fingerprint:
+        raise RuntimeError(
+            "Behavioral anchoring requires exactly identical tokenizers because KL is computed directly over logits."
+        )
+    anchor = AutoModelForCausalLM.from_pretrained(
+        args.anchor_model,
+        trust_remote_code=True,
+        torch_dtype="auto",
+        device_map="auto" if args.anchor_device == "auto" else None,
+        low_cpu_mem_usage=True,
+    )
+    if args.anchor_device == "cpu":
+        anchor.to("cpu")
+    anchor.config.use_cache = False
+    anchor.eval()
+    for parameter in anchor.parameters():
+        parameter.requires_grad_(False)
+    return anchor, anchor_fingerprint
+
+
 def publish_saved_model(trainer: Trainer, tokenizer: Any, output_dir: Path, artifact_type: str) -> Path:
     destination = output_dir / ("adapter" if "adapter" in artifact_type else "model")
     staging = output_dir / f".{destination.name}.tmp-{uuid.uuid4().hex}"
@@ -606,6 +709,7 @@ def main() -> None:
     dev_rows = read_jsonl(args.dev_file) if args.dev_file and args.dev_file.exists() else []
     model, tokenizer, artifact_type, targets = build_student(args)
     teacher, teacher_fingerprint = build_teacher(args, tokenizer)
+    anchor, anchor_fingerprint = build_anchor(args, tokenizer)
     train_dataset = CompletionDataset(
         train_rows,
         tokenizer,
@@ -679,6 +783,9 @@ def main() -> None:
         teacher_confidence_floor=args.teacher_confidence_floor,
         eos_token_id=tokenizer.eos_token_id,
         eos_loss_weight=args.eos_loss_weight,
+        anchor=anchor,
+        anchor_kl_weight=args.anchor_kl_weight,
+        anchor_temperature=args.anchor_temperature,
         args=training_args,
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
@@ -710,6 +817,13 @@ def main() -> None:
         "initial_adapter_tree_sha256": sha256_tree(args.initial_adapter) if args.initial_adapter is not None else None,
         "teacher": args.teacher,
         "teacher_tree_sha256": sha256_tree(Path(args.teacher)) if args.teacher else None,
+        "anchor_model": args.anchor_model,
+        "anchor_model_tree_sha256": sha256_tree(Path(args.anchor_model)) if args.anchor_model else None,
+        "anchor_tokenizer_fingerprint": anchor_fingerprint,
+        "anchor_kl_weight": args.anchor_kl_weight,
+        "anchor_temperature": args.anchor_temperature if args.anchor_model else None,
+        "anchor_device": args.anchor_device if args.anchor_model else None,
+        "lora_layer_indices": [int(v.strip()) for v in args.lora_layer_indices.split(",") if v.strip()] if args.lora_layer_indices else None,
         "artifact_type": artifact_type,
         "artifact_path": str(artifact),
         "artifact_bytes": tree_bytes(artifact),

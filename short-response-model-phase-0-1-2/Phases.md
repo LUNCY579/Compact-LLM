@@ -87,3 +87,22 @@ The meta-runner is `scripts/student_optimization_v2/run_student_optimization_v2.
 v2.1.2 remains inside official Phase 9; it is not a new numeric phase. It is used when v2.1/v2.1.1 establish that retrieval fixes the historical procedure collapse but narrow recovery training does not produce a materially stronger student.
 
 The experiment trains reusable reasoning operations from prompt-contained information, evaluates every checkpoint on original Phase 9 RAG + v2.1.1 procedural challenge + a new 33-family general reasoning DEV set, and keeps the unchanged input student as an explicit fallback. Student Optimization v2 remains blocked until this comparison is reviewed.
+
+## Phase 9 v2.2 research branch — capability composition
+
+After v2.1.2 broad-reasoning evidence is reviewed, v2.2 may be run as a governed Phase 9 research branch before Student Optimization v2. It does not replace the accepted Phase 9 release gate automatically.
+
+Order:
+
+1. materialize the exact input student as a frozen anchor;
+2. generate/validate the 40,500-row, 27-domain, 15-archetype v2.2 reasoning corpus and TRAIN-only social rehearsal;
+3. freeze original/v2.1.1 query-aware retrieval indexes and DEV calibrations;
+4. evaluate the frozen anchor on all capability axes;
+5. train Track A broad and Track B preservation-mixed + KL-anchored adapters independently from the anchor;
+6. train five Track C specialists independently from the anchor;
+7. run Track D weighted, greedy, and layer-separated composition experiments;
+8. build the unified DEV capability matrix and Pareto frontier;
+9. human-review policy sensitivity and the selected candidate;
+10. optionally run one sealed TEST readout of that frozen winner.
+
+Do not use TEST data to train, merge, route, tune weights, select layer groups, or switch the winner.

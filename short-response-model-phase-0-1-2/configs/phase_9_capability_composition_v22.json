@@ -1,0 +1,169 @@
+{
+  "schema_version": "2.2",
+  "experiment": {
+    "name": "phase9_multidomain_capability_composition_v2_2",
+    "primary_question": "Can a tiny short-response student gain broad reasoning while preserving specialized RAG, procedural, abstention, and social abilities when capability updates are isolated and composed instead of trained sequentially?",
+    "source_of_truth": [
+      "latest repository state",
+      "Chat-Bubble LLM - Procedural Skill Recovery.pdf"
+    ],
+    "frozen_anchor_rule": "Every independent adapter is trained from the exact same materialized input student. Sequential specialist fine-tuning is forbidden in the controlled composition tracks."
+  },
+  "data": {
+    "corpus_root": "data/phase_9_student_distillation/multidomain_reasoning_v22",
+    "canonical_rows": 40500,
+    "domains": 27,
+    "archetypes": 15,
+    "train_rows": 32400,
+    "dev_rows": 4050,
+    "test_rows": 4050,
+    "track_a_rows": 15000,
+    "specialist_rows": {
+      "general": 10000,
+      "grounding": 5500,
+      "procedure": 5500,
+      "abstention": 4500,
+      "social": 4500
+    },
+    "design": "Prompt-contained reasoning operations, deterministic short gold answers, train-only specialist rehearsal, no visible chain-of-thought and no encyclopedic fact memorization.",
+    "social_synthetic_train_rows": 3000,
+    "track_b_rows": 15000,
+    "track_b_mix": {
+      "general_reasoning": 12000,
+      "original_phase9_rehearsal": 2000,
+      "v211_procedural_rehearsal": 1000
+    }
+  },
+  "tracks": {
+    "A_broad_reasoning": {
+      "learning_rate": 1e-05,
+      "max_steps": 320,
+      "lora_rank": 16,
+      "train_view": "curriculum_views/track_a_broad_general.reviewed.jsonl",
+      "purpose": "Fresh broad multi-domain adapter from the frozen anchor."
+    },
+    "B_anchored_reasoning": {
+      "learning_rate": 1e-05,
+      "max_steps": 320,
+      "lora_rank": 16,
+      "anchor_kl_weight": 0.2,
+      "anchor_temperature": 1.5,
+      "train_view": "curriculum_views/track_b_anchored_mixed.reviewed.jsonl",
+      "purpose": "Broad reasoning plus 20% supervised preservation rehearsal and forward KL(anchor || student)."
+    },
+    "C_parallel_specialists": {
+      "learning_rate": 8e-06,
+      "max_steps": 220,
+      "lora_rank": 16,
+      "specialists": [
+        "general",
+        "grounding",
+        "procedure",
+        "abstention",
+        "social"
+      ],
+      "purpose": "Five independent LoRA deltas trained from the identical frozen anchor for clean causal attribution."
+    },
+    "D_composition": {
+      "weighted_presets": {
+        "balanced": {
+          "general": 0.45,
+          "grounding": 0.2,
+          "procedure": 0.15,
+          "abstention": 0.1,
+          "social": 0.1
+        },
+        "grounding_guarded": {
+          "general": 0.35,
+          "grounding": 0.3,
+          "procedure": 0.15,
+          "abstention": 0.15,
+          "social": 0.05
+        },
+        "reasoning_forward": {
+          "general": 0.55,
+          "grounding": 0.2,
+          "procedure": 0.1,
+          "abstention": 0.1,
+          "social": 0.05
+        }
+      },
+      "greedy": {
+        "candidate_weights": [
+          0.5,
+          1.0
+        ],
+        "max_rounds": 3,
+        "probe_multidomain_cases": 540,
+        "probe_original_rag_cases": 180,
+        "probe_procedural_cases": 180,
+        "minimum_improvement": 0.002
+      },
+      "layer_separated": {
+        "strategy": "central_disjoint",
+        "central_fraction": 0.6,
+        "capability_order": [
+          "grounding",
+          "procedure",
+          "general",
+          "abstention",
+          "social"
+        ],
+        "purpose": "Pre-registered interference experiment, not a claim that capabilities are known to localize to these exact layers."
+      }
+    }
+  },
+  "evaluation": {
+    "axes": [
+      "v2.2 multi-domain direct reasoning",
+      "v2.1.2 general reasoning continuity",
+      "original Phase 9 Real-RAG preservation under query_aware_v21",
+      "v2.1.1 procedural challenge under query_aware_v21"
+    ],
+    "protected_original_metrics": [
+      "procedure_correctness",
+      "supported_answer_correctness",
+      "evidence_faithfulness",
+      "correct_abstention_rate",
+      "conflict_safe_handling_rate",
+      "social_usable_rate"
+    ],
+    "null_metric_policy": "Protected metrics that are missing/null make a candidate technically invalid for official selection. Missing preservation evidence never becomes zero preservation cost.",
+    "sealed_policy": "Select one DEV winner only. TEST runs once on the frozen winner with frozen DEV retrieval calibrations and no retraining or candidate switching."
+  },
+  "selection": {
+    "official_policy": "preservation_guarded",
+    "policies": {
+      "balanced": {
+        "multidomain_gain_weight": 1.0,
+        "v212_continuity_gain_weight": 0.25,
+        "procedural_challenge_gain_weight": 0.25,
+        "original_preservation_weight": 1.0,
+        "reasoning_abstention_weight": 0.5,
+        "shortness_weight": 0.25
+      },
+      "preservation_guarded": {
+        "multidomain_gain_weight": 1.0,
+        "v212_continuity_gain_weight": 0.15,
+        "procedural_challenge_gain_weight": 0.15,
+        "original_preservation_weight": 1.5,
+        "reasoning_abstention_weight": 0.75,
+        "shortness_weight": 0.25
+      }
+    },
+    "pareto_dimensions": [
+      "multidomain_overall",
+      "multidomain_hard",
+      "original_supported",
+      "original_procedure",
+      "original_faithfulness",
+      "original_abstention",
+      "procedural_challenge"
+    ]
+  },
+  "safety": {
+    "maximum_default_learning_rate": 3e-05,
+    "maximum_steps_per_adapter": 500,
+    "high_stakes_dataset_policy": "Legal, health, and finance examples teach stated-rule reasoning and conservative uncertainty; they do not encode external professional advice as facts."
+  }
+}

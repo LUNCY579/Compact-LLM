@@ -52,3 +52,21 @@
 - `run_phase_9_general_reasoning_v212.ps1` — end-to-end v2.1.2 DEV ladder and optional sealed TEST.
 - `configs/phase_9_general_reasoning_v212.json` — curriculum, schedule, selection, and safety-guard policy.
 - `data/phase_9_student_distillation/general_reasoning_v212/` — generated canonical corpus and train/DEV/TEST views.
+
+## v2.2 files
+
+| File | Responsibility | Boundary |
+|---|---|---|
+| `generate_multidomain_reasoning_v22.py` | Generates 40,500 prompt-contained cases across 27 domains, 15 archetypes, and six train-only curriculum views plus 3,000 train-only social-rehearsal cases. | No external fact memorization or visible chain-of-thought targets. |
+| `validate_multidomain_reasoning_v22.py` | Verifies counts, split disjointness, short targets, specialist views, and file hashes. | Dataset integrity only, not model quality. |
+| `evaluate_multidomain_reasoning_v22.py` | Reports overall/domain/family/difficulty/abstention direct-reasoning correctness. | No RAG or external knowledge. |
+| `materialize_student_anchor_v22.py` | Merges the optional input adapter into a full immutable anchor checkpoint. | The anchor is never trained inside v2.2. |
+| `train_student.py` v2.2 extensions | Adds behavioral KL anchoring and fresh LoRA layer scoping. | Anchor tokenizer must match exactly; layer scoping is a research control. |
+| `derive_layer_plan_v22.py` | Splits a central transformer band into non-overlapping capability groups. | A preregistered interference test, not a semantic localization claim. |
+| `compose_lora_adapters_v22.py` | Materializes exact weighted sums of LoRA deltas into one dense checkpoint. | Supports LoRA-family adapters trained from the same anchor; no arbitrary unrelated-base merging. |
+| `evaluate_candidate_v22.py` | Runs original RAG, v2.1.1 procedure, v2.1.2 reasoning, and v2.2 multi-domain axes for one candidate. | Same evaluation contract for adapters and materialized models. |
+| `run_greedy_adapter_soup_v22.py` | Performs true probe-evaluated greedy adapter addition on DEV and full-DEV confirmation. | TEST is forbidden during the search. |
+| `select_capability_composition_v22.py` | Builds the capability matrix, null-safe preservation costs, Pareto frontier, policy sensitivity, and final DEV selection. | Missing protected metrics invalidate a candidate rather than hiding regression. |
+| `run_phase_9_capability_composition_v22.ps1` | End-to-end orchestration of Tracks A-D and optional sealed TEST. | Does not self-approve a production release. |
+| `configs/phase_9_capability_composition_v22.json` | Dataset, schedule, composition, selection, and safety policy. | Versioned research policy; changes should be documented. |
+| `data/.../multidomain_reasoning_v22/` | Canonical 40.5k corpus, 32.4k/4.05k/4.05k splits, Track A broad view, Track B 12k+2k+1k anchored mix, specialist views, train-only social rehearsal, and hashes. | DEV/TEST never feed training/composition search. |

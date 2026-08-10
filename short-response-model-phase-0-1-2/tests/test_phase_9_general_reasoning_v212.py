@@ -113,3 +113,22 @@ def test_selector_reads_nested_real_rag_metrics_from_evaluate_rag_summaries():
     assert packet["original_preservation"]["procedure_correctness"]["candidate"] == 0.833
     assert packet["policies"]["preservation_guarded"]["preservation_cost"] > 0
     assert packet["policies"]["preservation_guarded"]["opportunity_margin"] < 0
+
+
+def test_selector_treats_missing_preservation_metrics_as_invalid_not_zero_cost():
+    cfg = json.loads(CONFIG.read_text())
+    missing = {"evaluation_valid": True, "conditions": {"real_rag": {
+        "procedure_correctness": None,
+        "supported_answer_correctness": None,
+        "evidence_faithfulness": None,
+        "correct_abstention_rate": None,
+        "conflict_safe_handling_rate": None,
+        "social_usable_rate": None,
+    }}}
+    base = Candidate("input_student", "", missing, {"evaluation_valid": True, "procedure_correctness": .02}, _reasoning())
+    good = Candidate("good", "adapter", _rag(), {"evaluation_valid": True, "procedure_correctness": .10}, _reasoning(overall=.8, macro=.8, hard=.7))
+    out = select(cfg, base, [good])
+    assert out["status"] == "INVALID_BASELINE_EVIDENCE"
+    assert out["selected_candidate"] == "input_student"
+    packet = out["candidates"][0]
+    assert any(x.startswith("missing_original_metric:") for x in packet["technical_invalidity"])

@@ -290,3 +290,44 @@ First run: DEV only. Review `GENERAL_REASONING_V212_SELECTION.md`.
 Only after freezing the DEV winner, rerun the same output with `-ReuseExisting -RunSealedTest`.
 
 The input adapter may be the original strong query-aware student or the v2.1.1 Stage B1 adapter. The selector treats the exact input lineage as Candidate Zero and will retain it when reasoning gains do not justify preservation cost.
+
+## v2.2 — multi-domain capability-composition experiment
+
+Full DEV experiment:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_capability_composition_v22.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\original_adapter" `
+  -RequireCuda
+```
+
+The full run trains seven ordinary adapters (Track A, Track B, five specialists), five additional layer-scoped adapters, evaluates three weighted compositions, runs greedy composition probes, and writes one unified DEV selector. It is therefore intentionally much more expensive than v2.1.2. The v2.2 corpus contains 40,500 canonical cases across 27 domains and 15 reasoning archetypes, plus 3,000 TRAIN-only social-rehearsal rows for the social specialist.
+
+Track B keeps the frozen anchor resident for KL preservation. The default `-AnchorDevice auto` is faster when VRAM permits; use `-AnchorDevice cpu` to reduce GPU pressure at a substantial speed cost.
+
+For staged execution, use `-SkipWeightedComposition`, `-SkipLayerSeparated`, or `-SkipGreedy`. These switches skip research tracks only; they do not alter the dataset or evaluation contract.
+
+Important outputs:
+
+- `frozen_anchor/v22_anchor_manifest.json`
+- `layer_plan_v22.json`
+- `candidates_dev.json`
+- `capability_composition_v22_selection.json`
+- `CAPABILITY_COMPOSITION_V22_SELECTION.md`
+- per-track `candidate_evaluation_manifest.json`
+- `track_d_greedy_soup/GREEDY_SOUP_RESULT.md`
+
+After DEV selection and human review only:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_capability_composition_v22.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\original_adapter" `
+  -OutputRoot ".\artifacts\phase_9_capability_composition_v22_<same-run>" `
+  -ReuseExisting `
+  -RunSealedTest `
+  -RequireCuda
+```
+
+If policy sensitivity disagrees, the runner blocks sealed TEST.
