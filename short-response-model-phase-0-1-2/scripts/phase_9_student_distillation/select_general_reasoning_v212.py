@@ -20,58 +20,132 @@ REASONING_BENEFIT = ["overall_correctness", "macro_family_correctness", "hard_co
 REASONING_PROTECTED = ["abstention_correctness", "short_usable_rate"]
 
 
-def load(path: Path) -> dict[str, Any]: return json.loads(path.read_text(encoding="utf-8"))
+def load(path: Path) -> dict[str, Any]:
+    return json.loads(path.read_text(encoding="utf-8"))
+
 
 def f(d: dict[str, Any], key: str) -> float | None:
-    v=d.get(key)
-    try: return None if v is None else float(v)
-    except (TypeError,ValueError): return None
+    v = d.get(key)
+    try:
+        return None if v is None else float(v)
+    except (TypeError, ValueError):
+        return None
 
-def delta(a: float | None,b: float | None) -> float:
-    return 0.0 if a is None or b is None else b-a
 
-def rel_loss(a: float | None,b: float | None) -> float:
-    if a is None or b is None or a <= 0: return 0.0
-    return max(0.0,1.0-b/a)
+def delta(a: float | None, b: float | None) -> float:
+    return 0.0 if a is None or b is None else b - a
+
+
+def rel_loss(a: float | None, b: float | None) -> float:
+    if a is None or b is None or a <= 0:
+        return 0.0
+    return max(0.0, 1.0 - b / a)
+
+
+def metric_view(summary: dict[str, Any]) -> dict[str, Any]:
+    """Normalize eval packets for selection metrics.
+
+    `evaluate_rag.py` stores protected metrics under ``conditions.real_rag``.
+    General-reasoning evals and unit-test stubs keep metrics at the top level.
+    Always prefer Real-RAG when that condition packet exists.
+    """
+    if not isinstance(summary, dict):
+        return {}
+    conditions = summary.get("conditions")
+    if isinstance(conditions, dict):
+        real = conditions.get("real_rag")
+        if isinstance(real, dict):
+            view = dict(real)
+            view.setdefault("evaluation_valid", summary.get("evaluation_valid", True))
+            return view
+    return summary
+
 
 @dataclass
 class Candidate:
-    name:str; adapter:str; original:dict[str,Any]; challenge:dict[str,Any]; reasoning:dict[str,Any]
+    name: str
+    adapter: str
+    original: dict[str, Any]
+    challenge: dict[str, Any]
+    reasoning: dict[str, Any]
 
 
-def packet(c: Candidate, bo:dict[str,Any], bc:dict[str,Any], br:dict[str,Any], cfg:dict[str,Any]) -> dict[str,Any]:
-    original={}
+def packet(c: Candidate, bo: dict[str, Any], bc: dict[str, Any], br: dict[str, Any], cfg: dict[str, Any]) -> dict[str, Any]:
+    # RAG evals nest metrics under conditions.real_rag; reasoning evals stay flat.
+    bo_m = metric_view(bo)
+    bc_m = metric_view(bc)
+    co_m = metric_view(c.original)
+    cc_m = metric_view(c.challenge)
+
+    original = {}
     for key in ORIGINAL_PROTECTED:
-        before=f(bo,key); after=f(c.original,key)
-        original[key]={"baseline":before,"candidate":after,"relative_loss":rel_loss(before,after),"delta":delta(before,after)}
-    reasoning={}
-    gains=[]
+        before = f(bo_m, key)
+        after = f(co_m, key)
+        original[key] = {
+            "baseline": before,
+            "candidate": after,
+            "relative_loss": rel_loss(before, after),
+            "delta": delta(before, after),
+        }
+    reasoning = {}
+    gains = []
     for key in REASONING_BENEFIT:
-        before=f(br,key); after=f(c.reasoning,key); g=max(0.0,delta(before,after)); gains.append(g)
-        reasoning[key]={"baseline":before,"candidate":after,"delta":delta(before,after),"positive_gain":g}
+        before = f(br, key)
+        after = f(c.reasoning, key)
+        g = max(0.0, delta(before, after))
+        gains.append(g)
+        reasoning[key] = {"baseline": before, "candidate": after, "delta": delta(before, after), "positive_gain": g}
     for key in REASONING_PROTECTED:
-        before=f(br,key); after=f(c.reasoning,key)
-        reasoning[key]={"baseline":before,"candidate":after,"delta":delta(before,after),"relative_loss":rel_loss(before,after)}
-    general_gain=sum(gains)/len(gains) if gains else 0.0
-    cb=f(bc,"procedure_correctness"); ca=f(c.challenge,"procedure_correctness")
-    challenge_delta=delta(cb,ca)
-    challenge_positive=max(0.0,challenge_delta)
-    challenge_loss=rel_loss(cb,ca)
-    invalid=[]
-    if not bool(c.original.get("evaluation_valid",True)): invalid.append("original_invalid")
-    if not bool(c.challenge.get("evaluation_valid",True)): invalid.append("challenge_invalid")
-    if not bool(c.reasoning.get("evaluation_valid",True)): invalid.append("reasoning_invalid")
-    policies={}
-    for name,pcfg in (cfg.get("selection",{}).get("policies",{}) or {}).items():
-        ow=pcfg.get("original_preservation_weights",{})
-        rp=pcfg.get("reasoning_preservation_weights",{})
-        original_cost=sum(float(ow.get(k,0.0))*original[k]["relative_loss"] for k in ORIGINAL_PROTECTED)
-        reasoning_cost=sum(float(rp.get(k,0.0))*reasoning[k]["relative_loss"] for k in REASONING_PROTECTED)
-        ch_cost=float(pcfg.get("challenge_regression_weight",0.0))*challenge_loss
-        benefit=float(pcfg.get("general_reasoning_gain_weight",1.0))*general_gain + float(pcfg.get("challenge_gain_weight",0.0))*challenge_positive
-        cost=original_cost+reasoning_cost+ch_cost
-        policies[name]={"benefit":benefit,"preservation_cost":cost,"opportunity_margin":benefit-cost}
-    return {"name":c.name,"adapter":c.adapter,"technical_invalidity":invalid,"original_preservation":original,"reasoning":reasoning,"general_reasoning_gain":general_gain,"challenge":{"baseline":cb,"candidate":ca,"delta":challenge_delta,"positive_gain":challenge_positive,"relative_loss":challenge_loss},"policies":policies}
+        before = f(br, key)
+        after = f(c.reasoning, key)
+        reasoning[key] = {
+            "baseline": before,
+            "candidate": after,
+            "delta": delta(before, after),
+            "relative_loss": rel_loss(before, after),
+        }
+    general_gain = sum(gains) / len(gains) if gains else 0.0
+    cb = f(bc_m, "procedure_correctness")
+    ca = f(cc_m, "procedure_correctness")
+    challenge_delta = delta(cb, ca)
+    challenge_positive = max(0.0, challenge_delta)
+    challenge_loss = rel_loss(cb, ca)
+    invalid = []
+    if not bool(c.original.get("evaluation_valid", True)):
+        invalid.append("original_invalid")
+    if not bool(c.challenge.get("evaluation_valid", True)):
+        invalid.append("challenge_invalid")
+    if not bool(c.reasoning.get("evaluation_valid", True)):
+        invalid.append("reasoning_invalid")
+    policies = {}
+    for name, pcfg in (cfg.get("selection", {}).get("policies", {}) or {}).items():
+        ow = pcfg.get("original_preservation_weights", {})
+        rp = pcfg.get("reasoning_preservation_weights", {})
+        original_cost = sum(float(ow.get(k, 0.0)) * original[k]["relative_loss"] for k in ORIGINAL_PROTECTED)
+        reasoning_cost = sum(float(rp.get(k, 0.0)) * reasoning[k]["relative_loss"] for k in REASONING_PROTECTED)
+        ch_cost = float(pcfg.get("challenge_regression_weight", 0.0)) * challenge_loss
+        benefit = (
+            float(pcfg.get("general_reasoning_gain_weight", 1.0)) * general_gain
+            + float(pcfg.get("challenge_gain_weight", 0.0)) * challenge_positive
+        )
+        cost = original_cost + reasoning_cost + ch_cost
+        policies[name] = {"benefit": benefit, "preservation_cost": cost, "opportunity_margin": benefit - cost}
+    return {
+        "name": c.name,
+        "adapter": c.adapter,
+        "technical_invalidity": invalid,
+        "original_preservation": original,
+        "reasoning": reasoning,
+        "general_reasoning_gain": general_gain,
+        "challenge": {
+            "baseline": cb,
+            "candidate": ca,
+            "delta": challenge_delta,
+            "positive_gain": challenge_positive,
+            "relative_loss": challenge_loss,
+        },
+        "policies": policies,
+    }
 
 
 def select(cfg:dict[str,Any],baseline:Candidate,trained:list[Candidate])->dict[str,Any]:

@@ -14,9 +14,8 @@ def _read(path: Path):
     return [json.loads(x) for x in path.read_text(encoding="utf-8").splitlines() if x.strip()]
 
 
-def _rag(proc=.95, supported=.63, faith=.98, abstain=.81, conflict=1.0, social=1.0):
-    return {
-        "evaluation_valid": True,
+def _rag(proc=.95, supported=.63, faith=.98, abstain=.81, conflict=1.0, social=1.0, *, nested=False):
+    metrics = {
         "procedure_correctness": proc,
         "supported_answer_correctness": supported,
         "evidence_faithfulness": faith,
@@ -24,6 +23,9 @@ def _rag(proc=.95, supported=.63, faith=.98, abstain=.81, conflict=1.0, social=1
         "conflict_safe_handling_rate": conflict,
         "social_usable_rate": social,
     }
+    if nested:
+        return {"evaluation_valid": True, "conditions": {"real_rag": metrics}}
+    return {"evaluation_valid": True, **metrics}
 
 
 def _reasoning(overall=.30, macro=.30, hard=.20, abstain=.80, short=1.0):
@@ -86,3 +88,28 @@ def test_selector_accepts_broad_gain_when_preservation_is_near_flat():
     good=Candidate("good","adapter",_rag(proc=.95,supported=.64,faith=.975,abstain=.80),{"evaluation_valid":True,"procedure_correctness":.05},_reasoning(overall=.52,macro=.51,hard=.44,abstain=.80))
     out=select(cfg,base,[good])
     assert out["selected_candidate"] == "good"
+
+
+def test_selector_reads_nested_real_rag_metrics_from_evaluate_rag_summaries():
+    cfg = json.loads(CONFIG.read_text())
+    base = Candidate(
+        "input_student",
+        "",
+        _rag(nested=True),
+        _rag(proc=0.02, supported=0.0, faith=0.7, abstain=0.5, nested=True),
+        _reasoning(overall=0.003, macro=0.003, hard=0.014, abstain=0.03),
+    )
+    # Large reasoning gain but clear Real-RAG regressions must keep input_student.
+    trained = Candidate(
+        "stage_b2_mixed",
+        "adapter",
+        _rag(proc=0.833, supported=0.496, faith=0.818, abstain=0.741, nested=True),
+        _rag(proc=0.003, supported=0.003, faith=0.45, abstain=1.0, nested=True),
+        _reasoning(overall=0.437, macro=0.437, hard=0.471, abstain=0.97),
+    )
+    out = select(cfg, base, [trained])
+    assert out["selected_candidate"] == "input_student"
+    packet = next(c for c in out["candidates"] if c["name"] == "stage_b2_mixed")
+    assert packet["original_preservation"]["procedure_correctness"]["candidate"] == 0.833
+    assert packet["policies"]["preservation_guarded"]["preservation_cost"] > 0
+    assert packet["policies"]["preservation_guarded"]["opportunity_margin"] < 0
