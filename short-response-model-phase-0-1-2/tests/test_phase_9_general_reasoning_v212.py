@@ -63,6 +63,15 @@ def test_targets_are_short_and_no_chain_of_thought_is_trained():
         assert isinstance(row["verification"], dict)
 
 
+def test_stage_b_mix_ends_with_assistant_training_targets():
+    # Original Phase 9 reviewed rows are prompt-only; Stage B replay must attach
+    # gold answers before train_student.CompletionDataset can load the mix.
+    mix = _read(CORPUS / "curriculum_views" / "train_stage_b_generalization_mix.reviewed.jsonl")
+    assert len(mix) == 6000
+    assert all((row.get("messages") or []) and row["messages"][-1].get("role") == "assistant" for row in mix)
+    assert all(str(row["messages"][-1].get("content") or "").strip() for row in mix)
+
+
 def test_selector_keeps_input_when_reasoning_gain_does_not_pay_for_regression():
     cfg=json.loads(CONFIG.read_text())
     base=Candidate("input_student","",_rag(),{"evaluation_valid":True,"procedure_correctness":.02},_reasoning())

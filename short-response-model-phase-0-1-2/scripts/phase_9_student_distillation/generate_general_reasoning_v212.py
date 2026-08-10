@@ -514,8 +514,35 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def with_assistant_training_target(row: dict[str, Any]) -> dict[str, Any]:
+    """Ensure replay rows are CompletionDataset-ready.
+
+    Original Phase 9 reviewed splits are often prompt-only (system + user) with
+    gold in `approved_answer` / `answer`. v2.1.1 / v2.1.2 rows already include
+    the assistant turn. Preservation replay must append that target before SFT.
+    """
+    out = json.loads(json.dumps(row))
+    messages = [dict(message) for message in (out.get("messages") or [])]
+    if messages and messages[-1].get("role") == "assistant":
+        content = str(messages[-1].get("content") or "").strip()
+        if not content:
+            raise ValueError(f"{out.get('id')}: empty assistant training target")
+        out["messages"] = messages
+        out.setdefault("reference", content)
+        return out
+    answer = str(out.get("approved_answer") or out.get("answer") or out.get("reference") or "").strip()
+    if not answer:
+        raise ValueError(f"{out.get('id')}: missing approved_answer/answer for assistant training target")
+    if not messages:
+        raise ValueError(f"{out.get('id')}: missing prompt messages for assistant training target")
+    messages.append({"role": "assistant", "content": answer})
+    out["messages"] = messages
+    out["reference"] = answer
+    return out
+
+
 def preservation_sample(rows: list[dict[str, Any]], limit: int, seed: int, prefix: str) -> list[dict[str, Any]]:
-    """Stratified, train-only replay sample. Historical rows are copied, never rewritten."""
+    """Stratified, train-only replay sample with SFT assistant targets attached."""
     by_cat: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
         if str(row.get("intended_split") or "train") != "train":
@@ -536,7 +563,7 @@ def preservation_sample(rows: list[dict[str, Any]], limit: int, seed: int, prefi
         for cat in cats:
             p = pointers[cat]
             if p < len(by_cat[cat]) and len(out) < limit:
-                copied = dict(by_cat[cat][p])
+                copied = with_assistant_training_target(by_cat[cat][p])
                 copied["v212_replay_source"] = prefix
                 out.append(copied)
                 pointers[cat] += 1
