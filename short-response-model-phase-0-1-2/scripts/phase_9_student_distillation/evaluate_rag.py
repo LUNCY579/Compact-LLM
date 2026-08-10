@@ -829,8 +829,6 @@ def main() -> None:
     if any((packet.get("unknown_case_count") or 0) > 0 for packet in condition_packets.values()):
         technical_invalidity.append("benchmark contains unknown decision classes")
     research_ready = not readiness_reasons and not technical_invalidity and not args.smoke_test
-    if args.require_research_ready and not research_ready:
-        raise RuntimeError("Phase 9 evaluation is not research-ready: " + "; ".join([*technical_invalidity, *readiness_reasons]))
 
     model_path = Path(args.model)
     model_tree_sha256 = sha256_tree(model_path) if model_path.exists() else None
@@ -872,9 +870,14 @@ def main() -> None:
             "social": args.minimum_social_cases,
         },
     }
+    # Persist the packet before any research-ready hard fail so interrupted
+    # checkpoint ladders can resume from summary/results instead of discarding a
+    # completed evaluation over a rare decode glitch.
     write_json(args.output_dir / "summary.json", summary)
     (args.output_dir / "REPORT.md").write_text(markdown_report(summary), encoding="utf-8")
     print(f"Summary: {args.output_dir / 'summary.json'}")
+    if args.require_research_ready and not research_ready:
+        raise RuntimeError("Phase 9 evaluation is not research-ready: " + "; ".join([*technical_invalidity, *readiness_reasons]))
 
 
 if __name__ == "__main__":

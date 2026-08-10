@@ -61,7 +61,10 @@ function Invoke-Eval {
         [string]$Calibration,
         [string]$Destination,
         [string]$SelectionPolicy = "query_aware_v21",
-        [string]$Conditions = "oracle_rag,real_rag"
+        [string]$Conditions = "oracle_rag,real_rag",
+        # DEV checkpoint ladder must finish even if a rare decode glitch marks the
+        # packet non-research-ready. Sealed TEST keeps the strict gate.
+        [switch]$RequireResearchReady
     )
     $summary = Join-Path $Destination "summary.json"
     if (-not (Should-Run $summary)) { return }
@@ -79,8 +82,11 @@ function Invoke-Eval {
         "--minimum-cases-per-condition", "1",
         "--minimum-supported-cases", "1",
         "--minimum-unsupported-cases", "1",
-        "--require-research-ready"
+        # Always resume durable results.jsonl so a late readiness failure does not
+        # force a full re-decode of an already-completed DEV evaluation.
+        "--resume"
     )
+    if ($RequireResearchReady) { $args += "--require-research-ready" }
     if (-not [string]::IsNullOrWhiteSpace($Adapter)) { $args += @("--adapter", $Adapter) }
     if ($RequireCuda) { $args += "--require-cuda" }
     Invoke-PythonStep $Name $args
@@ -333,8 +339,8 @@ Original TEST uses frozen DEV calibration: $OriginalCalibration
 v2.1.1 TEST uses frozen DEV calibration: $RecoveryCalibration
 No TEST-based recalibration or training is allowed.
 "@
-    Invoke-Eval "[SEALED] DEV-selected candidate / original Phase 9 TEST" $StudentModel $SelectedAdapter $OriginalTest $OriginalDb $OriginalCalibration (Join-Path $OutputRoot "sealed_selected_original_test")
-    Invoke-Eval "[SEALED] DEV-selected candidate / v2.1.1 procedural TEST" $StudentModel $SelectedAdapter $RecoveryTest $RecoveryDb $RecoveryCalibration (Join-Path $OutputRoot "sealed_selected_v211_test")
+    Invoke-Eval "[SEALED] DEV-selected candidate / original Phase 9 TEST" $StudentModel $SelectedAdapter $OriginalTest $OriginalDb $OriginalCalibration (Join-Path $OutputRoot "sealed_selected_original_test") -RequireResearchReady
+    Invoke-Eval "[SEALED] DEV-selected candidate / v2.1.1 procedural TEST" $StudentModel $SelectedAdapter $RecoveryTest $RecoveryDb $RecoveryCalibration (Join-Path $OutputRoot "sealed_selected_v211_test") -RequireResearchReady
 }
 
 Write-Host ""

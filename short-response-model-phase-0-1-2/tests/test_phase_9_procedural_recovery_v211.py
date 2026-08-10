@@ -106,6 +106,12 @@ def test_v211_config_and_runner_encode_conservative_checkpoint_ladder() -> None:
     assert "select_procedural_recovery_v211.py" in runner
     assert "sealed_selected_original_test" in runner
     assert "query_aware_v21" in runner
+    assert "--resume" in runner
+    assert "RequireResearchReady" in runner
+    # DEV ladder stays soft; only sealed TEST uses the hard research-ready gate.
+    pre_sealed, sealed_block = runner.split("if ($RunSealedTest)", 1)
+    assert "-RequireResearchReady" not in pre_sealed
+    assert sealed_block.count("-RequireResearchReady") >= 2
 
 
 def test_v211_selector_rejects_training_that_overwrites_original_path() -> None:
