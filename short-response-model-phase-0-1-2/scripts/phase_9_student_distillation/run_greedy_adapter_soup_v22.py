@@ -49,6 +49,132 @@ def compose(py:str,base:str,ingredients:list[dict[str,Any]],out:Path,spec_path:P
     spec_path.parent.mkdir(parents=True,exist_ok=True); spec_path.write_text(json.dumps({'schema_version':'2.2','ingredients':ingredients},indent=2)+'\n',encoding='utf-8')
     run([py,'scripts/phase_9_student_distillation/compose_lora_adapters_v22.py','--base-model',base,'--spec',str(spec_path),'--output-dir',str(out),'--force'])
 
+def _fmt_margin(value:float)->str:
+    return f'{value:+.6f}'
+
+def format_greedy_soup_markdown(result:dict[str,Any])->str:
+    """Render accepted recipe + round-by-round probe margin table from a result payload."""
+    accepted=list(result.get('accepted_ingredients') or [])
+    history=list(result.get('history') or [])
+    probe_margin=float(result.get('probe_margin') or 0.0)
+    final_model=str(result.get('final_model') or '')
+    lines=[
+        '# v2.2 Greedy Adapter Soup',
+        '',
+        '## Accepted recipe',
+        '',
+    ]
+    if accepted:
+        lines.append('| Order | Adapter | Weight | Adapter path |')
+        lines.append('|---:|---|---:|---|')
+        for idx,ing in enumerate(accepted, start=1):
+            lines.append(
+                f"| {idx} | `{ing['name']}` | {float(ing['weight']):.1f} | `{ing.get('adapter','')}` |"
+            )
+        recipe=', '.join(f"{ing['name']}@{float(ing['weight']):.1f}" for ing in accepted)
+        lines.extend(['', f'Surviving mixture: `{{{recipe}}}`'])
+    else:
+        lines.append('No adapters accepted; final model is the frozen anchor.')
+    lines.extend([
+        '',
+        f'Probe opportunity margin: `{_fmt_margin(probe_margin)}`',
+        f'Final model: `{final_model}`',
+        '',
+        '## Search trace',
+        '',
+        'Search used DEV probes only; the final accepted mixture is evaluated on full DEV.',
+        '',
+        '| Round | Candidate | Weight | Probe margin | Decision |',
+        '|---:|---|---:|---:|---|',
+    ])
+    by_round:dict[int,list[dict[str,Any]]]={}
+    for trial in history:
+        by_round.setdefault(int(trial['round']), []).append(trial)
+    accepted_keys=[(str(ing['name']), float(ing['weight'])) for ing in accepted]
+    current_margin=0.0
+    stop_reason='Search completed with no remaining adapters.' if not by_round else 'Search finished.'
+    for rnd in sorted(by_round):
+        trials=by_round[rnd]
+        best=max(trials, key=lambda t: float(t['margin']))
+        accepted_this_round=None
+        if len(accepted_keys) >= rnd:
+            want=accepted_keys[rnd-1]
+            for trial in trials:
+                if (str(trial['candidate']), float(trial['weight'])) == want:
+                    accepted_this_round=trial
+                    break
+        for trial in sorted(trials, key=lambda t: (-float(t['margin']), str(t['candidate']), float(t['weight']))):
+            key=(str(trial['candidate']), float(trial['weight']))
+            if accepted_this_round is not None and (str(accepted_this_round['candidate']), float(accepted_this_round['weight'])) == key:
+                decision='accepted'
+            elif accepted_this_round is None and trial is best:
+                decision='best_rejected'
+            else:
+                decision='rejected'
+            lines.append(
+                f"| {rnd} | `{trial['candidate']}` | {float(trial['weight']):.1f} | {_fmt_margin(float(trial['margin']))} | {decision} |"
+            )
+        if accepted_this_round is not None:
+            current_margin=float(accepted_this_round['margin'])
+        else:
+            stop_reason=(
+                f'Round {rnd} stopped: best trial '
+                f"`{best['candidate']}@{float(best['weight']):.1f}` "
+                f'({_fmt_margin(float(best["margin"]))}) did not improve on current margin '
+                f'({_fmt_margin(current_margin)}).'
+            )
+            break
+    else:
+        if accepted:
+            stop_reason='All remaining adapters were consumed or max rounds reached after the last acceptance.'
+        elif by_round:
+            first_round=min(by_round)
+            best=max(by_round[first_round], key=lambda t: float(t['margin']))
+            stop_reason=(
+                f'Round {first_round} stopped: best trial '
+                f"`{best['candidate']}@{float(best['weight']):.1f}` "
+                f'({_fmt_margin(float(best["margin"]))}) did not beat the frozen-anchor margin.'
+            )
+    lines.extend(['', f'Stop reason: {stop_reason}', ''])
+    if accepted:
+        first=accepted[0]
+        lines.extend([
+            '## Highlights',
+            '',
+            f"- First accepted adapter: `{first['name']}` at weight `{float(first['weight']):.1f}`.",
+            f'- Surviving coefficients: ' + ', '.join(f"`{ing['name']}={float(ing['weight']):.1f}`" for ing in accepted) + '.',
+        ])
+        if by_round:
+            jump_trial=None
+            prev=0.0
+            for rnd,ing in enumerate(accepted, start=1):
+                for trial in by_round.get(rnd, []):
+                    if str(trial['candidate']) == str(ing['name']) and float(trial['weight']) == float(ing['weight']):
+                        delta=float(trial['margin']) - prev
+                        if jump_trial is None or delta > jump_trial['delta']:
+                            jump_trial={'round':rnd,'candidate':ing['name'],'weight':float(ing['weight']),'margin':float(trial['margin']),'delta':delta}
+                        prev=float(trial['margin'])
+                        break
+            if jump_trial is not None:
+                lines.append(
+                    f"- Largest margin jump: round {jump_trial['round']} "
+                    f"`{jump_trial['candidate']}@{jump_trial['weight']:.1f}` "
+                    f"({_fmt_margin(jump_trial['margin'] - jump_trial['delta'])} -> {_fmt_margin(jump_trial['margin'])})."
+                )
+            last_round=max(by_round)
+            if last_round > len(accepted):
+                best=max(by_round[last_round], key=lambda t: float(t['margin']))
+                lines.append(
+                    f"- Adding another adapter undid the gain: best round-{last_round} add-on "
+                    f"`{best['candidate']}@{float(best['weight']):.1f}` "
+                    f"scored {_fmt_margin(float(best['margin']))}, below the accepted margin "
+                    f"{_fmt_margin(probe_margin)}."
+                )
+            else:
+                lines.append('- No later round undid the accepted mixture; search ended after the last acceptance.')
+        lines.append('')
+    return '\n'.join(lines)
+
 def main()->None:
     p=argparse.ArgumentParser(); p.add_argument('--config',type=Path,required=True); p.add_argument('--base-model',required=True); p.add_argument('--adapter',action='append',type=parse_adapter,required=True); p.add_argument('--output-root',type=Path,required=True)
     p.add_argument('--original-benchmark',type=Path,required=True); p.add_argument('--original-db',type=Path,required=True); p.add_argument('--original-calibration',type=Path,required=True); p.add_argument('--procedural-benchmark',type=Path,required=True); p.add_argument('--procedural-db',type=Path,required=True); p.add_argument('--procedural-calibration',type=Path,required=True); p.add_argument('--multidomain-benchmark',type=Path,required=True); p.add_argument('--v212-benchmark',type=Path,required=True); p.add_argument('--maximum-evidence-tokens',type=int,default=384); p.add_argument('--require-cuda',action='store_true'); a=p.parse_args()
@@ -78,6 +204,6 @@ def main()->None:
     full_eval=eval_candidate(py,str(final_model),a.output_root/'full_dev_eval',a,False)
     result={'schema_version':'2.2','accepted_ingredients':accepted,'probe_margin':current_margin,'history':history,'final_model':str(final_model),'full_dev_evaluation_manifest':str(full_eval)}
     (a.output_root/'GREEDY_SOUP_RESULT.json').write_text(json.dumps(result,indent=2,sort_keys=True)+'\n',encoding='utf-8')
-    lines=['# v2.2 Greedy Adapter Soup','',f"Accepted ingredients: `{accepted}`",f"Probe margin: `{current_margin}`",f"Final model: `{final_model}`",'', 'Search used DEV probes only; the final accepted mixture is evaluated on full DEV.']
-    (a.output_root/'GREEDY_SOUP_RESULT.md').write_text('\n'.join(lines)+'\n',encoding='utf-8'); print(json.dumps(result,indent=2,sort_keys=True))
+    (a.output_root/'GREEDY_SOUP_RESULT.md').write_text(format_greedy_soup_markdown(result),encoding='utf-8')
+    print(json.dumps(result,indent=2,sort_keys=True))
 if __name__=='__main__': main()
