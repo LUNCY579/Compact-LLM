@@ -81,3 +81,9 @@ The official numeric phase boundaries remain 9 / 9B / 10 / 11. v2.0 adds a **met
 | S8 | Human release checkpoint and package. | Phase 11 Package |
 
 The meta-runner is `scripts/student_optimization_v2/run_student_optimization_v2.ps1`. It maintains `artifacts/student_optimization_v2/WORKFLOW_STATE.json` plus `reports/STUDENT_OPTIMIZATION_V2_MASTER_REPORT.md`, resumes automatically after human checkpoints, and cannot mark the workflow complete before the approved release package exists.
+
+## Phase 9 v2.1.2 — general reasoning transfer experiment
+
+v2.1.2 remains inside official Phase 9; it is not a new numeric phase. It is used when v2.1/v2.1.1 establish that retrieval fixes the historical procedure collapse but narrow recovery training does not produce a materially stronger student.
+
+The experiment trains reusable reasoning operations from prompt-contained information, evaluates every checkpoint on original Phase 9 RAG + v2.1.1 procedural challenge + a new 33-family general reasoning DEV set, and keeps the unchanged input student as an explicit fallback. Student Optimization v2 remains blocked until this comparison is reviewed.

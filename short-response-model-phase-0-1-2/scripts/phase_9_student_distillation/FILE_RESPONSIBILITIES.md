@@ -42,3 +42,13 @@
 | `data/.../canary/` | Small independent package for static/smoke verification of splitting and calibration. | Not a production benchmark. |
 
 | `data/.../rag_reasoning_v2/` | Canonical v1.7.3 evidence-reasoning corpus: 464 knowledge docs, 8 procedures, 530 reviewed cases, 392/67/71 train/dev/test, preferences, evaluator calibration, manifests. | Test and evaluator-heldout assets are never ordinary training data. |
+
+## v2.1.2 files
+
+- `generate_general_reasoning_v212.py` — deterministically creates 33-family prompt-contained reasoning data plus Stage A/B curriculum views.
+- `validate_general_reasoning_v212.py` — checks size, splits, compact targets, verification metadata, and no accidental grounded-prompt rebuild fields.
+- `evaluate_general_reasoning_v212.py` — direct closed prompt-contained reasoning evaluator; no RAG database is used.
+- `select_general_reasoning_v212.py` — compares broad reasoning gain against original Phase 9/v2.1.1 preservation costs.
+- `run_phase_9_general_reasoning_v212.ps1` — end-to-end v2.1.2 DEV ladder and optional sealed TEST.
+- `configs/phase_9_general_reasoning_v212.json` — curriculum, schedule, selection, and safety-guard policy.
+- `data/phase_9_student_distillation/general_reasoning_v212/` — generated canonical corpus and train/DEV/TEST views.

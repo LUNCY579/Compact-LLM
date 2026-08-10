@@ -89,6 +89,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resume-from-checkpoint", default=None)
     parser.add_argument("--allow-random-control", action="store_true")
     parser.add_argument("--require-cuda", action="store_true")
+    parser.add_argument("--pipeline-revision", default="phase9_large_corrective_curriculum_v1_7_5", help="Manifest-only revision label for the invoking Phase 9 curriculum.")
     return parser.parse_args()
 
 
@@ -694,7 +695,7 @@ def main() -> None:
     manifest = {
         "phase": "9_student_distillation",
         "schema_version": "1.4",
-        "pipeline_revision": "phase9_large_corrective_curriculum_v1_7_5",
+        "pipeline_revision": args.pipeline_revision,
         "objective": args.objective,
         "requested_max_steps": args.max_steps,
         "requested_epochs": args.epochs,

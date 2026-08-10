@@ -273,3 +273,20 @@ Legacy evaluations lacking prompt/decode provenance should be regenerated. Exist
 ## Human gate and Phase 9B
 
 A completed command does not self-approve a model. Review `reports\PHASE_9_STOP_GATE.md` and the exact assessment artifact. Human PASS must name the exact candidate and role. Phase 9B remains blocked until that explicit Phase 9 approval exists.
+
+## v2.1.2 — broad general reasoning experiment
+
+Use this after reviewing v2.1.1 when the narrow procedural curriculum produces only a marginal trained improvement.
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_general_reasoning_v212.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\input_adapter" `
+  -RequireCuda
+```
+
+First run: DEV only. Review `GENERAL_REASONING_V212_SELECTION.md`.
+
+Only after freezing the DEV winner, rerun the same output with `-ReuseExisting -RunSealedTest`.
+
+The input adapter may be the original strong query-aware student or the v2.1.1 Stage B1 adapter. The selector treats the exact input lineage as Candidate Zero and will retain it when reasoning gains do not justify preservation cost.

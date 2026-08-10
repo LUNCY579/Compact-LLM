@@ -231,3 +231,9 @@ After a Phase 9/9B student has an explicit human PASS and is materialized, the n
 It adds an empirical every-layer student deletion scan, importance-guided Phase 10 depth candidates, disjoint-DEV context/KV budget selection, student contextual-sparsity simulation/runtime measurement, and DEV-only quantization selection before the frozen Phase 11 sealed runtime experiment. It automatically stops at Phase 10 and Phase 11 human gates and resumes from those checkpoints when rerun. The workflow is only labelled `COMPLETE` after an approved Phase 11 release package exists.
 
 See `STUDENT_OPTIMIZATION_V2_WORKFLOW.md` and `scripts/student_optimization_v2/README.md`.
+
+## Phase 9 v2.1.2 general reasoning transfer
+
+v2.1.2 adds a broad, deterministic reasoning curriculum after v2.1.1 showed that narrow procedural tuning could preserve the strong query-aware path but yielded only a small challenge improvement. The new experiment trains prompt-contained arithmetic, temporal, logical, constraint, state, ranking, filtering, and insufficiency reasoning while preserving RAG grounding, abstention, faithfulness, social behavior, and concise output through mixed replay.
+
+The main runner is `scripts/phase_9_student_distillation/run_phase_9_general_reasoning_v212.ps1`. The design and commands are documented in `GENERAL_REASONING_RECOVERY_V2_1_2.md`.

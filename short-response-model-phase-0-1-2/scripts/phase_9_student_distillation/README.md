@@ -163,3 +163,20 @@ Hybrid mode is expensive because every profile receives curriculum SFT and progr
 - **Random narrow model remains incoherent:** expected; behavior data is not language pretraining.
 
 No candidate advances only because it is small. Phase 9 still uses the shared proportional opportunity engine, plus functional-readiness blockers and an explicit human decision.
+
+## v2.1.2 broad general-reasoning transfer
+
+After v2.1.1 showed that narrow procedural recovery can preserve the original query-aware path yet produce only a tiny residual challenge gain, v2.1.2 adds a separate **general reasoning** curriculum. It trains transferable operations over prompt-contained facts rather than memorizing general-world knowledge.
+
+Run:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_general_reasoning_v212.ps1 `
+  -StudentModel "C:\path\to\student" `
+  -StudentAdapter "C:\path\to\adapter" `
+  -RequireCuda
+```
+
+The runner compares the unchanged input student, Stage A broad reasoning, Stage B1 mixed generalization/preservation, and Stage B2 lower-rate consolidation on three DEV axes: original Phase 9 RAG, v2.1.1 procedural challenge, and v2.1.2 general reasoning. Sealed TEST is optional and only runs after DEV selection.
+
+See `GENERAL_REASONING_RECOVERY_V2_1_2.md`.
