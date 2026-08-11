@@ -11,6 +11,7 @@ import argparse
 import json
 import os
 import re
+import shutil
 import statistics
 import subprocess
 import sys
@@ -24,6 +25,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 
 ROOT = Path(__file__).resolve().parents[1]
 ABSTAIN = "I don't know based on the available information."
+# One densified adapter is ~1.3GB; soup write needs a full staging copy too.
+MIN_FREE_BYTES_FOR_SOUP = int(3.5 * 1024**3)
 
 
 def now() -> str:
@@ -43,6 +46,59 @@ def run(cmd: list[str], cwd: Path | None = None) -> None:
     print("+", " ".join(cmd), flush=True)
     subprocess.run(cmd, check=True, cwd=str(cwd or ROOT))
 
+
+def free_bytes(path: Path) -> int:
+    path.mkdir(parents=True, exist_ok=True)
+    usage = shutil.disk_usage(path)
+    return int(usage.free)
+
+
+def ensure_disk_space(path: Path, *, need: int = MIN_FREE_BYTES_FOR_SOUP, context: str) -> None:
+    free = free_bytes(path)
+    if free < need:
+        raise RuntimeError(
+            f"{context}: only {free / 1024**3:.2f} GiB free under {path.drive or path}; "
+            f"need at least {need / 1024**3:.2f} GiB. Shared materialize cache lives under "
+            f"_materialized/; delete leftover modes/*/materialized duplicates if present."
+        )
+
+
+def reclaim_per_mode_materialized(modes_root: Path, shared_root: Path) -> dict[str, Any]:
+    """Collapse duplicated per-mode densified adapters into one shared cache.
+
+    Older runs wrote a full copy under each mode. That exhausts disk (~8 modes ×
+    ~5–7 × 1.3GB). Keep one shared copy per adapter name and delete the rest.
+    """
+    shared_root.mkdir(parents=True, exist_ok=True)
+    moved = 0
+    removed = 0
+    freed = 0
+    if not modes_root.exists():
+        return {"moved": moved, "removed": removed, "approx_freed_bytes": freed}
+    for mode_dir in sorted(p for p in modes_root.iterdir() if p.is_dir()):
+        local = mode_dir / "materialized"
+        if not local.exists():
+            continue
+        for item in sorted(p for p in local.iterdir() if p.is_dir()):
+            dest = shared_root / item.name
+            size = sum(f.stat().st_size for f in item.rglob("*") if f.is_file())
+            if (dest / "model.safetensors").exists():
+                shutil.rmtree(item, ignore_errors=True)
+                removed += 1
+                freed += size
+            else:
+                if dest.exists():
+                    shutil.rmtree(dest, ignore_errors=True)
+                shutil.move(str(item), str(dest))
+                moved += 1
+        # Remove empty / leftover local materialized trees and failed soup staging.
+        shutil.rmtree(local, ignore_errors=True)
+        for staging in mode_dir.glob(".soup.tmp-*"):
+            size = sum(f.stat().st_size for f in staging.rglob("*") if f.is_file())
+            shutil.rmtree(staging, ignore_errors=True)
+            freed += size
+            removed += 1
+    return {"moved": moved, "removed": removed, "approx_freed_bytes": freed}
 
 def enumerate_modes(cfg: dict[str, Any]) -> list[dict[str, Any]]:
     modes: list[dict[str, Any]] = []
@@ -138,6 +194,7 @@ def build_mode_soup(
     v22: Path,
     mode: dict[str, Any],
     mode_root: Path,
+    shared_mat_root: Path,
     reuse: bool,
 ) -> Path:
     soup_dir = mode_root / "soup"
@@ -148,18 +205,25 @@ def build_mode_soup(
 
     base = v22 / default_cfg["ingredients"]["frozen_anchor"]
     ingredients = resolve_mode_ingredients(cfg, v22, mode)
-    mat_root = mode_root / "materialized"
-    mat_root.mkdir(parents=True, exist_ok=True)
+    # Shared densify cache across all 8 modes — never per-mode copies.
+    shared_mat_root.mkdir(parents=True, exist_ok=True)
     dense_paths: list[Path] = []
     for item in ingredients["adapters"]:
         dense_paths.append(
-            materialize_adapter(base, Path(item["path"]), mat_root / item["name"], reuse=reuse)
+            materialize_adapter(base, Path(item["path"]), shared_mat_root / item["name"], reuse=reuse)
         )
     for item in ingredients["full_models"]:
         dense_paths.append(Path(item["path"]))
 
     if len(dense_paths) < 2:
         raise RuntimeError(f"{mode['mode_id']}: need >=2 ingredients to average, got {len(dense_paths)}")
+
+    # Drop legacy per-mode densify trees before the soup write (needs ~1.3GB staging).
+    legacy = mode_root / "materialized"
+    if legacy.exists():
+        print(f"removing legacy per-mode materialize cache {legacy}", flush=True)
+        shutil.rmtree(legacy, ignore_errors=True)
+    ensure_disk_space(mode_root, context=f"{mode['mode_id']} soup write")
 
     cmd = [
         sys.executable,
@@ -178,13 +242,13 @@ def build_mode_soup(
             "mode": mode,
             "ingredients": ingredients,
             "dense_checkpoints_averaged": [str(p) for p in dense_paths],
+            "shared_materialized_root": str(shared_mat_root),
             "soup": str(soup_dir),
             "built_at": now(),
             "formula": "W = (1/N) * sum densified_ingredients",
         },
     )
     return soup_dir
-
 
 # ---- lightweight CPU eval (same gold contract as smoke_eval_cpu) ----
 
@@ -432,6 +496,15 @@ def main() -> None:
     benchmarks = {name: official / rel for name, rel in bench_map.items() if (official / rel).exists()}
 
     args.output_root.mkdir(parents=True, exist_ok=True)
+    shared_mat_root = args.output_root / "_materialized"
+    reclaim = reclaim_per_mode_materialized(args.output_root / "modes", shared_mat_root)
+    if reclaim["moved"] or reclaim["removed"]:
+        print(
+            f"reclaimed duplicated materializations: moved={reclaim['moved']} "
+            f"removed={reclaim['removed']} ~{reclaim['approx_freed_bytes'] / 1024**3:.2f} GiB",
+            flush=True,
+        )
+    ensure_disk_space(args.output_root, context="exclusion matrix startup")
     state_path = args.output_root / "EXCLUSION_MATRIX_STATE.json"
     report_path = args.output_root / "PROGRESS_REPORT.md"
     state: dict[str, Any] = {
@@ -440,6 +513,8 @@ def main() -> None:
         "limit": limit,
         "full": bool(args.full),
         "modes": modes,
+        "shared_materialized_root": str(shared_mat_root),
+        "reclaim": reclaim,
         "results": {},
     }
     if args.ReuseExisting and state_path.exists():
@@ -502,6 +577,7 @@ def main() -> None:
             v22=v22,
             mode=mode,
             mode_root=mode_root,
+            shared_mat_root=shared_mat_root,
             reuse=bool(args.ReuseExisting),
         )
         entry["status"] = "evaluating"

@@ -90,7 +90,18 @@ def copy_tokenizer_and_config(src: Path, dst: Path) -> None:
 def save_checkpoint(state: dict[str, torch.Tensor], template: Path, output: Path, manifest: dict[str, Any]) -> None:
     if output.exists():
         shutil.rmtree(output)
-    staging = output.parent / f".{output.name}.tmp-{uuid.uuid4().hex}"
+    parent = output.parent
+    parent.mkdir(parents=True, exist_ok=True)
+    # Staging writes a full second copy; require ~2× weight-file headroom.
+    weight_bytes = sum(v.numel() * v.element_size() for v in state.values())
+    need = max(int(weight_bytes * 1.15), 2 * 1024**3)
+    free = shutil.disk_usage(parent).free
+    if free < need:
+        raise RuntimeError(
+            f"Not enough disk to save soup under {parent}: free={free / 1024**3:.2f} GiB, "
+            f"need~{need / 1024**3:.2f} GiB for staging+final model.safetensors"
+        )
+    staging = parent / f".{output.name}.tmp-{uuid.uuid4().hex}"
     staging.mkdir(parents=True)
     try:
         copy_tokenizer_and_config(template, staging)

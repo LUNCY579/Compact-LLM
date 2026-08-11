@@ -67,6 +67,7 @@ Configured in `configs/exclusion_matrix.json`:
 - 4 drop modes: drop exactly one of the trio, or drop all three
 - × procedure toggle (`specialist_procedure` yes/no) → **8 soups**
 - Live report: `artifacts/exclusion_matrix/PROGRESS_REPORT.md`
+- Densified adapters are shared once under `artifacts/exclusion_matrix/_materialized/` (not copied per mode)
 
 ```powershell
 # smoke (48 rows/bench), resumable
