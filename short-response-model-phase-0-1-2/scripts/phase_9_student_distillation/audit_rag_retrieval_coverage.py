@@ -31,7 +31,7 @@ def main() -> None:
     p.add_argument("--output", type=Path, default=None)
     p.add_argument("--retrieval-top-k", type=int, default=20)
     p.add_argument("--selected-top-k", type=int, default=3)
-    p.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="legacy")
+    p.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21", "query_aware_v23"), default="legacy")
     p.add_argument("--require-complete-support-recall", action="store_true")
     args = p.parse_args()
 

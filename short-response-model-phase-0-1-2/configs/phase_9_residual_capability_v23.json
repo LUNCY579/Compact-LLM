@@ -1,0 +1,178 @@
+{
+  "schema_version": "2.3",
+  "experiment": {
+    "name": "phase9_preservation_constrained_residual_capability_v2_3",
+    "primary_question": "Can the sealed-v2.2 greedy anchor acquire genuinely answerable reasoning and hard procedural capabilities from stronger but destructive teachers while preserving its established grounded behavior?",
+    "optimization_anchor": "v2.2 greedy_soup (original student + 0.5 * abstention LoRA delta)",
+    "historical_anchor": "v2.2 frozen_anchor/original student",
+    "anchor_policy": "The greedy v2.2 checkpoint is immutable during v2.3 training and is the KL/reference anchor. The original student remains an immutable historical regression reference.",
+    "teacher_policy": "Track A broad, Track B anchored, and the v2.2 procedure specialist are discovery teachers only. Their predictions become residual candidates only when the packaged deterministic gold verifies them as correct.",
+    "sealed_policy": "The v2.2 sealed TEST is consumed and MUST NOT be used for v2.3 tuning or selection. v2.3 has a fresh sealed generation that is touched only after one DEV/OOD-DEV candidate is frozen."
+  },
+  "data": {
+    "root": "data/phase_9_student_distillation/residual_capability_v23",
+    "direct_reasoning": {
+      "canonical_rows": 24300,
+      "domains": 27,
+      "operations": 12,
+      "split_counts": {
+        "discovery": 11340,
+        "dev": 4860,
+        "ood_dev": 4860,
+        "fresh_sealed": 3240
+      },
+      "answerable_fraction_target": 0.8333333333,
+      "surface_policy": "Split-disjoint representation families: discovery uses prose/bullets/tables/key-value; DEV uses email/chat/ticket; OOD-DEV uses JSON/YAML/CLI/log; fresh sealed uses XML-like/config/mixed-document representations."
+    },
+    "procedural_rag": {
+      "canonical_rows": 7200,
+      "families": 8,
+      "topic_count": 1200,
+      "variants_per_topic": 6,
+      "split_counts": {
+        "discovery": 4320,
+        "dev": 1080,
+        "ood_dev": 1080,
+        "fresh_sealed": 720
+      },
+      "answerable_fraction_target": 0.6666666667,
+      "retrieval_selection_policy": "query_aware_v23"
+    },
+    "preservation_mining_rows": 2500,
+    "reasoning_training_rows": 6000,
+    "procedure_training_rows": 5000,
+    "reasoning_residual_fraction": 0.6,
+    "procedure_residual_fraction": 0.48,
+    "minimum_reasoning_residual_rows": 250,
+    "minimum_procedure_residual_rows": 60,
+    "maximum_repeat_factor": 8
+  },
+  "training": {
+    "reasoning_residual": {
+      "learning_rate": 6e-06,
+      "max_steps": 180,
+      "lora_rank": 16,
+      "anchor_kl_weight": 0.3,
+      "anchor_temperature": 1.5,
+      "residual_row_kl_multiplier": 0.35,
+      "preservation_row_kl_multiplier": 1.0
+    },
+    "procedure_residual": {
+      "learning_rate": 5e-06,
+      "max_steps": 140,
+      "lora_rank": 16,
+      "anchor_kl_weight": 0.35,
+      "anchor_temperature": 1.5,
+      "residual_row_kl_multiplier": 0.3,
+      "preservation_row_kl_multiplier": 1.0
+    }
+  },
+  "dose_calibration": {
+    "coarse_weights": [
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "refinement_radius": 0.15,
+    "refinement_step": 0.05,
+    "minimum_margin_improvement": 0.001,
+    "probe_direct_cases": 720,
+    "probe_ood_cases": 720,
+    "probe_original_rag_cases": 180,
+    "probe_procedural_cases": 180,
+    "retain_nonwinning_models": false
+  },
+  "composition": {
+    "joint_candidates": [
+      "best_reasoning_only",
+      "best_procedure_only",
+      "best_reasoning_plus_best_procedure",
+      "half_strength_joint",
+      "reasoning_full_procedure_half",
+      "reasoning_half_procedure_full"
+    ]
+  },
+  "evaluation": {
+    "primary_new_metrics": [
+      "answerable_correctness",
+      "answerable_hard_correctness",
+      "macro_answerable_domain_correctness",
+      "abstention_correctness",
+      "false_abstention_rate",
+      "answer_coverage",
+      "short_usable_rate"
+    ],
+    "protected_original_metrics": [
+      "procedure_correctness",
+      "supported_answer_correctness",
+      "evidence_faithfulness",
+      "correct_abstention_rate",
+      "conflict_safe_handling_rate",
+      "social_usable_rate"
+    ],
+    "diagnostic_axes": [
+      "v2.1.2 general reasoning continuity",
+      "v2.2 multidomain continuity",
+      "v2.1.1 historical procedural challenge"
+    ],
+    "null_metric_policy": "Missing protected or primary metrics make the candidate technically invalid. Missing evidence is never interpreted as zero regression.",
+    "fresh_sealed_axes": [
+      "v2.3 direct reasoning fresh_sealed",
+      "v2.3 procedural Real-RAG fresh_sealed"
+    ]
+  },
+  "selection": {
+    "official_policy": "preservation_guarded",
+    "policies": {
+      "balanced": {
+        "direct_dev_answerable_gain_weight": 0.7,
+        "direct_ood_answerable_gain_weight": 0.9,
+        "procedure_v23_gain_weight": 0.45,
+        "historical_procedure_challenge_gain_weight": 0.2,
+        "original_preservation_weight": 1.0,
+        "false_abstention_cost_weight": 0.75,
+        "new_abstention_loss_weight": 0.35,
+        "shortness_loss_weight": 0.2
+      },
+      "preservation_guarded": {
+        "direct_dev_answerable_gain_weight": 0.6,
+        "direct_ood_answerable_gain_weight": 0.8,
+        "procedure_v23_gain_weight": 0.4,
+        "historical_procedure_challenge_gain_weight": 0.15,
+        "original_preservation_weight": 1.5,
+        "false_abstention_cost_weight": 1.0,
+        "new_abstention_loss_weight": 0.5,
+        "shortness_loss_weight": 0.25
+      }
+    },
+    "pareto_dimensions": [
+      "direct_dev_answerable",
+      "direct_ood_answerable",
+      "v23_procedure_correctness",
+      "original_supported",
+      "original_procedure",
+      "original_faithfulness",
+      "original_abstention",
+      "historical_procedure_challenge"
+    ]
+  },
+  "diagnostics": {
+    "adapter_interference": {
+      "metrics": [
+        "frobenius_norm",
+        "cosine_similarity",
+        "sign_agreement",
+        "high_magnitude_overlap"
+      ],
+      "top_fraction": 0.1
+    },
+    "oracle_routing": "Report an upper bound using per-case best-of anchor/reasoning-residual/procedure-residual. This is diagnostic only and is not the deployment architecture."
+  },
+  "safety": {
+    "maximum_default_learning_rate": 3e-05,
+    "maximum_steps_per_adapter": 400,
+    "high_stakes_dataset_policy": "Health, legal, and finance examples use fictional prompt-contained rules; the corpus trains reasoning mechanics, not professional factual advice."
+  }
+}

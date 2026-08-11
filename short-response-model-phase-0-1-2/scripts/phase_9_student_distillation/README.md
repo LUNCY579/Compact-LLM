@@ -1,3 +1,18 @@
+## v2.3 preservation-constrained residual capability distillation
+
+v2.3 starts from the **materialized v2.2 greedy_soup** rather than continuing broad SFT. It mines only gold-verified cases where the greedy anchor is wrong and at least one v2.2 teacher is correct, trains separate answerable-reasoning and procedure residual LoRAs with preservation replay + greedy-anchor KL, calibrates how strongly each delta should be applied, and evaluates a small R/P composition family on DEV + structurally held-out OOD-DEV. It also introduces `query_aware_v23` for the fresh procedural corpus so an explicitly requested missing locator fails closed instead of borrowing a sibling record.
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_residual_capability_v23.ps1 `
+  -V22RunRoot ".\artifacts\phase_9_capability_composition_v22_lr1e4_s1200" `
+  -OutputRoot ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda
+```
+
+The v2.2 sealed TEST is consumed. The first run never uses it and should not pass `-RunFreshSealedTest`. Full design: repository-root `RESIDUAL_CAPABILITY_V2_3.md`.
+
+---
+
 ## v2.1.1 preservation-first procedural recovery
 
 The observed v2.1 DEV run established a crucial distinction: `query_aware_v21` retrieval restored the original student's procedural correctness with **unchanged weights**, while the tested recovery training improved the hard challenge but substantially damaged the strong original path. v2.1.1 therefore keeps the unchanged query-aware student as **candidate zero** and makes every weight-updated checkpoint earn its preservation cost.

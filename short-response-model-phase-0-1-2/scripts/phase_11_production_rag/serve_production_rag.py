@@ -66,7 +66,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--complex-policy", choices=("clarify", "abstain", "fallback"), default="clarify")
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--selected-top-k", type=int, default=3)
-    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="query_aware_v21")
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21", "query_aware_v23"), default="query_aware_v21")
     parser.add_argument("--social-retrieval-top-k", type=int, default=0)
     parser.add_argument("--maximum-evidence-tokens", type=int, default=512)
     parser.add_argument("--max-sequence-length", type=int, default=1024)

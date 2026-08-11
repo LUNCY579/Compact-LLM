@@ -88,6 +88,25 @@ v2.1.2 remains inside official Phase 9; it is not a new numeric phase. It is use
 
 The experiment trains reusable reasoning operations from prompt-contained information, evaluates every checkpoint on original Phase 9 RAG + v2.1.1 procedural challenge + a new 33-family general reasoning DEV set, and keeps the unchanged input student as an explicit fallback. Student Optimization v2 remains blocked until this comparison is reviewed.
 
+## Phase 9 v2.3 research branch — preservation-constrained residual capability distillation
+
+v2.3 follows the sealed v2.2 composition result. It promotes the materialized v2.2 `greedy_soup` to an immutable optimization anchor while retaining the original frozen student as a historical regression reference. Because the v2.2 greedy recipe was only `abstention@0.5`, v2.3 no longer treats aggregate multi-domain accuracy as proof of answerable general reasoning: the evaluator explicitly separates answerable correctness, hard answerable correctness, abstention correctness, false-abstention rate, and answer coverage.
+
+Official research order:
+
+1. create/validate fresh structural-OOD direct and procedural Real-RAG corpora; the consumed v2.2 sealed TEST is unavailable to all v2.3 tuning decisions;
+2. run the greedy anchor plus Track A, Track B, and procedure teachers on discovery data;
+3. compute the gold-verified oracle-union ceiling and mine only `anchor wrong + teacher verified correct` residuals;
+4. build a TRAIN-only preservation replay set from behavior the greedy anchor itself gets right;
+5. train independent answerable-reasoning (R) and procedure (P) LoRAs from the greedy anchor with preservation replay and KL anchoring;
+6. calibrate the strength of each residual delta on DEV probes (coarse sweep + local refinement), with zero dose as a valid fallback;
+7. evaluate R, P, and a small preregistered R/P composition family on full DEV + structurally held-out OOD-DEV plus protected historical Real-RAG behavior;
+8. report adapter-interference and oracle-routing upper-bound diagnostics;
+9. select from the Pareto frontier under `preservation_guarded` policy;
+10. only after review, evaluate the single frozen winner on the **new** v2.3 sealed generation.
+
+The main runner is `scripts/phase_9_student_distillation/run_phase_9_residual_capability_v23.ps1`. Full design: `RESIDUAL_CAPABILITY_V2_3.md`. Student Optimization v2 remains downstream of this behavioral experiment.
+
 ## Phase 9 v2.2 research branch — capability composition
 
 After v2.1.2 broad-reasoning evidence is reviewed, v2.2 may be run as a governed Phase 9 research branch before Student Optimization v2. It does not replace the accepted Phase 9 release gate automatically.

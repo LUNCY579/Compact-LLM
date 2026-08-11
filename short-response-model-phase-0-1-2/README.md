@@ -1,3 +1,22 @@
+# v2.3 — Preservation-Constrained Residual Capability Distillation
+
+v2.3 promotes the sealed v2.2 `greedy_soup` checkpoint to an **immutable optimization anchor** and targets the capability that v2.2 did not actually solve: **answerable cross-domain reasoning plus hard procedural transfer without destructive drift**. The v2.2 greedy recipe was only `original + 0.5 × abstention delta`, so v2.3 explicitly separates answerable correctness from abstention rather than treating the old multi-domain aggregate as general reasoning.
+
+The release adds a fresh 24,300-row structural-OOD direct corpus, a fresh 7,200-row procedural Real-RAG corpus, gold-verified residual mining from Track A / Track B / procedure teachers, an oracle-union ceiling, two independent KL-anchored residual LoRAs (Reasoning R and Procedure P), coarse + locally refined capability-dose calibration, a small preregistered R/P composition family, adapter-interference diagnostics, an oracle-routing upper bound, and a **new sealed generation**. The already-consumed v2.2 sealed TEST is never used for v2.3 tuning.
+
+**DEV/OOD-first command:**
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_residual_capability_v23.ps1 `
+  -V22RunRoot ".\artifacts\phase_9_capability_composition_v22_lr1e4_s1200" `
+  -OutputRoot ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda
+```
+
+Review `RESIDUAL_CAPABILITY_V2_3.md` before running. Do not use `-RunFreshSealedTest` until one DEV/OOD candidate is frozen.
+
+---
+
 # v2.1.1 — Preservation-First Procedural Recovery
 
 v2.1.1 is the corrective follow-up to the mixed v2.1 recovery result. The key finding was that `query_aware_v21` retrieval restored original Phase 9 DEV procedure correctness to about **0.953 with unchanged weights**, while the tested recovery training reduced that strong path to about **0.227** even though it improved the synthetic collision challenge. v2.1.1 therefore treats the unchanged query-aware student as **candidate zero**, trains only a bounded residual-recovery ladder, and automatically falls back to the original adapter whenever learned challenge gain does not exceed preservation cost.

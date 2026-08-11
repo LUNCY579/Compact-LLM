@@ -1,3 +1,22 @@
+## v2.3 one-command residual-capability experiment
+
+Prerequisite: a completed v2.2 run root containing `frozen_anchor`, `track_d_greedy_soup/final_model`, Track A, Track B, procedure-specialist, and abstention-specialist adapters. v2.3 automatically discovers those artifacts and refuses to proceed when an available v2.2 selection record names a different winner.
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_residual_capability_v23.ps1 `
+  -V22RunRoot ".\artifacts\phase_9_capability_composition_v22_lr1e4_s1200" `
+  -OutputRoot ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda
+```
+
+The unattended order is: generate/validate fresh v2.3 corpora -> build/freeze retrieval infrastructure -> evaluate discovery teachers -> gold-verified residual mining + oracle union -> build preservation-heavy R/P mixes -> train independent greedy-anchored LoRAs -> coarse/local dose sweeps -> full DEV/OOD capability matrix -> small R/P composition family -> preservation-guarded/Pareto selection -> adapter-interference and oracle-routing diagnostics. A partially completed root resumes with `-ReuseExisting`.
+
+The first run is **DEV/OOD only**. Once the selected candidate is reviewed, re-run the same root with `-ReuseExisting -RunFreshSealedTest`. That stage evaluates only the new v2.3 direct/procedural sealed splits and cannot recalibrate or retrain.
+
+Useful controls: `-AnchorDevice cpu` for lower GPU pressure; `-KeepDoseModels` to retain non-winning materialized dose candidates; `-SkipTraining`, `-SkipDoseSweep`, and `-SkipDiagnostics` for diagnostic/resume work; `-RegenerateDataset` only when intentionally rebuilding the deterministic corpora. `-AllowAggressiveTraining` is required to exceed the configured default LR/step safety bounds.
+
+---
+
 ## v2.1.1 preservation-first procedural recovery ladder
 
 Use this path after the v2.1 result in which unchanged query-aware retrieval strongly restored original procedural behavior but recovery training overwrote it. The workflow is DEV-first and preserves the unchanged student as candidate zero.

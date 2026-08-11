@@ -218,6 +218,10 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
             hard_weight = default_hard_weight if override is None else float(override)
             if not 0.0 <= hard_weight <= 1.0:
                 raise ValueError(f"{row.get('id')} hard_label_weight must be in [0,1]")
+            metadata = row.get("metadata") or {}
+            anchor_kl_multiplier = float(metadata.get("v23_anchor_kl_multiplier", 1.0))
+            if anchor_kl_multiplier < 0.0:
+                raise ValueError(f"{row.get('id')} v23_anchor_kl_multiplier must be nonnegative")
             self.examples.append(
                 {
                     "input_ids": input_ids,
@@ -225,6 +229,7 @@ class CompletionDataset(Dataset[dict[str, torch.Tensor]]):
                     "labels": labels,
                     "hard_label_weight": torch.tensor(hard_weight, dtype=torch.float32),
                     "hard_label_weight_overridden": torch.tensor(override is not None, dtype=torch.bool),
+                    "anchor_kl_multiplier": torch.tensor(anchor_kl_multiplier, dtype=torch.float32),
                     "token_loss_weights": token_loss_weights,
                 }
             )
@@ -255,6 +260,7 @@ class CompletionCollator:
             ),
             "hard_label_weight": torch.stack([row["hard_label_weight"] for row in features]),
             "hard_label_weight_overridden": torch.stack([row["hard_label_weight_overridden"] for row in features]),
+            "anchor_kl_multiplier": torch.stack([row["anchor_kl_multiplier"] for row in features]),
             "token_loss_weights": pad_sequence(
                 [row["token_loss_weights"] for row in features], batch_first=True, padding_value=0.0
             ),
@@ -374,6 +380,7 @@ class DistillationTrainer(Trainer):
         model_device = next(model.parameters()).device
         hard_weights = inputs.pop("hard_label_weight").to(model_device)
         hard_weight_overrides = inputs.pop("hard_label_weight_overridden").to(model_device)
+        anchor_kl_multipliers = inputs.pop("anchor_kl_multiplier").to(model_device)
         labels = inputs.pop("labels").to(model_device)
         token_loss_weights = inputs.pop("token_loss_weights").to(model_device)
         input_ids = inputs["input_ids"].to(model_device)
@@ -490,9 +497,19 @@ class DistillationTrainer(Trainer):
             ).sum(dim=-1) * (anchor_temperature**2)
             anchor_weights = token_weights
             anchor_kl_loss = (per_token_anchor_kl * anchor_weights).sum() / anchor_weights.sum().clamp_min(1.0)
-            loss = loss + self.anchor_kl_weight * anchor_kl_loss
+            # v2.3 residual training uses the same frozen anchor for every row,
+            # but allows a per-row multiplier.  Residual rows can therefore move
+            # farther toward newly verified capability, while preservation-replay
+            # rows receive the full anti-forgetting constraint.  Batch size one
+            # remains the official memory-efficient path; for larger batches we
+            # conservatively use the batch-mean multiplier.
+            row_anchor_multiplier = float(anchor_kl_multipliers.mean().detach().cpu())
+            effective_anchor_weight = self.anchor_kl_weight * row_anchor_multiplier
+            loss = loss + effective_anchor_weight * anchor_kl_loss
             self.last_loss_components["anchor_kl_loss"] = float(anchor_kl_loss.detach().cpu())
             self.last_loss_components["anchor_kl_weight"] = float(self.anchor_kl_weight)
+            self.last_loss_components["anchor_kl_row_multiplier"] = row_anchor_multiplier
+            self.last_loss_components["anchor_kl_effective_weight"] = float(effective_anchor_weight)
             output_packet["anchor_kl_loss"] = anchor_kl_loss.detach()
         return (loss, output_packet) if return_outputs else loss
 
@@ -823,6 +840,7 @@ def main() -> None:
         "anchor_kl_weight": args.anchor_kl_weight,
         "anchor_temperature": args.anchor_temperature if args.anchor_model else None,
         "anchor_device": args.anchor_device if args.anchor_model else None,
+        "row_anchor_kl_multiplier_field": "metadata.v23_anchor_kl_multiplier",
         "lora_layer_indices": [int(v.strip()) for v in args.lora_layer_indices.split(",") if v.strip()] if args.lora_layer_indices else None,
         "artifact_type": artifact_type,
         "artifact_path": str(artifact),

@@ -28,7 +28,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--retrieval-top-k", type=int, default=20)
     parser.add_argument("--selected-top-k", type=int, default=3)
-    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21"), default="query_aware_v21")
+    parser.add_argument("--retrieval-selection-policy", choices=("legacy", "query_aware_v21", "query_aware_v23"), default="query_aware_v21")
     parser.add_argument("--false-answer-cost", type=float, default=3.0)
     parser.add_argument("--false-abstention-cost", type=float, default=1.0)
     return parser.parse_args()

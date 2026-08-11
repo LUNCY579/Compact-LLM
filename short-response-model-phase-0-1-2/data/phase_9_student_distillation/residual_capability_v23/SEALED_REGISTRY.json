@@ -1,0 +1,14 @@
+{
+  "schema_version": "2.3",
+  "consumed_before_v23": [
+    "v2.2 selected-candidate sealed original Phase 9 TEST",
+    "v2.2 selected-candidate sealed v2.1.1 procedural TEST",
+    "v2.2 selected-candidate sealed v2.1.2 reasoning TEST",
+    "v2.2 selected-candidate sealed v2.2 multidomain TEST"
+  ],
+  "v23_fresh_sealed": [
+    "direct_reasoning/splits/fresh_sealed.reviewed.jsonl",
+    "procedural_rag/splits/fresh_sealed.reviewed.jsonl"
+  ],
+  "rule": "Consumed sealed data is never used for v2.3 mining, training, dose calibration, DEV/OOD selection, or candidate switching. Fresh v2.3 sealed data is evaluated once only after selection is frozen."
+}

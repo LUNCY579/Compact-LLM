@@ -204,6 +204,14 @@ def select_retrieved_passages(
 
     The original retrieval score is retained for answerability calibration; a
     separate ``selection_score_v21`` is diagnostic ordering evidence only.
+
+    ``query_aware_v23`` keeps the v2.1 ordering rules but also fails closed on
+    *explicitly requested locator values that are absent from the retrieved
+    knowledge*.  This matters for residual-procedure training: if a question
+    asks for ``audit X, record 5`` and retrieval only returns records 1--4,
+    those sibling records are evidence that the requested locator is missing,
+    not evidence for answering record 5.  The historical v2.1 policy is left
+    unchanged for reproducibility.
     """
 
     if selected_top_k <= 0:
@@ -211,7 +219,7 @@ def select_retrieved_passages(
     rows = [dict(item) for item in passages]
     if policy == "legacy":
         return rows[:selected_top_k]
-    if policy != "query_aware_v21":
+    if policy not in {"query_aware_v21", "query_aware_v23"}:
         raise ValueError(f"Unknown retrieval selection policy: {policy}")
 
     requested = explicit_locators(question)
@@ -226,28 +234,30 @@ def select_retrieved_passages(
         # Locator evidence dominates only when the query explicitly supplied a
         # locator.  Rank remains a tiny stable tie-breaker.
         score = base + 1.0 * matches - 1.0 * mismatches - (index * 1e-6)
-        row["selection_score_v21"] = float(score)
+        score_field = "selection_score_v23" if policy == "query_aware_v23" else "selection_score_v21"
+        row[score_field] = float(score)
         row["selection_locator_matches"] = int(matches)
         row["selection_locator_mismatches"] = int(mismatches)
         row["selection_locator_details"] = details
         annotated.append(row)
 
-    if kind == "knowledge" and requested and any(any_exact.values()):
+    if kind == "knowledge" and requested and (policy == "query_aware_v23" or any(any_exact.values())):
         filtered: list[dict[str, Any]] = []
         for row in annotated:
             details = row.get("selection_locator_details") or {}
             hard_mismatch = any(
-                packet.get("status") == "mismatch" and any_exact.get(name, False)
+                packet.get("status") == "mismatch"
+                and (policy == "query_aware_v23" or any_exact.get(name, False))
                 for name, packet in details.items()
             )
             if not hard_mismatch:
                 filtered.append(row)
-        if filtered:
+        if filtered or policy == "query_aware_v23":
             annotated = filtered
 
     annotated.sort(
         key=lambda row: (
-            -float(row.get("selection_score_v21", 0.0)),
+            -float(row.get("selection_score_v23", row.get("selection_score_v21", 0.0))),
             int(row.get("rank", 10**9)),
             passage_id(row),
         )
