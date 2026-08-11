@@ -19,6 +19,28 @@ def write_jsonl(p: Path, rows: list[dict[str, Any]]) -> None:
             f.write(json.dumps(r, ensure_ascii=False, sort_keys=True) + "\n")
 
 
+def with_assistant_training_target(row: dict[str, Any]) -> dict[str, Any]:
+    """Attach gold assistant targets for original Phase 9 prompt-only rows."""
+    out = json.loads(json.dumps(row))
+    messages = [dict(m) for m in (out.get("messages") or [])]
+    if messages and messages[-1].get("role") == "assistant":
+        content = str(messages[-1].get("content") or "").strip()
+        if not content:
+            raise ValueError(f"{out.get('id')}: empty assistant training target")
+        out["messages"] = messages
+        out.setdefault("reference", content)
+        return out
+    answer = str(out.get("approved_answer") or out.get("answer") or out.get("reference") or "").strip()
+    if not answer:
+        raise ValueError(f"{out.get('id')}: missing approved_answer/answer for assistant training target")
+    if not messages:
+        raise ValueError(f"{out.get('id')}: missing prompt messages for assistant training target")
+    messages.append({"role": "assistant", "content": answer})
+    out["messages"] = messages
+    out["reference"] = answer
+    return out
+
+
 def repeat_sample(rows: list[dict[str, Any]], n: int, rng: random.Random, max_repeat: int) -> list[dict[str, Any]]:
     if not rows or n <= 0:
         return []
@@ -114,9 +136,9 @@ def main() -> None:
     ap.add_argument("--seed", type=int, default=23071)
     a = ap.parse_args()
 
-    rr = read_jsonl(a.reasoning_residual)
-    pr = read_jsonl(a.procedure_residual)
-    pres = read_jsonl(a.preservation)
+    rr = [with_assistant_training_target(r) for r in read_jsonl(a.reasoning_residual)]
+    pr = [with_assistant_training_target(r) for r in read_jsonl(a.procedure_residual)]
+    pres = [with_assistant_training_target(r) for r in read_jsonl(a.preservation)]
     status = {
         "reasoning_ready": len(rr) >= a.minimum_reasoning_residual,
         "procedure_ready": len(pr) >= a.minimum_procedure_residual,

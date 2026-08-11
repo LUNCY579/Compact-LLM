@@ -34,6 +34,24 @@ def add_meta(row:dict[str,Any],**fields:Any)->dict[str,Any]:
     x=json.loads(json.dumps(row));m=dict(x.get('metadata') or {});m.update(fields);x['metadata']=m;return x
 def rate(n:int,d:int)->float|None:return n/d if d else None
 
+def with_assistant_training_target(row:dict[str,Any])->dict[str,Any]:
+    """Make original Phase 9 preservation rows CompletionDataset-ready.
+
+    Original reviewed splits are often prompt-only (system + user) with gold in
+    `approved_answer` / `answer`. Residual corpora already include the assistant
+    turn; preservation replay must append that target before SFT.
+    """
+    out=json.loads(json.dumps(row))
+    messages=[dict(m) for m in (out.get('messages') or [])]
+    if messages and messages[-1].get('role')=='assistant':
+        content=str(messages[-1].get('content') or '').strip()
+        if not content:raise ValueError(f"{out.get('id')}: empty assistant training target")
+        out['messages']=messages;out.setdefault('reference',content);return out
+    answer=str(out.get('approved_answer') or out.get('answer') or out.get('reference') or '').strip()
+    if not answer:raise ValueError(f"{out.get('id')}: missing approved_answer/answer for assistant training target")
+    if not messages:raise ValueError(f"{out.get('id')}: missing prompt messages for assistant training target")
+    messages.append({'role':'assistant','content':answer});out['messages']=messages;out['reference']=answer;return out
+
 def choose_preservation(rows:list[dict[str,Any]],results:dict[str,dict[str,Any]],limit:int,seed:int)->list[dict[str,Any]]:
     correct=[]
     for row in rows:
@@ -53,7 +71,7 @@ def choose_preservation(rows:list[dict[str,Any]],results:dict[str,dict[str,Any]]
     out=[]
     for k,f in quota.items():out.extend(b[k][:min(len(b[k]),round(limit*f))])
     used={str(r.get('id')) for r in out};rest=[r for r in correct if str(r.get('id')) not in used];rng.shuffle(rest);out.extend(rest[:max(0,limit-len(out))]);rng.shuffle(out)
-    return [add_meta(r,v23_role='preservation',v23_anchor_kl_multiplier=1.0,v23_preservation_class=cls(r)) for r in out[:limit]]
+    return [add_meta(with_assistant_training_target(r),v23_role='preservation',v23_anchor_kl_multiplier=1.0,v23_preservation_class=cls(r)) for r in out[:limit]]
 
 def main()->None:
     ap=argparse.ArgumentParser()
