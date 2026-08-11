@@ -1,3 +1,21 @@
+# v2.3.1 — Grokking Dynamics Observatory
+
+v2.3.1 extends the revised v2.3 residual-capability repository with a dedicated **training-dynamics / phase-transition observatory**. It does not assume that the v2.3 capability-dose threshold is grokking. Instead it measures long-horizon TRAIN/DEV/structural-OOD trajectories, continuous gold-logit progress, a step × adapter-dose surface, LoRA norm/effective-rank evolution, gradient-direction dynamics, cross-format representation geometry, and one-factor phase diagrams over data amount, unique examples vs repeated exposure, preservation ratio, weight decay, KL anchoring, learning rate, LoRA rank, seed, target module family, and layer scope.
+
+The standard unattended command is:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_grokking_dynamics_v231.ps1 `
+  -V23RunRoot ".\artifacts\phase_9_residual_capability_v23" `
+  -V22RunRoot ".\artifacts\phase_9_capability_composition_v22_lr1e4_s1200" `
+  -Profile standard `
+  -RequireCuda
+```
+
+The workflow **never uses consumed v2.2 sealed data or fresh v2.3 sealed data**. It produces `GROKKING_DYNAMICS_REPORT.md` and labels the observed regime conservatively (`READOUT_THRESHOLD_LIKELY`, `ORDINARY_FEATURE_LEARNING`, `MEMORIZATION_WITHOUT_ABSTRACTION`, `GROKKING_LIKE_TRANSITION_DETECTED`, `DELAYED_GENERALIZATION_REPRODUCED`, or `INSUFFICIENT_EVIDENCE`). A dose jump by itself is explicitly insufficient to claim grokking. See `GROKKING_DYNAMICS_V2_3_1.md`.
+
+---
+
 # v2.3 — Preservation-Constrained Residual Capability Distillation
 
 v2.3 promotes the sealed v2.2 `greedy_soup` checkpoint to an **immutable optimization anchor** and targets the capability that v2.2 did not actually solve: **answerable cross-domain reasoning plus hard procedural transfer without destructive drift**. The v2.2 greedy recipe was only `original + 0.5 × abstention delta`, so v2.3 explicitly separates answerable correctness from abstention rather than treating the old multi-domain aggregate as general reasoning.

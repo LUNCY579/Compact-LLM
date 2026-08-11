@@ -1,3 +1,9 @@
+# v2.3.1 Grokking Dynamics Observatory
+
+Use `run_phase_9_grokking_dynamics_v231.ps1` after a completed v2.3 run. The branch is designed to distinguish delayed generalization from readout thresholds, ordinary feature learning, or memorization. It keeps lightweight LoRA snapshots at every save event while retaining only a small number of resumable optimizer checkpoints, so long temporal curves are practical on consumer hardware.
+
+Primary design: `../../GROKKING_DYNAMICS_V2_3_1.md`.
+
 ## v2.3 preservation-constrained residual capability distillation
 
 v2.3 starts from the **materialized v2.2 greedy_soup** rather than continuing broad SFT. It mines only gold-verified cases where the greedy anchor is wrong and at least one v2.2 teacher is correct, trains separate answerable-reasoning and procedure residual LoRAs with preservation replay + greedy-anchor KL, calibrates how strongly each delta should be applied, and evaluates a small R/P composition family on DEV + structurally held-out OOD-DEV. It also introduces `query_aware_v23` for the fresh procedural corpus so an explicitly requested missing locator fails closed instead of borrowing a sibling record.

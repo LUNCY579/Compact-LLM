@@ -1,3 +1,21 @@
+# v2.3.1 Grokking Dynamics — execution addendum
+
+Run from the repository root after v2.3 has produced `residual_mining/mined/` and `residual_mining/training_views/` artifacts:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_phase_9_grokking_dynamics_v231.ps1 `
+  -V23RunRoot ".\artifacts\phase_9_residual_capability_v23" `
+  -V22RunRoot ".\artifacts\phase_9_capability_composition_v22_lr1e4_s1200" `
+  -Profile standard `
+  -RequireCuda
+```
+
+Use `-Profile pilot` for plumbing and `-Profile extended` only after the standard run is understood. To resume an interrupted run, reuse the exact `-OutputRoot` and add `-ReuseExisting`. Do **not** point this workflow at any sealed split; the validator/evaluators reject sealed paths.
+
+Review in order: `core_time_curve/TRAINING_TIME_CURVE.md`, `dose_time_surface/DOSE_TIME_SURFACE.md`, `FACTOR_PHASE_DIAGRAM.md`, `TRANSITION_DETECTION.md`, then `GROKKING_DYNAMICS_REPORT.md`.
+
+---
+
 ## v2.3 one-command residual-capability experiment
 
 Prerequisite: a completed v2.2 run root containing `frozen_anchor`, `track_d_greedy_soup/final_model`, Track A, Track B, procedure-specialist, and abstention-specialist adapters. v2.3 automatically discovers those artifacts and refuses to proceed when an available v2.2 selection record names a different winner.

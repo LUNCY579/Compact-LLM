@@ -1,3 +1,17 @@
+## v2.3.1 Grokking Dynamics files
+
+- `run_phase_9_grokking_dynamics_v231.ps1` — unattended end-to-end dynamics orchestrator.
+- `build_grokking_variants_v231.py` — non-sealed training/data-exposure variants and fixed probes.
+- `evaluate_grokking_checkpoint_v231.py` — one-load TRAIN/DEV/OOD generation + continuous logit evaluator with in-memory LoRA dose scaling.
+- `evaluate_grokking_time_curve_v231.py` — every-snapshot temporal curve.
+- `evaluate_grokking_dose_surface_v231.py` — adaptive checkpoint × dose surface.
+- `analyze_lora_dynamics_v231.py` — LoRA norms, effective dense-delta norm/rank, layerwise movement.
+- `analyze_representation_dynamics_v231.py` — cross-format reasoning-family geometry, CKA, effective rank.
+- `run_grokking_factor_sweep_v231.py` — one-factor-at-a-time phase screening.
+- `detect_grokking_transitions_v231.py` — conservative temporal/readout classification with threshold sensitivity.
+- `compile_grokking_report_v231.py` — final observatory report.
+- `train_student.py` — now also exposes opt-in gradient telemetry and lightweight PEFT snapshot callbacks; ordinary Phase 9 runs are unchanged unless those flags are supplied.
+
 ## v2.3 files
 
 | File | Responsibility | Important contract |

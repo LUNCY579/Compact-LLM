@@ -1,0 +1,244 @@
+{
+  "schema_version": "2.3.1",
+  "experiment": {
+    "name": "phase9_grokking_dynamics_observatory_v2_3_1",
+    "primary_question": "Does residual capability acquisition exhibit delayed generalization/grokking-like phase structure, or are the observed jumps better explained by ordinary learning, memorization, or weight-space/logit thresholds?",
+    "optimization_anchor": "v2.2 greedy_soup",
+    "source_experiment": "v2.3 preservation-constrained residual capability distillation",
+    "sealed_policy": "No consumed v2.2 sealed data and no fresh v2.3 sealed data may be used anywhere in v2.3.1 dynamics training, factor screening, transition detection, or model selection.",
+    "claim_policy": "A dose jump alone is never called grokking. Delayed generalization requires temporal train-fit-before-OOD evidence and reproducibility; all labels are diagnostic, not release gates."
+  },
+  "profiles": {
+    "pilot": {
+      "core_max_steps": 800,
+      "core_save_steps": 50,
+      "factor_max_steps": 300,
+      "factor_save_steps": 100,
+      "representation_checkpoint_count": 4,
+      "factor_values_per_axis": 1
+    },
+    "standard": {
+      "core_max_steps": 2400,
+      "core_save_steps": 100,
+      "factor_max_steps": 600,
+      "factor_save_steps": 100,
+      "representation_checkpoint_count": 6,
+      "factor_values_per_axis": 2
+    },
+    "extended": {
+      "core_max_steps": 4800,
+      "core_save_steps": 100,
+      "factor_max_steps": 1200,
+      "factor_save_steps": 100,
+      "representation_checkpoint_count": 10,
+      "factor_values_per_axis": 0
+    }
+  },
+  "core_training": {
+    "learning_rate": 6e-06,
+    "weight_decay": 0.0,
+    "lora_rank": 16,
+    "anchor_kl_weight": 0.3,
+    "anchor_temperature": 1.5,
+    "residual_fraction": 0.6,
+    "gradient_accumulation_steps": 32,
+    "warmup_ratio": 0.05,
+    "target_module_group": "both",
+    "seed": 23071,
+    "max_sequence_length": 768,
+    "max_completion_tokens": 32,
+    "maximum_evidence_tokens": 384,
+    "dynamics_gradient_interval": 10,
+    "dynamics_ema_beta": 0.95
+  },
+  "probes": {
+    "train_answerable_cases": 300,
+    "dev_answerable_cases": 240,
+    "dev_unanswerable_cases": 60,
+    "ood_answerable_cases": 240,
+    "ood_unanswerable_cases": 60,
+    "logit_cases_per_split": 96,
+    "representation_cases_per_split": 180,
+    "seed": 23131
+  },
+  "dose_surface": {
+    "doses": [
+      0.0,
+      0.1,
+      0.25,
+      0.5,
+      0.75,
+      0.9,
+      1.0,
+      1.1,
+      1.2
+    ],
+    "milestone_fractions": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "transition_neighbor_count": 2,
+    "probe_limit_per_split": 180
+  },
+  "factor_sweep": {
+    "data_fraction": [
+      0.25,
+      0.5,
+      1.0
+    ],
+    "unique_residual_cases": [
+      250,
+      500,
+      "all"
+    ],
+    "residual_fraction": [
+      0.35,
+      0.6,
+      0.8
+    ],
+    "weight_decay": [
+      0.0,
+      0.0001,
+      0.001,
+      0.01
+    ],
+    "anchor_kl_weight": [
+      0.0,
+      0.1,
+      0.3,
+      0.6
+    ],
+    "learning_rate": [
+      3e-06,
+      6e-06,
+      1.2e-05
+    ],
+    "lora_rank": [
+      4,
+      8,
+      16,
+      32
+    ],
+    "seed": [
+      42,
+      23071,
+      918273
+    ],
+    "target_module_group": [
+      "attention",
+      "mlp",
+      "both"
+    ],
+    "layer_scope": [
+      "all",
+      "middle_20",
+      "middle_40"
+    ],
+    "gradient_accumulation_steps_extended": [
+      16,
+      32,
+      64
+    ],
+    "warmup_ratio_extended": [
+      0.0,
+      0.05,
+      0.1
+    ],
+    "anchor_temperature_extended": [
+      1.0,
+      1.5,
+      2.0
+    ]
+  },
+  "exposure_control": {
+    "fixed_residual_exposures": 2000,
+    "preservation_to_residual_ratio": 0.6666666667,
+    "maximum_repeat_factor": 16
+  },
+  "temporal_evaluation": {
+    "evaluate_every_saved_checkpoint": true,
+    "dose_for_time_curve": 1.0,
+    "include_step_zero": true,
+    "include_final_adapter": true
+  },
+  "representation": {
+    "layer_positions": [
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0
+    ],
+    "metrics": [
+      "cross_format_nearest_centroid_reasoning_accuracy",
+      "within_vs_between_reasoning_cosine_gap",
+      "linear_cka_to_anchor",
+      "activation_effective_rank"
+    ]
+  },
+  "adapter_dynamics": {
+    "metrics": [
+      "lora_A_frobenius_norm",
+      "lora_B_frobenius_norm",
+      "effective_delta_frobenius_norm",
+      "delta_effective_rank",
+      "per_layer_delta_norm",
+      "relative_delta_norm_to_anchor_target_weights"
+    ]
+  },
+  "transition_detection": {
+    "train_progress_fraction": 0.8,
+    "ood_progress_fraction": 0.5,
+    "minimum_plateau_intervals": 3,
+    "minimum_observed_ood_gain_for_grokking_like": 0.03,
+    "minimum_delay_ratio_for_grokking_like": 2.0,
+    "reproduced_seed_count": 2,
+    "sensitivity": {
+      "train_progress_fraction": [
+        0.7,
+        0.8,
+        0.9
+      ],
+      "ood_progress_fraction": [
+        0.4,
+        0.5,
+        0.6
+      ],
+      "minimum_delay_ratio": [
+        1.5,
+        2.0,
+        3.0
+      ]
+    },
+    "labels": [
+      "READOUT_THRESHOLD_LIKELY",
+      "ORDINARY_FEATURE_LEARNING",
+      "MEMORIZATION_WITHOUT_ABSTRACTION",
+      "GROKKING_LIKE_TRANSITION_DETECTED",
+      "DELAYED_GENERALIZATION_REPRODUCED",
+      "INSUFFICIENT_EVIDENCE"
+    ]
+  },
+  "controls": {
+    "procedure_long_horizon_control": true,
+    "procedure_control_steps_fraction_of_core": 0.5,
+    "random_label_control": false,
+    "sealed_test_access": false
+  },
+  "reporting": {
+    "required_outputs": [
+      "GROKKING_DYNAMICS_REPORT.md",
+      "training_time_curve.json",
+      "training_time_curve.csv",
+      "dose_time_surface.json",
+      "dose_time_surface.csv",
+      "factor_phase_diagram.json",
+      "adapter_dynamics.json",
+      "representation_dynamics.json",
+      "transition_detection.json"
+    ]
+  }
+}

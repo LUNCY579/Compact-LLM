@@ -21,7 +21,7 @@ import torch.nn.functional as F
 from peft import LoraConfig, PeftModel, get_peft_model
 from torch.nn.utils.rnn import pad_sequence
 from torch.utils.data import Dataset
-from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
+from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainerCallback, TrainingArguments
 
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
@@ -66,6 +66,18 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Keep the Trainer checkpoints/ directory after publishing the final artifact.",
     )
+    parser.add_argument(
+        "--save-only-model-checkpoints",
+        action=argparse.BooleanOptionalAction,
+        default=True,
+        help="Use model-only Trainer checkpoints by default. Long-horizon dynamics runs may disable this to retain resumable optimizer state while separately saving lightweight adapter snapshots.",
+    )
+    parser.add_argument(
+        "--dynamics-snapshot-dir",
+        type=Path,
+        default=None,
+        help="Optional directory for lightweight PEFT adapter snapshots at each Trainer save event.",
+    )
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--temperature", type=float, default=2.0)
     parser.add_argument("--hard-label-weight", type=float, default=0.25, help="Legacy/default hard-label weight for rows that explicitly override the KD schedule.")
@@ -108,6 +120,24 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--allow-random-control", action="store_true")
     parser.add_argument("--require-cuda", action="store_true")
     parser.add_argument("--pipeline-revision", default="phase9_large_corrective_curriculum_v1_7_5", help="Manifest-only revision label for the invoking Phase 9 curriculum.")
+    parser.add_argument(
+        "--dynamics-log-file",
+        type=Path,
+        default=None,
+        help="Optional JSONL optimizer-step telemetry for long-horizon/grokking diagnostics. Normal Phase 9 runs leave this disabled.",
+    )
+    parser.add_argument(
+        "--dynamics-gradient-interval",
+        type=int,
+        default=10,
+        help="Optimizer-step interval for gradient-direction telemetry when --dynamics-log-file is enabled.",
+    )
+    parser.add_argument(
+        "--dynamics-ema-beta",
+        type=float,
+        default=0.95,
+        help="EMA coefficient used for slow-gradient diagnostics.",
+    )
     return parser.parse_args()
 
 
@@ -322,6 +352,149 @@ def selected_forward(
         shifted_weights = token_loss_weights[:, 1:].to(shifted_logits.device)
         selected_weights = shifted_weights[mask]
     return shifted_logits[mask], shifted_labels[mask], selected_weights
+
+
+
+class TrainingDynamicsCallback(TrainerCallback):
+    """Low-overhead telemetry for long-horizon adaptation studies.
+
+    The callback is opt-in.  At a configurable optimizer-step cadence it keeps
+    only CPU copies of the previous sampled gradient and an EMA gradient for
+    *trainable* parameters (LoRA in the official v2.3.1 path).  This avoids
+    retaining full-model gradients while still exposing direction persistence,
+    slow/fast gradient decomposition, parameter norm, and update-pressure
+    signals that can be correlated with delayed generalization.
+    """
+
+    def __init__(self, path: Path, *, interval: int, ema_beta: float) -> None:
+        self.path = Path(path)
+        self.interval = max(1, int(interval))
+        self.ema_beta = float(ema_beta)
+        if not 0.0 <= self.ema_beta < 1.0:
+            raise ValueError("dynamics_ema_beta must be in [0, 1)")
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._previous: dict[str, torch.Tensor] = {}
+        self._ema: dict[str, torch.Tensor] = {}
+        self._latest_gradient: dict[str, float] = {}
+        self._last_written_step = -1
+
+    @staticmethod
+    def _dot(a: dict[str, torch.Tensor], b: dict[str, torch.Tensor]) -> float:
+        total = 0.0
+        for name, va in a.items():
+            vb = b.get(name)
+            if vb is not None:
+                total += float(torch.sum(va.float() * vb.float()).item())
+        return total
+
+    @staticmethod
+    def _norm_sq(vectors: dict[str, torch.Tensor]) -> float:
+        return sum(float(torch.sum(v.float() * v.float()).item()) for v in vectors.values())
+
+    def _capture_gradient(self, model: Any) -> dict[str, float]:
+        current: dict[str, torch.Tensor] = {}
+        param_norm_sq = 0.0
+        grad_norm_sq = 0.0
+        lora_a_norm_sq = 0.0
+        lora_b_norm_sq = 0.0
+        for name, param in model.named_parameters():
+            if not param.requires_grad:
+                continue
+            pdata = param.detach().float()
+            param_norm_sq += float(torch.sum(pdata * pdata).item())
+            if "lora_A" in name:
+                lora_a_norm_sq += float(torch.sum(pdata * pdata).item())
+            elif "lora_B" in name:
+                lora_b_norm_sq += float(torch.sum(pdata * pdata).item())
+            if param.grad is None:
+                continue
+            grad = param.grad.detach().float().cpu()
+            current[name] = grad
+            grad_norm_sq += float(torch.sum(grad * grad).item())
+
+        prev_norm_sq = self._norm_sq(self._previous)
+        current_norm_sq = self._norm_sq(current)
+        prev_dot = self._dot(current, self._previous)
+        grad_cos_prev = (
+            prev_dot / math.sqrt(max(1e-30, current_norm_sq * prev_norm_sq))
+            if current and self._previous and current_norm_sq > 0 and prev_norm_sq > 0
+            else None
+        )
+
+        if not self._ema:
+            self._ema = {name: value.clone() for name, value in current.items()}
+        else:
+            for name, value in current.items():
+                old = self._ema.get(name)
+                self._ema[name] = value.clone() if old is None else old.mul(self.ema_beta).add(value, alpha=1.0 - self.ema_beta)
+        ema_norm_sq = self._norm_sq(self._ema)
+        ema_dot = self._dot(current, self._ema)
+        grad_cos_ema = (
+            ema_dot / math.sqrt(max(1e-30, current_norm_sq * ema_norm_sq))
+            if current and self._ema and current_norm_sq > 0 and ema_norm_sq > 0
+            else None
+        )
+        fast_norm_sq = 0.0
+        for name, value in current.items():
+            ema = self._ema.get(name)
+            if ema is not None:
+                residual = value - ema
+                fast_norm_sq += float(torch.sum(residual * residual).item())
+        self._previous = current
+        return {
+            "gradient_norm": math.sqrt(max(0.0, grad_norm_sq)),
+            "trainable_parameter_norm": math.sqrt(max(0.0, param_norm_sq)),
+            "lora_a_norm": math.sqrt(max(0.0, lora_a_norm_sq)),
+            "lora_b_norm": math.sqrt(max(0.0, lora_b_norm_sq)),
+            "gradient_cosine_previous_sample": grad_cos_prev,
+            "gradient_cosine_ema": grad_cos_ema,
+            "ema_gradient_norm": math.sqrt(max(0.0, ema_norm_sq)),
+            "fast_residual_gradient_norm": math.sqrt(max(0.0, fast_norm_sq)),
+            "slow_to_total_gradient_norm_ratio": (
+                math.sqrt(max(0.0, ema_norm_sq)) / math.sqrt(max(1e-30, current_norm_sq))
+                if current_norm_sq > 0
+                else None
+            ),
+        }
+
+    def on_pre_optimizer_step(self, args: Any, state: Any, control: Any, model: Any | None = None, **kwargs: Any) -> None:
+        del args, control, kwargs
+        step = int(getattr(state, "global_step", 0)) + 1
+        if model is not None and step % self.interval == 0:
+            self._latest_gradient = self._capture_gradient(model)
+
+    def on_log(self, args: Any, state: Any, control: Any, logs: dict[str, Any] | None = None, **kwargs: Any) -> None:
+        del args, control, kwargs
+        step = int(getattr(state, "global_step", 0))
+        if step == self._last_written_step:
+            return
+        payload: dict[str, Any] = {"step": step}
+        for key, value in (logs or {}).items():
+            if isinstance(value, (int, float)):
+                payload[key] = float(value)
+        payload.update(self._latest_gradient)
+        with self.path.open("a", encoding="utf-8", newline="\n") as handle:
+            handle.write(json.dumps(payload, sort_keys=True) + "\n")
+            handle.flush()
+        self._last_written_step = step
+
+
+
+class AdapterSnapshotCallback(TrainerCallback):
+    """Persist lightweight PEFT snapshots without keeping every optimizer state."""
+
+    def __init__(self, root: Path) -> None:
+        self.root = Path(root)
+        self.root.mkdir(parents=True, exist_ok=True)
+
+    def on_save(self, args: Any, state: Any, control: Any, model: Any | None = None, **kwargs: Any) -> None:
+        del args, control, kwargs
+        if model is None or not hasattr(model, "peft_config"):
+            return
+        step = int(getattr(state, "global_step", 0))
+        destination = self.root / f"step_{step:06d}"
+        destination.mkdir(parents=True, exist_ok=True)
+        model.save_pretrained(destination, safe_serialization=True)
 
 
 class DistillationTrainer(Trainer):
@@ -551,6 +724,10 @@ def validate_args(args: argparse.Namespace) -> None:
         )
     if args.max_sequence_length <= 1 or args.max_completion_tokens <= 0:
         raise ValueError("Sequence/completion limits must be positive")
+    if args.dynamics_gradient_interval <= 0:
+        raise ValueError("dynamics-gradient-interval must be positive")
+    if not 0.0 <= args.dynamics_ema_beta < 1.0:
+        raise ValueError("dynamics-ema-beta must be in [0, 1)")
 
 
 def ensure_random_control_acknowledged(student: str, allowed: bool) -> None:
@@ -786,7 +963,7 @@ def main() -> None:
     }
     # Prefer model-only checkpoints when mid-run saves are enabled (no optimizer).
     if "save_only_model" in inspect.signature(TrainingArguments.__init__).parameters:
-        training_args_kwargs["save_only_model"] = True
+        training_args_kwargs["save_only_model"] = bool(args.save_only_model_checkpoints)
     training_args = TrainingArguments(**training_args_kwargs)
     trainer = DistillationTrainer(
         model=model,
@@ -807,6 +984,10 @@ def main() -> None:
         train_dataset=train_dataset,
         eval_dataset=eval_dataset,
         data_collator=CompletionCollator(tokenizer.pad_token_id),
+        callbacks=(
+            ([TrainingDynamicsCallback(args.dynamics_log_file, interval=args.dynamics_gradient_interval, ema_beta=args.dynamics_ema_beta)] if args.dynamics_log_file is not None else [])
+            + ([AdapterSnapshotCallback(args.dynamics_snapshot_dir)] if args.dynamics_snapshot_dir is not None else [])
+        ) or None,
     )
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
@@ -877,6 +1058,11 @@ def main() -> None:
         "dev_prompt_packing": eval_dataset.prompt_packing if eval_dataset is not None else [],
         "save_strategy": save_strategy,
         "checkpoints_retained": bool(args.keep_checkpoints),
+        "save_only_model_checkpoints": bool(args.save_only_model_checkpoints),
+        "dynamics_snapshot_dir": str(args.dynamics_snapshot_dir) if args.dynamics_snapshot_dir is not None else None,
+        "dynamics_log_file": str(args.dynamics_log_file) if args.dynamics_log_file is not None else None,
+        "dynamics_gradient_interval": args.dynamics_gradient_interval if args.dynamics_log_file is not None else None,
+        "dynamics_ema_beta": args.dynamics_ema_beta if args.dynamics_log_file is not None else None,
         "environment": environment(),
     }
     write_json(args.output_dir / "training_manifest.json", manifest)

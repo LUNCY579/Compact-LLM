@@ -1,3 +1,11 @@
+## v2.3.1 research checkpoint — Grokking Dynamics Observatory
+
+After a completed v2.3 DEV/OOD residual-capability run, v2.3.1 is an **optional but first-class Phase 9 research branch** that studies *when and how* residual capability appears. It does not replace the frozen v2.2 greedy anchor and does not open any sealed test set. The branch preserves the v2.3 training pools, extends training horizons with frequent PEFT snapshots, compares TRAIN/DEV/structural-OOD trajectories, maps step × capability-dose behavior, records optimizer/LoRA/representation dynamics, and screens one factor at a time rather than launching a Cartesian hyperparameter search.
+
+A grokking label is diagnostic only. The main Phase 10/11 architecture/compression handoff remains blocked or allowed by the existing behavior-selection policy, not by the v2.3.1 dynamics label.
+
+---
+
 ## v2.1.1 Phase 9 preservation-first procedural checkpoint
 
 When v2.1 same-weight `query_aware_v21` retrieval is strong but recovery training damages the original path, use `run_phase_9_procedural_recovery_v211.ps1`. Candidate zero is the unchanged query-aware student. Stage A/B1/B2 are short checkpoints evaluated on both original DEV and the new 24-family procedural challenge, and a trained adapter advances only when residual challenge gain exceeds weighted relative preservation loss. Otherwise the workflow deliberately selects `query_aware_only`. Sealed TEST is run only after one DEV path is frozen.
