@@ -150,6 +150,7 @@ def main() -> None:
                 "relative_delta_norm_to_anchor_target_weights": (math.sqrt(delta_sq) / math.sqrt(base_sq)) if base_sq > 0 else None,
                 "delta_effective_rank_mean": (sum(float(row["delta_effective_rank"]) for row in modules) / len(modules)) if modules else None,
                 "delta_effective_rank_max": max([float(row["delta_effective_rank"]) for row in modules] or [0.0]),
+                "delta_singular_max": max([float(row["delta_singular_max"]) for row in modules] or [0.0]),
                 "per_layer_delta_norm": {str(layer): math.sqrt(value) for layer, value in sorted(layer_sq.items())},
             }
         )

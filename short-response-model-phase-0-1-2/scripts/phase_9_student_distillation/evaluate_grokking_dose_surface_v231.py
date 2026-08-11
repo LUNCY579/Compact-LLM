@@ -14,6 +14,7 @@ if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
 from scripts.phase_9_student_distillation.grokking_utils_v231 import (
+    critical_dose_trajectory,
     discover_adapters,
     nearest_steps,
     read_json,
@@ -120,14 +121,45 @@ def main() -> None:
         "doses": doses,
         "rows": rows,
     }
+    transition_cfg = cfg.get("transition_detection") or {}
+    trajectory = critical_dose_trajectory(
+        rows,
+        progress_fraction=float(transition_cfg.get("critical_dose_progress_fraction", 0.5)),
+        absolute_floor=float(transition_cfg.get("critical_dose_absolute_floor", 0.01)),
+        leftward_shift_minimum=float(transition_cfg.get("critical_dose_leftward_shift_minimum", 0.15)),
+        fixed_high_minimum=float(transition_cfg.get("fixed_high_critical_dose_minimum", 0.75)),
+    )
+    payload["critical_dose_trajectory"] = trajectory
     write_json(args.output_root / "dose_time_surface.json", payload)
     write_csv(args.output_root / "dose_time_surface.csv", rows)
     md = [
         "# v2.3.1 Step × Dose Surface",
         "",
-        "| Step | Dose | Train ans | DEV ans | OOD ans | DEV margin | OOD margin |",
-        "|---:|---:|---:|---:|---:|---:|---:|",
+        "## Critical-dose trajectory",
+        "",
+        (
+            f"- Start → end: `{trajectory.get('critical_dose_start')}` → `{trajectory.get('critical_dose_end')}`"
+        ),
+        f"- Leftward shift: `{trajectory.get('critical_dose_leftward_shift')}`",
+        f"- Migrates left: `{trajectory.get('critical_dose_migrates_left')}`",
+        f"- Fixed high critical dose: `{trajectory.get('fixed_high_critical_dose')}`",
+        "",
+        "| Step | Critical dose | Max OOD accuracy | Target accuracy |",
+        "|---:|---:|---:|---:|",
     ]
+    for item in trajectory.get("critical_dose_by_step") or []:
+        md.append(
+            f"| {item.get('step')} | {item.get('critical_dose')} | {item.get('max_ood_accuracy')} | {item.get('target_accuracy')} |"
+        )
+    md.extend(
+        [
+            "",
+            "## Full surface",
+            "",
+            "| Step | Dose | Train ans | DEV ans | OOD ans | DEV margin | OOD margin |",
+            "|---:|---:|---:|---:|---:|---:|---:|",
+        ]
+    )
     for row in rows:
         md.append(
             f"| {row['step']} | {row['dose']} | {row.get('train_answerable_correctness')} | {row.get('dev_answerable_correctness')} | "

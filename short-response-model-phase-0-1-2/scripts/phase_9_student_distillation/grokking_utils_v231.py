@@ -212,3 +212,175 @@ def finite(value: Any) -> float | None:
     except (TypeError, ValueError):
         return None
     return value if math.isfinite(value) else None
+
+
+def critical_dose_at_step(
+    dose_rows: list[dict[str, Any]],
+    *,
+    progress_fraction: float = 0.5,
+    absolute_floor: float = 0.01,
+    accuracy_key: str = "ood_answerable_correctness",
+) -> dict[str, Any]:
+    """Lowest dose whose OOD accuracy reaches progress_fraction of that step's max-dose accuracy."""
+    if not dose_rows:
+        return {"critical_dose": None, "max_ood_accuracy": None, "target_accuracy": None}
+    ordered = sorted(dose_rows, key=lambda row: float(row["dose"]))
+    accuracies = [float(row.get(accuracy_key) or 0.0) for row in ordered]
+    max_acc = max(accuracies) if accuracies else 0.0
+    if max_acc < float(absolute_floor):
+        return {
+            "critical_dose": None,
+            "max_ood_accuracy": max_acc,
+            "target_accuracy": None,
+            "reason": "below_absolute_floor",
+        }
+    target = float(progress_fraction) * max_acc
+    for row, acc in zip(ordered, accuracies):
+        if acc >= target:
+            return {
+                "critical_dose": float(row["dose"]),
+                "max_ood_accuracy": max_acc,
+                "target_accuracy": target,
+            }
+    return {
+        "critical_dose": float(ordered[-1]["dose"]),
+        "max_ood_accuracy": max_acc,
+        "target_accuracy": target,
+    }
+
+
+def critical_dose_trajectory(
+    surface_rows: list[dict[str, Any]],
+    *,
+    progress_fraction: float = 0.5,
+    absolute_floor: float = 0.01,
+    leftward_shift_minimum: float = 0.15,
+    fixed_high_minimum: float = 0.75,
+) -> dict[str, Any]:
+    """Reduce a step×dose surface to critical_dose(t) and leftward-migration flags."""
+    by_step: dict[int, list[dict[str, Any]]] = {}
+    for row in surface_rows:
+        by_step.setdefault(int(row["step"]), []).append(row)
+    series: list[dict[str, Any]] = []
+    for step in sorted(by_step):
+        info = critical_dose_at_step(
+            by_step[step],
+            progress_fraction=progress_fraction,
+            absolute_floor=absolute_floor,
+        )
+        series.append({"step": step, **info})
+    defined = [row for row in series if row.get("critical_dose") is not None]
+    start = float(defined[0]["critical_dose"]) if defined else None
+    end = float(defined[-1]["critical_dose"]) if defined else None
+    leftward_shift = (start - end) if start is not None and end is not None else None
+    monotonic_leftward = False
+    if len(defined) >= 2:
+        doses = [float(row["critical_dose"]) for row in defined]
+        monotonic_leftward = all(right <= left + 1e-12 for left, right in zip(doses, doses[1:]))
+    migrates_left = bool(
+        leftward_shift is not None
+        and leftward_shift >= float(leftward_shift_minimum)
+        and (monotonic_leftward or leftward_shift >= float(leftward_shift_minimum))
+    )
+    fixed_high = bool(
+        end is not None
+        and end >= float(fixed_high_minimum)
+        and not migrates_left
+    )
+    return {
+        "critical_dose_by_step": series,
+        "critical_dose_start": start,
+        "critical_dose_end": end,
+        "critical_dose_leftward_shift": leftward_shift,
+        "critical_dose_monotonic_leftward": monotonic_leftward,
+        "critical_dose_migrates_left": migrates_left,
+        "fixed_high_critical_dose": fixed_high,
+    }
+
+
+def _linear_r2(xs: list[float], ys: list[float]) -> float | None:
+    if len(xs) < 3 or len(xs) != len(ys):
+        return None
+    mean_x = sum(xs) / len(xs)
+    mean_y = sum(ys) / len(ys)
+    ss_xx = sum((x - mean_x) ** 2 for x in xs)
+    ss_yy = sum((y - mean_y) ** 2 for y in ys)
+    if ss_xx <= 1e-12 or ss_yy <= 1e-12:
+        return None
+    ss_xy = sum((x - mean_x) * (y - mean_y) for x, y in zip(xs, ys))
+    return float((ss_xy * ss_xy) / (ss_xx * ss_yy))
+
+
+def temporal_readout_summary(
+    rows: list[dict[str, Any]],
+    *,
+    accuracy_jump_fraction_minimum: float = 0.5,
+    margin_linear_r2_minimum: float = 0.7,
+    nll_linear_r2_minimum: float = 0.7,
+) -> dict[str, Any]:
+    """Detect sharp discrete OOD accuracy jumps accompanied by smooth logit trajectories."""
+    rows = sorted(rows, key=lambda row: int(row["step"]))
+    if len(rows) < 3:
+        return {
+            "smooth_logits_with_sharp_accuracy": False,
+            "reason": "insufficient_points",
+        }
+    steps = [float(row["step"]) for row in rows]
+    accuracies = [float(row.get("ood_answerable_correctness") or 0.0) for row in rows]
+    gain = max(accuracies) - min(accuracies)
+    jumps = [right - left for left, right in zip(accuracies, accuracies[1:])]
+    largest_jump = max(jumps) if jumps else 0.0
+    jump_fraction = (largest_jump / gain) if gain > 1e-12 else None
+    sharp_accuracy = bool(jump_fraction is not None and jump_fraction >= float(accuracy_jump_fraction_minimum))
+
+    margin_xs: list[float] = []
+    margin_ys: list[float] = []
+    for step, row in zip(steps, rows):
+        value = finite(row.get("ood_first_target_margin_mean"))
+        if value is None:
+            value = finite(row.get("ood_target_token_margin_mean"))
+        if value is not None:
+            margin_xs.append(step)
+            margin_ys.append(value)
+    margin_r2 = _linear_r2(margin_xs, margin_ys)
+    margin_improving = False
+    if len(margin_ys) >= 2:
+        margin_improving = margin_ys[-1] >= margin_ys[0]
+    smooth_margin = bool(
+        margin_r2 is not None
+        and margin_r2 >= float(margin_linear_r2_minimum)
+        and margin_improving
+    )
+
+    nll_xs: list[float] = []
+    nll_ys: list[float] = []
+    for step, row in zip(steps, rows):
+        value = finite(row.get("ood_target_token_nll_mean"))
+        if value is None:
+            value = finite(row.get("ood_first_target_nll_mean"))
+        if value is not None:
+            nll_xs.append(step)
+            nll_ys.append(value)
+    nll_r2 = _linear_r2(nll_xs, nll_ys)
+    nll_improving = False
+    if len(nll_ys) >= 2:
+        nll_improving = nll_ys[-1] <= nll_ys[0]
+    smooth_nll = bool(
+        nll_r2 is not None
+        and nll_r2 >= float(nll_linear_r2_minimum)
+        and nll_improving
+    )
+
+    return {
+        "ood_accuracy_total_gain": gain,
+        "largest_ood_accuracy_adjacent_jump": largest_jump,
+        "largest_ood_accuracy_jump_fraction_of_gain": jump_fraction,
+        "sharp_ood_accuracy_jump": sharp_accuracy,
+        "ood_margin_linear_r2": margin_r2,
+        "ood_margin_improving": margin_improving,
+        "smooth_ood_margin_trajectory": smooth_margin,
+        "ood_nll_linear_r2": nll_r2,
+        "ood_nll_improving": nll_improving,
+        "smooth_ood_nll_trajectory": smooth_nll,
+        "smooth_logits_with_sharp_accuracy": bool(sharp_accuracy and (smooth_margin or smooth_nll)),
+    }

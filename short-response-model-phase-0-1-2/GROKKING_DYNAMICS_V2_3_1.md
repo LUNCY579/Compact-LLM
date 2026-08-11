@@ -67,7 +67,7 @@ Trainer optimizer checkpoints retain only the most recent two copies for resumab
 - first-target probability;
 - first-target entropy.
 
-A sharp exact-accuracy transition accompanied by smooth logit-margin/NLL motion is evidence for a readout threshold rather than sufficient evidence of grokking.
+A sharp exact-accuracy transition accompanied by smooth logit-margin/NLL motion is formalized as `smooth_logits_with_sharp_accuracy` on the time curve and contributes to readout evidence. It is not by itself sufficient for a grokking label.
 
 ## Step × capability-dose surface
 
@@ -79,7 +79,7 @@ This produces a two-dimensional surface:
 
 `training step × residual dose → TRAIN / DEV / OOD behavior + continuous logits`
 
-The surface answers whether the critical dose moves as training continues. A leftward-moving critical dose is qualitatively different from a fixed interpolation threshold.
+The surface is reduced to a `critical_dose(t)` trajectory: at each retained step, the lowest dose whose OOD answerable accuracy reaches a preregistered fraction of that step’s max-dose OOD accuracy (subject to an absolute floor). A leftward-moving critical dose is qualitatively different from a fixed high interpolation threshold; both statistics are first-class detector outputs and appear in `DOSE_TIME_SURFACE.md` and the scientific report.
 
 ## Optimizer / gradient dynamics
 
@@ -167,9 +167,26 @@ Primary temporal diagnostics use configurable, versioned values from `configs/ph
 - OOD progress fraction: `0.50` of observed OOD gain;
 - minimum plateau intervals: `3`;
 - minimum observed OOD gain for a grokking-like claim: `0.03`;
-- minimum OOD/train delay ratio: `2.0`.
+- minimum OOD/train delay ratio: `2.0`;
+- memorization minimum train gain: `0.10`;
+- final-step readout destination dose minimum: `0.75`;
+- critical-dose progress fraction: `0.50` of that step’s max-dose OOD accuracy, with absolute floor `0.01`;
+- critical-dose leftward-shift minimum: `0.15`;
+- temporal readout: largest OOD accuracy jump must be at least `0.50` of total OOD gain, with margin/NLL linear \(R^2 \ge 0.70\).
 
 Because these choices are diagnostic conventions rather than universal scientific constants, the report also runs a sensitivity grid over train-progress fraction, OOD-progress fraction, and delay ratio. A fragile conclusion is visible rather than hidden behind one threshold.
+
+### Formalized surface and readout statistics
+
+The detector reduces the measured step × dose surface to a first-class `critical_dose(t)` series:
+
+- lowest dose whose OOD answerable accuracy reaches the configured fraction of that step’s maximum OOD accuracy;
+- start/end critical dose, leftward shift, monotonic-leftward flag;
+- `critical_dose_migrates_left` versus `fixed_high_critical_dose`.
+
+Separately, the time curve is tested for **temporal readout**: a sharp discrete OOD accuracy jump accompanied by smooth gold-token margin and/or NLL motion (`smooth_logits_with_sharp_accuracy`).
+
+Primary labels still follow a conservative temporal-first cascade. Competing active patterns are always emitted in `competing_evidence` so a cascade winner cannot silently suppress readout, leftward-dose, representation-precede, or memorization signatures.
 
 Possible labels:
 
@@ -179,6 +196,19 @@ Possible labels:
 - `GROKKING_LIKE_TRANSITION_DETECTED`
 - `DELAYED_GENERALIZATION_REPRODUCED`
 - `INSUFFICIENT_EVIDENCE`
+
+### Scientific report contents
+
+`GROKKING_DYNAMICS_REPORT.md` is compiled as a paper-style methods/evidence document, not a results dump. Required sections include:
+
+- abstract / diagnostic verdict;
+- experimental question and mechanism taxonomy;
+- preregistered methods and numeric thresholds;
+- observation pattern catalog with confirming techniques and falsifiers;
+- results with technique↔evidence mapping (temporal, critical-dose, readout, LoRA/representation/optimizer, factors, procedure control);
+- sensitivity analysis and fragility;
+- competing explanations matrix;
+- limitations and artifact index.
 
 ## Automatic command
 

@@ -185,6 +185,7 @@
       "lora_B_frobenius_norm",
       "effective_delta_frobenius_norm",
       "delta_effective_rank",
+      "delta_singular_max",
       "per_layer_delta_norm",
       "relative_delta_norm_to_anchor_target_weights"
     ]
@@ -196,6 +197,17 @@
     "minimum_observed_ood_gain_for_grokking_like": 0.03,
     "minimum_delay_ratio_for_grokking_like": 2.0,
     "reproduced_seed_count": 2,
+    "memorization_minimum_train_gain": 0.1,
+    "readout_destination_dose_minimum": 0.75,
+    "readout_jump_vs_median_multiplier": 2.0,
+    "readout_margin_monotonic_pair_fraction_minimum": 0.7,
+    "critical_dose_progress_fraction": 0.5,
+    "critical_dose_absolute_floor": 0.01,
+    "critical_dose_leftward_shift_minimum": 0.15,
+    "fixed_high_critical_dose_minimum": 0.75,
+    "temporal_readout_accuracy_jump_fraction_minimum": 0.5,
+    "temporal_readout_margin_linear_r2_minimum": 0.7,
+    "temporal_readout_nll_linear_r2_minimum": 0.7,
     "sensitivity": {
       "train_progress_fraction": [
         0.7,

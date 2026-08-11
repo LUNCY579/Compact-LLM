@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 import statistics
 from pathlib import Path
 from typing import Any
@@ -15,7 +14,15 @@ ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from scripts.phase_9_student_distillation.grokking_utils_v231 import finite, progress_step, read_json, read_jsonl, write_json
+from scripts.phase_9_student_distillation.grokking_utils_v231 import (
+    critical_dose_trajectory,
+    finite,
+    progress_step,
+    read_json,
+    read_jsonl,
+    temporal_readout_summary,
+    write_json,
+)
 
 
 def temporal_summary(rows: list[dict[str, Any]], cfg: dict[str, Any]) -> dict[str, Any]:
@@ -72,21 +79,42 @@ def sensitivity(rows: list[dict[str, Any]], cfg: dict[str, Any]) -> dict[str, An
                 local["ood_progress_fraction"] = of
                 local["minimum_delay_ratio_for_grokking_like"] = ratio
                 summary = temporal_summary(rows, local)
-                values.append({"train_fraction": tf, "ood_fraction": of, "delay_ratio_threshold": ratio, "detected": summary["grokking_like_under_primary_thresholds"]})
+                values.append(
+                    {
+                        "train_fraction": tf,
+                        "ood_fraction": of,
+                        "delay_ratio_threshold": ratio,
+                        "detected": summary["grokking_like_under_primary_thresholds"],
+                    }
+                )
     positives = sum(bool(v["detected"]) for v in values)
-    return {"trials": len(values), "positive_trials": positives, "positive_fraction": positives / len(values) if values else None, "details": values}
+    flipping = [v for v in values if bool(v["detected"]) != bool(values[0]["detected"])] if values else []
+    return {
+        "trials": len(values),
+        "positive_trials": positives,
+        "positive_fraction": positives / len(values) if values else None,
+        "fragile": bool(0.0 < (positives / len(values) if values else 0.0) < 1.0),
+        "flipping_cells": flipping,
+        "details": values,
+    }
 
 
-def dose_summary(surface: dict[str, Any]) -> dict[str, Any]:
+def dose_summary(surface: dict[str, Any], cfg: dict[str, Any] | None = None) -> dict[str, Any]:
     rows = surface.get("rows") or []
     if not rows:
         return {}
+    cfg = cfg or {}
+    dest_min = float(cfg.get("readout_destination_dose_minimum", 0.75))
+    jump_mult = float(cfg.get("readout_jump_vs_median_multiplier", 2.0))
+    mono_min = float(cfg.get("readout_margin_monotonic_pair_fraction_minimum", 0.7))
     final_step = max(int(r["step"]) for r in rows)
     final = sorted([r for r in rows if int(r["step"]) == final_step], key=lambda r: float(r["dose"]))
     jumps = []
     for left, right in zip(final, final[1:]):
         jump = float(right.get("ood_answerable_correctness") or 0.0) - float(left.get("ood_answerable_correctness") or 0.0)
-        margin_jump = (finite(right.get("ood_first_target_margin_mean")) or 0.0) - (finite(left.get("ood_first_target_margin_mean")) or 0.0)
+        margin_jump = (finite(right.get("ood_first_target_margin_mean")) or 0.0) - (
+            finite(left.get("ood_first_target_margin_mean")) or 0.0
+        )
         jumps.append({"from": left["dose"], "to": right["dose"], "accuracy_jump": jump, "margin_jump": margin_jump})
     positive = [max(0.0, float(j["accuracy_jump"])) for j in jumps]
     median = statistics.median(positive) if positive else 0.0
@@ -101,9 +129,16 @@ def dose_summary(surface: dict[str, Any]) -> dict[str, Any]:
     monotonic_fraction = monotonic_pairs / total_pairs if total_pairs else None
     threshold_like = bool(
         largest
-        and float(largest["to"]) >= 0.75
-        and float(largest["accuracy_jump"]) > max(1e-12, 2.0 * median)
-        and (monotonic_fraction is None or monotonic_fraction >= 0.7)
+        and float(largest["to"]) >= dest_min
+        and float(largest["accuracy_jump"]) > max(1e-12, jump_mult * median)
+        and (monotonic_fraction is None or monotonic_fraction >= mono_min)
+    )
+    trajectory = critical_dose_trajectory(
+        rows,
+        progress_fraction=float(cfg.get("critical_dose_progress_fraction", 0.5)),
+        absolute_floor=float(cfg.get("critical_dose_absolute_floor", 0.01)),
+        leftward_shift_minimum=float(cfg.get("critical_dose_leftward_shift_minimum", 0.15)),
+        fixed_high_minimum=float(cfg.get("fixed_high_critical_dose_minimum", 0.75)),
     )
     return {
         "final_step": final_step,
@@ -111,6 +146,7 @@ def dose_summary(surface: dict[str, Any]) -> dict[str, Any]:
         "median_nonnegative_ood_accuracy_jump": median,
         "ood_logit_margin_monotonic_pair_fraction": monotonic_fraction,
         "readout_threshold_like": threshold_like,
+        **trajectory,
     }
 
 
@@ -166,9 +202,11 @@ def adapter_summary(path: Path | None, temporal: dict[str, Any]) -> dict[str, An
         "checkpoint_count": len(checkpoints),
         "delta_norm_at_or_near_ood_transition": nearest.get("effective_delta_frobenius_norm") if nearest else None,
         "relative_delta_norm_at_or_near_ood_transition": nearest.get("relative_delta_norm_to_anchor_target_weights") if nearest else None,
+        "delta_singular_max_at_or_near_ood_transition": nearest.get("delta_singular_max") if nearest else None,
         "transition_nearest_step": nearest.get("step") if nearest else None,
         "final_delta_norm": checkpoints[-1].get("effective_delta_frobenius_norm"),
         "final_delta_effective_rank_mean": checkpoints[-1].get("delta_effective_rank_mean"),
+        "final_delta_singular_max": checkpoints[-1].get("delta_singular_max"),
     }
 
 
@@ -179,14 +217,99 @@ def optimizer_summary(path: Path | None, transition_step: int | None) -> dict[st
     sampled = [r for r in rows if finite(r.get("slow_to_total_gradient_norm_ratio")) is not None]
     if not sampled:
         return {"rows": len(rows), "gradient_samples": 0}
-    before = [float(r["slow_to_total_gradient_norm_ratio"]) for r in sampled if transition_step is None or int(r.get("step") or 0) < transition_step]
-    after = [float(r["slow_to_total_gradient_norm_ratio"]) for r in sampled if transition_step is not None and int(r.get("step") or 0) >= transition_step]
+    before = [
+        float(r["slow_to_total_gradient_norm_ratio"])
+        for r in sampled
+        if transition_step is None or int(r.get("step") or 0) < transition_step
+    ]
+    after = [
+        float(r["slow_to_total_gradient_norm_ratio"])
+        for r in sampled
+        if transition_step is not None and int(r.get("step") or 0) >= transition_step
+    ]
     return {
         "rows": len(rows),
         "gradient_samples": len(sampled),
         "slow_to_total_ratio_before_transition_mean": statistics.mean(before) if before else None,
         "slow_to_total_ratio_after_transition_mean": statistics.mean(after) if after else None,
         "gradient_cosine_ema_final": sampled[-1].get("gradient_cosine_ema"),
+    }
+
+
+def competing_evidence(
+    *,
+    label: str,
+    temporal: dict[str, Any],
+    dose: dict[str, Any],
+    temporal_readout: dict[str, Any],
+    representation: dict[str, Any],
+    cfg: dict[str, Any],
+) -> dict[str, Any]:
+    mem_train = float(cfg.get("memorization_minimum_train_gain", 0.1))
+    ood_floor = float(cfg["minimum_observed_ood_gain_for_grokking_like"])
+    flags = {
+        "critical_dose_migrates_left": bool(dose.get("critical_dose_migrates_left")),
+        "fixed_high_critical_dose": bool(dose.get("fixed_high_critical_dose")),
+        "temporal_readout_like": bool(temporal_readout.get("smooth_logits_with_sharp_accuracy")),
+        "representation_precedes_ood": bool(representation.get("representation_precedes_ood_transition")),
+        "dose_readout_like": bool(dose.get("readout_threshold_like")),
+        "grokking_like_temporal": bool(temporal.get("grokking_like_under_primary_thresholds")),
+        "memorization_like": bool(
+            float(temporal.get("train_observed_gain") or 0.0) >= mem_train
+            and float(temporal.get("ood_observed_gain") or 0.0) < ood_floor
+        ),
+        "ordinary_learning_like": bool(
+            float(temporal.get("train_observed_gain") or 0.0) > 0.0
+            and float(temporal.get("ood_observed_gain") or 0.0) > 0.0
+            and not temporal.get("grokking_like_under_primary_thresholds")
+        ),
+    }
+    pattern_names = {
+        "critical_dose_migrates_left": "LEFTWARD_CRITICAL_DOSE_MIGRATION",
+        "fixed_high_critical_dose": "FIXED_HIGH_CRITICAL_DOSE",
+        "temporal_readout_like": "TEMPORAL_READOUT_THRESHOLD",
+        "representation_precedes_ood": "LATENT_BEFORE_READOUT",
+        "dose_readout_like": "FINAL_STEP_DOSE_READOUT",
+        "grokking_like_temporal": "GROKKING_LIKE_TEMPORAL",
+        "memorization_like": "MEMORIZATION_WITHOUT_ABSTRACTION",
+        "ordinary_learning_like": "ORDINARY_FEATURE_LEARNING",
+    }
+    label_support = {
+        "DELAYED_GENERALIZATION_REPRODUCED": {
+            "grokking_like_temporal",
+            "representation_precedes_ood",
+            "critical_dose_migrates_left",
+        },
+        "GROKKING_LIKE_TRANSITION_DETECTED": {
+            "grokking_like_temporal",
+            "representation_precedes_ood",
+            "critical_dose_migrates_left",
+        },
+        "MEMORIZATION_WITHOUT_ABSTRACTION": {"memorization_like"},
+        "READOUT_THRESHOLD_LIKELY": {"dose_readout_like", "temporal_readout_like", "fixed_high_critical_dose"},
+        "ORDINARY_FEATURE_LEARNING": {"ordinary_learning_like"},
+        "INSUFFICIENT_EVIDENCE": set(),
+    }
+    support_keys = label_support.get(label, set())
+    supporting: list[str] = []
+    contradicting: list[str] = []
+    for key, active in flags.items():
+        if not active:
+            continue
+        name = pattern_names[key]
+        if key in support_keys:
+            supporting.append(name)
+        else:
+            contradicting.append(name)
+    return {
+        "flags": flags,
+        "supporting_patterns": supporting,
+        "contradicting_patterns": contradicting,
+        "primary_label": label,
+        "note": (
+            "Primary diagnostic_label follows the conservative temporal-first cascade; "
+            "supporting/contradicting patterns surface competing mechanisms that the cascade may suppress."
+        ),
     }
 
 
@@ -207,7 +330,13 @@ def main() -> None:
     time_rows = read_json(args.time_curve).get("rows") or []
     temporal = temporal_summary(time_rows, transition_cfg)
     sens = sensitivity(time_rows, transition_cfg)
-    dose = dose_summary(read_json(args.dose_surface))
+    dose = dose_summary(read_json(args.dose_surface), transition_cfg)
+    temporal_readout = temporal_readout_summary(
+        time_rows,
+        accuracy_jump_fraction_minimum=float(transition_cfg.get("temporal_readout_accuracy_jump_fraction_minimum", 0.5)),
+        margin_linear_r2_minimum=float(transition_cfg.get("temporal_readout_margin_linear_r2_minimum", 0.7)),
+        nll_linear_r2_minimum=float(transition_cfg.get("temporal_readout_nll_linear_r2_minimum", 0.7)),
+    )
     factors: list[dict[str, Any]] = []
     reproduced = 0
     if args.factor_manifest and args.factor_manifest.exists():
@@ -216,25 +345,53 @@ def main() -> None:
     adapter = adapter_summary(args.adapter_dynamics, temporal)
     optimizer = optimizer_summary(args.optimizer_dynamics, temporal.get("ood_progress_step"))
 
+    mem_train = float(transition_cfg.get("memorization_minimum_train_gain", 0.1))
     if temporal["grokking_like_under_primary_thresholds"] and reproduced >= int(transition_cfg["reproduced_seed_count"]):
         label = "DELAYED_GENERALIZATION_REPRODUCED"
     elif temporal["grokking_like_under_primary_thresholds"]:
         label = "GROKKING_LIKE_TRANSITION_DETECTED"
-    elif temporal["train_observed_gain"] >= 0.1 and temporal["ood_observed_gain"] < float(transition_cfg["minimum_observed_ood_gain_for_grokking_like"]):
+    elif temporal["train_observed_gain"] >= mem_train and temporal["ood_observed_gain"] < float(
+        transition_cfg["minimum_observed_ood_gain_for_grokking_like"]
+    ):
         label = "MEMORIZATION_WITHOUT_ABSTRACTION"
-    elif dose.get("readout_threshold_like"):
+    elif dose.get("readout_threshold_like") or temporal_readout.get("smooth_logits_with_sharp_accuracy"):
         label = "READOUT_THRESHOLD_LIKELY"
     elif temporal["train_observed_gain"] > 0 and temporal["ood_observed_gain"] > 0:
         label = "ORDINARY_FEATURE_LEARNING"
     else:
         label = "INSUFFICIENT_EVIDENCE"
 
+    evidence = competing_evidence(
+        label=label,
+        temporal=temporal,
+        dose=dose,
+        temporal_readout=temporal_readout,
+        representation=representation,
+        cfg=transition_cfg,
+    )
+
     payload = {
         "schema_version": "2.3.1",
         "diagnostic_label": label,
         "claim_policy": cfg["experiment"]["claim_policy"],
         "sealed_data_used": False,
+        "preregistered_thresholds": {
+            "train_progress_fraction": transition_cfg["train_progress_fraction"],
+            "ood_progress_fraction": transition_cfg["ood_progress_fraction"],
+            "minimum_plateau_intervals": transition_cfg["minimum_plateau_intervals"],
+            "minimum_observed_ood_gain_for_grokking_like": transition_cfg["minimum_observed_ood_gain_for_grokking_like"],
+            "minimum_delay_ratio_for_grokking_like": transition_cfg["minimum_delay_ratio_for_grokking_like"],
+            "reproduced_seed_count": transition_cfg["reproduced_seed_count"],
+            "memorization_minimum_train_gain": mem_train,
+            "readout_destination_dose_minimum": transition_cfg.get("readout_destination_dose_minimum", 0.75),
+            "critical_dose_progress_fraction": transition_cfg.get("critical_dose_progress_fraction", 0.5),
+            "critical_dose_absolute_floor": transition_cfg.get("critical_dose_absolute_floor", 0.01),
+            "temporal_readout_accuracy_jump_fraction_minimum": transition_cfg.get(
+                "temporal_readout_accuracy_jump_fraction_minimum", 0.5
+            ),
+        },
         "temporal": temporal,
+        "temporal_readout": temporal_readout,
         "sensitivity": sens,
         "dose_surface": dose,
         "factor_phase_diagram": factors,
@@ -242,6 +399,7 @@ def main() -> None:
         "representation": representation,
         "adapter_dynamics": adapter,
         "optimizer_dynamics": optimizer,
+        "competing_evidence": evidence,
     }
     write_json(args.output_json, payload)
     lines = [
@@ -262,9 +420,20 @@ def main() -> None:
         f"- Primary grokking-like criterion: `{temporal.get('grokking_like_under_primary_thresholds')}`",
         f"- Sensitivity positive fraction: `{sens.get('positive_fraction')}`",
         "",
-        "## Dose/readout evidence",
+        "## Temporal readout evidence",
         "",
-        f"- Readout-threshold-like: `{dose.get('readout_threshold_like')}`",
+        f"- Smooth logits with sharp accuracy: `{temporal_readout.get('smooth_logits_with_sharp_accuracy')}`",
+        f"- Largest OOD accuracy jump fraction of gain: `{temporal_readout.get('largest_ood_accuracy_jump_fraction_of_gain')}`",
+        f"- OOD margin linear R²: `{temporal_readout.get('ood_margin_linear_r2')}`",
+        f"- OOD NLL linear R²: `{temporal_readout.get('ood_nll_linear_r2')}`",
+        "",
+        "## Dose / critical-dose evidence",
+        "",
+        f"- Readout-threshold-like (final step): `{dose.get('readout_threshold_like')}`",
+        f"- Critical dose start → end: `{dose.get('critical_dose_start')}` → `{dose.get('critical_dose_end')}`",
+        f"- Critical-dose leftward shift: `{dose.get('critical_dose_leftward_shift')}`",
+        f"- Critical dose migrates left: `{dose.get('critical_dose_migrates_left')}`",
+        f"- Fixed high critical dose: `{dose.get('fixed_high_critical_dose')}`",
         f"- Largest OOD accuracy jump: `{dose.get('largest_ood_accuracy_jump')}`",
         f"- OOD logit-margin monotonic pair fraction: `{dose.get('ood_logit_margin_monotonic_pair_fraction')}`",
         "",
@@ -273,8 +442,14 @@ def main() -> None:
         f"- Representation precedes OOD transition: `{representation.get('representation_precedes_ood_transition')}`",
         f"- Delta norm near transition: `{adapter.get('delta_norm_at_or_near_ood_transition')}`",
         f"- Relative delta norm near transition: `{adapter.get('relative_delta_norm_at_or_near_ood_transition')}`",
+        f"- Delta singular max near transition: `{adapter.get('delta_singular_max_at_or_near_ood_transition')}`",
         f"- Slow/total gradient ratio before: `{optimizer.get('slow_to_total_ratio_before_transition_mean')}`",
         f"- Slow/total gradient ratio after: `{optimizer.get('slow_to_total_ratio_after_transition_mean')}`",
+        "",
+        "## Competing evidence",
+        "",
+        f"- Supporting patterns: `{evidence.get('supporting_patterns')}`",
+        f"- Contradicting patterns: `{evidence.get('contradicting_patterns')}`",
         "",
         "## Reproducibility",
         "",
