@@ -74,3 +74,12 @@ def test_v23_runner_is_end_to_end_and_uses_fresh_sealed_only():
     for token in ('Gold-verified residual','Anchored answerable-reasoning residual','Anchored procedural residual','[Dose]','Adapter interference map','Oracle routing upper bound','RunFreshSealedTest','fresh_sealed_selected','query_aware_v23'):
         assert token in text
     assert 'OriginalTest' not in text and 'V211Test' not in text
+
+def test_training_mix_caps_scarce_residual_and_backfills_preservation():
+    from scripts.phase_9_student_distillation.build_residual_training_mix_v23 import plan_mix_counts
+    # Matches the live mining outcome: 126 procedure residuals cannot supply 2400 draws at repeat<=8.
+    plan = plan_mix_counts(total=5000, residual_fraction=0.48, residual_pool=126, preservation_pool=1910, max_repeat=8)
+    assert plan['residual_rows_sampled'] == 126 * 8
+    assert plan['preservation_rows_sampled'] == 5000 - 126 * 8
+    assert plan['residual_capped_by_repeat'] is True
+    assert plan['total'] == 5000
