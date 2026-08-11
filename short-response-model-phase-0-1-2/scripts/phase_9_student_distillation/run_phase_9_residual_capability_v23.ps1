@@ -222,20 +222,68 @@ function Add-Candidate {
 $GreedyEval=Join-Path $OutputRoot "eval_greedy_anchor"; Eval-FullCandidate "[DEV/OOD] Greedy v2.2 anchor" $GreedyAnchorModel $GreedyEval; Add-Candidate "greedy_anchor" "baseline_v22_greedy" $GreedyAnchorModel $GreedyEval
 # Historical original anchor is evaluated for regression visibility but is not part of v2.3 selection.
 $HistoricalEval=Join-Path $OutputRoot "eval_historical_original_anchor"; Eval-FullCandidate "[DEV/OOD diagnostic] Historical original anchor" $OriginalAnchor $HistoricalEval
-if ($ReasoningWeight -gt 0 -and (Test-Path $ReasoningDoseModel)) { $e=Join-Path $OutputRoot "eval_best_reasoning_dose"; Eval-FullCandidate "[DEV/OOD] Best reasoning dose" $ReasoningDoseModel $e; Add-Candidate "best_reasoning_dose" "residual_reasoning" $ReasoningDoseModel $e }
-if ($ProcedureWeight -gt 0 -and (Test-Path $ProcedureDoseModel)) { $e=Join-Path $OutputRoot "eval_best_procedure_dose"; Eval-FullCandidate "[DEV/OOD] Best procedure dose" $ProcedureDoseModel $e; Add-Candidate "best_procedure_dose" "residual_procedure" $ProcedureDoseModel $e }
+
+# Production path: selected (possibly zero) doses. Research path: always keep full / best-nonzero
+# residual candidates when adapters exist, even if dose search retained weight 0.
+function Get-BestNonzeroWeight {
+    param([string]$DoseRoot,[double]$Fallback=1.0)
+    $path=Join-Path $DoseRoot "DOSE_SWEEP_RESULT.json"; if (-not (Test-Path $path)) { return $Fallback }
+    $data=Get-Content -Raw $path | ConvertFrom-Json
+    $cands=@(); if ($null -ne $data.final_selection) { $cands=$data.final_selection.candidates } elseif ($null -ne $data.coarse_selection) { $cands=$data.coarse_selection.candidates }
+    $best=$null; $bestMargin=-1e12
+    foreach ($c in $cands) {
+        if ([string]$c.name -eq "greedy_anchor") { continue }
+        $parts=([string]$c.name) -split "_"
+        $tag=$parts[-1]; if ($tag -notmatch "^\d+p\d+$") { continue }
+        $w=[double]($tag.Replace("p","."))
+        if ($w -le 0) { continue }
+        $m=[double]$c.policies.preservation_guarded.opportunity_margin
+        if ($m -gt $bestMargin) { $bestMargin=$m; $best=$w }
+    }
+    if ($null -eq $best) { return $Fallback }
+    return [double]$best
+}
+$ReasoningBestNonzero=Get-BestNonzeroWeight $ReasoningDoseRoot 1.0
+$ProcedureBestNonzero=Get-BestNonzeroWeight $ProcedureDoseRoot 1.0
+
+if ((Test-Path $ReasoningAdapter)) {
+    if ($ReasoningWeight -gt 0 -and (Test-Path $ReasoningDoseModel)) {
+        $e=Join-Path $OutputRoot "eval_best_reasoning_dose"; Eval-FullCandidate "[DEV/OOD] Best reasoning dose" $ReasoningDoseModel $e; Add-Candidate "best_reasoning_dose" "residual_reasoning" $ReasoningDoseModel $e
+    } else {
+        $m=Compose-Joint "reasoning_best_nonzero" $ReasoningBestNonzero 0.0
+        if ($null -ne $m) { $e=Join-Path $OutputRoot "eval_reasoning_best_nonzero"; Eval-FullCandidate "[DEV/OOD research] reasoning_best_nonzero" $m $e; Add-Candidate "reasoning_best_nonzero" "residual_reasoning" $m $e }
+    }
+    $mFull=Compose-Joint "reasoning_full" 1.0 0.0
+    if ($null -ne $mFull) { $e=Join-Path $OutputRoot "eval_reasoning_full"; Eval-FullCandidate "[DEV/OOD research] reasoning_full" $mFull $e; Add-Candidate "reasoning_full" "residual_reasoning" $mFull $e }
+}
+if ((Test-Path $ProcedureAdapter)) {
+    if ($ProcedureWeight -gt 0 -and (Test-Path $ProcedureDoseModel)) {
+        $e=Join-Path $OutputRoot "eval_best_procedure_dose"; Eval-FullCandidate "[DEV/OOD] Best procedure dose" $ProcedureDoseModel $e; Add-Candidate "best_procedure_dose" "residual_procedure" $ProcedureDoseModel $e
+    } else {
+        $m=Compose-Joint "procedure_best_nonzero" 0.0 $ProcedureBestNonzero
+        if ($null -ne $m) { $e=Join-Path $OutputRoot "eval_procedure_best_nonzero"; Eval-FullCandidate "[DEV/OOD research] procedure_best_nonzero" $m $e; Add-Candidate "procedure_best_nonzero" "residual_procedure" $m $e }
+    }
+    $mFull=Compose-Joint "procedure_full" 0.0 1.0
+    if ($null -ne $mFull) { $e=Join-Path $OutputRoot "eval_procedure_full"; Eval-FullCandidate "[DEV/OOD research] procedure_full" $mFull $e; Add-Candidate "procedure_full" "residual_procedure" $mFull $e }
+}
+
 $JointSpecs=@()
 if ($ReasoningWeight -gt 0 -or $ProcedureWeight -gt 0) {
     $JointSpecs += @([ordered]@{name="best_joint";rw=$ReasoningWeight;pw=$ProcedureWeight},[ordered]@{name="half_joint";rw=0.5*$ReasoningWeight;pw=0.5*$ProcedureWeight},[ordered]@{name="reasoning_full_procedure_half";rw=$ReasoningWeight;pw=0.5*$ProcedureWeight},[ordered]@{name="reasoning_half_procedure_full";rw=0.5*$ReasoningWeight;pw=$ProcedureWeight})
+} elseif ((Test-Path $ReasoningAdapter) -and (Test-Path $ProcedureAdapter)) {
+    # Research joint even when both dose searches retained zero.
+    $JointSpecs += @([ordered]@{name="best_rp_composition";rw=$ReasoningBestNonzero;pw=$ProcedureBestNonzero})
 }
 foreach ($j in $JointSpecs) {
-    if (($j.rw -le 0 -and $j.pw -le 0) -or ($j.rw -eq $ReasoningWeight -and $j.pw -eq 0) -or ($j.pw -eq $ProcedureWeight -and $j.rw -eq 0)) { continue }
+    if (($j.rw -le 0 -and $j.pw -le 0) -or ($j.rw -eq $ReasoningWeight -and $j.pw -eq 0 -and $ReasoningWeight -gt 0) -or ($j.pw -eq $ProcedureWeight -and $j.rw -eq 0 -and $ProcedureWeight -gt 0)) { continue }
     $m=Compose-Joint $j.name ([double]$j.rw) ([double]$j.pw); if ($null -ne $m) { $e=Join-Path $OutputRoot ("eval_"+$j.name); Eval-FullCandidate ("[DEV/OOD] Joint "+$j.name) $m $e; Add-Candidate $j.name "residual_joint_composition" $m $e }
 }
 
 $CandidatesManifest=Join-Path $OutputRoot "candidates_dev_v23.json"; @{schema_version="2.3";candidates=$Candidates} | ConvertTo-Json -Depth 12 | Set-Content $CandidatesManifest
 $SelectionJson=Join-Path $OutputRoot "residual_capability_v23_selection.json"; $SelectionMd=Join-Path $OutputRoot "RESIDUAL_CAPABILITY_V23_SELECTION.md"
 if (Should-Run $SelectionJson) { Invoke-PythonStep "[Select] v2.3 residual capability matrix / Pareto frontier" @(".\scripts\phase_9_student_distillation\select_residual_capability_v23.py","--config",$ConfigPath,"--candidates-manifest",$CandidatesManifest,"--output-json",$SelectionJson,"--output-md",$SelectionMd) }
+# Research matrix always retains rejected candidates with REJECTED_BY_POLICY for reporting.
+Invoke-PythonStep "[Select] v2.3.1 research matrix (rejected candidates retained)" @(".\scripts\phase_9_student_distillation\select_residual_capability_v231.py","--config",$ConfigPath,"--candidates-manifest",$CandidatesManifest,"--output-json",(Join-Path $OutputRoot "diagnostics_v231\research_matrix_v231.json"),"--output-md",(Join-Path $OutputRoot "diagnostics_v231\RESEARCH_MATRIX_V231.md"),"--also-copy-md",(Join-Path $OutputRoot "RESIDUAL_CAPABILITY_V23_RESEARCH_MATRIX.md"))
 $Selection=Get-Content -Raw $SelectionJson | ConvertFrom-Json
 Write-Host ""; Write-Host "DEV/OOD-selected v2.3 candidate: $($Selection.selected_candidate)"
 
@@ -248,9 +296,21 @@ if (-not $SkipDiagnostics) {
         $args=@(".\scripts\phase_9_student_distillation\analyze_adapter_interference_v23.py","--adapter",("residual_reasoning="+$ReasoningAdapter),"--adapter",("residual_procedure="+$ProcedureAdapter),"--adapter",("v22_abstention="+$AbstentionAdapter),"--adapter",("v22_track_b="+$TrackBAdapter),"--adapter",("v22_procedure="+$ProcedureTeacherAdapter),"--output-json",(Join-Path $diag "adapter_interference.json"),"--output-md",(Join-Path $diag "ADAPTER_INTERFERENCE.md"),"--top-fraction","$($Config.diagnostics.adapter_interference.top_fraction)")
         Invoke-PythonStep "[Diagnostics] Adapter interference map" $args
     }
-    $oracleArgs=@(".\scripts\phase_9_student_distillation\oracle_routing_upper_bound_v23.py","--direct",("greedy="+(Join-Path $GreedyEval "v23_direct\results.jsonl")),"--rag",("greedy="+(Join-Path $GreedyEval "v23_procedural_rag\results.jsonl")),"--output-json",(Join-Path $diag "oracle_routing_upper_bound.json"),"--output-md",(Join-Path $diag "ORACLE_ROUTING_UPPER_BOUND.md"))
-    if ($ReasoningWeight -gt 0) { $oracleArgs += @("--direct",("reasoning="+(Join-Path $OutputRoot "eval_best_reasoning_dose\v23_direct\results.jsonl")),"--rag",("reasoning="+(Join-Path $OutputRoot "eval_best_reasoning_dose\v23_procedural_rag\results.jsonl"))) }
-    if ($ProcedureWeight -gt 0) { $oracleArgs += @("--direct",("procedure="+(Join-Path $OutputRoot "eval_best_procedure_dose\v23_direct\results.jsonl")),"--rag",("procedure="+(Join-Path $OutputRoot "eval_best_procedure_dose\v23_procedural_rag\results.jsonl"))) }
+    # Multi-specialist oracle: greedy + discovery teachers + residual research candidates when present.
+    $oracleArgs=@(".\scripts\phase_9_student_distillation\oracle_routing_upper_bound_v23.py","--section-label","dev_and_available_specialists","--direct",("greedy="+(Join-Path $GreedyEval "v23_direct\results.jsonl")),"--rag",("greedy="+(Join-Path $GreedyEval "v23_procedural_rag\results.jsonl")),"--output-json",(Join-Path $diag "oracle_routing_upper_bound.json"),"--output-md",(Join-Path $diag "ORACLE_ROUTING_UPPER_BOUND.md"))
+    foreach ($pair in @(
+        @("track_a",(Join-Path $MiningRoot "direct_track_a\results.jsonl"),$null),
+        @("track_b",(Join-Path $MiningRoot "direct_track_b\results.jsonl"),(Join-Path $MiningRoot "rag_track_b\results.jsonl")),
+        @("procedure_teacher",(Join-Path $MiningRoot "direct_procedure_teacher\results.jsonl"),(Join-Path $MiningRoot "rag_procedure_teacher\results.jsonl"))
+    )) {
+        if (Test-Path $pair[1]) { $oracleArgs += @("--direct",($pair[0]+"="+$pair[1])) }
+        if ($null -ne $pair[2] -and (Test-Path $pair[2])) { $oracleArgs += @("--rag",($pair[0]+"="+$pair[2])) }
+    }
+    foreach ($name in @("best_reasoning_dose","reasoning_best_nonzero","reasoning_full","best_procedure_dose","procedure_best_nonzero","procedure_full","best_rp_composition","best_joint")) {
+        $d=Join-Path $OutputRoot ("eval_"+$name+"\v23_direct\results.jsonl"); $r=Join-Path $OutputRoot ("eval_"+$name+"\v23_procedural_rag\results.jsonl")
+        if (Test-Path $d) { $oracleArgs += @("--direct",($name+"="+$d)) }
+        if (Test-Path $r) { $oracleArgs += @("--rag",($name+"="+$r)) }
+    }
     Invoke-PythonStep "[Diagnostics] Oracle routing upper bound" $oracleArgs
 }
 

@@ -15,6 +15,15 @@ The release adds a fresh 24,300-row structural-OOD direct corpus, a fresh 7,200-
 
 Review `RESIDUAL_CAPABILITY_V2_3.md` before running. Do not use `-RunFreshSealedTest` until one DEV/OOD candidate is frozen.
 
+**v2.3.1 diagnostic-completion** (no retrain; keeps rejected residuals visible for research while production can still select greedy):
+
+```powershell
+.\scripts\phase_9_student_distillation\run_residual_diagnostics_v231.ps1 `
+  -V23Root ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda `
+  -ReuseExisting
+```
+
 ---
 
 # v2.1.1 — Preservation-First Procedural Recovery

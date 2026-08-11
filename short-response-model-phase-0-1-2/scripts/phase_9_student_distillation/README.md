@@ -11,6 +11,19 @@ v2.3 starts from the **materialized v2.2 greedy_soup** rather than continuing br
 
 The v2.2 sealed TEST is consumed. The first run never uses it and should not pass `-RunFreshSealedTest`. Full design: repository-root `RESIDUAL_CAPABILITY_V2_3.md`.
 
+### v2.3.1 diagnostic-completion (no retrain)
+
+If dose search retained weight 0 and the final matrix/oracle collapsed to greedy-only, complete research diagnostics without retraining:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_residual_diagnostics_v231.ps1 `
+  -V23Root ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda `
+  -ReuseExisting
+```
+
+This rematerializes rejected residual doses from retained LoRAs, keeps them in the research matrix as `REJECTED_BY_POLICY`, rebuilds a multi-specialist oracle (including answerable-only), and writes teacher-overlap + dose-ladder reports under `diagnostics_v231/`. Production selection remains `greedy_anchor` when policy says so.
+
 ---
 
 ## v2.1.1 preservation-first procedural recovery

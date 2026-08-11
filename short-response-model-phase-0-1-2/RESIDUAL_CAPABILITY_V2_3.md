@@ -249,7 +249,26 @@ This is descriptive/mechanistic evidence, not a promotion score.
 
 v2.3 also reports a non-production upper bound that selects the correct candidate per example if any evaluated specialist gets the case right. It answers: are remaining limitations mainly in the individual specialists, or in composition/routing?
 
+The oracle roster must include the greedy anchor, discovery teachers (Track A / Track B / procedure), residual full-strength adapters, and best-nonzero residual doses when those artifacts exist. An answerable-only oracle is also reported so abstention success cannot inflate the routing ceiling.
+
 The oracle router is diagnostic only; v2.3 does not change production inference into a multi-model ensemble.
+
+## v2.3.1 diagnostic-completion hotfix
+
+If a dose search retains weight `0.0`, production selection correctly keeps `greedy_anchor`, but research reporting must still retain rejected residuals (`reasoning_full`, `procedure_full`, best-nonzero doses, best R+P composition) with status `REJECTED_BY_POLICY` rather than dropping them from the matrix.
+
+Run the no-retrain hotfix against an existing v2.3 artifact root:
+
+```powershell
+.\scripts\phase_9_student_distillation\run_residual_diagnostics_v231.ps1 `
+  -V23Root ".\artifacts\phase_9_residual_capability_v23" `
+  -RequireCuda `
+  -ReuseExisting
+```
+
+Use `-SkipGpu` to regenerate CPU reports (dose ladders, teacher overlap, probe-backed research matrix) without rematerializing models. Full apples-to-apples DEV/OOD packets require the GPU path.
+
+Outputs land under `artifacts/phase_9_residual_capability_v23/diagnostics_v231/` and `RESIDUAL_CAPABILITY_V23_RESEARCH_MATRIX.md`. Production `residual_capability_v23_selection.json` remains `GREEDY_ANCHOR_RETAINED` while gaining a `research_diagnostics_ref` pointer.
 
 ## Sealed-data policy
 

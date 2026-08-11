@@ -2,7 +2,8 @@
 
 | File | Responsibility | Important contract |
 |---|---|---|
-| `run_phase_9_residual_capability_v23.ps1` | Unattended v2.3 discovery -> mining -> R/P training -> dose -> composition -> DEV/OOD selection -> optional fresh sealed workflow. | Old v2.2 TEST is never assigned; fresh sealed is opt-in only. |
+| `run_phase_9_residual_capability_v23.ps1` | Unattended v2.3 discovery -> mining -> R/P training -> dose -> composition -> DEV/OOD selection -> optional fresh sealed workflow. | Old v2.2 TEST is never assigned; fresh sealed is opt-in only. Always retains research residual candidates even when dose weight is 0. |
+| `run_residual_diagnostics_v231.ps1` / `run_residual_diagnostics_v231.py` | No-retrain v2.3.1 diagnostic-completion: rematerialize rejected doses, research matrix, multi-specialist oracle, teacher overlap, dose ladders. | Production winner unchanged; REJECTED_BY_POLICY retained for research. |
 | `generate_residual_discovery_v23.py` | Creates 24,300 structurally held-out direct reasoning cases. | Split-disjoint representation families; compact gold only. |
 | `generate_residual_procedural_rag_v23.py` | Creates 7,200 fresh procedural Real-RAG cases + knowledge/procedures/calibration subset. | Topic families never cross splits. |
 | `validate_residual_capability_v23.py` | Validates both fresh corpora and manifests. | Fails on split leakage, malformed targets, count/coverage issues. |
@@ -16,8 +17,11 @@
 | `compose_residual_adapters_v23.py` | Exact weighted R/P LoRA delta composition over greedy anchor. | Writes reproducible composition manifest. |
 | `evaluate_candidate_v23.py` | Runs one candidate across original RAG, historical procedure, fresh v2.3 RAG, direct DEV/OOD, and diagnostic continuity sets. | Historical and fresh retrieval policies are kept distinct. |
 | `select_residual_capability_v23.py` | Produces final DEV/OOD matrix, Pareto frontier, and official selection. | Missing protected/primary evidence is technical invalidity. |
+| `select_residual_capability_v231.py` | Research matrix with REJECTED_BY_POLICY status, coverage triad, and preservation-cost decomposition. | Does not change production winner. |
+| `aggregate_dose_ladders_v231.py` | CPU aggregation of retained dose-probe summaries (incl. procedural DEV/OOD). | Probe vs full-eval scopes labeled. |
+| `analyze_teacher_overlap_v231.py` | Teacher unique / pairwise / three-way overlap on discovery answerable cases. | Diagnostic only. |
 | `analyze_adapter_interference_v23.py` | Measures LoRA delta norm/cosine/sign/top-magnitude/per-layer overlap. | Diagnostic only; not a hidden selection gate. |
-| `oracle_routing_upper_bound_v23.py` | Reports per-case best-of candidate ceiling. | Diagnostic upper bound, not production routing. |
+| `oracle_routing_upper_bound_v23.py` | Reports per-case best-of candidate ceiling plus answerable-only direct union and overlap stats. | Diagnostic upper bound, not production routing. |
 | `phase9_common.py` / RAG CLI extensions | Adds `query_aware_v23` explicit-locator fail-closed behavior. | `query_aware_v21` historical behavior is preserved. |
 | `configs/phase_9_residual_capability_v23.json` | Single v2.3 data/training/dose/evaluation/selection policy. | Versioned source of defaults and safety bounds. |
 | `data/.../residual_capability_v23/` | Fresh direct + fresh procedural corpora and sealed registry. | v2.2 sealed TEST is marked consumed. |
