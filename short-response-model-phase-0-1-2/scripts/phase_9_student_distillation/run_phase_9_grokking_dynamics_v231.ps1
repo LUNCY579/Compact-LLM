@@ -29,9 +29,9 @@ $ParentVenv = Join-Path (Split-Path $Root -Parent) ".venv\Scripts\python.exe"
 if (Test-Path $LocalVenv) { $Python = $LocalVenv }
 elseif (Test-Path $ParentVenv) { $Python = $ParentVenv }
 
-function Invoke-PythonStep([string]$Label, [object[]]$Args) {
+function Invoke-PythonStep([string]$Label, [object[]]$Arguments) {
     Write-Host ""; Write-Host "=== $Label ===" -ForegroundColor Cyan
-    & $Python @Args | Out-Host
+    & $Python @Arguments | Out-Host
     if ($LASTEXITCODE -ne 0) { throw "$Label failed with exit code $LASTEXITCODE" }
 }
 function Ensure-Path([string]$Path, [string]$Label) {
