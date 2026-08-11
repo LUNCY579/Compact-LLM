@@ -35,7 +35,7 @@ function Invoke-PythonStep([string]$Label, [object[]]$Args) {
     if ($LASTEXITCODE -ne 0) { throw "$Label failed with exit code $LASTEXITCODE" }
 }
 function Ensure-Path([string]$Path, [string]$Label) {
-    if (-not (Test-Path $Path)) { throw "Missing $Label: $Path" }
+    if (-not (Test-Path $Path)) { throw "Missing ${Label}: $Path" }
 }
 function Latest-Checkpoint([string]$RootPath) {
     $root = Join-Path $RootPath "checkpoints"
