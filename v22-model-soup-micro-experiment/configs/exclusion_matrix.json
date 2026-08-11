@@ -1,0 +1,66 @@
+{
+  "schema_version": "0.1",
+  "official_root": "../short-response-model-phase-0-1-2",
+  "v22_run_root": "../short-response-model-phase-0-1-2/artifacts/phase_9_capability_composition_v22_lr1e4_s1200",
+  "rationale": {
+    "toxic_from_v22_selection": {
+      "track_a_broad": "margin ~-3.43",
+      "specialist_general": "margin ~-3.34",
+      "layer_separated": "margin ~-2.27"
+    },
+    "specialist_procedure": "Only non-zero procedural-challenge score in v2.2 DEV table, but large negative overall margin; toggled independently."
+  },
+  "always_include": {
+    "adapters": [
+      "track_b_anchored_reasoning/adapter",
+      "track_c_abstention/adapter",
+      "track_c_grounding/adapter",
+      "track_c_social/adapter"
+    ],
+    "full_models": []
+  },
+  "toxic_candidates": {
+    "track_a_broad": { "kind": "adapter", "path": "track_a_broad_reasoning/adapter" },
+    "specialist_general": { "kind": "adapter", "path": "track_c_general/adapter" },
+    "layer_separated": { "kind": "full_model", "path": "track_d_layer_separated_merge/model" }
+  },
+  "optional_procedure": {
+    "name": "specialist_procedure",
+    "kind": "adapter",
+    "path": "track_c_procedure/adapter"
+  },
+  "exclusion_modes": [
+    {
+      "id": "drop_layer_separated",
+      "exclude": ["layer_separated"],
+      "description": "Keep track_a_broad + specialist_general; drop layer_separated only"
+    },
+    {
+      "id": "drop_track_a",
+      "exclude": ["track_a_broad"],
+      "description": "Keep layer_separated + specialist_general; drop track_a_broad only"
+    },
+    {
+      "id": "drop_specialist_general",
+      "exclude": ["specialist_general"],
+      "description": "Keep layer_separated + track_a_broad; drop specialist_general only"
+    },
+    {
+      "id": "drop_all_toxic",
+      "exclude": ["layer_separated", "track_a_broad", "specialist_general"],
+      "description": "Drop all three large negative-margin candidates"
+    }
+  ],
+  "procedure_modes": [
+    { "id": "proc_yes", "include_procedure": true },
+    { "id": "proc_no", "include_procedure": false }
+  ],
+  "merge": {
+    "method": "uniform_full_checkpoint_average",
+    "note": "Materialize included LoRAs onto frozen_anchor, optionally add layer_separated full checkpoint, then uniform-average all resulting dense models (Wortsman / Phase-4-equivalent among same-base adapters)."
+  },
+  "eval": {
+    "default_limit": 48,
+    "benchmarks_key": "smoke_benchmarks"
+  }
+}

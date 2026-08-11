@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-"""CPU smoke eval over specialist-mean dose candidates."""
+"""CPU eval over specialist-mean dose candidates (smoke or full official DEV)."""
 
 import argparse
 import json
@@ -20,6 +20,13 @@ ABSTAIN = "I don't know based on the available information."
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return [json.loads(line) for line in path.read_text(encoding="utf-8-sig").splitlines() if line.strip()]
+
+
+def append_jsonl(path: Path, row: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("a", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
+        f.flush()
 
 
 def norm(text: str) -> str:
@@ -86,31 +93,7 @@ def rate(values: list[bool]) -> float | None:
     return sum(values) / len(values) if values else None
 
 
-def evaluate_one(model_dir: Path, benchmark: Path, limit: int, max_new: int) -> dict[str, Any]:
-    rows = read_jsonl(benchmark)[:limit]
-    model, tok = load_model(model_dir)
-    results: list[dict[str, Any]] = []
-    for idx, row in enumerate(rows, 1):
-        msgs = [dict(m) for m in (row.get("messages") or [])]
-        if not msgs or msgs[-1].get("role") != "assistant":
-            raise ValueError(f"row missing assistant target: {row.get('id')}")
-        answer, toks, sec = generate(model, tok, msgs[:-1], max_new)
-        decision = str(row.get("decision") or "answer")
-        results.append(
-            {
-                "id": str(row.get("id") or idx),
-                "decision": decision,
-                "correct": correct(answer, row),
-                "abstained": is_abstain(answer),
-                "answer": answer,
-                "gold": row.get("approved_answer"),
-                "generated_tokens": toks,
-                "generation_seconds": sec,
-            }
-        )
-        if idx % 10 == 0:
-            print(f"  {model_dir.name}: {idx}/{len(rows)}", flush=True)
-    del model
+def summarize(results: list[dict[str, Any]], model_dir: Path, benchmark: Path) -> dict[str, Any]:
     answerable = [r for r in results if r["decision"] == "answer"]
     abstain = [r for r in results if r["decision"] != "answer"]
     return {
@@ -122,8 +105,94 @@ def evaluate_one(model_dir: Path, benchmark: Path, limit: int, max_new: int) -> 
         "abstention_correctness": rate([bool(r["correct"]) for r in abstain]),
         "false_abstention_rate": rate([bool(r["abstained"]) for r in answerable]),
         "mean_generation_seconds": statistics.mean(r["generation_seconds"] for r in results) if results else None,
-        "results": results,
     }
+
+
+def evaluate_one(
+    model_dir: Path,
+    benchmark: Path,
+    dest: Path,
+    *,
+    limit: int | None,
+    max_new: int,
+    resume: bool,
+) -> dict[str, Any]:
+    rows = read_jsonl(benchmark)
+    if limit is not None:
+        rows = rows[:limit]
+    dest.mkdir(parents=True, exist_ok=True)
+    results_path = dest / "results.jsonl"
+    done: dict[str, dict[str, Any]] = {}
+    if resume and results_path.exists():
+        done = {str(r.get("id")): r for r in read_jsonl(results_path)}
+    elif results_path.exists():
+        results_path.unlink()
+
+    need_model = any(str(row.get("id") or idx) not in done for idx, row in enumerate(rows, 1))
+    model = tok = None
+    if need_model:
+        model, tok = load_model(model_dir)
+
+    results: list[dict[str, Any]] = []
+    for idx, row in enumerate(rows, 1):
+        rid = str(row.get("id") or idx)
+        if rid in done:
+            results.append(done[rid])
+            continue
+        assert model is not None and tok is not None
+        msgs = [dict(m) for m in (row.get("messages") or [])]
+        if not msgs or msgs[-1].get("role") != "assistant":
+            raise ValueError(f"row missing assistant target: {rid}")
+        answer, toks, sec = generate(model, tok, msgs[:-1], max_new)
+        decision = str(row.get("decision") or "answer")
+        pack = {
+            "id": rid,
+            "decision": decision,
+            "correct": correct(answer, row),
+            "abstained": is_abstain(answer),
+            "answer": answer,
+            "gold": row.get("approved_answer"),
+            "domain": row.get("domain"),
+            "difficulty": row.get("difficulty"),
+            "generated_tokens": toks,
+            "generation_seconds": sec,
+        }
+        append_jsonl(results_path, pack)
+        results.append(pack)
+        if idx % 50 == 0 or idx == len(rows):
+            print(f"  {model_dir.name}: {idx}/{len(rows)} (done={len(results)})", flush=True)
+
+    if model is not None:
+        del model
+    packet = summarize(results, model_dir, benchmark)
+    (dest / "summary.json").write_text(json.dumps(packet, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return packet
+
+
+def write_comparison(out_root: Path, matrix: dict[str, Any], limit: int | None, mode: str) -> None:
+    (out_root / "FULL_COMPARISON.json" if mode == "full" else out_root / "SMOKE_COMPARISON.json").write_text(
+        json.dumps(matrix, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    title = "Specialist-mean dose-sweep FULL DEV comparison" if mode == "full" else "Specialist-mean dose-sweep smoke comparison"
+    out_name = "FULL_COMPARISON.md" if mode == "full" else "SMOKE_COMPARISON.md"
+    lines = [
+        f"# {title}",
+        "",
+        f"- Device: CPU",
+        f"- Mode: {mode}",
+        f"- Limit: {'ALL' if limit is None else limit}",
+        f"- Merge backend: official Phase 4 `merge_delta_soup.py`",
+        "",
+        "| Benchmark | Candidate | Cases | Overall | Answerable | Abstention |",
+        "|---|---|---:|---:|---:|---:|",
+    ]
+    for bench_name, cands in matrix["benchmarks"].items():
+        for cand_name, packet in cands.items():
+            lines.append(
+                f"| {bench_name} | {cand_name} | {packet.get('case_count')} | {packet.get('overall_correctness')} | "
+                f"{packet.get('answerable_correctness')} | {packet.get('abstention_correctness')} |"
+            )
+    (out_root / out_name).write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
 def main() -> None:
@@ -131,60 +200,73 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--config", type=Path, default=ROOT / "configs" / "dose_sweep.json")
     p.add_argument("--artifacts", type=Path, default=ROOT / "artifacts")
-    p.add_argument("--limit", type=int, default=24)
+    p.add_argument("--limit", type=int, default=None, help="Row cap per benchmark. Omit / use with --full for complete DEV.")
+    p.add_argument("--full", action="store_true", help="Use configs.full_benchmarks and write under full_eval/.")
+    p.add_argument("--resume", action="store_true", help="Resume incomplete results.jsonl files.")
+    p.add_argument("--benchmark", action="append", dest="benchmarks", help="Optional subset of benchmark names.")
+    p.add_argument("--candidate", action="append", dest="candidates", help="Optional subset of candidate names.")
     p.add_argument("--max-new-tokens", type=int, default=32)
     args = p.parse_args()
+
     cfg = json.loads(args.config.read_text(encoding="utf-8"))
     official = (ROOT / cfg["official_root"]).resolve()
     v22 = (ROOT / cfg["v22_run_root"]).resolve()
     build = json.loads((args.artifacts / "DOSE_BUILD_SUMMARY.json").read_text(encoding="utf-8"))
 
-    candidates = {
+    mode = "full" if args.full else "smoke"
+    bench_map = cfg["full_benchmarks"] if args.full else cfg["smoke_benchmarks"]
+    if args.full and args.limit is not None:
+        raise SystemExit("Do not pass --limit with --full; full mode uses complete DEV sets.")
+    limit = None if args.full else (24 if args.limit is None else args.limit)
+
+    all_candidates = {
         "greedy_soup": str(v22 / cfg["ingredients"]["greedy_soup"]),
         **build["doses"],
     }
-    benchmarks = {
-        name: official / rel for name, rel in cfg["smoke_benchmarks"].items() if (official / rel).exists()
-    }
-    out_root = args.artifacts / "smoke_eval"
+    if args.candidates:
+        missing = [name for name in args.candidates if name not in all_candidates]
+        if missing:
+            raise SystemExit(f"Unknown candidates: {missing}. Available: {sorted(all_candidates)}")
+        candidates = {name: all_candidates[name] for name in args.candidates}
+    else:
+        candidates = all_candidates
+
+    benchmarks = {name: official / rel for name, rel in bench_map.items() if (official / rel).exists()}
+    if args.benchmarks:
+        benchmarks = {name: benchmarks[name] for name in args.benchmarks if name in benchmarks}
+        if not benchmarks:
+            raise SystemExit(f"No matching benchmarks. Available: {sorted(bench_map)}")
+
+    out_root = args.artifacts / ("full_eval" if args.full else "smoke_eval")
     out_root.mkdir(parents=True, exist_ok=True)
-    matrix: dict[str, Any] = {"limit": args.limit, "device": "cpu", "benchmarks": {}}
+    matrix: dict[str, Any] = {
+        "mode": mode,
+        "limit": limit,
+        "device": "cpu",
+        "resume": bool(args.resume),
+        "benchmarks": {},
+    }
 
     for bench_name, bench_path in benchmarks.items():
-        print(f"\n=== {bench_name} ===", flush=True)
+        n_rows = len(read_jsonl(bench_path)) if limit is None else min(limit, len(read_jsonl(bench_path)))
+        print(f"\n=== {bench_name} ({bench_path.name}, target_rows={n_rows}) ===", flush=True)
         matrix["benchmarks"][bench_name] = {}
         for cand_name, cand_path in candidates.items():
             path = Path(cand_path)
-            print(f"candidate {cand_name}", flush=True)
-            packet = evaluate_one(path, bench_path, args.limit, args.max_new_tokens)
-            results = packet.pop("results")
+            print(f"candidate {cand_name} <- {path}", flush=True)
             dest = out_root / bench_name / cand_name
-            dest.mkdir(parents=True, exist_ok=True)
-            (dest / "summary.json").write_text(json.dumps(packet, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-            (dest / "results.jsonl").write_text(
-                "\n".join(json.dumps(r, ensure_ascii=False, sort_keys=True) for r in results) + "\n",
-                encoding="utf-8",
+            packet = evaluate_one(
+                path,
+                bench_path,
+                dest,
+                limit=limit,
+                max_new=args.max_new_tokens,
+                resume=bool(args.resume),
             )
             matrix["benchmarks"][bench_name][cand_name] = packet
+            write_comparison(out_root, matrix, limit, mode)
 
-    (out_root / "SMOKE_COMPARISON.json").write_text(json.dumps(matrix, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    lines = [
-        "# Specialist-mean dose-sweep smoke comparison",
-        "",
-        f"- Device: CPU",
-        f"- Limit: {args.limit}",
-        f"- Merge backend: official Phase 4 `merge_delta_soup.py`",
-        "",
-        "| Benchmark | Candidate | Overall | Answerable | Abstention |",
-        "|---|---|---:|---:|---:|",
-    ]
-    for bench_name, cands in matrix["benchmarks"].items():
-        for cand_name, packet in cands.items():
-            lines.append(
-                f"| {bench_name} | {cand_name} | {packet.get('overall_correctness')} | "
-                f"{packet.get('answerable_correctness')} | {packet.get('abstention_correctness')} |"
-            )
-    (out_root / "SMOKE_COMPARISON.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
+    write_comparison(out_root, matrix, limit, mode)
     print(json.dumps(matrix, indent=2, sort_keys=True))
 
 
