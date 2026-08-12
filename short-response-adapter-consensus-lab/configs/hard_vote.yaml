@@ -1,0 +1,41 @@
+name: v22_hard_vote_primary
+backbone: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor
+experts:
+  - name: backbone
+    adapter: null
+  - name: track_a
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter
+  - name: track_b
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter
+  - name: general
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter
+  - name: grounding
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter
+  - name: procedure
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter
+  - name: abstention
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter
+  - name: social
+    adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter
+committees:
+  - {name: backbone_k1, experts: [backbone], role: baseline}
+  - {name: track_a_k1, experts: [track_a], role: individual}
+  - {name: track_b_k1, experts: [track_b], role: individual}
+  - {name: general_k1, experts: [general], role: individual}
+  - {name: grounding_k1, experts: [grounding], role: individual}
+  - {name: procedure_k1, experts: [procedure], role: individual}
+  - {name: abstention_k1, experts: [abstention], role: individual}
+  - {name: social_k1, experts: [social], role: individual}
+  - {name: complement_k2, experts: [general, abstention], role: even_k_tie_control}
+  - {name: specialist_k3, experts: [general, grounding, abstention], role: primary_pilot}
+  - {name: specialist_k5, experts: [general, grounding, procedure, abstention, social], role: specialty_diversity}
+  - {name: full_k7, experts: [track_a, track_b, general, grounding, procedure, abstention, social], role: committee_size_sweep}
+methods: [hard_plurality]
+datasets:
+  v22_dev: data/phase_9_student_distillation/multidomain_reasoning_v22/reviewed_splits/dev.reviewed.jsonl
+  v212_dev: data/phase_9_student_distillation/general_reasoning_v212/reviewed_splits/dev.reviewed.jsonl
+max_sequence_length: 512
+max_new_tokens: 32
+cache_mode: reference
+eos_policy: ordinary
+seed: 20260811

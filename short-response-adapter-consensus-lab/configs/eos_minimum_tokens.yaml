@@ -1,0 +1,19 @@
+name: v22_eos_minimum_tokens
+backbone: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor
+experts:
+  - {name: general, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter}
+  - {name: grounding, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter}
+  - {name: procedure, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter}
+  - {name: abstention, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter}
+  - {name: social, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter}
+committees:
+  - {name: specialist_k5, experts: [general, grounding, procedure, abstention, social], role: eos_ablation}
+methods: [hard_plurality]
+datasets:
+  v22_dev: data/phase_9_student_distillation/multidomain_reasoning_v22/reviewed_splits/dev.reviewed.jsonl
+max_sequence_length: 512
+max_new_tokens: 32
+cache_mode: reference
+eos_policy: minimum_tokens
+minimum_tokens: 3
+seed: 20260811

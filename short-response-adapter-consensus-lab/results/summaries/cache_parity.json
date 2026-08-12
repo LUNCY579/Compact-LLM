@@ -1,0 +1,273 @@
+{
+  "claim": "separate_cache is decision-equivalent to full-prefix reference on the tested packet",
+  "committee_names": [
+    "backbone_k1",
+    "specialist_k3"
+  ],
+  "comparison_count": 8,
+  "comparisons": [
+    {
+      "cached_latency_seconds": 2.1014523999983794,
+      "cached_output": "Matter 1.4.",
+      "cached_tokens": [
+        44,
+        1650,
+        220,
+        16,
+        13,
+        19,
+        13,
+        151645
+      ],
+      "committee": "backbone_k1",
+      "dataset": "v22_dev",
+      "decision_trace_match": true,
+      "example_id": "v22_agents_conflicting_evidence_0080",
+      "experts": [
+        "backbone"
+      ],
+      "reference_latency_seconds": 2.59152819999872,
+      "reference_output": "Matter 1.4.",
+      "reference_tokens": [
+        44,
+        1650,
+        220,
+        16,
+        13,
+        19,
+        13,
+        151645
+      ],
+      "token_match": true
+    },
+    {
+      "cached_latency_seconds": 0.2199003999994602,
+      "cached_output": "Belame Birch.",
+      "cached_tokens": [
+        21666,
+        373,
+        86988,
+        13,
+        151645
+      ],
+      "committee": "backbone_k1",
+      "dataset": "v22_dev",
+      "decision_trace_match": false,
+      "example_id": "v22_coaching_conflicting_evidence_0081",
+      "experts": [
+        "backbone"
+      ],
+      "reference_latency_seconds": 0.13453579999986687,
+      "reference_output": "Bel.",
+      "reference_tokens": [
+        21666,
+        13,
+        151645
+      ],
+      "token_match": false
+    },
+    {
+      "cached_latency_seconds": 0.4506208999991941,
+      "cached_output": "Thread 1..",
+      "cached_tokens": [
+        6855,
+        220,
+        16,
+        13,
+        13,
+        151645
+      ],
+      "committee": "backbone_k1",
+      "dataset": "v22_dev",
+      "decision_trace_match": true,
+      "example_id": "v22_coding_conflicting_evidence_0080",
+      "experts": [
+        "backbone"
+      ],
+      "reference_latency_seconds": 1.761485500002891,
+      "reference_output": "Thread 1..",
+      "reference_tokens": [
+        6855,
+        220,
+        16,
+        13,
+        13,
+        151645
+      ],
+      "token_match": true
+    },
+    {
+      "cached_latency_seconds": 1.829175099999702,
+      "cached_output": "The 1..",
+      "cached_tokens": [
+        785,
+        220,
+        16,
+        13,
+        13,
+        151645
+      ],
+      "committee": "backbone_k1",
+      "dataset": "v22_dev",
+      "decision_trace_match": true,
+      "example_id": "v22_business_conflicting_evidence_0081",
+      "experts": [
+        "backbone"
+      ],
+      "reference_latency_seconds": 0.3177088000011281,
+      "reference_output": "The 1..",
+      "reference_tokens": [
+        785,
+        220,
+        16,
+        13,
+        13,
+        151645
+      ],
+      "token_match": true
+    },
+    {
+      "cached_latency_seconds": 2.438012999999046,
+      "cached_output": "System-Boot.",
+      "cached_tokens": [
+        2320,
+        12,
+        17919,
+        13,
+        151645
+      ],
+      "committee": "specialist_k3",
+      "dataset": "v22_dev",
+      "decision_trace_match": false,
+      "example_id": "v22_agents_conflicting_evidence_0080",
+      "experts": [
+        "general",
+        "grounding",
+        "abstention"
+      ],
+      "reference_latency_seconds": 2.4838600999974005,
+      "reference_output": "System-Won.",
+      "reference_tokens": [
+        2320,
+        12,
+        54,
+        263,
+        13,
+        151645
+      ],
+      "token_match": false
+    },
+    {
+      "cached_latency_seconds": 2.438823799999227,
+      "cached_output": "System-Boot.",
+      "cached_tokens": [
+        2320,
+        12,
+        17919,
+        13,
+        151645
+      ],
+      "committee": "specialist_k3",
+      "dataset": "v22_dev",
+      "decision_trace_match": true,
+      "example_id": "v22_coaching_conflicting_evidence_0081",
+      "experts": [
+        "general",
+        "grounding",
+        "abstention"
+      ],
+      "reference_latency_seconds": 2.4289817000026233,
+      "reference_output": "System-Boot.",
+      "reference_tokens": [
+        2320,
+        12,
+        17919,
+        13,
+        151645
+      ],
+      "token_match": true
+    },
+    {
+      "cached_latency_seconds": 6.1605092999998305,
+      "cached_output": "I don't know based on the available information.",
+      "cached_tokens": [
+        40,
+        1513,
+        944,
+        1414,
+        3118,
+        389,
+        279,
+        2500,
+        1995,
+        13,
+        151645
+      ],
+      "committee": "specialist_k3",
+      "dataset": "v22_dev",
+      "decision_trace_match": false,
+      "example_id": "v22_coding_conflicting_evidence_0080",
+      "experts": [
+        "general",
+        "grounding",
+        "abstention"
+      ],
+      "reference_latency_seconds": 4.754721900000732,
+      "reference_output": "I don't know based on the available information.",
+      "reference_tokens": [
+        40,
+        1513,
+        944,
+        1414,
+        3118,
+        389,
+        279,
+        2500,
+        1995,
+        13,
+        151645
+      ],
+      "token_match": true
+    },
+    {
+      "cached_latency_seconds": 2.250987300001725,
+      "cached_output": "System-ble.",
+      "cached_tokens": [
+        2320,
+        12,
+        891,
+        13,
+        151645
+      ],
+      "committee": "specialist_k3",
+      "dataset": "v22_dev",
+      "decision_trace_match": true,
+      "example_id": "v22_business_conflicting_evidence_0081",
+      "experts": [
+        "general",
+        "grounding",
+        "abstention"
+      ],
+      "reference_latency_seconds": 2.248301999999967,
+      "reference_output": "System-ble.",
+      "reference_tokens": [
+        2320,
+        12,
+        891,
+        13,
+        151645
+      ],
+      "token_match": true
+    }
+  ],
+  "config": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\hard_vote.yaml",
+  "config_sha256": "f9b53a9b6099bf79c75b34cf243694e37a94e854b1468de7081e511da5e32766",
+  "dataset": "v22_dev",
+  "decision_trace_match_rate": 0.625,
+  "device": "cuda:0",
+  "example_count_per_committee": 4,
+  "precision": "auto",
+  "schema_version": "1.0",
+  "status": "FAIL",
+  "token_match_rate": 0.75
+}

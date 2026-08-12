@@ -1,0 +1,31 @@
+name: v22_fusion_comparators
+backbone: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor
+experts:
+  - {name: track_a, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter, validation_weight: 0.2588, temperature: 1.0}
+  - {name: track_b, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter, validation_weight: 0.2365, temperature: 0.8}
+  - {name: general, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter, validation_weight: 0.1926, temperature: 1.0}
+  - {name: grounding, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter, validation_weight: 0.0736, temperature: 1.25}
+  - {name: procedure, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter, validation_weight: 0.0798, temperature: 1.5}
+  - {name: abstention, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter, validation_weight: 0.1333, temperature: 1.5}
+  - {name: social, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter, validation_weight: 0.0005, temperature: 1.25}
+committees:
+  - {name: specialist_k3, experts: [general, grounding, abstention], role: primary_pilot}
+  - {name: specialist_k5, experts: [general, grounding, procedure, abstention, social], role: specialty_diversity}
+  - {name: full_k7, experts: [track_a, track_b, general, grounding, procedure, abstention, social], role: committee_size_finalist}
+methods:
+  - hard_plurality
+  - weighted_hard
+  - probability_mean
+  - logit_mean
+  - calibrated_logit_mean
+  - confidence_weighted_probability
+  - confidence_weighted_logit
+  - sequence_medoid
+datasets:
+  v22_dev: data/phase_9_student_distillation/multidomain_reasoning_v22/reviewed_splits/dev.reviewed.jsonl
+  v212_dev: data/phase_9_student_distillation/general_reasoning_v212/reviewed_splits/dev.reviewed.jsonl
+max_sequence_length: 512
+max_new_tokens: 32
+cache_mode: reference
+eos_policy: ordinary
+seed: 20260811

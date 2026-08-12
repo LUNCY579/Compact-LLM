@@ -1,0 +1,26 @@
+name: v22_negative_controls
+backbone: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor
+experts:
+  - {name: track_a_random_proxy, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter}
+  - {name: track_b_random_proxy, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter}
+  - {name: general, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter}
+  - {name: general_copy_2, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter}
+  - {name: general_copy_3, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter}
+  - {name: grounding, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter}
+  - {name: social_weak, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter}
+  - {name: social_sharp, adapter: artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter, logit_scale: 5.0}
+committees:
+  - {name: general_k1, experts: [general], role: invariant_reference}
+  - {name: duplicate_general_k3, experts: [general, general_copy_2, general_copy_3], role: duplicate_expert_control}
+  - {name: core_k2, experts: [general, grounding], role: weak_injection_reference}
+  - {name: weak_injection_k3, experts: [general, grounding, social_weak], role: weak_expert_control}
+  - {name: overconfident_k3, experts: [general, grounding, social_sharp], role: overconfident_expert_control}
+  - {name: fixed_random_proxy_k3, experts: [track_a_random_proxy, track_b_random_proxy, social_weak], role: fixed_seed_random_pool_proxy}
+methods: [hard_plurality, probability_mean, logit_mean]
+datasets:
+  v22_dev: data/phase_9_student_distillation/multidomain_reasoning_v22/reviewed_splits/dev.reviewed.jsonl
+max_sequence_length: 512
+max_new_tokens: 32
+cache_mode: reference
+eos_policy: ordinary
+seed: 20260811

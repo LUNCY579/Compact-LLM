@@ -1,0 +1,150 @@
+{
+  "condition_correctness": {
+    "abstention": 0.5,
+    "backbone": 0.0,
+    "hard_k7": 0.25,
+    "probability_k7": 0.375,
+    "track_a": 0.15625
+  },
+  "frozen_manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\frozen_configs\\frozen_final_config.json",
+  "interpretation": {
+    "hard_beats_base": true,
+    "hard_beats_best_individual": false,
+    "hard_beats_probability_mean": false,
+    "hard_beats_track_a": true,
+    "warning": "The sealed packet is a preregistered 32-example resource-aware sample, not the full 4,050-example TEST split."
+  },
+  "k1_method_invariants": {
+    "abstention_k1": {
+      "exact_token_sequence_match_rate": 1.0,
+      "paired_n": 32
+    },
+    "backbone_k1": {
+      "exact_token_sequence_match_rate": 1.0,
+      "paired_n": 32
+    },
+    "track_a_k1": {
+      "exact_token_sequence_match_rate": 1.0,
+      "paired_n": 32
+    }
+  },
+  "paired_comparisons": [
+    {
+      "bootstrap_ci_high": 0.40625,
+      "bootstrap_ci_low": 0.09375,
+      "condition_a": "hard_k7",
+      "condition_b": "backbone",
+      "difference": 0.25,
+      "holm_adjusted_mcnemar_p": 0.046875,
+      "label": "hard_k7 vs backbone",
+      "mcnemar_b": 8,
+      "mcnemar_c": 0,
+      "mcnemar_exact_p": 0.0078125,
+      "n": 32,
+      "rate_a": 0.25,
+      "rate_b": 0.0,
+      "sign_flip_p": 0.0078125
+    },
+    {
+      "bootstrap_ci_high": 0.25,
+      "bootstrap_ci_low": -0.0625,
+      "condition_a": "hard_k7",
+      "condition_b": "track_a",
+      "difference": 0.09375,
+      "holm_adjusted_mcnemar_p": 0.453125,
+      "label": "hard_k7 vs Track A",
+      "mcnemar_b": 5,
+      "mcnemar_c": 2,
+      "mcnemar_exact_p": 0.453125,
+      "n": 32,
+      "rate_a": 0.25,
+      "rate_b": 0.15625,
+      "sign_flip_p": 0.453125
+    },
+    {
+      "bootstrap_ci_high": -0.0625,
+      "bootstrap_ci_low": -0.4375,
+      "condition_a": "hard_k7",
+      "condition_b": "abstention",
+      "difference": -0.25,
+      "holm_adjusted_mcnemar_p": 0.107421875,
+      "label": "hard_k7 vs abstention specialist",
+      "mcnemar_b": 1,
+      "mcnemar_c": 9,
+      "mcnemar_exact_p": 0.021484375,
+      "n": 32,
+      "rate_a": 0.25,
+      "rate_b": 0.5,
+      "sign_flip_p": 0.021484375
+    },
+    {
+      "bootstrap_ci_high": -0.03125,
+      "bootstrap_ci_low": -0.25,
+      "condition_a": "hard_k7",
+      "condition_b": "probability_k7",
+      "difference": -0.125,
+      "holm_adjusted_mcnemar_p": 0.375,
+      "label": "hard_k7 vs probability mean",
+      "mcnemar_b": 0,
+      "mcnemar_c": 4,
+      "mcnemar_exact_p": 0.125,
+      "n": 32,
+      "rate_a": 0.25,
+      "rate_b": 0.375,
+      "sign_flip_p": 0.125
+    },
+    {
+      "bootstrap_ci_high": 0.53125,
+      "bootstrap_ci_low": 0.21875,
+      "condition_a": "probability_k7",
+      "condition_b": "backbone",
+      "difference": 0.375,
+      "holm_adjusted_mcnemar_p": 0.00341796875,
+      "label": "probability mean vs backbone",
+      "mcnemar_b": 12,
+      "mcnemar_c": 0,
+      "mcnemar_exact_p": 0.00048828125,
+      "n": 32,
+      "rate_a": 0.375,
+      "rate_b": 0.0,
+      "sign_flip_p": 0.00048828125
+    },
+    {
+      "bootstrap_ci_high": 0.40625,
+      "bootstrap_ci_low": 0.03125,
+      "condition_a": "probability_k7",
+      "condition_b": "track_a",
+      "difference": 0.21875,
+      "holm_adjusted_mcnemar_p": 0.26171875,
+      "label": "probability mean vs Track A",
+      "mcnemar_b": 9,
+      "mcnemar_c": 2,
+      "mcnemar_exact_p": 0.0654296875,
+      "n": 32,
+      "rate_a": 0.375,
+      "rate_b": 0.15625,
+      "sign_flip_p": 0.0654296875
+    },
+    {
+      "bootstrap_ci_high": 0.0,
+      "bootstrap_ci_low": -0.28125,
+      "condition_a": "probability_k7",
+      "condition_b": "abstention",
+      "difference": -0.125,
+      "holm_adjusted_mcnemar_p": 0.4375,
+      "label": "probability mean vs abstention specialist",
+      "mcnemar_b": 1,
+      "mcnemar_c": 5,
+      "mcnemar_exact_p": 0.21875,
+      "n": 32,
+      "rate_a": 0.375,
+      "rate_b": 0.5,
+      "sign_flip_p": 0.21875
+    }
+  ],
+  "paired_example_count": 32,
+  "schema_version": "1.0",
+  "source": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\sealed\\v22_frozen_finalists.jsonl",
+  "source_sha256": "9fe80c122d15f31f99a0895847529ddc388ad89b062c507bc1e57a8cb397adab",
+  "status": "FROZEN_SEALED_FINAL_NO_POST_SEALED_SELECTION"
+}
