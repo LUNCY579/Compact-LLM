@@ -12,8 +12,13 @@ METHODS = {
     "hard_plurality",
     "weighted_hard",
     "probability_mean",
+    "calibrated_probability_mean",
     "logit_mean",
     "calibrated_logit_mean",
+    "normalized_logit_mean",
+    "top2_approval",
+    "borda_top5",
+    "reciprocal_rank_top5",
     "confidence_weighted_probability",
     "confidence_weighted_logit",
 }
@@ -77,6 +82,55 @@ def _select_hard(
     return finalists[0], True, tied, totals
 
 
+def _select_primary_then_secondary(
+    primary: torch.Tensor,
+    secondary: torch.Tensor,
+) -> tuple[int, bool, list[int]]:
+    """Select a score winner with deterministic confidence and token-ID ties."""
+    maximum = torch.max(primary)
+    tied_tensor = torch.nonzero(torch.isclose(primary, maximum, rtol=1e-12, atol=1e-12)).flatten()
+    tied = [int(value) for value in tied_tensor.tolist()]
+    if len(tied) == 1:
+        return tied[0], False, tied
+    tied_secondary = secondary[tied_tensor]
+    best = torch.max(tied_secondary)
+    finalists = tied_tensor[torch.isclose(tied_secondary, best, rtol=1e-8, atol=1e-8)]
+    return int(torch.min(finalists).item()), True, tied
+
+
+def _stable_topk_indices(scores: torch.Tensor, k: int) -> torch.Tensor:
+    """Return full-stable-sort top-k indices without sorting the vocabulary.
+
+    ``torch.topk`` identifies the k-th score using a bounded temporary, but its
+    ordering of equal values is unspecified.  For each row, order the fewer
+    than k values strictly above that threshold with a stable small sort, then
+    fill the remaining slots from threshold ties in ascending token-ID order.
+    This is exactly the prefix of ``argsort(..., descending=True, stable=True)``
+    while avoiding a vocabulary-sized int64 permutation per expert.
+    """
+    if scores.ndim != 2:
+        raise ValueError("Stable top-k requires a rank-2 score tensor")
+    vocabulary_size = int(scores.shape[-1])
+    if k <= 0 or k > vocabulary_size:
+        raise ValueError(f"k must be in [1, {vocabulary_size}], got {k}")
+    rows: list[torch.Tensor] = []
+    for row in scores:
+        threshold = torch.topk(row, k, largest=True, sorted=False).values.min()
+        above = torch.nonzero(row > threshold, as_tuple=False).flatten()
+        if above.numel():
+            # ``nonzero`` supplies ascending token IDs, so a stable score sort
+            # retains the former full-sort token-ID tie break.
+            order = torch.argsort(row[above], descending=True, stable=True)
+            above = above[order]
+        remaining = k - int(above.numel())
+        boundary = torch.nonzero(row == threshold, as_tuple=False).flatten()[:remaining]
+        selected = torch.cat((above, boundary))
+        if int(selected.numel()) != k:
+            raise RuntimeError("Stable top-k failed to recover the requested rank depth")
+        rows.append(selected)
+    return torch.stack(rows, dim=0)
+
+
 def aggregate_logits(
     logits_by_expert: Mapping[str, torch.Tensor],
     *,
@@ -101,6 +155,7 @@ def aggregate_logits(
     raw_log_probabilities = torch.log_softmax(logits, dim=-1)
     raw_probabilities = torch.exp(raw_log_probabilities)
     calibrated = logits / temperature_values[:, None]
+    calibrated_probabilities = torch.softmax(calibrated, dim=-1)
     # ``torch.topk`` does not guarantee stable ordering when values are tied.
     # Greedy generation uses ``argmax`` semantics, selecting the first (and
     # therefore smallest token id) among exact ties. Preserve that behavior
@@ -121,6 +176,8 @@ def aggregate_logits(
     tie = False
     tied_tokens: list[int] = []
     hard_totals: dict[int, float] = {}
+    rank_score_totals: dict[int, float] = {}
+    rank_depth: int | None = None
     if method in {"hard_plurality", "weighted_hard"}:
         winner, tie, tied_tokens, hard_totals = _select_hard(
             top_tokens=top_tokens,
@@ -129,10 +186,34 @@ def aggregate_logits(
         )
     elif method == "probability_mean":
         winner = int(torch.argmax(raw_probabilities.mean(dim=0)).item())
+    elif method == "calibrated_probability_mean":
+        winner = int(torch.argmax(calibrated_probabilities.mean(dim=0)).item())
     elif method == "logit_mean":
         winner = int(torch.argmax(logits.mean(dim=0)).item())
     elif method == "calibrated_logit_mean":
         winner = int(torch.argmax(calibrated.mean(dim=0)).item())
+    elif method == "normalized_logit_mean":
+        centered = logits - logits.mean(dim=-1, keepdim=True)
+        scales = logits.std(dim=-1, keepdim=True, unbiased=False).clamp_min(torch.finfo(logits.dtype).eps)
+        winner = int(torch.argmax((centered / scales).mean(dim=0)).item())
+    elif method in {"top2_approval", "borda_top5", "reciprocal_rank_top5"}:
+        rank_depth = min(2 if method == "top2_approval" else 5, int(logits.shape[-1]))
+        ranked = _stable_topk_indices(raw_probabilities, rank_depth)
+        primary = torch.zeros(int(logits.shape[-1]), device=logits.device, dtype=logits.dtype)
+        if method == "top2_approval":
+            points = torch.ones(rank_depth, device=logits.device, dtype=logits.dtype)
+        elif method == "borda_top5":
+            points = torch.arange(rank_depth, 0, -1, device=logits.device, dtype=logits.dtype)
+        else:
+            points = 1.0 / torch.arange(1, rank_depth + 1, device=logits.device, dtype=logits.dtype)
+        for expert_ranking in ranked:
+            primary.scatter_add_(0, expert_ranking, points)
+        secondary = raw_log_probabilities.sum(dim=0)
+        winner, tie, tied_tokens = _select_primary_then_secondary(primary, secondary)
+        rank_score_totals = {
+            int(token): float(primary[token].item())
+            for token in torch.nonzero(primary).flatten().tolist()
+        }
     else:
         confidence = torch.tensor(margins, device=logits.device, dtype=logits.dtype).clamp_min(1e-12)
         confidence = confidence / confidence.sum()
@@ -173,6 +254,8 @@ def aggregate_logits(
             "tied_tokens": tied_tokens,
             "tie_break_rule": "sum_log_probability_then_smallest_token_id" if tie else None,
             "weighted_vote_totals": {str(token): value for token, value in sorted(hard_totals.items())},
+            "rank_score_totals": {str(token): value for token, value in sorted(rank_score_totals.items())},
+            "rank_depth": rank_depth,
             "winning_expert_coalition": coalition,
             "dissenting_experts": [name for name in names if name not in coalition],
             "mean_pairwise_js": mean_js,

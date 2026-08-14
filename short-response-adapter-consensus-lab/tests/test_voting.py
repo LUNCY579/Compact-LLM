@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import torch
 
-from consensus_lab.voting.rules import aggregate_logits
+from consensus_lab.voting.rules import _stable_topk_indices, aggregate_logits
 
 
 def logits(top: int, *, vocab: int = 6, strength: float = 5.0) -> torch.Tensor:
@@ -39,6 +39,29 @@ def test_tie_sum_log_probability_can_override_smallest_id() -> None:
     assert decision.diagnostics["tie"] is True
 
 
+def test_positive_logit_scaling_preserves_unique_plurality_winner() -> None:
+    values = {"a": logits(1), "b": logits(1), "c": logits(2)}
+    scaled = {"a": values["a"] * 0.1, "b": values["b"] * 10.0, "c": values["c"] * 3.0}
+    plain = aggregate_logits(values, method="hard_plurality", eos_token_id=None)
+    intervention = aggregate_logits(scaled, method="hard_plurality", eos_token_id=None)
+    assert plain.token_id == intervention.token_id == 1
+    assert plain.diagnostics["top_tokens"] == intervention.diagnostics["top_tokens"]
+
+
+def test_unequal_positive_scaling_can_change_confidence_tie_break() -> None:
+    values = {
+        "a": torch.tensor([0.0, 5.0, 4.9, 0.0]),
+        "b": torch.tensor([0.0, -5.0, 5.0, 0.0]),
+    }
+    scaled = {"a": values["a"], "b": values["b"] * 0.001}
+    plain = aggregate_logits(values, method="hard_plurality", eos_token_id=None)
+    intervention = aggregate_logits(scaled, method="hard_plurality", eos_token_id=None)
+    assert plain.diagnostics["top_tokens"] == intervention.diagnostics["top_tokens"]
+    assert plain.diagnostics["tie"] is intervention.diagnostics["tie"] is True
+    assert plain.token_id == 2
+    assert intervention.token_id == 1
+
+
 def test_k1_invariant() -> None:
     decision = aggregate_logits({"only": logits(3)}, method="hard_plurality", eos_token_id=5)
     assert decision.token_id == 3
@@ -67,8 +90,13 @@ def test_soft_methods_and_weighted_vote_are_defined() -> None:
     for method in (
         "weighted_hard",
         "probability_mean",
+        "calibrated_probability_mean",
         "logit_mean",
         "calibrated_logit_mean",
+        "normalized_logit_mean",
+        "top2_approval",
+        "borda_top5",
+        "reciprocal_rank_top5",
         "confidence_weighted_probability",
         "confidence_weighted_logit",
     ):
@@ -92,6 +120,48 @@ def test_raw_probability_mean_is_not_contaminated_by_temperatures() -> None:
         temperatures={"a": 0.1, "b": 10.0},
     )
     assert temperatures.token_id == plain.token_id
+
+
+def test_calibrated_probability_mean_uses_temperatures() -> None:
+    values = {"a": torch.tensor([0.0, 4.0, 0.0]), "b": torch.tensor([0.0, 0.0, 3.0])}
+    raw = aggregate_logits(values, method="probability_mean", eos_token_id=None)
+    calibrated = aggregate_logits(
+        values,
+        method="calibrated_probability_mean",
+        eos_token_id=None,
+        temperatures={"a": 10.0, "b": 0.1},
+    )
+    assert raw.token_id == 1
+    assert calibrated.token_id == 2
+
+
+def test_rank_rules_reward_repeated_high_rank_support() -> None:
+    values = {
+        "a": torch.tensor([0.0, 5.0, 4.0, 0.0]),
+        "b": torch.tensor([0.0, 0.0, 4.0, 5.0]),
+        "c": torch.tensor([0.0, 0.0, 4.0, 5.0]),
+    }
+    approval = aggregate_logits(values, method="top2_approval", eos_token_id=None)
+    borda = aggregate_logits(values, method="borda_top5", eos_token_id=None)
+    reciprocal = aggregate_logits(values, method="reciprocal_rank_top5", eos_token_id=None)
+    assert approval.token_id == 2
+    assert borda.token_id in range(4)
+    assert reciprocal.token_id in range(4)
+    assert approval.diagnostics["rank_depth"] == 2
+    assert approval.diagnostics["rank_score_totals"]["2"] == 3.0
+
+
+def test_stable_partial_topk_matches_full_stable_sort_with_ties() -> None:
+    scores = torch.tensor(
+        [
+            [0.0, 4.0, 4.0, 3.0, 3.0, 3.0, -1.0],
+            [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0],
+            [5.0, 1.0, 4.0, 2.0, 3.0, 3.0, 3.0],
+        ]
+    )
+    expected = torch.argsort(scores, dim=-1, descending=True, stable=True)[:, :5]
+    actual = _stable_topk_indices(scores, 5)
+    assert torch.equal(actual, expected)
 
 
 def test_masked_zero_probability_diagnostics_remain_finite() -> None:

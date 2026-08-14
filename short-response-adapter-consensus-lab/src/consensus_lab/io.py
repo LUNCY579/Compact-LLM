@@ -4,8 +4,9 @@ import hashlib
 import json
 import os
 import tempfile
+import time
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Iterator
 
 
 def read_json(path: Path) -> dict[str, Any]:
@@ -13,8 +14,15 @@ def read_json(path: Path) -> dict[str, Any]:
 
 
 def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    return list(iter_jsonl(path))
+
+
+def iter_jsonl(path: Path) -> Iterator[dict[str, Any]]:
+    """Yield JSONL records without retaining a potentially large trace file."""
     with path.open("r", encoding="utf-8-sig") as handle:
-        return [json.loads(line) for line in handle if line.strip()]
+        for line in handle:
+            if line.strip():
+                yield json.loads(line)
 
 
 def append_jsonl_durable(path: Path, row: dict[str, Any]) -> None:
@@ -35,7 +43,17 @@ def write_json_atomic(path: Path, payload: Any) -> None:
             handle.write(text)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(temp, path)
+        # Windows readers, virus scanners, and indexers can hold a short-lived
+        # sharing lock on an existing metadata file. Preserve atomic replace
+        # semantics while tolerating that transient condition.
+        for attempt in range(20):
+            try:
+                os.replace(temp, path)
+                break
+            except PermissionError:
+                if attempt == 19:
+                    raise
+                time.sleep(0.05 * (attempt + 1))
     finally:
         temp.unlink(missing_ok=True)
 
@@ -71,4 +89,3 @@ def tree_manifest(root: Path, *, include: Iterable[Path] | None = None) -> list[
 
 def tree_manifest_sha256(entries: list[dict[str, Any]]) -> str:
     return canonical_json_sha256(entries)
-

@@ -39,6 +39,7 @@ def main() -> None:
     parser.add_argument("--config", type=Path, default=LAB_ROOT / "configs/hard_vote.yaml")
     parser.add_argument("--dataset", default="v22_dev")
     parser.add_argument("--committee", action="append", dest="committees")
+    parser.add_argument("--method", action="append", dest="methods")
     parser.add_argument("--limit", type=int, default=8)
     parser.add_argument("--max-new-tokens", type=int)
     parser.add_argument("--device", default="auto")
@@ -53,6 +54,10 @@ def main() -> None:
     if missing:
         raise KeyError(f"Unknown committees: {missing}")
     selected = [by_name[name] for name in selected_names]
+    selected_methods = args.methods or config.methods
+    unsupported = sorted(set(selected_methods) & {"sequence_medoid", "adaptive_hard_plurality"})
+    if unsupported:
+        raise ValueError(f"Cache parity supports token aggregation methods only: {unsupported}")
     needed_names = {name for committee in selected for name in committee.experts}
     needed_experts = [expert for expert in config.experts if expert.name in needed_names]
     committee = ExpertCommittee.load(
@@ -69,59 +74,64 @@ def main() -> None:
     comparisons: list[dict[str, Any]] = []
     for committee_spec in selected:
         view = committee.subset(committee_spec.experts)
-        for row in rows:
-            messages = [dict(message) for message in (row.get("messages") or [])]
-            input_ids = view.encode_messages(messages[:-1], max_sequence_length=config.max_sequence_length)
-            reference = generate_reference(
-                view,
-                input_ids,
-                method="hard_plurality",
-                max_new_tokens=max_new_tokens,
-                eos_policy="ordinary",
-            )
-            cached = generate_separate_cache(
-                view,
-                input_ids,
-                method="hard_plurality",
-                max_new_tokens=max_new_tokens,
-                eos_policy="ordinary",
-            )
-            token_match = reference.output_token_ids == cached.output_token_ids
-            trace_match = _decision_signature(reference.steps) == _decision_signature(cached.steps)
-            comparisons.append(
-                {
-                    "dataset": args.dataset,
-                    "example_id": str(row.get("id")),
-                    "committee": committee_spec.name,
-                    "experts": committee_spec.experts,
-                    "token_match": token_match,
-                    "decision_trace_match": trace_match,
-                    "reference_tokens": reference.output_token_ids,
-                    "cached_tokens": cached.output_token_ids,
-                    "reference_output": reference.output_text,
-                    "cached_output": cached.output_text,
-                    "reference_latency_seconds": reference.latency_seconds,
-                    "cached_latency_seconds": cached.latency_seconds,
-                }
-            )
+        for method in selected_methods:
+            for row in rows:
+                messages = [dict(message) for message in (row.get("messages") or [])]
+                input_ids = view.encode_messages(messages[:-1], max_sequence_length=config.max_sequence_length)
+                reference = generate_reference(
+                    view,
+                    input_ids,
+                    method=method,
+                    max_new_tokens=max_new_tokens,
+                    eos_policy="ordinary",
+                )
+                cached = generate_separate_cache(
+                    view,
+                    input_ids,
+                    method=method,
+                    max_new_tokens=max_new_tokens,
+                    eos_policy="ordinary",
+                )
+                token_match = reference.output_token_ids == cached.output_token_ids
+                trace_match = _decision_signature(reference.steps) == _decision_signature(cached.steps)
+                comparisons.append(
+                    {
+                        "dataset": args.dataset,
+                        "example_id": str(row.get("id")),
+                        "committee": committee_spec.name,
+                        "experts": committee_spec.experts,
+                        "method": method,
+                        "token_match": token_match,
+                        "decision_trace_match": trace_match,
+                        "reference_tokens": reference.output_token_ids,
+                        "cached_tokens": cached.output_token_ids,
+                        "reference_output": reference.output_text,
+                        "cached_output": cached.output_text,
+                        "reference_latency_seconds": reference.latency_seconds,
+                        "cached_latency_seconds": cached.latency_seconds,
+                    }
+                )
     passed = all(row["token_match"] and row["decision_trace_match"] for row in comparisons)
     packet = {
         "schema_version": "1.0",
         "status": "PASS" if passed else "FAIL",
-        "claim": "separate_cache is decision-equivalent to full-prefix reference on the tested packet",
+        "claim": "separate_cache is decision-equivalent to full-prefix reference for every tested aggregation rule",
         "config": str(args.config.resolve()),
         "config_sha256": config.config_sha256,
         "precision": args.precision,
         "device": str(committee.device),
         "dataset": args.dataset,
         "committee_names": selected_names,
+        "methods": selected_methods,
         "example_count_per_committee": len(rows),
         "comparison_count": len(comparisons),
         "token_match_rate": sum(row["token_match"] for row in comparisons) / len(comparisons),
         "decision_trace_match_rate": sum(row["decision_trace_match"] for row in comparisons) / len(comparisons),
         "comparisons": comparisons,
     }
-    output = paths.assert_output_path(LAB_ROOT / "results/summaries/cache_parity.json")
+    output = paths.assert_output_path(
+        LAB_ROOT / f"results/summaries/cache_parity_{args.config.stem}.json"
+    )
     write_json_atomic(output, packet)
     print(json.dumps({**{key: value for key, value in packet.items() if key != "comparisons"}, "output": str(output)}, indent=2))
     if not passed:

@@ -7,7 +7,11 @@ from typing import Any
 import torch
 
 from consensus_lab.decoding.decoder import GenerationResult
-from consensus_lab.evaluation.direct import EVALUATION_PROTOCOL_VERSION, run_direct_experiment
+from consensus_lab.evaluation.direct import (
+    EVALUATION_PROTOCOL_VERSION,
+    _decode_with_cuda_oom_retries,
+    run_direct_experiment,
+)
 from consensus_lab.experiments.config import CommitteeSpec, ExperimentConfig
 from consensus_lab.io import read_jsonl
 from consensus_lab.paths import LabPaths
@@ -119,3 +123,108 @@ def test_interrupted_run_resumes_without_duplicate_rows(tmp_path: Path, monkeypa
     assert len(written) == 2
     assert len({row["example_id"] for row in written}) == 2
     assert all(row["evaluation_protocol_version"] == EVALUATION_PROTOCOL_VERSION for row in written)
+
+
+def test_clean_batch_cap_resumes_without_duplicate_rows(tmp_path: Path, monkeypatch: Any) -> None:
+    official = tmp_path / "short-response-model-phase-0-1-2"
+    lab = tmp_path / "short-response-adapter-consensus-lab"
+    official.mkdir()
+    lab.mkdir()
+    dataset = official / "dev.jsonl"
+    dataset.write_text(
+        "".join(
+            json.dumps(
+                {
+                    "id": f"case-{index}",
+                    "messages": [
+                        {"role": "user", "content": "question"},
+                        {"role": "assistant", "content": "answer"},
+                    ],
+                    "answer": "answer",
+                    "decision": "answer",
+                }
+            )
+            + "\n"
+            for index in range(3)
+        ),
+        encoding="utf-8",
+    )
+    config = ExperimentConfig(
+        name="batch_resume_test",
+        backbone=official,
+        experts=[],
+        committees=[CommitteeSpec("fake", [], "test")],
+        methods=["hard_plurality"],
+        datasets={"dev": dataset},
+        max_sequence_length=8,
+        max_new_tokens=2,
+        cache_mode="reference",
+        eos_policy="ordinary",
+        eos_confidence_threshold=0.5,
+        minimum_tokens=1,
+        adaptive_core_experts=[],
+        adaptive_agreement_threshold=0.67,
+        seed=7,
+        raw={},
+        config_sha256="batch-test-config",
+    )
+
+    def fake_generate(*args: Any, **kwargs: Any) -> GenerationResult:
+        return GenerationResult(
+            output_text="answer",
+            output_token_ids=[2],
+            steps=[{"agreement": 1.0, "vote_entropy": 0.0, "mean_pairwise_js": None}],
+            stop_reason="eos",
+            latency_seconds=0.01,
+            time_to_first_final_token_seconds=0.01,
+            forward_passes=1,
+            adapter_evaluations=1,
+            peak_gpu_vram_bytes=None,
+            peak_cpu_rss_bytes=100,
+            cache_mode="test",
+        )
+
+    monkeypatch.setattr("consensus_lab.evaluation.direct.generate_reference", fake_generate)
+    paths = LabPaths(tmp_path, lab, official)
+    output = lab / "results.jsonl"
+    kwargs = {
+        "paths": paths,
+        "config": config,
+        "committee": FakeCommittee(),
+        "output_path": output,
+        "summary_json": lab / "summary.json",
+        "summary_csv": lab / "summary.csv",
+        "live_report": lab / "live.md",
+        "resume": True,
+        "max_new_rows": 1,
+    }
+    for _ in range(3):
+        run_direct_experiment(**kwargs)
+    written = read_jsonl(output)
+    assert len(written) == 3
+    assert len({row["example_id"] for row in written}) == 3
+
+
+def test_cuda_oom_retry_recomputes_uncommitted_example(monkeypatch: Any) -> None:
+    calls = 0
+    releases = []
+
+    def flaky_decoder() -> str:
+        nonlocal calls
+        calls += 1
+        if calls == 1:
+            raise torch.OutOfMemoryError("CUDA error: out of memory")
+        return "ok"
+
+    monkeypatch.setattr(
+        "consensus_lab.evaluation.direct._release_unused_device_memory",
+        lambda device: releases.append(str(device)),
+    )
+    result, retries = _decode_with_cuda_oom_retries(
+        flaky_decoder,
+        input_device=torch.device("cuda:0"),
+    )
+    assert result == "ok"
+    assert retries == 1
+    assert calls == 2
+    assert releases == ["cuda:0"]

@@ -1,10 +1,13 @@
 from __future__ import annotations
 
+import gc
 import hashlib
 import json
 import math
 from pathlib import Path
 from typing import Any
+
+import torch
 
 from consensus_lab.decoding.decoder import (
     generate_adaptive_consultation,
@@ -14,14 +17,64 @@ from consensus_lab.decoding.decoder import (
 )
 from consensus_lab.evaluation.sampling import deterministic_stratified_sample
 from consensus_lab.evaluation.scoring import answer_correct, is_abstention, repetition_failure
-from consensus_lab.evaluation.summary import write_summary_files
+from consensus_lab.evaluation.summary import summary_projection, write_summary_files
 from consensus_lab.experiments.config import ExperimentConfig
-from consensus_lab.io import append_jsonl_durable, read_jsonl, write_json_atomic
+from consensus_lab.io import append_jsonl_durable, iter_jsonl, read_jsonl, write_json_atomic
 from consensus_lab.models.committee import ExpertCommittee
 from consensus_lab.paths import LabPaths
 
 
 EVALUATION_PROTOCOL_VERSION = "2.0-balanced-primary-strata-exact-reference"
+
+
+def _release_unused_device_memory(device: torch.device) -> None:
+    """Return unused CUDA allocator blocks between independent examples.
+
+    Generation latency and peak-memory measurements are finalized before this
+    call.  Releasing cached (not live) blocks therefore preserves the scoring
+    protocol while preventing method-specific temporary allocations from
+    fragmenting a small WDDM GPU across a long resumable sweep.
+    """
+    if device.type == "cuda":
+        torch.cuda.empty_cache()
+
+
+def _is_cuda_out_of_memory(error: BaseException) -> bool:
+    message = str(error).lower()
+    return "cuda" in message and "out of memory" in message
+
+
+def _effective_summary_every(requested: int, total: int) -> int:
+    """Bound repeated full-summary rebuilds while preserving durable rows."""
+    if requested <= 0 or total <= 0:
+        raise ValueError("requested and total must be positive")
+    return max(requested, math.ceil(total / 200))
+
+
+def _decode_with_cuda_oom_retries(
+    decoder: Any,
+    *args: Any,
+    input_device: torch.device,
+    max_retries: int = 2,
+    **kwargs: Any,
+) -> tuple[Any, int]:
+    """Retry an uncommitted example after clearing unused CUDA allocations."""
+    for retry_count in range(max_retries + 1):
+        try:
+            return decoder(*args, **kwargs), retry_count
+        except RuntimeError as error:
+            if (
+                input_device.type != "cuda"
+                or not _is_cuda_out_of_memory(error)
+                or retry_count >= max_retries
+            ):
+                raise
+            # The decoder unwound without returning a result and no row has
+            # been appended. Collect Python references before releasing cached
+            # CUDA blocks, then recompute the exact same example.
+            gc.collect()
+            _release_unused_device_memory(input_device)
+    raise AssertionError("unreachable")
 
 
 def _prompt_hash(messages: list[dict[str, Any]]) -> str:
@@ -47,7 +100,12 @@ def update_live_report(
     summaries: list[dict[str, Any]],
     warnings: list[str],
 ) -> None:
-    best = max(summaries, key=lambda row: float(row.get("correctness") or 0.0), default=None)
+    complete = completed >= total
+    best = (
+        max(summaries, key=lambda row: float(row.get("correctness") or 0.0), default=None)
+        if complete
+        else None
+    )
     backbone = next((row for row in summaries if row.get("committee") == "backbone_k1"), None)
     display_warnings = list(warnings)
     if best and float(best.get("false_abstention_rate") or 0.0) >= 0.9:
@@ -60,7 +118,7 @@ def update_live_report(
         f"- Run: `{run_name}`",
         f"- Completed example-method conditions: **{completed}/{total}**",
         f"- Pending example-method conditions: **{max(0, total - completed)}**",
-        f"- Status: **{'complete' if completed >= total else 'in progress'}**",
+        f"- Status: **{'complete' if complete else 'in progress'}**",
     ]
     if best:
         lines.extend(
@@ -75,7 +133,14 @@ def update_live_report(
         if backbone:
             difference = float(best.get("correctness") or 0.0) - float(backbone.get("correctness") or 0.0)
             lines.append(f"- Current-best minus backbone correctness: **{difference:+.4f}**")
-    lines.extend(["", "## Completed summaries", "", "| Dataset | Committee | Method | K | N | Correct | Tokens | Latency | VRAM MiB | Agreement |", "|---|---|---|---:|---:|---:|---:|---:|---:|---:|"])
+    if not complete:
+        lines.extend(
+            [
+                "- Interim condition summaries may have unequal N; no method ranking is reported until the frozen run is complete.",
+            ]
+        )
+    summary_heading = "Completed summaries" if complete else "Interim condition summaries (not method-comparable)"
+    lines.extend(["", f"## {summary_heading}", "", "| Dataset | Committee | Method | K | N | Correct | Tokens | Latency | VRAM MiB | Agreement |", "|---|---|---|---:|---:|---:|---:|---:|---:|---:|"])
     for summary in summaries:
         vram_mib = (
             float(summary["peak_gpu_vram_bytes"]) / (1024**2)
@@ -107,6 +172,9 @@ def run_direct_experiment(
     dataset_names: list[str] | None = None,
     limit: int | None = None,
     resume: bool = True,
+    summary_every: int = 1,
+    max_new_rows: int | None = None,
+    runtime_identity_sha256: str | None = None,
 ) -> list[dict[str, Any]]:
     output_path = paths.assert_output_path(output_path)
     summary_json = paths.assert_output_path(summary_json)
@@ -114,13 +182,29 @@ def run_direct_experiment(
     live_report = paths.assert_output_path(live_report)
     if output_path.exists() and not resume:
         raise FileExistsError(f"Results already exist; pass resume=True: {output_path}")
-    existing = read_jsonl(output_path) if output_path.is_file() else []
-    for row in existing:
-        if row.get("config_sha256") != config.config_sha256:
-            raise RuntimeError("Existing results were produced by a different experiment config")
-        if row.get("evaluation_protocol_version") != EVALUATION_PROTOCOL_VERSION:
-            raise RuntimeError("Existing results were produced by a different evaluation protocol")
-    done = {(row["dataset"], row["committee"], row["method"], row["example_id"]) for row in existing}
+    if summary_every <= 0:
+        raise ValueError("summary_every must be positive")
+    if max_new_rows is not None and max_new_rows <= 0:
+        raise ValueError("max_new_rows must be positive")
+    done: set[tuple[str, str, str, str]] = set()
+    # Keep only the compact fields needed by aggregate summaries. Full token
+    # traces remain durable in JSONL but are not retained beside the model in
+    # RAM, which matters for multi-committee runs with tens of thousands of
+    # rows.
+    all_rows: list[dict[str, Any]] = []
+    if output_path.is_file():
+        for row in iter_jsonl(output_path):
+            if row.get("config_sha256") != config.config_sha256:
+                raise RuntimeError("Existing results were produced by a different experiment config")
+            if row.get("evaluation_protocol_version") != EVALUATION_PROTOCOL_VERSION:
+                raise RuntimeError("Existing results were produced by a different evaluation protocol")
+            if runtime_identity_sha256 is not None and row.get("runtime_identity_sha256") != runtime_identity_sha256:
+                raise RuntimeError("Existing results were produced under a different runtime identity")
+            key = (str(row["dataset"]), str(row["committee"]), str(row["method"]), str(row["example_id"]))
+            if key in done:
+                raise RuntimeError(f"Existing results contain a duplicate condition key: {key}")
+            done.add(key)
+            all_rows.append(summary_projection(row))
     selected_datasets = dataset_names or list(config.datasets)
     sampled: dict[str, list[dict[str, Any]]] = {}
     for name in selected_datasets:
@@ -128,7 +212,7 @@ def run_direct_experiment(
             read_jsonl(config.datasets[name]), limit=limit, seed=config.seed
         )
     total = sum(len(rows) for rows in sampled.values()) * len(config.committees) * len(config.methods)
-    all_rows = list(existing)
+    effective_summary_every = _effective_summary_every(summary_every, total)
     is_sealed = any("sealed" in name.lower() or "test" in name.lower() for name in selected_datasets)
     warnings: list[str] = []
     if limit:
@@ -144,6 +228,9 @@ def run_direct_experiment(
     )
     decoders = {"reference": generate_reference, "separate_cache": generate_separate_cache}
     token_decoder = decoders[config.cache_mode]
+    pending_derived_updates = 0
+    newly_completed = 0
+    stop_after_clean_batch = False
     for dataset_name, rows in sampled.items():
         for committee_spec in config.committees:
             view = committee.subset(committee_spec.experts)
@@ -170,9 +257,11 @@ def run_direct_experiment(
                             "core_expert_names": config.adaptive_core_experts,
                             "agreement_threshold": config.adaptive_agreement_threshold,
                         }
-                    result = decoder(
+                    result, oom_retry_count = _decode_with_cuda_oom_retries(
+                        decoder,
                         view,
                         input_ids,
+                        input_device=input_ids.device,
                         method=method,
                         max_new_tokens=config.max_new_tokens,
                         eos_policy=config.eos_policy,  # type: ignore[arg-type]
@@ -232,31 +321,51 @@ def run_direct_experiment(
                         ],
                         "adapter_storage_bytes": committee_metadata["adapter_storage_bytes"],
                         "compute_proxy_expert_token_forwards": result.adapter_evaluations,
+                        "cuda_oom_retry_count": oom_retry_count,
+                        **(
+                            {"runtime_identity_sha256": runtime_identity_sha256}
+                            if runtime_identity_sha256 is not None
+                            else {}
+                        ),
                         **result.to_dict(),
                     }
                     append_jsonl_durable(output_path, packet)
-                    all_rows.append(packet)
+                    all_rows.append(summary_projection(packet))
                     done.add(key)
-                    summaries = write_summary_files(all_rows, summary_json, summary_csv)
-                    write_json_atomic(
-                        paths.lab_root / "state/run_state.json",
-                        {
-                            "schema_version": "1.0",
-                            "run_name": config.name,
-                            "config_sha256": config.config_sha256,
-                            "completed": len(done),
-                            "total": total,
-                            "results": str(output_path),
-                        },
-                    )
-                    update_live_report(
-                        path=live_report,
-                        run_name=config.name,
-                        completed=len(done),
-                        total=total,
-                        summaries=summaries,
-                        warnings=warnings,
-                    )
+                    pending_derived_updates += 1
+                    newly_completed += 1
+                    _release_unused_device_memory(input_ids.device)
+                    if pending_derived_updates >= effective_summary_every:
+                        summaries = write_summary_files(all_rows, summary_json, summary_csv)
+                        write_json_atomic(
+                            paths.lab_root / "state/run_state.json",
+                            {
+                                "schema_version": "1.0",
+                                "run_name": config.name,
+                                "config_sha256": config.config_sha256,
+                                "completed": len(done),
+                                "total": total,
+                                "results": str(output_path),
+                            },
+                        )
+                        update_live_report(
+                            path=live_report,
+                            run_name=config.name,
+                            completed=len(done),
+                            total=total,
+                            summaries=summaries,
+                            warnings=warnings,
+                        )
+                        pending_derived_updates = 0
+                    if max_new_rows is not None and newly_completed >= max_new_rows:
+                        stop_after_clean_batch = True
+                        break
+                if stop_after_clean_batch:
+                    break
+            if stop_after_clean_batch:
+                break
+        if stop_after_clean_batch:
+            break
     # Rebuild derived artifacts even when every raw row was already complete.
     # This repairs stale summaries after an interruption between durable JSONL
     # append and summary/report generation without rerunning model inference.

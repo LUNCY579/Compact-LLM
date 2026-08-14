@@ -13,6 +13,43 @@ from sklearn.metrics import average_precision_score, roc_auc_score
 from consensus_lab.io import write_json_atomic
 
 
+SUMMARY_PROJECTION_KEYS = {
+    "run_name",
+    "dataset",
+    "committee",
+    "method",
+    "experts",
+    "correct",
+    "decision",
+    "abstained",
+    "generated_tokens",
+    "latency_seconds",
+    "reasoning_family",
+    "domain",
+    "stop_reason",
+    "repetition_failure",
+    "output",
+    "peak_gpu_vram_bytes",
+    "peak_cpu_rss_bytes",
+    "forward_passes",
+    "adapter_evaluations",
+    "time_to_first_final_token_seconds",
+    "adapter_storage_bytes",
+    "backbone_parameter_count",
+    "active_parameter_count",
+    "committee_adapter_parameter_count",
+    "mean_agreement",
+    "mean_vote_entropy",
+    "mean_pairwise_js",
+    "tie_count",
+}
+
+
+def summary_projection(row: dict[str, Any]) -> dict[str, Any]:
+    """Discard token traces and text metadata not used by aggregate summaries."""
+    return {key: row.get(key) for key in SUMMARY_PROJECTION_KEYS}
+
+
 def _rate(values: list[bool]) -> float | None:
     return sum(values) / len(values) if values else None
 
