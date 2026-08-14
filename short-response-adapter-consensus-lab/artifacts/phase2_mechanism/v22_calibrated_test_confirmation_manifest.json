@@ -1,0 +1,145 @@
+{
+  "analysis_role": "V2.2 TEST SELECTED CALIBRATION CONFIRMATION WITH PRIOR N=32 EXPOSURE CAVEAT",
+  "calibrated_confirmation_outcomes_read_before_freeze": false,
+  "caveats": [
+    "An archived n=32 pilot previously exposed examples from the same v2.2 TEST split.",
+    "Hard and raw probability full-TEST outcomes were known before this confirmation was frozen.",
+    "The calibrated method and all seven temperatures were selected exclusively from the frozen DEV cache.",
+    "This adds one predeclared calibrated condition; it does not refit or replace the cornerstone family."
+  ],
+  "config": {
+    "canonical_sha256": "e4f77f7c7d68dc332eadc4decfb839d3a4b526addefd5c61538d92cf58df2794",
+    "expected_rows": 4050,
+    "file_sha256": "c78968748dd63566837b1d430737a84f6998ac9794fdfdc714dcd525869fd5bf",
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\phase2_v22_calibrated_test_confirmation.yaml"
+  },
+  "cornerstone": {
+    "hard_condition": "full_k7/hard_plurality",
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\sealed\\v22_frozen_finalists.jsonl",
+    "raw_probability_condition": "full_k7/probability_mean",
+    "sha256": "d3733391b53dc53e7d9ca899d7015ba6ff0b2faa7c28e52a2778a0827c45c32d"
+  },
+  "dataset": {
+    "name": "v22_sealed",
+    "rows": 4050,
+    "sha256": "768107b579126063d4dd304b80ffc88a57e1bc346a7adfe4b69771e1b499a8f4"
+  },
+  "existing_cornerstone_outcomes_known_before_freeze": true,
+  "fitted_temperatures": {
+    "abstention": 2.0,
+    "general": 1.0,
+    "grounding": 1.25,
+    "procedure": 1.25,
+    "social": 1.5,
+    "track_a": 1.0,
+    "track_b": 1.0
+  },
+  "freeze_script": {
+    "path": "experiments/phase2_mechanism/freeze_v22_calibrated_test.py",
+    "sha256": "8d6d0786603051a10f2bd9b8a5505374e535986cae9334e335dddeced396d42f"
+  },
+  "frozen_at_utc": "2026-08-12T23:16:55.059572+00:00",
+  "no_switching_rule": "Do not change temperatures, method, committee, EOS, decoder, comparison family, or reporting direction after calibrated v2.2 TEST output is inspected.",
+  "output": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\runs\\phase2_v22_calibrated_test_confirmation_dev_full.jsonl",
+  "planned_condition": "full_k7/calibrated_probability_mean",
+  "planned_paired_family": [
+    "calibrated probability K7 vs hard K7",
+    "calibrated probability K7 vs raw probability K7"
+  ],
+  "schema_version": "1.0",
+  "selected_dev_rows": {
+    "calibrated_probability_mean": {
+      "analysis_role": "DEV MODEL-SELECTION / CALIBRATION",
+      "answer_token_accuracy": 0.7352821210061183,
+      "bitmask": "1111111",
+      "candidate_argmax_certification_rate": 1.0,
+      "eos_accuracy": 0.9995061728395062,
+      "example_accuracy": 0.26765432098765435,
+      "example_correct": 1084,
+      "example_total": 4050,
+      "expert_token_forward_proxy": 131320,
+      "first_token_accuracy": 0.2760493827160494,
+      "k": 7,
+      "mask": 127,
+      "mean_pairwise_double_fault": 0.2411793075439131,
+      "mean_pairwise_top1_disagreement": 0.45709209056757033,
+      "members": [
+        "track_a",
+        "track_b",
+        "general",
+        "grounding",
+        "procedure",
+        "abstention",
+        "social"
+      ],
+      "method": "calibrated_probability_mean",
+      "token_accuracy": 0.7923240938166312,
+      "token_correct": 14864,
+      "token_total": 18760
+    },
+    "hard_plurality": {
+      "analysis_role": "DEV MODEL-SELECTION / CALIBRATION",
+      "answer_token_accuracy": 0.7239292997960571,
+      "bitmask": "1111111",
+      "candidate_argmax_certification_rate": 1.0,
+      "eos_accuracy": 0.9987654320987654,
+      "example_accuracy": 0.2525925925925926,
+      "example_correct": 1023,
+      "example_total": 4050,
+      "expert_token_forward_proxy": 131320,
+      "first_token_accuracy": 0.2577777777777778,
+      "k": 7,
+      "mask": 127,
+      "mean_pairwise_double_fault": 0.2411793075439131,
+      "mean_pairwise_top1_disagreement": 0.45709209056757033,
+      "members": [
+        "track_a",
+        "track_b",
+        "general",
+        "grounding",
+        "procedure",
+        "abstention",
+        "social"
+      ],
+      "method": "hard_plurality",
+      "token_accuracy": 0.7832622601279318,
+      "token_correct": 14694,
+      "token_total": 18760
+    },
+    "probability_mean": {
+      "analysis_role": "DEV MODEL-SELECTION / CALIBRATION",
+      "answer_token_accuracy": 0.7312032630863359,
+      "bitmask": "1111111",
+      "candidate_argmax_certification_rate": 1.0,
+      "eos_accuracy": 0.9992592592592593,
+      "example_accuracy": 0.2661728395061728,
+      "example_correct": 1078,
+      "example_total": 4050,
+      "expert_token_forward_proxy": 131320,
+      "first_token_accuracy": 0.26987654320987653,
+      "k": 7,
+      "mask": 127,
+      "mean_pairwise_double_fault": 0.2411793075439131,
+      "mean_pairwise_top1_disagreement": 0.45709209056757033,
+      "members": [
+        "track_a",
+        "track_b",
+        "general",
+        "grounding",
+        "procedure",
+        "abstention",
+        "social"
+      ],
+      "method": "probability_mean",
+      "token_accuracy": 0.7890724946695096,
+      "token_correct": 14803,
+      "token_total": 18760
+    }
+  },
+  "selection_manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\phase2_mechanism\\selected_dev_free_run_manifest.json",
+  "selection_manifest_sha256": "5348738d8dd1f8cb2645b2a437fe99685e94e2619169d70690705aa1221d216a",
+  "selection_used_test_outcomes": false,
+  "statistics": "paired example bootstrap difference CI; exact McNemar; Holm correction over the two predeclared calibrated-fusion comparisons",
+  "status": "V22_CALIBRATED_TEST_CONFIRMATION_FROZEN",
+  "teacher_analysis_sha256": "19fa2be96094f210d8f9e3006547bc649389a60383e594edf5051b6436b24b62"
+}

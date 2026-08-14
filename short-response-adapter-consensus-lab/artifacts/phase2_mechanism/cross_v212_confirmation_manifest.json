@@ -1,0 +1,49 @@
+{
+  "analysis_role": "FIXED-METHOD CROSS-CORPUS TRANSFER WITH PROVENANCE CAVEATS",
+  "caveats": [
+    "v2.1.2 TEST contains exact prompt-and-answer repetitions from v2.1.2 TRAIN; this does not leak into the seven v2.2-trained adapters, but prevents a template-independent holdout claim.",
+    "The official project previously evaluated a different selected D_greedy dense model on v2.1.2 TEST; the split is therefore not globally untouched."
+  ],
+  "claim_boundary": "Fixed-method cross-corpus transfer only; not globally untouched or template-independent holdout evidence; do not aggregate with v2.2.",
+  "configs": {
+    "controls": {
+      "canonical_sha256": "1c29b6ecf08f0700291ae70118600bd8e80c7d1446f9890fae57992c31dbc914",
+      "expected_rows": 3960,
+      "file_sha256": "21966c5bc985bf2da97ff4f1526a94279e487db5db3ea57582a14d4ae93df72b",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\phase2_cross_v212_controls.yaml"
+    },
+    "full_k7": {
+      "canonical_sha256": "e6a2051b0bf76ee4bf94eb468dd0d08b3fd0be182182bcd977766ffd76e71623",
+      "expected_rows": 3960,
+      "file_sha256": "141c696f69662a037a01c0a1cb5ab43e674eae1b7f5ffd150a2c4fbbb3068050",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\phase2_cross_v212_full_k7.yaml"
+    }
+  },
+  "cross_gate": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\phase2_mechanism\\cross_benchmark_verification.json",
+  "cross_gate_sha256": "e430af7614da2ebb8e33f46ba4df5bfaabe0c68511f405bf758a372f1b087643",
+  "frozen_at_utc": "2026-08-12T20:49:41.136775+00:00",
+  "no_switching_rule": "Do not change methods, temperatures, controls, EOS, decoder, or comparison family after v2.1.2 outputs are inspected.",
+  "outcome_data_read_before_freeze": false,
+  "planned_conditions": [
+    "backbone_k1/hard_plurality",
+    "track_a_k1/hard_plurality",
+    "abstention_k1/hard_plurality",
+    "full_k7/hard_plurality",
+    "full_k7/probability_mean",
+    "full_k7/calibrated_probability_mean"
+  ],
+  "planned_paired_family": [
+    "hard_k7 vs backbone",
+    "hard_k7 vs Track A",
+    "hard_k7 vs abstention",
+    "hard_k7 vs raw probability K7",
+    "hard_k7 vs calibrated probability K7"
+  ],
+  "schema_version": "1.0",
+  "selection_manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\phase2_mechanism\\selected_dev_free_run_manifest.json",
+  "selection_manifest_sha256": "5348738d8dd1f8cb2645b2a437fe99685e94e2619169d70690705aa1221d216a",
+  "statistics": "paired bootstrap difference CI; exact McNemar; Holm correction over the five planned hard-K7 comparisons",
+  "status": "V212_CROSS_CORPUS_CONFIRMATION_FROZEN",
+  "v212_test_rows": 1320,
+  "v212_test_sha256": "9333a3ae97c3c70f81a8998f88611d4224fc23e979edae0f69f860fc9c7c6cce"
+}

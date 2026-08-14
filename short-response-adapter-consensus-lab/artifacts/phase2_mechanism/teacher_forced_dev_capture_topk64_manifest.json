@@ -1,0 +1,72 @@
+{
+  "adapter_hashes": {
+    "abstention": {
+      "config": "33ed7b1707f08e1d1bd83f3d8f29a435ffb83c1556665167895c97bfaebead46",
+      "weights": "5ccf002233bfd32b426f3808236dd9b728fd69b5afc9a380bbe53a3b2a967ace"
+    },
+    "general": {
+      "config": "ea17ef3ad52bc8bcb962cf13a868886f23349b082f1c9004134c380009b2eddb",
+      "weights": "d002fbb4b3548c59ad955a27a3100d4024296dca00ba49df8e63c8d176fd1c7b"
+    },
+    "grounding": {
+      "config": "4f58d0755f160ac639278a1929e841cc85e67ec8b0688c6a0605aa9d2209e6c8",
+      "weights": "138e54b0efa35c3be19f1380a21629541db8b34659651dc1b6fb74a2319a1b02"
+    },
+    "procedure": {
+      "config": "494acf500deebb60da3dcfc7f7fd5d4b1636a9b24eaf6fc4524909b9b0c66ff2",
+      "weights": "c76a4a0bd25cb7d276145c15460205a80a9e2badbdb28a9987073d3d9b4cd19b"
+    },
+    "social": {
+      "config": "79352ff036fb0c3056904301c33cbea8394ba417cf000d407a7d59754c91e947",
+      "weights": "7a52ae04cc99050431fa35b5e2046e7d6b74f6e16db788679692264abea72d87"
+    },
+    "track_a": {
+      "config": "3a89fc081824fcf511a0c9c83128bd5b0212ba6ecd35a05c997f53cc2b2b1072",
+      "weights": "e09e4f05fc69e2b4ed446178d137e6e7feb89500c02860a6a92fc15d574dfcfc"
+    },
+    "track_b": {
+      "config": "7ec285e8308a6194e30ef20789ee393cd664516786c0c2bcd8bb3b27835515b7",
+      "weights": "54cdaf75f0902a959c4521d3624b86136f3575fdee5654da642a4cf4b17c8eee"
+    }
+  },
+  "analysis_role": "DEV MODEL-SELECTION / CALIBRATION",
+  "capture_config_sha256": "304554e6b05d61e6a9bbbb60570dcbdddbb121ce4cce65b1645d5d3ad6f8d9e7",
+  "created_at_utc": "2026-08-12T16:47:24.770681+00:00",
+  "dataset": "v22_dev",
+  "dataset_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\multidomain_reasoning_v22\\reviewed_splits\\dev.reviewed.jsonl",
+  "dataset_sha256": "11f58cc066e5650a5d4aac448f7a565a7dde007884110652726e58fee04ddb7a",
+  "expert_order": [
+    "track_a",
+    "track_b",
+    "general",
+    "grounding",
+    "procedure",
+    "abstention",
+    "social"
+  ],
+  "implementation_sha256": "86a290e55ee391cf94ccc708fbe23496016e0999e0dd5e2e2556b5f2e66cdddb",
+  "output": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\phase2_mechanism\\teacher_forced_dev_cache_topk64.jsonl",
+  "precision_argument": "auto",
+  "resolved_dtype": "torch.bfloat16",
+  "schema_version": "1.1-topk64-union-temperature-grid",
+  "seed": 20261013,
+  "source_config": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\fusion_sweep.yaml",
+  "source_config_sha256": "07c56ad5af3c12096858c970773b1cf1ea7d8cb530a93c2a3b12cdc3cf7b549c",
+  "status": "DEV_CAPTURE_FROZEN",
+  "target_encoding": "gold_text_tokenized_without_specials_plus_eos",
+  "teacher_forced_alignment": "last_target_length_logits_from_prompt_plus_target_without_final_token",
+  "temperature_grid": [
+    0.25,
+    0.5,
+    0.67,
+    0.75,
+    0.8,
+    1.0,
+    1.25,
+    1.5,
+    2.0,
+    3.0,
+    4.0
+  ],
+  "top_k": 64
+}
