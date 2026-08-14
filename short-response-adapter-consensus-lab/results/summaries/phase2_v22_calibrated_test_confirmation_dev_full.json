@@ -1,0 +1,106 @@
+{
+  "schema_version": "1.0",
+  "summaries": [
+    {
+      "abstention_correctness": 0.3277777777777778,
+      "active_parameter_count": 348680192,
+      "adapter_storage_bytes": 201341896,
+      "answerable_correctness": 0.10911680911680911,
+      "backbone_parameter_count": 344354816,
+      "case_count": 4050,
+      "category_correctness": {
+        "aggregate_delta": 0.0,
+        "capacity_fit": 0.24074074074074073,
+        "compare_metric": 0.5074074074074074,
+        "conflicting_evidence": 0.4703703703703704,
+        "constraint_preserving_transform": 0.5037037037037037,
+        "constraint_satisfaction": 0.0,
+        "dependency_order": 0.08888888888888889,
+        "diagnostic_priority": 0.0,
+        "evidence_binding": 0.007407407407407408,
+        "evidence_synthesis": 0.0,
+        "filter_then_rank": 0.022222222222222223,
+        "insufficient_information": 0.18518518518518517,
+        "rule_exception": 0.02962962962962963,
+        "state_transition": 0.011111111111111112,
+        "two_hop_relation": 0.007407407407407408
+      },
+      "committee": "full_k7",
+      "committee_adapter_parameter_count": 30277632,
+      "committee_size": 7,
+      "completion_rate": 1.0,
+      "correctness": 0.1382716049382716,
+      "dataset": "v22_sealed",
+      "disagreement_calibration_bins": [
+        {
+          "count": 1260,
+          "high": 0.2,
+          "low": 0.0,
+          "mean_predicted_error": 0.16875506768363913,
+          "observed_error_rate": 0.846031746031746
+        },
+        {
+          "count": 1777,
+          "high": 0.4,
+          "low": 0.2,
+          "mean_predicted_error": 0.2946614456904673,
+          "observed_error_rate": 0.8773213280810355
+        },
+        {
+          "count": 1006,
+          "high": 0.6000000000000001,
+          "low": 0.4,
+          "mean_predicted_error": 0.47230190286850326,
+          "observed_error_rate": 0.8548707753479126
+        },
+        {
+          "count": 7,
+          "high": 0.8,
+          "low": 0.6000000000000001,
+          "mean_predicted_error": 0.6231292517006803,
+          "observed_error_rate": 0.7142857142857143
+        },
+        {
+          "count": 0,
+          "high": 1.0,
+          "low": 0.8,
+          "mean_predicted_error": null,
+          "observed_error_rate": null
+        }
+      ],
+      "disagreement_error_auprc": 0.8344338254105685,
+      "disagreement_error_auroc": 0.5033352947196071,
+      "disagreement_error_brier": 0.45230858970768517,
+      "disagreement_error_ece": 0.5615450880688976,
+      "eos_rate": 1.0,
+      "false_abstention_rate": 0.3891737891737892,
+      "generation_limit_compliance_rate": 1.0,
+      "max_output_tokens": 11,
+      "mean_adapter_evaluations": 43.66962962962963,
+      "mean_agreement": 0.6998166930071692,
+      "mean_forward_passes": 43.66962962962963,
+      "mean_latency_seconds": 1.980040860222146,
+      "mean_output_tokens": 6.238518518518519,
+      "mean_pairwise_js": 0.27422118760002007,
+      "mean_time_to_first_final_token_seconds": 0.3312782128147237,
+      "mean_vote_entropy": 0.7112260642165585,
+      "median_output_tokens": 5.0,
+      "method": "calibrated_probability_mean",
+      "nonempty_rate": 1.0,
+      "p50_latency_seconds": 1.4858702999990783,
+      "p90_latency_seconds": 3.6045674000015424,
+      "p90_output_tokens": 11.0,
+      "p95_latency_seconds": 3.8443621599992173,
+      "p95_output_tokens": 11.0,
+      "pairwise_js_error_auroc": 0.49232449856733523,
+      "peak_cpu_rss_bytes": 1869795328,
+      "peak_gpu_vram_bytes": 862206464,
+      "repetition_rate": 0.0002469135802469136,
+      "run_name": "phase2_v22_calibrated_test_confirmation",
+      "short_response_rate_le_16_tokens": 1.0,
+      "tie_example_rate": 0.0,
+      "tokens_per_second": 3.1507019091609063,
+      "vote_entropy_error_auroc": 0.48925603765861647
+    }
+  ]
+}

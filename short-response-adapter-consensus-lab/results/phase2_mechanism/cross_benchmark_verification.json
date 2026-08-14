@@ -1,0 +1,500 @@
+{
+  "adapter_training_sources": {
+    "track_a_broad_reasoning": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\training_manifest.json",
+      "manifest_sha256": "379dc63a3989e551fdcaaa0ad7c4a8305f334cf905b3bc359ba10023fdce333e",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\track_a_broad_general.reviewed.jsonl"
+    },
+    "track_b_anchored_reasoning": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\training_manifest.json",
+      "manifest_sha256": "ee7165c321cd61d7ef04f171189e0a4ab8aa133a70c1056ec6144d23ea133dc6",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\track_b_anchored_mixed.reviewed.jsonl"
+    },
+    "track_c_abstention": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\training_manifest.json",
+      "manifest_sha256": "8f393fc210592ff394268611fe106ba8e7f25460c2133a25c535c5d2ddfc9009",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_abstention.reviewed.jsonl"
+    },
+    "track_c_general": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\training_manifest.json",
+      "manifest_sha256": "234f8f5f8941f1b8718ff123638e10aea86d0dac481538ce67e52f3fa2f46a79",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_general.reviewed.jsonl"
+    },
+    "track_c_grounding": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\training_manifest.json",
+      "manifest_sha256": "522fe3f6cffd0f69d450cc1a8cfe59a68033a4ab17186b975e875893359762e5",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_grounding.reviewed.jsonl"
+    },
+    "track_c_procedure": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\training_manifest.json",
+      "manifest_sha256": "9c0026d0b58119e35a926e2d48edf9516761fa6143cf81f02916d8e9b2130697",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_procedure.reviewed.jsonl"
+    },
+    "track_c_social": {
+      "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\training_manifest.json",
+      "manifest_sha256": "47d60d0a6a17c80b754c75738fbb3060dab4b279f23e9881dd09a8f19259a8bb",
+      "train_file": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_social.reviewed.jsonl"
+    }
+  },
+  "analysis_role": "CROSS-BENCHMARK PROVENANCE GATE",
+  "caveats": [
+    "v2.1.2 TEST contains exact prompt-and-answer repetitions from v2.1.2 TRAIN; this does not leak into the seven v2.2-trained adapters, but prevents a template-independent holdout claim.",
+    "The official project previously evaluated a different selected D_greedy dense model on v2.1.2 TEST; the split is therefore not globally untouched."
+  ],
+  "checks": [
+    {
+      "evidence": "2.1.2",
+      "name": "manifest schema",
+      "passed": true
+    },
+    {
+      "evidence": 21242,
+      "name": "manifest deterministic seed",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "dev": 1320,
+        "test": 1320,
+        "train": 10560
+      },
+      "name": "manifest split counts",
+      "passed": true
+    },
+    {
+      "evidence": 13200,
+      "name": "manifest canonical row count",
+      "passed": true
+    },
+    {
+      "evidence": 33,
+      "name": "manifest family count",
+      "passed": true
+    },
+    {
+      "evidence": 10560,
+      "name": "train row count",
+      "passed": true
+    },
+    {
+      "evidence": "b2eacf4435bfa7ef617639ed3d9626891fecae012bd4265ec5e0e9e7f4cdab5b",
+      "name": "train frozen hash",
+      "passed": true
+    },
+    {
+      "evidence": 10560,
+      "name": "train unique IDs",
+      "passed": true
+    },
+    {
+      "evidence": 10560,
+      "name": "train nonempty answers",
+      "passed": true
+    },
+    {
+      "evidence": 10560,
+      "name": "train final assistant message",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "dev row count",
+      "passed": true
+    },
+    {
+      "evidence": "c6619bdc3c492355d8e14a4a2b4350f9bae41a060649a6f0834ad7c8f7910f90",
+      "name": "dev frozen hash",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "dev unique IDs",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "dev nonempty answers",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "dev final assistant message",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "test row count",
+      "passed": true
+    },
+    {
+      "evidence": "9333a3ae97c3c70f81a8998f88611d4224fc23e979edae0f69f860fc9c7c6cce",
+      "name": "test frozen hash",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "test unique IDs",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "test nonempty answers",
+      "passed": true
+    },
+    {
+      "evidence": 1320,
+      "name": "test final assistant message",
+      "passed": true
+    },
+    {
+      "evidence": 0,
+      "name": "train/dev ID disjoint",
+      "passed": true
+    },
+    {
+      "evidence": 0,
+      "name": "train/test ID disjoint",
+      "passed": true
+    },
+    {
+      "evidence": 0,
+      "name": "dev/test ID disjoint",
+      "passed": true
+    },
+    {
+      "evidence": 0,
+      "name": "v2.1.2 TEST/v2.2 all ID disjoint",
+      "passed": true
+    },
+    {
+      "evidence": 0,
+      "name": "v2.1.2 TEST/v2.2 all exact-prompt disjoint",
+      "passed": true
+    },
+    {
+      "evidence": [],
+      "name": "no prior lab TEST reference",
+      "passed": true
+    },
+    {
+      "evidence": {
+        "track_a_broad_reasoning": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\track_a_broad_general.reviewed.jsonl",
+        "track_b_anchored_reasoning": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\track_b_anchored_mixed.reviewed.jsonl",
+        "track_c_abstention": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_abstention.reviewed.jsonl",
+        "track_c_general": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_general.reviewed.jsonl",
+        "track_c_grounding": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_grounding.reviewed.jsonl",
+        "track_c_procedure": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_procedure.reviewed.jsonl",
+        "track_c_social": "data\\phase_9_student_distillation\\multidomain_reasoning_v22\\curriculum_views\\specialist_social.reviewed.jsonl"
+      },
+      "name": "all seven adapter training files are v2.2, not v2.1.2",
+      "passed": true
+    }
+  ],
+  "checks_passed": 27,
+  "checks_total": 27,
+  "cross_v22": {
+    "template_overlap_interpretation": "Reported descriptively; shared abstract templates do not imply row leakage.",
+    "test_exact_prompt_overlap": 0,
+    "test_id_overlap": 0,
+    "test_value_normalized_template_overlap": 0,
+    "v22_split_paths": {
+      "dev": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\multidomain_reasoning_v22\\reviewed_splits\\dev.reviewed.jsonl",
+      "test": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\multidomain_reasoning_v22\\reviewed_splits\\test.reviewed.jsonl",
+      "train": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\multidomain_reasoning_v22\\reviewed_splits\\train.reviewed.jsonl"
+    }
+  },
+  "generated_at_utc": "2026-08-12T19:27:23.515134+00:00",
+  "historical_official_test_use": {
+    "condition": "different historical D_greedy dense selected model, not any Phase 2 adapter committee",
+    "exists": true,
+    "manifest_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\sealed_selected_test\\candidate_evaluation_manifest.json",
+    "manifest_sha256": "5882bdb03d0653850934d146b882b12560241f16b57091c0aab047e498502fdc",
+    "results_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\sealed_selected_test\\v212\\results.jsonl",
+    "results_sha256": "3a586a4d7d2baa606837931d338654eb0cd9d6c1029f730a753f2477ab5a2179",
+    "summary_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\sealed_selected_test\\v212\\summary.json",
+    "summary_sha256": "4de5aaa0c28e0bbfbc264164606f8d69783a3aa9dad125bc805c6de59e225af8"
+  },
+  "manifest": {
+    "content": {
+      "canonical_rows": 13200,
+      "chain_of_thought_policy": "No rationale text is placed in assistant targets. Verification metadata is audit-only.",
+      "decision_counts": {
+        "abstain": 1200,
+        "answer": 12000
+      },
+      "difficulty_counts": {
+        "easy": 4000,
+        "hard": 2800,
+        "moderate": 6400
+      },
+      "families": 33,
+      "family_counts": {
+        "ambiguous_ranking": 400,
+        "and_eligibility": 400,
+        "arithmetic_sequence": 400,
+        "arithmetic_total": 400,
+        "comparative_chain": 400,
+        "conditional_counterfactual": 400,
+        "diagnostic_rule": 400,
+        "duration_minutes": 400,
+        "entity_transfer": 400,
+        "exact_division": 400,
+        "filter_then_min": 400,
+        "indirect_manager": 400,
+        "instruction_order": 400,
+        "interval_overlap": 400,
+        "latest_date": 400,
+        "maximum_score": 400,
+        "minimum_value": 400,
+        "missing_rule": 400,
+        "multiplication_total": 400,
+        "or_routing": 400,
+        "parity_rule": 400,
+        "percentage_discount": 400,
+        "prerequisite_next": 400,
+        "rate_time": 400,
+        "ratio_scale": 400,
+        "set_intersection": 400,
+        "shortest_path": 400,
+        "smallest_sufficient": 400,
+        "state_transition": 400,
+        "sufficient_information": 400,
+        "table_filter": 400,
+        "threshold_rule": 400,
+        "tie_break": 400
+      },
+      "family_names": [
+        "arithmetic_total",
+        "multiplication_total",
+        "exact_division",
+        "percentage_discount",
+        "rate_time",
+        "ratio_scale",
+        "duration_minutes",
+        "latest_date",
+        "minimum_value",
+        "maximum_score",
+        "smallest_sufficient",
+        "threshold_rule",
+        "and_eligibility",
+        "or_routing",
+        "filter_then_min",
+        "tie_break",
+        "comparative_chain",
+        "set_intersection",
+        "interval_overlap",
+        "state_transition",
+        "prerequisite_next",
+        "entity_transfer",
+        "indirect_manager",
+        "shortest_path",
+        "arithmetic_sequence",
+        "parity_rule",
+        "conditional_counterfactual",
+        "diagnostic_rule",
+        "table_filter",
+        "instruction_order",
+        "sufficient_information",
+        "ambiguous_ranking",
+        "missing_rule"
+      ],
+      "schema_version": "2.1.2",
+      "seed": 21242,
+      "source": "deterministic_phase9_general_reasoning_v212",
+      "split_counts": {
+        "dev": 1320,
+        "test": 1320,
+        "train": 10560
+      },
+      "stage_a_rows": 4800,
+      "stage_b_general_rows": 3600,
+      "stage_b_preservation_rows": 2400,
+      "stage_b_preservation_sources": {
+        "original_phase9_train": 1200,
+        "v211_train": 1200
+      },
+      "stage_b_rows": 6000,
+      "test_policy": "topic/example IDs are held out from training; sealed TEST is not used for selection"
+    },
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\general_reasoning_v212\\manifests\\dataset_manifest.json",
+    "sha256": "ecf90624403c4c7e590ee2592e493eeab7249aeffa9dd4de8a5f9595a9fff020"
+  },
+  "prior_lab_test_references": [],
+  "schema_version": "1.0",
+  "splits": {
+    "dev": {
+      "assistant_final_message": 1320,
+      "decision_counts": {
+        "abstain": 120,
+        "answer": 1200
+      },
+      "duplicate_exact_normalized_prompt_rows": 580,
+      "duplicate_ids": [],
+      "family_counts": {
+        "ambiguous_ranking": 40,
+        "and_eligibility": 40,
+        "arithmetic_sequence": 40,
+        "arithmetic_total": 40,
+        "comparative_chain": 40,
+        "conditional_counterfactual": 40,
+        "diagnostic_rule": 40,
+        "duration_minutes": 40,
+        "entity_transfer": 40,
+        "exact_division": 40,
+        "filter_then_min": 40,
+        "indirect_manager": 40,
+        "instruction_order": 40,
+        "interval_overlap": 40,
+        "latest_date": 40,
+        "maximum_score": 40,
+        "minimum_value": 40,
+        "missing_rule": 40,
+        "multiplication_total": 40,
+        "or_routing": 40,
+        "parity_rule": 40,
+        "percentage_discount": 40,
+        "prerequisite_next": 40,
+        "rate_time": 40,
+        "ratio_scale": 40,
+        "set_intersection": 40,
+        "shortest_path": 40,
+        "smallest_sufficient": 40,
+        "state_transition": 40,
+        "sufficient_information": 40,
+        "table_filter": 40,
+        "threshold_rule": 40,
+        "tie_break": 40
+      },
+      "nonempty_answers": 1320,
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\general_reasoning_v212\\reviewed_splits\\dev.reviewed.jsonl",
+      "rows": 1320,
+      "sha256": "c6619bdc3c492355d8e14a4a2b4350f9bae41a060649a6f0834ad7c8f7910f90",
+      "unique_exact_normalized_prompts": 740,
+      "unique_ids": 1320
+    },
+    "test": {
+      "assistant_final_message": 1320,
+      "decision_counts": {
+        "abstain": 120,
+        "answer": 1200
+      },
+      "duplicate_exact_normalized_prompt_rows": 578,
+      "duplicate_ids": [],
+      "family_counts": {
+        "ambiguous_ranking": 40,
+        "and_eligibility": 40,
+        "arithmetic_sequence": 40,
+        "arithmetic_total": 40,
+        "comparative_chain": 40,
+        "conditional_counterfactual": 40,
+        "diagnostic_rule": 40,
+        "duration_minutes": 40,
+        "entity_transfer": 40,
+        "exact_division": 40,
+        "filter_then_min": 40,
+        "indirect_manager": 40,
+        "instruction_order": 40,
+        "interval_overlap": 40,
+        "latest_date": 40,
+        "maximum_score": 40,
+        "minimum_value": 40,
+        "missing_rule": 40,
+        "multiplication_total": 40,
+        "or_routing": 40,
+        "parity_rule": 40,
+        "percentage_discount": 40,
+        "prerequisite_next": 40,
+        "rate_time": 40,
+        "ratio_scale": 40,
+        "set_intersection": 40,
+        "shortest_path": 40,
+        "smallest_sufficient": 40,
+        "state_transition": 40,
+        "sufficient_information": 40,
+        "table_filter": 40,
+        "threshold_rule": 40,
+        "tie_break": 40
+      },
+      "nonempty_answers": 1320,
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\general_reasoning_v212\\reviewed_splits\\test.reviewed.jsonl",
+      "rows": 1320,
+      "sha256": "9333a3ae97c3c70f81a8998f88611d4224fc23e979edae0f69f860fc9c7c6cce",
+      "unique_exact_normalized_prompts": 742,
+      "unique_ids": 1320
+    },
+    "train": {
+      "assistant_final_message": 10560,
+      "decision_counts": {
+        "abstain": 960,
+        "answer": 9600
+      },
+      "duplicate_exact_normalized_prompt_rows": 7027,
+      "duplicate_ids": [],
+      "family_counts": {
+        "ambiguous_ranking": 320,
+        "and_eligibility": 320,
+        "arithmetic_sequence": 320,
+        "arithmetic_total": 320,
+        "comparative_chain": 320,
+        "conditional_counterfactual": 320,
+        "diagnostic_rule": 320,
+        "duration_minutes": 320,
+        "entity_transfer": 320,
+        "exact_division": 320,
+        "filter_then_min": 320,
+        "indirect_manager": 320,
+        "instruction_order": 320,
+        "interval_overlap": 320,
+        "latest_date": 320,
+        "maximum_score": 320,
+        "minimum_value": 320,
+        "missing_rule": 320,
+        "multiplication_total": 320,
+        "or_routing": 320,
+        "parity_rule": 320,
+        "percentage_discount": 320,
+        "prerequisite_next": 320,
+        "rate_time": 320,
+        "ratio_scale": 320,
+        "set_intersection": 320,
+        "shortest_path": 320,
+        "smallest_sufficient": 320,
+        "state_transition": 320,
+        "sufficient_information": 320,
+        "table_filter": 320,
+        "threshold_rule": 320,
+        "tie_break": 320
+      },
+      "nonempty_answers": 10560,
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\general_reasoning_v212\\reviewed_splits\\train.reviewed.jsonl",
+      "rows": 10560,
+      "sha256": "b2eacf4435bfa7ef617639ed3d9626891fecae012bd4265ec5e0e9e7f4cdab5b",
+      "unique_exact_normalized_prompts": 3533,
+      "unique_ids": 10560
+    }
+  },
+  "status": "PASS_WITH_CAVEATS",
+  "within_v212_split_overlap": {
+    "dev_test": {
+      "exact_prompt_answer_forms": 196,
+      "exact_prompt_forms": 196,
+      "right_rows_with_exact_prompt_answer_overlap": 717,
+      "right_rows_with_exact_prompt_overlap": 717,
+      "value_normalized_template_forms": 86
+    },
+    "train_dev": {
+      "exact_prompt_answer_forms": 443,
+      "exact_prompt_forms": 443,
+      "right_rows_with_exact_prompt_answer_overlap": 1010,
+      "right_rows_with_exact_prompt_overlap": 1010,
+      "value_normalized_template_forms": 86
+    },
+    "train_test": {
+      "exact_prompt_answer_forms": 444,
+      "exact_prompt_forms": 444,
+      "right_rows_with_exact_prompt_answer_overlap": 1008,
+      "right_rows_with_exact_prompt_overlap": 1008,
+      "value_normalized_template_forms": 86
+    }
+  }
+}

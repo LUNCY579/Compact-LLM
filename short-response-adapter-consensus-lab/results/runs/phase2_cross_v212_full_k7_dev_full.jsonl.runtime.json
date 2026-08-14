@@ -1,0 +1,769 @@
+{
+  "expected_rows": 3960,
+  "identity": {
+    "config": {
+      "canonical_sha256": "e6a2051b0bf76ee4bf94eb468dd0d08b3fd0be182182bcd977766ffd76e71623",
+      "file_sha256": "141c696f69662a037a01c0a1cb5ab43e674eae1b7f5ffd150a2c4fbbb3068050",
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\phase2_cross_v212_full_k7.yaml"
+    },
+    "datasets": {
+      "v212_test": {
+        "bytes": 2368282,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\general_reasoning_v212\\reviewed_splits\\test.reviewed.jsonl",
+        "relative_path": "data/phase_9_student_distillation/general_reasoning_v212/reviewed_splits/test.reviewed.jsonl",
+        "sha256": "9333a3ae97c3c70f81a8998f88611d4224fc23e979edae0f69f860fc9c7c6cce"
+      }
+    },
+    "model_inputs": [
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 1113,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/config.json",
+        "sha256": "00ae4d33dcad2302beb5a83cfd5a7420a005d8891f6d7cec9aa758e6cf811e23"
+      },
+      {
+        "bytes": 227,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\generation_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/generation_config.json",
+        "sha256": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48"
+      },
+      {
+        "bytes": 688724752,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/model.safetensors",
+        "sha256": "bd2e7d7f63987513d2a8a5a920a1ceb076c80aa00741c6b7dbaed53b0d1f2ac4"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 576,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\frozen_anchor\\v22_anchor_manifest.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/frozen_anchor/v22_anchor_manifest.json",
+        "sha256": "27629abaf23a4669cd3755e64fe7abca87a1ad3e56dcb6e7eec1bf9af2961279"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/adapter_config.json",
+        "sha256": "3a89fc081824fcf511a0c9c83128bd5b0212ba6ecd35a05c997f53cc2b2b1072"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/adapter_model.safetensors",
+        "sha256": "e09e4f05fc69e2b4ed446178d137e6e7feb89500c02860a6a92fc15d574dfcfc"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_a_broad_reasoning\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_a_broad_reasoning/adapter/training_args.bin",
+        "sha256": "488808ead6f671bbdb520e37e496e8f7e8afc38eeef7e447068cb60cf10c9b99"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/adapter_config.json",
+        "sha256": "7ec285e8308a6194e30ef20789ee393cd664516786c0c2bcd8bb3b27835515b7"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/adapter_model.safetensors",
+        "sha256": "54cdaf75f0902a959c4521d3624b86136f3575fdee5654da642a4cf4b17c8eee"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_b_anchored_reasoning\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_b_anchored_reasoning/adapter/training_args.bin",
+        "sha256": "642090d712879825050e15e33915787e3e8054e6ff868d8cb687fefdb5a9ed61"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/adapter_config.json",
+        "sha256": "33ed7b1707f08e1d1bd83f3d8f29a435ffb83c1556665167895c97bfaebead46"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/adapter_model.safetensors",
+        "sha256": "5ccf002233bfd32b426f3808236dd9b728fd69b5afc9a380bbe53a3b2a967ace"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_abstention\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_abstention/adapter/training_args.bin",
+        "sha256": "f1e24b88ec9a75aac16b97ce5d4c31ef786d9d2553eb1b283092b05dc73a5012"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/adapter_config.json",
+        "sha256": "ea17ef3ad52bc8bcb962cf13a868886f23349b082f1c9004134c380009b2eddb"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/adapter_model.safetensors",
+        "sha256": "d002fbb4b3548c59ad955a27a3100d4024296dca00ba49df8e63c8d176fd1c7b"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_general\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_general/adapter/training_args.bin",
+        "sha256": "97680739a1686b424a995e6bc32cd1bd52bd4f0f14968907887f4531455d588a"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/adapter_config.json",
+        "sha256": "4f58d0755f160ac639278a1929e841cc85e67ec8b0688c6a0605aa9d2209e6c8"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/adapter_model.safetensors",
+        "sha256": "138e54b0efa35c3be19f1380a21629541db8b34659651dc1b6fb74a2319a1b02"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_grounding\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_grounding/adapter/training_args.bin",
+        "sha256": "dcc8fb69a48cec167c60fbdef7920a5b5a45ca8bcd8b8265084d7a47bfd7723a"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/adapter_config.json",
+        "sha256": "494acf500deebb60da3dcfc7f7fd5d4b1636a9b24eaf6fc4524909b9b0c66ff2"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/adapter_model.safetensors",
+        "sha256": "c76a4a0bd25cb7d276145c15460205a80a9e2badbdb28a9987073d3d9b4cd19b"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_procedure\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_procedure/adapter/training_args.bin",
+        "sha256": "2d1bc9662b71cfa89302095446063e3973761450aaaf35e73bdcfc6a0bb5906a"
+      },
+      {
+        "bytes": 1246,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\adapter_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/adapter_config.json",
+        "sha256": "79352ff036fb0c3056904301c33cbea8394ba417cf000d407a7d59754c91e947"
+      },
+      {
+        "bytes": 17323608,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\adapter_model.safetensors",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/adapter_model.safetensors",
+        "sha256": "7a52ae04cc99050431fa35b5e2046e7d6b74f6e16db788679692264abea72d87"
+      },
+      {
+        "bytes": 4256,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\chat_template.jinja",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      {
+        "bytes": 5380,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\README.md",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/README.md",
+        "sha256": "7ae84c26a1ff23eeea254dbd8a7eed6b9cb50d80308d57db22ada4efda64c6ce"
+      },
+      {
+        "bytes": 11422650,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\tokenizer.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      {
+        "bytes": 723,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\tokenizer_config.json",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      {
+        "bytes": 5265,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_c_social\\adapter\\training_args.bin",
+        "relative_path": "artifacts/phase_9_capability_composition_v22_lr1e4_s1200/track_c_social/adapter/training_args.bin",
+        "sha256": "1b3dd26c718b8ea09935412c9851b077b139ffa7810dc7a7373cf6a75efd889b"
+      }
+    ],
+    "official_source_manifest": {
+      "after_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\manifests\\official_sources_after.json",
+      "after_sha256": "91815de39f4e74a1da912775f84060f2cb8dc4db4cbfc0840c37a88c8e914b55",
+      "before_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\manifests\\official_sources_before.json",
+      "before_sha256": "408ea7db2671e9200934278b0540d20bf2c71c47eaf170c1907d772449afd376",
+      "official_tree_manifest_sha256": "899141435d813de64b29a732f6b393202077be2ba1ad900cfa6e9134d38b9b00",
+      "verified_equal": true
+    },
+    "runtime_sources": [
+      {
+        "bytes": 206,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\scripts\\_bootstrap.py",
+        "relative_path": "scripts/_bootstrap.py",
+        "sha256": "39abce17ea13412deeb2eba013552520018690eeb320f8d9cc6b2c20d0571caa"
+      },
+      {
+        "bytes": 6459,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\scripts\\run_dev.py",
+        "relative_path": "scripts/run_dev.py",
+        "sha256": "2a47986456670ef3afa4ad648c5f0f4ffa8daf21ad43230aa0287d247869a2d0"
+      },
+      {
+        "bytes": 3055,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\io.py",
+        "relative_path": "src/consensus_lab/io.py",
+        "sha256": "ba4f74d8cf77ab849eab4ff3691dfb51c89ac113449cd8717d7abbf48815f617"
+      },
+      {
+        "bytes": 4698,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\paths.py",
+        "relative_path": "src/consensus_lab/paths.py",
+        "sha256": "ff6541aa453488d025dbe6b097b9dc0efc12ff6c496ee3334befbc16307bca9b"
+      },
+      {
+        "bytes": 1355,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\run_lock.py",
+        "relative_path": "src/consensus_lab/run_lock.py",
+        "sha256": "5268944dc98fde37353ab7dbda411efd6fe9a4b36a25fc1feeaa87e294d26843"
+      },
+      {
+        "bytes": 8744,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\run_provenance.py",
+        "relative_path": "src/consensus_lab/run_provenance.py",
+        "sha256": "ae77b33fe985bb0bb94fe64af8677d322dfb890d94475b5a5c1c77a1bc7fc78c"
+      },
+      {
+        "bytes": 20750,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\decoding\\decoder.py",
+        "relative_path": "src/consensus_lab/decoding/decoder.py",
+        "sha256": "9a3cc33508add6e73240046c7aa37b0503ad2d8ca559d1391d5f39ca160d963f"
+      },
+      {
+        "bytes": 18637,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\evaluation\\direct.py",
+        "relative_path": "src/consensus_lab/evaluation/direct.py",
+        "sha256": "19d177fc3d615e9488e72205742174db2d8df344875ea068a290815ac1085b3c"
+      },
+      {
+        "bytes": 2537,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\evaluation\\sampling.py",
+        "relative_path": "src/consensus_lab/evaluation/sampling.py",
+        "sha256": "2f645e10643508050e1de5e2abe442654b449c8f9ce75fc80177758e867bc469"
+      },
+      {
+        "bytes": 1366,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\evaluation\\scoring.py",
+        "relative_path": "src/consensus_lab/evaluation/scoring.py",
+        "sha256": "164493418eadb01464baca0bdf452945c9f6b691755a38e96c8bfea336f167d6"
+      },
+      {
+        "bytes": 10262,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\evaluation\\summary.py",
+        "relative_path": "src/consensus_lab/evaluation/summary.py",
+        "sha256": "91f767de29f9778792db4d50a622f82c56f6a9593f9814fbc0611f2cd93bc834"
+      },
+      {
+        "bytes": 6560,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\experiments\\config.py",
+        "relative_path": "src/consensus_lab/experiments/config.py",
+        "sha256": "f8eabaa7c35a86c2a136d0e117e24cfac4bb9bdf978c9d36e82e22d876dfc0f4"
+      },
+      {
+        "bytes": 14146,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\models\\committee.py",
+        "relative_path": "src/consensus_lab/models/committee.py",
+        "sha256": "9fd501def9d49ccec18feaf40004fc367e7d39374e3084509b5998592fc900e0"
+      },
+      {
+        "bytes": 12855,
+        "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\voting\\rules.py",
+        "relative_path": "src/consensus_lab/voting/rules.py",
+        "sha256": "eaa964678e107ef5f7ab32deda88143a26be13bd66328a808cb1395bb943fc63"
+      }
+    ],
+    "schema_version": "1.0",
+    "selection": {
+      "committee_size_filter": null,
+      "datasets": [
+        "v212_test"
+      ],
+      "limit": null,
+      "requested_device": "auto",
+      "requested_precision": "auto",
+      "resolved_device": "cuda:0",
+      "resolved_dtype": "torch.bfloat16"
+    }
+  },
+  "identity_sha256": "eb4e510f9bd678f7a6e786167d8f029f3cbf700c01d3c355f4a7832f7b38eef4",
+  "invocations": [
+    {
+      "finished_at_utc": "2026-08-14T17:07:54.976777+00:00",
+      "invocation_id": "1c84e819-3e65-4606-8556-ec90a558e3f1",
+      "pid": 829424,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 250,
+      "rows_before": 0,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:00:57.267741+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T17:15:07.377921+00:00",
+      "invocation_id": "a2d3a563-fad6-4b55-aead-ef8e7044177a",
+      "pid": 845756,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 500,
+      "rows_before": 250,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:08:11.886660+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T17:23:45.723448+00:00",
+      "invocation_id": "bfd750f9-7de1-46ea-8913-880471ca95aa",
+      "pid": 848828,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 750,
+      "rows_before": 500,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:15:21.506648+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T17:32:08.301458+00:00",
+      "invocation_id": "819dfea8-85b2-42a0-aa70-1fe860b0b389",
+      "pid": 827912,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 1000,
+      "rows_before": 750,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:24:27.558628+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "invocation_id": "13844ba3-f1e3-4399-89c6-d8b042095eee",
+      "observed_at_next_launch_utc": "2026-08-14T17:34:16.130866+00:00",
+      "pid": 850876,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_before": 1000,
+      "rows_observed_at_next_launch": 1036,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:32:25.026279+00:00",
+      "status": "INTERRUPTED_OR_UNCLEAN_EXIT"
+    },
+    {
+      "invocation_id": "aa9bd247-e276-4dba-8d85-8e322575f9fa",
+      "observed_at_next_launch_utc": "2026-08-14T17:38:24.359424+00:00",
+      "pid": 846560,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_before": 1036,
+      "rows_observed_at_next_launch": 1161,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:34:16.130866+00:00",
+      "status": "INTERRUPTED_OR_UNCLEAN_EXIT"
+    },
+    {
+      "invocation_id": "656f6442-a3b1-4fd0-8b4d-dd4df8e0d9f5",
+      "observed_at_next_launch_utc": "2026-08-14T17:46:35.747343+00:00",
+      "pid": 855956,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_before": 1161,
+      "rows_observed_at_next_launch": 1371,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:38:24.359424+00:00",
+      "status": "INTERRUPTED_OR_UNCLEAN_EXIT"
+    },
+    {
+      "finished_at_utc": "2026-08-14T17:58:39.501909+00:00",
+      "invocation_id": "50098a3b-3869-4e1f-b94e-f5056f95f564",
+      "pid": 853240,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 1621,
+      "rows_before": 1371,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:46:35.747343+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "invocation_id": "c4891b71-cb7f-452c-bf0f-96b9236c1099",
+      "observed_at_next_launch_utc": "2026-08-14T18:11:57.042346+00:00",
+      "pid": 861352,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_before": 1621,
+      "rows_observed_at_next_launch": 1630,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T17:59:24.232863+00:00",
+      "status": "INTERRUPTED_OR_UNCLEAN_EXIT"
+    },
+    {
+      "finished_at_utc": "2026-08-14T18:20:46.830924+00:00",
+      "invocation_id": "3e279b73-6858-432b-9adb-526bb5031549",
+      "pid": 57464,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 1880,
+      "rows_before": 1630,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T18:11:57.042346+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T18:32:09.407398+00:00",
+      "invocation_id": "9e97f4b1-a496-4ff5-9fa0-b3e19c53dbb2",
+      "pid": 99756,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 2130,
+      "rows_before": 1880,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T18:21:42.667448+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T18:43:03.137320+00:00",
+      "invocation_id": "2b955375-b34a-4bbb-8b1d-e3d81f61bfc9",
+      "pid": 133868,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 2380,
+      "rows_before": 2130,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T18:32:55.371011+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T18:53:46.128449+00:00",
+      "invocation_id": "fc88162e-3168-42aa-bc8a-fa605c2def31",
+      "pid": 162940,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 2630,
+      "rows_before": 2380,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T18:43:14.030919+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T19:01:30.869193+00:00",
+      "invocation_id": "6f16d646-50b3-4642-ad99-9300b5b016da",
+      "pid": 184828,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 2880,
+      "rows_before": 2630,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T18:54:15.698490+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T19:10:26.351548+00:00",
+      "invocation_id": "7402f78c-6d8b-4ff3-acf0-8654b210205f",
+      "pid": 204924,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 3130,
+      "rows_before": 2880,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T19:01:46.926081+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T19:20:28.597964+00:00",
+      "invocation_id": "d106fed9-0057-4e97-9c93-a533007a796d",
+      "pid": 175928,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 3380,
+      "rows_before": 3130,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T19:10:44.628112+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "finished_at_utc": "2026-08-14T19:31:17.460461+00:00",
+      "invocation_id": "3edd8cca-2a51-41ad-8bb3-70867ba09720",
+      "pid": 270244,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 250,
+      "rows_after": 3630,
+      "rows_before": 3380,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T19:20:51.222238+00:00",
+      "status": "RETURNED_CLEANLY"
+    },
+    {
+      "invocation_id": "580d0fb1-0087-4f51-bd54-afc40f5eb5d5",
+      "observed_at_next_launch_utc": "2026-08-14T19:37:06.244352+00:00",
+      "pid": 288644,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_before": 3630,
+      "rows_observed_at_next_launch": 3724,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T19:31:57.342268+00:00",
+      "status": "INTERRUPTED_OR_UNCLEAN_EXIT"
+    },
+    {
+      "finished_at_utc": "2026-08-14T19:44:59.866855+00:00",
+      "invocation_id": "2c58111c-6d20-46de-b7c6-0a21be60d562",
+      "pid": 325628,
+      "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+      "rows_added": 236,
+      "rows_after": 3960,
+      "rows_before": 3724,
+      "runtime_controls": {
+        "max_loaded_vram_gb": null,
+        "max_new_rows": 250,
+        "summary_every": 25
+      },
+      "started_at_utc": "2026-08-14T19:37:06.244352+00:00",
+      "status": "RETURNED_CLEANLY"
+    }
+  ],
+  "observed_rows": 3960,
+  "output_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\runs\\phase2_cross_v212_full_k7_dev_full.jsonl",
+  "schema_version": "1.0",
+  "status": "COMPLETE",
+  "updated_at_utc": "2026-08-14T19:44:59.868855+00:00"
+}

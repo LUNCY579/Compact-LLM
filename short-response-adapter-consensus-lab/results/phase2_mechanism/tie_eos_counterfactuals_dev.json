@@ -1,0 +1,205 @@
+{
+  "analysis_role": "DEV GOLD-PREFIX COUNTERFACTUAL / EXPLORATORY",
+  "current_anchor": {
+    "example_accuracy": 0.2525925925925926,
+    "token_accuracy": 0.7832622601279318
+  },
+  "eos_policies": {
+    "confidence_threshold_0.5": {
+      "example_correct": 505,
+      "example_total": 4050,
+      "harms_vs_ordinary": 653,
+      "overrides": 724,
+      "rescues_vs_ordinary": 71,
+      "token_correct": 14112,
+      "token_total": 18760
+    },
+    "minimum_tokens_3": {
+      "example_correct": 410,
+      "example_total": 4050,
+      "harms_vs_ordinary": 1631,
+      "overrides": 1720,
+      "rescues_vs_ordinary": 88,
+      "token_correct": 13151,
+      "token_total": 18760
+    },
+    "ordinary": {
+      "example_correct": 1023,
+      "example_total": 4050,
+      "harms_vs_ordinary": 0,
+      "overrides": 0,
+      "rescues_vs_ordinary": 0,
+      "token_correct": 14694,
+      "token_total": 18760
+    },
+    "strict_majority": {
+      "example_correct": 631,
+      "example_total": 4050,
+      "harms_vs_ordinary": 467,
+      "overrides": 472,
+      "rescues_vs_ordinary": 5,
+      "token_correct": 14232,
+      "token_total": 18760
+    }
+  },
+  "example_count": 4050,
+  "generated_at_utc": "2026-08-12T20:56:10.667958+00:00",
+  "limitations": [
+    "Counterfactuals are local decisions on gold prefixes, not free-running sequence outcomes.",
+    "Tie alternatives change only the deterministic resolution among plurality-tied tokens.",
+    "EOS alternatives are applied only when ordinary hard plurality selects EOS; replacement masks EOS and recomputes expert proposals.",
+    "Temperature-specific EOS probabilities use the frozen fitted DEV temperatures and captured exact log-sum-exp grid."
+  ],
+  "ordinary_eos_winner_count": 4135,
+  "provenance": {
+    "cache": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\phase2_mechanism\\teacher_forced_dev_cache_topk64.jsonl",
+    "cache_sha256": "4b192a736451e81fd9e3dcd212f3f3aa97cda0a67c440536802453187377ee13",
+    "script": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\experiments\\phase2_mechanism\\analyze_tie_eos_counterfactuals.py",
+    "script_sha256": "97faf259f1917d760f6f5c02aab1f0027276ac4ac22a5ab1f29df5e6c9289a04",
+    "selection_manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\phase2_mechanism\\selected_dev_free_run_manifest.json",
+    "selection_manifest_sha256": "5348738d8dd1f8cb2645b2a437fe99685e94e2619169d70690705aa1221d216a",
+    "teacher_analysis": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\phase2_mechanism\\teacher_forced_dev_analysis.json",
+    "teacher_analysis_sha256": "19fa2be96094f210d8f9e3006547bc649389a60383e594edf5051b6436b24b62"
+  },
+  "rows": [
+    {
+      "affected_tokens": 0,
+      "example_accuracy": 0.2525925925925926,
+      "example_correct": 1023,
+      "example_delta_vs_current": 0.0,
+      "example_total": 4050,
+      "family": "tie",
+      "harms_vs_current": 0,
+      "policy": "confidence_sum",
+      "rescues_vs_current": 0,
+      "token_accuracy": 0.7832622601279318,
+      "token_correct": 14694,
+      "token_delta_vs_current": 0.0,
+      "token_total": 18760
+    },
+    {
+      "affected_tokens": 404,
+      "example_accuracy": 0.25012345679012343,
+      "example_correct": 1013,
+      "example_delta_vs_current": -0.002469135802469158,
+      "example_total": 4050,
+      "family": "tie",
+      "harms_vs_current": 46,
+      "policy": "smallest_token_id",
+      "rescues_vs_current": 63,
+      "token_accuracy": 0.7841684434968017,
+      "token_correct": 14711,
+      "token_delta_vs_current": 0.0009061833688699394,
+      "token_total": 18760
+    },
+    {
+      "affected_tokens": 675,
+      "example_accuracy": 0.25308641975308643,
+      "example_correct": 1025,
+      "example_delta_vs_current": 0.0004938271604938427,
+      "example_total": 4050,
+      "family": "tie",
+      "harms_vs_current": 90,
+      "policy": "track_a_priority",
+      "rescues_vs_current": 177,
+      "token_accuracy": 0.7878997867803837,
+      "token_correct": 14781,
+      "token_delta_vs_current": 0.004637526652451984,
+      "token_total": 18760
+    },
+    {
+      "example_accuracy": 0.2525925925925926,
+      "example_correct": 1023,
+      "example_delta_vs_current": 0.0,
+      "example_total": 4050,
+      "family": "eos",
+      "harms_vs_ordinary": 0,
+      "overrides": 0,
+      "policy": "ordinary",
+      "rescues_vs_ordinary": 0,
+      "token_accuracy": 0.7832622601279318,
+      "token_correct": 14694,
+      "token_delta_vs_current": 0.0,
+      "token_total": 18760
+    },
+    {
+      "example_accuracy": 0.15580246913580248,
+      "example_correct": 631,
+      "example_delta_vs_current": -0.09679012345679011,
+      "example_total": 4050,
+      "family": "eos",
+      "harms_vs_ordinary": 467,
+      "overrides": 472,
+      "policy": "strict_majority",
+      "rescues_vs_ordinary": 5,
+      "token_accuracy": 0.75863539445629,
+      "token_correct": 14232,
+      "token_delta_vs_current": -0.02462686567164174,
+      "token_total": 18760
+    },
+    {
+      "example_accuracy": 0.12469135802469136,
+      "example_correct": 505,
+      "example_delta_vs_current": -0.12790123456790123,
+      "example_total": 4050,
+      "family": "eos",
+      "harms_vs_ordinary": 653,
+      "overrides": 724,
+      "policy": "confidence_threshold_0.5",
+      "rescues_vs_ordinary": 71,
+      "token_accuracy": 0.7522388059701492,
+      "token_correct": 14112,
+      "token_delta_vs_current": -0.031023454157782515,
+      "token_total": 18760
+    },
+    {
+      "example_accuracy": 0.10123456790123457,
+      "example_correct": 410,
+      "example_delta_vs_current": -0.151358024691358,
+      "example_total": 4050,
+      "family": "eos",
+      "harms_vs_ordinary": 1631,
+      "overrides": 1720,
+      "policy": "minimum_tokens_3",
+      "rescues_vs_ordinary": 88,
+      "token_accuracy": 0.7010127931769723,
+      "token_correct": 13151,
+      "token_delta_vs_current": -0.08224946695095947,
+      "token_total": 18760
+    }
+  ],
+  "schema_version": "1.0",
+  "status": "DEV_TIE_EOS_COUNTERFACTUALS_COMPLETE",
+  "tie_policies": {
+    "confidence_sum": {
+      "affected_tokens": 0,
+      "example_correct": 1023,
+      "example_total": 4050,
+      "harms_vs_current": 0,
+      "rescues_vs_current": 0,
+      "token_correct": 14694,
+      "token_total": 18760
+    },
+    "smallest_token_id": {
+      "affected_tokens": 404,
+      "example_correct": 1013,
+      "example_total": 4050,
+      "harms_vs_current": 46,
+      "rescues_vs_current": 63,
+      "token_correct": 14711,
+      "token_total": 18760
+    },
+    "track_a_priority": {
+      "affected_tokens": 675,
+      "example_correct": 1025,
+      "example_total": 4050,
+      "harms_vs_current": 90,
+      "rescues_vs_current": 177,
+      "token_correct": 14781,
+      "token_total": 18760
+    }
+  },
+  "tied_token_count": 1097,
+  "tied_token_rate": 0.05847547974413646,
+  "token_count": 18760
+}

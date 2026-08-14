@@ -1,0 +1,161 @@
+{
+  "analysis_role": "DEV MODEL-SELECTION / CALIBRATION",
+  "anchors": {
+    "core_k3": {
+      "example_accuracy": 0.2325925925925926,
+      "example_correct": 942,
+      "example_total": 4050,
+      "mean_expert_token_forwards": 3.0,
+      "token_accuracy": 0.7881130063965884,
+      "token_correct": 14785,
+      "token_total": 18760
+    },
+    "full_k7": {
+      "example_accuracy": 0.2525925925925926,
+      "example_correct": 1023,
+      "example_total": 4050,
+      "mean_expert_token_forwards": 7.0,
+      "token_accuracy": 0.7832622601279318,
+      "token_correct": 14694,
+      "token_total": 18760
+    }
+  },
+  "cache": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\phase2_mechanism\\teacher_forced_dev_cache_topk64.jsonl",
+  "cache_sha256": "4b192a736451e81fd9e3dcd212f3f3aa97cda0a67c440536802453187377ee13",
+  "capture_config_sha256": "304554e6b05d61e6a9bbbb60570dcbdddbb121ce4cce65b1645d5d3ad6f8d9e7",
+  "core": [
+    "track_a",
+    "track_b",
+    "general"
+  ],
+  "eligible_policy_count": 2,
+  "example_count": 4050,
+  "generated_at_utc": "2026-08-12T19:57:21.875113+00:00",
+  "limitations": [
+    "Selection uses teacher-forced DEV gold prefixes, not free-running trajectories.",
+    "For a K3 core, agreement has only three levels; the threshold grid represents the distinct escalation policies.",
+    "Latency must be measured under free-running reference decoding.",
+    "No TEST statistic is used for selection."
+  ],
+  "policies": [
+    {
+      "core": [
+        "track_a",
+        "track_b",
+        "general"
+      ],
+      "core_correct_full_wrong_on_escalation": 0,
+      "core_correct_full_wrong_on_escalation_rate": 0.0,
+      "escalated_tokens": 0,
+      "escalation_rate": 0.0,
+      "example_accuracy": 0.2325925925925926,
+      "example_accuracy_retention_vs_full": -0.01999999999999999,
+      "example_correct": 942,
+      "example_total": 4050,
+      "false_non_escalation_rate": 0.01220682302771855,
+      "forward_proxy": 56280,
+      "forward_reduction_vs_full": 0.5714285714285714,
+      "full_correct_core_wrong_not_escalated": 229,
+      "mean_expert_token_forwards": 3.0,
+      "threshold": 0.0,
+      "token_accuracy": 0.7881130063965884,
+      "token_accuracy_retention_vs_full": 0.004850746268656669,
+      "token_correct": 14785,
+      "token_total": 18760,
+      "winner_change_rate_given_escalation": 0.0,
+      "winner_changed_on_escalation": 0
+    },
+    {
+      "core": [
+        "track_a",
+        "track_b",
+        "general"
+      ],
+      "core_correct_full_wrong_on_escalation": 86,
+      "core_correct_full_wrong_on_escalation_rate": 0.004584221748400853,
+      "escalated_tokens": 1107,
+      "escalation_rate": 0.059008528784648184,
+      "example_accuracy": 0.2511111111111111,
+      "example_accuracy_retention_vs_full": -0.0014814814814814725,
+      "example_correct": 1017,
+      "example_total": 4050,
+      "false_non_escalation_rate": 0.004584221748400853,
+      "forward_proxy": 60708,
+      "forward_reduction_vs_full": 0.5377094121230581,
+      "full_correct_core_wrong_not_escalated": 86,
+      "mean_expert_token_forwards": 3.236034115138593,
+      "threshold": 0.34,
+      "token_accuracy": 0.7911513859275053,
+      "token_accuracy_retention_vs_full": 0.00788912579957357,
+      "token_correct": 14842,
+      "token_total": 18760,
+      "winner_change_rate_given_escalation": 0.7217705510388437,
+      "winner_changed_on_escalation": 799
+    },
+    {
+      "core": [
+        "track_a",
+        "track_b",
+        "general"
+      ],
+      "core_correct_full_wrong_on_escalation": 290,
+      "core_correct_full_wrong_on_escalation_rate": 0.015458422174840085,
+      "escalated_tokens": 3629,
+      "escalation_rate": 0.19344349680170575,
+      "example_accuracy": 0.25382716049382714,
+      "example_accuracy_retention_vs_full": 0.0012345679012345512,
+      "example_correct": 1028,
+      "example_total": 4050,
+      "false_non_escalation_rate": 0.0,
+      "forward_proxy": 70796,
+      "forward_reduction_vs_full": 0.4608894303990253,
+      "full_correct_core_wrong_not_escalated": 0,
+      "mean_expert_token_forwards": 3.773773987206823,
+      "threshold": 0.67,
+      "token_accuracy": 0.784861407249467,
+      "token_accuracy_retention_vs_full": 0.0015991471215351938,
+      "token_correct": 14724,
+      "token_total": 18760,
+      "winner_change_rate_given_escalation": 0.4075502893359052,
+      "winner_changed_on_escalation": 1479
+    }
+  ],
+  "schema_version": "1.0",
+  "selected_policy": {
+    "core": [
+      "track_a",
+      "track_b",
+      "general"
+    ],
+    "core_correct_full_wrong_on_escalation": 86,
+    "core_correct_full_wrong_on_escalation_rate": 0.004584221748400853,
+    "escalated_tokens": 1107,
+    "escalation_rate": 0.059008528784648184,
+    "example_accuracy": 0.2511111111111111,
+    "example_accuracy_retention_vs_full": -0.0014814814814814725,
+    "example_correct": 1017,
+    "example_total": 4050,
+    "false_non_escalation_rate": 0.004584221748400853,
+    "forward_proxy": 60708,
+    "forward_reduction_vs_full": 0.5377094121230581,
+    "full_correct_core_wrong_not_escalated": 86,
+    "mean_expert_token_forwards": 3.236034115138593,
+    "threshold": 0.34,
+    "token_accuracy": 0.7911513859275053,
+    "token_accuracy_retention_vs_full": 0.00788912579957357,
+    "token_correct": 14842,
+    "token_total": 18760,
+    "winner_change_rate_given_escalation": 0.7217705510388437,
+    "winner_changed_on_escalation": 799
+  },
+  "selected_threshold": 0.34,
+  "selection_rule": "minimum mean forwards among policies no worse than full hard by 0.5 token pp and 1.0 all-token-example pp; otherwise minimum-forward lexicographic fallback",
+  "status": "DEV_ADAPTIVE_THRESHOLD_SELECTED",
+  "threshold_grid": [
+    0.0,
+    0.34,
+    0.67
+  ],
+  "threshold_semantics": "escalate from K3 to K7 when core plurality agreement is strictly below threshold",
+  "token_count": 18760
+}

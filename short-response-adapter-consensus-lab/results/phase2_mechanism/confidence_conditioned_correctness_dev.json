@@ -1,0 +1,123 @@
+{
+  "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+  "example_count": 4050,
+  "expert_count": 7,
+  "expert_summaries": [
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.5581736339386294,
+      "correct_token_count": 15010,
+      "expert": "track_a",
+      "incorrect_token_count": 3750,
+      "mean_confidence_given_correct": 0.9409349820033699,
+      "mean_confidence_given_incorrect": 0.3827613480647405,
+      "mean_entropy_given_correct": 0.3248430108483992,
+      "mean_entropy_given_incorrect": 2.704254891204834,
+      "mean_margin_given_correct": 0.9226381956516743,
+      "mean_margin_given_incorrect": 0.2369768197392424,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.578481851226265,
+      "correct_token_count": 14771,
+      "expert": "track_b",
+      "incorrect_token_count": 3989,
+      "mean_confidence_given_correct": 0.8759619184668115,
+      "mean_confidence_given_incorrect": 0.2974800672405464,
+      "mean_entropy_given_correct": 0.8163556858274772,
+      "mean_entropy_given_incorrect": 3.5077689487135,
+      "mean_margin_given_correct": 0.848707508406516,
+      "mean_margin_given_incorrect": 0.1729664142362212,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.6051104549246573,
+      "correct_token_count": 14310,
+      "expert": "general",
+      "incorrect_token_count": 4450,
+      "mean_confidence_given_correct": 0.9212888792537252,
+      "mean_confidence_given_incorrect": 0.3161784243290679,
+      "mean_entropy_given_correct": 0.46075036584039736,
+      "mean_entropy_given_incorrect": 3.847087532643522,
+      "mean_margin_given_correct": 0.8972372480270967,
+      "mean_margin_given_incorrect": 0.20024511217522262,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.35658552784154385,
+      "correct_token_count": 11179,
+      "expert": "grounding",
+      "incorrect_token_count": 7581,
+      "mean_confidence_given_correct": 0.8758966248572108,
+      "mean_confidence_given_incorrect": 0.5193110970156669,
+      "mean_entropy_given_correct": 0.7374279247604358,
+      "mean_entropy_given_incorrect": 2.5302114837670637,
+      "mean_margin_given_correct": 0.8415719321755536,
+      "mean_margin_given_incorrect": 0.3950340945345461,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.417231828531947,
+      "correct_token_count": 10145,
+      "expert": "procedure",
+      "incorrect_token_count": 8615,
+      "mean_confidence_given_correct": 0.8771246801707444,
+      "mean_confidence_given_incorrect": 0.4598928516387974,
+      "mean_entropy_given_correct": 0.7613056135859144,
+      "mean_entropy_given_incorrect": 3.178499874816824,
+      "mean_margin_given_correct": 0.8445303540882126,
+      "mean_margin_given_incorrect": 0.37175155323589254,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.44851940809597224,
+      "correct_token_count": 8577,
+      "expert": "abstention",
+      "incorrect_token_count": 10183,
+      "mean_confidence_given_correct": 0.9730662610071292,
+      "mean_confidence_given_incorrect": 0.524546852911157,
+      "mean_entropy_given_correct": 0.1636906168296007,
+      "mean_entropy_given_incorrect": 2.804619383790879,
+      "mean_margin_given_correct": 0.9685239839477038,
+      "mean_margin_given_incorrect": 0.456759716598302,
+      "token_count": 18760
+    },
+    {
+      "analysis_role": "DEV MECHANISTIC / DESCRIPTIVE CALIBRATION",
+      "correct_minus_incorrect_confidence": 0.6455957997833566,
+      "correct_token_count": 7850,
+      "expert": "social",
+      "incorrect_token_count": 10910,
+      "mean_confidence_given_correct": 0.885225573249968,
+      "mean_confidence_given_incorrect": 0.23962977346661138,
+      "mean_entropy_given_correct": 0.7317056279273549,
+      "mean_entropy_given_incorrect": 4.608951622231306,
+      "mean_margin_given_correct": 0.863573867236967,
+      "mean_margin_given_incorrect": 0.1445156594229354,
+      "token_count": 18760
+    }
+  ],
+  "generated_at_utc": "2026-08-12T23:34:21.844196+00:00",
+  "limitations": [
+    "Conditioning on observed correctness is descriptive and not a calibration intervention.",
+    "Token decisions share examples and are not independent sequence-level observations.",
+    "All values use DEV gold prefixes rather than free-running prefixes."
+  ],
+  "provenance": {
+    "analysis_script": "experiments/phase2_mechanism/analyze_confidence_conditioning.py",
+    "analysis_script_sha256": "ac43a2ca389b0e7b4092747c7821af140a0b4a99dec684a7aea2860059648964",
+    "cache_path": "results/phase2_mechanism/teacher_forced_dev_cache_topk64.jsonl",
+    "cache_reused_without_new_model_forwards": true,
+    "cache_sha256": "4b192a736451e81fd9e3dcd212f3f3aa97cda0a67c440536802453187377ee13",
+    "teacher_analysis_path": "results/phase2_mechanism/teacher_forced_dev_analysis.json",
+    "teacher_analysis_sha256": "19fa2be96094f210d8f9e3006547bc649389a60383e594edf5051b6436b24b62"
+  },
+  "schema_version": "1.0",
+  "status": "DEV_CONFIDENCE_CONDITIONING_COMPLETE",
+  "token_count": 18760
+}

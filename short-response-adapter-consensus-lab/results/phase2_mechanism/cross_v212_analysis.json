@@ -1,0 +1,288 @@
+{
+  "analysis_role": "FIXED-METHOD CROSS-CORPUS TRANSFER WITH PROVENANCE CAVEATS",
+  "caveats": [
+    "v2.1.2 TEST contains exact prompt-and-answer repetitions from v2.1.2 TRAIN; this does not leak into the seven v2.2-trained adapters, but prevents a template-independent holdout claim.",
+    "The official project previously evaluated a different selected D_greedy dense model on v2.1.2 TEST; the split is therefore not globally untouched."
+  ],
+  "claim_boundary": "Fixed-method cross-corpus transfer only; not globally untouched or template-independent holdout evidence; do not aggregate with v2.2.",
+  "condition_summaries": [
+    {
+      "abstention_accuracy": 0.05,
+      "abstention_n": 120,
+      "accuracy": 0.004545454545454545,
+      "answerable_accuracy": 0.0,
+      "answerable_n": 1200,
+      "committee": "backbone_k1",
+      "condition": "backbone",
+      "correct": 6,
+      "mean_forward_passes": 7.6477272727272725,
+      "mean_latency_seconds": 0.24626304121216394,
+      "mean_output_tokens": 7.6477272727272725,
+      "mean_ttft_seconds": 0.03670871492427206,
+      "method": "hard_plurality",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1807630336,
+      "peak_gpu_vram_bytes": 746212352
+    },
+    {
+      "abstention_accuracy": 0.0,
+      "abstention_n": 120,
+      "accuracy": 0.003787878787878788,
+      "answerable_accuracy": 0.004166666666666667,
+      "answerable_n": 1200,
+      "committee": "track_a_k1",
+      "condition": "track_a",
+      "correct": 5,
+      "mean_forward_passes": 4.5227272727272725,
+      "mean_latency_seconds": 0.19861006469712292,
+      "mean_output_tokens": 4.5227272727272725,
+      "mean_ttft_seconds": 0.05429276818187756,
+      "method": "hard_plurality",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1826152448,
+      "peak_gpu_vram_bytes": 745798656
+    },
+    {
+      "abstention_accuracy": 1.0,
+      "abstention_n": 120,
+      "accuracy": 0.09090909090909091,
+      "answerable_accuracy": 0.0,
+      "answerable_n": 1200,
+      "committee": "abstention_k1",
+      "condition": "abstention",
+      "correct": 120,
+      "mean_forward_passes": 10.918939393939393,
+      "mean_latency_seconds": 0.45245893689408895,
+      "mean_output_tokens": 10.918939393939393,
+      "mean_ttft_seconds": 0.05168003856052757,
+      "method": "hard_plurality",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1834848256,
+      "peak_gpu_vram_bytes": 746165248
+    },
+    {
+      "abstention_accuracy": 0.0,
+      "abstention_n": 120,
+      "accuracy": 0.0007575757575757576,
+      "answerable_accuracy": 0.0008333333333333334,
+      "answerable_n": 1200,
+      "committee": "full_k7",
+      "condition": "hard_k7",
+      "correct": 1,
+      "mean_forward_passes": 39.109848484848484,
+      "mean_latency_seconds": 1.7561315332578074,
+      "mean_output_tokens": 5.587121212121212,
+      "mean_ttft_seconds": 0.3280089575762263,
+      "method": "hard_plurality",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1838596096,
+      "peak_gpu_vram_bytes": 862206464
+    },
+    {
+      "abstention_accuracy": 0.3333333333333333,
+      "abstention_n": 120,
+      "accuracy": 0.030303030303030304,
+      "answerable_accuracy": 0.0,
+      "answerable_n": 1200,
+      "committee": "full_k7",
+      "condition": "probability_k7",
+      "correct": 40,
+      "mean_forward_passes": 50.68636363636364,
+      "mean_latency_seconds": 2.510994112651392,
+      "mean_output_tokens": 7.240909090909091,
+      "mean_ttft_seconds": 0.36529618795452395,
+      "method": "probability_mean",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1854672896,
+      "peak_gpu_vram_bytes": 862206464
+    },
+    {
+      "abstention_accuracy": 0.0,
+      "abstention_n": 120,
+      "accuracy": 0.0015151515151515152,
+      "answerable_accuracy": 0.0016666666666666668,
+      "answerable_n": 1200,
+      "committee": "full_k7",
+      "condition": "calibrated_probability_k7",
+      "correct": 2,
+      "mean_forward_passes": 38.33030303030303,
+      "mean_latency_seconds": 2.1293561331818225,
+      "mean_output_tokens": 5.475757575757576,
+      "mean_ttft_seconds": 0.3944439616666779,
+      "method": "calibrated_probability_mean",
+      "n": 1320,
+      "peak_cpu_rss_bytes": 1855406080,
+      "peak_gpu_vram_bytes": 862206464
+    }
+  ],
+  "example_count": 1320,
+  "generated_at_utc": "2026-08-14T19:45:12.577259+00:00",
+  "paired_family": {
+    "comparisons": [
+      {
+        "baseline": "backbone",
+        "baseline_accuracy": 0.004545454545454545,
+        "bootstrap_ci95_high": 0.0,
+        "bootstrap_ci95_low": -0.007575757575757576,
+        "both_correct": 0,
+        "both_wrong": 1313,
+        "comparison": "hard_k7_vs_backbone",
+        "difference_hard_minus_baseline": -0.003787878787878788,
+        "hard_accuracy": 0.0007575757575757576,
+        "harm": 6,
+        "holm_adjusted_mcnemar_p": 0.375,
+        "mcnemar_exact_p": 0.125,
+        "n": 1320,
+        "rescue": 1,
+        "strata": {
+          "abstain": {
+            "baseline_correct": 6,
+            "difference_hard_minus_baseline": -0.05,
+            "hard_correct": 0,
+            "n": 120
+          },
+          "answer": {
+            "baseline_correct": 0,
+            "difference_hard_minus_baseline": 0.0008333333333333334,
+            "hard_correct": 1,
+            "n": 1200
+          }
+        }
+      },
+      {
+        "baseline": "track_a",
+        "baseline_accuracy": 0.003787878787878788,
+        "bootstrap_ci95_high": 0.0,
+        "bootstrap_ci95_low": -0.006818181818181818,
+        "both_correct": 0,
+        "both_wrong": 1314,
+        "comparison": "hard_k7_vs_track_a",
+        "difference_hard_minus_baseline": -0.0030303030303030303,
+        "hard_accuracy": 0.0007575757575757576,
+        "harm": 5,
+        "holm_adjusted_mcnemar_p": 0.4375,
+        "mcnemar_exact_p": 0.21875,
+        "n": 1320,
+        "rescue": 1,
+        "strata": {
+          "abstain": {
+            "baseline_correct": 0,
+            "difference_hard_minus_baseline": 0.0,
+            "hard_correct": 0,
+            "n": 120
+          },
+          "answer": {
+            "baseline_correct": 5,
+            "difference_hard_minus_baseline": -0.0033333333333333335,
+            "hard_correct": 1,
+            "n": 1200
+          }
+        }
+      },
+      {
+        "baseline": "abstention",
+        "baseline_accuracy": 0.09090909090909091,
+        "bootstrap_ci95_high": -0.075,
+        "bootstrap_ci95_low": -0.10606060606060606,
+        "both_correct": 0,
+        "both_wrong": 1199,
+        "comparison": "hard_k7_vs_abstention",
+        "difference_hard_minus_baseline": -0.09015151515151515,
+        "hard_accuracy": 0.0007575757575757576,
+        "harm": 120,
+        "holm_adjusted_mcnemar_p": 4.5891299456102104e-34,
+        "mcnemar_exact_p": 9.178259891220421e-35,
+        "n": 1320,
+        "rescue": 1,
+        "strata": {
+          "abstain": {
+            "baseline_correct": 120,
+            "difference_hard_minus_baseline": -1.0,
+            "hard_correct": 0,
+            "n": 120
+          },
+          "answer": {
+            "baseline_correct": 0,
+            "difference_hard_minus_baseline": 0.0008333333333333334,
+            "hard_correct": 1,
+            "n": 1200
+          }
+        }
+      },
+      {
+        "baseline": "probability_k7",
+        "baseline_accuracy": 0.030303030303030304,
+        "bootstrap_ci95_high": -0.020454545454545454,
+        "bootstrap_ci95_low": -0.03939393939393939,
+        "both_correct": 0,
+        "both_wrong": 1279,
+        "comparison": "hard_k7_vs_probability_k7",
+        "difference_hard_minus_baseline": -0.029545454545454545,
+        "hard_accuracy": 0.0007575757575757576,
+        "harm": 40,
+        "holm_adjusted_mcnemar_p": 1.5279510989785194e-10,
+        "mcnemar_exact_p": 3.8198777474462986e-11,
+        "n": 1320,
+        "rescue": 1,
+        "strata": {
+          "abstain": {
+            "baseline_correct": 40,
+            "difference_hard_minus_baseline": -0.3333333333333333,
+            "hard_correct": 0,
+            "n": 120
+          },
+          "answer": {
+            "baseline_correct": 0,
+            "difference_hard_minus_baseline": 0.0008333333333333334,
+            "hard_correct": 1,
+            "n": 1200
+          }
+        }
+      },
+      {
+        "baseline": "calibrated_probability_k7",
+        "baseline_accuracy": 0.0015151515151515152,
+        "bootstrap_ci95_high": 0.0015151515151515152,
+        "bootstrap_ci95_low": -0.003787878787878788,
+        "both_correct": 0,
+        "both_wrong": 1317,
+        "comparison": "hard_k7_vs_calibrated_probability_k7",
+        "difference_hard_minus_baseline": -0.0007575757575757576,
+        "hard_accuracy": 0.0007575757575757576,
+        "harm": 2,
+        "holm_adjusted_mcnemar_p": 1.0,
+        "mcnemar_exact_p": 1.0,
+        "n": 1320,
+        "rescue": 1,
+        "strata": {
+          "abstain": {
+            "baseline_correct": 0,
+            "difference_hard_minus_baseline": 0.0,
+            "hard_correct": 0,
+            "n": 120
+          },
+          "answer": {
+            "baseline_correct": 2,
+            "difference_hard_minus_baseline": -0.0008333333333333334,
+            "hard_correct": 1,
+            "n": 1200
+          }
+        }
+      }
+    ],
+    "definition": "paired bootstrap difference CI; exact McNemar; Holm correction over the five planned hard-K7 comparisons"
+  },
+  "provenance": {
+    "analysis_script": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\experiments\\phase2_mechanism\\analyze_cross_v212.py",
+    "analysis_script_sha256": "14708426c42dc57371e3bbb457643bd5973a456adef07db992e3be22658f8bf2",
+    "control_run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\runs\\phase2_cross_v212_controls_dev_full.jsonl",
+    "control_run_sha256": "17ac9b818575cab9207c1c0d5ecdf7668b2d90bb75736c27006ab1f3f4f4cdff",
+    "dataset_sha256": "9333a3ae97c3c70f81a8998f88611d4224fc23e979edae0f69f860fc9c7c6cce",
+    "full_run": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\results\\runs\\phase2_cross_v212_full_k7_dev_full.jsonl",
+    "full_run_sha256": "fb5e4d9d4816293698295200df4ba1c7e8fc860288e26729c0401659731df028",
+    "manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\phase2_mechanism\\cross_v212_confirmation_manifest.json",
+    "manifest_sha256": "b0c3d5760020a4b8a29c6f57518b976bb770c205f4b761c82b7493aeac024bca"
+  },
+  "schema_version": "1.0",
+  "status": "V212_FIXED_METHOD_CROSS_CORPUS_ANALYSIS_COMPLETE"
+}

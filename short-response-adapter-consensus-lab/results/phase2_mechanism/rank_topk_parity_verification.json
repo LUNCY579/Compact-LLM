@@ -1,0 +1,58 @@
+{
+  "equivalence": {
+    "all_checks_exact": true,
+    "candidate": "consensus_lab.voting.rules._stable_topk_indices(scores, k)",
+    "downstream_consequence": "identical per-expert stable rankings imply identical rank score totals, secondary tie-breaks, accepted tokens, and autoregressive trajectories",
+    "reference": "torch.argsort(scores, descending=True, stable=True)[:, :k]"
+  },
+  "exhaustive": {
+    "rank_depths": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ],
+    "score_alphabet": [
+      -1.0,
+      0.0,
+      1.0
+    ],
+    "vector_rank_checks": 15309,
+    "vectors": 2187,
+    "vocabulary_size": 7
+  },
+  "generated_at_utc": "2026-08-13T05:48:57.423205+00:00",
+  "provenance": {
+    "report": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\reports\\PHASE2_RANK_TOPK_PARITY.md",
+    "report_sha256": "babe15d240cd1788f116a9739d862566c26c58fc14c8e028e97cf0d4198e99a9",
+    "verification_script": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\experiments\\phase2_mechanism\\verify_rank_topk_parity.py",
+    "verification_script_sha256": "43874061e8ebf8ee62a38559e85d074a50c8611f535117d57cf08733048b1ade",
+    "voting_rules": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\src\\consensus_lab\\voting\\rules.py",
+    "voting_rules_sha256": "eaa964678e107ef5f7ab32deda88143a26be13bd66328a808cb1395bb943fc63"
+  },
+  "randomized": {
+    "forced_ties": true,
+    "row_rank_checks": 4096,
+    "rows_per_vocabulary": 256,
+    "vocabulary_sizes": [
+      8,
+      31,
+      257,
+      4096
+    ]
+  },
+  "realistic_vocabulary": {
+    "exact": true,
+    "expert_rows": 7,
+    "full_sort_index_bytes": 8508416,
+    "partial_result_index_bytes": 280,
+    "rank_depth": 5,
+    "vocabulary_size": 151936
+  },
+  "schema_version": "1.0",
+  "seed": 20260812,
+  "status": "RANK_TOPK_IMPLEMENTATION_PARITY_VERIFIED"
+}
