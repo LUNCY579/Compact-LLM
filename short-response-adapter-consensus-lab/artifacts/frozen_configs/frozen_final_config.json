@@ -1,0 +1,36 @@
+{
+  "frozen_at_utc": "2026-08-12T08:13:45.497018+00:00",
+  "frozen_config": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\frozen_configs\\sealed_finalists.yaml",
+  "frozen_config_sha256": "cbef7f7d828da3cb1c8b17ae94427685ea9f43ad6553f698b154115ae3696b36",
+  "parsed_config_sha256": "e72042083e464f5c043ee190e590f92f97e8a907632db471371f3df551adffce",
+  "post_sealed_rule": "No candidate, threshold, method, or committee changes based on sealed outcomes.",
+  "schema_version": "1.0",
+  "sealed_datasets": {
+    "v22_sealed": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-model-phase-0-1-2\\data\\phase_9_student_distillation\\multidomain_reasoning_v22\\reviewed_splits\\test.reviewed.jsonl",
+      "sha256": "768107b579126063d4dd304b80ffc88a57e1bc346a7adfe4b69771e1b499a8f4"
+    }
+  },
+  "sealed_limit": 4050,
+  "sealed_sample_seed": 20260811,
+  "selection_basis": {
+    "controls": [
+      "frozen backbone",
+      "Track A: official best v2.2 multidomain individual",
+      "abstention specialist: best K=1 on balanced 16-case lab pilot"
+    ],
+    "excluded_from_sealed": [
+      "weighted/logit/confidence fusion: no DEV advantage",
+      "sequence medoid: lower DEV pilot correctness",
+      "EOS ablations: no DEV advantage",
+      "mixed PEFT and random-seed diversity: no matched trained adapters",
+      "adaptive consultation: retained as separate DEV extension, not core finalist"
+    ],
+    "primary": "full_k7 hard plurality: best balanced capability/brevity DEV pilot committee",
+    "soft_comparator": "full_k7 probability mean tied primary on the 8-case paired fusion pilot"
+  },
+  "source_config": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\configs\\sealed_finalists.yaml",
+  "source_manifest": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\short-response-adapter-consensus-lab\\artifacts\\manifests\\official_sources_before.json",
+  "source_manifest_sha256": "408ea7db2671e9200934278b0540d20bf2c71c47eaf170c1907d772449afd376",
+  "status": "FROZEN_BEFORE_SEALED"
+}
