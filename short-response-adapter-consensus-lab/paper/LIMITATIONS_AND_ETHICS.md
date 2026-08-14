@@ -2,6 +2,60 @@
 
 ## Limitations
 
+### Paper-ready limitations narrative
+
+This study evaluates a single seven-member committee of rank-16 LoRA adapters
+sharing a custom 344M-parameter student backbone on primarily synthetic,
+templated short-response tasks. The resulting experts are not representative of
+all adapter ensembles, and the study does not establish that its findings extend
+to larger or public backbones. The observed behavior may change across backbone
+architectures and parameter scales, adapter-training recipes, datasets and task
+distributions, and generation lengths; these factors must therefore be tested
+before treating the mechanism as general.
+
+The expert pool also does not causally isolate why committee members differ.
+Specialization, random seed, competence, calibration, training mixture, and
+policy behavior vary together rather than in a matched factorial design. Because
+all experts share one backbone lineage, their errors may also be more correlated
+than those of independently trained models. Matched specialist and same-task
+multi-seed committees are needed to distinguish benefits of intentional
+specialization from generic variation among adapters.
+
+The main v2.2 benchmark contains unique example identifiers but substantial
+synthetic and structural templating, so example-level sample size may overstate
+the number of independent latent tasks. Exact-match accuracy can additionally
+confound semantic error with formatting variation. The archived 32-example
+pilot exposed part of v2.2 TEST before the full evaluation, and the v2.1.2
+transfer corpus has documented historical use and train/test overlap. These
+provenance constraints, together with the failure of hard voting to transfer to
+v2.1.2, limit claims of external validity and motivate a fresh, preregistered
+evaluation corpus.
+
+Hard plurality is mathematically resistant to confidence-scale domination when
+there is a unique plurality, but that structural property is not a guarantee of
+higher accuracy. Confidence-sensitive tie breaking remains, correlated experts
+can agree on the same wrong token, and calibrated probability fusion outperforms
+hard voting on DEV. Accordingly, the v2.2 TEST advantage should be interpreted
+as a benchmark-dependent outcome of this committee and task distribution, not
+as a general local-decision advantage or a universal theorem about hard voting.
+
+Aggregate exact-match accuracy also combines opposing answerable and abstention
+effects. Relative to different comparators, hard voting can rescue abstentions
+while sacrificing answerable cases, or reduce false abstention while losing some
+genuine-abstention accuracy. The most appropriate operating point therefore
+depends on class prevalence and the relative costs of an incorrect answer, an
+unnecessary abstention, and a failure to abstain; those deployment utilities are
+not identified by aggregate benchmark accuracy.
+
+Finally, full K=7 decoding is computationally expensive, and reported latency
+and memory measurements are specific to the evaluated laptop GPU, software
+stack, and reference decoder. The study does not establish comparable behavior
+for other PEFT methods, weight-space merging, learned routing, long-form
+generation, natural user distributions, or high-stakes settings. Before such
+deployment, future work should test larger public backbones, matched causal
+controls, non-templated and longer-form tasks, utility-weighted abstention,
+strong routing and merging baselines, and hardware-aware inference.
+
 ### One primary backbone lineage
 
 The clean K=7 committee uses one 344M-parameter Qwen3-derived frozen backbone
