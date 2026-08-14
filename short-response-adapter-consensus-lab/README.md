@@ -1,6 +1,6 @@
 # Short-Response Adapter Consensus Lab
 
-This isolated sibling lab tests exact multi-adapter next-token consensus over the official short-response model. The official repository is read-only; the two v22 mini-labs are excluded. The completed experiment includes source manifests, candidate discovery, exact baseline reproduction, correctness tests, DEV pilots/controls, a pre-frozen sealed packet, paired statistics, token traces, efficiency measurements, plots, and a final report.
+This isolated sibling lab studies exact multi-adapter next-token consensus over the official short-response model. The official repository is read-only; the two v22 mini-labs are excluded. The completed Phase 2 package independently verifies the 4,050-example cornerstone, analyzes paired TEST rescue/harm and token traces, evaluates calibration and every nonempty DEV committee, completes selected free-running, adaptive, calibrated-confirmation, and cross-corpus panels, and generates provenance-linked tables and figures.
 
 ## Environment
 
@@ -22,6 +22,10 @@ $Python = "..\.venv\Scripts\python.exe"
 ```
 
 `verify_cache_parity.py` is expected to exit nonzero in this environment; the recorded failure is why every research config uses `cache_mode: reference`.
+
+The complete Phase 2 command order, including immutable manifests, full DEV runs, cross-corpus confirmation, analysis, and final artifact generation, is maintained in [`paper/EXPERIMENTAL_PROTOCOL.md`](paper/EXPERIMENTAL_PROTOCOL.md). Do not refit or refreeze selections after reading TEST outcomes.
+
+For a documentation-only entry point, start at [`documentation/phase2_paper/README.md`](documentation/phase2_paper/README.md).
 
 Run bounded DEV experiments:
 
@@ -63,7 +67,11 @@ Do not refreeze after seeing sealed results. The scripts refuse to refreeze when
 - Frozen config: `artifacts/frozen_configs/frozen_final_config.json`
 - Source integrity: `artifacts/manifests/official_sources_{before,after}.json`
 - Quality–cost plots: `reports/plots/`
-- Conclusions: `reports/FINAL_REPORT.md`
+- Phase 2 synthesis: `reports/PHASE2_MECHANISM_REPORT.md`
+- Primary-source literature review: `paper/RELATED_WORK.md`, `paper/REFERENCES.md`, and `paper/references.bib`
+- Generated paper tables and figures: `paper/TABLES.md`, `paper/tables/`, and `paper/figures/`
+- Final written-synthesis verification: `reports/phase2_final_synthesis_verification.json`
+- Phase 2 completion certification: `reports/phase2_completion_audit.json`
 - Machine-readable completion audit: `reports/completion_audit.json`
 
 Runs are append-durable and resumable. An exclusive PID lock prevents concurrent writers. `scripts/repair_results.py` exists for audited deterministic deduplication and archives the unrepaired source before modification.
