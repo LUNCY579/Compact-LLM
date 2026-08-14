@@ -79,3 +79,14 @@ short-response-adapter-consensus-lab-4050-cases.zip
 
 # Large sealed run outputs (exceed GitHub 100MB limit)
 short-response-adapter-consensus-lab/results/sealed/v22_frozen_finalists.jsonl
+
+# Phase 2 raw inference/cache artifacts (local; hashes and analyses are tracked)
+short-response-adapter-consensus-lab/results/runs/*.jsonl
+short-response-adapter-consensus-lab/results/phase2_mechanism/teacher_forced_dev_cache*.jsonl
+
+# Preserve the small Phase 2 provenance packets despite the global artifacts rule
+!short-response-adapter-consensus-lab/artifacts/
+!short-response-adapter-consensus-lab/artifacts/manifests/
+!short-response-adapter-consensus-lab/artifacts/manifests/*.json
+!short-response-adapter-consensus-lab/artifacts/phase2_mechanism/
+!short-response-adapter-consensus-lab/artifacts/phase2_mechanism/*.json
