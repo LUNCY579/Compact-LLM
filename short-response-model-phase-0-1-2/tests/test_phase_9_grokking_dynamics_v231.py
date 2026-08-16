@@ -14,6 +14,7 @@ from scripts.phase_9_student_distillation.grokking_utils_v231 import (
     discover_adapters,
     temporal_readout_summary,
 )
+from scripts.phase_9_student_distillation.run_grokking_factor_sweep_v231 import anchor_cli_flags
 
 ROOT = Path(__file__).resolve().parents[1]
 CONFIG = ROOT / "configs/phase_9_grokking_dynamics_v231.json"
@@ -289,6 +290,14 @@ def test_compiled_report_contains_required_scientific_sections():
     assert "train_progress_fraction" in markdown
     assert str(transition_cfg["train_progress_fraction"]) in markdown
     assert "LEFTWARD_CRITICAL_DOSE" in markdown or "Leftward critical-dose migration" in markdown
+
+
+def test_zero_anchor_kl_omits_anchor_model_flag():
+    off = anchor_cli_flags("greedy_soup", {"anchor_kl_weight": 0.0, "anchor_temperature": 1.5})
+    assert off == []
+    on = anchor_cli_flags("greedy_soup", {"anchor_kl_weight": 0.3, "anchor_temperature": 1.5})
+    assert on[:4] == ["--anchor-model", "greedy_soup", "--anchor-kl-weight", "0.3"]
+    assert "--anchor-model" in on
 
 
 def test_snapshot_discovery_prefers_lightweight_dynamics_snapshot(tmp_path: Path):

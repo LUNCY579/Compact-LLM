@@ -29,6 +29,28 @@ def run(cmd: list[str]) -> None:
     subprocess.run(cmd, check=True)
 
 
+def anchor_cli_flags(base_model: str, settings: dict[str, Any]) -> list[str]:
+    """Pass --anchor-model only when KL is actually on.
+
+    train_student.py rejects --anchor-model together with a non-positive
+    --anchor-kl-weight. The no-KL contrast therefore omits the frozen
+    reference instead of loading it at weight 0.
+    """
+    weight = float(settings.get("anchor_kl_weight") or 0.0)
+    if weight <= 0.0:
+        return []
+    return [
+        "--anchor-model",
+        base_model,
+        "--anchor-kl-weight",
+        str(weight),
+        "--anchor-temperature",
+        str(settings.get("anchor_temperature", 1.5)),
+        "--anchor-device",
+        "auto",
+    ]
+
+
 def choose_values(values: list[Any], baseline: Any, limit: int) -> list[Any]:
     if limit <= 0 or len(values) <= limit:
         return list(values)
@@ -164,10 +186,7 @@ def main() -> None:
                 "--lora",
                 "--lora-rank", str(settings["lora_rank"]),
                 "--target-module-group", str(settings["target_module_group"]),
-                "--anchor-model", a.base_model,
-                "--anchor-kl-weight", str(settings["anchor_kl_weight"]),
-                "--anchor-temperature", str(settings["anchor_temperature"]),
-                "--anchor-device", "auto",
+                *anchor_cli_flags(a.base_model, settings),
                 "--save-steps", str(save_steps),
                 "--save-total-limit", "2",
                 "--keep-checkpoints",
