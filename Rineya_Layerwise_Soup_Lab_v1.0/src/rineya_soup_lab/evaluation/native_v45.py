@@ -10,7 +10,7 @@ from typing import Any, Mapping
 import torch
 
 from ..errors import EvaluationError
-from ..utils import read_json, sha256_file, utc_timestamp, write_json, write_jsonl
+from ..utils import append_jsonl, read_json, sha256_file, utc_timestamp, write_json
 from ..vendor.official_v45.quality_evaluation import (
     QUALITY_EVALUATION_VERSION,
     aggregate_quality_rows,
@@ -325,8 +325,7 @@ def evaluate_model_bundled_v45(
                 **quality,
             }
             outputs_by_id[stable_id] = row
-            ordered_partial = [outputs_by_id[value] for value in record_ids if value in outputs_by_id]
-            write_jsonl(results_path, ordered_partial)
+            append_jsonl(results_path, row)
             print(
                 f"[{index:03d}/{len(records):03d}] {stable_id}: {reply!r} "
                 f"quality={float(row['quality_score']):.3f}",
@@ -354,7 +353,10 @@ def load_existing_rows(path: Path) -> dict[str, dict[str, Any]]:
             try:
                 row = json.loads(line)
             except json.JSONDecodeError as exc:
-                raise EvaluationError(f"Invalid JSON at {path}:{line_number}: {exc}") from exc
+                remaining = handle.read()
+                if remaining.strip():
+                    raise EvaluationError(f"Invalid JSON at {path}:{line_number}: {exc}") from exc
+                break
             stable_id = str(row["id"])
             if stable_id in rows:
                 raise EvaluationError(f"Duplicate result ID {stable_id} in {path}")
@@ -423,7 +425,8 @@ def finalize_evidence(
     outputs: list[dict[str, Any]],
     summary: Mapping[str, Any],
 ) -> None:
-    write_jsonl(output_dir / "results.jsonl", outputs)
+    # Progress rows are already appended to results.jsonl. Rewriting that file
+    # on Windows is what antivirus/indexers lock; do not replace it here.
     write_json(output_dir / "summary.json", dict(summary))
     lines = [
         "# BUNDLED QUALITY EVALUATOR v4.5 RESULT",

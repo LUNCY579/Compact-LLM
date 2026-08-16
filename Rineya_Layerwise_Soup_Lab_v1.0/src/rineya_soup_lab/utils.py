@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import errno
 import hashlib
 import json
 import os
@@ -12,6 +13,51 @@ import tempfile
 import time
 from pathlib import Path
 from typing import Any, Iterable, Iterator, Mapping, Sequence
+
+# Windows antivirus/indexers often hold a brief exclusive lock on a file that
+# was just rewritten. os.replace then raises WinError 5/32 and kills the run.
+_LOCK_ERRNOS = {errno.EACCES, errno.EPERM, errno.EBUSY, errno.EAGAIN}
+_WINDOWS_LOCK_WINERRORS = {5, 32}  # ACCESS_DENIED, SHARING_VIOLATION
+_LOCK_ATTEMPTS = 40
+_LOCK_BASE_DELAY_SECONDS = 0.05
+
+
+def is_file_lock_error(exc: BaseException) -> bool:
+    if not isinstance(exc, OSError):
+        return False
+    winerror = getattr(exc, "winerror", None)
+    if winerror in _WINDOWS_LOCK_WINERRORS:
+        return True
+    return isinstance(exc, PermissionError) or exc.errno in _LOCK_ERRNOS
+
+
+def replace_file(source: Path, destination: Path) -> None:
+    """Replace *destination* with *source*, retrying Windows share locks.
+
+    After retries, copy over the existing file in place. That is not as strictly
+    atomic as os.replace, but it does not abort a multi-hour evaluation run.
+    """
+
+    source = Path(source)
+    destination = Path(destination)
+    last_error: OSError | None = None
+    for attempt in range(_LOCK_ATTEMPTS):
+        try:
+            os.replace(source, destination)
+            return
+        except OSError as exc:
+            if not is_file_lock_error(exc):
+                raise
+            last_error = exc
+            time.sleep(_LOCK_BASE_DELAY_SECONDS * (1.35 ** min(attempt, 14)))
+    try:
+        with source.open("rb") as src, destination.open("wb") as dest:
+            shutil.copyfileobj(src, dest, length=8 * 1024 * 1024)
+            dest.flush()
+            os.fsync(dest.fileno())
+        source.unlink(missing_ok=True)
+    except OSError as exc:
+        raise last_error or exc from exc
 
 
 def require_non_overlapping_path(
@@ -102,7 +148,7 @@ def atomic_write_text(path: Path, text: str) -> None:
             handle.write(text)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(tmp, path)
+        replace_file(tmp, path)
     finally:
         tmp.unlink(missing_ok=True)
 
@@ -131,10 +177,20 @@ def write_jsonl(path: Path, rows: Iterable[Mapping[str, Any]]) -> None:
 def append_jsonl(path: Path, row: Mapping[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     payload = json.dumps(dict(row), ensure_ascii=False, sort_keys=True) + "\n"
-    with path.open("a", encoding="utf-8", newline="\n") as handle:
-        handle.write(payload)
-        handle.flush()
-        os.fsync(handle.fileno())
+    last_error: OSError | None = None
+    for attempt in range(_LOCK_ATTEMPTS):
+        try:
+            with path.open("a", encoding="utf-8", newline="\n") as handle:
+                handle.write(payload)
+                handle.flush()
+                os.fsync(handle.fileno())
+            return
+        except OSError as exc:
+            if not is_file_lock_error(exc):
+                raise
+            last_error = exc
+            time.sleep(_LOCK_BASE_DELAY_SECONDS * (1.35 ** min(attempt, 14)))
+    raise last_error or PermissionError(f"Could not append to locked file: {path}")
 
 
 def deep_merge(base: Mapping[str, Any], override: Mapping[str, Any]) -> dict[str, Any]:
@@ -272,7 +328,7 @@ def write_csv(path: Path, rows: Iterable[Mapping[str, Any]], *, fieldnames: Sequ
             writer.writerows(materialized)
             handle.flush()
             os.fsync(handle.fileno())
-        os.replace(tmp, path)
+        replace_file(tmp, path)
     finally:
         tmp.unlink(missing_ok=True)
 

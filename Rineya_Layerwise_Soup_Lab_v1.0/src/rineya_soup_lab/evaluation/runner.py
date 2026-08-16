@@ -154,8 +154,12 @@ def run_evaluation(
     validate_evidence(summary, rows, dataset_path)
     # Normalize every backend into the same run-owned evidence contract. This also
     # makes external commands that write to custom locations safely resumable.
+    # Do not atomically replace an already-written results.jsonl: Windows scanners
+    # lock that file and the native evaluator already appended every completed row.
     write_json(output_dir / "summary.json", summary)
-    write_jsonl(output_dir / "results.jsonl", rows)
+    results_path = output_dir / "results.jsonl"
+    if not results_path.exists():
+        write_jsonl(results_path, rows)
     write_json(
         output_dir / "lab_evaluation_result.json",
         {

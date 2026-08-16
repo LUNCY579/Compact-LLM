@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import contextlib
-import os
 import re
 from dataclasses import dataclass
 from pathlib import Path
@@ -12,7 +11,7 @@ from safetensors import safe_open
 from safetensors.torch import save_file
 
 from ..errors import CompatibilityError
-from ..utils import read_json, sha256_file, stable_id, write_json
+from ..utils import read_json, replace_file, sha256_file, stable_id, write_json
 
 
 WEIGHT_PATTERNS = (
@@ -188,7 +187,7 @@ class StreamingSafetensorsWriter:
         weight_map: dict[str, str] = {}
         if len(self._parts) == 1:
             final = self.destination / "model.safetensors"
-            os.replace(self._parts[0], final)
+            replace_file(self._parts[0], final)
             for key in self._part_keys[0]:
                 weight_map[key] = final.name
             return {"weight_map": weight_map, "total_size": self._total_size, "shards": [final.name]}
@@ -196,7 +195,7 @@ class StreamingSafetensorsWriter:
         shards: list[str] = []
         for index, (part, keys) in enumerate(zip(self._parts, self._part_keys), 1):
             final = self.destination / f"model-{index:05d}-of-{total:05d}.safetensors"
-            os.replace(part, final)
+            replace_file(part, final)
             shards.append(final.name)
             for key in keys:
                 weight_map[key] = final.name
