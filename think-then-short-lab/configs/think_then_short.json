@@ -1,0 +1,51 @@
+{
+  "schema_version": "0.1.0",
+  "experiment": {
+    "name": "think_then_short_lab",
+    "primary_question": "Can Qwen3-native thinking improve answerable reasoning while keeping the visible assistant reply short?",
+    "firewall": "Official Phase 1-9 trainers and evals keep enable_thinking=False. This lab is the only place thinking is allowed.",
+    "sealed_policy": "Official sealed benchmarks must not be used here."
+  },
+  "student": {
+    "default_init": "..\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_d_greedy_soup\\final_model",
+    "historical_anchor": "..\\short-response-model-phase-0-1-2\\artifacts\\phase_9_capability_composition_v22_lr1e4_s1200\\track_d_greedy_soup\\final_model",
+    "note": "Read official greedy-soup / frozen-anchor as init checkpoints only. Never write into official artifacts/."
+  },
+  "thinking": {
+    "enable_thinking": true,
+    "mechanism": "qwen3_native",
+    "max_thinking_tokens": 512,
+    "max_answer_tokens": 32,
+    "system_prompt": "Think carefully when needed, then give only the short final answer. Do not include the thinking in the visible reply. If the prompt does not contain enough information to determine one answer, reply exactly: \"I don't know based on the available information.\""
+  },
+  "conversion": {
+    "require_instruction": true,
+    "require_output": true,
+    "allow_empty_thinking": true,
+    "drop_overlong_answer": true,
+    "drop_overlong_thinking": true,
+    "tokenizer_fallback": "whitespace"
+  },
+  "training_future": {
+    "enabled": false,
+    "objective": "sft_with_native_thinking",
+    "lora": true,
+    "answer_token_upweight": 1.5,
+    "notes": [
+      "Render assistant targets with apply_chat_template(..., enable_thinking=True).",
+      "Map reasoning -> think channel; output -> short visible answer.",
+      "Do not concatenate reasoning into the visible reply."
+    ]
+  },
+  "evaluation_future": {
+    "enabled": false,
+    "score_answer_only": true,
+    "report_thinking_tokens": true,
+    "report_answer_tokens": true,
+    "notes": [
+      "Decode with enough max_new_tokens for thinking, then score only the post-think answer.",
+      "Fail rows whose answer exceeds max_answer_tokens.",
+      "Use non-sealed probes only."
+    ]
+  }
+}

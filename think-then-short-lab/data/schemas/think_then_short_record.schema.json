@@ -1,0 +1,72 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Think-then-short record",
+  "description": "Qwen3-native think-then-short training/eval row. messages contain system/user only; thinking and answer are separate fields so the future trainer can render native think + short visible reply.",
+  "type": "object",
+  "required": [
+    "id",
+    "messages",
+    "thinking",
+    "answer",
+    "source"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "messages": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "role",
+          "content"
+        ],
+        "properties": {
+          "role": {
+            "enum": [
+              "system",
+              "user"
+            ]
+          },
+          "content": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "thinking": {
+      "type": "string",
+      "description": "Content for the Qwen3 think channel. May be empty when allow_empty_thinking is true."
+    },
+    "answer": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Short visible assistant reply only. Must stay within max_answer_tokens."
+    },
+    "source": {
+      "type": "string",
+      "minLength": 1
+    },
+    "empty_thinking": {
+      "type": "boolean"
+    },
+    "thinking_token_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "answer_token_count": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}
