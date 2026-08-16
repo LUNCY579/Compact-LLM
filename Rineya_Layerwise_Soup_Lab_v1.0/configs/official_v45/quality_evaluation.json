@@ -1,0 +1,44 @@
+{
+  "schema_version": "4.5",
+  "policy_name": "fresh_message_grounded_category_neutral_observable_quality_v4_5",
+  "decision_scope": "case quality only; candidate promotion is handled by the shared relative-opportunity engine",
+  "issue_taxonomy_path": "configs/official_v45/quality_issue_taxonomy_v4_5.json",
+  "weights": {
+    "comprehensibility": 0.16,
+    "mechanical_integrity": 0.14,
+    "contract_fulfillment": 0.14,
+    "prompt_function_alignment": 0.12,
+    "response_mode_fulfillment": 0.0,
+    "task_adequacy": 0.16,
+    "factual_correctness": 0.1,
+    "logic_factual_consistency": 0.06,
+    "safety_boundary": 0.05,
+    "context_consistency": 0.03,
+    "response_completeness": 0.02,
+    "brevity_appropriateness": 0.01,
+    "conversation_naturalness": 0.01
+  },
+  "category_weight_overrides": {},
+  "issue_costs": {
+    "critical": 1.0,
+    "major": 0.3,
+    "minor": 0.08
+  },
+  "issue_cost_multiplier": 0.75,
+  "diagnostic_thresholds": {
+    "note": 0.0
+  },
+  "review_diagnostics_are_zero_cost": true,
+  "reference_similarity_is_diagnostic_only": true,
+  "categories_are_reporting_only": true,
+  "category_names_do_not_create_requirements": true,
+  "category_names_do_not_change_weights": true,
+  "category_statistics_do_not_affect_promotion": true,
+  "contract_issue_score_multiplier": 0.65,
+  "emit_reference_overlap_diagnostic": false,
+  "prompt_function_scoring": "continuous, case-level prompt-grounded when authored; otherwise actual-message heuristic fallback; category-independent, mechanically gated, and never emitted as a defect label",
+  "partial_contract_credit": true,
+  "prompt_adequacy_subdimensions": true,
+  "contract_provenance_required": true,
+  "contracts_must_ignore_category_reference_and_inherited_contracts": true
+}
