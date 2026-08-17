@@ -105,6 +105,11 @@ def parse_args() -> argparse.Namespace:
         default="",
         help="Optional provenance label recorded in the training manifest.",
     )
+    p.add_argument(
+        "--allow-cpu",
+        action="store_true",
+        help="Train on CPU without QLoRA. Do not use this while intending to occupy the GPU.",
+    )
     return p.parse_args()
 
 
@@ -114,7 +119,8 @@ def seed_everything(seed: int) -> None:
     random.seed(seed)
     np.random.seed(seed)
     torch.manual_seed(seed)
-    torch.cuda.manual_seed_all(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
 
 
 # Load versioned SFT records and reject files that cannot provide a valid
@@ -288,6 +294,8 @@ def validate_args(args: argparse.Namespace) -> None:
         raise ValueError("--warmup-ratio must be in [0, 1]")
     if args.minimum_free_disk_gb < 0:
         raise ValueError("--minimum-free-disk-gb cannot be negative")
+    if args.allow_cpu and args.qlora:
+        raise ValueError("QLoRA requires CUDA; omit --qlora when using --allow-cpu.")
 
 
 def check_free_disk(output_dir: Path, minimum_gb: float) -> None:
@@ -383,7 +391,10 @@ def build_model(args: argparse.Namespace) -> tuple[Any, Any, list[str]]:
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token = tokenizer.eos_token
 
-    model_kwargs: dict[str, Any] = {"torch_dtype": "auto", "device_map": "auto"}
+    model_kwargs: dict[str, Any] = {
+        "torch_dtype": torch.float32 if args.allow_cpu else "auto",
+        "device_map": "cpu" if args.allow_cpu else "auto",
+    }
     # QLoRA keeps the frozen base in 4-bit NF4 form while training the small
     # adapter, reducing weight memory on a consumer GPU.
     if args.qlora:
@@ -437,12 +448,18 @@ def main() -> None:
     validate_args(args)
     check_free_disk(args.output_dir, args.minimum_free_disk_gb)
     seed_everything(args.seed)
-    if not torch.cuda.is_available():
-        raise RuntimeError("CUDA is unavailable. Fix PyTorch/GPU setup first.")
+    if not args.allow_cpu and not torch.cuda.is_available():
+        raise RuntimeError("CUDA is unavailable. Fix PyTorch/GPU setup first, or pass --allow-cpu.")
 
     train_rows = read_jsonl(args.train_file)
     dev_rows = read_jsonl(args.dev_file) if args.dev_file.exists() else []
     model, tokenizer, targets = build_model(args)
+    first_param = next(model.parameters())
+    print(
+        f"Trainer device={first_param.device} allow_cpu={args.allow_cpu} "
+        f"cuda_available={torch.cuda.is_available()} qlora={args.qlora}",
+        flush=True,
+    )
     # Tokenize training and optional development records with identical rules.
     train_data = ChatSFTDataset(train_rows, tokenizer, args.max_sequence_length)
     eval_data = ChatSFTDataset(dev_rows, tokenizer, args.max_sequence_length) if dev_rows else None
@@ -468,8 +485,10 @@ def main() -> None:
         save_total_limit=None if args.disable_intermediate_checkpoints else args.save_total_limit,
         report_to=[],
         remove_unused_columns=False,
-        fp16=not torch.cuda.is_bf16_supported(),
-        bf16=torch.cuda.is_bf16_supported(),
+        fp16=not args.allow_cpu and torch.cuda.is_available() and not torch.cuda.is_bf16_supported(),
+        bf16=not args.allow_cpu and torch.cuda.is_available() and torch.cuda.is_bf16_supported(),
+        use_cpu=bool(args.allow_cpu),
+        dataloader_pin_memory=not args.allow_cpu,
         seed=args.seed,
         data_seed=args.seed,
         gradient_checkpointing=args.gradient_checkpointing,
@@ -484,7 +503,8 @@ def main() -> None:
 
     # Record the training run's peak allocated VRAM for later comparisons
     # between all-layer and selected-layer adapters.
-    torch.cuda.reset_peak_memory_stats()
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats()
     result = trainer.train()
     # Save only the PEFT adapter and tokenizer, not another full copy of the
     # frozen base checkpoint.  Publish through a sibling staging directory so
@@ -545,7 +565,11 @@ def main() -> None:
         "train_examples": len(train_data),
         "dev_examples": len(eval_data) if eval_data is not None else 0,
         "train_metrics": result.metrics,
-        "peak_allocated_vram_gb": torch.cuda.max_memory_allocated() / 1024**3,
+        "peak_allocated_vram_gb": (
+            torch.cuda.max_memory_allocated() / 1024**3 if torch.cuda.is_available() else 0.0
+        ),
+        "allow_cpu": bool(args.allow_cpu),
+        "device": "cpu" if args.allow_cpu or not torch.cuda.is_available() else "cuda",
     }
     atomic_write_text(
         args.output_dir / "training_manifest.json",
