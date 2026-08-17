@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import math
 import statistics
+import sys
 import time
 from collections import Counter
 from pathlib import Path
@@ -326,11 +327,12 @@ def evaluate_model_bundled_v45(
             }
             outputs_by_id[stable_id] = row
             append_jsonl(results_path, row)
-            print(
+            progress = (
                 f"[{index:03d}/{len(records):03d}] {stable_id}: {reply!r} "
-                f"quality={float(row['quality_score']):.3f}",
-                flush=True,
+                f"quality={float(row['quality_score']):.3f}"
             )
+            encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+            print(progress.encode(encoding, errors="replace").decode(encoding, errors="replace"), flush=True)
     finally:
         del model
         if torch.cuda.is_available():
