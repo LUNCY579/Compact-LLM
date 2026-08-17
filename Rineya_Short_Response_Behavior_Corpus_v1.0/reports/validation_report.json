@@ -1,0 +1,65 @@
+{
+  "dataset": "Rineya_Short_Response_Behavior_Corpus_v1.0",
+  "created_utc": "2026-08-16T00:00:00Z",
+  "validation": {
+    "new_sft": {
+      "rows": 10000,
+      "unique_ids": 10000,
+      "unique_prompts": 10000
+    },
+    "preservation_sft": {
+      "rows": 2000,
+      "unique_ids": 2000,
+      "unique_prompts": 2000
+    },
+    "combined_sft": {
+      "rows": 12000,
+      "unique_ids": 12000,
+      "unique_prompts": 12000
+    },
+    "dpo": {
+      "rows": 5000,
+      "unique_ids": 5000,
+      "unique_prompts": 5000
+    }
+  },
+  "structure": {
+    "all_sft_rows_end_in_assistant": true,
+    "all_sft_rows_start_with_system": true,
+    "all_sft_rows_metadata_split_train": true,
+    "top_level_question_field_count": 0,
+    "reasoning_leakage_count": 0,
+    "combined_unique_prompt_rate": 1.0
+  },
+  "target_length_proxy": {
+    "definition": "Whitespace/punctuation proxy; not tokenizer-exact.",
+    "mean": 7.172,
+    "median": 7.0,
+    "p90": 11,
+    "max": 17
+  },
+  "automated_correctness_checks": {
+    "arithmetic_rows_checked": 400,
+    "arithmetic_errors": 0,
+    "numeric_confirmation_rows_checked": 240,
+    "numeric_confirmation_errors": 0,
+    "numeric_preference_errors": 0,
+    "explicit_balanced_comparison_errors": 0
+  },
+  "leakage": {
+    "policy": "Train-only corpus was compared against the repository DEV and SEALED records; evaluation rows are not included.",
+    "forbidden_sources": {
+      "dev_row_count": 510,
+      "sealed_row_count": 110
+    },
+    "checks": {
+      "exact_rendered_prompt_overlap": 0,
+      "exact_latest_user_overlap": 0,
+      "rapidfuzz_ratio_threshold": 94,
+      "fuzzy_latest_user_near_overlap": 0,
+      "template_family_overlap": 0
+    },
+    "result": "PASS"
+  },
+  "human_review_status": "pending"
+}

@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Rineya short-response DPO record",
+  "type": "object",
+  "required": [
+    "id",
+    "prompt",
+    "chosen",
+    "rejected",
+    "metadata"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 1
+    },
+    "chosen": {
+      "type": "string",
+      "minLength": 1
+    },
+    "rejected": {
+      "type": "string",
+      "minLength": 1
+    },
+    "metadata": {
+      "type": "object",
+      "required": [
+        "preference_dimension",
+        "rejection_type",
+        "source_record_id",
+        "source_provenance",
+        "human_review_status",
+        "split",
+        "template_family"
+      ],
+      "properties": {
+        "preference_dimension": {
+          "type": "string",
+          "minLength": 1
+        },
+        "rejection_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_record_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_provenance": {
+          "type": "string",
+          "minLength": 1
+        },
+        "human_review_status": {
+          "type": "string",
+          "minLength": 1
+        },
+        "split": {
+          "const": "train"
+        },
+        "template_family": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": false
+}
