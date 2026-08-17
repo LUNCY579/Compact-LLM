@@ -1,0 +1,31 @@
+{
+  "sft": {
+    "/mnt/data/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/sft/rineya_v2_recommended_combined_40000.jsonl": {
+      "rows": 40000,
+      "unique_ids": 40000,
+      "unique_prompts": 40000
+    },
+    "/mnt/data/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/sft/rineya_v2_new_all_train.jsonl": {
+      "rows": 32000,
+      "unique_ids": 32000,
+      "unique_prompts": 32000
+    }
+  },
+  "dpo": {
+    "/mnt/data/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/dpo/rineya_v2_preferences_train_12000.jsonl": {
+      "rows": 12000,
+      "unique_ids": 12000,
+      "unique_prompts": 12000
+    }
+  },
+  "leakage": {
+    "/mnt/data/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/sft/rineya_v2_recommended_combined_40000.jsonl": {
+      "exact_latest_user_overlap": 0
+    },
+    "/mnt/data/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/sft/rineya_v2_new_all_train.jsonl": {
+      "exact_latest_user_overlap": 0
+    }
+  },
+  "status": "PASS",
+  "errors": []
+}

@@ -1,0 +1,30 @@
+{
+  "status": "PASS_FOR_AVAILABLE_SNAPSHOTS",
+  "new_train_rows": 32000,
+  "v1_reference_rows": 12000,
+  "available_eval_snapshot_files": [
+    "data/preferences/dev.jsonl",
+    "data/phase_2c_targeted_recovery/dev.jsonl",
+    "data/dev/dev.jsonl",
+    "data/sealed/sealed.jsonl",
+    "data/phase_9b_memory_reconstruction/reconstruction_corpus_v2_large/preferences/dev.jsonl",
+    "data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/preferences/dev.jsonl",
+    "data/phase_9_student_distillation/rag_reasoning_v3_large/preferences/dev.jsonl",
+    "data/phase_9_student_distillation/rag_reasoning_v3_large/splits/dev.jsonl",
+    "data/phase_9_student_distillation/rag_reasoning_v2/preferences/dev.jsonl",
+    "data/phase_9_student_distillation/rag_reasoning_v2/splits/dev.jsonl"
+  ],
+  "available_eval_snapshot_row_count": 5482,
+  "exact_v1_rendered_prompt_overlap": 0,
+  "exact_v1_latest_user_overlap": 0,
+  "exact_available_eval_text_overlap": 0,
+  "fuzzy_latest_user": {
+    "available": true,
+    "threshold": 96.0,
+    "sampled_new_rows": 2000,
+    "v1_near_overlap": 0,
+    "eval_near_overlap": 0,
+    "examples": []
+  },
+  "important_limit": "The current local repository DEV/SEALED files were not supplied directly in this turn. Re-run scripts/validate_dataset.py against the exact current repository before training."
+}

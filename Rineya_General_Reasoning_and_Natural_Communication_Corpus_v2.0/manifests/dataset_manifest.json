@@ -1,0 +1,141 @@
+{
+  "corpus_name": "Rineya General Reasoning and Natural Communication Corpus v2.0",
+  "finalized_at_utc": "2026-08-17T06:15:45.042298Z",
+  "lineage": {
+    "base_corpus": "Rineya Short-Response Behavior Corpus v1.0",
+    "preservation_source_rows": 12000,
+    "available_eval_snapshot": "Short_Response_Model_Full_v2.1.1_Preservation_First_Procedural_Recovery",
+    "generated_seed": 20260816,
+    "v1_surface_grammar_corrections": 4
+  },
+  "files": {
+    "DATA_CARD.md": {
+      "bytes": 4691,
+      "sha256": "cf8dd3d3f08e7ecac94d1c22ee7ea66e63b7e95c77eadec8ca88205bf92f8d44"
+    },
+    "README.md": {
+      "bytes": 4020,
+      "sha256": "f594a876fb1b139e40175d1464a203235a43bcbe3832637c0eb28188adb0f409"
+    },
+    "data/dpo/rineya_v2_preferences_train_12000.jsonl": {
+      "bytes": 11187376,
+      "sha256": "c589765e5a9dc2316a94e74583fd7b88624151a715e565fe1408988be00c906c"
+    },
+    "data/sft/rineya_v1_preservation_slice_8000.jsonl": {
+      "bytes": 8999061,
+      "sha256": "dca9f4752d47843be87af93dec42f22f84b19263484615845aa5a2a3897e5021"
+    },
+    "data/sft/rineya_v2_integrated_reasoning_dialogue_train.jsonl": {
+      "bytes": 8466863,
+      "sha256": "baba45bbc52469cbe61f8cc350fdbcd49c7396d6858472bb45e941057516a778"
+    },
+    "data/sft/rineya_v2_natural_communication_train.jsonl": {
+      "bytes": 11883215,
+      "sha256": "546eb85d7de05a8e70b0033d38dbdeaa2907709099fc5dbc047ce236b2aa731e"
+    },
+    "data/sft/rineya_v2_new_all_train.jsonl": {
+      "bytes": 39659277,
+      "sha256": "dc68d9400419e2158144f8832ca52b005628f9b24862f95667e482e34998faee"
+    },
+    "data/sft/rineya_v2_reasoning_train.jsonl": {
+      "bytes": 19309199,
+      "sha256": "eda2b091c88eca83d8c45927ceb2d931086662abd9cd3eed07b521bfa1921f49"
+    },
+    "data/sft/rineya_v2_recommended_combined_40000.jsonl": {
+      "bytes": 48658338,
+      "sha256": "d856fdfc9b0b03cfda9bdbce2540845153a295924ba39b8aee94e6c558b90a00"
+    },
+    "examples/rineya1_1_research_plan.md": {
+      "bytes": 2234,
+      "sha256": "19ed1c7037463e21fe58e9eaa10f4bb1a26f4d2fcca3d510d9db446542372910"
+    },
+    "examples/training_and_mixing_guide.md": {
+      "bytes": 2188,
+      "sha256": "ea1188c74c07954d6c54e1c7ce7f76eb283f19e1dc639e1be35d52f85fa4f8cf"
+    },
+    "manifests/category_distribution.csv": {
+      "bytes": 1647,
+      "sha256": "63697f78a79c52f67bc992efb685aa00049b1ce864c2cc43a186a4615b3e425a"
+    },
+    "manifests/design_specification.json": {
+      "bytes": 1438,
+      "sha256": "bbbe7a6767caaff133f765ef76a794277720433c8a24c549abba5f6a032456cf"
+    },
+    "manifests/domain_distribution.csv": {
+      "bytes": 257,
+      "sha256": "0e18fa8d15a8c02d783d386b3ae0d7d571d8e264a9235cb74da244775ef29ed1"
+    },
+    "reports/curriculum_map.md": {
+      "bytes": 9080,
+      "sha256": "b6376d425179f319eaa94c3b92e7dd8aacf152829c5dc64e79df0bf1e59b2be0"
+    },
+    "reports/full_quality_audit_report.json": {
+      "bytes": 5864,
+      "sha256": "3203ab4338e74018aa1526d00a32051e1e0463f01c9916e71144f06caac38c3f"
+    },
+    "reports/leakage_report.json": {
+      "bytes": 1337,
+      "sha256": "5bc08995605be52bf06a626ac28b0cae4591cc0ad523d57b5de25ebe5750115a"
+    },
+    "reports/reproducibility_report.json": {
+      "bytes": 1847,
+      "sha256": "d6fc93ef046d78f135e096d0c8f5c6c97f28d0de7f745145f7cd51f6ab5b90dd"
+    },
+    "reports/sample_audit_packet.md": {
+      "bytes": 242680,
+      "sha256": "c6a5de38b4d5e2a496910911e5dc184488ef3f8470d0aeb0bb1c89f0b82ebb51"
+    },
+    "reports/schema_validation_report.json": {
+      "bytes": 828,
+      "sha256": "ecbb0811a1ef7feca9c4e9e73376a73892157bb351703218ce2bfb9fade0e215"
+    },
+    "reports/semantic_audit_report.json": {
+      "bytes": 1127,
+      "sha256": "50fc3ead4a607b0e11534b7bdc00faac2c9d62a865f2b5343435746533dccd7c"
+    },
+    "reports/statistics.md": {
+      "bytes": 1622,
+      "sha256": "dd1443b51914433272f88220ffa7f82a15e2756c7f0a52256f1cc1b5490085c4"
+    },
+    "reports/validation_report.json": {
+      "bytes": 2564,
+      "sha256": "f0474be489f67a45c90f85a832d5064b71f823394e20fb6cbef2db28532c7a95"
+    },
+    "reports/validator_execution_report.json": {
+      "bytes": 1072,
+      "sha256": "a2a62d0f0acdb027823c59785988261c88916aaf61b82abbccfa73170bdb53fc"
+    },
+    "schemas/dpo_record.schema.json": {
+      "bytes": 578,
+      "sha256": "38594d914c8a1f77dc681ef62629e6508fe6ba1aa5264f3070da29788df1f67d"
+    },
+    "schemas/sft_record.schema.json": {
+      "bytes": 1288,
+      "sha256": "922ddbdf4b05e2568ef39e672273376d6e10483ec71a33c1f05899d0fd26aef3"
+    },
+    "scripts/full_quality_audit.py": {
+      "bytes": 11637,
+      "sha256": "d1806bfcbcb7364d3797921dbad0a114bc7c8715315db297eb74220211cba522"
+    },
+    "scripts/generate_dataset.py": {
+      "bytes": 175791,
+      "sha256": "bfd2ddcc2064f93724f92a46cf06bf0d218c4215de32ff52c72bdcd14cba92a8"
+    },
+    "scripts/mix_jsonl.py": {
+      "bytes": 1070,
+      "sha256": "10e7baa31deae733a4814549a883ec3c2ded91754d02e07c98553cd3e4bc4f74"
+    },
+    "scripts/semantic_audit.py": {
+      "bytes": 21756,
+      "sha256": "ddc14c273c959de84343d8c0f6478eabc2560e5de45e6318189c82ebfd5c7df3"
+    },
+    "scripts/tokenizer_length_report.py": {
+      "bytes": 2918,
+      "sha256": "0454376cebb4435f791de87599a50aa5ae6cb8b077bcda2ce563b8b8ee7ddcb9"
+    },
+    "scripts/validate_dataset.py": {
+      "bytes": 3057,
+      "sha256": "3341e2f33b3df9045fd7f431056743c9268fc6a2abe101e3d945fcc75aad2f71"
+    }
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "status": "PASS",
+  "row_counts": {
+    "reasoning": 16000,
+    "communication": 9600,
+    "integrated": 6400,
+    "new": 32000,
+    "preservation": 8000,
+    "combined": 40000,
+    "dpo": 12000
+  },
+  "sft_contract": {
+    "reasoning": {
+      "rows": 16000,
+      "unique_ids": 16000,
+      "unique_rendered_prompts": 16000,
+      "unique_latest_user_prompts": 16000
+    },
+    "communication": {
+      "rows": 9600,
+      "unique_ids": 9600,
+      "unique_rendered_prompts": 9600,
+      "unique_latest_user_prompts": 9600
+    },
+    "integrated": {
+      "rows": 6400,
+      "unique_ids": 6400,
+      "unique_rendered_prompts": 6400,
+      "unique_latest_user_prompts": 6400
+    },
+    "new": {
+      "rows": 32000,
+      "unique_ids": 32000,
+      "unique_rendered_prompts": 32000,
+      "unique_latest_user_prompts": 32000
+    },
+    "preservation": {
+      "rows": 8000,
+      "unique_ids": 8000,
+      "unique_rendered_prompts": 8000,
+      "unique_latest_user_prompts": 7162,
+      "duplicate_latest_user_rows": 838
+    },
+    "combined": {
+      "rows": 40000,
+      "unique_ids": 40000,
+      "unique_rendered_prompts": 40000,
+      "unique_latest_user_prompts": 39162,
+      "duplicate_latest_user_rows": 838
+    }
+  },
+  "union_integrity": {
+    "component_ids": 32000,
+    "new_ids": 32000,
+    "preservation_ids": 8000,
+    "combined_ids": 40000,
+    "new_preservation_id_overlap": 0
+  },
+  "new_class_distribution": {
+    "acknowledgment_update": 800,
+    "apology_repair": 800,
+    "arithmetic_chain": 800,
+    "boundary_setting": 800,
+    "causal_reasoning": 800,
+    "clarification_request": 800,
+    "communication_rewrite": 800,
+    "comparative_recommendation": 800,
+    "comparison_ranking": 800,
+    "conditional_rules": 800,
+    "constraint_selection": 800,
+    "contradiction_detection": 800,
+    "conversation_closure": 800,
+    "counting_sets": 800,
+    "decision_explanation": 800,
+    "deescalation": 800,
+    "empathy_validation": 800,
+    "estimation_sanity": 800,
+    "evidence_grounded_dialogue": 800,
+    "evidence_inference": 800,
+    "informal_texting": 800,
+    "insufficient_information": 800,
+    "logical_implication": 800,
+    "multi_turn_context_update": 800,
+    "natural_follow_up": 800,
+    "negotiation_compromise": 800,
+    "percentage_reasoning": 800,
+    "physical_commonsense": 800,
+    "plan_revision": 800,
+    "practical_next_step": 800,
+    "preference_opinion": 800,
+    "ratio_proportion": 800,
+    "roleplay_reasoning": 800,
+    "schedule_ordering": 800,
+    "sequence_pattern": 800,
+    "spatial_relations": 800,
+    "tactful_disagreement": 800,
+    "time_duration": 800,
+    "troubleshooting_diagnosis": 800,
+    "unit_conversion": 800
+  },
+  "new_group_distribution": {
+    "communication": 9600,
+    "integrated": 6400,
+    "reasoning": 16000
+  },
+  "new_multi_turn_rows": 7714,
+  "new_target_proxy_tokens": {
+    "min": 2,
+    "median": 5,
+    "p90": 11,
+    "max": 19
+  },
+  "dpo": {
+    "rows": 12000,
+    "unique_ids": 12000,
+    "unique_prompts": 12000,
+    "class_distribution": {
+      "acknowledgment_update": 300,
+      "apology_repair": 300,
+      "arithmetic_chain": 300,
+      "boundary_setting": 300,
+      "causal_reasoning": 300,
+      "clarification_request": 300,
+      "communication_rewrite": 300,
+      "comparative_recommendation": 300,
+      "comparison_ranking": 300,
+      "conditional_rules": 300,
+      "constraint_selection": 300,
+      "contradiction_detection": 300,
+      "conversation_closure": 300,
+      "counting_sets": 300,
+      "decision_explanation": 300,
+      "deescalation": 300,
+      "empathy_validation": 300,
+      "estimation_sanity": 300,
+      "evidence_grounded_dialogue": 300,
+      "evidence_inference": 300,
+      "informal_texting": 300,
+      "insufficient_information": 300,
+      "logical_implication": 300,
+      "multi_turn_context_update": 300,
+      "natural_follow_up": 300,
+      "negotiation_compromise": 300,
+      "percentage_reasoning": 300,
+      "physical_commonsense": 300,
+      "plan_revision": 300,
+      "practical_next_step": 300,
+      "preference_opinion": 300,
+      "ratio_proportion": 300,
+      "roleplay_reasoning": 300,
+      "schedule_ordering": 300,
+      "sequence_pattern": 300,
+      "spatial_relations": 300,
+      "tactful_disagreement": 300,
+      "time_duration": 300,
+      "troubleshooting_diagnosis": 300,
+      "unit_conversion": 300
+    }
+  },
+  "eval_snapshot": {
+    "root": "/mnt/data/_rineya_repo_eval",
+    "files": [
+      "/mnt/data/_rineya_repo_eval/data/dev/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_2c_targeted_recovery/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9_student_distillation/rag_reasoning_v2/preferences/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9_student_distillation/rag_reasoning_v2/splits/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9_student_distillation/rag_reasoning_v3_large/preferences/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9_student_distillation/rag_reasoning_v3_large/splits/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9b_memory_reconstruction/reconstruction_corpus_v1/preferences/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/phase_9b_memory_reconstruction/reconstruction_corpus_v2_large/preferences/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/preferences/dev.jsonl",
+      "/mnt/data/_rineya_repo_eval/data/sealed/sealed.jsonl"
+    ],
+    "normalized_texts": 3266,
+    "exact_latest_user_overlap": 0
+  },
+  "errors": [],
+  "limitations": [
+    "Automated checks do not establish that every open-ended social target is uniquely optimal.",
+    "Human review remains required for safety, empathy, de-escalation, roleplay, informal language, and DPO preference quality.",
+    "Re-run exact overlap against the repository revision actually used for training."
+  ]
+}
