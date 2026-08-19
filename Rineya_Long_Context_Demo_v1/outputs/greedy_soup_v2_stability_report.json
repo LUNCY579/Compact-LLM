@@ -1,0 +1,217 @@
+{
+  "suite": "Rineya Long-Context Demonstration Suite",
+  "runs": [
+    {
+      "run": "greedy_soup_v2_stability",
+      "key_items": 192,
+      "prediction_rows": 192,
+      "covered_items": 192,
+      "coverage": 1.0,
+      "duplicate_prediction_ids": [],
+      "unexpected_prediction_ids": [],
+      "strict_exact": 0.0,
+      "first_line_exact": 0.0,
+      "short_response_rate_le_12_words": 0.901042,
+      "mean_response_words": 4.859375,
+      "pack_metrics": {
+        "complete_scenario_packs_in_key": 48,
+        "fully_covered_scenario_packs": 48,
+        "base_paraphrase_prediction_agreement": 0.333333,
+        "base_paraphrase_both_correct": 0.0,
+        "counterfactual_pair_both_correct_and_changed": 0.0,
+        "unanswerable_accuracy": 0.0,
+        "all_four_variants_correct": 0.0
+      },
+      "by_variant": {
+        "base": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "counterfactual": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "paraphrase": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "unanswerable": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      },
+      "by_domain": {
+        "arcane_academy": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "coastal_council": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "detective_bureau": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "expedition": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "family_enterprise": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "museum": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "orbital_station": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "research_institute": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      },
+      "by_task_type": {
+        "alias_resolution": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "causal_disambiguation": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "count_with_exclusions": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "latest_verified_record": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "multi_condition_identity": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "object_state_tracking": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "rule_exception": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "temporal_correction": {
+          "items": 24,
+          "covered": 24,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      },
+      "by_difficulty": {
+        "hard": {
+          "items": 120,
+          "covered": 120,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "medium": {
+          "items": 72,
+          "covered": 72,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      },
+      "by_needle_profile": {
+        "distributed": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "early": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "late": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "middle": {
+          "items": 48,
+          "covered": 48,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      },
+      "by_length_bucket": {
+        "compact_long": {
+          "items": 56,
+          "covered": 56,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "extended_long": {
+          "items": 68,
+          "covered": 68,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        },
+        "standard_long": {
+          "items": 68,
+          "covered": 68,
+          "strict_exact": 0.0,
+          "first_line_exact": 0.0
+        }
+      }
+    }
+  ],
+  "repeated_run_stability": {
+    "number_of_runs": 1,
+    "available": false
+  }
+}

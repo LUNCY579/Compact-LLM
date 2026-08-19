@@ -37,7 +37,7 @@ def load_completed_ids(path: Path) -> set[str]:
     return completed
 
 
-def render_chat(tokenizer: Any, row: dict[str, Any]) -> str:
+def render_chat(tokenizer: Any, row: dict[str, Any], enable_thinking: bool | None = None) -> str:
     messages = row.get("messages")
     if isinstance(messages, list):
         messages = [
@@ -51,11 +51,13 @@ def render_chat(tokenizer: Any, row: dict[str, Any]) -> str:
         messages = []
 
     if messages and getattr(tokenizer, "chat_template", None):
-        return tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-        )
+        template_kwargs: dict[str, Any] = {
+            "tokenize": False,
+            "add_generation_prompt": True,
+        }
+        if enable_thinking is not None:
+            template_kwargs["enable_thinking"] = enable_thinking
+        return tokenizer.apply_chat_template(messages, **template_kwargs)
 
     if messages:
         parts = [f"{message['role'].upper()}\n{message['content']}" for message in messages]
@@ -113,6 +115,11 @@ def main() -> None:
     parser.add_argument("--limit", type=int)
     parser.add_argument("--seed", type=int, default=17)
     parser.add_argument("--continue-on-error", action="store_true")
+    parser.add_argument(
+        "--disable-thinking",
+        action="store_true",
+        help="Pass enable_thinking=False to Qwen3 chat templates so the 24-token budget is not consumed by <think>.",
+    )
     args = parser.parse_args()
 
     try:
@@ -166,7 +173,11 @@ def main() -> None:
                 continue
 
             try:
-                rendered = render_chat(tokenizer, row)
+                rendered = render_chat(
+                    tokenizer,
+                    row,
+                    enable_thinking=False if args.disable_thinking else None,
+                )
                 encoded = tokenizer(
                     rendered,
                     return_tensors="pt",

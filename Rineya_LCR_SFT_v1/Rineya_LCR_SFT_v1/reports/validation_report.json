@@ -1,0 +1,99 @@
+{
+  "valid": true,
+  "errors_count": 0,
+  "warnings_count": 0,
+  "errors": [],
+  "warnings": [],
+  "input": "data/lcr_sft_v1.jsonl",
+  "file_bytes": 253022062,
+  "sha256": "8f0bc0174408eb513851443a6f9c32e2e79a00563fb9d35d659e7d27ab792c9c",
+  "packs": 2000,
+  "rows": 8000,
+  "unique_prompts": 8000,
+  "unique_titles": 2000,
+  "unique_people": 14000,
+  "unique_sites": 2000,
+  "unique_serials": 12931,
+  "unique_base_contexts": 2000,
+  "variant_counts": {
+    "base": 2000,
+    "paraphrase": 2000,
+    "counterfactual": 2000,
+    "unanswerable": 2000
+  },
+  "split_pack_counts": {
+    "train": 1800,
+    "dev": 200
+  },
+  "split_row_counts": {
+    "train": 7200,
+    "dev": 800
+  },
+  "domain_counts": {
+    "academy_chronicle": 167,
+    "archive_catalog": 166,
+    "civic_record": 167,
+    "clinic_inventory": 166,
+    "detective_file": 167,
+    "estate_business_saga": 167,
+    "expedition_journal": 167,
+    "lab_chronology": 167,
+    "museum_conservation": 167,
+    "ships_log": 166,
+    "station_log": 167,
+    "warehouse_logistics": 166
+  },
+  "task_counts": {
+    "address_route_tracking": 200,
+    "alias_resolution": 200,
+    "causal_disambiguation": 200,
+    "count_exclusions_duplicates": 200,
+    "definition_binding": 200,
+    "latest_verified_record_vs_rumor": 200,
+    "multi_condition_identity": 200,
+    "object_state_tracking": 200,
+    "rule_exception": 200,
+    "temporal_correction": 200
+  },
+  "domain_task_min": 16,
+  "domain_task_max": 17,
+  "length_bucket_pack_counts": {
+    "compact_long": 800,
+    "standard_long": 800,
+    "extended_long": 400
+  },
+  "needle_profile_pack_counts": {
+    "early": 500,
+    "middle": 500,
+    "late": 500,
+    "distributed": 500
+  },
+  "context_words": {
+    "min": 1150,
+    "max": 2177,
+    "mean": 1418.227,
+    "median": 1335.0
+  },
+  "context_words_by_bucket": {
+    "compact_long": {
+      "min": 1150,
+      "max": 1231,
+      "mean": 1180.587,
+      "rows": 3200
+    },
+    "extended_long": {
+      "min": 1699,
+      "max": 2177,
+      "mean": 1915.977,
+      "rows": 1600
+    },
+    "standard_long": {
+      "min": 1300,
+      "max": 1572,
+      "mean": 1406.991,
+      "rows": 3200
+    }
+  },
+  "frozen_v1_checked": true,
+  "frozen_v1_20_word_shingle_overlaps": 0
+}

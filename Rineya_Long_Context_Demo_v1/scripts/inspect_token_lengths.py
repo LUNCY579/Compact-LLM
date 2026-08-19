@@ -27,7 +27,7 @@ def load_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
-def render_chat(tokenizer: Any, row: dict[str, Any]) -> str:
+def render_chat(tokenizer: Any, row: dict[str, Any], enable_thinking: bool | None = None) -> str:
     messages = row.get("messages", [])
     messages = [
         {"role": str(message["role"]), "content": str(message["content"])}
@@ -37,11 +37,13 @@ def render_chat(tokenizer: Any, row: dict[str, Any]) -> str:
         and "content" in message
     ]
     if messages and getattr(tokenizer, "chat_template", None):
-        return tokenizer.apply_chat_template(
-            messages,
-            tokenize=False,
-            add_generation_prompt=True,
-        )
+        template_kwargs: dict[str, Any] = {
+            "tokenize": False,
+            "add_generation_prompt": True,
+        }
+        if enable_thinking is not None:
+            template_kwargs["enable_thinking"] = enable_thinking
+        return tokenizer.apply_chat_template(messages, **template_kwargs)
     if messages:
         return "\n\n".join(
             f"{message['role'].upper()}\n{message['content']}" for message in messages
@@ -64,6 +66,11 @@ def main() -> None:
     parser.add_argument("--max-context", type=int)
     parser.add_argument("--max-new-tokens", type=int, default=24)
     parser.add_argument("--trust-remote-code", action="store_true")
+    parser.add_argument(
+        "--disable-thinking",
+        action="store_true",
+        help="Pass enable_thinking=False to Qwen3 chat templates.",
+    )
     parser.add_argument("--json-output", type=Path)
     args = parser.parse_args()
 
@@ -80,7 +87,11 @@ def main() -> None:
 
     per_item: list[dict[str, Any]] = []
     for row in rows:
-        rendered = render_chat(tokenizer, row)
+        rendered = render_chat(
+            tokenizer,
+            row,
+            enable_thinking=False if args.disable_thinking else None,
+        )
         count = len(tokenizer(rendered, add_special_tokens=False)["input_ids"])
         per_item.append(
             {
