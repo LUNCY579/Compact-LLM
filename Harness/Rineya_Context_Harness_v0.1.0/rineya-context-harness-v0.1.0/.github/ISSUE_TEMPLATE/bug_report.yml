@@ -1,0 +1,52 @@
+name: Bug report
+description: Report a reproducible harness defect.
+title: "[bug] "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Do not include secrets, private conversations, model weights, sealed evaluation data, or unredacted databases/traces.
+  - type: input
+    id: version
+    attributes:
+      label: Version or commit
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: OS, Python version, model/search backend, and whether the deterministic fixtures reproduce it.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Minimal reproduction
+      description: Exact commands and smallest fixture/config needed.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: observed
+    attributes:
+      label: Observed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Redacted evidence
+      description: Relevant error, state revision, event, or trace excerpt.
+  - type: dropdown
+    id: security
+    attributes:
+      label: Could this be a security vulnerability?
+      options: ["No", "Possibly—do not publish details here"]
+    validations:
+      required: true

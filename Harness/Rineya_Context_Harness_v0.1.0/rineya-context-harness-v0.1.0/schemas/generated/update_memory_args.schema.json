@@ -1,0 +1,55 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "changes": {
+      "additionalProperties": true,
+      "minProperties": 1,
+      "title": "Changes",
+      "type": "object"
+    },
+    "expected_revision": {
+      "minimum": 0,
+      "title": "Expected Revision",
+      "type": "integer"
+    },
+    "idempotency_key": {
+      "anyOf": [
+        {
+          "maxLength": 256,
+          "minLength": 8,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Idempotency Key"
+    },
+    "memory_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Memory Id",
+      "type": "string"
+    },
+    "merge": {
+      "default": false,
+      "title": "Merge",
+      "type": "boolean"
+    },
+    "run_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "memory_id",
+    "changes",
+    "expected_revision"
+  ],
+  "title": "UpdateMemoryArgs",
+  "type": "object"
+}

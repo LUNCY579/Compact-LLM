@@ -1,0 +1,98 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "content_hash": {
+      "pattern": "^[a-f0-9]{64}$",
+      "title": "Content Hash",
+      "type": "string"
+    },
+    "id": {
+      "title": "Id",
+      "type": "string"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "passage": {
+      "maxLength": 100000,
+      "minLength": 1,
+      "title": "Passage",
+      "type": "string"
+    },
+    "publisher": {
+      "anyOf": [
+        {
+          "maxLength": 512,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Publisher"
+    },
+    "query": {
+      "anyOf": [
+        {
+          "maxLength": 4000,
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Query"
+    },
+    "rank": {
+      "anyOf": [
+        {
+          "minimum": 1,
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rank"
+    },
+    "retrieved_at": {
+      "format": "date-time",
+      "title": "Retrieved At",
+      "type": "string"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "source_uri": {
+      "maxLength": 8000,
+      "minLength": 1,
+      "title": "Source Uri",
+      "type": "string"
+    },
+    "suspicious_content": {
+      "default": false,
+      "title": "Suspicious Content",
+      "type": "boolean"
+    },
+    "title": {
+      "default": "Untitled source",
+      "maxLength": 2000,
+      "title": "Title",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "source_uri",
+    "passage",
+    "content_hash"
+  ],
+  "title": "EvidenceRecord",
+  "type": "object"
+}

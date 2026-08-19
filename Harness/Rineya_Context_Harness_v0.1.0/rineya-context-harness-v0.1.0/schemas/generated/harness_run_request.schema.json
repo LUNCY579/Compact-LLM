@@ -1,0 +1,187 @@
+{
+  "$defs": {
+    "ContextBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "evidence_tokens": {
+          "default": 704,
+          "minimum": 0,
+          "title": "Evidence Tokens",
+          "type": "integer"
+        },
+        "goal_tokens": {
+          "default": 256,
+          "minimum": 0,
+          "title": "Goal Tokens",
+          "type": "integer"
+        },
+        "recent_tokens": {
+          "default": 208,
+          "minimum": 0,
+          "title": "Recent Tokens",
+          "type": "integer"
+        },
+        "reserve_output_tokens": {
+          "default": 128,
+          "minimum": 1,
+          "title": "Reserve Output Tokens",
+          "type": "integer"
+        },
+        "state_tokens": {
+          "default": 512,
+          "minimum": 0,
+          "title": "State Tokens",
+          "type": "integer"
+        },
+        "static_tokens": {
+          "default": 240,
+          "minimum": 0,
+          "title": "Static Tokens",
+          "type": "integer"
+        },
+        "total_tokens": {
+          "default": 2048,
+          "minimum": 128,
+          "title": "Total Tokens",
+          "type": "integer"
+        }
+      },
+      "title": "ContextBudget",
+      "type": "object"
+    },
+    "ConversationTurn": {
+      "additionalProperties": false,
+      "description": "A bounded historical chat turn preserved with its original trust role.",
+      "properties": {
+        "content": {
+          "maxLength": 20000,
+          "minLength": 1,
+          "title": "Content",
+          "type": "string"
+        },
+        "role": {
+          "enum": [
+            "user",
+            "assistant"
+          ],
+          "title": "Role",
+          "type": "string"
+        }
+      },
+      "required": [
+        "role",
+        "content"
+      ],
+      "title": "ConversationTurn",
+      "type": "object"
+    },
+    "RunMode": {
+      "enum": [
+        "auto",
+        "direct",
+        "grounded",
+        "research"
+      ],
+      "title": "RunMode",
+      "type": "string"
+    },
+    "WorkflowBudget": {
+      "additionalProperties": false,
+      "properties": {
+        "max_active_memory_items": {
+          "default": 64,
+          "maximum": 10000,
+          "minimum": 4,
+          "title": "Max Active Memory Items",
+          "type": "integer"
+        },
+        "max_model_calls": {
+          "default": 8,
+          "maximum": 100,
+          "minimum": 1,
+          "title": "Max Model Calls",
+          "type": "integer"
+        },
+        "max_rounds": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Rounds",
+          "type": "integer"
+        },
+        "max_search_calls": {
+          "default": 3,
+          "maximum": 20,
+          "minimum": 0,
+          "title": "Max Search Calls",
+          "type": "integer"
+        },
+        "max_sources_fetched": {
+          "default": 8,
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Max Sources Fetched",
+          "type": "integer"
+        },
+        "max_wall_seconds": {
+          "default": 90.0,
+          "exclusiveMinimum": 0,
+          "maximum": 3600,
+          "title": "Max Wall Seconds",
+          "type": "number"
+        }
+      },
+      "title": "WorkflowBudget",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "budget": {
+      "$ref": "#/$defs/WorkflowBudget"
+    },
+    "context_budget": {
+      "$ref": "#/$defs/ContextBudget"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "mode": {
+      "$ref": "#/$defs/RunMode",
+      "default": "auto"
+    },
+    "question": {
+      "maxLength": 20000,
+      "minLength": 1,
+      "title": "Question",
+      "type": "string"
+    },
+    "recent_turns": {
+      "items": {
+        "$ref": "#/$defs/ConversationTurn"
+      },
+      "maxItems": 64,
+      "title": "Recent Turns",
+      "type": "array"
+    },
+    "run_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Run Id"
+    }
+  },
+  "required": [
+    "question"
+  ],
+  "title": "HarnessRunRequest",
+  "type": "object"
+}

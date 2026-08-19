@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "description": "A bounded historical chat turn preserved with its original trust role.",
+  "properties": {
+    "content": {
+      "maxLength": 20000,
+      "minLength": 1,
+      "title": "Content",
+      "type": "string"
+    },
+    "role": {
+      "enum": [
+        "user",
+        "assistant"
+      ],
+      "title": "Role",
+      "type": "string"
+    }
+  },
+  "required": [
+    "role",
+    "content"
+  ],
+  "title": "ConversationTurn",
+  "type": "object"
+}

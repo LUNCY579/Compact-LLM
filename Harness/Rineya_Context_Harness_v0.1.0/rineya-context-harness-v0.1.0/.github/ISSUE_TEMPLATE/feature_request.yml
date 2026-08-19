@@ -1,0 +1,36 @@
+name: Feature request
+description: Propose a measured capability or architecture change.
+title: "[proposal] "
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What observed failure or limitation motivates this change?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behavior
+    validations:
+      required: true
+  - type: textarea
+    id: boundary
+    attributes:
+      label: Trust, state, and permission impact
+      description: Explain effects on tools, deletion, persistence, external side effects, or untrusted data.
+    validations:
+      required: true
+  - type: textarea
+    id: evaluation
+    attributes:
+      label: Evaluation plan
+      description: State the frozen baseline, metric, regression suite, budget, and stop gate.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Simpler alternatives considered

@@ -1,0 +1,23 @@
+digraph G {
+  graph [rankdir=LR, bgcolor="transparent", pad=0.25, nodesep=0.45, ranksep=0.4, splines=spline];
+  node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=11, penwidth=1.5, margin="0.15,0.08"];
+  edge [fontname="DejaVu Sans", fontsize=9, color="#5B6B7C", penwidth=1.3, arrowsize=0.75];
+
+  pinned [label="PINNED\nGlobal invariants", fillcolor="#EAF1F8", color="#17365D"];
+  active [label="ACTIVE / HOT\nModel-visible now", fillcolor="#EAF5EC", color="#3C8D5A"];
+  warm [label="WARM\nLikely future utility", fillcolor="#FFF3DD", color="#D98C2B"];
+  archived [label="ARCHIVED / COLD\nExternally retained", fillcolor="#F3F5F7", color="#6B7280"];
+  evicted [label="EVICTED\nAbsent from active context", fillcolor="#FDECEC", color="#B54B4B"];
+  purged [label="PURGED\nAdmin-only permanent deletion", fillcolor="#ECECEC", color="#444444"];
+
+  pinned -> active [label="project into context"];
+  active -> warm [label="deprioritize"];
+  warm -> active [label="future utility rises"];
+  active -> archived [label="archive"];
+  active -> evicted [label="delete_memory(active_context)"];
+  archived -> active [label="restore"];
+  evicted -> active [label="restore"];
+  archived -> purged [label="explicit admin policy", color="#B54B4B"];
+  evicted -> purged [label="explicit admin policy", color="#B54B4B"];
+  pinned -> purged [label="forbidden", style=dashed, color="#B54B4B"];
+}

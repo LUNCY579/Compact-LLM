@@ -1,0 +1,179 @@
+{
+  "$defs": {
+    "MemoryKind": {
+      "enum": [
+        "global_invariant",
+        "current_state",
+        "open_goal",
+        "active_evidence",
+        "resolved_evidence",
+        "transient_observation",
+        "completed_checkpoint",
+        "superseded_state",
+        "conflict",
+        "user_preference",
+        "event_history"
+      ],
+      "title": "MemoryKind",
+      "type": "string"
+    },
+    "MemoryStatus": {
+      "enum": [
+        "active",
+        "archived",
+        "evicted",
+        "superseded",
+        "purged"
+      ],
+      "title": "MemoryStatus",
+      "type": "string"
+    },
+    "MemoryTemperature": {
+      "enum": [
+        "pinned",
+        "hot",
+        "warm",
+        "cold"
+      ],
+      "title": "MemoryTemperature",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "confidence": {
+      "default": 1.0,
+      "maximum": 1.0,
+      "minimum": 0.0,
+      "title": "Confidence",
+      "type": "number"
+    },
+    "created_at": {
+      "format": "date-time",
+      "title": "Created At",
+      "type": "string"
+    },
+    "dependencies": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Dependencies",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "expires_at": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Expires At"
+    },
+    "id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Id",
+      "type": "string"
+    },
+    "kind": {
+      "$ref": "#/$defs/MemoryKind"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "title": "Metadata",
+      "type": "object"
+    },
+    "payload": {
+      "additionalProperties": true,
+      "title": "Payload",
+      "type": "object"
+    },
+    "pinned": {
+      "default": false,
+      "title": "Pinned",
+      "type": "boolean"
+    },
+    "revision_created": {
+      "minimum": 0,
+      "title": "Revision Created",
+      "type": "integer"
+    },
+    "revision_updated": {
+      "minimum": 0,
+      "title": "Revision Updated",
+      "type": "integer"
+    },
+    "run_id": {
+      "maxLength": 256,
+      "minLength": 1,
+      "title": "Run Id",
+      "type": "string"
+    },
+    "source_ids": {
+      "items": {
+        "type": "string"
+      },
+      "title": "Source Ids",
+      "type": "array",
+      "uniqueItems": true
+    },
+    "status": {
+      "$ref": "#/$defs/MemoryStatus",
+      "default": "active"
+    },
+    "summary": {
+      "maxLength": 8000,
+      "minLength": 1,
+      "title": "Summary",
+      "type": "string"
+    },
+    "superseded_by": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Superseded By"
+    },
+    "temperature": {
+      "$ref": "#/$defs/MemoryTemperature",
+      "default": "warm"
+    },
+    "updated_at": {
+      "format": "date-time",
+      "title": "Updated At",
+      "type": "string"
+    },
+    "valid_from": {
+      "anyOf": [
+        {
+          "format": "date-time",
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Valid From"
+    }
+  },
+  "required": [
+    "kind",
+    "summary",
+    "run_id",
+    "revision_created",
+    "revision_updated"
+  ],
+  "title": "MemoryItem",
+  "type": "object"
+}

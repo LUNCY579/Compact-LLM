@@ -1,0 +1,278 @@
+{
+  "$defs": {
+    "ClaimProposal": {
+      "additionalProperties": false,
+      "description": "A proposed atomic claim linked to exact immutable evidence identifiers.",
+      "properties": {
+        "conflict_group": {
+          "anyOf": [
+            {
+              "maxLength": 256,
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Conflict Group"
+        },
+        "evidence_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence Ids",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "freshness_required": {
+          "default": false,
+          "title": "Freshness Required",
+          "type": "boolean"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "required_for_answer": {
+          "default": true,
+          "title": "Required For Answer",
+          "type": "boolean"
+        },
+        "statement": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Statement",
+          "type": "string"
+        },
+        "support_status": {
+          "$ref": "#/$defs/SupportStatus",
+          "default": "unsupported"
+        }
+      },
+      "required": [
+        "statement"
+      ],
+      "title": "ClaimProposal",
+      "type": "object"
+    },
+    "DeletionProposal": {
+      "additionalProperties": false,
+      "description": "Model proposal only; deterministic policy still authorizes the transition.",
+      "properties": {
+        "memory_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 128,
+          "title": "Memory Ids",
+          "type": "array"
+        },
+        "reason": {
+          "default": "no longer needed for future decisions",
+          "maxLength": 2000,
+          "title": "Reason",
+          "type": "string"
+        },
+        "reason_code": {
+          "$ref": "#/$defs/ReasonCode",
+          "default": "irrelevant_to_open_goals"
+        },
+        "replacement_state_ids": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 128,
+          "title": "Replacement State Ids",
+          "type": "array"
+        }
+      },
+      "title": "DeletionProposal",
+      "type": "object"
+    },
+    "MemoryKind": {
+      "enum": [
+        "global_invariant",
+        "current_state",
+        "open_goal",
+        "active_evidence",
+        "resolved_evidence",
+        "transient_observation",
+        "completed_checkpoint",
+        "superseded_state",
+        "conflict",
+        "user_preference",
+        "event_history"
+      ],
+      "title": "MemoryKind",
+      "type": "string"
+    },
+    "MemoryProposal": {
+      "additionalProperties": false,
+      "description": "Compact future-usable state proposed by a reconstruction policy.",
+      "properties": {
+        "dependencies": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Dependencies",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "kind": {
+          "$ref": "#/$defs/MemoryKind"
+        },
+        "metadata": {
+          "additionalProperties": true,
+          "title": "Metadata",
+          "type": "object"
+        },
+        "payload": {
+          "additionalProperties": true,
+          "title": "Payload",
+          "type": "object"
+        },
+        "pinned": {
+          "default": false,
+          "title": "Pinned",
+          "type": "boolean"
+        },
+        "source_ids": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Source Ids",
+          "type": "array",
+          "uniqueItems": true
+        },
+        "summary": {
+          "maxLength": 8000,
+          "minLength": 1,
+          "title": "Summary",
+          "type": "string"
+        },
+        "temperature": {
+          "$ref": "#/$defs/MemoryTemperature",
+          "default": "warm"
+        }
+      },
+      "required": [
+        "kind",
+        "summary"
+      ],
+      "title": "MemoryProposal",
+      "type": "object"
+    },
+    "MemoryTemperature": {
+      "enum": [
+        "pinned",
+        "hot",
+        "warm",
+        "cold"
+      ],
+      "title": "MemoryTemperature",
+      "type": "string"
+    },
+    "MemoryUpdateProposal": {
+      "additionalProperties": false,
+      "properties": {
+        "changes": {
+          "additionalProperties": true,
+          "minProperties": 1,
+          "title": "Changes",
+          "type": "object"
+        },
+        "merge": {
+          "default": false,
+          "title": "Merge",
+          "type": "boolean"
+        },
+        "target_id": {
+          "maxLength": 256,
+          "minLength": 1,
+          "title": "Target Id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "changes"
+      ],
+      "title": "MemoryUpdateProposal",
+      "type": "object"
+    },
+    "ReasonCode": {
+      "enum": [
+        "completed_no_future_dependency",
+        "superseded_by_current_state",
+        "duplicate",
+        "irrelevant_to_open_goals",
+        "source_reduced_to_claim",
+        "expired",
+        "user_request",
+        "policy_retention",
+        "other"
+      ],
+      "title": "ReasonCode",
+      "type": "string"
+    },
+    "SupportStatus": {
+      "enum": [
+        "supported",
+        "partially_supported",
+        "conflicted",
+        "unsupported",
+        "stale"
+      ],
+      "title": "SupportStatus",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "claims": {
+      "items": {
+        "$ref": "#/$defs/ClaimProposal"
+      },
+      "maxItems": 64,
+      "title": "Claims",
+      "type": "array"
+    },
+    "deletion": {
+      "$ref": "#/$defs/DeletionProposal"
+    },
+    "memory_additions": {
+      "items": {
+        "$ref": "#/$defs/MemoryProposal"
+      },
+      "maxItems": 64,
+      "title": "Memory Additions",
+      "type": "array"
+    },
+    "memory_updates": {
+      "items": {
+        "$ref": "#/$defs/MemoryUpdateProposal"
+      },
+      "maxItems": 64,
+      "title": "Memory Updates",
+      "type": "array"
+    },
+    "summary": {
+      "default": "",
+      "maxLength": 4000,
+      "title": "Summary",
+      "type": "string"
+    },
+    "unresolved_questions": {
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 32,
+      "title": "Unresolved Questions",
+      "type": "array"
+    }
+  },
+  "title": "ReconstructionOutcome",
+  "type": "object"
+}

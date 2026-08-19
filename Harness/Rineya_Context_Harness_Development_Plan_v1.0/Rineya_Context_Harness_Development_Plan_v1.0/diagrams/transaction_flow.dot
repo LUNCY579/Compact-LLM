@@ -1,0 +1,22 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad=0.25, nodesep=0.35, ranksep=0.42, splines=ortho];
+  node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=11, color="#17365D", penwidth=1.4, margin="0.14,0.08"];
+  edge [color="#5B6B7C", penwidth=1.4, arrowsize=0.75, fontname="DejaVu Sans", fontsize=9];
+
+  old [label="Revision N\nCurrent state + dependencies", fillcolor="#EAF1F8"];
+  obs [label="New observation / evidence", fillcolor="#E8F3F4", color="#2A7F8E"];
+  patch [label="Candidate state patch\nADD replacements first\nUPDATE / MERGE\nARCHIVE / EVICT old items", fillcolor="#F2ECF8", color="#6A4C93"];
+  checks [label="Validation\nrevision, schema, pins, dependencies,\nprovenance, answerability, budgets", fillcolor="#FFF3DD", color="#D98C2B"];
+  reject [label="REJECT + structured repair feedback", fillcolor="#FDECEC", color="#B54B4B"];
+  commit [label="Atomic commit -> Revision N+1", fillcolor="#EAF5EC", color="#3C8D5A"];
+  invalidate [label="Invalidate stale dynamic context / KV", fillcolor="#EAF5EC", color="#3C8D5A"];
+  next [label="Reassemble minimal sufficient context", fillcolor="#EAF5EC", color="#3C8D5A"];
+
+  old -> patch;
+  obs -> patch;
+  patch -> checks;
+  checks -> reject [label="fail"];
+  reject -> patch [label="one bounded repair"];
+  checks -> commit [label="pass"];
+  commit -> invalidate -> next;
+}
