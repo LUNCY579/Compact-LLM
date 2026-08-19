@@ -1,0 +1,69 @@
+{
+  "name": "Rineya Long-Context Demonstration Suite",
+  "version": "1.0.0",
+  "generation_seed": 20260818,
+  "scenario_packs": 64,
+  "rows": 256,
+  "unique_prompts": 256,
+  "unique_contexts": 192,
+  "splits": {
+    "showcase": 64,
+    "stability_test": 192
+  },
+  "scenario_splits": {
+    "showcase": 16,
+    "stability_test": 48
+  },
+  "variants": {
+    "base": 64,
+    "paraphrase": 64,
+    "counterfactual": 64,
+    "unanswerable": 64
+  },
+  "domains": {
+    "arcane_academy": 32,
+    "detective_bureau": 32,
+    "orbital_station": 32,
+    "expedition": 32,
+    "museum": 32,
+    "research_institute": 32,
+    "coastal_council": 32,
+    "family_enterprise": 32
+  },
+  "task_types": {
+    "alias_resolution": 32,
+    "object_state_tracking": 32,
+    "temporal_correction": 32,
+    "rule_exception": 32,
+    "count_with_exclusions": 32,
+    "causal_disambiguation": 32,
+    "multi_condition_identity": 32,
+    "latest_verified_record": 32
+  },
+  "difficulty": {
+    "hard": 160,
+    "medium": 96
+  },
+  "needle_profiles": {
+    "early": 64,
+    "middle": 64,
+    "late": 64,
+    "distributed": 64
+  },
+  "length_buckets": {
+    "compact_long": 88,
+    "standard_long": 84,
+    "extended_long": 84
+  },
+  "context_words": {
+    "min": 853,
+    "median": 1020.0,
+    "mean": 1012.43,
+    "p90": 1159,
+    "max": 1183
+  },
+  "answerable": {
+    "true": 192,
+    "false": 64
+  }
+}
