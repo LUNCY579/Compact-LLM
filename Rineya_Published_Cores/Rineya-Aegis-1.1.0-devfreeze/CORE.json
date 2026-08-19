@@ -4,8 +4,8 @@
   "directory_name": "Rineya-Aegis-1.1.0-devfreeze",
   "version": "1.1.0-devfreeze",
   "kind": "lora_merge",
-  "status": "dev_freeze_not_sealed",
-  "public_claim": "Dual-skill DEV freeze (chat + grounded RAG). Sealed TEST not run.",
+  "status": "public_announcement_ready",
+  "public_claim": "Dual-skill 19L (chat + grounded RAG). Human-accepted LR freeze 2026-08-17. Public announcement ready. Sealed TEST not run.",
   "created_at_utc": "2026-08-19T00:23:45.309031Z",
   "finished_at_utc": "2026-08-19T00:25:16.214851Z",
   "device": "cpu",
@@ -24,5 +24,11 @@
     "weight_sha256": "15fab4e7ad2b7289f9e8945db32e3e242105c72e5d7f8ffa21b93817164639c5",
     "has_tokenizer": true
   },
-  "note": "Vault write only. Official phase artifacts were not opened for write."
+  "note": "Vault write only. Official phase artifacts were not opened for write.",
+  "human_review": {
+    "when_utc": "2026-08-19T20:47:00Z",
+    "scope": "Dual-SFT v1 5e-4 LR freeze accepted 2026-08-17. 28L sibling Nimbus DEV chat human-reviewed 2026-08-19. Auto scores treated as reference only.",
+    "decision": "pass_public_announcement",
+    "sealed_test": "not_run"
+  }
 }
