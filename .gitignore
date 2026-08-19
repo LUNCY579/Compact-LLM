@@ -52,6 +52,13 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# Rineya published dense cores (local weight vault; never commit binaries)
+Rineya_Published_Cores/**/*.safetensors
+Rineya_Published_Cores/**/*.bin
+Rineya_Published_Cores/**/*.gguf
+Rineya_Published_Cores/**/tokenizer.json
+Rineya_Published_Cores/**/tokenizer.model
+
 # AI Models + bundled Quick Companion runtime (large binaries — keep locally, ship via build)
 models/*.gguf
 src-tauri/resources/models/*.gguf

@@ -1,0 +1,28 @@
+{
+  "core_id": "rineya.core.aegis.v1.1.0-devfreeze.19L.454M.dual-sft-v1-lr5e4",
+  "codename": "Aegis",
+  "directory_name": "Rineya-Aegis-1.1.0-devfreeze",
+  "version": "1.1.0-devfreeze",
+  "kind": "lora_merge",
+  "status": "dev_freeze_not_sealed",
+  "public_claim": "Dual-skill DEV freeze (chat + grounded RAG). Sealed TEST not run.",
+  "created_at_utc": "2026-08-19T00:23:45.309031Z",
+  "finished_at_utc": "2026-08-19T00:25:16.214851Z",
+  "device": "cpu",
+  "sources_unmodified": true,
+  "source_base": "short-response-model-phase-0-1-2/artifacts/phase_4_model_soups_phase2c_balanced_training/accepted_model",
+  "source_adapter": "short-response-model-phase-0-1-2/artifacts/teacher_dual_sft_v1/lr_sweep/lr5e4/sft_run/adapter",
+  "source_base_weight_sha256": "58ce704c729485fc8a83094c432a0e591959187587ba2b5eab9809c23d402b68",
+  "source_adapter_sha256": "6f765184fcb47b3607c39f1dab8ec07f3a023f1f8f140f80162ed397e008cf04",
+  "checks": {
+    "num_hidden_layers": 19,
+    "hidden_size": 1024,
+    "vocab_size": 151936,
+    "model_type": "qwen3",
+    "architecture": "Qwen3ForCausalLM",
+    "weight_bytes": 1817909640,
+    "weight_sha256": "15fab4e7ad2b7289f9e8945db32e3e242105c72e5d7f8ffa21b93817164639c5",
+    "has_tokenizer": true
+  },
+  "note": "Vault write only. Official phase artifacts were not opened for write."
+}
