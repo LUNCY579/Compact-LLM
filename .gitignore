@@ -58,6 +58,12 @@ Rineya_Published_Cores/**/*.bin
 Rineya_Published_Cores/**/*.gguf
 Rineya_Published_Cores/**/tokenizer.json
 Rineya_Published_Cores/**/tokenizer.model
+Rineya_Published_Cores/**/vocab.json
+Rineya_Published_Cores/**/merges.txt
+Rineya_Published_Cores/.tmp-halo-donor-*
+Rineya_Published_Cores/.tmp-crossdepth-donor-*
+Rineya_Published_Cores/*.staging-*
+Rineya_Published_Cores/halo_materialize.log
 
 # Official Qwen3 snapshot for local comparison (large binaries)
 Qwen3-0.6B/
@@ -103,3 +109,23 @@ short-response-adapter-consensus-lab/results/phase2_mechanism/teacher_forced_dev
 !short-response-adapter-consensus-lab/artifacts/manifests/*.json
 !short-response-adapter-consensus-lab/artifacts/phase2_mechanism/
 !short-response-adapter-consensus-lab/artifacts/phase2_mechanism/*.json
+
+# Teacher soup mini-lab: keep manifests, ignore ~1.8GB soup weights
+!Rineya_Teacher_Soup_Mini_v1/artifacts/
+!Rineya_Teacher_Soup_Mini_v1/artifacts/**
+Rineya_Teacher_Soup_Mini_v1/artifacts/**/*.safetensors
+Rineya_Teacher_Soup_Mini_v1/artifacts/**/*.bin
+Rineya_Teacher_Soup_Mini_v1/artifacts/**/tokenizer.json
+
+# Qwen3 cross-depth hybrids: keep manifests, ignore dense weights
+!Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/
+!Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**/*.safetensors
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**/*.bin
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**/tokenizer.json
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**/vocab.json
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/**/merges.txt
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*.log
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/**/results.jsonl
+Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/**/evaluation_progress.json
+Rineya_Teacher_Soup_Mini_v1/outputs/*.log
