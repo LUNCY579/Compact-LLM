@@ -1,0 +1,29 @@
+run:
+  name: external_server_dev
+  seed: 3407
+  output_dir: outputs/eval/external_server_dev
+
+data:
+  root: data/prepared
+  split: dev
+  require_test_unlock: false
+
+backend:
+  type: openai_compatible
+  endpoint: http://127.0.0.1:8000/v1/chat/completions
+  model: your-served-model-name
+  api_key_env: OPENAI_API_KEY
+  timeout_seconds: 120
+  retries: 3
+  generation:
+    max_new_tokens: 320
+    temperature: 0.0
+    top_p: 1.0
+
+protocols:
+  - type: direct_solve
+    name: direct_solve
+    limit: 100
+  - type: generated_rollout
+    name: generated_rollout
+    limit: 100

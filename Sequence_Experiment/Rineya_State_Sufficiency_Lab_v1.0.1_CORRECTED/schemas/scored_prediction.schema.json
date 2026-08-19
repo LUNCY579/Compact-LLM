@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.local/schemas/scored_prediction.schema.json",
+  "title": "Rineya Scored Prediction",
+  "type": "object",
+  "required": ["schema_version", "request_id", "protocol", "problem_id", "expected", "raw_output", "score"],
+  "properties": {
+    "schema_version": {"const": "1.0"},
+    "request_id": {"type": "string", "minLength": 1},
+    "protocol": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "transition_id": {"type": ["string", "null"]},
+    "expected": {"type": "object"},
+    "raw_output": {"type": "string"},
+    "score": {
+      "type": "object",
+      "required": ["correct_strict", "correct_lenient"],
+      "properties": {
+        "correct_strict": {"type": "boolean"},
+        "correct_lenient": {"type": "boolean"}
+      }
+    }
+  }
+}

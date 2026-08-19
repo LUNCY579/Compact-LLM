@@ -1,0 +1,13 @@
+include: full_adapter_dev.yaml
+run:
+  name: full_adapter_test
+  output_dir: outputs/eval/full_adapter_test
+data:
+  split: test
+  require_test_unlock: true
+  test_unlock_value: I_UNDERSTAND_TEST_IS_SEALED
+protocols:
+  - type: direct_solve
+    name: direct_solve
+    limit: null
+    generation_batch_size: 1

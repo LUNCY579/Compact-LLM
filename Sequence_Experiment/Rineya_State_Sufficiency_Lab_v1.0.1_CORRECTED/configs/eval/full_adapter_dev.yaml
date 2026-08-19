@@ -1,0 +1,47 @@
+run:
+  name: full_adapter_dev
+  seed: 3407
+  output_dir: outputs/eval/full_adapter_dev
+
+data:
+  root: data/prepared
+  split: dev
+  require_test_unlock: false
+
+backend:
+  type: local_transformers
+  model_name_or_path: ${RINEYA_BASE_MODEL}
+  adapter_path: outputs/train/full_context_lora/adapter
+  local_files_only: true
+  trust_remote_code: false
+  dtype: auto
+  device_map: auto
+  batch_size: 1
+  max_input_tokens: 2048
+  generation:
+    max_new_tokens: 640
+    do_sample: false
+    repetition_penalty: 1.0
+
+scoring:
+  absolute_tolerance: 0.000001
+  relative_tolerance: 0.000001
+  state_f1_threshold: 0.90
+  step_f1_threshold: 0.85
+
+protocols:
+  - type: direct_solve
+    name: direct_solve
+    limit: null
+    generation_batch_size: 1
+  - type: oracle_transition
+    name: oracle_transition
+    limit: 2400
+    one_per_problem: true
+    target_style: stateful
+    generation_batch_size: 1
+  - type: state_ablation
+    name: state_ablation
+    limit_problems: 120
+    variants: [compact_state, full_history, last_step_only, no_state, shuffled_state, distractor_state]
+    generation_batch_size: 1

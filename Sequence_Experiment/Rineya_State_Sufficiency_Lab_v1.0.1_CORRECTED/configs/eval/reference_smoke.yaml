@@ -1,0 +1,32 @@
+run:
+  name: reference_smoke
+  seed: 17
+  output_dir: outputs/eval/reference_smoke
+
+data:
+  root: data/prepared
+  split: dev
+  require_test_unlock: false
+
+backend:
+  type: reference
+
+scoring:
+  absolute_tolerance: 0.000001
+  relative_tolerance: 0.000001
+  state_f1_threshold: 0.90
+  step_f1_threshold: 0.85
+
+protocols:
+  - type: direct_solve
+    name: direct_solve
+    limit: 24
+    generation_batch_size: 8
+  - type: oracle_transition
+    name: oracle_transition
+    limit: 24
+    target_style: stateful
+    generation_batch_size: 8
+  - type: generated_rollout
+    name: generated_rollout
+    limit: 24

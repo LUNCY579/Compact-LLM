@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.local/schemas/stateful_response.schema.json",
+  "title": "Rineya Stateful Transition Response",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["next_reasoning_step", "updated_compact_state", "done", "final_answer"],
+  "properties": {
+    "next_reasoning_step": {"type": "string", "minLength": 1},
+    "updated_compact_state": {"type": "string", "minLength": 1},
+    "done": {"type": "boolean"},
+    "final_answer": {"type": ["string", "number", "boolean", "null"]}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"done": {"const": true}}},
+      "then": {"properties": {"final_answer": {"not": {"type": "null"}}}}
+    },
+    {
+      "if": {"properties": {"done": {"const": false}}},
+      "then": {"properties": {"final_answer": {"type": "null"}}}
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+include: _base_lora.yaml
+run:
+  name: full_context_lora
+  output_dir: outputs/train/full_context_lora
+
+data:
+  root: data/prepared
+  view: full_context
+  train_split: train
+  eval_split: dev
+  max_length: 1024
+  max_target_tokens: 640
+  pad_to_multiple_of: 8
+  train_on_prompt: false
+  max_train_examples: null
+  max_eval_examples: 1200
+  one_transition_per_problem: false
+  preserve_trajectory_order: false
+  inverse_problem_weight: false
+  exact_token_accounting: false
+  token_accounting_sample: 4096
+  token_cache_size: 2048

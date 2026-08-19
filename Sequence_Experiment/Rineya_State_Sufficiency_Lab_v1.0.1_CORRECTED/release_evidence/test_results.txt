@@ -1,0 +1,20 @@
+============================= test session starts ==============================
+platform linux -- Python 3.13.5, pytest-9.0.2, pluggy-1.6.0
+rootdir: /mnt/data/Rineya_State_Sufficiency_Lab_v1.0.1_CORRECTED
+configfile: pyproject.toml
+testpaths: tests
+plugins: metadata-3.1.1, json-report-1.5.0, asyncio-1.3.0, anyio-4.13.0, Faker-40.1.2, ddtrace-4.4.0, cov-7.0.0
+asyncio: mode=Mode.STRICT, debug=False, asyncio_default_fixture_loop_scope=None, asyncio_default_test_loop_scope=function
+collected 31 items
+
+tests/test_bundled_archive.py .                                          [  3%]
+tests/test_compare.py .                                                  [  6%]
+tests/test_config.py .                                                   [  9%]
+tests/test_data_validation.py .                                          [ 12%]
+tests/test_parser.py ....                                                [ 25%]
+tests/test_safe_extract.py ..                                            [ 32%]
+tests/test_scorers.py ..................                                 [ 90%]
+tests/test_stats.py ..                                                   [ 96%]
+tests/test_tokenization.py .                                             [100%]
+
+============================== 31 passed in 0.79s ==============================
