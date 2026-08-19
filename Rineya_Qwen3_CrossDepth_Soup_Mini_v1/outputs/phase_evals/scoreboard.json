@@ -1,0 +1,131 @@
+{
+  "generated_at": "2026-08-19T20:41:51Z",
+  "lab": "Rineya_Qwen3_CrossDepth_Soup_Mini_v1/phase_evals",
+  "aegis_reference": {
+    "label": "Aegis 19L (teacher dual-SFT v1 5e-4, PEFT on Pulse)",
+    "source": "short-response-model-phase-0-1-2/artifacts/teacher_dual_sft_v1/lr_sweep/SELECTION_REPORT.md",
+    "chat_quality": 0.8593539651416122,
+    "task_adequacy": 0.49776470588235294,
+    "oracle_supported": 1.0,
+    "real_supported": 0.7358490566037735,
+    "real_procedure": 0.9533333333333334,
+    "oracle_abstain": 1.0
+  },
+  "rows": [
+    {
+      "name": "qwen3_x_aegis",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\qwen3_x_aegis",
+      "recorded_as": null,
+      "chat": {
+        "chat_quality": 0.8601527252921369,
+        "task_adequacy": 0.5031960784313726,
+        "median_reply_tokens": 11.0,
+        "duplicate_reply_rate": 0.3627450980392157
+      },
+      "rag": {
+        "oracle_supported": 0.8905660377358491,
+        "oracle_abstain": 0.8273381294964028,
+        "oracle_procedure": 0.8666666666666667,
+        "real_supported": 0.6735849056603773,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.86
+      }
+    },
+    {
+      "name": "qwen3_x_v1_5e4_1e5",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\qwen3_x_v1_5e4_1e5",
+      "recorded_as": null,
+      "chat": {
+        "chat_quality": 0.866699355742297,
+        "task_adequacy": 0.5288627450980393,
+        "median_reply_tokens": 11.0,
+        "duplicate_reply_rate": 0.3411764705882353
+      },
+      "rag": {
+        "oracle_supported": 0.8415094339622642,
+        "oracle_abstain": 0.7266187050359713,
+        "oracle_procedure": 0.6933333333333334,
+        "real_supported": 0.6283018867924528,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.7
+      }
+    },
+    {
+      "name": "qwen3_x_v1_5e4_v2",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Halo-1.2.0-devfreeze",
+      "recorded_as": "Rineya-Halo-1.2.0-devfreeze",
+      "chat": {
+        "chat_quality": 0.8618833426704015,
+        "task_adequacy": 0.5117058823529412,
+        "median_reply_tokens": 11.0,
+        "duplicate_reply_rate": 0.3627450980392157
+      },
+      "rag": {
+        "oracle_supported": 0.8471698113207548,
+        "oracle_abstain": 0.6906474820143885,
+        "oracle_procedure": 0.7133333333333334,
+        "real_supported": 0.6283018867924528,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.7
+      }
+    },
+    {
+      "name": "qwen3_replace_aegis",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\qwen3_replace_aegis",
+      "recorded_as": null,
+      "chat": {
+        "chat_quality": 0.8471024183006536,
+        "task_adequacy": 0.45398039215686276,
+        "median_reply_tokens": 8.0,
+        "duplicate_reply_rate": 0.5196078431372549
+      },
+      "rag": {
+        "oracle_supported": 0.8849056603773585,
+        "oracle_abstain": 0.302158273381295,
+        "oracle_procedure": 0.8466666666666667,
+        "real_supported": 0.6679245283018868,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.8333333333333334
+      }
+    },
+    {
+      "name": "qwen3_replace_v1_5e4_1e5",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\qwen3_replace_v1_5e4_1e5",
+      "recorded_as": null,
+      "chat": {
+        "chat_quality": 0.8635912138188608,
+        "task_adequacy": 0.5129019607843137,
+        "median_reply_tokens": 9.0,
+        "duplicate_reply_rate": 0.4803921568627451
+      },
+      "rag": {
+        "oracle_supported": 0.8528301886792453,
+        "oracle_abstain": 0.28776978417266186,
+        "oracle_procedure": 0.7333333333333333,
+        "real_supported": 0.6339622641509434,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.72
+      }
+    },
+    {
+      "name": "qwen3_replace_v1_5e4_v2",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\qwen3_replace_v1_5e4_v2",
+      "recorded_as": null,
+      "chat": {
+        "chat_quality": 0.860311568627451,
+        "task_adequacy": 0.5034901960784314,
+        "median_reply_tokens": 9.0,
+        "duplicate_reply_rate": 0.43529411764705883
+      },
+      "rag": {
+        "oracle_supported": 0.869811320754717,
+        "oracle_abstain": 0.0,
+        "oracle_procedure": 0.7933333333333333,
+        "real_supported": 0.6490566037735849,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.7733333333333333
+      }
+    }
+  ],
+  "note": "50/50 cores: Nimbus / Lyra / Halo. Replace-kept (alpha=1.0) rows are lab-only until recorded. Aegis row is the prior 19L PEFT dual-SFT v1 5e-4 DEV freeze, not a 28L hybrid."
+}
