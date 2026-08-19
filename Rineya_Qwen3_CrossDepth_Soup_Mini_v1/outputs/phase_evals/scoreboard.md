@@ -15,4 +15,4 @@
 | `qwen3_replace_v1_5e4_1e5` | 0.7025 | 0.8636 | 0.5129 | 0.8528 | 0.6340 | 0.2878 | 0.7200 |
 | `qwen3_replace_v1_5e4_v2` | 0.6823 | 0.8603 | 0.5035 | 0.8698 | 0.6491 | 0.0000 | 0.7733 |
 
-50/50 cores: Nimbus / Lyra / Halo. Replace-kept (alpha=1.0) rows are lab-only until recorded. Aegis row is the prior 19L PEFT dual-SFT v1 5e-4 DEV freeze, not a 28L hybrid.
+50/50 cores: Nimbus / Lyra / Halo. Halo-donor α=1.0 replace is **Halo Uncensored** (oracle abstain 0.00; pair with Halo). Other replace-kept rows stay lab-only. Aegis row is the prior 19L PEFT dual-SFT v1 5e-4 DEV freeze, not a 28L hybrid.

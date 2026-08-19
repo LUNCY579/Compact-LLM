@@ -1,6 +1,6 @@
 # Qwen3 cross-depth soup scoreboard
 
-Curiosity-only. Frozen 64-row showcase. 28-layer Qwen3 geometry. Not a recorded core.
+Curiosity-only lab scoreboard. Frozen 64-row showcase. 28-layer Qwen3 geometry. Halo-donor α=1.0 (`qwen3_replace_v1_5e4_v2`) is recorded as **Halo Uncensored**.
 
 - Generated: `2026-08-19T20:46:49Z`
 - Protocol: greedy, `24` new tokens, context `4096`, seed `17`, thinking disabled

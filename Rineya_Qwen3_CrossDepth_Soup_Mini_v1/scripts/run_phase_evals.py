@@ -34,6 +34,10 @@ VAULT_FOR = {
     "qwen3_x_aegis": ("Nimbus", REPO / "Rineya_Published_Cores" / "Rineya-Nimbus-1.3.0-devfreeze"),
     "qwen3_x_v1_5e4_1e5": ("Lyra", REPO / "Rineya_Published_Cores" / "Rineya-Lyra-1.4.0-devfreeze"),
     "qwen3_x_v1_5e4_v2": ("Halo", VAULT_HALO),
+    "qwen3_replace_v1_5e4_v2": (
+        "Halo Uncensored",
+        REPO / "Rineya_Published_Cores" / "Rineya-Halo-Uncensored-1.5.0-devfreeze",
+    ),
 }
 THREE = ("qwen3_x_aegis", "qwen3_x_v1_5e4_1e5", "qwen3_x_v1_5e4_v2")
 REPLACE = ("qwen3_replace_aegis", "qwen3_replace_v1_5e4_1e5", "qwen3_replace_v1_5e4_v2")
@@ -206,7 +210,8 @@ def write_scoreboard(outputs: Path, rows: list[dict[str, Any]]) -> None:
         "aegis_reference": AEGIS_V1_5E4,
         "rows": rows,
         "note": (
-            "50/50 cores: Nimbus / Lyra / Halo. Replace-kept (alpha=1.0) rows are lab-only until recorded. "
+            "50/50 cores: Nimbus / Lyra / Halo. Halo-donor α=1.0 replace is Halo Uncensored "
+            "(oracle abstain 0.00; pair with Halo for censored vs uncensored). "
             "Aegis row is the prior 19L PEFT dual-SFT v1 5e-4 DEV freeze, not a 28L hybrid."
         ),
     }
@@ -332,9 +337,16 @@ def main() -> None:
             }
         )
         write_scoreboard(outputs, rows)
-        if not args.keep_lab_weights and not use_vault:
+        drop_lab = (
+            not args.keep_lab_weights
+            and not use_vault
+            and not name.startswith("qwen3_replace_")
+        )
+        if drop_lab:
             removed = drop_weight_files(model_path)
             print(f"[{utc_now()}] {name}: dropped lab hybrid weights {removed}", flush=True)
+        elif not use_vault:
+            print(f"[{utc_now()}] {name}: keeping lab hybrid weights under {model_path}", flush=True)
 
 
 if __name__ == "__main__":

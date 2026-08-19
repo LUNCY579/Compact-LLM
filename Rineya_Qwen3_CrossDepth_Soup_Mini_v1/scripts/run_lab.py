@@ -106,7 +106,7 @@ def render_scoreboard_md(payload: dict[str, Any]) -> str:
     lines = [
         "# Qwen3 cross-depth soup scoreboard",
         "",
-        "Curiosity-only. Frozen 64-row showcase. 28-layer Qwen3 geometry. Not a recorded core.",
+        "Curiosity-only lab scoreboard. Frozen 64-row showcase. 28-layer Qwen3 geometry.",
         "",
         f"- Generated: `{payload['generated_at']}`",
         f"- Protocol: greedy, `{payload['eval']['max_new_tokens']}` new tokens, "
@@ -342,12 +342,20 @@ def main() -> None:
             env,
         )
 
-        if not args.keep_weights:
+        keep_hybrid = (
+            args.keep_weights
+            or bool(spec.get("keep_lab_weights"))
+            or spec.get("round") == "replace_kept"
+            or spec.get("recorded_as") == "Halo Uncensored"
+        )
+        if keep_hybrid:
+            print(f"[{utc_now()}] {name}: keeping hybrid weights under {hybrid_dir}", flush=True)
+        else:
             removed_hybrid = drop_weight_files(hybrid_dir)
             print(f"[{utc_now()}] {name}: dropped hybrid weights {removed_hybrid}", flush=True)
-            if donor_is_temp:
-                removed_donor = drop_weight_files(donor_path)
-                print(f"[{utc_now()}] {name}: dropped 19L donor weights {removed_donor}", flush=True)
+        if donor_is_temp:
+            removed_donor = drop_weight_files(donor_path)
+            print(f"[{utc_now()}] {name}: dropped 19L donor weights {removed_donor}", flush=True)
 
     if args.materialize_only:
         print(f"[{utc_now()}] materialize-only complete; scoreboard unchanged", flush=True)

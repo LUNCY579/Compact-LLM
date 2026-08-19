@@ -2,7 +2,7 @@
 
 Curiosity-only lab: start from official **28-layer Qwen3-0.6B**, 50/50-average the **19 decoder blocks** that Pulse/Aegis still have, and leave the nine dropped Qwen3 layers (plus embeddings, final norm, and tied lm_head) unchanged.
 
-The 50/50 hybrids are recorded as **Nimbus** (`qwen3_x_aegis`), **Lyra** (`qwen3_x_v1_5e4_1e5`), and **Halo** (`qwen3_x_v1_5e4_v2`). Do not overwrite Pulse, Aegis, Halo, Nimbus, Lyra, or the local Qwen3 snapshot.
+The 50/50 hybrids are recorded as **Nimbus** (`qwen3_x_aegis`), **Lyra** (`qwen3_x_v1_5e4_1e5`), and **Halo** (`qwen3_x_v1_5e4_v2`). The Halo-donor **α=1.0** replace is **Halo Uncensored**. Do not overwrite Pulse, Aegis, Halo, Halo Uncensored, Nimbus, Lyra, or the local Qwen3 snapshot.
 
 64 rows is a noisy selection signal. Do not treat a hybrid that beats 14/64 here as a deploy decision. Dropped Qwen3 layers still assume their original neighbors.
 
@@ -29,7 +29,8 @@ See [`configs/hybrids.json`](configs/hybrids.json).
 - `qwen3_x_v2_5e4_v1_5e4` — v2@5e-4 + v1@5e-4, 50/50 (26/64)
 - `qwen3_x_v2_1e4_5e4` — v2@1e-4 + v2@5e-4, 50/50 (26/64)
 - `qwen3_x_v1_1e4_v2_5e4` — v1@1e-4 + v2@5e-4, 50/50 (24/64)
-- `qwen3_replace_*` — same donors with **α=1.0**: kept Qwen3 blocks fully replaced by the 19L donor
+- `qwen3_replace_v1_5e4_v2` — Halo donor **α=1.0** (**31/64**; recorded as **Halo Uncensored**; pair with Halo)
+- `qwen3_replace_*` — other donors with **α=1.0**: kept Qwen3 blocks fully replaced; lab-kept, not vaulted
 
 ## Run
 
@@ -41,7 +42,7 @@ $env:PYTHONUTF8 = "1"
 .\.venv\Scripts\python.exe Rineya_Qwen3_CrossDepth_Soup_Mini_v1\scripts\run_lab.py
 ```
 
-Resume is default. Hybrid and rematerialized 19L `model.safetensors` files are deleted after showcase eval; manifests stay.
+Resume is default. 50/50 hybrid and rematerialized 19L `model.safetensors` files are deleted after showcase eval; manifests stay. **Replace-kept** hybrids (`qwen3_replace_*`) keep their dense weights for later pair experiments.
 
 Phase 1 chat quality + Phase 9 RAG DEV for the original three hybrids:
 

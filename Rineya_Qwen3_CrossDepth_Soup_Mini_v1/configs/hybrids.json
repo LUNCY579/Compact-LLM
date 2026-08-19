@@ -1,6 +1,6 @@
 {
   "name": "Rineya Qwen3 Cross-Depth Soup Mini v1",
-  "purpose": "28-layer Qwen3 hybrids: blend or fully replace the 19 Phase-2B-kept decoder blocks with a 19-layer Rineya donor. Dropped Qwen3 layers stay official. 50/50 winners are recorded as Nimbus, Lyra, and Halo.",
+  "purpose": "28-layer Qwen3 hybrids: blend or fully replace the 19 Phase-2B-kept decoder blocks with a 19-layer Rineya donor. Dropped Qwen3 layers stay official. 50/50 winners are Nimbus, Lyra, and Halo. The Halo-donor α=1.0 replace is recorded as Halo Uncensored.",
   "qwen3_model": "Qwen3-0.6B",
   "pulse_base": "short-response-model-phase-0-1-2/artifacts/phase_4_model_soups_phase2c_balanced_training/accepted_model",
   "aegis_model": "Rineya_Published_Cores/Rineya-Aegis-1.1.0-devfreeze",
@@ -102,7 +102,8 @@
       "round": "replace_kept",
       "kind": "vault",
       "donor_name": "aegis",
-      "alpha": 1.0
+      "alpha": 1.0,
+      "keep_lab_weights": true
     },
     {
       "name": "qwen3_replace_v1_5e4_1e5",
@@ -110,7 +111,8 @@
       "kind": "soup",
       "donor_name": "v1_5e4_1e5",
       "members": ["v1_lr5e4", "v1_lr1e5"],
-      "alpha": 1.0
+      "alpha": 1.0,
+      "keep_lab_weights": true
     },
     {
       "name": "qwen3_replace_v1_5e4_v2",
@@ -118,7 +120,9 @@
       "kind": "soup",
       "donor_name": "v1_5e4_v2",
       "members": ["v1_lr5e4", "v2_lr1e4"],
-      "alpha": 1.0
+      "alpha": 1.0,
+      "recorded_as": "Halo Uncensored",
+      "keep_lab_weights": true
     }
   ]
 }
