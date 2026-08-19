@@ -14,7 +14,7 @@ Last compiled: 2026-08-19.
 
 | Eval | Protocol | Items | Source |
 |---|---|---:|---|
-| Frozen long-context showcase | greedy, 24 new tokens, context 4096, seed 17, thinking off | 64 | Pulse: `Rineya_Long_Context_Demo_v1/outputs/greedy_soup_v2_showcase_report.json` (Phase 8 accepted teacher = Pulse). Aegis: `…/aegis_showcase_report.json`. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*_report.json` |
+| Frozen long-context showcase | greedy, 24 new tokens, context 4096, seed 17, thinking off | 64 | Pulse: `Rineya_Long_Context_Demo_v1/outputs/greedy_soup_v2_showcase_report.json` (Phase 8 accepted teacher = Pulse). Aegis: `…/aegis_showcase_report.json`. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*_report.json`. Official Qwen3-4B/8B: `Rineya_Long_Context_Demo_v1/outputs/qwen3_4b_showcase_report.json` and `qwen3_8b_showcase_report.json` (NF4 4-bit; 8GB GPU cannot hold bf16 4B/8B) |
 | Dual-skill chat DEV | Phase 1 `dev.jsonl`, 32 tokens, `eos_only`, quality v4.5 | 510 | Pulse / Aegis: `short-response-model-phase-0-1-2/artifacts/teacher_dual_sft_v1/lr_sweep/SELECTION_REPORT.md` (2026-08-17). Aegis there is PEFT on Pulse; vault Aegis is the merged dense file. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/*/chat_dev/summary.json` |
 | Dual-skill RAG DEV | Phase 9 `dev.reviewed.jsonl`, oracle_rag + real_rag, `query_aware_v21` | 752×2 | Pulse / Aegis: same SELECTION_REPORT. 28L: `…/phase_evals/*/rag_dev/summary.json` and `…/phase_evals/scoreboard.json` |
 | Dual composite | `0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain` | — | Recorded on Aegis (SELECTION_REPORT) and on 28L (`phase_evals/scoreboard.md`). Pulse has no recorded composite |
@@ -91,13 +91,43 @@ Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. �
 | Lyra | 0.4063 | 0.5000 | 0.4375 |
 | Halo Uncensored | **0.4688** | 0.3750 | **0.6250** |
 
-### Reference: official Qwen3-0.6B (not a family core)
+### Reference: official Qwen3 scale (not family cores)
 
-Same protocol as the family showcase. Not included in the bold maxima above.
+There is no official Qwen3 **3B** or **9B**. Closest dense cards: `Qwen/Qwen3-4B` and `Qwen/Qwen3-8B`, saved at repo-root `Qwen3-4B/` and `Qwen3-8B/` (gitignored). Same greedy / 24 tokens / 4096 / seed 17 / thinking-off protocol. 0.6B was bf16. 4B and 8B were NF4 4-bit (`--load-in-4bit`) so they fit an 8GB GPU. Not included in the family bold maxima above. Chat DEV / RAG DEV / sealed: `not_run`.
 
-| Name | Hits / 64 | Strict exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | ≤12-word | Mean words | Base | Para | CF | Unans | Hard | Medium |
-|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Qwen3-0.6B | 14/64 | 0.2188 | 0.1875 | 0.1250 | 0.1250 | 0.4375 | 0.8906 | 4.4063 | 0.2500 | 0.1875 | 0.2500 | 0.1875 | 0.2250 | 0.2083 |
+| Name | Load | Hits / 64 | Strict exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | All-four | ≤12-word | Mean words |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Qwen3-0.6B | bf16 | 14/64 | 0.2188 | 0.1875 | 0.1250 | 0.1250 | 0.4375 | 0.0000 | 0.8906 | **4.4063** |
+| Qwen3-4B | NF4 4-bit | 43/64 | 0.6719 | 0.3125 | 0.6875 | 0.6875 | 0.8125 | 0.2500 | 0.9219 | 3.5938 |
+| Qwen3-8B | NF4 4-bit | **53/64** | **0.8281** | **0.4375** | **0.9375** | **0.9375** | **0.9375** | **0.4375** | **0.9844** | 2.5000 |
+
+| Name | Base | Paraphrase | Counterfactual | Unanswerable | Hard (n=40) | Medium (n=24) |
+|---|---:|---:|---:|---:|---:|---:|
+| Qwen3-0.6B | 0.2500 | 0.1875 | 0.2500 | 0.1875 | 0.2250 | 0.2083 |
+| Qwen3-4B | 0.6875 | 0.8750 | 0.8125 | 0.3125 | 0.5250 | 0.9167 |
+| Qwen3-8B | **0.9375** | **1.0000** | **0.9375** | **0.4375** | **0.7500** | **0.9583** |
+
+| Name | Distributed | Early | Late | Middle | Compact long | Extended long | Standard long |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Qwen3-0.6B | 0.3750 | 0.0625 | 0.3125 | 0.1250 | 0.2500 | 0.1875 | 0.1875 |
+| Qwen3-4B | **0.8750** | 0.5000 | 0.6875 | 0.6250 | 0.7500 | 0.6250 | 0.5625 |
+| Qwen3-8B | **0.8750** | **0.6250** | **0.9375** | **0.8750** | **0.8125** | **0.8125** | **0.8750** |
+
+### Family + official Qwen3 showcase (same 64 rows)
+
+Bold = largest in this table, including the official scale models.
+
+| Name | Hits / 64 | Strict exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | All-four | ≤12-word |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | 0/64 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.9062 |
+| Aegis | 4/64 | 0.0625 | 0.0000 | 0.0000 | 0.0625 | 0.0000 | **1.0000** |
+| Nimbus | 24/64 | 0.3750 | 0.1250 | 0.1250 | 0.2500 | 0.0000 | 0.9062 |
+| Lyra | 28/64 | 0.4375 | 0.1250 | 0.3125 | 0.4375 | 0.0000 | 0.9062 |
+| Halo | 30/64 | 0.4688 | 0.1250 | 0.3750 | 0.4375 | 0.0000 | 0.9062 |
+| Halo Uncensored | 31/64 | 0.4844 | 0.0000 | 0.3750 | 0.5625 | 0.0000 | 0.9844 |
+| Qwen3-0.6B | 14/64 | 0.2188 | 0.1875 | 0.1250 | 0.1250 | 0.0000 | 0.8906 |
+| Qwen3-4B (NF4) | 43/64 | 0.6719 | 0.3125 | 0.6875 | 0.6875 | 0.2500 | 0.9219 |
+| Qwen3-8B (NF4) | **53/64** | **0.8281** | **0.4375** | **0.9375** | **0.9375** | **0.4375** | 0.9844 |
 
 ---
 

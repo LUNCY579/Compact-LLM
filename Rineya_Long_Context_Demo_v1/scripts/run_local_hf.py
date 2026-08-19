@@ -131,6 +131,20 @@ def main() -> None:
         choices=("auto", "float32", "float16", "bfloat16"),
         help="Override checkpoint dtype at load time.",
     )
+    parser.add_argument(
+        "--load-in-4bit",
+        action="store_true",
+        help="Load NF4 4-bit weights (needed for Qwen3-4B/8B on 8GB GPUs).",
+    )
+    parser.add_argument(
+        "--max-gpu-memory",
+        help='Cap GPU weight placement, e.g. "3GiB". Remainder goes to CPU. Use when 4-bit is unavailable.',
+    )
+    parser.add_argument(
+        "--max-cpu-memory",
+        default="48GiB",
+        help="CPU memory budget when --max-gpu-memory is set.",
+    )
     args = parser.parse_args()
 
     try:
@@ -157,16 +171,36 @@ def main() -> None:
         "float16": torch.float16,
         "bfloat16": torch.bfloat16,
     }
+    if args.load_in_4bit:
+        try:
+            from transformers import BitsAndBytesConfig
+        except ImportError as exc:
+            raise SystemExit("Install bitsandbytes and a CUDA transformers build for --load-in-4bit") from exc
+        compute = (
+            torch.bfloat16
+            if torch.cuda.is_available() and torch.cuda.is_bf16_supported()
+            else torch.float16
+        )
+        model_kwargs["quantization_config"] = BitsAndBytesConfig(
+            load_in_4bit=True,
+            bnb_4bit_compute_dtype=compute,
+            bnb_4bit_quant_type="nf4",
+            bnb_4bit_use_double_quant=True,
+        )
+    else:
+        model_kwargs["torch_dtype"] = dtype_map[args.torch_dtype]
+    if args.max_gpu_memory:
+        model_kwargs["max_memory"] = {0: args.max_gpu_memory, "cpu": args.max_cpu_memory}
     try:
         model = AutoModelForCausalLM.from_pretrained(
             args.model,
-            torch_dtype=dtype_map[args.torch_dtype],
             **model_kwargs,
         )
     except TypeError:
+        if "torch_dtype" in model_kwargs:
+            model_kwargs["dtype"] = model_kwargs.pop("torch_dtype")
         model = AutoModelForCausalLM.from_pretrained(
             args.model,
-            dtype=dtype_map[args.torch_dtype],
             **model_kwargs,
         )
 
