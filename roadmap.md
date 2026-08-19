@@ -6,7 +6,7 @@ Weights live under `Rineya_Published_Cores/` (gitignored). Provenance is `CORE.j
 
 **Rule.** A model is “officially recorded” only after it has a vault directory, a `core_id`, and a `CORE.json`. Adapters, unfinished runs, and eval-only outputs stay in the working notes below.
 
-Last updated: 2026-08-19 ~20:47 UTC. Times below are UTC unless marked otherwise.
+Last updated: 2026-08-19. Family eval evidence tables compiled for manual review. Times below are UTC unless marked otherwise.
 
 ---
 
@@ -18,11 +18,12 @@ Human DEV chat review on 2026-08-19: auto Phase 1 scores are **reference only**.
 |---|---|---|---|
 | **Pulse** | Commercial 1.0 short-chat teacher (19L) | Phase 8 human PASS (2026-08-05) | Website 1.0 copy as today |
 | **Aegis** | 19L dual-skill (chat + grounded RAG) | `public_announcement_ready` | Optional sealed TEST; DPO not started |
-| **Halo** | 28L family; strongest frozen long-context (30/64) | `public_announcement_ready` | Optional sealed TEST |
+| **Halo** | 28L family; strongest frozen long-context among 50/50 (30/64) | `public_announcement_ready` | Optional sealed TEST |
+| **Halo Uncensored** | Halo donor α=1.0 replace; uncensored pair (31/64; oracle abstain 0.00) | `recorded_uncensored_pair` | Censored vs uncensored experiments vs Halo |
 | **Nimbus** | 28L family; Aegis donor; strongest 28L RAG of the three | `public_announcement_ready` | Optional sealed TEST |
 | **Lyra** | 28L family; chat auto-Q highest of the three (0.867) | `public_announcement_ready` | Optional sealed TEST |
 
-Do **not** announce α=1.0 replace-kept lab stitches, unfinished student runs, or raw v2 adapters.
+Do **not** announce Halo Uncensored as dual-skill or as Rineya 1.0. Pair it with **Halo** for censored vs uncensored work. Do not announce unfinished student runs or raw v2 adapters.
 
 **How to talk about the 28L family.** Chat quality matches 19L Aegis (~0.86 auto; human pass). Long-context showcase beats official Qwen3-0.6B (14/64) and 19L Aegis (4/64). Grounded RAG is still weaker than 19L Aegis (Nimbus best of the three: oracle 0.891 / real 0.674 vs Aegis 1.0 / 0.736). Keep Aegis as the 19L RAG specialist in public copy.
 
@@ -38,6 +39,7 @@ Read-only audit of the 50/50 chat DEV runs (510 rows each): hard failures **0**,
 | 2026-08-19 18:55–19:56 | Vault Halo, Nimbus, Lyra (50/50 28L) | done |
 | 2026-08-19 18:57–20:41 | 28L Phase 1 chat DEV + Phase 9 RAG DEV | done |
 | 2026-08-19 ~20:47 | Human DEV chat pass; public announcement ready | **done** |
+| 2026-08-19 ~21:00 | Vault Halo Uncensored (Halo donor α=1.0 replace) | **done** |
 | next | Public / website copy for the named family (Pulse 1.0 + four others) | ready to write |
 | next | Optional sealed chat TEST (110) + RAG TEST | `not_run`; not blocking announcement |
 | next | DPO on Pulse/Aegis lineage | `not_run` |
@@ -54,8 +56,206 @@ Read-only audit of the 50/50 chat DEV runs (510 rows each): hard failures **0**,
 | 2026-08-19 18:55:44 | **Halo** | 1.2.0-devfreeze | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze` | `38fb96fe…` |
 | 2026-08-19 19:54:38 | **Nimbus** | 1.3.0-devfreeze | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Nimbus-1.3.0-devfreeze` | `7ae45098…` |
 | 2026-08-19 19:54:59 | **Lyra** | 1.4.0-devfreeze | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Lyra-1.4.0-devfreeze` | `87c57b8e…` |
+| 2026-08-19 21:00:00 | **Halo Uncensored** | 1.5.0-devfreeze | recorded uncensored pair for Halo; oracle abstain 0.00 | `Rineya_Published_Cores/Rineya-Halo-Uncensored-1.5.0-devfreeze` | `c5d4a17f…` |
 
-Pulse is a dense copy of the Phase 8 teacher. Aegis is that same base with teacher dual-SFT v1 `5e-4` LoRA merged in. Halo, Nimbus, and Lyra are 28-layer Qwen3 with kept blocks 50/50-averaged against different 19-layer donors. Sources were not overwritten.
+Pulse is a dense copy of the Phase 8 teacher. Aegis is that same base with teacher dual-SFT v1 `5e-4` LoRA merged in. Halo, Nimbus, and Lyra are 28-layer Qwen3 with kept blocks 50/50-averaged against different 19-layer donors. Halo Uncensored uses the same Halo donor with kept blocks **fully replaced** (α=1.0). Sources were not overwritten.
+
+---
+
+## Family eval evidence
+
+Numbers only. **Bold** = the largest stored number in that column (ties all bold), including rates that count defects. `—` = that field was not stored or that eval was not run for this core.
+
+Every named family core appears in every table: Pulse, Aegis, Halo, Nimbus, Lyra, Halo Uncensored.
+
+### What was measured
+
+| Eval | Protocol | Items | Source |
+|---|---|---:|---|
+| Frozen long-context showcase | greedy, 24 new tokens, context 4096, seed 17, thinking off | 64 | Pulse: `Rineya_Long_Context_Demo_v1/outputs/greedy_soup_v2_showcase_report.json` (Phase 8 accepted teacher = Pulse). Aegis: `…/aegis_showcase_report.json`. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*_report.json` |
+| Dual-skill chat DEV | Phase 1 `dev.jsonl`, 32 tokens, `eos_only`, quality v4.5 | 510 | Pulse / Aegis: `short-response-model-phase-0-1-2/artifacts/teacher_dual_sft_v1/lr_sweep/SELECTION_REPORT.md` (2026-08-17). Aegis there is PEFT on Pulse; vault Aegis is the merged dense file. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/*/chat_dev/summary.json` |
+| Dual-skill RAG DEV | Phase 9 `dev.reviewed.jsonl`, oracle_rag + real_rag, `query_aware_v21` | 752×2 | Pulse / Aegis: same SELECTION_REPORT. 28L: `…/phase_evals/*/rag_dev/summary.json` and `…/phase_evals/scoreboard.json` |
+| Dual composite | `0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain` | — | Recorded on Aegis (SELECTION_REPORT) and on 28L (`phase_evals/scoreboard.md`). Pulse has no recorded composite |
+| Phase 8 sealed chat | 110 rows, `one_sentence`, 32 tokens, quality v4.5 | 110 | Pulse only: `short-response-model-phase-0-1-2/reports/RELEASE_CANDIDATE_AUDIT.json` |
+| Dual-skill sealed chat TEST / RAG TEST | — | — | `not_run` for all six family cores |
+
+### Identity
+
+| Name | Version | Layers | Stitch α | Donor | Weight SHA prefix |
+|---|---|---:|---:|---|---|
+| Pulse | 1.0.0-rc1 | 19 | — | Phase 8 accepted teacher (copy) | `58ce704c` |
+| Aegis | 1.1.0-devfreeze | 19 | — | Pulse + v1@5e-4 LoRA | `15fab4e7` |
+| Halo | 1.2.0-devfreeze | 28 | 0.5 | v1@5e-4 + v2@1e-4 soup | `38fb96fe` |
+| Nimbus | 1.3.0-devfreeze | 28 | 0.5 | vault Aegis | `7ae45098` |
+| Lyra | 1.4.0-devfreeze | 28 | 0.5 | v1@5e-4 + v1@1e-5 soup | `87c57b8e` |
+| Halo Uncensored | 1.5.0-devfreeze | 28 | 1.0 | same donor as Halo | `c5d4a17f` |
+
+### Eval coverage
+
+| Eval | Pulse | Aegis | Halo | Nimbus | Lyra | Halo Uncensored |
+|---|---|---|---|---|---|---|
+| Showcase 64 | run | run | run | run | run | run |
+| Chat DEV 510 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run |
+| RAG DEV 752×2 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run |
+| Dual composite | — | run | run | run | run | run |
+| Phase 8 sealed chat 110 (`one_sentence`) | run | — | — | — | — | — |
+| Dual-skill sealed chat TEST / RAG TEST | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` |
+
+### Showcase (64-row frozen long-context)
+
+| Name | Hits / 64 | Strict exact | First-line exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | ≤12-word rate | Mean response words |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | 0/64 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.3125 | 0.9062 | **5.0625** |
+| Aegis | 4/64 | 0.0625 | 0.0625 | 0.0000 | 0.0000 | 0.0625 | 0.5625 | **1.0000** | 2.6094 |
+| Halo | 30/64 | 0.4688 | 0.4688 | **0.1250** | **0.3750** | 0.4375 | 0.5625 | 0.9062 | 3.2500 |
+| Nimbus | 24/64 | 0.3750 | 0.3750 | **0.1250** | 0.1250 | 0.2500 | 0.4375 | 0.9062 | 3.1719 |
+| Lyra | 28/64 | 0.4375 | 0.4375 | **0.1250** | 0.3125 | 0.4375 | 0.6250 | 0.9062 | 3.2344 |
+| Halo Uncensored | **31/64** | **0.4844** | **0.4844** | 0.0000 | **0.3750** | **0.5625** | **0.6875** | 0.9844 | 2.5781 |
+
+Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. ≤12-word source values: Pulse / Halo / Nimbus / Lyra `0.90625`; Halo Uncensored `0.984375`.
+
+### Showcase by variant (strict exact, 16 rows each)
+
+| Name | Base | Paraphrase | Counterfactual | Unanswerable |
+|---|---:|---:|---:|---:|
+| Pulse | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| Aegis | 0.1250 | 0.0625 | 0.0625 | 0.0000 |
+| Halo | 0.5000 | 0.6875 | **0.5625** | **0.1250** |
+| Nimbus | 0.2500 | 0.6875 | 0.4375 | **0.1250** |
+| Lyra | 0.4375 | 0.6875 | 0.5000 | **0.1250** |
+| Halo Uncensored | **0.5625** | **0.8750** | 0.5000 | 0.0000 |
+
+### Showcase by difficulty (strict exact)
+
+| Name | Hard (n=40) | Medium (n=24) |
+|---|---:|---:|
+| Pulse | 0.0000 | 0.0000 |
+| Aegis | 0.1000 | 0.0000 |
+| Halo | 0.3500 | **0.6667** |
+| Nimbus | 0.3000 | 0.5000 |
+| Lyra | 0.3250 | 0.6250 |
+| Halo Uncensored | **0.4250** | 0.5833 |
+
+### Showcase by needle profile (strict exact, 16 rows each)
+
+| Name | Distributed | Early | Late | Middle |
+|---|---:|---:|---:|---:|
+| Pulse | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| Aegis | 0.0000 | 0.0625 | 0.1875 | 0.0000 |
+| Halo | **0.6875** | 0.1875 | **0.6250** | 0.3750 |
+| Nimbus | 0.6250 | 0.1250 | 0.5000 | 0.2500 |
+| Lyra | **0.6875** | 0.1250 | **0.6250** | 0.3125 |
+| Halo Uncensored | 0.6250 | **0.2500** | **0.6250** | **0.4375** |
+
+### Showcase by length bucket (strict exact)
+
+| Name | Compact long (n=32) | Extended long (n=16) | Standard long (n=16) |
+|---|---:|---:|---:|
+| Pulse | 0.0000 | 0.0000 | 0.0000 |
+| Aegis | 0.0938 | 0.0000 | 0.0625 |
+| Halo | 0.4375 | **0.5625** | 0.4375 |
+| Nimbus | 0.3438 | 0.3750 | 0.4375 |
+| Lyra | 0.4063 | 0.5000 | 0.4375 |
+| Halo Uncensored | **0.4688** | 0.3750 | **0.6250** |
+
+### Showcase reference: official Qwen3-0.6B (not a family core)
+
+Same protocol as the family showcase. Not included in the bold maxima above.
+
+| Name | Hits / 64 | Strict exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | ≤12-word | Mean words | Base | Para | CF | Unans | Hard | Medium |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Qwen3-0.6B | 14/64 | 0.2188 | 0.1875 | 0.1250 | 0.1250 | 0.4375 | 0.8906 | 4.4063 | 0.2500 | 0.1875 | 0.2500 | 0.1875 | 0.2250 | 0.2083 |
+
+### Dual composite (recorded formula)
+
+`0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain`. Pulse has no recorded composite in SELECTION_REPORT.
+
+| Name | Dual composite |
+|---|---:|
+| Pulse | — |
+| Aegis | **0.8382** |
+| Halo | 0.7381 |
+| Nimbus | 0.7814 |
+| Lyra | 0.7445 |
+| Halo Uncensored | 0.6823 |
+
+### Dual-skill chat DEV (510)
+
+| Name | Chat Q | Task adequacy | Median tok | P90 tok | Duplicate rate | 1-sentence viol. | Legacy heur. | Intel pass | Hard fails | Safety | Min Q | Quality pass (diag.) |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | 0.7984 | 0.2952 | 7.0 | — | — | — | — | — | — | — | — | — |
+| Aegis | 0.8594 | 0.4978 | — | — | — | — | — | — | — | — | — | — |
+| Halo | 0.8619 | 0.5117 | **11.0** | 17.0 | 0.3627 | **0.5294** | 0.9850 | **1.0000** | **0** | **1.0000** | **0.39** | 0.9961 |
+| Nimbus | 0.8602 | 0.5032 | **11.0** | **18.0** | 0.3627 | 0.5196 | 0.9837 | **1.0000** | **0** | **1.0000** | **0.39** | **0.9980** |
+| Lyra | **0.8667** | **0.5289** | **11.0** | 17.0 | 0.3412 | **0.5294** | 0.9869 | **1.0000** | **0** | **1.0000** | **0.39** | 0.9961 |
+| Halo Uncensored | 0.8603 | 0.5035 | 9.0 | 12.0 | **0.4353** | 0.4451 | **0.9987** | **1.0000** | **0** | **1.0000** | **0.39** | **0.9980** |
+
+Pulse / Aegis columns beyond SELECTION_REPORT were not stored in that report. 28L `contract_fulfillment` on this chat DEV is 1.0000 for Halo, Nimbus, Lyra, and Halo Uncensored.
+
+### Dual-skill chat DEV quality dimensions (v4.5 means)
+
+Pulse / Aegis: only `task_adequacy` is in SELECTION_REPORT. Other dimension cells for those two are —.
+
+| Name | Brevity | Comprehens. | Context cons. | Contract | Naturalness | Factual | Logic/fact | Mechanical | Prompt-fn align | Completeness | Mode fulfill | Safety | Task |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | — | — | — | — | — | — | — | — | — | — | — | — | 0.2952 |
+| Aegis | — | — | — | — | — | — | — | — | — | — | — | — | 0.4978 |
+| Halo | 0.9908 | 0.9986 | **1.0000** | **1.0000** | **0.9992** | **1.0000** | **1.0000** | 0.9986 | 0.5117 | **1.0000** | 0.5117 | **1.0000** | 0.5117 |
+| Nimbus | 0.9913 | **0.9993** | **1.0000** | **1.0000** | **0.9992** | **1.0000** | **1.0000** | **0.9993** | 0.5032 | **1.0000** | 0.5032 | **1.0000** | 0.5032 |
+| Lyra | 0.9920 | 0.9986 | **1.0000** | **1.0000** | **0.9992** | **1.0000** | **1.0000** | 0.9986 | **0.5289** | **1.0000** | **0.5289** | **1.0000** | **0.5289** |
+| Halo Uncensored | **0.9990** | **0.9993** | **1.0000** | **1.0000** | **0.9992** | **1.0000** | **1.0000** | **0.9993** | 0.5035 | **1.0000** | 0.5035 | **1.0000** | 0.5035 |
+
+### Dual-skill RAG DEV (supported / abstain / procedure)
+
+| Name | Oracle supp | Real supp | Oracle abstain | Real abstain | Oracle proc | Real proc | Oracle unsup. confident | Real unsup. confident | RAG hard fails | RAG intel pass | RAG mean Q |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | 0.3189 | 0.1774 | 0.0000 | — | — | 0.0667 | — | — | — | — | — |
+| Aegis | **1.0000** | **0.7358** | **1.0000** | — | — | **0.9533** | — | — | — | — | — |
+| Halo | 0.8472 | 0.6283 | 0.6906 | **0.7266** | 0.7133 | 0.7000 | 0.3094 | **0.2734** | 0 | **1.0000** | 0.6560 |
+| Nimbus | 0.8906 | 0.6736 | 0.8273 | **0.7266** | **0.8667** | 0.8600 | 0.1727 | **0.2734** | 2 | 0.9987 | **0.6771** |
+| Lyra | 0.8415 | 0.6283 | 0.7266 | **0.7266** | 0.6933 | 0.7000 | 0.2734 | **0.2734** | 0 | **1.0000** | 0.6620 |
+| Halo Uncensored | 0.8698 | 0.6491 | 0.0000 | **0.7266** | 0.7933 | 0.7733 | **1.0000** | **0.2734** | **9** | 0.9940 | 0.6295 |
+
+### Dual-skill RAG DEV (oracle_rag / real_rag diagnostics)
+
+Pulse / Aegis: these fields were not stored in SELECTION_REPORT.
+
+| Name | Oracle mean Q | Real mean Q | Oracle calib. | Real calib. | Oracle conflict safe | Real conflict ack | Oracle inject | Stale prec. | Social usable | Faithfulness | Oracle median tok | Real median tok |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | — | — | — | — | — | — | — | — | — | — | — | — |
+| Aegis | — | — | — | — | — | — | — | — | — | — | — | — |
+| Halo | 0.6642 | 0.6479 | 0.3947 | **0.5000** | **1.0000** | **0.6032** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **7.0** | 8.0 |
+| Nimbus | **0.6982** | 0.6560 | **0.4868** | **0.5000** | **1.0000** | **0.6032** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **7.0** | **10.0** |
+| Lyra | 0.6725 | 0.6516 | 0.4342 | **0.5000** | **1.0000** | **0.6032** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **7.0** | 8.0 |
+| Halo Uncensored | 0.6003 | **0.6588** | 0.0000 | **0.5000** | **1.0000** | **0.6032** | **1.0000** | **1.0000** | **1.0000** | **1.0000** | **7.0** | **10.0** |
+
+Oracle conflict explicit acknowledgment is 1.0000 for the four 28L cores. Real_rag P90 completion tokens is 14 for those four. Oracle_rag P90 completion tokens is 14 for those four. Prompt-injection and stale/current precedence are 1.0000 on both oracle_rag and real_rag for those four.
+
+### Phase 8 sealed chat (110; Pulse protocol)
+
+Different control than dual-skill DEV (`one_sentence` vs `eos_only`). Not mixed into the DEV tables.
+
+| Name | Cases | Chat Q | Task adequacy | Intel pass | Hard fails | Safety | Median tok | P90 tok | Duplicate rate | Quality pass (diag.) | Min Q |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| Pulse | **110** | **0.8524** | **0.4743** | **1.0000** | **0** | **1.0000** | **7.0** | **12.0** | **0.3909** | **1.0000** | **0.71** |
+| Aegis | — | — | — | — | — | — | — | — | — | — | — |
+| Halo | — | — | — | — | — | — | — | — | — | — | — |
+| Nimbus | — | — | — | — | — | — | — | — | — | — | — |
+| Lyra | — | — | — | — | — | — | — | — | — | — | — |
+| Halo Uncensored | — | — | — | — | — | — | — | — | — | — | — |
+
+Pulse Phase 8 human decision (not a numeric score): `PASS`, reviewer Cheng Li, 2026-08-05, version `1.0.0-rc1` (`reports/PHASE_8_STOP_GATE.md`).
+
+### Recorded human-review fields
+
+| Name | Recorded field | When |
+|---|---|---|
+| Pulse | Phase 8 human commercial `PASS` | 2026-08-05 |
+| Aegis | `CORE.json` `human_review.decision` = `pass_public_announcement` | 2026-08-19 |
+| Halo | `CORE.json` `human_review.decision` = `pass_public_announcement` | 2026-08-19 |
+| Nimbus | `CORE.json` `human_review.decision` = `pass_public_announcement` | 2026-08-19 |
+| Lyra | `CORE.json` `human_review.decision` = `pass_public_announcement` | 2026-08-19 |
+| Halo Uncensored | no `human_review` block; `status` = `recorded_uncensored_pair` | 2026-08-19 |
 
 ---
 
@@ -165,7 +365,7 @@ Frozen 64-row showcase (thinking off): **30/64** strict exact vs official Qwen3-
 
 Halo **inherits Pulse’s Phase 0–4 lineage** plus those two dual-SFT mixes **through weight-space averaging**. It was not trained as a 28-layer model.
 
-**Developer notes.** Do not advertise Halo as Rineya 1.0. Announce it as the 28L long-context family lead (30/64). Unanswerable on the frozen showcase stayed 2/16. Phase 1 chat DEV + Phase 9 RAG DEV: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/`. Chat quality stayed with Aegis (~0.86); RAG supportedness is below 19L Aegis (Halo oracle 0.847 / real 0.628 vs Aegis 1.0 / 0.736).
+**Developer notes.** Do not advertise Halo as Rineya 1.0. Announce it as the 28L long-context family lead among the 50/50 cores (30/64). Its uncensored sibling is **Halo Uncensored** (same donor, α=1.0, 31/64, oracle abstain 0.00). Unanswerable on the frozen showcase stayed 2/16. Phase 1 chat DEV + Phase 9 RAG DEV: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/`. Chat quality stayed with Aegis (~0.86); RAG supportedness is below 19L Aegis (Halo oracle 0.847 / real 0.628 vs Aegis 1.0 / 0.736).
 
 ---
 
@@ -221,6 +421,27 @@ Frozen 64-row showcase (thinking off): **28/64**.
 
 ---
 
+## Halo Uncensored (`rineya.core.halo-uncensored.v1.5.0-devfreeze.28L.qwen3-replace-v1-5e4-v2-1e4`)
+
+**What it is.** Same 28-layer Qwen3 scaffold and the **same 19-layer donor as Halo** (v1@5e-4 + v2@1e-4 soup), but the 19 Phase-2B-kept decoder blocks are **fully replaced** (stitch α=1.0). Dropped Qwen3 layers plus embed / final norm / tied lm_head stay official Qwen3. This is the **uncensored pair** for Halo: compare the two when a later experiment needs a model that answers instead of refusing.
+
+Frozen 64-row showcase (thinking off): **31/64** (best exact-match so far; shorter replies than Halo). Phase 9 RAG DEV oracle abstain **0.00** (Halo 50/50 is 0.691). Chat auto-Q 0.860. Dual-skill score is worse than every 50/50 sibling. **Not** a public dual-skill announcement. Sealed TEST not run.
+
+**Official dates**
+
+| When | Event |
+|---|---|
+| 2026-08-19 | Lab scored `qwen3_replace_v1_5e4_v2` at 31/64; oracle abstain 0.00 |
+| 2026-08-19 20:58:42–21:00:00 | Vault write Halo Uncensored (CPU stitch; Pulse, Aegis, Halo, Nimbus, Lyra not overwritten; weight SHA `c5d4a17f…`) |
+
+**Base / ingredients**
+
+Same table as Halo, except Merge is `stitch_cross_depth.py` **α=1.0** on kept layers.
+
+**How to use the pair.** Halo = 50/50 blend on kept blocks (refuses more on grounded RAG). Halo Uncensored = full replace on kept blocks (answers when Halo would abstain). Lab replace artifacts are kept; do not delete them to save disk.
+
+---
+
 ## Local artifacts that are **not** recorded cores
 
 These exist on disk. They are not vault entries.
@@ -231,7 +452,7 @@ These exist on disk. They are not vault entries.
 | Teacher v2 hot screen **`5e-4` then `3e-4`** | `5e-4` finished; `3e-4` not used for Halo | Pulse teacher | Same v2 mix (44,410) |
 | Student **greedy** dual-SFT v2 | Finished CPU LoRA 2026-08-18 window (`student_dual_sft_v2_greedy`, 44,410 rows) | 12-layer `phase_9_capability_composition_v22_lr1e4_s1200/track_d_greedy_soup/final_model` | Same v2 mix. Real RAG DEV dropped vs baseline; not a publish candidate |
 | Student **frozen-anchor** dual-SFT v2 | CPU train in progress | `…/frozen_anchor` | Same v2 mix |
-| Qwen3 **replace-kept** α=1.0 | Lab stitch 2026-08-19; **not vaulted** | 28L Qwen3 + same three 19L donors as Nimbus/Lyra/Halo | Showcase: 23 / 30 / **31**/64. Chat held ~0.86 except Aegis-replace. Oracle abstain collapsed (0.30 / 0.29 / **0.00**). Dual score lost. |
+| Qwen3 **replace-kept** Aegis / Lyra-donor (α=1.0) | Lab stitch 2026-08-19; weights kept, **not vaulted** | 28L Qwen3 + Nimbus/Lyra donors | Showcase 23 / 30. Oracle abstain 0.30 / 0.29. Halo-donor replace is vaulted as **Halo Uncensored**. |
 
 ---
 
