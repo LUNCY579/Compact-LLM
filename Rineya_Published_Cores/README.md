@@ -1,5 +1,7 @@
 # Rineya Published Cores
 
+Developer ledger of recorded names, timestamps, bases, and datasets: [`../roadmap.md`](../roadmap.md).
+
 Immutable vault for **dense** Hugging Face checkpoints (`model.safetensors`).
 This folder is the only place new merged/copied release cores are written.
 

@@ -1,0 +1,335 @@
+{
+  "name": "Rineya General Reasoning and Natural Communication Corpus",
+  "version": "3.0",
+  "generated_at": "2026-08-18T18:56:45.472836+00:00",
+  "seed": 20260818,
+  "new_sft_rows": 110000,
+  "preservation_rows": 14000,
+  "recommended_combined_rows": 124000,
+  "dpo_pairs": 16000,
+  "group_counts": {
+    "reasoning": 50000,
+    "communication": 30000,
+    "integrated": 30000
+  },
+  "class_counts": {
+    "arithmetic_chain": 2500,
+    "percentage_reasoning": 2500,
+    "ratio_proportion": 2500,
+    "unit_conversion": 2500,
+    "time_duration": 2500,
+    "schedule_ordering": 2500,
+    "comparison_ranking": 2500,
+    "logical_implication": 2500,
+    "conditional_rules": 2500,
+    "contradiction_detection": 2500,
+    "sequence_pattern": 2500,
+    "counting_sets": 2500,
+    "constraint_selection": 2500,
+    "causal_reasoning": 2500,
+    "physical_commonsense": 2500,
+    "spatial_relations": 2500,
+    "estimation_sanity": 2500,
+    "evidence_inference": 2500,
+    "insufficient_information": 2500,
+    "troubleshooting_diagnosis": 2500,
+    "acknowledgment_update": 2500,
+    "natural_follow_up": 2500,
+    "empathy_validation": 2500,
+    "tactful_disagreement": 2500,
+    "clarification_request": 2500,
+    "preference_opinion": 2500,
+    "apology_repair": 2500,
+    "deescalation": 2500,
+    "negotiation_compromise": 2500,
+    "boundary_setting": 2500,
+    "informal_texting": 2500,
+    "conversation_closure": 2500,
+    "decision_explanation": 3750,
+    "multi_turn_context_update": 3750,
+    "plan_revision": 3750,
+    "comparative_recommendation": 3750,
+    "practical_next_step": 3750,
+    "evidence_grounded_dialogue": 3750,
+    "communication_rewrite": 3750,
+    "roleplay_reasoning": 3750
+  },
+  "template_family_count": 16504,
+  "lineage": {
+    "v1_package": "/mnt/data/_v1src/Rineya_Short_Response_Behavior_Corpus_v1.0",
+    "v2_package": "/mnt/data/_v2src/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0",
+    "evaluation_snapshot": "/mnt/data/_repofiles"
+  },
+  "planning_resolution": "Used explicit per-class quotas, yielding 110,000 new rows rather than the conflicting 100,000 group-table total.",
+  "human_review_status": "pending",
+  "files": {
+    "DATA_CARD.md": {
+      "bytes": 1461,
+      "sha256": "3c0ca66d09a12a634a765fa1c93332b348f020dce57d3579d04524630d806284"
+    },
+    "README.md": {
+      "bytes": 3301,
+      "sha256": "70c77e3fd10bb6188c33893ed872e4b83eb65e60997df03cfea4600d2b14b969"
+    },
+    "data/dpo/rineya_v3_preferences_train_16000.jsonl": {
+      "bytes": 19291687,
+      "sha256": "f45d66ec2ad69e970ce7f8db83ecb7cc261cce89539ed4421066bfd578e532e6"
+    },
+    "data/sft/by_class/acknowledgment_update.jsonl": {
+      "bytes": 4883155,
+      "sha256": "676f20c0c36ad105ae8d5cb4dae6e5f3103cd9e299abf6f1fc557a5a8e0a586d"
+    },
+    "data/sft/by_class/apology_repair.jsonl": {
+      "bytes": 4815151,
+      "sha256": "ff33ad1b72df735e729d928e61790d8a32c05e3765b5dc142371cf7cc662764f"
+    },
+    "data/sft/by_class/arithmetic_chain.jsonl": {
+      "bytes": 4827988,
+      "sha256": "30eb5ca1b83bbbf1bbcc6f90973edeb233f2ff5d023923482c2a715f4d8b1847"
+    },
+    "data/sft/by_class/boundary_setting.jsonl": {
+      "bytes": 4915941,
+      "sha256": "b7c598b5ebf1725ace14125c5d8b8ef1d3851e2685f868631641c5e0cec5e5ec"
+    },
+    "data/sft/by_class/causal_reasoning.jsonl": {
+      "bytes": 4989533,
+      "sha256": "2e182dfa7164345cb7e9dbab482f361d7cadc683df27ed46610427a5d08db5de"
+    },
+    "data/sft/by_class/clarification_request.jsonl": {
+      "bytes": 4909795,
+      "sha256": "f7049bc6919391dd391fc700269c451ef07e7a1bb2a991f91bfe4d8b2b3b3a62"
+    },
+    "data/sft/by_class/communication_rewrite.jsonl": {
+      "bytes": 7608673,
+      "sha256": "10fff6d4d4843777a8b2e73b22ee5a6f0c0d871a27bfea7dd8bbaa702587d047"
+    },
+    "data/sft/by_class/comparative_recommendation.jsonl": {
+      "bytes": 7932084,
+      "sha256": "148fbc533325fb3c2a2425746382eee321eb037b6e31511647d37bde55e771c4"
+    },
+    "data/sft/by_class/comparison_ranking.jsonl": {
+      "bytes": 4835414,
+      "sha256": "a6b89a216aead619a14ea2f2d54691d0720947103e3f838177aa4142f174ce66"
+    },
+    "data/sft/by_class/conditional_rules.jsonl": {
+      "bytes": 4864621,
+      "sha256": "1bd5978f188b3804819fe81981ff41e9d61953bb04611d55d06f425fb819bac9"
+    },
+    "data/sft/by_class/constraint_selection.jsonl": {
+      "bytes": 4978532,
+      "sha256": "6d3de8b7fd4a2d2ac870b8729a8591acca7312ccee202de6d4aa9c456b500f0a"
+    },
+    "data/sft/by_class/contradiction_detection.jsonl": {
+      "bytes": 5101561,
+      "sha256": "711ba3aede80d7c35007519d6a41e342aaa62465fed88c0512eff41a2769490e"
+    },
+    "data/sft/by_class/conversation_closure.jsonl": {
+      "bytes": 4890778,
+      "sha256": "c9b1e315218dbb406f89ee9b18c0d0b2f1d3a90d4226556b5789cc3d02da5b10"
+    },
+    "data/sft/by_class/counting_sets.jsonl": {
+      "bytes": 4787285,
+      "sha256": "92c4a460086953d3c18b834d89d2da5c866831007a1c5ec0f9a41b0396708db2"
+    },
+    "data/sft/by_class/decision_explanation.jsonl": {
+      "bytes": 7873625,
+      "sha256": "ce949849ec73ab05f0b2c7081b12ba8c30f1e8154d171910445497935efdc710"
+    },
+    "data/sft/by_class/deescalation.jsonl": {
+      "bytes": 4912957,
+      "sha256": "789f6d8c55baf96a46369525a24d4f0eed7df70891b667a13fac4df2bad0de9c"
+    },
+    "data/sft/by_class/empathy_validation.jsonl": {
+      "bytes": 5000593,
+      "sha256": "00adf1b974cf81f3644650074c7a64f1da70ba81df8ee31e697b7d63035733ee"
+    },
+    "data/sft/by_class/estimation_sanity.jsonl": {
+      "bytes": 4748572,
+      "sha256": "be6804315a821aaebf23253e68b92700690b218c031fb08f3ef38dfbeeaea0ec"
+    },
+    "data/sft/by_class/evidence_grounded_dialogue.jsonl": {
+      "bytes": 7613636,
+      "sha256": "a330f5088a9ab301c8da599123e5fbf82909ea77f9a969bb41ec6f0a1994862d"
+    },
+    "data/sft/by_class/evidence_inference.jsonl": {
+      "bytes": 4863496,
+      "sha256": "817bde1086d3a240b2d012ef32d9d41196c41d985f841d617778e6974f798399"
+    },
+    "data/sft/by_class/informal_texting.jsonl": {
+      "bytes": 4843965,
+      "sha256": "e3eb9a91c250fd3f93dd30e1dabb1394b553a4cc833a1d6d00e5974f2d67a650"
+    },
+    "data/sft/by_class/insufficient_information.jsonl": {
+      "bytes": 4968571,
+      "sha256": "1beba1c54b3e41a775a5a31ec40827921341edcb4af28cdb35aeb034263cd2d5"
+    },
+    "data/sft/by_class/logical_implication.jsonl": {
+      "bytes": 4893620,
+      "sha256": "889c398aa416cfc683dae74f874024fe3f55d9b0747a9c15e8a843a7027b472b"
+    },
+    "data/sft/by_class/multi_turn_context_update.jsonl": {
+      "bytes": 7401478,
+      "sha256": "8e51d69f3c5270440213b78e4ce503448dc3c02095c0a6ac1ac39d73031e183c"
+    },
+    "data/sft/by_class/natural_follow_up.jsonl": {
+      "bytes": 4786636,
+      "sha256": "74a3554a0d358ec9307ebefbeeb3db6793cc80909964ac0959cb82352afe7b4b"
+    },
+    "data/sft/by_class/negotiation_compromise.jsonl": {
+      "bytes": 5127681,
+      "sha256": "c306233b22295c9fbeefbb24a097731f070e2081ba5fabdfd533a6d3f7697aee"
+    },
+    "data/sft/by_class/percentage_reasoning.jsonl": {
+      "bytes": 4757168,
+      "sha256": "5d2f03aec9a61a49c2cb1c1fea4c9b5dab22c28a99e4f16413abd1cb0c86fa9b"
+    },
+    "data/sft/by_class/physical_commonsense.jsonl": {
+      "bytes": 4849432,
+      "sha256": "423c3d9aa233331d50cbf0d257b52de48e0fe17acb9ebea4c69154373b28a2ae"
+    },
+    "data/sft/by_class/plan_revision.jsonl": {
+      "bytes": 7515702,
+      "sha256": "3b86903ddcc07bc66309b185183a843be18585cba0a7171679871f7237a30b06"
+    },
+    "data/sft/by_class/practical_next_step.jsonl": {
+      "bytes": 7694079,
+      "sha256": "aa81175bb98b4142bcf011f068f5d3bec620e4e5726c4e470f7e232b430e6a93"
+    },
+    "data/sft/by_class/preference_opinion.jsonl": {
+      "bytes": 5032429,
+      "sha256": "0bf0734017ab7d8715bafa05519acd16369d74d7e048444432856154c29a226a"
+    },
+    "data/sft/by_class/ratio_proportion.jsonl": {
+      "bytes": 4817827,
+      "sha256": "687015ae4611ca7fb646cee301088c43a5a95f2f1f2d9efa40d28ff9bb79f174"
+    },
+    "data/sft/by_class/roleplay_reasoning.jsonl": {
+      "bytes": 7825251,
+      "sha256": "514f307dc038099e2cc0be319640c58e081c0965b33e5cc23529f13604900b7e"
+    },
+    "data/sft/by_class/schedule_ordering.jsonl": {
+      "bytes": 4897581,
+      "sha256": "b8e35bcee827ce3f5c6be27844446b90aa03dc0ddf00f15e5df4000af63f480d"
+    },
+    "data/sft/by_class/sequence_pattern.jsonl": {
+      "bytes": 4627585,
+      "sha256": "78e7946f7590f0a55e4edc4da8a7a6b90c4840b074f70050b498ad0b5053706c"
+    },
+    "data/sft/by_class/spatial_relations.jsonl": {
+      "bytes": 4837070,
+      "sha256": "7745ff37956b6a8a02cbcebc1fd014b544dd8ba7ed28e72be63d70578ea214d5"
+    },
+    "data/sft/by_class/tactful_disagreement.jsonl": {
+      "bytes": 5061473,
+      "sha256": "ac02ddd215d6e8f25291bc48969e2d0e350d0a91949066e468f56406d0a4f549"
+    },
+    "data/sft/by_class/time_duration.jsonl": {
+      "bytes": 4717685,
+      "sha256": "6c16d84a718ca5c84bf5531ffe670cd95f2b30db508574a38abc3b6273144529"
+    },
+    "data/sft/by_class/troubleshooting_diagnosis.jsonl": {
+      "bytes": 5066828,
+      "sha256": "4ec6f096f901e2fde654367b216ea98ca2e643cecbf1b0d87bf1715599e8a39f"
+    },
+    "data/sft/by_class/unit_conversion.jsonl": {
+      "bytes": 4682467,
+      "sha256": "cb24111b91ae957e0cc6833c26b4a135a9ee2e1f095dc8ab8ed4bd814c875248"
+    },
+    "data/sft/rineya_v1_v2_preservation_slice_14000.jsonl": {
+      "bytes": 17341591,
+      "sha256": "5ee0c283b290cf89f6fcfbcf52bd2bcd03f6c63bb06793b9fa4b957d91973d50"
+    },
+    "data/sft/rineya_v3_integrated_reasoning_dialogue_train_30000.jsonl": {
+      "bytes": 61464528,
+      "sha256": "45b2e9cbd98eb6f67f09047a8b3053c1080f8c2aa80de704e25b4de3a970e5db"
+    },
+    "data/sft/rineya_v3_natural_communication_train_30000.jsonl": {
+      "bytes": 59180554,
+      "sha256": "6fb773d72a20ee68ac982ba931573e38ad3f82a9b7ef83dff2b575f2602803c6"
+    },
+    "data/sft/rineya_v3_new_all_train_110000.jsonl": {
+      "bytes": 217757918,
+      "sha256": "c344cb3d429529f068be56484993c1a0bef974ea848385d1e9daa26749e5fa69"
+    },
+    "data/sft/rineya_v3_reasoning_train_50000.jsonl": {
+      "bytes": 97112836,
+      "sha256": "64a4784553bedf6581334cbe27c3aefa34cc7b80778bedb81ed767078459b644"
+    },
+    "data/sft/rineya_v3_recommended_combined_124000.jsonl": {
+      "bytes": 235099509,
+      "sha256": "32ec39d30a1d99df94f758333070f24c662f175887c4180f7f14901487062cb7"
+    },
+    "examples/training_and_evaluation_guide.md": {
+      "bytes": 1037,
+      "sha256": "ed83295482913b3aeb4cdb191fd0dd4b145384868f0b5907bc6a94c3da579926"
+    },
+    "manifests/class_distribution.csv": {
+      "bytes": 1692,
+      "sha256": "7e4b689e206275b1dc482c0e86237bdcd0cf29004c55b988dc6143db82ed66e7"
+    },
+    "manifests/domain_distribution.csv": {
+      "bytes": 347,
+      "sha256": "53528fad3244687ddb513c6911fdde183b5d21a148938bab03ad1be09c9ec04e"
+    },
+    "manifests/family_manifest.jsonl": {
+      "bytes": 8677971,
+      "sha256": "c1450cb1ead77ed28762c88d44488f99e694a638ada33dc9b15f35305e4211c4"
+    },
+    "manifests/shard_manifests.jsonl": {
+      "bytes": 560983,
+      "sha256": "4a2ca0eb08869f3459cacf003f5c4299c1e46c9e5a01e190b092dd368536ebc0"
+    },
+    "reports/human_audit_packet_520.md": {
+      "bytes": 202988,
+      "sha256": "afd4c16897d4a324cf26f8fc95d8b3cbffe32bf6d6fd113041f57857934066c1"
+    },
+    "reports/human_audit_pool_40000_ids.jsonl": {
+      "bytes": 10732093,
+      "sha256": "1041a046fc1d96bff3835a2e5de8e7c68c99a243defaa685c6edd62c347b88ee"
+    },
+    "reports/leakage_report.json": {
+      "bytes": 2939,
+      "sha256": "88fd6f87d920d47d398a6b6ec0a83c7844c6d34ac6abbadc5d40082c0329fbb7"
+    },
+    "reports/near_duplicate_audit.json": {
+      "bytes": 195,
+      "sha256": "dee8f2442bbde26645371be30defa3429c9e5cede53b550a42e424cfb435e4f1"
+    },
+    "reports/semantic_audit_report.json": {
+      "bytes": 449,
+      "sha256": "b1361838cdc44baede920783c0f38feac0717ba4b6351b34d54aa45b936763f5"
+    },
+    "reports/statistics.md": {
+      "bytes": 686,
+      "sha256": "267c3498d29a9fee5e23ae0659b12b48ad27c6063962521c35eb4aa56b1d39b8"
+    },
+    "reports/validation_report.json": {
+      "bytes": 7876,
+      "sha256": "1c94eee1d36d48aab2882dfa86ae2130e5e445e9256915e534613bce22a3a200"
+    },
+    "schemas/dpo_record.schema.json": {
+      "bytes": 713,
+      "sha256": "8b5126515f2009d6dd71ef660557bcd6e412ebd4b67cd16b8ef2f0a85e34608f"
+    },
+    "schemas/sft_record.schema.json": {
+      "bytes": 1407,
+      "sha256": "6be9323754e82f8ce65b4ecebf1137b1c57c9952f2a6a9e4ba56e80443b99ec7"
+    },
+    "scripts/base_generators_v2.py": {
+      "bytes": 175791,
+      "sha256": "bfd2ddcc2064f93724f92a46cf06bf0d218c4215de32ff52c72bdcd14cba92a8"
+    },
+    "scripts/generate_dataset.py": {
+      "bytes": 102726,
+      "sha256": "9d4b3850127c8194717f30a0ba1daa0bf00b268c7517eda69dc4e0592a16fba2"
+    },
+    "scripts/mix_jsonl.py": {
+      "bytes": 1060,
+      "sha256": "9d36e3b4d28c3b81e632a31ca0e6e4634dd89656e2997b6d7870b46568e164ae"
+    },
+    "scripts/validate_dataset.py": {
+      "bytes": 2795,
+      "sha256": "74265096ab2c7b9dd5017998af791893eb2fa367dca35273552327aae61c9a2b"
+    }
+  }
+}

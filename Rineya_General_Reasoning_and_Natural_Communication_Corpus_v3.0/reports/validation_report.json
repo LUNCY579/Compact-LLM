@@ -1,0 +1,395 @@
+{
+  "status": "PASS",
+  "errors": [],
+  "sft_rows": 110000,
+  "dpo_pairs": 16000,
+  "unique_ids": 110000,
+  "unique_prompts": 110000,
+  "unique_latest_users": 110000,
+  "class_counts": {
+    "arithmetic_chain": 2500,
+    "percentage_reasoning": 2500,
+    "ratio_proportion": 2500,
+    "unit_conversion": 2500,
+    "time_duration": 2500,
+    "schedule_ordering": 2500,
+    "comparison_ranking": 2500,
+    "logical_implication": 2500,
+    "conditional_rules": 2500,
+    "contradiction_detection": 2500,
+    "sequence_pattern": 2500,
+    "counting_sets": 2500,
+    "constraint_selection": 2500,
+    "causal_reasoning": 2500,
+    "physical_commonsense": 2500,
+    "spatial_relations": 2500,
+    "estimation_sanity": 2500,
+    "evidence_inference": 2500,
+    "insufficient_information": 2500,
+    "troubleshooting_diagnosis": 2500,
+    "acknowledgment_update": 2500,
+    "natural_follow_up": 2500,
+    "empathy_validation": 2500,
+    "tactful_disagreement": 2500,
+    "clarification_request": 2500,
+    "preference_opinion": 2500,
+    "apology_repair": 2500,
+    "deescalation": 2500,
+    "negotiation_compromise": 2500,
+    "boundary_setting": 2500,
+    "informal_texting": 2500,
+    "conversation_closure": 2500,
+    "decision_explanation": 3750,
+    "multi_turn_context_update": 3750,
+    "plan_revision": 3750,
+    "comparative_recommendation": 3750,
+    "practical_next_step": 3750,
+    "evidence_grounded_dialogue": 3750,
+    "communication_rewrite": 3750,
+    "roleplay_reasoning": 3750
+  },
+  "group_counts": {
+    "reasoning": 50000,
+    "communication": 30000,
+    "integrated": 30000
+  },
+  "family_count": 16504,
+  "max_family_size": 8,
+  "target_tokens": {
+    "median": 6.0,
+    "p90": 12.0,
+    "p95": 13.0,
+    "max": 19,
+    "mean": 6.643163636363636
+  },
+  "multi_turn_rows": 59036,
+  "counterfactual_rows": 22016,
+  "min_domains_per_class": 21,
+  "difficulty_by_class": {
+    "arithmetic_chain": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "percentage_reasoning": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "ratio_proportion": {
+      "basic": 628,
+      "intermediate": 996,
+      "compositional": 876
+    },
+    "unit_conversion": {
+      "basic": 628,
+      "intermediate": 996,
+      "compositional": 876
+    },
+    "time_duration": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "schedule_ordering": {
+      "basic": 628,
+      "intermediate": 996,
+      "compositional": 876
+    },
+    "comparison_ranking": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "logical_implication": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "conditional_rules": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "contradiction_detection": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "sequence_pattern": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "counting_sets": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "constraint_selection": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "causal_reasoning": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "physical_commonsense": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "spatial_relations": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "estimation_sanity": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "evidence_inference": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "insufficient_information": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "troubleshooting_diagnosis": {
+      "basic": 628,
+      "intermediate": 996,
+      "compositional": 876
+    },
+    "acknowledgment_update": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "natural_follow_up": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "empathy_validation": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "tactful_disagreement": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "clarification_request": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "preference_opinion": {
+      "basic": 624,
+      "intermediate": 1000,
+      "compositional": 876
+    },
+    "apology_repair": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "deescalation": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "negotiation_compromise": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "boundary_setting": {
+      "basic": 628,
+      "intermediate": 1000,
+      "compositional": 872
+    },
+    "informal_texting": {
+      "basic": 624,
+      "intermediate": 1004,
+      "compositional": 872
+    },
+    "conversation_closure": {
+      "basic": 628,
+      "intermediate": 996,
+      "compositional": 876
+    },
+    "decision_explanation": {
+      "basic": 940,
+      "intermediate": 1496,
+      "compositional": 1314
+    },
+    "multi_turn_context_update": {
+      "basic": 936,
+      "intermediate": 1504,
+      "compositional": 1310
+    },
+    "plan_revision": {
+      "basic": 936,
+      "intermediate": 1502,
+      "compositional": 1312
+    },
+    "comparative_recommendation": {
+      "basic": 940,
+      "intermediate": 1500,
+      "compositional": 1310
+    },
+    "practical_next_step": {
+      "basic": 940,
+      "intermediate": 1498,
+      "compositional": 1312
+    },
+    "evidence_grounded_dialogue": {
+      "basic": 936,
+      "intermediate": 1506,
+      "compositional": 1308
+    },
+    "communication_rewrite": {
+      "basic": 940,
+      "intermediate": 1496,
+      "compositional": 1314
+    },
+    "roleplay_reasoning": {
+      "basic": 938,
+      "intermediate": 1504,
+      "compositional": 1308
+    }
+  },
+  "top_targets": [
+    [
+      "yes",
+      2766
+    ],
+    [
+      "i don t know based on the available information",
+      2061
+    ],
+    [
+      "no",
+      1978
+    ],
+    [
+      "option b",
+      1796
+    ],
+    [
+      "option c",
+      1591
+    ],
+    [
+      "option a",
+      1564
+    ],
+    [
+      "yes they conflict",
+      1250
+    ],
+    [
+      "no they can both be true",
+      1250
+    ],
+    [
+      "approved",
+      759
+    ],
+    [
+      "55",
+      569
+    ],
+    [
+      "reconnect the display cable",
+      500
+    ],
+    [
+      "no charge is required",
+      451
+    ],
+    [
+      "charge it",
+      439
+    ],
+    [
+      "no not necessarily",
+      410
+    ],
+    [
+      "12",
+      404
+    ],
+    [
+      "15",
+      384
+    ],
+    [
+      "north",
+      375
+    ],
+    [
+      "verify the charge before paying the disputed amount",
+      374
+    ],
+    [
+      "50 minutes",
+      355
+    ],
+    [
+      "10",
+      347
+    ],
+    [
+      "20",
+      341
+    ],
+    [
+      "do not change it without guidance from your prescriber",
+      341
+    ],
+    [
+      "i cannot claim a memory i do not have",
+      336
+    ],
+    [
+      "one symptom is not enough for a diagnosis",
+      329
+    ],
+    [
+      "18",
+      326
+    ],
+    [
+      "9",
+      323
+    ],
+    [
+      "no the reverse does not follow",
+      316
+    ],
+    [
+      "we have one hour of light left",
+      286
+    ],
+    [
+      "32",
+      285
+    ],
+    [
+      "25",
+      261
+    ]
+  ],
+  "generation_drops": {
+    "stock_target_in_shard": 28206
+  }
+}
