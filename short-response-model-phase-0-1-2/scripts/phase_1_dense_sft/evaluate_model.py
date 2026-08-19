@@ -114,6 +114,12 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Fail instead of using CPU when CUDA is unavailable.",
     )
+    p.add_argument(
+        "--torch-dtype",
+        default="auto",
+        choices=("auto", "float32", "float16", "bfloat16"),
+        help="Override checkpoint dtype at load time (bfloat16 fits 28L Qwen3 on 8GB).",
+    )
     p.add_argument("--resume", action="store_true", help="Reuse durable completed example rows by stable benchmark ID.")
     p.add_argument("--run-root", type=Path, default=None, help="Optional Phase 2B run root for LIVE_PROGRESS files.")
     p.add_argument("--progress-context", type=Path, default=None, help="JSON context merged into Phase 2B live progress.")
@@ -797,7 +803,17 @@ def main() -> None:
         if not torch.cuda.is_available():
             print("WARNING: CUDA is unavailable; evaluation will run on CPU and VRAM metrics will be 0.")
         tokenizer = AutoTokenizer.from_pretrained(args.model_id)
-        model = AutoModelForCausalLM.from_pretrained(args.model_id, torch_dtype="auto", device_map="auto")
+        dtype_map = {
+            "auto": "auto",
+            "float32": torch.float32,
+            "float16": torch.float16,
+            "bfloat16": torch.bfloat16,
+        }
+        model = AutoModelForCausalLM.from_pretrained(
+            args.model_id,
+            torch_dtype=dtype_map[args.torch_dtype],
+            device_map="auto",
+        )
         if args.adapter_path is not None:
             if PeftModel is None:
                 raise RuntimeError("Install peft before loading an adapter.")

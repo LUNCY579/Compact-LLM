@@ -110,6 +110,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Train on CPU without QLoRA. Do not use this while intending to occupy the GPU.",
     )
+    p.add_argument(
+        "--resume-from-checkpoint",
+        default="",
+        help="Checkpoint directory, or 'latest' to resume the newest checkpoint in --output-dir.",
+    )
     return p.parse_args()
 
 
@@ -505,7 +510,14 @@ def main() -> None:
     # between all-layer and selected-layer adapters.
     if torch.cuda.is_available():
         torch.cuda.reset_peak_memory_stats()
-    result = trainer.train()
+    resume = str(args.resume_from_checkpoint or "").strip()
+    if resume.lower() == "latest":
+        resume_from: str | bool | None = True
+    elif resume:
+        resume_from = resume
+    else:
+        resume_from = None
+    result = trainer.train(resume_from_checkpoint=resume_from)
     # Save only the PEFT adapter and tokenizer, not another full copy of the
     # frozen base checkpoint.  Publish through a sibling staging directory so
     # a disk-full or interrupted serialization never masquerades as a complete

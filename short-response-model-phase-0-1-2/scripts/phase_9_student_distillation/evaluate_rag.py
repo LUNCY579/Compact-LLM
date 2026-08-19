@@ -93,6 +93,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--limit", type=int, default=None)
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--require-cuda", action="store_true")
+    parser.add_argument(
+        "--torch-dtype",
+        default="auto",
+        choices=("auto", "float32", "float16", "bfloat16"),
+        help="Override checkpoint dtype at load time (bfloat16 fits 28L Qwen3 on 8GB).",
+    )
     parser.add_argument("--allow-uncalibrated-real-rag", action="store_true")
     parser.add_argument("--minimum-cases-per-condition", type=int, default=1)
     parser.add_argument("--minimum-supported-cases", type=int, default=1)
@@ -562,10 +568,16 @@ def main() -> None:
 
     tokenizer = AutoTokenizer.from_pretrained(args.model, trust_remote_code=True)
     tokenizer.pad_token = tokenizer.pad_token or tokenizer.eos_token
+    dtype_map = {
+        "auto": "auto",
+        "float32": torch.float32,
+        "float16": torch.float16,
+        "bfloat16": torch.bfloat16,
+    }
     model = AutoModelForCausalLM.from_pretrained(
         args.model,
         trust_remote_code=True,
-        torch_dtype="auto",
+        torch_dtype=dtype_map[args.torch_dtype],
         device_map="auto",
     )
     if args.adapter is not None:

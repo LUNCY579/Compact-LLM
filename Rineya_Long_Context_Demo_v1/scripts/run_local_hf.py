@@ -120,6 +120,17 @@ def main() -> None:
         action="store_true",
         help="Pass enable_thinking=False to Qwen3 chat templates so the 24-token budget is not consumed by <think>.",
     )
+    parser.add_argument(
+        "--adapter",
+        type=Path,
+        help="Optional PEFT adapter directory loaded onto --model (no full merge).",
+    )
+    parser.add_argument(
+        "--torch-dtype",
+        default="auto",
+        choices=("auto", "float32", "float16", "bfloat16"),
+        help="Override checkpoint dtype at load time.",
+    )
     args = parser.parse_args()
 
     try:
@@ -140,18 +151,34 @@ def main() -> None:
         "device_map": args.device_map,
         "trust_remote_code": args.trust_remote_code,
     }
+    dtype_map = {
+        "auto": "auto",
+        "float32": torch.float32,
+        "float16": torch.float16,
+        "bfloat16": torch.bfloat16,
+    }
     try:
         model = AutoModelForCausalLM.from_pretrained(
             args.model,
-            torch_dtype="auto",
+            torch_dtype=dtype_map[args.torch_dtype],
             **model_kwargs,
         )
     except TypeError:
         model = AutoModelForCausalLM.from_pretrained(
             args.model,
-            dtype="auto",
+            dtype=dtype_map[args.torch_dtype],
             **model_kwargs,
         )
+
+    if args.adapter:
+        adapter = args.adapter.expanduser().resolve()
+        if not (adapter / "adapter_config.json").exists():
+            raise SystemExit(f"Missing adapter_config.json in {adapter}")
+        try:
+            from peft import PeftModel
+        except ImportError as exc:
+            raise SystemExit("Install peft to use --adapter") from exc
+        model = PeftModel.from_pretrained(model, str(adapter))
 
     model.eval()
     if tokenizer.pad_token_id is None:
