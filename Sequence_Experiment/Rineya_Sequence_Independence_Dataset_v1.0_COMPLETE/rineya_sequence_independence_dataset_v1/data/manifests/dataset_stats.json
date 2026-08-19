@@ -1,0 +1,45 @@
+{
+  "category_count": 30,
+  "cross_split_problem_overlap": false,
+  "dataset_name": "Rineya Sequence-Independence Reasoning Dataset",
+  "dataset_version": "1.0",
+  "exact_problem_alignment": true,
+  "full_response_word_count": {
+    "max": 130,
+    "mean": 38.9738,
+    "median": 35.0,
+    "min": 19,
+    "total": 1870740
+  },
+  "generation_seed": 20260818,
+  "problem_splits": {
+    "dev": 2400,
+    "test": 2400,
+    "train": 43200
+  },
+  "problems_per_category": 1600,
+  "sequence_policy": {
+    "full_context": "One problem and one uninterrupted complete reasoning target per row.",
+    "split_transitions": "Every transition is independently sufficient and globally shuffled; chronological adjacency is intentionally removed."
+  },
+  "step_count": {
+    "max": 9,
+    "mean": 3.9567,
+    "median": 4.0,
+    "min": 2
+  },
+  "total_transition_records": 189922,
+  "total_unique_problems": 48000,
+  "transition_splits": {
+    "dev": 9460,
+    "test": 9521,
+    "train": 170941
+  },
+  "transition_target_word_count": {
+    "max": 21,
+    "mean": 8.5973,
+    "median": 8.0,
+    "min": 3,
+    "total": 1632818
+  }
+}
