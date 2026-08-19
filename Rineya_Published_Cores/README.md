@@ -24,5 +24,6 @@ It does **not** replace official phase artifacts. Sources under
 | `Rineya-Halo-1.2.0-devfreeze` | `rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4` | 28-layer Qwen3; 19 kept blocks 50/50 with v1@5e-4 + v2@1e-4 |
 | `Rineya-Nimbus-1.3.0-devfreeze` | `rineya.core.nimbus.v1.3.0-devfreeze.28L.qwen3-crossdepth-aegis` | 28-layer Qwen3; 19 kept blocks 50/50 with vault Aegis |
 | `Rineya-Lyra-1.4.0-devfreeze` | `rineya.core.lyra.v1.4.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-1e5` | 28-layer Qwen3; 19 kept blocks 50/50 with v1@5e-4 + v1@1e-5 |
+| `Rineya-Halo-Uncensored-1.5.0-devfreeze` | `rineya.core.halo-uncensored.v1.5.0-devfreeze.28L.qwen3-replace-v1-5e4-v2-1e4` | Same Halo donor; kept blocks fully replaced (α=1.0). Uncensored pair for Halo |
 
 Add new cores with `python _materialize_core.py`. The script refuses if the destination already exists.

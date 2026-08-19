@@ -101,6 +101,28 @@ CORES = {
         "showcase_hits": 28,
         "showcase_items": 64,
     },
+    "halo_uncensored": {
+        "name": "Rineya-Halo-Uncensored-1.5.0-devfreeze",
+        "core_id": "rineya.core.halo-uncensored.v1.5.0-devfreeze.28L.qwen3-replace-v1-5e4-v2-1e4",
+        "codename": "Halo Uncensored",
+        "version": "1.5.0-devfreeze",
+        "kind": "cross_depth_soup",
+        "public_claim": "Halo donor at α=1.0 (kept Qwen3 blocks fully replaced). Uncensored pair for Halo. Oracle abstain collapsed on RAG DEV. Not a dual-skill announcement. Sealed TEST not run.",
+        "status": "recorded_uncensored_pair",
+        "base": QWEN3,
+        "adapter": None,
+        "expected_layers": 28,
+        "donor_adapters": [V1_ADAPTER, V2_1E4_ADAPTER],
+        "pulse_base": TEACHER,
+        "alpha": 1.0,
+        "showcase_hits": 31,
+        "showcase_items": 64,
+        "compare_pair": "Halo",
+        "compare_pair_core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+        "experiment_role": "uncensored_replace_kept",
+        "oracle_abstain_dev": 0.0,
+        "chat_quality_dev": 0.8603,
+    },
 }
 
 WEIGHT_NAMES = (
@@ -402,6 +424,15 @@ def materialize(key: str) -> Path:
         if spec.get("showcase_hits") is not None:
             payload["showcase_hits"] = spec["showcase_hits"]
             payload["showcase_items"] = spec.get("showcase_items", 64)
+        for extra in (
+            "compare_pair",
+            "compare_pair_core_id",
+            "experiment_role",
+            "oracle_abstain_dev",
+            "chat_quality_dev",
+        ):
+            if spec.get(extra) is not None:
+                payload[extra] = spec[extra]
         write_json(staging / "CORE.json", payload)
         if dest.exists():
             raise FileExistsError(f"Refusing to overwrite existing core: {dest}")
