@@ -1,0 +1,121 @@
+{
+  "generated_at": "2026-08-21T01:00:04Z",
+  "global_best_note": "soup-lab alias global_best = cand_d1b08a8faf299ce4",
+  "showcase_rows": [
+    {
+      "name": "global_best",
+      "source": "soup-lab alias global_best = cand_d1b08a8faf299ce4",
+      "hits": 29,
+      "items": 64,
+      "strict_exact": 0.453125,
+      "unanswerable_accuracy": 0.125,
+      "counterfactual_pair_both_correct_and_changed": 0.3125,
+      "short_response_rate_le_12_words": 0.921875
+    },
+    {
+      "name": "late_rineya",
+      "source": "prior alpha_recipes sweep",
+      "hits": 31,
+      "items": 64,
+      "strict_exact": 0.484375,
+      "unanswerable_accuracy": 0.125,
+      "counterfactual_pair_both_correct_and_changed": 0.4375,
+      "short_response_rate_le_12_words": null
+    }
+  ],
+  "dual_rows": [
+    {
+      "name": "global_best",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Layerwise_Soup_Lab_v1.0\\runs\\qwen3_halo_uncensored\\candidate_cache\\cand_d1b08a8faf299ce4",
+      "note": "soup-lab alias global_best = cand_d1b08a8faf299ce4",
+      "chat": {
+        "chat_quality": 0.8649036251874487,
+        "task_adequacy": 0.5203921568627451,
+        "median_reply_tokens": 11.0,
+        "duplicate_reply_rate": 0.3392156862745098
+      },
+      "rag": {
+        "oracle_supported": 0.8433962264150944,
+        "oracle_abstain": 0.7769784172661871,
+        "oracle_procedure": 0.7,
+        "real_supported": 0.6075471698113207,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.6933333333333334
+      },
+      "showcase": "29/64"
+    },
+    {
+      "name": "late_rineya",
+      "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Qwen3_CrossDepth_Soup_Mini_v1\\artifacts\\alpha_recipes\\late_rineya",
+      "note": "CrossDepth alpha recipe late_rineya (Halo donor, non-uniform α)",
+      "chat": {
+        "chat_quality": 0.8611886274509803,
+        "task_adequacy": 0.5067450980392156,
+        "median_reply_tokens": 9.0,
+        "duplicate_reply_rate": 0.3352941176470588
+      },
+      "rag": {
+        "oracle_supported": 0.8509433962264151,
+        "oracle_abstain": 0.8705035971223022,
+        "oracle_procedure": 0.7266666666666667,
+        "real_supported": 0.620754716981132,
+        "real_abstain": 0.7266187050359713,
+        "real_procedure": 0.7133333333333334
+      },
+      "showcase": "31/64"
+    }
+  ],
+  "comparators": {
+    "Aegis 19L": {
+      "chat_quality": 0.8593539651416122,
+      "task_adequacy": 0.49776470588235294,
+      "oracle_supported": 1.0,
+      "real_supported": 0.7358490566037735,
+      "real_procedure": 0.9533333333333334,
+      "oracle_abstain": 1.0,
+      "dual": 0.8382,
+      "showcase": "4/64"
+    },
+    "Nimbus (qwen3_x_aegis)": {
+      "chat_quality": 0.8602,
+      "task_adequacy": 0.5032,
+      "oracle_supported": 0.8906,
+      "real_supported": 0.6736,
+      "real_procedure": 0.86,
+      "oracle_abstain": 0.8273,
+      "dual": 0.7814,
+      "showcase": "24/64"
+    },
+    "Lyra (qwen3_x_v1_5e4_1e5)": {
+      "chat_quality": 0.8667,
+      "task_adequacy": 0.5289,
+      "oracle_supported": 0.8415,
+      "real_supported": 0.6283,
+      "real_procedure": 0.7,
+      "oracle_abstain": 0.7266,
+      "dual": 0.7445,
+      "showcase": "28/64"
+    },
+    "Halo (qwen3_x_v1_5e4_v2)": {
+      "chat_quality": 0.8619,
+      "task_adequacy": 0.5117,
+      "oracle_supported": 0.8472,
+      "real_supported": 0.6283,
+      "real_procedure": 0.7,
+      "oracle_abstain": 0.6906,
+      "dual": 0.7381,
+      "showcase": "30/64"
+    },
+    "Pulse": {
+      "chat_quality": 0.7984,
+      "task_adequacy": null,
+      "oracle_supported": null,
+      "real_supported": null,
+      "real_procedure": null,
+      "oracle_abstain": null,
+      "dual": null,
+      "showcase": "0/64"
+    }
+  },
+  "note": "Lab fill-in only. global_best is the soup-lab uniform global α winner so far; layer_influence probes can score higher on chat but do not replace the alias until layer_search/freeze. late_rineya/global_best are not vault cores."
+}
