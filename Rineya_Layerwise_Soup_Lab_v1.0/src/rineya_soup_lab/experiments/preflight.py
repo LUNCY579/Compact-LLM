@@ -29,6 +29,9 @@ def run_preflight(context: RunContext) -> ResolvedSources:
             context.config.get("models.lineage_acknowledged", False)
         ),
         tokenizer_path=sources.tokenizer,
+        allow_hf_serialization_drift=bool(
+            context.config.get("models.allow_hf_serialization_drift", False)
+        ),
     )
     compatibility_path = context.path("manifests", "compatibility.json")
     write_compatibility_report(compatibility_path, report)

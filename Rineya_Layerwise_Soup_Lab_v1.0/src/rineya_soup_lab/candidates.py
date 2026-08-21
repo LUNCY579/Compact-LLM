@@ -155,6 +155,9 @@ class CandidateManager:
                 self.config.get("models.copy_non_floating_from", "anchor")
             ),
             source_fingerprints=self._source_fingerprints,
+            allow_tied_lm_head_alias=bool(
+                self.config.get("models.allow_hf_serialization_drift", False)
+            ),
         )
         # A separate tokenizer_path is supported; copy missing tokenizer artifacts so a
         # retained candidate remains a self-contained Hugging Face directory.
@@ -176,8 +179,21 @@ class CandidateManager:
         protocol = protocol_name or str(self.config.get("evaluation.selection_protocol"))
         dataset_path = Path(self.config.get(f"datasets.{split}"))
         candidate_id = recipe.id
-        model_path = self.model_path_for(recipe, retain=retain)
         output_dir = self.context.path("evaluations", split, protocol, candidate_id)
+        eval_key = f"{split}:{protocol}"
+        known = self.context.state.payload.get("candidates") or {}
+        if (
+            resume
+            and candidate_id in known
+            and eval_key in (known[candidate_id].get("evaluations") or {})
+            and (output_dir / "summary.json").is_file()
+            and (output_dir / "lab_evaluation_result.json").is_file()
+        ):
+            result = self.load_result(candidate_id, split=split, protocol_name=protocol)
+            if alias:
+                self.context.state.set_alias(alias, candidate_id)
+            return result
+        model_path = self.model_path_for(recipe, retain=retain)
         self.context.state.register_candidate(
             candidate_id,
             {

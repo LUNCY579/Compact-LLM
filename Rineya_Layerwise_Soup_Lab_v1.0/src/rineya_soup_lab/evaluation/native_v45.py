@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import gc
 import math
 import statistics
 import sys
@@ -11,6 +12,7 @@ from typing import Any, Mapping
 import torch
 
 from ..errors import EvaluationError
+from ..gpu import model_from_pretrained_kwargs, wait_for_python_gpu
 from ..utils import append_jsonl, read_json, sha256_file, utc_timestamp, write_json
 from ..vendor.official_v45.quality_evaluation import (
     QUALITY_EVALUATION_VERSION,
@@ -38,8 +40,40 @@ def _percentile(values: list[float], p: float) -> float:
 
 
 def _sync_cuda() -> None:
-    if torch.cuda.is_available():
+    if not torch.cuda.is_available():
+        return
+    try:
         torch.cuda.synchronize()
+    except OSError:
+        pass
+
+
+def _safe_print(text: str) -> None:
+    """Windows consoles raise EINVAL on some UTF-8 replies; never abort an eval for logs."""
+    try:
+        print(text, flush=True)
+    except OSError:
+        encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
+        fallback = text.encode(encoding, errors="replace").decode(encoding, errors="replace")
+        try:
+            print(fallback, flush=True)
+        except OSError:
+            pass
+
+
+def release_cuda() -> None:
+    gc.collect()
+    if not torch.cuda.is_available():
+        return
+    try:
+        torch.cuda.synchronize()
+    except Exception:
+        pass
+    torch.cuda.empty_cache()
+    try:
+        torch.cuda.ipc_collect()
+    except Exception:
+        pass
 
 
 def _render_chat(tokenizer: Any, messages: list[dict[str, Any]], enable_thinking: bool) -> str:
@@ -202,6 +236,9 @@ def evaluate_model_bundled_v45(
 
     if protocol.get("require_cuda") and not torch.cuda.is_available():
         raise EvaluationError("CUDA is unavailable but this protocol requires CUDA.")
+    release_cuda()
+    if protocol.get("wait_for_gpu", True):
+        wait_for_python_gpu(int(protocol.get("gpu_wait_poll_seconds", 60)))
     seed = int(protocol.get("seed", 0))
     torch.manual_seed(seed)
     if torch.cuda.is_available():
@@ -209,12 +246,11 @@ def evaluate_model_bundled_v45(
     tokenizer = AutoTokenizer.from_pretrained(
         str(tokenizer_path), trust_remote_code=trust_remote_code
     )
+    load_kwargs = model_from_pretrained_kwargs(protocol, offload_root=output_dir)
     model = AutoModelForCausalLM.from_pretrained(
         str(model_path),
-        torch_dtype="auto",
-        device_map="auto",
         trust_remote_code=trust_remote_code,
-        low_cpu_mem_usage=True,
+        **load_kwargs,
     )
     model.eval()
     input_device = model.get_input_embeddings().weight.device
@@ -240,7 +276,10 @@ def evaluate_model_bundled_v45(
             rendered = _render_chat(tokenizer, messages, bool(protocol.get("enable_thinking", False)))
             inputs = tokenizer(rendered, return_tensors="pt").to(input_device)
             if torch.cuda.is_available():
-                torch.cuda.reset_peak_memory_stats()
+                try:
+                    torch.cuda.reset_peak_memory_stats()
+                except OSError:
+                    pass
             _sync_cuda()
             start = time.perf_counter()
             stopping_criteria, boundary_criterion = build_stopping_criteria(
@@ -264,7 +303,14 @@ def evaluate_model_bundled_v45(
                 generation_kwargs["temperature"] = float(protocol.get("temperature", 0.6))
                 generation_kwargs["top_p"] = float(protocol.get("top_p", 0.9))
             with torch.inference_mode():
-                generated = model.generate(**inputs, **generation_kwargs)
+                try:
+                    generated = model.generate(**inputs, **generation_kwargs)
+                except OSError as exc:
+                    if exc.errno != 22:
+                        raise
+                    release_cuda()
+                    time.sleep(2)
+                    generated = model.generate(**inputs, **generation_kwargs)
             _sync_cuda()
             elapsed = time.perf_counter() - start
             if capture:
@@ -327,16 +373,13 @@ def evaluate_model_bundled_v45(
             }
             outputs_by_id[stable_id] = row
             append_jsonl(results_path, row)
-            progress = (
-                f"[{index:03d}/{len(records):03d}] {stable_id}: {reply!r} "
+            _safe_print(
+                f"[{index:03d}/{len(records):03d}] {stable_id} "
                 f"quality={float(row['quality_score']):.3f}"
             )
-            encoding = getattr(sys.stdout, "encoding", None) or "utf-8"
-            print(progress.encode(encoding, errors="replace").decode(encoding, errors="replace"), flush=True)
     finally:
         del model
-        if torch.cuda.is_available():
-            torch.cuda.empty_cache()
+        release_cuda()
 
     outputs = [outputs_by_id[value] for value in record_ids]
     summary = build_summary(outputs, protocol_name, protocol, quality_config_path)

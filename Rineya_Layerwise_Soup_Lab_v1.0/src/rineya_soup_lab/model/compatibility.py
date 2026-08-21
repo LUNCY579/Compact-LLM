@@ -59,6 +59,83 @@ TOKENIZER_FILES = (
     "sentencepiece.bpe.model",
 )
 
+TIED_LM_HEAD_KEY = "lm_head.weight"
+TIED_EMBED_KEY = "model.embed_tokens.weight"
+DEFAULT_ROPE_TYPE = "default"
+DEFAULT_LAYER_TYPE = "full_attention"
+
+
+def _as_float(value: Any) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _effective_rope_theta(config: Mapping[str, Any]) -> Any:
+    top = config.get("rope_theta")
+    if top is not None:
+        as_float = _as_float(top)
+        return as_float if as_float is not None else top
+    params = config.get("rope_parameters")
+    if isinstance(params, Mapping) and params.get("rope_theta") is not None:
+        value = params.get("rope_theta")
+        as_float = _as_float(value)
+        return as_float if as_float is not None else value
+    return None
+
+
+def _normalized_rope_parameters(config: Mapping[str, Any]) -> dict[str, Any]:
+    theta = _effective_rope_theta(config)
+    params = config.get("rope_parameters")
+    if not isinstance(params, Mapping) or not params:
+        return {"rope_theta": theta, "rope_type": DEFAULT_ROPE_TYPE}
+    normalized = {str(key): value for key, value in params.items()}
+    normalized.setdefault("rope_theta", theta)
+    normalized.setdefault("rope_type", DEFAULT_ROPE_TYPE)
+    as_float = _as_float(normalized.get("rope_theta"))
+    if as_float is not None:
+        normalized["rope_theta"] = as_float
+    return normalized
+
+
+def _effective_layer_types(config: Mapping[str, Any]) -> list[str]:
+    types = config.get("layer_types")
+    layer_count = int(config.get("num_hidden_layers") or 0)
+    if types is None:
+        return [DEFAULT_LAYER_TYPE] * layer_count
+    return [str(item) for item in types]
+
+
+def config_field_equivalent(field: str, anchor: Mapping[str, Any], greedy: Mapping[str, Any]) -> bool:
+    """Treat Hugging Face save_pretrained rewrites as the same architecture."""
+    if field == "rope_theta":
+        return _effective_rope_theta(anchor) == _effective_rope_theta(greedy)
+    if field == "rope_parameters":
+        return _normalized_rope_parameters(anchor) == _normalized_rope_parameters(greedy)
+    if field == "layer_types":
+        return _effective_layer_types(anchor) == _effective_layer_types(greedy)
+    return False
+
+
+def can_alias_tied_lm_head(
+    anchor_keys: set[str],
+    greedy_keys: set[str],
+    anchor_config: Mapping[str, Any],
+    greedy_config: Mapping[str, Any],
+) -> bool:
+    """True when the only key-set gap is a tied lm_head omitted by one serializer."""
+    if not bool(anchor_config.get("tie_word_embeddings")):
+        return False
+    if not bool(greedy_config.get("tie_word_embeddings")):
+        return False
+    if TIED_EMBED_KEY not in anchor_keys or TIED_EMBED_KEY not in greedy_keys:
+        return False
+    extra = (anchor_keys - greedy_keys) | (greedy_keys - anchor_keys)
+    return extra == {TIED_LM_HEAD_KEY}
+
 
 def tokenizer_fingerprint(path: Path) -> dict[str, Any]:
     entries = []
@@ -79,6 +156,7 @@ def compare_checkpoints(
     require_non_floating_equal: bool,
     lineage_acknowledged: bool,
     tokenizer_path: Path | None = None,
+    allow_hf_serialization_drift: bool = False,
 ) -> dict[str, Any]:
     classifier = ParameterClassifier(layer_key_regex)
     errors: list[str] = []
@@ -92,19 +170,47 @@ def compare_checkpoints(
         anchor_config = anchor.config()
         greedy_config = greedy.config()
         config_differences: dict[str, Any] = {}
+        equivalent_config_fields: list[str] = []
         for field in CRITICAL_CONFIG_FIELDS:
-            if anchor_config.get(field) != greedy_config.get(field):
-                config_differences[field] = {
-                    "anchor": anchor_config.get(field),
-                    "greedy": greedy_config.get(field),
-                }
-        if config_differences:
-            errors.append(f"Critical config fields differ: {sorted(config_differences)}")
+            if anchor_config.get(field) == greedy_config.get(field):
+                continue
+            entry: dict[str, Any] = {
+                "anchor": anchor_config.get(field),
+                "greedy": greedy_config.get(field),
+            }
+            if allow_hf_serialization_drift and config_field_equivalent(
+                field, anchor_config, greedy_config
+            ):
+                entry["equivalent"] = True
+                equivalent_config_fields.append(field)
+            config_differences[field] = entry
+        blocking_config = {
+            field: value
+            for field, value in config_differences.items()
+            if not value.get("equivalent")
+        }
+        if blocking_config:
+            errors.append(f"Critical config fields differ: {sorted(blocking_config)}")
+        elif equivalent_config_fields:
+            warnings.append(
+                "Hugging Face serialization-equivalent config fields differ: "
+                f"{sorted(equivalent_config_fields)}"
+            )
 
         anchor_keys = set(anchor.keys)
         greedy_keys = set(greedy.keys)
         missing_in_anchor = sorted(greedy_keys - anchor_keys)
         missing_in_greedy = sorted(anchor_keys - greedy_keys)
+        aliased_tied_lm_head = bool(allow_hf_serialization_drift) and can_alias_tied_lm_head(
+            anchor_keys, greedy_keys, anchor_config, greedy_config
+        )
+        if aliased_tied_lm_head:
+            missing_in_anchor = [key for key in missing_in_anchor if key != TIED_LM_HEAD_KEY]
+            missing_in_greedy = [key for key in missing_in_greedy if key != TIED_LM_HEAD_KEY]
+            warnings.append(
+                "Tied lm_head.weight is present on only one checkpoint; "
+                f"aliasing {TIED_EMBED_KEY} for merge."
+            )
         if missing_in_anchor or missing_in_greedy:
             errors.append(
                 f"Tensor key sets differ: missing_in_anchor={len(missing_in_anchor)}, "
@@ -119,10 +225,16 @@ def compare_checkpoints(
         parameter_count = 0
         weight_bytes = 0
         delta_accumulators: dict[str, dict[str, float]] = {}
-        common_keys = sorted(anchor_keys & greedy_keys)
+        comparable_greedy_keys = set(greedy_keys)
+        if aliased_tied_lm_head and TIED_LM_HEAD_KEY in anchor_keys:
+            comparable_greedy_keys.add(TIED_LM_HEAD_KEY)
+        common_keys = sorted(anchor_keys & comparable_greedy_keys)
         for key in common_keys:
             a = anchor.get_tensor(key)
-            g = greedy.get_tensor(key)
+            if key in greedy_keys:
+                g = greedy.get_tensor(key)
+            else:
+                g = greedy.get_tensor(TIED_EMBED_KEY)
             if tuple(a.shape) != tuple(g.shape):
                 shape_mismatches.append({"key": key, "anchor": list(a.shape), "greedy": list(g.shape)})
                 continue
@@ -219,27 +331,53 @@ def compare_checkpoints(
         anchor_tokenizer = tokenizer_fingerprint(anchor_path)
         greedy_tokenizer = tokenizer_fingerprint(greedy_path)
         configured_tokenizer = tokenizer_fingerprint(tokenizer_path) if tokenizer_path else None
-        if anchor_tokenizer["files"] and greedy_tokenizer["files"]:
-            if anchor_tokenizer["files"] != greedy_tokenizer["files"]:
-                errors.append("Tokenizer file hashes differ between anchor and greedy checkpoints.")
         endpoint_tokenizers = [
             ("anchor", anchor_tokenizer),
             ("greedy", greedy_tokenizer),
         ]
-        if configured_tokenizer and configured_tokenizer["files"]:
+        use_configured_tokenizer = bool(
+            allow_hf_serialization_drift and configured_tokenizer and configured_tokenizer["files"]
+        )
+        if use_configured_tokenizer:
+            if (
+                anchor_tokenizer["files"]
+                and greedy_tokenizer["files"]
+                and anchor_tokenizer["files"] != greedy_tokenizer["files"]
+            ):
+                warnings.append(
+                    "Tokenizer file hashes differ between endpoints; generation uses "
+                    "models.tokenizer_path."
+                )
             for endpoint_name, endpoint_tokenizer in endpoint_tokenizers:
                 if (
                     endpoint_tokenizer["files"]
                     and endpoint_tokenizer["files"] != configured_tokenizer["files"]
                 ):
-                    errors.append(
-                        f"Configured tokenizer files differ from the {endpoint_name} checkpoint tokenizer."
+                    warnings.append(
+                        f"Configured tokenizer files differ from the {endpoint_name} "
+                        "checkpoint tokenizer; generation uses models.tokenizer_path."
                     )
-        elif not (anchor_tokenizer["files"] and greedy_tokenizer["files"]):
-            warnings.append(
-                "No complete tokenizer fingerprint was found in the endpoints or at "
-                "models.tokenizer_path; tokenizer compatibility could not be proven."
-            )
+        else:
+            if anchor_tokenizer["files"] and greedy_tokenizer["files"]:
+                if anchor_tokenizer["files"] != greedy_tokenizer["files"]:
+                    errors.append(
+                        "Tokenizer file hashes differ between anchor and greedy checkpoints."
+                    )
+            if configured_tokenizer and configured_tokenizer["files"]:
+                for endpoint_name, endpoint_tokenizer in endpoint_tokenizers:
+                    if (
+                        endpoint_tokenizer["files"]
+                        and endpoint_tokenizer["files"] != configured_tokenizer["files"]
+                    ):
+                        errors.append(
+                            f"Configured tokenizer files differ from the {endpoint_name} "
+                            "checkpoint tokenizer."
+                        )
+            elif not (anchor_tokenizer["files"] and greedy_tokenizer["files"]):
+                warnings.append(
+                    "No complete tokenizer fingerprint was found in the endpoints or at "
+                    "models.tokenizer_path; tokenizer compatibility could not be proven."
+                )
 
         delta_statistics = []
         for group_key, values in sorted(delta_accumulators.items()):
@@ -272,6 +410,8 @@ def compare_checkpoints(
             "greedy_tokenizer": greedy_tokenizer,
             "configured_tokenizer": configured_tokenizer,
             "critical_config_differences": config_differences,
+            "equivalent_config_fields": equivalent_config_fields,
+            "aliased_tied_lm_head": aliased_tied_lm_head,
             "tensor_key_count": len(common_keys),
             "parameter_count": parameter_count,
             "anchor_weight_bytes_unsharded": weight_bytes,

@@ -177,6 +177,9 @@ def main(argv: list[str] | None = None) -> int:
                         config.get("models.lineage_acknowledged", False)
                     ),
                     tokenizer_path=tokenizer_path,
+                    allow_hf_serialization_drift=bool(
+                        config.get("models.allow_hf_serialization_drift", False)
+                    ),
                 )
                 require_compatible(compatibility)
                 manifest = merge_checkpoints(
@@ -197,6 +200,9 @@ def main(argv: list[str] | None = None) -> int:
                         config.get("models.copy_non_floating_from", "anchor")
                     ),
                     overwrite=args.overwrite,
+                    allow_tied_lm_head_alias=bool(
+                        config.get("models.allow_hf_serialization_drift", False)
+                    ),
                     source_fingerprints={
                         "anchor": {
                             **anchor_provenance,

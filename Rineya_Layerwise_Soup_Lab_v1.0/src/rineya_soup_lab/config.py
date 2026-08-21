@@ -36,6 +36,7 @@ DEFAULT_CONFIG: dict[str, Any] = {
         "copy_non_floating_from": "anchor",
         "require_non_floating_equal": True,
         "allow_quantized_sources": False,
+        "allow_hf_serialization_drift": False,
         "lineage_acknowledged": False,
     },
     "datasets": {

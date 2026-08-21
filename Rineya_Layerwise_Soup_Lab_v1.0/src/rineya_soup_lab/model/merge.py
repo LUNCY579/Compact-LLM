@@ -23,6 +23,7 @@ from .checkpoint import (
     is_weight_filename,
     parse_size_gb,
 )
+from .compatibility import TIED_EMBED_KEY, TIED_LM_HEAD_KEY, can_alias_tied_lm_head
 from .layer_map import MergeRecipe, ParameterClassifier
 
 
@@ -74,6 +75,14 @@ def _copy_checkpoint_metadata(anchor_path: Path, destination: Path) -> None:
 
 
 
+def _read_maybe_tied(reader: CheckpointReader, key: str, *, alias_tied_lm_head: bool):
+    if key in reader.keys:
+        return reader.get_tensor(key)
+    if alias_tied_lm_head and key == TIED_LM_HEAD_KEY and TIED_EMBED_KEY in reader.keys:
+        return reader.get_tensor(TIED_EMBED_KEY)
+    raise CompatibilityError(f"Missing tensor {key}")
+
+
 def merge_checkpoints(
     anchor_path: Path,
     greedy_path: Path,
@@ -88,6 +97,7 @@ def merge_checkpoints(
     copy_non_floating_from: str = "anchor",
     overwrite: bool = False,
     source_fingerprints: Mapping[str, Any] | None = None,
+    allow_tied_lm_head_alias: bool = False,
 ) -> dict[str, Any]:
     if recipe.kind == "endpoint":
         raise ValueError("Endpoint recipes do not need materialization.")
@@ -123,11 +133,17 @@ def merge_checkpoints(
     try:
         _copy_checkpoint_metadata(anchor_path, temporary)
         with CheckpointReader(anchor_path) as anchor, CheckpointReader(greedy_path) as greedy:
-            if anchor.keys != greedy.keys:
+            alias_tied_lm_head = bool(allow_tied_lm_head_alias) and can_alias_tied_lm_head(
+                set(anchor.keys),
+                set(greedy.keys),
+                anchor.config(),
+                greedy.config(),
+            )
+            if set(anchor.keys) != set(greedy.keys) and not alias_tied_lm_head:
                 raise CompatibilityError("Checkpoint tensor keys changed after preflight.")
             for index, key in enumerate(anchor.keys, 1):
-                a = anchor.get_tensor(key)
-                g = greedy.get_tensor(key)
+                a = _read_maybe_tied(anchor, key, alias_tied_lm_head=alias_tied_lm_head)
+                g = _read_maybe_tied(greedy, key, alias_tied_lm_head=alias_tied_lm_head)
                 if tuple(a.shape) != tuple(g.shape):
                     raise CompatibilityError(f"Shape mismatch for {key}: {tuple(a.shape)} vs {tuple(g.shape)}")
                 location = classifier.classify(key)

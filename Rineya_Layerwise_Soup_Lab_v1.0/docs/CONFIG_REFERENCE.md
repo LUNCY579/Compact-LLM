@@ -22,6 +22,7 @@ The authoritative annotated example is `configs/experiment.example.yaml`.
 - `max_shard_size_gb`: safetensors shard target.
 - `require_non_floating_equal`: buffers must match unless explicitly disabled.
 - `allow_quantized_sources`: unsafe by default; merging dequantized weights is preferred.
+- `allow_hf_serialization_drift`: off by default. When true, treat Hugging Face `save_pretrained` rewrites as compatible: `rope_theta` vs `rope_parameters`, missing `layer_types` vs all-`full_attention`, a tied `lm_head.weight` aliased to `model.embed_tokens.weight`, and tokenizer-file hash drift when `tokenizer_path` is the generation source.
 - `lineage_acknowledged`: mandatory manual statement that endpoints share a compatible origin. Shape compatibility cannot prove common initialization.
 
 ## `datasets`
