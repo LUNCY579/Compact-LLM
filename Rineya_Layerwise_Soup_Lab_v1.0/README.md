@@ -74,6 +74,28 @@ Rineya_Layerwise_Soup_Lab_v1.0/
 └── README.md
 ```
 
+## Halo pair vs the 12-layer student study
+
+`configs/experiment.local.yaml` is the original **12-layer** Rineya student study (frozen_anchor × greedy soup). Do not use that file to compare against Halo.
+
+`configs/experiment.qwen3_halo_uncensored.yaml` is a **same-shape 28-layer** Qwen3 experiment:
+
+| Endpoint | Path | Uniform α on this pair |
+|---|---|---|
+| Anchor | official `Qwen3-0.6B/` | α=0 |
+| Greedy | vault Halo Uncensored (do not overwrite) | α=1 |
+| Halo control | implied blend on kept blocks | α=0.5 |
+
+Dropped Qwen3 blocks, embeddings, norm, and `lm_head` are identical on both endpoints, so they stay official Qwen3 at every α. Search is restricted to the 19 Phase 2B kept layer ids. Coefficients are chosen on chat DEV v4.5 (510), not on the frozen 64-example showcase. After freeze, `scripts/score_showcase_finalists.py` scores `uniform` / `global_best` / `layerwise_seed` / `layerwise_best` once on that showcase (descriptive only). Sealed TEST stays off. `models.allow_hf_serialization_drift` is on only for this pair: newer transformers rewrote Uncensored `config.json` and omitted tied `lm_head.weight`.
+
+On an 8GB GPU the Halo-pair run waits for other Python compute jobs, loads with `device_map=auto` and a VRAM cap, and deletes ephemeral candidate weights after each eval.
+
+```powershell
+rineya-soup run --config configs\experiment.qwen3_halo_uncensored.yaml --through preflight
+rineya-soup run --config configs\experiment.qwen3_halo_uncensored.yaml --run-dir runs\qwen3_halo_uncensored --through freeze
+python scripts\score_showcase_finalists.py --config configs\experiment.qwen3_halo_uncensored.yaml --run-dir runs\qwen3_halo_uncensored
+```
+
 A completed run contains:
 
 ```text
