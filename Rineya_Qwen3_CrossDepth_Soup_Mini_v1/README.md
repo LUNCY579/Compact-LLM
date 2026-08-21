@@ -44,6 +44,23 @@ $env:PYTHONUTF8 = "1"
 
 Resume is default. 50/50 hybrid and rematerialized 19L `model.safetensors` files are deleted after showcase eval; manifests stay. **Replace-kept** hybrids (`qwen3_replace_*`) keep their dense weights for later pair experiments.
 
+## Kept-layer α recipes (Halo donor)
+
+Same stitch geometry as Halo: average only the 19 kept decoder blocks, leave dropped Qwen3 layers plus embed / norm / lm_head unchanged. Recipes live in [`configs/alpha_recipes.json`](configs/alpha_recipes.json) (regenerate with `scripts/make_alpha_recipes.py`). `stitch_cross_depth.py` accepts `--alpha-json` (length-19 vector) or scalar `--alpha`.
+
+From the repo root. Do **not** export `CUDA_VISIBLE_DEVICES=-1` for this runner: stitch is forced onto CPU inside the script, then CUDA is unset for one bf16 showcase at a time.
+
+```powershell
+$env:PYTHONUTF8 = "1"
+.\.venv\Scripts\python.exe Rineya_Qwen3_CrossDepth_Soup_Mini_v1\scripts\run_alpha_recipes.py
+```
+
+Resume is default (`--only NAME` to finish a subset). Halo (`uniform_0.5`) and Halo Uncensored (`uniform_1.0`) copy existing reports and are not restitched. Hybrid safetensors are dropped unless hits ≥ Halo 30/64. Scoreboard: [`outputs/alpha_recipes/scoreboard.md`](outputs/alpha_recipes/scoreboard.md).
+
+2026-08-20 result: best new stitch is `late_rineya` **31/64** (+1 vs Halo). Below the +2 discuss floor. **Not vaulted.** `announcement.md` unchanged.
+
+## Phase evals (recorded 50/50 hybrids)
+
 Phase 1 chat quality + Phase 9 RAG DEV for the original three hybrids:
 
 ```powershell
