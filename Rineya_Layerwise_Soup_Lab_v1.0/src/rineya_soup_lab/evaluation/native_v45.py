@@ -12,7 +12,12 @@ from typing import Any, Mapping
 import torch
 
 from ..errors import EvaluationError
-from ..gpu import model_from_pretrained_kwargs, wait_for_python_gpu
+from ..gpu import (
+    apply_cuda_process_limit,
+    model_from_pretrained_kwargs,
+    should_wait_for_gpu,
+    wait_for_python_gpu,
+)
 from ..utils import append_jsonl, read_json, sha256_file, utc_timestamp, write_json
 from ..vendor.official_v45.quality_evaluation import (
     QUALITY_EVALUATION_VERSION,
@@ -237,8 +242,9 @@ def evaluate_model_bundled_v45(
     if protocol.get("require_cuda") and not torch.cuda.is_available():
         raise EvaluationError("CUDA is unavailable but this protocol requires CUDA.")
     release_cuda()
-    if protocol.get("wait_for_gpu", True):
+    if should_wait_for_gpu(protocol):
         wait_for_python_gpu(int(protocol.get("gpu_wait_poll_seconds", 60)))
+    apply_cuda_process_limit(protocol)
     seed = int(protocol.get("seed", 0))
     torch.manual_seed(seed)
     if torch.cuda.is_available():

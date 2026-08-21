@@ -1,7 +1,15 @@
-from rineya_soup_lab.gpu import competing_python_gpu_rows, model_from_pretrained_kwargs
+from rineya_soup_lab.gpu import (
+    competing_python_gpu_rows,
+    model_from_pretrained_kwargs,
+    resolve_gpu_memory_gib,
+    should_wait_for_gpu,
+)
 
 
-def test_model_kwargs_offload_cap(tmp_path) -> None:
+def test_model_kwargs_offload_cap(tmp_path, monkeypatch) -> None:
+    monkeypatch.delenv("RINEYA_MAX_MEMORY_GPU_GIB", raising=False)
+    monkeypatch.delenv("RINEYA_MAX_MEMORY_CPU_GIB", raising=False)
+    monkeypatch.setattr("rineya_soup_lab.gpu.gpu_memory_gib", lambda: (None, None))
     kwargs = model_from_pretrained_kwargs(
         {"max_memory_gpu_gib": 6, "max_memory_cpu_gib": 30, "device_map": "auto"},
         offload_root=tmp_path,
@@ -11,6 +19,23 @@ def test_model_kwargs_offload_cap(tmp_path) -> None:
     assert kwargs["max_memory"]["cpu"] == "30.0GiB"
     assert kwargs["low_cpu_mem_usage"] is True
     assert kwargs["offload_folder"].endswith("_hf_offload")
+
+
+def test_env_gpu_cap_overrides_yaml_and_clamps_to_free(monkeypatch) -> None:
+    monkeypatch.setenv("RINEYA_MAX_MEMORY_GPU_GIB", "3.5")
+    monkeypatch.setattr("rineya_soup_lab.gpu.gpu_memory_gib", lambda: (3.0, 8.0))
+    # free=5.0, headroom=0.75 -> clamp 3.5 stays 3.5
+    assert resolve_gpu_memory_gib({"max_memory_gpu_gib": 6}) == 3.5
+    monkeypatch.setattr("rineya_soup_lab.gpu.gpu_memory_gib", lambda: (6.5, 8.0))
+    # free=1.5, headroom=0.75 -> clamp to 0.75
+    assert abs(resolve_gpu_memory_gib({"max_memory_gpu_gib": 6}) - 0.75) < 1e-9
+
+
+def test_wait_flag_env(monkeypatch) -> None:
+    monkeypatch.delenv("RINEYA_WAIT_FOR_GPU", raising=False)
+    assert should_wait_for_gpu({"wait_for_gpu": True}) is True
+    monkeypatch.setenv("RINEYA_WAIT_FOR_GPU", "0")
+    assert should_wait_for_gpu({"wait_for_gpu": True}) is False
 
 
 def test_competing_python_gpu_filters_desktop(monkeypatch) -> None:
