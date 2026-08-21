@@ -1,0 +1,58 @@
+{
+  "generated_at": "2026-08-21T04:34:54Z",
+  "read_only_source": "C:\\Users\\clclc\\RineyaExperiment\\artifacts\\rineya-core-en32k-28L",
+  "local_copy": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_R2_CrossDepth_Soup_Mini_v1\\scaffolds\\rineya-core-en32k-28L",
+  "source_weights": {
+    "path": "C:\\Users\\clclc\\RineyaExperiment\\artifacts\\rineya-core-en32k-28L\\model.safetensors",
+    "bytes": 948078864,
+    "mtime_utc": "2026-08-19T16:09:30Z"
+  },
+  "copy_weights": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_R2_CrossDepth_Soup_Mini_v1\\scaffolds\\rineya-core-en32k-28L\\model.safetensors",
+    "bytes": 948078864,
+    "mtime_utc": "2026-08-19T16:09:30Z"
+  },
+  "sha256_match": true,
+  "sha256": "a6bc04ca357d446d092789c998ddae658a6e405946f6449ae68be28dbe10c562",
+  "scaffold_vocab_size": 32768,
+  "scaffold_layers": 28,
+  "checks": [
+    {
+      "left": "r2.layers.0",
+      "right": "pulse.layers.0",
+      "suffix_count": 11,
+      "missing_on_right": [],
+      "extra_on_right": [],
+      "shape_mismatches": [],
+      "ok": true
+    },
+    {
+      "left": "r2.layers.0",
+      "right": "aegis.layers.0",
+      "suffix_count": 11,
+      "missing_on_right": [],
+      "extra_on_right": [],
+      "shape_mismatches": [],
+      "ok": true
+    },
+    {
+      "left": "r2.layers.27",
+      "right": "pulse.layers.18",
+      "suffix_count": 11,
+      "missing_on_right": [],
+      "extra_on_right": [],
+      "shape_mismatches": [],
+      "ok": true
+    },
+    {
+      "left": "r2.layers.27",
+      "right": "aegis.layers.18",
+      "suffix_count": 11,
+      "missing_on_right": [],
+      "extra_on_right": [],
+      "shape_mismatches": [],
+      "ok": true
+    }
+  ],
+  "note": "RineyaExperiment was opened read-only. Embeddings are not compared; stitch does not blend them."
+}
