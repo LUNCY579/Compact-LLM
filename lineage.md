@@ -6,7 +6,7 @@ Weights live under `Rineya_Published_Cores/` (gitignored). Provenance is each co
 
 **Rule.** A model is “officially recorded” only after it has a vault directory, a `core_id`, and a `CORE.json`.
 
-Times are UTC unless marked otherwise. Last updated: 2026-08-19.
+Times are UTC unless marked otherwise. Last updated: 2026-08-21.
 
 ---
 
@@ -14,20 +14,23 @@ Times are UTC unless marked otherwise. Last updated: 2026-08-19.
 
 | When (UTC) | Event |
 |---|---|
-| 2026-08-02 | Phase 2B frontier used by Pulse’s soup (`phase_2b_quality_v4_full_20260802_213049`, stage 09 drop to 19 layers) |
-| 2026-08-05 | Pulse Phase 8 human commercial PASS (Cheng Li), version `1.0.0-rc1` |
+| 2026-08-02 | Phase 2B frontier used by Pulse 1.0 soup (`phase_2b_quality_v4_full_20260802_213049`, stage 09 drop to 19 layers) |
+| 2026-08-05 | Pulse 1.0 Phase 8 human commercial PASS (Cheng Li), version `1.0.0-rc1` |
 | 2026-08-16 | Dual-SFT v1 mix seed `20260816`; Aegis QLoRA train label `teacher_dual_sft_v1_lr5e4` |
 | 2026-08-17 | Aegis dual-SFT v1 `5e-4` LR freeze accepted |
-| 2026-08-19 00:23:36–00:23:42 | Vault **Pulse** |
+| 2026-08-19 00:23:36–00:23:42 | Vault **Pulse 1.0.0-rc1** (19L) |
 | 2026-08-19 00:23:45–00:25:16 | Vault **Aegis** |
 | 2026-08-19 18:55:44–18:57:31 | Vault **Halo** |
 | 2026-08-19 18:57–20:41 | 28L Phase 1 chat DEV + Phase 9 RAG DEV |
-| 2026-08-19 19:54:38–19:54:56 | Vault **Nimbus** |
+| 2026-08-19 19:54:38–19:54:56 | Vault **Nimbus 1.3.0** (Aegis donor) |
 | 2026-08-19 19:54:59–19:56:26 | Vault **Lyra** |
 | 2026-08-19 ~20:47 | Human DEV chat pass for Aegis / Halo / Nimbus / Lyra |
 | 2026-08-19 20:58:42–21:00:00 | Vault **Halo Uncensored** |
+| 2026-08-20 | Halo-donor kept-layer α recipes; best stitch `late_rineya` 31/64 |
+| 2026-08-20 | Soup-lab Qwen3 × Halo Uncensored; `global_best` = uniform α=0.40 |
+| 2026-08-21 01:14 | Roster replace: archive Pulse 1.0 + Nimbus 1.3; vault **Pulse 1.6** (`late_rineya`) and **Nimbus 1.6** (`global_best`) |
 
-Open next items (copy, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md).
+Open next items (HF upload, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md).
 
 ---
 
@@ -35,59 +38,45 @@ Open next items (copy, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md).
 
 | Name | Version | Layers | Stitch α | Donor | Role |
 |---|---|---:|---:|---|---|
-| Pulse | 1.0.0-rc1 | 19 | — | Phase 8 accepted teacher (copy) | Commercial 1.0 short-chat teacher |
-| Aegis | 1.1.0-devfreeze | 19 | — | Pulse + v1@5e-4 LoRA | 19L dual-skill (chat + grounded RAG) |
+| Pulse | 1.6.0-devfreeze | 28 | shape mean 0.5 | Halo donor (`late_rineya`) | 28L family; long-context stitch |
+| Aegis | 1.1.0-devfreeze | 19 | — | archived Pulse 1.0 + v1@5e-4 LoRA | 19L dual-skill (chat + grounded RAG) |
 | Halo | 1.2.0-devfreeze | 28 | 0.5 | v1@5e-4 + v2@1e-4 soup | 28L family; Halo donor blend |
-| Nimbus | 1.3.0-devfreeze | 28 | 0.5 | vault Aegis | 28L family; Aegis donor blend |
+| Nimbus | 1.6.0-devfreeze | 28 | 0.40 uniform | Halo Uncensored endpoint | 28L family; soup-lab global_best |
 | Lyra | 1.4.0-devfreeze | 28 | 0.5 | v1@5e-4 + v1@1e-5 soup | 28L family; cooler-LR v1 soup blend |
 | Halo Uncensored | 1.5.0-devfreeze | 28 | 1.0 | same donor as Halo | Uncensored pair for Halo (kept blocks replaced) |
 
-Pulse is a dense copy of the Phase 8 teacher. Aegis is that same base with teacher dual-SFT v1 `5e-4` LoRA merged in. Halo, Nimbus, and Lyra are 28-layer Qwen3 with kept blocks 50/50-averaged against different 19-layer donors. Halo Uncensored uses the same Halo donor with kept blocks **fully replaced** (α=1.0). Sources were not overwritten.
+Active **Pulse** and **Nimbus** keep the roster names but are new 28L stitches (2026-08-21). The Phase 8 19L teacher and the prior Aegis-donor Nimbus live under `_superseded/`. Aegis ancestry still uses the archived Pulse 1.0 teacher.
 
 | Recorded (UTC) | Name | Status | Local directory | Weight SHA-256 (prefix) |
 |---|---|---|---|---|
-| 2026-08-19 00:23:36 | **Pulse** | Phase 8 human commercial PASS | `Rineya_Published_Cores/Rineya-Pulse-1.0.0-rc1` | `58ce704c…` |
+| 2026-08-21 01:14:07 | **Pulse** | 1.6.0 roster replace; sealed TEST not run | `Rineya_Published_Cores/Rineya-Pulse-1.6.0-devfreeze` | `2357574d…` |
 | 2026-08-19 00:25:16 | **Aegis** | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Aegis-1.1.0-devfreeze` | `15fab4e7…` |
 | 2026-08-19 18:55:44 | **Halo** | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze` | `38fb96fe…` |
-| 2026-08-19 19:54:38 | **Nimbus** | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Nimbus-1.3.0-devfreeze` | `7ae45098…` |
+| 2026-08-21 01:14:12 | **Nimbus** | 1.6.0 roster replace; sealed TEST not run | `Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze` | `7b66b8d0…` |
 | 2026-08-19 19:54:59 | **Lyra** | public announcement ready; sealed TEST not run | `Rineya_Published_Cores/Rineya-Lyra-1.4.0-devfreeze` | `87c57b8e…` |
 | 2026-08-19 21:00:00 | **Halo Uncensored** | recorded uncensored pair for Halo | `Rineya_Published_Cores/Rineya-Halo-Uncensored-1.5.0-devfreeze` | `c5d4a17f…` |
 
 ---
 
-## Pulse (`rineya.core.pulse.v1.0.0-rc1.19L.454M.dense`)
+## Pulse (`rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape`)
 
-**Spectrum.** 19-layer Qwen3 dense checkpoint, hidden size 1024, ~454M, `model.safetensors` 1,817,909,640 bytes. Local one-line context-faithful chat. Dynamic sparse routing is not in this release. Commercial **1.0** stays on Pulse.
+**Spectrum.** Official **28-layer Qwen3-0.6B** with Phase-2B-kept decoder blocks blended against the Halo donor using the non-uniform **`late_rineya`** α shape (mean 0.5; α rises with depth). Dropped Qwen3 layers plus embed / final norm / tied lm_head stay official Qwen3. Showcase **31/64**. Dual composite DEV **0.7561**.
 
 **Official dates**
 
 | When | Event |
 |---|---|
-| 2026-08-02 | Phase 2B frontier used by the soup (`phase_2b_quality_v4_full_20260802_213049`, stage 09 drop to 19 layers) |
-| 2026-08-05 | Phase 8 human PASS, reviewer Cheng Li, version `1.0.0-rc1` (`reports/PHASE_8_STOP_GATE.md`) |
-| 2026-08-19 00:23:36–00:23:42 | Copied into the published-cores vault (CPU, sources unmodified) |
+| 2026-08-20 | CrossDepth α-recipe sweep; `late_rineya` best new stitch (31/64) |
+| 2026-08-21 01:14:07 | Vault write as **Pulse 1.6.0**; archived prior Pulse 1.0.0-rc1 under `_superseded/` |
 
-**Base model (ancestry, in order)**
+**Base / ingredients**
 
-1. Hugging Face **`Qwen/Qwen3-0.6B`** (~28 decoder layers, ~600M). Alibaba pretraining; not a local dataset.
-2. Local dense teacher after Phase 2B reduction **28 → 19** layers:  
-   `short-response-model-phase-0-1-2/artifacts/phase_2b_quality_v4_full_20260802_213049/frontier/stage_09_drop_14_24_6_23_8_10_18_9_7/model`
-3. Phase 4 greedy soup (equal 0.5 / 0.5) of LoRA ingredients **`seed_37` + `seed_49`**, merged to a full HF checkpoint:  
-   `short-response-model-phase-0-1-2/artifacts/phase_4_model_soups_phase2c_balanced_training/accepted_model`  
-   (soup manifest also records that `seed_23` and `phase3_primary` were tried and rejected)
-4. Vault copy **Pulse** (same weight SHA as that accepted model: `58ce704c729485fc8a83094c432a0e591959187587ba2b5eab9809c23d402b68`)
+1. Official **`Qwen3-0.6B`** (28L)
+2. Halo donor = Pulse-teacher soup of dual-SFT **v1@5e-4 + v2@1e-4** (same donor lineage as Halo)
+3. Lab weights: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/artifacts/alpha_recipes/late_rineya`
+4. Vault SHA `2357574db5557c288f57a6b97b2761830ea265baf3c6a1c0270357a7d0eaa322`
 
-**All local datasets in this lineage**
-
-| Stage | Dataset | Path | Rows / notes |
-|---|---|---|---|
-| Phase 0–1 / 2C base SFT | Original short-response train | `short-response-model-phase-0-1-2/data/train/train.jsonl` | 2,950 |
-| Phase 2C recovery add-on | Targeted concise-reasoning templates | mixed into `short-response-model-phase-0-1-2/data/phase_2c_targeted_recovery/train.jsonl` | +124 → **3,074** train |
-| Phase 2C eval mix | Recovery DEV | `…/data/phase_2c_targeted_recovery/dev.jsonl` | 570 (510 base DEV + 60) |
-| Phase 2B probe (reduction, not SFT mix) | Structural probe | `short-response-model-phase-0-1-2/data/phase_2_structural_reduction/probe_150_thorough_v2.jsonl` | probe-only |
-| Held-out eval (not training) | Chat DEV / sealed | `data/dev/dev.jsonl` (510), `data/sealed/sealed.jsonl` (110) | never mix into train |
-
-Pulse itself is a **merge of adapters**, not a new SFT run. The soup ingredients were trained on the Phase 2C train mix above, on the reduced 19-layer teacher.
+**Superseded Pulse 1.0.0-rc1** (19L Phase 8 teacher, SHA `58ce704c…`) remains the dense base for **Aegis** and the commercial PASS artifact. Do not delete `_superseded/Rineya-Pulse-1.0.0-rc1`.
 
 ---
 
@@ -157,9 +146,30 @@ Halo **inherits Pulse’s Phase 0–4 lineage** plus those two dual-SFT mixes **
 
 ---
 
-## Nimbus (`rineya.core.nimbus.v1.3.0-devfreeze.28L.qwen3-crossdepth-aegis`)
+## Nimbus (`rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40`)
 
-**Spectrum.** Official **28-layer Qwen3-0.6B** with the 19 Phase-2B-kept decoder blocks 50/50-averaged against vault **Aegis**. Dropped Qwen3 layers plus embed / final norm / tied lm_head stay official Qwen3.
+**Spectrum.** Official **28-layer Qwen3-0.6B** with **uniform global α=0.40** toward vault **Halo Uncensored** (soup-lab alias `global_best`, candidate `cand_d1b08a8faf299ce4`). Showcase **29/64**. Dual composite DEV **0.7444**. Chat DEV quality **0.8649**.
+
+**Official dates**
+
+| When | Event |
+|---|---|
+| 2026-08-20 | Soup-lab global stage accepted α=0.40 on chat DEV v4.5 |
+| 2026-08-21 | CPU showcase 29/64 + dual chat/RAG fill-in |
+| 2026-08-21 01:14:12 | Vault write as **Nimbus 1.6.0**; archived prior Nimbus 1.3.0 under `_superseded/` |
+
+**Base / ingredients**
+
+1. Official **`Qwen3-0.6B`** (α=0 endpoint)
+2. Vault **Halo Uncensored 1.5.0** (α=1 endpoint)
+3. Lab weights: `Rineya_Layerwise_Soup_Lab_v1.0/runs/qwen3_halo_uncensored/candidate_cache/cand_d1b08a8faf299ce4`
+4. Vault SHA `7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c` (bf16 preserve-anchor serialization)
+
+**Superseded Nimbus 1.3.0** was the Aegis-donor 50/50 stitch (24/64). Kept under `_superseded/Rineya-Nimbus-1.3.0-devfreeze`.
+
+### Prior Nimbus 1.3.0 (archived)
+
+**Spectrum (historical).** Official **28-layer Qwen3-0.6B** with the 19 Phase-2B-kept decoder blocks 50/50-averaged against vault **Aegis**. Dropped Qwen3 layers plus embed / final norm / tied lm_head stay official Qwen3.
 
 **Official dates**
 
@@ -235,6 +245,7 @@ These exist on disk. They are not vault entries.
 | Student **greedy** dual-SFT v2 | Finished CPU LoRA 2026-08-18 window (`student_dual_sft_v2_greedy`, 44,410 rows) | 12-layer `phase_9_capability_composition_v22_lr1e4_s1200/track_d_greedy_soup/final_model` | Same v2 mix. Real RAG DEV dropped vs baseline; not a publish candidate |
 | Student **frozen-anchor** dual-SFT v2 | CPU train in progress | `…/frozen_anchor` | Same v2 mix |
 | Qwen3 **replace-kept** Aegis / Lyra-donor (α=1.0) | Lab stitch 2026-08-19; weights kept, **not vaulted** | 28L Qwen3 + Nimbus/Lyra donors | Showcase 23 / 30. Oracle abstain 0.30 / 0.29. Halo-donor replace is vaulted as **Halo Uncensored**. |
+| Halo-donor kept-layer **α recipes** | Lab 2026-08-20 UTC; **not vaulted** | Same Halo donor (v1@5e-4 + v2@1e-4) on the 19 kept Qwen3 layers; dropped layers untouched | Frozen showcase 64, bf16. Uniform 0.5 = Halo 30/64 (reused). Uniform 1.0 = Halo Uncensored 31/64 (reused). Best new stitch `late_rineya` 31/64 (+1 vs Halo; CF pair 0.4375). Below +2 hit floor. See `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/alpha_recipes/scoreboard.md`. |
 
 ---
 

@@ -6,7 +6,9 @@ Numbers only. No ranking. Geometry, recipes, and dates live in [`lineage.md`](li
 
 Every named family core appears in every table: Pulse, Aegis, Halo, Nimbus, Lyra, Halo Uncensored.
 
-Last compiled: 2026-08-19.
+Last compiled: 2026-08-21.
+
+**Roster note (2026-08-21).** Active **Pulse** = 1.6.0 (`late_rineya`, 28L). Active **Nimbus** = 1.6.0 (soup-lab `global_best` α=0.40). Prior Pulse 1.0 / Nimbus 1.3 are under `_superseded/`. Phase 8 sealed-chat row below is the **archived** Pulse 1.0 teacher only.
 
 ---
 
@@ -38,23 +40,23 @@ Last compiled: 2026-08-19.
 
 | Name | Hits / 64 | Strict exact | First-line exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | ≤12-word rate | Mean response words |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Pulse | 0/64 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.3125 | 0.9062 | **5.0625** |
+| Pulse | **31/64** | **0.4844** | **0.4844** | **0.1250** | **0.4375** | **0.5000** | 0.6250 | 0.9062 | 3.2188 |
 | Aegis | 4/64 | 0.0625 | 0.0625 | 0.0000 | 0.0000 | 0.0625 | 0.5625 | **1.0000** | 2.6094 |
-| Halo | 30/64 | 0.4688 | 0.4688 | **0.1250** | **0.3750** | 0.4375 | 0.5625 | 0.9062 | 3.2500 |
-| Nimbus | 24/64 | 0.3750 | 0.3750 | **0.1250** | 0.1250 | 0.2500 | 0.4375 | 0.9062 | 3.1719 |
+| Halo | 30/64 | 0.4688 | 0.4688 | **0.1250** | 0.3750 | 0.4375 | 0.5625 | 0.9062 | 3.2500 |
+| Nimbus | 29/64 | 0.4531 | 0.4531 | **0.1250** | 0.3125 | 0.3750 | 0.4375 | 0.9219 | 3.0781 |
 | Lyra | 28/64 | 0.4375 | 0.4375 | **0.1250** | 0.3125 | 0.4375 | 0.6250 | 0.9062 | 3.2344 |
-| Halo Uncensored | **31/64** | **0.4844** | **0.4844** | 0.0000 | **0.3750** | **0.5625** | **0.6875** | 0.9844 | 2.5781 |
+| Halo Uncensored | **31/64** | **0.4844** | **0.4844** | 0.0000 | 0.3750 | **0.5625** | **0.6875** | 0.9844 | 2.5781 |
 
-Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. ≤12-word source values: Pulse / Halo / Nimbus / Lyra `0.90625`; Halo Uncensored `0.984375`.
+Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. Pulse 1.6 source: `…/alpha_recipes/late_rineya_report.json`. Nimbus 1.6 source: `…/lab_fillins_cpu/showcase/global_best_report.json`.
 
 ### By variant (strict exact, 16 rows each)
 
 | Name | Base | Paraphrase | Counterfactual | Unanswerable |
 |---|---:|---:|---:|---:|
-| Pulse | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| Pulse | **0.5625** | 0.6875 | **0.5625** | **0.1250** |
 | Aegis | 0.1250 | 0.0625 | 0.0625 | 0.0000 |
 | Halo | 0.5000 | 0.6875 | **0.5625** | **0.1250** |
-| Nimbus | 0.2500 | 0.6875 | 0.4375 | **0.1250** |
+| Nimbus | 0.4375 | 0.6875 | **0.5625** | **0.1250** |
 | Lyra | 0.4375 | 0.6875 | 0.5000 | **0.1250** |
 | Halo Uncensored | **0.5625** | **0.8750** | 0.5000 | 0.0000 |
 
@@ -62,10 +64,10 @@ Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. �
 
 | Name | Hard (n=40) | Medium (n=24) |
 |---|---:|---:|
-| Pulse | 0.0000 | 0.0000 |
+| Pulse | 0.3750 | **0.6667** |
 | Aegis | 0.1000 | 0.0000 |
 | Halo | 0.3500 | **0.6667** |
-| Nimbus | 0.3000 | 0.5000 |
+| Nimbus | 0.3750 | 0.5833 |
 | Lyra | 0.3250 | 0.6250 |
 | Halo Uncensored | **0.4250** | 0.5833 |
 
@@ -73,21 +75,21 @@ Coverage is 64/64 on all six. All-four-variants-correct is 0.0000 on all six. �
 
 | Name | Distributed | Early | Late | Middle |
 |---|---:|---:|---:|---:|
-| Pulse | 0.0000 | 0.0000 | 0.0000 | 0.0000 |
+| Pulse | **0.7500** | 0.1875 | **0.6250** | 0.3750 |
 | Aegis | 0.0000 | 0.0625 | 0.1875 | 0.0000 |
-| Halo | **0.6875** | 0.1875 | **0.6250** | 0.3750 |
-| Nimbus | 0.6250 | 0.1250 | 0.5000 | 0.2500 |
-| Lyra | **0.6875** | 0.1250 | **0.6250** | 0.3125 |
+| Halo | 0.6875 | 0.1875 | **0.6250** | 0.3750 |
+| Nimbus | **0.7500** | 0.1875 | 0.5000 | 0.3750 |
+| Lyra | 0.6875 | 0.1250 | **0.6250** | 0.3125 |
 | Halo Uncensored | 0.6250 | **0.2500** | **0.6250** | **0.4375** |
 
 ### By length bucket (strict exact)
 
 | Name | Compact long (n=32) | Extended long (n=16) | Standard long (n=16) |
 |---|---:|---:|---:|
-| Pulse | 0.0000 | 0.0000 | 0.0000 |
+| Pulse | 0.4375 | **0.6250** | 0.4375 |
 | Aegis | 0.0938 | 0.0000 | 0.0625 |
-| Halo | 0.4375 | **0.5625** | 0.4375 |
-| Nimbus | 0.3438 | 0.3750 | 0.4375 |
+| Halo | 0.4375 | 0.5625 | 0.4375 |
+| Nimbus | 0.4063 | 0.5625 | 0.4375 |
 | Lyra | 0.4063 | 0.5000 | 0.4375 |
 | Halo Uncensored | **0.4688** | 0.3750 | **0.6250** |
 
@@ -119,30 +121,44 @@ Bold = largest in this table, including the official scale models.
 
 | Name | Hits / 64 | Strict exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | All-four | ≤12-word |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Pulse | 0/64 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.0000 | 0.9062 |
+| Pulse | **31/64** | **0.4844** | **0.1250** | **0.4375** | **0.5000** | 0.0000 | 0.9062 |
 | Aegis | 4/64 | 0.0625 | 0.0000 | 0.0000 | 0.0625 | 0.0000 | **1.0000** |
-| Nimbus | 24/64 | 0.3750 | 0.1250 | 0.1250 | 0.2500 | 0.0000 | 0.9062 |
+| Nimbus | 29/64 | 0.4531 | 0.1250 | 0.3125 | 0.3750 | 0.0000 | 0.9219 |
 | Lyra | 28/64 | 0.4375 | 0.1250 | 0.3125 | 0.4375 | 0.0000 | 0.9062 |
 | Halo | 30/64 | 0.4688 | 0.1250 | 0.3750 | 0.4375 | 0.0000 | 0.9062 |
-| Halo Uncensored | 31/64 | 0.4844 | 0.0000 | 0.3750 | 0.5625 | 0.0000 | 0.9844 |
+| Halo Uncensored | **31/64** | **0.4844** | 0.0000 | 0.3750 | 0.5625 | 0.0000 | 0.9844 |
 | Qwen3-0.6B | 14/64 | 0.2188 | 0.1875 | 0.1250 | 0.1250 | 0.0000 | 0.8906 |
 | Qwen3-4B (NF4) | 43/64 | 0.6719 | 0.3125 | 0.6875 | 0.6875 | 0.2500 | 0.9219 |
 | Qwen3-8B (NF4) | **53/64** | **0.8281** | **0.4375** | **0.9375** | **0.9375** | **0.4375** | 0.9844 |
 
 ---
 
+## Lab history: Halo-donor α recipes (Pulse 1.6 source)
+
+`late_rineya` is now vaulted as **Pulse 1.6.0**. Other recipes stay lab-only. Source: [`Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/alpha_recipes/scoreboard.md`](Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/alpha_recipes/scoreboard.md).
+
+| Recipe | Family | Mean α | Hits / 64 | Notes |
+|---|---|---:|---:|---|
+| `late_rineya` | shape mean 0.5 | 0.5000 | 31/64 | **→ Pulse 1.6.0** |
+| `uniform_0.5` (Halo) | uniform | 0.5000 | 30/64 | vault Halo |
+| soup-lab `global_best` α=0.40 | uniform | 0.4000 | 29/64 | **→ Nimbus 1.6.0** |
+
+---
+
 ## Dual composite (recorded formula)
 
-`0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain`. Pulse has no recorded composite in SELECTION_REPORT.
+`0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain`.
 
 | Name | Dual composite |
 |---|---:|
-| Pulse | — |
+| Pulse | 0.7561 |
 | Aegis | **0.8382** |
 | Halo | 0.7381 |
-| Nimbus | 0.7814 |
+| Nimbus | 0.7444 |
 | Lyra | 0.7445 |
 | Halo Uncensored | 0.6823 |
+
+Pulse / Nimbus dual numbers: [`…/lab_fillins_cpu/scoreboard.md`](Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/lab_fillins_cpu/scoreboard.md).
 
 ---
 
@@ -150,14 +166,14 @@ Bold = largest in this table, including the official scale models.
 
 | Name | Chat Q | Task adequacy | Median tok | P90 tok | Duplicate rate | 1-sentence viol. | Legacy heur. | Intel pass | Hard fails | Safety | Min Q | Quality pass (diag.) |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Pulse | 0.7984 | 0.2952 | 7.0 | — | — | — | — | — | — | — | — | — |
+| Pulse | 0.8612 | 0.5067 | 9.0 | 15.0 | 0.3353 | 0.4529 | — | **1.0000** | **0** | — | — | — |
 | Aegis | 0.8594 | 0.4978 | — | — | — | — | — | — | — | — | — | — |
 | Halo | 0.8619 | 0.5117 | **11.0** | 17.0 | 0.3627 | **0.5294** | 0.9850 | **1.0000** | **0** | **1.0000** | **0.39** | 0.9961 |
-| Nimbus | 0.8602 | 0.5032 | **11.0** | **18.0** | 0.3627 | 0.5196 | 0.9837 | **1.0000** | **0** | **1.0000** | **0.39** | **0.9980** |
+| Nimbus | 0.8649 | 0.5204 | **11.0** | **18.0** | 0.3392 | 0.5275 | 0.9784 | **1.0000** | **0** | — | — | **0.9980** |
 | Lyra | **0.8667** | **0.5289** | **11.0** | 17.0 | 0.3412 | **0.5294** | 0.9869 | **1.0000** | **0** | **1.0000** | **0.39** | 0.9961 |
 | Halo Uncensored | 0.8603 | 0.5035 | 9.0 | 12.0 | **0.4353** | 0.4451 | **0.9987** | **1.0000** | **0** | **1.0000** | **0.39** | **0.9980** |
 
-Pulse / Aegis columns beyond SELECTION_REPORT were not stored in that report. 28L `contract_fulfillment` on this chat DEV is 1.0000 for Halo, Nimbus, Lyra, and Halo Uncensored.
+Pulse / Nimbus 1.6 from `lab_fillins_cpu/*/chat_dev/summary.json`. Aegis beyond SELECTION_REPORT was not stored in that report.
 
 ### Quality dimensions (v4.5 means)
 
@@ -180,10 +196,10 @@ Pulse / Aegis: only `task_adequacy` is in SELECTION_REPORT. Other dimension cell
 
 | Name | Oracle supp | Real supp | Oracle abstain | Real abstain | Oracle proc | Real proc | Oracle unsup. confident | Real unsup. confident | RAG hard fails | RAG intel pass | RAG mean Q |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Pulse | 0.3189 | 0.1774 | 0.0000 | — | — | 0.0667 | — | — | — | — | — |
+| Pulse | 0.8509 | 0.6208 | 0.8705 | **0.7266** | 0.7267 | 0.7133 | — | — | — | — | — |
 | Aegis | **1.0000** | **0.7358** | **1.0000** | — | — | **0.9533** | — | — | — | — | — |
 | Halo | 0.8472 | 0.6283 | 0.6906 | **0.7266** | 0.7133 | 0.7000 | 0.3094 | **0.2734** | 0 | **1.0000** | 0.6560 |
-| Nimbus | 0.8906 | 0.6736 | 0.8273 | **0.7266** | **0.8667** | 0.8600 | 0.1727 | **0.2734** | 2 | 0.9987 | **0.6771** |
+| Nimbus | 0.8434 | 0.6075 | 0.7770 | **0.7266** | 0.7000 | 0.6933 | — | — | — | — | — |
 | Lyra | 0.8415 | 0.6283 | 0.7266 | **0.7266** | 0.6933 | 0.7000 | 0.2734 | **0.2734** | 0 | **1.0000** | 0.6620 |
 | Halo Uncensored | 0.8698 | 0.6491 | 0.0000 | **0.7266** | 0.7933 | 0.7733 | **1.0000** | **0.2734** | **9** | 0.9940 | 0.6295 |
 
@@ -204,13 +220,13 @@ Oracle conflict explicit acknowledgment is 1.0000 for the four 28L cores. Real_r
 
 ---
 
-## Phase 8 sealed chat (110; Pulse protocol)
+## Phase 8 sealed chat (110; archived Pulse 1.0.0-rc1 only)
 
-Different control than dual-skill DEV (`one_sentence` vs `eos_only`). Not mixed into the DEV tables.
+Different control than dual-skill DEV (`one_sentence` vs `eos_only`). Applies to **`_superseded/Rineya-Pulse-1.0.0-rc1`**, not active Pulse 1.6.0.
 
 | Name | Cases | Chat Q | Task adequacy | Intel pass | Hard fails | Safety | Median tok | P90 tok | Duplicate rate | Quality pass (diag.) | Min Q |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Pulse | **110** | **0.8524** | **0.4743** | **1.0000** | **0** | **1.0000** | **7.0** | **12.0** | **0.3909** | **1.0000** | **0.71** |
+| Pulse 1.0 (archived) | **110** | **0.8524** | **0.4743** | **1.0000** | **0** | **1.0000** | **7.0** | **12.0** | **0.3909** | **1.0000** | **0.71** |
 | Aegis | — | — | — | — | — | — | — | — | — | — | — |
 | Halo | — | — | — | — | — | — | — | — | — | — | — |
 | Nimbus | — | — | — | — | — | — | — | — | — | — | — |
