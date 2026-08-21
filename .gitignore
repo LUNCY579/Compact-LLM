@@ -135,3 +135,20 @@ Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*.log
 Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/**/results.jsonl
 Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/**/evaluation_progress.json
 Rineya_Teacher_Soup_Mini_v1/outputs/*.log
+
+# R2 32K cross-depth lab: keep manifests, ignore dense weights / tokenizer dumps
+!Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/
+!Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**
+Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**/*.safetensors
+Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**/*.bin
+Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**/tokenizer.json
+Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**/vocab.json
+Rineya_R2_CrossDepth_Soup_Mini_v1/artifacts/**/merges.txt
+Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/*.safetensors
+Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/*.bin
+Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/tokenizer.json
+Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/vocab.json
+Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/merges.txt
+Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/*.log
+Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/results.jsonl
+Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/evaluation_progress.json
