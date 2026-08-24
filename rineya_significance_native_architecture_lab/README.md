@@ -38,6 +38,7 @@ implementation and results are not evidence about Halo or this local runtime.
 | Literature/novelty audit | `NO_NOVELTY_CLAIM` | scoped audit completed; experimental distinction only |
 | Broad Halo confirmatory protocol | `DRAFT_NOT_REGISTERED`; `NOT_RUN` | local endpoint-validation registration is narrower and does not register this protocol |
 | Halo bounded mini evaluation | `PASS` execution; `NO_MEASURABLE_GAIN` descriptively | 3 fixed exploratory cases; no inferential statistics |
+| Halo complete showcase-64 evaluation | `PASS` execution; B3-over-B2 `NULL_AT_CLUSTER_LEVEL` | all 64 showcase cases; B0 30/64, B3 19/64, B2 17/64; 16-pack contrast `p=1.0`; unregistered |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -107,6 +108,31 @@ statistics, and no frozen exact-evidence metric, this is descriptive exploratory
 evidence only—not a positive, equivalence, family-wide, or confirmatory claim.
 The answer key was opened only after all inference and the unscored prediction
 artifact had been written.
+
+## Completed Halo showcase-64 evaluation
+
+[`halo_showcase64_eval_v1`](results/runs/halo_showcase64_eval_v1) is the first
+Cornerstone-1 run to cover the **complete** 64-case showcase split (16 scenario
+packs x four variants), rather than the three base-variant cases of the mini
+evaluation. It reuses `run_published_core_eval.execute_condition` unchanged, so
+both runs share one audited execution path. `run_showcase64_eval.py` is a
+sibling script; the three-case evaluator and its recorded artifact are untouched.
+
+| Condition | Strict exact | unanswerable |
+|---|---:|---:|
+| B0 full cache | 30/64 = `0.469` | 2/16 |
+| B3 `e=1` | 19/64 = `0.297` | 0/16 |
+| B2 `e=0` | 17/64 = `0.266` | 1/16 |
+
+B3's two-answer edge over B2 is null at the correct unit: 4 case-level wins and
+2 losses (`p=0.6875`) collapse to 2 packs better, 2 worse, and 12 tied
+(`p=1.0`), because the four wins fall in only two scenario packs. Compression
+cost 17.2 accuracy points while holding a median 32.0% of B0's entries and
+33.7% of its KV bytes. Halo's full-cache `0.469` compares with `0.219` for the
+recorded `qwen3_06b_showcase` baseline on identical cases, key, and scorer.
+The run is exploratory and unregistered: no frozen endpoint, no advance gate,
+no inferential claim, and no published-family result.
+See [SHOWCASE64_EVAL_REPORT.md](SHOWCASE64_EVAL_REPORT.md).
 
 ## Halo calibration and retention pilot
 
@@ -412,6 +438,7 @@ confirmation.
 - [SIGNIFICANCE_CAUSAL_ANALYSIS.md](SIGNIFICANCE_CAUSAL_ANALYSIS.md)
 - [EVIDENCE_ENDPOINT_CALIBRATION.md](EVIDENCE_ENDPOINT_CALIBRATION.md)
 - [ENDPOINT_VALIDATION_V2_RESULT.md](ENDPOINT_VALIDATION_V2_RESULT.md)
+- [SHOWCASE64_EVAL_REPORT.md](SHOWCASE64_EVAL_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
 - [ATTENTION_PRIOR_QUALITY_REPORT.md](ATTENTION_PRIOR_QUALITY_REPORT.md)

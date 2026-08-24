@@ -1,0 +1,132 @@
+{
+  "answer_key_opened_only_after_all_inference": true,
+  "benchmark_scope": "complete 64-case Rineya Long Context Demo showcase split",
+  "classification": "BOUNDED_EXPLORATORY",
+  "conditions": [
+    "B0",
+    "B2",
+    "B3"
+  ],
+  "descriptive_results": {
+    "B0": {
+      "by_variant": {
+        "base": {
+          "cases": 16,
+          "correct_cases": 8,
+          "exact_accuracy": 0.5
+        },
+        "counterfactual": {
+          "cases": 16,
+          "correct_cases": 9,
+          "exact_accuracy": 0.5625
+        },
+        "paraphrase": {
+          "cases": 16,
+          "correct_cases": 11,
+          "exact_accuracy": 0.6875
+        },
+        "unanswerable": {
+          "cases": 16,
+          "correct_cases": 2,
+          "exact_accuracy": 0.125
+        }
+      },
+      "cases": 64,
+      "correct_cases": 30,
+      "exact_accuracy": 0.46875,
+      "full_cache_conditioned_correctness": {
+        "applicable": false,
+        "reason": "B0 is the full-cache capability reference"
+      },
+      "total_inference_wall_seconds": 471.3836919000132
+    },
+    "B2": {
+      "by_variant": {
+        "base": {
+          "cases": 16,
+          "correct_cases": 4,
+          "exact_accuracy": 0.25
+        },
+        "counterfactual": {
+          "cases": 16,
+          "correct_cases": 4,
+          "exact_accuracy": 0.25
+        },
+        "paraphrase": {
+          "cases": 16,
+          "correct_cases": 8,
+          "exact_accuracy": 0.5
+        },
+        "unanswerable": {
+          "cases": 16,
+          "correct_cases": 1,
+          "exact_accuracy": 0.0625
+        }
+      },
+      "cases": 64,
+      "correct_cases": 17,
+      "exact_accuracy": 0.265625,
+      "full_cache_conditioned_correctness": {
+        "accuracy": 0.5666666666666667,
+        "correct_cases": 17,
+        "eligible_cases": 30
+      },
+      "total_inference_wall_seconds": 401.4409269999978
+    },
+    "B3": {
+      "by_variant": {
+        "base": {
+          "cases": 16,
+          "correct_cases": 5,
+          "exact_accuracy": 0.3125
+        },
+        "counterfactual": {
+          "cases": 16,
+          "correct_cases": 5,
+          "exact_accuracy": 0.3125
+        },
+        "paraphrase": {
+          "cases": 16,
+          "correct_cases": 9,
+          "exact_accuracy": 0.5625
+        },
+        "unanswerable": {
+          "cases": 16,
+          "correct_cases": 0,
+          "exact_accuracy": 0.0
+        }
+      },
+      "cases": 64,
+      "correct_cases": 19,
+      "exact_accuracy": 0.296875,
+      "full_cache_conditioned_correctness": {
+        "accuracy": 0.6333333333333333,
+        "correct_cases": 19,
+        "eligible_cases": 30
+      },
+      "total_inference_wall_seconds": 402.0776739999983
+    }
+  },
+  "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+  "inferential_statistics": null,
+  "interpretation_limits": [
+    "The complete showcase split was evaluated, but this run is exploratory and unregistered.",
+    "No endpoint was frozen, no advance gate was declared, and no confidence interval or hypothesis test is reported.",
+    "Scenario packs contain four correlated variants; the 64 rows are not 64 independent observations.",
+    "B0 is an instrumented full-cache behavioral control; its temporary query probes are rolled back and do not select cache entries.",
+    "CPU timing is local-run accounting, not a deployment or GPU latency claim.",
+    "Results describe Halo 1.2.0 only and support no published-family claim."
+  ],
+  "manual_greedy_decode": true,
+  "model_scope": "Rineya Halo 1.2.0 devfreeze only (Qwen3-0.6B source base)",
+  "paired_answer_counts": {
+    "B3_vs_B2": {
+      "losses": 2,
+      "net": 2,
+      "wins": 4
+    }
+  },
+  "registration": "NONE_EXPLORATORY_UNREGISTERED",
+  "schema_version": "1.0",
+  "status": "PASS"
+}

@@ -1,0 +1,446 @@
+{
+  "artifacts": {
+    "cases": "cases.jsonl",
+    "manifest": "manifest.json",
+    "predictions_B0": "showcase64_halo_B0.jsonl",
+    "predictions_B2": "showcase64_halo_B2.jsonl",
+    "predictions_B3": "showcase64_halo_B3.jsonl",
+    "predictions_partial": "predictions.partial.jsonl",
+    "resolved_config": "resolved_config.yaml",
+    "summary": "summary.json",
+    "unscored_predictions": "predictions.unscored.jsonl"
+  },
+  "benchmark": {
+    "answer_key_join_order": "opened_after_unscored_predictions_were_written",
+    "answer_key_sha256_after_inference": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "budget": {
+    "by_condition": {
+      "B0": {
+        "compression_boundaries": [
+          4,
+          5
+        ],
+        "resident_entries_after_prefill": [
+          1130,
+          1132,
+          1133,
+          1143,
+          1145,
+          1152,
+          1156,
+          1161,
+          1163,
+          1164,
+          1166,
+          1169,
+          1173,
+          1178,
+          1179,
+          1195,
+          1199,
+          1204,
+          1322,
+          1328,
+          1332,
+          1333,
+          1346,
+          1347,
+          1363,
+          1371,
+          1376,
+          1386,
+          1390,
+          1395,
+          1483,
+          1484,
+          1487,
+          1491,
+          1495,
+          1497,
+          1498,
+          1501,
+          1502,
+          1504
+        ]
+      },
+      "B2": {
+        "compression_boundaries": [
+          4,
+          5
+        ],
+        "resident_entries_after_prefill": [
+          298,
+          304,
+          308,
+          309,
+          322,
+          323,
+          339,
+          347,
+          352,
+          362,
+          364,
+          365,
+          366,
+          371,
+          375,
+          377,
+          384,
+          388,
+          393,
+          395,
+          396,
+          398,
+          401,
+          405,
+          410,
+          411,
+          427,
+          431,
+          436,
+          459,
+          460,
+          463,
+          467,
+          471,
+          473,
+          474,
+          477,
+          478,
+          480
+        ]
+      },
+      "B3": {
+        "compression_boundaries": [
+          4,
+          5
+        ],
+        "resident_entries_after_prefill": [
+          298,
+          304,
+          308,
+          309,
+          322,
+          323,
+          339,
+          347,
+          352,
+          362,
+          364,
+          365,
+          366,
+          371,
+          375,
+          377,
+          384,
+          388,
+          393,
+          395,
+          396,
+          398,
+          401,
+          405,
+          410,
+          411,
+          427,
+          431,
+          436,
+          459,
+          460,
+          463,
+          467,
+          471,
+          473,
+          474,
+          477,
+          478,
+          480
+        ]
+      }
+    },
+    "comparison_note": "B2 and B3 share the same resident-entry budget; B0 is full cache.",
+    "kv_only_bytes": null,
+    "matched": false,
+    "resident_entries": null,
+    "total_persistent_bytes": null
+  },
+  "completed_at": "2026-08-24T23:23:34.857206Z",
+  "config": {
+    "resolved_path": "resolved_config.yaml",
+    "sha256": "4d6220391294d314e25e83689f1311f13a703748ff432f670d753e33b585d6e3",
+    "source_path": "rineya_significance_native_architecture_lab/configs/halo_showcase64_eval.yaml"
+  },
+  "created_at": "2026-08-24T23:01:30.302058Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "experiment": {
+    "architecture_variant": "B0 full cache / B2 e=0 / B3 e=1",
+    "benchmark": "Rineya Long Context Demo showcase split (complete)",
+    "compute_tier": "B",
+    "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+    "name": "halo_published_core_cornerstone1_showcase64_eval",
+    "query_conditioned": true,
+    "seed": 17
+  },
+  "model": {
+    "architecture": "Qwen3ForCausalLM",
+    "checkpoint_aggregate_sha256": "bb6ea14775432c5de3eda200b4c09eb69a672fe8307ddffe7e89c8e5827ba477",
+    "checkpoint_files": {
+      "chat_template": {
+        "path": "chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      "config": {
+        "path": "config.json",
+        "sha256": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85"
+      },
+      "core": {
+        "path": "CORE.json",
+        "sha256": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b"
+      },
+      "generation_config": {
+        "path": "generation_config.json",
+        "sha256": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48"
+      },
+      "tokenizer": {
+        "path": "tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      "tokenizer_config": {
+        "path": "tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      "weights": {
+        "path": "model.safetensors",
+        "sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      }
+    },
+    "hashes": {
+      "chat_template": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "Complete 64-case showcase split: 16 scenario packs x 4 variants.",
+    "Exploratory and unregistered; no frozen endpoint, advance gate, or inferential statistics.",
+    "Scenario-pack variants are correlated; 64 rows are not 64 independent observations.",
+    "All conditions share identical prompt tokens, chunking, query tokens, probe boundaries, and manual greedy decoding.",
+    "B0 query probes are instrumentation-only because no entries are evicted.",
+    "Halo 1.2.0 only; no Halo Uncensored, Lyra, Nimbus, Pulse, R2, or Aegis result is implied.",
+    "Compression semantics are imported unchanged from run_published_core_eval.execute_condition."
+  ],
+  "repositories": {
+    "chatbubble": {
+      "commit": "eb8e433f68de929ed9c5eefc97e5b16b3bf261d6",
+      "dirty": true,
+      "remote": "https://github.com/LUNCY579/ChatBubble.git"
+    },
+    "source": {
+      "implementation": {
+        "blob": "30ee29724dce52de5a288f6421123fb718240541",
+        "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+        "path": "scripts/kv/significance.py",
+        "ref": "refs/heads/main"
+      },
+      "paper": {
+        "blob": "b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3",
+        "commit": "1664f54de0bbdfde45e311b75bbf3038dbfffe42",
+        "path": "paper/significance_matrix/main.tex",
+        "ref": "refs/heads/r2-healing-harness"
+      },
+      "remote": "https://github.com/LUNCY579/RineyaBeta.git"
+    }
+  },
+  "resolved_config": {
+    "_source_config_path": "rineya_significance_native_architecture_lab/configs/halo_showcase64_eval.yaml",
+    "attention_prior": {
+      "enabled": false
+    },
+    "benchmark": {
+      "case_selection": "complete_split_no_subsetting",
+      "expected_case_count": 64,
+      "external_scorer": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+      "external_scorer_note": "Per-condition prediction files are emitted in the demonstration suite's own {id, prediction} format so the suite's scorer produces metrics directly comparable with the existing qwen3_8b, qwen3_4b, qwen3_06b, aegis, and greedy_soup_v2 showcase baselines.",
+      "name": "Rineya Long Context Demo showcase split (complete)",
+      "prompt_only_during_inference": true,
+      "selection_rationale": "The complete showcase split is 16 scenario packs x 4 variants (base, paraphrase, counterfactual, unanswerable). Evaluating the whole split avoids the base-variant-only coverage of the earlier three-case mini evaluation.",
+      "split": "showcase",
+      "truncation": "forbidden"
+    },
+    "cache": {
+      "compress_only_at_boundaries": true,
+      "compression_chunk_tokens": 256,
+      "final_chunk_left_resident": true,
+      "recent_tokens": 64,
+      "retained_history_budget": 256,
+      "schedule_note": "Showcase prompts are 1130-1504 tokens, so this schedule yields four to five chunks and three to four real compression boundaries per case.",
+      "sink_tokens": 4,
+      "total_budget_slots": 256
+    },
+    "conditions": [
+      {
+        "exponent": null,
+        "id": "B0",
+        "label": "instrumented_full_cache",
+        "policy": "full_cache",
+        "query_conditioned": true
+      },
+      {
+        "exponent": 0.0,
+        "id": "B2",
+        "label": "raw_accumulation",
+        "policy": "significance",
+        "query_conditioned": true
+      },
+      {
+        "exponent": 1.0,
+        "id": "B3",
+        "label": "observation_normalization",
+        "policy": "significance",
+        "query_conditioned": true
+      }
+    ],
+    "controller": {
+      "enabled": false,
+      "type": "none"
+    },
+    "experiment": {
+      "classification": "BOUNDED_EXPLORATORY",
+      "compute_tier": "B",
+      "name": "halo_published_core_cornerstone1_showcase64_eval",
+      "purpose": "Descriptively compare a full-cache Halo control with raw and observation-normalized Cornerstone-1 retention across the complete 64-case Rineya Long Context Demo showcase split. This run is exploratory and unregistered: it freezes no endpoint, declares no advance gate, and reports no inferential statistics."
+    },
+    "memory_slots": {
+      "count": 0,
+      "enabled": false
+    },
+    "model": {
+      "allowed_core_ids": [
+        "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4"
+      ],
+      "checkpoint_files": {
+        "chat_template": "chat_template.jinja",
+        "config": "config.json",
+        "core": "CORE.json",
+        "generation_config": "generation_config.json",
+        "tokenizer": "tokenizer.json",
+        "tokenizer_config": "tokenizer_config.json",
+        "weights": "model.safetensors"
+      },
+      "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+      "expected_architecture": "Qwen3ForCausalLM",
+      "expected_hashes": {
+        "chat_template": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+        "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+        "core": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b",
+        "generation_config": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48",
+        "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+        "tokenizer_config": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e",
+        "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      },
+      "expected_head_dim": 128,
+      "expected_hidden_size": 1024,
+      "expected_kv_heads": 8,
+      "expected_layers": 28,
+      "expected_query_heads": 16,
+      "expected_source_base": "Qwen3-0.6B",
+      "expected_vocab_size": 151936,
+      "trust_remote_code": false
+    },
+    "outputs": {
+      "cases": "cases.jsonl",
+      "manifest": "manifest.json",
+      "resolved_config": "resolved_config.yaml",
+      "summary": "summary.json",
+      "unscored_predictions": "predictions.unscored.jsonl"
+    },
+    "paths": {
+      "answer_key": "Rineya_Long_Context_Demo_v1/data/showcase_answer_key.jsonl",
+      "base": "repository_root",
+      "model": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+      "output_root": "rineya_significance_native_architecture_lab/results/runs/halo_showcase64_eval_v1",
+      "prompts": "Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl",
+      "tokenizer": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze"
+    },
+    "prompt": {
+      "add_generation_prompt": true,
+      "add_special_tokens_after_rendering": false,
+      "enable_thinking": false,
+      "rendering": "chat_template"
+    },
+    "protocol": {
+      "answer_key_access": "after_all_inference_and_unscored_artifact",
+      "broad_claims": false,
+      "execution_mode": "closed_loop_model_execution",
+      "inferential_statistics": false,
+      "registration": "none_this_run_is_exploratory"
+    },
+    "query": {
+      "access_fairness": "identical_across_B0_B2_B3",
+      "max_tokens": 64,
+      "mode": "conditioned",
+      "probe_schedule": "every_nonfinal_chunk_boundary",
+      "rendering": "raw_question_no_special_tokens"
+    },
+    "runtime": {
+      "attention_implementation": "sdpa",
+      "baseline_parity_note": "seed 17, greedy decoding, enable_thinking=false, and max_new_tokens=24 match Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py defaults so the B0 full-cache control is comparable with the recorded showcase baselines.",
+      "batch_size": 1,
+      "decoding": "manual_greedy",
+      "deterministic": true,
+      "device": "cpu",
+      "dtype": "bfloat16",
+      "max_new_tokens": 24,
+      "seed": 17,
+      "verify_query_rollback": true
+    },
+    "schema_version": "1.0",
+    "significance": {
+      "enabled": true,
+      "enabled_for_selection": true,
+      "exponent": 1.0,
+      "exposure_mode": "realized",
+      "score_pooling": {
+        "enabled": false,
+        "width": 1
+      },
+      "selection_granularity": "kv_head"
+    }
+  },
+  "run_id": "halo_showcase64_eval_v1",
+  "runtime": {
+    "attention_implementation": "sdpa",
+    "device": "cpu",
+    "hardware": {
+      "dependencies": {
+        "PyYAML": "6.0.3",
+        "matplotlib": "3.11.1",
+        "numpy": "2.4.6",
+        "scikit-learn": "1.9.0",
+        "scipy": "1.17.1",
+        "torch": "2.12.1+cu126",
+        "transformers": "5.14.1"
+      },
+      "logical_cpu_count": 32,
+      "platform": "Windows-10-10.0.26200-SP0",
+      "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+      "python": "3.11.15",
+      "python_implementation": "CPython"
+    },
+    "manual_greedy": true,
+    "precision": "bfloat16",
+    "python": "3.11.15",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1"
+  },
+  "schema_version": "1.0",
+  "status": "COMPLETE"
+}
