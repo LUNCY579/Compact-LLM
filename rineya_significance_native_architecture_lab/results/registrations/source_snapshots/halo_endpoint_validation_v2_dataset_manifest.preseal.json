@@ -1,0 +1,40 @@
+{
+  "artifacts": {
+    "evaluation.jsonl": "e83e2469ab8e49866b32b17f926c3d13ec156b4d6f552b29452270e4c92dc161",
+    "inference.jsonl": "45ede8d349b57d7d1962e39d90888044624003232bfe915027e6a44f8cbbc8a2"
+  },
+  "case_count": 24,
+  "claim_limit": "Dataset construction only; no B0 or compression outcome.",
+  "classification": "DIFFICULTY_REDESIGN_AFTER_V1_B0_FAILURE_BEFORE_COMPRESSION",
+  "config_sha256": "5b6bd2742f2e0d78c0d40158a35b4ab2c57c48645ad592ca241501fdfd227a8b",
+  "difficulty": {
+    "R1_required_facts": 2,
+    "R3_updates": 3,
+    "R4": "unchanged"
+  },
+  "families": [
+    "R1",
+    "R3",
+    "R4"
+  ],
+  "independent_cluster_count": 24,
+  "model_target": "Rineya-Halo-1.2.0-devfreeze",
+  "schema_version": "1.0",
+  "seeds": [
+    600,
+    611,
+    630,
+    634,
+    635,
+    637,
+    649,
+    657
+  ],
+  "separation_check": {
+    "inference_contains_answer": false,
+    "inference_contains_evidence_annotation": false,
+    "join_key": "case_id"
+  },
+  "status": "PROSPECTIVE_ENDPOINT_VALIDATION_V2_DATASET_BUILT",
+  "tokenizer_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+}

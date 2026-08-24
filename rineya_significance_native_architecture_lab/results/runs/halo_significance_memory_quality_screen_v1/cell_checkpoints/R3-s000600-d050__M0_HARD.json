@@ -1,0 +1,135 @@
+{
+  "plan_fingerprint": "0edf71a1e4a6600803013276e0535cad5705c858e99a4d606cdae2ed75c8b2c5",
+  "result": {
+    "accounting": {
+      "chunk_size": 128,
+      "compression_boundaries": 3,
+      "compression_reports": [
+        {
+          "after_entries_per_layer": 128,
+          "before_entries_per_layer": 128,
+          "compressed_layers": 0,
+          "evictions_per_layer": 0
+        },
+        {
+          "after_entries_per_layer": 128,
+          "before_entries_per_layer": 256,
+          "compressed_layers": 28,
+          "evictions_per_layer": 128
+        },
+        {
+          "after_entries_per_layer": 128,
+          "before_entries_per_layer": 256,
+          "compressed_layers": 28,
+          "evictions_per_layer": 128
+        }
+      ],
+      "final_active_chunk_entries": 89,
+      "input_tokens": 473,
+      "memory_layer_writes": 0,
+      "memory_write_boundaries": 0,
+      "prefill_memory_attention": {
+        "attention_calls": 0,
+        "augmented_key_lengths": [],
+        "calls_with_valid_slots": 0,
+        "max_valid_slots_per_batch_head": 0
+      },
+      "resident_entries_after_decode": 248,
+      "scoring_events_per_layer": [
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3,
+        3
+      ],
+      "true_length_after_decode": 504
+    },
+    "budget": {
+      "condition_boundary_slack_bytes": 0,
+      "condition_boundary_total_bytes": 15368192,
+      "condition_realized_slack_bytes": 0,
+      "condition_realized_total_persistent_bytes": 29775872,
+      "m0_boundary_total_bytes": 15368192,
+      "m0_fixed_decode_capacity_bytes": 29775872,
+      "match_basis": "fixed_capacity_at_each_compression_boundary_and_fixed_decode_reserve",
+      "matched_total_persistent_bytes": true,
+      "ordinary_bytes_per_budget_unit": 120064
+    },
+    "case_id": "R3-s000600-d050",
+    "cluster_id": "R3-s000600",
+    "condition": "M0_HARD",
+    "decode_cache_appends": 31,
+    "decode_trajectory_sha256": "9f9d29c8e2501bdfe47d7c9f8332248a19eea92b52d19bee51d56a100c5a7312",
+    "efficiency": {
+      "alignment_metadata_bytes": 888832,
+      "architecture_total_persistent_bytes": 29775872,
+      "kv_bytes": 28442624,
+      "memory_kv_bytes": 0,
+      "memory_metadata_bytes": 0,
+      "memory_slot_bytes": 0,
+      "ordinary_total_bytes": 29775872,
+      "peak_rss_bytes": 2207158272,
+      "peak_vram_bytes": 0,
+      "sampled_peak_rss_bytes": 2207158272,
+      "significance_matrix_bytes": 444416,
+      "total_persistent_bytes": 29775872,
+      "wall_seconds_for_audit_only": 5.2187911000000895
+    },
+    "family": "R3",
+    "fixed_decode_steps": 32,
+    "generated_tokens": 5,
+    "memory_attention_calls": 0,
+    "memory_attention_calls_with_valid_slots": 0,
+    "memory_slots": "memory_slots/R3-s000600-d050__M0_HARD.npz",
+    "memory_slots_per_layer_kv_head": 0,
+    "memory_slots_sha256": "3e8207c309e54496c3497d2feea33db639bd10d5a5fd7357b76e09f290454f95",
+    "memory_state_sha256": "b40199ea4716ca1ad70979bc4df995dd3cddc81f08f3eb5620c70bf0f54f8fe7",
+    "memory_variant": "normalized_significance",
+    "ordinary_retained_history_budget": 128,
+    "post_eos_accounting_appends": 27,
+    "prediction": "Room 10",
+    "query_access": {
+      "compression_boundaries": 3,
+      "mode": "conditioned",
+      "probe_schedule": "every_nonfinal_chunk_boundary",
+      "prompt_input_tokens": 473,
+      "query_probe_token_evaluations": 48,
+      "query_token_sha256": "f2e7693e8aa5978748dc3ef2e2c13a7e6765d4a23a0c603fef4d5e9691075fe6",
+      "query_tokens_per_probe": 16
+    },
+    "resident_positions": "resident_positions/R3-s000600-d050__M0_HARD.npz",
+    "resident_positions_sha256": "195c7e99479855a635763630e4b4f100ff704824948ba875d55bfc153a222c93",
+    "selection_count_exponent": 1.0,
+    "stop_reason": "eos_token",
+    "timing": {
+      "decode_wall_seconds_for_audit_only": 3.248338800000056,
+      "latency_claim_allowed": false,
+      "prefill_wall_seconds_for_audit_only": 1.9704523000000336
+    }
+  },
+  "result_sha256": "6b74173155664432d8d5fabe0feb83543d5a2984aec2b126ec9b9557444356a0",
+  "schema_version": "1.0"
+}

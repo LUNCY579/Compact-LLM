@@ -1,0 +1,128 @@
+{
+  "cell_id": "R1-s000116-d050__c0512__B3",
+  "completed_at": "2026-08-24T06:03:43.249962Z",
+  "plan_fingerprint": "75f1acf569176db75fd5c55c7d5b348448dc727f1d241fedf3f000a9d7f74b13",
+  "result": {
+    "accounting": {
+      "boundary_accounting": [
+        {
+          "absolute_token_position": 361,
+          "boundary_index": 0,
+          "history_entries_before_probe": 361,
+          "resident_after_compression": 128,
+          "temporary_query_entries": 11
+        }
+      ],
+      "compression_reports": [
+        {
+          "after_entries_per_layer": 128,
+          "before_entries_per_layer": 361,
+          "compressed_layers": 28,
+          "evictions_per_layer": 233
+        }
+      ],
+      "decode_cache_appends": 25,
+      "max_transient_resident_entries": 372,
+      "resident_entries_after_decode": 217,
+      "resident_entries_after_prefill": 192
+    },
+    "case_id": "R1-s000116-d050",
+    "cell_id": "R1-s000116-d050__c0512__B3",
+    "cluster_id": "R1-s000116",
+    "count_exponent": 1.0,
+    "efficiency": {
+      "alignment_metadata_bytes": 777728,
+      "architecture_total_persistent_bytes": 26053888,
+      "decode_wall_seconds": 2.0112126000000217,
+      "kv_only_bytes": 24887296,
+      "peak_rss_bytes": 1828589568,
+      "peak_vram_bytes": 0,
+      "prefill_wall_seconds": 0.7256536999999526,
+      "sampled_peak_rss_bytes": 1828589568,
+      "significance_matrix_bytes": 388864,
+      "total_persistent_bytes": 26053888,
+      "wall_seconds": 2.764380699999947
+    },
+    "family": "R1",
+    "generated_tokens": 26,
+    "held_constant": {
+      "absolute_position_ids_sha256": "9ec4084cdf9ac309ef3d137d6058c5fdac378c2a00c648e3aa93487a1483dddd",
+      "attention_implementation": "sdpa",
+      "decoding": "manual_greedy",
+      "device": "cpu",
+      "dtype": "bfloat16",
+      "input_token_sha256": "787f83ad0ed95bee802ac73e6b8fbfef7f113fc2b3e9e31fb05858333da31b4f",
+      "max_new_tokens": 32,
+      "model_identity_sha256": "e3314056e92eb671321afc94cbb4117f5b9d345403ff0be5a3db777a23e4101b",
+      "prompt_sha256": "a634c898d38ffb1ab427623f218efcc46d573e2f60e2b1289bf0f346efc97f6d",
+      "query_text_sha256": "36e5dcaad1527541b9cd4d47838d5a6ecdc01b616521d29891e52626e531e667",
+      "query_token_sha256": "8dbbef423faed2c6b21e3435b98d36a046198222f9804ff3e001954a342e4faf",
+      "recent_tokens": 32,
+      "retained_history_budget": 128,
+      "seed": 17,
+      "sink_tokens": 4,
+      "terminal_active_tokens": 64
+    },
+    "method": "B3",
+    "plan_fingerprint": "75f1acf569176db75fd5c55c7d5b348448dc727f1d241fedf3f000a9d7f74b13",
+    "prediction": "K0 = 65, K1 = 11.  \nK0 + K1 = 76.",
+    "query_access": {
+      "query_probe_token_evaluations": 11,
+      "query_probes": 1,
+      "query_tokens_per_probe": 11,
+      "scoring_events_per_layer": [
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1,
+        1
+      ]
+    },
+    "resident_positions": "resident_positions/R1-s000116-d050__c0512__B3.npz",
+    "resident_positions_sha256": "41f88adfae61a6cd2a1ebd84853d1fd4dd4ae975eaa44ac05dd03406c2f9678e",
+    "schedule": {
+      "boundary_positions": [
+        361
+      ],
+      "chunk_sizes": [
+        361,
+        64
+      ],
+      "compression_rounds": 1,
+      "final_resident_entries": 192,
+      "input_tokens": 425,
+      "prefix_chunk_tokens": 512,
+      "prefix_tokens": 361,
+      "retained_history_budget": 128,
+      "schedule_id": "c0512",
+      "terminal_active_tokens": 64
+    },
+    "schedule_id": "c0512",
+    "stop_reason": "eos_token"
+  },
+  "result_sha256": "c99e5c3d1f55275affa6451d0181fcd50bb46f939d39a9db481eb696a44cedad",
+  "schema_version": "1.0"
+}

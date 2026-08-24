@@ -1,0 +1,111 @@
+schema_version: "1.0"
+
+experiment:
+  name: tier_a_state_and_policy_validation
+  status: NOT_RUN
+  evidence_class: NOT_RUN
+  compute_tier: A
+  purpose: Validate state alignment, ranking, controls, trace replay, and byte accounting without model inference.
+
+protocol:
+  execution_mode: open_loop_trace_simulation
+  source_semantics_verified: true
+  source_runtime_fidelity_status: NOT_RUN
+
+provenance:
+  chatbubble_commit: 03777703dd8587f1248d9a72115eafb9356d50b8
+  source_remote: https://github.com/LUNCY579/RineyaBeta.git
+  implementation_ref: refs/heads/main
+  implementation_commit: 9e00be74098878290dc2b0d54cbffee4652c6088
+  implementation_path: scripts/kv/significance.py
+  implementation_blob: 30ee29724dce52de5a288f6421123fb718240541
+  paper_ref: refs/heads/r2-healing-harness
+  paper_commit: 1664f54de0bbdfde45e311b75bbf3038dbfffe42
+
+paths:
+  base: package_root
+  model: null
+  tokenizer: null
+  benchmark: null
+  output_root: results/runs/tier_a
+
+runtime:
+  device: cpu
+  model_inference: false
+  seed: 17
+  deterministic: true
+  workers: 1
+
+synthetic_state:
+  batch_size: 1
+  layers: 4
+  query_heads: 4
+  kv_heads: 2
+  head_dim: 8
+  initial_tokens: 64
+  incoming_tokens_per_round: 16
+  rounds: 12
+  resident_budget: 48
+  dtype: float32
+
+significance:
+  enabled: true
+  exponent: 1.0
+  exponent_grid: [0.0, 0.25, 0.5, 0.75, 1.0]
+  exposure_mode: realized
+  query_conditioned: false
+  source_semantics_verified: true
+  score_pooling:
+    enabled: false
+    width: 1
+  selection_granularity: kv_head
+  stable_tie_break: absolute_position
+
+query:
+  mode: agnostic
+
+cache:
+  total_budget_slots: 48
+  sink_tokens: 4
+  recent_tokens: 8
+  matched_total_persistent_bytes: true
+
+attention_prior:
+  enabled: false
+  lambda: 0.0
+
+memory_slots:
+  enabled: false
+  count: 0
+
+controller:
+  enabled: false
+  type: none
+
+controls:
+  - true_realized_count
+  - constant_count
+  - age_derived_count
+  - shuffled_count
+  - wrong_token_count
+  - delayed_count
+  - noisy_count
+  - head_averaged_count
+  - shuffled_significance
+  - random_selection
+
+checks:
+  cache_state_alignment: true
+  count_gather_alignment: true
+  stable_tie_breaking: true
+  exact_rollback: true
+  budget_conservation: true
+  deterministic_replay: true
+  byte_accounting: true
+
+outputs:
+  resolved_config: resolved_config.yaml
+  manifest: manifest.json
+  summary: summary.json
+  cases: cases.jsonl
+  traces: traces

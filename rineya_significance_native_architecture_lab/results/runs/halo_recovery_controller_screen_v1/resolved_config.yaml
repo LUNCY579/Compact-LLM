@@ -1,0 +1,134 @@
+accounting:
+  fallback_runs_sequentially_after_compressed_path: true
+  input_token_dtype_bytes: 8
+  kv_dtype_bytes: 2
+  kv_tensor_count: 2
+  open_loop_wall_time_source: recorded_same_prompt_full_cache_reference_chunk256
+  persistent_bytes: K_plus_V_plus_S_plus_C_plus_alignment_for_compressed_and_K_plus_V_for_full
+  smoke_wall_time_source: live_process_perf_counter
+adaptive_head_budget:
+  enabled: false
+attention_prior:
+  enabled: false
+  lambda: 0.0
+cache:
+  compressed_retained_history_budget: 128
+  compression_chunk_tokens: 128
+  query_conditioned: true
+  recent_tokens: 32
+  recovery_cache: full_no_eviction_fresh_from_position_zero
+  score_pooling_width: 1
+  significance_exponent: 1.0
+  sink_tokens: 4
+  total_budget_slots: 128
+controller:
+  decision_rule: recover_if_risk_greater_than_or_equal_to_threshold
+  enabled: true
+  learned_parameters: 0
+  recovery_action: recompute_full_cache
+  smoke_case_selection: lowest_risk_accept_and_highest_risk_recover_without_outcome_access
+  smoke_threshold: midpoint_of_minimum_and_maximum_saved_preanswer_risk
+  type: deterministic_fixed_threshold
+experiment:
+  classification: EXPLORATORY_ARCHITECTURE_E
+  compute_tier: A_then_B_smoke
+  name: halo_significance_controlled_recovery_v1
+  purpose: Test whether answer-blind Cornerstone-1 state can rank compressed-run risk,
+    then prove a deterministic controller can literally accept an unchanged compressed
+    path or trigger a fresh full-cache Halo recomputation.
+memory_slots:
+  count: 0
+  enabled: false
+model:
+  allowed_core_ids:
+  - rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_architecture: Qwen3ForCausalLM
+  expected_hashes:
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+  expected_head_dim: 128
+  expected_hidden_size: 1024
+  expected_kv_heads: 8
+  expected_layers: 28
+  expected_query_heads: 16
+  expected_source_base: Qwen3-0.6B
+  expected_vocab_size: 151936
+  trust_remote_code: false
+paths:
+  base: repository_root
+  full_cache_run: rineya_significance_native_architecture_lab/results/runs/halo_capability_calibration_v2
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  prompt_only_inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/inference.jsonl
+  screen_output: rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1
+  smoke_output: rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_smoke_v1
+  source_run: rineya_significance_native_architecture_lab/results/runs/halo_count_causal_controls_v2
+protocol:
+  answer_access: only_after_pre_answer_features_are_durable
+  broad_quality_claims: false
+  cluster_correctness_aggregation: all_cases_correct
+  cluster_risk_aggregation: maximum
+  confirmatory: false
+  controller_training: none
+  execution_mode: closed_loop_model_execution
+  open_loop_execution_mode: OPEN_LOOP_TRACE_SIMULATION
+  pairing_unit: whole_cluster
+  smoke_execution_mode: CLOSED_LOOP_MODEL_EXECUTION
+  source_condition: true_realized_count
+  threshold_sweep: every_unique_tie_safe_risk_score
+query:
+  access_fairness: identical_for_accept_and_recovery_decisions
+  mode: conditioned
+  probe_schedule: every_nonfinal_chunk_boundary
+risk_signal:
+  decision_boundary: final_available_nonfinal_chunk_boundary
+  features:
+    churn: retained_entry_id_Jaccard_distance_from_previous_boundary
+    concentration: one_minus_top_mass
+    count: bounded_coefficient_of_variation_of_true_C
+    entropy: normalized_Shannon_entropy_of_S_over_C
+    margin: one_minus_bounded_selected_vs_evicted_cutoff_gap
+    query_delta: one_minus_latest_query_score_fraction
+  query_delta_derivation: Difference cumulative S across adjacent boundaries after
+    aligning persistent semantic entry IDs; ordinary chunks are not scored in this
+    query-conditioned run, so the nonnegative difference is the latest query-probe
+    contribution.
+  top_mass_fraction: 0.1
+  version: cornerstone-preanswer-risk-v1
+  weights:
+    churn: 1.0
+    concentration: 1.0
+    count: 1.0
+    entropy: 1.0
+    margin: 1.0
+    query_delta: 1.0
+runtime:
+  attention_implementation: sdpa
+  batch_size: 1
+  decoding: manual_greedy
+  deterministic: true
+  device: cpu
+  dtype: bfloat16
+  max_new_tokens: 32
+  seed: 23
+  verify_query_rollback: true
+schema_version: '1.0'
+selection_bias:
+- Only 11 clusters already selected because Halo B0 was correct are included.
+- R2 benchmark-family cases are absent because the B0 capability gate was 0/8.
+- At most four clusters per included family and one evidence depth are represented.
+- The same 11 clusters describe risk association and threshold curves; there is no
+  held-out calibration split.
+- Every threshold is shown and none is selected as a deployment operating point.
+- Full-cache outcomes and costs are reused from a same-prompt prior run whose full-cache
+  prefill chunk is 256 rather than the compressed path's 128.
+- Each selected cluster contributes one case, so whole-cluster gating is enforced
+  but numerically identical to case-level gating here.
+significance:
+  enabled: true
+  exponent: 1.0
+  exposure_mode: realized_event_count
+  score_pooling:
+    enabled: false
+    width: 1

@@ -1,0 +1,137 @@
+schema_version: '1.0'
+experiment:
+  name: halo_tiny_significance_controller_v1
+  classification: EXPLORATORY_ARCHITECTURE_F_UNDERPOWERED_SCREEN
+  compute_tier: C
+  purpose: Test whether the six durable pre-answer Cornerstone-1 features from the
+    Halo recovery screen predict compressed-run failure using a seven-parameter logistic
+    controller, with a shallow CART control and non-learned baselines.
+protocol:
+  execution_mode: open_loop_trace_simulation
+  backbone: frozen_no_model_execution
+  target: compressed_error
+  action: recompute_full_cache
+  pairing_unit: whole_cluster
+  one_feature_row_per_cluster: true
+  answer_access: only_after_feature_snapshot_and_cluster_split_are_durable
+  evaluation_access: after_train_only_fit_and_calibration_only_threshold_selection
+  confirmatory: false
+  broad_quality_claims: false
+  reinforcement_learning: false
+  source_artifacts_read_only: true
+paths:
+  base: repository_root
+  source_features: rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/features.pre_answer.jsonl
+  source_outcomes: rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/scored_cases.jsonl
+  source_manifest: rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/manifest.json
+  output: rineya_significance_native_architecture_lab/results/experiment_f/halo_tiny_controller_v1
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  allowed_core_ids:
+  - rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_source_base: Qwen3-0.6B
+  expected_architecture: Qwen3ForCausalLM
+  frozen_backbone_trainable_parameters: 0
+  trust_remote_code: false
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+features:
+  source: PRE_ANSWER_ON_POLICY_CORNERSTONE_STATE
+  order:
+  - entropy
+  - concentration
+  - margin
+  - churn
+  - count
+  - query_delta
+  dimension: 6
+  fit_preprocessing_on: train_only
+  oracle_evidence_access: false
+  answer_access: false
+split:
+  algorithm: sha256_rank_exact_counts_v1
+  salt: rineya-halo-experiment-f-v1
+  immutable_single_attempt: true
+  counts:
+    train: 5
+    calibration: 3
+    evaluation: 3
+  require_both_classes_in_every_split: true
+  failure_policy: abort_without_outcome_based_reassignment
+logistic_controller:
+  enabled: true
+  type: l2_logistic_regression
+  class_weight: balanced
+  optimizer: damped_Newton_IRLS
+  l2_penalty: 1.0
+  maximum_iterations: 100
+  convergence_tolerance: 1.0e-10
+  expected_trainable_parameters: 7
+tree_control:
+  enabled: true
+  type: deterministic_shallow_CART_control
+  maximum_depth: 2
+  minimum_leaf_samples: 1
+  leaf_laplace_smoothing: 1.0
+  split_objective: gini_gain
+calibration:
+  partition: calibration_only
+  objective: maximum_balanced_accuracy
+  decision_rule: recover_if_score_greater_than_or_equal_to_threshold
+  threshold_candidates: above_maximum_plus_every_unique_score
+  tie_break: fewer_recoveries_then_higher_threshold
+baselines:
+  deterministic_equal_weight_score: true
+  constant_accept_all: true
+  constant_recover_all: true
+  calibration_budget_hash:
+    enabled: true
+    salt: rineya-halo-experiment-f-budget-control-v1
+    budget_source: logistic_calibration_recovery_fraction
+    selection: sha256_rank_without_features_or_labels
+evaluation:
+  primary_controller: logistic
+  metrics:
+  - error_roc_auc
+  - balanced_accuracy
+  - error_recall
+  - success_specificity
+  - recovery_precision
+  - coverage
+  - selective_risk
+  - system_accuracy
+  risk_coverage_curves: held_out_descriptive_only
+  minimum_claim_population: 30
+  forced_classification_below_minimum: UNDERPOWERED_OVERFIT_SCREEN_ONLY
+runtime:
+  device: cpu
+  dtype: float64
+  seed: 0
+  deterministic: true
+  model_execution: false
+  resource_measurement: sampled_process_RSS_plus_tracemalloc
+significance:
+  enabled: true
+  exponent: 1.0
+  source_condition: true_realized_count
+  score_pooling:
+    enabled: false
+    width: 1
+cache:
+  total_budget_slots: 128
+  sink_tokens: 4
+  recent_tokens: 32
+  provenance: inherited_source_features_only
+query:
+  mode: conditioned
+  access_fairness: inherited_identically_from_source_run
+attention_prior:
+  enabled: false
+  lambda: 0.0
+memory_slots:
+  enabled: false
+  count: 0
+adaptive_head_budget:
+  enabled: false

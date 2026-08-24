@@ -1,0 +1,36 @@
+schema_version: "1.0"
+experiment:
+  name: halo_prospective_endpoint_validation_dataset_v2
+  status: BUILD_ONLY
+  compute_tier: A
+protocol:
+  execution_mode: open_loop_trace_simulation
+paths:
+  base: repository_root
+  tokenizer: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  output_root: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2
+model:
+  target: Rineya-Halo-1.2.0-devfreeze
+  tokenizer_sha256: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+benchmark:
+  families: [R1, R3, R4]
+  # Fresh seeds selected from generator structure only. Each produces exactly
+  # three R3 updates; R1 is forced to exactly two required keys.
+  seeds: [600, 611, 630, 634, 635, 637, 649, 657]
+  r1_required_fact_count: 2
+  r3_update_count: 3
+  evidence_depth: 0.50
+  filler_count: 16
+  split: prospective_endpoint_validation_v2
+  expected_independent_clusters: 24
+  design_history: difficulty_reduced_after_v1_B0_gate_failure_before_any_compression_outcome
+prompt:
+  rendering: halo_chat_template
+  enable_thinking: false
+  system: Use only the supplied context. Return only the shortest exact answer.
+significance:
+  enabled: false
+  exponent: 1.0
+  score_pooling: {enabled: false, width: 1}
+query: {mode: agnostic}
+cache: {total_budget_slots: 0, sink_tokens: 0, recent_tokens: 0}

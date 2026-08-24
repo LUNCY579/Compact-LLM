@@ -1,0 +1,17 @@
+{
+  "checks": {
+    "bottom_right_causal_mask": "exact_tensor_equal",
+    "count_lag_gather": "exact_tensor_equal",
+    "post_rope_gqa_score": "exact_tensor_equal",
+    "sink_heavy_recent_selection": "exact_indices_equal_no_ties"
+  },
+  "claim_limit": "Primitive parity only; this is not end-to-end source benchmark reproduction.",
+  "schema_version": "1.0",
+  "source": {
+    "chunked_prefill_blob": "499b3ccc8d4e6954d4dac89aacea590ef25fc46f",
+    "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+    "remote": "https://github.com/LUNCY579/RineyaBeta.git",
+    "significance_blob": "30ee29724dce52de5a288f6421123fb718240541"
+  },
+  "status": "PASS"
+}

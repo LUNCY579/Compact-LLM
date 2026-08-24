@@ -1,0 +1,45 @@
+{
+  "budget_control": {
+    "calibration_n": 3,
+    "calibration_recovered": 2,
+    "evaluation_recover_count": 2,
+    "fraction": 0.6666666666666666,
+    "source": "logistic_calibration_recovery_fraction"
+  },
+  "evaluation_labels_used": false,
+  "models": {
+    "deterministic_equal_weight": {
+      "accepted": 3,
+      "balanced_accuracy": 0.5,
+      "candidate_count": 4,
+      "fit_partition": "calibration_only",
+      "objective": "maximum_balanced_accuracy",
+      "recovered": 0,
+      "threshold": 0.5272149128178666,
+      "tie_break": "fewer_recoveries_then_higher_threshold"
+    },
+    "logistic": {
+      "accepted": 1,
+      "balanced_accuracy": 0.75,
+      "candidate_count": 4,
+      "fit_partition": "calibration_only",
+      "objective": "maximum_balanced_accuracy",
+      "recovered": 2,
+      "threshold": 0.47710413404742436,
+      "tie_break": "fewer_recoveries_then_higher_threshold"
+    },
+    "shallow_tree": {
+      "accepted": 3,
+      "balanced_accuracy": 0.5,
+      "candidate_count": 2,
+      "fit_partition": "calibration_only",
+      "objective": "maximum_balanced_accuracy",
+      "recovered": 0,
+      "threshold": 0.20000000000000004,
+      "tie_break": "fewer_recoveries_then_higher_threshold"
+    }
+  },
+  "partition": "calibration_only",
+  "schema_version": "1.0",
+  "selection_objective": "maximum_balanced_accuracy"
+}

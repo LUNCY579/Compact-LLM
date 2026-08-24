@@ -1,0 +1,14 @@
+extends: halo_cpu_smoke.yaml
+experiment:
+  name: lyra_cornerstone1_cpu_smoke
+  purpose: Verify Cornerstone-1 runtime compatibility on the published Lyra core.
+paths:
+  model: Rineya_Published_Cores/Rineya-Lyra-1.4.0-devfreeze
+  tokenizer: Rineya_Published_Cores/Rineya-Lyra-1.4.0-devfreeze
+  output_root: rineya_significance_native_architecture_lab/results/runs/lyra_cpu_smoke_20260823
+model:
+  core_id: rineya.core.lyra.v1.4.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-1e5
+  expected_hashes:
+    weights: 87c57b8eef24238cbba8bc98a38298c9c200a0fa05102b368d1c6cdaf363c5aa
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85

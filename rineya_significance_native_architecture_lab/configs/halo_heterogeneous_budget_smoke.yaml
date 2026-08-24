@@ -1,0 +1,73 @@
+schema_version: "1.0"
+
+experiment:
+  name: halo_heterogeneous_budget_closed_loop_smoke
+  status: NOT_RUN
+  evidence_class: RUNTIME_COMPATIBILITY_ONLY
+  compute_tier: B
+  purpose: Exercise exact unequal layer/KV-head storage on one published Halo prompt without measuring answer quality.
+
+protocol:
+  execution_mode: closed_loop_model_execution
+
+significance:
+  enabled: true
+  exponent: 1.0
+  score_pooling:
+    enabled: false
+    width: 1
+
+query:
+  mode: conditioned
+
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  tokenizer: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  benchmark: Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_heterogeneous_budget_smoke_v2
+
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_layers: 28
+  expected_query_heads: 16
+  expected_kv_heads: 8
+  expected_head_dim: 128
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+
+runtime:
+  device: cpu
+  dtype: bfloat16
+  attention_implementation: sdpa
+  seed: 43
+  max_cases: 1
+  max_input_tokens: 48
+  query_tokens: 8
+  chunk_tokens: 24
+  observation_window: 8
+
+cache:
+  total_budget_slots: 16
+  average_budget_per_layer_head: 16
+  fixed_global_entry_budget: 3584
+  minimum_per_layer_head: 14
+  maximum_per_layer_head: 18
+  sink_tokens: 4
+  recent_tokens: 8
+  count_exponent: 1.0
+
+allocation:
+  strategy: entropy_proportional
+  seed: 43
+  require_observed_heterogeneity: true
+
+claims:
+  supports:
+    - Exact fixed-global-budget runtime compatibility on this single Halo case.
+    - Uniform padded runtime identity against the existing rectangular runtime on this case.
+  does_not_support:
+    - Answer-quality, architecture-quality, memory-saving, latency, or confirmatory claims.
+    - Truly ragged-kernel memory savings; physical padded bytes are reported separately.

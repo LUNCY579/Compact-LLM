@@ -1,0 +1,373 @@
+{
+  "claim_limit": "Figures are exploratory unless their individual claim limit says engineering-only; no confirmatory claim.",
+  "classification": "VALID_HALO_EXPLORATORY_FIGURES",
+  "figure_count": 28,
+  "figures": [
+    {
+      "claim_limit": "One bounded case per core; compatibility only.",
+      "data": "data/family_smokes.csv",
+      "file": "01_family_smoke_identity.png",
+      "sha256": "bad87778ef5b13167832cf4ef798c4238a823ce9be749f7c2bf878ca33ce3c84",
+      "sources": [
+        "results/runs/halo_cpu_smoke_20260823_v2/summary.json",
+        "results/runs/halo_uncensored_cpu_smoke_20260823/summary.json",
+        "results/runs/lyra_cpu_smoke_20260823/summary.json",
+        "results/runs/nimbus_cpu_smoke_20260823/summary.json",
+        "results/runs/pulse_cpu_smoke_20260823/summary.json"
+      ],
+      "title": "Published-family disabled-path identity"
+    },
+    {
+      "claim_limit": "Local smoke timing; not deployment latency.",
+      "data": "data/family_smokes.csv",
+      "file": "02_family_smoke_cpu_seconds.png",
+      "sha256": "6c9481576bee7939295e8509630961c181d59f1e15832fffb3d35bbc16b62495",
+      "sources": [
+        "results/runs/halo_cpu_smoke_20260823_v2/summary.json",
+        "results/runs/halo_uncensored_cpu_smoke_20260823/summary.json",
+        "results/runs/lyra_cpu_smoke_20260823/summary.json",
+        "results/runs/nimbus_cpu_smoke_20260823/summary.json",
+        "results/runs/pulse_cpu_smoke_20260823/summary.json"
+      ],
+      "title": "Published-family bounded CPU runtime"
+    },
+    {
+      "claim_limit": "Exact tensor bytes; excludes allocator/object overhead.",
+      "data": "data/family_smokes.csv",
+      "file": "03_family_smoke_persistent_bytes.png",
+      "sha256": "fa5cdd2023ae0060bb9a8b0da0d3c8b1d5e53eaa6901d3bbdf359f9b7c761fbe",
+      "sources": [
+        "results/runs/halo_cpu_smoke_20260823_v2/summary.json",
+        "results/runs/halo_uncensored_cpu_smoke_20260823/summary.json",
+        "results/runs/lyra_cpu_smoke_20260823/summary.json",
+        "results/runs/nimbus_cpu_smoke_20260823/summary.json",
+        "results/runs/pulse_cpu_smoke_20260823/summary.json"
+      ],
+      "title": "Published-family persistent-state accounting"
+    },
+    {
+      "claim_limit": "Capability gate only; no compression-policy conclusion.",
+      "data": "data/capability.csv",
+      "file": "04_halo_b0_r1_r4_capability.png",
+      "sha256": "02855daf06a322bfdaa95fa329fd04c15a373a28770381be2debf1144fdc19f0",
+      "sources": [
+        "results/runs/halo_capability_calibration_v2/summary.json"
+      ],
+      "title": "Halo B0 capability: R1-R4 calibration"
+    },
+    {
+      "claim_limit": "Capability gate only; no compression-policy conclusion.",
+      "data": "data/capability.csv",
+      "file": "05_halo_b0_r5_r8_capability.png",
+      "sha256": "ba2e08e4a227e4d9efe215ae9df9dfbe619485eee9054fc13361e8a649c8ad72",
+      "sources": [
+        "results/runs/halo_r5_r8_capability_screen_v1/summary.json",
+        "results/runs/halo_r5_r8_capability_screen_v1/validity_audit.json"
+      ],
+      "title": "Halo B0 capability: R5/R6/R8 valid cells (n=2/family; R7 invalid)"
+    },
+    {
+      "claim_limit": "Calibration reuse; not an independent result.",
+      "data": "data/endpoint_calibration.csv",
+      "file": "06_endpoint_calibration_distribution.png",
+      "sha256": "9177b35d6f41d30940787cd6d0a8f0c646932035a9401fdc3ac654930e79f8be",
+      "sources": [
+        "results/runs/halo_retention_pilot_v2/cases.jsonl",
+        "results/statistics/halo_evidence_endpoint_calibration_v1.json"
+      ],
+      "title": "Outcome-blind endpoint calibration distribution"
+    },
+    {
+      "claim_limit": "Post-hoc application to endpoint-calibration rows.",
+      "data": "data/pilot.csv",
+      "file": "07_pilot_frozen_endpoint.png",
+      "sha256": "535956dca17dc83e432468af9f59ff72ed6f03fa1059e3c4d9c4f83e273c1126",
+      "sources": [
+        "results/runs/halo_retention_pilot_v2/cases.jsonl"
+      ],
+      "title": "Halo pilot frozen retention endpoint"
+    },
+    {
+      "claim_limit": "Eleven B0-selected clusters; exploratory.",
+      "data": "data/pilot.csv",
+      "file": "08_pilot_accuracy.png",
+      "sha256": "312b3d76f0cd4d0f56ad8a3abe94d5b9ea64e2afc6c057628a5c40209239fcb1",
+      "sources": [
+        "results/runs/halo_retention_pilot_v2/cases.jsonl"
+      ],
+      "title": "Halo pilot answer accuracy"
+    },
+    {
+      "claim_limit": "Exploratory B0-selected clusters.",
+      "data": "data/count_conditions.csv",
+      "file": "09_count_endpoint_by_condition.png",
+      "sha256": "48a344e1983d27e1f800c4af7ea69f07a5a601749aa7c97d6c45a3f3cca24b14",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/summary.json"
+      ],
+      "title": "Count controls: frozen retention endpoint"
+    },
+    {
+      "claim_limit": "Cluster bootstrap intervals; exploratory and multiplicity-adjusted values remain in CSV.",
+      "data": "data/count_deltas.csv",
+      "file": "10_count_endpoint_delta_vs_true.png",
+      "sha256": "67c90f99fc0e4fa3317f1ce8bfe599f59b27e25af65e3e8369f2a4695f95aac2",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/statistics.json"
+      ],
+      "title": "Count controls minus true C"
+    },
+    {
+      "claim_limit": "Eleven B0-selected clusters; no answer contrast is confirmatory.",
+      "data": "data/count_conditions.csv",
+      "file": "11_count_accuracy.png",
+      "sha256": "53114c351faca22781fb2f08c83bdae323930336547674396d3d0c725f456001",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/summary.json"
+      ],
+      "title": "Count controls: Halo answer accuracy"
+    },
+    {
+      "claim_limit": "Exact byte/value equality for the recorded boundary diagnostics.",
+      "data": "data/count_conditions.csv",
+      "file": "12_count_trajectory_equivalence.png",
+      "sha256": "b3c1daf8dbfa76194e7bcd28860083475d771be7cc2963d75ac8db11fac6cb98",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/statistics.json"
+      ],
+      "title": "Exact trajectory identity with true C"
+    },
+    {
+      "claim_limit": "Only fully observed facts are scored; future facts are excluded.",
+      "data": "data/count_boundaries.csv",
+      "file": "13_count_boundary_retention.png",
+      "sha256": "f800409e6d93c95aca2b4d3e8c767107b0b218b13a06e9e56674752b567822d9",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/boundary_evidence.jsonl"
+      ],
+      "title": "Observed-fact retention across boundaries"
+    },
+    {
+      "claim_limit": "Descriptive final retained-state labels; they do not assert causal mediation.",
+      "data": "data/count_conditions.csv",
+      "file": "14_count_failure_distribution.png",
+      "sha256": "2820e605c2d826adec0a86af7c8649b98d42e545bfe79df785646862c55e8625",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/statistics.json"
+      ],
+      "title": "Count-control final-state labels"
+    },
+    {
+      "claim_limit": "Cluster-level exploratory contrast; rows are not independent replicates.",
+      "data": "data/schedule_contrasts.csv",
+      "file": "15_schedule_endpoint_contrast.png",
+      "sha256": "630e9e65ce4e69795010f8b2ff03f03c24dc39bfdce5105d5d62ab0e8329e46e",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/statistics.json"
+      ],
+      "title": "B3-B2 retention contrast by rounds"
+    },
+    {
+      "claim_limit": "Exploratory B0-selected clusters.",
+      "data": "data/schedule_slopes.csv",
+      "file": "16_schedule_endpoint_slopes.png",
+      "sha256": "56b388bdf10e53a691fe93db0fbfb070e513228b2c8dd207420fcc63de00c903",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/statistics.json"
+      ],
+      "title": "Per-cluster B3-B2 retention interaction slopes"
+    },
+    {
+      "claim_limit": "Cluster-level exploratory contrast; rows are not independent replicates.",
+      "data": "data/schedule_contrasts.csv",
+      "file": "17_schedule_accuracy_contrast.png",
+      "sha256": "afe481b457be2cefd70f22c5885914787547e8af2b5309979eedfb73a532ba7d",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/statistics.json"
+      ],
+      "title": "B3-B2 answer contrast by rounds"
+    },
+    {
+      "claim_limit": "Descriptive cell means; n varies by realized round.",
+      "data": "data/schedule_rows.csv",
+      "file": "18_schedule_absolute_endpoint.png",
+      "sha256": "9025a6ffcda03e5ba2cad5844a158681a15cec18957f1d991a36b213588a2905",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Frozen retention by realized rounds"
+    },
+    {
+      "claim_limit": "Descriptive B0-selected cell means; sample size and family composition vary by round.",
+      "data": "data/schedule_rows.csv",
+      "file": "19_schedule_absolute_accuracy.png",
+      "sha256": "bad8847fd376c671911700ef7f268f4a86c20d9dbaf512d4a5559915488c6b85",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Answer accuracy by realized rounds"
+    },
+    {
+      "claim_limit": "Local CPU cell means; sample size and family composition vary by round; not deployment or GPU latency.",
+      "data": "data/schedule_rows.csv",
+      "file": "20_schedule_cpu_time.png",
+      "sha256": "40dd6ed4fed19f83b6c869ed0c333f9947b135f67541a5113a81ceaf361188d4",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Local CPU time by realized rounds"
+    },
+    {
+      "claim_limit": "Descriptive tradeoff scatter, not a Pareto frontier; round cells have changing n/family composition.",
+      "data": "data/schedule_rows.csv",
+      "file": "21_schedule_quality_vs_cpu_time.png",
+      "sha256": "0e52d677086f45f0dcafb8a5ec27ba297d2387501f43efa35b5387c5c55732c5",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Retention vs local CPU time"
+    },
+    {
+      "claim_limit": "Exact query-access accounting.",
+      "data": "data/schedule_rows.csv",
+      "file": "22_schedule_query_cost.png",
+      "sha256": "26ed8162cb2e9fcbb1340f2292575a17e4df7a9a1e5674791c384107fc0c24dc",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Query-probe cost by realized rounds"
+    },
+    {
+      "claim_limit": "The prefill entry budget is matched at 192; post-decode tensor bytes may vary with generated length.",
+      "data": "data/schedule_rows.csv",
+      "file": "23_schedule_persistent_bytes.png",
+      "sha256": "da08512fe5f23042ec98cb604932a92c0c5944a089554d66c19a0f73e6d01c52",
+      "sources": [
+        "results/runs/halo_schedule_control_v2/cases.jsonl"
+      ],
+      "title": "Matched final-prefill cache entries"
+    },
+    {
+      "claim_limit": "Four B0-selected R4 clusters; not a direct stale-token survival measure.",
+      "data": "data/count_r4.csv",
+      "file": "24_count_r4_correction_accuracy.png",
+      "sha256": "27fca1b7f470a33f7f22dce43f91a2a812a72997e954614813b5b9e54fed0aea",
+      "sources": [
+        "results/runs/halo_count_causal_controls_v1/cases.jsonl"
+      ],
+      "title": "R4 correction-task accuracy by count control"
+    },
+    {
+      "claim_limit": "Boundary-local open-loop allocation; sparse physical storage and closed-loop outputs are unmeasured.",
+      "data": "data/adaptive_allocations.csv",
+      "file": "25_adaptive_layer_allocation.png",
+      "sha256": "5fe8678ef332c711312a87e8c4a8eb04e4d0a5bb448af11ef7f35d6e8328eaff",
+      "sources": [
+        "results/runs/halo_adaptive_budget_screen_v1/rows.jsonl"
+      ],
+      "title": "Adaptive allocation by layer"
+    },
+    {
+      "claim_limit": "Boundary-local open-loop allocation; sparse physical storage and closed-loop outputs are unmeasured.",
+      "data": "data/adaptive_allocations.csv",
+      "file": "26_adaptive_head_allocation.png",
+      "sha256": "e95b129b8d491a4718488cfc422742d104f8045369852290bc9ac9c767556677",
+      "sources": [
+        "results/runs/halo_adaptive_budget_screen_v1/rows.jsonl"
+      ],
+      "title": "Adaptive allocation by KV head"
+    },
+    {
+      "claim_limit": "Open-loop boundary-local endpoint; shuffled-statistic control is strongest, so specificity gate fails.",
+      "data": "data/adaptive_deltas.csv",
+      "file": "27_adaptive_endpoint_delta.png",
+      "sha256": "d6f151a0fee74d0befe0c3c66ad5b8543d9b70565557b90a27d9f17d61db3858",
+      "sources": [
+        "results/runs/halo_adaptive_budget_screen_v1/statistics.json"
+      ],
+      "title": "Adaptive allocation minus uniform"
+    },
+    {
+      "claim_limit": "Open-loop, B0-selected, boundary-local evidence only; no answer-quality claim.",
+      "data": "data/adaptive_endpoints.csv",
+      "file": "28_adaptive_endpoint_by_strategy.png",
+      "sha256": "a8cf8ceb9247e52b09e7bd741ed0f1d668fd9d8e1db4c95559af42da56ce5091",
+      "sources": [
+        "results/runs/halo_adaptive_budget_screen_v1/rows.jsonl"
+      ],
+      "title": "Boundary-local retention by allocation strategy"
+    }
+  ],
+  "integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "artifact_files": {
+      "01_family_smoke_identity.png": "bad87778ef5b13167832cf4ef798c4238a823ce9be749f7c2bf878ca33ce3c84",
+      "02_family_smoke_cpu_seconds.png": "6c9481576bee7939295e8509630961c181d59f1e15832fffb3d35bbc16b62495",
+      "03_family_smoke_persistent_bytes.png": "fa5cdd2023ae0060bb9a8b0da0d3c8b1d5e53eaa6901d3bbdf359f9b7c761fbe",
+      "04_halo_b0_r1_r4_capability.png": "02855daf06a322bfdaa95fa329fd04c15a373a28770381be2debf1144fdc19f0",
+      "05_halo_b0_r5_r8_capability.png": "ba2e08e4a227e4d9efe215ae9df9dfbe619485eee9054fc13361e8a649c8ad72",
+      "06_endpoint_calibration_distribution.png": "9177b35d6f41d30940787cd6d0a8f0c646932035a9401fdc3ac654930e79f8be",
+      "07_pilot_frozen_endpoint.png": "535956dca17dc83e432468af9f59ff72ed6f03fa1059e3c4d9c4f83e273c1126",
+      "08_pilot_accuracy.png": "312b3d76f0cd4d0f56ad8a3abe94d5b9ea64e2afc6c057628a5c40209239fcb1",
+      "09_count_endpoint_by_condition.png": "48a344e1983d27e1f800c4af7ea69f07a5a601749aa7c97d6c45a3f3cca24b14",
+      "10_count_endpoint_delta_vs_true.png": "67c90f99fc0e4fa3317f1ce8bfe599f59b27e25af65e3e8369f2a4695f95aac2",
+      "11_count_accuracy.png": "53114c351faca22781fb2f08c83bdae323930336547674396d3d0c725f456001",
+      "12_count_trajectory_equivalence.png": "b3c1daf8dbfa76194e7bcd28860083475d771be7cc2963d75ac8db11fac6cb98",
+      "13_count_boundary_retention.png": "f800409e6d93c95aca2b4d3e8c767107b0b218b13a06e9e56674752b567822d9",
+      "14_count_failure_distribution.png": "2820e605c2d826adec0a86af7c8649b98d42e545bfe79df785646862c55e8625",
+      "15_schedule_endpoint_contrast.png": "630e9e65ce4e69795010f8b2ff03f03c24dc39bfdce5105d5d62ab0e8329e46e",
+      "16_schedule_endpoint_slopes.png": "56b388bdf10e53a691fe93db0fbfb070e513228b2c8dd207420fcc63de00c903",
+      "17_schedule_accuracy_contrast.png": "afe481b457be2cefd70f22c5885914787547e8af2b5309979eedfb73a532ba7d",
+      "18_schedule_absolute_endpoint.png": "9025a6ffcda03e5ba2cad5844a158681a15cec18957f1d991a36b213588a2905",
+      "19_schedule_absolute_accuracy.png": "bad8847fd376c671911700ef7f268f4a86c20d9dbaf512d4a5559915488c6b85",
+      "20_schedule_cpu_time.png": "40dd6ed4fed19f83b6c869ed0c333f9947b135f67541a5113a81ceaf361188d4",
+      "21_schedule_quality_vs_cpu_time.png": "0e52d677086f45f0dcafb8a5ec27ba297d2387501f43efa35b5387c5c55732c5",
+      "22_schedule_query_cost.png": "26ed8162cb2e9fcbb1340f2292575a17e4df7a9a1e5674791c384107fc0c24dc",
+      "23_schedule_persistent_bytes.png": "da08512fe5f23042ec98cb604932a92c0c5944a089554d66c19a0f73e6d01c52",
+      "24_count_r4_correction_accuracy.png": "27fca1b7f470a33f7f22dce43f91a2a812a72997e954614813b5b9e54fed0aea",
+      "25_adaptive_layer_allocation.png": "5fe8678ef332c711312a87e8c4a8eb04e4d0a5bb448af11ef7f35d6e8328eaff",
+      "26_adaptive_head_allocation.png": "e95b129b8d491a4718488cfc422742d104f8045369852290bc9ac9c767556677",
+      "27_adaptive_endpoint_delta.png": "d6f151a0fee74d0befe0c3c66ad5b8543d9b70565557b90a27d9f17d61db3858",
+      "28_adaptive_endpoint_by_strategy.png": "a8cf8ceb9247e52b09e7bd741ed0f1d668fd9d8e1db4c95559af42da56ce5091",
+      "data/adaptive_allocations.csv": "4937a93c92581128b6f355a9fe3fe2ed4467de8529df101cc4c223e516a68a5f",
+      "data/adaptive_deltas.csv": "97b13efb04e4df279dd96e0589e2cd40acdefa71cd9bdec53954d341dcd570f9",
+      "data/adaptive_endpoints.csv": "3b0c258434ca475042818f8e47167e1386b98ec487e7814bdb701c94459ce6f6",
+      "data/capability.csv": "40bfdd25731b65bf2fca50cf4fbb026ea93bae0a542d1d3e17af7aed5a7eecc3",
+      "data/count_boundaries.csv": "806c3ad32868787cf69055bbb077bf00d3c8e07451c12b1ab299b676388b849b",
+      "data/count_conditions.csv": "684c0f2b3862e6f6bc191d886354751fb94032a9f64dda6ca773a83bd6d587de",
+      "data/count_deltas.csv": "e86f842285fc9228a56df639c2440c5444cd66219e40c500e5dcdd3ab2ed8086",
+      "data/count_r4.csv": "aeac9714889c036e26835d69318d863ff19f1db87695198b18f26b276e69c71a",
+      "data/endpoint_calibration.csv": "26de5ab42a3899c64aa19b140ca9e4ca94cb832ec7bd516d54d0f61e2a851f29",
+      "data/family_smokes.csv": "9927b40ec5fd46c803c1066faecbe8424a33ef8ec6e2cf676cd44ca8ad7b07fd",
+      "data/pilot.csv": "1635fc4548c0cce0133175513f2ede79c7e118a77e9ef4bf7d4cc9f700dd27d4",
+      "data/schedule_contrasts.csv": "6c556c18da2f9fec5be1ff981f34bbeb5dda9374fc051a541db1e757799e5130",
+      "data/schedule_rows.csv": "0b4cf5973ef212ea032f81c87a15ccf980f28f2e3e01ad56e5030b90ccc697fc",
+      "data/schedule_slopes.csv": "98128504a0754464d59490daa2fe1884b74d86fd1f578de62ff829964fd6a8ea"
+    },
+    "artifact_tree_sha256": "2852533875ccf5d78c236489937478f7c58bb19fe5945b7805f063b77af65689",
+    "generator": "scripts/make_halo_control_figures.py",
+    "generator_sha256": "4aba21111ba3e6c59c266377fd5240fd6a3334b4bf5a4453d616ee1740298056"
+  },
+  "schema_version": "1.0",
+  "source_hashes": {
+    "results/runs/halo_adaptive_budget_screen_v1/rows.jsonl": "0ce7e9365597a73dca3e221ed7f3fa50d682029e7ec250cf364d550bbf719f15",
+    "results/runs/halo_adaptive_budget_screen_v1/statistics.json": "32cfbb7a717dbe35c3994519a6159f5467b11e03fe919a69740f89dc87bab891",
+    "results/runs/halo_capability_calibration_v2/summary.json": "d9fcf10d483142bd75d097f7b74dd54337af24e5b329dbb1d3d862042f859a91",
+    "results/runs/halo_count_causal_controls_v1/boundary_evidence.jsonl": "ef130a6e46f75cddf29f59134b75b024ffaca7405ad84121f8b446427aa54b0c",
+    "results/runs/halo_count_causal_controls_v1/cases.jsonl": "0064e45cdf5d56aceb208721bf0416e03d5754f396af98a6c6a22acc5c68bd94",
+    "results/runs/halo_count_causal_controls_v1/statistics.json": "69d4070e069a4c0661a6e872cb2cebaf1fcbcfcf059ecb3e283b537c0367a766",
+    "results/runs/halo_count_causal_controls_v1/summary.json": "5e7ccf1c0ad60415f04be91e3b8196223eea3a39e0dd806555acb3408a5b4f39",
+    "results/runs/halo_cpu_smoke_20260823_v2/summary.json": "1895172e631d27c94d58c9177b7641adb59a5ec98f532d9c13a48b2f26ea38d8",
+    "results/runs/halo_r5_r8_capability_screen_v1/summary.json": "d5d0ff215c4f8dbe61093c1344b51be1151a5aa128a6e62e294591f7fb2cd4e6",
+    "results/runs/halo_r5_r8_capability_screen_v1/validity_audit.json": "b36341f1cf35e7fb88dc328a00f334dedaf62bb4b774691367341c1a357515de",
+    "results/runs/halo_retention_pilot_v2/cases.jsonl": "5c37102aa839053026d63b4e2c29f063d340cc97a737ec6ca9ad517863bd3dcf",
+    "results/runs/halo_schedule_control_v2/cases.jsonl": "d398618fa568b3ca7f5b83b6c17e65cb12d7b1214ac938f61f9fbc6ff6dd6a83",
+    "results/runs/halo_schedule_control_v2/statistics.json": "6b0052a6426ba072b1e970a93501614d2f4da6d51bd8141e05ba02254d0f2da5",
+    "results/runs/halo_uncensored_cpu_smoke_20260823/summary.json": "cd98fce65681404cf5c596490825508763aa0f22eb5c025501fc7562f3fa9ffc",
+    "results/runs/lyra_cpu_smoke_20260823/summary.json": "ac148679870355f4d724ed8764c9aebb800c83c2bd53cb634fa95bb87bcc3bd4",
+    "results/runs/nimbus_cpu_smoke_20260823/summary.json": "50d98639a6334e832f36f7880d999770ae4afcfeb15003a6c1c50fe195483d4e",
+    "results/runs/pulse_cpu_smoke_20260823/summary.json": "6dda44ff13eb6a623261407860ac49cadd7e0ee19d03e444b245fdddb54d7b91",
+    "results/statistics/halo_evidence_endpoint_calibration_v1.json": "a568eacadddad6a403b9da49bde934fb385d224278be88dcb4aed46dbac4e27c"
+  },
+  "status": "PASS"
+}

@@ -1,0 +1,60 @@
+{
+  "answer_key_opened_only_after_all_inference": true,
+  "case_ids": [
+    "RLC-001-B",
+    "RLC-010-B",
+    "RLC-019-B"
+  ],
+  "classification": "BOUNDED_EXPLORATORY",
+  "conditions": [
+    "B0",
+    "B2",
+    "B3"
+  ],
+  "descriptive_results": {
+    "B0": {
+      "cases": 3,
+      "correct_cases": 1,
+      "exact_accuracy": 0.3333333333333333,
+      "full_cache_conditioned_correctness": {
+        "applicable": false,
+        "reason": "B0 is the full-cache capability reference"
+      },
+      "total_inference_wall_seconds": 11.713803799999368
+    },
+    "B2": {
+      "cases": 3,
+      "correct_cases": 1,
+      "exact_accuracy": 0.3333333333333333,
+      "full_cache_conditioned_correctness": {
+        "accuracy": 1.0,
+        "correct_cases": 1,
+        "eligible_cases": 1
+      },
+      "total_inference_wall_seconds": 10.930718000000525
+    },
+    "B3": {
+      "cases": 3,
+      "correct_cases": 1,
+      "exact_accuracy": 0.3333333333333333,
+      "full_cache_conditioned_correctness": {
+        "accuracy": 1.0,
+        "correct_cases": 1,
+        "eligible_cases": 1
+      },
+      "total_inference_wall_seconds": 10.189527000000453
+    }
+  },
+  "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+  "inferential_statistics": null,
+  "interpretation_limits": [
+    "Exactly three preselected exploratory cases were evaluated.",
+    "No confidence interval, hypothesis test, or population-level claim is reported.",
+    "B0 is an instrumented full-cache behavioral control; its temporary query probes are rolled back and do not select cache entries.",
+    "CPU timing is local-run accounting, not a deployment or GPU latency claim."
+  ],
+  "manual_greedy_decode": true,
+  "model_scope": "Rineya Halo 1.2.0 devfreeze only (Qwen3-0.6B source base)",
+  "schema_version": "1.0",
+  "status": "PASS"
+}

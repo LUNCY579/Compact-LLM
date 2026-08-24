@@ -1,0 +1,140 @@
+{
+  "artifact_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "content_manifest": "content_manifest.json",
+    "file_count": 77,
+    "tree_sha256": "dec28d9e8ee5034da51b002696944e34acd3874177de731b23948a5e15f9db19"
+  },
+  "artifacts": {
+    "boundary_diagnostics": "boundary_diagnostics/",
+    "boundary_evidence": "boundary_evidence.jsonl",
+    "boundary_index": "boundary_diagnostics.jsonl",
+    "cases": "cases.jsonl",
+    "content_manifest": "content_manifest.json",
+    "partial_boundary_index": "boundary_diagnostics.partial.jsonl",
+    "partial_predictions": "predictions.partial.jsonl",
+    "predictions": "predictions.unscored.jsonl",
+    "resident_positions": "resident_positions/",
+    "restart_state": "run_state.json",
+    "statistics": "statistics.json",
+    "summary": "summary.json",
+    "within_process_true_identity": "within_process_true_identity.json"
+  },
+  "budget": {
+    "matched_across_conditions": true,
+    "retained_history_entries_per_layer_head": 128
+  },
+  "code_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "file_count": 61,
+    "tree_sha256": "81ce93351f849b0f9f3c9916501c418e10ce21ba5aa22bd91546ceaae2cb6500"
+  },
+  "completed_at": "2026-08-24T06:58:11.233307Z",
+  "config": {
+    "resolved_path": "resolved_config.yaml",
+    "sha256": "50e5ee2a031e03406e49a7003a28e708df83faff18f1def2b7a60d6b5369a328"
+  },
+  "created_at": "2026-08-24T06:55:18.116069Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "experiment": {
+    "architecture_variant": "Halo closed-loop exposure count causal controls",
+    "benchmark": "halo_calibration_v3_B0_eligible",
+    "compute_tier": "B",
+    "count_control_contract": "eligible_heavy_v2",
+    "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+    "name": "halo_closed_loop_eligible_pool_count_controls_v2",
+    "query_conditioned": true,
+    "seed": 23
+  },
+  "model": {
+    "architecture": "Qwen3ForCausalLM",
+    "checkpoint_integrity": {
+      "aggregate_sha256": "bb6ea14775432c5de3eda200b4c09eb69a672fe8307ddffe7e89c8e5827ba477",
+      "algorithm": "sha256",
+      "files": {
+        "chat_template": {
+          "path": "chat_template.jinja",
+          "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+        },
+        "config": {
+          "path": "config.json",
+          "sha256": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85"
+        },
+        "core": {
+          "path": "CORE.json",
+          "sha256": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b"
+        },
+        "generation_config": {
+          "path": "generation_config.json",
+          "sha256": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48"
+        },
+        "tokenizer": {
+          "path": "tokenizer.json",
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        "tokenizer_config": {
+          "path": "tokenizer_config.json",
+          "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+        },
+        "weights": {
+          "path": "model.safetensors",
+          "sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+        }
+      }
+    },
+    "hashes": {
+      "chat_template": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "core": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b",
+      "generation_config": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "tokenizer_config": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "True realized C remains persistent in every condition; only the boundary ranking denominator is perturbed.",
+    "All conditions receive identical prompt/query tokens, query probes, cache budget, chunk schedule, and greedy decoding procedure.",
+    "No Rineya/R2 model, Aegis model, or benchmark R2 family is active.",
+    "V2 shuffle/rotation transforms only the eligible heavy-ranking pool after excluding exactly four sink and 32 recent entries.",
+    "The prior v1 global shuffled/wrong-token controls remain ELIGIBLE_POOL_CONFOUNDED and are not reinterpreted.",
+    "Persisted v2 diagnostics pass protected-slot immutability, eligible-pool multiset, and semantic-derangement audits.",
+    "The same-process true-count identity replay is exact, but v1/v2 reference traces from separate CPU-bfloat16/SDPA processes are not bitwise reproducible; paired v2 inference therefore remains process-local and exploratory."
+  ],
+  "repositories": {
+    "chatbubble": {
+      "commit": "03777703dd8587f1248d9a72115eafb9356d50b8",
+      "dirty": true,
+      "remote": "https://github.com/LUNCY579/ChatBubble.git"
+    },
+    "source": {
+      "implementation": {
+        "blob": "30ee29724dce52de5a288f6421123fb718240541",
+        "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+        "path": "scripts/kv/significance.py",
+        "ref": "refs/heads/main"
+      },
+      "paper": {
+        "blob": "b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3",
+        "commit": "1664f54de0bbdfde45e311b75bbf3038dbfffe42",
+        "path": "paper/significance_matrix/main.tex",
+        "ref": "refs/heads/r2-healing-harness"
+      },
+      "remote": "https://github.com/LUNCY579/RineyaBeta.git"
+    }
+  },
+  "run_id": "halo_count_causal_controls_v2",
+  "runtime": {
+    "device": "cpu",
+    "hardware": null,
+    "precision": "bfloat16",
+    "python": "3.11.15",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1"
+  },
+  "schema_version": "1.0",
+  "status": "COMPLETE"
+}

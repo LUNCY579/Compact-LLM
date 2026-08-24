@@ -1,0 +1,47 @@
+schema_version: "1.0"
+experiment:
+  name: halo_boundary_local_adaptive_budget_screen_v1
+  compute_tier: A
+  status: NOT_RUN
+  classification: OPEN_LOOP_BOUNDARY_LOCAL_SCREEN
+protocol:
+  execution_mode: open_loop_trace_simulation
+  trace_support: ON_POLICY_BOUNDARY_LOCAL
+  closed_loop_equivalence: false
+paths:
+  base: repository_root
+  count_run: rineya_significance_native_architecture_lab/results/runs/halo_count_causal_controls_v1
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/evaluation.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_adaptive_budget_screen_v1
+source_condition: true_realized_count
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_layers: 28
+  expected_kv_heads: 8
+allocation:
+  strategies: [uniform, entropy_proportional, inverse_concentration, shuffled_statistic]
+  average_budget_per_layer_head: 128
+  global_entry_budget: 28672
+  minimum_per_layer_head: 36
+  maximum_per_layer_head: 220
+  sink_tokens: 4
+  recent_tokens: 32
+  exponent: 1.0
+  seed: 29
+analysis:
+  primary_boundary: 2
+  minimum_independent_clusters: 8
+  confidence: 0.95
+  bootstrap_samples: 10000
+  randomization_samples: 100000
+  primary_endpoint: layer_fact_exact_completion_rate
+significance:
+  enabled: true
+  exponent: 1.0
+  score_pooling: {enabled: false, width: 1}
+query: {mode: conditioned}
+cache: {total_budget_slots: 128, sink_tokens: 4, recent_tokens: 32}
+claim_limits:
+  - Boundary-local selection only; changing an earlier selection would change later hidden states.
+  - Variable per-head/layer allocations assume sparse physical storage without rectangular padding overhead.
+  - No Halo answer-quality or closed-loop adaptive-budget claim is supported.

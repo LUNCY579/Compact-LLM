@@ -1,0 +1,1055 @@
+{
+  "attention_feedback": {
+    "applications": 1064,
+    "by_forward_role": {
+      "context_prefill": {
+        "applications": 112,
+        "maximum_abs_bias": 0.019999999552965164,
+        "maximum_current_key_abs_bias": 0.0,
+        "maximum_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_nats": 1.8341745186064924,
+        "mean_attention_entropy_normalized": 0.34916587573076996,
+        "mean_clipped_fraction": 0.009573800223214286,
+        "mean_old_minus_recent_bias": 0.0002806067850461399,
+        "mean_prior_entropy_normalized": 0.7307812866887876,
+        "mean_source_entropy_normalized": 0.3142822138220903,
+        "nonzero_bias_applications": 84
+      },
+      "decode": {
+        "applications": 868,
+        "maximum_abs_bias": 0.019999999552965164,
+        "maximum_current_key_abs_bias": 0.0,
+        "maximum_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_nats": 1.819371460185897,
+        "mean_attention_entropy_normalized": 0.3465373183295886,
+        "mean_clipped_fraction": 0.012869698660714286,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_prior_entropy_normalized": 0.9734254742839507,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "nonzero_bias_applications": 868
+      },
+      "query_probe": {
+        "applications": 84,
+        "maximum_abs_bias": 0.019999999552965164,
+        "maximum_current_key_abs_bias": 0.0,
+        "maximum_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_nats": 1.8867227527357282,
+        "mean_attention_entropy_normalized": 0.35260143964773133,
+        "mean_clipped_fraction": 0.008475167410714286,
+        "mean_old_minus_recent_bias": 0.00030316366129617175,
+        "mean_prior_entropy_normalized": 0.6498998908237332,
+        "mean_source_entropy_normalized": 0.26102696110527696,
+        "nonzero_bias_applications": 56
+      }
+    },
+    "by_layer": {
+      "0": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.13406169414520264,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.5812641931207556,
+        "mean_clipped_fraction": 0.04090711805555555,
+        "mean_old_minus_recent_bias": -0.003071923776587937,
+        "mean_source_entropy_normalized": 0.8682856249312559,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.08991694450378418,
+        "zero_lambda_bypasses": 0
+      },
+      "1": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.00952160358428955,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.5256379607476687,
+        "mean_clipped_fraction": 0.05137803819444445,
+        "mean_old_minus_recent_bias": -0.0015316321645918328,
+        "mean_source_entropy_normalized": 0.8574185185134411,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.11832306534051895,
+        "zero_lambda_bypasses": 0
+      },
+      "10": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.03617292642593384,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.42204236905825765,
+        "mean_clipped_fraction": 0.008897569444444444,
+        "mean_old_minus_recent_bias": -0.0004793719791551767,
+        "mean_source_entropy_normalized": 0.5506484854655961,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.18526146281510592,
+        "zero_lambda_bypasses": 0
+      },
+      "11": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.05471870303153992,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3928022353272689,
+        "mean_clipped_fraction": 0.008680555555555556,
+        "mean_old_minus_recent_bias": 0.000415303600271323,
+        "mean_source_entropy_normalized": 0.49524711289753515,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.1845888737589121,
+        "zero_lambda_bypasses": 0
+      },
+      "12": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.019314885139465332,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.49746167267623703,
+        "mean_clipped_fraction": 0.007921006944444444,
+        "mean_old_minus_recent_bias": 1.5715713541592573e-05,
+        "mean_source_entropy_normalized": 0.6211891137063503,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.14622848108410835,
+        "zero_lambda_bypasses": 0
+      },
+      "13": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.08032983541488647,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.45875712837043564,
+        "mean_clipped_fraction": 0.010579427083333334,
+        "mean_old_minus_recent_bias": -0.0001025414793629251,
+        "mean_source_entropy_normalized": 0.6529821238170067,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.18795426562428474,
+        "zero_lambda_bypasses": 0
+      },
+      "14": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.05111098289489746,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.4150064250356273,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": -0.00021670993252579743,
+        "mean_source_entropy_normalized": 0.5034766477636166,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.18821664713323116,
+        "zero_lambda_bypasses": 0
+      },
+      "15": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.12329667806625366,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3645648293589291,
+        "mean_clipped_fraction": 0.009602864583333334,
+        "mean_old_minus_recent_bias": -0.0003219720312901902,
+        "mean_source_entropy_normalized": 0.49253035005595946,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.18888654559850693,
+        "zero_lambda_bypasses": 0
+      },
+      "16": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.07311031222343445,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.38091383482280533,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0003223933781555388,
+        "mean_source_entropy_normalized": 0.4392239324645036,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.15808507334440947,
+        "zero_lambda_bypasses": 0
+      },
+      "17": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.061325252056121826,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.455121699916689,
+        "mean_clipped_fraction": 0.007866753472222222,
+        "mean_old_minus_recent_bias": 0.00011444573687589986,
+        "mean_source_entropy_normalized": 0.5271960268211033,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.1485540196299553,
+        "zero_lambda_bypasses": 0
+      },
+      "18": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.21558722853660583,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3502894326260215,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0006758613419353626,
+        "mean_source_entropy_normalized": 0.39572586833188933,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.09757670015096664,
+        "zero_lambda_bypasses": 0
+      },
+      "19": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.11743786931037903,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.32762500643730164,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.00046120236584101804,
+        "mean_source_entropy_normalized": 0.3802436565876835,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.12970685586333275,
+        "zero_lambda_bypasses": 0
+      },
+      "2": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.02726513147354126,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.4965412640257886,
+        "mean_clipped_fraction": 0.05300564236111111,
+        "mean_old_minus_recent_bias": 0.0015466745406027054,
+        "mean_source_entropy_normalized": 0.8302314008275667,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.10359854996204376,
+        "zero_lambda_bypasses": 0
+      },
+      "20": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.16593904793262482,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.28365184954906764,
+        "mean_clipped_fraction": 0.008680555555555556,
+        "mean_old_minus_recent_bias": 0.000574048625720833,
+        "mean_source_entropy_normalized": 0.35310520076503354,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.13786453381180763,
+        "zero_lambda_bypasses": 0
+      },
+      "21": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.1709020435810089,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.2514776846295909,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0008403425987732286,
+        "mean_source_entropy_normalized": 0.3387052159652942,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.11667872779071331,
+        "zero_lambda_bypasses": 0
+      },
+      "22": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.15117855370044708,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.255699323588296,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.00046182179559966445,
+        "mean_source_entropy_normalized": 0.3683094759989116,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.1354897073470056,
+        "zero_lambda_bypasses": 0
+      },
+      "23": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.07302965223789215,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.1864766323644864,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0005932309326858053,
+        "mean_source_entropy_normalized": 0.25885598255424863,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.10050699301064014,
+        "zero_lambda_bypasses": 0
+      },
+      "24": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.10580695420503616,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.20237328719935918,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0006244180868735486,
+        "mean_source_entropy_normalized": 0.30201490150971544,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.11926179006695747,
+        "zero_lambda_bypasses": 0
+      },
+      "25": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.10457971692085266,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.1864245814320288,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.000739310388275448,
+        "mean_source_entropy_normalized": 0.3090551503830486,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.09139861911535263,
+        "zero_lambda_bypasses": 0
+      },
+      "26": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.05847761034965515,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.21012310468052564,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0007632100759009416,
+        "mean_source_entropy_normalized": 0.3786839303146634,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.08956037368625402,
+        "zero_lambda_bypasses": 0
+      },
+      "27": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.013987138867378235,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.15124588832259178,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.000445563792002051,
+        "mean_source_entropy_normalized": 0.12836372258607298,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.0672164101852104,
+        "zero_lambda_bypasses": 0
+      },
+      "3": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.0993775725364685,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.29477145013056305,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.0008341244210896548,
+        "mean_source_entropy_normalized": 0.3967685847180999,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.08358461363241076,
+        "zero_lambda_bypasses": 0
+      },
+      "4": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.004968553781509399,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.30016876090514033,
+        "mean_clipped_fraction": 0.013509114583333334,
+        "mean_old_minus_recent_bias": -0.0002234068427545329,
+        "mean_source_entropy_normalized": 0.37612920471777517,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.07790824119001627,
+        "zero_lambda_bypasses": 0
+      },
+      "5": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.010429829359054565,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.24948713732393166,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 5.169524431241573e-05,
+        "mean_source_entropy_normalized": 0.315129667132472,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.09904439887031913,
+        "zero_lambda_bypasses": 0
+      },
+      "6": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": 0.025461405515670776,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.35020914046387924,
+        "mean_clipped_fraction": 0.012641059027777778,
+        "mean_old_minus_recent_bias": 0.000983646713696847,
+        "mean_source_entropy_normalized": 0.482275791052315,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.15774232614785433,
+        "zero_lambda_bypasses": 0
+      },
+      "7": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.052301764488220215,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.38189328344244705,
+        "mean_clipped_fraction": 0.0078125,
+        "mean_old_minus_recent_bias": 0.00041407257493928127,
+        "mean_source_entropy_normalized": 0.46088103520580465,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.12837272230535746,
+        "zero_lambda_bypasses": 0
+      },
+      "8": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.04811978340148926,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3675948153985174,
+        "mean_clipped_fraction": 0.008029513888888888,
+        "mean_old_minus_recent_bias": 0.0008040446494608963,
+        "mean_source_entropy_normalized": 0.4418708467338648,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.11470078211277723,
+        "zero_lambda_bypasses": 0
+      },
+      "9": {
+        "applications": 38,
+        "attention_entropy_last_minus_first": -0.04201972484588623,
+        "forward_role_counts": {
+          "context_prefill": 4,
+          "decode": 31,
+          "query_probe": 3
+        },
+        "max_abs_bias": 0.019999999552965164,
+        "max_current_key_abs_bias": 0.0,
+        "max_invalid_key_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.38457214910733073,
+        "mean_clipped_fraction": 0.0087890625,
+        "mean_old_minus_recent_bias": 0.0009809397169091324,
+        "mean_source_entropy_normalized": 0.492105549097889,
+        "nonzero_bias_applications": 36,
+        "source_entropy_last_minus_first": 0.1565270498394966,
+        "zero_lambda_bypasses": 0
+      }
+    },
+    "maximum_abs_bias": 0.019999999552965164,
+    "maximum_current_key_abs_bias": 0.0,
+    "maximum_invalid_key_abs_bias": 0.0,
+    "mean_attention_entropy_normalized": 0.3472927550021979,
+    "mean_clipped_fraction": 0.012175825305451127,
+    "mean_old_minus_recent_bias": 0.00022718260445395928,
+    "mean_prior_entropy_normalized": 0.9223424874218111,
+    "mean_source_entropy_normalized": 0.4404130755198062,
+    "nonzero_bias_applications": 1008,
+    "temporal_by_role_and_key_length": [
+      {
+        "forward_role": "context_prefill",
+        "key_length": 128,
+        "layers": 28,
+        "maximum_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3891935295292309,
+        "mean_old_minus_recent_bias": 0.0,
+        "mean_source_entropy_normalized": 0.0,
+        "scoring_events_before_forward": 0
+      },
+      {
+        "forward_role": "context_prefill",
+        "key_length": 175,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.26453807417835506,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "context_prefill",
+        "key_length": 256,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.38089446829898016,
+        "mean_old_minus_recent_bias": 0.0004120085389201579,
+        "mean_source_entropy_normalized": 0.3453781586181971,
+        "scoring_events_before_forward": 1
+      },
+      {
+        "forward_role": "context_prefill",
+        "key_length": 256,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3620374309165137,
+        "mean_old_minus_recent_bias": 0.0004974824449683572,
+        "mean_source_entropy_normalized": 0.43770272469763377,
+        "scoring_events_before_forward": 2
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 176,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3395102053348507,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 177,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.366911274514028,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 178,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3605839604777949,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 179,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3439034415142877,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 180,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.34334887244871687,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 181,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.36828109196254183,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 182,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3574303665331432,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 183,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3458248305001429,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 184,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3627069246556078,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 185,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3431315911667688,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 186,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.33795992231794764,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 187,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3380023187824658,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 188,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.37379186760102,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 189,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.37636035148586544,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 190,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.35277088412216734,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 191,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3476200444357736,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 192,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3613273575901985,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 193,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3415577081697328,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 194,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.34358939475246836,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 195,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3720833845436573,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 196,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.34750085696578026,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 197,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.31303673583481995,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 198,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.31602599046060015,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 199,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3554511809987681,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 200,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3287851996719837,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 201,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3324954214372805,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 202,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.32898553434227196,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 203,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3460356571844646,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 204,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.36153216447149006,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 205,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.30881066167993204,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "decode",
+        "key_length": 206,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.32730167226067614,
+        "mean_old_minus_recent_bias": 0.00021293615629604443,
+        "mean_source_entropy_normalized": 0.47404797197253046,
+        "scoring_events_before_forward": 3
+      },
+      {
+        "forward_role": "query_probe",
+        "key_length": 139,
+        "layers": 28,
+        "maximum_abs_bias": 0.0,
+        "mean_attention_entropy_normalized": 0.3429486554648195,
+        "mean_old_minus_recent_bias": 0.0,
+        "mean_source_entropy_normalized": 0.0,
+        "scoring_events_before_forward": 0
+      },
+      {
+        "forward_role": "query_probe",
+        "key_length": 267,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.35403888832245556,
+        "mean_old_minus_recent_bias": 0.0004120085389201579,
+        "mean_source_entropy_normalized": 0.3453781586181971,
+        "scoring_events_before_forward": 1
+      },
+      {
+        "forward_role": "query_probe",
+        "key_length": 267,
+        "layers": 28,
+        "maximum_abs_bias": 0.019999999552965164,
+        "mean_attention_entropy_normalized": 0.3608167751559189,
+        "mean_old_minus_recent_bias": 0.0004974824449683572,
+        "mean_source_entropy_normalized": 0.43770272469763377,
+        "scoring_events_before_forward": 2
+      }
+    ]
+  },
+  "case_id": "R1-s000611-k2-d050-lclustered",
+  "condition": "C1_NORMALIZED_SC",
+  "query_access": {
+    "answer_access_during_inference": false,
+    "mode": "conditioned",
+    "probe_schedule": "every_nonfinal_chunk_boundary",
+    "query_token_sha256": "8dbbef423faed2c6b21e3435b98d36a046198222f9804ff3e001954a342e4faf",
+    "query_tokens": 11
+  },
+  "retained_set": {
+    "boundaries": 3,
+    "mean_boundary_churn_jaccard_distance": 0.6082578578844945,
+    "mean_early_position_fraction": 0.6002952938988095,
+    "mean_late_position_fraction": 0.10539899553571429,
+    "mean_mean_cross_head_jaccard_distance": 0.3018399273504662,
+    "mean_mean_normalized_absolute_position": 0.318844276673242,
+    "mean_mean_unique_position_fraction_across_heads": 0.19383603050595238,
+    "mean_middle_position_fraction": 0.29430571056547616,
+    "rows": [
+      {
+        "boundary_index": 0,
+        "compression": {
+          "after_entries": 3584,
+          "before_entries": 3584,
+          "evictions": 0,
+          "layers": 0
+        },
+        "early_position_fraction": 1.0,
+        "kv_heads_per_layer": 8,
+        "late_position_fraction": 0.0,
+        "layers": 28,
+        "mean_boundary_churn_jaccard_distance": null,
+        "mean_cross_head_jaccard_distance": 0.0,
+        "mean_normalized_absolute_position": 0.14767441860465116,
+        "mean_unique_position_fraction_across_heads": 0.125,
+        "middle_position_fraction": 0.0,
+        "retained_entries_with_head_multiplicity": 28672,
+        "stored_length": 128,
+        "true_length": 128
+      },
+      {
+        "boundary_index": 1,
+        "compression": {
+          "after_entries": 3584,
+          "before_entries": 7168,
+          "evictions": 3584,
+          "layers": 28
+        },
+        "early_position_fraction": 0.46439034598214285,
+        "kv_heads_per_layer": 8,
+        "late_position_fraction": 0.0,
+        "layers": 28,
+        "mean_boundary_churn_jaccard_distance": 0.7075183101909561,
+        "mean_cross_head_jaccard_distance": 0.4123587931868628,
+        "mean_normalized_absolute_position": 0.33018162115863786,
+        "mean_unique_position_fraction_across_heads": 0.20748465401785715,
+        "middle_position_fraction": 0.5356096540178571,
+        "retained_entries_with_head_multiplicity": 28672,
+        "stored_length": 128,
+        "true_length": 256
+      },
+      {
+        "boundary_index": 2,
+        "compression": {
+          "after_entries": 3584,
+          "before_entries": 7168,
+          "evictions": 3584,
+          "layers": 28
+        },
+        "early_position_fraction": 0.3364955357142857,
+        "kv_heads_per_layer": 8,
+        "late_position_fraction": 0.31619698660714285,
+        "layers": 28,
+        "mean_boundary_churn_jaccard_distance": 0.5089974055780329,
+        "mean_cross_head_jaccard_distance": 0.4931609888645358,
+        "mean_normalized_absolute_position": 0.4786767902564369,
+        "mean_unique_position_fraction_across_heads": 0.2490234375,
+        "middle_position_fraction": 0.34730747767857145,
+        "retained_entries_with_head_multiplicity": 28672,
+        "stored_length": 128,
+        "true_length": 384
+      }
+    ]
+  }
+}

@@ -1,0 +1,153 @@
+"""Faithful Torch/Transformers runtime for Cornerstone-1 significance."""
+
+from .attention_prior import (
+    AttentionPriorAccessDeclaration,
+    AttentionPriorApplicationDiagnostics,
+    AttentionPriorTrace,
+    PriorBiasResult,
+    SignificanceAttentionPrior,
+    merge_attention_prior_mask,
+)
+from .cache import (
+    CacheStructureSnapshot,
+    CompressionReport,
+    SignificanceCache,
+    SignificanceDynamicLayer,
+)
+from .count_controls import (
+    CLEAN_COUNT_CONTROL_NAMES_V2,
+    COUNT_CONTROL_NAMES,
+    BoundarySummary,
+    CountControlName,
+    CountControlSpec,
+    RuntimeCountController,
+    boundary_resident_positions,
+)
+from .heterogeneous_attention import (
+    heterogeneous_bottom_right_mask,
+    heterogeneous_transformers_sdpa,
+)
+from .heterogeneous_budget import (
+    LiveBudgetDecision,
+    allocate_live_budget,
+    live_significance_state,
+)
+from .heterogeneous_cache import (
+    CacheByteAccounting,
+    HeterogeneousCacheSnapshot,
+    HeterogeneousCompressionReport,
+    HeterogeneousSignificanceCache,
+    HeterogeneousSignificanceLayer,
+)
+from .heterogeneous_runtime import (
+    HeterogeneousDecodeResult,
+    HeterogeneousPrefillResult,
+    heterogeneous_chunked_prefill,
+    heterogeneous_decode_append,
+    heterogeneous_score_with_query,
+)
+from .masks import bottom_right_causal_allowed, bottom_right_causal_mask
+from .memory import (
+    MEMORY_VARIANTS,
+    MemoryBudgetMatch,
+    MemoryByteLedger,
+    MemorySlotState,
+    MemorySnapshot,
+    MemoryVariant,
+    MemoryWriteReport,
+    SignificanceMemory,
+    match_memory_total_budget,
+    rectangular_position_bytes,
+)
+from .memory_runtime import (
+    MemoryAttentionAccounting,
+    MemoryChunkedPrefillResult,
+    MemoryCompressionResult,
+    MemoryDecodeAppendResult,
+    augment_attention_with_memory,
+    chunked_prefill_with_memory,
+    compress_cache_with_memory,
+    memory_decode_append,
+    score_with_query_memory,
+    transformers_sdpa_with_memory,
+)
+from .policy import SignificancePolicy, select_keep_indices
+from .scoring import (
+    PostRopeGQASignificanceDiagnostics,
+    post_rope_gqa_significance,
+    post_rope_gqa_significance_diagnostics,
+)
+from .transformers_runtime import (
+    ChunkedPrefillResult,
+    attention_prior_decode_append,
+    chunked_prefill,
+    record_transformers_sdpa,
+    score_with_query,
+)
+
+__all__ = [
+    "CLEAN_COUNT_CONTROL_NAMES_V2",
+    "COUNT_CONTROL_NAMES",
+    "MEMORY_VARIANTS",
+    "AttentionPriorAccessDeclaration",
+    "AttentionPriorApplicationDiagnostics",
+    "AttentionPriorTrace",
+    "BoundarySummary",
+    "CacheByteAccounting",
+    "CacheStructureSnapshot",
+    "ChunkedPrefillResult",
+    "CompressionReport",
+    "CountControlName",
+    "CountControlSpec",
+    "HeterogeneousCacheSnapshot",
+    "HeterogeneousCompressionReport",
+    "HeterogeneousDecodeResult",
+    "HeterogeneousPrefillResult",
+    "HeterogeneousSignificanceCache",
+    "HeterogeneousSignificanceLayer",
+    "LiveBudgetDecision",
+    "MemoryAttentionAccounting",
+    "MemoryBudgetMatch",
+    "MemoryByteLedger",
+    "MemoryChunkedPrefillResult",
+    "MemoryCompressionResult",
+    "MemoryDecodeAppendResult",
+    "MemorySlotState",
+    "MemorySnapshot",
+    "MemoryVariant",
+    "MemoryWriteReport",
+    "PostRopeGQASignificanceDiagnostics",
+    "PriorBiasResult",
+    "RuntimeCountController",
+    "SignificanceAttentionPrior",
+    "SignificanceCache",
+    "SignificanceDynamicLayer",
+    "SignificanceMemory",
+    "SignificancePolicy",
+    "allocate_live_budget",
+    "attention_prior_decode_append",
+    "augment_attention_with_memory",
+    "bottom_right_causal_allowed",
+    "bottom_right_causal_mask",
+    "boundary_resident_positions",
+    "chunked_prefill",
+    "chunked_prefill_with_memory",
+    "compress_cache_with_memory",
+    "heterogeneous_bottom_right_mask",
+    "heterogeneous_chunked_prefill",
+    "heterogeneous_decode_append",
+    "heterogeneous_score_with_query",
+    "heterogeneous_transformers_sdpa",
+    "live_significance_state",
+    "match_memory_total_budget",
+    "memory_decode_append",
+    "merge_attention_prior_mask",
+    "post_rope_gqa_significance",
+    "post_rope_gqa_significance_diagnostics",
+    "record_transformers_sdpa",
+    "rectangular_position_bytes",
+    "score_with_query",
+    "score_with_query_memory",
+    "select_keep_indices",
+    "transformers_sdpa_with_memory",
+]

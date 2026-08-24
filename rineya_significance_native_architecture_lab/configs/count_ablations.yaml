@@ -1,0 +1,103 @@
+schema_version: "1.0"
+
+experiment:
+  name: cornerstone1_count_causal_ablations
+  status: NOT_RUN
+  evidence_class: NOT_RUN
+  compute_tier: A
+  mode: OPEN_LOOP_TRACE_SIMULATION
+  purpose: Test whether entry-aligned realized exposure contains information beyond schedule age.
+
+protocol:
+  execution_mode: open_loop_trace_simulation
+  source_semantics_verified: true
+  source_runtime_fidelity_status: NOT_RUN
+
+provenance:
+  chatbubble_commit: 03777703dd8587f1248d9a72115eafb9356d50b8
+  source_remote: https://github.com/LUNCY579/RineyaBeta.git
+  implementation_ref: refs/heads/main
+  implementation_commit: 9e00be74098878290dc2b0d54cbffee4652c6088
+  implementation_path: scripts/kv/significance.py
+  implementation_blob: 30ee29724dce52de5a288f6421123fb718240541
+
+paths:
+  base: package_root
+  trace_input: null
+  output_root: results/runs/count_ablations
+
+runtime:
+  device: cpu
+  model_inference: false
+  seed: 23
+  deterministic: true
+
+significance:
+  enabled: true
+  exponent: 1.0
+  source_semantics_verified: true
+  score_pooling:
+    enabled: false
+    width: 1
+  stable_tie_break: absolute_position
+
+query:
+  mode: agnostic
+
+cache:
+  total_budget_slots: 1024
+  resident_budget_entries: 1024
+  sink_tokens: 64
+  recent_tokens: 256
+  matched_total_persistent_bytes: true
+
+attention_prior:
+  enabled: false
+  lambda: 0.0
+
+memory_slots:
+  enabled: false
+  count: 0
+
+controller:
+  enabled: false
+  type: none
+
+ablations:
+  - id: true_realized_count
+    count_transform: identity
+  - id: constant_count
+    count_transform: constant_one
+  - id: age_derived_count
+    count_transform: schedule_age
+  - id: shuffled_count
+    count_transform: seeded_permutation
+  - id: wrong_token_count
+    count_transform: circular_shift
+    shift: 1
+  - id: delayed_count
+    count_transform: previous_boundary
+  - id: noisy_count
+    count_transform: additive_noise
+    noise_distribution: normal
+    noise_std_fraction_of_mean: 0.10
+    clamp_min: 1.0
+  - id: head_averaged_count
+    count_transform: mean_across_kv_heads
+
+analysis:
+  paired_by_case: true
+  primary_reference: true_realized_count
+  metrics:
+    - evidence_survival
+    - distractor_retention
+    - retained_set_jaccard
+    - rank_correlation_with_true_count
+    - rank_correlation_with_age
+  label_open_loop_only: true
+
+outputs:
+  resolved_config: resolved_config.yaml
+  manifest: manifest.json
+  summary: summary.json
+  cases: cases.jsonl

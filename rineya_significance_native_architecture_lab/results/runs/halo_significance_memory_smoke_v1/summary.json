@@ -1,0 +1,24 @@
+{
+  "answer_generation_performed": false,
+  "cases": 2,
+  "checkpoint_loaded": true,
+  "claims_not_supported": [
+    "Significance memory improves answer accuracy, reasoning, or long-context quality.",
+    "Normalized significance is better than mean, recency, raw significance, or random controls.",
+    "The smoke is a latency benchmark or a large architecture sweep."
+  ],
+  "claims_supported": [
+    "M=0 uses the exact existing hard-eviction path on this Halo smoke.",
+    "M=4 normalized-significance slots enter later Halo attention with finite output."
+  ],
+  "evidence_class": "RUNTIME_COMPATIBILITY_ONLY",
+  "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+  "m0_identity_pass": true,
+  "m4_finite_runtime_pass": true,
+  "memory_slots_per_layer_kv_head": 4,
+  "memory_total_persistent_bytes": 491904,
+  "model_inference_performed": true,
+  "quality_measured": false,
+  "schema_version": "1.0",
+  "status": "PASS"
+}

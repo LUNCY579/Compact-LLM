@@ -1,0 +1,158 @@
+analysis:
+  bootstrap_samples: 10000
+  confidence: 0.95
+  independence_unit: cluster_id
+  minimum_independent_clusters: 12
+  multiplicity_adjustment: none_exploratory
+  pairwise_scope: all_15_whole_cluster_condition_pairs
+  randomization_samples: 100000
+attention_prior:
+  enabled: false
+  lambda: 0.0
+cache:
+  baseline_retained_history_budget: 128
+  compression_chunk_tokens: 128
+  memory_retained_history_budget: 123
+  recent_tokens: 32
+  selection_count_exponent: 1.0
+  sink_tokens: 4
+  total_budget_slots: 128
+conditions:
+- aggregation: normalized_significance
+  id: M0_HARD
+  ordinary_budget: 128
+  slots: 0
+- aggregation: mean
+  id: M4_MEAN
+  ordinary_budget: 123
+  slots: 4
+- aggregation: recency
+  id: M4_RECENCY
+  ordinary_budget: 123
+  slots: 4
+- aggregation: raw_significance
+  id: M4_RAW_S
+  ordinary_budget: 123
+  slots: 4
+- aggregation: normalized_significance
+  id: M4_NORMALIZED_S_OVER_C
+  ordinary_budget: 123
+  slots: 4
+- aggregation: random
+  id: M4_RANDOM
+  ordinary_budget: 123
+  slots: 4
+controller:
+  enabled: false
+  type: none
+endpoint:
+  definition_sha256: 31669a6a30fab93f37fdb27ca25f04fb3ccb68024fe7de6057086dca7279348f
+  memory_slot_treatment: slots_are_not_exact_token_evidence_and_never_count_as_retained_positions
+  primary: layer_fact_exact_completion_rate
+  version: layer-fact-retention-v1
+experiment:
+  classification: EXPLORATORY_NOT_REGISTERED
+  compute_tier: B
+  name: halo_significance_memory_quality_screen_v1
+  purpose: Compare fixed-slot aggregation controls at matched total persistent bytes
+    on frozen Halo clusters.
+  status: NOT_RUN
+frozen_case_source:
+  new_conditions_registered: false
+  registered_config: rineya_significance_native_architecture_lab/configs/halo_endpoint_validation_v2_registered.yaml
+  registered_config_sha256: 82e0964bb532ae27bc43cf66b393628e09df364ef6280fc846613792a60c58bc
+  registration_id: halo-endpoint-validation-v2-registered
+  reuse_scope: selected_case_ids_and_frozen_endpoint_only
+  source_hashes:
+    capability_cases: 333906cc8069a31c3f85eff08fd8f7544e3f22662865915a43a935d5e4fb920a
+    evaluation: e83e2469ab8e49866b32b17f926c3d13ec156b4d6f552b29452270e4c92dc161
+    inference: 45ede8d349b57d7d1962e39d90888044624003232bfe915027e6a44f8cbbc8a2
+memory_slots:
+  invalid_slot_semantics: physically_present_and_fully_masked
+  key_semantics: weighted_post_rope_key
+  random_seed: 7301
+  recency_tau: 32.0
+  stable_bucket: semantic_entry_id_modulo_slot_count
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_hashes:
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+  expected_head_dim: 128
+  expected_kv_heads: 8
+  expected_layers: 28
+  expected_query_heads: 16
+paths:
+  base: repository_root
+  capability_cases: rineya_significance_native_architecture_lab/results/runs/halo_endpoint_validation_v2_capability/cases.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/evaluation.jsonl
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/inference.jsonl
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_significance_memory_quality_screen_v1
+protocol:
+  answer_key_access: after_all_72_predictions_slots_and_resident_states_are_durable
+  execution_mode: closed_loop_model_execution
+  interpretation: exploratory_local_not_registered
+  latency_claim_allowed: false
+  same_process_m0_identity_gate: required_before_cells
+  successive_halving_used: false
+  total_cells: 72
+  total_persistent_byte_match: required
+query:
+  access_fairness: identical_across_all_six_conditions
+  max_tokens: 64
+  mode: conditioned
+  probe_schedule: every_nonfinal_chunk_boundary
+runtime:
+  deterministic: true
+  device: cpu
+  dtype: bfloat16
+  fixed_decode_accounting: continue_cache_appends_after_first_eos_without_extending_prediction
+  max_new_tokens: 32
+  seed: 73
+  verify_query_rollback: true
+schema_version: '1.0'
+selection:
+  families:
+  - R1
+  - R3
+  - R4
+  independent_clusters: 12
+  selected_case_ids:
+  - R1-s000611-k2-d050-lclustered
+  - R1-s000630-k2-d050-lclustered
+  - R1-s000634-k2-d050-lclustered
+  - R1-s000637-k2-d050-lclustered
+  - R3-s000600-d050
+  - R3-s000630-d050
+  - R3-s000635-d050
+  - R3-s000637-d050
+  - R4-s000600-d050
+  - R4-s000611-d050
+  - R4-s000630-d050
+  - R4-s000634-d050
+significance:
+  enabled: true
+  exponent: 1.0
+  score_pooling:
+    enabled: false
+    width: 1
+total_persistent_budget:
+  includes:
+  - K
+  - V
+  - S
+  - C
+  - absolute_positions
+  - semantic_entry_ids
+  - memory_K
+  - memory_V
+  - memory_metadata
+  m0_boundary_total_bytes: 15368192
+  m4_boundary_total_bytes: 15259776
+  m4_memory_bytes: 491904
+  match_basis: fixed_capacity_at_each_compression_boundary_and_fixed_decode_reserve
+  memory_ordinary_budget_reduction: 5
+  ordinary_bytes_per_budget_unit: 120064
+  unavoidable_discrete_slack_bytes: 108416

@@ -1,0 +1,135 @@
+{
+  "artifact_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "content_manifest": "content_manifest.json",
+    "file_count": 186,
+    "tree_sha256": "bd2c8f1535d6d6e933d9643a7f362f7f9d8287fdcde682de8828cc21a6394da8"
+  },
+  "artifacts": {
+    "boundary_diagnostics": "boundary_diagnostics/",
+    "boundary_evidence": "boundary_evidence.jsonl",
+    "boundary_index": "boundary_diagnostics.jsonl",
+    "cases": "cases.jsonl",
+    "content_manifest": "content_manifest.json",
+    "partial_boundary_index": "boundary_diagnostics.partial.jsonl",
+    "partial_predictions": "predictions.partial.jsonl",
+    "predictions": "predictions.unscored.jsonl",
+    "resident_positions": "resident_positions/",
+    "restart_state": "run_state.json",
+    "statistics": "statistics.json",
+    "summary": "summary.json"
+  },
+  "budget": {
+    "matched_across_conditions": true,
+    "retained_history_entries_per_layer_head": 128
+  },
+  "code_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "file_count": 62,
+    "tree_sha256": "b8b478c294066aa1fa19a1ab74c79dd2ce21654acf52de98c257c08ab3050bd0"
+  },
+  "completed_at": "2026-08-24T05:54:51.074356Z",
+  "config": {
+    "resolved_path": "resolved_config.yaml",
+    "sha256": "04b47c817c8801cb3738fa0e9a9ddab058c34df6b6dc5543939629a0bae80f27"
+  },
+  "created_at": "2026-08-24T05:53:52.451220Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "experiment": {
+    "architecture_variant": "Halo closed-loop exposure count causal controls",
+    "benchmark": "halo_calibration_v3_B0_eligible",
+    "compute_tier": "B",
+    "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+    "name": "halo_closed_loop_exposure_count_causal_controls_v1",
+    "query_conditioned": true,
+    "seed": 23
+  },
+  "model": {
+    "architecture": "Qwen3ForCausalLM",
+    "checkpoint_integrity": {
+      "aggregate_sha256": "bb6ea14775432c5de3eda200b4c09eb69a672fe8307ddffe7e89c8e5827ba477",
+      "algorithm": "sha256",
+      "files": {
+        "chat_template": {
+          "path": "chat_template.jinja",
+          "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+        },
+        "config": {
+          "path": "config.json",
+          "sha256": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85"
+        },
+        "core": {
+          "path": "CORE.json",
+          "sha256": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b"
+        },
+        "generation_config": {
+          "path": "generation_config.json",
+          "sha256": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48"
+        },
+        "tokenizer": {
+          "path": "tokenizer.json",
+          "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+        },
+        "tokenizer_config": {
+          "path": "tokenizer_config.json",
+          "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+        },
+        "weights": {
+          "path": "model.safetensors",
+          "sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+        }
+      }
+    },
+    "hashes": {
+      "chat_template": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "core": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b",
+      "generation_config": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "tokenizer_config": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "True realized C remains persistent in every condition; only the boundary ranking denominator is perturbed.",
+    "All conditions receive identical prompt/query tokens, query probes, cache budget, chunk schedule, and greedy decoding procedure.",
+    "No Rineya/R2 model, Aegis model, or benchmark R2 family is active.",
+    "Boundary evidence excludes required facts not fully observed at that boundary; future facts are never labeled evicted."
+  ],
+  "repositories": {
+    "chatbubble": {
+      "commit": "03777703dd8587f1248d9a72115eafb9356d50b8",
+      "dirty": true,
+      "remote": "https://github.com/LUNCY579/ChatBubble.git"
+    },
+    "source": {
+      "implementation": {
+        "blob": "30ee29724dce52de5a288f6421123fb718240541",
+        "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+        "path": "scripts/kv/significance.py",
+        "ref": "refs/heads/main"
+      },
+      "paper": {
+        "blob": "b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3",
+        "commit": "1664f54de0bbdfde45e311b75bbf3038dbfffe42",
+        "path": "paper/significance_matrix/main.tex",
+        "ref": "refs/heads/r2-healing-harness"
+      },
+      "remote": "https://github.com/LUNCY579/RineyaBeta.git"
+    }
+  },
+  "run_id": "halo_count_causal_controls_v1",
+  "runtime": {
+    "device": "cpu",
+    "hardware": null,
+    "precision": "bfloat16",
+    "python": "3.11.15",
+    "torch": "2.13.0+cpu",
+    "transformers": "5.15.0"
+  },
+  "schema_version": "1.0",
+  "status": "COMPLETE"
+}

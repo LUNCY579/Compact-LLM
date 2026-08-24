@@ -1,0 +1,253 @@
+{
+  "by_condition": {
+    "B3_ENTROPY": {
+      "clusters": 12,
+      "correct": 8,
+      "mean_layer_fact_exact_completion_rate": 0.2232142857142857,
+      "mean_logical_payload_bytes_after_decode": 24883264.0,
+      "mean_physical_total_bytes_after_decode": 27287118.0,
+      "mean_representation_overhead_bytes": 2403854.0,
+      "strict_evidence_survival": 0,
+      "total_heterogeneous_boundaries": 24
+    },
+    "B3_SHUFFLED": {
+      "clusters": 12,
+      "correct": 5,
+      "mean_layer_fact_exact_completion_rate": 0.2380952380952381,
+      "mean_logical_payload_bytes_after_decode": 24943296.0,
+      "mean_physical_total_bytes_after_decode": 28065052.0,
+      "mean_representation_overhead_bytes": 3121756.0,
+      "strict_evidence_survival": 0,
+      "total_heterogeneous_boundaries": 24
+    },
+    "B3_UNIFORM": {
+      "clusters": 12,
+      "correct": 5,
+      "mean_layer_fact_exact_completion_rate": 0.21130952380952386,
+      "mean_logical_payload_bytes_after_decode": 24983317.333333332,
+      "mean_physical_total_bytes_after_decode": 24983317.333333332,
+      "mean_representation_overhead_bytes": 0.0,
+      "strict_evidence_survival": 0,
+      "total_heterogeneous_boundaries": 0
+    }
+  },
+  "cells": 36,
+  "claims_not_supported": [
+    "registered or confirmatory evidence for the new allocation conditions",
+    "population-level answer or retention improvement",
+    "memory saving from head raggedness because the implementation uses physical padding",
+    "latency improvement or deployment efficiency"
+  ],
+  "claims_supported": [
+    "closed-loop rectangular, entropy, and shuffled allocation outcomes were measured on these 12 frozen Halo cases",
+    "every compression boundary conserved the exact same logical global entry budget"
+  ],
+  "classification": "EXPLORATORY_NOT_REGISTERED",
+  "cluster_aware_paired_contrasts": {
+    "B3_ENTROPY_minus_B3_SHUFFLED__answer_correct": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": 1.0,
+        "R1-s000630-k2": 0.0,
+        "R1-s000634-k2": 0.0,
+        "R1-s000637-k2": 0.0,
+        "R3-s000600": 0.0,
+        "R3-s000630": 0.0,
+        "R3-s000635": 0.0,
+        "R3-s000637": 1.0,
+        "R4-s000600": 0.0,
+        "R4-s000611": 0.0,
+        "R4-s000630": 1.0,
+        "R4-s000634": 0.0
+      },
+      "confidence_interval": [
+        0.0,
+        0.5
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": 0.25,
+      "median_difference": 0.0,
+      "p_value_two_sided": 0.25,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    },
+    "B3_ENTROPY_minus_B3_SHUFFLED__endpoint": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": 0.0357142857142857,
+        "R1-s000630-k2": 0.0,
+        "R1-s000634-k2": -0.017857142857142905,
+        "R1-s000637-k2": 0.0357142857142857,
+        "R3-s000600": -0.03571428571428571,
+        "R3-s000630": 0.03571428571428571,
+        "R3-s000635": -0.0357142857142857,
+        "R3-s000637": 0.03571428571428571,
+        "R4-s000600": -0.08928571428571427,
+        "R4-s000611": -0.0357142857142857,
+        "R4-s000630": -0.053571428571428575,
+        "R4-s000634": -0.05357142857142856
+      },
+      "confidence_interval": [
+        -0.03720238095238096,
+        0.007440476190476189
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": -0.014880952380952384,
+      "median_difference": -0.0267857142857143,
+      "p_value_two_sided": 0.298828125,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    },
+    "B3_ENTROPY_minus_B3_UNIFORM__answer_correct": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": 1.0,
+        "R1-s000630-k2": 0.0,
+        "R1-s000634-k2": 0.0,
+        "R1-s000637-k2": 0.0,
+        "R3-s000600": 0.0,
+        "R3-s000630": 0.0,
+        "R3-s000635": 0.0,
+        "R3-s000637": 1.0,
+        "R4-s000600": 0.0,
+        "R4-s000611": 0.0,
+        "R4-s000630": 1.0,
+        "R4-s000634": 0.0
+      },
+      "confidence_interval": [
+        0.0,
+        0.5
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": 0.25,
+      "median_difference": 0.0,
+      "p_value_two_sided": 0.25,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    },
+    "B3_ENTROPY_minus_B3_UNIFORM__endpoint": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": 0.0,
+        "R1-s000630-k2": 0.0357142857142857,
+        "R1-s000634-k2": 0.0357142857142857,
+        "R1-s000637-k2": -0.035714285714285754,
+        "R3-s000600": 0.07142857142857142,
+        "R3-s000630": 0.07142857142857142,
+        "R3-s000635": 0.035714285714285726,
+        "R3-s000637": 0.07142857142857142,
+        "R4-s000600": -0.07142857142857142,
+        "R4-s000611": -0.0357142857142857,
+        "R4-s000630": -0.053571428571428575,
+        "R4-s000634": 0.017857142857142863
+      },
+      "confidence_interval": [
+        -0.016369047619047616,
+        0.038690476190476185
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": 0.011904761904761899,
+      "median_difference": 0.02678571428571428,
+      "p_value_two_sided": 0.4833984375,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    },
+    "B3_SHUFFLED_minus_B3_UNIFORM__answer_correct": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": 0.0,
+        "R1-s000630-k2": 0.0,
+        "R1-s000634-k2": 0.0,
+        "R1-s000637-k2": 0.0,
+        "R3-s000600": 0.0,
+        "R3-s000630": 0.0,
+        "R3-s000635": 0.0,
+        "R3-s000637": 0.0,
+        "R4-s000600": 0.0,
+        "R4-s000611": 0.0,
+        "R4-s000630": 0.0,
+        "R4-s000634": 0.0
+      },
+      "confidence_interval": [
+        0.0,
+        0.0
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": 0.0,
+      "median_difference": 0.0,
+      "p_value_two_sided": 1.0,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    },
+    "B3_SHUFFLED_minus_B3_UNIFORM__endpoint": {
+      "cluster_count": 12,
+      "cluster_differences": {
+        "R1-s000611-k2": -0.0357142857142857,
+        "R1-s000630-k2": 0.0357142857142857,
+        "R1-s000634-k2": 0.0535714285714286,
+        "R1-s000637-k2": -0.07142857142857145,
+        "R3-s000600": 0.10714285714285714,
+        "R3-s000630": 0.03571428571428571,
+        "R3-s000635": 0.07142857142857142,
+        "R3-s000637": 0.03571428571428571,
+        "R4-s000600": 0.01785714285714285,
+        "R4-s000611": 0.0,
+        "R4-s000630": 0.0,
+        "R4-s000634": 0.07142857142857142
+      },
+      "confidence_interval": [
+        -5.782411586589357e-18,
+        0.052083333333333336
+      ],
+      "eligibility_reason": "PASS",
+      "eligible": true,
+      "mean_difference": 0.026785714285714284,
+      "median_difference": 0.035714285714285705,
+      "p_value_two_sided": 0.107421875,
+      "randomization_samples": 4096,
+      "row_count": 12,
+      "test_method": "exact_cluster_sign_flip"
+    }
+  },
+  "conditions": [
+    "B3_UNIFORM",
+    "B3_ENTROPY",
+    "B3_SHUFFLED"
+  ],
+  "matching_audit": {
+    "case_count": 12,
+    "conditions": [
+      "B3_UNIFORM",
+      "B3_ENTROPY",
+      "B3_SHUFFLED"
+    ],
+    "failures": [],
+    "query_access_equal_within_case": true,
+    "status": "PASS"
+  },
+  "schema_version": "1.0",
+  "selected_frozen_clusters": 12,
+  "status": "PASS",
+  "uniform_identity_gate": {
+    "cache_mismatches": [],
+    "case_id": "R1-s000611-k2-d050-lclustered",
+    "compression_boundaries": 3,
+    "exact_cache_state": true,
+    "exact_logits": true,
+    "global_budget": 28672,
+    "max_abs_logit_delta": 0.0,
+    "performed_before_outcome_access": true,
+    "status": "PASS",
+    "uniform_allocation_reports_exact": true
+  }
+}

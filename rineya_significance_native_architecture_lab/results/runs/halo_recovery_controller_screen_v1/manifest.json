@@ -1,0 +1,265 @@
+{
+  "artifact_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "content_manifest": "content_manifest.json",
+    "file_count": 7,
+    "tree_sha256": "1548d4655b7a473bd78412b7bd104281800ac25be85d9b36a78e5ed43792a139"
+  },
+  "artifacts": {
+    "content_manifest": "content_manifest.json",
+    "pre_answer_features": "features.pre_answer.jsonl",
+    "resolved_config": "resolved_config.yaml",
+    "risk_coverage": "risk_coverage.jsonl",
+    "risk_coverage_csv": "risk_coverage.csv",
+    "risk_coverage_figure": "risk_coverage.png",
+    "scored_cases": "scored_cases.jsonl",
+    "summary": "summary.json"
+  },
+  "code_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "file_count": 60,
+    "tree_sha256": "dd2aed0b24d4319df345cb33baa5c400410d170f0431e56540ff9922acec6197"
+  },
+  "completed_at": "2026-08-24T07:41:38.421069Z",
+  "config": {
+    "resolved_path": "configs/halo_recovery_controller.yaml",
+    "sha256": "329d47579e2b3b99dca662e747e7d1376c2239fb49276179355e0e375dc3f463"
+  },
+  "created_at": "2026-08-24T07:41:35.423167Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "experiment": {
+    "architecture_variant": "E deterministic significance-controlled full-cache recovery",
+    "benchmark": "11 B0-selected Halo count-control clusters",
+    "compute_tier": "A",
+    "execution_mode": "OPEN_LOOP_TRACE_SIMULATION",
+    "name": "halo_significance_controlled_recovery_v1",
+    "query_conditioned": true,
+    "seed": 23
+  },
+  "input_provenance": {
+    "full_cache_manifest_sha256": "34e21cc5a3d8886dc978705147bbf82d78035a3928085984a58a1a2c9862f4ce",
+    "full_cache_run_id": "halo_capability_calibration_v2",
+    "prompt_only_inference_sha256": "544e200b7943768b3686d353f9fdaf32ff69b5f81656d3a1b1b5c794065275ec",
+    "source_boundary_index_sha256": "36f5fb35181d9bebece238232e305f78376f1845a1989f4898eabeee5fc00a16",
+    "source_content_manifest_sha256": "5db266614f8a0ac24ec71637abace5b61214bbcb2dd39d0db9ecfb10b1fb3861",
+    "source_manifest_sha256": "82cf5fc2bc16c4570b43fa35681e274b5895df24ea7b2b314b6a56f4fb1c49fc",
+    "source_model_hash_contract": "PASS",
+    "source_run_id": "halo_count_causal_controls_v2",
+    "source_unscored_predictions_sha256": "4250be2b6b23313c37c3414517943f5d809bdc671e55a9ad07e411a810f53f2b"
+  },
+  "model": {
+    "architecture": "Qwen3ForCausalLM",
+    "hashes": {
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "Features were durable before answer-derived outcomes were opened.",
+    "Whole clusters are indivisible gate units; tied risk scores are never split.",
+    "Thresholds are enumerated, not fitted; there is no held-out calibration split.",
+    "Fallback outcomes and timing are reused from an earlier same-prompt full-cache Halo run whose prefill chunk differs (256 versus 128).",
+    "No broad quality, causality, or deployability claim is supported."
+  ],
+  "repositories": {
+    "chatbubble": {
+      "commit": "03777703dd8587f1248d9a72115eafb9356d50b8",
+      "dirty": true,
+      "remote": "https://github.com/LUNCY579/ChatBubble.git"
+    },
+    "source": {
+      "implementation": {
+        "blob": "30ee29724dce52de5a288f6421123fb718240541",
+        "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+        "path": "scripts/kv/significance.py",
+        "ref": "refs/heads/main"
+      },
+      "paper": {
+        "blob": "b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3",
+        "commit": "1664f54de0bbdfde45e311b75bbf3038dbfffe42",
+        "path": "paper/significance_matrix/main.tex",
+        "ref": "refs/heads/r2-healing-harness"
+      },
+      "remote": "https://github.com/LUNCY579/RineyaBeta.git"
+    }
+  },
+  "resolved_config": {
+    "accounting": {
+      "fallback_runs_sequentially_after_compressed_path": true,
+      "input_token_dtype_bytes": 8,
+      "kv_dtype_bytes": 2,
+      "kv_tensor_count": 2,
+      "open_loop_wall_time_source": "recorded_same_prompt_full_cache_reference_chunk256",
+      "persistent_bytes": "K_plus_V_plus_S_plus_C_plus_alignment_for_compressed_and_K_plus_V_for_full",
+      "smoke_wall_time_source": "live_process_perf_counter"
+    },
+    "adaptive_head_budget": {
+      "enabled": false
+    },
+    "attention_prior": {
+      "enabled": false,
+      "lambda": 0.0
+    },
+    "cache": {
+      "compressed_retained_history_budget": 128,
+      "compression_chunk_tokens": 128,
+      "query_conditioned": true,
+      "recent_tokens": 32,
+      "recovery_cache": "full_no_eviction_fresh_from_position_zero",
+      "score_pooling_width": 1,
+      "significance_exponent": 1.0,
+      "sink_tokens": 4,
+      "total_budget_slots": 128
+    },
+    "controller": {
+      "decision_rule": "recover_if_risk_greater_than_or_equal_to_threshold",
+      "enabled": true,
+      "learned_parameters": 0,
+      "recovery_action": "recompute_full_cache",
+      "smoke_case_selection": "lowest_risk_accept_and_highest_risk_recover_without_outcome_access",
+      "smoke_threshold": "midpoint_of_minimum_and_maximum_saved_preanswer_risk",
+      "type": "deterministic_fixed_threshold"
+    },
+    "experiment": {
+      "classification": "EXPLORATORY_ARCHITECTURE_E",
+      "compute_tier": "A_then_B_smoke",
+      "name": "halo_significance_controlled_recovery_v1",
+      "purpose": "Test whether answer-blind Cornerstone-1 state can rank compressed-run risk, then prove a deterministic controller can literally accept an unchanged compressed path or trigger a fresh full-cache Halo recomputation."
+    },
+    "memory_slots": {
+      "count": 0,
+      "enabled": false
+    },
+    "model": {
+      "allowed_core_ids": [
+        "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4"
+      ],
+      "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+      "expected_architecture": "Qwen3ForCausalLM",
+      "expected_hashes": {
+        "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+        "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+        "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      },
+      "expected_head_dim": 128,
+      "expected_hidden_size": 1024,
+      "expected_kv_heads": 8,
+      "expected_layers": 28,
+      "expected_query_heads": 16,
+      "expected_source_base": "Qwen3-0.6B",
+      "expected_vocab_size": 151936,
+      "trust_remote_code": false
+    },
+    "paths": {
+      "base": "repository_root",
+      "full_cache_run": "rineya_significance_native_architecture_lab/results/runs/halo_capability_calibration_v2",
+      "model": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+      "prompt_only_inference": "rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/inference.jsonl",
+      "screen_output": "rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1",
+      "smoke_output": "rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_smoke_v1",
+      "source_run": "rineya_significance_native_architecture_lab/results/runs/halo_count_causal_controls_v2"
+    },
+    "protocol": {
+      "answer_access": "only_after_pre_answer_features_are_durable",
+      "broad_quality_claims": false,
+      "cluster_correctness_aggregation": "all_cases_correct",
+      "cluster_risk_aggregation": "maximum",
+      "confirmatory": false,
+      "controller_training": "none",
+      "execution_mode": "closed_loop_model_execution",
+      "open_loop_execution_mode": "OPEN_LOOP_TRACE_SIMULATION",
+      "pairing_unit": "whole_cluster",
+      "smoke_execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+      "source_condition": "true_realized_count",
+      "threshold_sweep": "every_unique_tie_safe_risk_score"
+    },
+    "query": {
+      "access_fairness": "identical_for_accept_and_recovery_decisions",
+      "mode": "conditioned",
+      "probe_schedule": "every_nonfinal_chunk_boundary"
+    },
+    "risk_signal": {
+      "decision_boundary": "final_available_nonfinal_chunk_boundary",
+      "features": {
+        "churn": "retained_entry_id_Jaccard_distance_from_previous_boundary",
+        "concentration": "one_minus_top_mass",
+        "count": "bounded_coefficient_of_variation_of_true_C",
+        "entropy": "normalized_Shannon_entropy_of_S_over_C",
+        "margin": "one_minus_bounded_selected_vs_evicted_cutoff_gap",
+        "query_delta": "one_minus_latest_query_score_fraction"
+      },
+      "query_delta_derivation": "Difference cumulative S across adjacent boundaries after aligning persistent semantic entry IDs; ordinary chunks are not scored in this query-conditioned run, so the nonnegative difference is the latest query-probe contribution.",
+      "top_mass_fraction": 0.1,
+      "version": "cornerstone-preanswer-risk-v1",
+      "weights": {
+        "churn": 1.0,
+        "concentration": 1.0,
+        "count": 1.0,
+        "entropy": 1.0,
+        "margin": 1.0,
+        "query_delta": 1.0
+      }
+    },
+    "runtime": {
+      "attention_implementation": "sdpa",
+      "batch_size": 1,
+      "decoding": "manual_greedy",
+      "deterministic": true,
+      "device": "cpu",
+      "dtype": "bfloat16",
+      "max_new_tokens": 32,
+      "seed": 23,
+      "verify_query_rollback": true
+    },
+    "schema_version": "1.0",
+    "selection_bias": [
+      "Only 11 clusters already selected because Halo B0 was correct are included.",
+      "R2 benchmark-family cases are absent because the B0 capability gate was 0/8.",
+      "At most four clusters per included family and one evidence depth are represented.",
+      "The same 11 clusters describe risk association and threshold curves; there is no held-out calibration split.",
+      "Every threshold is shown and none is selected as a deployment operating point.",
+      "Full-cache outcomes and costs are reused from a same-prompt prior run whose full-cache prefill chunk is 256 rather than the compressed path's 128.",
+      "Each selected cluster contributes one case, so whole-cluster gating is enforced but numerically identical to case-level gating here."
+    ],
+    "significance": {
+      "enabled": true,
+      "exponent": 1.0,
+      "exposure_mode": "realized_event_count",
+      "score_pooling": {
+        "enabled": false,
+        "width": 1
+      }
+    }
+  },
+  "run_id": "halo_recovery_controller_screen_v1",
+  "runtime": {
+    "device": "cpu",
+    "hardware": {
+      "dependencies": {
+        "PyYAML": "6.0.3",
+        "matplotlib": "3.11.1",
+        "numpy": "2.5.2",
+        "scikit-learn": "1.9.0",
+        "scipy": "1.18.1",
+        "torch": null,
+        "transformers": null
+      },
+      "logical_cpu_count": 32,
+      "platform": "Windows-11-10.0.26200-SP0",
+      "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+      "python": "3.12.11",
+      "python_implementation": "CPython"
+    },
+    "model_loaded": false,
+    "precision": "numpy-float64-analysis-of-float32-traces",
+    "python": "3.12.11",
+    "torch": null,
+    "transformers": null
+  },
+  "schema_version": "1.0",
+  "status": "COMPLETE"
+}

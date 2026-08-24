@@ -1,0 +1,202 @@
+{
+  "analysis": {
+    "bootstrap_samples": 10000,
+    "comparisons": [
+      "C1_NORMALIZED_SC_minus_C0_B3_NO_PRIOR",
+      "C1_NORMALIZED_SC_minus_C5_RAW_S",
+      "C1_NORMALIZED_SC_minus_C4_SHUFFLED_SC",
+      "C1_NORMALIZED_SC_minus_C6_AGE_ONLY"
+    ],
+    "confidence": 0.95,
+    "independence_unit": "whole_cluster_id",
+    "minimum_independent_clusters": 12,
+    "primary_test": "exact_cluster_sign_flip",
+    "randomization_samples": 100000,
+    "specificity_rule": {
+      "directional_but_inconclusive": "all three endpoint deltas are positive but one or more CIs include zero",
+      "not_supported": "one or more endpoint deltas are non-positive",
+      "supported": "normalized endpoint delta is positive with CI lower above zero against raw, shuffled, and age"
+    }
+  },
+  "attention_prior": {
+    "access": {
+      "answer": "none",
+      "future_hidden_states": "none",
+      "future_tokens": "none",
+      "oracle_evidence": "none",
+      "query": "conditioned"
+    },
+    "clip": 2.0,
+    "enabled": true,
+    "epsilon": 1e-06,
+    "lambda": 0.01,
+    "max_abs_lambda": 0.25,
+    "per_layer_lambdas": null,
+    "shuffle_seed": 41,
+    "transform": "clipped_z_score"
+  },
+  "cache": {
+    "compression_chunk_tokens": 128,
+    "matched_storage": true,
+    "recent_tokens": 32,
+    "retained_history_budget": 128,
+    "sink_tokens": 4,
+    "total_budget_slots": 128
+  },
+  "claims": {
+    "prohibited": [
+      "registered or confirmatory evidence for attention-prior conditions",
+      "population-level quality improvement",
+      "feedback safety beyond these 12 selected clusters and this lambda",
+      "lambda optimality"
+    ]
+  },
+  "conditions": [
+    {
+      "id": "C0_B3_NO_PRIOR",
+      "lambda": 0.0,
+      "source": "normalized"
+    },
+    {
+      "id": "C1_NORMALIZED_SC",
+      "lambda": 0.01,
+      "source": "normalized"
+    },
+    {
+      "id": "C5_RAW_S",
+      "lambda": 0.01,
+      "source": "raw"
+    },
+    {
+      "id": "C4_SHUFFLED_SC",
+      "lambda": 0.01,
+      "source": "shuffled"
+    },
+    {
+      "id": "C6_AGE_ONLY",
+      "lambda": 0.01,
+      "source": "age"
+    }
+  ],
+  "controller": {
+    "enabled": false,
+    "type": "none"
+  },
+  "endpoint": {
+    "definition_sha256": "31669a6a30fab93f37fdb27ca25f04fb3ccb68024fe7de6057086dca7279348f",
+    "primary": "layer_fact_exact_completion_rate",
+    "version": "layer-fact-retention-v1"
+  },
+  "experiment": {
+    "classification": "EXPLORATORY_NOT_REGISTERED",
+    "compute_tier": "B",
+    "name": "halo_attention_prior_quality_screen_v1",
+    "purpose": "Compare a frozen tiny soft-attention prior and its raw, shuffled, and age controls on the exact 12 clusters selected by endpoint-validation v2.",
+    "status": "NOT_RUN"
+  },
+  "frozen_case_source": {
+    "registered_config": "rineya_significance_native_architecture_lab/configs/halo_endpoint_validation_v2_registered.yaml",
+    "registered_config_sha256": "82e0964bb532ae27bc43cf66b393628e09df364ef6280fc846613792a60c58bc",
+    "registration_artifact": "rineya_significance_native_architecture_lab/results/registrations/halo_endpoint_validation_v2.json",
+    "registration_artifact_sha256": "ff328faae68f186263dec1e2cc84c5442128739d48a3f4189c0d894b0ae415c2",
+    "source_hashes": {
+      "capability_cases": "333906cc8069a31c3f85eff08fd8f7544e3f22662865915a43a935d5e4fb920a",
+      "evaluation": "e83e2469ab8e49866b32b17f926c3d13ec156b4d6f552b29452270e4c92dc161",
+      "inference": "45ede8d349b57d7d1962e39d90888044624003232bfe915027e6a44f8cbbc8a2"
+    }
+  },
+  "frozen_lambda_source": {
+    "config": "rineya_significance_native_architecture_lab/configs/halo_attention_prior_smoke.yaml",
+    "config_sha256": "c38d3e647b94bad6bc622808aaa9ea4c7f5be4db159f4bf98291a3c16ef01903",
+    "lambda": 0.01,
+    "smoke_summary": "rineya_significance_native_architecture_lab/results/runs/halo_attention_prior_smoke_v1/summary.json",
+    "smoke_summary_sha256": "f8466a1198af5dd99da25c1f0d4a8285b478aceca28d7fe0e512b3c78d7fee9c",
+    "tuning_on_quality_outcomes": false
+  },
+  "memory_slots": {
+    "count": 0,
+    "enabled": false
+  },
+  "model": {
+    "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "expected_architecture": "Qwen3ForCausalLM",
+    "expected_hashes": {
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "expected_head_dim": 128,
+    "expected_hidden_size": 1024,
+    "expected_kv_heads": 8,
+    "expected_layers": 28,
+    "expected_query_heads": 16,
+    "expected_vocab_size": 151936
+  },
+  "paths": {
+    "base": "repository_root",
+    "capability_cases": "rineya_significance_native_architecture_lab/results/runs/halo_endpoint_validation_v2_capability/cases.jsonl",
+    "evaluation": "rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/evaluation.jsonl",
+    "inference": "rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/inference.jsonl",
+    "model": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "output_root": "rineya_significance_native_architecture_lab/results/runs/halo_attention_prior_quality_screen_v1"
+  },
+  "protocol": {
+    "answer_key_access": "after_all_60_predictions_and_diagnostics_are_durable",
+    "c0_identity_gate": "before_answer_access_same_process",
+    "execution_mode": "closed_loop_model_execution",
+    "feedback_safety_generalization": "prohibited",
+    "new_conditions_registered": false,
+    "quality_screen_is_exploratory": true,
+    "total_cells": 60
+  },
+  "query": {
+    "access_fairness": "identical_across_all_five_conditions",
+    "max_tokens": 64,
+    "mode": "conditioned",
+    "probe_schedule": "every_nonfinal_chunk_boundary",
+    "rendering": "raw_question_no_special_tokens"
+  },
+  "runtime": {
+    "attention_implementation": "sdpa",
+    "decoding": "manual_greedy",
+    "deterministic": true,
+    "device": "cpu",
+    "dtype": "bfloat16",
+    "max_new_tokens": 32,
+    "restartable": true,
+    "seed": 41,
+    "verify_query_rollback": true
+  },
+  "schema_version": "1.0",
+  "selection": {
+    "families": [
+      "R1",
+      "R3",
+      "R4"
+    ],
+    "independent_clusters": 12,
+    "selected_case_ids": [
+      "R1-s000611-k2-d050-lclustered",
+      "R1-s000630-k2-d050-lclustered",
+      "R1-s000634-k2-d050-lclustered",
+      "R1-s000637-k2-d050-lclustered",
+      "R3-s000600-d050",
+      "R3-s000630-d050",
+      "R3-s000635-d050",
+      "R3-s000637-d050",
+      "R4-s000600-d050",
+      "R4-s000611-d050",
+      "R4-s000630-d050",
+      "R4-s000634-d050"
+    ]
+  },
+  "significance": {
+    "enabled": true,
+    "exponent": 1.0,
+    "exposure_mode": "realized",
+    "score_pooling": {
+      "enabled": false,
+      "width": 1
+    }
+  }
+}

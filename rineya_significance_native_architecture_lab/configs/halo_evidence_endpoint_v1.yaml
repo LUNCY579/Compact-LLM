@@ -1,0 +1,64 @@
+schema_version: "1.0"
+experiment:
+  name: halo_evidence_retention_endpoint_calibration_v1
+  compute_tier: A
+  status: EXPLORATORY_CALIBRATION_FROZEN_FOR_FUTURE_RUNS
+protocol:
+  execution_mode: open_loop_trace_simulation
+endpoint:
+  version: layer-fact-retention-v1
+  primary:
+    name: layer_fact_exact_completion_rate
+    formula: mean_layer_fact_indicator_all_exact_annotated_fact_tokens_available
+    head_aggregation: union_within_layer
+    layer_aggregation: macro_mean
+    fact_aggregation: macro_mean
+    threshold: null
+  sensitivity:
+    - name: layer_fact_macro_token_recall
+      formula: mean_layer_fact_retained_token_fraction
+    - name: layer_balanced_minimum_fact_token_recall
+      formula: mean_over_layers_of_minimum_fact_retained_token_fraction
+    - name: minimum_layer_fact_token_recall
+      formula: minimum_over_layer_fact_retained_token_fraction
+  preserved_diagnostic:
+    name: strict_all_required_fact_tokens_available_in_every_evaluated_layer
+    formula: conjunction_over_every_layer_fact_token
+selection_rationale:
+  - Exact fact completion does not reward partial retention of repeated template text.
+  - Macro layer/fact weighting prevents long facts or individual layers from dominating.
+  - Averaging atomic completion cells avoids the saturated global conjunction.
+  - The primary definition has no threshold fitted from pilot values.
+  - Partial-token metrics are sensitivity diagnostics, not semantic-survival claims.
+calibration:
+  source_cases: rineya_significance_native_architecture_lab/results/runs/halo_retention_pilot_v2/cases.jsonl
+  expected_source_sha256: 5c37102aa839053026d63b4e2c29f063d340cc97a737ec6ca9ad517863bd3dcf
+  pooling: condition_blind_all_33_evidence_records
+  permitted_fields:
+    - evidence.layers.layer_index
+    - evidence.layers.facts.fact_id
+    - evidence.layers.facts.retained_token_count
+    - evidence.layers.facts.required_token_count
+    - evidence.layers.facts.token_retention_fraction
+    - evidence.layers.facts.all_fact_tokens_retained
+    - evidence.strict_case_all_required_fact_tokens_available_in_at_least_one_kv_head_of_every_evaluated_layer
+  forbidden_for_endpoint_selection:
+    - condition
+    - correct
+    - prediction
+    - accepted_answers
+    - failure_labels
+    - task_family
+  non_saturation_screen:
+    minimum_distinct_values: 5
+    maximum_fraction_at_zero: 0.80
+    maximum_fraction_at_one: 0.80
+freeze:
+  scope: future_evaluations_only
+  existing_pilot_application: exploratory_posthoc
+  confirmatory_status: NOT_REGISTERED
+  amendment_rule: any_definition_change_requires_new_version_and_new_calibration_artifact
+claim_limits:
+  - Retention endpoints do not establish causal mediation of answer correctness.
+  - Existing Halo pilot comparisons remain exploratory and calibration-selected.
+  - The strict all-token/every-layer endpoint remains reported as a diagnostic.

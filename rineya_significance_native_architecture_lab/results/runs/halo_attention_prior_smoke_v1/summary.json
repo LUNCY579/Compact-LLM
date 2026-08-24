@@ -1,0 +1,40 @@
+{
+  "C0_zero_bias": {
+    "argmax_agreement": 1.0,
+    "bit_exact_kv_structure": true,
+    "bit_exact_logits": true,
+    "max_abs_logit_delta": 0.0,
+    "mean_abs_logit_delta": 0.0,
+    "status": "PASS"
+  },
+  "C1_tiny_global_lambda": {
+    "clip": 2.0,
+    "finite_logits": true,
+    "lambda": 0.01,
+    "max_abs_bias_observed": 0.019999999552965164,
+    "max_current_key_abs_bias": 0.0,
+    "max_invalid_key_abs_bias": 0.0,
+    "nonzero_bias_applications": 56,
+    "status": "PASS"
+  },
+  "answer_generation": false,
+  "architecture_experiment": "C_SOFT_SIGNIFICANCE_AWARE_ATTENTION",
+  "cases": 2,
+  "claims_not_supported": [
+    "answer quality improves",
+    "long-context reasoning improves",
+    "feedback is safe beyond this bounded runtime smoke",
+    "normalized significance beats raw, shuffled, or age controls"
+  ],
+  "claims_supported": [
+    "lambda=0 logits and KV structure are bit-exact to the schedule-matched plain unrecorded chunked B0 path",
+    "one lambda=0.01 normalized historical-significance prior completed with finite Halo logits",
+    "the prior stayed within its declared clipped logit bound and did not bias current-forward keys"
+  ],
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "execution_mode": "CLOSED_LOOP_MODEL_EXECUTION",
+  "model": "Rineya Halo published Qwen3-0.6B core",
+  "quality_evaluation": false,
+  "schema_version": "1.0",
+  "status": "PASS"
+}

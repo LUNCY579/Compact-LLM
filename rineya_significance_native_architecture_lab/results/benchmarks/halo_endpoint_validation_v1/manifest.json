@@ -1,0 +1,49 @@
+{
+  "artifact_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "content_manifest": "content_manifest.json",
+    "file_count": 2,
+    "tree_sha256": "d207a80ecdd8b7fea9f1249b8031d857b4c169df0e75b35cb377e2675c963f77"
+  },
+  "artifacts": {
+    "content_manifest": "content_manifest.json",
+    "evaluation.jsonl": "b0cbc73e0c8590ccdc1a05b88161b9f6addaddcfa6027577278c7dab110dabb3",
+    "inference.jsonl": "2a9b45d8573624554aafc9d4ef4b279b187c01f3efd5cd3d3ef4546906af3803"
+  },
+  "case_count": 24,
+  "claim_limit": "Dataset construction and evidence-token alignment only; no model outcome.",
+  "code_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "file_count": 59,
+    "tree_sha256": "cc6bb0b095918f4d27bc4fb10a9f35a04f823f976dd52db4642dbb42156aef7a"
+  },
+  "config_sha256": "df808cd16c8eb946d106c29afae603ae2cec9e3281f32c0ee019b95e3337f724",
+  "evidence_depths": [
+    0.5
+  ],
+  "families": [
+    "R1",
+    "R3",
+    "R4"
+  ],
+  "independent_cluster_count": 24,
+  "model_target": "Rineya-Halo-1.2.0-devfreeze",
+  "schema_version": "1.0",
+  "seeds": [
+    401,
+    409,
+    419,
+    421,
+    431,
+    433,
+    439,
+    443
+  ],
+  "separation_check": {
+    "inference_contains_answer": false,
+    "inference_contains_evidence_annotation": false,
+    "join_key": "case_id"
+  },
+  "status": "CALIBRATION_DATASET_BUILT",
+  "tokenizer_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+}

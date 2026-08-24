@@ -1,0 +1,109 @@
+schema_version: "1.0"
+
+experiment:
+  name: halo_cornerstone1_cpu_smoke
+  status: NOT_RUN
+  evidence_class: NOT_RUN
+  compute_tier: B
+  purpose: Verify Cornerstone-1 score, rollback, and bounded-cache execution on the published Halo core.
+
+protocol:
+  execution_mode: closed_loop_model_execution
+  source_semantics_verified: true
+  source_runtime_fidelity_status: NOT_RUN
+
+provenance:
+  chatbubble_commit: 03777703dd8587f1248d9a72115eafb9356d50b8
+  source_remote: https://github.com/LUNCY579/RineyaBeta.git
+  implementation_ref: refs/heads/main
+  implementation_commit: 9e00be74098878290dc2b0d54cbffee4652c6088
+  implementation_path: scripts/kv/significance.py
+  implementation_blob: 30ee29724dce52de5a288f6421123fb718240541
+
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  tokenizer: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  benchmark: Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl
+  answer_key: null
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_cpu_smoke_20260823_v2
+
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_architecture: Qwen3ForCausalLM
+  expected_layers: 28
+  expected_hidden_size: 1024
+  expected_query_heads: 16
+  expected_kv_heads: 8
+  expected_head_dim: 128
+  expected_vocab_size: 151936
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+  trust_remote_code: false
+  hash_before_run: true
+
+runtime:
+  device: cpu
+  dtype: bfloat16
+  attention_implementation: sdpa
+  batch_size: 1
+  seed: 17
+  deterministic: true
+  max_cases: 1
+  max_input_tokens: 192
+  identity_tolerance: 2.0
+  answer_generation: false
+
+significance:
+  enabled: true
+  exponent: 1.0
+  exposure_mode: realized
+  query_conditioned: true
+  source_semantics_verified: true
+  score_pooling:
+    enabled: false
+    width: 1
+  selection_granularity: kv_head
+  stable_tie_break: absolute_position_then_entry_id
+
+query:
+  mode: conditioned
+  rendering: raw_question_no_special_tokens
+  max_tokens: 32
+  probe_schedule: every_nonfinal_chunk_boundary
+
+cache:
+  # The policy retains at most 48 historical states between chunks. During a
+  # forward, the active 64-token chunk and temporary query probe are additional.
+  retained_history_budget: 48
+  total_budget_slots: 48
+  active_chunk_tokens: 64
+  max_resident_entries_after_final_chunk: 112
+  max_query_tokens: 32
+  max_transient_entries: 144
+  sink_tokens: 4
+  recent_tokens: 16
+  compression_chunk_tokens: 64
+  compress_only_at_boundaries: true
+  matched_total_persistent_bytes: false
+
+attention_prior:
+  enabled: false
+  lambda: 0.0
+
+memory_slots:
+  enabled: false
+  count: 0
+
+controller:
+  enabled: false
+  type: none
+
+outputs:
+  resolved_config: resolved_config.yaml
+  manifest: manifest.json
+  cases: cases.jsonl
+  summary: summary.json
+  diagnostics: runtime_diagnostics.json

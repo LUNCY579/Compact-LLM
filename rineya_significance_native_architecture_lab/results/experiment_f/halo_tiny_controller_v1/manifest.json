@@ -1,0 +1,384 @@
+{
+  "artifact_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "content_manifest": "content_manifest.json",
+    "file_count": 15,
+    "tree_sha256": "30b563e6e5309012ebc68e159166c2277614f53f460ecb88c267c1fa3e2cbd65"
+  },
+  "artifacts": {
+    "calibration": "calibration.json",
+    "content_manifest": "content_manifest.json",
+    "data_access_ledger": "data_access_ledger.json",
+    "evaluation_predictions": "predictions.evaluation.post_answer.jsonl",
+    "metrics": "metrics.json",
+    "models": "models.json",
+    "post_answer_join": "joined.post_answer.jsonl",
+    "pre_answer_features": "features.pre_answer.jsonl",
+    "pre_answer_split": "split.pre_answer.jsonl",
+    "prelabel_freeze": "prelabel_freeze.json",
+    "resolved_config": "resolved_config.yaml",
+    "risk_coverage": "risk_coverage.evaluation.jsonl",
+    "risk_coverage_csv": "risk_coverage.evaluation.csv",
+    "risk_coverage_figure": "risk_coverage.evaluation.png",
+    "summary": "summary.json",
+    "training_resources": "training_resources.json"
+  },
+  "code_integrity": {
+    "algorithm": "sha256-canonical-path-map-v1",
+    "file_count": 59,
+    "tree_sha256": "288e51c7e48157ddf97a6b3846264dca16f531dca2ae810e46ad2bf964cd55dc"
+  },
+  "completed_at": "2026-08-24T08:15:43.568705Z",
+  "config": {
+    "resolved_path": "configs/halo_tiny_significance_controller.yaml",
+    "sha256": "9138359090b8909b739931e6d5bdc0dc091e6e2ba75d397db82d3ca9db752fbf"
+  },
+  "created_at": "2026-08-24T08:15:42.508591Z",
+  "data_access": {
+    "access_ledger": "data_access_ledger.json",
+    "oracle_evidence_opened": false,
+    "outcome_based_split_reassignment": false,
+    "outcomes_opened_after_freeze": true,
+    "phase": "COMPLETE",
+    "prelabel_freeze": "prelabel_freeze.json"
+  },
+  "dataset": {
+    "calibration_clusters": 3,
+    "class_support": {
+      "calibration": {
+        "compressed_error": 1,
+        "compressed_success": 2
+      },
+      "evaluation": {
+        "compressed_error": 2,
+        "compressed_success": 1
+      },
+      "train": {
+        "compressed_error": 2,
+        "compressed_success": 3
+      }
+    },
+    "evaluation_clusters": 3,
+    "feature_count": 6,
+    "independence_unit": "cluster",
+    "total_clusters": 11,
+    "train_clusters": 5
+  },
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "experiment": {
+    "architecture_variant": "F tiny learned significance recovery controller",
+    "benchmark": "11 B0-selected durable Halo recovery clusters",
+    "compute_tier": "C",
+    "execution_mode": "OPEN_LOOP_TRACE_SIMULATION",
+    "name": "halo_tiny_significance_controller_v1",
+    "query_conditioned": true,
+    "seed": 0
+  },
+  "input_provenance": {
+    "source_artifacts_modified": false,
+    "source_feature_sha256": "ed17f47993f6c911a621fa90a6c55f7118c119fb22e86abf44745caccaa9f842",
+    "source_manifest_sha256": "088b04e7cb857345f2db9b2aa23e2d5106a551dc604f8752c1bd004f5ec239fb",
+    "source_outcome_sha256": "3b587059b5b86ad5255aeaa6ff89e5c9457da353500637fde8ff23b960d37fd1",
+    "source_run_id": "halo_recovery_controller_screen_v1"
+  },
+  "learning": {
+    "backbone_trainable_parameters": 0,
+    "calibration_thresholds": {
+      "deterministic_equal_weight": 0.5272149128178666,
+      "logistic": 0.47710413404742436,
+      "shallow_tree": 0.20000000000000004
+    },
+    "logistic_trainable_parameters": 7,
+    "reinforcement_learning": false,
+    "resources": {
+      "backbone": {
+        "model_execution": false,
+        "status": "FROZEN_NOT_LOADED",
+        "trainable_parameters": 0
+      },
+      "dataset": {
+        "calibration_clusters": 3,
+        "class_support": {
+          "calibration": {
+            "compressed_error": 1,
+            "compressed_success": 2
+          },
+          "evaluation": {
+            "compressed_error": 2,
+            "compressed_success": 1
+          },
+          "train": {
+            "compressed_error": 2,
+            "compressed_success": 3
+          }
+        },
+        "evaluation_clusters": 3,
+        "feature_count": 6,
+        "independence_unit": "cluster",
+        "total_clusters": 11,
+        "train_clusters": 5
+      },
+      "logistic": {
+        "baseline_process_rss_bytes": 47853568,
+        "incremental_process_rss_bytes_sampled": 1363968,
+        "measurement_limit": "RSS is sampled at optimizer iterations and boundaries; process-lifetime peak includes imports, while tracemalloc excludes native NumPy allocations.",
+        "optimizer": "damped_Newton_IRLS",
+        "optimizer_state": {
+          "estimate_excludes_design_matrix_and_predictions": true,
+          "estimated_transient_optimizer_bytes": 504,
+          "persisted_after_fit_bytes": 0,
+          "transient_state": "gradient + Hessian + Newton step"
+        },
+        "peak_process_rss_bytes_sampled": 49217536,
+        "peak_python_tracemalloc_bytes": 12170,
+        "process_lifetime_peak_rss_bytes": 56238080,
+        "trainable_parameter_count": 7,
+        "wall_seconds": 0.001593999999386142
+      },
+      "tree_control": {
+        "baseline_process_rss_bytes": 48234496,
+        "incremental_process_rss_bytes_sampled": 983040,
+        "learned_scalar_count": 4,
+        "measurement_limit": "RSS is sampled at optimizer iterations and boundaries; process-lifetime peak includes imports, while tracemalloc excludes native NumPy allocations.",
+        "optimizer": "exhaustive_gini_split_search_with_deterministic_ties",
+        "optimizer_state": {
+          "persisted_after_fit_bytes": 0,
+          "transient_state": "one best-split tuple per recursive node"
+        },
+        "peak_process_rss_bytes_sampled": 49217536,
+        "peak_python_tracemalloc_bytes": 1019399,
+        "process_lifetime_peak_rss_bytes": 56238080,
+        "wall_seconds": 0.022701399999277783
+      }
+    },
+    "tree_learned_scalars": 4
+  },
+  "model": {
+    "architecture": "Qwen3ForCausalLM",
+    "hashes": {
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": null,
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "Architecture F only; the Halo backbone was frozen and not loaded.",
+    "Feature and SHA-256 cluster split artifacts were fsync-backed and durable before outcomes opened.",
+    "Every frozen split had both classes; no salt search, stratification, or outcome reassignment exists.",
+    "The three-cluster evaluation is underpowered and supports no controller-quality claim.",
+    "Source recovery artifacts were read-only and remain the authority for feature/outcome provenance."
+  ],
+  "repositories": {
+    "chatbubble": {
+      "commit": "03777703dd8587f1248d9a72115eafb9356d50b8",
+      "dirty": true,
+      "remote": "https://github.com/LUNCY579/ChatBubble.git"
+    },
+    "source": {
+      "implementation": {
+        "blob": "30ee29724dce52de5a288f6421123fb718240541",
+        "commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+        "path": "scripts/kv/significance.py",
+        "ref": "refs/heads/main"
+      },
+      "paper": {
+        "blob": "b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3",
+        "commit": "1664f54de0bbdfde45e311b75bbf3038dbfffe42",
+        "path": "paper/significance_matrix/main.tex",
+        "ref": "refs/heads/r2-healing-harness"
+      },
+      "remote": "https://github.com/LUNCY579/RineyaBeta.git"
+    }
+  },
+  "resolved_config": {
+    "adaptive_head_budget": {
+      "enabled": false
+    },
+    "attention_prior": {
+      "enabled": false,
+      "lambda": 0.0
+    },
+    "baselines": {
+      "calibration_budget_hash": {
+        "budget_source": "logistic_calibration_recovery_fraction",
+        "enabled": true,
+        "salt": "rineya-halo-experiment-f-budget-control-v1",
+        "selection": "sha256_rank_without_features_or_labels"
+      },
+      "constant_accept_all": true,
+      "constant_recover_all": true,
+      "deterministic_equal_weight_score": true
+    },
+    "cache": {
+      "provenance": "inherited_source_features_only",
+      "recent_tokens": 32,
+      "sink_tokens": 4,
+      "total_budget_slots": 128
+    },
+    "calibration": {
+      "decision_rule": "recover_if_score_greater_than_or_equal_to_threshold",
+      "objective": "maximum_balanced_accuracy",
+      "partition": "calibration_only",
+      "threshold_candidates": "above_maximum_plus_every_unique_score",
+      "tie_break": "fewer_recoveries_then_higher_threshold"
+    },
+    "evaluation": {
+      "forced_classification_below_minimum": "UNDERPOWERED_OVERFIT_SCREEN_ONLY",
+      "metrics": [
+        "error_roc_auc",
+        "balanced_accuracy",
+        "error_recall",
+        "success_specificity",
+        "recovery_precision",
+        "coverage",
+        "selective_risk",
+        "system_accuracy"
+      ],
+      "minimum_claim_population": 30,
+      "primary_controller": "logistic",
+      "risk_coverage_curves": "held_out_descriptive_only"
+    },
+    "experiment": {
+      "classification": "EXPLORATORY_ARCHITECTURE_F_UNDERPOWERED_SCREEN",
+      "compute_tier": "C",
+      "name": "halo_tiny_significance_controller_v1",
+      "purpose": "Test whether the six durable pre-answer Cornerstone-1 features from the Halo recovery screen predict compressed-run failure using a seven-parameter logistic controller, with a shallow CART control and non-learned baselines."
+    },
+    "features": {
+      "answer_access": false,
+      "dimension": 6,
+      "fit_preprocessing_on": "train_only",
+      "oracle_evidence_access": false,
+      "order": [
+        "entropy",
+        "concentration",
+        "margin",
+        "churn",
+        "count",
+        "query_delta"
+      ],
+      "source": "PRE_ANSWER_ON_POLICY_CORNERSTONE_STATE"
+    },
+    "logistic_controller": {
+      "class_weight": "balanced",
+      "convergence_tolerance": 1e-10,
+      "enabled": true,
+      "expected_trainable_parameters": 7,
+      "l2_penalty": 1.0,
+      "maximum_iterations": 100,
+      "optimizer": "damped_Newton_IRLS",
+      "type": "l2_logistic_regression"
+    },
+    "memory_slots": {
+      "count": 0,
+      "enabled": false
+    },
+    "model": {
+      "allowed_core_ids": [
+        "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4"
+      ],
+      "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+      "expected_architecture": "Qwen3ForCausalLM",
+      "expected_hashes": {
+        "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+        "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+        "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      },
+      "expected_source_base": "Qwen3-0.6B",
+      "frozen_backbone_trainable_parameters": 0,
+      "trust_remote_code": false
+    },
+    "paths": {
+      "base": "repository_root",
+      "output": "rineya_significance_native_architecture_lab/results/experiment_f/halo_tiny_controller_v1",
+      "source_features": "rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/features.pre_answer.jsonl",
+      "source_manifest": "rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/manifest.json",
+      "source_outcomes": "rineya_significance_native_architecture_lab/results/runs/halo_recovery_controller_screen_v1/scored_cases.jsonl"
+    },
+    "protocol": {
+      "action": "recompute_full_cache",
+      "answer_access": "only_after_feature_snapshot_and_cluster_split_are_durable",
+      "backbone": "frozen_no_model_execution",
+      "broad_quality_claims": false,
+      "confirmatory": false,
+      "evaluation_access": "after_train_only_fit_and_calibration_only_threshold_selection",
+      "execution_mode": "open_loop_trace_simulation",
+      "one_feature_row_per_cluster": true,
+      "pairing_unit": "whole_cluster",
+      "reinforcement_learning": false,
+      "source_artifacts_read_only": true,
+      "target": "compressed_error"
+    },
+    "query": {
+      "access_fairness": "inherited_identically_from_source_run",
+      "mode": "conditioned"
+    },
+    "runtime": {
+      "deterministic": true,
+      "device": "cpu",
+      "dtype": "float64",
+      "model_execution": false,
+      "resource_measurement": "sampled_process_RSS_plus_tracemalloc",
+      "seed": 0
+    },
+    "schema_version": "1.0",
+    "significance": {
+      "enabled": true,
+      "exponent": 1.0,
+      "score_pooling": {
+        "enabled": false,
+        "width": 1
+      },
+      "source_condition": "true_realized_count"
+    },
+    "split": {
+      "algorithm": "sha256_rank_exact_counts_v1",
+      "counts": {
+        "calibration": 3,
+        "evaluation": 3,
+        "train": 5
+      },
+      "failure_policy": "abort_without_outcome_based_reassignment",
+      "immutable_single_attempt": true,
+      "require_both_classes_in_every_split": true,
+      "salt": "rineya-halo-experiment-f-v1"
+    },
+    "tree_control": {
+      "enabled": true,
+      "leaf_laplace_smoothing": 1.0,
+      "maximum_depth": 2,
+      "minimum_leaf_samples": 1,
+      "split_objective": "gini_gain",
+      "type": "deterministic_shallow_CART_control"
+    }
+  },
+  "run_id": "halo_tiny_controller_v1",
+  "runtime": {
+    "device": "cpu",
+    "hardware": {
+      "dependencies": {
+        "PyYAML": "6.0.3",
+        "matplotlib": "3.11.1",
+        "numpy": "2.5.2",
+        "scikit-learn": "1.9.0",
+        "scipy": "1.18.1",
+        "torch": null,
+        "transformers": null
+      },
+      "logical_cpu_count": 32,
+      "platform": "Windows-11-10.0.26200-SP0",
+      "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+      "python": "3.12.11",
+      "python_implementation": "CPython"
+    },
+    "precision": "float64",
+    "python": "3.12.11",
+    "torch": null,
+    "transformers": null
+  },
+  "schema_version": "1.0",
+  "status": "COMPLETE"
+}

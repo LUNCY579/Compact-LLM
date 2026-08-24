@@ -1,0 +1,115 @@
+{
+  "_meta": {
+    "config_sha256": "f80267e205e56f2a9f85a0ef0bc39fa84d6ccaa49c337324b2ed126244c73550",
+    "source_config": "rineya_significance_native_architecture_lab/configs/halo_cpu_smoke.yaml"
+  },
+  "attention_prior": {
+    "enabled": false,
+    "lambda": 0.0
+  },
+  "cache": {
+    "active_chunk_tokens": 64,
+    "compress_only_at_boundaries": true,
+    "compression_chunk_tokens": 64,
+    "matched_total_persistent_bytes": false,
+    "max_query_tokens": 32,
+    "max_resident_entries_after_final_chunk": 112,
+    "max_transient_entries": 144,
+    "recent_tokens": 16,
+    "retained_history_budget": 48,
+    "sink_tokens": 4,
+    "total_budget_slots": 48
+  },
+  "controller": {
+    "enabled": false,
+    "type": "none"
+  },
+  "experiment": {
+    "compute_tier": "B",
+    "evidence_class": "NOT_RUN",
+    "name": "halo_cornerstone1_cpu_smoke",
+    "purpose": "Verify Cornerstone-1 score, rollback, and bounded-cache execution on the published Halo core.",
+    "status": "NOT_RUN"
+  },
+  "memory_slots": {
+    "count": 0,
+    "enabled": false
+  },
+  "model": {
+    "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "expected_architecture": "Qwen3ForCausalLM",
+    "expected_hashes": {
+      "config": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "tokenizer": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+    },
+    "expected_head_dim": 128,
+    "expected_hidden_size": 1024,
+    "expected_kv_heads": 8,
+    "expected_layers": 28,
+    "expected_query_heads": 16,
+    "expected_vocab_size": 151936,
+    "hash_before_run": true,
+    "trust_remote_code": false
+  },
+  "outputs": {
+    "cases": "cases.jsonl",
+    "diagnostics": "runtime_diagnostics.json",
+    "manifest": "manifest.json",
+    "resolved_config": "resolved_config.yaml",
+    "summary": "summary.json"
+  },
+  "paths": {
+    "answer_key": null,
+    "base": "repository_root",
+    "benchmark": "Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl",
+    "model": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "output_root": "rineya_significance_native_architecture_lab/results/runs/halo_cpu_smoke_20260823_v2",
+    "tokenizer": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze"
+  },
+  "protocol": {
+    "execution_mode": "closed_loop_model_execution",
+    "source_runtime_fidelity_status": "NOT_RUN",
+    "source_semantics_verified": true
+  },
+  "provenance": {
+    "chatbubble_commit": "03777703dd8587f1248d9a72115eafb9356d50b8",
+    "implementation_blob": "30ee29724dce52de5a288f6421123fb718240541",
+    "implementation_commit": "9e00be74098878290dc2b0d54cbffee4652c6088",
+    "implementation_path": "scripts/kv/significance.py",
+    "implementation_ref": "refs/heads/main",
+    "source_remote": "https://github.com/LUNCY579/RineyaBeta.git"
+  },
+  "query": {
+    "max_tokens": 32,
+    "mode": "conditioned",
+    "probe_schedule": "every_nonfinal_chunk_boundary",
+    "rendering": "raw_question_no_special_tokens"
+  },
+  "runtime": {
+    "answer_generation": false,
+    "attention_implementation": "sdpa",
+    "batch_size": 1,
+    "deterministic": true,
+    "device": "cpu",
+    "dtype": "bfloat16",
+    "identity_tolerance": 2.0,
+    "max_cases": 1,
+    "max_input_tokens": 192,
+    "seed": 17
+  },
+  "schema_version": "1.0",
+  "significance": {
+    "enabled": true,
+    "exponent": 1.0,
+    "exposure_mode": "realized",
+    "query_conditioned": true,
+    "score_pooling": {
+      "enabled": false,
+      "width": 1
+    },
+    "selection_granularity": "kv_head",
+    "source_semantics_verified": true,
+    "stable_tie_break": "absolute_position_then_entry_id"
+  }
+}

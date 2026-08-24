@@ -1,0 +1,248 @@
+{
+  "schema_version": "1.0",
+  "status": "ARCHITECTURE_EXPERIMENTS_A_TO_F_SETTLED_DEVELOPMENT_EVIDENCE",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "active_scope": "published_qwen3_0.6b_family_halo_primary",
+  "decision": "NARROW_LOCAL_RETENTION_SUPPORT_WITHOUT_ANSWER_OR_COMPONENT_PROMOTION",
+  "goal_status": "ACTIVE_WITH_NAMED_SPECIFICATION_AND_CONFIRMATION_GAPS",
+  "source_primitive_parity": {
+    "artifact": "source_parity.json",
+    "checks_passed": 4,
+    "checks_total": 4,
+    "status": "PASS",
+    "end_to_end_source_benchmark_reproduction": "NOT_RUN"
+  },
+  "family_compatibility": {
+    "cores_passed": 5,
+    "cores_tested": 5,
+    "core_ids": ["halo", "halo_uncensored", "lyra", "nimbus", "pulse"],
+    "cases_per_core": 1,
+    "answer_generation_performed": false,
+    "claim_limit": "One prompt-only runtime compatibility case per published Qwen3-0.6B core; no family-wide quality claim."
+  },
+  "endpoint_program": {
+    "definition": {
+      "version": "layer-fact-retention-v1",
+      "primary_endpoint": "layer_fact_exact_completion_rate",
+      "design_rows": 33,
+      "outcome_blind": true,
+      "non_saturation_screen": "PASS",
+      "strict_diagnostic": "SATURATED_AT_ZERO"
+    },
+    "design_pilot_reuse": {
+      "classification": "EXPLORATORY_POSTHOC",
+      "clusters": 11,
+      "B3_minus_B2": {
+        "mean_difference": 0.06168831168831168,
+        "confidence_interval": [0.030844155844155844, 0.09415584415584415],
+        "p_value_two_sided": 0.0078125
+      }
+    },
+    "prospective_v1": {
+      "run_id": "halo_endpoint_validation_capability_v1",
+      "classification": "FULL_CACHE_CAPABILITY_STOP",
+      "B0_correct": 9,
+      "clusters": 24,
+      "by_family": {"R1": "1/8", "R3": "1/8", "R4": "7/8"},
+      "advance_gate_passed": false,
+      "compressed_conditions_run": false
+    },
+    "prospective_v2_capability": {
+      "run_id": "halo_endpoint_validation_v2_capability",
+      "difficulty_calibrated_after_v1_stop": true,
+      "B0_correct": 18,
+      "clusters": 24,
+      "by_family": {"R1": "6/8", "R3": "4/8", "R4": "8/8"},
+      "advance_gate_passed": true
+    },
+    "locally_registered_v2": {
+      "registration": "registrations/halo_endpoint_validation_v2.json",
+      "execution": "runs/halo_endpoint_validation_v2_registered",
+      "classification": "PROSPECTIVE_REGISTERED_ENDPOINT_VALIDATION_LOCAL",
+      "clusters": 12,
+      "families": ["R1", "R3", "R4"],
+      "by_condition": {
+        "B2": {"correct": 6, "mean_endpoint": 0.1726190476190476},
+        "B3": {"correct": 5, "mean_endpoint": 0.2127976190476191},
+        "B4": {"correct": 1, "mean_endpoint": 0.0}
+      },
+      "primary_B3_minus_B2_endpoint": {
+        "mean_difference": 0.040178571428571425,
+        "confidence_interval": [0.013392857142857137, 0.07589285714285714],
+        "p_value_two_sided": 0.01953125
+      },
+      "secondary_B3_minus_B2_answer": {
+        "mean_difference": -0.08333333333333333,
+        "wins": 0,
+        "losses": 1,
+        "p_value_two_sided": 1.0
+      },
+      "claim_limit": "Narrow locally registered retained-state separation only; difficulty-tuned templates, 12 clusters, no answer gain, no public preregistration or broad confirmation.",
+      "runtime": {"python": "3.11.15", "torch": "2.13.0+cpu", "transformers": "5.15.0"},
+      "locked_runtime_reproduction": "NOT_RUN"
+    }
+  },
+  "capability_and_benchmark_repairs": {
+    "halo_calibration_v3": {
+      "clusters": 32,
+      "B0_correct": 18,
+      "by_family": {"R1": "7/8", "R2": "0/8", "R3": "3/8", "R4": "8/8"},
+      "advance_gate_passed": false
+    },
+    "r7_v1": "INVALID_UNINFORMATIVE",
+    "r7_v2": {
+      "dataset": "benchmarks/halo_r7_v2",
+      "design_status": "VALID_BALANCED",
+      "clusters": 8,
+      "screen_balance": "4_YES_4_NO",
+      "Halo_correct": 4,
+      "Halo_outputs": "8_YES",
+      "NO_side_correct": 0,
+      "advance_gate_passed": false,
+      "compressed_conditions_run": false
+    },
+    "r8": {"B0_correct": 0, "clusters": 2, "decision": "STOP"}
+  },
+  "count_and_schedule_controls": {
+    "count_v1": {
+      "run_id": "halo_count_causal_controls_v1",
+      "cells": 88,
+      "exact_fixed_schedule_equivalents": ["age_derived_count", "head_averaged_count"],
+      "global_shuffle_status": "ELIGIBLE_POOL_CONFOUNDED"
+    },
+    "count_v2": {
+      "run_id": "halo_count_causal_controls_v2",
+      "cells": 33,
+      "clusters": 11,
+      "contract": "eligible_heavy_v2",
+      "audited_layer_head_cells": 22176,
+      "invariants": "PASS",
+      "primary_endpoint_contrasts_vs_true": {
+        "eligible_shuffled": {"mean_difference": -0.0211038961038961, "p_value": 0.4921875, "holm_p": 0.4921875},
+        "eligible_circular": {"mean_difference": -0.014610389610389608, "p_value": 0.125, "holm_p": 0.25}
+      },
+      "same_process_true_identity": "PASS",
+      "cross_process_reproducibility": {
+        "status": "NOT_EXACT_ACROSS_SEPARATE_PROCESSES",
+        "prediction_exact": "10/11",
+        "endpoint_exact": "9/11",
+        "resident_trajectory_exact": "0/11",
+        "cause": "NOT_ESTABLISHED"
+      },
+      "claim_limit": "Clean process-local exploratory null controls; not equivalence or cross-process reproduction."
+    },
+    "schedule_v2": {
+      "run_id": "halo_schedule_control_v2",
+      "cells": 110,
+      "matched_pairs": 55,
+      "endpoint_interaction_per_round": {"mean": 0.009360740610740608, "confidence_interval": [0.0031039948227448238, 0.01759849947349947], "p_value": 0.00390625},
+      "answer_interaction_per_round": {"mean": 0.02248157248157248, "confidence_interval": [-0.035995085995086, 0.07641277641277643], "p_value": 0.4375}
+    }
+  },
+  "architecture_experiments": {
+    "A_significance_native_retention": {
+      "decision": "NARROW_LOCAL_RETAINED_STATE_SUPPORT_NO_ANSWER_GAIN",
+      "primary_evidence": "endpoint_program.locally_registered_v2"
+    },
+    "B_heterogeneous_budget": {
+      "smoke": "runs/halo_heterogeneous_budget_smoke_v2",
+      "quality_run": "runs/halo_heterogeneous_budget_quality_screen_v1",
+      "classification": "RUNTIME_PASS_QUALITY_SPECIFICITY_FAILED",
+      "cells": 36,
+      "clusters": 12,
+      "correct": {"uniform": 5, "entropy": 8, "shuffled": 5},
+      "mean_endpoint": {"uniform": 0.21131, "entropy": 0.22321, "shuffled": 0.23810},
+      "entropy_minus_uniform_answer_p": 0.25,
+      "logical_budget_matched": true,
+      "physical_storage_matched": false,
+      "mean_padding_overhead_bytes": {"entropy": 2403854, "shuffled": 3121756},
+      "claim_limit": "Exploratory 36-cell screen; shuffled retention exceeds entropy and padded storage is not ragged-memory saving."
+    },
+    "C_attention_prior": {
+      "smoke": "runs/halo_attention_prior_smoke_v1",
+      "quality_run": "runs/halo_attention_prior_quality_screen_v1",
+      "classification": "NO_MEASURABLE_ANSWER_GAIN_SPECIFICITY_NOT_SUPPORTED",
+      "cells": 60,
+      "clusters": 12,
+      "correct_all_conditions": 5,
+      "normalized_raw_shuffled_mean_endpoint": 0.21577,
+      "active_intervention": true,
+      "claim_limit": "One frozen lambda; no answer gain, feedback-safety, or all-prior conclusion."
+    },
+    "D_significance_memory": {
+      "smoke": "runs/halo_significance_memory_smoke_v1",
+      "quality_run": "runs/halo_significance_memory_quality_screen_v1",
+      "classification": "EXPLORATORY_LOCAL_NEGATIVE_OR_NEUTRAL",
+      "cells": 72,
+      "clusters": 12,
+      "correct_all_conditions": 5,
+      "ordinary_budget": {"M0": 128, "M4": 123},
+      "M4_slot_bytes": 491904,
+      "integer_slack_below_M0_bytes": 108416,
+      "mean_endpoint": {"M0": 0.211310, "normalized": 0.183036, "random": 0.191964},
+      "claim_limit": "Tested M4 design has no answer or specificity gain; blended slots receive no exact-token endpoint credit."
+    },
+    "E_recovery": {
+      "screen": "runs/halo_recovery_controller_screen_v1",
+      "smoke": "runs/halo_recovery_controller_smoke_v1",
+      "classification": "MECHANISM_PASS_RISK_SIGNAL_NO_MEASURABLE_GAIN",
+      "clusters": 11,
+      "deterministic_error_roc_auc": 0.5,
+      "accept_identity": "PASS",
+      "full_recompute_restore": "PASS",
+      "claim_limit": "Accept/recompute wiring only; no predictive risk or deployable threshold claim."
+    },
+    "F_tiny_controller": {
+      "run": "experiment_f/halo_tiny_controller_v1",
+      "classification": "UNDERPOWERED_OVERFIT_SCREEN_ONLY",
+      "split": {"train": 5, "calibration": 3, "evaluation": 3, "algorithm": "sha256_rank_exact_counts_v1", "outcome_retry": false},
+      "evaluation_class_support": {"compressed_error": 2, "compressed_success": 1},
+      "trainable_parameters": 7,
+      "logistic": {"auc": 1.0, "balanced_accuracy": 1.0, "coverage": 0.3333333333333333, "selective_risk": 0.0, "system_accuracy": 1.0, "recoveries": 2, "recorded_wall_multiplier": 1.172},
+      "equal_weight": {"auc": 0.0, "balanced_accuracy": 0.25},
+      "hash_budget": {"auc": 0.0, "balanced_accuracy": 0.25},
+      "depth_two_tree": {"auc": 0.5, "balanced_accuracy": 0.5},
+      "evaluation_positive_negative_pairs": 2,
+      "training_wall_seconds": 0.001593999999386142,
+      "sampled_peak_rss_bytes": 49217536,
+      "transient_optimizer_bytes": 504,
+      "persisted_optimizer_bytes": 0,
+      "decision": "DO_NOT_ADVANCE",
+      "claim_limit": "Perfect metrics on three held-out clusters are underpowered and high-overfit-risk; Finding D remains unestablished."
+    }
+  },
+  "runtime_version_boundary": {
+    "registered_endpoint_v2": {"python": "3.11.15", "torch": "2.13.0+cpu", "transformers": "5.15.0"},
+    "current_lock_and_B_to_D": {"torch": "2.12.1+cu126", "transformers": "5.14.1"},
+    "cross_runtime_reproduction": "NOT_RUN",
+    "interpretation": "Use paired within-process controls; do not pool trajectories or quality across runtime versions."
+  },
+  "broad_confirmatory_protocol": {
+    "status": "DRAFT_NOT_REGISTERED",
+    "results": "NOT_RUN",
+    "local_endpoint_registration_is_not_broad_registration": true
+  },
+  "figure_collections": {
+    "status": "PASS",
+    "total_figures": 50,
+    "collections": {
+      "halo_controls_v1": {"figures": 28, "manifest": "figures/halo_controls_v1/figure_manifest.json"},
+      "halo_deep_architecture_v1": {"figures": 22, "manifest": "figures/halo_deep_architecture_v1/figure_manifest.json"}
+    },
+    "claim_limit": "Manifest-verified visualizations of existing evidence; no independent or upgraded claim."
+  },
+  "literature_novelty_audit": {
+    "artifact": "../LITERATURE_NOVELTY_AUDIT.md",
+    "status": "NO_NOVELTY_CLAIM"
+  },
+  "excluded_from_active_scope": ["Rineya/R2 models", "Aegis models"],
+  "remaining_required_work": [
+    "freeze and register a materially larger, family/depth-diverse broad Halo replication",
+    "resolve benchmark-family R2, corrected R7 v2, and R8 capability gaps prospectively",
+    "reproduce the local endpoint result under the frozen target runtime",
+    "run end-to-end source benchmark reproduction or preserve the primitive-only parity limit",
+    "test truly ragged adaptive storage and deployment costs if Experiment B continues",
+    "run synchronized GPU confirmation only after CPU launch gates pass",
+    "test cross-core quality separately before any published-family generalization"
+  ]
+}

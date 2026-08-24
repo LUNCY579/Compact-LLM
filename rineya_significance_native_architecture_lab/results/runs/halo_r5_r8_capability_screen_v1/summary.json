@@ -1,0 +1,52 @@
+{
+  "by_family": {
+    "R5": {
+      "clusters": 2,
+      "correct": 2
+    },
+    "R6": {
+      "clusters": 2,
+      "correct": 1
+    },
+    "R7": {
+      "clusters": 2,
+      "correct": 2
+    },
+    "R8": {
+      "clusters": 2,
+      "correct": 0
+    }
+  },
+  "capability_rate": 0.625,
+  "classification": "BOUNDED_FULL_CACHE_CAPABILITY_SCREEN_WITH_INVALID_FAMILY",
+  "compression_policy_evaluated": false,
+  "correct_clusters": 5,
+  "independent_clusters": 8,
+  "inferential_statistics": null,
+  "schema_version": "1.0",
+  "selection": {
+    "context_layout": "clustered",
+    "expected_independent_clusters": 8,
+    "families": [
+      "R5",
+      "R6",
+      "R7",
+      "R8"
+    ],
+    "requested_evidence_depth": 0.5,
+    "seeds": [
+      300,
+      301
+    ]
+  },
+  "status": "PASS",
+  "validity_audit": {
+    "invalid_families": [
+      "R7"
+    ],
+    "status": "FAIL",
+    "valid_accuracy": 0.5,
+    "valid_correct": 3,
+    "valid_rows": 6
+  }
+}

@@ -1,0 +1,68 @@
+# Local model material must never be copied into the lab.
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
+
+# Raw traces and per-run model outputs can be very large. Track their hashes,
+# summaries, frozen configs, and selected final figures instead.
+results/traces/*
+!results/traces/.gitkeep
+!results/traces/README.md
+results/runs/*
+!results/runs/.gitkeep
+# The reviewed Halo run is the current published-core deliverable. Earlier R2
+# and provisional synthetic runs remain local and out of current scope.
+!results/runs/tier_a_20260823/
+!results/runs/halo_cpu_smoke_20260823_v2/
+!results/runs/halo_uncensored_cpu_smoke_20260823/
+!results/runs/lyra_cpu_smoke_20260823/
+!results/runs/nimbus_cpu_smoke_20260823/
+!results/runs/pulse_cpu_smoke_20260823/
+!results/runs/halo_mini_eval_20260823_v2/
+results/benchmarks/*/inference.jsonl
+results/benchmarks/*/evaluation.jsonl
+!results/benchmarks/halo_calibration_v2/inference.jsonl
+!results/benchmarks/halo_calibration_v2/evaluation.jsonl
+!results/benchmarks/halo_calibration_v3/inference.jsonl
+!results/benchmarks/halo_calibration_v3/evaluation.jsonl
+!results/benchmarks/halo_r1_r8_ladder_v1/inference.jsonl
+!results/benchmarks/halo_r1_r8_ladder_v1/evaluation.jsonl
+!results/benchmarks/halo_endpoint_validation_v1/inference.jsonl
+!results/benchmarks/halo_endpoint_validation_v1/evaluation.jsonl
+!results/benchmarks/halo_endpoint_validation_v2/inference.jsonl
+!results/benchmarks/halo_endpoint_validation_v2/evaluation.jsonl
+!results/benchmarks/halo_r7_v2/inference.jsonl
+!results/benchmarks/halo_r7_v2/evaluation.jsonl
+!results/runs/halo_capability_calibration_v2/
+!results/runs/halo_retention_pilot_v2/
+!results/runs/halo_r5_r8_capability_screen_v1/
+!results/runs/halo_count_causal_controls_v1/
+results/runs/halo_count_causal_controls_v1/boundary_diagnostics/*.npz
+results/runs/halo_count_causal_controls_v1/resident_positions/*.npz
+!results/runs/halo_count_causal_controls_v2/
+results/runs/halo_count_causal_controls_v2/boundary_diagnostics/*.npz
+results/runs/halo_count_causal_controls_v2/resident_positions/*.npz
+!results/runs/halo_schedule_control_v2/
+!results/runs/halo_adaptive_budget_screen_v1/
+!results/runs/halo_heterogeneous_budget_smoke_v2/
+!results/runs/halo_heterogeneous_budget_quality_screen_v1/
+!results/runs/halo_endpoint_validation_capability_v1/
+!results/runs/halo_endpoint_validation_v2_capability/
+!results/runs/halo_endpoint_validation_v2_registered/
+!results/runs/halo_r7_v2_capability_screen/
+!results/runs/halo_significance_memory_smoke_v1/
+!results/runs/halo_significance_memory_quality_screen_v1/
+!results/runs/halo_attention_prior_smoke_v1/
+!results/runs/halo_attention_prior_quality_screen_v1/
+!results/runs/halo_recovery_controller_screen_v1/
+!results/runs/halo_recovery_controller_smoke_v1/
+
+# Local caches.
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.egg-info/

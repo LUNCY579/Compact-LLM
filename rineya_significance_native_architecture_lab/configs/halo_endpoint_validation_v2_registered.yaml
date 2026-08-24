@@ -1,0 +1,125 @@
+analysis:
+  bootstrap_samples: 10000
+  confidence: 0.95
+  independence_unit: cluster_id
+  minimum_independent_clusters: 12
+  multiplicity: one_declared_primary_endpoint_contrast
+  primary_test: exact_cluster_sign_flip
+  randomization_samples: 100000
+  secondary_outcomes:
+  - answer_correct
+  - B3_minus_B4_endpoint
+  - strict_all_token_diagnostic
+attention_prior:
+  enabled: false
+cache:
+  compression_chunk_tokens: 128
+  recent_tokens: 32
+  retained_history_budget: 128
+  sink_tokens: 4
+  total_budget_slots: 128
+conditions:
+- exponent: 0.0
+  id: B2
+  policy: significance
+- exponent: 1.0
+  id: B3
+  policy: significance
+- exponent: 0.0
+  id: B4
+  policy: position
+controller:
+  enabled: false
+  type: none
+endpoint:
+  definition_sha256: 31669a6a30fab93f37fdb27ca25f04fb3ccb68024fe7de6057086dca7279348f
+  direction: two_sided
+  primary: layer_fact_exact_completion_rate
+  primary_contrast: B3_minus_B2
+  version: layer-fact-retention-v1
+experiment:
+  classification: PROSPECTIVE_REGISTERED_LOCAL_VALIDATION
+  compute_tier: B
+  name: halo_prospective_endpoint_validation_v2_registered
+  status: NOT_RUN
+memory_slots:
+  count: 0
+  enabled: false
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_hashes:
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+paths:
+  base: repository_root
+  capability_cases: rineya_significance_native_architecture_lab/results/runs/halo_endpoint_validation_v2_capability/cases.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/evaluation.jsonl
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/inference.jsonl
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_endpoint_validation_v2_registered
+protocol:
+  answer_key_access: after_all_inference_predictions_are_durable
+  endpoint_definition_access: frozen_before_this_dataset_compression
+  execution_mode: closed_loop_model_execution
+query:
+  access_fairness: identical_across_B2_B3_B4
+  max_tokens: 64
+  mode: conditioned
+  probe_schedule: every_nonfinal_chunk_boundary
+registration:
+  amendment_rule: any_change_requires_new_registration_id_and_version
+  id: halo-endpoint-validation-v2-registered
+  registered_at: '2026-08-24T07:14:28.236013Z'
+  status: REGISTERED_NOT_RUN
+runtime:
+  deterministic: true
+  device: cpu
+  dtype: bfloat16
+  max_new_tokens: 32
+  seed: 41
+  verify_query_rollback: true
+schema_version: '1.0'
+selection:
+  families:
+  - R1
+  - R3
+  - R4
+  independent_clusters: 12
+  per_family: 4
+  rule: lexicographically_first_four_B0_correct_case_ids_per_family
+  selected_case_ids:
+  - R1-s000611-k2-d050-lclustered
+  - R1-s000630-k2-d050-lclustered
+  - R1-s000634-k2-d050-lclustered
+  - R1-s000637-k2-d050-lclustered
+  - R3-s000600-d050
+  - R3-s000630-d050
+  - R3-s000635-d050
+  - R3-s000637-d050
+  - R4-s000600-d050
+  - R4-s000611-d050
+  - R4-s000630-d050
+  - R4-s000634-d050
+  selected_case_ids_by_family:
+    R1:
+    - R1-s000611-k2-d050-lclustered
+    - R1-s000630-k2-d050-lclustered
+    - R1-s000634-k2-d050-lclustered
+    - R1-s000637-k2-d050-lclustered
+    R3:
+    - R3-s000600-d050
+    - R3-s000630-d050
+    - R3-s000635-d050
+    - R3-s000637-d050
+    R4:
+    - R4-s000600-d050
+    - R4-s000611-d050
+    - R4-s000630-d050
+    - R4-s000634-d050
+significance:
+  enabled: true
+  exponent: 1.0
+  score_pooling:
+    enabled: false
+    width: 1

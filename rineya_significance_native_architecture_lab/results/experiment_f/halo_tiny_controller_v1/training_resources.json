@@ -1,0 +1,61 @@
+{
+  "backbone": {
+    "model_execution": false,
+    "status": "FROZEN_NOT_LOADED",
+    "trainable_parameters": 0
+  },
+  "dataset": {
+    "calibration_clusters": 3,
+    "class_support": {
+      "calibration": {
+        "compressed_error": 1,
+        "compressed_success": 2
+      },
+      "evaluation": {
+        "compressed_error": 2,
+        "compressed_success": 1
+      },
+      "train": {
+        "compressed_error": 2,
+        "compressed_success": 3
+      }
+    },
+    "evaluation_clusters": 3,
+    "feature_count": 6,
+    "independence_unit": "cluster",
+    "total_clusters": 11,
+    "train_clusters": 5
+  },
+  "logistic": {
+    "baseline_process_rss_bytes": 47853568,
+    "incremental_process_rss_bytes_sampled": 1363968,
+    "measurement_limit": "RSS is sampled at optimizer iterations and boundaries; process-lifetime peak includes imports, while tracemalloc excludes native NumPy allocations.",
+    "optimizer": "damped_Newton_IRLS",
+    "optimizer_state": {
+      "estimate_excludes_design_matrix_and_predictions": true,
+      "estimated_transient_optimizer_bytes": 504,
+      "persisted_after_fit_bytes": 0,
+      "transient_state": "gradient + Hessian + Newton step"
+    },
+    "peak_process_rss_bytes_sampled": 49217536,
+    "peak_python_tracemalloc_bytes": 12170,
+    "process_lifetime_peak_rss_bytes": 56238080,
+    "trainable_parameter_count": 7,
+    "wall_seconds": 0.001593999999386142
+  },
+  "tree_control": {
+    "baseline_process_rss_bytes": 48234496,
+    "incremental_process_rss_bytes_sampled": 983040,
+    "learned_scalar_count": 4,
+    "measurement_limit": "RSS is sampled at optimizer iterations and boundaries; process-lifetime peak includes imports, while tracemalloc excludes native NumPy allocations.",
+    "optimizer": "exhaustive_gini_split_search_with_deterministic_ties",
+    "optimizer_state": {
+      "persisted_after_fit_bytes": 0,
+      "transient_state": "one best-split tuple per recursive node"
+    },
+    "peak_process_rss_bytes_sampled": 49217536,
+    "peak_python_tracemalloc_bytes": 1019399,
+    "process_lifetime_peak_rss_bytes": 56238080,
+    "wall_seconds": 0.022701399999277783
+  }
+}

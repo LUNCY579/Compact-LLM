@@ -1,0 +1,35 @@
+{
+  "execution_mode": "OPEN_LOOP_TRACE_SIMULATION",
+  "figures": {
+    "baseline_controls.png": "bc61efdd1b6d80c8a96a85fc529a72b2fc130f485435b113af79cd4589a359d5",
+    "byte_comparison.png": "32b65c17bd0bfb1e960861c3a20a4c150d21fe102d70272d4b4130280f15ae11",
+    "compression_round_interaction.png": "5d99f8ee4e4b77511114b62a180fc11d8f91ea6e63eea5310d349ee6d656cb3a",
+    "count_ablations.png": "68936d0eee5d0a7f6a65a2d2ae399b9035fe29b8d7632f95eb3c581c4ed27b4a",
+    "exponent_sweep.png": "2fde4eb054ff777282778a6b9212406941c649092b4d1cf6faa724ddc0ecc0b2",
+    "rank_trajectories.png": "ddfb42f243b0db262efd9bcba4b903b937995f4893b8d209642987a08c2d44da"
+  },
+  "generator": {
+    "matplotlib": "3.11.1",
+    "script": "scripts/make_figures.py",
+    "script_sha256": "0c5d59653bad7602ec85df8c6af5dc82f3cd2146d2c9ac3bf78da33fda669a91"
+  },
+  "inputs": {
+    "baseline_policy_comparison.csv": "89cfd3ba91f35dd8fe40f59a2b006972a60636c16e7fb8b429cf3bb88d206d6b",
+    "budget_ledger.json": "7bba67bfca5a6ac902490f4c56e0ad2e484979c45344577c70f820e4fc67cbd3",
+    "compression_round_interaction.csv": "0f177fb79daa2ad154e6b6841c362df3ae6872b6ae22300b50ce56d2d0e897c3",
+    "count_ablation.csv": "889cf2837c71eb2499f8cad60dbb18bc41e215aec48e436d541c5ce6f2c11917",
+    "exponent_sweep.csv": "e9fa5e1da665ab8ba95bd6ea6340b3fd5fc3b0c1f7eed1a40a5e1b40ae4735c8",
+    "exposure_rank_trajectories.csv": "7b757ccbf530cbc9a0fa9cd5af41a5333e8bcf5d37395da6b5db9c4973ded290"
+  },
+  "model_inference_performed": false,
+  "not_run": [
+    "model accuracy or evidence survival",
+    "attention-prior strength versus quality",
+    "memory-slot count versus quality",
+    "controller risk/coverage",
+    "comparative/deployment CPU or GPU latency and GPU VRAM"
+  ],
+  "run_id": "tier_a_20260823",
+  "schema_version": "1.0",
+  "scope": "SYNTHETIC_TIER_A_ONLY"
+}

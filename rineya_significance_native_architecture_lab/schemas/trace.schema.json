@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.local/schemas/significance-trace-manifest-v1.json",
+  "title": "Rineya Significance Trace Manifest",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "case_id",
+    "support",
+    "execution_mode",
+    "score_semantics",
+    "information_access",
+    "model_id",
+    "model_hash",
+    "tokenizer_hash",
+    "metadata"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0" },
+    "case_id": { "type": "string", "minLength": 1 },
+    "support": { "enum": ["FULL_CANDIDATE", "ON_POLICY"] },
+    "execution_mode": {
+      "enum": ["OPEN_LOOP_TRACE_SIMULATION", "CLOSED_LOOP_MODEL_EXECUTION"]
+    },
+    "score_semantics": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": true
+    },
+    "information_access": {
+      "type": "object",
+      "required": ["answer", "future_tokens", "future_hidden_state", "oracle_evidence"],
+      "properties": {
+        "answer": { "const": false },
+        "future_tokens": { "const": false },
+        "future_hidden_state": { "const": false },
+        "oracle_evidence": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    },
+    "model_id": { "type": ["string", "null"] },
+    "model_hash": {
+      "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+    },
+    "tokenizer_hash": {
+      "anyOf": [{ "$ref": "#/$defs/sha256" }, { "type": "null" }]
+    },
+    "metadata": { "type": "object", "additionalProperties": true }
+  },
+  "$defs": {
+    "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "additionalProperties": false
+}

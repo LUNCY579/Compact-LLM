@@ -1,0 +1,32 @@
+schema_version: "1.0"
+experiment:
+  name: halo_full_cache_capability_calibration_v1
+  compute_tier: B
+  status: NOT_RUN
+protocol:
+  execution_mode: closed_loop_model_execution
+  answer_key_access: after_all_inference
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/inference.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/evaluation.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_capability_calibration_v2
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+runtime:
+  device: cpu
+  dtype: bfloat16
+  chunk_size: 256
+  max_new_tokens: 32
+  seed: 17
+significance:
+  enabled: false
+  exponent: 1.0
+  score_pooling: {enabled: false, width: 1}
+query: {mode: agnostic}
+cache: {total_budget_slots: 0, sink_tokens: 0, recent_tokens: 0}

@@ -1,0 +1,52 @@
+{
+  "boundary_evidence_rows": 99,
+  "by_condition": {
+    "eligible_circular_count_v2": {
+      "clusters": 11,
+      "correct": 5,
+      "count_transform": "eligible_circular_v2",
+      "mean_layer_fact_exact_completion_rate": 0.1948051948051948,
+      "mean_minimum_per_layer_required_token_availability_fraction": 0.6677938091646781,
+      "strict_evidence_survival": 0
+    },
+    "eligible_shuffled_count_v2": {
+      "clusters": 11,
+      "correct": 3,
+      "count_transform": "eligible_shuffled_v2",
+      "mean_layer_fact_exact_completion_rate": 0.1883116883116883,
+      "mean_minimum_per_layer_required_token_availability_fraction": 0.6829033765998269,
+      "strict_evidence_survival": 0
+    },
+    "true_realized_count": {
+      "clusters": 11,
+      "correct": 6,
+      "count_transform": "true",
+      "mean_layer_fact_exact_completion_rate": 0.2094155844155844,
+      "mean_minimum_per_layer_required_token_availability_fraction": 0.6683700383210787,
+      "strict_evidence_survival": 0
+    }
+  },
+  "claim_limit": "Exploratory B0-selected calibration controls; not confirmatory evidence.",
+  "classification": "EXPLORATORY_CLOSED_LOOP_COUNT_CAUSAL_CONTROLS",
+  "conditions": [
+    "true_realized_count",
+    "eligible_shuffled_count_v2",
+    "eligible_circular_count_v2"
+  ],
+  "count_control_contract": "eligible_heavy_v2",
+  "eligible_pool_invariants": {
+    "eligible_count_multiset_preserved_per_layer_head": "PASS",
+    "protected_denominators_immutable": "PASS",
+    "semantic_fixed_points": 0
+  },
+  "families": [
+    "R1",
+    "R3",
+    "R4"
+  ],
+  "inferential_statistics": null,
+  "matched_query_budget_schedule_contract": "PASS",
+  "schema_version": "1.0",
+  "selected_B0_eligible_clusters": 11,
+  "status": "PASS"
+}

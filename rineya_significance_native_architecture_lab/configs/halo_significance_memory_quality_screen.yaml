@@ -1,0 +1,162 @@
+schema_version: "1.0"
+
+experiment:
+  name: halo_significance_memory_quality_screen_v1
+  classification: EXPLORATORY_NOT_REGISTERED
+  status: NOT_RUN
+  compute_tier: B
+  purpose: Compare fixed-slot aggregation controls at matched total persistent bytes on frozen Halo clusters.
+
+frozen_case_source:
+  registration_id: halo-endpoint-validation-v2-registered
+  registered_config: rineya_significance_native_architecture_lab/configs/halo_endpoint_validation_v2_registered.yaml
+  registered_config_sha256: 82e0964bb532ae27bc43cf66b393628e09df364ef6280fc846613792a60c58bc
+  reuse_scope: selected_case_ids_and_frozen_endpoint_only
+  new_conditions_registered: false
+  source_hashes:
+    capability_cases: 333906cc8069a31c3f85eff08fd8f7544e3f22662865915a43a935d5e4fb920a
+    evaluation: e83e2469ab8e49866b32b17f926c3d13ec156b4d6f552b29452270e4c92dc161
+    inference: 45ede8d349b57d7d1962e39d90888044624003232bfe915027e6a44f8cbbc8a2
+
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/inference.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_endpoint_validation_v2/evaluation.jsonl
+  capability_cases: rineya_significance_native_architecture_lab/results/runs/halo_endpoint_validation_v2_capability/cases.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_significance_memory_quality_screen_v1
+
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_layers: 28
+  expected_query_heads: 16
+  expected_kv_heads: 8
+  expected_head_dim: 128
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+
+selection:
+  independent_clusters: 12
+  families: [R1, R3, R4]
+  selected_case_ids:
+    - R1-s000611-k2-d050-lclustered
+    - R1-s000630-k2-d050-lclustered
+    - R1-s000634-k2-d050-lclustered
+    - R1-s000637-k2-d050-lclustered
+    - R3-s000600-d050
+    - R3-s000630-d050
+    - R3-s000635-d050
+    - R3-s000637-d050
+    - R4-s000600-d050
+    - R4-s000611-d050
+    - R4-s000630-d050
+    - R4-s000634-d050
+
+conditions:
+  - id: M0_HARD
+    slots: 0
+    aggregation: normalized_significance
+    ordinary_budget: 128
+  - id: M4_MEAN
+    slots: 4
+    aggregation: mean
+    ordinary_budget: 123
+  - id: M4_RECENCY
+    slots: 4
+    aggregation: recency
+    ordinary_budget: 123
+  - id: M4_RAW_S
+    slots: 4
+    aggregation: raw_significance
+    ordinary_budget: 123
+  - id: M4_NORMALIZED_S_OVER_C
+    slots: 4
+    aggregation: normalized_significance
+    ordinary_budget: 123
+  - id: M4_RANDOM
+    slots: 4
+    aggregation: random
+    ordinary_budget: 123
+
+cache:
+  baseline_retained_history_budget: 128
+  memory_retained_history_budget: 123
+  total_budget_slots: 128
+  compression_chunk_tokens: 128
+  sink_tokens: 4
+  recent_tokens: 32
+  selection_count_exponent: 1.0
+
+memory_slots:
+  recency_tau: 32.0
+  random_seed: 7301
+  stable_bucket: semantic_entry_id_modulo_slot_count
+  key_semantics: weighted_post_rope_key
+  invalid_slot_semantics: physically_present_and_fully_masked
+
+significance:
+  enabled: true
+  exponent: 1.0
+  score_pooling:
+    enabled: false
+    width: 1
+
+attention_prior:
+  enabled: false
+  lambda: 0.0
+
+controller:
+  enabled: false
+  type: none
+
+total_persistent_budget:
+  match_basis: fixed_capacity_at_each_compression_boundary_and_fixed_decode_reserve
+  ordinary_bytes_per_budget_unit: 120064
+  m0_boundary_total_bytes: 15368192
+  m4_memory_bytes: 491904
+  m4_boundary_total_bytes: 15259776
+  unavoidable_discrete_slack_bytes: 108416
+  memory_ordinary_budget_reduction: 5
+  includes: [K, V, S, C, absolute_positions, semantic_entry_ids, memory_K, memory_V, memory_metadata]
+
+query:
+  mode: conditioned
+  max_tokens: 64
+  probe_schedule: every_nonfinal_chunk_boundary
+  access_fairness: identical_across_all_six_conditions
+
+runtime:
+  device: cpu
+  dtype: bfloat16
+  deterministic: true
+  seed: 73
+  max_new_tokens: 32
+  verify_query_rollback: true
+  fixed_decode_accounting: continue_cache_appends_after_first_eos_without_extending_prediction
+
+endpoint:
+  version: layer-fact-retention-v1
+  definition_sha256: 31669a6a30fab93f37fdb27ca25f04fb3ccb68024fe7de6057086dca7279348f
+  primary: layer_fact_exact_completion_rate
+  memory_slot_treatment: slots_are_not_exact_token_evidence_and_never_count_as_retained_positions
+
+analysis:
+  independence_unit: cluster_id
+  minimum_independent_clusters: 12
+  confidence: 0.95
+  bootstrap_samples: 10000
+  randomization_samples: 100000
+  pairwise_scope: all_15_whole_cluster_condition_pairs
+  multiplicity_adjustment: none_exploratory
+
+protocol:
+  execution_mode: closed_loop_model_execution
+  same_process_m0_identity_gate: required_before_cells
+  answer_key_access: after_all_72_predictions_slots_and_resident_states_are_durable
+  total_cells: 72
+  successive_halving_used: false
+  interpretation: exploratory_local_not_registered
+  total_persistent_byte_match: required
+  latency_claim_allowed: false

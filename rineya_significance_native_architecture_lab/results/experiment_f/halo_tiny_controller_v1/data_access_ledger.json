@@ -1,0 +1,37 @@
+{
+  "oracle_evidence_opened": false,
+  "ordered_events": [
+    {
+      "event": "PRE_ANSWER_FEATURE_SNAPSHOT_DURABLE",
+      "sequence": 1,
+      "sha256": "ed17f47993f6c911a621fa90a6c55f7118c119fb22e86abf44745caccaa9f842"
+    },
+    {
+      "event": "CLUSTER_HASH_SPLIT_DURABLE",
+      "sequence": 2,
+      "sha256": "b635ddf2307a3938fd93a2f9bb99c715d7e7cec68075ad8b0dabdb00c3bd98a3"
+    },
+    {
+      "event": "ANSWER_DERIVED_OUTCOMES_OPENED",
+      "sequence": 3,
+      "sha256": "3b587059b5b86ad5255aeaa6ff89e5c9457da353500637fde8ff23b960d37fd1"
+    }
+  ],
+  "outcome_based_reassignment_attempted": false,
+  "schema_version": "1.0",
+  "source_artifacts_modified": false,
+  "split_class_support_checked_after_freeze": {
+    "calibration": {
+      "compressed_error": 1,
+      "compressed_success": 2
+    },
+    "evaluation": {
+      "compressed_error": 2,
+      "compressed_success": 1
+    },
+    "train": {
+      "compressed_error": 2,
+      "compressed_success": 3
+    }
+  }
+}

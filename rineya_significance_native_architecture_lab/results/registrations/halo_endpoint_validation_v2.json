@@ -1,0 +1,73 @@
+{
+  "analysis": {
+    "bootstrap_samples": 10000,
+    "confidence": 0.95,
+    "independence_unit": "cluster_id",
+    "minimum_independent_clusters": 12,
+    "multiplicity": "one_declared_primary_endpoint_contrast",
+    "primary_test": "exact_cluster_sign_flip",
+    "randomization_samples": 100000,
+    "secondary_outcomes": [
+      "answer_correct",
+      "B3_minus_B4_endpoint",
+      "strict_all_token_diagnostic"
+    ]
+  },
+  "claim_limit": "Local prospective validation registration; not a publication preregistration.",
+  "compressed_output_absent_at_registration": true,
+  "primary_endpoint": {
+    "definition_sha256": "31669a6a30fab93f37fdb27ca25f04fb3ccb68024fe7de6057086dca7279348f",
+    "direction": "two_sided",
+    "primary": "layer_fact_exact_completion_rate",
+    "primary_contrast": "B3_minus_B2",
+    "version": "layer-fact-retention-v1"
+  },
+  "registered_at": "2026-08-24T07:14:28.236013Z",
+  "registered_config": "configs/halo_endpoint_validation_v2_registered.yaml",
+  "registered_config_sha256": "82e0964bb532ae27bc43cf66b393628e09df364ef6280fc846613792a60c58bc",
+  "registration_id": "halo-endpoint-validation-v2-registered",
+  "schema_version": "1.0",
+  "selected_case_ids": [
+    "R1-s000611-k2-d050-lclustered",
+    "R1-s000630-k2-d050-lclustered",
+    "R1-s000634-k2-d050-lclustered",
+    "R1-s000637-k2-d050-lclustered",
+    "R3-s000600-d050",
+    "R3-s000630-d050",
+    "R3-s000635-d050",
+    "R3-s000637-d050",
+    "R4-s000600-d050",
+    "R4-s000611-d050",
+    "R4-s000630-d050",
+    "R4-s000634-d050"
+  ],
+  "selected_case_ids_by_family": {
+    "R1": [
+      "R1-s000611-k2-d050-lclustered",
+      "R1-s000630-k2-d050-lclustered",
+      "R1-s000634-k2-d050-lclustered",
+      "R1-s000637-k2-d050-lclustered"
+    ],
+    "R3": [
+      "R3-s000600-d050",
+      "R3-s000630-d050",
+      "R3-s000635-d050",
+      "R3-s000637-d050"
+    ],
+    "R4": [
+      "R4-s000600-d050",
+      "R4-s000611-d050",
+      "R4-s000630-d050",
+      "R4-s000634-d050"
+    ]
+  },
+  "source_hashes": {
+    "capability_cases": "333906cc8069a31c3f85eff08fd8f7544e3f22662865915a43a935d5e4fb920a",
+    "capability_manifest": "e6698108ec0223adfcdd9ebcbd8f880fb306fc20184a72ce29fa45781cf10150",
+    "capability_summary": "5b190d22364cf33f21b91fef07c0e2bdeaa527fd0d5f3b11393df663e0268947",
+    "dataset_manifest": "17c181a0dfc625fb50c9ececc0c7dc3e751891f1ce72b94d0aa45180122964a8",
+    "evaluation": "e83e2469ab8e49866b32b17f926c3d13ec156b4d6f552b29452270e4c92dc161",
+    "inference": "45ede8d349b57d7d1962e39d90888044624003232bfe915027e6a44f8cbbc8a2"
+  },
+  "status": "REGISTERED_NOT_RUN"
+}

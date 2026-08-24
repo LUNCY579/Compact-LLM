@@ -1,0 +1,88 @@
+# Claims ledger
+
+This ledger separates mechanism provenance, local engineering evidence, work
+under review, and unrun hypotheses. Current model claims are limited to the
+published Qwen3-0.6B family. Halo is primary; five separately identified family
+compatibility smokes have executed.
+
+| ID | Statement | Evidence class | Status | Permitted wording |
+|---|---|---|---|---|
+| `P-001` | RineyaBeta contains the historical Significance Matrix implementation and reports. | `INHERITED_SOURCE_EVIDENCE` | source inspected | “The source repository contains/reports…” only. |
+| `P-002` | The audited corrected implementation is `main@9e00be74098878290dc2b0d54cbffee4652c6088`, blob `30ee29724dce52de5a288f6421123fb718240541`. | `INHERITED_SOURCE_EVIDENCE` | ref/blob verified | State exact immutable provenance. |
+| `P-003` | The audited paper artifact is `r2-healing-harness@1664f54de0bbdfde45e311b75bbf3038dbfffe42`, blob `b83c7f37d871f1ddb59a00ccf521c89d84b1c3e3`. | `INHERITED_SOURCE_EVIDENCE` | ref/blob verified | Provenance only; no Halo efficacy inference. |
+| `P-004` | Halo is a published Qwen3-0.6B-derived 28L core with 1024 hidden size, 16 query heads, 8 KV heads, and head dimension 128. | `EXISTING_CHATBUBBLE_EVIDENCE` | local config inspected | Describe target architecture only. |
+| `P-005` | Expected weight/tokenizer/config hashes were recorded and verified for Halo, Halo Uncensored, Lyra, Nimbus, and Pulse. | `EXISTING_CHATBUBBLE_EVIDENCE` | verified by five completed smokes | State the per-core run and immutable hashes. |
+| `N-001` | The local recorder matches audited source primitives. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_PRIMITIVE_PARITY`: 4/4 exact tensor/index checks; end-to-end source benchmark reproduction `NOT_RUN` | Name the four primitives and preserve the claim limit; never shorten this to whole-runtime parity. |
+| `N-002` | The disabled local chunked path preserved bf16 logits on one 192-token CPU case for each of the five published Qwen3-0.6B cores. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_SMOKE` on 5/5: max/mean delta 0.0; argmax 1.0 | One case per core; compatibility identity gate only. |
+| `N-003` | Query-conditioned `S/C` state completed exact rollback and aligned B48+C64 compression on all five smoke cases. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_SMOKE` on 5/5 | Runtime engineering only; include transient query separately. |
+| `N-004` | The family smokes improve or even measure answer quality, evidence survival, or long-context reasoning. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED` | Explicitly state that no answer was decoded. |
+| `N-005` | The family smokes establish deployment latency, throughput, peak memory, or GPU behavior. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED` | Diagnostics only; no deployment claim. |
+| `N-006` | Observation normalization improves Halo accuracy or evidence retention over raw accumulation. | `NEW_CHATBUBBLE_EVIDENCE` | `NARROW_RETENTION_SUPPORT_ONLY`: locally registered v2 endpoint B3-B2 `+0.0401786`, CI `[0.0133929, 0.0758929]`, `p=0.01953125`; answers B3 5/12 vs B2 6/12, `p=1.0` | State local registration, difficulty tuning, 12-cluster scope, and retained-state-only interpretation; no answer, mediation, population, or broad confirmatory claim. |
+| `N-007` | The existing Tier-A run supports a scientific mechanism conclusion. | `INVALID_OR_CONFOUNDED` | config/execution mismatch and invalid sampling interpretation | Machinery artifacts only; no causal/generalization conclusion. |
+| `N-008` | Adaptive budgets, attention priors, memory slots, recovery, or a controller improve Halo. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: B/C/D specificity or quality screens failed; E risk AUC 0.50; F is an underpowered n=3 held-out screen | Runtime/mechanism support is separate from quality; no architectural improvement or deployment claim. |
+| `N-009` | A result on Halo generalizes to other published Qwen3-0.6B Rineya cores. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_RUN` | No family-wide efficacy claim. |
+| `N-010` | Rineya/R2 or Aegis results support the current Halo conclusion. | out of active scope | `EXCLUDED` | They may appear as provenance, never as current evidence. |
+| `N-011` | The bounded Halo mini evaluation supports a broad policy-quality claim. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: 3 cases, 2/3 B0 capability failures, no inferential statistics | Describe the exact exploratory counts and limits only. |
+| `N-012` | `halo_calibration_v3` provides 32 independent exact-evidence calibration clusters across R1-R4. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_DATASET_ARTIFACT`: 32/32 inference/evaluation pairs, eight per family, manifest-integrity protected | Construction and token alignment only; no model-quality claim. |
+| `N-013` | Full-cache Halo passes the balanced calibration advance gate. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: 18/32 overall, but R1 7/8, R2 0/8, R3 3/8, R4 8/8; gate failed because R2 was below two | State both the overall score and per-family gate failure; R2 is a benchmark label, not a model. |
+| `N-014` | The pilot's strict all-token evidence endpoint is suitable for confirmation. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED_SATURATED`: B2, B3, and B4 were each 0/11 | The strict Boolean remains an auditable diagnostic, not the primary endpoint. |
+| `N-015` | `layer-fact-retention-v1` is frozen, non-saturated, and prospectively evaluated. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_ENDPOINT_DEFINITION_AND_LOCAL_VALIDATION`: outcome-blind design on 33 rows; v1 prospective sample stopped at B0 9/24; difficulty-calibrated v2 passed B0 18/24 and locally registered 12-cluster execution | Separate endpoint definition, failed v1 capability attempt, and local v2 result; local registration is not public preregistration or the broad protocol. |
+| `N-016` | B3 outperformed the positional B4 control in the selected pilot. | `NEW_CHATBUBBLE_EVIDENCE` | `EXPLORATORY_POSTHOC`: answers 6/11 vs 1/11; graded retention differences were substantially larger than B3-B2 | Development diagnostic only; no preregistered inferential or deployment claim. |
+| `N-017` | Endpoint v1 distinguishes B3 from B2 on the endpoint-design pilot. | `NEW_CHATBUBBLE_EVIDENCE` | `EXPLORATORY_POSTHOC`: B3-B2 `+0.061688`, 95% CI `[0.030844, 0.094156]`, `p=0.0078125` | Same data designed the endpoint; no independent validation, answer mediation, or confirmation. |
+| `N-018` | The controlled R1-R8 ladder is a valid model-quality result. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: 1,176 cases / 84 clusters were built and exact-aligned; no ladder-wide model run occurred | Describe dataset construction only; rows within a cluster are not independent outcomes. |
+| `N-019` | Full-cache Halo can advance all R5-R8 families to compression testing. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: R7 v1 invalid; corrected balanced R7 v2 elicited all-YES and scored 4/8 with 0/4 NO; R8 0/2 | R7 v2 is a valid benchmark but fails its two-sided capability gate; neither R7 nor R8 ran compression. |
+| `N-020` | True per-entry C adds information beyond deterministic age under the tested fixed schedule. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED_IN_REGIME`: age-derived and head-averaged counts exactly matched true C on effective counts, scores, selections, residents, predictions, frozen endpoint, and answers in 11/11 clusters | Exact trajectory equivalence is limited to fixed 128-token chunks and one query-scoring event per non-final boundary. |
+| `N-021` | Constant or shuffled counts reduce endpoint v1 versus true C. | `NEW_CHATBUBBLE_EVIDENCE` | `EXPLORATORY_MULTIPLICITY_NULL`: deltas `-0.055195` and `-0.058442`; nominal `p=0.015625/0.046875`, Holm `p=0.109375/0.28125`; shuffled is eligible-pool confounded | Report nominal and Holm-adjusted values together; neither survives correction, and shuffled is not a clean identity intervention. |
+| `N-022` | Delayed count improves Halo retention. | `NEW_CHATBUBBLE_EVIDENCE` | `DESCRIPTIVE_ONLY`: endpoint delta `+0.063312`, nominal `p=0.1171875`, Holm `p=0.5859375` | No directional or causal claim. |
+| `N-023` | B3's retention advantage grows with realized compression rounds in schedule v2. | `NEW_CHATBUBBLE_EVIDENCE` | `EXPLORATORY_INTERACTION`: slope `+0.00936074`/round, 95% CI `[0.00310399, 0.01759850]`, `p=0.00390625` | 11 B0-selected development clusters, 55 matched pairs; not registered or population evidence. |
+| `N-024` | B3's answer advantage grows with realized compression rounds. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_DETECTED`: interaction slope `+0.02248157`, 95% CI `[-0.03599509, 0.07641278]`, `p=0.4375` | Do not infer answer improvement, equivalence, or mediation. |
+| `N-025` | The 50 Halo figures constitute new independent evidence. | convenience visualization | `NOT_SUPPORTED`: both figure manifests `PASS`; every panel derives from listed artifacts and has its own claim limit | Cite source artifacts and claim limits; plots do not upgrade evidence class. |
+| `N-026` | The Significance Matrix architecture is broadly novel. | literature boundary | `NO_NOVELTY_CLAIM` after scoped audit | Describe the narrower realized-exposure experimental distinction only; broad novelty requires a systematic search and matched prior-art comparisons. |
+| `N-027` | The true-count callback reproduces the standard B3 path on real Halo. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_ENGINEERING_IDENTITY`: one case; exact generated token IDs, resident positions, accounting, policy, and exponent | One-case callback identity only; no quality, schedule-generalization, or whole-runtime claim. |
+| `N-028` | Shuffled and wrong-token counts are clean identity-breaking controls. | control-validity audit | `NOT_SUPPORTED_CONFOUNDED`: global C distribution is preserved, but values cross 4 sink + 32 recent protected slots; eligible-heavy-pool C multiset changed in 224/224 audited layer-head cells | Call them `GLOBALLY_DISTRIBUTION_PRESERVING_BUT_ELIGIBLE_POOL_CONFOUNDED`; do not attribute their outcomes solely to entry identity. |
+| `N-029` | Significance-aligned adaptive layer/head allocation has a specific advantage. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED_SPECIFICITY_GATE_FAILED`: 132 open-loop rows; entropy delta `+0.055195` (Holm `p=0.214844`), shuffled-statistic `+0.115260` (Holm `p=0.043945`) | Decision `NO_SIGNIFICANCE_SPECIFIC_ADVANTAGE`; no model load, answers, closed-loop propagation, or sparse-storage measurement. |
+| `N-030` | Endpoint v1 prospectively separates B3 and B2 in the locally registered v2 sample. | `NEW_CHATBUBBLE_EVIDENCE` | `SUPPORTED_NARROW_LOCAL`: B3-B2 `+0.0401786`, CI `[0.0133929, 0.0758929]`, exact `p=0.01953125` over 12 clusters | Say “locally registered prospective retained-state separation”; disclose v1 B0 stop 9/24, v2 difficulty tuning, modest sample, no public preregistration, and no reproduction under the current 2.12.1/5.14.1 lock. |
+| `N-031` | The locally registered endpoint result implies better answers. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: B3 5/12, B2 6/12; one B3 loss, no wins; `p=1.0` | No answer gain, causal mediation, or architecture-level efficacy claim. |
+| `N-032` | Corrected R7 v2 is a valid balanced benchmark and Halo passes its capability gate. | `NEW_CHATBUBBLE_EVIDENCE` | design `SUPPORTED`; capability `NOT_SUPPORTED`: 80-case balanced construction; frozen screen 4/8 with all-YES outputs and 0/4 NO | Preserve the distinction: benchmark repair passed, Halo gate failed, no compressed condition ran. |
+| `N-033` | Eligible-pool count permutations isolate count identity cleanly and reveal a retention effect. | `NEW_CHATBUBBLE_EVIDENCE` | control validity `SUPPORTED`; effect `NOT_DETECTED`: 22,176/22,176 invariant cells pass; shuffled Holm `p=0.4921875`, circular Holm `p=0.25` | Clean process-local null controls; do not claim equivalence or cross-process reproducibility. |
+| `N-034` | Separate CPU-bf16/SDPA runs reproduce exact Halo count trajectories. | reproducibility audit | `NOT_SUPPORTED`: v1/v2 common cases matched 10/11 predictions, 9/11 endpoint values, and 0/11 resident trajectories | Cause unestablished; use same-process identities and within-process paired contrasts only. |
+| `N-035` | Entropy-allocated heterogeneous budgets improve Halo. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED_SPECIFICITY`: answers 8/12 vs uniform 5/12, `p=0.25`; shuffled had higher retention; padded physical storage exceeded logical payload | Describe the numerical answer difference as exploratory; no significance-specific, ragged-memory, or efficiency claim. |
+| `N-036` | A normalized significance attention prior improves Halo or is feedback-safe. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: all five arms 5/12; normalized endpoint equals raw/shuffled; active intervention but specificity failed | Runtime compatibility and boundedness only; no answer-gain, safety, or all-lambda generalization. |
+| `N-037` | Normalized-significance memory slots recover information lost to eviction. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: all six byte-matched arms 5/12; normalized endpoint below M0 and random; no simpler-control advantage | Negative/neutral for tested M4 implementation; do not generalize to learned or larger memories. |
+| `N-038` | The deterministic Cornerstone risk score predicts recovery need. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED`: descriptive error ROC AUC 0.50 on 11 selected clusters | Accept/recompute mechanism is supported separately; no deployable threshold or quality claim. |
+| `N-039` | The tiny learned controller establishes Finding D. | `NEW_CHATBUBBLE_EVIDENCE` | `NOT_SUPPORTED_UNDERPOWERED`: held-out n=3 logistic AUC/BA 1.0 and 3/3 counterfactual system accuracy, but only two positive-negative pairs; tree overfits | Classification `UNDERPOWERED_OVERFIT_SCREEN_ONLY`; report high overfit risk, frozen 5/3/3 split/no retry, and no advancement. |
+
+## Update rule
+
+A `NOT_RUN` row may change only after a complete run has:
+
+1. a schema-valid manifest and resolved-config hash;
+2. verified model, tokenizer, and config hashes;
+3. passed identity, invariant, rollback, and leakage checks;
+4. preserved raw cases/traces or immutable hashes;
+5. reported retained history, active chunk, transient query, KV bytes, and total
+   persistent bytes separately;
+6. used cluster-aware analysis and a pre-frozen evidence metric, and—if
+   promoted beyond exploratory evidence—a registration frozen before outcomes;
+7. distinguished confirmatory from exploratory analysis.
+
+The broad Halo confirmatory protocol remains `DRAFT_NOT_REGISTERED`. The strict
+token-level Boolean saturated at zero. Outcome-blind
+`layer-fact-retention-v1` now has one completed local prospective validation,
+after a first independent dataset stopped at B0 and a second was explicitly
+difficulty-calibrated before registration. That narrow record does not register
+the broad architecture program. Ladder, capability, count/schedule, B-F, and
+controller results remain development evidence unless their own row says
+otherwise. A materially larger, diverse, prospectively split and registered
+plan is still required. Negative and null findings remain in the ledger.
+
+## Novelty boundary
+
+No claim may say Rineya invented cumulative-attention KV selection generally.
+The completed scoped [literature audit](LITERATURE_NOVELTY_AUDIT.md) identifies
+direct prior art for heavy-hitter retention, observation-window scoring,
+normalized saliency, adaptive budgets, memory summaries, and recovery. The
+only current distinction is experimental: persistent realized exposure state
+kept aligned with surviving semantic entries through repeated compression, and
+the behavior of `S/max(C,1)^e` under count and schedule controls. The verdict is
+`NO_NOVELTY_CLAIM`, not a publication-ready novelty finding.

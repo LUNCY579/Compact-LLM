@@ -1,0 +1,82 @@
+schema_version: "1.0"
+experiment:
+  name: halo_held_constant_compression_round_control_v2
+  compute_tier: B
+  status: EXPLORATORY_NOT_CONFIRMATORY
+protocol:
+  execution_mode: closed_loop_model_execution
+  evaluation_view_access: after_all_inference_checkpoints
+  causal_question: method_by_realized_compression_round_interaction
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/inference.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/evaluation.jsonl
+  capability_cases: rineya_significance_native_architecture_lab/results/runs/halo_capability_calibration_v2/cases.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_schedule_control_v2
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  allowed_core_ids:
+    - rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_source_base: Qwen3-0.6B
+  trust_remote_code: false
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+runtime:
+  device: cpu
+  dtype: bfloat16
+  attention_implementation: sdpa
+  decoding: manual_greedy
+  deterministic: true
+  batch_size: 1
+  max_new_tokens: 32
+  seed: 17
+  verify_query_rollback: true
+conditions:
+  - {id: B2, policy: significance, exponent: 0.0, query_conditioned: true}
+  - {id: B3, policy: significance, exponent: 1.0, query_conditioned: true}
+query:
+  mode: conditioned
+  rendering: raw_question_no_special_tokens
+  max_tokens: 64
+  probe_schedule: every_prefix_chunk_boundary_fixed_terminal_suffix
+cache:
+  retained_history_budget: 128
+  total_budget_slots: 128
+  sink_tokens: 4
+  recent_tokens: 32
+schedule:
+  design: fixed_terminal_suffix
+  # Halo calibration prompts are 424-425 tokens. These values realize
+  # approximately 6, 4, 3, 2, and 1 compression rounds per prompt.
+  prefix_chunk_tokens: [64, 96, 128, 192, 512]
+  terminal_active_tokens: 64
+  minimum_distinct_round_counts: 5
+  final_budget_definition: retained_history_budget_plus_fixed_terminal_active_tokens
+significance:
+  enabled: true
+  score_pooling: {enabled: false, width: 1}
+selection:
+  families: [R1, R3, R4]
+  maximum_eligible_clusters_per_family: 4
+  minimum_total_eligible_clusters: 8
+checkpointing:
+  resume: true
+  flush_every_cell: true
+  max_new_cells_per_invocation: null
+analysis:
+  independence_unit: immutable_cluster
+  minimum_independent_clusters: 8
+  confidence: 0.95
+  bootstrap_samples: 10000
+  randomization_samples: 100000
+  outcomes:
+    answer_accuracy: correct
+    frozen_layer_fact_exact_completion: evidence.layer_fact_exact_completion_rate
+    minimum_required_token_availability: evidence.minimum_per_layer_required_token_availability_fraction
+    complete_layer_fraction: evidence.fraction_layers_with_complete_required_token_union
+attention_prior: {enabled: false}
+memory_slots: {enabled: false, count: 0}
+controller: {enabled: false, type: none}

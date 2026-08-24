@@ -1,0 +1,94 @@
+{
+  "architecture_experiment": "F_TINY_LEARNED_SIGNIFICANCE_CONTROLLER",
+  "backbone": "FROZEN_NOT_LOADED",
+  "feature_provenance": "PRE_ANSWER_ON_POLICY_CORNERSTONE_STATE",
+  "logistic": {
+    "backbone_parameters_trainable": 0,
+    "coefficients": [
+      -0.08020794678517085,
+      0.29406137555789574,
+      0.0,
+      0.03365278768679463,
+      0.11708394169778825,
+      0.13373652180261886
+    ],
+    "converged": true,
+    "feature_names": [
+      "entropy",
+      "concentration",
+      "margin",
+      "churn",
+      "count",
+      "query_delta"
+    ],
+    "fitted_preprocessing_scalar_count": 12,
+    "intercept": -0.06565063177462613,
+    "iterations": 4,
+    "l2_penalty": 1.0,
+    "optimizer": "damped_Newton_IRLS",
+    "standardization": {
+      "fit_partition": "train_only",
+      "mean": [
+        0.4376690587765097,
+        0.20244949029821496,
+        1.0,
+        0.5569563047686482,
+        0.32224551179163063,
+        0.6584434730028187
+      ],
+      "scale": [
+        0.006892226400486382,
+        0.012023778999891998,
+        1.0,
+        0.0363121439290534,
+        0.00288589140610289,
+        0.0019512756946542542
+      ],
+      "zero_variance_feature_indices": [
+        2
+      ]
+    },
+    "trainable_parameter_count": 7,
+    "type": "l2_logistic_regression"
+  },
+  "reinforcement_learning": false,
+  "schema_version": "1.0",
+  "shallow_tree_control": {
+    "backbone_parameters_trainable": 0,
+    "feature_names": [
+      "entropy",
+      "concentration",
+      "margin",
+      "churn",
+      "count",
+      "query_delta"
+    ],
+    "internal_count": 1,
+    "leaf_count": 2,
+    "leaf_probability_smoothing": "Laplace(1.0)",
+    "learned_scalar_count": 4,
+    "max_depth": 2,
+    "min_leaf_samples": 1,
+    "node_count": 3,
+    "optimizer": "exhaustive_gini_split_search_with_deterministic_ties",
+    "root": {
+      "feature_index": 1,
+      "feature_name": "concentration",
+      "left": {
+        "positive_count": 0,
+        "probability": 0.2,
+        "sample_count": 3
+      },
+      "positive_count": 2,
+      "probability": 0.42857142857142855,
+      "right": {
+        "positive_count": 2,
+        "probability": 0.75,
+        "sample_count": 2
+      },
+      "sample_count": 5,
+      "threshold": 0.21014535357775277
+    },
+    "type": "deterministic_shallow_CART_control"
+  }
+}

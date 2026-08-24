@@ -1,0 +1,138 @@
+attention_prior:
+  enabled: false
+  lambda: 0.0
+cache:
+  compress_only_at_boundaries: true
+  compression_chunk_tokens: 128
+  final_chunk_left_resident: true
+  matched_across_all_count_controls: true
+  recent_tokens: 32
+  retained_history_budget: 128
+  sink_tokens: 4
+  total_budget_slots: 128
+conditions:
+- count_transform: 'true'
+  id: true_realized_count
+- count_transform: constant
+  id: constant_count
+- count_transform: age_derived
+  id: age_derived_count
+- count_transform: shuffled
+  id: shuffled_count
+- count_transform: wrong_token
+  id: wrong_token_count
+  shift: 1
+- count_transform: delayed
+  first_boundary_semantics: zero_count_with_ranking_floor_one
+  id: delayed_count
+- clamp_min: 1.0
+  count_transform: noisy
+  id: noisy_count
+  noise_distribution: seeded_normal
+  noise_std_fraction_of_mean: 0.1
+- count_transform: head_averaged
+  id: head_averaged_count
+controller:
+  enabled: false
+  type: none
+experiment:
+  classification: EXPLORATORY_CAUSAL_CONTROL
+  compute_tier: B
+  name: halo_closed_loop_exposure_count_causal_controls_v1
+  purpose: Test whether entry-aligned realized exposure counts causally affect Halo
+    retention beyond constant, schedule-age, identity-broken, delayed, noisy, or head-averaged
+    denominators.
+  status: NOT_RUN
+memory_slots:
+  count: 0
+  enabled: false
+model:
+  allowed_core_ids:
+  - rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  checkpoint_files:
+    chat_template: chat_template.jinja
+    config: config.json
+    core: CORE.json
+    generation_config: generation_config.json
+    tokenizer: tokenizer.json
+    tokenizer_config: tokenizer_config.json
+    weights: model.safetensors
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_architecture: Qwen3ForCausalLM
+  expected_hashes:
+    chat_template: 51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+    core: 8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b
+    generation_config: 90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    tokenizer_config: 1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+  expected_head_dim: 128
+  expected_hidden_size: 1024
+  expected_kv_heads: 8
+  expected_layers: 28
+  expected_query_heads: 16
+  expected_source_base: Qwen3-0.6B
+  expected_vocab_size: 151936
+  trust_remote_code: false
+outputs:
+  boundary_diagnostics: boundary_diagnostics/
+  boundary_evidence: boundary_evidence.jsonl
+  boundary_index: boundary_diagnostics.jsonl
+  cases: cases.jsonl
+  manifest: manifest.json
+  partial_boundary_index: boundary_diagnostics.partial.jsonl
+  partial_predictions: predictions.partial.jsonl
+  resident_positions: resident_positions/
+  resolved_config: resolved_config.yaml
+  restart_state: run_state.json
+  summary: summary.json
+  unscored_predictions: predictions.unscored.jsonl
+paths:
+  base: repository_root
+  capability_cases: rineya_significance_native_architecture_lab/results/runs/halo_capability_calibration_v2/cases.jsonl
+  evaluation: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/evaluation.jsonl
+  inference: rineya_significance_native_architecture_lab/results/benchmarks/halo_calibration_v3/inference.jsonl
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_count_causal_controls_v1
+protocol:
+  answer_key_access: after_all_inference_and_unscored_artifact
+  broad_claims: false
+  execution_mode: closed_loop_model_execution
+  inferential_statistics: false
+  pairing_unit: case_id
+query:
+  access_fairness: identical_across_all_count_controls
+  max_tokens: 64
+  mode: conditioned
+  probe_schedule: every_nonfinal_chunk_boundary
+  rendering: raw_question_no_special_tokens
+runtime:
+  attention_implementation: sdpa
+  batch_size: 1
+  decoding: manual_greedy
+  deterministic: true
+  device: cpu
+  dtype: bfloat16
+  max_new_tokens: 32
+  seed: 23
+  verify_query_rollback: true
+schema_version: '1.0'
+selection:
+  excluded_family_reason:
+    R2: full_cache_capability_gate_zero_of_eight
+  families:
+  - R1
+  - R3
+  - R4
+  maximum_eligible_clusters_per_family: 4
+  source: full_cache_correct_clusters_only
+significance:
+  enabled: true
+  exponent: 1.0
+  exposure_mode: realized_event_count
+  preserve_true_counts_across_all_controls: true
+  score_pooling:
+    enabled: false
+    width: 1
+  selection_granularity: kv_head
