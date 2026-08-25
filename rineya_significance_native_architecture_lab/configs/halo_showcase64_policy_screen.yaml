@@ -1,0 +1,167 @@
+schema_version: "1.0"
+
+experiment:
+  name: halo_showcase64_cornerstone1_policy_screen
+  classification: EXPLORATORY_SCREEN
+  compute_tier: B
+  purpose: >-
+    Locate the practical limit of Cornerstone-1 selection on the 64-case
+    showcase split. The showcase-64 evaluation showed zero compression loss on
+    late-needle cases and heavy loss on early, middle, and distributed needles,
+    which is the signature of a positional recency window rather than
+    content-significance selection. These arms test that directly at matched
+    budget, sweep the normalization exponent, and map the capacity curve.
+
+protocol:
+  execution_mode: closed_loop_model_execution
+  answer_key_access: after_all_inference_and_unscored_artifact
+  inferential_statistics: false
+  broad_claims: false
+  registration: none_this_run_is_exploratory
+
+paths:
+  base: repository_root
+  model: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  tokenizer: Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze
+  prompts: Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl
+  answer_key: Rineya_Long_Context_Demo_v1/data/showcase_answer_key.jsonl
+  output_root: rineya_significance_native_architecture_lab/results/runs/halo_showcase64_policy_screen_v1
+
+model:
+  core_id: rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  allowed_core_ids:
+    - rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4
+  expected_source_base: Qwen3-0.6B
+  expected_architecture: Qwen3ForCausalLM
+  expected_layers: 28
+  expected_hidden_size: 1024
+  expected_query_heads: 16
+  expected_kv_heads: 8
+  expected_head_dim: 128
+  expected_vocab_size: 151936
+  trust_remote_code: false
+  checkpoint_files:
+    weights: model.safetensors
+    tokenizer: tokenizer.json
+    config: config.json
+    chat_template: chat_template.jinja
+    core: CORE.json
+    generation_config: generation_config.json
+    tokenizer_config: tokenizer_config.json
+  expected_hashes:
+    weights: 38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544
+    tokenizer: be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506
+    config: 2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85
+    chat_template: 51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9
+    core: 8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b
+    generation_config: 90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48
+    tokenizer_config: 1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e
+
+benchmark:
+  name: Rineya Long Context Demo showcase split (complete)
+  split: showcase
+  expected_case_count: 64
+  case_selection: complete_split_no_subsetting
+  prompt_only_during_inference: true
+  truncation: forbidden
+
+prompt:
+  rendering: chat_template
+  enable_thinking: false
+  add_generation_prompt: true
+  add_special_tokens_after_rendering: false
+
+runtime:
+  device: cpu
+  dtype: bfloat16
+  attention_implementation: sdpa
+  batch_size: 1
+  seed: 17
+  deterministic: true
+  decoding: manual_greedy
+  max_new_tokens: 24
+  verify_query_rollback: true
+
+query:
+  mode: conditioned
+  rendering: raw_question_no_special_tokens
+  max_tokens: 64
+  probe_schedule: every_nonfinal_chunk_boundary
+  access_fairness: identical_across_all_arms
+
+significance:
+  enabled: true
+  enabled_for_selection: true
+  exposure_mode: realized
+  score_pooling:
+    enabled: false
+    width: 1
+  selection_granularity: kv_head
+
+cache:
+  compression_chunk_tokens: 256
+
+# Every arm holds chunking, query access, prompt tokens, and decoding fixed.
+# `heavy` is the derived content-selected slot count: budget - sinks - recent.
+arms:
+  - id: B4_POS
+    label: positional_recency_ranking_matched_budget
+    policy: position
+    exponent: 0.0
+    budget: 256
+    sinks: 4
+    recent: 64
+    question: >-
+      Does content significance beat pure recency at identical budget? This is
+      the decisive control: if B4_POS matches B3, the selection signal is
+      contributing nothing beyond position.
+  - id: E05
+    label: exponent_one_half
+    policy: significance
+    exponent: 0.5
+    budget: 256
+    sinks: 4
+    recent: 64
+    question: Is the normalization exponent tunable between the tested e=0 and e=1?
+  - id: E20
+    label: exponent_two
+    policy: significance
+    exponent: 2.0
+    budget: 256
+    sinks: 4
+    recent: 64
+    question: Does stronger exposure normalization help or overcorrect?
+  - id: R008
+    label: narrow_recency_wide_heavy
+    policy: significance
+    exponent: 1.0
+    budget: 256
+    sinks: 4
+    recent: 8
+    question: >-
+      With 244 content-selected slots instead of 188, does significance
+      selection recover early and middle needles?
+  - id: R192
+    label: wide_recency_narrow_heavy
+    policy: significance
+    exponent: 1.0
+    budget: 256
+    sinks: 4
+    recent: 192
+    question: >-
+      With only 60 content-selected slots, does accuracy fall? If it does not,
+      recency is carrying the result.
+  - id: B512
+    label: double_budget
+    policy: significance
+    exponent: 1.0
+    budget: 512
+    sinks: 4
+    recent: 64
+    question: Where is the capacity knee? Does doubling the budget recover B0?
+
+outputs:
+  resolved_config: resolved_config.yaml
+  manifest: manifest.json
+  cases: cases.jsonl
+  summary: summary.json

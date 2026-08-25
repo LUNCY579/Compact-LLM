@@ -540,12 +540,16 @@ def _policy_for(
             pool_width=1,
             require_heavy=False,
         )
+    # `score_pool_width` stays absent from every Cornerstone-1 config, so this
+    # defaults to 1 and the isolated Cornerstone-1 path is unchanged. Screens
+    # that deliberately study contiguous-span preservation (a Cornerstone-2
+    # factor) may set it, and must report it as a separate factor.
     return SignificancePolicy(
         budget=int(cache_config["retained_history_budget"]),
         sinks=int(cache_config["sink_tokens"]),
         recent=int(cache_config["recent_tokens"]),
         count_exponent=float(condition.exponent),
-        pool_width=1,
+        pool_width=int(cache_config.get("score_pool_width", 1)),
         require_heavy=True,
         ranking_mode="position" if condition.policy == "position" else "significance",
     )

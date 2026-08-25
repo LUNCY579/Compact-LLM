@@ -1,0 +1,132 @@
+{
+  "arms": [
+    {
+      "budget": 256,
+      "exponent": 0.0,
+      "heavy": 188,
+      "id": "B4_POS",
+      "label": "positional_recency_ranking_matched_budget",
+      "policy": "position",
+      "recent": 64,
+      "sinks": 4
+    },
+    {
+      "budget": 256,
+      "exponent": 0.5,
+      "heavy": 188,
+      "id": "E05",
+      "label": "exponent_one_half",
+      "policy": "significance",
+      "recent": 64,
+      "sinks": 4
+    },
+    {
+      "budget": 256,
+      "exponent": 2.0,
+      "heavy": 188,
+      "id": "E20",
+      "label": "exponent_two",
+      "policy": "significance",
+      "recent": 64,
+      "sinks": 4
+    },
+    {
+      "budget": 256,
+      "exponent": 1.0,
+      "heavy": 244,
+      "id": "R008",
+      "label": "narrow_recency_wide_heavy",
+      "policy": "significance",
+      "recent": 8,
+      "sinks": 4
+    },
+    {
+      "budget": 256,
+      "exponent": 1.0,
+      "heavy": 60,
+      "id": "R192",
+      "label": "wide_recency_narrow_heavy",
+      "policy": "significance",
+      "recent": 192,
+      "sinks": 4
+    },
+    {
+      "budget": 512,
+      "exponent": 1.0,
+      "heavy": 444,
+      "id": "B512",
+      "label": "double_budget",
+      "policy": "significance",
+      "recent": 64,
+      "sinks": 4
+    }
+  ],
+  "benchmark": {
+    "answer_key_join_order": "opened_after_unscored_predictions_were_written",
+    "answer_key_sha256_after_inference": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "classification": "EXPLORATORY_SCREEN",
+  "completed_at": "2026-08-25T02:50:28.190590Z",
+  "config": {
+    "resolved_path": "resolved_config.yaml",
+    "sha256": "be212a5d2942f823b6acc8784ec4636bd1f0ea6ad5627185ab74efb821a7df98",
+    "source_path": "rineya_significance_native_architecture_lab/configs/halo_showcase64_policy_screen.yaml"
+  },
+  "created_at": "2026-08-25T02:16:40.450375Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "execution_mode": "closed_loop_model_execution",
+  "model": {
+    "checkpoint_aggregate_sha256": "bb6ea14775432c5de3eda200b4c09eb69a672fe8307ddffe7e89c8e5827ba477",
+    "checkpoint_files": {
+      "chat_template": {
+        "path": "chat_template.jinja",
+        "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+      },
+      "config": {
+        "path": "config.json",
+        "sha256": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85"
+      },
+      "core": {
+        "path": "CORE.json",
+        "sha256": "8317f76d375c3dc09bf0316f5f3452d5a66cba126af235050adc818d4c51d56b"
+      },
+      "generation_config": {
+        "path": "generation_config.json",
+        "sha256": "90d5f4e22a088a995712d44c519d1902acab0988a8f6087dbf73f127cf40ef48"
+      },
+      "tokenizer": {
+        "path": "tokenizer.json",
+        "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+      },
+      "tokenizer_config": {
+        "path": "tokenizer_config.json",
+        "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+      },
+      "weights": {
+        "path": "model.safetensors",
+        "sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544"
+      }
+    },
+    "id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+    "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+    "status": "VERIFIED"
+  },
+  "notes": [
+    "Selection-policy screen on the complete 64-case showcase split.",
+    "B4_POS substitutes absolute position for the significance score at identical budget.",
+    "Execution reuses run_published_core_eval.execute_condition unchanged.",
+    "Exploratory and unregistered; no confirmatory or published-family claim."
+  ],
+  "run_id": "halo_showcase64_policy_screen_v1",
+  "runtime": {
+    "attention_implementation": "sdpa",
+    "device": "cpu",
+    "manual_greedy": true,
+    "precision": "bfloat16"
+  },
+  "schema_version": "1.0",
+  "seed": 17
+}

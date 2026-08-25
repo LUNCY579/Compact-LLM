@@ -39,6 +39,9 @@ implementation and results are not evidence about Halo or this local runtime.
 | Broad Halo confirmatory protocol | `DRAFT_NOT_REGISTERED`; `NOT_RUN` | local endpoint-validation registration is narrower and does not register this protocol |
 | Halo bounded mini evaluation | `PASS` execution; `NO_MEASURABLE_GAIN` descriptively | 3 fixed exploratory cases; no inferential statistics |
 | Halo complete showcase-64 evaluation | `PASS` execution; B3-over-B2 `NULL_AT_CLUSTER_LEVEL` | all 64 showcase cases; B0 30/64, B3 19/64, B2 17/64; 16-pack contrast `p=1.0`; unregistered |
+| Cornerstone-1 implementation-theory audit | `C_EQUALS_ARRIVAL_CHUNK_AGE` | uniform scalar exposure + one scoring event per boundary; at most 5 distinct `C` values per run |
+| Halo showcase-64 selection-policy screen | significance vs position `NULL`; recency-budget contrast `p=0.0078` | 6 arms x 64 cases; `B4_POS` 22/64 vs B3 19/64 cluster `p=1.0`; `R192` 25/64 vs `R008` 14/64 |
+| Halo cohort-ranking and hybrid screens | `DIRECTIONAL_NOT_SIGNIFICANT`; hybrid `NOT_SUPPORTED` | `CMEAN` 22/64 restores early needles to B0 level; `HYB192` 22/64 did not compose |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -439,6 +442,8 @@ confirmation.
 - [EVIDENCE_ENDPOINT_CALIBRATION.md](EVIDENCE_ENDPOINT_CALIBRATION.md)
 - [ENDPOINT_VALIDATION_V2_RESULT.md](ENDPOINT_VALIDATION_V2_RESULT.md)
 - [SHOWCASE64_EVAL_REPORT.md](SHOWCASE64_EVAL_REPORT.md)
+- [IMPLEMENTATION_THEORY_AUDIT.md](IMPLEMENTATION_THEORY_AUDIT.md)
+- [POLICY_SCREEN_REPORT.md](POLICY_SCREEN_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
 - [ATTENTION_PRIOR_QUALITY_REPORT.md](ATTENTION_PRIOR_QUALITY_REPORT.md)

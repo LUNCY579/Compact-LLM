@@ -1,0 +1,222 @@
+{
+  "answer_key_opened_only_after_all_inference": true,
+  "arms": {
+    "B4_POS": {
+      "budget": 256,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 11
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 0
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 11
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 0
+        }
+      },
+      "cases": 64,
+      "correct_cases": 22,
+      "exact_accuracy": 0.34375,
+      "exponent": 0.0,
+      "heavy_slots": 188,
+      "label": "positional_recency_ranking_matched_budget",
+      "median_resident_after_prefill": 398,
+      "median_total_persistent_bytes": 48745984,
+      "policy": "position",
+      "question": "Does content significance beat pure recency at identical budget? This is the decisive control: if B4_POS matches B3, the selection signal is contributing nothing beyond position.",
+      "recent": 64,
+      "sinks": 4,
+      "total_inference_wall_seconds": 261.7192761999868
+    },
+    "B512": {
+      "budget": 512,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 8
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 3
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 9
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 6
+        }
+      },
+      "cases": 64,
+      "correct_cases": 26,
+      "exact_accuracy": 0.40625,
+      "exponent": 1.0,
+      "heavy_slots": 444,
+      "label": "double_budget",
+      "median_resident_after_prefill": 654,
+      "median_total_persistent_bytes": 78761984,
+      "policy": "significance",
+      "question": "Where is the capacity knee? Does doubling the budget recover B0?",
+      "recent": 64,
+      "sinks": 4,
+      "total_inference_wall_seconds": 406.1511691999913
+    },
+    "E05": {
+      "budget": 256,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 3
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 2
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 10
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 1
+        }
+      },
+      "cases": 64,
+      "correct_cases": 16,
+      "exact_accuracy": 0.25,
+      "exponent": 0.5,
+      "heavy_slots": 188,
+      "label": "exponent_one_half",
+      "median_resident_after_prefill": 398,
+      "median_total_persistent_bytes": 48025600,
+      "policy": "significance",
+      "question": "Is the normalization exponent tunable between the tested e=0 and e=1?",
+      "recent": 64,
+      "sinks": 4,
+      "total_inference_wall_seconds": 234.09757189999073
+    },
+    "E20": {
+      "budget": 256,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 6
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 2
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 9
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 4
+        }
+      },
+      "cases": 64,
+      "correct_cases": 21,
+      "exact_accuracy": 0.328125,
+      "exponent": 2.0,
+      "heavy_slots": 188,
+      "label": "exponent_two",
+      "median_resident_after_prefill": 398,
+      "median_total_persistent_bytes": 48025600,
+      "policy": "significance",
+      "question": "Does stronger exposure normalization help or overcorrect?",
+      "recent": 64,
+      "sinks": 4,
+      "total_inference_wall_seconds": 236.86563630000455
+    },
+    "R008": {
+      "budget": 256,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 5
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 1
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 7
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 1
+        }
+      },
+      "cases": 64,
+      "correct_cases": 14,
+      "exact_accuracy": 0.21875,
+      "exponent": 1.0,
+      "heavy_slots": 244,
+      "label": "narrow_recency_wide_heavy",
+      "median_resident_after_prefill": 398,
+      "median_total_persistent_bytes": 48025600,
+      "policy": "significance",
+      "question": "With 244 content-selected slots instead of 188, does significance selection recover early and middle needles?",
+      "recent": 8,
+      "sinks": 4,
+      "total_inference_wall_seconds": 403.5243573999869
+    },
+    "R192": {
+      "budget": 256,
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 10
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 4
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 9
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 2
+        }
+      },
+      "cases": 64,
+      "correct_cases": 25,
+      "exact_accuracy": 0.390625,
+      "exponent": 1.0,
+      "heavy_slots": 60,
+      "label": "wide_recency_narrow_heavy",
+      "median_resident_after_prefill": 398,
+      "median_total_persistent_bytes": 48025600,
+      "policy": "significance",
+      "question": "With only 60 content-selected slots, does accuracy fall? If it does not, recency is carrying the result.",
+      "recent": 192,
+      "sinks": 4,
+      "total_inference_wall_seconds": 406.02301140001873
+    }
+  },
+  "benchmark_scope": "complete 64-case Rineya Long Context Demo showcase split",
+  "classification": "EXPLORATORY_SCREEN",
+  "inferential_statistics": null,
+  "interpretation_limits": [
+    "Exploratory screen; no endpoint was frozen and no advance gate was declared.",
+    "Scenario packs contain four correlated variants; 64 rows are not 64 independent observations.",
+    "Arms are compared descriptively; no multiplicity control is applied across arms.",
+    "Results describe Halo 1.2.0 on one suite at one chunk schedule only."
+  ],
+  "model_scope": "Rineya Halo 1.2.0 devfreeze only",
+  "registration": "NONE_EXPLORATORY_UNREGISTERED",
+  "schema_version": "1.0",
+  "status": "PASS"
+}
