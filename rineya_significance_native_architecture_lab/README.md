@@ -42,6 +42,7 @@ implementation and results are not evidence about Halo or this local runtime.
 | Cornerstone-1 implementation-theory audit | `C_EQUALS_ARRIVAL_CHUNK_AGE` | uniform scalar exposure + one scoring event per boundary; at most 5 distinct `C` values per run |
 | Halo showcase-64 selection-policy screen | significance vs position `NULL`; recency-budget contrast `p=0.0078` | 6 arms x 64 cases; `B4_POS` 22/64 vs B3 19/64 cluster `p=1.0`; `R192` 25/64 vs `R008` 14/64 |
 | Halo cohort-ranking and hybrid screens | `DIRECTIONAL_NOT_SIGNIFICANT`; hybrid `NOT_SUPPORTED` | `CMEAN` 22/64 restores early needles to B0 level; `HYB192` 22/64 did not compose |
+| Halo gated-exposure screen (audit repair P1) | mechanism `SUPPORTED`; H2 `NOT_SUPPORTED_SPECIFICITY_FAILED` | `C` made head-specific and content-derived; true gate vs eligible-pool-shuffled gate identical on 64/64, cluster `p=1.0` |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -444,6 +445,7 @@ confirmation.
 - [SHOWCASE64_EVAL_REPORT.md](SHOWCASE64_EVAL_REPORT.md)
 - [IMPLEMENTATION_THEORY_AUDIT.md](IMPLEMENTATION_THEORY_AUDIT.md)
 - [POLICY_SCREEN_REPORT.md](POLICY_SCREEN_REPORT.md)
+- [GATED_EXPOSURE_REPORT.md](GATED_EXPOSURE_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
 - [ATTENTION_PRIOR_QUALITY_REPORT.md](ATTENTION_PRIOR_QUALITY_REPORT.md)
