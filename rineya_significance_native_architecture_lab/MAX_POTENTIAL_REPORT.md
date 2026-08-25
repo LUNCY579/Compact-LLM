@@ -1,5 +1,46 @@
 # Cornerstone-1 maximum potential: a bounded answer
 
+> ## RETRACTED AND SUPERSEDED — read this first
+>
+> **The central conclusion of this report was wrong, because of a bug in my own
+> oracle.** It is superseded by
+> [`halo_showcase64_oracle_bounds_v2`](results/runs/halo_showcase64_oracle_bounds_v2).
+>
+> `run_showcase64_oracle_bounds.py` located answer positions by matching individual
+> sub-tokens and then discarding any occurring more than `RARE_MAX = 3` times. That
+> filter was imported from an AUC diagnostic, where it correctly stopped common
+> sub-words contaminating a rank statistic. Applying it to the oracle was a mistake I
+> did not re-justify.
+>
+> Measured consequence: **the v1 oracle protected nothing on 20 of 64 cases** and ran
+> as plain B3 there. All 20 contain the gold answer literally in the context; their
+> sub-tokens recur 4-9 times precisely because these tasks track one named entity
+> through a long document — exactly what the filter removed
+> (`'Faris Dane'` -> `' Far'`x7, `'is'`x7, `' Dane'`x7).
+>
+> A corrected span-matching oracle fires on **64/64** and scores **32/64**:
+>
+> | | v1 (invalid) | v2 (corrected) |
+> |---|---:|---:|
+> | oracle upper bound | 25/64 | **32/64** |
+> | anti-oracle lower bound | 14/64 | **9/64** |
+> | selection dynamic range | 11 | **23** (23W/0L, cluster `p=0.0039`) |
+> | gap vs shipped B3 | +6 | **+13** (13W/0L, cluster `p=0.0156`) |
+> | residual gap vs full cache | +5 unreachable | **none** (32 vs 30, `p=0.6875`) |
+>
+> **Both headline claims below are therefore false and are withdrawn:**
+> - "the oracle ceiling is already matched by a positional policy" — it is not;
+>   `ORACLE_SPAN` 32 vs `R192` 25 (6 clusters better / 2 worse).
+> - "a ~5-answer residual gap is not closable by any selection policy" — there is no
+>   residual gap. Perfect selection reaches full-cache accuracy and slightly exceeds it.
+>
+> What survives: the signal measurements in section 3, the efficiency figures in
+> section 4, and the axis-by-axis scope statements. What inverts is the strategic
+> conclusion — **all of the recoverable headroom is in selection (GAP A), and it is
+> 13 answers, cluster-significant.** Ledger rows `N-057` and `N-058` are retracted;
+> see `N-062`-`N-064`.
+
+
 Run: [`halo_showcase64_oracle_bounds_v1`](results/runs/halo_showcase64_oracle_bounds_v1)
 Classification: `ORACLE_BOUND_NOT_A_POLICY`. Halo 1.2.0, complete 64-case showcase split.
 

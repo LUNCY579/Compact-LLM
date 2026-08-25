@@ -1,0 +1,22 @@
+{
+  "benchmark": {
+    "answer_key_access": "opened_before_inference_by_design_oracle_arms",
+    "answer_key_sha256": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "classification": "ORACLE_BOUND_NOT_A_POLICY",
+  "completed_at": "2026-08-25T23:21:58.583549Z",
+  "created_at": "2026-08-25T23:11:35.452352Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "notes": [
+    "Corrects a rarity filter that silently disabled the v1 oracle on 20/64 cases.",
+    "Answer positions located by contiguous token-span match, no frequency threshold.",
+    "No file under src/ was modified."
+  ],
+  "run_id": "halo_showcase64_oracle_bounds_v2",
+  "schema_version": "1.0",
+  "seed": 17,
+  "supersedes": "halo_showcase64_oracle_bounds_v1"
+}
