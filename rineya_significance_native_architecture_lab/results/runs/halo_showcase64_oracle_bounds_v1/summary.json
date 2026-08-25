@@ -1,0 +1,105 @@
+{
+  "arms": {
+    "ANTI_ORACLE": {
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 2
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 2
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 10
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 0
+        }
+      },
+      "cases": 64,
+      "correct_cases": 14,
+      "exact_accuracy": 0.21875,
+      "label": "answer_tokens_ranked_last_lower_bound",
+      "oracle_informed": true
+    },
+    "ORACLE_KEEP": {
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 5
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 2
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 10
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 8
+        }
+      },
+      "cases": 64,
+      "correct_cases": 25,
+      "exact_accuracy": 0.390625,
+      "label": "answer_tokens_ranked_first_upper_bound",
+      "oracle_informed": true
+    },
+    "RANDOM": {
+      "by_needle_profile": {
+        "distributed": {
+          "cases": 16,
+          "correct_cases": 7
+        },
+        "early": {
+          "cases": 16,
+          "correct_cases": 0
+        },
+        "late": {
+          "cases": 16,
+          "correct_cases": 9
+        },
+        "middle": {
+          "cases": 16,
+          "correct_cases": 1
+        }
+      },
+      "cases": 64,
+      "correct_cases": 17,
+      "exact_accuracy": 0.265625,
+      "label": "uniform_random_ranking_no_information",
+      "oracle_informed": false
+    }
+  },
+  "benchmark_scope": "complete 64-case showcase split",
+  "cases_with_locatable_answer_tokens": 44,
+  "classification": "ORACLE_BOUND_NOT_A_POLICY",
+  "interpretation_limits": [
+    "ORACLE_KEEP and ANTI_ORACLE read the answer key during inference. They are bounds, never policies.",
+    "Neither may be cited as Halo performance or as evidence for any selection rule.",
+    "Answer positions are rare sub-token matches and may miss paraphrased evidence, so ORACLE_KEEP is a lower bound on the true oracle.",
+    "Sinks and the recent window remain protected, so the contrast isolates the heavy pool.",
+    "Scenario packs are correlated; the 16-pack unit governs any comparison."
+  ],
+  "measured_signal": {
+    "S_vs_frequency_matched_negatives_best_head_auc": 0.7178,
+    "S_vs_frequency_matched_negatives_head_mean_auc": 0.5412,
+    "note": "The score does carry answer-location signal; these bounds say what it could be worth."
+  },
+  "model_scope": "Rineya Halo 1.2.0 devfreeze only",
+  "reference_arms": {
+    "B0_full_cache": "30/64",
+    "B3_shipped": "19/64",
+    "B4_POS": "22/64",
+    "R192_best_compressed": "25/64",
+    "SUM_SHUF_shuffled_scores": "21/64"
+  },
+  "registration": "NONE_EXPLORATORY_UNREGISTERED",
+  "schema_version": "1.0",
+  "status": "PASS"
+}

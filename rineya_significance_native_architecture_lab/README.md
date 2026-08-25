@@ -44,6 +44,7 @@ implementation and results are not evidence about Halo or this local runtime.
 | Halo cohort-ranking and hybrid screens | `DIRECTIONAL_NOT_SIGNIFICANT`; hybrid `NOT_SUPPORTED` | `CMEAN` 22/64 restores early needles to B0 level; `HYB192` 22/64 did not compose |
 | Halo gated-exposure screen (audit repair P1) | mechanism `SUPPORTED`; H2 `NOT_SUPPORTED_SPECIFICITY_FAILED` | `C` made head-specific and content-derived; true gate vs eligible-pool-shuffled gate identical on 64/64, cluster `p=1.0` |
 | Halo aggregator screen + shuffled-`S` control | shipped `S` `INERT`; P4 `DIRECTIONAL_NOT_SIGNIFICANT` | `SUM_SHUF` 21/64 vs B3 19/64 cluster `p=1.0` (44/64 predictions differ); `MAX_E0` 20/64, first arm to beat its own shuffle (`p=0.2891`) |
+| Halo oracle bounds / max-potential study | ceiling `MATCHED_BY_POSITIONAL_POLICY` | `ORACLE_KEEP` 25/64 ties `R192` 25/64 (`p=1.0`); range `ANTI_ORACLE` 14 to 25; B3 19 vs `RANDOM` 17 (`p=1.0`); best-head AUC 0.72 |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -448,6 +449,7 @@ confirmation.
 - [POLICY_SCREEN_REPORT.md](POLICY_SCREEN_REPORT.md)
 - [GATED_EXPOSURE_REPORT.md](GATED_EXPOSURE_REPORT.md)
 - [AGGREGATOR_REPORT.md](AGGREGATOR_REPORT.md)
+- [MAX_POTENTIAL_REPORT.md](MAX_POTENTIAL_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
 - [ATTENTION_PRIOR_QUALITY_REPORT.md](ATTENTION_PRIOR_QUALITY_REPORT.md)
