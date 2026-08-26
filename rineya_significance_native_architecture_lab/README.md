@@ -49,6 +49,7 @@ implementation and results are not evidence about Halo or this local runtime.
 | Halo GAP-A span/sink screen | pooling `DIRECTIONAL_MONOTONE`; `SPANLINK` `FAILED`; sinks `BEHAVIOURAL` | `POOL7` 26/64 vs B3 19/64 (monotone 19/21/25/26); `B0` vs `POOL7` no longer detectable (`p=0.7539`); unanswerable 0/16 -> 2/16 |
 | Published family showcase-64 (`N-009`) | phenomenon `REPLICATES 4/4`; no pooled claim | B0 28-31/64, B3 18-21/64, retention 0.57-0.66 across Halo Uncensored, Lyra, Nimbus, Pulse |
 | Halo extended pooling sweep | `DIRECTIONAL_NOISY`; best `POOL13_SINK48` 29/64 | widths 1..21 give 19/21/25/26/23/27/29 (POOL9 dips); `B0` vs best cluster `p=1.0`; held-out validation running |
+| **Held-out stability-192 validation** | **`CONFIRMED`** (preregistered, cluster `p=0.00088`) | `POOL13_SINK48` 86/192 vs shipped 59/192; ties `B0` 86/192 at `0.293x` bytes; abstention `0/48` -> `6/48` |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -455,6 +456,7 @@ confirmation.
 - [AGGREGATOR_REPORT.md](AGGREGATOR_REPORT.md)
 - [MAX_POTENTIAL_REPORT.md](MAX_POTENTIAL_REPORT.md) (§2 retracted; see v2 oracle)
 - [SPAN_SCREEN_REPORT.md](SPAN_SCREEN_REPORT.md)
+- [VALIDATION_RESULT.md](VALIDATION_RESULT.md)
 - [PUBLISHED_FAMILY_REPORT.md](PUBLISHED_FAMILY_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
