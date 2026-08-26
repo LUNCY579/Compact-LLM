@@ -1,0 +1,80 @@
+{
+  "arms": [
+    {
+      "id": "POOL1",
+      "label": "baseline_identity_gate",
+      "link": "none",
+      "pool": 1,
+      "sinks": 4
+    },
+    {
+      "id": "POOL3",
+      "label": "max_pool_width_3",
+      "link": "none",
+      "pool": 3,
+      "sinks": 4
+    },
+    {
+      "id": "POOL5",
+      "label": "max_pool_width_5",
+      "link": "none",
+      "pool": 5,
+      "sinks": 4
+    },
+    {
+      "id": "POOL7",
+      "label": "max_pool_width_7",
+      "link": "none",
+      "pool": 7,
+      "sinks": 4
+    },
+    {
+      "id": "SPANLINK",
+      "label": "word_aware_forward_propagation",
+      "link": "word",
+      "pool": 1,
+      "sinks": 4
+    },
+    {
+      "id": "SPANLINK_RAND",
+      "label": "count_matched_random_link_control",
+      "link": "random",
+      "pool": 1,
+      "sinks": 4
+    },
+    {
+      "id": "SINK48",
+      "label": "sinks_cover_system_prompt",
+      "link": "none",
+      "pool": 1,
+      "sinks": 48
+    },
+    {
+      "id": "SPAN_SINK48",
+      "label": "spanlink_plus_sink_coverage",
+      "link": "word",
+      "pool": 1,
+      "sinks": 48
+    }
+  ],
+  "benchmark": {
+    "answer_key_join_order": "opened_after_unscored_predictions_were_written",
+    "answer_key_sha256_after_inference": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "classification": "EXPLORATORY_SCREEN",
+  "completed_at": "2026-08-26T00:21:14.800796Z",
+  "created_at": "2026-08-25T23:38:38.751609Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "notes": [
+    "First execution of score pooling in this lab; pool_width had never been enabled.",
+    "SPANLINK uses tokenizer word boundaries only and is budget-neutral.",
+    "SINK48 covers the system prompt containing the UNKNOWN abstention instruction at token 38.",
+    "POOL1 is an identity gate against the recorded B3 result."
+  ],
+  "run_id": "halo_showcase64_span_screen_v1",
+  "schema_version": "1.0",
+  "seed": 17
+}

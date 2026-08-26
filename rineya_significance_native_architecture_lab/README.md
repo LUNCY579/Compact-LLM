@@ -46,6 +46,7 @@ implementation and results are not evidence about Halo or this local runtime.
 | Halo aggregator screen + shuffled-`S` control | shipped `S` `INERT`; P4 `DIRECTIONAL_NOT_SIGNIFICANT` | `SUM_SHUF` 21/64 vs B3 19/64 cluster `p=1.0` (44/64 predictions differ); `MAX_E0` 20/64, first arm to beat its own shuffle (`p=0.2891`) |
 | Halo oracle bounds v1 | `RETRACTED_INSTRUMENTATION_ERROR` | `RARE_MAX=3` filter disabled the oracle on 20/64 cases; bound invalid |
 | Halo oracle bounds v2 (corrected) | selection gap `13 ANSWERS`, cluster `p=0.0156` | `ORACLE_SPAN` 32/64 vs `ANTI_SPAN` 9/64 (`p=0.0039`); no residual gap vs B0 30/64 (`p=0.6875`) |
+| Halo GAP-A span/sink screen | pooling `DIRECTIONAL_MONOTONE`; `SPANLINK` `FAILED`; sinks `BEHAVIOURAL` | `POOL7` 26/64 vs B3 19/64 (monotone 19/21/25/26); `B0` vs `POOL7` no longer detectable (`p=0.7539`); unanswerable 0/16 -> 2/16 |
 | Tier-A synthetic/open-loop run | `INVALID_OR_CONFOUNDED` | config/execution mismatch; machinery audit only |
 | GPU confirmation | `NOT_RUN` | no evidence |
 
@@ -451,6 +452,7 @@ confirmation.
 - [GATED_EXPOSURE_REPORT.md](GATED_EXPOSURE_REPORT.md)
 - [AGGREGATOR_REPORT.md](AGGREGATOR_REPORT.md)
 - [MAX_POTENTIAL_REPORT.md](MAX_POTENTIAL_REPORT.md) (§2 retracted; see v2 oracle)
+- [SPAN_SCREEN_REPORT.md](SPAN_SCREEN_REPORT.md)
 - [R7_V2_REPORT.md](R7_V2_REPORT.md)
 - [HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md](HETEROGENEOUS_BUDGET_QUALITY_SCREEN.md)
 - [ATTENTION_PRIOR_QUALITY_REPORT.md](ATTENTION_PRIOR_QUALITY_REPORT.md)
