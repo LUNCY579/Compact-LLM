@@ -1,0 +1,99 @@
+{
+  "arms": {
+    "POOL13_POS": {
+      "cases": 192,
+      "correct_cases": 81,
+      "exact_accuracy": 0.421875,
+      "from_reference_run": false,
+      "unanswerable": {
+        "cases": 48,
+        "correct_cases": 12
+      }
+    },
+    "POOL13_RANDOM": {
+      "cases": 192,
+      "correct_cases": 62,
+      "exact_accuracy": 0.3229166666666667,
+      "from_reference_run": false,
+      "unanswerable": {
+        "cases": 48,
+        "correct_cases": 21
+      }
+    },
+    "POOL13_SHUF": {
+      "cases": 192,
+      "correct_cases": 71,
+      "exact_accuracy": 0.3697916666666667,
+      "from_reference_run": false,
+      "unanswerable": {
+        "cases": 48,
+        "correct_cases": 18
+      }
+    },
+    "POOL13_SINK48": {
+      "cases": 192,
+      "correct_cases": 86,
+      "exact_accuracy": 0.4479166666666667,
+      "from_reference_run": true,
+      "unanswerable": {
+        "cases": 48,
+        "correct_cases": 6
+      }
+    }
+  },
+  "cases": 192,
+  "classification": "SPECIFICITY_CONTROL_PREREGISTERED_PLAN",
+  "configuration": {
+    "budget": 256,
+    "pool_width": 13,
+    "recent": 64,
+    "sinks": 48
+  },
+  "interpretation_limits": [
+    "One primary contrast declared before inference; everything else descriptive.",
+    "A null here does not weaken N-071/N-072, which compare against the shipped baseline.",
+    "It does determine whether the gain may be attributed to the significance matrix at all.",
+    "Reference arm POOL13_SINK48 comes from the validation run, same split, same protocol, different process."
+  ],
+  "packs": 48,
+  "primary_result": {
+    "case_losses": 17,
+    "case_wins": 32,
+    "cluster_exact_two_sided_p": 0.21003961563110352,
+    "comparison": "POOL13_SINK48 vs POOL13_SHUF",
+    "direction": "favours_POOL13_SINK48",
+    "packs_better": 15,
+    "packs_tied": 25,
+    "packs_total": 48,
+    "packs_worse": 8
+  },
+  "schema_version": "1.0",
+  "secondary_descriptive": [
+    {
+      "case_losses": 19,
+      "case_wins": 43,
+      "cluster_exact_two_sided_p": 0.043285250663757324,
+      "comparison": "POOL13_SINK48 vs POOL13_RANDOM",
+      "direction": "favours_POOL13_SINK48",
+      "packs_better": 18,
+      "packs_tied": 23,
+      "packs_total": 48,
+      "packs_worse": 7
+    },
+    {
+      "case_losses": 17,
+      "case_wins": 22,
+      "cluster_exact_two_sided_p": 1.0,
+      "comparison": "POOL13_SINK48 vs POOL13_POS",
+      "direction": "favours_neither",
+      "packs_better": 12,
+      "packs_tied": 24,
+      "packs_total": 48,
+      "packs_worse": 12
+    }
+  ],
+  "significance_score_credited": false,
+  "split": "stability_test",
+  "status": "PASS",
+  "verdict": "GAIN_IS_STRUCTURAL_SCORE_NOT_CREDITED"
+}

@@ -1,0 +1,18 @@
+{
+  "asymmetry_note": "This test can only remove credit from the significance matrix; it cannot weaken the configuration result.",
+  "credit_score_if": "p < 0.05 with the real S/C ranking ahead",
+  "declared_at": "2026-08-26T04:07:11.310864Z",
+  "independence_unit": "scenario_pack",
+  "otherwise": "attribute the confirmed gain to pooling and sink structure alone; reword N-071/N-072",
+  "packs_expected": 48,
+  "primary_contrast": "POOL13_SINK48 vs POOL13_SHUF",
+  "primary_test": "exact two-sided cluster sign test over 48 scenario packs",
+  "question": "Does the significance score contribute under pooling, or is the confirmed gain purely structural?",
+  "reference_arm_not_rerun": {
+    "POOL13_SINK48": "86/192 from halo_stability192_validation_v1"
+  },
+  "secondary_descriptive_only": [
+    "POOL13_RANDOM vs POOL13_SINK48",
+    "POOL13_POS vs POOL13_SINK48"
+  ]
+}
