@@ -1,0 +1,43 @@
+{
+  "benchmark": {
+    "answer_key_join_order": "opened_after_unscored_predictions_were_written",
+    "answer_key_sha256_after_inference": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "classification": "BOUNDED_EXPLORATORY",
+  "completed_at": "2026-08-26T02:08:58.605909Z",
+  "conditions": [
+    "B0",
+    "B3"
+  ],
+  "cores": {
+    "nimbus": {
+      "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+      "declared_status_before_this_run": "SMOKE_COMPLETE",
+      "directory": "Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+      "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "weights_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+    },
+    "pulse": {
+      "config_sha256": "2284cc1687a4f4f6e3a64a13dfcf7562e592b951afa2f91244cc7b212c9cfb85",
+      "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
+      "declared_status_before_this_run": "SMOKE_COMPLETE",
+      "directory": "Rineya_Published_Cores/Rineya-Pulse-1.6.0-devfreeze",
+      "tokenizer_sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506",
+      "weights_sha256": "2357574db5557c288f57a6b97b2761830ea265baf3c6a1c0270357a7d0eaa322"
+    }
+  },
+  "created_at": "2026-08-26T01:46:52.039287Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "notes": [
+    "First answer-level evidence for any published core other than Halo.",
+    "Every core's weight hash and CORE.json identity verified before load.",
+    "Compression semantics imported unchanged from run_published_core_eval.execute_condition."
+  ],
+  "run_id": "halo_family_showcase64_v1_part2",
+  "schema_version": "1.0",
+  "seed": 17
+}
