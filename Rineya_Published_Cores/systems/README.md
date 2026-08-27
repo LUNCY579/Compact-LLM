@@ -18,3 +18,6 @@ and `run_family_system.py` for prediction-only replay.
 
 Showcase64 was selection data. Stability192 was frozen validation. Sealed TEST
 was not run.
+
+Backed up to private Hugging Face main at commit
+`548fdc6b99205aca09326652d5ac0009fe860707`.

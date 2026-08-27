@@ -54,7 +54,7 @@ These are inference systems, not one-weight merges. Supa Core 1.7 and Baya Core
 | When (UTC) | Event | Track |
 |---|---|---|
 | complete | Supa/Baya dense paired publication + exhaustive family search | See `Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md` |
-| in progress | Hugging Face backup of System48/46/45/42 | `Rineya_Published_Cores/systems/` |
+| complete | Hugging Face backup of System48/46/45/42 | private main commit `548fdc6b99205aca09326652d5ac0009fe860707` |
 | next | Public / website copy for the named family | see [`announcement.md`](announcement.md); **do not** call Pulse 1.6 “Rineya 1.0” |
 | next | Optional sealed chat TEST (110) + RAG TEST | `not_run`; not blocking announcement |
 | next | DPO on Aegis lineage | `not_run` |

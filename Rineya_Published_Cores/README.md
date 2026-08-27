@@ -60,3 +60,7 @@ Supa and Baya were originally published under their former names with the histor
 Publish or verify the four routed frontier bundles with
 `python _publish_family_frontier.py preflight|apply|verify`. Dense cores are not
 overwritten by that transaction.
+
+Private Hugging Face backup: `Luncy1978/rineya-published-cores` main commit
+`548fdc6b99205aca09326652d5ac0009fe860707` (systems, catalogs, adapters,
+evidence, and runtime verified byte-for-byte after upload).
