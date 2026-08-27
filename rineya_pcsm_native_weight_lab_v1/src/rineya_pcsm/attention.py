@@ -69,6 +69,7 @@ class PeerAttention(nn.Module):
                 "residual/depth scales must be nonnegative and temperature positive"
             )
         self.descriptor_dimension = descriptor_dimension
+        self.residual_hidden = residual_hidden
         self.residual_scale = float(residual_scale)
         self.temperature = float(temperature)
         self.depth_penalty = float(depth_penalty)
@@ -82,6 +83,16 @@ class PeerAttention(nn.Module):
             raise TypeError("unexpected residual network")
         nn.init.zeros_(final.weight)
         nn.init.zeros_(final.bias)
+
+    def configuration(self) -> dict[str, object]:
+        return {
+            "version": "pcsm-peer-attention-v1",
+            "descriptor_dimension": self.descriptor_dimension,
+            "residual_hidden": self.residual_hidden,
+            "residual_scale": self.residual_scale,
+            "temperature": self.temperature,
+            "depth_penalty": self.depth_penalty,
+        }
 
     def forward(
         self,

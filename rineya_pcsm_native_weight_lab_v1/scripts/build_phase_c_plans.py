@@ -14,7 +14,8 @@ import torch
 from safetensors.torch import load_file
 
 from rineya_pcsm.hashing import canonical_json_hash, sha256_file
-from rineya_pcsm.manifest import atomic_write_json, utc_now
+from rineya_pcsm.integration import to_native_update_plan
+from rineya_pcsm.manifest import atomic_write_json, git_state, utc_now
 from rineya_pcsm.persistence import load_plan, save_plan
 from rineya_pcsm.real_plans import (
     PlanBuildResult,
@@ -27,6 +28,13 @@ from rineya_pcsm.topk import budget_to_k
 
 def slug_fraction(value: float) -> str:
     return f"{value:.6f}".rstrip("0").rstrip(".").replace(".", "p")
+
+
+def self_hash_valid(value: dict[str, Any], key: str) -> bool:
+    declared = value.get(key)
+    payload = dict(value)
+    payload.pop(key, None)
+    return isinstance(declared, str) and declared == canonical_json_hash(payload)
 
 
 def load_gradient(
@@ -148,6 +156,9 @@ def build_arm(
             generator_config["structural_proxy_learning_rate"]
         ),
         support_fraction=support_fraction,
+        stabilizer_lower=float(generator_config["stabilizer_bounds"][0]),
+        stabilizer_upper=float(generator_config["stabilizer_bounds"][1]),
+        topk_ste_temperature=float(generator_config["topk_ste_temperature"]),
     )
     return result.plan, result.trace, result.attention
 
@@ -155,6 +166,7 @@ def build_arm(
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--budget-manifest", type=Path, required=True)
+    parser.add_argument("--preregistration", type=Path, required=True)
     parser.add_argument("--gradient-cache", type=Path, required=True)
     parser.add_argument("--model", type=Path, required=True)
     parser.add_argument("--plan-root", type=Path, required=True)
@@ -163,7 +175,28 @@ def main() -> int:
     args = parser.parse_args()
 
     budget = json.loads(args.budget_manifest.read_text(encoding="utf-8"))
+    preregistration = json.loads(args.preregistration.read_text(encoding="utf-8"))
+    if not self_hash_valid(budget, "budget_manifest_sha256"):
+        raise RuntimeError("Budget self-seal is invalid")
+    if not self_hash_valid(preregistration, "preregistration_sha256"):
+        raise RuntimeError("Preregistration self-seal is invalid")
+    budget_file_sha = sha256_file(args.budget_manifest)
+    preregistration_file_sha = sha256_file(args.preregistration)
+    if preregistration["budget"]["sha256"] != budget_file_sha:
+        raise RuntimeError("Preregistration does not bind the supplied budget")
     stage = budget[args.stage]
+    planned_cell_grid = [
+        {"seed": int(seed), "budget_fraction": float(fraction), "arm": str(arm)}
+        for seed in stage["seeds"]
+        for fraction in stage["budget_fractions"]
+        for arm in stage["arms"]
+        if arm != "no_update_frozen"
+    ]
+    if (
+        args.stage == "qualification"
+        and planned_cell_grid != preregistration["expected_plan_cells"]
+    ):
+        raise RuntimeError("Qualification cell grid differs from preregistration")
     base_fingerprint = str(budget["base_model"]["weight_sha256"])
     config_fingerprint = str(budget["base_model"]["config_sha256"])
     if sha256_file(args.model / "model.safetensors") != base_fingerprint:
@@ -190,6 +223,59 @@ def main() -> int:
     )
     if meta_gradient.shape != weights[target].shape:
         raise RuntimeError("Gradient/target shapes differ")
+    cache_files = {
+        section: {
+            "manifest_sha256": sha256_file(args.gradient_cache / f"{section}.json"),
+            "tensor_sha256": sha256_file(
+                args.gradient_cache / f"{section}.safetensors"
+            ),
+            "manifest_self_sha256": preregistration["gradient_cache"][section][
+                "manifest_self_sha256"
+            ],
+            "row_ids": preregistration["gradient_cache"][section]["row_ids"],
+        }
+        for section in ("meta_train", "mask_cal")
+    }
+    for section, record in cache_files.items():
+        frozen = preregistration["gradient_cache"][section]
+        if (
+            record["manifest_sha256"] != frozen["manifest"]["sha256"]
+            or record["tensor_sha256"] != frozen["tensor"]["sha256"]
+        ):
+            raise RuntimeError(f"Preregistered {section} cache differs")
+
+    provenance = {
+        "preregistration_file_sha256": preregistration_file_sha,
+        "preregistration_self_sha256": preregistration["preregistration_sha256"],
+        "budget_file_sha256": budget_file_sha,
+        "budget_self_sha256": budget["budget_manifest_sha256"],
+        "sample_manifest_sha256": preregistration["sample_manifest"]["sha256"],
+        "split_manifest_sha256": preregistration["split_manifest"]["sha256"],
+        "model_weight_sha256": base_fingerprint,
+        "model_config_sha256": config_fingerprint,
+        "tokenizer_sha256": preregistration["model"]["tokenizer_sha256"],
+        "gradient_cache": cache_files,
+        "target": target,
+        "role": "mlp.down_proj",
+        "expected_plan_cells_sha256": canonical_json_hash(
+            preregistration["expected_plan_cells"]
+        ),
+    }
+    planner_access_log = [
+        {
+            "event": "cache_access",
+            "purpose": "META_TRAIN gradient cache",
+            "split": "train",
+            "sealed": False,
+        },
+        {
+            "event": "cache_access",
+            "purpose": "MASK_CAL gradient cache",
+            "split": "train",
+            "sealed": False,
+        },
+    ]
+    planner_access_log_sha = canonical_json_hash(planner_access_log)
 
     arms = [arm for arm in stage["arms"] if arm != "no_update_frozen"]
     records: list[dict[str, Any]] = []
@@ -197,12 +283,20 @@ def main() -> int:
         partial = json.loads(args.result.read_text(encoding="utf-8"))
         if (
             partial.get("status") == "running"
+            and partial.get("schema_version") == "2.0"
             and partial.get("stage") == args.stage
             and partial.get("base_fingerprint") == base_fingerprint
+            and partial.get("provenance") == provenance
         ):
             records = list(partial.get("records", []))
     completed_keys: set[tuple[int, float, str]] = set()
+    expected_plan_keys = {
+        (int(cell["seed"]), float(cell["budget_fraction"]), str(cell["arm"]))
+        for cell in planned_cell_grid
+    }
     for record in records:
+        if not self_hash_valid(record, "record_sha256"):
+            raise RuntimeError("Partial plan record self-seal is invalid")
         key = (
             int(record["seed"]),
             float(record["budget_fraction"]),
@@ -218,6 +312,8 @@ def main() -> int:
         ):
             raise RuntimeError(f"Partial plan artifact mismatch: {key}")
         completed_keys.add(key)
+    if not completed_keys.issubset(expected_plan_keys):
+        raise RuntimeError("Partial result contains a noncanonical plan cell")
     for seed in stage["seeds"]:
         for fraction in stage["budget_fractions"]:
             k = budget_to_k(weights[target].numel(), float(fraction))
@@ -252,6 +348,7 @@ def main() -> int:
                 tensor_path = destination / "tensors.safetensors"
                 manifest_path = destination / "plan.json"
                 entry = plan.entries[0]
+                native_plan = to_native_update_plan(plan)
                 selected_scales = entry.stabilizer.reshape(-1).index_select(
                     0, entry.flat_indices
                 )
@@ -264,6 +361,8 @@ def main() -> int:
                     "plan_directory": str(destination.resolve()),
                     "plan_manifest_sha256": sha256_file(manifest_path),
                     "plan_tensor_sha256": sha256_file(tensor_path),
+                    "plan_hash": native_plan.plan_hash,
+                    "support_hash": native_plan.support_hash,
                     "support_stats": plan.support_stats(),
                     "selected_scale_distribution": {
                         "minimum": float(selected_scales.min()),
@@ -279,28 +378,73 @@ def main() -> int:
                     "metadata": dict(plan.metadata),
                     "attention": attention,
                     "calibration_trace": list(trace),
+                    "generator_architecture_sha256": canonical_json_hash(
+                        dict(entry.generator_config)
+                    ),
+                    "generator_parameter_count": int(
+                        plan.metadata.get("generator_parameter_count", 0)
+                    ),
+                    "attention_architecture_sha256": canonical_json_hash(
+                        plan.metadata.get("attention_config", {})
+                    ),
+                    "attention_parameter_count": int(
+                        plan.metadata.get("attention_parameter_count", 0)
+                    ),
+                    "total_generator_capacity": int(
+                        plan.metadata.get("generator_parameter_count", 0)
+                    )
+                    + int(plan.metadata.get("attention_parameter_count", 0)),
+                    "meta_compute": {
+                        "calibration_steps": int(plan.metadata.get("steps", 0)),
+                        "backward_count": int(plan.metadata.get("steps", 0)),
+                        "trace_length": len(trace),
+                        "meta_train": cache_files["meta_train"],
+                        "mask_cal": cache_files["mask_cal"],
+                    },
+                    "preregistration_file_sha256": preregistration_file_sha,
                     "elapsed_seconds": time.perf_counter() - started,
                 }
+                if arm == "layer_shuffled_peer_pcsm":
+                    expected_permutation = preregistration["layer_depth_permutations"][
+                        str(seed)
+                    ]
+                    actual_mapping = plan.metadata.get("layer_depth_assignment")
+                    if (
+                        actual_mapping != expected_permutation["mapping"]
+                        or plan.metadata.get("layer_depth_assignment_sha256")
+                        != expected_permutation["mapping_sha256"]
+                        or not plan.metadata.get("layer_depth_assignment_nonidentity")
+                    ):
+                        raise RuntimeError("Layer permutation evidence mismatch")
+                    record["layer_depth_permutation"] = expected_permutation
                 record["record_sha256"] = canonical_json_hash(record)
                 records.append(record)
                 atomic_write_json(
                     args.result,
                     {
-                        "schema_version": "1.0",
+                        "schema_version": "2.0",
                         "status": "running",
                         "updated_at_utc": utc_now(),
                         "base_fingerprint": base_fingerprint,
                         "stage": args.stage,
+                        "provenance": provenance,
+                        "git": git_state(Path(__file__).resolve().parents[2]),
+                        "access_log": planner_access_log,
+                        "access_log_sha256": planner_access_log_sha,
                         "records": records,
                         "sealed_test_read": False,
                     },
                 )
     result = {
-        "schema_version": "1.0",
+        "schema_version": "2.0",
         "status": "complete",
         "completed_at_utc": utc_now(),
         "base_fingerprint": base_fingerprint,
         "stage": args.stage,
+        "provenance": provenance,
+        "git": git_state(Path(__file__).resolve().parents[2]),
+        "access_log": planner_access_log,
+        "access_log_sha256": planner_access_log_sha,
         "records": records,
         "sealed_test_read": False,
     }

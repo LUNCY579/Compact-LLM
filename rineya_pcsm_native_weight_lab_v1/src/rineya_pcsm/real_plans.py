@@ -15,6 +15,7 @@ from .attention import PeerAttention, PeerAttentionResult
 from .calibration import first_order_loss_change
 from .descriptors import tensor_descriptor
 from .generator import LOCAL_FEATURE_NAMES, PCSMGenerator
+from .hashing import canonical_json_hash
 from .plan import PCSMPlan, TensorPlan, make_tensor_plan
 from .property_maps import PropertyMaps, aggregate_property_maps, build_property_maps
 from .randomness import derive_seed, seed_everything
@@ -39,6 +40,9 @@ class PreparedPeerContext:
     peer_descriptors: dict[str, Tensor]
     peer_maps: tuple[PropertyMaps, ...]
     attention_module: PeerAttention | None
+    target_depth: float
+    peer_depths: dict[str, float]
+    layer_depth_assignment: dict[str, int]
 
 
 def load_same_role_weights(
@@ -76,6 +80,22 @@ def _layer_depth(name: str) -> int:
     if match is None:
         raise ValueError(f"Cannot derive layer depth from parameter name: {name}")
     return int(match.group(1))
+
+
+def layer_depth_permutation(names: list[str], *, seed: int) -> dict[str, int]:
+    ordered = sorted(names)
+    generator = torch.Generator(device="cpu").manual_seed(
+        derive_seed(seed, "layer-depth-permutation")
+    )
+    permutation = torch.randperm(len(ordered), generator=generator).tolist()
+    source_depths = [_layer_depth(name) for name in ordered]
+    return dict(
+        zip(
+            ordered,
+            [source_depths[index] for index in permutation],
+            strict=True,
+        )
+    )
 
 
 def _zero_properties(shape: tuple[int, int]) -> PropertyMaps:
@@ -143,6 +163,9 @@ def _prepare_peer_context(
             peer_descriptors={},
             peer_maps=(),
             attention_module=None,
+            target_depth=depths[target_name] / maximum_depth,
+            peer_depths={},
+            layer_depth_assignment={},
         )
 
     peer_weights = {
@@ -157,12 +180,7 @@ def _prepare_peer_context(
     peer_names = sorted(peer_weights)
     descriptor_depths = {name: depths[name] for name in peer_names}
     if mode == "layer_shuffled":
-        generator = torch.Generator(device="cpu").manual_seed(
-            derive_seed(seed, "layer-depth-permutation")
-        )
-        permutation = torch.randperm(len(peer_names), generator=generator).tolist()
-        permuted_depths = [depths[peer_names[index]] for index in permutation]
-        descriptor_depths = dict(zip(peer_names, permuted_depths, strict=True))
+        descriptor_depths = layer_depth_permutation(peer_names, seed=seed)
     peer_descriptors = {
         name: tensor_descriptor(
             value,
@@ -184,6 +202,9 @@ def _prepare_peer_context(
         peer_descriptors=peer_descriptors,
         peer_maps=tuple(maps_by_name[name] for name in names),
         attention_module=attention_module,
+        target_depth=depths[target_name] / maximum_depth,
+        peer_depths={name: descriptor_depths[name] / maximum_depth for name in names},
+        layer_depth_assignment=descriptor_depths,
     )
 
 
@@ -213,7 +234,11 @@ def peer_context(
             None,
         )
     attention = prepared.attention_module(
-        target_name, prepared.target_descriptor, prepared.peer_descriptors
+        target_name,
+        prepared.target_descriptor,
+        prepared.peer_descriptors,
+        target_depth=prepared.target_depth,
+        peer_depths=prepared.peer_depths,
     )
     properties = aggregate_property_maps(
         prepared.peer_maps, attention.alphas, _matrix_shape(weights[target_name])
@@ -243,6 +268,9 @@ def calibrate_pcsm_plan(
     structural_regularizer: float = 0.0,
     structural_proxy_learning_rate: float = 0.0001,
     support_fraction: float | None = None,
+    stabilizer_lower: float = 0.25,
+    stabilizer_upper: float = 1.0,
+    topk_ste_temperature: float = 1.0,
 ) -> PlanBuildResult:
     """Calibrate generator offline using held-out first-order alignment."""
 
@@ -252,6 +280,8 @@ def calibrate_pcsm_plan(
         raise ValueError("structural_regularizer must be nonnegative")
     if structural_proxy_learning_rate <= 0:
         raise ValueError("structural_proxy_learning_rate must be positive")
+    if topk_ste_temperature <= 0:
+        raise ValueError("topk_ste_temperature must be positive")
     target = weights[target_name].float()
     if (
         calibration_gradient.shape != target.shape
@@ -267,7 +297,11 @@ def calibrate_pcsm_plan(
         seed=seed,
     )
     seed_everything(derive_seed(seed, "pcsm-generator"))
-    generator = PCSMGenerator(descriptor_dimension=descriptor_dimension)
+    generator = PCSMGenerator(
+        descriptor_dimension=descriptor_dimension,
+        lower=stabilizer_lower,
+        upper=stabilizer_upper,
+    )
     trainable = list(generator.parameters())
     if prepared.attention_module is not None:
         trainable.extend(prepared.attention_module.parameters())
@@ -291,6 +325,8 @@ def calibrate_pcsm_plan(
                 target_name,
                 prepared.target_descriptor,
                 prepared.peer_descriptors,
+                target_depth=prepared.target_depth,
+                peer_depths=prepared.peer_depths,
             )
             peer_descriptor = attention.peer_summary
             properties = aggregate_property_maps(
@@ -307,7 +343,7 @@ def calibrate_pcsm_plan(
             peer_descriptor,
             properties,
         )
-        support_ste = topk_ste(output.scores, k)
+        support_ste = topk_ste(output.scores, k, temperature=topk_ste_temperature)
         predicted = first_order_loss_change(
             meta_unit,
             cal_unit,
@@ -349,6 +385,8 @@ def calibrate_pcsm_plan(
                 target_name,
                 prepared.target_descriptor,
                 prepared.peer_descriptors,
+                target_depth=prepared.target_depth,
+                peer_depths=prepared.peer_depths,
             )
             peer_descriptor = attention.peer_summary
             properties = aggregate_property_maps(
@@ -378,6 +416,8 @@ def calibrate_pcsm_plan(
         k=k,
         peer_names=peer_names,
         attention_alphas=alphas,
+        stabilizer_lower=stabilizer_lower,
+        stabilizer_upper=stabilizer_upper,
         module_type="torch.nn.Linear",
         layer_depth=_layer_depth(target_name),
         support_fraction=support_fraction,
@@ -397,11 +437,36 @@ def calibrate_pcsm_plan(
             "attention_residual_jointly_calibrated": bool(
                 steps > 0 and prepared.attention_module is not None
             ),
+            "attention_config": (
+                {}
+                if prepared.attention_module is None
+                else prepared.attention_module.configuration()
+            ),
+            "generator_parameter_count": sum(
+                parameter.numel() for parameter in generator.parameters()
+            ),
+            "attention_parameter_count": (
+                0
+                if prepared.attention_module is None
+                else sum(
+                    parameter.numel()
+                    for parameter in prepared.attention_module.parameters()
+                )
+            ),
+            "layer_depth_assignment": prepared.layer_depth_assignment,
+            "layer_depth_assignment_sha256": canonical_json_hash(
+                prepared.layer_depth_assignment
+            ),
+            "layer_depth_assignment_nonidentity": any(
+                _layer_depth(name) != depth
+                for name, depth in prepared.layer_depth_assignment.items()
+            ),
             "structural_regularizer": structural_regularizer,
             "structural_regularizer_kind": (
                 "updated_target_normalized_row_column_energy"
             ),
             "structural_proxy_learning_rate": structural_proxy_learning_rate,
+            "topk_ste_temperature": topk_ste_temperature,
             "support_frozen_once_after_calibration": True,
         },
     )
@@ -480,6 +545,7 @@ __all__ = [
     "PlanBuildResult",
     "calibrate_pcsm_plan",
     "classical_tensor_plan",
+    "layer_depth_permutation",
     "load_same_role_weights",
     "peer_context",
     "without_stabilizer",

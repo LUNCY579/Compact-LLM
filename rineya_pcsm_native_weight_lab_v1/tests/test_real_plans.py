@@ -5,6 +5,7 @@ import torch
 from rineya_pcsm.real_plans import (
     calibrate_pcsm_plan,
     classical_tensor_plan,
+    layer_depth_permutation,
     peer_context,
     without_stabilizer,
 )
@@ -85,3 +86,27 @@ def test_classical_controls_and_stabilizer_ablation_preserve_support() -> None:
     assert torch.equal(
         ablated.entries[0].stabilizer, torch.ones_like(ablated.entries[0].stabilizer)
     )
+
+
+def test_layer_depth_permutation_is_persisted_nonidentity_bijection() -> None:
+    values = weights()
+    target = "model.layers.2.mlp.down_proj.weight"
+    peers = sorted(set(values) - {target})
+    mapping = layer_depth_permutation(peers, seed=17)
+    assert sorted(mapping) == peers
+    assert sorted(mapping.values()) == [0, 1, 3]
+    assert any(int(name.split(".")[2]) != depth for name, depth in mapping.items())
+    result = calibrate_pcsm_plan(
+        values,
+        target_name=target,
+        calibration_gradient=torch.ones_like(values[target]),
+        meta_gradient=torch.ones_like(values[target]),
+        base_fingerprint="c" * 64,
+        k=5,
+        seed=17,
+        mode="layer_shuffled",
+        steps=1,
+    )
+    assert result.plan.metadata["layer_depth_assignment"] == mapping
+    assert result.plan.metadata["layer_depth_assignment_nonidentity"] is True
+    assert any(value > 0 for value in result.attention["depth_distances"])
