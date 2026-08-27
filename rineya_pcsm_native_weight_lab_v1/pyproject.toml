@@ -1,0 +1,54 @@
+[build-system]
+requires = ["hatchling>=1.26"]
+build-backend = "hatchling.build"
+
+[project]
+name = "rineya-pcsm"
+version = "0.1.0"
+description = "Peer-conditioned stabilizer matrices for exact-support native-weight experiments"
+requires-python = ">=3.11"
+dependencies = [
+  "numpy>=2.0,<2.4",
+  "psutil>=6.1",
+  "PyYAML>=6.0",
+  "safetensors>=0.5",
+  "torch>=2.5",
+  "transformers>=4.50",
+]
+
+[project.optional-dependencies]
+dev = [
+  "mypy>=1.13",
+  "pytest>=8.3",
+  "ruff>=0.9",
+  "types-PyYAML>=6.0.12",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/rineya_pcsm"]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "integration: requires local model weights or GPU resources",
+  "slow: controlled experiment that is intentionally slower than unit tests",
+]
+
+[tool.ruff]
+line-length = 88
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF", "TRY"]
+ignore = ["TRY003"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+packages = ["rineya_pcsm"]
+
+[[tool.mypy.overrides]]
+module = ["numpy", "numpy.*"]
+follow_imports = "skip"
