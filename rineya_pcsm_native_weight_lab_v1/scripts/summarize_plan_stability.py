@@ -61,14 +61,12 @@ def main() -> int:
         )
         if key in records:
             raise RuntimeError(f"Duplicate plan cell: {key}")
-        plan = load_plan(
-            record["plan_directory"], expected_base_fingerprint=base
-        )
+        plan = load_plan(record["plan_directory"], expected_base_fingerprint=base)
         masks[key] = plan.entries[0].support_mask
         records[key] = record
 
-    by_arm_budget: dict[tuple[str, float], list[tuple[int, torch.Tensor]]] = defaultdict(
-        list
+    by_arm_budget: dict[tuple[str, float], list[tuple[int, torch.Tensor]]] = (
+        defaultdict(list)
     )
     for (seed, fraction, arm), mask in masks.items():
         by_arm_budget[(arm, fraction)].append((seed, mask))
@@ -130,7 +128,9 @@ def main() -> int:
         contributions = defaultdict(float)
         for name, alpha in zip(peer_names, alphas, strict=True):
             distance = abs(layer_index(name) - target_depth)
-            bucket = "nearest" if distance == 1 else "mid" if distance <= 7 else "distant"
+            bucket = (
+                "nearest" if distance == 1 else "mid" if distance <= 7 else "distant"
+            )
             contributions[bucket] += float(alpha)
         attention.append(
             {
@@ -166,4 +166,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-
