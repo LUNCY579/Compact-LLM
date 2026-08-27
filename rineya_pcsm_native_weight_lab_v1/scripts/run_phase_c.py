@@ -119,6 +119,13 @@ def assert_delta_valid(
         raise RuntimeError(f"Native delta audit failed for {arm}")
 
 
+def self_hash_valid(value: dict[str, Any], key: str) -> bool:
+    declared = value.get(key)
+    payload = dict(value)
+    payload.pop(key, None)
+    return isinstance(declared, str) and declared == canonical_json_hash(payload)
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--budget-manifest", type=Path, required=True)
@@ -136,6 +143,15 @@ def main() -> int:
 
     budget = json.loads(args.budget_manifest.read_text(encoding="utf-8"))
     plan_result = json.loads(args.plan_result.read_text(encoding="utf-8"))
+    if not self_hash_valid(budget, "budget_manifest_sha256"):
+        raise RuntimeError("Budget manifest self-seal is invalid")
+    if not self_hash_valid(plan_result, "result_sha256"):
+        raise RuntimeError("Plan result self-seal is invalid")
+    if any(
+        not self_hash_valid(record, "record_sha256")
+        for record in plan_result.get("records", [])
+    ):
+        raise RuntimeError("Plan result contains an invalid record self-seal")
     stage = budget[args.stage]
     base_hash = str(budget["base_model"]["weight_sha256"])
     if sha256_file(args.model / "model.safetensors") != base_hash:
@@ -151,6 +167,8 @@ def main() -> int:
     if sha256_file(sample_path) != sample_record["sha256"]:
         raise RuntimeError("Frozen sample manifest hash mismatch")
     sample_manifest = json.loads(sample_path.read_text(encoding="utf-8"))
+    if not self_hash_valid(sample_manifest, "sample_manifest_sha256"):
+        raise RuntimeError("Sample manifest self-seal is invalid")
     if (
         sha256_file(args.model / "tokenizer.json")
         != sample_manifest["tokenizer_sha256"]
