@@ -9,6 +9,7 @@ Last updated: 2026-08-27.
 
 | File | What it holds |
 |---|---|
+| [`Rineya_Published_Cores/MODEL_REGISTRY.md`](Rineya_Published_Cores/MODEL_REGISTRY.md) | Every weight artifact under its **original working label**, load-bearing adapters, arm recipes, and per-item shippability. |
 | [`comparison.md`](comparison.md) | Every eval and performance number for eight dense cores and four routed systems. |
 | [`lineage.md`](lineage.md) | Timeline, spectrum (what each core is), ancestry, donors, and train mixes. |
 | [`announcement.md`](announcement.md) | What may be named in public copy, and what must not. |
@@ -26,6 +27,34 @@ Last updated: 2026-08-27.
 
 These are inference systems, not one-weight merges. Supa Core 1.7 and Baya Core
 1.7 below remain the immutable dense dependencies that individually score 40.
+
+## Abstention-gated single-pass results (not yet recorded in the vault)
+
+Evidence under `artifacts/rineya_abstention_gate_v1/` (gitignored). Base arm is
+`nimbus_low` = Nimbus 1.6 + step200 @ 0.8125, whose dense form is Supa Core 1.7.
+**stability192 is held-out validation; showcase64 was the tuning split.**
+
+| Working label | Form | Passes | Cores | showcase64 | stability192 | p vs `nimbus_low` |
+|---|---|---:|---:|---:|---:|---:|
+| `nimbus_low` (reference) | base + adapter | 1 | 1 | 42 | 121 | — |
+| **S1 gate** | processor, normalised | **1** | **1** | **47** | **130** | **0.0490** |
+| **Rineya-Nimbus-Abstain-1.0** | dense + baked logit bias | **1** | **1** | 43 | **125** | 0.2188 |
+| Rineya-Nimbus-Dense-1.0-nobias | dense merge, ablation control | 1 | 1 | 40 | 121 | 1.0000 |
+
+Two things follow, and they change the roster:
+
+- **The single-pass gate beats the nine-pass System48 on held-out data** (130 vs
+  128) and is the only result in the family clearing p < 0.05. System48's 48/64
+  headline is a tuning-split number.
+- **`Rineya-Nimbus-Abstain-1.0` ties the three-pass System46** (125 = 125) at one
+  third the inference cost, in one directory, with weights **byte-identical to
+  Supa Core 1.7** (`962abc5b…`).
+
+Consequence: System46, Gate45 and DenseGate42 are strictly dominated and should be
+retired from the shipping roster. System48 survives only as a research upper bound.
+See [`MODEL_REGISTRY.md` §6](Rineya_Published_Cores/MODEL_REGISTRY.md) for why the
+cascades can never be collapsed into one checkpoint, and why S1 can ship as a model
+class but not as weights.
 
 ## Recorded dense cores (vault)
 
@@ -55,9 +84,16 @@ These are inference systems, not one-weight merges. Supa Core 1.7 and Baya Core
 |---|---|---|
 | complete | Supa/Baya dense paired publication + exhaustive family search | See `Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md` |
 | complete | Hugging Face backup of System48/46/45/42 | private main commit `548fdc6b99205aca09326652d5ac0009fe860707` |
+| complete | Abstention gate lab; single-pass 130/192 and a baked 125/192 checkpoint | `artifacts/rineya_abstention_gate_v1/` |
+| **next** | **Cut a third tuning split and re-select the logit bias** | Highest-value open item. Four biases tie at the showcase optimum but differ by 4 points held-out; the pure-bias ceiling is **133/192 at b=8.28**, above S1's 130, and showcase cannot find it |
+| **next** | **Promote `Rineya-Nimbus-Abstain-1.0` into the vault** | Needs only `CORE.json` + config + `modeling_abstain.py`; weights already exist as Supa Core 1.7 |
+| **next** | **Replicate the Tier 2 adapters** (`step200` above all) | Single point of failure for the entire long-context line; gitignored and unreplicated |
+| **next** | **Fix the Halo/Nimbus `showcase_hits` transposition** | Measured Halo **29** / Nimbus **30**; catalog, both `CORE.json`, `comparison.md:92-93,173,175` and `announcement.md:17,19,30` disagree. Root cause `_materialize_core.py:68` |
+| next | Retire System46 / Gate45 / DenseGate42 from the shipping roster | Strictly dominated by the single-pass gate |
 | next | Public / website copy for the named family | see [`announcement.md`](announcement.md); **do not** call Pulse 1.6 “Rineya 1.0” |
-| next | Optional sealed chat TEST (110) + RAG TEST | `not_run`; not blocking announcement |
+| next | Optional sealed chat TEST (110) + RAG TEST | `not_run`; still the only untouched split — required before any public score claim |
 | next | DPO on Aegis lineage | `not_run` |
+| later | Distil System48 into one dense model | Only honest route to collapse a cascade; low expected payoff (its +6 is p=0.109 and a 1-pass gate already exceeds it) |
 | later | Student cores | not a publish candidate yet |
 
 ---
@@ -66,6 +102,6 @@ These are inference systems, not one-weight merges. Supa Core 1.7 and Baya Core
 
 1. Materialize with `Rineya_Published_Cores/_materialize_core.py` (refuses overwrite), **or** archive the old dir under `_superseded/` then write a new versioned directory.
 2. Confirm `CORE.json` has `core_id`, timestamps, sources, and weight SHA.
-3. Add a row to the vault table above, a full section in [`lineage.md`](lineage.md), and rows in [`comparison.md`](comparison.md) for every eval that was run.
+3. Add a row to the vault table above, a row in [`MODEL_REGISTRY.md`](Rineya_Published_Cores/MODEL_REGISTRY.md) under its working label, a full section in [`lineage.md`](lineage.md), and rows in [`comparison.md`](comparison.md) for every eval that was run.
 4. Update [`announcement.md`](announcement.md) only if the core may be named in public copy.
 5. Leave unfinished adapters in [`lineage.md`](lineage.md) “not recorded cores” until merge + `CORE.json`.
