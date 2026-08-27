@@ -6,6 +6,7 @@ param(
         'Synthetic',
         'PhaseCPrepare',
         'PhaseCCache',
+        'PhaseCPreregister',
         'PhaseCPilot',
         'PhaseCQualification',
         'PhaseCGate',
@@ -75,10 +76,31 @@ function Read-JsonObject {
     return Get-Content -LiteralPath $Path -Raw | ConvertFrom-Json
 }
 
+function Assert-CommittedFile {
+    param([Parameter(Mandatory = $true)][string] $Path)
+
+    Require-File -Path $Path -Label 'Committed root-of-trust file'
+    $GitRoot = (& git -C $script:LabRootForGit rev-parse --show-toplevel).Trim()
+    if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($GitRoot)) {
+        throw 'Unable to resolve the Git root for preregistration authentication.'
+    }
+    $Resolved = (Resolve-Path -LiteralPath $Path).Path
+    $Relative = [System.IO.Path]::GetRelativePath($GitRoot, $Resolved).Replace('\', '/')
+    & git -C $GitRoot ls-files --error-unmatch -- $Relative *> $null
+    if ($LASTEXITCODE -ne 0) {
+        throw "Preregistration is not tracked at HEAD: $Relative"
+    }
+    & git -C $GitRoot diff --quiet HEAD -- $Relative
+    if ($LASTEXITCODE -ne 0) {
+        throw "Preregistration differs from committed HEAD bytes: $Relative"
+    }
+}
+
 if ([string]::IsNullOrWhiteSpace($LabRoot)) {
     $LabRoot = Join-Path $PSScriptRoot '..\..'
 }
 $LabRoot = Resolve-ExistingDirectory -Path $LabRoot -Label 'PCSM lab'
+$script:LabRootForGit = $LabRoot
 
 if ([string]::IsNullOrWhiteSpace($OriginalRepoRoot)) {
     $WorktreeRoot = Split-Path -Parent $LabRoot
@@ -158,6 +180,7 @@ try {
     $BudgetManifest = Join-Path $PhaseRoot 'budget_manifest.json'
     $GradientRoot = Join-Path $RunRoot 'cache\phase_c\gradients'
     $GradientSummary = Join-Path $PhaseRoot 'gradient_cache_summary.json'
+    $Preregistration = Join-Path $PhaseRoot 'PREREGISTRATION.json'
     $PlanRoot = Join-Path $RunRoot 'plans'
     $PilotPlans = Join-Path $PhaseRoot 'pilot_plans.json'
     $PilotRun = Join-Path $PhaseRoot 'pilot_run.json'
@@ -225,10 +248,45 @@ try {
         throw "Gradient cache is not complete (status=$($GradientStatus.status))."
     }
 
+    if ($Stage -eq 'PhaseCPreregister') {
+        Invoke-CheckedPython -PythonArguments @(
+            'scripts\freeze_phase_c_preregistration.py',
+            '--budget', $BudgetManifest,
+            '--sample-manifest', $SampleManifest,
+            '--split-manifest', $SplitManifest,
+            '--gradient-summary', $GradientSummary,
+            '--gradient-cache', $GradientRoot,
+            '--model', $BaseModel,
+            '--corpus-root', $CorpusRoot,
+            '--maximum-tokens', [string] $MaximumTokens,
+            '--output', $Preregistration
+        )
+        $Frozen = Read-JsonObject -Path $Preregistration
+        if (
+            $Frozen.schema_version -ne '2.0' -or
+            $Frozen.expected_run_cell_count -ne 200 -or
+            $Frozen.expected_plan_cell_count -ne 175 -or
+            @($Frozen.encoded_one_step_dev_by_stage.pilot).Count -ne 1 -or
+            @($Frozen.encoded_one_step_dev_by_stage.qualification).Count -ne 4 -or
+            $Frozen.maximum_tokens -ne $MaximumTokens -or
+            @($Frozen.source_files.PSObject.Properties).Count -lt 1 -or
+            @($Frozen.access_log).Count -ne 1 -or
+            $Frozen.sealed_test_read -ne $false
+        ) {
+            throw 'Preregistration did not freeze the canonical 200-run/175-plan schema-v2 grid.'
+        }
+        Write-Host 'Root of trust generated. For an official run, review and commit PREREGISTRATION.json before building any qualification plan.'
+        return
+    }
+
+    Require-File -Path $Preregistration -Label 'Committed schema-v2 preregistration root of trust'
+    Assert-CommittedFile -Path $Preregistration
+
     if ($Stage -eq 'PhaseCPilot') {
         Invoke-CheckedPython -PythonArguments @(
             'scripts\build_phase_c_plans.py',
             '--budget-manifest', $BudgetManifest,
+            '--preregistration', $Preregistration,
             '--gradient-cache', $GradientRoot,
             '--model', $BaseModel,
             '--plan-root', $PlanRoot,
@@ -238,6 +296,10 @@ try {
         Invoke-CheckedPython -PythonArguments @(
             'scripts\run_phase_c.py',
             '--budget-manifest', $BudgetManifest,
+            '--preregistration', $Preregistration,
+            '--sample-manifest', $SampleManifest,
+            '--split-manifest', $SplitManifest,
+            '--gradient-summary', $GradientSummary,
             '--plan-result', $PilotPlans,
             '--gradient-cache', $GradientRoot,
             '--corpus-root', $CorpusRoot,
@@ -259,15 +321,28 @@ try {
         Invoke-CheckedPython -PythonArguments @(
             'scripts\build_phase_c_plans.py',
             '--budget-manifest', $BudgetManifest,
+            '--preregistration', $Preregistration,
             '--gradient-cache', $GradientRoot,
             '--model', $BaseModel,
             '--plan-root', $PlanRoot,
             '--result', $QualificationPlans,
             '--stage', 'qualification'
         )
+        $PlanEvidence = Read-JsonObject -Path $QualificationPlans
+        if (
+            $PlanEvidence.schema_version -ne '2.0' -or
+            $PlanEvidence.status -ne 'complete' -or
+            @($PlanEvidence.records).Count -ne 175
+        ) {
+            throw 'Qualification planner did not produce exactly 175 complete schema-v2 plan cells.'
+        }
         Invoke-CheckedPython -PythonArguments @(
             'scripts\run_phase_c.py',
             '--budget-manifest', $BudgetManifest,
+            '--preregistration', $Preregistration,
+            '--sample-manifest', $SampleManifest,
+            '--split-manifest', $SplitManifest,
+            '--gradient-summary', $GradientSummary,
             '--plan-result', $QualificationPlans,
             '--gradient-cache', $GradientRoot,
             '--corpus-root', $CorpusRoot,
@@ -278,6 +353,14 @@ try {
             '--device', $Device,
             '--maximum-tokens', [string] $MaximumTokens
         )
+        $RunEvidence = Read-JsonObject -Path $QualificationRun
+        if (
+            $RunEvidence.schema_version -ne '2.0' -or
+            $RunEvidence.status -ne 'complete' -or
+            @($RunEvidence.records).Count -ne 200
+        ) {
+            throw 'Qualification runner did not produce exactly 200 complete schema-v2 run cells.'
+        }
         return
     }
 
@@ -288,7 +371,12 @@ try {
             'scripts\audit_phase_c_gate.py',
             '--run', $QualificationRun,
             '--plans', $QualificationPlans,
+            '--preregistration', $Preregistration,
             '--budget', $BudgetManifest,
+            '--sample-manifest', $SampleManifest,
+            '--split-manifest', $SplitManifest,
+            '--gradient-summary', $GradientSummary,
+            '--gradient-cache', $GradientRoot,
             '--output', $Gate
         )
         if ($LASTEXITCODE -notin @(0, 2)) {
@@ -303,7 +391,16 @@ try {
     if ($Stage -eq 'PhaseDGuard') {
         Require-File -Path $Gate -Label 'Phase-C advancement gate'
         Invoke-CheckedPython -PythonArguments @(
-            'scripts\train_phase_d.py', '--gate', $Gate
+            'scripts\train_phase_d.py',
+            '--gate', $Gate,
+            '--run', $QualificationRun,
+            '--plans', $QualificationPlans,
+            '--preregistration', $Preregistration,
+            '--budget', $BudgetManifest,
+            '--sample-manifest', $SampleManifest,
+            '--split-manifest', $SplitManifest,
+            '--gradient-summary', $GradientSummary,
+            '--gradient-cache', $GradientRoot
         )
         return
     }

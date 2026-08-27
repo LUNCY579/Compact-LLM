@@ -21,13 +21,14 @@ never synthesize an independent signed update.
 - Initial real target: `model.layers.14.mlp.down_proj.weight`, shape
   `1024 x 3072` (3,145,728 native coordinates)
 - Software qualification: a 98-test qualification milestone passed; after
-  additional direct gap tests landed concurrently, the fresh handoff run passed
-  **110 tests** (`110 passed in 9.40s` in the pinned development environment)
+  direct gap and schema-v2 adversarial gate tests landed, the current suite
+  passes **142/142 tests** in the pinned development environment
 - Synthetic feasibility: complete over 8 seeds, 5 budgets, and 8 required A-H
   arms; every declared decisive synthetic check passed
 - Real one-step Phase C: **RUNNING/PENDING**. The one-seed resource pilot is
-  complete and valid, but cannot advance; the full qualification plan matrix is
-  running and no confirmatory result or gate verdict exists
+  complete and valid, but cannot advance; a 54-plan schema-v1 partial artifact
+  is preserved as legacy/non-gating while schema-v2 qualification is hardened,
+  and no confirmatory result or gate verdict exists
 - Full SFT Phase D: **STOP** unless and until the pre-specified Phase-C gate
   produces `PASS_ADVANCE_TO_PHASE_D`
 
@@ -96,7 +97,9 @@ Missing same-role peers fail closed.
 | `src/rineya_pcsm/delta_audit.py` | Bitwise whole-parameter before/after audit |
 | `src/rineya_pcsm/data.py` | Grouped split construction, sealed-data policy, fail-closed tokenization |
 | `src/rineya_pcsm/real_plans.py`, `phase_c.py` | Real-model plan generation and one-step primitives |
-| `scripts/` | Split, sample, budget, cache, plan, one-step, gate, and Phase-D guard entry points |
+| `src/rineya_pcsm/phase_c_runtime.py` | Schema-stable resume, baseline reuse, and canonical unplanned-state evidence |
+| `scripts/freeze_phase_c_preregistration.py` | Immutable schema-v2 root-of-trust generator |
+| `scripts/` | Split, sample, budget, cache, preregistration, plan, one-step, gate, and Phase-D guard entry points |
 | `tests/` | Qualification and regression tests |
 | `results/synthetic/` | Raw synthetic JSON/CSV and statistical summary |
 | `results/phase_c/` | Frozen real-model setup artifacts and live status |
@@ -111,14 +114,20 @@ The required lifecycle is deliberately transactional:
 1. Load and hash the base checkpoint.
 2. Run `META_TRAIN` and `MASK_CAL` forward/backward passes without an optimizer
    step.
-3. Generate the peer-conditioned support and scale plan.
-4. Save the plan atomically; existing plan destinations are not overwritten.
-5. Discard calibration model state.
-6. Reload the byte-identical base and verify model, config, tokenizer, sample,
-   gradient-cache, plan, support, and tensor hashes.
-7. Bind only planned parameters, perform the declared update, and evaluate
+3. Generate, review, and commit `results/phase_c/PREREGISTRATION.json` before
+   qualification planning. This schema-v2 root binds the model, manifests,
+   caches, all tokenizer artifacts, encoded dev token/label hashes, source tree,
+   200 run cells, 175 plan cells, and five nonidentity layer-depth mappings.
+4. Generate the peer-conditioned support and scale plans from that exact root.
+5. Save plans atomically; existing destinations are verified rather than
+   overwritten.
+6. Discard calibration model state.
+7. Reload the byte-identical base and verify model, config, tokenizer, sample,
+   split, gradient summary/cache, preregistration, plan, support, source, and
+   tensor hashes.
+8. Bind only planned parameters, perform the declared update, and evaluate
    held-out `ONE_STEP_DEV` examples.
-8. Reject the run if any undeclared native coordinate changed by even one bit.
+9. Reject the run if any undeclared native coordinate changes by even one bit.
 
 For the first real experiment, support is generated once and frozen. Therefore
 the reported support union equals the declared K. Dynamic masks are outside the
@@ -167,6 +176,28 @@ the checked-in evidence):
   --statistics-seed 20260826
 ```
 
+For the official Phase-C evidence tree, freeze the root of trust only after the
+gradient summary is complete and before any schema-v2 plan:
+
+```powershell
+& $RuntimePython scripts\freeze_phase_c_preregistration.py `
+  --budget results\phase_c\budget_manifest_v4.json `
+  --sample-manifest results\phase_c\sample_manifest.json `
+  --split-manifest results\phase_c\split_manifest.json `
+  --gradient-summary results\phase_c\gradient_cache_summary.json `
+  --gradient-cache cache\phase_c\gradients `
+  --model $env:PCSM_BASE_MODEL `
+  --corpus-root $env:PCSM_CORPUS_ROOT `
+  --maximum-tokens 40960 `
+  --output results\phase_c\PREREGISTRATION.json
+```
+
+Review the generated hash tables and then commit that exact file. The gate
+finds the last commit that changed the preregistration, proves that commit is an
+ancestor of the current `HEAD`, and proves the working bytes equal that committed
+blob. Later code/docs commits therefore do not invalidate an unchanged root;
+merely generating an uncommitted file is still insufficient.
+
 The PowerShell driver exposes each fail-closed stage and keeps outputs under an
 explicit run root:
 
@@ -179,6 +210,17 @@ $RunRoot = Join-Path $Lab 'results\reproduction\phase-c-001'
 & .\scripts\reproduce\Invoke-PCSMReproduction.ps1 `
   -Stage PhaseCCache -RunRoot $RunRoot -Device cuda
 
+& .\scripts\reproduce\Invoke-PCSMReproduction.ps1 `
+  -Stage PhaseCPreregister -RunRoot $RunRoot
+```
+
+For an official qualification, inspect and commit the generated
+`PREREGISTRATION.json` before continuing. The planner now requires
+`--preregistration`; the runner requires `--preregistration`,
+`--split-manifest`, and `--gradient-summary` in addition to its prior inputs.
+The driver supplies all of them explicitly.
+
+```powershell
 & .\scripts\reproduce\Invoke-PCSMReproduction.ps1 `
   -Stage PhaseCPilot -RunRoot $RunRoot -Device cuda
 ```
@@ -194,7 +236,9 @@ Only a valid resource pilot permits the expensive qualification matrix:
 ```
 
 `PhaseDGuard` is intentionally non-runnable without a passed gate and still
-requires a separate reviewed Phase-D implementation milestone after a pass.
+requires a separate reviewed Phase-D implementation milestone after a pass. It
+accepts the full run/plan/preregistration/manifest/cache chain and re-audits it;
+an isolated gate JSON is never sufficient authorization.
 
 ## Real Phase-C scope
 
@@ -211,6 +255,13 @@ The confirmatory one-step matrix uses:
 - the same checkpoint, examples, K, optimizer, LR grid, tokenization, and
   evaluation budget for each paired cell;
 - actual held-out NLL after one native update, not score correlation alone.
+
+The frozen Cartesian grid has exactly `5 seeds x 5 budgets x 8 arms = 200`
+logical run cells. The frozen arm has no plan, so the exact plan grid is
+`5 x 5 x 7 = 175` cells. The runner evaluates one deterministic no-update
+baseline once and clones that self-sealed evidence into the 25 logical baseline
+cells; every sparse arm still reloads its own byte-verified base. Reuse changes
+compute cost only, never the pre-registered output schema or statistical grid.
 
 The decisive effect is
 `coordinate_shuffled_loss - real_peer_loss`; positive values favor real peers.

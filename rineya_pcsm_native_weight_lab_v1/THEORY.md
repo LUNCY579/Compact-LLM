@@ -325,16 +325,59 @@ directory and atomic rename. Existing destinations are refused. Loading rejects
 missing or extra files, wrong base identity, malformed fields, tensor hash
 mismatch, mask hash mismatch, non-binary masks, or invalid scales.
 
-The workflow is:
+Schema-v2 qualification adds a committed root above individual plans.
+`PREREGISTRATION.json` self-seals its canonical payload and binds:
+
+- model weight/config plus all tokenizer JSON/vocabulary/merge bytes;
+- budget, sample, split, and gradient-summary files plus their internal
+  self-seals;
+- both calibration-cache manifests/tensors and exact calibration row IDs;
+- target identity, five seeds, five fractions, eight arms, exact K values, all
+  200 run cells, and the 175 non-frozen plan cells;
+- the 40,960-token ceiling and per-example hashes of the exact encoded
+  `input_ids` and assistant-only `labels` used by both the one-row pilot and
+  four-row qualification `ONE_STEP_DEV` stages;
+- one deterministic, bijective, nonidentity layer-depth assignment per seed;
+- generator, optimizer, gate, data-access policy, source-file hashes, and a
+  source-tree hash;
+- git state and `sealed_test_read: false`.
+
+The workflow is therefore:
 
 \[
-load\ base \rightarrow calibrate\ without\ step \rightarrow save\ plan
-\rightarrow discard \rightarrow reload\ identical\ base \rightarrow apply.
+load\ base \rightarrow calibrate\ without\ step \rightarrow
+commit\ preregistration \rightarrow save\ plan \rightarrow discard
+\rightarrow reload\ identical\ base \rightarrow apply.
 \]
 
-For real Phase C, each seed/budget/arm cell loads a fresh model. The manifest
-also binds the model config, tokenizer, frozen sample content and token lengths,
-gradient caches, and exact plan cell before evaluation.
+The schema-v2 planner refuses a changed preregistration, budget, model, cache,
+or cell grid. Every plan record self-seals and persists generator/attention
+architecture hashes, parameter counts, total capacity, calibration/backward
+counts, selected-scale distribution, and cache provenance. Planner access is
+logged as two non-sealed training-cache reads and hashed.
+
+The runner independently binds the preregistration, split manifest, gradient
+summary, sample, plan set, model, tokenizer, and calibration tensors. It hashes
+an optimizer signature (kind, betas, epsilon, decay, LR grid, selection split,
+and one-step count), a dev-data signature (the complete frozen example list),
+an encoded-token signature, a runtime/device environment signature, the LR
+grid, and an access log. The access log contains only validation reads
+for held-out loss and training-artifact reads for fixed plans/gradients; any
+sealed access invalidates the run.
+
+Every sparse run cell loads a fresh model. Because the frozen model and dev data
+make `no_update_frozen` independent of seed, budget, plan, and optimizer, the
+runner evaluates that baseline once and clones the same self-sealed semantic
+evidence into all 25 logical baseline cells. Timing/resource fields from the
+source record remain unchanged, the schema remains identical, and the final
+qualification grid still contains exactly 200 records. Existing baseline
+evidence is reusable only when all semantic hashes agree. Sparse resume is
+accepted only when every completed cell has the same canonical unplanned-
+parameter fingerprint.
+
+A schema-v1 partial plan file lacks this root chain and cannot be resumed or
+used by the schema-v2 gate, even if its individual plans remain useful as
+historical engineering evidence.
 
 ## 12. Post-update native delta audit
 
@@ -431,4 +474,3 @@ inferred.
   matrix. Generalization requires replication.
 - No inference-time, biological, universal cooperation, novelty, or speed claim
   follows from the design.
-

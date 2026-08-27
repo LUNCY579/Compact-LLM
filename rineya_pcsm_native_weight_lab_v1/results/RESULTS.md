@@ -1,6 +1,6 @@
 # PCSM results and evidence ledger
 
-Evidence snapshot: **2026-08-27 04:14 UTC**.
+Evidence snapshot: **2026-08-27 05:23 UTC**.
 
 ## 1. Outcome summary
 
@@ -9,7 +9,7 @@ Evidence snapshot: **2026-08-27 04:14 UTC**.
 | Software qualification | PASS | The qualified implementation satisfies the tested engineering invariants |
 | Synthetic mathematical feasibility | PASS | The pathway can learn and exploit peer-dependent structure when the synthetic hidden optimum is constructed from that structure |
 | Real resource pilot | VALID_RESOURCE_PILOT | One-seed resource/correctness evidence only; it cannot advance |
-| Full transformer one-step Phase C | RUNNING / PENDING | Qualification plans are running; no confirmatory effectiveness conclusion yet |
+| Full transformer one-step Phase C | RUNNING / PENDING | Pre-outcome schema-v2 hardening/restart is active; no confirmatory effectiveness conclusion yet |
 | Real-peer advancement gate | PENDING | No PASS or STOP evidence has been computed yet |
 | Full matched SFT Phase D | STOP | Prohibited unless the complete Phase-C gate passes |
 
@@ -31,20 +31,20 @@ for the CUDA model runtime described in Section 4.
 & '.\.venv\Scripts\python.exe' -m mypy --strict src\rineya_pcsm
 ```
 
-Observed result:
+Observed current result:
 
 ```text
-........................................................................ [ 65%]
-......................................                                   [100%]
-110 passed in 9.40s
+142/142 tests passed
 All checks passed!
-Success: no issues found in 26 source files
+Success: no issues found in 28 source files
 ```
 
-An earlier 98-test milestone had already passed. Direct gap tests then landed
-concurrently; the 110-test handoff rerun is the current evidence. Test count
-alone is not treated as proof: the direct tests cover every one of the 25
-required qualification checks plus global support-union reporting.
+An earlier 98-test milestone had already passed. Direct gap tests, schema-v2
+runtime tests, and adversarial gate tests then landed; 142/142 is the current
+evidence. Test count alone is not treated as proof: the direct tests cover every
+one of the 25 required qualification checks plus global support-union reporting,
+root-of-trust authentication, exact cell grids, forged evidence, and Phase-D
+reauthentication.
 
 Development environment captured during the run:
 
@@ -322,15 +322,62 @@ real-versus-shuffled NLL gap depends on a very small support difference and has
 no uncertainty estimate. The pilot establishes resource feasibility and exact
 audit behavior only.
 
-### 4.4 Full qualification is running; confirmatory result is pending
+### 4.4 Legacy partial plans are preserved but non-gating
 
-At this snapshot `qualification_plans.json` records `status: running` and the
-full qualification run has not started. Partial plan records contain no held-out
-outcome and are not analyzed as results.
+The pre-hardening planner was stopped before any qualification outcome and its
+partial file was renamed, not overwritten:
+
+- path: `results/phase_c/qualification_plans_legacy_incomplete.json`;
+- schema: 1.0;
+- recorded status: `running` (incomplete historical state);
+- records: 54 of the required 175 non-frozen plans;
+- file bytes: 440,293;
+- file SHA-256:
+  `26a279e2c613baacf8e1ebdf7d51b87ece2c34f28f8ca9a6fc4743e334577f95`;
+- seeds represented: 35 records for seed 11 and 19 for seed 17;
+- budgets represented: 14 at 0.0001, 14 at 0.0005, 12 at 0.001,
+  7 at 0.005, and 7 at 0.01;
+- no held-out run records or qualification NLL outcomes.
+
+Its arm counts are random 8, gradient TopK 8, target-only 8,
+coordinate-shuffled 8, layer-shuffled 8, real bootstrap 7, and real calibrated
+7. The frozen arm correctly has no plan.
+
+The legacy file has no committed preregistration binding, schema-v2 provenance,
+source-tree signature, access log, or result self-seal. It cannot be resumed by
+the schema-v2 planner and cannot be supplied to the gate. Its individual plans
+remain preserved solely as historical engineering evidence.
+
+### 4.5 Schema-v2 qualification is running; confirmatory result is pending
+
+The restart freezes a committed `results/phase_c/PREREGISTRATION.json` before
+new planning. That root binds the exact model/manifests/caches/source tree,
+five deterministic nonidentity layer-depth mappings, 175 ordered plan cells,
+and 200 ordered run cells. New planner/runner artifacts must be schema 2.0 and
+must carry the root hash, access logs, and generator/optimizer/data signatures.
+
+A real-model preregistration smoke on the stable producer tree succeeded with
+200 run cells, 175 plan cells, one pilot encoding, four qualification encodings,
+four tokenizer artifacts, a sealed validation-only access log, and a valid
+self-seal. Smoke artifact file/self hashes are intentionally not reported as
+official identities. The two clearly marked post-commit hash placeholders live
+in [EXPERIMENT_PROTOCOL.md](../EXPERIMENT_PROTOCOL.md) and will be filled from
+the committed official artifact, not from a smoke file.
+
+Already byte-determined identities are source-tree
+`e899999d2f33dfc327b493f25bb24bcd594757bfc01c3eb6f46a5c4db5c94b9c`,
+preregistration access log
+`4578ca7b1e3792a6d446a655d1c220c6e2fd267c879fde1a88ff9f433bf0ced5`,
+pilot encoded data
+`aebb2d04037926dedf21f318dbb9ae9746f09758754f71858eb9583c8692449c`,
+and qualification encoded data
+`edaf37f53e648c2abbda6448ed5b679371a249ded51ce88eb9acdbc28d5d448a`.
+The complete 33-file source and input/cache hash tables are in
+[EXPERIMENT_PROTOCOL.md](../EXPERIMENT_PROTOCOL.md).
 
 There is still no completed:
 
-- full 200-cell qualification plan set or one-step run;
+- complete schema-v2 175-cell qualification plan set or 200-cell one-step run;
 - five-seed real-versus-shuffled paired effect;
 - layer-identity permutation effect;
 - full qualification delta-audit matrix;
@@ -339,7 +386,7 @@ There is still no completed:
 
 Accordingly the correct real-model conclusion remains **PENDING**, not positive,
 negative, or inconclusive. No confirmatory metric is guessed from the pilot or
-partial plan generation.
+either partial plan generation.
 
 ## 5. Phase D decision
 
@@ -363,14 +410,19 @@ The strongest supported statement is:
 
 The exact next experiment is the frozen real Phase-C protocol:
 
-1. finish the immutable 200-cell v4 qualification plan set now in progress;
-2. run all 200 one-step qualification cells from fresh byte-verified bases;
-3. verify every exact-support and unplanned-parameter audit;
-4. compute the pre-specified real-versus-coordinate-shuffle and layer-
+1. generate, review, and commit the schema-v2 `PREREGISTRATION.json` root of
+   trust before new plans;
+2. build exactly 175 schema-v2 plan cells and verify every record/artifact seal;
+3. run exactly 200 logical cells; evaluate the deterministic frozen baseline
+   once and clone it into its 25 pre-registered cells while loading a fresh base
+   for every sparse cell;
+4. verify every access log, signature, exact-support audit, and canonical
+   unplanned-parameter fingerprint;
+5. compute the pre-specified real-versus-coordinate-shuffle and layer-
    permutation paired analyses;
-5. complete the registered causal-ablation evidence without cherry-picking;
-6. preserve a `PASS_ADVANCE_TO_PHASE_D` or `STOP_NO_PHASE_D` gate artifact;
-7. keep Phase D stopped unless every gate condition passes.
+6. complete the registered causal-ablation evidence without cherry-picking;
+7. preserve a `PASS_ADVANCE_TO_PHASE_D` or `STOP_NO_PHASE_D` gate artifact;
+8. keep Phase D stopped unless every gate condition passes.
 
 If real peers do not beat shuffled peers, preserve that negative result and
 interpret any PCSM baseline gain as a generic structural prior or generator
