@@ -193,10 +193,38 @@ def main() -> int:
 
     arms = [arm for arm in stage["arms"] if arm != "no_update_frozen"]
     records: list[dict[str, Any]] = []
+    if args.result.is_file():
+        partial = json.loads(args.result.read_text(encoding="utf-8"))
+        if (
+            partial.get("status") == "running"
+            and partial.get("stage") == args.stage
+            and partial.get("base_fingerprint") == base_fingerprint
+        ):
+            records = list(partial.get("records", []))
+    completed_keys: set[tuple[int, float, str]] = set()
+    for record in records:
+        key = (
+            int(record["seed"]),
+            float(record["budget_fraction"]),
+            str(record["arm"]),
+        )
+        if key in completed_keys:
+            raise RuntimeError(f"Duplicate partial plan record: {key}")
+        destination = Path(record["plan_directory"])
+        if (
+            sha256_file(destination / "plan.json") != record["plan_manifest_sha256"]
+            or sha256_file(destination / "tensors.safetensors")
+            != record["plan_tensor_sha256"]
+        ):
+            raise RuntimeError(f"Partial plan artifact mismatch: {key}")
+        completed_keys.add(key)
     for seed in stage["seeds"]:
         for fraction in stage["budget_fractions"]:
             k = budget_to_k(weights[target].numel(), float(fraction))
             for arm in arms:
+                cell_key = (int(seed), float(fraction), str(arm))
+                if cell_key in completed_keys:
+                    continue
                 started = time.perf_counter()
                 plan, trace, attention = build_arm(
                     arm,
