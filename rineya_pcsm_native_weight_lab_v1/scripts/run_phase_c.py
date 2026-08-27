@@ -224,20 +224,58 @@ def main() -> int:
     device = torch.device(args.device)
     optimizer_config = budget["native_optimizer"]
     seed_everything(17)
-    run: dict[str, Any] = {
-        "schema_version": "1.0",
-        "status": "running",
-        "stage": args.stage,
-        "started_at_utc": utc_now(),
-        "base_weight_sha256": base_hash,
-        "budget_manifest_sha256": sha256_file(args.budget_manifest),
-        "plan_result_sha256": sha256_file(args.plan_result),
-        "device": str(device),
-        "records": [],
-        "environment": environment_manifest(),
-        "git": git_state(Path(__file__).resolve().parents[2]),
-        "sealed_test_read": False,
-    }
+    budget_file_hash = sha256_file(args.budget_manifest)
+    plan_result_file_hash = sha256_file(args.plan_result)
+    if args.output.is_file():
+        run = json.loads(args.output.read_text(encoding="utf-8"))
+        if (
+            run.get("stage") != args.stage
+            or run.get("base_weight_sha256") != base_hash
+            or run.get("budget_manifest_sha256") != budget_file_hash
+            or run.get("plan_result_sha256") != plan_result_file_hash
+        ):
+            raise RuntimeError("Existing run cannot resume under different evidence")
+        if any(
+            not self_hash_valid(record, "record_sha256")
+            for record in run.get("records", [])
+        ):
+            raise RuntimeError("Existing run contains an invalid record self-seal")
+        for key in (
+            "run_sha256",
+            "error",
+            "error_type",
+            "traceback",
+            "failed_at_utc",
+            "completed_at_utc",
+        ):
+            run.pop(key, None)
+        run["status"] = "running"
+        run["resumed_at_utc"] = utc_now()
+    else:
+        run = {
+            "schema_version": "1.0",
+            "status": "running",
+            "stage": args.stage,
+            "started_at_utc": utc_now(),
+            "base_weight_sha256": base_hash,
+            "budget_manifest_sha256": budget_file_hash,
+            "plan_result_sha256": plan_result_file_hash,
+            "device": str(device),
+            "records": [],
+            "environment": environment_manifest(),
+            "git": git_state(Path(__file__).resolve().parents[2]),
+            "sealed_test_read": False,
+        }
+    completed_cells: set[tuple[int, float, str]] = set()
+    for record in run["records"]:
+        key = (
+            int(record["seed"]),
+            float(record["budget_fraction"]),
+            str(record["arm"]),
+        )
+        if key in completed_cells:
+            raise RuntimeError(f"Existing run has a duplicate cell: {key}")
+        completed_cells.add(key)
     atomic_write_json(args.output, run)
     try:
         # Tokenization is frozen once; every arm receives identical tensors.
@@ -260,6 +298,9 @@ def main() -> int:
         for seed in stage["seeds"]:
             for fraction in stage["budget_fractions"]:
                 for arm in stage["arms"]:
+                    cell_key = (int(seed), float(fraction), str(arm))
+                    if cell_key in completed_cells:
+                        continue
                     started = time.perf_counter()
                     if device.type == "cuda":
                         torch.cuda.reset_peak_memory_stats()
