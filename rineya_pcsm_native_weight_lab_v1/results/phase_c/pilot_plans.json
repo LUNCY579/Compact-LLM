@@ -1,0 +1,915 @@
+{
+  "base_fingerprint": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+  "completed_at_utc": "2026-08-27T04:11:30.751654Z",
+  "records": [
+    {
+      "arm": "random_sparse_native",
+      "attention": {},
+      "budget_fraction": 0.001,
+      "calibration_trace": [],
+      "elapsed_seconds": 0.652366400000119,
+      "k": 3146,
+      "metadata": {
+        "method": "random",
+        "seed": 17,
+        "target_plan_records": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "exact_k": 3146,
+            "feature_names": [],
+            "feature_weights": [],
+            "generator_config": {
+              "method": "random",
+              "version": "classical-control-v1"
+            },
+            "layer_depth": 14,
+            "module_type": "torch.nn.Linear",
+            "parameter_name": "model.layers.14.mlp.down_proj.weight",
+            "requested_fraction": 0.001,
+            "selected_fraction": 0.0010000864664713542,
+            "semantic_role": "mlp.down_proj",
+            "shape": [
+              1024,
+              3072
+            ]
+          }
+        }
+      },
+      "plan_directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-pcsm\\rineya_pcsm_native_weight_lab_v1\\cache\\phase_c\\plans\\pilot\\seed-17\\budget-0p001\\random_sparse_native",
+      "plan_manifest_sha256": "81feb1b869171c9accf6cf60911365f5f28a8cbadf36214823290ada7cb5cca4",
+      "plan_tensor_sha256": "97b6a1d80b58a59bb7845707632c29111f09c3b3eb8d67e4c14584feeb494e82",
+      "record_sha256": "77d0a5e9a205e0f89ad9ec92bbae5e278602e4565a64e4c946f3620524ec3f32",
+      "seed": 17,
+      "selected_scale_distribution": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "q05": 1.0,
+        "q50": 1.0,
+        "q95": 1.0,
+        "standard_deviation": 0.0
+      },
+      "stage": "pilot",
+      "support_stats": {
+        "per_target_k": {
+          "model.layers.14.mlp.down_proj.weight": 3146
+        },
+        "total_numel": 3145728,
+        "union_fraction": 0.0010000864664713542,
+        "union_k": 3146
+      }
+    },
+    {
+      "arm": "gradient_topk_sparse_native",
+      "attention": {},
+      "budget_fraction": 0.001,
+      "calibration_trace": [],
+      "elapsed_seconds": 0.5172610999998142,
+      "k": 3146,
+      "metadata": {
+        "method": "gradient",
+        "seed": 17,
+        "target_plan_records": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "exact_k": 3146,
+            "feature_names": [],
+            "feature_weights": [],
+            "generator_config": {
+              "method": "gradient",
+              "version": "classical-control-v1"
+            },
+            "layer_depth": 14,
+            "module_type": "torch.nn.Linear",
+            "parameter_name": "model.layers.14.mlp.down_proj.weight",
+            "requested_fraction": 0.001,
+            "selected_fraction": 0.0010000864664713542,
+            "semantic_role": "mlp.down_proj",
+            "shape": [
+              1024,
+              3072
+            ]
+          }
+        }
+      },
+      "plan_directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-pcsm\\rineya_pcsm_native_weight_lab_v1\\cache\\phase_c\\plans\\pilot\\seed-17\\budget-0p001\\gradient_topk_sparse_native",
+      "plan_manifest_sha256": "550a54ffa93bd4fe141a9b0b0addb0b204b85e68542e9c58b1652220f7e2da7e",
+      "plan_tensor_sha256": "cf1013f0428fd08adea1b307b893772dead02bc0a5766211bbad6cae48d9a30d",
+      "record_sha256": "ea127c3a15ae496ed51fd5f11459d0a7b77d7181c3bf30e2d75b92f7d7f31a5a",
+      "seed": 17,
+      "selected_scale_distribution": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "q05": 1.0,
+        "q50": 1.0,
+        "q95": 1.0,
+        "standard_deviation": 0.0
+      },
+      "stage": "pilot",
+      "support_stats": {
+        "per_target_k": {
+          "model.layers.14.mlp.down_proj.weight": 3146
+        },
+        "total_numel": 3145728,
+        "union_fraction": 0.0010000864664713542,
+        "union_k": 3146
+      }
+    },
+    {
+      "arm": "coordinate_shuffled_peer_pcsm",
+      "attention": {
+        "alphas": [
+          0.03633538633584976,
+          0.03660162538290024,
+          0.03632199764251709,
+          0.03616514429450035,
+          0.03777744993567467,
+          0.03767484053969383,
+          0.036387085914611816,
+          0.03789183124899864,
+          0.03568841516971588,
+          0.03699847310781479,
+          0.03593306243419647,
+          0.03888825699687004,
+          0.03737747669219971,
+          0.037718385457992554,
+          0.03772581368684769,
+          0.03821028769016266,
+          0.03494550660252571,
+          0.036985334008932114,
+          0.03771974891424179,
+          0.03784118965268135,
+          0.03649657592177391,
+          0.036328889429569244,
+          0.03634222596883774,
+          0.03880917280912399,
+          0.038735222071409225,
+          0.035649508237838745,
+          0.0364510715007782
+        ],
+        "depth_distances": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "logits": [
+          1.0225977897644043,
+          1.0298982858657837,
+          1.0222291946411133,
+          1.0179014205932617,
+          1.0615180730819702,
+          1.0587981939315796,
+          1.0240195989608765,
+          1.064541220664978,
+          1.004631757736206,
+          1.040682315826416,
+          1.0114634037017822,
+          1.0904979705810547,
+          1.0508739948272705,
+          1.0599533319473267,
+          1.0601502656936646,
+          1.0729104280471802,
+          0.9835954904556274,
+          1.0403270721435547,
+          1.0599894523620605,
+          1.0632038116455078,
+          1.0270241498947144,
+          1.0224188566207886,
+          1.022786021232605,
+          1.088462233543396,
+          1.086555004119873,
+          1.0035409927368164,
+          1.0257765054702759
+        ],
+        "peer_names": [
+          "model.layers.0.mlp.down_proj.weight",
+          "model.layers.1.mlp.down_proj.weight",
+          "model.layers.10.mlp.down_proj.weight",
+          "model.layers.11.mlp.down_proj.weight",
+          "model.layers.12.mlp.down_proj.weight",
+          "model.layers.13.mlp.down_proj.weight",
+          "model.layers.15.mlp.down_proj.weight",
+          "model.layers.16.mlp.down_proj.weight",
+          "model.layers.17.mlp.down_proj.weight",
+          "model.layers.18.mlp.down_proj.weight",
+          "model.layers.19.mlp.down_proj.weight",
+          "model.layers.2.mlp.down_proj.weight",
+          "model.layers.20.mlp.down_proj.weight",
+          "model.layers.21.mlp.down_proj.weight",
+          "model.layers.22.mlp.down_proj.weight",
+          "model.layers.23.mlp.down_proj.weight",
+          "model.layers.24.mlp.down_proj.weight",
+          "model.layers.25.mlp.down_proj.weight",
+          "model.layers.26.mlp.down_proj.weight",
+          "model.layers.27.mlp.down_proj.weight",
+          "model.layers.3.mlp.down_proj.weight",
+          "model.layers.4.mlp.down_proj.weight",
+          "model.layers.5.mlp.down_proj.weight",
+          "model.layers.6.mlp.down_proj.weight",
+          "model.layers.7.mlp.down_proj.weight",
+          "model.layers.8.mlp.down_proj.weight",
+          "model.layers.9.mlp.down_proj.weight"
+        ],
+        "residuals": [
+          0.031392861157655716,
+          0.03953311964869499,
+          0.03130660578608513,
+          0.02661740779876709,
+          0.07830031216144562,
+          0.07504738867282867,
+          0.033753857016563416,
+          0.08273739367723465,
+          0.01256279181689024,
+          0.053504906594753265,
+          0.01997697912156582,
+          0.12379869073629379,
+          0.06625288724899292,
+          0.07781277596950531,
+          0.07808880507946014,
+          0.0957985445857048,
+          -0.008913068100810051,
+          0.05379768833518028,
+          0.0787104070186615,
+          0.08290843665599823,
+          0.03634946793317795,
+          0.031131146475672722,
+          0.031654585152864456,
+          0.13344226777553558,
+          0.11483670026063919,
+          0.011085841804742813,
+          0.03525788336992264
+        ],
+        "self_alpha": 0.0,
+        "similarities": [
+          0.9912049174308777,
+          0.9903651475906372,
+          0.9909226298332214,
+          0.9912840127944946,
+          0.9832177758216858,
+          0.9837508201599121,
+          0.9902657270431519,
+          0.981803834438324,
+          0.9920689463615417,
+          0.9871774315834045,
+          0.9914864301681519,
+          0.9666992425918579,
+          0.9846210479736328,
+          0.9821406006813049,
+          0.9820614457130432,
+          0.9771118760108948,
+          0.9925085306167603,
+          0.9865293502807617,
+          0.9812790155410767,
+          0.9802954196929932,
+          0.9906747341156006,
+          0.9912877082824707,
+          0.9911314845085144,
+          0.9550199508666992,
+          0.9717183113098145,
+          0.9924551248550415,
+          0.9905186295509338
+        ]
+      },
+      "budget_fraction": 0.001,
+      "calibration_trace": [
+        {
+          "objective": 0.0005155939143151045,
+          "predicted_loss_change": 5.156385327609314e-07,
+          "step": 0.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -2.077500104904175,
+          "predicted_loss_change": -0.0020776798482984304,
+          "step": 1.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -2.0022666454315186,
+          "predicted_loss_change": -0.0020024399273097515,
+          "step": 2.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -1.986895203590393,
+          "predicted_loss_change": -0.001987067051231861,
+          "step": 3.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -1.996349573135376,
+          "predicted_loss_change": -0.0019965223036706448,
+          "step": 4.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -1.996349573135376,
+          "predicted_loss_change": -0.0019965223036706448,
+          "step": 5.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -1.996349573135376,
+          "predicted_loss_change": -0.0019965223036706448,
+          "step": 6.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -1.9963582754135132,
+          "predicted_loss_change": -0.00199653091840446,
+          "step": 7.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -2.0311880111694336,
+          "predicted_loss_change": -0.0020313637796789408,
+          "step": 8.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -3.4924519062042236,
+          "predicted_loss_change": -0.003492753952741623,
+          "step": 9.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.819351673126221,
+          "predicted_loss_change": -0.007820027880370617,
+          "step": 10.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985658168792725,
+          "predicted_loss_change": -0.007986349053680897,
+          "step": 11.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 12.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 13.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 14.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 15.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 16.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 17.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 18.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.985397815704346,
+          "predicted_loss_change": -0.007986088283360004,
+          "step": 19.0,
+          "structural_regularizer": 0.0
+        }
+      ],
+      "elapsed_seconds": 59.56537060000028,
+      "k": 3146,
+      "metadata": {
+        "attention_residual_jointly_calibrated": true,
+        "generator_learning_rate": 0.01,
+        "mode": "shuffled",
+        "seed": 17,
+        "steps": 20,
+        "structural_proxy_learning_rate": 0.0001,
+        "structural_regularizer": 0.0,
+        "structural_regularizer_kind": "updated_target_normalized_row_column_energy",
+        "support_frozen_once_after_calibration": true,
+        "target_plan_records": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "exact_k": 3146,
+            "feature_names": [
+              "task_gradient_magnitude",
+              "peer_element_magnitude",
+              "peer_row_energy",
+              "peer_column_energy",
+              "peer_joint_leverage",
+              "target_element_magnitude",
+              "peer_target_structural_difference",
+              "gradient_peer_interaction"
+            ],
+            "feature_weights": [
+              0.9969630837440491,
+              7.953465663845805e-10,
+              5.334410690949198e-10,
+              8.054412171942804e-12,
+              7.686110081728259e-10,
+              3.126828657107339e-11,
+              1.9837534392941336e-11,
+              0.003036943031474948
+            ],
+            "generator_config": {
+              "descriptor_dimension": 24,
+              "feature_names": [
+                "task_gradient_magnitude",
+                "peer_element_magnitude",
+                "peer_row_energy",
+                "peer_column_energy",
+                "peer_joint_leverage",
+                "target_element_magnitude",
+                "peer_target_structural_difference",
+                "gradient_peer_interaction"
+              ],
+              "global_feature_blocks": [
+                "target",
+                "task_gradient",
+                "peer"
+              ],
+              "hidden_dimension": 64,
+              "stabilizer_lower": 0.25,
+              "stabilizer_upper": 1.0,
+              "version": "pcsm-generator-v1"
+            },
+            "layer_depth": 14,
+            "module_type": "torch.nn.Linear",
+            "parameter_name": "model.layers.14.mlp.down_proj.weight",
+            "requested_fraction": 0.001,
+            "selected_fraction": 0.0010000864664713542,
+            "semantic_role": "mlp.down_proj",
+            "shape": [
+              1024,
+              3072
+            ]
+          }
+        }
+      },
+      "plan_directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-pcsm\\rineya_pcsm_native_weight_lab_v1\\cache\\phase_c\\plans\\pilot\\seed-17\\budget-0p001\\coordinate_shuffled_peer_pcsm",
+      "plan_manifest_sha256": "ce96441068e3a8e29416d992623ecdd90702eccc9c0ffb82dcb27aefb1d208bc",
+      "plan_tensor_sha256": "341daa70c3be429f3c2839d1f0bcd011192674ce3d2b05178e0ea92c7a1b34ea",
+      "record_sha256": "3a75526d3c1111c3282881891d52174b2f31c4a82a14db3a0dabcdd3320209c7",
+      "seed": 17,
+      "selected_scale_distribution": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "q05": 1.0,
+        "q50": 1.0,
+        "q95": 1.0,
+        "standard_deviation": 0.0
+      },
+      "stage": "pilot",
+      "support_stats": {
+        "per_target_k": {
+          "model.layers.14.mlp.down_proj.weight": 3146
+        },
+        "total_numel": 3145728,
+        "union_fraction": 0.0010000864664713542,
+        "union_k": 3146
+      }
+    },
+    {
+      "arm": "real_peer_pcsm_calibrated",
+      "attention": {
+        "alphas": [
+          0.04151279851794243,
+          0.040690504014492035,
+          0.04033571854233742,
+          0.04091254621744156,
+          0.03549646958708763,
+          0.03567742556333542,
+          0.03944164514541626,
+          0.03427844122052193,
+          0.04093543440103531,
+          0.03674909099936485,
+          0.040015287697315216,
+          0.03065728023648262,
+          0.03521948307752609,
+          0.03384901583194733,
+          0.03381217271089554,
+          0.032070666551589966,
+          0.041573215276002884,
+          0.035374272614717484,
+          0.03324058651924133,
+          0.03285423666238785,
+          0.04030095413327217,
+          0.04079445078969002,
+          0.04071905091404915,
+          0.029474297538399696,
+          0.03146521747112274,
+          0.042420417070388794,
+          0.040129367262125015
+        ],
+        "depth_distances": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "logits": [
+          1.1019994020462036,
+          1.0819923877716064,
+          1.073235034942627,
+          1.0874344110488892,
+          0.9454309344291687,
+          0.9505158066749573,
+          1.0508198738098145,
+          0.910514235496521,
+          1.0879937410354614,
+          0.9801111817359924,
+          1.0652592182159424,
+          0.7988678812980652,
+          0.9375970959663391,
+          0.8979076147079468,
+          0.8968185186386108,
+          0.8439394235610962,
+          1.1034537553787231,
+          0.9419823884963989,
+          0.8797692656517029,
+          0.868078351020813,
+          1.0723727941513062,
+          1.0845437049865723,
+          1.0826936960220337,
+          0.7595162391662598,
+          0.8248803615570068,
+          1.1236274242401123,
+          1.0681060552597046
+        ],
+        "peer_names": [
+          "model.layers.0.mlp.down_proj.weight",
+          "model.layers.1.mlp.down_proj.weight",
+          "model.layers.10.mlp.down_proj.weight",
+          "model.layers.11.mlp.down_proj.weight",
+          "model.layers.12.mlp.down_proj.weight",
+          "model.layers.13.mlp.down_proj.weight",
+          "model.layers.15.mlp.down_proj.weight",
+          "model.layers.16.mlp.down_proj.weight",
+          "model.layers.17.mlp.down_proj.weight",
+          "model.layers.18.mlp.down_proj.weight",
+          "model.layers.19.mlp.down_proj.weight",
+          "model.layers.2.mlp.down_proj.weight",
+          "model.layers.20.mlp.down_proj.weight",
+          "model.layers.21.mlp.down_proj.weight",
+          "model.layers.22.mlp.down_proj.weight",
+          "model.layers.23.mlp.down_proj.weight",
+          "model.layers.24.mlp.down_proj.weight",
+          "model.layers.25.mlp.down_proj.weight",
+          "model.layers.26.mlp.down_proj.weight",
+          "model.layers.27.mlp.down_proj.weight",
+          "model.layers.3.mlp.down_proj.weight",
+          "model.layers.4.mlp.down_proj.weight",
+          "model.layers.5.mlp.down_proj.weight",
+          "model.layers.6.mlp.down_proj.weight",
+          "model.layers.7.mlp.down_proj.weight",
+          "model.layers.8.mlp.down_proj.weight",
+          "model.layers.9.mlp.down_proj.weight"
+        ],
+        "residuals": [
+          0.10611166805028915,
+          0.08607497066259384,
+          0.07673680782318115,
+          0.09029965102672577,
+          -0.04425666108727455,
+          -0.03982867673039436,
+          0.05488191172480583,
+          -0.07736246287822723,
+          0.0908093973994255,
+          -0.012279925867915154,
+          0.0687047466635704,
+          -0.17358459532260895,
+          -0.0520007386803627,
+          -0.08866826444864273,
+          -0.08896443992853165,
+          -0.13613411784172058,
+          0.10818801075220108,
+          -0.0464499294757843,
+          -0.10455773025751114,
+          -0.11602041125297546,
+          0.07689353078603745,
+          0.08832354098558426,
+          0.08671717345714569,
+          -0.1998855620622635,
+          -0.15332451462745667,
+          0.1257961541414261,
+          0.07195369899272919
+        ],
+        "self_alpha": 0.0,
+        "similarities": [
+          0.9958876967430115,
+          0.9959174394607544,
+          0.9964982271194458,
+          0.9971347451210022,
+          0.9896876215934753,
+          0.9903444647789001,
+          0.9959379434585571,
+          0.9878767132759094,
+          0.9971843361854553,
+          0.9923911094665527,
+          0.996554434299469,
+          0.9724524617195129,
+          0.9895978569984436,
+          0.9865759015083313,
+          0.9857829809188843,
+          0.9800735712051392,
+          0.9952657222747803,
+          0.9884323477745056,
+          0.9843270182609558,
+          0.9840987324714661,
+          0.9954792857170105,
+          0.9962201714515686,
+          0.9959765076637268,
+          0.9594017863273621,
+          0.9782049059867859,
+          0.9978312849998474,
+          0.996152400970459
+        ]
+      },
+      "budget_fraction": 0.001,
+      "calibration_trace": [
+        {
+          "objective": -0.0032642693258821964,
+          "predicted_loss_change": -3.2645516512275208e-06,
+          "step": 0.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -0.0841328576207161,
+          "predicted_loss_change": -8.414013427682221e-05,
+          "step": 1.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -8.46819019317627,
+          "predicted_loss_change": -0.008468922227621078,
+          "step": 2.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -8.039349555969238,
+          "predicted_loss_change": -0.008040045388042927,
+          "step": 3.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -8.00555419921875,
+          "predicted_loss_change": -0.008006246760487556,
+          "step": 4.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.978112697601318,
+          "predicted_loss_change": -0.007978802546858788,
+          "step": 5.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 6.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 7.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 8.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 9.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 10.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 11.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 12.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 13.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 14.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 15.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 16.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 17.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 18.0,
+          "structural_regularizer": 0.0
+        },
+        {
+          "objective": -7.963923931121826,
+          "predicted_loss_change": -0.007964612916111946,
+          "step": 19.0,
+          "structural_regularizer": 0.0
+        }
+      ],
+      "elapsed_seconds": 53.69326239999964,
+      "k": 3146,
+      "metadata": {
+        "attention_residual_jointly_calibrated": true,
+        "generator_learning_rate": 0.01,
+        "mode": "real",
+        "seed": 17,
+        "steps": 20,
+        "structural_proxy_learning_rate": 0.0001,
+        "structural_regularizer": 0.0,
+        "structural_regularizer_kind": "updated_target_normalized_row_column_energy",
+        "support_frozen_once_after_calibration": true,
+        "target_plan_records": {
+          "model.layers.14.mlp.down_proj.weight": {
+            "exact_k": 3146,
+            "feature_names": [
+              "task_gradient_magnitude",
+              "peer_element_magnitude",
+              "peer_row_energy",
+              "peer_column_energy",
+              "peer_joint_leverage",
+              "target_element_magnitude",
+              "peer_target_structural_difference",
+              "gradient_peer_interaction"
+            ],
+            "feature_weights": [
+              0.9999291896820068,
+              3.781893265756729e-15,
+              3.2227663937576916e-15,
+              9.091370059002916e-17,
+              7.483978796055582e-17,
+              4.422729171012652e-15,
+              1.537728278044881e-13,
+              7.084853859851137e-05
+            ],
+            "generator_config": {
+              "descriptor_dimension": 24,
+              "feature_names": [
+                "task_gradient_magnitude",
+                "peer_element_magnitude",
+                "peer_row_energy",
+                "peer_column_energy",
+                "peer_joint_leverage",
+                "target_element_magnitude",
+                "peer_target_structural_difference",
+                "gradient_peer_interaction"
+              ],
+              "global_feature_blocks": [
+                "target",
+                "task_gradient",
+                "peer"
+              ],
+              "hidden_dimension": 64,
+              "stabilizer_lower": 0.25,
+              "stabilizer_upper": 1.0,
+              "version": "pcsm-generator-v1"
+            },
+            "layer_depth": 14,
+            "module_type": "torch.nn.Linear",
+            "parameter_name": "model.layers.14.mlp.down_proj.weight",
+            "requested_fraction": 0.001,
+            "selected_fraction": 0.0010000864664713542,
+            "semantic_role": "mlp.down_proj",
+            "shape": [
+              1024,
+              3072
+            ]
+          }
+        }
+      },
+      "plan_directory": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-pcsm\\rineya_pcsm_native_weight_lab_v1\\cache\\phase_c\\plans\\pilot\\seed-17\\budget-0p001\\real_peer_pcsm_calibrated",
+      "plan_manifest_sha256": "bb4f1fdb46d8859a56a1ff5591b6455b10d32835d800f6d1c20571c723497a60",
+      "plan_tensor_sha256": "2588622e4ae2271a5feb1f3d86e81943f7b9e476aa1c2d8424c68a4bb88cbcaa",
+      "record_sha256": "4c554040b75a8c0395d2d1e25cf7016cc792b324eb62c856813bd01b86af2f04",
+      "seed": 17,
+      "selected_scale_distribution": {
+        "maximum": 1.0,
+        "mean": 1.0,
+        "minimum": 1.0,
+        "q05": 1.0,
+        "q50": 1.0,
+        "q95": 1.0,
+        "standard_deviation": 0.0
+      },
+      "stage": "pilot",
+      "support_stats": {
+        "per_target_k": {
+          "model.layers.14.mlp.down_proj.weight": 3146
+        },
+        "total_numel": 3145728,
+        "union_fraction": 0.0010000864664713542,
+        "union_k": 3146
+      }
+    }
+  ],
+  "result_sha256": "8e76ed2320364711378f58e1b38a3d5695dc9b8c3d3a970cf02dfe16f63f77ef",
+  "schema_version": "1.0",
+  "sealed_test_read": false,
+  "stage": "pilot",
+  "status": "complete"
+}

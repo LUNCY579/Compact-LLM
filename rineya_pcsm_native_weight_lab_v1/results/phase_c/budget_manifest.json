@@ -1,0 +1,156 @@
+{
+  "advancement_gate": {
+    "layer_permutation_test_required": true,
+    "paired_bootstrap_ci_must_exclude_zero": true,
+    "pilot_can_advance": false,
+    "real_over_shuffled_seed_wins": "at_least_4_of_5",
+    "requires_complete_qualification": true,
+    "retention_noninferiority_required": true
+  },
+  "base_model": {
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Nimbus-1.6.0-devfreeze",
+    "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+  },
+  "budget_manifest_sha256": "28dc267dd474f8df4850d53e80db8425eabe8cd7bc26e561d67eaf7986be9ffc",
+  "calibration": {
+    "mask_cal": [
+      {
+        "assistant_token_count": 4,
+        "content_sha256": "00b6c5652441fe72c150a7e405c51c797432d6c73c9bf6ba2f76da6d10b2e744",
+        "row_id": "rineya_v3_sft__linked_fact__train_014__01301",
+        "token_count": 2686
+      }
+    ],
+    "meta_train": [
+      {
+        "assistant_token_count": 6,
+        "content_sha256": "9115141dbd801f786a2cc81aca481a2a7b6c0ac0d9e48069545761b04511dbc8",
+        "row_id": "rineya_v3_sft__resolved_fact__train_021__00115",
+        "token_count": 2743
+      }
+    ]
+  },
+  "created_at_utc": "2026-08-27T03:40:37.170035Z",
+  "generator": {
+    "bootstrap_steps": 0,
+    "calibration_learning_rate": 0.01,
+    "calibration_steps": 20,
+    "descriptor_dimension": 24,
+    "stabilizer_bounds": [
+      0.25,
+      1.0
+    ],
+    "structural_regularizer_ablation": 0.05,
+    "structural_regularizer_primary": 0.0,
+    "topk_ste_temperature": 1.0
+  },
+  "native_optimizer": {
+    "betas": [
+      0.9,
+      0.999
+    ],
+    "epsilon": 1e-08,
+    "kind": "ExactSupportAdamW",
+    "learning_rate_grid": [
+      5e-05,
+      0.0001,
+      0.0002
+    ],
+    "selection_split": "META_TRAIN_only",
+    "weight_decay": 0.01
+  },
+  "peer_policy": "all other same-role layers; target self-weight exactly zero",
+  "pilot": {
+    "arms": [
+      "no_update_frozen",
+      "random_sparse_native",
+      "gradient_topk_sparse_native",
+      "coordinate_shuffled_peer_pcsm",
+      "real_peer_pcsm_calibrated"
+    ],
+    "budget_fractions": [
+      0.001
+    ],
+    "one_step_dev": [
+      {
+        "assistant_token_count": 9,
+        "content_sha256": "972052c684f2aac8257574579079d765a9ba6fdc7af3923e6c26077498dabd89",
+        "row_id": "rineya_v3_sft__fact_lookup__validation_002__00338",
+        "token_count": 2755
+      }
+    ],
+    "purpose": "resource and correctness only; cannot pass advancement gate",
+    "seeds": [
+      17
+    ]
+  },
+  "qualification": {
+    "arms": [
+      "no_update_frozen",
+      "random_sparse_native",
+      "gradient_topk_sparse_native",
+      "target_only_sparse_native",
+      "coordinate_shuffled_peer_pcsm",
+      "real_peer_pcsm_bootstrap",
+      "real_peer_pcsm_calibrated"
+    ],
+    "budget_fractions": [
+      0.0001,
+      0.0005,
+      0.001,
+      0.005,
+      0.01
+    ],
+    "fairness": "same base, target, examples, selected-coordinate count, optimizer, learning-rate grid, and per-arm evaluation budget",
+    "one_step_dev": [
+      {
+        "assistant_token_count": 9,
+        "content_sha256": "972052c684f2aac8257574579079d765a9ba6fdc7af3923e6c26077498dabd89",
+        "row_id": "rineya_v3_sft__fact_lookup__validation_002__00338",
+        "token_count": 2755
+      },
+      {
+        "assistant_token_count": 5,
+        "content_sha256": "fb44e0506d87382871ec56a3c1e6a3706e0f8149838bbd2f0d909a294c2953ce",
+        "row_id": "rineya_v3_sft__counterfactual_result__validation_002__00541",
+        "token_count": 2785
+      },
+      {
+        "assistant_token_count": 5,
+        "content_sha256": "b87a4a2d42c01d367310285a5cfa30bb6197338b2e918d4abd10ece3fe8ebe3f",
+        "row_id": "rineya_v3_sft__numeric_result__validation_002__00346",
+        "token_count": 2812
+      }
+    ],
+    "required_causal_ablations": [
+      "coordinate_shuffle",
+      "layer_shuffle",
+      "module_role_shuffle",
+      "uniform_peer_attention",
+      "nearest_layer_only",
+      "target_only",
+      "gradient_feature_only",
+      "no_step_scale_head",
+      "random_generator",
+      "structural_regularizer_off_on"
+    ],
+    "run_only_if_pilot_is_valid": true,
+    "seeds": [
+      11,
+      17,
+      23,
+      29,
+      31
+    ]
+  },
+  "sample_manifest": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble-pcsm\\rineya_pcsm_native_weight_lab_v1\\results\\phase_c\\sample_manifest.json",
+    "sha256": "83a22898dcb0efd5eed15d0811ac1956e689ff16f55e6f58f53d644e4fcbe42e"
+  },
+  "schema_version": "1.0",
+  "sealed_test_read": false,
+  "selection_policy": "quality-blind shortest-token resource rule frozen before model execution",
+  "target_parameter": "model.layers.14.mlp.down_proj.weight",
+  "target_role": "mlp.down_proj"
+}
