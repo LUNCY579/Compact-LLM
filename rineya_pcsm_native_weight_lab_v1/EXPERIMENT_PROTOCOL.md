@@ -63,9 +63,11 @@ place.
 
 Final preregistration identities:
 
-- file SHA-256: **`PENDING_AFTER_CODE_AND_DOCS_COMMIT`**;
+- file SHA-256:
+  **`7c8e4a16e6d53dd95a2a8377ea6d257c2384896ded477543ec10f1a716858132`**;
 - canonical `preregistration_sha256` self-seal:
-  **`PENDING_AFTER_CODE_AND_DOCS_COMMIT`**;
+  **`49c1b5b98eae998876c69584da43840da6212c498a6927aaa5de58a131f896b8`**;
+- root committed in `4a63345` from clean source commit `6c825c3`;
 - frozen 33-file source-tree SHA-256:
   `e899999d2f33dfc327b493f25bb24bcd594757bfc01c3eb6f46a5c4db5c94b9c`;
 - preregistration access-log SHA-256:
@@ -75,11 +77,9 @@ Final preregistration identities:
 - encoded qualification signature:
   `edaf37f53e648c2abbda6448ed5b679371a249ded51ce88eb9acdbc28d5d448a`.
 
-Only the two explicitly marked preregistration hashes depend on generating the
-official timestamped artifact after this code/docs commit. A smoke artifact's
-hash is deliberately not substituted. The source, access, tokenizer, encoded-
-data, input-manifest, cache, grid, and mapping hashes above are already frozen
-by their underlying bytes.
+These are the committed official artifact identities, not smoke-run hashes.
+The source, access, tokenizer, encoded-data, input-manifest, cache, grid, and
+mapping hashes above are frozen by their underlying bytes.
 
 The source tree covers every package module and every qualification authority:
 

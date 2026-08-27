@@ -22,13 +22,14 @@ never synthesize an independent signed update.
   `1024 x 3072` (3,145,728 native coordinates)
 - Software qualification: a 98-test qualification milestone passed; after
   direct gap and schema-v2 adversarial gate tests landed, the current suite
-  passes **142/142 tests** in the pinned development environment
+  passes **143/143 tests** in the pinned development environment
 - Synthetic feasibility: complete over 8 seeds, 5 budgets, and 8 required A-H
   arms; every declared decisive synthetic check passed
 - Real one-step Phase C: **RUNNING/PENDING**. The one-seed resource pilot is
   complete and valid, but cannot advance; a 54-plan schema-v1 partial artifact
-  is preserved as legacy/non-gating while schema-v2 qualification is hardened,
-  and no confirmatory result or gate verdict exists
+  is preserved as legacy/non-gating; the schema-v2 root is committed at
+  `4a63345`, new qualification planning is next, and no confirmatory result or
+  gate verdict exists
 - Full SFT Phase D: **STOP** unless and until the pre-specified Phase-C gate
   produces `PASS_ADVANCE_TO_PHASE_D`
 

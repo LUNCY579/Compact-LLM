@@ -34,13 +34,13 @@ for the CUDA model runtime described in Section 4.
 Observed current result:
 
 ```text
-142/142 tests passed
+143/143 tests passed
 All checks passed!
 Success: no issues found in 28 source files
 ```
 
 An earlier 98-test milestone had already passed. Direct gap tests, schema-v2
-runtime tests, and adversarial gate tests then landed; 142/142 is the current
+runtime tests, and adversarial gate tests then landed; 143/143 is the current
 evidence. Test count alone is not treated as proof: the direct tests cover every
 one of the 25 required qualification checks plus global support-union reporting,
 root-of-trust authentication, exact cell grids, forged evidence, and Phase-D
@@ -356,13 +356,14 @@ five deterministic nonidentity layer-depth mappings, 175 ordered plan cells,
 and 200 ordered run cells. New planner/runner artifacts must be schema 2.0 and
 must carry the root hash, access logs, and generator/optimizer/data signatures.
 
-A real-model preregistration smoke on the stable producer tree succeeded with
-200 run cells, 175 plan cells, one pilot encoding, four qualification encodings,
-four tokenizer artifacts, a sealed validation-only access log, and a valid
-self-seal. Smoke artifact file/self hashes are intentionally not reported as
-official identities. The two clearly marked post-commit hash placeholders live
-in [EXPERIMENT_PROTOCOL.md](../EXPERIMENT_PROTOCOL.md) and will be filled from
-the committed official artifact, not from a smoke file.
+A real-model preregistration smoke on the stable producer tree succeeded, then
+the official root was generated from clean commit `6c825c3` and committed alone
+as `4a63345`. Its file SHA-256 is
+`7c8e4a16e6d53dd95a2a8377ea6d257c2384896ded477543ec10f1a716858132`
+and its canonical self-seal is
+`49c1b5b98eae998876c69584da43840da6212c498a6927aaa5de58a131f896b8`.
+It freezes 200 run cells, 175 plan cells, one pilot encoding, four qualification
+encodings, four tokenizer artifacts, and a sealed validation-only access log.
 
 Already byte-determined identities are source-tree
 `e899999d2f33dfc327b493f25bb24bcd594757bfc01c3eb6f46a5c4db5c94b9c`,
