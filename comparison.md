@@ -4,11 +4,58 @@ Numbers only. No ranking. Geometry, recipes, and dates live in [`lineage.md`](li
 
 **Bold** = the largest stored number in that column (ties all bold), including rates that count defects. `—` = that field was not stored or that eval was not run for this core.
 
-Every named family core appears in every table: Pulse, Aegis, Halo, Nimbus, Lyra, Halo Uncensored.
+The vault has eight dense cores plus four published routed systems. **Supa 2.0**
+and **Baya 2.0** name the 48/46 frontier systems; Supa Core 1.7 and Baya Core
+1.7 remain immutable 40-point dense dependencies.
 
-Last compiled: 2026-08-21.
+**Rename note (2026-08-26).** Supa was formerly named Taria; Baya was formerly named Lumina. This identity-only rename did not change either weight file or any score below.
+
+Last compiled: 2026-08-27.
 
 **Roster note (2026-08-21).** Active **Pulse** = 1.6.0 (`late_rineya`, 28L). Active **Nimbus** = 1.6.0 (soup-lab `global_best` α=0.40). Prior Pulse 1.0 / Nimbus 1.3 are under `_superseded/`. Phase 8 sealed-chat row below is the **archived** Pulse 1.0 teacher only.
+
+## Current common-protocol Long Context Demo baseline (2026-08-26)
+
+Every row below was generated from the actual published-core directory with the same protocol: BF16 load, greedy seed 17, thinking disabled, 24 generated tokens, 4096 context, no truncation.
+
+| Core | Showcase 64 | Stability 192 | All 256 | All-four packs / 64 |
+|---|---:|---:|---:|---:|
+| Pulse 1.6 | 31 | 89 | 120 | 0 |
+| Aegis 1.1 | 2 | 20 | 22 | 0 |
+| Halo 1.2 | 29 | 86 | 115 | 0 |
+| Nimbus 1.6 | 30 | 83 | 113 | 0 |
+| Lyra 1.4 | 28 | 86 | 114 | 0 |
+| Halo Uncensored 1.5 | 31 | 96 | 127 | 0 |
+| **Supa 1.7** | **40** | **121** | **161** | **13** |
+| **Baya 1.7** | **40** | **112** | **152** | **14** |
+
+Supa/Baya dense-vs-PEFT prediction parity is 251/256 and 249/256 respectively. Dense scores are reported above; adapter-form scores are not silently inherited.
+
+### Fast-algorithm family frontier
+
+| Recipe | Arms | Showcase | Stability | All 256 | All-four packs / 64 |
+|---|---:|---:|---:|---:|---:|
+| Supa-Baya Dense Gate42 | 2 | 42 | 124 | 166 | 18 |
+| Nimbus DualScale PEFT Gate45 | 2 | 45 | 124 | 169 | 19 |
+| **Baya 2.0 System46** | 3 | 46 | 125 | 171 | 21 |
+| **Supa 2.0 System48** | 9 | **48** | **128** | **176** | **21** |
+
+All four rows are now backed up as runnable system bundles under
+`Rineya_Published_Cores/systems/`. They use prediction-only routing and never
+read answers at inference time. They are not single dense checkpoints.
+
+### Best tested recipe by compatible anchor
+
+| Anchor | Best recipe | Showcase | Stability |
+|---|---|---:|---:|
+| Pulse | negative-vector UNKNOWN gate | 43 | 118 |
+| Halo | checkpoint-200 scale gate | 41 | 112 |
+| Lyra | checkpoint-200 scale gate | 41 | 118 |
+| Nimbus | checkpoint-200 scale gate | 45 | 124 |
+| Halo Uncensored | baseline retained | 31 | 96 |
+| Aegis | native 19L Pulse/Aegis LERP 0.5 | 6 | not promoted |
+
+---
 
 ---
 

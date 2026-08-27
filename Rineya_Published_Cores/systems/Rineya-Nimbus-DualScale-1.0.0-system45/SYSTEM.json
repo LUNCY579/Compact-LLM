@@ -1,0 +1,208 @@
+{
+  "schema_version": "2.0",
+  "system_id": "rineya.system.nimbus-dualscale.v1.0.0.system45.peft-unknown-gate",
+  "codename": "Nimbus DualScale PEFT Gate45",
+  "display_name": "Rineya Nimbus DualScale PEFT Gate 45",
+  "directory_name": "Rineya-Nimbus-DualScale-1.0.0-system45",
+  "version": "1.0.0-system",
+  "kind": "two_arm_peft_unknown_gate",
+  "classification": "showcase_selected_stability_validated",
+  "created_at_utc": "2026-08-27T19:59:37.875578Z",
+  "single_checkpoint": false,
+  "arm_count": 2,
+  "answer_key_access_at_inference": false,
+  "routing": {
+    "initial_arm": "nimbus_low",
+    "steps": [
+      {
+        "op": "select_if_arm_unknown",
+        "arm": "nimbus_high"
+      }
+    ]
+  },
+  "arms": {
+    "nimbus_low": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 0.8125,
+      "base_model": {
+        "directory": "Rineya-Nimbus-1.6.0-devfreeze",
+        "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+        "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+        "weight_bytes": 1503300328
+      }
+    },
+    "nimbus_high": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 1.25,
+      "base_model": {
+        "directory": "Rineya-Nimbus-1.6.0-devfreeze",
+        "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+        "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+        "weight_bytes": 1503300328
+      }
+    }
+  },
+  "assets": {
+    "step200": {
+      "source": "artifacts/rineya_long_context_weight_geometry_v1/selected/halo_stage_a_step200_adapter",
+      "bundled_path": "assets/step200",
+      "files": {
+        "adapter_config.json": {
+          "bytes": 1225,
+          "sha256": "beb2bf72b46b8256957e66282ee326ae3f6a0b01c406af9d92033dfff37db471"
+        },
+        "adapter_model.safetensors": {
+          "bytes": 40422168,
+          "sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+        },
+        "README.md": {
+          "bytes": 5340,
+          "sha256": "3a707c947127255b428d261718bcd3a9ef6debe727c3dedfffee90de4eab7a57"
+        }
+      }
+    }
+  },
+  "results": {
+    "showcase64": {
+      "hits": 45,
+      "items": 64,
+      "strict_exact": 0.703125
+    },
+    "stability192": {
+      "hits": 124,
+      "items": 192,
+      "strict_exact": 0.6458333333333334
+    },
+    "all256": {
+      "hits": 169,
+      "items": 256,
+      "strict_exact": 0.66015625
+    }
+  },
+  "evidence": {
+    "showcase64": {
+      "hits": 45,
+      "items": 64,
+      "inputs": {
+        "nimbus_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale0p8125_showcase64.jsonl",
+          "bytes": 17823,
+          "sha256": "6bc4fd98218c6a1a2a6e4f18cf12309f6f27ad40ad8febc061809e3ac3808913",
+          "bundled_path": "evidence/inputs/showcase64/nimbus_low.jsonl"
+        },
+        "nimbus_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale1p25_showcase64.jsonl",
+          "bytes": 17424,
+          "sha256": "5b5d28d6aefa412d782170f1179b6cd7a7c872313763e2cf1940509e7fdd4886",
+          "bundled_path": "evidence/inputs/showcase64/nimbus_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/ensembles/nimbus_scale0p8125_1p25_unknown_gate_showcase64.jsonl",
+        "bytes": 17421,
+        "sha256": "09d6ba594ee26a63693f2b6fc020791d83fcd8b72635b032435e31c5f70d8278",
+        "bundled_path": "evidence/expected/showcase64.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/ensembles/nimbus_scale0p8125_1p25_unknown_gate_showcase64_report.json",
+        "bytes": 5801,
+        "sha256": "4e0784167c33f229a697bc21ec3a60ce4075a988e4647574f87d3237fd335123",
+        "bundled_path": "evidence/expected/showcase64_report.json"
+      },
+      "canonical_prediction_sha256": "f77db116197535824c1e7860fa7ce978752cbd20e6a6a322a0d0420f11c0ebe0",
+      "replayable": true,
+      "replay_verified": true
+    },
+    "stability192": {
+      "hits": 124,
+      "items": 192,
+      "inputs": {
+        "nimbus_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_step200_scale0p8125_stability192.jsonl",
+          "bytes": 53346,
+          "sha256": "f6179e38941211c43670f9876ad9d5b66e77be36748de4e9aa67fa9471ec9861",
+          "bundled_path": "evidence/inputs/stability192/nimbus_low.jsonl"
+        },
+        "nimbus_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_step200_scale1p25_stability192.jsonl",
+          "bytes": 52108,
+          "sha256": "c89a7763ec4a545ae74f0f6eb4528b0f8d2c05f829cefd0ca4387e513161ca54",
+          "bundled_path": "evidence/inputs/stability192/nimbus_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_scale0p8125_1p25_unknown_gate_stability192.jsonl",
+        "bytes": 51861,
+        "sha256": "9197d1031810bc1be1ef298a6184576319da6836ff706f10bddd3ed0f04137a7",
+        "bundled_path": "evidence/expected/stability192.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_scale0p8125_1p25_unknown_gate_stability192_report.json",
+        "bytes": 5951,
+        "sha256": "cdfd8c77a4196bfa62d893f1b37a41488e43251de6e7b5a90b1f5dac0e9609d1",
+        "bundled_path": "evidence/expected/stability192_report.json"
+      },
+      "canonical_prediction_sha256": "847ffebb2e9a6ba2eabef277e13fd3b8065aff7c25654b984da9a56b12ea48f6",
+      "replayable": true,
+      "replay_verified": true
+    },
+    "all256": {
+      "hits": 169,
+      "items": 256,
+      "inputs": {
+        "nimbus_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_step200_scale0p8125_all256.jsonl",
+          "bytes": 70913,
+          "sha256": "dd8476ed28f4a57d64fd18a64a4f20fae7084382d16cd87c552a3611d4775ab7",
+          "bundled_path": "evidence/inputs/all256/nimbus_low.jsonl"
+        },
+        "nimbus_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_step200_scale1p25_all256.jsonl",
+          "bytes": 69276,
+          "sha256": "917ef4dbd6eb14d19b21c1bc0e71fedcb79090471af41f23b03b908563cbe075",
+          "bundled_path": "evidence/inputs/all256/nimbus_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_scale0p8125_1p25_unknown_gate_all256.jsonl",
+        "bytes": 69282,
+        "sha256": "bb3c3fd9ba0cc2ecb3bfebd1e41e56845df3f590f1b20abe5468e4669d69f10a",
+        "bundled_path": "evidence/expected/all256.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_scale0p8125_1p25_unknown_gate_all256_report.json",
+        "bytes": 5947,
+        "sha256": "ca9f8f849ae2817f5459d81c8e51546d516d77061d9938f130643a271b276d2d",
+        "bundled_path": "evidence/expected/all256_report.json"
+      },
+      "canonical_prediction_sha256": "5c0b477f9c9a0507eccc3eca68fdc5aebba272a372c2fd6bd0dd414355210c03",
+      "replayable": true,
+      "replay_verified": true
+    }
+  },
+  "source_config": {
+    "source_path": "Rineya_Long_Context_Weight_Geometry_Lab_v1/configs/final/nimbus_two_scale_unknown_gate.json",
+    "bytes": 2815,
+    "sha256": "d776f1ccb492a01ab5c466f220a3922668ccc5b2349ed4cdaed8afa539d4dbc7",
+    "bundled_path": "recipe/source_config.json"
+  },
+  "protocol": {
+    "dtype": "bfloat16",
+    "decoding": "greedy",
+    "seed": 17,
+    "thinking": false,
+    "max_new_tokens": 24,
+    "max_context": 4096,
+    "truncation": "forbidden"
+  },
+  "caveat": "The 45 score requires two PEFT executions. Dense materialization changes predictions and does not inherit this result.",
+  "system_manifest_sha256": "404f4511b3a32fc3f8226493bd773514082a48dff4133600c6d63a35770d93c3"
+}

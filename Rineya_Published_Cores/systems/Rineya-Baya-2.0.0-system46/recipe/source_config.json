@@ -1,0 +1,52 @@
+{
+  "schema_version": "1.0",
+  "name": "pulse_strong_negative_over_nimbus_unknown_gate",
+  "classification": "showcase_selected_stability_validated",
+  "method": "high_normalized_unknown_else_low",
+  "answer_key_access_at_inference": false,
+  "underlying_model_prediction_arms": 3,
+  "low": {
+    "description": "Nimbus checkpoint-200 scales 0.8125/1.25 UNKNOWN gate",
+    "showcase": "artifacts/rineya_long_context_weight_geometry_v1/ensembles/nimbus_scale0p8125_1p25_unknown_gate_showcase64.jsonl",
+    "stability": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_scale0p8125_1p25_unknown_gate_stability192.jsonl"
+  },
+  "high": {
+    "description": "Pulse + exact negative task vector 1.5*delta200 - 0.5*delta250",
+    "showcase": "artifacts/rineya_published_core_search_v1/negative_vectors/pulse_neg_200_250_1p5_m0p5_showcase64.jsonl",
+    "stability": "artifacts/rineya_published_core_search_v1/consensus48_stability/pulse_strong_negative_stability192.jsonl"
+  },
+  "results": {
+    "showcase64": {
+      "hits": 46,
+      "items": 64,
+      "strict_exact": 0.71875,
+      "base_paraphrase_both_correct": 13,
+      "counterfactual_pair_both_correct_and_changed": 9,
+      "unanswerable_correct": 9,
+      "all_four_packs": 7,
+      "prediction_sha256": "a5da6a57343087283baf746816d1c76eb8ab10cbd7d889d59a62f6f4bbc7fd23"
+    },
+    "stability192": {
+      "hits": 125,
+      "items": 192,
+      "strict_exact": 0.6510416666666666,
+      "base_paraphrase_both_correct": 36,
+      "counterfactual_pair_both_correct_and_changed": 26,
+      "unanswerable_correct": 19,
+      "all_four_packs": 14,
+      "prediction_sha256": "8a3f5a151a532fc7fcbd9d1ce6bd5a3e24fffed5d14d9f1110a25dad02eac36e"
+    },
+    "all256": {
+      "hits": 171,
+      "items": 256,
+      "strict_exact": 0.66796875,
+      "base_paraphrase_both_correct": 49,
+      "counterfactual_pair_both_correct_and_changed": 35,
+      "unanswerable_correct": 28,
+      "all_four_packs": 21,
+      "prediction_sha256": "96e24430645ec032895550bc5b295f74d2216af7067a7f686b1f636507c45889",
+      "report_sha256": "3b8acf6788fad48e999753728a00d6165044ae97d3870fb6622c52f4c7b4ad1f"
+    }
+  },
+  "caveat": "Showcase selected the cascade; Stability was frozen validation. This three-arm recipe is the recommended efficiency/performance tradeoff, while the nine-arm consensus cascade is the measured search ceiling."
+}

@@ -4,10 +4,114 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import math
+import re
 import time
 from pathlib import Path
 from typing import Any
+
+LORA_PROJECTION_NAMES = {
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj",
+    "gate_proj",
+    "up_proj",
+    "down_proj",
+}
+LAYER_NAME_RE = re.compile(r"(?:^|\.)layers\.(\d+)\.")
+
+
+def load_adapter_scale_profile(path: Path) -> tuple[dict[str, Any], str]:
+    """Load and validate a deterministic LoRA scale-profile recipe."""
+
+    raw = path.read_bytes()
+    try:
+        profile = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"Invalid adapter scale profile {path}: {exc}") from exc
+    if not isinstance(profile, dict):
+        raise TypeError("Adapter scale profile must be a JSON object")
+
+    allowed = {
+        "schema_version",
+        "label",
+        "default_multiplier",
+        "layer_multipliers",
+        "module_multipliers",
+    }
+    unknown = sorted(set(profile) - allowed)
+    if unknown:
+        raise ValueError(f"Unknown adapter scale profile fields: {unknown}")
+    if str(profile.get("schema_version", "1.0")) != "1.0":
+        raise ValueError("Adapter scale profile schema_version must be '1.0'")
+
+    def finite_number(value: Any, field: str) -> float:
+        if isinstance(value, bool) or not isinstance(value, (int, float)):
+            raise TypeError(f"{field} must be a finite number")
+        result = float(value)
+        if not math.isfinite(result):
+            raise ValueError(f"{field} must be a finite number")
+        return result
+
+    default_multiplier = finite_number(
+        profile.get("default_multiplier", 1.0), "default_multiplier"
+    )
+    layer_values = profile.get("layer_multipliers", {})
+    if not isinstance(layer_values, dict):
+        raise TypeError("layer_multipliers must be an object")
+    layer_multipliers: dict[str, float] = {}
+    for key, value in layer_values.items():
+        try:
+            layer = int(key)
+        except (TypeError, ValueError) as exc:
+            raise ValueError(f"Invalid layer_multipliers key: {key!r}") from exc
+        if layer < 0 or str(layer) != str(key):
+            raise ValueError(f"Invalid layer_multipliers key: {key!r}")
+        layer_multipliers[str(layer)] = finite_number(
+            value, f"layer_multipliers.{layer}"
+        )
+
+    module_values = profile.get("module_multipliers", {})
+    if not isinstance(module_values, dict):
+        raise TypeError("module_multipliers must be an object")
+    bad_modules = sorted(set(module_values) - LORA_PROJECTION_NAMES)
+    if bad_modules:
+        raise ValueError(f"Unknown module_multipliers keys: {bad_modules}")
+    module_multipliers = {
+        key: finite_number(value, f"module_multipliers.{key}")
+        for key, value in module_values.items()
+    }
+
+    normalized = {
+        "schema_version": "1.0",
+        "label": str(profile.get("label", path.stem)),
+        "default_multiplier": default_multiplier,
+        "layer_multipliers": layer_multipliers,
+        "module_multipliers": module_multipliers,
+    }
+    return normalized, hashlib.sha256(raw).hexdigest()
+
+
+def adapter_scale_for_module(
+    module_name: str, global_scale: float, profile: dict[str, Any] | None
+) -> tuple[float, int | None, str]:
+    """Resolve the absolute LoRA scale factor for one named projection module."""
+
+    layer_match = LAYER_NAME_RE.search(module_name)
+    layer = int(layer_match.group(1)) if layer_match else None
+    projection = module_name.rsplit(".", 1)[-1]
+    multiplier = 1.0
+    if profile is not None:
+        multiplier = float(profile["default_multiplier"])
+        if layer is not None:
+            multiplier = float(
+                profile["layer_multipliers"].get(str(layer), multiplier)
+            )
+        multiplier *= float(profile["module_multipliers"].get(projection, 1.0))
+    return global_scale * multiplier, layer, projection
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -126,6 +230,24 @@ def main() -> None:
         help="Optional PEFT adapter directory loaded onto --model (no full merge).",
     )
     parser.add_argument(
+        "--adapter-scale",
+        type=float,
+        default=1.0,
+        help=(
+            "Multiply the active LoRA adapter contribution by this finite factor. "
+            "The base checkpoint is unchanged; 0 disables the adapter and 1 uses "
+            "its configured scale."
+        ),
+    )
+    parser.add_argument(
+        "--adapter-scale-profile",
+        type=Path,
+        help=(
+            "Optional JSON recipe containing default, per-layer, and per-projection "
+            "multipliers applied on top of --adapter-scale."
+        ),
+    )
+    parser.add_argument(
         "--torch-dtype",
         default="auto",
         choices=("auto", "float32", "float16", "bfloat16"),
@@ -146,6 +268,24 @@ def main() -> None:
         help="CPU memory budget when --max-gpu-memory is set.",
     )
     args = parser.parse_args()
+
+    if not math.isfinite(args.adapter_scale):
+        parser.error("--adapter-scale must be finite")
+    if args.adapter is None and args.adapter_scale != 1.0:
+        parser.error("--adapter-scale requires --adapter")
+    if args.adapter is None and args.adapter_scale_profile is not None:
+        parser.error("--adapter-scale-profile requires --adapter")
+
+    adapter_scale_profile: dict[str, Any] | None = None
+    adapter_scale_profile_sha256: str | None = None
+    if args.adapter_scale_profile is not None:
+        profile_path = args.adapter_scale_profile.expanduser().resolve(strict=True)
+        try:
+            adapter_scale_profile, adapter_scale_profile_sha256 = (
+                load_adapter_scale_profile(profile_path)
+            )
+        except (TypeError, ValueError) as exc:
+            parser.error(str(exc))
 
     try:
         import torch
@@ -210,9 +350,45 @@ def main() -> None:
             raise SystemExit(f"Missing adapter_config.json in {adapter}")
         try:
             from peft import PeftModel
+            from peft.tuners.lora.layer import LoraLayer
         except ImportError as exc:
             raise SystemExit("Install peft to use --adapter") from exc
         model = PeftModel.from_pretrained(model, str(adapter))
+        scaled_layers = 0
+        observed_layers: set[int] = set()
+        observed_modules: set[str] = set()
+        effective_scales: list[float] = []
+        for module_name, module in model.named_modules():
+            if not isinstance(module, LoraLayer):
+                continue
+            effective_scale, layer, projection = adapter_scale_for_module(
+                module_name, args.adapter_scale, adapter_scale_profile
+            )
+            if layer is not None:
+                observed_layers.add(layer)
+            observed_modules.add(projection)
+            for adapter_name in module.active_adapters:
+                module.set_scale(adapter_name, effective_scale)
+            effective_scales.append(effective_scale)
+            scaled_layers += 1
+        if scaled_layers == 0:
+            raise SystemExit("The loaded adapter contains no LoRA layers to scale")
+        if adapter_scale_profile is not None:
+            requested_layers = {
+                int(value) for value in adapter_scale_profile["layer_multipliers"]
+            }
+            missing_layers = sorted(requested_layers - observed_layers)
+            if missing_layers:
+                raise SystemExit(
+                    f"Adapter scale profile references missing LoRA layers: {missing_layers}"
+                )
+            requested_modules = set(adapter_scale_profile["module_multipliers"])
+            missing_modules = sorted(requested_modules - observed_modules)
+            if missing_modules:
+                raise SystemExit(
+                    "Adapter scale profile references missing LoRA modules: "
+                    f"{missing_modules}"
+                )
 
     model.eval()
     if tokenizer.pad_token_id is None:
@@ -297,6 +473,15 @@ def main() -> None:
                         "seed": args.seed,
                         "decoding": "greedy",
                     }
+                    if args.adapter:
+                        result["adapter_scale"] = args.adapter_scale
+                        result["adapter_effective_scale_min"] = min(effective_scales)
+                        result["adapter_effective_scale_max"] = max(effective_scales)
+                        if adapter_scale_profile is not None:
+                            result["adapter_scale_profile"] = adapter_scale_profile["label"]
+                            result["adapter_scale_profile_sha256"] = (
+                                adapter_scale_profile_sha256
+                            )
 
             except Exception as exc:
                 if not args.continue_on_error:

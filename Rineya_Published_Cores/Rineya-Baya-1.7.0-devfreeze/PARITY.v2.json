@@ -1,0 +1,326 @@
+{
+  "schema_version": "1.0",
+  "kind": "dense_vs_peft_prediction_parity",
+  "verified_at_utc": "2026-08-26T23:46:51.315797Z",
+  "core_id": "rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+  "codename": "Lumina",
+  "model": {
+    "directory": ".Rineya-Lumina-1.7.0-devfreeze.staging-v1",
+    "weight_sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+    "dtype_counts": {
+      "BF16": 310
+    }
+  },
+  "protocol": {
+    "dtype": "bfloat16",
+    "decoding": "greedy",
+    "seed": 17,
+    "thinking": false,
+    "max_new_tokens": 24,
+    "max_context": 4096,
+    "truncation": "forbidden",
+    "prompts_sha256": "2619bd2c4a503e8d65e1d22d5090738b91229365b400332ade29c110dece0af5"
+  },
+  "candidate": {
+    "path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256.jsonl",
+    "file_sha256": "4646cc109aa12a815d85174b4f0909997f715d3940aad58101164f101d3b6f06",
+    "canonical_prediction_sha256": "5c8ae1e136caf93aecb0f0e43b0dc66583196425bc5a8ee6c1e00427cf6b14b3",
+    "rows": 256
+  },
+  "peft_reference": {
+    "path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_step200_scale1p25_all256.jsonl",
+    "file_sha256": "917ef4dbd6eb14d19b21c1bc0e71fedcb79090471af41f23b03b908563cbe075",
+    "canonical_prediction_sha256": "4101d52889b4681542ae0c2d16c0378cc646ed288bcc5be3960c1cb029ed0adb",
+    "rows": 256
+  },
+  "parity": {
+    "raw_prediction_matches": 249,
+    "normalized_prediction_matches": 249,
+    "items": 256,
+    "exact_raw_parity": false,
+    "exact_normalized_parity": false,
+    "differing_ids": [
+      "RLC-008-P",
+      "RLC-010-U",
+      "RLC-015-C",
+      "RLC-026-U",
+      "RLC-033-P",
+      "RLC-061-P",
+      "RLC-063-B"
+    ]
+  },
+  "dense_results": {
+    "showcase64": {
+      "hits": 40,
+      "items": 64,
+      "strict_exact": 0.625
+    },
+    "stability192": {
+      "hits": 112,
+      "items": 192,
+      "strict_exact": 0.5833333333333334
+    },
+    "all256": {
+      "hits": 152,
+      "items": 256,
+      "strict_exact": 0.59375
+    }
+  },
+  "dense_report": {
+    "path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256_report.json",
+    "sha256": "0d99501c9cc8fc34b91b89a2ed32e29332b7c3ae49f59c098e6d239708863ef1",
+    "run": {
+      "run": "lumina_dense_all256",
+      "key_items": 256,
+      "prediction_rows": 256,
+      "covered_items": 256,
+      "coverage": 1.0,
+      "duplicate_prediction_ids": [],
+      "unexpected_prediction_ids": [],
+      "strict_exact": 0.59375,
+      "first_line_exact": 0.59375,
+      "short_response_rate_le_12_words": 1.0,
+      "mean_response_words": 2.054688,
+      "pack_metrics": {
+        "complete_scenario_packs_in_key": 64,
+        "fully_covered_scenario_packs": 64,
+        "base_paraphrase_prediction_agreement": 0.609375,
+        "base_paraphrase_both_correct": 0.5,
+        "counterfactual_pair_both_correct_and_changed": 0.59375,
+        "unanswerable_accuracy": 0.390625,
+        "all_four_variants_correct": 0.21875
+      },
+      "by_variant": {
+        "base": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.75,
+          "first_line_exact": 0.75
+        },
+        "counterfactual": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "paraphrase": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.640625,
+          "first_line_exact": 0.640625
+        },
+        "unanswerable": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.390625,
+          "first_line_exact": 0.390625
+        }
+      },
+      "by_domain": {
+        "arcane_academy": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "coastal_council": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.5625,
+          "first_line_exact": 0.5625
+        },
+        "detective_bureau": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "expedition": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "family_enterprise": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "museum": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "orbital_station": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.59375,
+          "first_line_exact": 0.59375
+        },
+        "research_institute": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.625,
+          "first_line_exact": 0.625
+        }
+      },
+      "by_task_type": {
+        "alias_resolution": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.09375,
+          "first_line_exact": 0.09375
+        },
+        "causal_disambiguation": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 1.0,
+          "first_line_exact": 1.0
+        },
+        "count_with_exclusions": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.46875,
+          "first_line_exact": 0.46875
+        },
+        "latest_verified_record": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.6875,
+          "first_line_exact": 0.6875
+        },
+        "multi_condition_identity": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.40625,
+          "first_line_exact": 0.40625
+        },
+        "object_state_tracking": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.75,
+          "first_line_exact": 0.75
+        },
+        "rule_exception": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.46875,
+          "first_line_exact": 0.46875
+        },
+        "temporal_correction": {
+          "items": 32,
+          "covered": 32,
+          "strict_exact": 0.875,
+          "first_line_exact": 0.875
+        }
+      },
+      "by_difficulty": {
+        "hard": {
+          "items": 160,
+          "covered": 160,
+          "strict_exact": 0.4875,
+          "first_line_exact": 0.4875
+        },
+        "medium": {
+          "items": 96,
+          "covered": 96,
+          "strict_exact": 0.770833,
+          "first_line_exact": 0.770833
+        }
+      },
+      "by_needle_profile": {
+        "distributed": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.578125,
+          "first_line_exact": 0.578125
+        },
+        "early": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.28125,
+          "first_line_exact": 0.28125
+        },
+        "late": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.640625,
+          "first_line_exact": 0.640625
+        },
+        "middle": {
+          "items": 64,
+          "covered": 64,
+          "strict_exact": 0.875,
+          "first_line_exact": 0.875
+        }
+      },
+      "by_length_bucket": {
+        "compact_long": {
+          "items": 88,
+          "covered": 88,
+          "strict_exact": 0.590909,
+          "first_line_exact": 0.590909
+        },
+        "extended_long": {
+          "items": 84,
+          "covered": 84,
+          "strict_exact": 0.571429,
+          "first_line_exact": 0.571429
+        },
+        "standard_long": {
+          "items": 84,
+          "covered": 84,
+          "strict_exact": 0.619048,
+          "first_line_exact": 0.619048
+        }
+      }
+    }
+  },
+  "run_manifest": {
+    "mode": "publisher_controlled_demo256_v2",
+    "core_id": "rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+    "started_at_utc": "2026-08-26T23:44:47.737822Z",
+    "finished_at_utc": "2026-08-26T23:46:42.478873Z",
+    "python_version": "3.11.15",
+    "environment": {
+      "python": "3.11.15",
+      "platform": "win32",
+      "packages": {
+        "torch": "2.12.1+cu126",
+        "transformers": "5.14.1",
+        "peft": "0.19.1",
+        "safetensors": "0.8.0",
+        "accelerate": "1.14.0"
+      }
+    },
+    "runner": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
+      "sha256": "4e9a73e78fe706a7e0491b57534d19753228cb743e2a3811c9307077815f4119"
+    },
+    "evaluator": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+      "sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5"
+    },
+    "invocation": {
+      "model": ".Rineya-Lumina-1.7.0-devfreeze.staging-v1",
+      "prompts": "Rineya_Long_Context_Demo_v1/data/all_prompts.jsonl",
+      "predictions": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256.jsonl",
+      "report": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256_report.json",
+      "dtype": "bfloat16",
+      "decoding": "greedy",
+      "seed": 17,
+      "thinking": false,
+      "max_new_tokens": 24,
+      "max_context": 4096,
+      "truncation": "forbidden",
+      "max_gpu_memory": "2GiB",
+      "max_cpu_memory": "32GiB"
+    },
+    "model_weight_sha256_before": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+    "model_weight_sha256_after": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba"
+  },
+  "publishable_provenance": true,
+  "selection_caveat": "Showcase was used during model selection. Stability was frozen before its first selected-recipe run; all scores are on the public Demo suite."
+}

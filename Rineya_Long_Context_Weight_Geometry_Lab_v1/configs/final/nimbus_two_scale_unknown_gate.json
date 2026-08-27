@@ -1,0 +1,80 @@
+{
+  "schema_version": "1.0",
+  "name": "nimbus_step200_two_scale_unknown_gate",
+  "classification": "showcase_selected_stability_validated",
+  "base_model": {
+    "path": "Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+    "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+  },
+  "adapter": {
+    "source": "artifacts/halo_long_context_sft_v1/stage_a/checkpoint-200",
+    "preserved_source": "artifacts/rineya_long_context_weight_geometry_v1/selected/halo_stage_a_step200_adapter",
+    "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+    "rank": 16,
+    "original_alpha": 32
+  },
+  "arms": {
+    "low": {
+      "scale": 0.8125,
+      "standalone_adapter": "artifacts/rineya_long_context_weight_geometry_v1/selected/nimbus_step200_scale0p8125_adapter",
+      "encoded_lora_alpha": 26,
+      "config_sha256": "1abf76a796f86c52273ad0d88d650e4174076476a91dac78c1864a70f1d7160d"
+    },
+    "high": {
+      "scale": 1.25,
+      "standalone_adapter": "artifacts/rineya_long_context_weight_geometry_v1/selected/nimbus_step200_scale1p25_adapter",
+      "encoded_lora_alpha": 40,
+      "config_sha256": "40200036e8ff271f6b3eb45732c137493530dbb20d9c0ae8ca6e60af4d771b4b"
+    }
+  },
+  "selection_rule": {
+    "method": "high_scale_unknown_else_low_scale",
+    "description": "Return the high-scale prediction only when its normalized value is UNKNOWN; otherwise return the low-scale prediction.",
+    "answer_key_access_at_inference": false,
+    "script": "Rineya_Long_Context_Weight_Geometry_Lab_v1/scripts/build_abstention_scale_ensemble.py"
+  },
+  "inference": {
+    "torch_dtype": "bfloat16",
+    "thinking": false,
+    "decoding": "greedy",
+    "max_new_tokens": 24,
+    "max_context": 4096,
+    "truncation": "forbidden",
+    "seed": 17
+  },
+  "results": {
+    "nimbus_baseline": {
+      "showcase64_hits": 30,
+      "stability192_hits": 83,
+      "all256_hits": 113,
+      "all256_strict_exact": 0.44140625
+    },
+    "showcase64": {
+      "hits": 45,
+      "items": 64,
+      "strict_exact": 0.703125,
+      "all_four_packs": 6,
+      "packs": 16
+    },
+    "stability192": {
+      "hits": 124,
+      "items": 192,
+      "strict_exact": 0.6458333333333334,
+      "all_four_packs": 13,
+      "packs": 48
+    },
+    "all256": {
+      "hits": 169,
+      "items": 256,
+      "strict_exact": 0.66015625,
+      "base_paraphrase_both_correct": 0.765625,
+      "counterfactual_pair_both_correct_and_changed": 0.546875,
+      "unanswerable_accuracy": 0.40625,
+      "all_four_variants_correct": 0.296875,
+      "all_four_packs": 19,
+      "packs": 64,
+      "prediction_sha256": "bb3c3fd9ba0cc2ecb3bfebd1e41e56845df3f590f1b20abe5468e4669d69f10a",
+      "report_sha256": "ca9f8f849ae2817f5459d81c8e51546d516d77061d9938f130643a271b276d2d"
+    }
+  }
+}
