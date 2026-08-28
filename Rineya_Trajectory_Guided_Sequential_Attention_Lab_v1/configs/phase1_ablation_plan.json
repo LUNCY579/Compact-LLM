@@ -1,0 +1,48 @@
+{
+  "schema_version": "tgsa.phase1-ablation-plan.v1",
+  "status": "preregister-before-execution",
+  "seeds": [101, 202, 303, 404, 505],
+  "arms": [
+    "parallel_mha",
+    "cascade",
+    "history_control",
+    "raw_delta",
+    "learned_delta",
+    "qkv_conditioned",
+    "predictor_corrector",
+    "full"
+  ],
+  "fairness_views": [
+    "native_parameter_count",
+    "parameter_matched",
+    "training_flop_matched",
+    "inference_flop_matched",
+    "wall_clock_latency_matched"
+  ],
+  "primary_endpoint": {
+    "name": "sealed_long_context_macro_accuracy",
+    "comparison": "full_minus_cascade",
+    "test": "stratified_paired_bootstrap",
+    "bootstrap_samples": 10000,
+    "confidence": 0.95,
+    "minimum_practical_effect_absolute": 0.01
+  },
+  "guardrails": {
+    "maximum_short_context_accuracy_regression_absolute": 0.005,
+    "maximum_validation_nll_regression_relative": 0.01,
+    "report_peak_memory": true,
+    "report_prefill_and_decode_latency_separately": true
+  },
+  "diagnostic_only": [
+    "trajectory_velocity_convergence",
+    "trajectory_oscillation",
+    "attention_entropy",
+    "importance_sparsity",
+    "intermediate_logit_stability"
+  ],
+  "sealed_data_policy": {
+    "authors_of_training_code_do_not_inspect_answers": true,
+    "one_final_primary_evaluation_per_frozen_checkpoint": true,
+    "all_exclusions_are_declared_before_unsealing": true
+  }
+}

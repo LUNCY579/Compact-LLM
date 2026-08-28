@@ -1,0 +1,42 @@
+{
+  "schema_version": "tgsa.phase0-smoke.v1",
+  "seed": 1729,
+  "model": {
+    "embed_dim": 64,
+    "num_heads": 4,
+    "dropout": 0.0,
+    "bias": false,
+    "trajectory_rank": 16,
+    "trajectory_mode": "learned",
+    "control_source": "velocity",
+    "use_state_cascade": true,
+    "use_control_injection": true,
+    "use_predictor": true,
+    "condition_q": true,
+    "condition_k": true,
+    "condition_v": true,
+    "use_importance_bias": true,
+    "normalize_carrier": true,
+    "trajectory_scale": 0.5,
+    "max_predictor_step": 0.5,
+    "max_correction_step": 1.0,
+    "importance_floor": 0.0001,
+    "importance_logit_scale": 1.0,
+    "telemetry_level": "none",
+    "detach_telemetry": true
+  },
+  "runtime": {
+    "batch_size": 2,
+    "sequence_length": 64,
+    "device": "auto",
+    "dtype": "float32",
+    "warmup_iterations": 5,
+    "timed_iterations": 20
+  },
+  "acceptance": {
+    "max_causal_prefix_error": 0.00001,
+    "require_finite_forward": true,
+    "require_finite_backward": true,
+    "require_trajectory_gradient": true
+  }
+}

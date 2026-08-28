@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.example/schemas/tgsa-run-manifest-v1.json",
+  "title": "TGSA Run Manifest",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "schema_version",
+    "run_id",
+    "created_at_utc",
+    "status",
+    "branch",
+    "config_sha256",
+    "seed",
+    "environment",
+    "model",
+    "input",
+    "checks",
+    "metrics",
+    "claim_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.run-manifest.v1"},
+    "run_id": {"type": "string", "minLength": 1},
+    "created_at_utc": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["pass", "fail"]},
+    "branch": {"type": "string", "minLength": 1},
+    "git_commit": {"type": ["string", "null"]},
+    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "seed": {"type": "integer"},
+    "environment": {"type": "object"},
+    "model": {"type": "object"},
+    "input": {"type": "object"},
+    "checks": {
+      "type": "object",
+      "additionalProperties": {"type": "boolean"}
+    },
+    "metrics": {"type": "object"},
+    "claim_scope": {"type": "string", "minLength": 1}
+  }
+}
