@@ -32,8 +32,9 @@ Times are UTC unless marked otherwise. Last updated: 2026-08-27.
 | 2026-08-21 01:14 | Roster replace: archive Pulse 1.0 + Nimbus 1.3; vault **Pulse 1.6** (`late_rineya`) and **Nimbus 1.6** (`global_best`) |
 | 2026-08-26 23:47 | Transactional paired publication of **Supa 1.7** and **Baya 1.7** after BF16 dense parity and Demo-256 validation |
 | 2026-08-27 19:59 | Transactional publication of **Supa System48**, **Baya System46**, PEFT Gate45, and Dense Gate42 with exact adapters, routing, hashes, and replay evidence |
+| 2026-08-27 | Transactional promotion of the former `Rineya-Nimbus-Abstain-1.0` checkpoint as **Supa-A1**; `Nimbus-A1` assigned to the actual Nimbus 1.6 lineage |
 
-Open next items (HF upload, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md).
+Open next items (new calibration/final splits, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md). The Supa-A1 private Hub backup is commit `b14103c71c240998171694a0d0397bd4e5d64d71`.
 
 **Rename/alias note (2026-08-26).** Supa was formerly Taria (`rineya.core.taria.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125`); Baya was formerly Lumina (`rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25`). This identity-only rename preserved both weight hashes and all frozen evidence. Historical artifact and publisher-script paths keep their original names for auditability.
 
@@ -45,6 +46,7 @@ Open next items (HF upload, sealed TEST, DPO) are on [`roadmap.md`](roadmap.md).
 | **Baya 2.0** | 3-arm Nimbus/Pulse UNKNOWN cascade | **46** | **125** | **171** |
 | Nimbus DualScale PEFT Gate45 | Nimbus + step-200 at 0.8125/1.25 | **45** | **124** | **169** |
 | Supa-Baya Dense Gate42 | Supa Core 1.7 + Baya Core 1.7 | **42** | **124** | **166** |
+| **Supa-A1** | one dense weight + baked UNKNOWN-logit custom class | **43** | **125** | **168** |
 
 The routing is nonlinear and prompt-dependent. System48/46/45 cannot be
 represented by a single dense merge without a new distillation experiment and
@@ -65,6 +67,7 @@ fresh evaluation. The prior dense Supa/Baya names remain version-qualified as
 | Halo Uncensored | 1.5.0-devfreeze | 28 | 1.0 | same donor as Halo | Uncensored pair for Halo (kept blocks replaced) |
 | Supa Core | 1.7.0-devfreeze | 28 | Nimbus + 0.8125 long-context delta | Stage-A checkpoint 200, trained from Halo then transferred to Nimbus | Dense low-scale dependency arm; 40/64 |
 | Baya Core | 1.7.0-devfreeze | 28 | Nimbus + 1.25 long-context delta | Same checkpoint/direction as Supa | Dense high-scale dependency arm; 40/64 |
+| Supa-A1 | 1.0.0-devfreeze / tracking A1 | 28 | Supa tensor + baked bias 5.15625 | Same tensor as Supa 1.7; custom model class | One-pass abstention core; 43/64, 125/192 |
 
 Active **Pulse** and **Nimbus** keep the roster names but are new 28L stitches (2026-08-21). The Phase 8 19L teacher and the prior Aegis-donor Nimbus live under `_superseded/`. Aegis ancestry still uses the archived Pulse 1.0 teacher.
 
@@ -78,6 +81,7 @@ Active **Pulse** and **Nimbus** keep the roster names but are new 28L stitches (
 | 2026-08-19 21:00:00 | **Halo Uncensored** | recorded uncensored pair for Halo | `Rineya_Published_Cores/Rineya-Halo-Uncensored-1.5.0-devfreeze` | `c5d4a17f…` |
 | 2026-08-26 23:47:23 | **Supa** | Showcase selected; Stability validated; sealed TEST not run | `Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze` | `962abc5b…` |
 | 2026-08-26 23:47:26 | **Baya** | Showcase selected; Stability validated; sealed TEST not run | `Rineya_Published_Cores/Rineya-Baya-1.7.0-devfreeze` | `1737cd1e…` |
+| 2026-08-27 | **Supa-A1** | S4 added post-confirmation; Showcase threshold; Stability previously inspected; sealed TEST not run | `Rineya_Published_Cores/Rineya-Supa-A1-1.0.0-devfreeze` | `962abc5b…` |
 
 ---
 
@@ -216,7 +220,7 @@ Inherits Aegis’s dual-SFT v1 mix (16,410) through the dense Aegis donor.
 
 ## Supa Core 1.7 (`rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125`)
 
-**Spectrum.** BF16 dense Nimbus 1.6 plus the Stage-A long-context LoRA checkpoint 200 at scale **0.8125**. The adapter was trained from **Halo 1.2**, not Nimbus, on the disjoint CC0 long-context corpus; transfer to Nimbus was a later weight-space experiment. Supa is the low-scale paired-answer arm.
+**Spectrum.** BF16 dense Nimbus 1.6 plus the early Stage-A long-context LoRA checkpoint 200 at scale **0.8125**. The adapter was trained from **Halo 1.2**, not Nimbus, on the disjoint CC0 long-context corpus; transfer to Nimbus was a later weight-space experiment. Stage A itself is incomplete (latest checkpoint 250, NaN eval losses, no CC0 validation/test). Supa is the low-scale paired-answer arm, not evidence of a finished SFT run.
 
 **Publication gates**
 
@@ -248,6 +252,41 @@ Recorded transactionally with `Rineya_Published_Cores/_publish_taria_lumina.py`.
 Supa Core 1.7 and Baya Core 1.7 are the preserved dense pair. Their 42-point
 gate is now published as Dense Gate42; the Supa/Baya 2.0 names belong to the
 48/46 routed systems. Sealed TEST not run.
+
+---
+
+## Supa-A1 (`rineya.core.supa-a1.v1.0.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-abstain-b5p15625`)
+
+**Spectrum.** Supa-A1 promotes the local checkpoint formerly called
+`Rineya-Nimbus-Abstain-1.0`. Its 1,192,135,096-byte tensor is byte-identical to
+Supa Core 1.7 (`962abc5b…`). The behavioral change is an `auto_map` Qwen3 model
+class that adds **5.156249985098839** to token **51378** (`UNKNOWN`) before
+greedy argmax.
+
+**A-series identity and sibling control**
+
+- public/tracking name: **Supa-A1**;
+- semantic vault version: `1.0.0-devfreeze`; tracking label: `A1`;
+- actual Nimbus 1.6 receives the **Nimbus-A1** tracking alias;
+- the former `Rineya-Nimbus-Dense-1.0-nobias` is a Supa-A1 ablation control,
+  not a separate Nimbus core, because its tensor is the same Supa weight.
+
+**Publication gates**
+
+- source Nimbus weight `7b66b8d0…` and step200 adapter `517966d7…` at 0.8125;
+- FP32 LoRA merge followed by BF16 save;
+- gate spec `5f6cc42e…`, source checkpoint manifest `c613d0fd…`;
+- source machine paths sanitized into `SOURCE_CHECKPOINT.json`;
+- actual checkpoint results: 43/64 Showcase, 125/192 Stability, 168/256;
+- offline S4 reference: 46/64, 125/192 (not inherited by the checkpoint);
+- transactional promotion, full hash verification, Python compile check, and
+  `trust_remote_code=True` smoke load;
+- sealed TEST not run.
+
+The two-logit S4 gate is bias-bakeable because the softmax normalizer cancels.
+Greedy decoding and a one-token `UNKNOWN` are required. The class applies its
+bias at every decode step although the tuned gate was first-token-only; the
+256-row audit found no mid-answer `UNKNOWN`.
 
 ---
 

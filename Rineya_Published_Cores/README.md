@@ -1,6 +1,6 @@
 # Rineya Published Cores
 
-Developer ledger: [`../roadmap.md`](../roadmap.md) (index), [`../lineage.md`](../lineage.md) (recipes and dates), [`../comparison.md`](../comparison.md) (evals), [`../announcement.md`](../announcement.md) (public copy).
+Developer ledger: [`../roadmap.md`](../roadmap.md) (index), [`../lineage.md`](../lineage.md) (recipes and dates), [`../comparison.md`](../comparison.md) (evals), [`FAMILY_PERFORMANCE_AND_RESEARCH.md`](FAMILY_PERFORMANCE_AND_RESEARCH.md) (protocol-aware technical review), [`../announcement.md`](../announcement.md) (public copy).
 
 Immutable vault for dense Hugging Face checkpoints (`model.safetensors`) and
 versioned routed systems under [`systems/`](systems/README.md).
@@ -38,13 +38,20 @@ and frozen replay evidence.
 | `Rineya-Pulse-1.6.0-devfreeze` | `rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape` | 28L late_rineya α-shape (Halo donor). Roster name **Pulse** |
 | `Rineya-Aegis-1.1.0-devfreeze` | `rineya.core.aegis.v1.1.0-devfreeze.19L.454M.dual-sft-v1-lr5e4` | LoRA merge of teacher dual-SFT v1 `5e-4` into archived Pulse 1.0 base |
 | `Rineya-Halo-1.2.0-devfreeze` | `rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4` | 28-layer Qwen3; 19 kept blocks 50/50 with v1@5e-4 + v2@1e-4 |
-| `Rineya-Nimbus-1.6.0-devfreeze` | `rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40` | 28L soup-lab global_best α=0.40. Roster name **Nimbus** |
+| `Rineya-Nimbus-1.6.0-devfreeze` | `rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40` | 28L soup-lab global_best α=0.40. Roster name **Nimbus**; tracking alias **Nimbus-A1** |
 | `Rineya-Lyra-1.4.0-devfreeze` | `rineya.core.lyra.v1.4.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-1e5` | 28-layer Qwen3; 19 kept blocks 50/50 with v1@5e-4 + v1@1e-5 |
 | `Rineya-Halo-Uncensored-1.5.0-devfreeze` | `rineya.core.halo-uncensored.v1.5.0-devfreeze.28L.qwen3-replace-v1-5e4-v2-1e4` | Same Halo donor; kept blocks fully replaced (α=1.0). Uncensored pair for Halo |
 | `Rineya-Supa-1.7.0-devfreeze` | `rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125` | **Supa Core 1.7**, dense 40/64 low-scale dependency arm |
 | `Rineya-Baya-1.7.0-devfreeze` | `rineya.core.baya.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25` | **Baya Core 1.7**, dense 40/64 high-scale dependency arm |
+| `Rineya-Supa-A1-1.0.0-devfreeze` | `rineya.core.supa-a1.v1.0.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-abstain-b5p15625` | **Supa-A1**, one-pass baked abstention core: 43/64 Showcase, 125/192 Stability; custom code + greedy decoding required |
 
 **Rename aliases (2026-08-26).** Supa was formerly Taria (`rineya.core.taria.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125`); Baya was formerly Lumina (`rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25`). Weights and frozen evidence are unchanged.
+
+**A-series tracking (2026-08-27).** Supa-A1 promotes the checkpoint formerly
+called `Rineya-Nimbus-Abstain-1.0`. `Nimbus-A1` resolves to the actual Nimbus 1.6
+lineage. The former `Rineya-Nimbus-Dense-1.0-nobias` is retained as Supa-A1's
+ablation evidence rather than published as a misleading duplicate Nimbus core;
+its weights are byte-identical to Supa Core 1.7 and Supa-A1.
 
 ## Superseded (archived, not deleted)
 
@@ -61,6 +68,15 @@ Publish or verify the four routed frontier bundles with
 `python _publish_family_frontier.py preflight|apply|verify`. Dense cores are not
 overwritten by that transaction.
 
-Private Hugging Face backup: `Luncy1978/rineya-published-cores` main commit
-`548fdc6b99205aca09326652d5ac0009fe860707` (systems, catalogs, adapters,
-evidence, and runtime verified byte-for-byte after upload).
+Promote or verify Supa-A1 with
+`python _promote_supa_a1.py preflight|apply|verify`. Add `--smoke-load` to verify
+the `trust_remote_code=True` model-class load. The transaction pins every source
+hash, stages the directory, refuses collisions, sanitizes machine-local paths,
+and appends the catalog only after directory verification.
+
+Private Hugging Face family backup: `Luncy1978/rineya-published-cores`.
+Supa-A1, its 1.19 GB weight, frozen prompts/keys/predictions, full manifests,
+root custom-code module, refreshed catalog, and family cards were added at
+commit `b14103c71c240998171694a0d0397bd4e5d64d71`. The repository was verified
+private after upload. Earlier routed-system backup commit:
+`548fdc6b99205aca09326652d5ac0009fe860707`.

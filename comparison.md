@@ -28,6 +28,7 @@ Every row below was generated from the actual published-core directory with the 
 | Halo Uncensored 1.5 | 31 | 96 | 127 | 0 |
 | **Supa 1.7** | **40** | **121** | **161** | **13** |
 | **Baya 1.7** | **40** | **112** | **152** | **14** |
+| **Supa-A1** | **43** | **125** | **168** | **19** |
 
 Supa/Baya dense-vs-PEFT prediction parity is 251/256 and 249/256 respectively. Dense scores are reported above; adapter-form scores are not silently inherited.
 
@@ -39,10 +40,14 @@ Supa/Baya dense-vs-PEFT prediction parity is 251/256 and 249/256 respectively. D
 | Nimbus DualScale PEFT Gate45 | 2 | 45 | 124 | 169 | 19 |
 | **Baya 2.0 System46** | 3 | 46 | 125 | 171 | 21 |
 | **Supa 2.0 System48** | 9 | **48** | **128** | **176** | **21** |
+| **Supa-A1 baked S4** | **1** | 43 | 125 | 168 | 19 |
+| S1 normalized gate (research, not a published core) | **1** | 47 | **130** | **177** | **25** |
 
-All four rows are now backed up as runnable system bundles under
+The four routed rows are backed up as runnable system bundles under
 `Rineya_Published_Cores/systems/`. They use prediction-only routing and never
-read answers at inference time. They are not single dense checkpoints.
+read answers at inference time. Supa-A1 is a separate one-directory custom-code
+core. S1 remains a research logits processor. Neither should inherit another
+row's score.
 
 ### Best tested recipe by compatible anchor
 
@@ -66,24 +71,31 @@ read answers at inference time. They are not single dense checkpoints.
 | Frozen long-context showcase | greedy, 24 new tokens, context 4096, seed 17, thinking off | 64 | Pulse: `Rineya_Long_Context_Demo_v1/outputs/greedy_soup_v2_showcase_report.json` (Phase 8 accepted teacher = Pulse). Aegis: `…/aegis_showcase_report.json`. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/*_report.json`. Official Qwen3-4B/8B: `Rineya_Long_Context_Demo_v1/outputs/qwen3_4b_showcase_report.json` and `qwen3_8b_showcase_report.json` (NF4 4-bit; 8GB GPU cannot hold bf16 4B/8B) |
 | Dual-skill chat DEV | Phase 1 `dev.jsonl`, 32 tokens, `eos_only`, quality v4.5 | 510 | Pulse / Aegis: `short-response-model-phase-0-1-2/artifacts/teacher_dual_sft_v1/lr_sweep/SELECTION_REPORT.md` (2026-08-17). Aegis there is PEFT on Pulse; vault Aegis is the merged dense file. 28L: `Rineya_Qwen3_CrossDepth_Soup_Mini_v1/outputs/phase_evals/*/chat_dev/summary.json` |
 | Dual-skill RAG DEV | Phase 9 `dev.reviewed.jsonl`, oracle_rag + real_rag, `query_aware_v21` | 752×2 | Pulse / Aegis: same SELECTION_REPORT. 28L: `…/phase_evals/*/rag_dev/summary.json` and `…/phase_evals/scoreboard.json` |
-| Dual composite | `0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain` | — | Recorded on Aegis (SELECTION_REPORT) and on 28L (`phase_evals/scoreboard.md`). Pulse has no recorded composite |
+| Dual composite | `0.30·chat_Q + 0.15·task + 0.20·oracle_supp + 0.15·real_supp + 0.10·real_proc + 0.10·oracle_abstain` | — | Recorded on Aegis (SELECTION_REPORT) and the current 28L cores (`phase_evals/scoreboard.md`), including Pulse 1.6 at 0.7561 |
+| Baked abstention checkpoint | same Demo runner; `trust_remote_code=True`; greedy-only gate | 64 + 192 | `Rineya-Supa-A1-1.0.0-devfreeze/evidence/*_report.json`; S4 was added after the S1 Stability run, although its threshold used Showcase only |
 | Phase 8 sealed chat | 110 rows, `one_sentence`, 32 tokens, quality v4.5 | 110 | Pulse only: `short-response-model-phase-0-1-2/reports/RELEASE_CANDIDATE_AUDIT.json` |
-| Dual-skill sealed chat TEST / RAG TEST | — | — | `not_run` for all six family cores |
+| Dual-skill sealed chat TEST / RAG TEST | — | — | `not_run` for every family core; the six-core table below predates Supa, Baya, and Supa-A1 |
 
 ## Eval coverage
 
-| Eval | Pulse | Aegis | Halo | Nimbus | Lyra | Halo Uncensored |
-|---|---|---|---|---|---|---|
-| Showcase 64 | run | run | run | run | run | run |
-| Chat DEV 510 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run |
-| RAG DEV 752×2 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run |
-| Dual composite | — | run | run | run | run | run |
-| Phase 8 sealed chat 110 (`one_sentence`) | run | — | — | — | — | — |
-| Dual-skill sealed chat TEST / RAG TEST | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` |
+| Eval | Pulse | Aegis | Halo | Nimbus | Lyra | Halo-U | Supa | Baya | Supa-A1 |
+|---|---|---|---|---|---|---|---|---|---|
+| Showcase 64 | run | run | run | run | run | run | run | run | run |
+| Chat DEV 510 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run | `not_run` | `not_run` | `not_run` |
+| RAG DEV 752×2 | run (sweep baseline) | run (sweep selected, PEFT) | run | run | run | run | `not_run` | `not_run` | `not_run` |
+| Dual composite | run | run | run | run | run | run | `not_run` | `not_run` | `not_run` |
+| Phase 8 sealed chat 110 (`one_sentence`) | run | — | — | — | — | — | — | — | — |
+| Dual-skill sealed chat TEST / RAG TEST | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` | `not_run` |
 
 ---
 
-## Showcase (64-row frozen long-context)
+## Historical source-run Showcase (64-row frozen long-context)
+
+This section preserves the older source-selection evaluations and their full
+metric breakdown. It is a different evidence epoch from the standardized vault
+table above: Aegis is 4 here versus 2 in the fresh run, Halo is 30 versus 29,
+and Nimbus is 29 versus 30. Those are own-model rerun differences, not swapped
+labels. Do not combine cells across the two protocol epochs.
 
 | Name | Hits / 64 | Strict exact | First-line exact | Unanswerable | CF pair correct+changed | Base+paraphrase both | Base/paraphrase agree | ≤12-word rate | Mean response words |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
@@ -162,7 +174,7 @@ There is no official Qwen3 **3B** or **9B**. Closest dense cards: `Qwen/Qwen3-4B
 | Qwen3-4B | **0.8750** | 0.5000 | 0.6875 | 0.6250 | 0.7500 | 0.6250 | 0.5625 |
 | Qwen3-8B | **0.8750** | **0.6250** | **0.9375** | **0.8750** | **0.8125** | **0.8125** | **0.8750** |
 
-### Family + official Qwen3 showcase (same 64 rows)
+### Historical family + official Qwen3 showcase (same 64 rows)
 
 Bold = largest in this table, including the official scale models.
 

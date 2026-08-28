@@ -15,6 +15,12 @@ Baya is a BF16 dense reconstruction of Nimbus 1.6 plus the disjoint Halo long-co
 
 The LoRA was trained on Halo 1.2 and transferred to Nimbus; it was not trained on Nimbus. Supa and Baya are separate dense cores. The answer-blind UNKNOWN gate is a two-model inference recipe, not a property of either core alone.
 
+The Stage-A run was not completed: checkpoint 250 is the latest local state,
+there is no final adapter or CC0 validation/test score, and evaluation loss was
+NaN at steps 100 and 200. Checkpoint 200 was selected by the separate Demo
+screen and should be understood as an early useful task vector, not a converged
+long-context fine-tune.
+
 ## Frozen evaluation protocol
 
 BF16, greedy decoding, seed 17, thinking disabled, 24 generated tokens, 4096-token context cap, and no truncation.
@@ -26,3 +32,5 @@ BF16, greedy decoding, seed 17, thinking disabled, 24 generated tokens, 4096-tok
 - Complete public Demo: 152/256
 
 These are public Demo results. Showcase was used during model selection and is not an untouched test result.
+Demo prompts are approximately 1.1K–1.55K input tokens under the 4096 cap; these
+figures do not establish 8K/16K/32K competence.

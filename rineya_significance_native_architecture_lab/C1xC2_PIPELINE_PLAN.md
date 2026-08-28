@@ -20,10 +20,10 @@ POOL1 = shipped    59/192 (30.7%)    45.4 MB
 One operating point: budget 256, pool 13, sinks 48, recent 64. Quality fully
 preserved at under a third of the bytes.
 
-**Open blocker.** `POOL13_SINK48` still ranks by `S/max(C,1)` beneath the
-pooling, and the program has shown the raw score is inert (`N-046`, `N-054`).
-[`halo_stability192_pooling_specificity_v1`](results/runs/halo_stability192_pooling_specificity_v1)
-is running now to settle it, with a plan fixed before inference.
+**Resolved blocker (`N-073`).** The specificity run found real 86/192,
+position-only 81/192, shuffled 71/192, and random 62/192. Real versus position
+is tied at the 48-pack test (`p=1.0`), so the pipeline is routed to **C2
+structure alone**; the Significance Matrix score is not credited.
 
 The outcome routes everything downstream:
 
@@ -57,8 +57,11 @@ We know quality is preserved at budget 256. Nobody has asked the compression
 question: **how far down can the budget go before quality breaks?**
 
 ```text
-budget   256 (known)  ->  0.293x bytes, ties full cache
-budget   192, 128, 96, 64, 48  ->  unmeasured
+  budget   256 (confirmed) -> 86/192 at 0.293x bytes
+  budget   192             -> exploratory 28/64 at 40.34 MB
+  budget   128             -> exploratory 24/64 at 32.78 MB
+  budget    96             -> exploratory 21/64 at 28.82 MB
+  budget    64             -> exploratory 13/64 at 25.87 MB
 ```
 
 Each budget needs its own best `(pool_width, sink_tokens, recent)`, because the
@@ -75,7 +78,8 @@ that achieves it.
 
 Every phase carries the same non-negotiables (section 4).
 
-**Phase A — specificity (running).** Settles whether `S` is credited. ~75 min.
+**Phase A — specificity (complete).** `S` is not credited; continue with the
+position/structure baseline.
 
 **Phase B — factorial at fixed budget 256.** The confirmed point was found by
 ad-hoc sweeping across 14 arms with no multiplicity control; `pool=13` is a
@@ -83,10 +87,9 @@ winner's-curse survivor, not a demonstrated optimum. A clean factorial
 `pool_width x sink_tokens` with an identity gate and a shuffled control per
 cell, on showcase-64 for screening. Winner re-confirmed on stability-192.
 
-**Phase C — budget descent.** For budgets 192/128/96/64, screen a small
-budget-scaled configuration set on showcase-64, then confirm the best per budget
-on stability-192. Produces the frontier curve. This is the phase that answers
-"compress as much as possible".
+**Phase C — budget descent (Showcase screen complete; confirmation pending).**
+The 13-cell exploratory screen identifies budget 192 as the likely next knee.
+No reduced budget has held-out confirmation yet, so the frontier is not frozen.
 
 **Phase D — family transfer.** Apply the chosen operating point to Halo
 Uncensored, Lyra, Nimbus, Pulse. All five lose 10-13 answers with retention near

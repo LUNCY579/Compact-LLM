@@ -14,7 +14,8 @@ Last updated: 2026-08-27.
 **Storage convention.** `Rineya_Published_Cores/**/*.safetensors` is gitignored
 (`.gitignore:57`) and `artifacts/` is gitignored (`.gitignore:97`). Weights stay
 local; `CORE.json`, `SYSTEM.json`, configs, adapter configs and manifests are
-committed. 180 vault files are currently tracked.
+committed. The private Hugging Face vault carries the binary backup; Supa-A1
+and its self-contained evidence were added at Hub commit `b14103c71c240998171694a0d0397bd4e5d64d71`.
 
 ---
 
@@ -24,6 +25,9 @@ committed. 180 vault files are currently tracked.
 |---|---|---|
 | **Taria** 1.7 (scale 0.8125) | Supa Core 1.7 | frozen parity evidence, `artifacts/.../published_dense_parity_v2/taria/`, `_publish_taria_lumina.py` |
 | **Lumina** 1.7 (scale 1.25) | Baya Core 1.7 | frozen parity evidence, `artifacts/.../published_dense_parity_v2/lumina/`, `_publish_taria_lumina.py` |
+| `Rineya-Nimbus-Abstain-1.0` | **Supa-A1** 1.0.0-devfreeze | sanitized former identity in `Rineya-Supa-A1-1.0.0-devfreeze/SOURCE_CHECKPOINT.json` |
+| Nimbus 1.6 | **Nimbus-A1** tracking alias | `CATALOG.json` tracking-label map; no duplicate checkpoint |
+| `Rineya-Nimbus-Dense-1.0-nobias` | Supa-A1 ablation control | `Rineya-Supa-A1-1.0.0-devfreeze/evidence/`; not a distinct named core |
 | `nimbus_pulse_consensus_cascade_showcase48` | Supa 2.0 System48 | artifact filenames, `configs/final/` |
 | `pulse_strong_over_nimbus_gate46` | Baya 2.0 System46 | artifact filenames, `configs/final/` |
 | `nimbus_scale0p8125_1p25_unknown_gate` | Nimbus DualScale PEFT Gate45 | artifact filenames |
@@ -42,10 +46,10 @@ over the frozen 64-row demo suite.
 
 | # | Working label | Directory | Params/arch | Weight bytes | SHA-256 prefix | Showcase | Role |
 |---|---|---|---|---:|---|---:|---|
-| 1 | **Pulse 1.6** | `Rineya-Pulse-1.6.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `2357574d…` | 31/64 | `late_rineya` α-shape; Halo donor. Strongest ungated dense chat core |
+| 1 | **Pulse 1.6** | `Rineya-Pulse-1.6.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `2357574d…` | 31/64 | `late_rineya` α-shape; Halo donor. Strong frozen long-context core; Lyra has the higher recorded chat-Q |
 | 2 | **Aegis 1.1** | `Rineya-Aegis-1.1.0-devfreeze` | 19L / 454M | 1,817,909,640 | `15fab4e7…` | 2/64 | RAG specialist. Weak on long-context; keep for grounded work |
 | 3 | **Halo 1.2** | `Rineya-Halo-1.2.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `38fb96fe…` | **29/64** | Cross-depth soup v1@5e-4 + v2@1e-4. Donor for Pulse/Halo-U |
-| 4 | **Nimbus 1.6** | `Rineya-Nimbus-1.6.0-devfreeze` | 28L Qwen3 | 1,503,300,328 | `7b66b8d0…` | **30/64** | Soup-lab `global_best` α=0.40. **Base for every long-context arm** |
+| 4 | **Nimbus 1.6** | `Rineya-Nimbus-1.6.0-devfreeze` | 28L Qwen3 | 1,503,300,328 | `7b66b8d0…` | **30/64** | Soup-lab `global_best` α=0.40. **Base for every Nimbus/Supa/Baya long-context arm** |
 | 5 | **Lyra 1.4** | `Rineya-Lyra-1.4.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `87c57b8e…` | 28/64 | Cross-depth soup v1@5e-4 + v1@1e-5 |
 | 6 | **Halo Uncensored 1.5** | `Rineya-Halo-Uncensored-1.5.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `c5d4a17f…` | 31/64 | α=1.0 replace. Uncensored pair for Halo; **arm in System48** |
 | 7 | **Taria 1.7** → Supa | `Rineya-Supa-1.7.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `962abc5b…` | 40/64 | Nimbus + step200 @ **0.8125**, dense. Best single dense core |
@@ -54,18 +58,20 @@ over the frozen 64-row demo suite.
 Held-out stability192 / all256 for the two 1.7 cores: **Taria 121/192, 161/256** ·
 **Lumina 112/192, 152/256**.
 
-> Halo 1.2 and Nimbus 1.6 showcase values above are the **measured** ones
-> (rescored from the frozen prediction artifacts: Halo `strict_exact` 0.453125 =
-> 29/64; Nimbus 0.46875 = 30/64). `CATALOG.json` and both `CORE.json` files
-> currently record these transposed as Halo 30 / Nimbus 29. See §7.
+> Halo 1.2 and Nimbus 1.6 values above use the standardized 2026-08-26 vault
+> rerun: Halo `strict_exact` 0.453125 = 29/64; Nimbus 0.46875 = 30/64.
+> Earlier source-selection runs genuinely measured Halo 30 / Nimbus 29. The
+> difference is cross-run protocol drift, not a label transposition; §7 records
+> both evidence epochs.
 
 ---
 
-## 2. Tier 2 — LoRA deltas that are load-bearing · **must be preserved**
+## 2. Tier 2 — LoRA deltas that are load-bearing · **preserve both copies**
 
 These are not cores, but **no routed system or gated model can be reproduced
-without them**. They currently live only under gitignored `artifacts/`; their
-configs are mirrored into the system bundles, their weights are not.
+without them**. Their working copies remain under gitignored `artifacts/`; the
+private Hugging Face family vault also contains the adapter weights inside the
+published system bundles. Git keeps configs and manifests, not binaries.
 
 | Working label | Canonical path | Adapter bytes | SHA-256 prefix | Used by |
 |---|---|---:|---|---|
@@ -73,8 +79,9 @@ configs are mirrored into the system bundles, their weights are not.
 | **step250** (`stage_a/checkpoint-250`) | `artifacts/halo_long_context_sft_v1/stage_a/checkpoint-250` | 40,422,168 | `a508de22…` | `pulse_step250` arm (System48 only) |
 | **pulse_negative_strong** (`neg_200_250_1p5_m0p5`) | `artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p5_m0p5` | 80,792,504 | `79bff1c6…` | `pulse_strong` arm (System48, System46) |
 
-**step200 is the single highest-value non-core artifact in the family.** Losing it
-would make Taria 1.7, Lumina 1.7 and all four systems unreproducible from source.
+**step200 is the single highest-value non-core artifact in the family.** The local
+copy and private Hub copy must both be retained; losing both would make Taria 1.7,
+Lumina 1.7 and all four systems unreproducible from source.
 
 ---
 
@@ -100,28 +107,31 @@ and **3 adapters** across 9 forward passes.
 
 ---
 
-## 4. Tier 4 — abstention checkpoints · **promote into the vault**
+## 4. Tier 4 — abstention checkpoints · **Supa-A1 promoted**
 
-New results (`artifacts/rineya_abstention_gate_v1/`). Held-out stability192 is the
-number that matters; showcase64 was the tuning split.
+Source results remain under `artifacts/rineya_abstention_gate_v1/`; frozen
+checkpoint evidence is mirrored into the Supa-A1 core. S4 was added after the
+S1 Stability run; its threshold itself was selected on showcase64 only.
 
 | Working label | Form | Passes | Cores | showcase64 | **stability192** | p vs `nimbus_low` |
 |---|---|---:|---:|---:|---:|---:|
 | `nimbus_low` (reference) | base + adapter | 1 | 1 | 42 | 121 | — |
-| **Rineya-Nimbus-Dense-1.0-nobias** | dense merge, bias 0 (ablation control) | 1 | 1 | 40 | 121 | 1.0000 |
-| **Rineya-Nimbus-Abstain-1.0** | dense merge + **baked** logit bias | **1** | **1** | 43 | **125** | 0.2188 |
+| `Rineya-Nimbus-Dense-1.0-nobias` | dense merge, bias 0 (Supa-A1 ablation; not a named core) | 1 | 1 | 40 | 121 | 1.0000 |
+| **Supa-A1** (formerly `Rineya-Nimbus-Abstain-1.0`) | dense merge + **baked** logit bias | **1** | **1** | 43 | **125** | 0.2188 |
 | S4 gate applied offline | processor, bias form | 1 | 1 | 46 | 125 | 0.2188 |
 | **S1 gate** (`unknown_variant_logprob`) | processor, normalised form | 1 | 1 | **47** | **130** | **0.0490** |
 
-**`Rineya-Nimbus-Abstain-1.0`** — 1,192,135,096 bytes, SHA-256 `962abc5b…`.
-That is **byte-identical to Taria 1.7**. Promoting it into the vault therefore
-costs *no new weights*: it needs only `config.json`, `modeling_abstain.py`,
-`CHECKPOINT.json` and the tokenizer files. Recipe: Nimbus 1.6 + step200 @ 0.8125,
-merged in float32, saved bfloat16, plus `abstain_logit_bias = 5.156249985098839`
-on token `51378` (`UNKNOWN`).
+**Supa-A1** — 1,192,135,096 bytes, SHA-256 `962abc5b…`, byte-identical
+to Taria/Supa Core 1.7. The promoted directory adds `CORE.json`, sanitized source
+provenance, frozen evidence, `config.json`, and `modeling_abstain.py`. Recipe:
+Nimbus 1.6 + step200 @ 0.8125, merged in float32, saved bfloat16, plus
+`abstain_logit_bias = 5.156249985098839` on token `51378` (`UNKNOWN`).
 
-**S1 is the strongest result in the family** (130/192) and the only one that
-clears p < 0.05. It has no checkpoint yet — see §6.
+**S1 is the strongest preregistered primary single-pass result** (130/192).
+Exploratory S2 has the higher raw count at 131/192 but was never primary. S1's
+preregistered row-level comparison clears p < 0.05 by one row; multiplicity and post-outcome
+pack-level sensitivity are discussed in `FAMILY_PERFORMANCE_AND_RESEARCH.md`.
+It has no published checkpoint yet — see §6.
 
 ---
 
@@ -139,8 +149,8 @@ clears p < 0.05. It has no checkpoint yet — see §6.
 | Item | Single runnable directory? | Why |
 |---|---|---|
 | Tier 1 dense cores (8) | **Yes** | Plain Qwen3 checkpoints, any runtime |
-| `Rineya-Nimbus-Dense-1.0-nobias` | **Yes** | Plain Qwen3 checkpoint |
-| `Rineya-Nimbus-Abstain-1.0` (S4, 125) | **Yes**, needs `trust_remote_code=True` | Rule is `z_UNKNOWN − z_top1 ≥ τ`; the softmax normaliser **cancels**, so it reduces to a constant added to one logit. Verified: offset exactly +5.15625 on token 51378, max absolute change on the other 151,935 logits = 0.0 |
+| Supa-A1 no-bias evidence | **Yes**, but not separately published | Plain Qwen3 ablation; tensors duplicate Supa Core 1.7 |
+| **Supa-A1** (baked S4, 125) | **Yes**, needs `trust_remote_code=True` | Rule is `z_UNKNOWN − z_top1 ≥ τ`; the softmax normaliser **cancels**, so it reduces to a constant added to one logit. Verified: offset exactly +5.15625 on token 51378, max absolute change on the other 151,935 logits = 0.0 |
 | **S1 gate (130)** | **Yes — but only as a model class, never as weights.** See below | Rule is `logsumexp(z_U) − logsumexp(z) ≥ τ`; the normaliser does **not** cancel |
 | System48 / System46 / Gate45 / DenseGate42 | **No, and never** | Routing compares *decoded text across separate models* |
 
@@ -194,38 +204,35 @@ is merely the badly-tuned one:
 | 5.750 | 46 | 126 | 0.1250 |
 | **5.156** *(shipped)* | 46 | **125** | 0.2188 |
 
-Four biases **tie** at the showcase optimum and diverge by 4 points held-out. The
+Four biases **tie** at the showcase optimum and diverge by 4 points on the now-inspected Stability split. The
 pre-registered tie-break (fewest added abstentions) picked the most conservative.
 The best achievable pure-bias gate on stability is **133/192 at b = 8.28** —
 higher than S1's 130 — and showcase gives no way to find it.
 
 So the pure-bias form, which ships as one directory and needs ~12 lines, has a
 **higher ceiling** than the normalised form that needs a processor. The blocker is
-threshold selection, not expressiveness. **Cut a third tuning split** and re-select
-the bias on it; that is worth more than any work on S1.
+threshold selection, not expressiveness. Create a new pack-disjoint calibration
+split **and** a second untouched final test, then select the bias on calibration
+only. That is worth more than packaging another post-hoc gate.
 
 ---
 
 ## 7. Gaps and risks
 
-1. **Halo/Nimbus `showcase_hits` are transposed in live metadata.** `CATALOG.json`
-   `cores[2]/cores[3]` and both `CORE.json` files read Halo 30 / Nimbus 29;
-   rescoring the frozen artifacts with `evaluate_predictions.py` gives Halo **29**,
-   Nimbus **30**. `SCOREBOARD.md`, `PUBLISHED_FAMILY_SEARCH_REPORT.md` and
-   `comparison.md:25-26` already have it right; `comparison.md:92-93,173,175` and
-   `announcement.md:17,19,30` are wrong. Root cause: `_materialize_core.py:68`
-   hardcodes Halo `showcase_hits: 30`.
-2. **Tier 2 adapters are gitignored and unreplicated.** step200 in particular is a
-   single point of failure for the entire long-context line.
-3. **The abstention lab is not in the vault.** `artifacts/rineya_abstention_gate_v1/`
-   holds the best results in the family with no `CORE.json`/`SYSTEM.json` record.
-   Its source (`Rineya_Abstention_Gate_Lab_v1/`) is uncommitted.
-4. **Sealed TEST has never been run** for any core or system. Every number here is
+1. **Two valid Halo/Nimbus result epochs must not be conflated.** Historical
+   source-selection artifacts measured Halo **30** / Nimbus **29**. Standardized
+   2026-08-26 reruns of the actual vault directories measured Halo **29** /
+   Nimbus **30**. Live `CORE.json`, `CATALOG.json`, and announcement copy now use
+   the standardized values; historical tables should remain explicitly labeled.
+2. **The abstention gate needs custom-code serving.** The baked gate is one model
+   execution, but `trust_remote_code=True` is required and the exact equivalence
+   assumes greedy decoding and a one-token `UNKNOWN` surface.
+3. **Sealed TEST has never been run** for any core or system. Every number here is
    showcase (selection) or stability192 (validation).
-5. **No routed system's headline is statistically significant.** Against the 42
+4. **No routed system's headline is statistically significant.** Against the 42
    baseline on showcase64: System48 +6 (p=0.109), S1 +5 (p=0.125), System46 +4
    (p=0.289). Head-to-head, 48 vs 46 p=0.500, 47 vs 46 p=1.000, 47 vs 48 p=1.000.
-6. **Dense materialisation is lossy.** Folding step200 @ 0.8125 into BF16 preserves
+5. **Dense materialisation is lossy.** Folding step200 @ 0.8125 into BF16 preserves
    magnitude (`‖realised‖/‖intended‖ = 1.0134`) but corrupts direction by 12–28%
    per tensor. Effect: showcase 42→40, stability 121→121. Independently corroborated
    by Gate45 (PEFT, 45) → DenseGate42 (dense, 42).

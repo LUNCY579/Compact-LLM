@@ -172,6 +172,180 @@ def render_chat(tokenizer: Any, row: dict[str, Any], enable_thinking: bool | Non
     raise ValueError(f"Row {row.get('id')} has neither messages nor prompt")
 
 
+UNKNOWN_SURFACE_FORMS = (
+    "UNKNOWN",
+    "unknown",
+    "Unknown",
+    " UNKNOWN",
+    " unknown",
+    " Unknown",
+)
+
+
+def unknown_continuation_tokens(tokenizer: Any) -> list[dict[str, Any]]:
+    """First-token ids for the abstention surface forms, de-duplicated in order."""
+
+    entries: list[dict[str, Any]] = []
+    seen: set[int] = set()
+    for surface in UNKNOWN_SURFACE_FORMS:
+        encoded = tokenizer.encode(surface, add_special_tokens=False)
+        if not encoded:
+            continue
+        token_id = int(encoded[0])
+        if token_id in seen:
+            continue
+        seen.add(token_id)
+        entries.append(
+            {
+                "surface": surface,
+                "token_id": token_id,
+                "single_token": len(encoded) == 1,
+            }
+        )
+    if not entries:
+        raise RuntimeError("Tokenizer produced no UNKNOWN continuation tokens")
+    return entries
+
+
+def step_confidence(torch: Any, step_logits: Any, chosen_id: int) -> dict[str, Any]:
+    """Greedy-step diagnostics computed in float32 over the full vocabulary."""
+
+    logprobs = torch.log_softmax(step_logits.to(torch.float32), dim=-1)
+    probs = logprobs.exp()
+    entropy = float(-(probs * torch.nan_to_num(logprobs, neginf=0.0)).sum())
+    top2 = torch.topk(logprobs, 2)
+    top1_logprob = float(top2.values[0])
+    top2_logprob = float(top2.values[1])
+    return {
+        "token_logprob": float(logprobs[chosen_id]),
+        "top1_logprob": top1_logprob,
+        "top2_logprob": top2_logprob,
+        "logprob_margin": top1_logprob - top2_logprob,
+        "prob_margin": float(top2.values[0].exp() - top2.values[1].exp()),
+        "entropy": entropy,
+        "logprobs": logprobs,
+    }
+
+
+def summarize_confidence(
+    *,
+    torch: Any,
+    tokenizer: Any,
+    step_logits: Any,
+    continuation: Any,
+    top_k: int,
+    unknown_tokens: list[dict[str, Any]],
+) -> dict[str, Any]:
+    """Per-row confidence signals derived from the single greedy decode pass."""
+
+    steps = min(len(step_logits), int(continuation.shape[-1]))
+    if steps == 0:
+        raise RuntimeError("Generation produced no scored steps")
+
+    eos_id = tokenizer.eos_token_id
+    eos_ids = set(eos_id) if isinstance(eos_id, (list, tuple, set)) else {eos_id}
+
+    content_length = steps
+    eos_emitted = False
+    for position in range(steps):
+        if int(continuation[position]) in eos_ids:
+            content_length = position
+            eos_emitted = True
+            break
+
+    per_step: list[dict[str, Any]] = []
+    first_extras: dict[str, Any] | None = None
+    for position in range(steps):
+        chosen_id = int(continuation[position])
+        stats = step_confidence(torch, step_logits[position][0], chosen_id)
+        logprobs = stats.pop("logprobs")
+        if position == 0:
+            ranked = torch.topk(logprobs, min(top_k, int(logprobs.shape[-1])))
+            first_extras = {
+                "top_k": [
+                    {
+                        "token_id": int(token_id),
+                        "token": tokenizer.decode([int(token_id)]),
+                        "logprob": float(logprob),
+                    }
+                    for token_id, logprob in zip(ranked.indices, ranked.values)
+                ],
+                "unknown_logprobs": {
+                    entry["token_id"]: float(logprobs[entry["token_id"]])
+                    for entry in unknown_tokens
+                },
+            }
+        stats["position"] = position
+        stats["token_id"] = chosen_id
+        stats["is_eos"] = chosen_id in eos_ids
+        per_step.append(stats)
+
+    if first_extras is None:
+        raise RuntimeError("First decode step was not scored")
+
+    unknown_logprobs = first_extras["unknown_logprobs"]
+    variant_logprob = float(
+        torch.logsumexp(torch.tensor(list(unknown_logprobs.values())), dim=0)
+    )
+    exact_id = unknown_tokens[0]["token_id"]
+
+    content_steps = per_step[:content_length]
+    if content_steps:
+        token_logprobs = [step["token_logprob"] for step in content_steps]
+        margins = [step["logprob_margin"] for step in content_steps]
+        entropies = [step["entropy"] for step in content_steps]
+        answer = {
+            "sum_logprob": sum(token_logprobs),
+            "mean_logprob": sum(token_logprobs) / len(token_logprobs),
+            "min_logprob": min(token_logprobs),
+            "mean_logprob_margin": sum(margins) / len(margins),
+            "min_logprob_margin": min(margins),
+            "mean_entropy": sum(entropies) / len(entropies),
+            "max_entropy": max(entropies),
+        }
+    else:
+        answer = None
+
+    first = per_step[0]
+    return {
+        "scored_steps": steps,
+        "content_tokens": content_length,
+        "eos_emitted": eos_emitted,
+        "first_token": {
+            "token_id": first["token_id"],
+            "token": tokenizer.decode([first["token_id"]]),
+            "is_eos": first["is_eos"],
+            "token_logprob": first["token_logprob"],
+            "top1_logprob": first["top1_logprob"],
+            "top2_logprob": first["top2_logprob"],
+            "logprob_margin": first["logprob_margin"],
+            "prob_margin": first["prob_margin"],
+            "entropy": first["entropy"],
+            "top_k": first_extras["top_k"],
+        },
+        "unknown": {
+            "exact_token_id": exact_id,
+            "exact_logprob": unknown_logprobs[exact_id],
+            "variant_logprob": variant_logprob,
+            "per_token_logprob": {
+                str(token_id): value for token_id, value in unknown_logprobs.items()
+            },
+        },
+        "answer": answer,
+        "per_step": [
+            {
+                "position": step["position"],
+                "token_id": step["token_id"],
+                "is_eos": step["is_eos"],
+                "token_logprob": step["token_logprob"],
+                "logprob_margin": step["logprob_margin"],
+                "entropy": step["entropy"],
+            }
+            for step in per_step
+        ],
+    }
+
+
 def infer_context_limit(model: Any, tokenizer: Any, override: int | None) -> int | None:
     if override:
         return override
@@ -248,6 +422,21 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--emit-logprobs",
+        action="store_true",
+        help=(
+            "Opt-in: record greedy-decode confidence signals (per-step logprob, "
+            "margin, entropy, and first-step UNKNOWN mass) next to each "
+            "prediction. Decoding is unchanged."
+        ),
+    )
+    parser.add_argument(
+        "--logprob-top-k",
+        type=int,
+        default=20,
+        help="First-step candidates recorded when --emit-logprobs is set.",
+    )
+    parser.add_argument(
         "--torch-dtype",
         default="auto",
         choices=("auto", "float32", "float16", "bfloat16"),
@@ -275,6 +464,8 @@ def main() -> None:
         parser.error("--adapter-scale requires --adapter")
     if args.adapter is None and args.adapter_scale_profile is not None:
         parser.error("--adapter-scale-profile requires --adapter")
+    if args.logprob_top_k < 1:
+        parser.error("--logprob-top-k must be positive")
 
     adapter_scale_profile: dict[str, Any] | None = None
     adapter_scale_profile_sha256: str | None = None
@@ -394,6 +585,10 @@ def main() -> None:
     if tokenizer.pad_token_id is None:
         tokenizer.pad_token_id = tokenizer.eos_token_id
 
+    unknown_tokens = (
+        unknown_continuation_tokens(tokenizer) if args.emit_logprobs else []
+    )
+
     context_limit = infer_context_limit(model, tokenizer, args.max_context)
     rows = load_jsonl(args.input)
     if args.limit is not None:
@@ -442,19 +637,28 @@ def main() -> None:
                     device = input_device(model)
                     encoded = {name: tensor.to(device) for name, tensor in encoded.items()}
 
+                    generate_kwargs: dict[str, Any] = {
+                        "max_new_tokens": args.max_new_tokens,
+                        "do_sample": False,
+                        "use_cache": True,
+                        "pad_token_id": tokenizer.pad_token_id,
+                        "eos_token_id": tokenizer.eos_token_id,
+                    }
+                    if args.emit_logprobs:
+                        generate_kwargs["return_dict_in_generate"] = True
+                        generate_kwargs["output_logits"] = True
+
                     synchronize_if_needed(torch)
                     started = time.perf_counter()
                     with torch.inference_mode():
-                        generated = model.generate(
-                            **encoded,
-                            max_new_tokens=args.max_new_tokens,
-                            do_sample=False,
-                            use_cache=True,
-                            pad_token_id=tokenizer.pad_token_id,
-                            eos_token_id=tokenizer.eos_token_id,
-                        )
+                        generated = model.generate(**encoded, **generate_kwargs)
                     synchronize_if_needed(torch)
                     latency = time.perf_counter() - started
+
+                    step_logits = None
+                    if args.emit_logprobs:
+                        step_logits = generated.logits
+                        generated = generated.sequences
 
                     prompt_length = int(encoded["input_ids"].shape[-1])
                     continuation = generated[0, prompt_length:]
@@ -481,6 +685,16 @@ def main() -> None:
                             result["adapter_scale_profile"] = adapter_scale_profile["label"]
                             result["adapter_scale_profile_sha256"] = (
                                 adapter_scale_profile_sha256
+                            )
+                    if args.emit_logprobs:
+                        with torch.inference_mode():
+                            result["confidence"] = summarize_confidence(
+                                torch=torch,
+                                tokenizer=tokenizer,
+                                step_logits=step_logits,
+                                continuation=continuation,
+                                top_k=args.logprob_top_k,
+                                unknown_tokens=unknown_tokens,
                             )
 
             except Exception as exc:

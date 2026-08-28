@@ -1,0 +1,38 @@
+{
+  "schema_version": "1.0",
+  "former_identity": "Rineya-Nimbus-Abstain-1.0",
+  "source_manifest": {
+    "path": "artifacts/rineya_abstention_gate_v1/checkpoint/Rineya-Nimbus-Abstain-1.0/CHECKPOINT.json",
+    "sha256": "c613d0fd6c0da0ee19d0367331d8fc97b4d988b041a6faaf02c0ee196df7c389",
+    "sanitization": "The exact source shape is bundled as ORIGINAL_CHECKPOINT.sanitized.json with machine-specific paths replaced by repository-relative paths."
+  },
+  "recipe": {
+    "base": "Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+    "base_weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+    "adapter": "artifacts/halo_long_context_sft_v1/stage_a/checkpoint-200",
+    "adapter_weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+    "adapter_scale": 0.8125,
+    "scaled_lora_slots": 196,
+    "merge_dtype": "float32",
+    "saved_dtype": "bfloat16"
+  },
+  "gate": {
+    "spec": "artifacts/rineya_abstention_gate_v1/tuning_showcase64/showcase64_gate_S4_logit_bias.json",
+    "spec_sha256": "5f6cc42e9c4baa57a83ef0fbe6c0b924abb881246480e8b2b84d457ba240279d",
+    "signal": "unknown_exact_minus_top1",
+    "threshold": -5.156249985098839,
+    "unknown_surface": "UNKNOWN",
+    "unknown_token_id": 51378,
+    "logit_bias": 5.156249985098839,
+    "selection_status": "POST-HOC fourth gate chosen after the S1 confirmatory Stability run; its threshold itself was selected on Showcase only"
+  },
+  "implementation": {
+    "original_builder_sha256": "0f7f2b573827da0f695cc5b1303135d9050c85d3bfb2d1a9fc186e1b6b9155c1",
+    "current_builder": {
+      "path": "Rineya_Abstention_Gate_Lab_v1/scripts/build_abstention_checkpoint.py",
+      "bytes": 9278,
+      "sha256": "e5e2bc1d77a9d707b454c35c63281ba5e84d99a30d39ef30f41a8b0ee21c292b"
+    },
+    "note": "The current builder replaces the original non-round-tripping GenerationConfig.sequence_bias route with the evaluated auto_map model-class route."
+  }
+}
