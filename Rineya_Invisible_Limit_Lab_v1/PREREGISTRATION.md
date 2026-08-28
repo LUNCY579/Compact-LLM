@@ -89,7 +89,7 @@ appear in both answerable contexts and survive into the unanswerable context.
 5. Any configuration choice made after seeing a TEST number invalidates the
    claim for that configuration.
 
-**TEST file hashes (sha256, first 16) — substrate v2, current:**
+**TEST file hashes (sha256, first 16) — final substrate, current:**
 `test_full.jsonl` `8bb8420cb293` · `test_prompts.jsonl` `d9b8b8456384` ·
 `test_answer_key.jsonl` `dda248c62b6e`
 
