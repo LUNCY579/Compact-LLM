@@ -4,11 +4,15 @@ Can a decode-time abstention threshold on **one** model recover the routed
 cascade's gain on the Rineya long-context suite, removing the multi-pass
 requirement?
 
-**Yes, at the operating point tested.** A threshold on the UNKNOWN token's
+**Yes on accuracy, no on significance.** A threshold on the UNKNOWN token's
 probability mass at the first generated token takes `nimbus_low` from 121/192 to
-130/192 on the held-out stability split — above the three-pass System46 (125)
-and the nine-arm System48 (128) — at exact McNemar p = 0.0490. One pass, one
-base core, no extra weights.
+**128-130/192** on the held-out stability split — level with or above the
+nine-arm System48 (128) — from one pass, one base core, no extra weights.
+
+The 130 and its p = 0.0490 hold only on the BF16 base+adapter arithmetic path.
+FP32 and both dense merges give 128 at p = 0.12-0.14, while the ungated model is
+121 in every realisation. **The durable claim is a stable +7; the significance
+is not robust.** Audit: `artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`.
 
 - Findings, caveats and file map:
   `artifacts/rineya_abstention_gate_v1/RESULTS.md`

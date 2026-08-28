@@ -119,7 +119,14 @@ S1 Stability run; its threshold itself was selected on showcase64 only.
 | `Rineya-Nimbus-Dense-1.0-nobias` | dense merge, bias 0 (Supa-A1 ablation; not a named core) | 1 | 1 | 40 | 121 | 1.0000 |
 | **Supa-A1** (formerly `Rineya-Nimbus-Abstain-1.0`) | dense merge + **baked** logit bias | **1** | **1** | 43 | **125** | 0.2188 |
 | S4 gate applied offline | processor, bias form | 1 | 1 | 46 | 125 | 0.2188 |
-| **S1 gate** (`unknown_variant_logprob`) | processor, normalised form | 1 | 1 | **47** | **130** | **0.0490** |
+| **S1 gate** (`unknown_variant_logprob`) | processor, normalised form | 1 | 1 | 47 | 130 | 0.0490 [^bf16] |
+| S1 gate, base+adapter at FP32 | processor, normalised form | 1 | 1 | 44 | 128 | 0.1435 |
+| S1 gate, dense merge (BF16 store) | processor, normalised form | 1 | 1 | 43 | 128 | 0.1185 |
+| S1 gate, dense merge (FP16 store) | processor, normalised form | 1 | 1 | 44 | 128 | 0.1435 |
+
+[^bf16]: The 130 and its p-value hold only on the BF16 base+adapter arithmetic
+path. Three more-accurate realisations give 128 and p = 0.12-0.14. See
+[`../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`](../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md).
 
 **Supa-A1** — 1,192,135,096 bytes, SHA-256 `962abc5b…`, byte-identical
 to Taria/Supa Core 1.7. The promoted directory adds `CORE.json`, sanitized source
@@ -127,11 +134,17 @@ provenance, frozen evidence, `config.json`, and `modeling_abstain.py`. Recipe:
 Nimbus 1.6 + step200 @ 0.8125, merged in float32, saved bfloat16, plus
 `abstain_logit_bias = 5.156249985098839` on token `51378` (`UNKNOWN`).
 
-**S1 is the strongest preregistered primary single-pass result** (130/192).
-Exploratory S2 has the higher raw count at 131/192 but was never primary. S1's
-preregistered row-level comparison clears p < 0.05 by one row; multiplicity and post-outcome
-pack-level sensitivity are discussed in `FAMILY_PERFORMANCE_AND_RESEARCH.md`.
-It has no published checkpoint yet — see §6.
+**S1 is the strongest preregistered primary single-pass result by raw count,
+but its significance is not robust.** The preregistered row-level comparison
+clears p < 0.05 by one row on the BF16 base+adapter path only. Running the
+identical weights and adapter at FP32 — strictly more accurate — gives 128/192
+and p = 0.1435, as do both dense merges. The ungated model is 121/192 in every
+realisation, so the gate is worth a stable +7; the significance is not.
+**Do not cite 130/192 or p = 0.0490 as an established result.** Exploratory S2
+has the higher raw count at 131/192 but was never primary. Multiplicity and the
+post-outcome pack-level sensitivity are discussed in
+`FAMILY_PERFORMANCE_AND_RESEARCH.md`; the precision audit is in
+[`../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`](../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md). S1 has no published checkpoint yet — see §6.
 
 ---
 

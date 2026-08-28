@@ -10,10 +10,17 @@ to a comparison of two raw logits:
     z_UNKNOWN + b >= z_argmax,   b = -threshold
 
 Under greedy decoding the emitted token is the argmax, so adding the constant
-``b`` to one row of the logit vector *is* the gate. No wrapper, no second pass,
-no post-processing: the abstention behaviour is a property of the model.
+``b`` to one row of the logit vector is exactly the gate: one forward pass, no
+second model, no post-processing step.
 
-Two conditions make this exact, and both hold for this suite:
+The offset is *not* in the weights. Qwen3's output head is
+``nn.Linear(..., bias=False)`` with tied embeddings and no config flag to enable
+a bias, so there is nowhere in the checkpoint to store a constant. It is applied
+here in ``forward``, which is why this core needs ``trust_remote_code=True``.
+The equivalent portable form is a ``logit_bias`` of +5.15625 on token 51378,
+which every standard serving stack supports natively.
+
+Two conditions make the algebra exact, and both hold for this suite:
 
 * ``UNKNOWN`` is a single token in the Qwen3 vocabulary (id 51378);
 * decoding is greedy, so the decision is an argmax comparison.

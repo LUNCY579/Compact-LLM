@@ -15,7 +15,10 @@ and each `CORE.json`; this document explains what those records mean.
 - **Best routed family system:** Supa 2.0 System48 at 48/64, 128/192, 176/256,
   but it executes nine model arms and its Showcase score is selection data.
 - **Best preregistered single-pass research gate:** S1 at 47/64, 130/192,
-  177/256. It is a logits processor, not a published plain-weight core.
+  177/256 on the BF16 base+adapter path. It is a logits processor, not a
+  published plain-weight core, and **its 130 is not numerically robust** —
+  FP32 and both dense merges give 128/192 with p = 0.12-0.14. The durable
+  claim is +7 over the 121 baseline. See [`../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`](../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md).
 - **Best runnable one-directory abstention core:** **Supa-A1** at 43/64,
   125/192, 168/256. It uses one model execution and custom model code.
 - **Best confirmed cache-compression configuration:** Halo `POOL13_SINK48`
@@ -212,6 +215,15 @@ The preregistered analysis used row-level exact McNemar: S1 vs `nimbus_low`
 has 13 gains, four losses, and p=0.0490. Three gates reached Stability; under a
 Bonferroni threshold of 0.0167 none passes, although S1 was the sole declared
 primary endpoint.
+
+**That p-value is not numerically robust.** Re-running the identical weights,
+adapter and frozen gate at FP32 — strictly more accurate than the BF16 protocol
+— gives 128/192 and p=0.1435. Both dense merges also give 128/192 (p=0.1185
+BF16 store, p=0.1435 FP16 store). The ungated model is 121/192 in all four
+realisations, so the *model* is numerically stable and the *gate* is not: an
+argmax decision has margin, a threshold decision has none. The supported claim
+is a stable +7 on Stability; statistical significance is not supported. Full
+table in [`../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`](../artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md).
 
 A post-outcome sensitivity audit instead used the 48 scenario packs:
 

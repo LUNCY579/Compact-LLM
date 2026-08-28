@@ -1,5 +1,13 @@
 # Confirmatory protocol — single-pass decode-time abstention gate
 
+> **OUTCOME NOTE (added after the confirmatory run).** S1 met this protocol's
+> decision rule on the frozen BF16 path (p = 0.0490). A later precision audit
+> showed the result does not survive a change of arithmetic: FP32 and both dense
+> merges give 128/192 at p = 0.12-0.14. The protocol was followed as written;
+> the conclusion it licensed does not generalise. Recorded here so the
+> pre-registration is never read without its outcome. See
+> `artifacts/rineya_abstention_gate_v1/NUMERICAL_ROBUSTNESS.md`.
+
 Written before any threshold was inspected. The sweep script refuses to select a
 threshold on any split other than the one named here.
 
