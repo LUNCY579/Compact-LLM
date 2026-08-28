@@ -225,13 +225,20 @@ def build_object_state_tracking(rng, dom, difficulty) -> dict[str, Any]:
     places = rng.sample(dom["places"], 3)
     q = f"Where was the {obj} located after the final transfer?"
     qp = f"State the location holding the {obj} once the last transfer was completed."
+    # The swap exchanges the midweek and final destinations, so both candidate
+    # places appear in both answerable contexts and only which transfer is
+    # "final" moves. Reassigning just the final destination silently dropped the
+    # base answer from the counterfactual context.
     base = [
         f"The {obj} was first held in {places[0]} during the opening inventory.",
         f"A midweek movement slip relocated it to {places[1]}.",
         f"The final transfer placed the {obj} in {places[2]}, and it remained there after the debrief.",
     ]
-    cf = list(base)
-    cf[2] = f"The final transfer placed the {obj} in {places[1]}, and it remained there after the debrief."
+    cf = [
+        f"The {obj} was first held in {places[0]} during the opening inventory.",
+        f"A midweek movement slip relocated it to {places[2]}.",
+        f"The final transfer placed the {obj} in {places[1]}, and it remained there after the debrief.",
+    ]
     un = list(base)
     un[2] = (
         f"A final transfer was carried out after the midweek movement, but the "
@@ -526,6 +533,34 @@ FILLER_TEMPLATES = [
     "A note on {topic} was added to the margin and initialled by the {role}.",
     "The {ord} inventory pass covered {p1} and raised no discrepancy.",
 ]
+# Unresolvability DISTRACTORS.
+#
+# These carry exactly the vocabulary an unanswerable variant needs -- blank
+# fields, missing pages, unresolved matters -- but they attach to facts the
+# question never asks about. They go into EVERY variant, answerable included.
+#
+# Without them the generator is trivially broken: substrate v2 put such language
+# only in unanswerable contexts, so a plain string match separated the classes
+# 64/64 against 0/192 and a linear probe on hidden states scored AUC 1.000. That
+# measured template detection, not abstention. The original suite balances the
+# vocabulary across both classes -- 'unresolved' and 'never' appear in 100% of
+# its answerable AND unanswerable contexts -- so presence of the language is
+# uninformative and only its referent matters. This restores that property.
+# The decisive cue in an unanswerable variant and these distractors must be drawn
+# from the SAME phrase family, differing only in what they refer to. Sampling a
+# subset was not enough: substrate v3 still put "no surviving record" in 88% of
+# unanswerable contexts and 0% of answerable ones, and a bag-of-words model
+# separated the classes at AUC 0.947. Every template below is therefore injected
+# into EVERY context, so each construction appears in 100% of both classes and
+# only its referent carries information.
+UNRESOLVED_DISTRACTORS = [
+    "The {topic} waiver was countersigned off-file, so no surviving record states who authorised it.",
+    "The {topic} field on the standing return was left blank and the matter remains unresolved.",
+    "The page recording the {topic} totals was removed before filing and cannot now be recovered.",
+    "The {topic} register was withdrawn as unreliable, and the replacement was never filed.",
+    "The {topic} column was truncated when the file was copied and is illegible.",
+    "The {topic} entry is explicitly disputed, so no surviving record states which figure was adopted.",
+]
 FILLER_SLOTS = {
     "src1": ["meeting minutes", "duty rosters", "committee papers", "shift diaries"],
     "src2": ["transfer slips", "access logs", "movement dockets", "gate registers"],
@@ -583,6 +618,17 @@ def assemble(rng, dom, spec, needle_profile, target_words) -> tuple[str, str, st
     # larger than the ~40 sentences a scenario needs, so nothing repeats.
     seen: set[str] = set()
     filler: list[str] = []
+
+    # Seed every context -- answerable or not -- with unresolvability distractors
+    # about non-decisive topics, so the vocabulary cannot be used as a shortcut.
+    # ALL templates, every context. Topics are shuffled so the pairing varies,
+    # but each construction is guaranteed present in both classes.
+    topics = rng.sample(FILLER_SLOTS["topic"], len(UNRESOLVED_DISTRACTORS))
+    for tpl, topic in zip(UNRESOLVED_DISTRACTORS, topics):
+        s = tpl.format(topic=topic)
+        seen.add(s)
+        filler.append(s)
+
     guard = 0
     while _wc(" ".join(filler)) < filler_target and guard < 4000:
         guard += 1

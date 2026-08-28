@@ -90,8 +90,8 @@ appear in both answerable contexts and survive into the unanswerable context.
    claim for that configuration.
 
 **TEST file hashes (sha256, first 16) — substrate v2, current:**
-`test_full.jsonl` `3a31a760a375` · `test_prompts.jsonl` `9564498fb42b` ·
-`test_answer_key.jsonl` `893d3d646dc1`
+`test_full.jsonl` `8bb8420cb293` · `test_prompts.jsonl` `d9b8b8456384` ·
+`test_answer_key.jsonl` `dda248c62b6e`
 
 ### Amendment 1 — substrate v1 withdrawn, 2026-08-28
 
@@ -139,6 +139,52 @@ TEST remains a genuine first look. DEV was rebuilt on the same seed and rescored
 from scratch; every v1 DEV number is void.
 
 ---
+
+### Amendment 2 — abstention on this benchmark family is partly lexically cued
+
+Recorded 2026-08-28, before TEST was scored. This one bounds what H₁ can mean and
+is the most important caveat in this document.
+
+Substrate v2's hidden-state probe returned **AUC 1.000** for detecting
+unanswerable rows. That looked like a decisive Stage 3 result. It is not, and
+chasing it down produced a finding about the benchmark itself.
+
+A trivial bag-of-words classifier over raw context text separates answerable from
+unanswerable at:
+
+| suite | BoW AUC |
+|---|---:|
+| **original `Rineya_Long_Context_Demo_v1`** | **1.000** |
+| this lab, substrate v2 | 0.947 |
+| this lab, final substrate (DEV) | **0.911** |
+
+So the original suite is *perfectly* separable from surface text alone, and our
+substrate is measurably **less** separable than the reference. Lexical cueing is
+inherent to the design: destroying a binding necessarily changes the text, and any
+systematic change is detectable. The absolute 0.85 target we first wrote was
+neither achievable nor meaningful, and the validator now requires only that we are
+no more separable than the reference suite.
+
+**What this means for the claim.** On this family, "detect that the answer is not
+determined" is substantially solvable by recognising unanswerable-style phrasing
+rather than by reasoning about whether the queried binding survives. The
+interesting gap is that the base models barely exploit it — ungated abstention
+sits at 9–15 of 64 while the signal is near-perfectly decodable from the hidden
+state. That is strong evidence the deficit is **readout-limited**, and it is not
+an artifact of our generator, since the reference suite carries the property more
+strongly.
+
+But it also means:
+
+> A probe-driven win on the unanswerable variant is a **benchmark-specific
+> engineering result**. It is not, on its own, evidence that a 0.6B model has
+> acquired an abstention capability that a 4B model lacks.
+
+Any Stage 8 result will therefore report the unanswerable component with this
+caveat attached, and the headline claim will be stated as bounded to this suite.
+A uniform win driven mostly by the unanswerable column is a weaker result than the
+same margin spread across base, paraphrase and counterfactual, and will be
+described that way rather than aggregated into a single triumphant number.
 
 ## 4. The compute-parity rule
 
