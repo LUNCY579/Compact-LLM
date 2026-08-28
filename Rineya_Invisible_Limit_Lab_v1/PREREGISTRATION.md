@@ -249,6 +249,67 @@ readout-limitation, not representation-limitation. **Stage 6 was skipped** becau
 the counterfactual deficit that motivated it did not reproduce on the fresh
 substrate.
 
+### Amendment 4 — Stage 6 pre-registration, 2026-08-28
+
+Recorded **before any training was run** and before TEST2 was scored.
+
+**H₁ is settled and closed.** Stage 8 returned `H1 NOT ESTABLISHED`: Rineya-frozen
+721 / Qwen3-4B 720 over 1024 rows, uniformity `T = -22`, permutation p = 0.9728.
+Losses on base (−6), paraphrase (−22) and counterfactual (−21) against +50 on
+unanswerable. That result stands and **TEST will not be rescored**.
+
+**What Stage 6 tests.** The entire remaining deficit is paraphrase and
+counterfactual, −43 rows between them, and no abstention work touches either. So:
+
+> **H₂.** A 0.6B-class configuration with task-specific contrastive training can
+> beat Qwen3-4B on **all four** variant families, at ≤6 forward passes, on a split
+> never previously scored.
+
+**A new sealed split.** Reusing TEST would make this a second look at data already
+used for a verdict. Instead **TEST2** is generated fresh — 256 scenarios / 1024
+rows, seed 20260830, validated at 0 failures, zero context-hash overlap with DEV,
+TEST or TRAIN. Hashes: `test2_full.jsonl` `15db26abb20887ab` ·
+`test2_prompts.jsonl` `b9d204e13f0aa1ed` · `test2_answer_key.jsonl`
+`7997d01b8a6ca75e`. Same sealing protocol as §3: scored once, at the end of
+Stage 6.
+
+**Training design.** LoRA on `Rineya-Supa-1.7.0-devfreeze`, supervised on the
+TRAIN split's **answerable variants only** (base, paraphrase, counterfactual =
+768 rows). Unanswerable rows are excluded deliberately: abstention is the probe's
+job, and training UNKNOWN targets would move the very hidden states the probe
+reads. The contrastive signal is structural rather than a custom loss — base and
+counterfactual share near-identical contexts with different answers, so fitting
+both forces attention onto the one sentence that distinguishes them.
+
+Because training moves the hidden states, **the probe must be refit on DEV after
+training** and the whole downstream chain re-derived. The previously frozen probe
+does not transfer.
+
+### The fairness problem this creates, stated plainly
+
+Rineya receives 768 in-distribution training examples. Qwen3-4B receives none.
+That asymmetry is not new in kind — Supa 1.7 already contains the step200
+long-context SFT and Qwen3-4B was always zero-shot — but Stage 6 widens it
+materially.
+
+**Consequence for what may be claimed.** A Stage 6 win supports:
+
+> a *task-specialised* 0.6B system beats a *general* 4B model on this suite at
+> equal compute
+
+It does **not** support "a 0.6B model matches a 4B model's capacity." Those are
+different claims and only the first is licensed by this design.
+
+**Commitment.** If Stage 6a closes the gap, **Stage 6b will give Qwen3-4B the
+identical training** (QLoRA on the same 768 rows, same hyperparameters as far as
+scale permits) and the comparison re-run. Only the 6b result can speak to
+capacity. If 6b is not run, the write-up will state the claim in the
+task-specialised form above and not the capacity form.
+
+TRAIN is licence-clean for this purpose: it is our own generated data, stamped
+`intended_use: "evaluation and controlled training for the Rineya invisible-limit
+programme"`, and disjoint from every evaluation split.
+
 ## 4. The compute-parity rule
 
 Parameter count is the wrong axis: if Rineya spends nine forward passes to beat
