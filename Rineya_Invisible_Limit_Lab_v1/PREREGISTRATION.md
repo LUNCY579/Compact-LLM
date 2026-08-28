@@ -186,6 +186,69 @@ A uniform win driven mostly by the unanswerable column is a weaker result than t
 same margin spread across base, paraphrase and counterfactual, and will be
 described that way rather than aggregated into a single triumphant number.
 
+### Amendment 3 — statistical and protocol hardening, 2026-08-28
+
+Recorded before TEST was scored. Four weaknesses were found by self-review of the
+design, three of them fixed by changing the experiment rather than by adding
+caveats.
+
+**3a. Condition 1 had no error control (fixed).** §5 condition 1 requires
+`delta >= 0` on all four variants but attaches no significance test. Under the
+null each variant is close to a coin flip, so the conjunction alone fires far
+more often than 5% and must not be read as a significance claim. A properly
+controlled uniformity test is now computed alongside it:
+
+> `T = min over variants of delta_v`, with an exact permutation null obtained by
+> flipping discordant pairs within each variant. H₁ requires `T >= 0`; the
+> permutation p supplies the error control condition 1 lacks.
+
+`compare_models.py` now reports **two verdicts**: the one as pre-registered, and
+an error-controlled one that additionally requires the uniformity p < 0.05. If
+the two disagree, the error-controlled verdict governs and the discrepancy is
+reported.
+
+**3b. TEST was underpowered (fixed by enlarging it).** At 512 rows the minimum
+detectable effect was roughly 9 percentage points per variant, so a null verdict
+on a small per-variant gap would have been uninformative. TEST was regenerated at
+**256 scenarios / 1024 rows**, halving the per-variant standard error. New hashes:
+`test_full.jsonl` `b8f42adf501ed695` · `test_prompts.jsonl` `f9f143989f6dd767` ·
+`test_answer_key.jsonl` `6b26dae5ba8a26be`. Validates at 0 failures with zero
+context-hash overlap against DEV or TRAIN. TEST had still never been scored when
+this change was made, so the seal is intact.
+
+**3c. Device asymmetry (fixed by construction).** Qwen3-4B originally needed
+`--max-gpu-memory` splitting to fit, while the Rineya core ran pure CPU. BF16
+reduction order differs between devices, which adds noise to greedy decoding.
+**Both models now run pure CPU on TEST** (`--device-map cpu`), so the confound is
+eliminated rather than measured. The DEV Qwen3-4B run used GPU splitting; DEV does
+not inform the frozen Rineya configuration, which is Supa 1.7 + a probe fit on
+Supa's own CPU signals, so that asymmetry cannot bias the claim.
+
+**3d. No interval estimates (fixed).** Every delta now carries a 95% percentile
+CI bootstrapped over **scenarios**, not rows. The four variants of a scenario
+share a context, so row-level resampling would treat correlated observations as
+independent and give intervals that are too narrow.
+
+### Disclosure — what was seen before the substrate was rebuilt
+
+Substrate v1's DEV comparison was inspected (Supa-A1 ahead 142–137) *before* the
+decision to rebuild. Every rebuild was justified by a model-agnostic defect —
+unanswerable variants leaking defensible answers, then lexical shortcuts, then a
+counterfactual that dropped its own base answer — and each was caught by an
+automated validator check rather than by inspecting who won. But the ordering
+means blindness cannot be claimed for the decision to iterate. Every substrate
+change is committed with its defect evidence so the reasoning can be audited
+independently.
+
+### Stages not run
+
+**Stage 4 (attention-mass features) was skipped**, not executed: the hidden-state
+probe already saturates the unanswerable column, leaving nothing for it to add.
+**Stage 5 was skipped** on its pre-registered condition — Stage 3 showed
+readout-limitation, not representation-limitation. **Stage 6 was skipped** because
+the counterfactual deficit that motivated it did not reproduce on the fresh
+substrate.
+
 ## 4. The compute-parity rule
 
 Parameter count is the wrong axis: if Rineya spends nine forward passes to beat
