@@ -89,9 +89,54 @@ appear in both answerable contexts and survive into the unanswerable context.
 5. Any configuration choice made after seeing a TEST number invalidates the
    claim for that configuration.
 
-**TEST file hashes (sha256, first 16):**
-`test_full.jsonl` `951ac28059521d3b` · `test_prompts.jsonl` `b17c3dd4bc156172` ·
-`test_answer_key.jsonl` `c178b0c8cb72b48f`
+**TEST file hashes (sha256, first 16) — substrate v2, current:**
+`test_full.jsonl` `3a31a760a375` · `test_prompts.jsonl` `9564498fb42b` ·
+`test_answer_key.jsonl` `893d3d646dc1`
+
+### Amendment 1 — substrate v1 withdrawn, 2026-08-28
+
+Substrate v1 (TEST hashes `951ac280…`, `b17c3dd4…`, `c178b0c8…`) was **withdrawn
+before TEST was ever scored**. The §6 generator-artifact gate fired on DEV.
+
+*What was wrong.* Six of the eight unanswerable builders left a defensible answer
+in the context, so the variant did not test abstention at all. The clearest case:
+`alias_resolution` asked "Who personally carried the {object}?" while the context
+still stated "{call sign} carried the {object}", so `Harrow` was a legitimate
+answer even with the call-sign-to-person binding destroyed. Both models answered
+the call sign on every such row. Measured UNKNOWN rates on v1 DEV unanswerable
+rows, out of 8 per builder per model:
+
+| builder | Qwen3-4B | Supa-A1 |
+|---|---:|---:|
+| `alias_resolution` | 0 | 0 |
+| `count_with_exclusions` | 0 | 0 |
+| `latest_verified_record` | 0 | 0 |
+| `object_state_tracking` | 1 | 0 |
+| `temporal_correction` | 0 | 1 |
+| `rule_exception` | 0 | 6 |
+| `causal_disambiguation` | 6 | 1 |
+| `multi_condition_identity` | 8 | 7 |
+
+*Why it mattered for fairness, not merely difficulty.* The defect pushed
+unanswerable to the floor for both models, and unanswerable is precisely where
+Qwen3-4B held its largest advantage on the original suite. Old-suite → v1 DEV,
+Qwen3-4B's unanswerable fell 30 → 14 while Supa-A1's fell only 21 → 15. Overall,
+Qwen3-4B lost 41 points and Supa-A1 only 26. A suite that selectively neutralises
+the larger model's best axis would manufacture the result this programme is
+trying to test. v1 DEV showed Supa-A1 ahead 142 to 137; **that number is
+withdrawn and is not evidence for anything.**
+
+*The fix.* The one builder that worked, `multi_condition_identity` (15/16), was
+the only one carrying an explicit "no participant can be shown to satisfy …"
+statement matching exactly what the question asks. That pattern is now applied to
+all eight builders, and `alias_resolution`'s question was changed to demand a
+*named participant* rather than "who". All three splits revalidate at 0 failures,
+0 warnings.
+
+*Standing.* TEST v1 was never read, scored, or inspected — only aggregate
+structural statistics were produced from it. The seal is therefore intact and v2
+TEST remains a genuine first look. DEV was rebuilt on the same seed and rescored
+from scratch; every v1 DEV number is void.
 
 ---
 

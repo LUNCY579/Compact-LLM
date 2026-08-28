@@ -187,7 +187,10 @@ def build_alias_resolution(rng, dom, difficulty) -> dict[str, Any]:
     obj = rng.choice(dom["objects"])
     place = rng.choice(dom["places"])
     a, b = people[0], people[1]
-    q = f"Who personally carried the {obj} to {place}?"
+    # The question must demand a *participant*, not merely "who". Asking "who"
+    # let both models answer with the call sign, which the context legitimately
+    # supports even when the call-sign-to-person binding is destroyed.
+    q = f"Which named participant personally carried the {obj} to {place}?"
     qp = f"Give the ordinary name of the person recorded as transporting the {obj} to {place}."
     base = [
         f"A sealed communications appendix records a temporary call-sign assignment for the operation.",
@@ -201,10 +204,12 @@ def build_alias_resolution(rng, dom, difficulty) -> dict[str, Any]:
     un[1] = (
         f"The appendix shows that the temporary call signs “{codes[0]}” and "
         f"“{codes[1]}” were issued, but the page binding each name to a "
-        f"participant was removed before filing. No other source reconstructs which "
-        f"participant received which name."
+        f"participant was removed before filing."
     )
-    del un[2]
+    un[2] = (
+        f"No surviving source records which participant received which call sign, "
+        f"so no named participant can be identified as the carrier."
+    )
     return {
         "question": q, "question_paraphrase": qp,
         "base_sents": base, "cf_sents": cf, "un_sents": un,
@@ -232,7 +237,8 @@ def build_object_state_tracking(rng, dom, difficulty) -> dict[str, Any]:
         f"A final transfer was carried out after the midweek movement, but the "
         f"destination field on the slip was left blank and the counter-signature "
         f"page is missing. {places[0]}, {places[1]} and {places[2]} all appear as "
-        f"candidate destinations elsewhere in the file."
+        f"candidate destinations elsewhere in the file, and no surviving record "
+        f"states where the {obj} was left after that transfer."
     )
     return {
         "question": q, "question_paraphrase": qp,
@@ -266,8 +272,10 @@ def build_temporal_correction(rng, dom, difficulty) -> dict[str, Any]:
         f"The circulated schedule listed the examination of the {obj} as beginning on {d_planned}.",
         f"That entry was only a plan and was never treated as a record of events.",
         f"A correction notice was raised because the planned date was known to be "
-        f"wrong, and {d_actual} was among the replacements discussed, but the notice "
-        f"was filed unsigned and its date field is illegible. No countersigned copy survives.",
+        f"wrong, and {d_actual} was one of several dates discussed, but the notice "
+        f"was filed unsigned and its date field is illegible. No countersigned copy "
+        f"survives, so no surviving record states the day on which the examination "
+        f"actually began.",
     ]
     return {
         "question": q, "question_paraphrase": qp,
@@ -298,7 +306,7 @@ def build_rule_exception(rng, dom, difficulty) -> dict[str, Any]:
     un[4] = (
         f"The delegation form for that clause was issued, but the delegate field "
         f"was left blank and the register of delegates for that period was never "
-        f"completed."
+        f"completed, so no surviving record names who held the approval authority."
     )
     return {
         "question": q, "question_paraphrase": qp,
@@ -340,8 +348,9 @@ def build_count_with_exclusions(rng, dom, difficulty) -> dict[str, Any]:
         f"On review some entries were marked invalid and others struck as duplicates, but the "
         f"review column was truncated when the register was copied, so neither category total "
         f"can be recovered.",
-        f"The reconciliation sheet that would supersede the preliminary tally was never filed, "
-        f"and {valid} appears in the working papers only as an unconfirmed estimate.",
+        f"The preliminary tally was formally withdrawn as unsafe, and the reconciliation "
+        f"sheet that would have superseded it was never filed, so no surviving record "
+        f"states how many entries qualified as valid.",
     ]
     return {
         "question": q, "question_paraphrase": qp,
@@ -384,7 +393,7 @@ def build_causal_disambiguation(rng, dom, difficulty) -> dict[str, Any]:
         f"Two faults were open at the time of the stoppage involving the {obj}.",
         f"The review lists {causes[0]} and {causes[1]} as the open faults.",
         f"The panel could not agree which was primary and closed the item as "
-        f"unresolved, so neither fault is ranked in any surviving record.",
+        f"unresolved, so no surviving record states which fault was the primary cause.",
     ]
     return {
         "question": q, "question_paraphrase": qp,
@@ -414,7 +423,8 @@ def build_multi_condition_identity(rng, dom, difficulty) -> dict[str, Any]:
     un[1] = (
         f"{a}, {b} and {people[2]} all signed before the cutoff, but the token "
         f"register for the later entry was destroyed, so no participant can be "
-        f"shown to satisfy the second condition."
+        f"shown to satisfy the second condition and no surviving record names who "
+        f"performed the final check."
     )
     del un[3]
     del un[2]
@@ -450,8 +460,9 @@ def build_latest_verified_record(rng, dom, difficulty) -> dict[str, Any]:
         f"Provisional witness accounts named {b} as having applied the seal to the {obj}, "
         f"while a competing statement named {a}.",
         "Those accounts were taken before the register was recovered and are expressly superseded.",
-        "The final audit was commissioned and its cover sheet survives, but the "
-        "findings pages were never filed, so no superseding identification exists.",
+        "Both statements were withdrawn as unreliable once the register was recovered. "
+        "The final audit was commissioned and its cover sheet survives, but the findings "
+        "pages were never filed, so no surviving record identifies who applied the seal.",
     ]
     return {
         "question": q, "question_paraphrase": qp,
