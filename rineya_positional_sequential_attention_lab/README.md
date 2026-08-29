@@ -211,53 +211,44 @@ memmaps and skip cleanly when the checkpoints are absent. One heavy test
 
 ## STATUS
 
-Last integration pass: 2026-08-28. `585 passed, 1 skipped` in 60 s;
-`ruff check src tests scripts` is **clean**.
+Last verified: 2026-08-29. `600 passed, 1 skipped`; `ruff check src tests scripts` clean.
+Every claim in this section was checked against the files on disk, not from memory.
 
-### Implemented and exercised on real data
+### Run on real checkpoints, with artifacts
 
-* **Phase 1 — checkpoint audit.** Run. `manifests/model_manifest.json`,
-  `manifests/tensor_hashes.csv`, `results/model_pairwise_distance.csv`,
-  `results/weight_delta_by_layer.csv`, `results/weight_delta_by_head.csv`,
-  `reports/phase1_checkpoint_audit.md`.
-* **Phase 2 — benchmark.** Built. 4 752 items across four families, three lengths, four
-  formats; `data/generated/` plus the three split copies and
-  `data/position_split_manifest.json` (1 752 calibration / 1 413 validation / 1 587
-  sealed). `reports/phase2_instrument_calibration.md` records the three protocol fixes
-  the pilot forced.
-* **Phase 3 — run, teacher-forced, calibration split.** 1 752 items x 5 arms = 8 760
-  records. `results/baseline_position_results_calibration_tf.parquet`,
-  `results/phase3_positional_analysis.json`,
-  `reports/phase3_positional_fingerprint.md`. Clustered BCa CIs on `scenario_id`.
-  Answers brief questions 1-3. The earlier
-  `reports/phase3_preview_positional_fingerprint.md` is superseded but retained, because
-  it is where the primary-metric decision was argued.
+| phase | artifacts | report |
+| --- | --- | --- |
+| 1 — checkpoint audit | `manifests/model_manifest.json`, `tensor_hashes.csv`, `results/model_pairwise_distance.csv`, `weight_delta_by_{layer,head}.csv` | `phase1_checkpoint_audit.md` |
+| 2 — benchmark | 4 752 items; `data/generated/` + three split copies + `position_split_manifest.json` | `phase2_instrument_calibration.md` |
+| 3 — positional fingerprint | `baseline_position_results_{calibration,validation}_tf.parquet`, `phase3_positional_analysis.json` | `phase3_positional_fingerprint.md` |
+| 4 — significance matrices | `results/phase4_significance/<arm>/kv_head_position_significance.{npz,csv}` + `tier2_ablation_significance.*`, four arms | `phase4_6_7_mechanism.md` |
+| 4b — bias `B`, distance `D` | `kv_head_bias_matrix.npz`, `distance_significance.npz` | `phase4b_bias_and_distance.md` |
+| 6 — probes, patching | `activation_probe_results.json`, `activation_patch_results.parquet`, `head_ablation_results.parquet` | `phase4_6_7_mechanism.md` |
+| 7 — low rank, weight deltas | `significance_svd.json`, `significance_low_rank_models.npz`, `phase7_weight_delta_correlation.csv` | `phase4_6_7_mechanism.md` |
 
-### Implemented, unit-tested on toy models, never run on a real checkpoint
+Every artifact has a `*.provenance.json` sidecar except the two Phase-3 parquets — see
+"Known gaps".
 
-Everything else. The library code exists, imports cleanly, and is covered by 585 tests,
-but no GPU run has produced a result file for any of it:
+### Written and dry-run verified, not yet run to completion
 
-* Phase 3 greedy/accuracy pass, the validation split, and the 16K/32K buckets
-* Phases 4-5, 7 — significance, bias and distance matrices, low-rank structure
-* Phase 6 — probes and activation patching
-* Phase 8 — checkpoint arithmetic and position-aware soups
-* Phase 10 — sequential attention arms
-* Phases 11+ — PSA / SGSA / cheap corrections and their controls
-* All figures: `figures/` is empty
+* **Phase 8 — the intervention screen** (`scripts/phase8_cheap_interventions.py`).
+  20 treatments and 48 matched negative controls, ~4 GPU-hours. Started four times and
+  stopped four times: once by GPU contention with a concurrent test run, once by an
+  orphaned process from a previous attempt, once by the padding defect below, once
+  externally. Its flat-RoPE bit-exactness check passes and the baseline arm completes;
+  no treatment arm has produced a result.
 
-### Not implemented
+### Not started
 
-* **Driver scripts for Phases 4-13.** Only Phase 1 (module CLI) and Phase 3
-  (`scripts/phase3_baseline_fingerprint.py` + `scripts/phase3_analyze.py`) have
-  entry points. Every other phase must currently be driven from a Python session against
-  the library API.
-* **`scripts/phase14_*.py`.** Phase 14 does not exist, which is why the sealed split is
-  still sealed. `tests/test_split_discipline.py` asserts this and will fail — deliberately,
-  as a prompt to update it — the day a Phase-14 script lands.
-* **The report tying it together.** `reports/` has Phase 1, Phase 2b and Phase 3 (see
-  `reports/README.md` for the index and evidence levels). There is no cross-phase
-  narrative yet because Phases 4+ have produced no results.
+* Phase 5 (recursive layer refinement beyond Phase 4's ladder), Phase 9 (model
+  selection), Phase 10 (the five sequential arms), Phases 11-12 (the
+  significance x sequentiality factorial and ordering controls), Phase 13
+  (preservation), Phase 14 (sealed test), Phase 15 (final report).
+* **`scripts/phase14_*.py` does not exist, which is why the sealed split is still
+  sealed.** `tests/test_split_discipline.py` enforces this.
+* **`figures/` is empty.** The thirteen figure builders in `src/rineya_psa/figures/` are
+  implemented and tested against synthetic inputs; none has been run on real results.
+* Phase 3's greedy/accuracy pass and the 16K/32K buckets.
 
 ### Known gaps and things a reader should not assume
 
@@ -284,3 +275,22 @@ but no GPU run has produced a result file for any of it:
 * **SDPA kernels are not bit-deterministic on this card.** `torch.use_deterministic_algorithms`
   is deliberately left off; we record the fact rather than pay the speed cost. Generation
   is greedy (`do_sample=False`) everywhere.
+* **Two Phase-3 parquets have no provenance sidecar**, and the sidecars that exist record
+  the git commit at write time — which for the Phase-3 analysis predates later fixes to
+  `phase3_analyze.py`. The published tables were regenerated after those fixes; the
+  sidecar is what is stale, not the numbers. A remediation pass is adding a dirty-tree
+  and changed-file record so a reader can tell a stale sidecar from a current one.
+* **The claim "Supa-A1.1 is better on all five families" is WITHDRAWN.** It was an
+  artefact of every `semantic_single_hop` answer beginning with the article *the*; on
+  content tokens Supa is indistinguishable from Qwen3 there
+  (−0.020 ± 0.137). `multi_hop` shares the same answer form and has **not** been
+  decomposed, so its between-model numbers are upper bounds. See
+  `reports/phase3_positional_fingerprint.md` §3.
+* **Open audit findings.** An adversarial audit raised roughly 40 findings; 15 are fixed
+  with regression tests, the rest are being worked through. The two that would most change
+  how this lab should be read if they hold up: the baseline-equivalence invariant may be
+  weaker than §"Two rules" claims (its identity cases may short-circuit to SDPA without
+  exercising PSA arithmetic, and the bf16 arm SPEC §5.2 mandates is untested), and the
+  `multi_hop` position axis may be confounded — which matters because those are the
+  largest effects in the study. Neither is resolved yet; do not treat either as settled.
+  `reports/validation_pass_1.md` records what has been fixed so far.
