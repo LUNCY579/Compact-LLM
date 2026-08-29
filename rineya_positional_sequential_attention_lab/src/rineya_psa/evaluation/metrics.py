@@ -24,7 +24,13 @@ from typing import TYPE_CHECKING, Any
 
 import numpy as np
 
-from rineya_psa.types import BenchmarkItem, TokenizedItem, UShapeFit, matches_gold, normalize_answer
+from rineya_psa.types import (
+    BenchmarkItem,
+    TokenizedItem,
+    UShapeFit,
+    matches_gold,
+    normalize_answer,
+)
 
 if TYPE_CHECKING:  # pragma: no cover - typing only, never executed
     import torch
@@ -32,9 +38,11 @@ if TYPE_CHECKING:  # pragma: no cover - typing only, never executed
 __all__ = [
     "TeacherForcedScores",
     "accuracy",
+    "accuracy_columns",
     "aligned_answer_logprobs",
     "answer_logit_window",
     "answer_margin",
+    "contains_gold",
     "edge_middle_gap",
     "first_nonempty_line",
     "gold_nll",
@@ -57,6 +65,50 @@ def first_nonempty_line(text: str) -> str:
         if line.strip():
             return line.strip()
     return ""
+
+
+def contains_gold(
+    prediction: str,
+    item: BenchmarkItem | Mapping[str, Any],
+) -> bool:
+    """Does the gold answer appear as a normalised span inside the prediction?
+
+    SPEC section 13.2. The Phase-2b calibration found two failure modes that are the model
+    finding the answer and the scorer refusing it: format non-compliance ("The answer is:
+    **The loom overseer**." against gold "the loom overseer") and truncation mid-restatement.
+    ``strict`` scores both as wrong.
+
+    **This is a CEILING, not a score.** A sufficiently verbose model inflates it - a
+    prediction that lists every candidate contains the gold one - so SPEC 13.2 forbids
+    accepting an intervention on this column alone. It is reported beside ``strict`` and
+    ``first_line`` and never collapsed into a single headline.
+    """
+    if isinstance(item, Mapping):
+        gold = str(item.get("answer", ""))
+        aliases = tuple(item.get("answer_aliases", ()) or ())
+    else:
+        gold = item.answer
+        aliases = item.answer_aliases
+    haystack = normalize_answer(prediction)
+    if not haystack:
+        return False
+    for candidate in (gold, *aliases):
+        needle = normalize_answer(candidate)
+        if needle and needle in haystack:
+            return True
+    return False
+
+
+def accuracy_columns(
+    prediction: str,
+    item: BenchmarkItem | Mapping[str, Any],
+) -> dict[str, bool]:
+    """The three columns SPEC 13.2 mandates, always together."""
+    return {
+        "strict": accuracy(prediction, item),
+        "first_line": accuracy(prediction, item, first_line=True),
+        "contains": contains_gold(prediction, item),
+    }
 
 
 def accuracy(

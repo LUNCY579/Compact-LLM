@@ -716,3 +716,47 @@ def test_position_binned_context_is_not_corrupted_by_padding(tiny_qwen3_model, t
         "the short item scored differently when batched with a longer one: the position "
         "bins moved with the padding"
     )
+
+
+# ---------------------------------------------------------------------------
+# SPEC 13.2's three accuracy columns. `contains` did not exist while README.md
+# claimed all three were reported; an audit caught the mismatch.
+# ---------------------------------------------------------------------------
+
+def test_contains_gold_catches_the_two_real_scorer_artefacts():
+    from rineya_psa.evaluation.metrics import accuracy, contains_gold
+
+    item = make_item(0, answer="the loom overseer")
+    # 1. format non-compliance: the model found it, strict refuses it
+    verbose = "The answer is: **The loom overseer**."
+    assert not accuracy(verbose, item)
+    assert contains_gold(verbose, item)
+    # 2. exact answer still counts
+    assert contains_gold("the loom overseer", item)
+    # and a genuinely wrong answer is still wrong
+    assert not contains_gold("the kiln inspector", item)
+
+
+def test_contains_is_a_ceiling_not_a_score():
+    """A model that lists every candidate 'contains' the gold one. That is the point."""
+    from rineya_psa.evaluation.metrics import accuracy_columns
+
+    item = make_item(0, answer="the ferry reeve")
+    shotgun = "maybe the loom overseer, the ferry reeve, or the kiln inspector"
+    cols = accuracy_columns(shotgun, item)
+    assert cols["contains"] is True
+    assert cols["strict"] is False
+    assert set(cols) == {"strict", "first_line", "contains"}
+
+
+def test_accuracy_columns_uses_aliases():
+    from rineya_psa.evaluation.metrics import accuracy_columns
+
+    item = BenchmarkItem(
+        item_id="a", scenario_id="s", family="semantic_single_hop", fmt="natural",
+        length_bucket="2k", target_positions=(0.5,), local_position="middle",
+        split="calibration", system="s", user="u", answer="the ferry reeve",
+        answer_aliases=("ferry reeve",), distractors=(), evidence_sentences=(), seed=0,
+    )
+    assert accuracy_columns("it was the ferry reeve", item)["contains"] is True
+    assert accuracy_columns("ferry reeve", item)["strict"] is True
