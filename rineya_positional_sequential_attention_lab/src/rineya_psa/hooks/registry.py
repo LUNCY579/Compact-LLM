@@ -197,6 +197,40 @@ def psa_attention_forward(
     acc = ensure_accumulator(ctx)
     capturing = acc is not None and ctx.capture.applies_to(layer)
 
+    if bias_table_q is not None and scale_table_q is None and not capturing:
+        # SPEC 12.3 fast path. Under an ABSOLUTE binning the Mode-1 bias depends only on
+        # (query head, source token), never on the query row, so it is an additive mask of
+        # shape [1, H_q, 1, T] that broadcasts over rows -- and SDPA takes an explicit
+        # additive mask at full speed once the backend is pinned (measured 0.36 s / 1.31 GB
+        # at T=4096, against 1.63 s / 4.02 GB for the eager chunked path). Folding it into
+        # the causal mask here is what makes the Phase-8 Mode-1 sweep affordable: it drops
+        # that arm from ~6x a plain forward to ~1.2x.
+        #
+        # The bias is added to the *already-masked* tensor, so -inf entries stay -inf and
+        # the future cannot be unmasked. `attention_mask` may be None when the caller took
+        # the is_causal shortcut, in which case an explicit causal mask is built.
+        bias_mask = bias_table_q.to(query.dtype)  # [H_q, n_bins] -> gathered below
+        src_bins = lb.binning.gather_source(
+            bias_mask, kv_len, valid_mask=src_valid, fill=0.0
+        )  # [H_q, T]
+        additive = src_bins.unsqueeze(0).unsqueeze(2)  # [1, H_q, 1, T]
+        if attention_mask is not None:
+            base = attention_mask
+            if base.dtype != query.dtype:
+                base = base.to(query.dtype)
+            combined = base + additive
+        else:
+            neg = torch.finfo(query.dtype).min
+            causal = torch.full((q_len, kv_len), neg, device=query.device, dtype=query.dtype)
+            causal = causal.triu(1 + q_offset)
+            combined = causal.view(1, 1, q_len, kv_len) + additive
+        out, weights = _baseline_forward(
+            module, query, key, value, combined, scaling, dropout, **kwargs
+        )
+        if gamma is not None:
+            out = out * gamma.view(1, 1, -1, 1)
+        return out, weights
+
     if bias_table_q is None and scale_table_q is None and not capturing:
         # Mode 2 is already baked into `value` and Mode 3 is a per-head rescale of the
         # output, so nothing here needs the explicit [T, T] matrix. This is the path

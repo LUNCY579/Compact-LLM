@@ -214,7 +214,12 @@ _PSA_SESSION_MULTIPLIER = 1.25
 # alone moves ~30 GB at 4K across 28 layers, which is ~1 s of bandwidth against a 0.29 s
 # SDPA baseline. Flagged as an estimate everywhere it is used; the number that settles it
 # is the wall_clock_s column of compute_metrics.csv after the real run.
-_MODE1_MULTIPLIER = 6.0
+# Measured, not estimated. SPEC 12.3's SDPA broadcast-mask fast path carries an absolute-
+# binned Mode-1 bias as a [1, H_q, 1, T] additive mask instead of forcing the explicit
+# [T, T] eager kernel: 0.36 s / 1.31 GB vs 1.63 s / 4.02 GB at T=4096. Verified to agree
+# with the eager kernel to 3.6e-07 in
+# tests/test_baseline_equivalence.py::test_mode1_sdpa_fast_path_equals_the_eager_chunked_path.
+_MODE1_MULTIPLIER = 1.25
 
 # The RoPE hook recomputes cos/sin once per (scale, dtype) per forward and caches it.
 _ROPE_MULTIPLIER = 1.05
@@ -473,10 +478,23 @@ def load_significance(path: Path, arch: Any, *, negate: bool) -> SignificanceTab
     ``OBJECTIVE_SIGN`` re-signs it so that larger always means "this cell matters", which
     is the orientation every mode in ``psa.py`` assumes.
     """
+    # Phase 4 writes a SignificanceResult (values/per_item/baseline/evaluated + a meta
+    # blob carrying the matrix), while Phase 5 and the control generators write a bare
+    # SignificanceMatrix. Accept either rather than making the caller know which produced
+    # the file: the two npz layouts are distinguishable by their key set.
+    import numpy as _np
+
     from rineya_psa.hooks.binning import binning_from_describe
     from rineya_psa.significance.matrices import SignificanceMatrix
 
-    sm = SignificanceMatrix.load(path)
+    with _np.load(path, allow_pickle=True) as _z:
+        _is_result = "per_item" in _z and "baseline" in _z
+    if _is_result:
+        from rineya_psa.significance.causal import SignificanceResult
+
+        sm = SignificanceResult.load(path).matrix
+    else:
+        sm = SignificanceMatrix.load(path)
     binning = binning_from_describe(dict(sm.binning_desc))
     if binning.is_query_dependent:
         # SPEC 12.3: a distance-binned Mode 1 needs a full [1, H, T, T] mask, which is
@@ -496,7 +514,9 @@ def load_significance(path: Path, arch: Any, *, negate: bool) -> SignificanceTab
     return table
 
 
-def load_bias(path: Path, arch: Any, *, field_name: str, sign: str) -> SignificanceTable:
+def load_bias(
+    path: Path, arch: Any, *, field_name: str, sign: str, bias_model: str = "qwen3"
+) -> SignificanceTable:
     """Read the Phase-4b positional bias ``B`` and turn it into a correction.
 
     ``qk_logit_mean`` is the default field because ``position_logit_correction`` adds its
@@ -512,11 +532,51 @@ def load_bias(path: Path, arch: Any, *, field_name: str, sign: str) -> Significa
     so ``lam`` is exactly the number of logits added at the most-corrected bin — an
     interpretable dose rather than an arbitrary one.
     """
+    # Phase 4b writes ONE archive covering the whole panel: a leading model axis and
+    # `_q` / `_kv` suffixed fields, rather than the flat single-model layout
+    # PositionalBias.load expects. Read either. The `_kv` rollup is the right field here
+    # because Modes 1 and 2 act at KV-head granularity (Phase 4b flags that rollup as an
+    # approximation in its own metadata).
+    import json as _json
+
+    import numpy as _np
+
     from rineya_psa.hooks.binning import binning_from_describe
     from rineya_psa.significance.bias import PositionalBias
 
-    pb = PositionalBias.load(path)
-    sm = pb.to_significance_matrix(field_name, kv_heads=True)
+    with _np.load(path, allow_pickle=True) as _z:
+        _combined = "attn_by_bin_kv" in _z
+        if _combined:
+            _meta = _z["meta"]
+            _meta = _json.loads(str(_meta)) if _meta.dtype.kind in "US" else _meta.item()
+            _models = list(_meta["models"])
+            if bias_model not in _models:
+                raise SystemExit(
+                    f"{path.name} carries {_models}; --bias-model {bias_model!r} is not one"
+                )
+            _i = _models.index(bias_model)
+            _field = {"attn_by_bin": "attn_by_bin_kv",
+                      "qk_logit_mean": "qk_logit_mean_kv"}.get(field_name, field_name)
+            if _field not in _z:
+                raise SystemExit(f"{path.name} has no field {_field!r}; has {list(_z)}")
+            _values = _np.asarray(_z[_field][_i], dtype=_np.float64)
+            _binning_desc = dict(_meta["binning_desc"])
+    if _combined:
+        from rineya_psa.significance.matrices import SignificanceMatrix as _SM
+
+        sm = _SM(
+            values=_values,
+            layers=tuple(int(x) for x in _meta["layers"]),
+            kv_heads=tuple(range(int(_meta["n_kv_heads"]))),
+            bins=tuple(int(x) for x in _meta["bins"]),
+            binning_desc=_binning_desc,
+            objective="bias",
+            model_key=bias_model,
+            provenance={"source": str(path), "field": field_name},
+        )
+    else:
+        pb = PositionalBias.load(path)
+        sm = pb.to_significance_matrix(field_name, kv_heads=True)
     binning = binning_from_describe(dict(sm.binning_desc))
     if binning.is_query_dependent:
         raise SystemExit(

@@ -1,0 +1,1702 @@
+{
+  "arm": "nimbus",
+  "model_key": "nimbus",
+  "ungated": false,
+  "dtype_approximated": false,
+  "config": {
+    "phase": 4,
+    "arm": "nimbus",
+    "model_key": "nimbus",
+    "ungated": false,
+    "split": "calibration",
+    "families": [
+      "exact_retrieval",
+      "multi_hop_guided"
+    ],
+    "length_bucket": "2k",
+    "fmt": "natural",
+    "objective": "gold_nll",
+    "eps": 0.25,
+    "n_bins": 8,
+    "top_k": 64,
+    "seed": 20260828,
+    "accept_rho": 0.5
+  },
+  "n_items_tier1": 149,
+  "n_items_tier2": 149,
+  "mean_prompt_tokens": 2042.4496644295302,
+  "grid": {
+    "n_layers": 28,
+    "n_kv_heads": 8,
+    "n_bins": 8,
+    "n_cells": 1792
+  },
+  "agreement": {
+    "n_cells": 128,
+    "cells": [
+      [
+        0,
+        0,
+        7
+      ],
+      [
+        0,
+        1,
+        7
+      ],
+      [
+        0,
+        2,
+        1
+      ],
+      [
+        0,
+        3,
+        1
+      ],
+      [
+        0,
+        3,
+        6
+      ],
+      [
+        0,
+        4,
+        0
+      ],
+      [
+        0,
+        5,
+        7
+      ],
+      [
+        0,
+        6,
+        0
+      ],
+      [
+        0,
+        6,
+        7
+      ],
+      [
+        0,
+        7,
+        0
+      ],
+      [
+        1,
+        1,
+        0
+      ],
+      [
+        1,
+        1,
+        3
+      ],
+      [
+        1,
+        1,
+        7
+      ],
+      [
+        1,
+        4,
+        5
+      ],
+      [
+        1,
+        4,
+        7
+      ],
+      [
+        2,
+        0,
+        7
+      ],
+      [
+        2,
+        1,
+        0
+      ],
+      [
+        2,
+        1,
+        1
+      ],
+      [
+        2,
+        2,
+        0
+      ],
+      [
+        2,
+        3,
+        3
+      ],
+      [
+        2,
+        3,
+        7
+      ],
+      [
+        2,
+        6,
+        0
+      ],
+      [
+        2,
+        6,
+        6
+      ],
+      [
+        2,
+        6,
+        7
+      ],
+      [
+        3,
+        0,
+        7
+      ],
+      [
+        3,
+        1,
+        7
+      ],
+      [
+        3,
+        6,
+        2
+      ],
+      [
+        3,
+        6,
+        7
+      ],
+      [
+        4,
+        0,
+        7
+      ],
+      [
+        4,
+        1,
+        0
+      ],
+      [
+        4,
+        1,
+        3
+      ],
+      [
+        4,
+        2,
+        7
+      ],
+      [
+        4,
+        5,
+        6
+      ],
+      [
+        4,
+        6,
+        0
+      ],
+      [
+        4,
+        7,
+        1
+      ],
+      [
+        5,
+        2,
+        7
+      ],
+      [
+        5,
+        3,
+        0
+      ],
+      [
+        5,
+        3,
+        2
+      ],
+      [
+        5,
+        4,
+        7
+      ],
+      [
+        5,
+        6,
+        7
+      ],
+      [
+        6,
+        0,
+        3
+      ],
+      [
+        6,
+        1,
+        0
+      ],
+      [
+        6,
+        1,
+        7
+      ],
+      [
+        6,
+        2,
+        7
+      ],
+      [
+        6,
+        3,
+        0
+      ],
+      [
+        7,
+        0,
+        7
+      ],
+      [
+        7,
+        4,
+        7
+      ],
+      [
+        7,
+        5,
+        7
+      ],
+      [
+        7,
+        6,
+        0
+      ],
+      [
+        7,
+        6,
+        7
+      ],
+      [
+        7,
+        7,
+        7
+      ],
+      [
+        8,
+        0,
+        7
+      ],
+      [
+        8,
+        1,
+        0
+      ],
+      [
+        8,
+        2,
+        4
+      ],
+      [
+        8,
+        2,
+        5
+      ],
+      [
+        8,
+        3,
+        4
+      ],
+      [
+        9,
+        2,
+        7
+      ],
+      [
+        9,
+        3,
+        7
+      ],
+      [
+        9,
+        7,
+        7
+      ],
+      [
+        10,
+        0,
+        0
+      ],
+      [
+        10,
+        0,
+        4
+      ],
+      [
+        10,
+        1,
+        7
+      ],
+      [
+        10,
+        3,
+        7
+      ],
+      [
+        10,
+        5,
+        7
+      ],
+      [
+        10,
+        6,
+        7
+      ],
+      [
+        10,
+        7,
+        0
+      ],
+      [
+        11,
+        0,
+        2
+      ],
+      [
+        11,
+        2,
+        1
+      ],
+      [
+        11,
+        2,
+        7
+      ],
+      [
+        11,
+        3,
+        0
+      ],
+      [
+        11,
+        4,
+        7
+      ],
+      [
+        11,
+        7,
+        7
+      ],
+      [
+        12,
+        2,
+        7
+      ],
+      [
+        12,
+        3,
+        0
+      ],
+      [
+        12,
+        5,
+        2
+      ],
+      [
+        13,
+        0,
+        7
+      ],
+      [
+        13,
+        1,
+        7
+      ],
+      [
+        13,
+        4,
+        7
+      ],
+      [
+        13,
+        5,
+        2
+      ],
+      [
+        13,
+        5,
+        7
+      ],
+      [
+        14,
+        0,
+        7
+      ],
+      [
+        14,
+        3,
+        7
+      ],
+      [
+        14,
+        5,
+        2
+      ],
+      [
+        14,
+        5,
+        4
+      ],
+      [
+        14,
+        6,
+        7
+      ],
+      [
+        15,
+        1,
+        7
+      ],
+      [
+        15,
+        4,
+        6
+      ],
+      [
+        15,
+        4,
+        7
+      ],
+      [
+        15,
+        6,
+        7
+      ],
+      [
+        15,
+        7,
+        0
+      ],
+      [
+        16,
+        3,
+        6
+      ],
+      [
+        16,
+        5,
+        5
+      ],
+      [
+        16,
+        6,
+        7
+      ],
+      [
+        17,
+        0,
+        5
+      ],
+      [
+        17,
+        1,
+        7
+      ],
+      [
+        17,
+        4,
+        7
+      ],
+      [
+        17,
+        5,
+        6
+      ],
+      [
+        17,
+        6,
+        6
+      ],
+      [
+        17,
+        7,
+        7
+      ],
+      [
+        18,
+        1,
+        3
+      ],
+      [
+        18,
+        1,
+        4
+      ],
+      [
+        18,
+        1,
+        7
+      ],
+      [
+        18,
+        3,
+        7
+      ],
+      [
+        19,
+        3,
+        5
+      ],
+      [
+        19,
+        4,
+        3
+      ],
+      [
+        19,
+        4,
+        6
+      ],
+      [
+        19,
+        5,
+        7
+      ],
+      [
+        19,
+        6,
+        7
+      ],
+      [
+        19,
+        7,
+        4
+      ],
+      [
+        20,
+        0,
+        7
+      ],
+      [
+        20,
+        1,
+        7
+      ],
+      [
+        20,
+        4,
+        4
+      ],
+      [
+        21,
+        3,
+        3
+      ],
+      [
+        21,
+        3,
+        4
+      ],
+      [
+        21,
+        5,
+        4
+      ],
+      [
+        21,
+        7,
+        1
+      ],
+      [
+        21,
+        7,
+        7
+      ],
+      [
+        22,
+        4,
+        4
+      ],
+      [
+        22,
+        6,
+        0
+      ],
+      [
+        23,
+        0,
+        7
+      ],
+      [
+        23,
+        1,
+        6
+      ],
+      [
+        23,
+        3,
+        4
+      ],
+      [
+        23,
+        3,
+        6
+      ],
+      [
+        23,
+        3,
+        7
+      ],
+      [
+        24,
+        1,
+        3
+      ],
+      [
+        24,
+        2,
+        1
+      ],
+      [
+        24,
+        5,
+        1
+      ],
+      [
+        25,
+        4,
+        7
+      ]
+    ],
+    "spearman": 0.9654023988280535,
+    "spearman_ci": {
+      "estimate": 0.9654023988280535,
+      "ci_low": 0.9261765520201266,
+      "ci_high": 0.9827836054825222,
+      "ci_level": 0.95,
+      "sd": 0.015177771257538844,
+      "method": "bca",
+      "n_resamples": 2000,
+      "n_scenarios": 26,
+      "n_items": 128,
+      "seed": 20260828
+    },
+    "ci_clustered_on": "layer",
+    "n_layers": 26,
+    "pearson": 0.9890431632379039,
+    "bland_altman": {
+      "mean_difference": 7.742910256127269e-05,
+      "sd_difference": 0.020676553739764122,
+      "limits_of_agreement": [
+        -0.0404486162273764,
+        0.040603474432498954
+      ],
+      "note": "difference is ablation minus attribution, in objective units"
+    },
+    "accept_rho": 0.5,
+    "verdict": "attribution_usable",
+    "attribution": {
+      "tier": "attribution",
+      "eps": 0.25
+    },
+    "ablation": {
+      "tier": "ablation",
+      "eps": 0.25,
+      "mode": "selected_cells"
+    }
+  },
+  "agreement_restricted": {
+    "top_only": {
+      "n_cells": 64,
+      "spearman": 0.960485347985348,
+      "spearman_ci": {
+        "estimate": 0.960485347985348,
+        "ci_low": 0.9246510710688413,
+        "ci_high": 0.9815287622139479,
+        "ci_level": 0.95,
+        "sd": 0.013202729138796889,
+        "method": "bca",
+        "n_resamples": 2000,
+        "n_scenarios": 21,
+        "n_items": 64,
+        "seed": 20260828
+      }
+    },
+    "control_only": {
+      "n_cells": 64,
+      "spearman": 0.76268315018315,
+      "spearman_ci": {
+        "estimate": 0.76268315018315,
+        "ci_low": 0.5790585210219268,
+        "ci_high": 0.8757892047456807,
+        "ci_level": 0.95,
+        "sd": 0.07698280139411391,
+        "method": "bca",
+        "n_resamples": 2000,
+        "n_scenarios": 25,
+        "n_items": 64,
+        "seed": 20260828
+      }
+    }
+  },
+  "verdict": "attribution_usable",
+  "attribution_usable": true,
+  "fallback_to_coarse_to_fine_ablation": false,
+  "cells": {
+    "n_top": 64,
+    "n_control": 64,
+    "n_visited_by_ablation": 128,
+    "n_never_visited": 1664,
+    "never_visited_are_nan": true
+  },
+  "cost_incurred": {
+    "tier1_forwards": 149,
+    "tier1_backwards": 149,
+    "tier1_seconds": 65.18907129999934,
+    "tier2_forwards": 19221,
+    "tier2_seconds": 3671.0621613000003,
+    "total_seconds": 3736.2512325999996,
+    "total_gpu_hours": 1.037847564611111,
+    "peak_vram_gb": 1.287188992
+  },
+  "tier1": {
+    "tier": "attribution",
+    "perturbation": "value",
+    "objective": "gold_nll",
+    "eps": 0.25,
+    "n_items": 149,
+    "n_forwards": 149,
+    "wall_seconds": 65.18667479999931,
+    "coverage": 1.0,
+    "baseline_mean": 7.540721942023718,
+    "matrix": {
+      "model_key": "nimbus",
+      "objective": "gold_nll",
+      "shape": [
+        28,
+        8,
+        8
+      ],
+      "binning": {
+        "kind": "absolute",
+        "name": "absolute8",
+        "n_bins": 8,
+        "domain": "source_index_over_sequence_length"
+      },
+      "n_finite": 1792,
+      "mean": -0.0010877040404831003,
+      "sd": 0.044102776137715245,
+      "max_importance": 0.5312071678622458,
+      "argmax_cell": {
+        "layer": 0,
+        "kv_head": 6,
+        "bin": 0
+      },
+      "content_sha256": "20cae7d67ff69912b2fe4171cc32629b28c63d7d9d26f822f5cbb94958a6326f"
+    },
+    "top_cells": [
+      {
+        "layer": 0,
+        "kv_head": 6,
+        "bin": 0,
+        "importance": 0.5312071678622458
+      },
+      {
+        "layer": 0,
+        "kv_head": 4,
+        "bin": 0,
+        "importance": 0.23032586006510178
+      },
+      {
+        "layer": 0,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.22590334103411477
+      },
+      {
+        "layer": 11,
+        "kv_head": 3,
+        "bin": 0,
+        "importance": 0.22175104576069238
+      },
+      {
+        "layer": 9,
+        "kv_head": 3,
+        "bin": 7,
+        "importance": 0.2112966033836339
+      },
+      {
+        "layer": 4,
+        "kv_head": 1,
+        "bin": 0,
+        "importance": 0.20812642154277572
+      },
+      {
+        "layer": 17,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.1995827335639288
+      },
+      {
+        "layer": 15,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.18733393668428364
+      },
+      {
+        "layer": 4,
+        "kv_head": 6,
+        "bin": 0,
+        "importance": 0.18000799892532746
+      },
+      {
+        "layer": 5,
+        "kv_head": 2,
+        "bin": 7,
+        "importance": 0.1731135343645243
+      },
+      {
+        "layer": 10,
+        "kv_head": 6,
+        "bin": 7,
+        "importance": 0.17002415427025533
+      },
+      {
+        "layer": 23,
+        "kv_head": 3,
+        "bin": 7,
+        "importance": 0.1628839533601031
+      },
+      {
+        "layer": 18,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.15104504129630608
+      },
+      {
+        "layer": 7,
+        "kv_head": 5,
+        "bin": 7,
+        "importance": 0.14908526927832788
+      },
+      {
+        "layer": 14,
+        "kv_head": 6,
+        "bin": 7,
+        "importance": 0.13726085004390487
+      },
+      {
+        "layer": 15,
+        "kv_head": 4,
+        "bin": 7,
+        "importance": 0.13716158450849905
+      }
+    ],
+    "notes": {
+      "estimator": "attribution_patching",
+      "caveat": "linear response: I_hat = eps * dL/ds recovers L(1) - L(1-eps) only to first order",
+      "n_backwards": 149,
+      "agreement_verdict": "attribution_usable",
+      "dtype_approximated": false
+    }
+  },
+  "tier2": {
+    "tier": "ablation",
+    "perturbation": "value",
+    "objective": "gold_nll",
+    "eps": 0.25,
+    "n_items": 149,
+    "n_forwards": 19221,
+    "wall_seconds": 3671.060269999998,
+    "coverage": 0.07142857142857142,
+    "baseline_mean": 7.540721942023718,
+    "matrix": {
+      "model_key": "nimbus",
+      "objective": "gold_nll",
+      "shape": [
+        28,
+        8,
+        8
+      ],
+      "binning": {
+        "kind": "absolute",
+        "name": "absolute8",
+        "n_bins": 8,
+        "domain": "source_index_over_sequence_length"
+      },
+      "n_finite": 128,
+      "mean": -0.022074716718213032,
+      "sd": 0.1390004467869404,
+      "max_importance": 0.4755741549309479,
+      "argmax_cell": {
+        "layer": 0,
+        "kv_head": 6,
+        "bin": 0
+      },
+      "content_sha256": "00b778ed832a3c7cfaa10361d977081e34f49e03dde72b444931d985805c0aa2"
+    },
+    "top_cells": [
+      {
+        "layer": 0,
+        "kv_head": 6,
+        "bin": 0,
+        "importance": 0.4755741549309479
+      },
+      {
+        "layer": 0,
+        "kv_head": 4,
+        "bin": 0,
+        "importance": 0.27347323809421836
+      },
+      {
+        "layer": 4,
+        "kv_head": 1,
+        "bin": 0,
+        "importance": 0.2645656571162149
+      },
+      {
+        "layer": 9,
+        "kv_head": 3,
+        "bin": 7,
+        "importance": 0.25691318657560175
+      },
+      {
+        "layer": 11,
+        "kv_head": 3,
+        "bin": 0,
+        "importance": 0.23494246531608584
+      },
+      {
+        "layer": 17,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.22727776470968356
+      },
+      {
+        "layer": 10,
+        "kv_head": 6,
+        "bin": 7,
+        "importance": 0.22024336749706933
+      },
+      {
+        "layer": 4,
+        "kv_head": 6,
+        "bin": 0,
+        "importance": 0.20907437338844573
+      },
+      {
+        "layer": 15,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.17241766362659236
+      },
+      {
+        "layer": 5,
+        "kv_head": 2,
+        "bin": 7,
+        "importance": 0.1670133141603871
+      },
+      {
+        "layer": 23,
+        "kv_head": 3,
+        "bin": 7,
+        "importance": 0.1651572750752105
+      },
+      {
+        "layer": 18,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.15898366022039354
+      },
+      {
+        "layer": 7,
+        "kv_head": 5,
+        "bin": 7,
+        "importance": 0.15542811714293436
+      },
+      {
+        "layer": 10,
+        "kv_head": 0,
+        "bin": 0,
+        "importance": 0.1495124510193092
+      },
+      {
+        "layer": 15,
+        "kv_head": 4,
+        "bin": 7,
+        "importance": 0.1478204787184364
+      },
+      {
+        "layer": 3,
+        "kv_head": 1,
+        "bin": 7,
+        "importance": 0.14766483943304476
+      }
+    ],
+    "notes": {
+      "mode": "selected_cells",
+      "selection": {
+        "top": [
+          [
+            0,
+            6,
+            0
+          ],
+          [
+            11,
+            4,
+            7
+          ],
+          [
+            6,
+            3,
+            0
+          ],
+          [
+            9,
+            7,
+            7
+          ],
+          [
+            7,
+            0,
+            7
+          ],
+          [
+            2,
+            3,
+            7
+          ],
+          [
+            3,
+            0,
+            7
+          ],
+          [
+            0,
+            7,
+            0
+          ],
+          [
+            0,
+            4,
+            0
+          ],
+          [
+            1,
+            1,
+            0
+          ],
+          [
+            0,
+            1,
+            7
+          ],
+          [
+            4,
+            0,
+            7
+          ],
+          [
+            11,
+            3,
+            0
+          ],
+          [
+            9,
+            3,
+            7
+          ],
+          [
+            6,
+            1,
+            0
+          ],
+          [
+            1,
+            4,
+            7
+          ],
+          [
+            4,
+            1,
+            0
+          ],
+          [
+            4,
+            2,
+            7
+          ],
+          [
+            17,
+            1,
+            7
+          ],
+          [
+            18,
+            3,
+            7
+          ],
+          [
+            9,
+            2,
+            7
+          ],
+          [
+            15,
+            1,
+            7
+          ],
+          [
+            0,
+            0,
+            7
+          ],
+          [
+            0,
+            6,
+            7
+          ],
+          [
+            5,
+            3,
+            0
+          ],
+          [
+            10,
+            1,
+            7
+          ],
+          [
+            4,
+            6,
+            0
+          ],
+          [
+            13,
+            4,
+            7
+          ],
+          [
+            14,
+            0,
+            7
+          ],
+          [
+            5,
+            2,
+            7
+          ],
+          [
+            2,
+            6,
+            0
+          ],
+          [
+            7,
+            6,
+            7
+          ],
+          [
+            10,
+            6,
+            7
+          ],
+          [
+            2,
+            6,
+            7
+          ],
+          [
+            17,
+            4,
+            7
+          ],
+          [
+            23,
+            3,
+            7
+          ],
+          [
+            10,
+            5,
+            7
+          ],
+          [
+            11,
+            2,
+            7
+          ],
+          [
+            20,
+            0,
+            7
+          ],
+          [
+            18,
+            1,
+            7
+          ],
+          [
+            7,
+            5,
+            7
+          ],
+          [
+            14,
+            3,
+            7
+          ],
+          [
+            13,
+            1,
+            7
+          ],
+          [
+            14,
+            6,
+            7
+          ],
+          [
+            15,
+            4,
+            7
+          ],
+          [
+            2,
+            0,
+            7
+          ],
+          [
+            17,
+            7,
+            7
+          ],
+          [
+            11,
+            7,
+            7
+          ],
+          [
+            6,
+            2,
+            7
+          ],
+          [
+            0,
+            5,
+            7
+          ],
+          [
+            10,
+            3,
+            7
+          ],
+          [
+            10,
+            0,
+            0
+          ],
+          [
+            7,
+            4,
+            7
+          ],
+          [
+            13,
+            5,
+            7
+          ],
+          [
+            5,
+            6,
+            7
+          ],
+          [
+            1,
+            1,
+            7
+          ],
+          [
+            3,
+            1,
+            7
+          ],
+          [
+            15,
+            6,
+            7
+          ],
+          [
+            12,
+            2,
+            7
+          ],
+          [
+            10,
+            7,
+            0
+          ],
+          [
+            8,
+            0,
+            7
+          ],
+          [
+            2,
+            2,
+            0
+          ],
+          [
+            2,
+            1,
+            0
+          ],
+          [
+            16,
+            6,
+            7
+          ]
+        ],
+        "control": [
+          [
+            20,
+            4,
+            4
+          ],
+          [
+            24,
+            2,
+            1
+          ],
+          [
+            8,
+            1,
+            0
+          ],
+          [
+            12,
+            5,
+            2
+          ],
+          [
+            0,
+            3,
+            1
+          ],
+          [
+            8,
+            2,
+            4
+          ],
+          [
+            24,
+            5,
+            1
+          ],
+          [
+            12,
+            3,
+            0
+          ],
+          [
+            19,
+            7,
+            4
+          ],
+          [
+            23,
+            3,
+            4
+          ],
+          [
+            19,
+            3,
+            5
+          ],
+          [
+            17,
+            0,
+            5
+          ],
+          [
+            21,
+            5,
+            4
+          ],
+          [
+            25,
+            4,
+            7
+          ],
+          [
+            17,
+            5,
+            6
+          ],
+          [
+            21,
+            3,
+            4
+          ],
+          [
+            20,
+            1,
+            7
+          ],
+          [
+            6,
+            1,
+            7
+          ],
+          [
+            2,
+            1,
+            1
+          ],
+          [
+            6,
+            0,
+            3
+          ],
+          [
+            4,
+            5,
+            6
+          ],
+          [
+            1,
+            1,
+            3
+          ],
+          [
+            23,
+            3,
+            6
+          ],
+          [
+            0,
+            3,
+            6
+          ],
+          [
+            8,
+            3,
+            4
+          ],
+          [
+            13,
+            5,
+            2
+          ],
+          [
+            21,
+            3,
+            3
+          ],
+          [
+            2,
+            3,
+            3
+          ],
+          [
+            11,
+            2,
+            1
+          ],
+          [
+            23,
+            1,
+            6
+          ],
+          [
+            18,
+            1,
+            4
+          ],
+          [
+            18,
+            1,
+            3
+          ],
+          [
+            14,
+            5,
+            2
+          ],
+          [
+            3,
+            6,
+            2
+          ],
+          [
+            21,
+            7,
+            1
+          ],
+          [
+            14,
+            5,
+            4
+          ],
+          [
+            13,
+            0,
+            7
+          ],
+          [
+            19,
+            4,
+            3
+          ],
+          [
+            15,
+            7,
+            0
+          ],
+          [
+            19,
+            6,
+            7
+          ],
+          [
+            10,
+            0,
+            4
+          ],
+          [
+            5,
+            4,
+            7
+          ],
+          [
+            17,
+            6,
+            6
+          ],
+          [
+            15,
+            4,
+            6
+          ],
+          [
+            21,
+            7,
+            7
+          ],
+          [
+            11,
+            0,
+            2
+          ],
+          [
+            16,
+            5,
+            5
+          ],
+          [
+            19,
+            5,
+            7
+          ],
+          [
+            4,
+            1,
+            3
+          ],
+          [
+            1,
+            4,
+            5
+          ],
+          [
+            19,
+            4,
+            6
+          ],
+          [
+            7,
+            6,
+            0
+          ],
+          [
+            24,
+            1,
+            3
+          ],
+          [
+            8,
+            2,
+            5
+          ],
+          [
+            22,
+            4,
+            4
+          ],
+          [
+            23,
+            0,
+            7
+          ],
+          [
+            5,
+            3,
+            2
+          ],
+          [
+            22,
+            6,
+            0
+          ],
+          [
+            7,
+            7,
+            7
+          ],
+          [
+            2,
+            6,
+            6
+          ],
+          [
+            4,
+            7,
+            1
+          ],
+          [
+            3,
+            6,
+            7
+          ],
+          [
+            16,
+            3,
+            6
+          ],
+          [
+            0,
+            2,
+            1
+          ]
+        ]
+      },
+      "unvisited_cells_are_nan": true,
+      "caveat": "only the top-K plus the random control were ablated; every other cell is NaN because it was never measured, not because it measured zero"
+    }
+  },
+  "baseline_max_abs_gap": 0.0,
+  "artifacts": {
+    "tier1_npz": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4_significance\\nimbus\\kv_head_position_significance.npz",
+    "tier1_csv": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4_significance\\nimbus\\kv_head_position_significance.csv",
+    "tier2_npz": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4_significance\\nimbus\\tier2_ablation_significance.npz",
+    "tier2_csv": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4_significance\\nimbus\\tier2_ablation_significance.csv"
+  }
+}

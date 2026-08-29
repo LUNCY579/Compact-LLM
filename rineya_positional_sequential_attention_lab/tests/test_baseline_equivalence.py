@@ -415,3 +415,37 @@ def test_context_shape_validation_fires_before_the_forward(fixture):
     ):
         pass
     assert model.config._attn_implementation != PSA_KEY
+
+
+def test_mode1_sdpa_fast_path_equals_the_eager_chunked_path(fixture):
+    """SPEC 12.3's fast path must be an optimisation, not a different computation.
+
+    Under an absolute binning the Mode-1 bias depends only on (query head, source token),
+    so it can ride as a [1, H_q, 1, T] additive mask through SDPA instead of forcing the
+    explicit [T, T] kernel. That is worth ~5x on the Phase-8 Mode-1 sweep, and it is only
+    legitimate if it reproduces the kernel it replaces. Capture forces the chunked path
+    without altering the intervention, so a capture-enabled run is the reference.
+    """
+    model, arch, input_ids = fixture
+    binning = AbsoluteBinning(8)
+    table = torch.randn(arch.num_layers, arch.num_kv_heads, binning.n_bins) * 1.5
+    spec = LogitBiasSpec(table=table, lam=1.0, binning=binning)
+
+    fast = _psa_logits(model, input_ids, PSAContext(enabled=True, logit_bias=spec))
+    reference = _psa_logits(
+        model,
+        input_ids,
+        PSAContext(
+            enabled=True,
+            logit_bias=spec,
+            capture=CaptureSpec(what=("attn_entropy",), binning=binning),
+        ),
+    )
+    assert torch.allclose(fast, reference, atol=2e-4, rtol=0.0), (
+        f"fast path differs from the eager kernel by "
+        f"{(fast - reference).abs().max().item():g}"
+    )
+
+    # Negative control: it must actually be doing something.
+    plain = _logits(model, input_ids, "sdpa")
+    assert (fast - plain).abs().max().item() > 1e-2
