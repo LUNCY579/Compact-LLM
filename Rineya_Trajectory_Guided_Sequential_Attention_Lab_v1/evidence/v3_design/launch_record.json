@@ -1,0 +1,89 @@
+{
+  "analysis_code_sha256": "5d45fe648bb71da3c12f0edffb6118c23ce54d6555c6e60cd22eeed7de86d362",
+  "branch": "research/tgsa-phase1-identifiability-v3-powered-confirmatory",
+  "calibration_report_sha256": "1f25009a0a8a19d159ee24df9922e0c00aae95dbec36261eb18a4a8f861cc9ce",
+  "ci": {
+    "conclusion": "success",
+    "confirmatory_job": "skipped",
+    "head_sha": "04d3c02b6f9c7398fede8416deea81ce170ea7c2",
+    "workflow_run_id": 33271024242
+  },
+  "dataset_manifest_sha256": "cad5851eeba887584c9c6aa38cef11f00d752c71fb2c71c6877cdc44a3e52d54",
+  "dataset_split_sha256": {
+    "dev": "a29ee38a5f2285113e1e534c1827707da885703503fffac23afa8bd3eaeefe7e",
+    "test": "b23e9c9fceb2f709b899fd52ed9ede5e3c09bce34e184812dae72a86fd072178",
+    "train": "0e80ca962fd88f4910b145b4c5807c03e6b6a59550d620a54134ef62bf980fc4"
+  },
+  "design_freeze_commit": "04d3c02b6f9c7398fede8416deea81ce170ea7c2",
+  "design_freeze_tag": "tgsa-phase1-v3-launch-2026-08-29",
+  "environment": {
+    "cpu_count": 32,
+    "cuda_available": false,
+    "gpu": null,
+    "numpy": "2.4.6",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15",
+    "torch": "2.13.0+cpu"
+  },
+  "execution_commit": "<successor of the design freeze; recorded in every run manifest>",
+  "execution_plan": {
+    "estimated_cell_minutes": {
+      "cascade": 9.1,
+      "history_control": 12.0,
+      "learned_delta": 10.8
+    },
+    "measured_cost_ms_per_step": {
+      "cascade": 218,
+      "history_control": 288,
+      "learned_delta": 258
+    },
+    "phases": [
+      "prepare",
+      "train",
+      "barrier",
+      "evaluate",
+      "verify",
+      "analyze"
+    ],
+    "sharding": "The 60 registered cells are independent: each builds its own model from its own derived seeds and writes its own run directory. Training is therefore sharded across processes purely as an execution strategy. It is NOT a design change: no registered arm, seed, step budget, data order, or estimator is affected, and the barrier still requires all 60 cells before any confirmatory evaluation runs. Determinism is verified by re-running one cell standalone and comparing its final_model_state_sha256."
+  },
+  "generator_code_sha256": "d66cd1ada479fbe27a0156e28ae09b2b39780c13f9d83979102b967f06e62014",
+  "inference_code_sha256": "d3aae13347cf908fbbc19173b77a3f3fa149d39d1bdcfc3c70ad9a273dd1d83f",
+  "note": "dataset_manifest_sha256 is filled by the PREPARE step; the dataset is materialized from the config, not committed.",
+  "operator_code_sha256": "0b72794d55057136894eef842a867d052c9f59a3fb060a4c2aacc4f2d7f95ce3",
+  "parent_v2_frozen": "e0063f0e784da69a33a7669956ff0ac13daa2cd6",
+  "pinned_phase0_ancestor": "aefb70ebed2e7f57b9cbfe25c24dfdc0aee2fd4e",
+  "power_report_sha256": "43b3d133eae5afc4e548fecb03b2e996b52e4f800e4349705b7b956a44de6334",
+  "preregistration_sha256": "6cfa608a510672181a847241b4b6e91fabe8d12032071c346230efb456361085",
+  "registered_arms": [
+    "cascade",
+    "history_control",
+    "learned_delta"
+  ],
+  "registered_cells": 60,
+  "registered_seeds": [
+    101,
+    202,
+    303,
+    404,
+    505,
+    606,
+    707,
+    808,
+    909,
+    1010,
+    1111,
+    1212,
+    1313,
+    1414,
+    1515,
+    1616,
+    1717,
+    1818,
+    1919,
+    2020
+  ],
+  "schema_version": "tgsa.phase1-launch-record.v1",
+  "study_config_sha256": "9dadb157b04fefad6a4d1ed8cfee1d5ed23916e4c12e13f2dce61b097a7b8163",
+  "study_id": "tgsa-phase1-identifiability-v3-2026-08-29"
+}
