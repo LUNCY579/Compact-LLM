@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chatbubble.local/tgsa/phase1_analysis.schema.json",
+  "title": "TGSA Phase 1 frozen analysis",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "study_id",
+    "decision",
+    "claim_ceiling",
+    "is_full_registered_matrix",
+    "confirmatory_config",
+    "analysis_code_sha256",
+    "study_config_sha256",
+    "matrix_manifest_sha256",
+    "comparisons",
+    "gates"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.phase1-model-analysis.v1"},
+    "decision": {"enum": ["supports_phase1_mechanism_hypothesis", "inconclusive", "contradicted", "smoke_only"]},
+    "claim_ceiling": {"type": "string", "minLength": 1},
+    "is_full_registered_matrix": {"type": "boolean"},
+    "confirmatory_config": {"type": "boolean"},
+    "analysis_code_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "study_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "matrix_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "comparisons": {"type": "object", "minProperties": 4},
+    "gates": {"type": "object", "minProperties": 5}
+  },
+  "additionalProperties": true
+}
