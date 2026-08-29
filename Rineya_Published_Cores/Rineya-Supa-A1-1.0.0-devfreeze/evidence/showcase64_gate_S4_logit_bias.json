@@ -1,0 +1,46 @@
+{
+  "schema_version": "1.0",
+  "kind": "abstention_gate_spec",
+  "created_utc": "2026-08-27T21:40:36.873456+00:00",
+  "gate_label": "S4_logit_bias",
+  "tuning_split": "showcase",
+  "provenance": "POST-HOC 4th gate, added after the confirmatory run at the user's request. Chosen because it is the only signal family whose decision boundary is an exact constant logit offset on the UNKNOWN token, so it can be baked into a single checkpoint. Threshold is the showcase-best for this signal, taken from the original tuning sweep; stability was NOT used to pick it.",
+  "checkpoint_equivalence": {
+    "claim": "gate fires iff argmax(z + b*e_UNKNOWN) == UNKNOWN at the first generated token",
+    "unknown_token_id": 51378,
+    "logit_bias": 5.156249985098839,
+    "derivation": "signal = logP(UNKNOWN) - logP(top1) = z_UNK - z_top1; the softmax normaliser cancels"
+  },
+  "gate": {
+    "combine": "single",
+    "signal": "unknown_exact_minus_top1",
+    "direction": "high",
+    "threshold": -5.156249985098839,
+    "rule": "abstain if unknown_exact_minus_top1 >= -5.15625",
+    "abstain_text": "UNKNOWN"
+  },
+  "tuning_outcome": {
+    "rows": 64,
+    "baseline_correct": 42,
+    "gated_correct": 46,
+    "delta": 4,
+    "abstentions": 7,
+    "model_abstentions": 3,
+    "added_abstentions": 4,
+    "abstention_true_positives": 7,
+    "abstention_false_positives": 0,
+    "abstention_precision": 1.0,
+    "abstention_recall": 0.4375,
+    "unanswerable_rows": 16,
+    "gained_ids": [
+      "RLC-010-U",
+      "RLC-032-U",
+      "RLC-051-U",
+      "RLC-064-U"
+    ],
+    "lost_ids": [],
+    "mcnemar_b_gate_only_correct": 4,
+    "mcnemar_c_baseline_only_correct": 0,
+    "mcnemar_exact_p": 0.125
+  }
+}

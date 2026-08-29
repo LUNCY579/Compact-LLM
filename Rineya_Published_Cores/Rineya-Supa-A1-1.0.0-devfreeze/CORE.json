@@ -1,0 +1,126 @@
+{
+  "schema_version": "1.2",
+  "core_id": "rineya.core.supa-a1.v1.0.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-abstain-b5p15625",
+  "codename": "Supa-A1",
+  "family_name": "Supa",
+  "directory_name": "Rineya-Supa-A1-1.0.0-devfreeze",
+  "version": "1.0.0-devfreeze",
+  "tracking_label": "Supa-A1",
+  "tracking": {
+    "scheme": "family letter/sequence release label",
+    "generation": "A",
+    "sequence": 1,
+    "label": "A1"
+  },
+  "kind": "dense_lora_merge_with_baked_abstention",
+  "status": "showcase_selected_posthoc_stability_evaluated_private_core",
+  "classification": "single_pass_posthoc_abstention_core",
+  "public_claim": "Single-pass Supa A-series core: 43/64 Showcase (tuning-split checkpoint evaluation), 125/192 previously inspected Stability, 168/256 combined. Requires greedy decoding and trust_remote_code=True. Sealed TEST not run.",
+  "release_manifest": "FILES.json",
+  "published_at_utc": "2026-08-27T23:19:12.114782Z",
+  "former_identity": {
+    "name": "Rineya-Nimbus-Abstain-1.0",
+    "kind": "local checkpoint name",
+    "manifest_sha256": "c613d0fd6c0da0ee19d0367331d8fc97b4d988b041a6faaf02c0ee196df7c389"
+  },
+  "source": {
+    "base": "Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+    "base_weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+    "adapter": "artifacts/halo_long_context_sft_v1/stage_a/checkpoint-200",
+    "adapter_weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+    "adapter_scale": 0.8125,
+    "scaled_lora_slots": 196,
+    "merge_dtype": "float32",
+    "saved_dtype": "bfloat16"
+  },
+  "abstention": {
+    "spec": "artifacts/rineya_abstention_gate_v1/tuning_showcase64/showcase64_gate_S4_logit_bias.json",
+    "spec_sha256": "5f6cc42e9c4baa57a83ef0fbe6c0b924abb881246480e8b2b84d457ba240279d",
+    "signal": "unknown_exact_minus_top1",
+    "threshold": -5.156249985098839,
+    "unknown_surface": "UNKNOWN",
+    "unknown_token_id": 51378,
+    "logit_bias": 5.156249985098839,
+    "selection_status": "POST-HOC fourth gate chosen after the S1 confirmatory Stability run; its threshold itself was selected on Showcase only",
+    "form": "constant offset applied inside Qwen3AbstainForCausalLM.forward",
+    "loader_requirement": "trust_remote_code=True",
+    "runtime_module": "modeling_supa_a1.py",
+    "decoding_requirement": "greedy argmax",
+    "known_deviation": "The model class applies the offset at every decode step; the tuned gate was defined on the first generated token. No mid-answer UNKNOWN was observed on the 256-row evaluation."
+  },
+  "evaluation": {
+    "protocol": {
+      "suite": "Rineya Long-Context Demonstration Suite",
+      "context_tokens": 4096,
+      "max_new_tokens": 24,
+      "decoding": "greedy",
+      "seed": 17,
+      "thinking": false
+    },
+    "checkpoint_results": {
+      "showcase64": {
+        "hits": 43,
+        "items": 64,
+        "role": "tuning split"
+      },
+      "stability192": {
+        "hits": 125,
+        "items": 192,
+        "role": "previously inspected validation; S4 was added after the S1 confirmatory run, threshold selected on Showcase only"
+      },
+      "all256": {
+        "hits": 168,
+        "items": 256,
+        "role": "combined report"
+      }
+    },
+    "offline_gate_reference": {
+      "showcase64": {
+        "hits": 46,
+        "items": 64
+      },
+      "stability192": {
+        "hits": 125,
+        "items": 192
+      },
+      "caveat": "Do not inherit 46/64 to this checkpoint. Two rows drifted during BF16 LoRA folding and one additional showcase row differs because the checkpoint applies the offset at every decode step."
+    },
+    "no_bias_control": {
+      "former_name": "Rineya-Nimbus-Dense-1.0-nobias",
+      "classification": "abstention_ablation_control_not_a_named_core",
+      "showcase64": {
+        "hits": 40,
+        "items": 64
+      },
+      "stability192": {
+        "hits": 121,
+        "items": 192
+      },
+      "all256": {
+        "hits": 161,
+        "items": 256
+      },
+      "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "note": "This control is weight-identical to Supa Core 1.7 and Supa-A1. It is evidence, not a distinct Nimbus model."
+    }
+  },
+  "checks": {
+    "num_hidden_layers": 28,
+    "hidden_size": 1024,
+    "vocab_size": 151936,
+    "model_type": "qwen3",
+    "architecture": "Qwen3AbstainForCausalLM",
+    "weight_bytes": 1192135096,
+    "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "source_config_sha256": "630ec3b22b272439d441069eee1e1425f743c5f0986e314064883c1d8ea689e2",
+    "source_modeling_sha256": "a56a2022ccbe45da003e3d7e695e9a86442b89966fd24b042e0e9299387f74a2",
+    "has_tokenizer": true
+  },
+  "limits": [
+    "Showcase64 selected the threshold; it is not untouched test data.",
+    "S4 was added after Stability had been inspected for S1; its threshold used Showcase only.",
+    "The 125/192 gain over the 121/192 no-bias control has exact McNemar p=0.2188.",
+    "The threshold is calibrated to this model, adapter scale, prompt, and class mix.",
+    "Serving stacks that reject remote code need an equivalent logits processor."
+  ]
+}

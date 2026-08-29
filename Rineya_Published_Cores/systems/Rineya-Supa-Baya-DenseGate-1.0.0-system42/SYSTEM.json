@@ -1,0 +1,106 @@
+{
+  "schema_version": "2.0",
+  "system_id": "rineya.system.supa-baya.v1.0.0.system42.dense-unknown-gate",
+  "codename": "Supa-Baya Dense Gate42",
+  "display_name": "Rineya Supa-Baya Dense Gate 42",
+  "directory_name": "Rineya-Supa-Baya-DenseGate-1.0.0-system42",
+  "version": "1.0.0-system",
+  "kind": "two_dense_core_unknown_gate",
+  "classification": "showcase_selected_stability_validated",
+  "created_at_utc": "2026-08-27T19:59:37.875578Z",
+  "single_checkpoint": false,
+  "arm_count": 2,
+  "answer_key_access_at_inference": false,
+  "routing": {
+    "initial_arm": "supa_dense_low",
+    "steps": [
+      {
+        "op": "select_if_arm_unknown",
+        "arm": "baya_dense_high"
+      }
+    ]
+  },
+  "arms": {
+    "supa_dense_low": {
+      "base_model": {
+        "directory": "Rineya-Supa-1.7.0-devfreeze",
+        "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+        "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+        "weight_bytes": 1192135096
+      }
+    },
+    "baya_dense_high": {
+      "base_model": {
+        "directory": "Rineya-Baya-1.7.0-devfreeze",
+        "core_id": "rineya.core.baya.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+        "weight_sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+        "weight_bytes": 1192135096
+      }
+    }
+  },
+  "assets": {},
+  "results": {
+    "showcase64": {
+      "hits": 42,
+      "items": 64,
+      "strict_exact": 0.65625
+    },
+    "stability192": {
+      "hits": 124,
+      "items": 192,
+      "strict_exact": 0.6458333333333334
+    },
+    "all256": {
+      "hits": 166,
+      "items": 256,
+      "strict_exact": 0.6484375
+    }
+  },
+  "evidence": {
+    "all256": {
+      "hits": 166,
+      "items": 256,
+      "inputs": {
+        "supa_dense_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/taria/taria_dense_all256.jsonl",
+          "bytes": 44826,
+          "sha256": "983e0d47d15e6f4fbb8b83c79384e855893654e8ccbcbd45b84dd657d14b178d",
+          "bundled_path": "evidence/inputs/all256/supa_dense_low.jsonl"
+        },
+        "baya_dense_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256.jsonl",
+          "bytes": 44715,
+          "sha256": "4646cc109aa12a815d85174b4f0909997f715d3940aad58101164f101d3b6f06",
+          "bundled_path": "evidence/inputs/all256/baya_dense_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_published_core_search_v1/published_pair/taria_lumina_unknown_gate_all256.jsonl",
+        "bytes": 68806,
+        "sha256": "2812d9b9e6afa8bb8ab12c301ae651557212f38906d244a6b8df761883e40338",
+        "bundled_path": "evidence/expected/all256.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_published_core_search_v1/published_pair/taria_lumina_unknown_gate_all256_report.json",
+        "bytes": 5917,
+        "sha256": "65d58887265b74f98b22f2b2c7fd4c93748476418bcc1089523a92121c900795",
+        "bundled_path": "evidence/expected/all256_report.json"
+      },
+      "canonical_prediction_sha256": "a5c82e3a2b4e965673963159a5d21120b9239c8cfba77a2d2719c1a2ab7f06cd",
+      "replayable": true,
+      "replay_verified": true
+    }
+  },
+  "source_config": null,
+  "protocol": {
+    "dtype": "bfloat16",
+    "decoding": "greedy",
+    "seed": 17,
+    "thinking": false,
+    "max_new_tokens": 24,
+    "max_context": 4096,
+    "truncation": "forbidden"
+  },
+  "caveat": "This 42 result is the answer-blind gate over the two preserved dense 1.7 cores. It is distinct from the coincidental 42-point single PEFT arm.",
+  "system_manifest_sha256": "f681d014db89630bdf9279c4edf8e6986a95486ed409265c0adada68b4d6460e"
+}

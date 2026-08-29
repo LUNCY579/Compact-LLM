@@ -1,0 +1,547 @@
+{
+  "schema_version": "1.0",
+  "kind": "taria_lumina_bf16_dense_lora_transfer_merge",
+  "status": "finalized",
+  "core_id": "rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+  "codename": "Lumina",
+  "directory_name": "Rineya-Lumina-1.7.0-devfreeze",
+  "created_at_utc": "2026-08-26T23:27:10.919244Z",
+  "staged_at_utc": "2026-08-26T23:27:18.384234Z",
+  "source": {
+    "application_base": {
+      "path": "Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+      "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+      "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+      "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+      "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "training_base": {
+      "path": "Rineya_Published_Cores/Rineya-Halo-1.2.0-devfreeze",
+      "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+      "weight_sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544",
+      "note": "The Stage-A LoRA was trained on Halo, then transferred to Nimbus."
+    },
+    "adapter": {
+      "path": "artifacts/rineya_long_context_weight_geometry_v1/selected/nimbus_step200_scale1p25_adapter",
+      "original_checkpoint": "artifacts/halo_long_context_sft_v1/stage_a/checkpoint-200",
+      "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+      "config_sha256": "40200036e8ff271f6b3eb45732c137493530dbb20d9c0ae8ca6e60af4d771b4b",
+      "training_step": 200,
+      "rank": 16,
+      "original_alpha": 32,
+      "effective_scale": 1.25,
+      "encoded_alpha": 40,
+      "effective_alpha_over_rank": 2.5,
+      "target_modules": [
+        "down_proj",
+        "gate_proj",
+        "k_proj",
+        "o_proj",
+        "q_proj",
+        "up_proj",
+        "v_proj"
+      ],
+      "dropout": 0.05,
+      "bias": "none",
+      "peft_version_recorded": "0.19.1"
+    }
+  },
+  "source_snapshot_before": {
+    "base": {
+      ".gitattributes": {
+        "bytes": 1570,
+        "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+      },
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 726,
+        "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+      },
+      "generation_config.json": {
+        "bytes": 239,
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      "merges.txt": {
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      "model.safetensors": {
+        "bytes": 1503300328,
+        "sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9732,
+        "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "vocab.json": {
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    },
+    "adapter": {
+      "adapter_config.json": {
+        "bytes": 1177,
+        "sha256": "40200036e8ff271f6b3eb45732c137493530dbb20d9c0ae8ca6e60af4d771b4b"
+      },
+      "adapter_model.safetensors": {
+        "bytes": 40422168,
+        "sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      }
+    }
+  },
+  "source_snapshot_after": {
+    "base": {
+      ".gitattributes": {
+        "bytes": 1570,
+        "sha256": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930"
+      },
+      "LICENSE": {
+        "bytes": 11343,
+        "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+      },
+      "config.json": {
+        "bytes": 726,
+        "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+      },
+      "generation_config.json": {
+        "bytes": 239,
+        "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+      },
+      "merges.txt": {
+        "bytes": 1671853,
+        "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+      },
+      "model.safetensors": {
+        "bytes": 1503300328,
+        "sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c"
+      },
+      "tokenizer.json": {
+        "bytes": 11422654,
+        "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+      },
+      "tokenizer_config.json": {
+        "bytes": 9732,
+        "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+      },
+      "vocab.json": {
+        "bytes": 2776833,
+        "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      }
+    },
+    "adapter": {
+      "adapter_config.json": {
+        "bytes": 1177,
+        "sha256": "40200036e8ff271f6b3eb45732c137493530dbb20d9c0ae8ca6e60af4d771b4b"
+      },
+      "adapter_model.safetensors": {
+        "bytes": 40422168,
+        "sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      }
+    }
+  },
+  "sources_unmodified": true,
+  "algorithm": {
+    "formula": "BF16(FP32(Nimbus) + FP32(LoRA_B @ LoRA_A) * alpha/r)",
+    "accumulator_dtype": "float32",
+    "output_dtype": "bfloat16",
+    "safe_merge": true,
+    "serialization": "safetensors",
+    "preserved_base_assets_byte_exact": true
+  },
+  "environment": {
+    "python": "3.11.15",
+    "platform": "win32",
+    "packages": {
+      "torch": "2.12.1+cu126",
+      "transformers": "5.14.1",
+      "peft": "0.19.1",
+      "safetensors": "0.8.0",
+      "accelerate": "1.14.0"
+    }
+  },
+  "output": {
+    "staging_directory": ".Rineya-Lumina-1.7.0-devfreeze.staging-v1",
+    "final_directory": "Rineya-Lumina-1.7.0-devfreeze",
+    "checks": {
+      "model_type": "qwen3",
+      "architecture": "Qwen3ForCausalLM",
+      "num_hidden_layers": 28,
+      "hidden_size": 1024,
+      "vocab_size": 151936,
+      "tie_word_embeddings": true,
+      "weight_bytes": 1192135096,
+      "weight_sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+      "tensor_count": 310,
+      "parameter_count_serialized": 596049920,
+      "tensor_inventory_sha256": "b112b8694b49c51196084dea43892e67c8653b924057929471faa1c01c103af3",
+      "tensor_inventory_missing_from_base": [
+        "lm_head.weight"
+      ],
+      "tensor_inventory_unexpected": [],
+      "dtype_counts": {
+        "BF16": 310
+      },
+      "all_finite": true,
+      "no_peft_remnants": true,
+      "preserved_asset_sha256": {
+        ".gitattributes": "34448b82c17d60fec9b65b1f093c115ddbaadc04beb1b0140b6bfed2e012a930",
+        "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e",
+        "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+        "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+        "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+        "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+        "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+        "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+      },
+      "reload": {
+        "performed": true,
+        "class": "Qwen3ForCausalLM",
+        "num_hidden_layers": 28,
+        "parameter_dtype": "torch.bfloat16",
+        "tied_embeddings": true,
+        "missing_keys": [],
+        "unexpected_keys": [],
+        "mismatched_keys": [],
+        "error_messages": []
+      }
+    }
+  },
+  "dense_parity": {
+    "schema_version": "1.0",
+    "kind": "dense_vs_peft_prediction_parity",
+    "verified_at_utc": "2026-08-26T23:46:51.315797Z",
+    "core_id": "rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+    "codename": "Lumina",
+    "model": {
+      "directory": ".Rineya-Lumina-1.7.0-devfreeze.staging-v1",
+      "weight_sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+      "dtype_counts": {
+        "BF16": 310
+      }
+    },
+    "protocol": {
+      "dtype": "bfloat16",
+      "decoding": "greedy",
+      "seed": 17,
+      "thinking": false,
+      "max_new_tokens": 24,
+      "max_context": 4096,
+      "truncation": "forbidden",
+      "prompts_sha256": "2619bd2c4a503e8d65e1d22d5090738b91229365b400332ade29c110dece0af5"
+    },
+    "candidate": {
+      "path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256.jsonl",
+      "file_sha256": "4646cc109aa12a815d85174b4f0909997f715d3940aad58101164f101d3b6f06",
+      "canonical_prediction_sha256": "5c8ae1e136caf93aecb0f0e43b0dc66583196425bc5a8ee6c1e00427cf6b14b3",
+      "rows": 256
+    },
+    "peft_reference": {
+      "path": "artifacts/rineya_long_context_weight_geometry_v1/final/nimbus_step200_scale1p25_all256.jsonl",
+      "file_sha256": "917ef4dbd6eb14d19b21c1bc0e71fedcb79090471af41f23b03b908563cbe075",
+      "canonical_prediction_sha256": "4101d52889b4681542ae0c2d16c0378cc646ed288bcc5be3960c1cb029ed0adb",
+      "rows": 256
+    },
+    "parity": {
+      "raw_prediction_matches": 249,
+      "normalized_prediction_matches": 249,
+      "items": 256,
+      "exact_raw_parity": false,
+      "exact_normalized_parity": false,
+      "differing_ids": [
+        "RLC-008-P",
+        "RLC-010-U",
+        "RLC-015-C",
+        "RLC-026-U",
+        "RLC-033-P",
+        "RLC-061-P",
+        "RLC-063-B"
+      ]
+    },
+    "dense_results": {
+      "showcase64": {
+        "hits": 40,
+        "items": 64,
+        "strict_exact": 0.625
+      },
+      "stability192": {
+        "hits": 112,
+        "items": 192,
+        "strict_exact": 0.5833333333333334
+      },
+      "all256": {
+        "hits": 152,
+        "items": 256,
+        "strict_exact": 0.59375
+      }
+    },
+    "dense_report": {
+      "path": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256_report.json",
+      "sha256": "0d99501c9cc8fc34b91b89a2ed32e29332b7c3ae49f59c098e6d239708863ef1",
+      "run": {
+        "run": "lumina_dense_all256",
+        "key_items": 256,
+        "prediction_rows": 256,
+        "covered_items": 256,
+        "coverage": 1.0,
+        "duplicate_prediction_ids": [],
+        "unexpected_prediction_ids": [],
+        "strict_exact": 0.59375,
+        "first_line_exact": 0.59375,
+        "short_response_rate_le_12_words": 1.0,
+        "mean_response_words": 2.054688,
+        "pack_metrics": {
+          "complete_scenario_packs_in_key": 64,
+          "fully_covered_scenario_packs": 64,
+          "base_paraphrase_prediction_agreement": 0.609375,
+          "base_paraphrase_both_correct": 0.5,
+          "counterfactual_pair_both_correct_and_changed": 0.59375,
+          "unanswerable_accuracy": 0.390625,
+          "all_four_variants_correct": 0.21875
+        },
+        "by_variant": {
+          "base": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.75,
+            "first_line_exact": 0.75
+          },
+          "counterfactual": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "paraphrase": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.640625,
+            "first_line_exact": 0.640625
+          },
+          "unanswerable": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.390625,
+            "first_line_exact": 0.390625
+          }
+        },
+        "by_domain": {
+          "arcane_academy": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "coastal_council": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.5625,
+            "first_line_exact": 0.5625
+          },
+          "detective_bureau": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "expedition": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "family_enterprise": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "museum": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "orbital_station": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.59375,
+            "first_line_exact": 0.59375
+          },
+          "research_institute": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.625,
+            "first_line_exact": 0.625
+          }
+        },
+        "by_task_type": {
+          "alias_resolution": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.09375,
+            "first_line_exact": 0.09375
+          },
+          "causal_disambiguation": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 1.0,
+            "first_line_exact": 1.0
+          },
+          "count_with_exclusions": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.46875,
+            "first_line_exact": 0.46875
+          },
+          "latest_verified_record": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.6875,
+            "first_line_exact": 0.6875
+          },
+          "multi_condition_identity": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.40625,
+            "first_line_exact": 0.40625
+          },
+          "object_state_tracking": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.75,
+            "first_line_exact": 0.75
+          },
+          "rule_exception": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.46875,
+            "first_line_exact": 0.46875
+          },
+          "temporal_correction": {
+            "items": 32,
+            "covered": 32,
+            "strict_exact": 0.875,
+            "first_line_exact": 0.875
+          }
+        },
+        "by_difficulty": {
+          "hard": {
+            "items": 160,
+            "covered": 160,
+            "strict_exact": 0.4875,
+            "first_line_exact": 0.4875
+          },
+          "medium": {
+            "items": 96,
+            "covered": 96,
+            "strict_exact": 0.770833,
+            "first_line_exact": 0.770833
+          }
+        },
+        "by_needle_profile": {
+          "distributed": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.578125,
+            "first_line_exact": 0.578125
+          },
+          "early": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.28125,
+            "first_line_exact": 0.28125
+          },
+          "late": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.640625,
+            "first_line_exact": 0.640625
+          },
+          "middle": {
+            "items": 64,
+            "covered": 64,
+            "strict_exact": 0.875,
+            "first_line_exact": 0.875
+          }
+        },
+        "by_length_bucket": {
+          "compact_long": {
+            "items": 88,
+            "covered": 88,
+            "strict_exact": 0.590909,
+            "first_line_exact": 0.590909
+          },
+          "extended_long": {
+            "items": 84,
+            "covered": 84,
+            "strict_exact": 0.571429,
+            "first_line_exact": 0.571429
+          },
+          "standard_long": {
+            "items": 84,
+            "covered": 84,
+            "strict_exact": 0.619048,
+            "first_line_exact": 0.619048
+          }
+        }
+      }
+    },
+    "run_manifest": {
+      "mode": "publisher_controlled_demo256_v2",
+      "core_id": "rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+      "started_at_utc": "2026-08-26T23:44:47.737822Z",
+      "finished_at_utc": "2026-08-26T23:46:42.478873Z",
+      "python_version": "3.11.15",
+      "environment": {
+        "python": "3.11.15",
+        "platform": "win32",
+        "packages": {
+          "torch": "2.12.1+cu126",
+          "transformers": "5.14.1",
+          "peft": "0.19.1",
+          "safetensors": "0.8.0",
+          "accelerate": "1.14.0"
+        }
+      },
+      "runner": {
+        "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
+        "sha256": "4e9a73e78fe706a7e0491b57534d19753228cb743e2a3811c9307077815f4119"
+      },
+      "evaluator": {
+        "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+        "sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5"
+      },
+      "invocation": {
+        "model": ".Rineya-Lumina-1.7.0-devfreeze.staging-v1",
+        "prompts": "Rineya_Long_Context_Demo_v1/data/all_prompts.jsonl",
+        "predictions": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256.jsonl",
+        "report": "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_v2/lumina/lumina_dense_all256_report.json",
+        "dtype": "bfloat16",
+        "decoding": "greedy",
+        "seed": 17,
+        "thinking": false,
+        "max_new_tokens": 24,
+        "max_context": 4096,
+        "truncation": "forbidden",
+        "max_gpu_memory": "2GiB",
+        "max_cpu_memory": "32GiB"
+      },
+      "model_weight_sha256_before": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+      "model_weight_sha256_after": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba"
+    },
+    "publishable_provenance": true,
+    "selection_caveat": "Showcase was used during model selection. Stability was frozen before its first selected-recipe run; all scores are on the public Demo suite."
+  },
+  "finalized_at_utc": "2026-08-26T23:47:26.576747Z",
+  "parity_classification": "measured_dense_prediction_drift",
+  "nonpublishable_parity_evidence_archives": [
+    "artifacts/rineya_long_context_weight_geometry_v1/published_dense_parity_legacy_packets/lumina/PARITY.json"
+  ]
+}

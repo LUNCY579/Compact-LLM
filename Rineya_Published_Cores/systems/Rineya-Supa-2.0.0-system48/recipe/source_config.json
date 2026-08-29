@@ -1,0 +1,164 @@
+{
+  "schema_version": "1.0",
+  "name": "nimbus_pulse_unknown_consensus_cascade_showcase48",
+  "classification": "showcase_selected_stability_validated",
+  "builder": {
+    "path": "Rineya_Long_Context_Weight_Geometry_Lab_v1/scripts/build_consensus_cascade.py",
+    "sha256": "3fae925c844a6eba1c89fda8bdcb5661bb41e589af53058d5102eade4d9457fa",
+    "method": "unknown_override_then_ordered_non_unknown_consensus",
+    "answer_key_accessed": false
+  },
+  "selection_rule": {
+    "answer_key_access_at_inference": false,
+    "description": "Start from the primary prediction. Apply ordered UNKNOWN overrides. Then apply ordered consensus pairs, preserving a current UNKNOWN and otherwise replacing it only when both pair arms normalize to the same non-empty, non-UNKNOWN answer. Copy the left arm's raw prediction on agreement."
+  },
+  "showcase64_inputs": {
+    "primary": {
+      "label": "nimbus_step200_scale0p8125_1p25_unknown_gate",
+      "path": "artifacts/rineya_long_context_weight_geometry_v1/ensembles/nimbus_scale0p8125_1p25_unknown_gate_showcase64.jsonl",
+      "sha256": "09d6ba594ee26a63693f2b6fc020791d83fcd8b72635b032435e31c5f70d8278",
+      "rows": 64
+    },
+    "unknown_overrides": [
+      {
+        "label": "pulse_neg_200_250_1p5_m0p5",
+        "path": "artifacts/rineya_published_core_search_v1/negative_vectors/pulse_neg_200_250_1p5_m0p5_showcase64.jsonl",
+        "sha256": "960bc79ab08412028d9f6c213cdc4d730a725f9ed50e6da424d244a5cab58071",
+        "rows": 64
+      }
+    ],
+    "consensus_pairs": [
+      {
+        "index": 1,
+        "left": {
+          "label": "halo_uncensored_baseline",
+          "path": "artifacts/rineya_published_core_search_v1/baselines/halo_uncensored_showcase64.jsonl",
+          "sha256": "a8cea6fc6f8f673fb8956267789a222c60331627f6eeb035b2628c2235ee4d30",
+          "rows": 64
+        },
+        "right": {
+          "label": "nimbus_step200_scale1p0625",
+          "path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale1p0625_showcase64.jsonl",
+          "sha256": "e6ee3dcc6ec380031db7884cef93e25b838eb33a96536977e8842d59648b6f6b",
+          "rows": 64
+        }
+      },
+      {
+        "index": 2,
+        "left": {
+          "label": "pulse_baseline",
+          "path": "artifacts/rineya_published_core_search_v1/baselines/pulse_showcase64.jsonl",
+          "sha256": "17d0dfade6d14d51e9f0dcce548e34f63074b6fbcb4cb6b9837f9006c5430e59",
+          "rows": 64
+        },
+        "right": {
+          "label": "pulse_step250_scale0p75",
+          "path": "artifacts/rineya_published_core_search_v1/checkpoint_triage/pulse_step250/pulse_step250_scale0p75.jsonl",
+          "sha256": "527b5cf6cc399120fe497e76b4a3cad07158938439b0a10bdcb77581f795956a",
+          "rows": 64
+        }
+      },
+      {
+        "index": 3,
+        "left": {
+          "label": "halo_step200_scale0p25",
+          "path": "artifacts/rineya_published_core_search_v1/scale_grids/halo/halo_scale0p25.jsonl",
+          "sha256": "949331d78b71856327b739eb2ccfe08c38e2de8dace9327f0e8a59ae991cba23",
+          "rows": 64
+        },
+        "right": {
+          "label": "halo_step200_scale0p75",
+          "path": "artifacts/rineya_published_core_search_v1/scale_grids/halo/halo_scale0p75.jsonl",
+          "sha256": "efdaf02e8d591d632325568616528f060369498f35932b5ee9630903eb83e4fe",
+          "rows": 64
+        }
+      }
+    ]
+  },
+  "stability192_inputs": {
+    "status": "complete_frozen_validation",
+    "primary": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_scale0p8125_1p25_unknown_gate_stability192.jsonl",
+    "unknown_overrides": [
+      "artifacts/rineya_published_core_search_v1/consensus48_stability/pulse_strong_negative_stability192.jsonl"
+    ],
+    "consensus_pairs": [
+      [
+        "artifacts/rineya_published_core_search_v1/baselines/halo_uncensored_stability192.jsonl",
+        "artifacts/rineya_published_core_search_v1/consensus48_stability/nimbus_scale1p0625_stability192.jsonl"
+      ],
+      [
+        "artifacts/rineya_published_core_search_v1/baselines/pulse_stability192.jsonl",
+        "artifacts/rineya_published_core_search_v1/consensus48_stability/pulse_step250_scale0p75_stability192.jsonl"
+      ],
+      [
+        "artifacts/rineya_published_core_search_v1/consensus48_stability/halo_scale0p25_stability192.jsonl",
+        "artifacts/rineya_published_core_search_v1/consensus48_stability/halo_scale0p75_stability192.jsonl"
+      ]
+    ],
+    "output": "artifacts/rineya_published_core_search_v1/consensus48_stability/cascade_stability192.jsonl",
+    "sha256": {
+      "primary": "9197d1031810bc1be1ef298a6184576319da6836ff706f10bddd3ed0f04137a7",
+      "unknown_override_1": "511102ea5cf795a9df52eb78294c91633918e7a89112b200dc004a30b9d83a52",
+      "consensus_1_left": "a95a8ac44816b48c026ca614bb3eaceedd98dfd2b43936c20320e51f581ff01a",
+      "consensus_1_right": "d0783e9bae1d55ce0779b4497e271c40d49455ffa914d6678414e202a3090016",
+      "consensus_2_left": "85c7f8370ebb5f3dbc777a8457d882eeaa53665b9f68f885bae6fd0cd6a93224",
+      "consensus_2_right": "1df2c5615f466073e88674410603b073f56b6e792294d6405eea27282642e9e9",
+      "consensus_3_left": "2883c5eac433563d055d3c812108e3d189b733afb081055595ed1f0acba6e421",
+      "consensus_3_right": "19a1799767bcec07d036cb333522c0271747c3fe4d09dd04f8a92ed975d46131",
+      "output": "0ccbe0197ec5f85b3124ac334a9f6bb61e6be4fde5b998dc9194990518e23eb8"
+    }
+  },
+  "cost": {
+    "builder_input_files": 8,
+    "underlying_model_prediction_arms": 9,
+    "note": "The primary file is itself the two-arm Nimbus UNKNOWN gate."
+  },
+  "results": {
+    "showcase64": {
+      "hits": 48,
+      "items": 64,
+      "strict_exact": 0.75,
+      "base_paraphrase_both_correct": 13,
+      "counterfactual_pair_both_correct_and_changed": 11,
+      "unanswerable_correct": 9,
+      "all_four_packs": 7,
+      "packs": 16,
+      "gain_ids_over_primary": [
+        "RLC-005-C",
+        "RLC-032-U",
+        "RLC-033-C"
+      ],
+      "loss_ids_over_primary": [],
+      "selection_split": true
+    },
+    "stability192": {
+      "status": "complete",
+      "frozen_validation": true,
+      "hits": 128,
+      "items": 192,
+      "strict_exact": 0.6666666666666666,
+      "base_paraphrase_both_correct": 36,
+      "counterfactual_pair_both_correct_and_changed": 27,
+      "unanswerable_correct": 19,
+      "all_four_packs": 14,
+      "packs": 48
+    },
+    "all256": {
+      "hits": 176,
+      "items": 256,
+      "strict_exact": 0.6875,
+      "base_paraphrase_both_correct": 49,
+      "counterfactual_pair_both_correct_and_changed": 38,
+      "unanswerable_correct": 28,
+      "all_four_packs": 21,
+      "packs": 64,
+      "prediction_sha256": "1270cff0ef5c48a1a8f89e1d31bc01ff372aed459c34a1aaec774414dc74eaa9",
+      "report_sha256": "2325c5229bf5ec7ca0291b8582ba7b769ce19b02b9ea1a856a6ca330438bde21"
+    }
+  },
+  "caveats": [
+    "Showcase64 was used to select the ordered cascade and is not an untouched validation result.",
+    "Stability192 was evaluated once after freezing the Showcase-selected cascade and improved over the prior Nimbus gate.",
+    "The builder consumes predictions only and must never read an answer key."
+  ]
+}

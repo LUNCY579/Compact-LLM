@@ -1,0 +1,420 @@
+{
+  "schema_version": "2.0",
+  "system_id": "rineya.system.supa.v2.0.0.system48.lcr-nine-arm-consensus",
+  "codename": "Supa",
+  "display_name": "Rineya Supa 48",
+  "directory_name": "Rineya-Supa-2.0.0-system48",
+  "version": "2.0.0-system",
+  "kind": "multi_model_prediction_cascade",
+  "classification": "showcase_selected_stability_validated",
+  "created_at_utc": "2026-08-27T19:59:37.875578Z",
+  "single_checkpoint": false,
+  "arm_count": 9,
+  "answer_key_access_at_inference": false,
+  "routing": {
+    "initial_arm": "nimbus_low",
+    "steps": [
+      {
+        "op": "select_if_arm_unknown",
+        "arm": "nimbus_high"
+      },
+      {
+        "op": "select_if_arm_unknown",
+        "arm": "pulse_strong"
+      },
+      {
+        "op": "consensus_replace",
+        "left": "halo_uncensored",
+        "right": "nimbus_mid"
+      },
+      {
+        "op": "consensus_replace",
+        "left": "pulse_base",
+        "right": "pulse_step250"
+      },
+      {
+        "op": "consensus_replace",
+        "left": "halo_low",
+        "right": "halo_high"
+      }
+    ]
+  },
+  "arms": {
+    "nimbus_low": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 0.8125,
+      "base_model": {
+        "directory": "Rineya-Nimbus-1.6.0-devfreeze",
+        "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+        "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+        "weight_bytes": 1503300328
+      }
+    },
+    "nimbus_high": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 1.25,
+      "base_model": {
+        "directory": "Rineya-Nimbus-1.6.0-devfreeze",
+        "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+        "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+        "weight_bytes": 1503300328
+      }
+    },
+    "pulse_strong": {
+      "adapter": {
+        "asset": "pulse_negative_strong",
+        "bundled_path": "assets/pulse_negative_strong",
+        "weight_sha256": "79bff1c6a40d9b356e6bc48aeaf0d5e64ab2ee40ae152ed4a8b23a17f102314b"
+      },
+      "scale": 1.0,
+      "base_model": {
+        "directory": "Rineya-Pulse-1.6.0-devfreeze",
+        "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
+        "weight_sha256": "2357574db5557c288f57a6b97b2761830ea265baf3c6a1c0270357a7d0eaa322",
+        "weight_bytes": 2384234968
+      }
+    },
+    "halo_uncensored": {
+      "base_model": {
+        "directory": "Rineya-Halo-Uncensored-1.5.0-devfreeze",
+        "core_id": "rineya.core.halo-uncensored.v1.5.0-devfreeze.28L.qwen3-replace-v1-5e4-v2-1e4",
+        "weight_sha256": "c5d4a17f69ca932a5d4ad29e4f9ba1a29d7a137c08951fd89f61b4cb95444503",
+        "weight_bytes": 2384234968
+      }
+    },
+    "nimbus_mid": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 1.0625,
+      "base_model": {
+        "directory": "Rineya-Nimbus-1.6.0-devfreeze",
+        "core_id": "rineya.core.nimbus.v1.6.0-devfreeze.28L.qwen3-x-halo-uncensored-alpha-0.40",
+        "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+        "weight_bytes": 1503300328
+      }
+    },
+    "pulse_base": {
+      "base_model": {
+        "directory": "Rineya-Pulse-1.6.0-devfreeze",
+        "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
+        "weight_sha256": "2357574db5557c288f57a6b97b2761830ea265baf3c6a1c0270357a7d0eaa322",
+        "weight_bytes": 2384234968
+      }
+    },
+    "pulse_step250": {
+      "adapter": {
+        "asset": "step250",
+        "bundled_path": "assets/step250",
+        "weight_sha256": "a508de2267d44ebd589af5486ed9f042f424c218ed6b22872eeaa55cedbe87a8"
+      },
+      "scale": 0.75,
+      "base_model": {
+        "directory": "Rineya-Pulse-1.6.0-devfreeze",
+        "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
+        "weight_sha256": "2357574db5557c288f57a6b97b2761830ea265baf3c6a1c0270357a7d0eaa322",
+        "weight_bytes": 2384234968
+      }
+    },
+    "halo_low": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 0.25,
+      "base_model": {
+        "directory": "Rineya-Halo-1.2.0-devfreeze",
+        "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+        "weight_sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544",
+        "weight_bytes": 2384234968
+      }
+    },
+    "halo_high": {
+      "adapter": {
+        "asset": "step200",
+        "bundled_path": "assets/step200",
+        "weight_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+      },
+      "scale": 0.75,
+      "base_model": {
+        "directory": "Rineya-Halo-1.2.0-devfreeze",
+        "core_id": "rineya.core.halo.v1.2.0-devfreeze.28L.qwen3-crossdepth-v1-5e4-v2-1e4",
+        "weight_sha256": "38fb96fe286776919032c4418eef0a2534e2c2c2865c1465cc9dd4cfe7e36544",
+        "weight_bytes": 2384234968
+      }
+    }
+  },
+  "assets": {
+    "step200": {
+      "source": "artifacts/rineya_long_context_weight_geometry_v1/selected/halo_stage_a_step200_adapter",
+      "bundled_path": "assets/step200",
+      "files": {
+        "adapter_config.json": {
+          "bytes": 1225,
+          "sha256": "beb2bf72b46b8256957e66282ee326ae3f6a0b01c406af9d92033dfff37db471"
+        },
+        "adapter_model.safetensors": {
+          "bytes": 40422168,
+          "sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4"
+        },
+        "README.md": {
+          "bytes": 5340,
+          "sha256": "3a707c947127255b428d261718bcd3a9ef6debe727c3dedfffee90de4eab7a57"
+        }
+      }
+    },
+    "step250": {
+      "source": "artifacts/halo_long_context_sft_v1/stage_a/checkpoint-250",
+      "bundled_path": "assets/step250",
+      "files": {
+        "adapter_config.json": {
+          "bytes": 1225,
+          "sha256": "beb2bf72b46b8256957e66282ee326ae3f6a0b01c406af9d92033dfff37db471"
+        },
+        "adapter_model.safetensors": {
+          "bytes": 40422168,
+          "sha256": "a508de2267d44ebd589af5486ed9f042f424c218ed6b22872eeaa55cedbe87a8"
+        },
+        "README.md": {
+          "bytes": 5340,
+          "sha256": "3a707c947127255b428d261718bcd3a9ef6debe727c3dedfffee90de4eab7a57"
+        }
+      }
+    },
+    "pulse_negative_strong": {
+      "source": "artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p5_m0p5",
+      "bundled_path": "assets/pulse_negative_strong",
+      "files": {
+        "adapter_config.json": {
+          "bytes": 1227,
+          "sha256": "70429a100453358398fea3a638285415aa4ca0319f70b20d24825133a2317dd1"
+        },
+        "adapter_model.safetensors": {
+          "bytes": 80792504,
+          "sha256": "79bff1c6a40d9b356e6bc48aeaf0d5e64ab2ee40ae152ed4a8b23a17f102314b"
+        },
+        "soup_manifest.json": {
+          "bytes": 5980,
+          "sha256": "866a04706ddc2a3af37f3f30cf5ee15135e7c7c91a4827af6626968ac60cc19c"
+        }
+      }
+    }
+  },
+  "results": {
+    "showcase64": {
+      "hits": 48,
+      "items": 64,
+      "strict_exact": 0.75
+    },
+    "stability192": {
+      "hits": 128,
+      "items": 192,
+      "strict_exact": 0.6666666666666666
+    },
+    "all256": {
+      "hits": 176,
+      "items": 256,
+      "strict_exact": 0.6875
+    }
+  },
+  "evidence": {
+    "showcase64": {
+      "hits": 48,
+      "items": 64,
+      "inputs": {
+        "nimbus_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale0p8125_showcase64.jsonl",
+          "bytes": 17823,
+          "sha256": "6bc4fd98218c6a1a2a6e4f18cf12309f6f27ad40ad8febc061809e3ac3808913",
+          "bundled_path": "evidence/inputs/showcase64/nimbus_low.jsonl"
+        },
+        "nimbus_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale1p25_showcase64.jsonl",
+          "bytes": 17424,
+          "sha256": "5b5d28d6aefa412d782170f1179b6cd7a7c872313763e2cf1940509e7fdd4886",
+          "bundled_path": "evidence/inputs/showcase64/nimbus_high.jsonl"
+        },
+        "pulse_strong": {
+          "source_path": "artifacts/rineya_published_core_search_v1/negative_vectors/pulse_neg_200_250_1p5_m0p5_showcase64.jsonl",
+          "bytes": 17231,
+          "sha256": "960bc79ab08412028d9f6c213cdc4d730a725f9ed50e6da424d244a5cab58071",
+          "bundled_path": "evidence/inputs/showcase64/pulse_strong.jsonl"
+        },
+        "halo_uncensored": {
+          "source_path": "artifacts/rineya_published_core_search_v1/baselines/halo_uncensored_showcase64.jsonl",
+          "bytes": 11498,
+          "sha256": "a8cea6fc6f8f673fb8956267789a222c60331627f6eeb035b2628c2235ee4d30",
+          "bundled_path": "evidence/inputs/showcase64/halo_uncensored.jsonl"
+        },
+        "nimbus_mid": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/nimbus_scale/nimbus_step200_scale1p0625_showcase64.jsonl",
+          "bytes": 17821,
+          "sha256": "e6ee3dcc6ec380031db7884cef93e25b838eb33a96536977e8842d59648b6f6b",
+          "bundled_path": "evidence/inputs/showcase64/nimbus_mid.jsonl"
+        },
+        "pulse_base": {
+          "source_path": "artifacts/rineya_published_core_search_v1/baselines/pulse_showcase64.jsonl",
+          "bytes": 11682,
+          "sha256": "17d0dfade6d14d51e9f0dcce548e34f63074b6fbcb4cb6b9837f9006c5430e59",
+          "bundled_path": "evidence/inputs/showcase64/pulse_base.jsonl"
+        },
+        "pulse_step250": {
+          "source_path": "artifacts/rineya_published_core_search_v1/checkpoint_triage/pulse_step250/pulse_step250_scale0p75.jsonl",
+          "bytes": 39228,
+          "sha256": "527b5cf6cc399120fe497e76b4a3cad07158938439b0a10bdcb77581f795956a",
+          "bundled_path": "evidence/inputs/showcase64/pulse_step250.jsonl"
+        },
+        "halo_low": {
+          "source_path": "artifacts/rineya_published_core_search_v1/scale_grids/halo/halo_scale0p25.jsonl",
+          "bytes": 37259,
+          "sha256": "949331d78b71856327b739eb2ccfe08c38e2de8dace9327f0e8a59ae991cba23",
+          "bundled_path": "evidence/inputs/showcase64/halo_low.jsonl"
+        },
+        "halo_high": {
+          "source_path": "artifacts/rineya_published_core_search_v1/scale_grids/halo/halo_scale0p75.jsonl",
+          "bytes": 37120,
+          "sha256": "efdaf02e8d591d632325568616528f060369498f35932b5ee9630903eb83e4fe",
+          "bundled_path": "evidence/inputs/showcase64/halo_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_published_core_search_v1/finalists/nimbus_pulse_consensus_cascade_showcase48.jsonl",
+        "bytes": 81689,
+        "sha256": "b680dac23d82dac5291296a9e79fea0a95293842b6f44ad5417d1082a701c7cf",
+        "bundled_path": "evidence/expected/showcase64.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_published_core_search_v1/finalists/consensus_cascade_showcase_report.json",
+        "bytes": 5793,
+        "sha256": "ff26d4cda0fa258351d5e2ef96be0654f0465867ff0e2903870e4454702b2064",
+        "bundled_path": "evidence/expected/showcase64_report.json"
+      },
+      "canonical_prediction_sha256": "0606ffcf9ead2b2b3c0d4449825971bb7d02dc556f4b35d3057499fc4e575787",
+      "replayable": true,
+      "replay_verified": true
+    },
+    "stability192": {
+      "hits": 128,
+      "items": 192,
+      "inputs": {
+        "nimbus_low": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_step200_scale0p8125_stability192.jsonl",
+          "bytes": 53346,
+          "sha256": "f6179e38941211c43670f9876ad9d5b66e77be36748de4e9aa67fa9471ec9861",
+          "bundled_path": "evidence/inputs/stability192/nimbus_low.jsonl"
+        },
+        "nimbus_high": {
+          "source_path": "artifacts/rineya_long_context_weight_geometry_v1/stability_finalists/nimbus_step200_scale1p25_stability192.jsonl",
+          "bytes": 52108,
+          "sha256": "c89a7763ec4a545ae74f0f6eb4528b0f8d2c05f829cefd0ca4387e513161ca54",
+          "bundled_path": "evidence/inputs/stability192/nimbus_high.jsonl"
+        },
+        "pulse_strong": {
+          "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/pulse_strong_negative_stability192.jsonl",
+          "bytes": 51689,
+          "sha256": "511102ea5cf795a9df52eb78294c91633918e7a89112b200dc004a30b9d83a52",
+          "bundled_path": "evidence/inputs/stability192/pulse_strong.jsonl"
+        },
+        "halo_uncensored": {
+          "source_path": "artifacts/rineya_published_core_search_v1/baselines/halo_uncensored_stability192.jsonl",
+          "bytes": 34257,
+          "sha256": "a95a8ac44816b48c026ca614bb3eaceedd98dfd2b43936c20320e51f581ff01a",
+          "bundled_path": "evidence/inputs/stability192/halo_uncensored.jsonl"
+        },
+        "nimbus_mid": {
+          "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/nimbus_scale1p0625_stability192.jsonl",
+          "bytes": 53379,
+          "sha256": "d0783e9bae1d55ce0779b4497e271c40d49455ffa914d6678414e202a3090016",
+          "bundled_path": "evidence/inputs/stability192/nimbus_mid.jsonl"
+        },
+        "pulse_base": {
+          "source_path": "artifacts/rineya_published_core_search_v1/baselines/pulse_stability192.jsonl",
+          "bytes": 34447,
+          "sha256": "85c7f8370ebb5f3dbc777a8457d882eeaa53665b9f68f885bae6fd0cd6a93224",
+          "bundled_path": "evidence/inputs/stability192/pulse_base.jsonl"
+        },
+        "pulse_step250": {
+          "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/pulse_step250_scale0p75_stability192.jsonl",
+          "bytes": 52492,
+          "sha256": "1df2c5615f466073e88674410603b073f56b6e792294d6405eea27282642e9e9",
+          "bundled_path": "evidence/inputs/stability192/pulse_step250.jsonl"
+        },
+        "halo_low": {
+          "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/halo_scale0p25.jsonl",
+          "bytes": 112315,
+          "sha256": "2883c5eac433563d055d3c812108e3d189b733afb081055595ed1f0acba6e421",
+          "bundled_path": "evidence/inputs/stability192/halo_low.jsonl"
+        },
+        "halo_high": {
+          "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/halo_scale0p75.jsonl",
+          "bytes": 112204,
+          "sha256": "19a1799767bcec07d036cb333522c0271747c3fe4d09dd04f8a92ed975d46131",
+          "bundled_path": "evidence/inputs/stability192/halo_high.jsonl"
+        }
+      },
+      "expected_output": {
+        "source_path": "artifacts/rineya_published_core_search_v1/consensus48_stability/cascade_stability192.jsonl",
+        "bytes": 243402,
+        "sha256": "0ccbe0197ec5f85b3124ac334a9f6bb61e6be4fde5b998dc9194990518e23eb8",
+        "bundled_path": "evidence/expected/stability192.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_published_core_search_v1/finalists/consensus_cascade_stability_report.json",
+        "bytes": 5947,
+        "sha256": "ba0cd8316e126e4b5beea036d1fefab555ffe420b59d48b55b559e8abe5d34ce",
+        "bundled_path": "evidence/expected/stability192_report.json"
+      },
+      "canonical_prediction_sha256": "88af7dc62d3b874a143a60db0e6701748a9a734d5b265aa7461dc15c83535b14",
+      "replayable": true,
+      "replay_verified": true
+    },
+    "all256": {
+      "hits": 176,
+      "items": 256,
+      "inputs": {},
+      "expected_output": {
+        "source_path": "artifacts/rineya_published_core_search_v1/finalists/nimbus_pulse_consensus_cascade_all256.jsonl",
+        "bytes": 325091,
+        "sha256": "1270cff0ef5c48a1a8f89e1d31bc01ff372aed459c34a1aaec774414dc74eaa9",
+        "bundled_path": "evidence/expected/all256.jsonl"
+      },
+      "report": {
+        "source_path": "artifacts/rineya_published_core_search_v1/finalists/nimbus_pulse_consensus_cascade_all256_report.json",
+        "bytes": 5921,
+        "sha256": "2325c5229bf5ec7ca0291b8582ba7b769ce19b02b9ea1a856a6ca330438bde21",
+        "bundled_path": "evidence/expected/all256_report.json"
+      },
+      "canonical_prediction_sha256": "38c95d37497864d96580b51e13963cc87397bb5a120bf2f6468d1bb8ab954500",
+      "replayable": false,
+      "replay_verified": false
+    }
+  },
+  "source_config": {
+    "source_path": "Rineya_Long_Context_Weight_Geometry_Lab_v1/configs/final/nimbus_pulse_consensus_cascade_showcase48.json",
+    "bytes": 7194,
+    "sha256": "db0b7ae03a0dee5adc153c81d8d983840265ffe914795ad1f6304929d3ced467",
+    "bundled_path": "recipe/source_config.json"
+  },
+  "protocol": {
+    "dtype": "bfloat16",
+    "decoding": "greedy",
+    "seed": 17,
+    "thinking": false,
+    "max_new_tokens": 24,
+    "max_context": 4096,
+    "truncation": "forbidden"
+  },
+  "caveat": "Showcase selected the nine-arm ordering; Stability was frozen validation. This is a routed system, not one dense checkpoint.",
+  "system_manifest_sha256": "55d546a0b74d68ecf3d29f7d97cf956e0b4c01d2c0cde17d2b21f463e07a0236"
+}

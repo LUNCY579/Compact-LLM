@@ -40,9 +40,9 @@ B0            vs POOL13_SINK48   packs 10b/9w/29t   p = 1.00000
 ```
 
 The shipped mechanism is significantly worse than full cache (`p = 0.00005`),
-losing 27 of 192 answers. `POOL13_SINK48` recovers **all** of them and lands on
-exactly the same score, with the gap to full cache undetectable at 48-pack
-power (`p = 1.0`).
+with 27 fewer correct rows. `POOL13_SINK48` restores the **same total score** as
+full cache, with the gap undetectable at 48-pack power (`p = 1.0`). It does not
+recover exactly the same cases: B0 vs POOL13 has 10 better and nine worse packs.
 
 ## What was actually bought
 
@@ -69,13 +69,13 @@ Sink coverage is positional. Every Cornerstone-1 finding stands unchanged:
 the score is indistinguishable from a position counter (`N-046`) and from a
 shuffle of itself (`N-054`).
 
-**The decisive control has not been run.** `POOL13_SINK48` still ranks by
-`S/max(C,1)` underneath the pooling. Since `SUM_SHUF` showed the raw score is
-inert, it is entirely possible that pooling a *shuffled* or *random* score
-performs identically — in which case the gain is purely structural and the
-significance score contributes nothing even here. **`POOL13_RANDOM_SINK48` is
-the single most important next run.** Until it exists, no claim may be made
-that the significance score contributes to this result.
+**The decisive specificity control is complete (`N-073`).** Under the same
+pooling/sink structure, real `S/C` scores 86/192, position-only 81/192,
+eligible-pool-shuffled 71/192, and random 62/192. Real versus position is not
+detected as different (`p = 1.0`), so the Significance Matrix score is **not
+credited**. Real versus shuffled is also not significant (`p = 0.21004`); real
+versus random is `p = 0.04329`. The supported gain is structural pooling plus
+sink/prompt protection.
 
 Other limits:
 

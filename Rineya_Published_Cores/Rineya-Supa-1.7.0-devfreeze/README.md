@@ -1,0 +1,36 @@
+---
+library_name: transformers
+license: apache-2.0
+pipeline_tag: text-generation
+base_model: Qwen/Qwen3-0.6B
+---
+> Formerly published internally as **Taria**. Weight and parity evidence are unchanged.
+
+
+# Rineya Supa 1.7.0-devfreeze
+
+Status: **dense validation recorded**.
+
+Supa is a BF16 dense reconstruction of Nimbus 1.6 plus the disjoint Halo long-context Stage-A checkpoint-200 LoRA at effective scale `0.8125` (rank 16, encoded alpha `26`).
+
+The LoRA was trained on Halo 1.2 and transferred to Nimbus; it was not trained on Nimbus. Supa and Baya are separate dense cores. The answer-blind UNKNOWN gate is a two-model inference recipe, not a property of either core alone.
+
+The Stage-A run was not completed: checkpoint 250 is the latest local state,
+there is no final adapter or CC0 validation/test score, and evaluation loss was
+NaN at steps 100 and 200. Checkpoint 200 was selected by the separate Demo
+screen and should be understood as an early useful task vector, not a converged
+long-context fine-tune.
+
+## Frozen evaluation protocol
+
+BF16, greedy decoding, seed 17, thinking disabled, 24 generated tokens, 4096-token context cap, and no truncation.
+
+## Dense Demo results
+
+- Showcase (selection): 40/64
+- Stability (frozen validation): 121/192
+- Complete public Demo: 161/256
+
+These are public Demo results. Showcase was used during model selection and is not an untouched test result.
+Demo prompts are approximately 1.1K–1.55K input tokens under the 4096 cap; these
+figures do not establish 8K/16K/32K competence.

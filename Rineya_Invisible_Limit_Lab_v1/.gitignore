@@ -1,0 +1,11 @@
+# Bulk generated contexts (~57 MB). Deterministically regenerable from the
+# committed generator plus the seeds recorded in PREREGISTRATION.md §2, so the
+# repository keeps the recipe and the ground truth rather than the bytes.
+#
+#   python scripts/generate_suite.py --scenarios 64  --seed 20260827 --split dev   --prefix RILDEV   --outdir data
+#   python scripts/generate_suite.py --scenarios 128 --seed 20260828 --split test  --prefix RILTEST  --outdir data
+#   python scripts/generate_suite.py --scenarios 256 --seed 20260829 --split train --prefix RILTRAIN --outdir data
+#
+# Answer keys ARE committed: they are small and they are the sealed ground truth.
+data/*_full.jsonl
+data/*_prompts.jsonl
