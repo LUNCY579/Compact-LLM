@@ -1,0 +1,81 @@
+# Reports
+
+Written in the order the work happened. Each one states its own evidence level in its
+opening paragraph; none of them is the final report, which does not exist yet because
+the results it would summarise do not exist yet.
+
+| report | phase | evidence level | what it settles |
+| --- | --- | --- | --- |
+| [`phase1_checkpoint_audit.md`](phase1_checkpoint_audit.md) | 1 | **complete** — exhaustive, CPU-side, reproducible from the checkpoints | the panel's structure, what the merges changed, and the geometry of the family |
+| [`phase2_instrument_calibration.md`](phase2_instrument_calibration.md) | 2b | **complete for its purpose** — a go/no-go check on the instrument, n=162 | that the benchmark has dynamic range on NLL and not on accuracy, and three protocol defects that would have wrecked Phase 3 |
+| [`phase3_preview_positional_fingerprint.md`](phase3_preview_positional_fingerprint.md) | 3 | **preview — superseded** by the row below; retained because it is where the metric decision was made and argued | the choice of primary metric (summed gold NLL) |
+| [`phase3_positional_fingerprint.md`](phase3_positional_fingerprint.md) | 3 | **complete** for the calibration split, teacher-forced — 7830 records, clustered BCa CIs | brief questions 1-3: who loses the middle, who is most robust, who has the smallest gap |
+
+## How to read the evidence levels
+
+**complete** — the numbers are final for what they measure, and rerunning the
+artifact-producing command reproduces them.
+
+**complete for its purpose** — the run was sized to answer a specific yes/no question
+and answers it; it is not sized for the effect estimates it happens to contain.
+
+**preview** — the numbers are directional. They exist to make a design decision, and
+they carry no confidence intervals, no paired bootstrap, and small per-cell n. Nothing
+in a preview may be quoted as a result.
+
+## The four findings that changed the plan
+
+1. **The Rineya family is a line, not a space** (Phase 1 §4). `Δnimbus = 0.7999 · Δhalo`
+   with the coefficient constant to four decimal places in every touched layer, cosine
+   +0.9946. Blockwise-α interpolation between Halo and Nimbus is therefore a
+   one-dimensional search that already contains Nimbus, so the brief's §34/§35 soup work
+   is re-planned against the actual geometry — the plane spanned by the Halo ray and the
+   Supa adapter direction — instead of being run as a blind sweep.
+
+2. **Accuracy cannot resolve position on this panel** (Phase 2b §2, Phase 3-preview §3).
+   Qwen3's margin at the first answer token is negative at six of seven positions: it is
+   below the decision threshold almost everywhere, so exact-match sees a flat floor while
+   summed gold NLL sees a nine-nat range. Every mechanistic phase is therefore selected
+   on NLL, with accuracy reported beside it.
+
+3. **`multi_hop` was unmeasurable** (Phase 2b §4). 0/36 on both accuracy scorers at
+   NLL 4.4–5.1. A `multi_hop_guided` variant now exists and works: it lowers NLL by
+   2–6 nats and, for Qwen3, flattens the positional curve to non-significance.
+
+4. **The positional deficit has a different shape in every task family** (Phase 3 §1).
+   `multi_hop` and `state_constraint` peak in the true middle; `exact_retrieval` is a
+   recency gradient with its worst point at p=0.17; `semantic_single_hop` varies by
+   8 nats while its *middle-minus-edge* statistic is not significant at all. "The
+   edge-middle gap" is therefore not one number per model, and any intervention has to
+   say which shape it is targeting.
+
+## Corrections recorded in place
+
+Four analysis errors were caught and are documented where they happened, because all
+four produced results that looked entirely real:
+
+- **Phase 2b §7** — a position-accuracy check compared the *decisive* evidence sentence's
+  achieved position against the *first* sentence's target. For the multi-evidence
+  families those are different sentences, and the mismatch read as "position control is
+  completely broken" (apparent mean error 0.17, max 0.97). Like-for-like it is 0.007.
+  The generator was correct; the check was not.
+- **Phase 3-preview §5** — pooling all `natural`/4K items per position mixes local
+  rhetorical position into the global-position axis, because the
+  `local_position_sweep` grid only emits p ∈ {0.02, 0.50, 0.98}. That puts a spurious
+  step at exactly the three positions defining the edge-middle gap. All Phase-3 analysis
+  holds local position fixed or models it explicitly.
+- **Phase 3 §5, the position axis** — `state_constraint` and `multi_hop` carry several
+  evidence sentences, only one of which is swept. Grouping on `target_positions[0]`
+  collapsed `state_constraint` onto a single constant position. Same error class as the
+  first correction above, which is why it was looked for.
+- **Phase 3 §5, a sign inversion** — `paired_bootstrap(a, b)` returns `b - a`; it was
+  called with the arguments reversed, so every model-vs-Qwen3 difference and every
+  better/worse verdict was inverted. Caught by cross-checking the paired table against
+  the per-position curves, which disagreed.
+
+## Still to come
+
+Phases 4–15, plus the greedy/accuracy pass and the validation split for Phase 3. See
+the STATUS section of the lab [`README.md`](../README.md) for what is implemented versus
+what has been run. The short version: the library exists and is tested, Phases 1–3 have
+produced results on real checkpoints, and Phases 4 onward have not.

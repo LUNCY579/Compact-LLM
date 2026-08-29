@@ -14,6 +14,7 @@ phase_2_progressive_reduction_backup_20260730_133427/
 short-response-model-phase-0-1-2/playground_artifacts/phase2b_layer_combinations/evidence
 short-response-model-phase-0-1-2/playground_artifacts/phase2b_layer_combinations/models
 short-response-model-phase-0-1-2/playground_artifacts/phase2b_layer_combinations/reference
+rineya_long_context_cc0_v1_main/
 
 # Environment
 .env
@@ -152,3 +153,17 @@ Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/merges.txt
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/*.log
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/results.jsonl
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/evaluation_progress.json
+
+# PSA lab: generated benchmark bank (~260 MB across generated/ + the three splits).
+# Fully reproducible: `PYTHONPATH=src python -c "from rineya_psa.benchmark.generate
+# import build, load_config; build(load_config())"` with configs/benchmark_v1.yaml.
+# The split manifest and its sha256 ARE tracked, so a rebuild is verifiable.
+rineya_positional_sequential_attention_lab/data/generated/
+rineya_positional_sequential_attention_lab/data/calibration/
+rineya_positional_sequential_attention_lab/data/validation/
+rineya_positional_sequential_attention_lab/data/sealed/
+rineya_positional_sequential_attention_lab/results/*.parquet
+rineya_positional_sequential_attention_lab/manifests/.audit_cache/
+rineya_positional_sequential_attention_lab/**/__pycache__/
+rineya_positional_sequential_attention_lab/.pytest_cache/
+rineya_positional_sequential_attention_lab/.ruff_cache/
