@@ -1,0 +1,232 @@
+name: TGSA Phase 1 model identifiability
+
+on:
+  push:
+    branches:
+      - research/tgsa-phase1-model-identifiability
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-phase1.yml"
+  pull_request:
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-phase1.yml"
+  workflow_dispatch:
+    inputs:
+      run_full_matrix:
+        description: "Run the registered 3-arm x 5-seed matrix on a self-hosted runner labeled tgsa"
+        required: false
+        default: false
+        type: boolean
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tgsa-phase1-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
+  PYTHONUNBUFFERED: "1"
+  TOKENIZERS_PARALLELISM: "false"
+
+jobs:
+  unit-and-smoke:
+    name: Unit tests and non-evidentiary smoke matrix
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out full lineage
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "${{ env.LAB }}/pyproject.toml"
+
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "${LAB}[dev]"
+
+      - name: Run complete lab test suite
+        run: |
+          pytest "${LAB}/tests" -q --tb=short --durations=15
+
+      - name: Materialize smoke dataset
+        run: |
+          rm -rf ci_artifacts/tgsa_phase1_smoke
+          mkdir -p ci_artifacts/tgsa_phase1_smoke
+          python "${LAB}/scripts/prepare_phase1_data.py" \
+            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --output-dir "ci_artifacts/tgsa_phase1_smoke/dataset"
+
+      - name: Run developer and agent doctor
+        run: |
+          python "${LAB}/scripts/phase1_doctor.py" \
+            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --output "ci_artifacts/tgsa_phase1_smoke/doctor.json"
+
+      - name: Train all smoke arms and exercise interventions
+        run: |
+          python "${LAB}/scripts/run_phase1_model_study.py" \
+            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
+            --output-dir "ci_artifacts/tgsa_phase1_smoke/study" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Run frozen paired analyzer
+        run: |
+          python "${LAB}/scripts/analyze_phase1_model_study.py" \
+            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --output-dir "ci_artifacts/tgsa_phase1_smoke/study"
+
+      - name: Verify evidence and claim-scope contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("ci_artifacts/tgsa_phase1_smoke")
+          doctor = json.loads((root / "doctor.json").read_text(encoding="utf-8"))
+          matrix = json.loads((root / "study" / "matrix_manifest.json").read_text(encoding="utf-8"))
+          analysis = json.loads((root / "study" / "analysis.json").read_text(encoding="utf-8"))
+
+          assert doctor["passed"] is True, doctor
+          assert doctor["checks"]["history_delta_exact_initialization"] is True
+          assert doctor["checks"]["history_delta_parameter_count_equal"] is True
+          assert doctor["checks"]["intervention_hooks_cleaned_up"] is True
+          assert matrix["status"] == "complete", matrix
+          assert matrix["is_full_registered_matrix"] is True
+          assert analysis["decision"] == "smoke_only", analysis
+          assert analysis["confirmatory_config"] is False
+          assert analysis["is_full_registered_matrix"] is True
+
+          expected = {("cascade", 7), ("history_control", 7), ("learned_delta", 7)}
+          actual = {(entry["arm"], int(entry["seed"])) for entry in matrix["runs"]}
+          assert actual == expected, actual
+
+          for arm, seed in sorted(expected):
+              run_dir = root / "study" / "runs" / arm / f"seed_{seed}"
+              manifest = json.loads((run_dir / "run_manifest.json").read_text(encoding="utf-8"))
+              assert manifest["status"] == "complete"
+              assert manifest["training"]["fixed_final_checkpoint"] is True
+              assert manifest["training"]["early_stopping"] is False
+              assert (run_dir / manifest["training"]["final_checkpoint"]).is_file()
+              assert (run_dir / "predictions_test__identity.jsonl").is_file()
+              if arm == "learned_delta":
+                  for mode in ("zero", "negate", "roll_batch"):
+                      assert (run_dir / f"predictions_test__{mode}.jsonl").is_file()
+
+          print("TGSA Phase 1 smoke evidence contracts verified.")
+          PY
+
+      - name: Upload smoke evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tgsa-phase1-smoke-${{ github.run_id }}
+          path: ci_artifacts/tgsa_phase1_smoke
+          if-no-files-found: warn
+          retention-days: 14
+
+  full-registered-matrix:
+    name: Registered 3-arm x 5-seed matrix
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_full_matrix }}
+    needs: unit-and-smoke
+    runs-on:
+      - self-hosted
+      - tgsa
+    timeout-minutes: 1440
+
+    steps:
+      - name: Check out full lineage
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "${{ env.LAB }}/pyproject.toml"
+
+      - name: Install package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e "${LAB}[dev]"
+
+      - name: Run tests before evidence collection
+        run: |
+          pytest "${LAB}/tests" -q --tb=short
+
+      - name: Materialize registered dataset and run doctor
+        run: |
+          rm -rf full_evidence
+          mkdir -p full_evidence
+          python "${LAB}/scripts/prepare_phase1_data.py" \
+            --config "${LAB}/configs/phase1_model_identifiability.json" \
+            --output-dir "full_evidence/dataset"
+          python "${LAB}/scripts/phase1_doctor.py" \
+            --config "${LAB}/configs/phase1_model_identifiability.json" \
+            --dataset-dir "full_evidence/dataset" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --output "full_evidence/doctor.json"
+
+      - name: Run registered matrix
+        run: |
+          python "${LAB}/scripts/run_phase1_model_study.py" \
+            --config "${LAB}/configs/phase1_model_identifiability.json" \
+            --dataset-dir "full_evidence/dataset" \
+            --output-dir "full_evidence/study" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Apply frozen registered analysis
+        run: |
+          python "${LAB}/scripts/analyze_phase1_model_study.py" \
+            --config "${LAB}/configs/phase1_model_identifiability.json" \
+            --output-dir "full_evidence/study"
+
+      - name: Capture immutable source metadata
+        if: always()
+        run: |
+          git rev-parse HEAD > full_evidence/git_head.txt
+          git status --porcelain > full_evidence/git_status.txt
+          python -m pip freeze > full_evidence/pip_freeze.txt
+          python - <<'PY'
+          import json
+          import platform
+          from pathlib import Path
+          import torch
+
+          payload = {
+              "python": platform.python_version(),
+              "platform": platform.platform(),
+              "torch": torch.__version__,
+              "cuda_available": torch.cuda.is_available(),
+              "cuda_version": torch.version.cuda,
+              "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
+          }
+          Path("full_evidence/runtime.json").write_text(
+              json.dumps(payload, indent=2, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+
+      - name: Upload registered evidence bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tgsa-phase1-full-${{ github.run_id }}
+          path: full_evidence
+          if-no-files-found: error
+          retention-days: 90
