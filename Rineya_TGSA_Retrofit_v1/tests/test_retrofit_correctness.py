@@ -636,3 +636,126 @@ def test_conversion_at_the_real_rineya_layer_count() -> None:
         )
         assert module.conditioning_is_neutral()
     assert verify_conversion_manifest(manifest, source_state=state, modules=modules)["passed"]
+
+
+# --------------------------------------------------------------------------
+# The damage harness must have teeth
+# --------------------------------------------------------------------------
+
+
+def test_damage_harness_detects_a_small_perturbation() -> None:
+    """A damage report that always reports zero is worthless.
+
+    Confirms the measurement responds to a deliberately perturbed conditioning
+    weight, so the zero result for an unperturbed conversion is meaningful.
+    """
+
+    from rineya_tgsa.damage import measure_conversion_damage
+
+    config = _config()
+
+    def build(perturbation: float):
+        torch.manual_seed(31)
+        native = NativeReferenceAttention(config).eval()
+        torch.manual_seed(31)
+        tgsa = RineyaTGSAAttention(config, layer_index=0).eval()
+        for name in ("q_proj", "k_proj", "v_proj", "o_proj"):
+            getattr(tgsa, name).load_state_dict(getattr(native, name).state_dict())
+        if perturbation:
+            with torch.no_grad():
+                nn.init.normal_(tgsa.conditioning["q"][5].weight, std=perturbation)
+        mask = _causal(16, dtype=torch.float32)
+        return (
+            lambda ids: (native(embed(ids), attention_mask=mask)[0], []),
+            lambda ids: (tgsa(embed(ids), attention_mask=mask)[0], []),
+        )
+
+    torch.manual_seed(32)
+    embedding = nn.Embedding(64, HIDDEN)
+    embed = embedding
+    ids = torch.randint(0, 64, (2, 16))
+
+    clean = measure_conversion_damage(*(), **dict(zip(
+        ("native_forward", "retrofit_forward"), build(0.0))), input_ids=ids)
+    perturbed = measure_conversion_damage(*(), **dict(zip(
+        ("native_forward", "retrofit_forward"), build(0.5))), input_ids=ids)
+
+    assert clean.output_absolute_drift["max"] == 0.0
+    assert perturbed.output_absolute_drift["max"] > 1e-6, "harness cannot detect a real change"
+
+
+# --------------------------------------------------------------------------
+# Warm-start schedule and layer placement
+# --------------------------------------------------------------------------
+
+
+def test_placement_ladder_samples_depth_evenly() -> None:
+    from rineya_tgsa.schedule import placement_candidates
+
+    candidates = placement_candidates(28)
+    names = [c.name for c in candidates]
+    assert "none" in names, "the unconverted control must be an arm"
+    singles = [c for c in candidates if len(c.layers) == 1]
+    assert len(singles) >= 4
+    positions = sorted(c.layers[0] for c in singles)
+    # Early, middle, and late are all represented rather than only one region.
+    assert positions[0] == 0 and positions[-1] == 27
+    assert any(8 <= p <= 19 for p in positions), f"no middle-depth single layer: {positions}"
+    assert any(len(c.layers) == 28 for c in candidates), "full conversion must be an arm"
+
+
+def test_placement_candidates_are_unique() -> None:
+    from rineya_tgsa.schedule import placement_candidates
+
+    candidates = placement_candidates(28)
+    assert len({c.layers for c in candidates}) == len(candidates)
+
+
+def test_freeze_stages_release_progressively() -> None:
+    from rineya_tgsa.schedule import STAGE_ORDER, apply_stage
+
+    model = RineyaTGSAAttention(_config(), layer_index=0)
+    counts = [apply_stage(model, stage)["trainable_parameters"] for stage in STAGE_ORDER]
+    assert counts == sorted(counts), f"stages must be monotonically more permissive: {counts}"
+    assert counts[0] > 0, "the trajectory stage must train something"
+    assert counts[-1] == sum(p.numel() for p in model.parameters())
+
+
+def test_trajectory_stage_freezes_every_pretrained_projection() -> None:
+    from rineya_tgsa.schedule import apply_stage
+
+    model = RineyaTGSAAttention(_config(), layer_index=0)
+    apply_stage(model, "trajectory")
+    for name in ("q_proj", "k_proj", "v_proj", "o_proj"):
+        module = getattr(model, name)
+        assert not module.weight.requires_grad, f"{name} must be frozen in the trajectory stage"
+    assert model.carrier_init.weight.requires_grad
+    assert model.conditioning["q"][0].weight.requires_grad
+
+
+def test_attention_stage_releases_projections_but_not_before() -> None:
+    from rineya_tgsa.schedule import apply_stage
+
+    model = RineyaTGSAAttention(_config(), layer_index=0)
+    apply_stage(model, "attention")
+    assert model.q_proj.weight.requires_grad
+    assert model.carrier_init.weight.requires_grad
+
+
+def test_schedule_maps_steps_to_stages_in_order() -> None:
+    from rineya_tgsa.schedule import FreezeSchedule
+
+    schedule = FreezeSchedule.progressive(400)
+    assert schedule.total_steps == 400
+    assert schedule.stage_at(0) == "trajectory"
+    assert schedule.stage_at(150) == "attention"
+    assert schedule.stage_at(250) == "converted_layers"
+    assert schedule.stage_at(399) == "all"
+    assert FreezeSchedule.immediate_full(400).stage_at(0) == "all"
+
+
+def test_schedule_rejects_an_unknown_stage() -> None:
+    from rineya_tgsa.schedule import FreezeSchedule
+
+    with pytest.raises(ValueError, match="unknown warm-start stages"):
+        FreezeSchedule({"unfreeze_everything_now": 10})
