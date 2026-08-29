@@ -37,7 +37,6 @@ SEALED_ALLOWLIST: dict[str, str] = {
     "src/rineya_psa/paths.py": "defines DATA_SEALED; defining a path is not reading it",
     "src/rineya_psa/types.py": "split_for_scenario returns the label",
     "src/rineya_psa/benchmark/generate.py": "the one-time writer that lays the bank down",
-    "scripts/phase3_baseline_fingerprint.py": "refuses --split sealed; asserted below",
 }
 
 
@@ -65,27 +64,121 @@ def _docstring_nodes(tree: ast.AST) -> set[int]:
     return out
 
 
+#: A line carrying this marker is exempt from the sealed scan. It exists so a script can
+#: *refuse* the sealed split -- which requires naming it -- without being confused for a
+#: script that *reads* it. The marker is deliberately ugly and greppable: exempting a line
+#: is a deliberate, reviewable act, and `grep -rn "sealed-ok" scripts/` lists every one.
+SEALED_REFUSAL_MARKER = "sealed-ok:"
+
+
 def sealed_references(path: Path) -> list[str]:
-    """Code-level (not comment-level) mentions of the sealed split in one file."""
-    tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+    """Code-level mentions of the sealed split that are not marked as refusals.
+
+    The original version banned the substring outright, which is too coarse: a driver
+    that validates ``--split`` has to name ``sealed`` in order to reject it, and banning
+    the name pushes authors towards *not* checking at all. What must never happen is a
+    **read**, so a mention is allowed only on a line that carries
+    ``# sealed-ok: <reason>``.
+    """
+    text = path.read_text(encoding="utf-8")
+    lines = text.splitlines()
+
+    def exempt(lineno: int) -> bool:
+        return 1 <= lineno <= len(lines) and SEALED_REFUSAL_MARKER in lines[lineno - 1]
+
+    tree = ast.parse(text, filename=str(path))
     docstrings = _docstring_nodes(tree)
     hits: list[str] = []
     for node in ast.walk(tree):
         if isinstance(node, ast.Constant) and isinstance(node.value, str):
-            if id(node) in docstrings:
+            if id(node) in docstrings or exempt(node.lineno):
                 continue
             if "sealed" in node.value.lower():
                 hits.append(f"line {node.lineno}: string {node.value!r}")
         elif isinstance(node, ast.Name) and "SEALED" in node.id:
-            hits.append(f"line {node.lineno}: name {node.id}")
+            if not exempt(node.lineno):
+                hits.append(f"line {node.lineno}: name {node.id}")
         elif isinstance(node, ast.Attribute) and "SEALED" in node.attr:
-            hits.append(f"line {node.lineno}: attribute .{node.attr}")
+            if not exempt(node.lineno):
+                hits.append(f"line {node.lineno}: attribute .{node.attr}")
+    return hits
+
+
+def sealed_reads(path: Path) -> list[str]:
+    """Constructions that would actually OPEN the sealed split. Never exemptible.
+
+    This is the property the discipline is about, and no marker can silence it: building
+    a path into ``data/sealed`` or touching ``paths.DATA_SEALED`` is a read no matter what
+    comment sits on the line.
+    """
+    text = path.read_text(encoding="utf-8")
+    hits: list[str] = []
+    for i, line in enumerate(text.splitlines(), start=1):
+        stripped = line.split("#", 1)[0]
+        if "DATA_SEALED" in stripped:
+            hits.append(f"line {i}: DATA_SEALED")
+        if "data/sealed" in stripped or "data" + chr(92) + "sealed" in stripped:
+            hits.append(f"line {i}: literal path into data/sealed")
     return hits
 
 
 # --------------------------------------------------------------------------------------
 # 1. Nobody but Phase 14 touches the sealed split
 # --------------------------------------------------------------------------------------
+
+
+def test_nothing_outside_phase14_can_actually_open_the_sealed_split() -> None:
+    """The property itself, with no exemption mechanism.
+
+    `sealed_references` can be silenced per line by a `# sealed-ok:` marker so that a
+    driver may refuse the split by name. This test cannot be silenced: it looks for the
+    constructions that would really read the data.
+    """
+    offenders: dict[str, list[str]] = {}
+    for path in _python_files():
+        rel = path.relative_to(LAB_ROOT).as_posix()
+        if rel.startswith("scripts/phase14_") or rel in SEALED_ALLOWLIST:
+            continue
+        hits = sealed_reads(path)
+        if hits:
+            offenders[rel] = hits
+    assert not offenders, (
+        "these files construct a path into the sealed split, which SPEC section 8 "
+        f"permits only in scripts/phase14_*.py: {json.dumps(offenders, indent=2)}"
+    )
+
+
+def test_every_driver_that_takes_a_split_refuses_sealed() -> None:
+    """Positive check: refusing is required, not merely permitted.
+
+    A driver that simply never mentions `sealed` passes the negative scan while happily
+    accepting `--split sealed` if someone types it. Each phase driver exposing --split
+    must therefore list its allowed choices and exclude sealed.
+    """
+    import re
+
+    checked = 0
+    for path in sorted((LAB_ROOT / "scripts").glob("phase*.py")):
+        if path.name.startswith("phase14_"):
+            continue
+        text = path.read_text(encoding="utf-8")
+        if '"--split"' not in text:
+            continue
+        checked += 1
+        m = re.search(r'"--split".{0,400}?choices=([A-Za-z_][\w.]*|\(([^)]*)\))', text, re.S)
+        assert m, f"{path.name}: --split must declare explicit choices excluding sealed"
+        spec = m.group(0)
+        if m.group(2) is not None:            # inline tuple: read it directly
+            allowed = m.group(2)
+        else:                                  # named constant: resolve its definition
+            const = m.group(1)
+            d = re.search(rf"^{re.escape(const)}[^=]*=\s*\(([^)]*)\)", text, re.M | re.S)
+            assert d, f"{path.name}: --split uses {const} but it is not defined literally here"
+            allowed = d.group(1)
+        assert "sealed" not in allowed, (
+            f"{path.name}: --split choices include sealed ({spec.splitlines()[0]!r})"
+        )
+    assert checked >= 2, f"expected several phase drivers with --split, found {checked}"
 
 
 def test_only_phase14_and_the_allowlist_name_the_sealed_split() -> None:

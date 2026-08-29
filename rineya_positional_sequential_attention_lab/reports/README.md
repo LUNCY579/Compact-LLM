@@ -25,12 +25,16 @@ in a preview may be quoted as a result.
 
 ## The four findings that changed the plan
 
-1. **The Rineya family is a line, not a space** (Phase 1 §4). `Δnimbus = 0.7999 · Δhalo`
-   with the coefficient constant to four decimal places in every touched layer, cosine
-   +0.9946. Blockwise-α interpolation between Halo and Nimbus is therefore a
-   one-dimensional search that already contains Nimbus, so the brief's §34/§35 soup work
-   is re-planned against the actual geometry — the plane spanned by the Halo ray and the
-   Supa adapter direction — instead of being run as a blind sweep.
+1. **The Halo/Nimbus branch lies on one ray through Qwen3, exactly** (Phase 1 §4).
+   `Δnimbus = 0.8 · Δhalo` holds *exactly* in the merge arithmetic — the apparent 10.3 %
+   residual is bfloat16 store rounding to six significant figures — and
+   `Δhalo_uncensored = 2.000000 · Δhalo` with cosine 1.00000000, measured directly against
+   the donor checkpoint rather than inferred from recipes. **A uniform-α soup of the two is
+   therefore 1-D and already contains Nimbus at α = 0.80.** Blockwise α is *not* 1-D: it is
+   a 19-parameter search over per-block rescalings in a narrow [0.8, 1.0] band, and a
+   blockwise model can sit 50 % of the segment length off the uniform-α line. An earlier
+   draft claimed blockwise α "cannot produce a new model"; that was wrong and is corrected
+   in place.
 
 2. **Accuracy cannot resolve position on this panel** (Phase 2b §2, Phase 3-preview §3).
    Qwen3's margin at the first answer token is negative at six of seven positions: it is

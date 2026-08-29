@@ -94,8 +94,8 @@ def main(argv: Sequence[str] | None = None) -> int:
     ap.add_argument("--yes-i-costed-this", action="store_true")
     args = ap.parse_args(argv)
 
-    if args.split == "sealed":  # defence in depth; argparse already refuses it
-        raise SystemExit("the sealed split is opened only by scripts/phase14_*.py")
+    if args.split == "sealed":  # defence in depth; argparse already refuses it  # sealed-ok:
+        raise SystemExit("the sealed split is opened only by scripts/phase14_*.py")  # sealed-ok:
 
     items = load_split(args.split)
     if args.limit:
