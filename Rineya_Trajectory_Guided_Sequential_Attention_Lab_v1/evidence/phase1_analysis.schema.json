@@ -4,29 +4,127 @@
   "title": "TGSA Phase 1 frozen analysis",
   "type": "object",
   "required": [
-    "schema_version",
-    "study_id",
-    "decision",
-    "claim_ceiling",
-    "is_full_registered_matrix",
-    "confirmatory_config",
     "analysis_code_sha256",
-    "study_config_sha256",
-    "matrix_manifest_sha256",
+    "claim_ceiling",
     "comparisons",
-    "gates"
+    "confirmatory_config",
+    "decision",
+    "evidence_chain",
+    "gates",
+    "hypothesis_hierarchy",
+    "interval_estimator",
+    "is_full_registered_matrix",
+    "matrix_manifest_sha256",
+    "primary_gate",
+    "schema_version",
+    "secondary_analyses_are_non_gating",
+    "study_config_sha256",
+    "study_id"
   ],
   "properties": {
-    "schema_version": {"const": "tgsa.phase1-model-analysis.v1"},
-    "decision": {"enum": ["supports_phase1_mechanism_hypothesis", "inconclusive", "contradicted", "smoke_only"]},
-    "claim_ceiling": {"type": "string", "minLength": 1},
-    "is_full_registered_matrix": {"type": "boolean"},
-    "confirmatory_config": {"type": "boolean"},
-    "analysis_code_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "study_config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "matrix_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
-    "comparisons": {"type": "object", "minProperties": 4},
-    "gates": {"type": "object", "minProperties": 5}
+    "schema_version": {
+      "const": "tgsa.phase1-model-analysis.v1"
+    },
+    "decision": {
+      "enum": [
+        "supports_phase1_mechanism_hypothesis",
+        "inconclusive",
+        "contradicted",
+        "smoke_only"
+      ]
+    },
+    "claim_ceiling": {
+      "type": "string",
+      "minLength": 1
+    },
+    "is_full_registered_matrix": {
+      "type": "boolean"
+    },
+    "confirmatory_config": {
+      "type": "boolean"
+    },
+    "analysis_code_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "study_config_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "matrix_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "comparisons": {
+      "type": "object",
+      "minProperties": 4
+    },
+    "gates": {
+      "type": "object",
+      "minProperties": 7
+    },
+    "primary_gate": {
+      "enum": [
+        "lower_bound_above_zero",
+        "conjunction"
+      ]
+    },
+    "interval_estimator": {
+      "enum": [
+        "crossed_cluster_t",
+        "seed_cluster",
+        "crossed_pigeonhole",
+        "crossed_pigeonhole_t"
+      ]
+    },
+    "sensitivity_estimators": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "secondary_analyses_are_non_gating": {
+      "const": true
+    },
+    "hypothesis_hierarchy": {
+      "type": "object",
+      "required": [
+        "H1a_learned_delta_gt_history_control",
+        "H1b_learned_delta_gt_cascade",
+        "H1c_aligned_gt_replay_deranged",
+        "interpretation"
+      ],
+      "properties": {
+        "H1a_learned_delta_gt_history_control": {
+          "type": "boolean"
+        },
+        "H1b_learned_delta_gt_cascade": {
+          "type": "boolean"
+        },
+        "H1c_aligned_gt_replay_deranged": {
+          "type": "boolean"
+        },
+        "interpretation": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "evidence_chain": {
+      "type": "object",
+      "required": [
+        "passed",
+        "checks"
+      ],
+      "properties": {
+        "passed": {
+          "type": "boolean"
+        },
+        "checks": {
+          "type": "object"
+        }
+      }
+    }
   },
   "additionalProperties": true
 }

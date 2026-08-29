@@ -18,6 +18,13 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence, cast
 
 from .phase1_data import sha256_file
+from .phase1_inference import (
+    INTERVAL_ESTIMATORS,
+    PRIMARY_ESTIMATOR,
+    estimate_interval,
+    resolve_interval_estimator,
+)
+from .phase1_response import difficulty_response
 from .phase1_verify import verify_evidence_chain
 from .phase1_runner import (
     MATRIX_MANIFEST_VERSION,
@@ -436,9 +443,18 @@ def _estimate_comparison(
     bootstrap_samples: int,
     confidence: float,
     bootstrap_seed: int,
-    scheme: str = "crossed_paired",
+    scheme: str = PRIMARY_ESTIMATOR,
+    sensitivity_schemes: Sequence[str] = (),
 ) -> dict[str, object]:
-    estimator = resolve_bootstrap(scheme)
+    """Estimate one registered contrast.
+
+    The primary interval uses the registered estimator. Every additional
+    registered estimator is reported alongside it as a preregistered sensitivity
+    analysis, so a reader can see immediately whether the conclusion depends on
+    the inferential choice. Only the primary enters a gate.
+    """
+
+    resolve_interval_estimator(scheme)
     accuracy_values = paired_seed_stratum_values(
         candidate_by_seed,
         baseline_by_seed,
@@ -451,20 +467,39 @@ def _estimate_comparison(
         score=_nll_improvement,
         include_families=include_families,
     )
+    sensitivity: dict[str, object] = {}
+    for name in sensitivity_schemes:
+        if name == scheme:
+            continue
+        try:
+            sensitivity[name] = estimate_interval(
+                accuracy_values,
+                estimator=name,
+                confidence=confidence,
+                samples=bootstrap_samples,
+                rng_seed=bootstrap_seed + 500,
+            ).to_dict()
+        except ValueError as exc:
+            # A sensitivity analysis that cannot be computed is reported as such.
+            # It must never abort, and must never silently vanish either.
+            sensitivity[name] = {"status": "unavailable", "reason": str(exc)}
     return {
-        "bootstrap_scheme": scheme,
-        "accuracy_delta": estimator(
+        "interval_estimator": scheme,
+        "accuracy_delta": estimate_interval(
             accuracy_values,
-            samples=bootstrap_samples,
+            estimator=scheme,
             confidence=confidence,
-            seed=bootstrap_seed,
+            samples=bootstrap_samples,
+            rng_seed=bootstrap_seed,
         ).to_dict(),
-        "answer_nll_improvement": estimator(
+        "answer_nll_improvement": estimate_interval(
             nll_values,
-            samples=bootstrap_samples,
+            estimator=scheme,
             confidence=confidence,
-            seed=bootstrap_seed + 1,
+            samples=bootstrap_samples,
+            rng_seed=bootstrap_seed + 1,
         ).to_dict(),
+        "sensitivity_estimators": sensitivity,
         "per_family_accuracy_delta": _per_family_observed(candidate_by_seed, baseline_by_seed),
     }
 
@@ -479,7 +514,7 @@ def _markdown_report(analysis: Mapping[str, object]) -> str:
         "",
         f"**Confirmatory configuration:** `{analysis['confirmatory_config']}`  ",
         f"**Registered confirmatory matrix:** `{analysis['registered_confirmatory_matrix']}`  ",
-        f"**Bootstrap scheme:** `{analysis['bootstrap_scheme']}`  ",
+        f"**Interval estimator:** `{analysis['interval_estimator']}`  ",
         f"**Alignment falsifier:** `{analysis['alignment_condition']}`",
         "",
         str(analysis["claim_ceiling"]),
@@ -592,8 +627,13 @@ def analyze_study(
     bootstrap_samples = int(analysis_cfg.get("bootstrap_samples", 10000))
     confidence = float(analysis_cfg.get("confidence", 0.95))
     bootstrap_seed = int(analysis_cfg.get("bootstrap_seed", 91273))
-    bootstrap_scheme = str(analysis_cfg.get("bootstrap_scheme", "crossed_paired"))
-    resolve_bootstrap(bootstrap_scheme)
+    bootstrap_scheme = str(analysis_cfg.get("interval_estimator", PRIMARY_ESTIMATOR))
+    resolve_interval_estimator(bootstrap_scheme)
+    sensitivity_schemes = [
+        str(name) for name in analysis_cfg.get("sensitivity_estimators", list(INTERVAL_ESTIMATORS))
+    ]
+    for name in sensitivity_schemes:
+        resolve_interval_estimator(name)
     primary_families = {str(value) for value in analysis_cfg["primary_families"]}
     guardrail_family = str(analysis_cfg.get("guardrail_family", "direct_lookup"))
     alignment_condition = str(analysis_cfg.get("alignment_condition", "replay_derangement"))
@@ -647,6 +687,7 @@ def analyze_study(
             confidence=confidence,
             bootstrap_seed=bootstrap_seed,
             scheme=bootstrap_scheme,
+            sensitivity_schemes=sensitivity_schemes,
         ),
         "learned_delta_minus_cascade": _estimate_comparison(
             learned,
@@ -656,6 +697,7 @@ def analyze_study(
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 1000,
             scheme=bootstrap_scheme,
+            sensitivity_schemes=sensitivity_schemes,
         ),
         "aligned_delta_minus_replayed_delta": _estimate_comparison(
             learned,
@@ -665,6 +707,7 @@ def analyze_study(
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 2000,
             scheme=bootstrap_scheme,
+            sensitivity_schemes=sensitivity_schemes,
         ),
         "direct_lookup_delta_minus_history_control": _estimate_comparison(
             learned,
@@ -674,6 +717,7 @@ def analyze_study(
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 3000,
             scheme=bootstrap_scheme,
+            sensitivity_schemes=sensitivity_schemes,
         ),
     }
 
@@ -682,41 +726,64 @@ def analyze_study(
     alignment_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["aligned_delta_minus_replayed_delta"])["accuracy_delta"])
     guardrail_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["direct_lookup_delta_minus_history_control"])["accuracy_delta"])
 
-    min_history = float(analysis_cfg.get("minimum_history_delta", 0.02))
-    min_cascade = float(analysis_cfg.get("minimum_cascade_delta", 0.02))
-    min_alignment = float(analysis_cfg.get("minimum_alignment_drop", 0.015))
+    # v3 gate definition. The registered primary test is against zero; the
+    # "minimum effect" values are the effects the study is POWERED to detect and
+    # are reported descriptively alongside the interval.
+    #
+    # v2 additionally required `observed >= threshold`. That clause caps
+    # detection probability at 50% when the true effect equals the threshold,
+    # because an unbiased symmetric estimator exceeds its own mean half the time
+    # — a property of the rule, not of the sample size. See
+    # PHASE1_V3_POWER_REPORT.md.
+    gate_rule = str(analysis_cfg.get("primary_gate", "lower_bound_above_zero"))
+    if gate_rule not in {"lower_bound_above_zero", "conjunction"}:
+        raise ValueError(f"unsupported primary_gate {gate_rule!r}")
+    # v3 names these `powered_for_*` because that is what they are: the effect
+    # the replication level was chosen to detect. The v2 `minimum_*` names are
+    # accepted as a fallback so a v2 configuration still analyses.
+    min_history = float(
+        analysis_cfg.get("powered_for_history_delta", analysis_cfg.get("minimum_history_delta", 0.02))
+    )
+    min_cascade = float(
+        analysis_cfg.get("powered_for_cascade_delta", analysis_cfg.get("minimum_cascade_delta", 0.02))
+    )
+    min_alignment = float(
+        analysis_cfg.get("powered_for_alignment_drop", analysis_cfg.get("minimum_alignment_drop", 0.015))
+    )
+
+    def _passes(estimate: Mapping[str, object], powered_for: float) -> bool:
+        if float(estimate["confidence_low"]) <= 0.0:
+            return False
+        if gate_rule == "conjunction":
+            return float(estimate["observed"]) >= powered_for
+        return True
+
+    def _reason(estimate: Mapping[str, object], powered_for: float) -> str:
+        return (
+            f"mean={float(estimate['observed']):+.4f}, "
+            f"lower={float(estimate['confidence_low']):+.4f}, "
+            f"upper={float(estimate['confidence_high']):+.4f}, "
+            f"powered_for={powered_for:+.4f}, "
+            f"observed_at_or_above_powered_effect="
+            f"{float(estimate['observed']) >= powered_for}"
+        )
     noninferiority = float(analysis_cfg.get("direct_lookup_noninferiority_margin", -0.01))
     gates: dict[str, dict[str, object]] = {
         "full_registered_matrix": {
             "pass": is_full,
             "reason": f"selected arms={selected_arms}; selected seeds={selected_seeds}",
         },
-        "finite_difference_beats_information_matched_history": {
-            "pass": float(history_estimate["observed"]) >= min_history
-            and float(history_estimate["confidence_low"]) > 0.0,
-            "reason": (
-                f"mean={float(history_estimate['observed']):+.4f}, "
-                f"lower={float(history_estimate['confidence_low']):+.4f}, "
-                f"threshold={min_history:+.4f}"
-            ),
+        "H1a_finite_difference_beats_information_matched_history": {
+            "pass": _passes(history_estimate, min_history),
+            "reason": _reason(history_estimate, min_history),
         },
-        "finite_difference_beats_cascade": {
-            "pass": float(cascade_estimate["observed"]) >= min_cascade
-            and float(cascade_estimate["confidence_low"]) > 0.0,
-            "reason": (
-                f"mean={float(cascade_estimate['observed']):+.4f}, "
-                f"lower={float(cascade_estimate['confidence_low']):+.4f}, "
-                f"threshold={min_cascade:+.4f}"
-            ),
+        "H1b_finite_difference_beats_cascade": {
+            "pass": _passes(cascade_estimate, min_cascade),
+            "reason": _reason(cascade_estimate, min_cascade),
         },
-        "trajectory_alignment_is_causal": {
-            "pass": float(alignment_estimate["observed"]) >= min_alignment
-            and float(alignment_estimate["confidence_low"]) > 0.0,
-            "reason": (
-                f"aligned-minus-rolled mean={float(alignment_estimate['observed']):+.4f}, "
-                f"lower={float(alignment_estimate['confidence_low']):+.4f}, "
-                f"threshold={min_alignment:+.4f}"
-            ),
+        "H1c_trajectory_alignment_is_causal": {
+            "pass": _passes(alignment_estimate, min_alignment),
+            "reason": "aligned-minus-replayed " + _reason(alignment_estimate, min_alignment),
         },
         "direct_lookup_noninferiority": {
             "pass": float(guardrail_estimate["confidence_low"]) >= noninferiority,
@@ -764,8 +831,69 @@ def analyze_study(
     else:
         decision = "inconclusive"
 
+    # Secondary, explicitly non-gating. Bins come from registered generator
+    # metadata, so no binning decision can be made after seeing outcomes.
+    secondary: dict[str, object] = {
+        "status": "skipped",
+        "reason": "requires --dataset-dir to read registered example metadata",
+    }
+    if dataset_dir is not None:
+        from .phase1_data import load_examples, validate_dataset_manifest
+
+        dataset_manifest = validate_dataset_manifest(dataset_dir / "dataset_manifest.json")
+        splits = cast(Mapping[str, Mapping[str, object]], dataset_manifest["splits"])
+        test_examples = load_examples(dataset_dir / str(splits["test"]["path"]))
+        secondary = difficulty_response(
+            learned,
+            history,
+            examples_metadata={
+                example.id: dict(example.metadata) for example in test_examples
+            },
+            example_families={example.id: example.family for example in test_examples},
+            estimator=bootstrap_scheme,
+            confidence=confidence,
+            bootstrap_samples=bootstrap_samples,
+            rng_seed=bootstrap_seed + 4000,
+        )
+
+    h1a = bool(gates["H1a_finite_difference_beats_information_matched_history"]["pass"])
+    h1b = bool(gates["H1b_finite_difference_beats_cascade"]["pass"])
+    h1c = bool(gates["H1c_trajectory_alignment_is_causal"]["pass"])
+    if h1a and h1b and h1c:
+        interpretation = (
+            "controlled evidence that trajectory-specific, example-aligned information adds "
+            "capability beyond the sequential cascade and an information-matched history control"
+        )
+    elif h1b and not h1a:
+        interpretation = (
+            "evidence for an extra learned recurrent pathway, NOT for trajectory-specific "
+            "capability: learned_delta beat cascade but not the information-matched history control"
+        )
+    elif h1a and h1b and not h1c:
+        interpretation = (
+            "the finite-difference parameterization may help, but example-aligned trajectory "
+            "content has NOT been shown causal: the replay-derangement falsifier did not fire"
+        )
+    elif float(history_estimate["confidence_high"]) < 0.0:
+        interpretation = "evidence AGAINST the mechanism in this setting: the primary effect is negative"
+    elif float(history_estimate["confidence_low"]) <= 0.0 <= float(history_estimate["confidence_high"]):
+        interpretation = (
+            "inconclusive, not success: the primary confidence interval includes zero"
+        )
+    else:
+        interpretation = "inconclusive: the registered hypothesis hierarchy was not satisfied"
+
     analysis: dict[str, object] = {
         "schema_version": ANALYSIS_SCHEMA_VERSION,
+        "primary_gate": gate_rule,
+        "hypothesis_hierarchy": {
+            "H1a_learned_delta_gt_history_control": h1a,
+            "H1b_learned_delta_gt_cascade": h1b,
+            "H1c_aligned_gt_replay_deranged": h1c,
+            "interpretation": interpretation,
+        },
+        "secondary_difficulty_response": secondary,
+        "secondary_analyses_are_non_gating": True,
         "created_at_utc": utc_now(),
         "study_id": study["study_id"],
         "decision": decision,
@@ -779,7 +907,8 @@ def analyze_study(
         "is_full_registered_matrix": is_full,
         "confirmatory_config": confirmatory_config,
         "registered_confirmatory_matrix": registered_matrix,
-        "bootstrap_scheme": bootstrap_scheme,
+        "interval_estimator": bootstrap_scheme,
+        "sensitivity_estimators": sensitivity_schemes,
         "alignment_condition": alignment_condition,
         "derangement_coverage_by_seed": coverage_by_seed,
         "evidence_chain": chain,

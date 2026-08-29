@@ -1,0 +1,3869 @@
+{
+  "bootstrap_grid_restricted_to": {
+    "seed_counts": [
+      5,
+      10,
+      15,
+      20
+    ],
+    "seed_sds": [
+      0.02,
+      0.04
+    ]
+  },
+  "bootstrap_samples": 999,
+  "conditions": [
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.006569623629916195,
+        "ci_low": 0.00452031923317689,
+        "monte_carlo_standard_error": 0.0005205908902391589,
+        "rate": 0.00545
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02631856757627269,
+        "ci_low": 0.022064212341927687,
+        "monte_carlo_standard_error": 0.0010844166634647403,
+        "rate": 0.0241
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.011849677467711685,
+        "ci_low": 0.009038383442031575,
+        "monte_carlo_standard_error": 0.000715642281450726,
+        "rate": 0.01035
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9546341387776004,
+        "ci_low": 0.948692356645709,
+        "monte_carlo_standard_error": 0.0015152877202036586,
+        "rate": 0.95175
+      },
+      "interval_width": {
+        "mean": 0.04422406665562544,
+        "median": 0.0430414391281651,
+        "q025": 0.01732795406075362,
+        "q975": 0.07720283657603264,
+        "sd": 0.015505170450881773
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 6.821008403361344e-05,
+        "median": 0.0001680672268907558,
+        "q025": -0.01663865546218487,
+        "q250": -0.005714285714285713,
+        "q750": 0.005714285714285713,
+        "q975": 0.016806722689075626,
+        "sd": 0.008552580388166175
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9311988353807366,
+        "empirical_sd_of_estimate": 0.008552580388166175,
+        "mean_estimated": 0.00796415289696047
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.0160411632313286,
+        "ci_low": 0.012745380593571434,
+        "monte_carlo_standard_error": 0.0008395090827382393,
+        "rate": 0.0143
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02678771471112898,
+        "ci_low": 0.0224948923746209,
+        "monte_carlo_standard_error": 0.0010942416894818073,
+        "rate": 0.02455
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.04301177170988781,
+        "ci_low": 0.037564824647306004,
+        "monte_carlo_standard_error": 0.001388955722836405,
+        "rate": 0.0402
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9547311982989952,
+        "ci_low": 0.9487952587171029,
+        "monte_carlo_standard_error": 0.0015137961801378681,
+        "rate": 0.95185
+      },
+      "interval_width": {
+        "mean": 0.06014657316604114,
+        "median": 0.05872699234840512,
+        "q025": 0.023409288529680067,
+        "q975": 0.1057941503462897,
+        "sd": 0.02139985437709177
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 4.596638655462187e-06,
+        "median": 0.0,
+        "q025": -0.022352941176470582,
+        "q250": -0.007731092436974789,
+        "q750": 0.007731092436974786,
+        "q975": 0.02252100840336134,
+        "sd": 0.011422963991575715
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9482284772704708,
+        "empirical_sd_of_estimate": 0.011422963991575715,
+        "mean_estimated": 0.01083157975164726
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.024335520064619406,
+        "ci_low": 0.020247989590594172,
+        "monte_carlo_standard_error": 0.001041805164126191,
+        "rate": 0.0222
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.026214286505658362,
+        "ci_low": 0.02196853181975324,
+        "monte_carlo_standard_error": 0.0010822199406774946,
+        "rate": 0.024
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.15820765647017654,
+        "ci_low": 0.14822555894194323,
+        "monte_carlo_standard_error": 0.0025465179903154033,
+        "rate": 0.15315
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9521579609429962,
+        "ci_low": 0.9460695138641995,
+        "monte_carlo_standard_error": 0.001552729210132919,
+        "rate": 0.9492
+      },
+      "interval_width": {
+        "mean": 0.10069957486020664,
+        "median": 0.09836771941834423,
+        "q025": 0.03808201204341304,
+        "q975": 0.17787266378897082,
+        "sd": 0.03610798778107245
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -6.12689075630254e-05,
+        "median": 0.0,
+        "q025": -0.03798319327731094,
+        "q250": -0.013277310924369741,
+        "q750": 0.013277310924369744,
+        "q975": 0.037478991596638644,
+        "sd": 0.01940834560514022
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9343724678802172,
+        "empirical_sd_of_estimate": 0.01940834560514022,
+        "mean_estimated": 0.018134623780547036
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.02522312729858581,
+        "ci_low": 0.02106005589533239,
+        "monte_carlo_standard_error": 0.0010611007845628992,
+        "rate": 0.02305
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.0254840458893137,
+        "ci_low": 0.02129904128657645,
+        "monte_carlo_standard_error": 0.001066703098336177,
+        "rate": 0.0233
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.23840545136863875,
+        "ci_low": 0.2266972879213772,
+        "monte_carlo_standard_error": 0.0029870030967509894,
+        "rate": 0.2325
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9557986180140325,
+        "ci_low": 0.9499274165227423,
+        "monte_carlo_standard_error": 0.0014972691391329754,
+        "rate": 0.95295
+      },
+      "interval_width": {
+        "mean": 0.14490403364723553,
+        "median": 0.14099734071216746,
+        "q025": 0.05489944707997876,
+        "q975": 0.2565601646663146,
+        "sd": 0.05220094476211434
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.0001108991596638654,
+        "median": -1.734723475976807e-18,
+        "q025": -0.0532773109243698,
+        "q250": -0.01915966386554619,
+        "q750": 0.018319327731092475,
+        "q975": 0.053613445378151325,
+        "sd": 0.027550172189779978
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9471899263390943,
+        "empirical_sd_of_estimate": 0.027550172189779978,
+        "mean_estimated": 0.02609524556706706
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.001422299416836254,
+        "ci_low": 0.0005693909743673826,
+        "monte_carlo_standard_error": 0.00021203655345246488,
+        "rate": 0.0009
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.026631353558559875,
+        "ci_low": 0.02235131113800684,
+        "monte_carlo_standard_error": 0.001090977543306919,
+        "rate": 0.0244
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0014833803364226327,
+        "ci_low": 0.000608290851175394,
+        "monte_carlo_standard_error": 0.0002178413987285245,
+        "rate": 0.00095
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.955264962363639,
+        "ci_low": 0.9493612834127975,
+        "monte_carlo_standard_error": 0.0015055603607959393,
+        "rate": 0.9524
+      },
+      "interval_width": {
+        "mean": 0.02685479827149152,
+        "median": 0.0265623764462692,
+        "q025": 0.015940194655452225,
+        "q975": 0.03947969327155981,
+        "sd": 0.006062125276168847
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 4.0042016806722535e-06,
+        "median": -8.673617379884035e-19,
+        "q025": -0.01184873949579832,
+        "q250": -0.004117647058823528,
+        "q750": 0.004033613445378151,
+        "q975": 0.012016806722689068,
+        "sd": 0.006094598445028151
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.973921667651142,
+        "empirical_sd_of_estimate": 0.006094598445028151,
+        "mean_estimated": 0.005935661481245874
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.006296230472696864,
+        "ci_low": 0.004293808408424273,
+        "monte_carlo_standard_error": 0.0005085744783215139,
+        "rate": 0.0052
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02506654554673877,
+        "ci_low": 0.02091669525799626,
+        "monte_carlo_standard_error": 0.0010577237351974285,
+        "rate": 0.0229
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.007495350720454561,
+        "ci_low": 0.005294265681343145,
+        "monte_carlo_standard_error": 0.0005594778816003364,
+        "rate": 0.0063
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9554590316016097,
+        "ci_low": 0.9495671373604043,
+        "monte_carlo_standard_error": 0.0015025518293889232,
+        "rate": 0.9526
+      },
+      "interval_width": {
+        "mean": 0.0359867850315231,
+        "median": 0.03565544819232075,
+        "q025": 0.021027873088494457,
+        "q975": 0.05300277755068186,
+        "sd": 0.00830303549028981
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -5.2785714285714266e-05,
+        "median": -8.403361344537681e-05,
+        "q025": -0.015966386554621848,
+        "q250": -0.0054621848739495795,
+        "q750": 0.005462184873949577,
+        "q975": 0.015630252100840333,
+        "sd": 0.008116129388693754
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9800343949300342,
+        "empirical_sd_of_estimate": 0.008116129388693754,
+        "mean_estimated": 0.007954085954622351
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.023394848989370547,
+        "ci_low": 0.019389006330744016,
+        "monte_carlo_standard_error": 0.001020938538796533,
+        "rate": 0.0213
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.025692735440504554,
+        "ci_low": 0.021490274920963146,
+        "monte_carlo_standard_error": 0.0010711617524911913,
+        "rate": 0.0235
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.07198198029962555,
+        "ci_low": 0.06498378522400397,
+        "monte_carlo_standard_error": 0.0017849571423426392,
+        "rate": 0.0684
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9548282542946988,
+        "ci_low": 0.9488981643141882,
+        "monte_carlo_standard_error": 0.0015123028383891904,
+        "rate": 0.95195
+      },
+      "interval_width": {
+        "mean": 0.06018347139678675,
+        "median": 0.05952176817297536,
+        "q025": 0.03449393116768645,
+        "q975": 0.08954323236491629,
+        "sd": 0.014133705265956418
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -5.514705882352936e-05,
+        "median": 0.0,
+        "q025": -0.026890756302521003,
+        "q250": -0.009243697478991595,
+        "q750": 0.009075630252100847,
+        "q975": 0.026554621848739503,
+        "sd": 0.013609031688076562
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9774560504062838,
+        "empirical_sd_of_estimate": 0.013609031688076562,
+        "mean_estimated": 0.013302230363681278
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.025379686054096767,
+        "ci_low": 0.021203439529004595,
+        "monte_carlo_standard_error": 0.0010644660633387989,
+        "rate": 0.0232
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.025431867233236916,
+        "ci_low": 0.02125123914625884,
+        "monte_carlo_standard_error": 0.0010655852265304732,
+        "rate": 0.02325
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.15714380711016715,
+        "ci_low": 0.14718981157767044,
+        "monte_carlo_standard_error": 0.002539346274142225,
+        "rate": 0.1521
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9553619987799002,
+        "ci_low": 0.949464208589325,
+        "monte_carlo_standard_error": 0.0015040570135470262,
+        "rate": 0.9525
+      },
+      "interval_width": {
+        "mean": 0.08673886089043553,
+        "median": 0.08564626504952219,
+        "q025": 0.049395590363074136,
+        "q975": 0.1294924473167449,
+        "sd": 0.02059043175126797
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -5.539075630252124e-05,
+        "median": 6.288372600415926e-18,
+        "q025": -0.03865546218487399,
+        "q250": -0.013109243697478989,
+        "q750": 0.013193277310924371,
+        "q975": 0.037899159663865575,
+        "sd": 0.019555812541256365
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9803588621461876,
+        "empirical_sd_of_estimate": 0.019555812541256365,
+        "mean_estimated": 0.019171714131290235
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02678771471112898,
+        "ci_low": 0.0224948923746209,
+        "monte_carlo_standard_error": 0.0010942416894818073,
+        "rate": 0.02455
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9537604461259417,
+        "ci_low": 0.9477663949622688,
+        "monte_carlo_standard_error": 0.0015286313731570477,
+        "rate": 0.95085
+      },
+      "interval_width": {
+        "mean": 0.020490196259831884,
+        "median": 0.020353901125326097,
+        "q025": 0.014102282080044845,
+        "q975": 0.027636172129185718,
+        "sd": 0.0034663500342284373
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 4.2830882352941274e-06,
+        "median": -4.336808689942018e-19,
+        "q025": -0.00961134453781513,
+        "q250": -0.003308823529411766,
+        "q750": 0.0033088235294117625,
+        "q975": 0.00966386554621849,
+        "sd": 0.00489608722706082
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.981729676388809,
+        "empirical_sd_of_estimate": 0.00489608722706082,
+        "mean_estimated": 0.004806634128993801
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.0016047356856993729,
+        "ci_low": 0.0006868970946874327,
+        "monte_carlo_standard_error": 0.00022900846054240006,
+        "rate": 0.00105
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02657922848110634,
+        "ci_low": 0.02230345541906599,
+        "monte_carlo_standard_error": 0.0010898870927761278,
+        "rate": 0.02435
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0016047356856993729,
+        "ci_low": 0.0006868970946874327,
+        "monte_carlo_standard_error": 0.00022900846054240006,
+        "rate": 0.00105
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9562836639145197,
+        "ci_low": 0.9504421785861991,
+        "monte_carlo_standard_error": 0.0014896828101981976,
+        "rate": 0.95345
+      },
+      "interval_width": {
+        "mean": 0.027422250585455693,
+        "median": 0.02726287551024719,
+        "q025": 0.01865623875916891,
+        "q975": 0.037119857592935436,
+        "sd": 0.004720334419899396
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -4.6008403361344765e-06,
+        "median": -1.0028870095490916e-18,
+        "q025": -0.012815126050420171,
+        "q250": -0.004411764705882353,
+        "q750": 0.004411764705882355,
+        "q975": 0.012867647058823532,
+        "sd": 0.00653359923658801
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9845676247263704,
+        "empirical_sd_of_estimate": 0.00653359923658801,
+        "mean_estimated": 0.006432770281281483
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.022505584746243444,
+        "ci_low": 0.018578597035166497,
+        "monte_carlo_standard_error": 0.001000794621788107,
+        "rate": 0.02045
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.028298151424066848,
+        "ci_low": 0.02388389875712033,
+        "monte_carlo_standard_error": 0.0011252555265360842,
+        "rate": 0.026
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.034685971287958375,
+        "ci_low": 0.02979371684973872,
+        "monte_carlo_standard_error": 0.0012473246870803125,
+        "rate": 0.03215
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9534691532464725,
+        "ci_low": 0.9474578030633716,
+        "monte_carlo_standard_error": 0.0015330475775395883,
+        "rate": 0.95055
+      },
+      "interval_width": {
+        "mean": 0.045438017108741305,
+        "median": 0.045134549150710884,
+        "q025": 0.030237552583976514,
+        "q975": 0.062195719300301516,
+        "sd": 0.008200644311488502
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 7.941701680672267e-05,
+        "median": -3.144186300207963e-18,
+        "q025": -0.02121848739495798,
+        "q250": -0.0070903361344537875,
+        "q750": 0.0073004201680672304,
+        "q975": 0.02121848739495798,
+        "sd": 0.010803040839773109
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.98666176870881,
+        "empirical_sd_of_estimate": 0.010803040839773109,
+        "mean_estimated": 0.010658947382404043
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.027360860900026266,
+        "ci_low": 0.023021534946061902,
+        "monte_carlo_standard_error": 0.0011061191165511969,
+        "rate": 0.0251
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02751712574326773,
+        "ci_low": 0.02316521249200361,
+        "monte_carlo_standard_error": 0.0011093339781147965,
+        "rate": 0.02525
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.10713641487457294,
+        "ci_low": 0.09871611936479095,
+        "monte_carlo_standard_error": 0.0021479278095410934,
+        "rate": 0.10285
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9528864760921071,
+        "ci_low": 0.9468407106610043,
+        "monte_carlo_standard_error": 0.0015418332837891396,
+        "rate": 0.94995
+      },
+      "interval_width": {
+        "mean": 0.06523219304668075,
+        "median": 0.06495557218354944,
+        "q025": 0.04310404094613903,
+        "q975": 0.08969014734232317,
+        "sd": 0.011893859171300926
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 1.4671743697478889e-05,
+        "median": -0.0001575630252100902,
+        "q025": -0.030567226890756277,
+        "q250": -0.010399159663865554,
+        "q750": 0.010661764705882334,
+        "q975": 0.030882352941176437,
+        "sd": 0.015636868043379094
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9786043810659216,
+        "empirical_sd_of_estimate": 0.015636868043379094,
+        "mean_estimated": 0.015302307573400486
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.025901385247773436,
+        "ci_low": 0.02168154829927182,
+        "monte_carlo_standard_error": 0.0010756000650799535,
+        "rate": 0.0237
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.955264962363639,
+        "ci_low": 0.9493612834127975,
+        "monte_carlo_standard_error": 0.0015055603607959393,
+        "rate": 0.9524
+      },
+      "interval_width": {
+        "mean": 0.01828116895558765,
+        "median": 0.018203026782799555,
+        "q025": 0.013300929482656508,
+        "q975": 0.023653883417037395,
+        "sd": 0.0026532318449978155
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -2.1119747899159642e-05,
+        "median": -4.201680672268819e-05,
+        "q025": -0.008739495798319325,
+        "q250": -0.0030252100840336134,
+        "q750": 0.0029831932773109245,
+        "q975": 0.008781512605042011,
+        "sd": 0.0044606480931917054
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9790430407995756,
+        "empirical_sd_of_estimate": 0.0044606480931917054,
+        "mean_estimated": 0.004367166473095236
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.0007223484532697996,
+        "ci_low": 0.00016955317759555281,
+        "monte_carlo_standard_error": 0.0001322644132032498,
+        "rate": 0.00035
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.026527101045300053,
+        "ci_low": 0.02225560205847788,
+        "monte_carlo_standard_error": 0.001088795435332092,
+        "rate": 0.0243
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0007223484532697996,
+        "ci_low": 0.00016955317759555281,
+        "monte_carlo_standard_error": 0.0001322644132032498,
+        "rate": 0.00035
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9557015978586921,
+        "ci_low": 0.9498244750852939,
+        "monte_carlo_standard_error": 0.0014987807961806827,
+        "rate": 0.95285
+      },
+      "interval_width": {
+        "mean": 0.024345856251574163,
+        "median": 0.024240185913413637,
+        "q025": 0.01732301962070995,
+        "q975": 0.03193322531752999,
+        "sd": 0.003737716833447112
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -6.165546218487394e-05,
+        "median": 4.201680672268721e-05,
+        "q025": -0.011512605042016805,
+        "q250": -0.00403361344537815,
+        "q750": 0.0038655462184873936,
+        "q975": 0.011596638655462179,
+        "sd": 0.005849134265393223
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9943270347403894,
+        "empirical_sd_of_estimate": 0.005849134265393223,
+        "mean_estimated": 0.005815952329906849
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.016780148844750986,
+        "ci_low": 0.0134061261296705,
+        "monte_carlo_standard_error": 0.0008595056718835542,
+        "rate": 0.015
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.026214286505658362,
+        "ci_low": 0.02196853181975324,
+        "monte_carlo_standard_error": 0.0010822199406774946,
+        "rate": 0.024
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.021877342064646102,
+        "ci_low": 0.018007070160031162,
+        "monte_carlo_standard_error": 0.0009863056701651877,
+        "rate": 0.01985
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9538089919502594,
+        "ci_low": 0.9478178299343455,
+        "monte_carlo_standard_error": 0.0015278938117552546,
+        "rate": 0.9509
+      },
+      "interval_width": {
+        "mean": 0.04011998091941963,
+        "median": 0.039920503264918375,
+        "q025": 0.028022933368995973,
+        "q975": 0.05319934413560475,
+        "sd": 0.006413355999047966
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -3.236134453781504e-05,
+        "median": -8.403361344537307e-05,
+        "q025": -0.01903361344537816,
+        "q250": -0.0066386554621848705,
+        "q750": 0.006596638655462185,
+        "q975": 0.01903361344537815,
+        "sd": 0.009721113864548388
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9859172663508223,
+        "empirical_sd_of_estimate": 0.009721113864548388,
+        "mean_estimated": 0.009584214007220624
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.02464888009357027,
+        "ci_low": 0.02053451434000964,
+        "monte_carlo_standard_error": 0.0010486598590582173,
+        "rate": 0.0225
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02527531609478505,
+        "ci_low": 0.021107847895527537,
+        "monte_carlo_standard_error": 0.0010622238464655178,
+        "rate": 0.0231
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.07694345739942592,
+        "ci_low": 0.06972044537445939,
+        "monte_carlo_standard_error": 0.001842341411085361,
+        "rate": 0.07325
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9541002488498492,
+        "ci_low": 0.948126457813122,
+        "monte_carlo_standard_error": 0.0015234592216400143,
+        "rate": 0.9512
+      },
+      "interval_width": {
+        "mean": 0.05750206548994955,
+        "median": 0.057257927219375004,
+        "q025": 0.040057827572096666,
+        "q975": 0.07622593638003029,
+        "sd": 0.009232408517825806
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 7.216176470588232e-05,
+        "median": 8.403361344538603e-05,
+        "q025": -0.027184873949579833,
+        "q250": -0.009117647058823529,
+        "q750": 0.009411764705882359,
+        "q975": 0.027142857142857142,
+        "sd": 0.013820771991759333
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9939096962667822,
+        "empirical_sd_of_estimate": 0.013820771991759333,
+        "mean_estimated": 0.01373659929250197
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.020769921608960556,
+        "ci_low": 0.011802189856305195,
+        "monte_carlo_standard_error": 0.0022672466578225244,
+        "rate": 0.015666666666666666
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.020769921608960556,
+        "ci_low": 0.011802189856305195,
+        "monte_carlo_standard_error": 0.0022672466578225244,
+        "rate": 0.015666666666666666
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.05301807841633993,
+        "ci_low": 0.0381456739237067,
+        "monte_carlo_standard_error": 0.0037848381735551126,
+        "rate": 0.045
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9743262483559733,
+        "ci_low": 0.9618083774388212,
+        "monte_carlo_standard_error": 0.0031807522986213783,
+        "rate": 0.9686666666666667
+      },
+      "interval_width": {
+        "mean": 0.0538275294117647,
+        "median": 0.05221848739495795,
+        "q025": 0.03967226890756303,
+        "q975": 0.07630252100840332,
+        "sd": 0.009685833895010116
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00015764705882352932,
+        "median": 1.0842021724855044e-18,
+        "q025": -0.024033613445378146,
+        "q250": -0.007899159663865543,
+        "q750": 0.007394957983193276,
+        "q975": 0.023029411764705895,
+        "sd": 0.011722779878113281
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.1690292199650467,
+        "empirical_sd_of_estimate": 0.011722779878113281,
+        "mean_estimated": 0.013704272216732713
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.05301807841633993,
+        "ci_low": 0.0381456739237067,
+        "monte_carlo_standard_error": 0.0037848381735551126,
+        "rate": 0.045
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.053376980168699344,
+        "ci_low": 0.038452586272197074,
+        "monte_carlo_standard_error": 0.0037981671993310238,
+        "rate": 0.04533333333333334
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.16391376352530382,
+        "ci_low": 0.1383130587841239,
+        "monte_carlo_standard_error": 0.006531110733053559,
+        "rate": 0.15066666666666667
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9200390914531064,
+        "ci_low": 0.8995780666929761,
+        "monte_carlo_standard_error": 0.005216210487686617,
+        "rate": 0.9103333333333333
+      },
+      "interval_width": {
+        "mean": 0.07413931932773109,
+        "median": 0.07160924369747901,
+        "q025": 0.044209873949579814,
+        "q975": 0.1175623949579832,
+        "sd": 0.019183443978483927
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -9.983193277310898e-05,
+        "median": -0.0001680672268907611,
+        "q025": -0.03748319327731097,
+        "q250": -0.013277310924369744,
+        "q750": 0.012647058823529424,
+        "q975": 0.038155462184873985,
+        "sd": 0.019439989802790405
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9779832595298928,
+        "empirical_sd_of_estimate": 0.019439989802790405,
+        "mean_estimated": 0.01901198459256084
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.007400212345912326,
+        "ci_low": 0.0025342196904608112,
+        "monte_carlo_standard_error": 0.001199243588761343,
+        "rate": 0.004333333333333333
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.011876473671083446,
+        "ci_low": 0.005381913474637302,
+        "monte_carlo_standard_error": 0.0016264480727442034,
+        "rate": 0.008
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00905663185652444,
+        "ci_low": 0.0035410565832478284,
+        "monte_carlo_standard_error": 0.0013704689654221234,
+        "rate": 0.005666666666666667
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.987046260157491,
+        "ci_low": 0.977718371973844,
+        "monte_carlo_standard_error": 0.0023601553621177863,
+        "rate": 0.983
+      },
+      "interval_width": {
+        "mean": 0.040265305322128846,
+        "median": 0.03958613445378153,
+        "q025": 0.031445168067226865,
+        "q975": 0.05169348739495798,
+        "sd": 0.005277131281365339
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 0.00011470588235294109,
+        "median": -4.2016806722689056e-05,
+        "q025": -0.015966386554621844,
+        "q250": -0.005630252100840334,
+        "q750": 0.005714285714285714,
+        "q975": 0.016386554621848737,
+        "sd": 0.008348589484765473
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.2313629147237384,
+        "empirical_sd_of_estimate": 0.008348589484765473,
+        "mean_estimated": 0.010280143481792766
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.03490068783467981,
+        "ci_low": 0.022972359462877675,
+        "monte_carlo_standard_error": 0.0030293319151013893,
+        "rate": 0.028333333333333332
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03490068783467981,
+        "ci_low": 0.022972359462877675,
+        "monte_carlo_standard_error": 0.0030293319151013893,
+        "rate": 0.028333333333333332
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.08321720874339528,
+        "ci_low": 0.06454074216888286,
+        "monte_carlo_standard_error": 0.004759396164625493,
+        "rate": 0.07333333333333333
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9556965290471897,
+        "ci_low": 0.9398234365957681,
+        "monte_carlo_standard_error": 0.004041337329079002,
+        "rate": 0.9483333333333334
+      },
+      "interval_width": {
+        "mean": 0.056344378151260505,
+        "median": 0.05566176470588235,
+        "q025": 0.03842857142857142,
+        "q975": 0.07845388655462184,
+        "sd": 0.0102682681667046
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -6.977591036414557e-05,
+        "median": -0.00012605042016806609,
+        "q025": -0.025970588235294113,
+        "q250": -0.009495798319327724,
+        "q750": 0.008991596638655463,
+        "q975": 0.026218487394957975,
+        "sd": 0.013600528233907106
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.0609926558525848,
+        "empirical_sd_of_estimate": 0.013600528233907106,
+        "mean_estimated": 0.014430060571891166
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.0012788487253259629,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.010275291621682597,
+        "ci_low": 0.004319839120639021,
+        "monte_carlo_standard_error": 0.0014857346355952692,
+        "rate": 0.006666666666666667
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0012788487253259629,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9881978101436948,
+        "ci_low": 0.9792300783910395,
+        "monte_carlo_standard_error": 0.0022672466578225283,
+        "rate": 0.9843333333333333
+      },
+      "interval_width": {
+        "mean": 0.029352512605042014,
+        "median": 0.029129201680672265,
+        "q025": 0.024622899159663866,
+        "q975": 0.03538676470588236,
+        "sd": 0.002735783571236841
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00016260504201680664,
+        "median": -0.0002521008403361349,
+        "q025": -0.011640756302521009,
+        "q250": -0.004327731092436974,
+        "q750": 0.003991596638655462,
+        "q975": 0.0114296218487395,
+        "sd": 0.005962223819713659
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.2590465886265167,
+        "empirical_sd_of_estimate": 0.005962223819713659,
+        "mean_estimated": 0.007506717560838243
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole",
+      "gate_conjunction": {
+        "ci_high": 0.015407375891476678,
+        "ci_low": 0.007843338161892113,
+        "monte_carlo_standard_error": 0.0019042933947617771,
+        "rate": 0.011
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.019250145247380092,
+        "ci_low": 0.01065870981448653,
+        "monte_carlo_standard_error": 0.002170091310589556,
+        "rate": 0.014333333333333333
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.02001110596565724,
+        "ci_low": 0.011229377297908946,
+        "monte_carlo_standard_error": 0.002219234102117215,
+        "rate": 0.015
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.973422344214883,
+        "ci_low": 0.9607148392773621,
+        "monte_carlo_standard_error": 0.0032294421029484786,
+        "rate": 0.9676666666666667
+      },
+      "interval_width": {
+        "mean": 0.04134396848739495,
+        "median": 0.04104411764705879,
+        "q025": 0.03177305672268907,
+        "q975": 0.0531221113445378,
+        "sd": 0.005339410390324454
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.0003522549019607842,
+        "median": -0.000420168067226895,
+        "q025": -0.01890861344537816,
+        "q250": -0.0068907563025210105,
+        "q750": 0.005976890756302531,
+        "q975": 0.0184453781512605,
+        "sd": 0.009507161953141793
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.1133254114866011,
+        "empirical_sd_of_estimate": 0.009507161953141793,
+        "mean_estimated": 0.010584564993551345
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.03159237275326237,
+        "ci_low": 0.02028834763664708,
+        "monte_carlo_standard_error": 0.002868888028229495,
+        "rate": 0.025333333333333333
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.05481150645315906,
+        "ci_low": 0.03968131639113648,
+        "monte_carlo_standard_error": 0.0038509258146099917,
+        "rate": 0.04666666666666667
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.054453034773714305,
+        "ci_low": 0.03937397396973145,
+        "monte_carlo_standard_error": 0.0038378186319642377,
+        "rate": 0.04633333333333333
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9250868170248077,
+        "ci_low": 0.9051833667348712,
+        "monte_carlo_standard_error": 0.005073500508269159,
+        "rate": 0.9156666666666666
+      },
+      "interval_width": {
+        "mean": 0.053511677282992984,
+        "median": 0.050797560780192076,
+        "q025": 0.01871466655360542,
+        "q975": 0.10380606951513352,
+        "sd": 0.022296087056347537
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 0.00025865546218487386,
+        "median": 1.5178830414797062e-18,
+        "q025": -0.02235714285714285,
+        "q250": -0.007899159663865543,
+        "q750": 0.008235294117647058,
+        "q975": 0.023193277310924368,
+        "sd": 0.011693611676974648
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9303368968982505,
+        "empirical_sd_of_estimate": 0.011693611676974648,
+        "mean_estimated": 0.01087899840108974
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.03746167639187949,
+        "ci_low": 0.025072069611626467,
+        "monte_carlo_standard_error": 0.003147815232941848,
+        "rate": 0.030666666666666665
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.04001329718400274,
+        "ci_low": 0.027181147525451723,
+        "monte_carlo_standard_error": 0.0032614413991362778,
+        "rate": 0.033
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.15874340863930167,
+        "ci_low": 0.1334962021573793,
+        "monte_carlo_standard_error": 0.006440701020046625,
+        "rate": 0.14566666666666667
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9348322369288242,
+        "ci_low": 0.9160781839571981,
+        "monte_carlo_standard_error": 0.004779260751762067,
+        "rate": 0.926
+      },
+      "interval_width": {
+        "mean": 0.10060668730056443,
+        "median": 0.09324935285991932,
+        "q025": 0.03079533787787164,
+        "q975": 0.20569451901849756,
+        "sd": 0.04569993673911927
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00044268907563025197,
+        "median": -0.0006722689075630234,
+        "q025": -0.03697478991596638,
+        "q250": -0.013613445378151259,
+        "q750": 0.01277310924369747,
+        "q975": 0.03764705882352941,
+        "sd": 0.019264029991155323
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9433437729430001,
+        "empirical_sd_of_estimate": 0.019264029991155323,
+        "mean_estimated": 0.018172602733943572
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.00946479971066351,
+        "ci_low": 0.003798702829958543,
+        "monte_carlo_standard_error": 0.0014099645385611654,
+        "rate": 0.006
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03673096670684454,
+        "ci_low": 0.02447115109496187,
+        "monte_carlo_standard_error": 0.0031144823004794872,
+        "rate": 0.03
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00946479971066351,
+        "ci_low": 0.003798702829958543,
+        "monte_carlo_standard_error": 0.0014099645385611654,
+        "rate": 0.006
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9454591985971362,
+        "ci_low": 0.9280889017177788,
+        "monte_carlo_standard_error": 0.004424912637764936,
+        "rate": 0.9373333333333334
+      },
+      "interval_width": {
+        "mean": 0.03424497918611527,
+        "median": 0.033687739015777506,
+        "q025": 0.01929752447499852,
+        "q975": 0.052074280914210166,
+        "sd": 0.00844101453969106
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -5.700280112044822e-05,
+        "median": 8.403361344537692e-05,
+        "q025": -0.01579831932773109,
+        "q250": -0.005630252100840333,
+        "q750": 0.005378151260504199,
+        "q975": 0.016050420168067223,
+        "sd": 0.008086427097892424
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9927543948352786,
+        "empirical_sd_of_estimate": 0.008086427097892424,
+        "mean_estimated": 0.008027836039947792
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.03709641848975932,
+        "ci_low": 0.024771513412896875,
+        "monte_carlo_standard_error": 0.0031311990366962314,
+        "rate": 0.030333333333333334
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.04219366016814778,
+        "ci_low": 0.02899566914640538,
+        "monte_carlo_standard_error": 0.0033553439962742022,
+        "rate": 0.035
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.08180732271057986,
+        "ci_low": 0.06328737179829913,
+        "monte_carlo_standard_error": 0.0047193219852008405,
+        "rate": 0.072
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9439009965056631,
+        "ci_low": 0.926318033305003,
+        "monte_carlo_standard_error": 0.004479380744238187,
+        "rate": 0.9356666666666666
+      },
+      "interval_width": {
+        "mean": 0.05863452941767779,
+        "median": 0.057916417594278985,
+        "q025": 0.0322766430125248,
+        "q975": 0.09025585716187023,
+        "sd": 0.01507709729565668
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.0001034733893557424,
+        "median": -0.00042016806722689154,
+        "q025": -0.027144957983193274,
+        "q250": -0.00901260504201682,
+        "q750": 0.008991596638655461,
+        "q975": 0.027310924369747917,
+        "sd": 0.013560796179624931
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9734582149275907,
+        "empirical_sd_of_estimate": 0.013560796179624931,
+        "mean_estimated": 0.013200868442014577
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.0012788487253259629,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03416710349262118,
+        "ci_low": 0.02237431560323675,
+        "monte_carlo_standard_error": 0.0029945073174186894,
+        "rate": 0.027666666666666666
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0012788487253259629,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9538417809704134,
+        "ci_low": 0.9376833000674456,
+        "monte_carlo_standard_error": 0.004114468598962914,
+        "rate": 0.9463333333333334
+      },
+      "interval_width": {
+        "mean": 0.023592034697967848,
+        "median": 0.023428385291966548,
+        "q025": 0.016416122795302485,
+        "q975": 0.03133763174339122,
+        "sd": 0.003824979075237303
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -8.841736694677871e-05,
+        "median": -0.00021008403361344582,
+        "q025": -0.011219537815126048,
+        "q250": -0.003949579831932772,
+        "q750": 0.003781512605042014,
+        "q975": 0.011723739495798316,
+        "sd": 0.005816633523495963
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 1.0009923721641458,
+        "empirical_sd_of_estimate": 0.005816633523495963,
+        "mean_estimated": 0.005822405788693717
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_pigeonhole_t",
+      "gate_conjunction": {
+        "ci_high": 0.02228162802615586,
+        "ci_low": 0.012953739842509025,
+        "monte_carlo_standard_error": 0.002360155362117785,
+        "rate": 0.017
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03526715736364233,
+        "ci_low": 0.02327170403476495,
+        "monte_carlo_standard_error": 0.0030465767066708877,
+        "rate": 0.028666666666666667
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.026776587435550444,
+        "ci_low": 0.01644854964331183,
+        "monte_carlo_standard_error": 0.002617823523463719,
+        "rate": 0.021
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9507437259709831,
+        "ci_low": 0.9341232140583781,
+        "monte_carlo_standard_error": 0.00423284774117851,
+        "rate": 0.943
+      },
+      "interval_width": {
+        "mean": 0.03951329958751295,
+        "median": 0.03923990950035153,
+        "q025": 0.027006425020490395,
+        "q975": 0.05278410444001359,
+        "sd": 0.00666591868867736
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 0.000331624649859944,
+        "median": 0.00039915966386554923,
+        "q025": -0.018529411764705878,
+        "q250": -0.00609243697478991,
+        "q750": 0.006806722689075632,
+        "q975": 0.019120798319327743,
+        "sd": 0.00967093003291378
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9921167947486783,
+        "empirical_sd_of_estimate": 0.00967093003291378,
+        "mean_estimated": 0.00959469210649315
+      },
+      "trials": 3000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.006350953758772034,
+        "ci_low": 0.004339065918743494,
+        "monte_carlo_standard_error": 0.0005110008561636664,
+        "rate": 0.00525
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.029598798703460574,
+        "ci_low": 0.025082771387586345,
+        "monte_carlo_standard_error": 0.001151247964167581,
+        "rate": 0.02725
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.010888251534086622,
+        "ci_low": 0.008200155040557626,
+        "monte_carlo_standard_error": 0.0006841307440833222,
+        "rate": 0.00945
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9491448561919071,
+        "ci_low": 0.9428838092388363,
+        "monte_carlo_standard_error": 0.001596790374469986,
+        "rate": 0.9461
+      },
+      "interval_width": {
+        "mean": 0.043423541276110846,
+        "median": 0.04230658996904642,
+        "q025": 0.016055713894272315,
+        "q975": 0.07746062583380396,
+        "sd": 0.015911127987753047
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 9.263025210084031e-05,
+        "median": 9.54097911787244e-19,
+        "q025": -0.016470588235294115,
+        "q250": -0.0057142857142857125,
+        "q750": 0.005882352941176469,
+        "q975": 0.016974789915966383,
+        "sd": 0.008514386415506767
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9184442404571267,
+        "empirical_sd_of_estimate": 0.008514386415506767,
+        "mean_estimated": 0.00781998916434859
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.014560084180131725,
+        "ci_low": 0.011426997345725403,
+        "monte_carlo_standard_error": 0.0007979219886680652,
+        "rate": 0.0129
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.025849226495032823,
+        "ci_low": 0.021633726255618053,
+        "monte_carlo_standard_error": 0.0010744923801498084,
+        "rate": 0.02365
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.04141126772024001,
+        "ci_low": 0.03606592394872772,
+        "monte_carlo_standard_error": 0.0013630146275810835,
+        "rate": 0.03865
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9554590316016097,
+        "ci_low": 0.9495671373604043,
+        "monte_carlo_standard_error": 0.0015025518293889232,
+        "rate": 0.9526
+      },
+      "interval_width": {
+        "mean": 0.05950314465949904,
+        "median": 0.05789590761000053,
+        "q025": 0.022455737851627463,
+        "q975": 0.10595124065689607,
+        "sd": 0.02160804272194076
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00011798319327731086,
+        "median": -0.000168067226890755,
+        "q025": -0.022689075630252097,
+        "q250": -0.007899159663865543,
+        "q750": 0.007731092436974787,
+        "q975": 0.022352941176470586,
+        "sd": 0.01145663846313502
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.935327326912382,
+        "empirical_sd_of_estimate": 0.01145663846313502,
+        "mean_estimated": 0.010715707029125658
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.02532750234394359,
+        "ci_low": 0.021155642442763384,
+        "monte_carlo_standard_error": 0.0010633456046836324,
+        "rate": 0.02315
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.027412951428641506,
+        "ci_low": 0.02306942521384105,
+        "monte_carlo_standard_error": 0.0011071918871631962,
+        "rate": 0.02515
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.1496438231420154,
+        "ci_low": 0.13989263767945248,
+        "monte_carlo_standard_error": 0.002487588289890431,
+        "rate": 0.1447
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.953129272957511,
+        "ci_low": 0.9470978177775725,
+        "monte_carlo_standard_error": 0.0015381800934871047,
+        "rate": 0.9502
+      },
+      "interval_width": {
+        "mean": 0.10033672430920172,
+        "median": 0.09785876667000831,
+        "q025": 0.03610231398076285,
+        "q975": 0.17808837430115082,
+        "sd": 0.03648660210666905
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00014637815126050424,
+        "median": 0.00016806722689074771,
+        "q025": -0.03747899159663866,
+        "q250": -0.013445378151260491,
+        "q750": 0.012773109243697484,
+        "q975": 0.03781512605042016,
+        "sd": 0.01920751914339659
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9407398840357944,
+        "empirical_sd_of_estimate": 0.01920751914339659,
+        "mean_estimated": 0.01806927933157421
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.02642283907024722,
+        "ci_low": 0.02215990244074193,
+        "monte_carlo_standard_error": 0.0010866084851500102,
+        "rate": 0.0242
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02673559666657439,
+        "ci_low": 0.022447029622781108,
+        "monte_carlo_standard_error": 0.001093154838071899,
+        "rate": 0.0245
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.2447081953261126,
+        "ci_low": 0.23289214351320203,
+        "monte_carlo_standard_error": 0.0030145351009732827,
+        "rate": 0.23875
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.952740787952297,
+        "ci_low": 0.9466864564116312,
+        "monte_carlo_standard_error": 0.001544020077589667,
+        "rate": 0.9498
+      },
+      "interval_width": {
+        "mean": 0.1443755887142577,
+        "median": 0.14031508902548756,
+        "q025": 0.05257631913446107,
+        "q975": 0.25793441366122094,
+        "sd": 0.052720904283188076
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 0.0002662184873949582,
+        "median": 0.0005042016806722277,
+        "q025": -0.05495798319327737,
+        "q250": -0.01848739495798319,
+        "q750": 0.01899159663865546,
+        "q975": 0.054621848739495805,
+        "sd": 0.02771278020116477
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9381981754799875,
+        "empirical_sd_of_estimate": 0.02771278020116477,
+        "mean_estimated": 0.02600007982221071
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.0009202228750329448,
+        "ci_low": 0.000271621145015576,
+        "monte_carlo_standard_error": 0.0001580743495953724,
+        "rate": 0.0005
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.030378580942774593,
+        "ci_low": 0.025802701094188172,
+        "monte_carlo_standard_error": 0.0011665333257134148,
+        "rate": 0.028
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0009202228750329448,
+        "ci_low": 0.000271621145015576,
+        "monte_carlo_standard_error": 0.0001580743495953724,
+        "rate": 0.0005
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9473939704650168,
+        "ci_low": 0.9410353862955286,
+        "monte_carlo_standard_error": 0.0016216890885740085,
+        "rate": 0.9443
+      },
+      "interval_width": {
+        "mean": 0.025973519913302535,
+        "median": 0.02575082913599843,
+        "q025": 0.014595553943969936,
+        "q975": 0.038952192991894015,
+        "sd": 0.00619857838961782
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 2.0638655462184862e-05,
+        "median": -6.938893903907229e-19,
+        "q025": -0.011848739495798318,
+        "q250": -0.004117647058823527,
+        "q750": 0.004054621848739496,
+        "q975": 0.012016806722689073,
+        "sd": 0.006064139299930745
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9466923553263699,
+        "empirical_sd_of_estimate": 0.006064139299930745,
+        "mean_estimated": 0.0057408743168786405
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.007332381267051059,
+        "ci_low": 0.00515729274556348,
+        "monte_carlo_standard_error": 0.0005528190255409089,
+        "rate": 0.00615
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03219641695233353,
+        "ci_low": 0.02748419295843287,
+        "monte_carlo_standard_error": 0.0012013521028407948,
+        "rate": 0.02975
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.008253900133961052,
+        "ci_low": 0.005935447417358108,
+        "monte_carlo_standard_error": 0.0005895337140486539,
+        "rate": 0.007
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9463235244321079,
+        "ci_low": 0.9399062548077611,
+        "monte_carlo_standard_error": 0.0016366697895421661,
+        "rate": 0.9432
+      },
+      "interval_width": {
+        "mean": 0.035536478459958644,
+        "median": 0.03518037504259815,
+        "q025": 0.019967309982610273,
+        "q975": 0.05287633330703164,
+        "sd": 0.008491100981362952
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 0.0001332142857142857,
+        "median": 0.00016806722689075614,
+        "q025": -0.015882352941176466,
+        "q250": -0.005378151260504201,
+        "q750": 0.005630252100840335,
+        "q975": 0.016302521008403358,
+        "sd": 0.008189258130224048
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9591290790237403,
+        "empirical_sd_of_estimate": 0.008189258130224048,
+        "mean_estimated": 0.00785455560832947
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.025588395663864342,
+        "ci_low": 0.021394653104814584,
+        "monte_carlo_standard_error": 0.0010689349839910752,
+        "rate": 0.0234
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.028141985528011813,
+        "ci_low": 0.023740122263992202,
+        "monte_carlo_standard_error": 0.001122091295305333,
+        "rate": 0.02585
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.07903916689989743,
+        "ci_low": 0.07172394852615785,
+        "monte_carlo_standard_error": 0.0018658766036370143,
+        "rate": 0.0753
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9501657594897926,
+        "ci_low": 0.9439625026652331,
+        "monte_carlo_standard_error": 0.0015820378867144737,
+        "rate": 0.94715
+      },
+      "interval_width": {
+        "mean": 0.05977249117280792,
+        "median": 0.05919975208463599,
+        "q025": 0.03380602061753744,
+        "q975": 0.0892441815497586,
+        "sd": 0.01423106061913409
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 8.670168067226887e-05,
+        "median": 1.3877787807814458e-18,
+        "q025": -0.027142857142857135,
+        "q250": -0.009243697478991595,
+        "q750": 0.009495798319327727,
+        "q975": 0.027058823529411767,
+        "sd": 0.01376355530730444
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.959882235737121,
+        "empirical_sd_of_estimate": 0.01376355530730444,
+        "mean_estimated": 0.013211392240066903
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 10,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.02970279530276557,
+        "ci_low": 0.025178736381070124,
+        "monte_carlo_standard_error": 0.0011532991264195079,
+        "rate": 0.02735
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03001473748526182,
+        "ci_low": 0.02546667897694022,
+        "monte_carlo_standard_error": 0.0011594282534939365,
+        "rate": 0.02765
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.1578530491330166,
+        "ci_low": 0.1478803007043424,
+        "monte_carlo_standard_error": 0.0025441320720434304,
+        "rate": 0.1528
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9506031857617757,
+        "ci_low": 0.9444249035607993,
+        "monte_carlo_standard_error": 0.001575662400389119,
+        "rate": 0.9476
+      },
+      "interval_width": {
+        "mean": 0.08624066213486765,
+        "median": 0.08536723151883291,
+        "q025": 0.04869079394541506,
+        "q975": 0.1293417443281611,
+        "sd": 0.020606901225148657
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00011195798319327752,
+        "median": -8.403361344535946e-05,
+        "q025": -0.03915966386554624,
+        "q250": -0.013445378151260517,
+        "q750": 0.013277310924369788,
+        "q975": 0.03915966386554624,
+        "sd": 0.01982863662807392
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9613166366626047,
+        "empirical_sd_of_estimate": 0.01982863662807392,
+        "mean_estimated": 0.01906159827290495
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03152148291525221,
+        "ci_low": 0.026859376642387117,
+        "monte_carlo_standard_error": 0.0011885535326606035,
+        "rate": 0.0291
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9434511404228026,
+        "ci_low": 0.9368797718297973,
+        "monte_carlo_standard_error": 0.0016760062276137278,
+        "rate": 0.94025
+      },
+      "interval_width": {
+        "mean": 0.019632063127495148,
+        "median": 0.019503358355534017,
+        "q025": 0.01294446490150552,
+        "q975": 0.027057148475640082,
+        "sd": 0.003616425969030922
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -8.245273109243701e-05,
+        "median": -0.00010504201680672318,
+        "q025": -0.009611344537815128,
+        "q250": -0.0034138655462184874,
+        "q750": 0.0032037815126050436,
+        "q975": 0.009506302521008406,
+        "sd": 0.004864607041790665
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9467016310075255,
+        "empirical_sd_of_estimate": 0.004864607041790665,
+        "mean_estimated": 0.004605331420673916
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.0023162231997501115,
+        "ci_low": 0.001175179137369369,
+        "monte_carlo_standard_error": 0.00028699107128968315,
+        "rate": 0.00165
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.031157930165415106,
+        "ci_low": 0.0265230638174635,
+        "monte_carlo_standard_error": 0.0011815971712051446,
+        "rate": 0.02875
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0023162231997501115,
+        "ci_low": 0.001175179137369369,
+        "monte_carlo_standard_error": 0.00028699107128968315,
+        "rate": 0.00165
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9454961298381129,
+        "ci_low": 0.9390339758630514,
+        "monte_carlo_standard_error": 0.0016481273843365382,
+        "rate": 0.94235
+      },
+      "interval_width": {
+        "mean": 0.026721480717831435,
+        "median": 0.02656061571673266,
+        "q025": 0.017466979825649286,
+        "q975": 0.036797624906125335,
+        "sd": 0.004948451194719024
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -8.581932773109288e-06,
+        "median": 5.421010862427522e-20,
+        "q025": -0.012920168067226893,
+        "q250": -0.004411764705882355,
+        "q750": 0.004464285714285713,
+        "q975": 0.012920168067226895,
+        "sd": 0.006556158311652534
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9561059826044299,
+        "empirical_sd_of_estimate": 0.006556158311652534,
+        "mean_estimated": 0.006268382184672746
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.020409624474851562,
+        "ci_low": 0.016675325450782798,
+        "monte_carlo_standard_error": 0.0009515670627969424,
+        "rate": 0.01845
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02678771471112898,
+        "ci_low": 0.0224948923746209,
+        "monte_carlo_standard_error": 0.0010942416894818073,
+        "rate": 0.02455
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.034893264733707206,
+        "ci_low": 0.029986346589567444,
+        "monte_carlo_standard_error": 0.00125106909281622,
+        "rate": 0.03235
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9533720488176068,
+        "ci_low": 0.9473549458994485,
+        "monte_carlo_standard_error": 0.0015345161696769438,
+        "rate": 0.95045
+      },
+      "interval_width": {
+        "mean": 0.04518180927981892,
+        "median": 0.04489265192151394,
+        "q025": 0.02988743381903742,
+        "q975": 0.06194905269813882,
+        "sd": 0.008253245106904394
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 2.5585609243697504e-05,
+        "median": 5.252100840335682e-05,
+        "q025": -0.021323529411764696,
+        "q250": -0.00719537815126051,
+        "q750": 0.007405462184873942,
+        "q975": 0.021113445378151265,
+        "sd": 0.010838491782519458
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9778893423333832,
+        "empirical_sd_of_estimate": 0.010838491782519458,
+        "mean_estimated": 0.010598845601093731
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 16,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.02522312729858581,
+        "ci_low": 0.02106005589533239,
+        "monte_carlo_standard_error": 0.0010611007845628992,
+        "rate": 0.02305
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.025536222030234416,
+        "ci_low": 0.021346845942050115,
+        "monte_carlo_standard_error": 0.0010678196828116627,
+        "rate": 0.02335
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.10229987423927121,
+        "ci_low": 0.09405448434262569,
+        "monte_carlo_standard_error": 0.0021032877834476194,
+        "rate": 0.0981
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9530321567236119,
+        "ci_low": 0.9469949724186827,
+        "monte_carlo_standard_error": 0.0015396426533452502,
+        "rate": 0.9501
+      },
+      "interval_width": {
+        "mean": 0.06506046834868331,
+        "median": 0.06469790037734525,
+        "q025": 0.04294306969490775,
+        "q975": 0.08933182797044385,
+        "sd": 0.011863097921359207
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00023887342436974764,
+        "median": -0.00021008403361343986,
+        "q025": -0.03067226890756301,
+        "q250": -0.010714285714285702,
+        "q750": 0.010136554621848742,
+        "q975": 0.03030462184873944,
+        "sd": 0.015511154097497482
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.983938650211027,
+        "empirical_sd_of_estimate": 0.015511154097497482,
+        "mean_estimated": 0.015262024025906913
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.01,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03390839462689618,
+        "ci_low": 0.029071581564885065,
+        "monte_carlo_standard_error": 0.0012331674663240188,
+        "rate": 0.0314
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.00019203605610462553,
+        "ci_low": 0.0,
+        "monte_carlo_standard_error": 0.0,
+        "rate": 0.0
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.937943603212106,
+        "ci_low": 0.9310894790479278,
+        "monte_carlo_standard_error": 0.0017481824847538087,
+        "rate": 0.9346
+      },
+      "interval_width": {
+        "mean": 0.017280648282669363,
+        "median": 0.017206107418550172,
+        "q025": 0.012084308489994068,
+        "q975": 0.02292665948500805,
+        "sd": 0.002794398270705567
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -2.7436974789915893e-06,
+        "median": 3.144186300207963e-19,
+        "q025": -0.008823529411764704,
+        "q250": -0.0029831932773109237,
+        "q750": 0.003025210084033613,
+        "q975": 0.008697478991596638,
+        "sd": 0.004460262719651696
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9255403889637747,
+        "empirical_sd_of_estimate": 0.004460262719651696,
+        "mean_estimated": 0.004128153292427055
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.0006544211207521783,
+        "ci_low": 0.00013749971371878445,
+        "monte_carlo_standard_error": 0.00012245611458804333,
+        "rate": 0.0003
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.030118702480299703,
+        "ci_low": 0.02556267557469111,
+        "monte_carlo_standard_error": 0.0011614632473737599,
+        "rate": 0.02775
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.0006544211207521783,
+        "ci_low": 0.00013749971371878445,
+        "monte_carlo_standard_error": 0.00012245611458804333,
+        "rate": 0.0003
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9472966713875267,
+        "ci_low": 0.94093272378023,
+        "monte_carlo_standard_error": 0.0016230582244639278,
+        "rate": 0.9442
+      },
+      "interval_width": {
+        "mean": 0.023561626065701943,
+        "median": 0.02344420962005813,
+        "q025": 0.016500545442869597,
+        "q975": 0.03138440924144374,
+        "sd": 0.003829294114576896
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -9.478991596638655e-06,
+        "median": 4.201680672268877e-05,
+        "q025": -0.011470588235294114,
+        "q250": -0.003949579831932772,
+        "q750": 0.003949579831932772,
+        "q975": 0.011471638655462095,
+        "sd": 0.0058380149076314
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.964130549974134,
+        "empirical_sd_of_estimate": 0.0058380149076314,
+        "mean_estimated": 0.005628608523651855
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.04,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.014295131513271112,
+        "ci_low": 0.011192046030614064,
+        "monte_carlo_standard_error": 0.000790252412207644,
+        "rate": 0.01265
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.02464888009357027,
+        "ci_low": 0.02053451434000964,
+        "monte_carlo_standard_error": 0.0010486598590582173,
+        "rate": 0.0225
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.019307029237896074,
+        "ci_low": 0.0156783239634561,
+        "monte_carlo_standard_error": 0.000924587475580326,
+        "rate": 0.0174
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9528864760921071,
+        "ci_low": 0.9468407106610043,
+        "monte_carlo_standard_error": 0.0015418332837891396,
+        "rate": 0.94995
+      },
+      "interval_width": {
+        "mean": 0.03967746786606039,
+        "median": 0.03954773686039875,
+        "q025": 0.027326925816152765,
+        "q975": 0.0528683813060749,
+        "sd": 0.006510699916026436
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -7.033193277310927e-05,
+        "median": 4.201680672269509e-05,
+        "q025": -0.01928676470588236,
+        "q250": -0.00651260504201681,
+        "q750": 0.006428571428571424,
+        "q975": 0.018613445378151263,
+        "sd": 0.009656785741020156
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9815380448647855,
+        "empirical_sd_of_estimate": 0.009656785741020156,
+        "mean_estimated": 0.009478502595919062
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 20,
+        "seed_sd": 0.06,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "seed_cluster",
+      "gate_conjunction": {
+        "ci_high": 0.028714499944209906,
+        "ci_low": 0.024267396608132392,
+        "monte_carlo_standard_error": 0.0011336454472188383,
+        "rate": 0.0264
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.029286760694157275,
+        "ci_low": 0.024794924618523312,
+        "monte_carlo_standard_error": 0.0011450698122822032,
+        "rate": 0.02695
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.07909027175328595,
+        "ci_low": 0.07177282446916372,
+        "monte_carlo_standard_error": 0.0018664455188941358,
+        "rate": 0.07535
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9500199367933974,
+        "ci_low": 0.943808382972445,
+        "monte_carlo_standard_error": 0.0015841559266688372,
+        "rate": 0.947
+      },
+      "interval_width": {
+        "mean": 0.05727762690785794,
+        "median": 0.05702022706418494,
+        "q025": 0.03983687330469641,
+        "q975": 0.07577315834627853,
+        "sd": 0.009271155872700812
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 8.288445378151272e-05,
+        "median": 8.403361344539183e-05,
+        "q025": -0.027269957983193323,
+        "q250": -0.00928571428571429,
+        "q750": 0.009411764705882356,
+        "q975": 0.02773109243697481,
+        "sd": 0.01395069222562884
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9808103575192091,
+        "empirical_sd_of_estimate": 0.01395069222562884,
+        "mean_estimated": 0.013682983429459472
+      },
+      "trials": 20000
+    }
+  ],
+  "confidence": 0.95,
+  "disagreement_rate": 0.3,
+  "example_sd": 0.05,
+  "interpretation": "Outcome-blind. The registered strata are a FIXED set, so the default stratum_sd=0 is the correctly specified world. The probe reports what happens when a stratum random effect is injected, which inflates true variance in a way no correctly specified estimator can track.",
+  "kind": "null_calibration_and_coverage",
+  "practical_threshold": 0.02,
+  "schema_version": "tgsa.phase1-simulation.v2",
+  "seed_counts": [
+    5,
+    10,
+    16,
+    20
+  ],
+  "seed_sds": [
+    0.01,
+    0.02,
+    0.04,
+    0.06
+  ],
+  "skipped_conditions": [
+    "crossed_pigeonhole@m=10,sigma_a=0.01",
+    "crossed_pigeonhole@m=10,sigma_a=0.06",
+    "crossed_pigeonhole@m=16,sigma_a=0.01",
+    "crossed_pigeonhole@m=16,sigma_a=0.02",
+    "crossed_pigeonhole@m=16,sigma_a=0.04",
+    "crossed_pigeonhole@m=16,sigma_a=0.06",
+    "crossed_pigeonhole@m=20,sigma_a=0.01",
+    "crossed_pigeonhole@m=20,sigma_a=0.06",
+    "crossed_pigeonhole@m=5,sigma_a=0.01",
+    "crossed_pigeonhole@m=5,sigma_a=0.06",
+    "crossed_pigeonhole_t@m=10,sigma_a=0.01",
+    "crossed_pigeonhole_t@m=10,sigma_a=0.06",
+    "crossed_pigeonhole_t@m=16,sigma_a=0.01",
+    "crossed_pigeonhole_t@m=16,sigma_a=0.02",
+    "crossed_pigeonhole_t@m=16,sigma_a=0.04",
+    "crossed_pigeonhole_t@m=16,sigma_a=0.06",
+    "crossed_pigeonhole_t@m=20,sigma_a=0.01",
+    "crossed_pigeonhole_t@m=20,sigma_a=0.06",
+    "crossed_pigeonhole_t@m=5,sigma_a=0.01",
+    "crossed_pigeonhole_t@m=5,sigma_a=0.06"
+  ],
+  "stratum_misspecification_probe": [
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.0,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.01508954407699653,
+        "ci_low": 0.011897345412804492,
+        "monte_carlo_standard_error": 0.000813032594672563,
+        "rate": 0.0134
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.026266428241676135,
+        "ci_low": 0.022016370880129848,
+        "monte_carlo_standard_error": 0.001083318916570739,
+        "rate": 0.02405
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.045281585808990714,
+        "ci_low": 0.03969416558955625,
+        "monte_carlo_standard_error": 0.0014248199886301427,
+        "rate": 0.0424
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9549738316547223,
+        "ci_low": 0.9490525293433478,
+        "monte_carlo_standard_error": 0.001510059435916349,
+        "rate": 0.9521
+      },
+      "interval_width": {
+        "mean": 0.05989023194136504,
+        "median": 0.05833269064453275,
+        "q025": 0.02277419427435938,
+        "q975": 0.10510088214306512,
+        "sd": 0.021362767820794975
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": 4.8319327731092443e-05,
+        "median": 0.00016806722689075536,
+        "q025": -0.022521008403361343,
+        "q250": -0.007731092436974788,
+        "q750": 0.007731092436974788,
+        "q975": 0.02252100840336134,
+        "sd": 0.011500305096247025
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.9378373959134005,
+        "empirical_sd_of_estimate": 0.011500305096247025,
+        "mean_estimated": 0.010785416183673919
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.02,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.020567007477183534,
+        "ci_low": 0.016817884837633995,
+        "monte_carlo_standard_error": 0.0009553543845087015,
+        "rate": 0.0186
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.03146955230265307,
+        "ci_low": 0.026811326458591873,
+        "monte_carlo_standard_error": 0.0011875625772985606,
+        "rate": 0.02905
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.05516402028714491,
+        "ci_low": 0.04900804401912483,
+        "monte_carlo_standard_error": 0.001569968152543229,
+        "rate": 0.052
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.9437920531365791,
+        "ci_low": 0.9372387246907814,
+        "monte_carlo_standard_error": 0.0016714012085672309,
+        "rate": 0.9406
+      },
+      "interval_width": {
+        "mean": 0.059856144527688844,
+        "median": 0.05820369721678771,
+        "q025": 0.02339933110898347,
+        "q975": 0.10526024791852524,
+        "sd": 0.021234802932002785
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00012859663865546223,
+        "median": -0.00016806722689075492,
+        "q025": -0.024369747899159654,
+        "q250": -0.008571428571428568,
+        "q750": 0.008235294117647058,
+        "q975": 0.0242016806722689,
+        "sd": 0.012430169380308963
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.867186695072879,
+        "empirical_sd_of_estimate": 0.012430169380308963,
+        "mean_estimated": 0.010779277504106226
+      },
+      "trials": 20000
+    },
+    {
+      "design": {
+        "disagreement_rate": 0.3,
+        "example_sd": 0.05,
+        "seed_count": 5,
+        "seed_sd": 0.02,
+        "stratum_sd": 0.05,
+        "true_effect": 0.0
+      },
+      "estimator": "crossed_cluster_t",
+      "gate_conjunction": {
+        "ci_high": 0.05171921658996299,
+        "ci_low": 0.04575413435788266,
+        "monte_carlo_standard_error": 0.0015212359695326693,
+        "rate": 0.04865
+      },
+      "gate_lower_bound_above_zero": {
+        "ci_high": 0.06317150454558539,
+        "ci_low": 0.05659756399820913,
+        "monte_carlo_standard_error": 0.0016766627567880192,
+        "rate": 0.0598
+      },
+      "gate_practical_effect": {
+        "ci_high": 0.11639455845711968,
+        "ci_low": 0.1076544807260231,
+        "monte_carlo_standard_error": 0.0022295425259456253,
+        "rate": 0.11195
+      },
+      "interval_coverage_of_truth": {
+        "ci_high": 0.8829553138835501,
+        "ci_low": 0.8738993148219786,
+        "monte_carlo_standard_error": 0.0023101704482570116,
+        "rate": 0.8785
+      },
+      "interval_width": {
+        "mean": 0.060512283440609736,
+        "median": 0.058834085160996794,
+        "q025": 0.02408763996314053,
+        "q975": 0.10626465955810817,
+        "sd": 0.02128347036131459
+      },
+      "layout": {
+        "example_count": 1190,
+        "examples_per_stratum": [
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70,
+          70
+        ],
+        "stratum_count": 17
+      },
+      "observed_effect": {
+        "mean": -0.00021271428571428564,
+        "median": -0.0001680672268907573,
+        "q025": -0.03310924369747898,
+        "q250": -0.01159663865546218,
+        "q750": 0.010924369747899159,
+        "q975": 0.03277310924369747,
+        "sd": 0.016677321603531206
+      },
+      "practical_threshold": 0.02,
+      "standard_error": {
+        "calibration_ratio": 0.6534286174364096,
+        "empirical_sd_of_estimate": 0.016677321603531206,
+        "mean_estimated": 0.010897439197937762
+      },
+      "trials": 20000
+    }
+  ],
+  "trials_analytic": 20000,
+  "trials_bootstrap": 3000
+}

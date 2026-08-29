@@ -6,6 +6,7 @@ on:
       - research/tgsa-phase1-model-identifiability
       - research/tgsa-phase1-model-identifiability-launch-audit
       - research/tgsa-phase1-identifiability-v2-launch-ready
+      - research/tgsa-phase1-identifiability-v3-powered-confirmatory
     paths:
       - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
       - ".github/workflows/tgsa-phase1.yml"
@@ -16,7 +17,7 @@ on:
   workflow_dispatch:
     inputs:
       run_full_matrix:
-        description: "Run the registered 3-arm x 5-seed matrix on a self-hosted runner labeled tgsa"
+        description: "Run the registered 3-arm x 20-seed matrix on a self-hosted runner labeled tgsa"
         required: false
         default: false
         type: boolean
@@ -35,8 +36,8 @@ concurrency:
 
 env:
   LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
-  SMOKE_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v2_smoke.json
-  FULL_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v2.json
+  SMOKE_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v3_smoke.json
+  FULL_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v3.json
   PYTHONUNBUFFERED: "1"
   TOKENIZERS_PARALLELISM: "false"
 
@@ -149,12 +150,13 @@ jobs:
               (lab / "evidence/phase1_analysis.schema.json", root / "study/analysis.json"),
           ]
           for arm in ("cascade", "history_control", "learned_delta"):
-              pairs.append(
-                  (
-                      lab / "evidence/phase1_run_manifest.schema.json",
-                      root / f"study/runs/{arm}/seed_7/run_manifest.json",
+              for seed in (7, 11):
+                  pairs.append(
+                      (
+                          lab / "evidence/phase1_run_manifest.schema.json",
+                          root / f"study/runs/{arm}/seed_{seed}/run_manifest.json",
+                      )
                   )
-              )
           failures = []
           for schema_path, target in pairs:
               schema = json.loads(schema_path.read_text(encoding="utf-8"))
@@ -196,12 +198,28 @@ jobs:
           assert analysis["confirmatory_config"] is False
           assert analysis["registered_confirmatory_matrix"] is False
           assert analysis["is_full_registered_matrix"] is True
-          assert analysis["bootstrap_scheme"] == "crossed_paired"
+          assert analysis["interval_estimator"] == "crossed_cluster_t"
+          assert analysis["primary_gate"] == "lower_bound_above_zero"
           assert analysis["alignment_condition"] == "replay_derangement"
+          # Secondary analyses must never acquire gating power.
+          assert analysis["secondary_analyses_are_non_gating"] is True
+          assert analysis["secondary_difficulty_response"]["gating"] is False
+          # Efficiency is recorded but must never gate.
+          for arm, seed in sorted(expected):
+              manifest = json.loads(
+                  (root / "study" / "runs" / arm / f"seed_{seed}" / "run_manifest.json").read_text(
+                      encoding="utf-8"
+                  )
+              )
+              assert manifest["efficiency"]["gating"] is False
           assert chain["passed"] is True, chain["errors"]
           assert analysis["gates"]["paired_initialization_and_artifact_integrity"]["pass"] is True
 
-          expected = {("cascade", 7), ("history_control", 7), ("learned_delta", 7)}
+          expected = {
+              (arm, seed)
+              for arm in ("cascade", "history_control", "learned_delta")
+              for seed in (7, 11)
+          }
           actual = {(entry["arm"], int(entry["seed"])) for entry in matrix["runs"]}
           assert actual == expected, actual
 
@@ -234,7 +252,7 @@ jobs:
           retention-days: 14
 
   full-registered-matrix:
-    name: Registered 3-arm x 5-seed matrix
+    name: Registered 3-arm x 20-seed matrix
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_full_matrix }}
     needs: unit-and-smoke
     runs-on:

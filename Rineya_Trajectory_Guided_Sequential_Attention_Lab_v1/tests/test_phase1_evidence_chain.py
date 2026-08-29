@@ -29,7 +29,7 @@ from tgsa.phase1_verify import verify_evidence_chain
 
 LAB_ROOT = Path(__file__).resolve().parents[1]
 REPO_ROOT = LAB_ROOT.parent
-SMOKE_CONFIG = LAB_ROOT / "configs" / "phase1_identifiability_v2_smoke.json"
+SMOKE_CONFIG = LAB_ROOT / "configs" / "phase1_identifiability_v3_smoke.json"
 
 
 @pytest.fixture(scope="module")

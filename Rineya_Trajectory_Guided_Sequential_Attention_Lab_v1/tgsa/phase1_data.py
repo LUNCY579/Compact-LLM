@@ -257,6 +257,18 @@ def _make_pointer_example(
     rng.shuffle(pairs)
     task_token = vocab.TASK_LOOKUP if family == "direct_lookup" else vocab.TASK_POINTER
     tokens: list[int] = [vocab.BOS, task_token]
+    # Latent difficulty variables registered for the secondary difficulty-response
+    # analysis. `chain` is the set of nodes actually traversed; every other pair
+    # is a distractor. `evidence_position` is where the LAST required pair sits in
+    # the prompt, which is the retrieval distance the mechanism has to span.
+    chain_nodes = []
+    walker = start
+    for _ in range(hops):
+        chain_nodes.append(walker)
+        walker = mapping[walker]
+    chain_positions = [
+        index for index, (key, _value) in enumerate(pairs) if key in set(chain_nodes)
+    ]
     for key, value in pairs:
         tokens.extend((vocab.PAIR, vocab.key(key), vocab.value(value)))
     tokens.extend((vocab.QUERY, vocab.key(start), vocab.hop(hops), vocab.ANSWER))
@@ -309,6 +321,12 @@ def _make_pointer_example(
             "start_is_fixed_point": mapping[start] == start,
             "answer_equals_start": target == start,
             "trivial": target == start or effective_hops < hops,
+            "context_bucket": _context_bucket(len(tokens)),
+            "distractor_count": node_count - len(set(chain_nodes)),
+            "evidence_position": max(chain_positions) if chain_positions else 0,
+            "evidence_span": (
+                max(chain_positions) - min(chain_positions) if chain_positions else 0
+            ),
         },
     )
 
@@ -370,6 +388,10 @@ def _make_state_example(
             "answer_equals_start": current == start,
             "effective_steps": first_return if first_return else step_count,
             "trivial": current == start or bool(first_return),
+            "context_bucket": _context_bucket(len(tokens)),
+            "distractor_count": 0,
+            "evidence_position": step_count - 1,
+            "evidence_span": step_count,
         },
     )
 

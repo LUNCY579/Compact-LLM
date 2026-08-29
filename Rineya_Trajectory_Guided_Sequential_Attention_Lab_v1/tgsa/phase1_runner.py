@@ -31,7 +31,7 @@ from typing import Any, Iterable, Mapping, Sequence, cast
 import torch
 from torch import Tensor
 
-from .metrics import telemetry_summary
+from .metrics import count_parameters, telemetry_summary
 from .phase1_data import (
     Phase1Batch,
     Phase1Example,
@@ -707,6 +707,93 @@ def evaluate_replay_derangement(
     return rows, _summary_from_rows(rows), coverage
 
 
+def efficiency_profile(
+    model: TinyTGSAForCausalLM,
+    examples: Sequence[Phase1Example],
+    *,
+    device: torch.device,
+    batch_size: int,
+    repeats: int = 3,
+) -> dict[str, object]:
+    """Descriptive cost profile. NEVER an advancement gate.
+
+    The Phase-1 research question is whether sequential trajectory-guided
+    computation increases accuracy. A sequential mechanism that is slower but
+    reliably more accurate is an acceptable and potentially important result, so
+    these numbers are recorded for completeness and explicitly excluded from
+    every gate. Do not optimize away sequential computation before establishing
+    whether it helps.
+    """
+
+    selected = list(examples[: max(2, min(batch_size, len(examples)))])
+    batch = collate_examples(selected).to(device)
+    model.eval()
+
+    def _peak_memory() -> int | None:
+        if device.type != "cuda":
+            return None
+        return int(torch.cuda.max_memory_allocated(device))
+
+    if device.type == "cuda":
+        torch.cuda.reset_peak_memory_stats(device)
+
+    with torch.inference_mode():
+        # Warm-up excluded from timing: first call pays lazy-init costs.
+        model(batch.input_ids, key_padding_mask=batch.key_padding_mask, telemetry_level="none")
+        if device.type == "cuda":
+            torch.cuda.synchronize(device)
+        prefill: list[float] = []
+        for _ in range(max(1, repeats)):
+            start = time.perf_counter()
+            model(
+                batch.input_ids,
+                key_padding_mask=batch.key_padding_mask,
+                telemetry_level="none",
+            )
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            prefill.append(time.perf_counter() - start)
+
+        # Single-token "decode" proxy: one extra position appended to the prompt.
+        short = batch.input_ids[:, :-1]
+        short_mask = batch.key_padding_mask[:, :-1]
+        decode: list[float] = []
+        for _ in range(max(1, repeats)):
+            start = time.perf_counter()
+            model(short, key_padding_mask=short_mask, telemetry_level="none")
+            if device.type == "cuda":
+                torch.cuda.synchronize(device)
+            decode.append(time.perf_counter() - start)
+
+    tokens = int((~batch.key_padding_mask).sum().item())
+    median_prefill = sorted(prefill)[len(prefill) // 2]
+    return {
+        "gating": False,
+        "claim_scope": "descriptive cost only; never an advancement gate",
+        "batch_examples": len(selected),
+        "valid_tokens": tokens,
+        "prefill_seconds": {
+            "median": median_prefill,
+            "min": min(prefill),
+            "max": max(prefill),
+            "repeats": len(prefill),
+        },
+        "decode_proxy_seconds": {
+            "median": sorted(decode)[len(decode) // 2],
+            "min": min(decode),
+            "max": max(decode),
+        },
+        "throughput_tokens_per_second": (tokens / median_prefill) if median_prefill > 0 else None,
+        "peak_memory_bytes": _peak_memory(),
+        "parameter_count": count_parameters(model, trainable_only=False),
+        "sequential_head_count": model.config.num_heads * model.config.num_layers,
+        "note": (
+            "The TGSA operator is sequential across heads by construction. Slower "
+            "wall-clock is expected and is not evidence against the mechanism."
+        ),
+    }
+
+
 def telemetry_snapshot(
     model: TinyTGSAForCausalLM,
     examples: Sequence[Phase1Example],
@@ -1071,6 +1158,17 @@ def train_one_run(
                 "pre_training": pre_training_telemetry,
                 "post_training": post_training_telemetry,
             },
+            "efficiency": {
+                "gating": False,
+                "training_wall_clock_seconds": elapsed_seconds,
+                "seconds_per_update": elapsed_seconds / max(total_steps - start_step, 1),
+                "inference": efficiency_profile(
+                    model,
+                    examples["dev"],
+                    device=device,
+                    batch_size=int(evaluation.get("batch_size", batch_size)),
+                ),
+            },
             "evaluations": evaluation_records,
             "debug_snapshot": model_debug_snapshot(model),
         }
@@ -1277,7 +1375,21 @@ def run_study_matrix(
     resume: bool = True,
     overwrite: bool = False,
     force_data: bool = False,
+    phase: str = "all",
 ) -> dict[str, object]:
+    """Run the registered matrix.
+
+    ``phase`` selects how far to go, which is what makes confirmatory exposure
+    controllable by an operator rather than only by the code path:
+
+    ``train``     train every cell, verify the barrier, stop before any test outcome exists;
+    ``barrier``   verify an already-trained matrix without training or evaluating;
+    ``evaluate``  run only the frozen confirmatory evaluation over trained cells;
+    ``all``       train, verify, then evaluate in one invocation.
+    """
+
+    if phase not in {"all", "train", "barrier", "evaluate"}:
+        raise ValueError(f"unsupported phase {phase!r}; expected all|train|barrier|evaluate")
     study = load_study_config(study_config_path)
     confirmatory = bool(study["confirmatory"])
     if confirmatory and force_data:
@@ -1369,7 +1481,7 @@ def run_study_matrix(
         )
 
     # ---- Phase 1: train every registered cell. No test outcome is produced. ----
-    for seed, arm in cells:
+    for seed, arm in cells if phase in {"all", "train"} else []:
         try:
             train_one_run(
                 study=study,
@@ -1425,6 +1537,30 @@ def run_study_matrix(
             "refusing to begin the frozen test-evaluation phase: the registered training "
             f"matrix is incomplete or inconsistent ({len(trained)}/{len(cells)} cells)"
         )
+
+    if phase in {"train", "barrier"}:
+        summary = {
+            "schema_version": MATRIX_MANIFEST_VERSION,
+            "status": "trained" if matrix_is_complete else "partial_failure",
+            "phase": phase,
+            "created_at_utc": utc_now(),
+            "study_id": study["study_id"],
+            "confirmatory": confirmatory,
+            "claim_scope": (
+                "training/barrier phase only; no confirmatory test outcome has been "
+                "produced or inspected"
+            ),
+            "selected_arms": list(selected_arms),
+            "selected_seeds": list(selected_seeds),
+            "trained_before_evaluation": sorted(trained),
+            "source_head": sorted(heads),
+            "barrier_passed": matrix_is_complete,
+            "reuse_audit": reuse_audit,
+            "runs": run_entries,
+            "failures": failures,
+        }
+        atomic_write_json(output_root / "matrix_barrier.json", summary)
+        return summary
 
     # ---- Phase 2: one frozen test-evaluation sweep over the fixed checkpoints. ----
     for seed, arm in cells:

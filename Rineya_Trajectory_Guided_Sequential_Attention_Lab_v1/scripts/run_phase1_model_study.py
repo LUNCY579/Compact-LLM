@@ -35,6 +35,17 @@ def main() -> int:
     parser.add_argument("--no-resume", action="store_true")
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--force-data", action="store_true")
+    parser.add_argument(
+        "--phase",
+        choices=("all", "train", "barrier", "evaluate"),
+        default="all",
+        help=(
+            "train: train every cell and stop before any confirmatory test outcome; "
+            "barrier: verify an already-trained matrix; "
+            "evaluate: run only the frozen confirmatory evaluation; "
+            "all: train, verify, then evaluate"
+        ),
+    )
     args = parser.parse_args()
     if args.overwrite and args.force_data:
         parser.error("--overwrite and --force-data cannot be combined")
@@ -50,9 +61,10 @@ def main() -> int:
         resume=not args.no_resume,
         overwrite=args.overwrite,
         force_data=args.force_data,
+        phase=args.phase,
     )
     print(json.dumps(matrix, indent=2, sort_keys=True))
-    return 0 if matrix["status"] == "complete" else 1
+    return 0 if matrix["status"] in {"complete", "trained"} else 1
 
 
 if __name__ == "__main__":
