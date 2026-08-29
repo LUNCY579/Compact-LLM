@@ -204,14 +204,6 @@ jobs:
           # Secondary analyses must never acquire gating power.
           assert analysis["secondary_analyses_are_non_gating"] is True
           assert analysis["secondary_difficulty_response"]["gating"] is False
-          # Efficiency is recorded but must never gate.
-          for arm, seed in sorted(expected):
-              manifest = json.loads(
-                  (root / "study" / "runs" / arm / f"seed_{seed}" / "run_manifest.json").read_text(
-                      encoding="utf-8"
-                  )
-              )
-              assert manifest["efficiency"]["gating"] is False
           assert chain["passed"] is True, chain["errors"]
           assert analysis["gates"]["paired_initialization_and_artifact_integrity"]["pass"] is True
 
@@ -228,6 +220,8 @@ jobs:
               manifest = json.loads((run_dir / "run_manifest.json").read_text(encoding="utf-8"))
               assert manifest["status"] == "complete"
               assert manifest["test_evaluation_deferred"] is True
+              # Efficiency is recorded for completeness but must never gate.
+              assert manifest["efficiency"]["gating"] is False
               assert manifest["training"]["fixed_final_checkpoint"] is True
               assert manifest["training"]["early_stopping"] is False
               assert (run_dir / manifest["training"]["final_checkpoint"]).is_file()
