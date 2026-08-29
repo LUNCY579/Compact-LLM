@@ -1,5 +1,10 @@
 # Phase 3 (preview) — positional fingerprints, and choosing the primary metric
 
+> **RETRACTED IN PART — see §6.** Four claims in this preview were overturned by a later
+> audit: the stated sample size, the location of the worst position, the sign of the
+> quadratic coefficient, and the strength of the margin claim. The metric decision this
+> report exists to make (summed gold NLL) stands. Read §6 before quoting anything here.
+
 **Status: preview, not the Phase 3 result.** One length bucket (4K), one split
 (calibration), `local_position` fixed to `middle`, n = 33 items per model × position,
 teacher-forced only, no confidence intervals, no paired bootstrap. Its purpose is to
@@ -117,3 +122,47 @@ under test (brief §8), and mixing it into the global-position axis puts a spuri
 step at exactly the three positions that define the edge-middle gap. Every number
 above is restricted to `local_position == "middle"`. The full Phase 3 run must either
 hold local position fixed or model it explicitly; it may not pool.
+
+
+---
+
+## 6. Retractions
+
+A later adversarial audit checked every number in this preview against `pilot5.csv`.
+Four claims did not survive. All four are my errors, and all four are the kind that a
+"preview" label does not excuse, because each was stated as a fact rather than as a
+direction.
+
+**1. The sample size is wrong.** This report says "n = 33 items per model × position".
+The real per-cell n is **11** for `exact_retrieval` and **22** for `semantic_single_hop`;
+33 is their *sum*, and every table here is per-family. Each conclusion below rests on
+three times less data than claimed.
+
+**2. "The worst position is p = 0.33, not p = 0.50" is not supported at this n.** Paired
+per-scenario tests on the same data: 0.33 − 0.17 = +0.615 ± 0.949 (p = 0.53), and
+0.33 − 0.50 = +1.411 ± 0.667 (p = 0.061, CI [−0.08, +2.90], straddling zero). The *modal*
+per-scenario worst position for Qwen3 is actually **0.17** (5/11 scenarios) not 0.33
+(4/11). The related claim that "each model's worst position is different" is likewise
+unsupported — only Supa's argmax is reliably distinguishable.
+
+**3. The quadratic-coefficient claim has the sign backwards.** This report says "a
+quadratic fit will report β₂ > 0 *and* β₁ < 0". Running the lab's own
+`metrics.ushape_fit` on this report's own Qwen3 row gives **β₁ = −4.389 (se 1.034),
+β₂ = −24.627 (se 3.816)**, R² = 0.937. β₂ is *negative*. The sign convention is the trap:
+`ushape_fit`'s β₂ > 0 signature is defined for a higher-is-better metric, and summed NLL
+is lower-is-better, so an inverted-U in NLL gives β₂ < 0. The underlying observation — a
+recency gradient dominating a curvature term — is right; the coefficient statement is not.
+
+**4. The margin claim is too strong.** "Qwen3 would not emit the correct identifier
+anywhere except at the very end" overstates a mean. Per item, Qwen3 greedily emits the
+gold token on **21 of 77 items (27 %), spread across five of the seven positions** — 4/11
+at p = 0.02, 6/11 at p = 0.83 (median margin **+0.50**, i.e. positive), 8/11 at p = 0.98.
+The *mean* margin is negative at six of seven positions, which is what the table shows;
+"would not emit it anywhere" does not follow from a negative mean over a skewed
+distribution.
+
+**What stands.** The metric decision — summed gold NLL as primary, because accuracy is at
+floor — is unaffected by all four and is confirmed by the full Phase 3 run. The
+dilution finding (first-token vs rest) also stands, and in fact turned out to matter more
+than this report realised: see the withdrawal in
+[`phase3_positional_fingerprint.md`](phase3_positional_fingerprint.md) §3.

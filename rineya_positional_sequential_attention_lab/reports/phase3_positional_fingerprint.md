@@ -91,7 +91,10 @@ despite a large positional range.
 **3. Which has the smallest edge-middle gap?** Supa-A1.1, on every family:
 +0.10 vs Qwen3's +4.14 on `exact_retrieval` (a 97.5 % reduction), −0.03 (n.s.) vs
 +0.75 on `state_constraint`, and −1.82 on `semantic_single_hop` — where its middle is
-*better* than its edges, the only reversal in the panel. The exception is `multi_hop`,
+*better* than its edges, the only reversal in the panel. That reversal **survives** the
+leading-article decomposition of §3, shrinking from −2.97 to **−0.97 ± 0.33** on content
+tokens alone; it is smaller than tabulated but still real, because a constant per-item
+article cost cannot by itself create a positional gradient. The exception is `multi_hop`,
 where Supa retains a +4.31 middle deficit despite being 15 nats better overall.
 
 ## 3. Paired against Qwen3 on identical items
@@ -106,12 +109,36 @@ Mean NLL difference vs Qwen3, clustered bootstrap, negative = better than Qwen3:
 
 Every cell's CI excludes zero. Cohen's *dz* ranges from 0.84 to 5.49.
 
-**The dissociation is confirmed at full n.** Halo and Nimbus are substantially better
-than Qwen3 on three families and reliably **worse** on `semantic_single_hop`
-(+2.12 and +1.79 nats, dz ≈ 1.1). Supa-A1.1 is better on all five. Whatever the
-Halo/Nimbus branch bought in verbatim and structured retrieval, it cost something in
-semantic single-hop retrieval — and since Phase 1 showed Nimbus is just Halo at
-α ≈ 0.80, this is one trade-off, seen twice, not two independent findings.
+**The dissociation holds — but one half of it was an artefact, and is withdrawn.**
+
+Halo and Nimbus are substantially better than Qwen3 on three families and reliably
+**worse** on `semantic_single_hop`. That half survives scrutiny (see below). Since Phase 1
+showed Nimbus is just Halo at α ≈ 0.80, it is one trade-off seen twice, not two findings.
+
+**Withdrawn: "Supa-A1.1 is better on all five."** Every one of the 11 distinct
+`semantic_single_hop` answers begins with the article *the*, and that token carries no
+retrieval information — this report's own §1 says so. Decomposing the paired difference
+into the leading token and the rest (n = 154 scenario × position pairs):
+
+| supa − qwen3, `semantic_single_hop` | mean ± 95 % CI | verdict |
+| --- | ---: | --- |
+| summed NLL (as tabulated above) | **−3.335 ± 0.396** | better |
+| leading token `the` alone | −3.371 ± 0.101 | better |
+| **content tokens only** | **−0.020 ± 0.137** | **not significant** |
+
+Supa's entire apparent advantage on this family is confidence about the word *the*. On the
+tokens that actually carry the answer it is indistinguishable from Qwen3. The −4.89 in the
+table above should be read as a *metric* artefact, not a capability difference.
+
+The same decomposition applied to Halo and Nimbus leaves their deficit intact —
+content-only +0.894 ± 0.165 and +0.646 ± 0.145, both significant — so the trade-off they
+made is real; only the claim about Supa was inflated.
+
+**This caveat is not confined to one cell.** `multi_hop` answers have the same "the
+<role>" form, so the `multi_hop` columns of the table above carry the same inflation and
+have **not** yet been decomposed. Treat every between-model comparison on a family whose
+answers share a leading function word as an upper bound until it has been. The
+`exact_retrieval` family is unaffected — its answers are bare nonce codes.
 
 This matters for Phase 9's model selection, which must be stated over all families
 before the numbers are consulted rather than after.

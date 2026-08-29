@@ -8,7 +8,7 @@ the results it would summarise do not exist yet.
 | --- | --- | --- | --- |
 | [`phase1_checkpoint_audit.md`](phase1_checkpoint_audit.md) | 1 | **complete** — exhaustive, CPU-side, reproducible from the checkpoints | the panel's structure, what the merges changed, and the geometry of the family |
 | [`phase2_instrument_calibration.md`](phase2_instrument_calibration.md) | 2b | **complete for its purpose** — a go/no-go check on the instrument, n=162 | that the benchmark has dynamic range on NLL and not on accuracy, and three protocol defects that would have wrecked Phase 3 |
-| [`phase3_preview_positional_fingerprint.md`](phase3_preview_positional_fingerprint.md) | 3 | **preview — superseded** by the row below; retained because it is where the metric decision was made and argued | the choice of primary metric (summed gold NLL) |
+| [`phase3_preview_positional_fingerprint.md`](phase3_preview_positional_fingerprint.md) | 3 | **preview — RETRACTED IN PART** (see its §6) and superseded by the row below; retained because it is where the metric decision was made and argued | the choice of primary metric (summed gold NLL) |
 | [`phase3_positional_fingerprint.md`](phase3_positional_fingerprint.md) | 3 | **complete** for the calibration split, teacher-forced — 7830 records, clustered BCa CIs | brief questions 1-3: who loses the middle, who is most robust, who has the smallest gap |
 | [`phase4_6_7_mechanism.md`](phase4_6_7_mechanism.md) | 4, 6, 7 | **complete** for calibration — 4 arms, attribution/ablation gate passed on all four | the Significance Matrix itself, probes, low-rank structure, and the weight-delta correlation |
 | [`phase4b_bias_and_distance.md`](phase4b_bias_and_distance.md) | 4b | **complete** — 4 models x 8 control contexts x 2 kinds at 8K, the two kinds agreeing at rho = 0.998 | brief question 7 (absolute vs distance), and the content-independent bias `B` that separates "looks there" from "helps" |
@@ -76,6 +76,21 @@ in a preview may be quoted as a result.
    strongest in every row) but not with causal significance — and the sign is **positive
    for the Halo/Nimbus soups and negative for the Supa adapter**, so the two lineages did
    opposite things to positional bias.
+
+## A metric artefact that reached a published claim
+
+Every `semantic_single_hop` answer begins with the article *the*, and `multi_hop` answers
+have the same "the &lt;role&gt;" form. Between-model differences in summed NLL on those
+families are therefore inflated by confidence about a token that carries no retrieval
+information. Decomposed on 154 paired scenario x position observations, Supa's apparent
+−3.34 nat advantage over Qwen3 on `semantic_single_hop` is **−3.37 from the article and
+−0.02 ± 0.14 from the content** — i.e. entirely artefactual. The claim "Supa-A1.1 is
+better on all five families" is **withdrawn**; Halo's and Nimbus's *deficit* on the same
+family survives the decomposition (+0.89, +0.65 content-only, both significant), as does
+Supa's positional reversal (−0.97 ± 0.33 content-only, down from −2.97).
+
+`multi_hop` has not yet been decomposed and its between-model numbers should be read as
+upper bounds. `exact_retrieval` is unaffected — bare nonce codes, no leading article.
 
 ## Corrections recorded in place
 
