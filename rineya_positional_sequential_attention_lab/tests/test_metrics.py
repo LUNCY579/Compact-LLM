@@ -667,3 +667,52 @@ def test_score_preservation_reports_coverage_and_stability():
     assert block["coverage"] == pytest.approx(2 / 3)
     assert block["exact_match"] == pytest.approx(1 / 3)  # "4." normalises to "4"
     assert block["stability"]["n"] == 3
+
+
+# ---------------------------------------------------------------------------
+# Regression: a padded batch must not move a position-binned intervention.
+#
+# The PSA kernel bins a source token by j / T. In a LEFT-padded row the first real token
+# sits at padded index T - real_len, so without `ctx.valid_mask` it is binned as if it sat
+# in the middle of the context. `run_items` never set valid_mask, so every batched
+# position-binned intervention was applied at the wrong positions - silently, with
+# plausible numbers. Found by audit while Phase 8 was running on that path.
+# ---------------------------------------------------------------------------
+
+def test_position_binned_context_is_not_corrupted_by_padding(tiny_qwen3_model, tiny_arch):
+    """Same item, alone vs batched with a longer neighbour, must score identically."""
+    import torch
+
+    from rineya_psa.evaluation.runner import run_items
+    from rineya_psa.hooks.binning import AbsoluteBinning
+    from rineya_psa.hooks.registry import register_psa
+    from rineya_psa.hooks.specs import LogitBiasSpec, PSAContext
+
+    register_psa()
+    model, arch = tiny_qwen3_model, tiny_arch
+    binning = AbsoluteBinning(4)
+    table = torch.zeros(arch.num_layers, arch.num_kv_heads, binning.n_bins)
+    table[:, :, 0] = 4.0  # a bias that only bites if bin 0 is where we think it is
+
+    def ctx() -> PSAContext:
+        return PSAContext(
+            enabled=True,
+            logit_bias=LogitBiasSpec(table=table.clone(), lam=1.0, binning=binning),
+            position_bins=binning,
+        )
+
+    tok = StubTokenizer()
+    short = make_item(1, n_user=40)
+    longer = make_item(2, n_user=400)   # forces left padding when batched together
+    alone = run_items(model, tok, [short], ctx=ctx(), record=("gold_nll",))
+    together = run_items(
+        model, tok, [longer, short], ctx=ctx(), record=("gold_nll",),
+        batch_tokens=100_000, max_batch_rows=8,   # deliberately try to batch them
+    )
+    by_id = {r.item_id: r for r in together}
+
+    assert alone[0].gold_nll is not None
+    assert by_id[short.item_id].gold_nll == pytest.approx(alone[0].gold_nll, abs=1e-4), (
+        "the short item scored differently when batched with a longer one: the position "
+        "bins moved with the padding"
+    )

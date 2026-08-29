@@ -304,6 +304,7 @@ def _teacher_forced_batch(
     device: Any,
     want_scores: bool,
     want_prediction: bool,
+    ctx: Any = None,
 ) -> list[dict[str, Any]]:
     """One padded forward; per-row gold NLL, first-token margin, and gold-prefix argmax."""
     import torch
@@ -314,6 +315,11 @@ def _teacher_forced_batch(
     sequences = [list(t.input_ids) + list(t.answer_ids) for t in tok_items]
     n_answers = [len(t.answer_ids) for t in tok_items]
     ids, mask, position_ids = _pad_left(sequences, pad_id, device)
+    # The attention mask IS the valid mask: a position-binned PSA context must know which
+    # columns are padding, or it bins pad slots as content and every real token's
+    # normalised position shifts. Set it from the tensor actually fed to the model rather
+    # than recomputing widths, so the two can never disagree.
+    _sync_valid_mask(ctx, mask)
     width = int(ids.shape[1])
     keep = min(width, max(n_answers) + 1)
 
@@ -365,12 +371,14 @@ def generate_batch(
     pad_id: int,
     device: Any,
     max_new_tokens: int,
+    ctx: Any = None,
 ) -> list[str]:
     """Greedy continuation for one left-padded batch, template and newline stripped."""
     import torch
     from transformers.tokenization_utils_base import PreTrainedTokenizerBase
 
     ids, mask, _ = _pad_left([list(t.input_ids) for t in tok_items], pad_id, device)
+    _sync_valid_mask(ctx, mask)
     kwargs: dict[str, Any] = {
         "max_new_tokens": max_new_tokens,
         "do_sample": False,
@@ -407,6 +415,16 @@ def _psa_context(model: Any, ctx: Any) -> Any:
     from rineya_psa.hooks.registry import psa_session  # lazy: no GPU/torch at import time
 
     return psa_session(model, ctx)
+
+
+def _sync_valid_mask(ctx: Any, mask: Any) -> None:
+    """Point a PSA context at the padding mask of the batch about to run.
+
+    ``None`` when nothing is padded, so the unpadded fast paths stay fast.
+    """
+    if ctx is None or not hasattr(ctx, "valid_mask"):
+        return
+    ctx.valid_mask = None if bool(mask.all()) else mask.to(dtype=bool)
 
 
 def run_items(
@@ -459,6 +477,20 @@ def run_items(
     want_scores = "gold_nll" in requested or "answer_margin" in requested
     want_prediction = "prediction" in requested or "correct" in requested
 
+
+    # A padded batch silently corrupts every position-binned intervention. The PSA kernel
+    # bins a source token by j / T, and in a LEFT-padded row the first real token sits at
+    # padded index T - real_len, so it is binned as if it were in the middle of the
+    # context. `PSAContext.valid_mask` exists precisely to exclude pad positions, and
+    # nothing was setting it. Two defences, because this is silent and fatal:
+    #   1. the context's valid_mask is set from the real attention mask, per batch;
+    #   2. a position-binned context forces batch size 1, which SPEC 12.2 mandates anyway
+    #      (batch 1 measured faster here, and padding is a positional confound in a study
+    #      about position).
+    _position_binned = ctx is not None and getattr(ctx, "position_bins", None) is not None
+    if _position_binned and batch_tokens > 1:
+        batch_tokens, max_batch_rows = 1, 1
+
     lengths = [_row_length(t, mode, max_new_tokens) for _, t in pairs]
     batches = plan_batches(lengths, batch_tokens=batch_tokens, max_rows=max_batch_rows)
 
@@ -485,6 +517,7 @@ def run_items(
                         pad_id=pad_id,
                         device=device,
                         max_new_tokens=max_new_tokens,
+                        ctx=ctx,
                     )
                 if want_scores:
                     scored = _teacher_forced_batch(
@@ -494,6 +527,7 @@ def run_items(
                         device=device,
                         want_scores=True,
                         want_prediction=False,
+                        ctx=ctx,
                     )
             else:
                 scored = _teacher_forced_batch(
@@ -503,6 +537,7 @@ def run_items(
                     device=device,
                     want_scores=want_scores,
                     want_prediction=want_prediction,
+                    ctx=ctx,
                 )
                 if want_prediction:
                     predictions = [

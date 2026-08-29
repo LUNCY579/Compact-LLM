@@ -213,7 +213,11 @@ def psa_attention_forward(
         src_bins = lb.binning.gather_source(
             bias_mask, kv_len, valid_mask=src_valid, fill=0.0
         )  # [H_q, T]
-        additive = src_bins.unsqueeze(0).unsqueeze(2)  # [1, H_q, 1, T]
+        # gather_source returns [H_q, T] unpadded, or [B, H_q, T] when a per-row
+        # valid_mask is supplied. Both must broadcast over the query axis.
+        additive = (
+            src_bins.unsqueeze(0).unsqueeze(2) if src_bins.ndim == 2 else src_bins.unsqueeze(2)
+        )  # -> [1 or B, H_q, 1, T]
         if attention_mask is not None:
             base = attention_mask
             if base.dtype != query.dtype:
