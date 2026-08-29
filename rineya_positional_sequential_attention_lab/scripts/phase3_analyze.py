@@ -111,11 +111,18 @@ def main(argv: Sequence[str] | None = None) -> int:
         paths.RESULTS / "baseline_position_results_calibration_tf.parquet"))
     ap.add_argument("--bank", default=str(paths.DATA / "calibration" / "position_examples.jsonl"))
     ap.add_argument("--value", default="gold_nll")
+    ap.add_argument("--fmt", default="natural",
+                    help="surface format to hold fixed; format is a separate factor")
     ap.add_argument("--out", default=str(paths.RESULTS / "phase3_positional_analysis.json"))
     args = ap.parse_args(argv)
 
     d = load(Path(args.parquet), Path(args.bank))
-    d = d[d.local_position == "middle"].copy()
+    # Hold BOTH nuisance factors fixed, not just one. The local_position_sweep and
+    # format_sweep grids each emit only p in {0.02, 0.50, 0.98}, so leaving either free
+    # loads those three positions with extra conditions -- and those are exactly the three
+    # the edge-middle gap is computed from. An earlier run filtered local_position and not
+    # fmt, which put 18 non-natural items on each edge/middle cell and none on the others.
+    d = d[(d.local_position == "middle") & (d.fmt == args.fmt)].copy()
     d["group"] = d.apply(group_label, axis=1)
     d = d[d[args.value].notna()]
 

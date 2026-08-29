@@ -1,8 +1,8 @@
 # Phase 3 — Baseline positional fingerprint
 
 **Evidence level: complete for the calibration split, teacher-forced.**
-1752 items × 5 arms = 8760 records, of which 7830 enter the analysis after holding
-`local_position` fixed at `middle`. Primary metric is summed gold NLL over the answer
+1752 items × 5 arms = 8760 records. The analysis holds **both** nuisance factors fixed —
+`local_position == "middle"` and `fmt == "natural"` — see §5. Primary metric is summed gold NLL over the answer
 (SPEC §13); lower is better. Confidence intervals are BCa bootstraps with 10 000
 resamples **clustered on `scenario_id`**, so positional variants of one source example
 are never treated as independent.
@@ -26,10 +26,10 @@ Summed gold NLL by position of the **decisive** evidence sentence. `mid−edge` 
 
 | arm | 0.02 | 0.17 | 0.33 | 0.50 | 0.67 | 0.83 | 0.98 | mid−edge | worst |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :-: |
-| qwen3 | 3.52 | 7.37 | 7.06 | 6.83 | 6.06 | 4.15 | 0.80 | **+4.67*** | 0.17 |
-| halo | 0.23 | 1.05 | 2.10 | 1.44 | 2.50 | 1.04 | 0.01 | +1.33* | 0.67 |
-| nimbus | 0.37 | 1.51 | 2.11 | 2.05 | 2.57 | 1.46 | 0.03 | +1.85* | 0.67 |
-| supa_a11 | 0.03 | 2.31 | 0.19 | 0.08 | 0.02 | 0.05 | 0.01 | **+0.07*** | 0.17 |
+| qwen3 | 3.52 | 7.37 | 7.06 | 6.83 | 6.06 | 4.15 | 0.80 | **+4.14*** | 0.17 |
+| halo | 0.23 | 1.05 | 2.10 | 1.44 | 2.50 | 1.04 | 0.01 | +1.43* | 0.67 |
+| nimbus | 0.37 | 1.51 | 2.11 | 2.05 | 2.57 | 1.46 | 0.03 | +1.95* | 0.67 |
+| supa_a11 | 0.03 | 2.31 | 0.19 | 0.08 | 0.02 | 0.05 | 0.01 | **+0.10*** | 0.17 |
 
 ### Multi-hop, hard variant (n = 39/cell, 3 positions by construction)
 
@@ -53,9 +53,9 @@ Summed gold NLL by position of the **decisive** evidence sentence. `mid−edge` 
 
 | arm | 0.02 | 0.17 | 0.33 | 0.50 | 0.67 | 0.83 | 0.98 | mid−edge | worst |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: | ---: | :-: |
-| qwen3 | 10.66 | 12.62 | 9.96 | 9.83 | 9.88 | 9.80 | 8.05 | +0.47 | 0.17 |
-| halo | 13.13 | 16.99 | 13.64 | 11.46 | 10.64 | 10.94 | 9.16 | +0.32 | 0.17 |
-| nimbus | 12.53 | 16.27 | 12.96 | 11.28 | 10.59 | 10.94 | 9.03 | +0.51 | 0.17 |
+| qwen3 | 10.66 | 12.62 | 9.96 | 9.83 | 9.88 | 9.80 | 8.05 | +0.58 | 0.17 |
+| halo | 13.13 | 16.99 | 13.64 | 11.46 | 10.64 | 10.94 | 9.16 | +0.49 | 0.17 |
+| nimbus | 12.53 | 16.27 | 12.96 | 11.28 | 10.59 | 10.94 | 9.03 | +0.66 | 0.17 |
 | supa_a11 (ungated) | 6.09 | 7.03 | 5.13 | 3.87 | 4.08 | 4.71 | 5.29 | **−1.82*** | 0.17 |
 
 **The task family determines the shape, and it is not the same shape.**
@@ -89,7 +89,7 @@ despite a large positional range.
 **2. Which model has the best worst-position robustness?** Supa-A1.1, decisively.
 
 **3. Which has the smallest edge-middle gap?** Supa-A1.1, on every family:
-+0.07 vs Qwen3's +4.67 on `exact_retrieval` (a 98.5 % reduction), −0.03 (n.s.) vs
++0.10 vs Qwen3's +4.14 on `exact_retrieval` (a 97.5 % reduction), −0.03 (n.s.) vs
 +0.75 on `state_constraint`, and −1.82 on `semantic_single_hop` — where its middle is
 *better* than its edges, the only reversal in the panel. The exception is `multi_hop`,
 where Supa retains a +4.31 middle deficit despite being 15 nats better overall.
@@ -150,6 +150,24 @@ states. It was called as `(other, base)` while the output field was labelled
 inverted — Halo was reported as *worse* than Qwen3 on exact retrieval when it is 3.77
 nats better. It was caught by cross-checking §3 against the §1 curves, which disagreed.
 The call now passes `(base, other)` with a comment naming the convention.
+
+### A third instance of the same confound, caught after publication
+
+The first version of this report filtered `local_position` and **not** `fmt`. The
+`format_sweep` grid emits only p ∈ {0.02, 0.50, 0.98}, so each of those three cells
+carried 18 extra non-natural items (6 json + 6 list + 6 shuffled) on top of 33 natural,
+while the other four positions were natural-only — surface format loaded onto exactly the
+three positions the edge-middle gap is computed from. Same error class as the
+`local_position` confound this report already documents, and I looked for that one and
+then failed to check its sibling.
+
+Re-run with both factors fixed: **every qualitative conclusion survives.** No cell changes
+significance, no worst position moves, and the ordering of models is unchanged. The
+magnitudes move by up to ~13 %: Qwen3's `exact_retrieval` gap +4.67 → **+4.14**, Supa's
++0.07 → **+0.10**, Halo's +1.33 → +1.43, and the `semantic_single_hop` gaps rise slightly
+(all still non-significant for the three non-Supa arms). The tables above are the
+corrected numbers. `multi_hop` and `state_constraint` are unaffected, because neither is
+emitted by the `format_sweep` grid.
 
 ## 6. What this run does not establish
 

@@ -908,3 +908,52 @@ def test_compute_metrics_row_and_csv(fixture, tmp_path):
 
     with pytest.raises(ValueError, match="unknown columns"):
         write_compute_metrics([{**row, "surprise": 1}], tmp_path / "bad.csv")
+
+
+# ---------------------------------------------------------------------------
+# Regression: PSA must consume importance(), not raw Delta.
+#
+# `coerce_significance` reached the payload through `_payload_of`, which walks
+# `.values` -- the raw `Delta = L_normal - L_perturbed`. On a loss objective an important
+# cell is NEGATIVE there, so every PSA/SGSA gate built from a gold_nll matrix boosted the
+# cells that do not matter and suppressed the ones that do. Same trap as
+# `matrices.to_logit_bias_spec`, in a second file, found by a later audit.
+# ---------------------------------------------------------------------------
+
+import numpy as _np2  # noqa: E402
+import pytest as _pytest2  # noqa: E402
+
+from rineya_psa.interventions.psa import coerce_significance as _coerce  # noqa: E402
+from rineya_psa.significance.matrices import SignificanceMatrix as _SM  # noqa: E402
+
+
+def _loss_matrix() -> _SM:
+    # bin 3 is the important cell: ablating it RAISES loss, so Delta is negative there.
+    values = _np2.array([[[0.5, 0.0, 0.0, -1.0]]], dtype=_np2.float64)
+    return _SM(
+        values=values, layers=(0,), kv_heads=(0,), bins=(0, 1, 2, 3),
+        binning_desc={"kind": "absolute", "n_bins": 4},
+        objective="gold_nll", model_key="psa-sign-test", provenance={},
+    )
+
+
+def test_coerce_significance_uses_importance_not_raw_delta():
+    m = _loss_matrix()
+    table = _coerce(m)
+    got = _np2.asarray(table.values)[0, 0]
+    _np2.testing.assert_allclose(got, m.importance()[0, 0])
+    best = int(_np2.argmax(m.importance()[0, 0]))
+    assert got[best] > 0, "the most important bin must come through positive"
+    assert "importance" in str(table.source)
+
+
+@_pytest2.mark.parametrize("objective", ["gold_nll", "margin", "correct"])
+def test_coerce_agrees_with_the_matrix_own_ranking(objective):
+    peak = -1.0 if objective == "gold_nll" else 1.0
+    values = _np2.array([[[0.5 * -peak, 0.0, 0.0, peak]]], dtype=_np2.float64)
+    m = _SM(values=values, layers=(0,), kv_heads=(0,), bins=(0, 1, 2, 3),
+            binning_desc={"kind": "absolute", "n_bins": 4},
+            objective=objective, model_key="t", provenance={})
+    got = _np2.asarray(_coerce(m).values)[0, 0]
+    top = m.top_cells(1)[0][0]
+    assert int(_np2.argmax(got)) == top[2], f"{objective}: PSA disagrees with top_cells"

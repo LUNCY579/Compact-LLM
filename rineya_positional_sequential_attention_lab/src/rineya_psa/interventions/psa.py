@@ -276,6 +276,34 @@ def coerce_significance(
             meta=dict(matrix.meta),
         )
 
+    # A SignificanceMatrix stores Delta = L_normal - L_perturbed. On a LOSS objective an
+    # important cell is NEGATIVE there, so reading `.values` and scattering it into a gate
+    # boosts the cells that do not matter and suppresses the ones that do. `.importance()`
+    # applies OBJECTIVE_SIGN and is the only correct entry point. This is the same trap
+    # that `matrices.to_logit_bias_spec` fell into; it is duck-typed here rather than
+    # imported so `interventions/` stays decoupled from `significance/`.
+    importance = getattr(matrix, "importance", None)
+    if callable(importance) and getattr(matrix, "objective", None) is not None:
+        signed = _payload_of(importance())
+        if signed is not None:
+            values = np.asarray(signed, dtype=np.float64)
+            if values.ndim == 2 and n_kv_heads is not None:
+                values = np.repeat(values[:, None, :], int(n_kv_heads), axis=1)
+            resolved = binning
+            if resolved is None:
+                candidate = getattr(matrix, "binning", None) or getattr(
+                    matrix, "_binning_object", lambda: None
+                )()
+                if candidate is not None and hasattr(candidate, "n_bins"):
+                    resolved = candidate
+            return SignificanceTable(
+                values=values,
+                binning=resolved,
+                name=str(name or getattr(matrix, "name", None) or "significance"),
+                source=f"{type(matrix).__name__}.importance({matrix.objective})",
+                meta=dict(getattr(matrix, "provenance", None) or getattr(matrix, "meta", {}) or {}),
+            )
+
     payload = _payload_of(matrix)
     if payload is None:
         raise TypeError(
