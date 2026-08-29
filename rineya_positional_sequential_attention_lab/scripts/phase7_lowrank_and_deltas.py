@@ -240,12 +240,33 @@ def discover_sources(
     """Every significance / bias matrix in ``results_dir``, in a stable order."""
     skip = {LOW_RANK_NPZ_NAME, CORRELATION_CSV_NAME, SVD_JSON_NAME}
     found: list[Source] = []
-    for path in sorted(results_dir.glob("*.npz")) + sorted(results_dir.glob("*.csv")):
+    # RECURSIVE. Phase 4 writes one directory per arm
+    # (results/phase4_significance/<arm>/kv_head_position_significance.npz) so that the
+    # brief's fixed artifact names survive across four models; a top-level glob finds
+    # nothing and reports "no artifacts" on a run that produced eight of them.
+    for path in sorted(results_dir.rglob("*.npz")) + sorted(results_dir.rglob("*.csv")):
         if path.name in skip:
             continue
         source = load_source(path, bias_field=bias_field)
-        if source is not None:
-            found.append(source)
+        if source is None:
+            continue
+        # A Tier-2 ablation matrix is SPARSE BY DESIGN: Phase 4 evaluates ~128 of 1792
+        # cells (top-K plus the random control) and leaves the rest NaN, exactly as SPEC
+        # 11.2 requires. An SVD needs complete rows, so such a matrix has nothing to
+        # decompose - which is a property of the input, not an error. Skip it loudly
+        # instead of aborting a run over the dense Tier-1 matrices that ARE decomposable.
+        values = np.asarray(source.matrix.values, dtype=np.float64)
+        if values.ndim >= 2:
+            flat = values.reshape(-1, values.shape[-1])
+            if not np.isfinite(flat).all(axis=1).any():
+                covered = float(np.isfinite(flat).mean())
+                print(
+                    f"  skip {path.name} ({source.name}): no complete row "
+                    f"({covered:.1%} of cells evaluated) - sparse by construction",
+                    flush=True,
+                )
+                continue
+        found.append(source)
     return found
 
 
