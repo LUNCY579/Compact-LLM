@@ -1,0 +1,3018 @@
+{
+  "config": {
+    "script": "phase4b_bias_and_distance.py",
+    "models": [
+      "qwen3",
+      "halo",
+      "nimbus",
+      "supa_a11"
+    ],
+    "kinds": [
+      "random_ids",
+      "shuffled_filler"
+    ],
+    "context_tokens": 8192,
+    "n_per_kind": 4,
+    "bias_bins": 16,
+    "abs_bins": 8,
+    "dist_bins": 8,
+    "layers": null,
+    "chunk": 256,
+    "query_tail_fraction": 0.25,
+    "seed": 20260828,
+    "split": "calibration",
+    "unigram_source": "benchmark",
+    "unigram_n_texts": 32,
+    "unigram_split": "calibration",
+    "unigram_item_ids": [
+      "013f47abf024809d",
+      "05d61e98dc7d3a5f",
+      "09b4de1fdd9b3d31",
+      "11cec8039e0b940f",
+      "14af1b144fe5f353",
+      "29994d0d2d59e3ec",
+      "2b32e944cdd37251",
+      "342d43f9ea1c42ac",
+      "39c63164d6f50e22",
+      "484605ab952ce55d",
+      "539f2372e33960f4",
+      "55677bdfe9da8307",
+      "56c02cb372fc3da6",
+      "5a1641825d92f33e",
+      "63c3bb822702605f",
+      "6db7abfad6102aa1",
+      "7395faaf2081675d",
+      "7b03a65b2fe276ab",
+      "7ed4746107770bb2",
+      "9925d48e360d1524",
+      "a32dd8acf3c76dd9",
+      "a3a13de8b5320f84",
+      "ab275fb7d9a950cf",
+      "acc1d0c073c480e1",
+      "b58308762de5449f",
+      "bdfa3380cffb709f",
+      "d2262ddfd09d7d0e",
+      "db35ce3628f06077",
+      "dfa0736d6372f4e2",
+      "e2eb59a556fa9696",
+      "ebfb3043acf81f13",
+      "f7d259a7b7cbc783"
+    ]
+  },
+  "is_partial_run": false,
+  "item_limit": null,
+  "models": [
+    "qwen3",
+    "halo",
+    "nimbus",
+    "supa_a11"
+  ],
+  "n_contexts": 8,
+  "wall_seconds": 995.5764104000009,
+  "estimated_seconds": 760.51098943488,
+  "backends": {
+    "cuda": true,
+    "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "FLASH_ATTENTION": {
+      "available": false,
+      "reason": "RuntimeError: No available kernel. Aborting execution."
+    },
+    "CUDNN_ATTENTION": {
+      "available": true,
+      "ms": 2.994,
+      "peak_gb": 0.0671
+    },
+    "EFFICIENT_ATTENTION": {
+      "available": true,
+      "ms": 4.121,
+      "peak_gb": 0.0671
+    },
+    "MATH": {
+      "available": true,
+      "ms": 76.791,
+      "peak_gb": 2.6762
+    },
+    "pinned": [
+      "CUDNN_ATTENTION",
+      "EFFICIENT_ATTENTION"
+    ]
+  },
+  "artifacts": {
+    "kv_head_bias_matrix": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\kv_head_bias_matrix.npz",
+    "distance_significance": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\distance_significance.npz",
+    "per_model_dir": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4b"
+  },
+  "kv_rollup_is_an_approximation": true,
+  "kv_rollup_note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+  "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+  "per_model": {
+    "qwen3": {
+      "model_key": "qwen3",
+      "backend_pinned": true,
+      "dtype_approximated": false,
+      "arch": {
+        "num_layers": 28,
+        "num_q_heads": 16,
+        "num_kv_heads": 8,
+        "kv_group_size": 2
+      },
+      "bias_random_ids_seconds": 31.86310980000053,
+      "bias_shuffled_filler_seconds": 31.05052490000162,
+      "distance_seconds": 184.66770619999807,
+      "bias_pooled": {
+        "model_key": "qwen3",
+        "shape": [
+          28,
+          16,
+          16
+        ],
+        "binning": {
+          "kind": "absolute",
+          "name": "absolute16",
+          "n_bins": 16,
+          "domain": "source_index_over_sequence_length"
+        },
+        "context_kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "n_contexts": 8,
+        "bin_centers": [
+          0.03125,
+          0.09375,
+          0.15625,
+          0.21875,
+          0.28125,
+          0.34375,
+          0.40625,
+          0.46875,
+          0.53125,
+          0.59375,
+          0.65625,
+          0.71875,
+          0.78125,
+          0.84375,
+          0.90625,
+          0.96875
+        ],
+        "attn_by_bin_pooled": [
+          0.359042738412161,
+          0.013336031528239036,
+          0.012716045083659217,
+          0.012886476237986642,
+          0.013799631098846755,
+          0.014909804106278625,
+          0.016374938364193778,
+          0.018473315516498164,
+          0.02118408392355156,
+          0.0251578369230478,
+          0.0304981098934143,
+          0.044572987763768945,
+          0.12062320116961864,
+          0.11294970654808933,
+          0.10104111581068397,
+          0.08243277040716228
+        ],
+        "qk_logit_mean_pooled": [
+          -1.934209885391015,
+          -2.1497540412079843,
+          -2.070444884370139,
+          -2.0617200078406603,
+          -1.9175473315323757,
+          -1.803748271142857,
+          -1.6380399588851853,
+          -1.410301271241175,
+          -1.1276241622437542,
+          -0.7548302970000285,
+          -0.3569168450616595,
+          0.23678719371923762,
+          1.2105510041704,
+          1.7035238659602026,
+          2.3071062017368473,
+          3.2802456090545484
+        ],
+        "entropy_by_layer": [
+          3.214214802283095,
+          4.392927250941284,
+          4.055092727183364,
+          3.259145979594905,
+          2.4478335937601514,
+          1.7782070934772491,
+          2.9744199003616814,
+          3.5307289540069178,
+          3.972958918311633,
+          3.743394041492138,
+          2.91831169615034,
+          3.828447363252053,
+          3.991840470349416,
+          5.016338724526577,
+          3.605013332911767,
+          3.3876850501983427,
+          4.453581305686384,
+          4.32657399168238,
+          4.490261579863727,
+          4.900945028173737,
+          3.7829231042414904,
+          3.9629476538393646,
+          3.716265136608854,
+          3.598684180993587,
+          4.151410367601784,
+          4.895057440560777,
+          4.3684513990883715,
+          1.1514676538827189
+        ],
+        "edge_bias_score_mean": 0.07875717220100002,
+        "middle_mass_mean": 0.1849707075895999,
+        "kv_head_dispersion_mean": 0.022202931461163773,
+        "provenance": {
+          "query_tail_fraction": 0.25,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "n_query_rows": 8192,
+          "capture_what": [
+            "attn_by_bin",
+            "qk_logit_mean",
+            "attn_entropy"
+          ],
+          "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias",
+          "pooled_over_kinds": {
+            "random_ids": 4,
+            "shuffled_filler": 4
+          },
+          "pooling_weights": [
+            0.5,
+            0.5
+          ],
+          "sd_note": "attn_by_bin_sd is None on a pooled object: the per-kind runs return a mean and an sd but not the per-context arrays, so a correct within-set spread cannot be reconstructed here. Each kind's own sd is in its own npz and in the summary.",
+          "kv_rollup_is_an_approximation": true,
+          "kv_rollup_note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+          "backend_pinned": true,
+          "dtype_approximated": false,
+          "arch": {
+            "num_layers": 28,
+            "num_q_heads": 16,
+            "num_kv_heads": 8,
+            "kv_group_size": 2
+          },
+          "bias_random_ids_seconds": 31.86310980000053,
+          "bias_shuffled_filler_seconds": 31.05052490000162,
+          "distance_seconds": 184.66770619999807
+        },
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "attn_dispersion_mean": 0.022202931461163773,
+          "attn_dispersion_max": 0.07876332187673188,
+          "attn_dispersion_over_group_mean_median": 0.27589503398688975,
+          "attn_dispersion_over_group_mean_max": 1.2602305792045507,
+          "qk_dispersion_mean": 2.450226821546244
+        },
+        "edge_bias": {
+          "mean": 0.07875717220100002,
+          "max": 0.12494775122242491,
+          "max_at": {
+            "layer": 5,
+            "q_head": 0
+          },
+          "middle_mass_mean": 0.1849707075895999,
+          "middle_mass_min": 0.00021499269733079663,
+          "n_heads_edge_biased": 411,
+          "n_heads": 448
+        }
+      },
+      "bias_by_kind": {
+        "random_ids": {
+          "model_key": "qwen3",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "random_ids"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3563946971802386,
+            0.01316582090662678,
+            0.01270325935626441,
+            0.012985058153876686,
+            0.013988614012997586,
+            0.015317227131823343,
+            0.016442530129132635,
+            0.01785723237492289,
+            0.021056491616675877,
+            0.024890079979264314,
+            0.030543508040457506,
+            0.044096645169863335,
+            0.12148826685026605,
+            0.1134681765915018,
+            0.10197932028898649,
+            0.08362120200804059
+          ],
+          "qk_logit_mean_pooled": [
+            -1.8889845037193709,
+            -2.0829524882946253,
+            -1.987479282674144,
+            -1.973371074673261,
+            -1.825257750782498,
+            -1.6978363202320648,
+            -1.552037137281088,
+            -1.3560151657915023,
+            -1.0458249304173088,
+            -0.6799060489855882,
+            -0.2697616277830548,
+            0.3112029323659239,
+            1.2918150930665888,
+            1.7867654316935282,
+            2.403331219511074,
+            3.3882855091113533
+          ],
+          "entropy_by_layer": [
+            3.2199777220957913,
+            4.364688529400155,
+            4.054571618326008,
+            3.2954346446786076,
+            2.480693999445066,
+            1.775869934790535,
+            2.997774558607489,
+            3.52463692962192,
+            3.92055275849998,
+            3.742458955734037,
+            2.8974427292123437,
+            3.862294954364188,
+            4.009516910417005,
+            4.959795734612271,
+            3.581032919464633,
+            3.367950932472013,
+            4.440582204144448,
+            4.332092761527747,
+            4.452273565810174,
+            4.842064402997494,
+            3.804100820911117,
+            3.9793880814686418,
+            3.7018196012359113,
+            3.610698294825852,
+            4.140809437725693,
+            4.860623927728739,
+            4.345712791429833,
+            1.1754406586260302
+          ],
+          "edge_bias_score_mean": 0.07895168411008299,
+          "middle_mass_mean": 0.18419232845513747,
+          "kv_head_dispersion_mean": 0.02219358187746035,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "random_ids-20260828-0",
+              "random_ids-20260828-1",
+              "random_ids-20260828-2",
+              "random_ids-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.02219358187746035,
+            "attn_dispersion_max": 0.07900627600385728,
+            "attn_dispersion_over_group_mean_median": 0.2724547379481007,
+            "attn_dispersion_over_group_mean_max": 1.2641172352484311,
+            "qk_dispersion_mean": 2.461320575202028
+          },
+          "edge_bias": {
+            "mean": 0.07895168411008299,
+            "max": 0.12494454957848246,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18419232845513747,
+            "middle_mass_min": 0.0002222742060561426,
+            "n_heads_edge_biased": 417,
+            "n_heads": 448
+          }
+        },
+        "shuffled_filler": {
+          "model_key": "qwen3",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "shuffled_filler"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3616907796440834,
+            0.013506242149851288,
+            0.012728830811054023,
+            0.012787894322096599,
+            0.01361064818469592,
+            0.014502381080733909,
+            0.016307346599254917,
+            0.019089398658073436,
+            0.021311676230427245,
+            0.02542559386683129,
+            0.03045271174637109,
+            0.04504933035767455,
+            0.11975813548897121,
+            0.11243123650467687,
+            0.10010291133238144,
+            0.08124433880628398
+          ],
+          "qk_logit_mean_pooled": [
+            -1.9794352670626592,
+            -2.2165555941213433,
+            -2.1534104860661336,
+            -2.1500689410080605,
+            -2.0098369122822533,
+            -1.9096602220536494,
+            -1.7240427804892826,
+            -1.4645873766908477,
+            -1.2094233940701997,
+            -0.8297545450144688,
+            -0.44407206234026425,
+            0.16237145507255132,
+            1.129286915274211,
+            1.6202823002268778,
+            2.210881183962621,
+            3.172205708997743
+          ],
+          "entropy_by_layer": [
+            3.208451882470399,
+            4.421165972482413,
+            4.05561383604072,
+            3.2228573145112023,
+            2.414973188075237,
+            1.7805442521639634,
+            2.951065242115874,
+            3.5368209783919156,
+            4.025365078123286,
+            3.7443291272502393,
+            2.9391806630883366,
+            3.794599772139918,
+            3.974164030281827,
+            5.072881714440882,
+            3.6289937463589013,
+            3.4074191679246724,
+            4.466580407228321,
+            4.321055221837014,
+            4.52824959391728,
+            4.959825653349981,
+            3.761745387571864,
+            3.9465072262100875,
+            3.7307106719817966,
+            3.5866700671613216,
+            4.162011297477875,
+            4.929490953392815,
+            4.3911900067469105,
+            1.1274946491394076
+          ],
+          "edge_bias_score_mean": 0.07856266029191705,
+          "middle_mass_mean": 0.18574908672406235,
+          "kv_head_dispersion_mean": 0.0223102838361753,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "shuffled_filler-20260828-0",
+              "shuffled_filler-20260828-1",
+              "shuffled_filler-20260828-2",
+              "shuffled_filler-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.0223102838361753,
+            "attn_dispersion_max": 0.07868213385703991,
+            "attn_dispersion_over_group_mean_median": 0.28057234834427813,
+            "attn_dispersion_over_group_mean_max": 1.2589225119048786,
+            "qk_dispersion_mean": 2.4397636442777135
+          },
+          "edge_bias": {
+            "mean": 0.07856266029191705,
+            "max": 0.12495095286636741,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18574908672406235,
+            "middle_mass_min": 0.00020771118860545067,
+            "n_heads_edge_biased": 410,
+            "n_heads": 448
+          }
+        }
+      },
+      "kind_agreement": {
+        "kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "random_ids_vs_shuffled_filler": {
+          "attn_pearson": 0.9983814250748866,
+          "attn_spearman": 0.9980725550502325,
+          "attn_max_abs_diff": 0.14743306674063206,
+          "attn_mean_abs_diff": 0.002925457702656361,
+          "qk_spearman": 0.9994285702159732,
+          "entropy_mean_abs_diff": 0.09187156139289852
+        }
+      },
+      "distance": {
+        "model_key": "qwen3",
+        "shape": [
+          28,
+          16,
+          8,
+          8
+        ],
+        "absolute_binning": {
+          "kind": "absolute",
+          "name": "absolute8",
+          "n_bins": 8,
+          "domain": "source_index_over_sequence_length"
+        },
+        "distance_binning": {
+          "kind": "distance",
+          "name": "distance8",
+          "n_bins": 8,
+          "edges": [
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "domain": "(query_index - source_index) / sequence_length"
+        },
+        "n_contexts": 8,
+        "distance_marginal_pooled": [
+          0.5402088829325989,
+          0.11004137765969288,
+          0.08152498331900764,
+          0.06571423716511407,
+          0.057809203434361564,
+          0.052066344473254235,
+          0.047897455856982976,
+          0.044611097199097165
+        ],
+        "absolute_marginal_pooled": [
+          0.49086407817583233,
+          0.10076109152672792,
+          0.08686020806094741,
+          0.078471382302183,
+          0.07266152922144942,
+          0.06600572798805948,
+          0.05838670132734934,
+          0.04586286343756082
+        ],
+        "cell_counts": [
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "additive_decomposition": {
+          "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+          "weighting": "cell_counts;transform=log",
+          "n_iterations": 23,
+          "converged": true,
+          "n_abs": 8,
+          "n_dist": 8,
+          "n_cells_fitted": 448,
+          "absolute_only_mean_r2": 0.40390506866688725,
+          "absolute_only_median_r2": 0.4205098425746598,
+          "absolute_only_pooled_r2": 0.4744974868985097,
+          "distance_only_mean_r2": 0.5646834793912411,
+          "distance_only_median_r2": 0.5161343216630159,
+          "distance_only_pooled_r2": 0.5008723813608706,
+          "additive_mean_r2": 0.9504805342174146,
+          "additive_median_r2": 0.951545056442993,
+          "additive_pooled_r2": 0.9223035447133726,
+          "additive_gain_over_absolute": 0.44780605781486293,
+          "additive_gain_over_distance": 0.42143116335250197,
+          "residual_after_additive": 0.07769645528662739,
+          "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+        },
+        "provenance": {
+          "query_tail_fraction": 1.0,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3",
+            "shuffled_filler-20260828-0",
+            "shuffled_filler-20260828-1",
+            "shuffled_filler-20260828-2",
+            "shuffled_filler-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "accumulator": "significance.distance.JointBinAccumulator",
+          "caveat": "distance bin 0 also collects the causally masked upper triangle, whose attention mass is zero and whose allowed-cell count is zero, so it does not contribute to either accumulator"
+        },
+        "variance_explained": {
+          "log": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=log",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.40390506866688725,
+            "absolute_only_median_r2": 0.4205098425746598,
+            "absolute_only_pooled_r2": 0.4744974868985097,
+            "distance_only_mean_r2": 0.5646834793912411,
+            "distance_only_median_r2": 0.5161343216630159,
+            "distance_only_pooled_r2": 0.5008723813608706,
+            "additive_mean_r2": 0.9504805342174146,
+            "additive_median_r2": 0.951545056442993,
+            "additive_pooled_r2": 0.9223035447133726,
+            "additive_gain_over_absolute": 0.44780605781486293,
+            "additive_gain_over_distance": 0.42143116335250197,
+            "residual_after_additive": 0.07769645528662739,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          },
+          "identity": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=identity",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.4499094658172705,
+            "absolute_only_median_r2": 0.34628811262912096,
+            "absolute_only_pooled_r2": 0.5001388765130526,
+            "distance_only_mean_r2": 0.5515090002515526,
+            "distance_only_median_r2": 0.5055374340312511,
+            "distance_only_pooled_r2": 0.5789408019791098,
+            "additive_mean_r2": 0.9384556205264302,
+            "additive_median_r2": 0.9950973190013037,
+            "additive_pooled_r2": 0.9652148387172846,
+            "additive_gain_over_absolute": 0.4650759622042321,
+            "additive_gain_over_distance": 0.38627403673817484,
+            "residual_after_additive": 0.03478516128271536,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          }
+        },
+        "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe."
+        }
+      }
+    },
+    "halo": {
+      "model_key": "halo",
+      "backend_pinned": true,
+      "dtype_approximated": true,
+      "arch": {
+        "num_layers": 28,
+        "num_q_heads": 16,
+        "num_kv_heads": 8,
+        "kv_group_size": 2
+      },
+      "bias_random_ids_seconds": 31.280258899998444,
+      "bias_shuffled_filler_seconds": 31.208424299999024,
+      "distance_seconds": 187.14124269999957,
+      "bias_pooled": {
+        "model_key": "halo",
+        "shape": [
+          28,
+          16,
+          16
+        ],
+        "binning": {
+          "kind": "absolute",
+          "name": "absolute16",
+          "n_bins": 16,
+          "domain": "source_index_over_sequence_length"
+        },
+        "context_kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "n_contexts": 8,
+        "bin_centers": [
+          0.03125,
+          0.09375,
+          0.15625,
+          0.21875,
+          0.28125,
+          0.34375,
+          0.40625,
+          0.46875,
+          0.53125,
+          0.59375,
+          0.65625,
+          0.71875,
+          0.78125,
+          0.84375,
+          0.90625,
+          0.96875
+        ],
+        "attn_by_bin_pooled": [
+          0.35476253827163634,
+          0.012247778962602842,
+          0.011880089697498616,
+          0.01228019986087582,
+          0.013258594731486755,
+          0.014171455498315012,
+          0.01581911122769582,
+          0.01795230777130912,
+          0.02091634678166124,
+          0.025103670275711996,
+          0.03054290043749283,
+          0.04456317558884703,
+          0.12331071138790417,
+          0.11521818748836792,
+          0.1032302126628201,
+          0.0847417241823304
+        ],
+        "qk_logit_mean_pooled": [
+          -1.910371766639173,
+          -2.1375126837126084,
+          -2.0251187134416164,
+          -2.0005180855550213,
+          -1.8374207933435645,
+          -1.726142308520171,
+          -1.5463880356262507,
+          -1.3066861034970674,
+          -1.0123890604791899,
+          -0.634578887926328,
+          -0.2417912997931353,
+          0.346312134607615,
+          1.316431839411239,
+          1.7941695197155998,
+          2.3897964578767903,
+          3.3627443424251005
+        ],
+        "entropy_by_layer": [
+          3.201331287258654,
+          4.388070176471956,
+          4.027750540873967,
+          3.194367458752822,
+          2.416398328176001,
+          1.8623994581430452,
+          2.9723429973819293,
+          3.3905147470068187,
+          3.824254850449506,
+          3.7147664880612865,
+          2.9514144237618893,
+          3.729946991603356,
+          4.0987285412848,
+          4.8407626315020025,
+          3.5513794429716654,
+          3.378231732698623,
+          4.4909820690518245,
+          4.280592639464885,
+          4.304173663491383,
+          4.7035358713474125,
+          3.91126358017209,
+          3.831725716270739,
+          3.667305641050916,
+          3.552392078214325,
+          4.0481081681500655,
+          4.9147096923261415,
+          4.300774548086338,
+          1.0453988635126734
+        ],
+        "edge_bias_score_mean": 0.07941798502518957,
+        "middle_mass_mean": 0.18232756231251981,
+        "kv_head_dispersion_mean": 0.022152847910260374,
+        "provenance": {
+          "query_tail_fraction": 0.25,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "n_query_rows": 8192,
+          "capture_what": [
+            "attn_by_bin",
+            "qk_logit_mean",
+            "attn_entropy"
+          ],
+          "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias",
+          "pooled_over_kinds": {
+            "random_ids": 4,
+            "shuffled_filler": 4
+          },
+          "pooling_weights": [
+            0.5,
+            0.5
+          ],
+          "sd_note": "attn_by_bin_sd is None on a pooled object: the per-kind runs return a mean and an sd but not the per-context arrays, so a correct within-set spread cannot be reconstructed here. Each kind's own sd is in its own npz and in the summary.",
+          "kv_rollup_is_an_approximation": true,
+          "kv_rollup_note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+          "backend_pinned": true,
+          "dtype_approximated": true,
+          "arch": {
+            "num_layers": 28,
+            "num_q_heads": 16,
+            "num_kv_heads": 8,
+            "kv_group_size": 2
+          },
+          "bias_random_ids_seconds": 31.280258899998444,
+          "bias_shuffled_filler_seconds": 31.208424299999024,
+          "distance_seconds": 187.14124269999957
+        },
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "attn_dispersion_mean": 0.022152847910260374,
+          "attn_dispersion_max": 0.07767039594670214,
+          "attn_dispersion_over_group_mean_median": 0.2716601027620066,
+          "attn_dispersion_over_group_mean_max": 1.2427232104906634,
+          "qk_dispersion_mean": 2.472838975773548
+        },
+        "edge_bias": {
+          "mean": 0.07941798502518957,
+          "max": 0.1249191868850553,
+          "max_at": {
+            "layer": 5,
+            "q_head": 0
+          },
+          "middle_mass_mean": 0.18232756231251981,
+          "middle_mass_min": 0.0003228562799740685,
+          "n_heads_edge_biased": 418,
+          "n_heads": 448
+        }
+      },
+      "bias_by_kind": {
+        "random_ids": {
+          "model_key": "halo",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "random_ids"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3524697754623572,
+            0.012059574123947281,
+            0.011957559355155212,
+            0.012498884977713577,
+            0.013478392546598921,
+            0.014626907338518248,
+            0.016150595402203864,
+            0.01752724454504439,
+            0.02092796190486169,
+            0.024801842124411704,
+            0.030491376952604905,
+            0.043804200889009784,
+            0.12394299596619743,
+            0.11524495032969842,
+            0.10407992577915744,
+            0.08593690259319178
+          ],
+          "qk_logit_mean_pooled": [
+            -1.8741661468354127,
+            -2.072593549081083,
+            -1.9364983277052457,
+            -1.9053061559630546,
+            -1.7439757294837201,
+            -1.6171524599486864,
+            -1.4508978803058394,
+            -1.2497782203488765,
+            -0.9282990076118429,
+            -0.5651513250970766,
+            -0.16124585752212234,
+            0.4113425512908374,
+            1.3883249811615153,
+            1.8609826745723481,
+            2.4706367153055777,
+            3.4499901876937917
+          ],
+          "entropy_by_layer": [
+            3.206938265124336,
+            4.35901791183278,
+            4.034215457853861,
+            3.22402471723035,
+            2.456163253635168,
+            1.8577836265030783,
+            2.9974096895894036,
+            3.3811822063289583,
+            3.7788987980457023,
+            3.7158308912767097,
+            2.9273413673508912,
+            3.7370568669284694,
+            4.112107574241236,
+            4.807644683402032,
+            3.539777109050192,
+            3.3598511070013046,
+            4.471645251614973,
+            4.280439799884334,
+            4.265063958708197,
+            4.649865627521649,
+            3.9402966842753813,
+            3.8518791418755427,
+            3.6618978662882,
+            3.5740231681847945,
+            4.033550853491761,
+            4.892652169626672,
+            4.295498638268327,
+            1.0654886301781517
+          ],
+          "edge_bias_score_mean": 0.07954775586052058,
+          "middle_mass_mean": 0.18180852170325348,
+          "kv_head_dispersion_mean": 0.02216526783487683,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "random_ids-20260828-0",
+              "random_ids-20260828-1",
+              "random_ids-20260828-2",
+              "random_ids-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.02216526783487683,
+            "attn_dispersion_max": 0.07701285581595117,
+            "attn_dispersion_over_group_mean_median": 0.27522882875967725,
+            "attn_dispersion_over_group_mean_max": 1.2322063801472158,
+            "qk_dispersion_mean": 2.4852824319247477
+          },
+          "edge_bias": {
+            "mean": 0.07954775586052058,
+            "max": 0.12491349807738365,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18180852170325348,
+            "middle_mass_min": 0.00033918826871830263,
+            "n_heads_edge_biased": 420,
+            "n_heads": 448
+          }
+        },
+        "shuffled_filler": {
+          "model_key": "halo",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "shuffled_filler"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3570553010809156,
+            0.012435983801258408,
+            0.011802620039842015,
+            0.012061514744038064,
+            0.01303879691637459,
+            0.013716003658111778,
+            0.015487627053187772,
+            0.018377370997573857,
+            0.020904731658460796,
+            0.025405498427012285,
+            0.030594423922380758,
+            0.04532215028868427,
+            0.1226784268096109,
+            0.11519142464703742,
+            0.10238049954648279,
+            0.08354654577146903
+          ],
+          "qk_logit_mean_pooled": [
+            -1.9465773864429334,
+            -2.202431818344134,
+            -2.113739099177987,
+            -2.0957300151469878,
+            -1.9308658572034088,
+            -1.8351321570916557,
+            -1.641878190946662,
+            -1.363593986645258,
+            -1.0964791133465366,
+            -0.7040064507555793,
+            -0.32233674206414825,
+            0.2812817179243926,
+            1.244538697660963,
+            1.7273563648588524,
+            2.3089562004480024,
+            3.2754984971564096
+          ],
+          "entropy_by_layer": [
+            3.195724309392972,
+            4.4171224411111325,
+            4.021285623894073,
+            3.1647102002752945,
+            2.376633402716834,
+            1.8670152897830121,
+            2.947276305174455,
+            3.399847287684679,
+            3.86961090285331,
+            3.7137020848458633,
+            2.9754874801728874,
+            3.7228371162782423,
+            4.085349508328363,
+            4.873880579601973,
+            3.562981776893139,
+            3.3966123583959416,
+            4.510318886488676,
+            4.280745479045436,
+            4.3432833682745695,
+            4.757206115173176,
+            3.8822304760687985,
+            3.8115722906659357,
+            3.6727134158136323,
+            3.5307609882438555,
+            4.06266548280837,
+            4.936767215025611,
+            4.306050457904348,
+            1.0253090968471952
+          ],
+          "edge_bias_score_mean": 0.07928821418985851,
+          "middle_mass_mean": 0.18284660292178612,
+          "kv_head_dispersion_mean": 0.02223267448482156,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "shuffled_filler-20260828-0",
+              "shuffled_filler-20260828-1",
+              "shuffled_filler-20260828-2",
+              "shuffled_filler-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.02223267448482156,
+            "attn_dispersion_max": 0.07832793607745314,
+            "attn_dispersion_over_group_mean_median": 0.2643049442415645,
+            "attn_dispersion_over_group_mean_max": 1.2532399762196227,
+            "qk_dispersion_mean": 2.4607789213782403
+          },
+          "edge_bias": {
+            "mean": 0.07928821418985851,
+            "max": 0.12492487569272696,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18284660292178612,
+            "middle_mass_min": 0.0003065242912298344,
+            "n_heads_edge_biased": 415,
+            "n_heads": 448
+          }
+        }
+      },
+      "kind_agreement": {
+        "kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "random_ids_vs_shuffled_filler": {
+          "attn_pearson": 0.9983825856146863,
+          "attn_spearman": 0.998280601547937,
+          "attn_max_abs_diff": 0.14921759441494942,
+          "attn_mean_abs_diff": 0.0028552095622522066,
+          "qk_spearman": 0.9994566660952895,
+          "entropy_mean_abs_diff": 0.08895510027546802
+        }
+      },
+      "distance": {
+        "model_key": "halo",
+        "shape": [
+          28,
+          16,
+          8,
+          8
+        ],
+        "absolute_binning": {
+          "kind": "absolute",
+          "name": "absolute8",
+          "n_bins": 8,
+          "domain": "source_index_over_sequence_length"
+        },
+        "distance_binning": {
+          "kind": "distance",
+          "name": "distance8",
+          "n_bins": 8,
+          "edges": [
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "domain": "(query_index - source_index) / sequence_length"
+        },
+        "n_contexts": 8,
+        "distance_marginal_pooled": [
+          0.5456322907065034,
+          0.109937872552655,
+          0.08055708047527678,
+          0.06453420716705627,
+          0.056788456069879874,
+          0.05120331316593984,
+          0.04712561751747979,
+          0.044092956254456514
+        ],
+        "absolute_marginal_pooled": [
+          0.4868663326297522,
+          0.09971410881220268,
+          0.08688091356391711,
+          0.0791238544569223,
+          0.0736858440895464,
+          0.06698841900723375,
+          0.059625319776461114,
+          0.04698700157321208
+        ],
+        "cell_counts": [
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "additive_decomposition": {
+          "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+          "weighting": "cell_counts;transform=log",
+          "n_iterations": 23,
+          "converged": true,
+          "n_abs": 8,
+          "n_dist": 8,
+          "n_cells_fitted": 448,
+          "absolute_only_mean_r2": 0.4030401574766203,
+          "absolute_only_median_r2": 0.41621097071532576,
+          "absolute_only_pooled_r2": 0.47256179517460317,
+          "distance_only_mean_r2": 0.5669396999911476,
+          "distance_only_median_r2": 0.5249176263446945,
+          "distance_only_pooled_r2": 0.5020394375793138,
+          "additive_mean_r2": 0.950060021646135,
+          "additive_median_r2": 0.9501846017668146,
+          "additive_pooled_r2": 0.9222118833364669,
+          "additive_gain_over_absolute": 0.4496500881618637,
+          "additive_gain_over_distance": 0.42017244575715307,
+          "residual_after_additive": 0.07778811666353314,
+          "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+        },
+        "provenance": {
+          "query_tail_fraction": 1.0,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3",
+            "shuffled_filler-20260828-0",
+            "shuffled_filler-20260828-1",
+            "shuffled_filler-20260828-2",
+            "shuffled_filler-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "accumulator": "significance.distance.JointBinAccumulator",
+          "caveat": "distance bin 0 also collects the causally masked upper triangle, whose attention mass is zero and whose allowed-cell count is zero, so it does not contribute to either accumulator"
+        },
+        "variance_explained": {
+          "log": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=log",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.4030401574766203,
+            "absolute_only_median_r2": 0.41621097071532576,
+            "absolute_only_pooled_r2": 0.47256179517460317,
+            "distance_only_mean_r2": 0.5669396999911476,
+            "distance_only_median_r2": 0.5249176263446945,
+            "distance_only_pooled_r2": 0.5020394375793138,
+            "additive_mean_r2": 0.950060021646135,
+            "additive_median_r2": 0.9501846017668146,
+            "additive_pooled_r2": 0.9222118833364669,
+            "additive_gain_over_absolute": 0.4496500881618637,
+            "additive_gain_over_distance": 0.42017244575715307,
+            "residual_after_additive": 0.07778811666353314,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          },
+          "identity": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=identity",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.4450348954521316,
+            "absolute_only_median_r2": 0.33833395759746154,
+            "absolute_only_pooled_r2": 0.4941436569683232,
+            "distance_only_mean_r2": 0.5601142303396693,
+            "distance_only_median_r2": 0.5146090673790527,
+            "distance_only_pooled_r2": 0.5865882555947661,
+            "additive_mean_r2": 0.9409943056291615,
+            "additive_median_r2": 0.9958283617232908,
+            "additive_pooled_r2": 0.9665568835335482,
+            "additive_gain_over_absolute": 0.472413226565225,
+            "additive_gain_over_distance": 0.37996862793878206,
+            "residual_after_additive": 0.03344311646645182,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          }
+        },
+        "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe."
+        }
+      }
+    },
+    "nimbus": {
+      "model_key": "nimbus",
+      "backend_pinned": true,
+      "dtype_approximated": false,
+      "arch": {
+        "num_layers": 28,
+        "num_q_heads": 16,
+        "num_kv_heads": 8,
+        "kv_group_size": 2
+      },
+      "bias_random_ids_seconds": 31.437744399998337,
+      "bias_shuffled_filler_seconds": 31.50007939999705,
+      "distance_seconds": 189.68181410000034,
+      "bias_pooled": {
+        "model_key": "nimbus",
+        "shape": [
+          28,
+          16,
+          16
+        ],
+        "binning": {
+          "kind": "absolute",
+          "name": "absolute16",
+          "n_bins": 16,
+          "domain": "source_index_over_sequence_length"
+        },
+        "context_kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "n_contexts": 8,
+        "bin_centers": [
+          0.03125,
+          0.09375,
+          0.15625,
+          0.21875,
+          0.28125,
+          0.34375,
+          0.40625,
+          0.46875,
+          0.53125,
+          0.59375,
+          0.65625,
+          0.71875,
+          0.78125,
+          0.84375,
+          0.90625,
+          0.96875
+        ],
+        "attn_by_bin_pooled": [
+          0.3557354037200987,
+          0.012478772039613216,
+          0.012034480143452953,
+          0.01240965638518497,
+          0.013362002360994708,
+          0.014297971603991155,
+          0.015895930819894988,
+          0.018013828146925762,
+          0.020941492001707102,
+          0.025084074690859638,
+          0.030505996224560603,
+          0.04451873017351211,
+          0.1227669435725486,
+          0.1148035413732559,
+          0.10283970339179316,
+          0.0843102509533732
+        ],
+        "qk_logit_mean_pooled": [
+          -1.9163839836523948,
+          -2.1435990592163745,
+          -2.040491998285412,
+          -2.0173160321189294,
+          -1.8585882944975975,
+          -1.747468606646797,
+          -1.5712657938317014,
+          -1.3344042397399594,
+          -1.041809104719326,
+          -0.6651955521379266,
+          -0.271185753302981,
+          0.3173057721083166,
+          1.2898446791249643,
+          1.7712034888717252,
+          2.3697085539804448,
+          3.3433646808889534
+        ],
+        "entropy_by_layer": [
+          3.2032699954288546,
+          4.387553286040202,
+          4.029470507404767,
+          3.2043645053345244,
+          2.4206669752602465,
+          1.8478095715399832,
+          2.968778456794098,
+          3.4221117423148826,
+          3.852890148817096,
+          3.7303051971830428,
+          2.9473797854734585,
+          3.744648860534653,
+          4.064921917393804,
+          4.865648750565015,
+          3.564950310974382,
+          3.3861660115071572,
+          4.483179457951337,
+          4.273825437296182,
+          4.34941536153201,
+          4.755783742410131,
+          3.8954816764453426,
+          3.865029293112457,
+          3.6813016665400937,
+          3.5608344486681744,
+          4.070363367951359,
+          4.9144531856291,
+          4.309131989866728,
+          1.06699125078012
+        ],
+        "edge_bias_score_mean": 0.07934484069460933,
+        "middle_mass_mean": 0.18262002602244604,
+        "kv_head_dispersion_mean": 0.022130589306131255,
+        "provenance": {
+          "query_tail_fraction": 0.25,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "n_query_rows": 8192,
+          "capture_what": [
+            "attn_by_bin",
+            "qk_logit_mean",
+            "attn_entropy"
+          ],
+          "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias",
+          "pooled_over_kinds": {
+            "random_ids": 4,
+            "shuffled_filler": 4
+          },
+          "pooling_weights": [
+            0.5,
+            0.5
+          ],
+          "sd_note": "attn_by_bin_sd is None on a pooled object: the per-kind runs return a mean and an sd but not the per-context arrays, so a correct within-set spread cannot be reconstructed here. Each kind's own sd is in its own npz and in the summary.",
+          "kv_rollup_is_an_approximation": true,
+          "kv_rollup_note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+          "backend_pinned": true,
+          "dtype_approximated": false,
+          "arch": {
+            "num_layers": 28,
+            "num_q_heads": 16,
+            "num_kv_heads": 8,
+            "kv_group_size": 2
+          },
+          "bias_random_ids_seconds": 31.437744399998337,
+          "bias_shuffled_filler_seconds": 31.50007939999705,
+          "distance_seconds": 189.68181410000034
+        },
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "attn_dispersion_mean": 0.022130589306131255,
+          "attn_dispersion_max": 0.078018685600041,
+          "attn_dispersion_over_group_mean_median": 0.27034141475288737,
+          "attn_dispersion_over_group_mean_max": 1.248307570142412,
+          "qk_dispersion_mean": 2.4690723672443204
+        },
+        "edge_bias": {
+          "mean": 0.07934484069460933,
+          "max": 0.12492526468122377,
+          "max_at": {
+            "layer": 5,
+            "q_head": 0
+          },
+          "middle_mass_mean": 0.18262002602244604,
+          "middle_mass_min": 0.0002969506028924103,
+          "n_heads_edge_biased": 419,
+          "n_heads": 448
+        }
+      },
+      "bias_by_kind": {
+        "random_ids": {
+          "model_key": "nimbus",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "random_ids"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.353359147610809,
+            0.012321469107429942,
+            0.012125517952363716,
+            0.012639124059114978,
+            0.013608115270646138,
+            0.014767409590804003,
+            0.016202540790436388,
+            0.01758153291149797,
+            0.020950074875918788,
+            0.02480007905104868,
+            0.03045313110823971,
+            0.04376529114518457,
+            0.12334375104861971,
+            0.11487037363183157,
+            0.10369346830358898,
+            0.08551788482623124
+          ],
+          "qk_logit_mean_pooled": [
+            -1.8770775328736622,
+            -2.0773495472642645,
+            -1.9519310360421318,
+            -1.9219769250967471,
+            -1.763635871046144,
+            -1.6383256701925413,
+            -1.4769890500447869,
+            -1.2770495770640926,
+            -0.9575300832910411,
+            -0.5950328195215694,
+            -0.1900297953725385,
+            0.3829176029391874,
+            1.361391444877849,
+            1.839703916745922,
+            2.452636803087379,
+            3.4346977591950627
+          ],
+          "entropy_by_layer": [
+            3.208991148683708,
+            4.358949149493128,
+            4.034697378985584,
+            3.23761212505633,
+            2.459905335213989,
+            1.8438927910465281,
+            2.992802119930275,
+            3.412614727858454,
+            3.8038865631679073,
+            3.7274048986146227,
+            2.923497078474611,
+            3.7563049754244275,
+            4.080804028082639,
+            4.833135680994019,
+            3.549435243010521,
+            3.3679199015023187,
+            4.464004633482546,
+            4.274131189566106,
+            4.314517493126914,
+            4.704035789007321,
+            3.925111748278141,
+            3.8846695525571704,
+            3.680144268553704,
+            3.580430247122422,
+            4.058212292729877,
+            4.893398814019747,
+            4.300273821281735,
+            1.0890699447772931
+          ],
+          "edge_bias_score_mean": 0.0794678202245266,
+          "middle_mass_mean": 0.18212817474377624,
+          "kv_head_dispersion_mean": 0.022135868714821212,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "random_ids-20260828-0",
+              "random_ids-20260828-1",
+              "random_ids-20260828-2",
+              "random_ids-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.022135868714821212,
+            "attn_dispersion_max": 0.07737153305259857,
+            "attn_dispersion_over_group_mean_median": 0.27426745820091203,
+            "attn_dispersion_over_group_mean_max": 1.2379615413980538,
+            "qk_dispersion_mean": 2.481862689958106
+          },
+          "edge_bias": {
+            "mean": 0.0794678202245266,
+            "max": 0.12492183999211048,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18212817474377624,
+            "middle_mass_min": 0.00031042009677014273,
+            "n_heads_edge_biased": 419,
+            "n_heads": 448
+          }
+        },
+        "shuffled_filler": {
+          "model_key": "nimbus",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "shuffled_filler"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3581116598293884,
+            0.01263607497179649,
+            0.011943442334542193,
+            0.012180188711254964,
+            0.013115889451343274,
+            0.013828533617178307,
+            0.015589320849353586,
+            0.01844612338235355,
+            0.02093290912749541,
+            0.025368070330670598,
+            0.0305588613408815,
+            0.045272169201839636,
+            0.12219013609647748,
+            0.11473670911468023,
+            0.10198593847999733,
+            0.08310261708051517
+          ],
+          "qk_logit_mean_pooled": [
+            -1.9556904344311274,
+            -2.209848571168485,
+            -2.1290529605286923,
+            -2.1126551391411112,
+            -1.9535407179490514,
+            -1.856611543101053,
+            -1.6655425376186161,
+            -1.3917589024158263,
+            -1.1260881261476112,
+            -0.7353582847542839,
+            -0.35234171123342356,
+            0.2516939412774458,
+            1.2182979133720795,
+            1.7027030609975295,
+            2.2867803048735107,
+            3.252031602582844
+          ],
+          "entropy_by_layer": [
+            3.197548842174001,
+            4.4161574225872755,
+            4.02424363582395,
+            3.1711168856127188,
+            2.381428615306504,
+            1.8517263520334382,
+            2.9447547936579213,
+            3.431608756771311,
+            3.9018937344662845,
+            3.733205495751463,
+            2.971262492472306,
+            3.7329927456448786,
+            4.049039806704968,
+            4.898161820136011,
+            3.580465378938243,
+            3.404412121511996,
+            4.502354282420129,
+            4.273519685026258,
+            4.384313229937106,
+            4.807531695812941,
+            3.865851604612544,
+            3.845389033667743,
+            3.6824590645264834,
+            3.541238650213927,
+            4.08251444317284,
+            4.935507557238452,
+            4.317990158451721,
+            1.044912556782947
+          ],
+          "edge_bias_score_mean": 0.07922186116469206,
+          "middle_mass_mean": 0.18311187730111583,
+          "kv_head_dispersion_mean": 0.02221555172352931,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "shuffled_filler-20260828-0",
+              "shuffled_filler-20260828-1",
+              "shuffled_filler-20260828-2",
+              "shuffled_filler-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.02221555172352931,
+            "attn_dispersion_max": 0.07866583814748343,
+            "attn_dispersion_over_group_mean_median": 0.254947080269362,
+            "attn_dispersion_over_group_mean_max": 1.2586534570916847,
+            "qk_dispersion_mean": 2.456716433197163
+          },
+          "edge_bias": {
+            "mean": 0.07922186116469206,
+            "max": 0.12492868937033702,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.18311187730111583,
+            "middle_mass_min": 0.00028348110901467785,
+            "n_heads_edge_biased": 416,
+            "n_heads": 448
+          }
+        }
+      },
+      "kind_agreement": {
+        "kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "random_ids_vs_shuffled_filler": {
+          "attn_pearson": 0.9983897565995609,
+          "attn_spearman": 0.9982587393609981,
+          "attn_max_abs_diff": 0.14820802677422762,
+          "attn_mean_abs_diff": 0.0028618885696086033,
+          "qk_spearman": 0.999449661267805,
+          "entropy_mean_abs_diff": 0.08921062726741573
+        }
+      },
+      "distance": {
+        "model_key": "nimbus",
+        "shape": [
+          28,
+          16,
+          8,
+          8
+        ],
+        "absolute_binning": {
+          "kind": "absolute",
+          "name": "absolute8",
+          "n_bins": 8,
+          "domain": "source_index_over_sequence_length"
+        },
+        "distance_binning": {
+          "kind": "distance",
+          "name": "distance8",
+          "n_bins": 8,
+          "edges": [
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "domain": "(query_index - source_index) / sequence_length"
+        },
+        "n_contexts": 8,
+        "distance_marginal_pooled": [
+          0.5446411993967196,
+          0.1098586727246575,
+          0.08071401309816705,
+          0.06476424400216631,
+          0.05699932024868361,
+          0.05138938377618078,
+          0.04729645095682224,
+          0.04420896384014062
+        ],
+        "absolute_marginal_pooled": [
+          0.4877340197754072,
+          0.09988771945466256,
+          0.08687488941924235,
+          0.07894550564325252,
+          0.07346437808210007,
+          0.06679838351027383,
+          0.05938579227385789,
+          0.046781559884741294
+        ],
+        "cell_counts": [
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "additive_decomposition": {
+          "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+          "weighting": "cell_counts;transform=log",
+          "n_iterations": 23,
+          "converged": true,
+          "n_abs": 8,
+          "n_dist": 8,
+          "n_cells_fitted": 448,
+          "absolute_only_mean_r2": 0.40321399356799414,
+          "absolute_only_median_r2": 0.4155897797622342,
+          "absolute_only_pooled_r2": 0.4729848192687126,
+          "distance_only_mean_r2": 0.5665308284362675,
+          "distance_only_median_r2": 0.5216564082118074,
+          "distance_only_pooled_r2": 0.5017569260681529,
+          "additive_mean_r2": 0.95018546694241,
+          "additive_median_r2": 0.950677589163647,
+          "additive_pooled_r2": 0.9222390006359023,
+          "additive_gain_over_absolute": 0.44925418136718964,
+          "additive_gain_over_distance": 0.42048207456774933,
+          "residual_after_additive": 0.07776099936409775,
+          "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+        },
+        "provenance": {
+          "query_tail_fraction": 1.0,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3",
+            "shuffled_filler-20260828-0",
+            "shuffled_filler-20260828-1",
+            "shuffled_filler-20260828-2",
+            "shuffled_filler-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "accumulator": "significance.distance.JointBinAccumulator",
+          "caveat": "distance bin 0 also collects the causally masked upper triangle, whose attention mass is zero and whose allowed-cell count is zero, so it does not contribute to either accumulator"
+        },
+        "variance_explained": {
+          "log": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=log",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.40321399356799414,
+            "absolute_only_median_r2": 0.4155897797622342,
+            "absolute_only_pooled_r2": 0.4729848192687126,
+            "distance_only_mean_r2": 0.5665308284362675,
+            "distance_only_median_r2": 0.5216564082118074,
+            "distance_only_pooled_r2": 0.5017569260681529,
+            "additive_mean_r2": 0.95018546694241,
+            "additive_median_r2": 0.950677589163647,
+            "additive_pooled_r2": 0.9222390006359023,
+            "additive_gain_over_absolute": 0.44925418136718964,
+            "additive_gain_over_distance": 0.42048207456774933,
+            "residual_after_additive": 0.07776099936409775,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          },
+          "identity": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=identity",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.44619381855485685,
+            "absolute_only_median_r2": 0.33843497643558595,
+            "absolute_only_pooled_r2": 0.4954220126180483,
+            "distance_only_mean_r2": 0.5584291943762982,
+            "distance_only_median_r2": 0.5115294258096759,
+            "distance_only_pooled_r2": 0.5851227217249041,
+            "additive_mean_r2": 0.9405815561000433,
+            "additive_median_r2": 0.9957492574723443,
+            "additive_pooled_r2": 0.9663437917022134,
+            "additive_gain_over_absolute": 0.4709217790841651,
+            "additive_gain_over_distance": 0.3812210699773093,
+            "residual_after_additive": 0.033656208297786594,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          }
+        },
+        "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe."
+        }
+      }
+    },
+    "supa_a11": {
+      "model_key": "supa_a11",
+      "backend_pinned": true,
+      "dtype_approximated": false,
+      "arch": {
+        "num_layers": 28,
+        "num_q_heads": 16,
+        "num_kv_heads": 8,
+        "kv_group_size": 2
+      },
+      "bias_random_ids_seconds": 27.08396929999799,
+      "bias_shuffled_filler_seconds": 26.757456999999704,
+      "distance_seconds": 180.48268430000098,
+      "bias_pooled": {
+        "model_key": "supa_a11",
+        "shape": [
+          28,
+          16,
+          16
+        ],
+        "binning": {
+          "kind": "absolute",
+          "name": "absolute16",
+          "n_bins": 16,
+          "domain": "source_index_over_sequence_length"
+        },
+        "context_kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "n_contexts": 8,
+        "bin_centers": [
+          0.03125,
+          0.09375,
+          0.15625,
+          0.21875,
+          0.28125,
+          0.34375,
+          0.40625,
+          0.46875,
+          0.53125,
+          0.59375,
+          0.65625,
+          0.71875,
+          0.78125,
+          0.84375,
+          0.90625,
+          0.96875
+        ],
+        "attn_by_bin_pooled": [
+          0.35843971832359295,
+          0.013463482334397472,
+          0.013462247360954345,
+          0.01414518738632913,
+          0.015386752898280065,
+          0.01619690942036251,
+          0.017660563344829176,
+          0.020009758914251767,
+          0.023026526667194958,
+          0.02757496258130589,
+          0.03347515682681238,
+          0.04645479099895056,
+          0.11777170589770744,
+          0.10884792558956795,
+          0.0961355070745721,
+          0.07794448224617716
+        ],
+        "qk_logit_mean_pooled": [
+          -1.8272175130628787,
+          -1.9723325117966428,
+          -1.8349935450046198,
+          -1.7953677541102877,
+          -1.6408688221091228,
+          -1.5498867713711368,
+          -1.4029600463038443,
+          -1.1761521626438594,
+          -0.8993725134524604,
+          -0.5276409837754598,
+          -0.13122450443997227,
+          0.41963712157443717,
+          1.297561122105289,
+          1.7376413481828463,
+          2.2591200024227356,
+          3.1175922770220756
+        ],
+        "entropy_by_layer": [
+          3.1961775098461658,
+          4.37031932012178,
+          4.051612166571431,
+          3.2505856138595846,
+          2.5534053359297104,
+          1.8765123881603358,
+          2.956562549894443,
+          3.3802093907725066,
+          3.994997283036355,
+          3.7262602042173967,
+          3.10886634059716,
+          3.6807418414682616,
+          3.984869890846312,
+          4.9032001291634515,
+          3.7643627939978614,
+          3.506598292326089,
+          4.5419655807781965,
+          4.071498892211821,
+          4.36115047999192,
+          5.185142563190311,
+          4.079065916419495,
+          3.8332157241529785,
+          3.9848144439747557,
+          3.4836491797468625,
+          4.042025363087305,
+          4.968687202781439,
+          4.5640071719826665,
+          1.1106077827644185
+        ],
+        "edge_bias_score_mean": 0.0750531043201639,
+        "middle_mass_mean": 0.1997854216519873,
+        "kv_head_dispersion_mean": 0.02236242461836949,
+        "provenance": {
+          "query_tail_fraction": 0.25,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "n_query_rows": 8192,
+          "capture_what": [
+            "attn_by_bin",
+            "qk_logit_mean",
+            "attn_entropy"
+          ],
+          "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias",
+          "pooled_over_kinds": {
+            "random_ids": 4,
+            "shuffled_filler": 4
+          },
+          "pooling_weights": [
+            0.5,
+            0.5
+          ],
+          "sd_note": "attn_by_bin_sd is None on a pooled object: the per-kind runs return a mean and an sd but not the per-context arrays, so a correct within-set spread cannot be reconstructed here. Each kind's own sd is in its own npz and in the summary.",
+          "kv_rollup_is_an_approximation": true,
+          "kv_rollup_note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+          "backend_pinned": true,
+          "dtype_approximated": false,
+          "arch": {
+            "num_layers": 28,
+            "num_q_heads": 16,
+            "num_kv_heads": 8,
+            "kv_group_size": 2
+          },
+          "bias_random_ids_seconds": 27.08396929999799,
+          "bias_shuffled_filler_seconds": 26.757456999999704,
+          "distance_seconds": 180.48268430000098
+        },
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+          "attn_dispersion_mean": 0.02236242461836949,
+          "attn_dispersion_max": 0.07552713242420965,
+          "attn_dispersion_over_group_mean_median": 0.2719799136541978,
+          "attn_dispersion_over_group_mean_max": 1.2084339970659812,
+          "qk_dispersion_mean": 2.4366624363028424
+        },
+        "edge_bias": {
+          "mean": 0.0750531043201639,
+          "max": 0.12491251140454551,
+          "max_at": {
+            "layer": 5,
+            "q_head": 0
+          },
+          "middle_mass_mean": 0.1997854216519873,
+          "middle_mass_min": 0.0003469956573098898,
+          "n_heads_edge_biased": 393,
+          "n_heads": 448
+        }
+      },
+      "bias_by_kind": {
+        "random_ids": {
+          "model_key": "supa_a11",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "random_ids"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.3554341674717177,
+            0.013362773127076772,
+            0.01351440401137032,
+            0.014231244330939521,
+            0.015453286194916213,
+            0.016485534418831906,
+            0.01780022596413541,
+            0.01960607104909481,
+            0.0230519471709353,
+            0.027278084439688297,
+            0.03336428215197884,
+            0.04603180124315388,
+            0.11869577245811667,
+            0.10944935990786624,
+            0.09702684685502001,
+            0.07920979986938294
+          ],
+          "qk_logit_mean_pooled": [
+            -1.8055214538337947,
+            -1.9033893847869356,
+            -1.7541733417162308,
+            -1.7142255361032182,
+            -1.5624090043942747,
+            -1.4576630192553108,
+            -1.3249523948417001,
+            -1.1187268607812126,
+            -0.8197611062988537,
+            -0.46048548031727216,
+            -0.05695067441372105,
+            0.4892872220154751,
+            1.3731079176091368,
+            1.8109859723984612,
+            2.34272144376616,
+            3.217962757047904
+          ],
+          "entropy_by_layer": [
+            3.2020743447064888,
+            4.339529062155634,
+            4.049077633302659,
+            3.286268710391596,
+            2.584645157912746,
+            1.8726644796261098,
+            2.9721755886566825,
+            3.369709622580558,
+            3.9523861994966865,
+            3.726125070359558,
+            3.073125710710883,
+            3.702478773717303,
+            4.045979579910636,
+            4.897671351674944,
+            3.7377524697221816,
+            3.4958406129153445,
+            4.525552152888849,
+            4.088416924001649,
+            4.33630903204903,
+            5.11824059789069,
+            4.105007691192441,
+            3.8688983368920162,
+            3.9751301914220676,
+            3.5103499109391123,
+            4.02402847900521,
+            4.942319326743018,
+            4.552988036099123,
+            1.1366523122269427
+          ],
+          "edge_bias_score_mean": 0.07523164192484444,
+          "middle_mass_mean": 0.19907123263273466,
+          "kv_head_dispersion_mean": 0.022377167410058765,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "random_ids-20260828-0",
+              "random_ids-20260828-1",
+              "random_ids-20260828-2",
+              "random_ids-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.022377167410058765,
+            "attn_dispersion_max": 0.07654622958357593,
+            "attn_dispersion_over_group_mean_median": 0.2622717352097259,
+            "attn_dispersion_over_group_mean_max": 1.2247392989307404,
+            "qk_dispersion_mean": 2.44864517463783
+          },
+          "edge_bias": {
+            "mean": 0.07523164192484444,
+            "max": 0.12491046895138425,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.19907123263273466,
+            "middle_mass_min": 0.00035487669811118394,
+            "n_heads_edge_biased": 399,
+            "n_heads": 448
+          }
+        },
+        "shuffled_filler": {
+          "model_key": "supa_a11",
+          "shape": [
+            28,
+            16,
+            16
+          ],
+          "binning": {
+            "kind": "absolute",
+            "name": "absolute16",
+            "n_bins": 16,
+            "domain": "source_index_over_sequence_length"
+          },
+          "context_kinds": [
+            "shuffled_filler"
+          ],
+          "n_contexts": 4,
+          "bin_centers": [
+            0.03125,
+            0.09375,
+            0.15625,
+            0.21875,
+            0.28125,
+            0.34375,
+            0.40625,
+            0.46875,
+            0.53125,
+            0.59375,
+            0.65625,
+            0.71875,
+            0.78125,
+            0.84375,
+            0.90625,
+            0.96875
+          ],
+          "attn_by_bin_pooled": [
+            0.36144526917546826,
+            0.013564191541718174,
+            0.013410090710538367,
+            0.01405913044171874,
+            0.015320219601643916,
+            0.01590828442189312,
+            0.017520900725522943,
+            0.020413446779408723,
+            0.023001106163454615,
+            0.02787184072292348,
+            0.033586031501645915,
+            0.04687778075474723,
+            0.1168476393372982,
+            0.10824649127126966,
+            0.09524416729412419,
+            0.07667916462297139
+          ],
+          "qk_logit_mean_pooled": [
+            -1.8489135722919627,
+            -2.04127563880635,
+            -1.9158137482930084,
+            -1.8765099721173573,
+            -1.7193286398239707,
+            -1.6421105234869628,
+            -1.4809676977659885,
+            -1.233577464506506,
+            -0.9789839206060671,
+            -0.5947964872336472,
+            -0.2054983344662235,
+            0.34998702113339925,
+            1.222014326601441,
+            1.664296723967232,
+            2.175518561079311,
+            3.017221796996247
+          ],
+          "entropy_by_layer": [
+            3.190280674985843,
+            4.401109578087926,
+            4.054146699840203,
+            3.214902517327573,
+            2.5221655139466748,
+            1.8803602966945618,
+            2.940949511132203,
+            3.390709158964455,
+            4.037608366576023,
+            3.7263953380752355,
+            3.144606970483437,
+            3.6590049092192203,
+            3.923760201781988,
+            4.908728906651959,
+            3.7909731182735413,
+            3.5173559717368335,
+            4.5583790086675435,
+            4.054580860421993,
+            4.3859919279348105,
+            5.252044528489932,
+            4.053124141646549,
+            3.797533111413941,
+            3.994498696527444,
+            3.4569484485546127,
+            4.0600222471694,
+            4.99505507881986,
+            4.57502630786621,
+            1.0845632533018943
+          ],
+          "edge_bias_score_mean": 0.07487456671548338,
+          "middle_mass_mean": 0.20049961067123995,
+          "kv_head_dispersion_mean": 0.02245158459898861,
+          "provenance": {
+            "query_tail_fraction": 0.25,
+            "chunk": 256,
+            "context_ids": [
+              "shuffled_filler-20260828-0",
+              "shuffled_filler-20260828-1",
+              "shuffled_filler-20260828-2",
+              "shuffled_filler-20260828-3"
+            ],
+            "context_lengths": [
+              8192,
+              8192,
+              8192,
+              8192
+            ],
+            "n_query_rows": 8192,
+            "capture_what": [
+              "attn_by_bin",
+              "qk_logit_mean",
+              "attn_entropy"
+            ],
+            "caveat": "measured on content-free contexts; attn_by_bin averages only the last 0.25 of query rows so causal masking does not masquerade as positional bias"
+          },
+          "kv_rollup": {
+            "is_an_approximation": true,
+            "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe.",
+            "attn_dispersion_mean": 0.02245158459898861,
+            "attn_dispersion_max": 0.07598235026242106,
+            "attn_dispersion_over_group_mean_median": 0.28478925340792416,
+            "attn_dispersion_over_group_mean_max": 1.2157274972123477,
+            "qk_dispersion_mean": 2.4250304567001066
+          },
+          "edge_bias": {
+            "mean": 0.07487456671548338,
+            "max": 0.12491455385770678,
+            "max_at": {
+              "layer": 5,
+              "q_head": 0
+            },
+            "middle_mass_mean": 0.20049961067123995,
+            "middle_mass_min": 0.00033911461650859565,
+            "n_heads_edge_biased": 390,
+            "n_heads": 448
+          }
+        }
+      },
+      "kind_agreement": {
+        "kinds": [
+          "random_ids",
+          "shuffled_filler"
+        ],
+        "random_ids_vs_shuffled_filler": {
+          "attn_pearson": 0.9984064407650172,
+          "attn_spearman": 0.9981845249625175,
+          "attn_max_abs_diff": 0.1306924307718873,
+          "attn_mean_abs_diff": 0.0029094471089946084,
+          "qk_spearman": 0.9994579044013581,
+          "entropy_mean_abs_diff": 0.0952226325758342
+        }
+      },
+      "distance": {
+        "model_key": "supa_a11",
+        "shape": [
+          28,
+          16,
+          8,
+          8
+        ],
+        "absolute_binning": {
+          "kind": "absolute",
+          "name": "absolute8",
+          "n_bins": 8,
+          "domain": "source_index_over_sequence_length"
+        },
+        "distance_binning": {
+          "kind": "distance",
+          "name": "distance8",
+          "n_bins": 8,
+          "edges": [
+            0.125,
+            0.25,
+            0.375,
+            0.5,
+            0.625,
+            0.75,
+            0.875
+          ],
+          "domain": "(query_index - source_index) / sequence_length"
+        },
+        "n_contexts": 8,
+        "distance_marginal_pooled": [
+          0.5254187351250234,
+          0.11789851599098711,
+          0.0855707909608989,
+          0.06699770734165814,
+          0.05884697509013596,
+          0.05269485724397782,
+          0.047896211261075905,
+          0.04454977762940514
+        ],
+        "absolute_marginal_pooled": [
+          0.49579468973373814,
+          0.10101310644992623,
+          0.08757260393642241,
+          0.07845295152472229,
+          0.07213098427555817,
+          0.06474620542846513,
+          0.05664850043992585,
+          0.043514528854404134
+        ],
+        "cell_counts": [
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            128.0,
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          [
+            64.0625,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ]
+        ],
+        "additive_decomposition": {
+          "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+          "weighting": "cell_counts;transform=log",
+          "n_iterations": 23,
+          "converged": true,
+          "n_abs": 8,
+          "n_dist": 8,
+          "n_cells_fitted": 448,
+          "absolute_only_mean_r2": 0.41309716639845556,
+          "absolute_only_median_r2": 0.4247817735924716,
+          "absolute_only_pooled_r2": 0.4658232847397996,
+          "distance_only_mean_r2": 0.5441801058992549,
+          "distance_only_median_r2": 0.4964766403450125,
+          "distance_only_pooled_r2": 0.5046557720268652,
+          "additive_mean_r2": 0.9504650768722777,
+          "additive_median_r2": 0.9524257433311593,
+          "additive_pooled_r2": 0.9188375994029139,
+          "additive_gain_over_absolute": 0.45301431466311426,
+          "additive_gain_over_distance": 0.4141818273760487,
+          "residual_after_additive": 0.08116240059708613,
+          "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+        },
+        "provenance": {
+          "query_tail_fraction": 1.0,
+          "chunk": 256,
+          "context_ids": [
+            "random_ids-20260828-0",
+            "random_ids-20260828-1",
+            "random_ids-20260828-2",
+            "random_ids-20260828-3",
+            "shuffled_filler-20260828-0",
+            "shuffled_filler-20260828-1",
+            "shuffled_filler-20260828-2",
+            "shuffled_filler-20260828-3"
+          ],
+          "context_lengths": [
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192,
+            8192
+          ],
+          "accumulator": "significance.distance.JointBinAccumulator",
+          "caveat": "distance bin 0 also collects the causally masked upper triangle, whose attention mass is zero and whose allowed-cell count is zero, so it does not contribute to either accumulator"
+        },
+        "variance_explained": {
+          "log": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=log",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.41309716639845556,
+            "absolute_only_median_r2": 0.4247817735924716,
+            "absolute_only_pooled_r2": 0.4658232847397996,
+            "distance_only_mean_r2": 0.5441801058992549,
+            "distance_only_median_r2": 0.4964766403450125,
+            "distance_only_pooled_r2": 0.5046557720268652,
+            "additive_mean_r2": 0.9504650768722777,
+            "additive_median_r2": 0.9524257433311593,
+            "additive_pooled_r2": 0.9188375994029139,
+            "additive_gain_over_absolute": 0.45301431466311426,
+            "additive_gain_over_distance": 0.4141818273760487,
+            "residual_after_additive": 0.08116240059708613,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          },
+          "identity": {
+            "identifiability": "sum_a A[a] = 0 and sum_r D[r] = 0 (unweighted over bins); mu carries the level",
+            "weighting": "cell_counts;transform=identity",
+            "converged": true,
+            "n_cells_fitted": 448,
+            "absolute_only_mean_r2": 0.4591000993876471,
+            "absolute_only_median_r2": 0.3486822874817472,
+            "absolute_only_pooled_r2": 0.5090828815181754,
+            "distance_only_mean_r2": 0.5238172780694438,
+            "distance_only_median_r2": 0.45096510058458444,
+            "distance_only_pooled_r2": 0.5618977216771496,
+            "additive_mean_r2": 0.9293855311226729,
+            "additive_median_r2": 0.9931806066523614,
+            "additive_pooled_r2": 0.9608936227172626,
+            "additive_gain_over_absolute": 0.45181074119908726,
+            "additive_gain_over_distance": 0.39899590104011307,
+            "residual_after_additive": 0.03910637728273736,
+            "reading": "residual_after_additive is the share of the joint (absolute x distance) variance that neither an absolute-position effect nor a distance effect captures, i.e. genuine interaction"
+          }
+        },
+        "spec_12_3_note": "SPEC 12.3's T<=2048 restriction is on distance-binned INTERVENTIONS, which need a [1, H, T, T] mask. Distance-binned CAPTURE chunks over query rows and has no such limit; these arrays were measured at the context length recorded in context_tokens.",
+        "kv_rollup": {
+          "is_an_approximation": true,
+          "note": "attention probabilities are per QUERY head; SPEC 5.3 Mode 1 and Mode 2 act at KV-head granularity. The [l, kv_head, b] arrays are the mean over the query heads of each GQA group -- an APPROXIMATION, not a measurement. kv_head_dispersion_* reports the within-group spread the mean threw away; where it is comparable to the group mean the rollup summarises nothing and any Mode 1/2 table built from it is unsafe."
+        }
+      }
+    }
+  }
+}

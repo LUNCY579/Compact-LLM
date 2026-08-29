@@ -1,0 +1,119 @@
+{
+  "generated_at_utc": "2026-08-29T10:54:08Z",
+  "lab_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab",
+  "git": {
+    "repo_root": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble",
+    "commit": "25852098d40cc8378dfff5ae630c7af9e624a4bf",
+    "branch": "research/positional-sequential-attention",
+    "dirty": true,
+    "dirty_paths": [
+      "rineya_halo_long_context_sft_v1/",
+      "rineya_positional_sequential_attention_lab/results/phase4b/",
+      "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2.yaml",
+      "rineya_significance_native_architecture_lab/configs/published_family_showcase64_v2_finalize.yaml",
+      "rineya_significance_native_architecture_lab/results/runs/halo_compression_frontier_v1/",
+      "rineya_significance_native_architecture_lab/scripts/finalize_published_family_showcase64.py",
+      "rineya_significance_native_architecture_lab/scripts/run_published_family_core_showcase64.py",
+      "rineya_significance_native_architecture_lab/tests/test_published_family_showcase64_v2.py"
+    ],
+    "dirty_path_count": 8
+  },
+  "versions": {
+    "python": "3.11.15",
+    "numpy": "2.4.6",
+    "scipy": "1.17.1",
+    "torch": "2.12.1+cu126",
+    "transformers": "5.14.1",
+    "pandas": "3.0.5",
+    "sklearn": "1.9.0"
+  },
+  "gpu": {
+    "cuda_available": true,
+    "device_count": 1,
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_memory_bytes": 8585216000,
+    "gpu_source": "torch"
+  },
+  "platform": {
+    "os": "Windows-10-10.0.26200-SP0",
+    "system": "Windows",
+    "machine": "AMD64",
+    "processor": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+    "cpu_count": 32,
+    "hostname": "TheFakeGod",
+    "user": "clclc",
+    "executable": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe"
+  },
+  "config": {
+    "script": "phase4b_bias_and_distance.py",
+    "models": [
+      "qwen3",
+      "halo",
+      "nimbus",
+      "supa_a11"
+    ],
+    "kinds": [
+      "random_ids",
+      "shuffled_filler"
+    ],
+    "context_tokens": 8192,
+    "n_per_kind": 4,
+    "bias_bins": 16,
+    "abs_bins": 8,
+    "dist_bins": 8,
+    "layers": null,
+    "chunk": 256,
+    "query_tail_fraction": 0.25,
+    "seed": 20260828,
+    "split": "calibration",
+    "unigram_source": "benchmark",
+    "unigram_n_texts": 32,
+    "unigram_split": "calibration",
+    "unigram_item_ids": [
+      "013f47abf024809d",
+      "05d61e98dc7d3a5f",
+      "09b4de1fdd9b3d31",
+      "11cec8039e0b940f",
+      "14af1b144fe5f353",
+      "29994d0d2d59e3ec",
+      "2b32e944cdd37251",
+      "342d43f9ea1c42ac",
+      "39c63164d6f50e22",
+      "484605ab952ce55d",
+      "539f2372e33960f4",
+      "55677bdfe9da8307",
+      "56c02cb372fc3da6",
+      "5a1641825d92f33e",
+      "63c3bb822702605f",
+      "6db7abfad6102aa1",
+      "7395faaf2081675d",
+      "7b03a65b2fe276ab",
+      "7ed4746107770bb2",
+      "9925d48e360d1524",
+      "a32dd8acf3c76dd9",
+      "a3a13de8b5320f84",
+      "ab275fb7d9a950cf",
+      "acc1d0c073c480e1",
+      "b58308762de5449f",
+      "bdfa3380cffb709f",
+      "d2262ddfd09d7d0e",
+      "db35ce3628f06077",
+      "dfa0736d6372f4e2",
+      "e2eb59a556fa9696",
+      "ebfb3043acf81f13",
+      "f7d259a7b7cbc783"
+    ]
+  },
+  "config_sha256": "d2fff95087ee202e9951c189d31d510605047cd11d917ce0610b20081d366e9e",
+  "extra": {},
+  "artifact": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\rineya_positional_sequential_attention_lab\\results\\phase4b\\distance_supa_a11.npz",
+    "bytes": 97933,
+    "sha256": "a779c266189cbc8179d5612c820ce6ee5c64633df034b149020f534fd594e9a2",
+    "arrays": [
+      "cell_counts",
+      "joint_mass",
+      "meta"
+    ]
+  }
+}

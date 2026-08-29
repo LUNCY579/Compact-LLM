@@ -10,6 +10,7 @@ the results it would summarise do not exist yet.
 | [`phase2_instrument_calibration.md`](phase2_instrument_calibration.md) | 2b | **complete for its purpose** — a go/no-go check on the instrument, n=162 | that the benchmark has dynamic range on NLL and not on accuracy, and three protocol defects that would have wrecked Phase 3 |
 | [`phase3_preview_positional_fingerprint.md`](phase3_preview_positional_fingerprint.md) | 3 | **preview — superseded** by the row below; retained because it is where the metric decision was made and argued | the choice of primary metric (summed gold NLL) |
 | [`phase3_positional_fingerprint.md`](phase3_positional_fingerprint.md) | 3 | **complete** for the calibration split, teacher-forced — 7830 records, clustered BCa CIs | brief questions 1-3: who loses the middle, who is most robust, who has the smallest gap |
+| [`phase4b_bias_and_distance.md`](phase4b_bias_and_distance.md) | 4b | **complete** — 4 models x 8 control contexts x 2 kinds at 8K, the two kinds agreeing at rho = 0.998 | brief question 7 (absolute vs distance), and the content-independent bias `B` that separates "looks there" from "helps" |
 
 ## How to read the evidence levels
 
@@ -23,7 +24,7 @@ and answers it; it is not sized for the effect estimates it happens to contain.
 they carry no confidence intervals, no paired bootstrap, and small per-cell n. Nothing
 in a preview may be quoted as a result.
 
-## The four findings that changed the plan
+## The five findings that changed the plan
 
 1. **The Halo/Nimbus branch lies on one ray through Qwen3, exactly** (Phase 1 §4).
    `Δnimbus = 0.8 · Δhalo` holds *exactly* in the merge arithmetic — the apparent 10.3 %
@@ -52,6 +53,16 @@ in a preview may be quoted as a result.
    8 nats while its *middle-minus-edge* statistic is not significant at all. "The
    edge-middle gap" is therefore not one number per model, and any intervention has to
    say which shape it is targeting.
+
+5. **Attention position is half absolute and half distance, and the two are
+   complementary** (Phase 4b §2). Absolute-only explains 0.47 of the structure,
+   distance-only 0.50, the additive model **0.92** — identical to within 0.9 % across all
+   four models. So the absolute-binned Significance Matrix that SPEC §5.3 makes the
+   primary grid is, by construction, blind to about half the positional structure. That
+   is a limitation of the cheap intervention to report, not a defect to hide. Separately,
+   Supa-A1.1 has the lowest edge bias and highest middle mass **on contexts with no
+   content at all** — a structural correlate of its behavioural Phase 3 advantage,
+   measured a completely different way.
 
 ## Corrections recorded in place
 
