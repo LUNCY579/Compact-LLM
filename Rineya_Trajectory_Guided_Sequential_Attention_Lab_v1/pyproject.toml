@@ -7,7 +7,7 @@ name = "rineya-tgsa-research"
 version = "0.2.0"
 description = "Auditable reference implementation for Trajectory-Guided Sequential Attention"
 requires-python = ">=3.10"
-dependencies = ["torch>=2.1"]
+dependencies = ["torch>=2.1", "numpy>=1.24"]
 
 [project.optional-dependencies]
 # `test` is the historical name and stays as an alias so older invocations keep
@@ -15,6 +15,10 @@ dependencies = ["torch>=2.1"]
 # resolve to the same pinned set: the Phase-1 launch audit failed because CI
 # installed a `dev` extra that did not exist, so pytest was missing and the job
 # died before the test suite ran.
+# numpy is required at RUNTIME, not just for tests: `state_dict_sha256` hashes
+# tensors through `Tensor.numpy()`, so the whole evidence chain depends on it.
+# torch declares numpy as optional and the CPU-only wheel index does not pull
+# it, which is exactly how CI failed with "Numpy is not available".
 test = ["pytest>=8", "jsonschema>=4.21"]
 dev = ["pytest>=8", "jsonschema>=4.21"]
 

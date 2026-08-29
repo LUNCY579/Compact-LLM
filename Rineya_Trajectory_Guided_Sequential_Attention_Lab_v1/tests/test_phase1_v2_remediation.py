@@ -90,6 +90,28 @@ def test_p0_1_every_extra_the_workflow_installs_is_declared() -> None:
     assert requested <= declared, f"workflow requests undeclared extras: {sorted(requested - declared)}"
 
 
+def test_p0_1_runtime_dependencies_cover_the_evidence_hash_path() -> None:
+    """`state_dict_sha256` hashes through `Tensor.numpy()`.
+
+    torch declares numpy as optional and the CPU-only wheel index does not pull
+    it, so the whole evidence chain silently depended on an undeclared package.
+    CI surfaced this as `RuntimeError: Numpy is not available`.
+    """
+
+    project = tomllib.loads((LAB_ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"]
+    names = {re.split(r"[<>=!\[]", item)[0].strip() for item in project["dependencies"]}
+    assert {"torch", "numpy"} <= names, f"runtime dependencies are incomplete: {sorted(names)}"
+
+
+def test_p0_1_install_probe_covers_every_import_the_pipeline_needs() -> None:
+    workflow = REPO_ROOT / ".github" / "workflows" / "tgsa-phase1.yml"
+    if not workflow.is_file():
+        pytest.skip("lab consumed standalone; repo-root workflow is not present")
+    text = workflow.read_text(encoding="utf-8")
+    for name in ("pytest", "jsonschema", "numpy", "torch"):
+        assert f'"{name}"' in text, f"install probe does not fail closed on missing {name}"
+
+
 def test_p0_1_dev_and_test_extras_both_provide_pytest() -> None:
     extras = tomllib.loads((LAB_ROOT / "pyproject.toml").read_text(encoding="utf-8"))["project"][
         "optional-dependencies"
