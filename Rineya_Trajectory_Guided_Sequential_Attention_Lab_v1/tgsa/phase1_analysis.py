@@ -1,9 +1,10 @@
 """Frozen paired analysis for the TGSA Phase-1 model study.
 
 The primary estimand is a macro-average over registered non-guardrail strata,
-then over paired training seeds. Bootstrap draws resample seeds and, within each
-selected seed, examples inside each stratum. This keeps arm, seed, task, and
-example pairing intact while avoiding domination by a populous stratum.
+then over paired training seeds. Seed and example are CROSSED factors: every
+training seed is evaluated on the same materialized test split. The registered
+bootstrap therefore resamples seed IDs and example IDs and applies the same
+resampled examples to every selected seed, preserving that shared structure.
 """
 
 from __future__ import annotations
@@ -17,6 +18,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Sequence, cast
 
 from .phase1_data import sha256_file
+from .phase1_verify import verify_evidence_chain
 from .phase1_runner import (
     MATRIX_MANIFEST_VERSION,
     REQUIRED_ARMS,
@@ -132,36 +134,72 @@ def paired_seed_stratum_values(
     *,
     score: Callable[[Mapping[str, object], Mapping[str, object]], float],
     include_families: set[str] | None = None,
-) -> dict[int, dict[str, list[float]]]:
+) -> dict[int, dict[str, dict[str, float]]]:
+    """Paired per-example differences keyed by seed, stratum, and example ID.
+
+    Example identity is carried explicitly rather than implied by list position.
+    The crossed bootstrap needs it: seed and example are crossed factors, so a
+    resampled example must be the *same* example in every selected seed.
+    """
+
     if candidate_by_seed.keys() != baseline_by_seed.keys():
         raise ValueError("candidate and baseline seed sets differ")
-    result: dict[int, dict[str, list[float]]] = {}
+    result: dict[int, dict[str, dict[str, float]]] = {}
     for seed in sorted(candidate_by_seed):
         paired = _validate_pair(candidate_by_seed[seed], baseline_by_seed[seed])
-        strata: dict[str, list[float]] = {}
+        strata: dict[str, dict[str, float]] = {}
         for candidate, baseline in paired:
             family = str(candidate["family"])
             if include_families is not None and family not in include_families:
                 continue
             stratum = str(candidate["stratum"])
-            strata.setdefault(stratum, []).append(score(candidate, baseline))
+            strata.setdefault(stratum, {})[str(candidate["example_id"])] = score(candidate, baseline)
         if not strata:
             raise ValueError(f"family filter removed all examples for seed {seed}")
         result[seed] = dict(sorted(strata.items()))
-    reference_strata = set(next(iter(result.values())))
+    reference = next(iter(result.values()))
+    reference_strata = set(reference)
     for seed, strata in result.items():
         if set(strata) != reference_strata:
             raise ValueError(f"stratum set differs for seed {seed}")
+        for stratum in reference_strata:
+            # All seeds are evaluated on the same materialized test split, so
+            # the example set inside a stratum must be identical. If it is not,
+            # the design is not crossed and the paired estimand is undefined.
+            if set(strata[stratum]) != set(reference[stratum]):
+                raise ValueError(
+                    f"seed {seed} stratum {stratum!r} does not share the reference example set; "
+                    "seed and example are not crossed"
+                )
     return result
 
 
-def hierarchical_paired_bootstrap(
-    values: Mapping[int, Mapping[str, Sequence[float]]],
+def crossed_paired_bootstrap(
+    values: Mapping[int, Mapping[str, Mapping[str, float]]],
     *,
     samples: int,
     confidence: float,
     seed: int,
 ) -> BootstrapEstimate:
+    """Two-way paired bootstrap over the crossed seed x example design.
+
+    Every training seed is evaluated on the *same* materialized test examples,
+    so seed and example are crossed, not nested. Each draw therefore resamples
+    seed IDs and, independently, example IDs within each stratum — and then
+    evaluates every selected seed on the *same* resampled examples, preserving
+    the shared-example structure across seeds.
+
+    The pre-remediation estimator resampled examples independently inside each
+    selected seed, which destroys that structure and can understate uncertainty
+    when example-level effects are correlated across seeds
+    (``PHASE1_LAUNCH_AUDIT.md`` finding P0-7).
+
+    Ten thousand draws do not create information: with five training seeds the
+    seed-level resolution remains coarse, which is why the registered gates also
+    require a minimum observed effect and why an outcome-blind power simulation
+    is part of the launch gates.
+    """
+
     if samples <= 0:
         raise ValueError("bootstrap samples must be positive")
     if not 0.0 < confidence < 1.0:
@@ -172,29 +210,43 @@ def hierarchical_paired_bootstrap(
     strata = sorted(next(iter(values.values())))
     if not strata:
         raise ValueError("no paired strata")
+    example_ids: dict[str, list[str]] = {}
+    for stratum in strata:
+        ids = sorted(values[seed_ids[0]][stratum])
+        if not ids:
+            raise ValueError("all seed/stratum cells must be non-empty")
+        example_ids[stratum] = ids
     for seed_id in seed_ids:
         if sorted(values[seed_id]) != strata:
             raise ValueError("all seeds must share the same strata")
-        if any(not values[seed_id][stratum] for stratum in strata):
-            raise ValueError("all seed/stratum cells must be non-empty")
+        for stratum in strata:
+            if sorted(values[seed_id][stratum]) != example_ids[stratum]:
+                raise ValueError("all seeds must share the same examples inside each stratum")
 
-    def cell_macro(seed_id: int) -> float:
-        return sum(sum(values[seed_id][stratum]) / len(values[seed_id][stratum]) for stratum in strata) / len(strata)
+    def macro(seed_id: int, selection: Mapping[str, Sequence[str]]) -> float:
+        total = 0.0
+        for stratum in strata:
+            cell = values[seed_id][stratum]
+            chosen = selection[stratum]
+            total += sum(cell[example_id] for example_id in chosen) / len(chosen)
+        return total / len(strata)
 
-    observed = sum(cell_macro(seed_id) for seed_id in seed_ids) / len(seed_ids)
+    identity = {stratum: example_ids[stratum] for stratum in strata}
+    observed = sum(macro(seed_id, identity) for seed_id in seed_ids) / len(seed_ids)
+
     rng = random.Random(seed)
     draws: list[float] = []
     for _ in range(samples):
         selected_seeds = [rng.choice(seed_ids) for _ in seed_ids]
-        seed_draws: list[float] = []
-        for seed_id in selected_seeds:
-            stratum_draws: list[float] = []
-            for stratum in strata:
-                cell = values[seed_id][stratum]
-                resampled = [rng.choice(cell) for _ in cell]
-                stratum_draws.append(sum(resampled) / len(resampled))
-            seed_draws.append(sum(stratum_draws) / len(stratum_draws))
-        draws.append(sum(seed_draws) / len(seed_draws))
+        # One example resample per draw, shared by every selected seed. This is
+        # what keeps the design crossed.
+        selection = {
+            stratum: [rng.choice(example_ids[stratum]) for _ in example_ids[stratum]]
+            for stratum in strata
+        }
+        draws.append(
+            sum(macro(seed_id, selection) for seed_id in selected_seeds) / len(selected_seeds)
+        )
     draws.sort()
     alpha = (1.0 - confidence) / 2.0
     return BootstrapEstimate(
@@ -210,6 +262,72 @@ def hierarchical_paired_bootstrap(
             len(values[seed_id][stratum]) for seed_id in seed_ids for stratum in strata
         ),
     )
+
+
+def seed_cluster_bootstrap(
+    values: Mapping[int, Mapping[str, Mapping[str, float]]],
+    *,
+    samples: int,
+    confidence: float,
+    seed: int,
+) -> BootstrapEstimate:
+    """Registered alternative: treat the generated test set as fixed.
+
+    Only training seeds are resampled. The resulting interval covers variation
+    across training seeds for *this* materialized test split, so the claim is
+    correspondingly narrower.
+    """
+
+    if samples <= 0:
+        raise ValueError("bootstrap samples must be positive")
+    if not 0.0 < confidence < 1.0:
+        raise ValueError("confidence must be in (0, 1)")
+    seed_ids = sorted(values)
+    strata = sorted(next(iter(values.values())))
+
+    def macro(seed_id: int) -> float:
+        total = 0.0
+        for stratum in strata:
+            cell = values[seed_id][stratum]
+            total += sum(cell.values()) / len(cell)
+        return total / len(strata)
+
+    per_seed = {seed_id: macro(seed_id) for seed_id in seed_ids}
+    observed = sum(per_seed.values()) / len(seed_ids)
+    rng = random.Random(seed)
+    draws = sorted(
+        sum(per_seed[rng.choice(seed_ids)] for _ in seed_ids) / len(seed_ids)
+        for _ in range(samples)
+    )
+    alpha = (1.0 - confidence) / 2.0
+    return BootstrapEstimate(
+        observed=observed,
+        confidence_low=_quantile(draws, alpha),
+        confidence_high=_quantile(draws, 1.0 - alpha),
+        probability_positive=sum(value > 0.0 for value in draws) / len(draws),
+        samples=samples,
+        confidence=confidence,
+        seed_count=len(seed_ids),
+        stratum_count=len(strata),
+        example_seed_pairs=sum(
+            len(values[seed_id][stratum]) for seed_id in seed_ids for stratum in strata
+        ),
+    )
+
+
+BOOTSTRAP_SCHEMES: dict[str, Callable[..., BootstrapEstimate]] = {
+    "crossed_paired": crossed_paired_bootstrap,
+    "seed_cluster": seed_cluster_bootstrap,
+}
+
+
+def resolve_bootstrap(scheme: str) -> Callable[..., BootstrapEstimate]:
+    if scheme not in BOOTSTRAP_SCHEMES:
+        raise ValueError(
+            f"unsupported bootstrap scheme {scheme!r}; registered schemes are "
+            f"{sorted(BOOTSTRAP_SCHEMES)}"
+        )
+    return BOOTSTRAP_SCHEMES[scheme]
 
 
 def _prediction_path(
@@ -304,7 +422,7 @@ def _per_family_observed(
         seed_values = []
         for seed, strata in values.items():
             seed_values.append(
-                sum(sum(cell) / len(cell) for cell in strata.values()) / len(strata)
+                sum(sum(cell.values()) / len(cell) for cell in strata.values()) / len(strata)
             )
         result[family] = sum(seed_values) / len(seed_values)
     return result
@@ -318,7 +436,9 @@ def _estimate_comparison(
     bootstrap_samples: int,
     confidence: float,
     bootstrap_seed: int,
+    scheme: str = "crossed_paired",
 ) -> dict[str, object]:
+    estimator = resolve_bootstrap(scheme)
     accuracy_values = paired_seed_stratum_values(
         candidate_by_seed,
         baseline_by_seed,
@@ -332,13 +452,14 @@ def _estimate_comparison(
         include_families=include_families,
     )
     return {
-        "accuracy_delta": hierarchical_paired_bootstrap(
+        "bootstrap_scheme": scheme,
+        "accuracy_delta": estimator(
             accuracy_values,
             samples=bootstrap_samples,
             confidence=confidence,
             seed=bootstrap_seed,
         ).to_dict(),
-        "answer_nll_improvement": hierarchical_paired_bootstrap(
+        "answer_nll_improvement": estimator(
             nll_values,
             samples=bootstrap_samples,
             confidence=confidence,
@@ -355,6 +476,11 @@ def _markdown_report(analysis: Mapping[str, object]) -> str:
         "# TGSA Phase 1 model-identifiability analysis",
         "",
         f"**Decision:** `{analysis['decision']}`",
+        "",
+        f"**Confirmatory configuration:** `{analysis['confirmatory_config']}`  ",
+        f"**Registered confirmatory matrix:** `{analysis['registered_confirmatory_matrix']}`  ",
+        f"**Bootstrap scheme:** `{analysis['bootstrap_scheme']}`  ",
+        f"**Alignment falsifier:** `{analysis['alignment_condition']}`",
         "",
         str(analysis["claim_ceiling"]),
         "",
@@ -382,9 +508,10 @@ def _markdown_report(analysis: Mapping[str, object]) -> str:
             "",
             "A positive decision supports only the controlled Phase-1 statement that an aligned "
             "finite-difference control signal improved these trained synthetic tasks beyond an "
-            "information-matched sequential-history control, and that disrupting signal alignment "
-            "reduced the learned-delta model. It does not establish Qwen-scale, natural-language, "
-            "long-context, efficiency, novelty, or publication-primary claims.",
+            "information-matched sequential-history control, and that replaying another "
+            "same-length example's aligned control reduced the learned-delta model. It does not "
+            "establish Qwen-scale, natural-language, long-context, efficiency, novelty, or "
+            "publication-primary claims. A `smoke_only` decision is never evidence.",
             "",
         ]
     )
@@ -395,9 +522,17 @@ def analyze_study(
     *,
     study_config_path: Path,
     output_root: Path,
+    dataset_dir: Path | None = None,
+    repo_root: Path | None = None,
     allow_partial: bool = False,
 ) -> dict[str, object]:
     study = load_study_config(study_config_path)
+    confirmatory_config = bool(study["confirmatory"])
+    if confirmatory_config and dataset_dir is None:
+        raise ValueError(
+            "confirmatory analysis requires --dataset-dir so the evidence chain can be "
+            "bound to the materialized dataset actually used"
+        )
     matrix_path = output_root / "matrix_manifest.json"
     matrix = json.loads(matrix_path.read_text(encoding="utf-8"))
     if matrix.get("schema_version") != MATRIX_MANIFEST_VERSION:
@@ -434,12 +569,35 @@ def analyze_study(
         arms=selected_arms,
         seeds=selected_seeds,
     )
+    # Bind the whole chain — current config, current materialized data, current
+    # source checkout, preflight, matrix, run manifests, checkpoints, train logs,
+    # and prediction files — with exact hashes. The integrity gate below is
+    # derived from this report instead of being hard-coded to pass.
+    chain = verify_evidence_chain(
+        study_config_path=study_config_path,
+        output_root=output_root,
+        dataset_dir=dataset_dir,
+        repo_root=repo_root,
+    )
+    if str(matrix.get("study_config_sha256")) != sha256_file(study_config_path):
+        raise ValueError("matrix manifest was produced from a different study configuration")
+    if str(artifact_audit["shared_study_config_sha256"]) != sha256_file(study_config_path):
+        raise ValueError("run manifests were produced from a different study configuration")
+    if str(artifact_audit["shared_dataset_manifest_sha256"]) != str(
+        matrix.get("dataset_manifest_sha256")
+    ):
+        raise ValueError("run manifests and matrix manifest disagree about the dataset")
+
     analysis_cfg = cast(Mapping[str, object], study["analysis"])
     bootstrap_samples = int(analysis_cfg.get("bootstrap_samples", 10000))
     confidence = float(analysis_cfg.get("confidence", 0.95))
     bootstrap_seed = int(analysis_cfg.get("bootstrap_seed", 91273))
+    bootstrap_scheme = str(analysis_cfg.get("bootstrap_scheme", "crossed_paired"))
+    resolve_bootstrap(bootstrap_scheme)
     primary_families = {str(value) for value in analysis_cfg["primary_families"]}
     guardrail_family = str(analysis_cfg.get("guardrail_family", "direct_lookup"))
+    alignment_condition = str(analysis_cfg.get("alignment_condition", "replay_derangement"))
+    minimum_coverage = float(analysis_cfg.get("minimum_derangement_coverage", 0.95))
 
     learned = _load_prediction_matrix(
         output_root,
@@ -467,8 +625,18 @@ def analyze_study(
         arm="learned_delta",
         seeds=selected_seeds,
         split="test",
-        intervention="roll_batch",
+        intervention=alignment_condition,
     )
+    # Coverage of the length-matched derangement. Examples with no valid
+    # same-length donor keep their own control and contribute a zero paired
+    # difference, which biases the contrast toward zero; the gate below refuses
+    # to call the falsifier informative if too many examples were skipped.
+    coverage_by_seed: dict[str, float] = {}
+    for seed in selected_seeds:
+        rows = rolled[seed]
+        applied = [bool(row.get("intervention_applied", True)) for row in rows]
+        coverage_by_seed[str(seed)] = sum(applied) / len(applied)
+    observed_coverage = min(coverage_by_seed.values()) if coverage_by_seed else 0.0
 
     comparisons: dict[str, object] = {
         "learned_delta_minus_history_control": _estimate_comparison(
@@ -478,6 +646,7 @@ def analyze_study(
             bootstrap_samples=bootstrap_samples,
             confidence=confidence,
             bootstrap_seed=bootstrap_seed,
+            scheme=bootstrap_scheme,
         ),
         "learned_delta_minus_cascade": _estimate_comparison(
             learned,
@@ -486,14 +655,16 @@ def analyze_study(
             bootstrap_samples=bootstrap_samples,
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 1000,
+            scheme=bootstrap_scheme,
         ),
-        "aligned_delta_minus_batch_rolled_delta": _estimate_comparison(
+        "aligned_delta_minus_replayed_delta": _estimate_comparison(
             learned,
             rolled,
             include_families=primary_families,
             bootstrap_samples=bootstrap_samples,
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 2000,
+            scheme=bootstrap_scheme,
         ),
         "direct_lookup_delta_minus_history_control": _estimate_comparison(
             learned,
@@ -502,12 +673,13 @@ def analyze_study(
             bootstrap_samples=bootstrap_samples,
             confidence=confidence,
             bootstrap_seed=bootstrap_seed + 3000,
+            scheme=bootstrap_scheme,
         ),
     }
 
     history_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["learned_delta_minus_history_control"])["accuracy_delta"])
     cascade_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["learned_delta_minus_cascade"])["accuracy_delta"])
-    alignment_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["aligned_delta_minus_batch_rolled_delta"])["accuracy_delta"])
+    alignment_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["aligned_delta_minus_replayed_delta"])["accuracy_delta"])
     guardrail_estimate = cast(Mapping[str, object], cast(Mapping[str, object], comparisons["direct_lookup_delta_minus_history_control"])["accuracy_delta"])
 
     min_history = float(analysis_cfg.get("minimum_history_delta", 0.02))
@@ -553,14 +725,37 @@ def analyze_study(
                 f"margin={noninferiority:+.4f}"
             ),
         },
+        "alignment_falsifier_coverage": {
+            "pass": observed_coverage >= minimum_coverage,
+            "reason": (
+                f"minimum per-seed length-matched derangement coverage={observed_coverage:.4f}, "
+                f"threshold={minimum_coverage:.4f}"
+            ),
+        },
         "paired_initialization_and_artifact_integrity": {
-            "pass": True,
-            "reason": "all registered seed audits and recorded file hashes validated",
+            "pass": bool(chain["passed"]),
+            "reason": (
+                "closed evidence chain verified: "
+                f"{sum(1 for value in cast(Mapping[str, bool], chain['checks']).values() if value)}"
+                f"/{len(cast(Mapping[str, bool], chain['checks']))} checks passed"
+                + ("" if chain["passed"] else f"; failures={list(cast(Sequence[str], chain['errors']))[:5]}")
+            ),
         },
     }
 
     all_pass = all(bool(gate["pass"]) for gate in gates.values())
-    if not is_full:
+    # A non-confirmatory configuration can never produce an evidentiary
+    # decision, regardless of scores or matrix completeness. Before the launch
+    # audit a complete one-seed smoke matrix could be labelled
+    # `supports_phase1_mechanism_hypothesis` because `is_full` was evaluated
+    # relative to the smoke configuration itself (finding P0-4).
+    registered_matrix = (
+        confirmatory_config
+        and is_full
+        and str(matrix.get("study_id")) == str(study["study_id"])
+        and str(matrix.get("study_config_sha256")) == sha256_file(study_config_path)
+    )
+    if not registered_matrix:
         decision = "smoke_only"
     elif all_pass:
         decision = "supports_phase1_mechanism_hypothesis"
@@ -582,6 +777,12 @@ def analyze_study(
             "paper-primary claims."
         ),
         "is_full_registered_matrix": is_full,
+        "confirmatory_config": confirmatory_config,
+        "registered_confirmatory_matrix": registered_matrix,
+        "bootstrap_scheme": bootstrap_scheme,
+        "alignment_condition": alignment_condition,
+        "derangement_coverage_by_seed": coverage_by_seed,
+        "evidence_chain": chain,
         "configured_arms": list(configured_arms),
         "configured_seeds": list(configured_seeds),
         "selected_arms": list(selected_arms),

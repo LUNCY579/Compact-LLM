@@ -4,6 +4,8 @@ on:
   push:
     branches:
       - research/tgsa-phase1-model-identifiability
+      - research/tgsa-phase1-model-identifiability-launch-audit
+      - research/tgsa-phase1-identifiability-v2-launch-ready
     paths:
       - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
       - ".github/workflows/tgsa-phase1.yml"
@@ -18,6 +20,11 @@ on:
         required: false
         default: false
         type: boolean
+      archive_existing_evidence:
+        description: "Archive (never delete) an existing evidence root before starting"
+        required: false
+        default: true
+        type: boolean
 
 permissions:
   contents: read
@@ -28,6 +35,8 @@ concurrency:
 
 env:
   LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
+  SMOKE_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v2_smoke.json
+  FULL_CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_identifiability_v2.json
   PYTHONUNBUFFERED: "1"
   TOKENIZERS_PARALLELISM: "false"
 
@@ -53,32 +62,54 @@ jobs:
       - name: Install package and test dependencies
         run: |
           python -m pip install --upgrade pip
+          # CPU-only wheels. The default index pulls a multi-gigabyte CUDA stack
+          # that a CPU smoke job can never use.
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
           python -m pip install -e "${LAB}[dev]"
+          # pip treats an unknown extra as a WARNING, not an error, so a typoed
+          # extra silently installs nothing. Fail closed instead.
+          python - <<'PY'
+          import importlib.util
+          import sys
+
+          missing = [name for name in ("pytest", "jsonschema") if importlib.util.find_spec(name) is None]
+          if missing:
+              print(f"::error::extra did not resolve; missing {missing}")
+              sys.exit(1)
+          print("dev extra resolved")
+          PY
 
       - name: Run complete lab test suite
         run: |
-          pytest "${LAB}/tests" -q --tb=short --durations=15
+          python -m pytest "${LAB}/tests" -q --tb=short --durations=15
 
       - name: Materialize smoke dataset
         run: |
           rm -rf ci_artifacts/tgsa_phase1_smoke
           mkdir -p ci_artifacts/tgsa_phase1_smoke
           python "${LAB}/scripts/prepare_phase1_data.py" \
-            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --config "${SMOKE_CONFIG}" \
             --output-dir "ci_artifacts/tgsa_phase1_smoke/dataset"
+
+      - name: Freeze outcome-blind task-difficulty report
+        run: |
+          python "${LAB}/scripts/phase1_task_difficulty_report.py" \
+            --config "${SMOKE_CONFIG}" \
+            --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
+            --output "ci_artifacts/tgsa_phase1_smoke/task_difficulty.json"
 
       - name: Run developer and agent doctor
         run: |
           python "${LAB}/scripts/phase1_doctor.py" \
-            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --config "${SMOKE_CONFIG}" \
             --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
             --repo-root "${GITHUB_WORKSPACE}" \
             --output "ci_artifacts/tgsa_phase1_smoke/doctor.json"
 
-      - name: Train all smoke arms and exercise interventions
+      - name: Train all smoke arms, then evaluate once
         run: |
           python "${LAB}/scripts/run_phase1_model_study.py" \
-            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
+            --config "${SMOKE_CONFIG}" \
             --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
             --output-dir "ci_artifacts/tgsa_phase1_smoke/study" \
             --repo-root "${GITHUB_WORKSPACE}"
@@ -86,8 +117,58 @@ jobs:
       - name: Run frozen paired analyzer
         run: |
           python "${LAB}/scripts/analyze_phase1_model_study.py" \
-            --config "${LAB}/configs/phase1_model_identifiability_smoke.json" \
-            --output-dir "ci_artifacts/tgsa_phase1_smoke/study"
+            --config "${SMOKE_CONFIG}" \
+            --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
+            --output-dir "ci_artifacts/tgsa_phase1_smoke/study" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Verify the closed evidence chain
+        run: |
+          python "${LAB}/scripts/verify_phase1_evidence.py" \
+            --config "${SMOKE_CONFIG}" \
+            --dataset-dir "ci_artifacts/tgsa_phase1_smoke/dataset" \
+            --output-dir "ci_artifacts/tgsa_phase1_smoke/study" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --expect-confirmatory false \
+            --report "ci_artifacts/tgsa_phase1_smoke/evidence_verification.json"
+
+      - name: Validate every artifact against its JSON schema
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import sys
+          from pathlib import Path
+
+          import jsonschema
+
+          lab = Path(os.environ["LAB"])
+          root = Path("ci_artifacts/tgsa_phase1_smoke")
+          pairs = [
+              (lab / "evidence/phase1_dataset_manifest.schema.json", root / "dataset/dataset_manifest.json"),
+              (lab / "evidence/phase1_analysis.schema.json", root / "study/analysis.json"),
+          ]
+          for arm in ("cascade", "history_control", "learned_delta"):
+              pairs.append(
+                  (
+                      lab / "evidence/phase1_run_manifest.schema.json",
+                      root / f"study/runs/{arm}/seed_7/run_manifest.json",
+                  )
+              )
+          failures = []
+          for schema_path, target in pairs:
+              schema = json.loads(schema_path.read_text(encoding="utf-8"))
+              document = json.loads(target.read_text(encoding="utf-8"))
+              try:
+                  jsonschema.validate(document, schema)
+              except jsonschema.ValidationError as exc:
+                  failures.append(f"{target}: {exc.message}")
+          if failures:
+              for failure in failures:
+                  print(f"::error::{failure}")
+              sys.exit(1)
+          print(f"schema-validated {len(pairs)} artifacts")
+          PY
 
       - name: Verify evidence and claim-scope contracts
         run: |
@@ -99,6 +180,7 @@ jobs:
           doctor = json.loads((root / "doctor.json").read_text(encoding="utf-8"))
           matrix = json.loads((root / "study" / "matrix_manifest.json").read_text(encoding="utf-8"))
           analysis = json.loads((root / "study" / "analysis.json").read_text(encoding="utf-8"))
+          chain = json.loads((root / "evidence_verification.json").read_text(encoding="utf-8"))
 
           assert doctor["passed"] is True, doctor
           assert doctor["checks"]["history_delta_exact_initialization"] is True
@@ -106,9 +188,18 @@ jobs:
           assert doctor["checks"]["intervention_hooks_cleaned_up"] is True
           assert matrix["status"] == "complete", matrix
           assert matrix["is_full_registered_matrix"] is True
-          assert analysis["decision"] == "smoke_only", analysis
+          assert matrix["deferred_test_evaluation"] is True
+
+          # A smoke configuration must never be able to emit an evidentiary
+          # decision, even when its own arm/seed matrix is complete.
+          assert analysis["decision"] == "smoke_only", analysis["decision"]
           assert analysis["confirmatory_config"] is False
+          assert analysis["registered_confirmatory_matrix"] is False
           assert analysis["is_full_registered_matrix"] is True
+          assert analysis["bootstrap_scheme"] == "crossed_paired"
+          assert analysis["alignment_condition"] == "replay_derangement"
+          assert chain["passed"] is True, chain["errors"]
+          assert analysis["gates"]["paired_initialization_and_artifact_integrity"]["pass"] is True
 
           expected = {("cascade", 7), ("history_control", 7), ("learned_delta", 7)}
           actual = {(entry["arm"], int(entry["seed"])) for entry in matrix["runs"]}
@@ -118,11 +209,15 @@ jobs:
               run_dir = root / "study" / "runs" / arm / f"seed_{seed}"
               manifest = json.loads((run_dir / "run_manifest.json").read_text(encoding="utf-8"))
               assert manifest["status"] == "complete"
+              assert manifest["test_evaluation_deferred"] is True
               assert manifest["training"]["fixed_final_checkpoint"] is True
               assert manifest["training"]["early_stopping"] is False
               assert (run_dir / manifest["training"]["final_checkpoint"]).is_file()
               assert (run_dir / "predictions_test__identity.jsonl").is_file()
               if arm == "learned_delta":
+                  assert (run_dir / "predictions_test__replay_derangement.jsonl").is_file()
+                  for index in (1, 2):
+                      assert (run_dir / f"predictions_test__replay_derangement_{index}.jsonl").is_file()
                   for mode in ("zero", "negate", "roll_batch"):
                       assert (run_dir / f"predictions_test__{mode}.jsonl").is_file()
 
@@ -164,48 +259,97 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e "${LAB}[dev]"
+          python - <<'PY'
+          import importlib.util
+          import sys
+
+          missing = [name for name in ("pytest", "jsonschema") if importlib.util.find_spec(name) is None]
+          if missing:
+              print(f"::error::extra did not resolve; missing {missing}")
+              sys.exit(1)
+          PY
+
+      - name: Refuse a dirty confirmatory checkout
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            echo "::error::confirmatory execution requires a clean checkout"
+            git status --porcelain
+            exit 1
+          fi
 
       - name: Run tests before evidence collection
         run: |
-          pytest "${LAB}/tests" -q --tb=short
+          python -m pytest "${LAB}/tests" -q --tb=short
 
-      - name: Materialize registered dataset and run doctor
+      - name: Resolve a persistent, non-destructive evidence root
         run: |
-          rm -rf full_evidence
-          mkdir -p full_evidence
-          python "${LAB}/scripts/prepare_phase1_data.py" \
-            --config "${LAB}/configs/phase1_model_identifiability.json" \
-            --output-dir "full_evidence/dataset"
-          python "${LAB}/scripts/phase1_doctor.py" \
-            --config "${LAB}/configs/phase1_model_identifiability.json" \
-            --dataset-dir "full_evidence/dataset" \
-            --repo-root "${GITHUB_WORKSPACE}" \
-            --output "full_evidence/doctor.json"
+          HEAD_SHA="$(git rev-parse HEAD)"
+          STUDY_ID="$(python -c "import json,os,sys; print(json.load(open(os.environ['FULL_CONFIG']))['study_id'])")"
+          ROOT="full_evidence/${STUDY_ID}/${HEAD_SHA}"
+          # Never `rm -rf` an evidence root: that destroys resumable checkpoints
+          # and immutable failure bundles. Archive instead, and only on request.
+          if [ -d "${ROOT}" ] && [ "${{ inputs.archive_existing_evidence }}" = "true" ]; then
+            mv "${ROOT}" "${ROOT}.archived.$(date -u +%Y%m%dT%H%M%SZ)"
+          fi
+          mkdir -p "${ROOT}"
+          echo "EVIDENCE_ROOT=${ROOT}" >> "${GITHUB_ENV}"
 
-      - name: Run registered matrix
+      - name: Materialize registered dataset, difficulty report, and doctor
+        run: |
+          python "${LAB}/scripts/prepare_phase1_data.py" \
+            --config "${FULL_CONFIG}" \
+            --output-dir "${EVIDENCE_ROOT}/dataset"
+          python "${LAB}/scripts/phase1_task_difficulty_report.py" \
+            --config "${FULL_CONFIG}" \
+            --dataset-dir "${EVIDENCE_ROOT}/dataset" \
+            --output "${EVIDENCE_ROOT}/task_difficulty.json"
+          python "${LAB}/scripts/phase1_power_simulation.py" \
+            --config "${FULL_CONFIG}" \
+            --output "${EVIDENCE_ROOT}/power_simulation.json"
+          python "${LAB}/scripts/phase1_doctor.py" \
+            --config "${FULL_CONFIG}" \
+            --dataset-dir "${EVIDENCE_ROOT}/dataset" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --output "${EVIDENCE_ROOT}/doctor.json"
+
+      - name: Train the registered matrix, then evaluate once
         run: |
           python "${LAB}/scripts/run_phase1_model_study.py" \
-            --config "${LAB}/configs/phase1_model_identifiability.json" \
-            --dataset-dir "full_evidence/dataset" \
-            --output-dir "full_evidence/study" \
+            --config "${FULL_CONFIG}" \
+            --dataset-dir "${EVIDENCE_ROOT}/dataset" \
+            --output-dir "${EVIDENCE_ROOT}/study" \
             --repo-root "${GITHUB_WORKSPACE}"
 
       - name: Apply frozen registered analysis
         run: |
           python "${LAB}/scripts/analyze_phase1_model_study.py" \
-            --config "${LAB}/configs/phase1_model_identifiability.json" \
-            --output-dir "full_evidence/study"
+            --config "${FULL_CONFIG}" \
+            --dataset-dir "${EVIDENCE_ROOT}/dataset" \
+            --output-dir "${EVIDENCE_ROOT}/study" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Verify the closed evidence chain
+        run: |
+          python "${LAB}/scripts/verify_phase1_evidence.py" \
+            --config "${FULL_CONFIG}" \
+            --dataset-dir "${EVIDENCE_ROOT}/dataset" \
+            --output-dir "${EVIDENCE_ROOT}/study" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --expect-confirmatory true \
+            --report "${EVIDENCE_ROOT}/evidence_verification.json"
 
       - name: Capture immutable source metadata
         if: always()
         run: |
-          git rev-parse HEAD > full_evidence/git_head.txt
-          git status --porcelain > full_evidence/git_status.txt
-          python -m pip freeze > full_evidence/pip_freeze.txt
+          git rev-parse HEAD > "${EVIDENCE_ROOT}/git_head.txt"
+          git status --porcelain > "${EVIDENCE_ROOT}/git_status.txt"
+          python -m pip freeze > "${EVIDENCE_ROOT}/pip_freeze.txt"
           python - <<'PY'
           import json
+          import os
           import platform
           from pathlib import Path
+
           import torch
 
           payload = {
@@ -216,7 +360,7 @@ jobs:
               "cuda_version": torch.version.cuda,
               "gpu": torch.cuda.get_device_name(0) if torch.cuda.is_available() else None,
           }
-          Path("full_evidence/runtime.json").write_text(
+          Path(os.environ["EVIDENCE_ROOT"], "runtime.json").write_text(
               json.dumps(payload, indent=2, sort_keys=True) + "\n",
               encoding="utf-8",
           )

@@ -272,6 +272,24 @@ def _make_pointer_example(
     }
     signature = _stable_signature(latent)
     stratum = f"{family}:h{hops}:{_context_bucket(len(tokens))}"
+    # Difficulty diagnostics. A random permutation has fixed points and short
+    # cycles, so a nominal multi-hop item can be reachable in fewer distinct
+    # transitions than its hop label claims, or can resolve to the start node
+    # itself. These items are valid but dilute the iterative signal, so they are
+    # measured and frozen rather than assumed away
+    # (``PHASE1_LAUNCH_AUDIT.md`` finding P1-5).
+    cycle_length = 1
+    walker = mapping[start]
+    while walker != start:
+        walker = mapping[walker]
+        cycle_length += 1
+    effective_hops = hops
+    probe = start
+    for step in range(1, hops + 1):
+        probe = mapping[probe]
+        if probe == target:
+            effective_hops = step
+            break
     return Phase1Example(
         schema_version=EXAMPLE_SCHEMA_VERSION,
         id=_example_id(split, family, signature),
@@ -282,7 +300,16 @@ def _make_pointer_example(
         answer_token=answer_token,
         answer_input_index=answer_input_index,
         latent_signature=signature,
-        metadata={"node_count": node_count, "hops": hops, "token_length": len(tokens)},
+        metadata={
+            "node_count": node_count,
+            "hops": hops,
+            "token_length": len(tokens),
+            "effective_hops": effective_hops,
+            "start_cycle_length": cycle_length,
+            "start_is_fixed_point": mapping[start] == start,
+            "answer_equals_start": target == start,
+            "trivial": target == start or effective_hops < hops,
+        },
     )
 
 
@@ -316,6 +343,15 @@ def _make_state_example(
     latent = {"family": "state_update", "start": start, "steps": steps}
     signature = _stable_signature(latent)
     stratum = f"state_update:s{step_count}:{_context_bucket(len(tokens))}"
+    # A sequence of individually non-zero steps can still cancel modulo the
+    # domain, leaving the answer equal to the start value (finding P1-5).
+    net_shift = sum(steps) % vocab.domain_size
+    prefix = start
+    first_return = 0
+    for index, step in enumerate(steps[:-1], start=1):
+        prefix = (prefix + step) % vocab.domain_size
+        if prefix == current and first_return == 0:
+            first_return = index
     return Phase1Example(
         schema_version=EXAMPLE_SCHEMA_VERSION,
         id=_example_id(split, "state_update", signature),
@@ -326,7 +362,15 @@ def _make_state_example(
         answer_token=answer_token,
         answer_input_index=answer_input_index,
         latent_signature=signature,
-        metadata={"step_count": step_count, "token_length": len(tokens)},
+        metadata={
+            "step_count": step_count,
+            "token_length": len(tokens),
+            "net_shift": net_shift,
+            "cancels_to_start": net_shift == 0,
+            "answer_equals_start": current == start,
+            "effective_steps": first_return if first_return else step_count,
+            "trivial": current == start or bool(first_return),
+        },
     )
 
 
@@ -402,6 +446,18 @@ def generate_split(
             else:
                 raise ValueError(f"unsupported task family: {family}")
             if example.latent_signature in seen:
+                continue
+            # Registered, outcome-blind difficulty control. A random permutation
+            # produces fixed points and short cycles, and a modular step sequence
+            # can cancel, so a nominal multi-hop item may resolve to the start
+            # node or need fewer distinct transitions than its label claims.
+            # Retaining those items dilutes the iterative mechanism signal and
+            # costs power (``PHASE1_LAUNCH_AUDIT.md`` finding P1-5). Rejection is
+            # applied at generation time, before any model exists, and is
+            # recorded in the dataset manifest.
+            if bool(family_cfg.get("reject_trivial", False)) and bool(
+                example.metadata.get("trivial", False)
+            ):
                 continue
             if max(example.tokens) >= vocab.vocab_size or min(example.tokens) < 0:
                 raise AssertionError("generator emitted a token outside the vocabulary")
@@ -494,11 +550,13 @@ def materialize_dataset(
 
     all_signatures: set[str] = set()
     split_entries: dict[str, object] = {}
+    generated_families: set[str] = set()
     output_dir.mkdir(parents=True, exist_ok=True)
     for split in ("train", "dev", "test"):
         counts = splits_cfg.get(split)
         if not isinstance(counts, Mapping):
             raise TypeError(f"dataset split must be an object: {split}")
+        generated_families.update(str(key) for key in counts)
         examples = generate_split(
             split=split,
             count_by_family={str(k): int(v) for k, v in counts.items()},
@@ -534,6 +592,12 @@ def materialize_dataset(
         "vocabulary": vocab.to_dict(),
         "splits": split_entries,
         "cross_split_unique_latent_signatures": True,
+        "difficulty_policy": {
+            family: bool(
+                _family_spec(dataset_config, family, split="train").get("reject_trivial", False)
+            )
+            for family in sorted(generated_families)
+        },
         "claim_scope": (
             "controlled synthetic mechanism-identification data; not an independently authored "
             "sealed language-model evaluation"

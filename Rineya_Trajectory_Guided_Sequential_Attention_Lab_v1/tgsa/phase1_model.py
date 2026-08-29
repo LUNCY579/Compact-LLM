@@ -13,7 +13,7 @@ import json
 import math
 from contextlib import AbstractContextManager
 from dataclasses import asdict, dataclass
-from typing import Literal, Mapping, Sequence
+from typing import Literal, Mapping, Sequence, cast
 
 import torch
 import torch.nn.functional as F
@@ -181,6 +181,13 @@ class TinyTGSAForCausalLM(nn.Module):
         self.final_norm = RMSNorm(config.embed_dim)
         self.lm_head = nn.Linear(config.embed_dim, config.vocab_size, bias=False)
         self.apply(self._initialize_weights)
+        # `apply` walks every nn.Linear, including the trajectory-encoder factors,
+        # so the operator's registered initialization must be restored afterwards.
+        # Without this the zero-initialized residual is replaced by a generic
+        # N(0, 0.02) draw and the encoder is no longer the identity at step 0.
+        for block in self.blocks:
+            if isinstance(block.attention, TrajectoryGuidedSequentialAttention):
+                block.attention.reset_registered_parameters()
         if config.tie_embeddings:
             self.lm_head.weight = self.token_embedding.weight
 
@@ -296,11 +303,100 @@ def shared_state_fingerprint(left: nn.Module, right: nn.Module) -> dict[str, obj
     }
 
 
-def build_model(config: TinyLMConfig, *, initialization_seed: int) -> TinyTGSAForCausalLM:
-    torch.manual_seed(initialization_seed)
+CANONICAL_SUPERNET_ARM: ModelArm = "learned_delta"
+
+
+def derive_initialization_seed(initialization_seed: int, *parts: object) -> int:
+    """Derive a recorded, arm-specific seed for tensors the supernet lacks."""
+
+    payload = json.dumps(
+        [int(initialization_seed), *[str(part) for part in parts]],
+        sort_keys=True,
+        separators=(",", ":"),
+    ).encode("utf-8")
+    return int.from_bytes(hashlib.sha256(payload).digest()[:8], "big") & 0x7FFF_FFFF
+
+
+def _seeded(seed: int) -> None:
+    torch.manual_seed(seed)
     if torch.cuda.is_available():
-        torch.cuda.manual_seed_all(initialization_seed)
-    return TinyTGSAForCausalLM(config)
+        torch.cuda.manual_seed_all(seed)
+
+
+def build_canonical_supernet(
+    config: TinyLMConfig,
+    *,
+    initialization_seed: int,
+) -> TinyTGSAForCausalLM:
+    """Build the single canonical parameter source for one seed.
+
+    Every arm in a seed is initialized by copying from this model, so shared
+    tensors are identical by construction rather than by coincident RNG order.
+    """
+
+    _seeded(initialization_seed)
+    return TinyTGSAForCausalLM(config.with_arm(CANONICAL_SUPERNET_ARM))
+
+
+def copy_shared_tensors(
+    target: nn.Module,
+    canonical_state: Mapping[str, Tensor],
+) -> tuple[str, ...]:
+    """Copy every exactly-compatible tensor from ``canonical_state``.
+
+    A key is copied only when it exists on both sides with the same dtype and
+    the same shape. Returns the sorted keys that were **not** copied, i.e. the
+    arm-only tensors that keep their derived-seed initialization.
+    """
+
+    target_state = target.state_dict()
+    copied: set[str] = set()
+    with torch.no_grad():
+        for key, tensor in target_state.items():
+            source = canonical_state.get(key)
+            if source is None:
+                continue
+            if source.shape != tensor.shape or source.dtype != tensor.dtype:
+                continue
+            tensor.copy_(source)
+            copied.add(key)
+    return tuple(sorted(set(target_state) - copied))
+
+
+def build_model(
+    config: TinyLMConfig,
+    *,
+    initialization_seed: int,
+    canonical_state: Mapping[str, Tensor] | None = None,
+) -> TinyTGSAForCausalLM:
+    """Construct one arm from the seed's canonical supernet.
+
+    ``build_model`` never relies on two arms consuming the RNG stream in the
+    same order. It builds (or accepts) the canonical ``learned_delta`` supernet
+    for the seed and copies every exactly-compatible tensor by key. Arm-only
+    tensors are constructed under an explicitly derived, recorded seed.
+
+    See ``PHASE1_LAUNCH_AUDIT.md`` finding P0-2: the pre-remediation path merely
+    reset the global seed before building structurally different graphs, so the
+    learned trajectory factors consumed random numbers that the cascade arm did
+    not, and shared tensors silently diverged.
+    """
+
+    if canonical_state is None:
+        canonical = build_canonical_supernet(config, initialization_seed=initialization_seed)
+        if config.arm == CANONICAL_SUPERNET_ARM:
+            return canonical
+        canonical_state = canonical.state_dict()
+    elif config.arm == CANONICAL_SUPERNET_ARM:
+        _seeded(initialization_seed)
+        model = TinyTGSAForCausalLM(config)
+        copy_shared_tensors(model, canonical_state)
+        return model
+
+    _seeded(derive_initialization_seed(initialization_seed, "arm", config.arm))
+    model = TinyTGSAForCausalLM(config)
+    copy_shared_tensors(model, canonical_state)
+    return model
 
 
 def paired_initialization_audit(
@@ -308,22 +404,63 @@ def paired_initialization_audit(
     base_config: TinyLMConfig,
     initialization_seed: int,
 ) -> dict[str, object]:
-    """Prove the finite-difference and history controls start identically."""
+    """Prove every registered arm starts from one canonical parameter source."""
 
-    history = build_model(base_config.with_arm("history_control"), initialization_seed=initialization_seed)
-    delta = build_model(base_config.with_arm("learned_delta"), initialization_seed=initialization_seed)
+    canonical = build_canonical_supernet(base_config, initialization_seed=initialization_seed)
+    canonical_state = {key: value.clone() for key, value in canonical.state_dict().items()}
+    canonical_hash = state_dict_sha256(canonical)
+
+    arms: dict[str, TinyTGSAForCausalLM] = {
+        arm: build_model(
+            base_config.with_arm(cast(ModelArm, arm)),
+            initialization_seed=initialization_seed,
+            canonical_state=canonical_state,
+        )
+        for arm in ("cascade", "history_control", "learned_delta")
+    }
+    history = arms["history_control"]
+    delta = arms["learned_delta"]
+    cascade = arms["cascade"]
+
     if state_key_shape_signature(history) != state_key_shape_signature(delta):
         raise RuntimeError("history_control and learned_delta state structures differ")
     history_hash = state_dict_sha256(history)
     delta_hash = state_dict_sha256(delta)
     if history_hash != delta_hash:
         raise RuntimeError("history_control and learned_delta did not receive identical initialization")
+    if delta_hash != canonical_hash:
+        raise RuntimeError("learned_delta did not reproduce the canonical supernet state")
 
-    cascade = build_model(base_config.with_arm("cascade"), initialization_seed=initialization_seed)
     shared = shared_state_fingerprint(cascade, delta)
     if not bool(shared["identical"]):
         raise RuntimeError("cascade and learned_delta shared parameters differ at initialization")
+
+    # Every registered arm must be a byte-exact restriction of the canonical
+    # supernet on its shared keys. Anything else means an arm was initialized
+    # from an independent RNG draw.
+    per_arm: dict[str, object] = {}
+    for arm, model in sorted(arms.items()):
+        fingerprint = shared_state_fingerprint(model, canonical)
+        if not bool(fingerprint["identical"]):
+            raise RuntimeError(f"{arm} shared tensors differ from the canonical supernet")
+        arm_only = sorted(set(model.state_dict()) - set(canonical_state))
+        per_arm[arm] = {
+            "shared_tensor_count": fingerprint["common_tensor_count"],
+            "shared_sha256": fingerprint["left_common_sha256"],
+            "identical_to_canonical": True,
+            "arm_only_tensors": arm_only,
+            "arm_only_initialization_seed": derive_initialization_seed(
+                initialization_seed, "arm", arm
+            ),
+            "trainable_parameters": count_parameters(model),
+            "state_sha256": state_dict_sha256(model),
+        }
+
     return {
+        "canonical_supernet_arm": CANONICAL_SUPERNET_ARM,
+        "canonical_state_sha256": canonical_hash,
+        "canonical_initialization_seed": initialization_seed,
+        "all_arms_match_canonical_shared_tensors": True,
         "history_delta_exact_state_structure": True,
         "history_delta_exact_initialization": True,
         "history_delta_state_sha256": history_hash,
@@ -332,6 +469,7 @@ def paired_initialization_audit(
         "history_delta_parameter_count_equal": count_parameters(history) == count_parameters(delta),
         "cascade_trainable_parameters": count_parameters(cascade),
         "cascade_delta_shared_initialization": shared,
+        "per_arm": per_arm,
     }
 
 
@@ -375,13 +513,183 @@ def gradient_group_norms(module: nn.Module) -> dict[str, float]:
     return {name: math.sqrt(value) for name, value in sorted(accumulators.items())}
 
 
+def length_matched_derangement(
+    group_keys: Sequence[object],
+    *,
+    derangement_index: int = 0,
+) -> tuple[list[int], list[bool]]:
+    """Build a fixed, fixed-point-free donor assignment inside equal groups.
+
+    Examples are grouped by ``group_keys`` — the registered stratum paired with
+    the exact valid sequence length — and each group of size ``k >= 2`` receives
+    a cyclic shift by ``1 + (derangement_index % (k - 1))``. Donor and receiver
+    therefore always share a valid length, so no valid position can ever be
+    handed a donor's padded-position control.
+
+    ``derangement_index`` selects one of several deterministic permutations so
+    the alignment contrast can be shown robust to the choice rather than resting
+    on a single arbitrary permutation.
+
+    Returns ``(donor_index, applied)``. A group of size one has no valid donor:
+    those rows keep their own control and are reported as ``applied=False`` so
+    coverage is measured rather than silently assumed. Leaving them unperturbed
+    contributes a zero paired difference, which biases the aligned-minus-rolled
+    contrast toward zero and therefore cannot manufacture a positive result.
+
+    See ``PHASE1_LAUNCH_AUDIT.md`` finding P1-4: the pre-remediation
+    ``roll_batch`` shifted controls by one row inside heterogeneous padded
+    batches, so a valid position could receive a donor's padded-position value.
+    """
+
+    if derangement_index < 0:
+        raise ValueError("derangement_index must be non-negative")
+    members: dict[object, list[int]] = {}
+    for position, key in enumerate(group_keys):
+        members.setdefault(key, []).append(position)
+    donor = list(range(len(group_keys)))
+    applied = [False] * len(group_keys)
+    for key in sorted(members, key=repr):
+        rows = members[key]
+        size = len(rows)
+        if size < 2:
+            continue
+        shift = 1 + (derangement_index % (size - 1))
+        for offset, row in enumerate(rows):
+            donor[row] = rows[(offset + shift) % size]
+            applied[row] = True
+    return donor, applied
+
+
+class ControlCapture(AbstractContextManager["ControlCapture"]):
+    """Record every trajectory-encoder input from one unperturbed forward pass.
+
+    Each ``TrajectoryEncoder`` is invoked exactly once per forward pass, so the
+    module identity is a sufficient key. The captured tensors are the aligned
+    control signals that :class:`ReplayIntervention` later hands to other
+    examples, which is what makes the falsifier a clean counterfactual instead
+    of a compounding perturbation.
+    """
+
+    def __init__(self, model: nn.Module) -> None:
+        self.model = model
+        self.captured: dict[int, Tensor] = {}
+        self.order: list[int] = []
+        self._handles: list[torch.utils.hooks.RemovableHandle] = []
+
+    def _hook(self, module: nn.Module, inputs: tuple[object, ...]) -> None:
+        if len(inputs) != 1 or not isinstance(inputs[0], Tensor):
+            raise RuntimeError("unexpected TrajectoryEncoder input contract")
+        key = id(module)
+        if key in self.captured:
+            raise RuntimeError("TrajectoryEncoder was invoked twice in one capture pass")
+        self.captured[key] = inputs[0].detach().clone()
+        self.order.append(key)
+
+    def __enter__(self) -> "ControlCapture":
+        if self._handles:
+            raise RuntimeError("ControlCapture cannot be entered twice")
+        for module in self.model.modules():
+            if isinstance(module, TrajectoryEncoder):
+                self._handles.append(module.register_forward_pre_hook(self._hook))
+        if not self._handles:
+            raise ValueError("model has no trajectory encoders to capture")
+        return self
+
+    def __exit__(self, exc_type: object, exc_value: object, traceback: object) -> None:
+        for handle in self._handles:
+            handle.remove()
+        self._handles.clear()
+        return None
+
+
+class ReplayIntervention(AbstractContextManager["ReplayIntervention"]):
+    """Replace each example's control with a donor's *captured aligned* control.
+
+    Every donor signal comes from an unperturbed forward pass, so head ``j``'s
+    substituted control is not itself a product of the intervention at heads
+    ``< j``. Rows with ``applied=False`` keep their own control unchanged.
+    """
+
+    def __init__(
+        self,
+        model: nn.Module,
+        *,
+        captured: Mapping[int, Tensor],
+        donor_index: Sequence[int],
+        applied: Sequence[bool],
+    ) -> None:
+        if len(donor_index) != len(applied):
+            raise ValueError("donor_index and applied must have equal length")
+        self.model = model
+        self.captured = dict(captured)
+        self.donor_index = list(int(value) for value in donor_index)
+        self.applied = [bool(value) for value in applied]
+        self.records: list[dict[str, object]] = []
+        self._handles: list[torch.utils.hooks.RemovableHandle] = []
+        self._module_names = {id(module): name for name, module in model.named_modules()}
+
+    def _hook(self, module: nn.Module, inputs: tuple[object, ...]) -> tuple[object, ...]:
+        if len(inputs) != 1 or not isinstance(inputs[0], Tensor):
+            raise RuntimeError("unexpected TrajectoryEncoder input contract")
+        original = inputs[0]
+        donor_source = self.captured.get(id(module))
+        if donor_source is None:
+            raise RuntimeError("no captured aligned control for this trajectory encoder")
+        if donor_source.shape != original.shape:
+            raise RuntimeError("captured control shape does not match the replay pass")
+        if len(self.donor_index) != original.shape[0]:
+            raise ValueError("donor assignment does not match the evaluation batch size")
+        index = torch.tensor(self.donor_index, device=original.device, dtype=torch.long)
+        donated = donor_source.to(device=original.device, dtype=original.dtype).index_select(0, index)
+        keep = torch.tensor(
+            [not value for value in self.applied],
+            device=original.device,
+            dtype=torch.bool,
+        )[:, None, None]
+        transformed = torch.where(keep, original, donated)
+        self.records.append(
+            {
+                "module": self._module_names.get(id(module), "<unknown>"),
+                "mode": "replay_derangement",
+                "shape": list(original.shape),
+                "rows_intervened": int(sum(self.applied)),
+                "rows_total": len(self.applied),
+                "input_rms": float(original.detach().float().square().mean().sqrt().item()),
+                "output_rms": float(transformed.detach().float().square().mean().sqrt().item()),
+            }
+        )
+        return (transformed,)
+
+    def __enter__(self) -> "ReplayIntervention":
+        if self._handles:
+            raise RuntimeError("ReplayIntervention cannot be entered twice")
+        for module in self.model.modules():
+            if isinstance(module, TrajectoryEncoder):
+                self._handles.append(module.register_forward_pre_hook(self._hook))
+        if not self._handles:
+            raise ValueError("model has no trajectory encoders to intervene on")
+        return self
+
+    def __exit__(self, exc_type: object, exc_value: object, traceback: object) -> None:
+        for handle in self._handles:
+            handle.remove()
+        self._handles.clear()
+        return None
+
+
 class ControlIntervention(AbstractContextManager["ControlIntervention"]):
     """Intercept raw control signals at every trajectory encoder.
 
-    `roll_batch` is the primary alignment falsifier: it preserves the empirical
-    distribution and tensor shape of the control signal while assigning each
-    example another example's trajectory. It never rolls across sequence
-    positions, so it cannot create future-token leakage.
+    These are the *descriptive* interventions. ``zero`` and ``negate`` probe
+    dependence and directional sensitivity but introduce out-of-distribution
+    control values.
+
+    ``roll_batch`` is retained as a diagnostic with an explicitly narrowed
+    interpretation. It shifts controls by one row inside a heterogeneous padded
+    batch, so a valid position can receive a donor's padded-position control,
+    and later heads see controls that are already products of the intervention
+    at earlier heads. The registered alignment falsifier is instead
+    :class:`ReplayIntervention` driven by :func:`length_matched_derangement`.
     """
 
     def __init__(

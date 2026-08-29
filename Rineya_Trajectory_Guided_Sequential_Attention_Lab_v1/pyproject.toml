@@ -4,13 +4,19 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "rineya-tgsa-research"
-version = "0.1.0"
+version = "0.2.0"
 description = "Auditable reference implementation for Trajectory-Guided Sequential Attention"
 requires-python = ">=3.10"
 dependencies = ["torch>=2.1"]
 
 [project.optional-dependencies]
-test = ["pytest>=8"]
+# `test` is the historical name and stays as an alias so older invocations keep
+# working. `dev` is the name every workflow and launch runbook uses. Both must
+# resolve to the same pinned set: the Phase-1 launch audit failed because CI
+# installed a `dev` extra that did not exist, so pytest was missing and the job
+# died before the test suite ran.
+test = ["pytest>=8", "jsonschema>=4.21"]
+dev = ["pytest>=8", "jsonschema>=4.21"]
 
 [tool.setuptools.packages.find]
 where = ["."]

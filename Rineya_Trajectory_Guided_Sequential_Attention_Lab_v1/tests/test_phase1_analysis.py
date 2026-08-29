@@ -5,7 +5,7 @@ import pytest
 from tgsa.phase1_analysis import (
     _accuracy_delta,
     _quantile,
-    hierarchical_paired_bootstrap,
+    crossed_paired_bootstrap,
     paired_seed_stratum_values,
 )
 
@@ -44,12 +44,14 @@ def test_quantile_uses_linear_interpolation() -> None:
     assert _quantile(values, 1.0) == 10.0
 
 
-def test_hierarchical_bootstrap_macro_averages_strata_not_examples() -> None:
+def test_crossed_bootstrap_macro_averages_strata_not_examples() -> None:
+    """A populous stratum must not dominate a rare one."""
+
     values = {
-        1: {"rare": [1.0], "common": [0.0, 0.0, 0.0, 0.0]},
-        2: {"rare": [1.0], "common": [0.0, 0.0, 0.0, 0.0]},
+        1: {"rare": {"r0": 1.0}, "common": {f"c{i}": 0.0 for i in range(4)}},
+        2: {"rare": {"r0": 1.0}, "common": {f"c{i}": 0.0 for i in range(4)}},
     }
-    estimate = hierarchical_paired_bootstrap(
+    estimate = crossed_paired_bootstrap(
         values,
         samples=500,
         confidence=0.95,
@@ -65,15 +67,29 @@ def test_hierarchical_bootstrap_macro_averages_strata_not_examples() -> None:
     assert estimate.example_seed_pairs == 10
 
 
-def test_hierarchical_bootstrap_is_seed_deterministic() -> None:
+def test_crossed_bootstrap_is_seed_deterministic() -> None:
     values = {
-        10: {"a": [1.0, 0.0, 1.0], "b": [0.0, 1.0]},
-        20: {"a": [0.0, 1.0, 1.0], "b": [1.0, 1.0]},
+        10: {"a": {"x": 1.0, "y": 0.0, "z": 1.0}, "b": {"p": 0.0, "q": 1.0}},
+        20: {"a": {"x": 0.0, "y": 1.0, "z": 1.0}, "b": {"p": 1.0, "q": 1.0}},
     }
-    first = hierarchical_paired_bootstrap(values, samples=1000, confidence=0.95, seed=19)
-    second = hierarchical_paired_bootstrap(values, samples=1000, confidence=0.95, seed=19)
+    first = crossed_paired_bootstrap(values, samples=1000, confidence=0.95, seed=19)
+    second = crossed_paired_bootstrap(values, samples=1000, confidence=0.95, seed=19)
 
     assert first == second
+
+
+def test_crossed_bootstrap_applies_one_example_resample_to_every_seed() -> None:
+    """The crossed contract: a resampled example is the same example in every
+    selected seed. With seed-invariant values the estimate must be exact."""
+
+    values = {
+        seed: {"a": {f"ex{i}": 1.0 for i in range(8)}}
+        for seed in (1, 2, 3)
+    }
+    estimate = crossed_paired_bootstrap(values, samples=200, confidence=0.95, seed=7)
+    assert estimate.observed == pytest.approx(1.0)
+    assert estimate.confidence_low == pytest.approx(1.0)
+    assert estimate.confidence_high == pytest.approx(1.0)
 
 
 def test_paired_rows_preserve_seed_instance_and_stratum_pairing() -> None:
@@ -100,8 +116,8 @@ def test_paired_rows_preserve_seed_instance_and_stratum_pairing() -> None:
     )
 
     assert values == {
-        1: {"h4": [1.0], "s6": [1.0]},
-        2: {"h4": [1.0], "s6": [1.0]},
+        1: {"h4": {"a": 1.0}, "s6": {"b": 1.0}},
+        2: {"h4": {"a": 1.0}, "s6": {"b": 1.0}},
     }
 
 

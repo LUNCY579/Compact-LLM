@@ -10,6 +10,9 @@ REPO_ROOT = LAB_ROOT.parent
 if str(LAB_ROOT) not in sys.path:
     sys.path.insert(0, str(LAB_ROOT))
 from tgsa.phase1_runner import run_study_matrix
+from tgsa.phase1_runner import validate_completed_run_reuse as _validate_completed_run_reuse
+
+__all__ = ["main", "_validate_completed_run_reuse"]
 
 
 def _csv(value: str | None) -> list[str] | None:
@@ -33,6 +36,8 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true")
     parser.add_argument("--force-data", action="store_true")
     args = parser.parse_args()
+    if args.overwrite and args.force_data:
+        parser.error("--overwrite and --force-data cannot be combined")
     arm_values = _csv(args.arms)
     seed_values = _csv(args.seeds)
     matrix = run_study_matrix(

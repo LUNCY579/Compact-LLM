@@ -33,7 +33,26 @@ class RMSNorm(nn.Module):
 
 
 class TrajectoryEncoder(nn.Module):
-    """Encode a finite-difference velocity in a shared carrier coordinate system."""
+    """Encode a control signal in the shared carrier coordinate system.
+
+    ``learned`` mode is a **residual around the identity**::
+
+        encode(x) = x + up(SiLU(down(RMSNorm(x))))
+
+    The raw, same-shaped control tensor is therefore always present on the path
+    the downstream mechanism consumes. This is required by the preregistered
+    information-matching argument. Given the current carrier ``c_j``, the raw
+    finite difference ``d_j = c_j - c_{j-1}`` and the raw history mean
+    ``m_j = (c_j + c_{j-1}) / 2`` are affine bijections of each other, so
+    ``learned_delta`` and ``history_control`` receive algebraically equivalent
+    access to ``c_{j-1}``.
+
+    The pre-remediation encoder was ``up(SiLU(down(RMSNorm(x))))`` with no raw
+    term. ``RMSNorm`` discards magnitude and ``SiLU`` is not injective, so that
+    path was not invertible and the comparison degenerated into two matched
+    *normalized nonlinear encodings* rather than an information-matched control.
+    See ``PHASE1_LAUNCH_AUDIT.md`` finding P0-6.
+    """
 
     def __init__(self, dim: int, rank: int, mode: str, bias: bool) -> None:
         super().__init__()
@@ -43,18 +62,36 @@ class TrajectoryEncoder(nn.Module):
             self.down = nn.Linear(dim, rank, bias=bias)
             self.up = nn.Linear(rank, dim, bias=bias)
             self.activation = nn.SiLU()
-            nn.init.xavier_uniform_(self.down.weight)
-            # A small nonzero initialization keeps the initial perturbation stable
-            # while preserving immediate gradient flow through both factors.
-            nn.init.normal_(self.up.weight, mean=0.0, std=1.0e-3)
-            if self.down.bias is not None:
-                nn.init.zeros_(self.down.bias)
-            if self.up.bias is not None:
-                nn.init.zeros_(self.up.bias)
         else:
             self.down = None
             self.up = None
             self.activation = None
+        self.reset_trajectory_parameters()
+
+    def reset_trajectory_parameters(self) -> None:
+        """Apply the registered encoder initialization.
+
+        Callers must invoke this *after* any enclosing model-wide
+        ``module.apply(...)`` initializer, which would otherwise overwrite these
+        tensors with the generic linear-layer initialization.
+
+        ``up.weight`` is zero so the encoder is exactly the identity at step 0.
+        That makes the information-matching property provable at initialization
+        and keeps the cold-start perturbation at zero. Gradient reaches ``down``
+        from the first optimizer step onward because ``up`` becomes non-zero
+        after that step, which is the standard zero-init residual-adapter
+        convention.
+        """
+
+        if self.mode != "learned":
+            return
+        assert self.down is not None and self.up is not None
+        nn.init.xavier_uniform_(self.down.weight)
+        nn.init.zeros_(self.up.weight)
+        if self.down.bias is not None:
+            nn.init.zeros_(self.down.bias)
+        if self.up.bias is not None:
+            nn.init.zeros_(self.up.bias)
 
     def forward(self, velocity: Tensor) -> Tensor:
         if self.mode == "none":
@@ -63,7 +100,8 @@ class TrajectoryEncoder(nn.Module):
             return velocity
         assert self.down is not None and self.up is not None
         assert self.activation is not None
-        return self.up(self.activation(self.down(self.norm(velocity))))
+        residual = self.up(self.activation(self.down(self.norm(velocity))))
+        return velocity + residual
 
 
 def _add_attention_bias(logits: Tensor, attention_bias: Tensor | None) -> Tensor:
@@ -236,12 +274,27 @@ class TrajectoryGuidedSequentialAttention(nn.Module):
         self._initialize_control_paths()
 
     def _initialize_control_paths(self) -> None:
-        # Neutral gates at initialization. Trajectory transforms are intentionally
-        # small through TrajectoryEncoder.up, avoiding a large cold-start impulse.
+        # Neutral gates at initialization. The trajectory residual is exactly zero
+        # at step 0 (TrajectoryEncoder.up is zero-initialized), so the encoder
+        # starts as the identity and there is no cold-start impulse.
         for layer in self.pre_gate:
             nn.init.zeros_(layer.bias)
         for layer in self.correction_gate:
             nn.init.zeros_(layer.bias)
+
+    def reset_registered_parameters(self) -> None:
+        """Re-apply this operator's registered initialization.
+
+        An enclosing model that runs a generic ``apply(...)`` initializer over
+        every ``nn.Linear`` would otherwise clobber the trajectory-encoder
+        initialization, silently replacing the zero-initialized residual with a
+        generic normal draw. Enclosing models must call this after their own
+        global initializer.
+        """
+
+        for encoder in self.trajectory_encoders:
+            encoder.reset_trajectory_parameters()
+        self._initialize_control_paths()
 
     @overload
     def forward(
