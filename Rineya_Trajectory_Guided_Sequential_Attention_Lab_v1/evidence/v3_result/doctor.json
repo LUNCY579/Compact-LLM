@@ -1,0 +1,588 @@
+{
+  "arm_checks": {
+    "cascade": {
+      "finite_gradients": true,
+      "finite_loss": true,
+      "logits_shape": [
+        4,
+        67,
+        106
+      ],
+      "loss": 4.6642632484436035,
+      "state_sha256": "b386798b55344c6d21867de3a4412c354c4ddb5eeb3ffa4b0694e7fec32553d5"
+    },
+    "history_control": {
+      "finite_gradients": true,
+      "finite_loss": true,
+      "logits_shape": [
+        4,
+        67,
+        106
+      ],
+      "loss": 4.664263725280762,
+      "state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18"
+    },
+    "learned_delta": {
+      "finite_gradients": true,
+      "finite_loss": true,
+      "logits_shape": [
+        4,
+        67,
+        106
+      ],
+      "loss": 4.664268493652344,
+      "state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18"
+    }
+  },
+  "checks": {
+    "all_forward_backward_finite": true,
+    "all_interventions_finite": true,
+    "base_commit_is_ancestor": true,
+    "dataset_valid": true,
+    "history_delta_exact_initialization": true,
+    "history_delta_parameter_count_equal": true,
+    "intervention_hooks_cleaned_up": true
+  },
+  "device": "cuda",
+  "git": {
+    "branch": "research/tgsa-phase1-identifiability-v3-powered-confirmatory",
+    "dirty": false,
+    "expected_base_commit": "aefb70ebed2e7f57b9cbfe25c24dfdc0aee2fd4e",
+    "expected_base_is_ancestor": true,
+    "head": "72395b69beb96dc71dc80bc8c73ef75205ea51a1"
+  },
+  "initialization_audit": {
+    "all_arms_match_canonical_shared_tensors": true,
+    "canonical_initialization_seed": 871287633,
+    "canonical_state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+    "canonical_supernet_arm": "learned_delta",
+    "cascade_delta_shared_initialization": {
+      "common_tensor_count": 246,
+      "identical": true,
+      "left_common_sha256": "b386798b55344c6d21867de3a4412c354c4ddb5eeb3ffa4b0694e7fec32553d5",
+      "left_only": [],
+      "right_common_sha256": "b386798b55344c6d21867de3a4412c354c4ddb5eeb3ffa4b0694e7fec32553d5",
+      "right_only": [
+        "blocks.0.attention.trajectory_encoders.0.down.weight",
+        "blocks.0.attention.trajectory_encoders.0.up.weight",
+        "blocks.0.attention.trajectory_encoders.1.down.weight",
+        "blocks.0.attention.trajectory_encoders.1.up.weight",
+        "blocks.0.attention.trajectory_encoders.2.down.weight",
+        "blocks.0.attention.trajectory_encoders.2.up.weight",
+        "blocks.0.attention.trajectory_encoders.3.down.weight",
+        "blocks.0.attention.trajectory_encoders.3.up.weight",
+        "blocks.0.attention.trajectory_encoders.4.down.weight",
+        "blocks.0.attention.trajectory_encoders.4.up.weight",
+        "blocks.0.attention.trajectory_encoders.5.down.weight",
+        "blocks.0.attention.trajectory_encoders.5.up.weight",
+        "blocks.1.attention.trajectory_encoders.0.down.weight",
+        "blocks.1.attention.trajectory_encoders.0.up.weight",
+        "blocks.1.attention.trajectory_encoders.1.down.weight",
+        "blocks.1.attention.trajectory_encoders.1.up.weight",
+        "blocks.1.attention.trajectory_encoders.2.down.weight",
+        "blocks.1.attention.trajectory_encoders.2.up.weight",
+        "blocks.1.attention.trajectory_encoders.3.down.weight",
+        "blocks.1.attention.trajectory_encoders.3.up.weight",
+        "blocks.1.attention.trajectory_encoders.4.down.weight",
+        "blocks.1.attention.trajectory_encoders.4.up.weight",
+        "blocks.1.attention.trajectory_encoders.5.down.weight",
+        "blocks.1.attention.trajectory_encoders.5.up.weight"
+      ]
+    },
+    "cascade_trainable_parameters": 264120,
+    "history_delta_exact_initialization": true,
+    "history_delta_exact_state_structure": true,
+    "history_delta_parameter_count_equal": true,
+    "history_delta_state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+    "history_trainable_parameters": 270264,
+    "learned_delta_trainable_parameters": 270264,
+    "per_arm": {
+      "cascade": {
+        "arm_only_initialization_seed": 832689714,
+        "arm_only_tensors": [],
+        "identical_to_canonical": true,
+        "shared_sha256": "b386798b55344c6d21867de3a4412c354c4ddb5eeb3ffa4b0694e7fec32553d5",
+        "shared_tensor_count": 246,
+        "state_sha256": "b386798b55344c6d21867de3a4412c354c4ddb5eeb3ffa4b0694e7fec32553d5",
+        "trainable_parameters": 264120
+      },
+      "history_control": {
+        "arm_only_initialization_seed": 1073004775,
+        "arm_only_tensors": [],
+        "identical_to_canonical": true,
+        "shared_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+        "shared_tensor_count": 270,
+        "state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+        "trainable_parameters": 270264
+      },
+      "learned_delta": {
+        "arm_only_initialization_seed": 1038072393,
+        "arm_only_tensors": [],
+        "identical_to_canonical": true,
+        "shared_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+        "shared_tensor_count": 270,
+        "state_sha256": "96b5ff6ba87064aa997a2c431782f4ca23e392fa4ed97828d09c01c162fdfb18",
+        "trainable_parameters": 270264
+      }
+    }
+  },
+  "interventions": {
+    "identity": {
+      "answer_logits_sha256": "2777c50db2d57002a5eefca7d00d309f1a94420227bd89e8c7add674f9495d26",
+      "finite": true,
+      "records": []
+    },
+    "negate": {
+      "answer_logits_sha256": "6cbc66b0a5bbe5d5457057647d31212949b54cba1a02da2702891526b1b58e4e",
+      "finite": true,
+      "records": [
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -0.9999999403953552,
+          "input_rms": 0.8196107149124146,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.1",
+          "output_rms": 0.8196107149124146,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0,
+          "input_rms": 8.23034206405282e-05,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.2",
+          "output_rms": 8.23034206405282e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0,
+          "input_rms": 8.270872058346868e-05,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.3",
+          "output_rms": 8.270872058346868e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.000000238418579,
+          "input_rms": 0.00013886661326978356,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.4",
+          "output_rms": 0.00013886661326978356,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0000001192092896,
+          "input_rms": 0.00010463131184224039,
+          "mode": "negate",
+          "module": "blocks.0.attention.trajectory_encoders.5",
+          "output_rms": 0.00010463131184224039,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -0.9999998211860657,
+          "input_rms": 0.8160046935081482,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.1",
+          "output_rms": 0.8160046935081482,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0,
+          "input_rms": 9.019290882861242e-05,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.2",
+          "output_rms": 9.019290882861242e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0,
+          "input_rms": 9.301600221078843e-05,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.3",
+          "output_rms": 9.301600221078843e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -1.0,
+          "input_rms": 7.124282274162397e-05,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.4",
+          "output_rms": 7.124282274162397e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": -0.9999999403953552,
+          "input_rms": 8.40217326185666e-05,
+          "mode": "negate",
+          "module": "blocks.1.attention.trajectory_encoders.5",
+          "output_rms": 8.40217326185666e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        }
+      ]
+    },
+    "roll_batch": {
+      "answer_logits_sha256": "15f6de6f509a3b0358665c02985c2f790d47bede74bf895b0d40f6db55e13c79",
+      "finite": true,
+      "records": [
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.710667073726654,
+          "input_rms": 0.8196107149124146,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.1",
+          "output_rms": 0.8196107149124146,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.5968068242073059,
+          "input_rms": 8.268485544249415e-05,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.2",
+          "output_rms": 8.268485544249415e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.7700207829475403,
+          "input_rms": 8.270932448795065e-05,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.3",
+          "output_rms": 8.270932448795065e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.8288436532020569,
+          "input_rms": 0.0001388660748489201,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.4",
+          "output_rms": 0.0001388660748489201,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.5716111063957214,
+          "input_rms": 0.00010463102080393583,
+          "mode": "roll_batch",
+          "module": "blocks.0.attention.trajectory_encoders.5",
+          "output_rms": 0.00010463102080393583,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.6954819560050964,
+          "input_rms": 0.8160049915313721,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.1",
+          "output_rms": 0.8160049915313721,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.6829922795295715,
+          "input_rms": 9.017842967296019e-05,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.2",
+          "output_rms": 9.017842239700258e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.687707781791687,
+          "input_rms": 9.299887460656464e-05,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.3",
+          "output_rms": 9.299887460656464e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.6321836113929749,
+          "input_rms": 7.124955300241709e-05,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.4",
+          "output_rms": 7.124955300241709e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.8303387761116028,
+          "input_rms": 8.400503429584205e-05,
+          "mode": "roll_batch",
+          "module": "blocks.1.attention.trajectory_encoders.5",
+          "output_rms": 8.400503429584205e-05,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        }
+      ]
+    },
+    "zero": {
+      "answer_logits_sha256": "8bdf1b4e479bb3f7a9f8c5b2b651310776fd1a5bdd74fcc4b2ad4b6d76480fdf",
+      "finite": true,
+      "records": [
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.8196107149124146,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.1",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 8.24871240183711e-05,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.2",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 8.270885155070573e-05,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.3",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0001388670934829861,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.4",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.00010463073704158887,
+          "mode": "zero",
+          "module": "blocks.0.attention.trajectory_encoders.5",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.0,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.0",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 0.8160041570663452,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.1",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 8.999933197628707e-05,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.2",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 9.300882811658084e-05,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.3",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 7.124609692255035e-05,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.4",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        },
+        {
+          "input_output_cosine": 0.0,
+          "input_rms": 8.40141365188174e-05,
+          "mode": "zero",
+          "module": "blocks.1.attention.trajectory_encoders.5",
+          "output_rms": 0.0,
+          "shape": [
+            4,
+            67,
+            16
+          ]
+        }
+      ]
+    }
+  },
+  "passed": true,
+  "schema_version": "tgsa.phase1-doctor.v1"
+}
