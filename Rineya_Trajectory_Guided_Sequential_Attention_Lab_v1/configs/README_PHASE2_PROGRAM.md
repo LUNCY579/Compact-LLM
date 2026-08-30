@@ -1,0 +1,1 @@
+The authoritative branch/stage contract is `phase2_program_contract.json`. The accompanying example is explanatory only. Every runnable Phase-2 config must embed the same `study_kind`, `mtp_semantics`, rejected-regime status, and development-only boundary; CI verifies those fields before any rehearsal.
