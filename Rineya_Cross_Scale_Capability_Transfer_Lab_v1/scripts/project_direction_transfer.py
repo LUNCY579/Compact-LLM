@@ -46,17 +46,29 @@ def main() -> int:
     parser.add_argument("--overwrite", action="store_true")
     args = parser.parse_args()
     destination = validate_safe_destination(args.output, [args.target, args.donor])
+    if destination.exists():
+        if not args.overwrite:
+            raise SystemExit(f"destination exists: {destination}")
+        import shutil
+
+        shutil.rmtree(destination)
     destination.mkdir(parents=True, exist_ok=True)
     writer = StreamingSafetensorsWriter(destination, 1536 * 1024 * 1024)
     stats = {}
     with CheckpointReader(args.target) as target, CheckpointReader(args.donor) as donor:
-        target_layers = int(target.config()["num_hidden_layers"])
+        target_config = target.config()
+        target_layers = int(target_config["num_hidden_layers"])
         donor_layers = int(donor.config()["num_hidden_layers"])
         mapping = uniform_depth_map(target_layers, donor_layers)
         donor_keys = set(donor.keys)
+        tied = bool(target_config.get("tie_word_embeddings", False))
+        embed_value = None
         for key in target.keys:
+            if tied and key == "lm_head.weight":
+                continue
             value = target.get_tensor(key)
             mapped = _donor_key(key, mapping)
+            output = value
             if mapped in donor_keys:
                 donor_value = donor.get_tensor(mapped)
                 if (
@@ -65,13 +77,16 @@ def main() -> int:
                     and donor_value.shape[0] >= value.shape[0]
                     and donor_value.shape[1] >= value.shape[1]
                 ):
-                    mixed, record = spectral_direction_transfer(
+                    output, record = spectral_direction_transfer(
                         value, donor_value, rank=args.rank, strength=args.strength
                     )
-                    writer.add(key, mixed.half())
                     stats[key] = {"donor_key": mapped, **record}
-                    continue
-            writer.add(key, value)
+            if key == "model.embed_tokens.weight":
+                embed_value = output
+            writer.add(key, output.half() if output.is_floating_point() else output)
+        if tied and embed_value is not None and "lm_head.weight" in target.keys:
+            writer.add("lm_head.weight", embed_value.half())
+            stats["lm_head.weight"] = {"tied_to": "model.embed_tokens.weight"}
     writer.finalize()
     copy_sidecars(args.target, destination)
     atomic_write_json(

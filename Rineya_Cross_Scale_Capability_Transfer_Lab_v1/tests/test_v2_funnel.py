@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from rineya_cross_scale.promotion import evaluate_two_control
 from rineya_cross_scale.v2 import (
+    EXPECTED_ARTIFACTS,
     expand_alpha_plans,
     first_wave_plans,
     load_frozen_grids,
@@ -71,6 +72,14 @@ def test_one_layer_count_is_frozen() -> None:
     plans = one_layer_plans()
     assert len(plans) == 56
     assert all(plan.parameters["layers"][0] in range(28) for plan in plans)
+
+
+def test_cached_artifact_hashes_are_frozen() -> None:
+    assert EXPECTED_ARTIFACTS["delta4"]["digest"].startswith("8edf2d4f")
+    assert EXPECTED_ARTIFACTS["delta8"]["digest"].startswith("2951457e")
+    assert EXPECTED_ARTIFACTS["projected4"]["weight_sha256"].startswith("43d2d2e7")
+    assert EXPECTED_ARTIFACTS["v1_consensus"]["weight_sha256"].startswith("5758b7af")
+    assert EXPECTED_ARTIFACTS["v1_consensus"]["digest"].startswith("b30894ce")
 
 
 def test_successive_halving_prefers_eligible() -> None:

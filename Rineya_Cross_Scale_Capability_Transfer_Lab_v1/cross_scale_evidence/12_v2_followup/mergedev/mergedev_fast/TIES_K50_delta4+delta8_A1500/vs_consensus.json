@@ -1,0 +1,177 @@
+{
+  "families": {
+    "common_sense": {
+      "a_only": 0,
+      "a_score": 0.0,
+      "b_only": 0,
+      "b_score": 0.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "counterfactual_reasoning": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "general_reasoning": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "grounded_qa_rag": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "instruction_following": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "long_context_retrieval": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "lost_in_the_middle": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "mathematics": {
+      "a_only": 0,
+      "a_score": 0.0,
+      "b_only": 0,
+      "b_score": 0.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "multi_hop_binding": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "normal_conversation": {
+      "a_only": 0,
+      "a_score": 0.0,
+      "b_only": 0,
+      "b_score": 0.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "paraphrase_robustness": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 3
+    },
+    "science": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "short_response": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    },
+    "unanswerable_abstention": {
+      "a_only": 0,
+      "a_score": 1.0,
+      "b_only": 0,
+      "b_score": 1.0,
+      "delta": 0.0,
+      "items": 1
+    }
+  },
+  "items": 16,
+  "label_a": "consensus",
+  "label_b": "TIES_K50_delta4+delta8_A1500",
+  "overall": {
+    "a_score": 0.8125,
+    "b_score": 0.8125,
+    "delta_b_minus_a": 0.0
+  },
+  "paired": {
+    "a_only": 0,
+    "b_only": 0,
+    "both_correct": 13,
+    "both_wrong": 3,
+    "mcnemar_exact_two_sided_p": 1.0
+  },
+  "predictions_a": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\cross_scale_evidence\\06_dev_results\\mergedev_fast\\candidates\\CONS_MEAN_A1500\\predictions.jsonl",
+    "sha256": "a4224e2011fabe773ab4d216104ed7e46513260f83cc41363a20cfea2574b58c"
+  },
+  "predictions_b": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\cross_scale_evidence\\12_v2_followup\\mergedev\\mergedev_fast\\TIES_K50_delta4+delta8_A1500\\predictions.jsonl",
+    "sha256": "418de704bbd074964e9bacdda50288beb3af203eb47c56da0b04bfa50fecff36"
+  },
+  "response_changes": 0,
+  "scenario_bootstrap": {
+    "ci95": [
+      0.0,
+      0.0
+    ],
+    "observed_macro_delta": 0.0,
+    "probability_delta_gt_zero": 0.0,
+    "replicates": 10000,
+    "scenario_count": 13,
+    "seed": 17
+  },
+  "schema_version": "1.0",
+  "sets": {
+    "a_only": [],
+    "b_only": [],
+    "both_correct": [
+      "mergedev_counterfactual_reasoning_770aaf5dae0c1fb5",
+      "mergedev_general_reasoning_078451b6adf65710",
+      "mergedev_grounded_qa_rag_10414013c88bdaac",
+      "mergedev_instruction_following_7c4b4480b4835c0f",
+      "mergedev_long_context_retrieval_20550a305b3b2af6",
+      "mergedev_lost_in_the_middle_e4e7cc76239741de",
+      "mergedev_multi_hop_binding_492bf31e1ae5deff",
+      "mergedev_paraphrase_robustness_0cfbf1026bf11fe7",
+      "mergedev_paraphrase_robustness_44e3777f1aad20a2",
+      "mergedev_paraphrase_robustness_c26fef498d2d9fd3",
+      "mergedev_science_0ac5af678b239ec5",
+      "mergedev_short_response_30785feeb5a8abdf",
+      "mergedev_unanswerable_abstention_22f9fcfd9ce716c8"
+    ],
+    "both_wrong": [
+      "mergedev_common_sense_025ea65887df6a1b",
+      "mergedev_mathematics_12cd1363c6e3df98",
+      "mergedev_normal_conversation_4a73375fc950bab7"
+    ],
+    "response_changes": []
+  }
+}

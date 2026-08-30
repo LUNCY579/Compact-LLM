@@ -43,6 +43,7 @@ EXPECTED_ARTIFACTS = {
 DEFAULT_MODEL_CANDIDATES = {
     "supa": [
         REPO_ROOT / "Rineya_Published_Cores" / "Rineya-Supa-A1.1-1.1.0-devfreeze",
+        REPO_ROOT.parent / "Chat-Bubble" / "Rineya_Published_Cores" / "Rineya-Supa-A1.1-1.1.0-devfreeze",
     ],
     "qwen06": [
         Path.home()
@@ -82,6 +83,7 @@ ENV_KEYS = {
 
 METHOD_COMPLEXITY = {
     "CONSENSUS_SIGN": 10,
+    "TASK_VECTOR": 15,
     "CONSENSUS_COSINE": 20,
     "TIES": 30,
     "DARE": 40,

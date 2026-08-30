@@ -158,6 +158,7 @@ def build_candidate(plan: CandidatePlan, paths: dict[str, Path], destination: Pa
         destination=destination,
         alpha=plan.coefficient,
         output_dtype="float16",
+        max_shard_bytes=1536 * 1024 * 1024,
         overwrite=False,
         source_fingerprints=fingerprints,
     )
@@ -300,6 +301,15 @@ def run_plans(plans: list[CandidatePlan], *, split: str, keep: int | None) -> di
         "rows": ranked,
     }
     atomic_write_json(EVIDENCE / "mergedev" / f"{split}_ranking.json", report)
+    keep_names = set(promoted)
+    for plan in plans:
+        if plan.name in keep_names:
+            continue
+        weight_dir = LOCAL / "v2_candidates" / plan.name
+        if weight_dir.is_dir():
+            import shutil
+
+            shutil.rmtree(weight_dir, ignore_errors=True)
     print(json.dumps({"promoted": promoted, "completed": len(summaries)}, indent=2))
     return report
 
@@ -314,6 +324,7 @@ def main() -> int:
     parser.add_argument("--split", default="mergedev_fast")
     parser.add_argument("--keep", type=int)
     parser.add_argument("--families", nargs="*")
+    parser.add_argument("--names", nargs="*")
     args = parser.parse_args()
     if args.stage == "verify":
         report = verify_cached_artifacts()
@@ -324,6 +335,8 @@ def main() -> int:
         plans = first_wave_plans()
         if args.families:
             plans = [plan for plan in plans if plan.merge_family in set(args.families)]
+        if args.names:
+            plans = [plan for plan in plans if plan.name in set(args.names)]
         run_plans(plans, split=args.split, keep=args.keep or 8)
         return 0
     if args.stage == "expand":
