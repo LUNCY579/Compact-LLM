@@ -1,8 +1,8 @@
 # TGSA Phase 1 v4 — operator and agent runbook
 
 Every command below was executed end to end by
-`pipeline_rehearsal.py` at toy scale before this file was written, so the
-sequence is validated rather than reconstructed. What the rehearsal cannot
+`scripts/phase1_v4_pipeline_rehearsal.py` at toy scale before this file was
+written, so the sequence is validated rather than reconstructed. What the rehearsal cannot
 validate is scale, and §0 says what that costs.
 
 v4 differs from v3 in three operational ways:
@@ -53,12 +53,23 @@ carry over verbatim — see `PHASE1_V3_RUNBOOK.md` §Setup.
 Development-only, arm-blind. This is the artifact that gates everything else.
 
 ```bash
-python competence_run.py --output competence_easy50k_20k.json --band easy_nontrivial --train-examples 50000 --holdout 3000 --steps 20000 --seeds 1,2,3
+python scripts/phase1_v4_competence_run.py --output <evidence>/competence_easy50k_20k.json --band easy_nontrivial --train-examples 50000 --holdout 3000 --steps 20000 --seeds 1,2,3
 ```
 
 Exit code 0 means `GO`, 1 means `NO_GO`. The report records per-seed held-out
 accuracy, per-family accuracy, distinct prediction counts, and the loss curve of
 every run — all of which the gate consumes and none of which the pilot recorded.
+
+If the gate itself has changed since a report was written, `require_go` rejects
+it on schema version rather than honouring a stale rule. Recompute the verdict
+from the stored raw runs instead of re-measuring:
+
+```bash
+python scripts/regate_competence_report.py --input <stored.json> --output <regated.json>
+```
+
+It cannot manufacture a `GO` — a stored `GO` whose raw runs fail the current
+thresholds re-gates to `NO_GO` — and it never modifies its input.
 
 **Read the reasons on a `NO_GO`.** A dispersion failure
 (`competence_is_reliable_across_seeds`) means the update budget is truncating a
@@ -106,7 +117,7 @@ Cheap, and it has already caught one defect that would have aborted the first
 cell of the matrix.
 
 ```bash
-python pipeline_rehearsal.py
+python scripts/phase1_v4_pipeline_rehearsal.py
 ```
 
 Runs the full sequence at toy scale including a negative control that flips the
