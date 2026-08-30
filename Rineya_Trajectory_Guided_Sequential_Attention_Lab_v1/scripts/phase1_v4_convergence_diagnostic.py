@@ -60,8 +60,9 @@ def still_descending(curve: list[list[float]], *, tail_fraction: float = 0.2) ->
     if len(curve) < 4:
         return False
     tail = max(2, int(len(curve) * tail_fraction))
-    early = statistics.fmean(point[1] for point in curve[-tail:-tail // 2 or -1])
-    late = statistics.fmean(point[1] for point in curve[-tail // 2 or -1:])
+    half = -(tail // 2) or -1  # tail >= 2 keeps this negative
+    early = statistics.fmean(point[1] for point in curve[-tail:half])
+    late = statistics.fmean(point[1] for point in curve[half:])
     total = curve[0][1] - min(point[1] for point in curve)
     if total <= 0:
         return False
