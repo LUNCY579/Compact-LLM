@@ -68,6 +68,12 @@ competence verdict from **development-only** evidence and emits a machine-readab
 Thresholds are supplied by the caller and must be frozen from the outcome-blind
 development pilot **before** any confirmatory run. This module does not invent
 them, and it never reads a confirmatory outcome.
+
+``require_go`` additionally refuses any report whose regime is marked
+``development_only``. The pipeline rehearsal produces a genuine, well-formed
+``GO`` at toy scale in order to exercise this very code path, and that artifact
+persists on disk afterwards; without the marker it would satisfy every
+structural check the config builder makes.
 """
 
 from __future__ import annotations
@@ -291,11 +297,19 @@ def load_verdict(path: Path) -> dict[str, object]:
     return value
 
 
-def require_go(path: Path) -> dict[str, object]:
+def require_go(path: Path, *, allow_development_only: bool = False) -> dict[str, object]:
     """Fail closed unless a frozen competence report says GO.
 
     Called by the confirmatory runner. A missing, malformed, or NO_GO report
     must stop the launch — that is the entire point of the gate.
+
+    ``allow_development_only`` exists solely so the pipeline rehearsal can
+    exercise this code path with its own toy report. It is never set from a
+    real study configuration: ``run_study_matrix`` passes it only when the
+    study itself declares ``development_only``, and ``build_phase1_v4_config``
+    only emits that declaration when it was given a marked report. The marker
+    therefore travels with the artifact chain and cannot be laundered by
+    passing a marked report to an unmarked config, or the reverse.
     """
 
     report_path = Path(path)
@@ -305,6 +319,20 @@ def require_go(path: Path) -> dict[str, object]:
             f"be dispatched without a frozen GO verdict"
         )
     report = load_verdict(report_path)
+
+    # A rehearsal produces a real, well-formed GO report at toy scale so the
+    # pipeline's gate path can be exercised end to end. That artifact then sits
+    # on disk at a path this function would otherwise accept, and it now passes
+    # every structural check the config builder makes. Refusing it here is the
+    # only thing standing between a toy report and a dispatched matrix.
+    regime = report.get("regime")
+    if isinstance(regime, Mapping) and regime.get("development_only") and not allow_development_only:
+        raise ValueError(
+            f"competence report at {report_path} is marked development_only; it was "
+            f"produced by a rehearsal or a smoke run and certifies nothing. A "
+            f"confirmatory matrix requires a report from a real measurement"
+        )
+
     if report["verdict"] != "GO":
         failed = [name for name, ok in report["checks"].items() if not ok]  # type: ignore[union-attr]
         raise ValueError(

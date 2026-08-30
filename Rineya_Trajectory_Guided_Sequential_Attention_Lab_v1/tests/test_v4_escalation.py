@@ -206,3 +206,82 @@ def test_the_ladder_terminates_from_every_starting_point() -> None:
             history.append(_report(step.train_examples, step.steps,
                                    failures[min(moves - 1, len(failures) - 1)]))
             step, _ = next_step(history)
+
+
+# --------------------------------------------------------------------------
+# Order independence
+# --------------------------------------------------------------------------
+
+
+def test_the_answer_does_not_depend_on_report_order() -> None:
+    """Regimes are measured in parallel, so "the latest report" is arbitrary.
+
+    An earlier revision read reports[-1] and returned a permitted move for one
+    ordering and REJECT for the other, on identical evidence.
+    """
+
+    memorizing = _report(50_000, 20_000, MEMORIZATION_CHECK)
+    mixed = _report(200_000, 20_000, MIXTURE_CHECK)
+
+    forward, _ = next_step([memorizing, mixed])
+    backward, _ = next_step([mixed, memorizing])
+    assert forward == backward
+    assert forward is not None
+    assert (forward.train_examples, forward.steps) == (200_000, 30_000)
+
+
+def test_every_failing_report_is_considered_not_just_one() -> None:
+    """The move may come from an earlier report if the later one is exhausted."""
+
+    step, reason = next_step([
+        _report(200_000, 20_000, MIXTURE_CHECK),      # -> 200k x 30k, available
+        _report(50_000, 20_000, MEMORIZATION_CHECK),  # -> 200k x 20k, exhausted
+    ])
+    assert step is not None
+    assert (step.train_examples, step.steps) == (200_000, 30_000)
+    assert "already been measured" not in reason
+
+
+def test_rejection_reports_every_exhausted_response() -> None:
+    """When nothing is permitted, say why for each, not just the last."""
+
+    step, reason = next_step([
+        _report(50_000, 20_000, MEMORIZATION_CHECK),   # -> 200k x 20k, measured
+        _report(200_000, 20_000, MEMORIZATION_CHECK),  # -> at max data
+    ])
+    assert step is None
+    assert "REJECT" in reason
+    assert "already been measured" in reason
+    assert "registered maximum" in reason
+
+
+def test_the_tiebreak_prefers_the_smallest_regime() -> None:
+    """Fixed and outcome-independent: it must not depend on which scored better."""
+
+    step, reason = next_step([
+        _report(200_000, 20_000, MIXTURE_CHECK),     # -> 200k x 30k
+        _report(50_000, 20_000, MIXTURE_CHECK),      # -> 50k  x 30k
+    ])
+    assert step is not None
+    assert (step.train_examples, step.steps) == (50_000, 30_000)
+    assert "deferred as larger" in reason
+
+
+def test_an_unanswerable_failure_anywhere_rejects() -> None:
+    """A dead family in ANY report is fatal, not only in the last one."""
+
+    step, reason = next_step([
+        _report(50_000, 20_000, "every_primary_family_competent"),
+        _report(200_000, 20_000, MIXTURE_CHECK),
+    ])
+    assert step is None
+    assert "no registered response" in reason
+
+
+def test_a_go_anywhere_still_ends_the_ladder() -> None:
+    step, reason = next_step([
+        _report(50_000, 20_000, MEMORIZATION_CHECK),
+        _report(200_000, 20_000),
+    ])
+    assert step is None
+    assert "already exists" in reason

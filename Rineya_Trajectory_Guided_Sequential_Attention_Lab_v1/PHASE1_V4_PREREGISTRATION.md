@@ -52,8 +52,14 @@ competent regime is a result. A null in an incompetent regime is not.
 
 `tgsa/phase1_competence.py` emits a machine-readable `GO` / `NO_GO` from
 development-only evidence. `run_study_matrix` calls `require_go` before it
-creates an output root, so a confirmatory matrix **cannot be dispatched** on a
-missing, malformed, superseded-schema, or `NO_GO` report.
+creates an output root, so a matrix **cannot be dispatched** on a missing,
+malformed, superseded-schema, `NO_GO`, or development-only report.
+
+Precisely: the gate is consulted when the study declares `confirmatory: true`
+**and** carries a `competence_report` key. A smoke configuration declares
+neither and is deliberately not gated. This means the protection rests on the
+registered config carrying that key — which `build_phase1_v4_config.py` always
+emits, and which `tests/test_build_v4_config.py` pins.
 
 Eight checks, every threshold frozen from the outcome-blind pilot
 (`PHASE1_V4_PILOT_REPORT.md` §7) before any v4 confirmatory run:
@@ -67,7 +73,7 @@ Eight checks, every threshold frozen from the outcome-blind pilot
 | `predictions_are_input_dependent` | rejects a constant predictor scoring at the majority baseline |
 | `no_primary_family_saturated` | a ceiling is as uninformative as a floor — no room for a decrement |
 | `generalization_gap_acceptable` | seen − holdout ≤ 0.10; memorization must never substitute for competence |
-| `competence_is_reliable_across_seeds` | the worst individual **run** must clear the floor, and per-arm coefficient of variation must be ≤ 0.35 — the signature of a mixture of converged and unconverged runs, as distinct from ordinary dispersion, which is a power problem and is handled below |
+| `competence_is_reliable_across_seeds` | the worst individual **run** must clear the floor; per-arm coefficient of variation must be ≤ 0.35 — the signature of a mixture of converged and unconverged runs, as distinct from ordinary dispersion, which is a power problem and is handled below; and at least **3** runs per arm must be recorded, since two seeds cannot establish that a third behaves the same way. Unrecorded per-seed evidence fails closed. |
 
 The gate is **arm-blind**: every check is evaluated on the weakest arm or on all
 arms, never on a between-arm difference.
@@ -80,9 +86,17 @@ arms, never on a between-arm difference.
 
 The v4 pilot produced a live test of this rule. In `easy_50k_long`,
 `learned_delta` averaged 0.3737 against controls at 0.2633 and 0.2637 — a
-+0.11 apparent margin. It was not used, and §2 of the pilot report shows it was
-an artifact of which seeds finished a training phase transition, not a mechanism
-effect. The rule held under temptation, which is the only time a rule matters.
++0.11 apparent margin. It was not used for selection.
+
+§2 of the pilot report gives an arithmetic account of that margin that needs no
+reference to the mechanism: `learned_delta` drew two seeds that completed the
+training phase transition, each control drew one. **That is a sufficient
+explanation, not a demonstration that no mechanism effect exists.** Two seeds of
+development data can neither establish an effect nor rule one out, and this
+programme treats asserting a negative as the same category of overclaim as
+asserting a positive. The margin is recorded and used for nothing.
+
+The rule held under temptation, which is the only time a rule matters.
 
 ---
 
@@ -335,25 +349,55 @@ wrong. It told a 200k regime failing on mixture to escalate to "50k × 30k" — 
 *reduction* in data as the response to a problem data had already solved. Caught
 before the 200k measurement produced a report.
 
-On exhaustion — four measurements taken, a rung repeated, or a failure with no
-registered response — the regime family is **rejected** and the difficulty band
+On exhaustion — four distinct **regimes** measured, a rung repeated, or a failure
+with no registered response — the regime family is **rejected** and the difficulty band
 is revisited under a new preregistration. That is a result about the
 experimental setup, not a failure of nerve, and it is the same kind of result
 v3 produced at far greater cost.
+
+`OBSERVED` **The ladder's answer must not depend on report order, and an earlier
+revision's did.** Regimes are routinely measured in parallel — two competence
+runs on one GPU is the documented throughput ceiling — so "the most recent
+report" is whichever finished first. Reading only the last report returned a
+permitted move for one ordering and `REJECT` for the other on identical
+evidence. Every failing report's registered response is now considered,
+responses already measured are dropped, and the smallest remaining regime wins
+on a fixed tiebreak that cannot depend on which report scored better.
+
+This was found while two parallel measurements were at eight of nine cells, with
+partial results already indicating that the fix changes the answer from `REJECT`
+to one further permitted run. Recording that plainly because it is the kind of
+change that must not be made quietly: it removes an arbitrary dependence rather
+than adding any move, every move it can return was already registered in the
+table above, and the four-regime cap still binds. The fix would equally have
+produced `REJECT` had both regimes failed the same way.
 
 `scripts/phase1_v4_escalation.py` reads the reports produced so far and answers
 what is permitted next, refusing past the cap, so the rule is enforceable rather
 than aspirational. `tests/test_v4_escalation.py` proves by exhaustion that no
 sequence of permitted moves can run forever.
 
-`OBSERVED` The two competence measurements launched before the split-order fix
-generated their **training** split first, so their holdouts inherited the same
-depletion: `state_update` holdout items are three-step only. That makes those
-measurements **conservative** — the holdout is strictly harder than the
-confirmatory test set will be, so competence measured on it under-states
-competence on the registered distribution, and a `GO` from them is trustworthy in
-the direction that matters. `scripts/phase1_v4_competence_run.py` now generates
-the holdout first, so the certified distribution matches the confirmatory one.
+`OBSERVED` Two competence measurements were launched before the split-order fix.
+They generated their **training** split first, so their holdouts inherited the
+same depletion: `state_update` holdout items are three-step only.
+
+That makes them **conservative as evidence of failure** — the holdout is
+strictly harder than the confirmatory test set, so a regime that fails on such a
+measurement would also fail on the registered distribution. It does **not** make
+a `GO` from them usable. A gate artifact must certify the distribution the study
+will actually evaluate on, and theirs does not, so
+`build_phase1_v4_config.py` refuses any report whose
+`regime.split_generation_order` is not `["holdout", "train"]`.
+
+An earlier revision of this section called such a `GO` "trustworthy in the
+direction that matters", which contradicted that refusal. The refusal is
+correct and this text was wrong: conservative-for-failure and
+valid-for-certification are different properties, and only the first holds.
+Re-measuring the same regime under the corrected harness is a correction, not an
+escalation, and does not consume a ladder rung.
+
+`scripts/phase1_v4_competence_run.py` now generates the holdout first, so new
+measurements certify the confirmatory distribution directly.
 
 `OBSERVED` The 200k × 20k measurement was launched on a single partial
 observation — one arm, one seed, showing a 0.168 memorization gap — before this

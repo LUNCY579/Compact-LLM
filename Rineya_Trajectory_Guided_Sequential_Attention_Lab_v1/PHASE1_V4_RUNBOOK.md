@@ -29,9 +29,13 @@ run**, one run per (arm, seed) cell.
 | 20 | 60 | ~17.6 h | ~26 h |
 | 30 | 90 | ~26 h | ~40 h |
 
-Two concurrent runner processes fit in 8 GB (each holds ~1.2 GB) and push the
-GPU from ~40% to ~85%, so the wall clock is roughly 60% of the table. Do not run
-more than two: the third contends without adding throughput.
+Two concurrent runner processes fit in 8 GB and push the GPU from ~40% to ~85%,
+so the wall clock is roughly 60% of the table. Do not run more than two: the
+third contends without adding throughput.
+
+`OBSERVED` Per-process GPU memory depends on the regime. Two 50,000-example runs
+sat at ~1.5 GB total; two 200,000-example runs at ~1.9–2.0 GB. Neither is close
+to the 8 GB card, which is why host RAM binds first.
 
 `OBSERVED` **Host RAM, not GPU memory, is the binding constraint.** Measured on
 this 16 GB machine with two concurrent 200,000-example runs: GPU memory sits at
@@ -169,6 +173,19 @@ constant and the primary estimand has three strata:
 Auditing at v3's structure would report the power of a study nobody is going to
 run. See `PHASE1_V4_PREREGISTRATION.md` §Stratum structure.
 
+Then read the seed count off the surface at the realised variance, rather than
+re-running the audit once you know it:
+
+```bash
+python scripts/phase1_v4_read_power_surface.py --surface power/v4_power.json --competence <competence.json> --output power/v4_recommendation.json
+```
+
+It takes the realised σ_a from `detail.realised_seed_sd_for_power_audit` in the
+competence report and refuses to interpolate onto a variance that was never
+simulated. Simulating the whole surface first and reading from it afterwards is
+deliberate: re-running the audit *after* seeing the realised variance invites
+choosing a grid that produces a convenient answer.
+
 If `recommended_seed_count` is null, the design is not powered and **must not be
 registered**. `build_phase1_v4_config.py` enforces this.
 
@@ -184,6 +201,12 @@ python scripts/build_phase1_v4_config.py --competence <competence.json> --power 
 
 Copy the competence report **next to the config**: the runner resolves
 `competence_report` relative to the config's own directory.
+
+`OBSERVED` The competence report's split order is machine-checked by the builder,
+but the **dataset's** split order is not: `materialize_dataset` honours whatever
+the config says and defaults to the old train-first order for configs that omit
+it. The generated v4 config always sets it, so this only matters if a config is
+hand-edited — which the top of this section forbids. Verify it in the manifest.
 
 `OBSERVED` The generated config sets `dataset.split_generation_order` to
 `["test", "dev", "train"]`. Do not "simplify" this away. Splits are generated in
@@ -263,9 +286,15 @@ the complete preflight. Do not "fix" it by serialising the whole matrix.
 Everything forbidden in v3, plus:
 
 * **Editing the competence report after the matrix is dispatched.** Its SHA-256
-  is bound into the config's `registration` block and the verifier will catch it.
+  is recorded in the config's `registration` block, so an edit is *detectable* by
+  comparing the file against that value. `OBSERVED` It is **not** detected
+  automatically: `scripts/verify_phase1_evidence.py` walks the config → dataset →
+  manifest → predictions chain and never opens the competence report. Check it by
+  hand, or treat the recorded digest as the artifact of record.
 * **Re-running the competence step until it returns `GO`.** The escalation ladder
-  is one step, and it is registered in advance.
+  permits at most four distinct regimes, each rung at most once, each tied to the
+  specific check that failed. Ask `scripts/phase1_v4_escalation.py` rather than
+  deciding by hand.
 * **Selecting a regime because `learned_delta` did well on it.** Selection is
   arm-blind on the minimum across all three arms. The pilot contains a live case
   where the temptation was real and the rule held.

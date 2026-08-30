@@ -1421,7 +1421,13 @@ def run_study_matrix(
     if confirmatory and competence_report:
         from .phase1_competence import require_go
 
-        require_go(study_config_path.parent / str(competence_report))
+        # A development-only report is accepted only by a study that declares
+        # itself development-only too. The rehearsal sets both; nothing else
+        # sets either, so the marker cannot be laundered in either direction.
+        require_go(
+            study_config_path.parent / str(competence_report),
+            allow_development_only=bool(study.get("development_only")),
+        )
     if confirmatory and force_data:
         raise ValueError(
             "--force-data regenerates the materialized dataset and is forbidden for a "

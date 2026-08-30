@@ -470,3 +470,74 @@ def test_a_superseded_schema_is_rejected_on_load(tmp_path: Path) -> None:
     path.write_text(json.dumps(stale), encoding="utf-8")
     with pytest.raises(ValueError, match="unsupported competence report schema"):
         require_go(path)
+
+
+# --------------------------------------------------------------------------
+# A rehearsal writes a genuine GO report to a fixed path. It must not launch.
+# --------------------------------------------------------------------------
+
+
+def test_a_development_only_report_is_refused_however_well_formed(tmp_path: Path) -> None:
+    """The pipeline rehearsal produces a real GO at toy scale to exercise this
+    very code path, and that artifact persists on disk afterwards. Without the
+    marker it satisfies every structural check the config builder makes."""
+
+    report = _evaluate(_arms())
+    assert report["verdict"] == "GO"
+    report["regime"] = {"train_examples": 2400, "steps": 150,
+                        "split_generation_order": ["holdout", "train"],
+                        "development_only": True}
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps(report), encoding="utf-8")
+    with pytest.raises(ValueError, match="development_only"):
+        require_go(path)
+
+
+def test_a_real_report_is_not_caught_by_the_marker(tmp_path: Path) -> None:
+    report = _evaluate(_arms())
+    report["regime"] = {"train_examples": 50_000, "steps": 20_000,
+                        "split_generation_order": ["holdout", "train"]}
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps(report), encoding="utf-8")
+    assert require_go(path)["verdict"] == "GO"
+
+
+def test_the_marker_is_checked_before_the_verdict(tmp_path: Path) -> None:
+    """A development-only NO_GO should still name the marker, not the verdict,
+    so an operator is told the artifact is the wrong kind rather than that the
+    regime failed."""
+
+    arms = _arms()
+    arms[0] = _competent_arm("cascade", accuracy=0.04)
+    report = _evaluate(arms)
+    report["regime"] = {"development_only": True}
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps(report), encoding="utf-8")
+    with pytest.raises(ValueError, match="development_only"):
+        require_go(path)
+
+
+def test_the_runner_accepts_a_marked_report_only_for_a_marked_study(tmp_path: Path) -> None:
+    """The two ends of the chain must agree, or the marker is launderable."""
+
+    from tgsa.phase1_runner import run_study_matrix
+
+    lab = Path(__file__).resolve().parents[1]
+    report = _evaluate(_arms())
+    report["regime"] = {"train_examples": 2400, "steps": 150,
+                        "split_generation_order": ["holdout", "train"],
+                        "development_only": True}
+    (tmp_path / "competence.json").write_text(json.dumps(report), encoding="utf-8")
+
+    study = json.loads((lab / "configs" / "phase1_identifiability_v3.json").read_text(encoding="utf-8"))
+    study["competence_report"] = "competence.json"
+    config_path = tmp_path / "study.json"
+    config_path.write_text(json.dumps(study), encoding="utf-8")
+
+    # Unmarked study + marked report -> refused.
+    with pytest.raises(ValueError, match="development_only"):
+        run_study_matrix(
+            study_config_path=config_path, dataset_dir=tmp_path / "dataset",
+            output_root=tmp_path / "study", repo_root=lab.parent, phase="train",
+        )
+    assert not (tmp_path / "study").exists()
