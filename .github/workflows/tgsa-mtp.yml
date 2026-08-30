@@ -16,7 +16,7 @@ on:
   workflow_dispatch:
     inputs:
       run_development_matrix:
-        description: "Run the 3-seed development competence matrix on a self-hosted tgsa runner"
+        description: "Run the 3-seed development-only competence matrix on a self-hosted tgsa runner"
         required: false
         default: false
         type: boolean
@@ -73,7 +73,7 @@ jobs:
           print("combined editable environment resolved")
           PY
 
-      - name: Run TGSA MTP focused tests
+      - name: Run TGSA MTP and integrity focused tests
         run: |
           python -m pytest \
             "${LAB}/tests/test_mtp.py" \
@@ -81,14 +81,16 @@ jobs:
             "${LAB}/tests/test_phase2_model.py" \
             "${LAB}/tests/test_phase2_decode.py" \
             "${LAB}/tests/test_phase2_analysis.py" \
+            "${LAB}/tests/test_phase2_integrity.py" \
             "${RETROFIT}/tests/test_mtp_adapter.py" \
+            "${RETROFIT}/tests/test_run_integrity.py" \
             -q --tb=short
 
-      - name: Run pre-existing TGSA regression suite
+      - name: Run complete TGSA regression suite
         run: |
           python -m pytest "${LAB}/tests" -q --tb=short --durations=15
 
-      - name: Run pre-existing retrofit regression suite
+      - name: Run complete retrofit regression suite
         run: |
           python -m pytest "${RETROFIT}/tests" -q --tb=short --durations=15
 
@@ -101,14 +103,14 @@ jobs:
             --dataset-dir "ci_artifacts/tgsa_mtp_smoke/dataset" \
             --output-dir "ci_artifacts/tgsa_mtp_smoke/study"
 
-      - name: Verify closed evidence chain and final smoke gate
+      - name: Verify legacy and integrity evidence chains
         run: |
           python "${LAB}/scripts/verify_phase2_mtp_evidence.py" \
             --config "${SMOKE_CONFIG}" \
             --dataset-dir "ci_artifacts/tgsa_mtp_smoke/dataset" \
             --output-dir "ci_artifacts/tgsa_mtp_smoke/study"
 
-      - name: Validate Phase-2 JSON schemas and claim contracts
+      - name: Validate schemas, provenance, and claim boundaries
         run: |
           python - <<'PY'
           import json
@@ -121,6 +123,7 @@ jobs:
           pairs = [
               (lab / "evidence/phase2_matrix.schema.json", root / "matrix_manifest.json"),
               (lab / "evidence/phase2_verification.schema.json", root / "evidence_verification.json"),
+              (lab / "evidence/phase2_integrity.schema.json", root / "phase2_integrity.json"),
           ]
           matrix = json.loads((root / "matrix_manifest.json").read_text(encoding="utf-8"))
           for entry in matrix["runs"]:
@@ -137,18 +140,49 @@ jobs:
               )
 
           verification = json.loads((root / "evidence_verification.json").read_text(encoding="utf-8"))
+          integrity_verification = json.loads((root / "phase2_integrity_verification.json").read_text(encoding="utf-8"))
+          integrity = json.loads((root / "phase2_integrity.json").read_text(encoding="utf-8"))
           gate = json.loads((root / "gate.json").read_text(encoding="utf-8"))
           competence = json.loads((root / "competence_report.json").read_text(encoding="utf-8"))
+
           assert verification["passed"] is True, verification["errors"]
+          assert integrity_verification["passed"] is True, integrity_verification["errors"]
           assert verification["checks"]["paired_initialization"] is True
           assert verification["checks"]["all_primary_decodes_exact"] is True
           assert gate["verdict"] == "SMOKE_ONLY", gate
           assert gate["checks"]["exact_decode_equivalence"] is True
           assert gate["checks"]["main_path_initialization_neutral"] is True
-          # The tiny budget is intentionally not promoted into a competence claim.
-          assert competence["verdict"] in {"GO", "NO_GO"}
+
           assert matrix["confirmatory"] is False
-          print(f"validated {len(pairs)} Phase-2 artifacts")
+          assert matrix["development_only"] is True
+          assert matrix["mechanism_interpretation_allowed"] is False
+          assert matrix["training_dose"]["sample_presentations"] == 96
+          assert matrix["training_dose"]["unique_train_examples"] == 96
+          assert matrix["training_dose"]["effective_epochs"] == 1.0
+          assert len(matrix["regime_fingerprint"]) == 64
+          assert len(matrix["device_fingerprint"]) == 64
+          assert len(matrix["study_fingerprint"]) == 64
+
+          assert competence["verdict"] in {"GO", "NO_GO"}
+          assert competence["development_only"] is True
+          assert competence["certifies_confirmatory"] is False
+          assert integrity["development_only"] is True
+          assert integrity["mechanism_interpretation_allowed"] is False
+          assert integrity["contract"]["external_phase1_competence"]["required"] is False
+          assert integrity["claim_scope"].startswith("integrity and prerequisite")
+
+          fingerprints = set()
+          for entry in matrix["runs"]:
+              manifest = json.loads((root / entry["manifest"]).read_text(encoding="utf-8"))
+              assert manifest["development_only"] is True
+              assert manifest["mechanism_interpretation_allowed"] is False
+              assert manifest["training_dose"] == matrix["training_dose"]
+              assert manifest["integrity"]["regime_fingerprint"] == matrix["regime_fingerprint"]
+              assert manifest["integrity"]["device_fingerprint"] == matrix["device_fingerprint"]
+              assert manifest["metric_semantics"]["wall_clock_speed_claim"] is False
+              fingerprints.add(manifest["integrity"]["cell_fingerprint"])
+          assert len(fingerprints) == len(matrix["runs"])
+          print(f"validated {len(pairs)} artifacts and {len(fingerprints)} cell fingerprints")
           PY
 
       - name: Upload smoke evidence bundle
@@ -161,7 +195,7 @@ jobs:
           retention-days: 21
 
   development-matrix:
-    name: Three-seed development competence matrix
+    name: Three-seed development-only competence matrix
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.run_development_matrix }}
     needs: unit-and-smoke
     runs-on:
@@ -187,7 +221,7 @@ jobs:
           test ! -e "$ROOT"
           echo "ROOT=$ROOT" >> "$GITHUB_ENV"
 
-      - name: Run development matrix
+      - name: Run and verify development-only matrix
         run: |
           python "${LAB}/scripts/run_phase2_mtp_study.py" \
             --config "${DEV_CONFIG}" \
@@ -197,6 +231,18 @@ jobs:
             --config "${DEV_CONFIG}" \
             --dataset-dir "${ROOT}/dataset" \
             --output-dir "${ROOT}/study"
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          root = Path(os.environ["ROOT"]) / "study"
+          matrix = json.loads((root / "matrix_manifest.json").read_text(encoding="utf-8"))
+          integrity = json.loads((root / "phase2_integrity_verification.json").read_text(encoding="utf-8"))
+          assert matrix["development_only"] is True
+          assert matrix["mechanism_interpretation_allowed"] is False
+          assert integrity["passed"] is True, integrity
+          print(json.dumps(matrix["training_dose"], indent=2, sort_keys=True))
+          PY
 
       - name: Upload development evidence
         if: always()

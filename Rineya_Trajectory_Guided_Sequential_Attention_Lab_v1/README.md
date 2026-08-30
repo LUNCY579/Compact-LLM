@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA + MTP is executable and non-evidentiary.** 311 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA + MTP is executable and non-evidentiary.** 349 tests.
 
 ### What has been demonstrated
 
@@ -26,6 +26,9 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
   initialization, prompt-masked future-token objectives, exact verified block
   decoding, factorial analysis, arm-blind competence gating, and a closed
   evidence verifier. Its smoke configuration is intentionally `SMOKE_ONLY`.
+- A fail-closed Phase-2 integrity layer that binds data diversity, sample
+  presentations, effective epochs, device identity, regime identity, and
+  development-only provenance into each study and cell fingerprint.
 
 > **v3 is not evidence against TGSA.** A contrast between arms that cannot
 > perform the task is uninformative in both directions. It constrains the
@@ -49,9 +52,10 @@ is not to make TGSA win; it is to build a system in which TGSA can win or lose
 for a scientifically meaningful reason.
 
 Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
-reaching ~6.6× the strongest trivial baseline, but its seeds are bimodal — a
-training phase transition that some seeds complete and others do not — so it
-fails the reliability check. The registered escalation ladder is running.
+reaching several times the strongest trivial baseline, but its seeds are
+bimodal — a training phase transition that some seeds complete and others do
+not — so it fails the reliability check. The registered escalation ladder is
+running. No development margin is interpreted as a TGSA result.
 
 ### Phase 2 — TGSA + multi-token prediction complementarity
 
@@ -63,9 +67,12 @@ next controls distinguish future-horizon supervision from extra parameters or
 gradient signal.
 
 The reference decoder verifies every MTP block against the main LM head and
-must reproduce ordinary greedy decoding exactly. It reports serial-round
-speedup and fractional round reduction, not an unmeasured wall-clock claim. See
-`TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md` and `PHASE2_RUNBOOK.md`.
+must reproduce ordinary greedy decoding exactly. It reports target-forward
+amortization and fractional serial-round reduction as algorithmic proxies, not
+an unmeasured wall-clock claim. Every non-confirmatory run is explicitly marked
+`development_only=true`, and an internal development GO cannot certify a later
+confirmatory matrix. See `TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md`,
+`PHASE2_RUNBOOK.md`, and `PHASE2_V4_REGIME_INTEGRATION.md`.
 
 ## Core recurrence
 
@@ -122,8 +129,8 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 
 | Path | Purpose |
 |---|---|
-| `tgsa/` | Reference attention, configuration, telemetry, MTP, and statistics |
-| `tests/` | Causality, gradient, mask, shape, ablation, decoding, and statistical tests |
+| `tgsa/` | Reference attention, configuration, telemetry, MTP, integrity, and statistics |
+| `tests/` | Causality, gradient, mask, shape, ablation, decoding, integrity, and statistical tests |
 | `scripts/` | Smoke execution, ablation matrices, Phase-2 execution, and verification |
 | `configs/` | Frozen Phase-0/1 configs and Phase-2 smoke/development configs |
 | `evidence/` | Run-manifest schemas and artifact contracts |
@@ -145,6 +152,7 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md` | Combined mechanism, controls, estimands, gates, and claim ceiling |
 | `PHASE2_RUNBOOK.md` | Synthetic and real-Rineya execution sequence |
 | `PHASE2_IMPLEMENTATION_SUMMARY.md` | Added modules, reused safeguards, and validation record |
+| `PHASE2_V4_REGIME_INTEGRATION.md` | How v4's dose/diversity trend constrains Phase-2 design |
 
 ## Non-negotiable research rules
 
@@ -154,3 +162,5 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 4. The existing long-context demo may be diagnostic, but a paper claim requires an independently authored sealed bank.
 5. Telemetry is explanatory evidence only unless its predictive relationship is preregistered and validated out of sample.
 6. No “first” or novelty claim is permitted until the final related-work search and citation audit are complete.
+7. A development competence report cannot certify a confirmatory matrix, even if its numeric verdict is `GO`.
+8. Serial target-forward reduction is an algorithmic proxy, not a tokens-per-second result.
