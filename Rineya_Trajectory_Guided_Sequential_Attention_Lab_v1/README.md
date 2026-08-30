@@ -6,24 +6,48 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-This branch establishes an auditable Phase-0 foundation:
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development.** 274 tests.
 
-- a typed PyTorch reference kernel;
-- a conventional parallel-MHA control;
-- seven mechanism-preserving TGSA ablations plus a conventional parallel control;
-- a shared carrier state that makes inter-head differences comparable;
-- learned trajectory encoding, bounded predictor/corrector gates, Q/K/V conditioning, and soft token-importance biasing;
-- causal masking, padding masks, additive bias support, and summary/full telemetry;
-- deterministic smoke and evidence-manifest scripts;
-- 22 unit tests covering shapes, causality, gradients, masks, telemetry, all ablations, and paired statistics;
-- preregistration, falsification criteria, Qwen/GQA integration requirements, and an arXiv evidence checklist.
+### What has been demonstrated
 
-This is a **reference implementation**, not a fused production kernel and not yet evidence of improved model quality. The first local validation recorded:
+- A typed PyTorch reference kernel, a conventional parallel-MHA control, seven
+  mechanism-preserving TGSA ablations, a shared carrier state, learned trajectory
+  encoding, bounded predictor/corrector gates, Q/K/V conditioning, and soft
+  token-importance biasing.
+- A **completed confirmatory study** (`tgsa-phase1-identifiability-v3-2026-08-29`):
+  60/60 cells, a clean train → barrier → single-evaluate sequence, 2001 passing
+  evidence-chain checks. Tagged `tgsa-phase1-v3-result-2026-08-29` and immutable.
+- The v3 `decision` was **`inconclusive`**, and the reason is now understood: no
+  arm was competent. All three memorized the 5,000-example training set and
+  scored at the majority baseline on held-out data — an in-band held-out test
+  (same difficulty, novel instances, zero latent-signature overlap) gave 0.236
+  seen against 0.045 held-out, versus a 0.0407 majority baseline.
 
-- 22/22 tests passing;
-- all reference ablations finite and differentiable;
-- zero observed causal-prefix perturbation error in the configured synthetic check;
-- an expected large latency penalty for the unfused sequential CPU implementation, which remains a first-class optimization target.
+> **v3 is not evidence against TGSA.** A contrast between arms that cannot
+> perform the task is uninformative in both directions. It constrains the
+> experimental setup, not the mechanism.
+
+### What has NOT been demonstrated
+
+- Anything about the TGSA mechanism. No hypothesis in the ladder has been
+  confirmed or refuted.
+- Improved model quality, at any scale.
+- Any Qwen/GQA, natural-language, long-context, or efficiency claim. The Rineya
+  retrofit track is explicitly **non-evidentiary** until the mechanism has been
+  fairly tested here.
+
+### Phase 1 v4 — competence-first (in development)
+
+v4 changes only the regime in which the contrast is run, plus a **competence
+gate** the confirmatory runner consults before it creates an output root. Eight
+arm-blind checks, every threshold frozen from an outcome-blind pilot. The purpose
+is not to make TGSA win; it is to build a system in which TGSA can win or lose
+for a scientifically meaningful reason.
+
+Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
+reaching ~6.6× the strongest trivial baseline, but its seeds are bimodal — a
+training phase transition that some seeds complete and others do not — so it
+fails the reliability check. The registered escalation ladder is running.
 
 ## Core recurrence
 
@@ -81,6 +105,12 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `DESIGN_DECISIONS.md` | Architectural decisions, rationale, and deferred questions |
 | `EVIDENCE_LEDGER.md` | Demonstrated evidence versus still-missing claims |
 | `PAPER_EVIDENCE_CHECKLIST.md` | Reproducibility and arXiv release gate |
+| `PHASE1_V3_PREREGISTRATION.md` | The frozen v3 confirmatory design |
+| `PHASE1_V3_RESULT.md` | The v3 result and what it does and does not support |
+| `PHASE1_V3_COMPETENCE_POSTMORTEM.md` | Why v3 returned `inconclusive` |
+| `PHASE1_V4_PREREGISTRATION.md` | v4 design, competence gate, escalation ladder |
+| `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and the frozen thresholds |
+| `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
 
 ## Non-negotiable research rules
 

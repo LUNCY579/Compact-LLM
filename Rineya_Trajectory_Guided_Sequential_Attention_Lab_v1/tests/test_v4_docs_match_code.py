@@ -120,3 +120,42 @@ def test_the_runbook_power_command_uses_the_v4_stratum_count() -> None:
 
     assert "--stratum-count 3 " in RUNBOOK
     assert "--stratum-count 17" not in RUNBOOK
+
+
+# --------------------------------------------------------------------------
+# The README is what a reader trusts first
+# --------------------------------------------------------------------------
+
+README = (LAB / "README.md").read_text(encoding="utf-8")
+
+
+def test_the_readme_test_count_is_not_stale() -> None:
+    """It claimed 22 tests long after the suite passed 250."""
+
+    import subprocess
+
+    collected = subprocess.run(
+        [sys.executable, "-m", "pytest", str(LAB / "tests"), "--collect-only", "-q"],
+        capture_output=True, text=True, cwd=str(LAB),
+    ).stdout
+    count = int(re.search(r"(\d+) tests collected", collected).group(1))
+    claimed = re.search(r"(\d+) tests\.", README)
+    assert claimed, "README no longer states a test count"
+    assert int(claimed.group(1)) == count, (
+        f"README claims {claimed.group(1)} tests, suite collects {count}"
+    )
+
+
+def test_the_readme_does_not_overclaim() -> None:
+    """The v3 result must not be readable as evidence about the mechanism."""
+
+    assert "not evidence against TGSA" in README
+    assert "Anything about the TGSA mechanism." in README
+    assert "non-evidentiary" in README
+
+
+def test_the_readme_repository_map_lists_files_that_exist() -> None:
+    referenced = set(re.findall(r"^\| `([\w./-]+\.md)` \|", README, flags=re.MULTILINE))
+    assert referenced, "no document rows found in the repository map"
+    missing = sorted(name for name in referenced if not (LAB / name).is_file())
+    assert not missing, f"repository map lists files that do not exist: {missing}"
