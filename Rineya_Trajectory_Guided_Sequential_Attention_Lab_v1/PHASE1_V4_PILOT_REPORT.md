@@ -1,13 +1,17 @@
-# Phase-1 v4 development pilot — competence report (Stages 1–4)
+# Phase-1 v4 development pilot — competence report (Stages 1–5)
 
 Development-only. Nothing here reads a confirmatory bank, and **no between-arm
 difference was used to select anything**. Configurations are scored by the
 minimum absolute held-out accuracy across all three arms.
 
-Grid recorded before execution. Primary axis is training-set size, because the
-v3 postmortem showed pure memorization; capacity was deliberately *not* the first
-lever, since more capacity on 5,000 examples memorizes better rather than
+Grid recorded before execution. Primary axis was training-set size, because the
+v3 postmortem showed pure memorization; capacity was deliberately *not* the
+first lever, since more capacity on 5,000 examples memorizes better rather than
 generalizing.
+
+**Current state: `V4_COMPETENCE_NOT_YET_ESTABLISHED`.** A regime that clears
+every accuracy-based check exists, but it fails a reliability check added as a
+result of this pilot. See §2 and §4.
 
 ---
 
@@ -25,12 +29,10 @@ overlap), so difficulty is fixed and only instance novelty varies.
 | `data_200k` | 200k | 2.5k | hard | 0.0407 | 0.0323 | −0.0083 | 0.0056 | 3.461 |
 | `data_200k_long` | 200k | 10k | hard | 0.0407 | 0.0477 | +0.0070 | 0.0013 | 3.416 |
 | `easy_5k` | 5k | 2.5k | easy | 0.0400 | 0.0940 | +0.0540 | **0.1747** | 3.323 |
-| **`easy_50k`** | **50k** | **2.5k** | **easy** | **0.0400** | **0.0937** | **+0.0537** | **0.0124** | **3.182** |
+| `easy_50k` | 50k | 2.5k | easy | 0.0400 | 0.0937 | +0.0537 | 0.0124 | 3.182 |
+| `easy_50k_long` | 50k | 10k | easy | 0.0400 | **0.2633** | **+0.2233** | 0.0683 | **2.063** |
 
 Uniform-answer NLL reference: ln(32) = **3.466**.
-
-Per-arm held-out accuracy for `easy_50k`: `cascade` 0.0937,
-`history_control` 0.0937, `learned_delta` 0.1063.
 
 `OBSERVED` **`v3_replica` reproduces the v3 pathology** — margin +0.005 with a
 memorization gap of 0.105 and NLL *worse* than uniform. The harness reproduces
@@ -51,59 +53,82 @@ against a 4.0% baseline (+5.4 points, 2.3×) — but with a 0.175 memorization g
 
 `OBSERVED` **`easy_50k` is the first regime with real generalization.** Same
 accuracy as `easy_5k` (9.4%) but the memorization gap collapses to 0.012 and NLL
-improves to 3.182, comfortably below uniform. The competence is now earned on
-unseen instances rather than recalled.
+improves to 3.182, comfortably below uniform.
 
-### 1.1 Incomplete regimes — stated plainly
-
-`OBSERVED` Three of the nine planned regimes did **not** produce a result:
-
-* `easy_50k_long` (50k × 10k steps) — CUDA OOM, twice;
-* `easy_50k_wide` (192-dim, 4-layer) — not reached;
-* `medium_50k_long` — still running at the time of writing.
-
-These were the regimes designed to answer whether absolute competence rises
-above ~9% with more updates or more capacity. **That question is therefore
-open**, and it is the reason the final state below is not "ready".
+`OBSERVED` **`easy_50k_long` reaches 6.6× the trivial baseline on the mean** —
+min-arm 0.2633 against 0.0400, NLL 2.063, memorization gap 0.068. On every check
+the gate had at the time, this was a `GO`.
 
 ---
 
-## 2. SUPPORTED INTERPRETATION
+## 2. THE FINDING THAT CHANGED THE PLAN
 
-`SUPPORTED` **Competence is achievable, and the lever is task difficulty
-combined with data volume — not capacity.** The 258k-parameter model that failed
-completely on the hard band reaches 2.3× the trivial baseline on the easy band
-with the same parameter count.
+`OBSERVED` **`easy_50k_long`'s per-seed results are bimodal.**
 
-`SUPPORTED` **The v3 hard band is beyond this model.** Even 200k examples and 4×
-the updates yield only +0.007 over trivial. Choosing the v3 difficulty band was
-the design error; the model was never the problem.
+| arm | seed 1 | seed 2 | mean |
+|---|---:|---:|---:|
+| `cascade` | 0.1167 | 0.4100 | 0.2633 |
+| `history_control` | 0.3993 | 0.1280 | 0.2637 |
+| `learned_delta` | 0.3167 | 0.4307 | 0.3737 |
 
-`SUPPORTED` **Data volume and difficulty must move together.** On the hard band,
-more data traded memorization for chance-level performance. On the easy band, it
-traded memorization for genuine generalization at the same accuracy. Data alone
-is not sufficient — it converts a memorizer into either a learner or a guesser
-depending on whether the task is within reach.
+`OBSERVED` The loss curves say why. A phase transition begins around step
+5000–7000. Four of six runs complete it, ending at train loss 1.33–1.63. Two do
+not — `cascade` seed 1 ends at 2.278 and `history_control` seed 2 at 2.155, and
+**both are still descending at the final step**. They did not fail; the
+10,000-step cosine schedule annealed their learning rate to zero partway through
+the transition.
 
-`HYPOTHESIS` The `easy_nontrivial` band at 50k examples with more updates, or a
-wider model, would push absolute competence above 9.4%. Untested — the regimes
-that would have answered it did not complete.
+`SUPPORTED` **The mean describes no model that exists.** It averages a converged
+model and a truncated one. Realised between-seed SD is ≈ 0.20 — an order of
+magnitude above the σ_a = 0.02 central / 0.04 robustness values the confirmatory
+design is powered for. At that dispersion no realistic seed count detects the
++0.020 target effect, so a confirmatory launch on this regime would be
+uninterpretable for a *new* reason rather than v3's old one.
+
+`SUPPORTED` **This fully explains the apparent `learned_delta` margin.**
+`learned_delta` drew two converged seeds; each control drew one converged and one
+truncated. 0.3737 vs 0.2633/0.2637 is a coin flip over which seeds finished
+training, not a mechanism effect. It was never used for selection — the rule is
+min-arm — and it must not be read as evidence in either direction.
 
 ---
 
 ## 3. UNSUPPORTED CLAIMS
 
-* That 9.4% is *sufficient* absolute competence for a robust mechanism contrast.
-  It clears every trivial baseline, but the dynamic range above the floor is
-  ~5 points, which is modest.
-* That `learned_delta`'s slightly higher `easy_50k` number (0.1063 vs 0.0937)
-  means anything. It was not used for selection and must not be read as a
-  mechanism signal — 2 seeds, development data, no interval.
+* That `learned_delta`'s higher `easy_50k_long` number means anything. §2 gives
+  the arithmetic that accounts for it without reference to the mechanism.
+* That `easy_50k_long` competence is reproducible. Two of six runs did not reach
+  the state the mean reports.
+* That the 20,000-step regime now under test will converge for all seeds. It is
+  the indicated next step because the truncated runs were still descending, but
+  it is untested.
 * Anything about the TGSA mechanism.
 
 ---
 
-## 4. ANOMALIES
+## 4. CONSEQUENCE: AN EIGHTH GATE CHECK
+
+`competence_is_reliable_across_seeds` was added to `tgsa/phase1_competence.py`:
+
+* the **worst individual run** — not the arm mean — must clear the absolute floor;
+* within-arm between-seed SD must be ≤ `maximum_seed_sd`, defaulted to **0.04**
+  so the bound is traceable to the registered power analysis rather than chosen
+  for convenience;
+* fewer than `minimum_seed_runs` (3) recorded runs, or none, fails closed.
+
+The schema version is bumped to `v2` and pinned on load, so a report produced
+before the check existed cannot satisfy `require_go`.
+
+`tests/test_phase1_competence.py::test_a_bimodal_regime_is_refused_despite_a_healthy_mean`
+pins the exact `easy_50k_long` numbers and asserts that the other seven checks
+pass while the verdict is `NO_GO` — the gate must fail for the right reason.
+
+Note that the 0.1167 run still clears the 0.07 absolute floor, so the dispersion
+bound is the load-bearing half. A floor alone would not have caught this.
+
+---
+
+## 5. ANOMALIES
 
 `OBSERVED` `data_50k` and `data_200k` land **below** the trivial baseline
 (−0.009, −0.008) with NLL at exactly uniform. The models converged to
@@ -111,53 +136,55 @@ approximately uniform prediction over the answer space — a "learned to guess"
 state, which is a coherent optimum when the task is out of reach and
 memorization is unavailable.
 
+`OBSERVED` **The pilot's training-set seed was not reproducible.** It was
+`1_000_000 + hash(band) % 1000`, and Python salts `hash()` of str per process.
+Since each regime ran in its own process, regimes were compared across
+*different* training draws, and `easy_50k_long`'s exact dataset cannot be
+regenerated from its own record. Within-regime measurements are unaffected —
+train and holdout stayed consistent and signature-disjoint within a process — but
+cross-regime comparison carried an uncontrolled nuisance factor. Fixed in
+`d3028d5`; `tests/test_seed_determinism.py` walks the AST of every module under
+`tgsa/` and `scripts/` and fails on any builtin `hash()` call.
+
+`OBSERVED` The same defect existed in `tgsa/phase1_power.py`. The **v3 launch
+decision is not affected**: it was made by `scripts/phase1_power_simulation.py`,
+which seeds deterministically.
+
 `OBSERVED` Two CUDA OOM failures in a single-process pilot loop as allocator
 fragmentation accumulated across regimes. Infrastructure, not science; the fix
 is a fresh process per regime.
 
 ---
 
-## 5. LIMITATIONS
+## 6. LIMITATIONS
 
-* 2 development seeds per arm per regime. Adequate for a floor/competence
-  screen, not for precision.
-* 6 of 9 planned regimes completed.
+* 2 development seeds per arm per regime — which is precisely how a bimodal
+  regime came to look like a competent one. The competence run uses 3 and the
+  gate now requires it.
+* 7 of 10 planned regimes completed. `easy_200k_long` is in flight.
+  `easy_50k_wide` and `medium_50k_long` were **dropped**: both were scheduled at
+  10,000 steps, which §2 shows is inside the truncation window, so neither would
+  have answered the question that now matters.
 * Only three difficulty bands were defined, and the gap between `easy_nontrivial`
-  (2 hops, 5–8 nodes) and `hard` (2–4 hops, 10–20 nodes) is large. The `medium`
-  band result is pending.
+  (2 hops, 5–8 nodes) and `hard` (2–4 hops, 10–20 nodes) is large.
 
 ---
 
-## 6. RECOMMENDED CONFIGURATION (provisional)
-
-Smallest configuration meeting arm-blind competence, on current evidence:
-
-| field | value |
-|---|---|
-| band | `easy_nontrivial` — pointer 2 hops / 5–8 nodes, state 2–3 steps, trivial items rejected |
-| train examples | 50,000 |
-| updates | ≥2,500 (10k untested) |
-| embed_dim / layers / heads | 96 / 2 / 6 (unchanged from v3) |
-| batch / LR | 64 / 1e-3 with warmup + cosine |
-| parameters | ~255k |
-
-**Provisional**, because the regimes that would confirm whether a longer or
-wider run does materially better did not complete.
-
----
-
-## 7. COMPETENCE GATE THRESHOLDS (derived, to be frozen)
+## 7. COMPETENCE GATE THRESHOLDS (frozen)
 
 Derived from this pilot, outcome-blind, before any v4 confirmatory run:
 
 | check | threshold | rationale |
 |---|---|---|
-| margin over strongest trivial baseline | ≥ **+0.030** | `easy_50k` achieves +0.054; `v3_replica` scored +0.005. Sits well above the failure and below the demonstrated pass. |
+| margin over strongest trivial baseline | ≥ **+0.030** | `easy_50k` achieves +0.054; `v3_replica` scored +0.005. Sits above the failure and below the demonstrated pass. |
 | absolute held-out accuracy, weakest arm | ≥ **0.070** | `easy_50k` weakest arm is 0.0937; v3 was 0.045. |
 | answer NLL | < **0.97 × ln(32)** = 3.362 | `easy_50k` reaches 3.182; v3 was 4.03 and `data_200k` 3.461. Excludes the "learned to guess" state. |
 | memorization gap (seen − holdout) | ≤ **0.10** | v3 was 0.105, `easy_5k` 0.175, `easy_50k` 0.012. |
 | distinct predictions | ≥ 4 | rejects a constant predictor. |
 | per-family accuracy | above the same floor, and ≤ 0.95 | v3's `state_update` was below chance while `pointer_chase` was near baseline. |
+| **between-seed SD, per arm** | ≤ **0.04** | the registered power-analysis robustness value; `easy_50k_long` realised ≈ 0.20. |
+| **worst individual run** | ≥ the absolute floor | the arm mean is not the unit of competence. |
+| **recorded development runs per arm** | ≥ 3 | two seeds cannot establish that a third behaves the same way. |
 
 Every threshold is placed strictly between a demonstrated failure and a
 demonstrated pass, so the gate is calibrated against observed behaviour rather
@@ -167,11 +194,13 @@ than chosen to be permissive.
 
 ## 8. CLAIM CEILING
 
-> A development pilot demonstrates that all three registered arms can reach
-> ~2.3× the strongest trivial baseline with a collapsed memorization gap and
-> answer-NLL below uniform, on an `easy_nontrivial` difficulty band with 50,000
-> training examples. The v3 regime's failure is attributable to band difficulty
-> combined with training-set size, not to model capacity or optimization.
+> A development pilot establishes that the v3 regime's failure is attributable to
+> band difficulty combined with training-set size, not to model capacity or
+> optimization, and that all three registered arms reach several times the
+> strongest trivial baseline on an easier band given a sufficient update budget.
+> It does **not** yet establish that this competence is reproducible across
+> seeds, because the one regime that reached it did so, for two of three arms, by
+> averaging over a training phase transition that some seeds did not complete.
 
 Nothing here bears on the TGSA mechanism.
 
@@ -179,8 +208,14 @@ Nothing here bears on the TGSA mechanism.
 
 ## 9. NEXT PERMITTED EXPERIMENT
 
-1. Complete `easy_50k_long`, `easy_50k_wide`, and `medium_50k_long`, one process
-   per regime, to establish whether absolute competence exceeds ~9.4%.
-2. Prefer the smallest regime whose weakest arm clears the frozen thresholds
-   with margin, ideally at a higher absolute accuracy for better dynamic range.
-3. Freeze the competence gate, run it, and dispatch v4 **only** on `GO`.
+1. Re-run `easy_nontrivial` / 50k examples at **20,000 steps with 3 seeds**,
+   recording per-seed held-out accuracy, per-family accuracy, and distinct
+   prediction counts — the full gate input set. The truncated runs were still
+   descending, so the budget is the indicated lever.
+2. Run the frozen competence gate. Dispatch v4 **only** on `GO`.
+3. On `GO`, re-run the outcome-blind power simulation with the *realised* σ_a
+   from step 1 before confirming the seed count. The v3 count of 20 was powered
+   for σ_a = 0.02; it is retained only if the realised value supports it.
+4. On `NO_GO` for dispersion only, escalate the budget to 30,000 steps **once**.
+   If dispersion persists, the regime is rejected and the band is revisited — the
+   step budget is not to be tuned until the gate happens to pass.
