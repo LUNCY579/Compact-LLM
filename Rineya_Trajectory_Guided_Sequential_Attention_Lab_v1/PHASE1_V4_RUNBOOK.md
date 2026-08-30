@@ -47,6 +47,12 @@ Two consequences:
   that looked like a GPU problem and was not. The audit is cheap (under an hour)
   and can wait for a free slot.
 
+`OBSERVED` **The test suite is one of those processes.** Run in full while two
+200k jobs held the GPU, `tests/test_phase1_evidence_chain.py` produced 13 errors
+that vanish when the file is run on its own. Those tests train real models. A
+suite failure during a matrix run is a resource symptom until proven otherwise —
+re-run the failing file alone before believing it.
+
 Check free RAM before adding any process:
 
 ```bash
