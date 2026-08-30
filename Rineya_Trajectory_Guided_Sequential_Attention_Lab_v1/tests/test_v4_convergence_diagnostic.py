@@ -54,6 +54,7 @@ def test_a_plateaued_run_is_not() -> None:
 
 
 def _report(tmp_path: Path, spec: list[tuple[str, int, float, float, bool]]) -> Path:
+    tmp_path.mkdir(parents=True, exist_ok=True)
     runs = []
     for arm, seed, loss, holdout, descending in spec:
         runs.append({
@@ -154,3 +155,41 @@ def test_per_family_modes_are_absent_when_nothing_is_bimodal(tmp_path: Path) -> 
     summary = describe(path)
     assert summary["split_point"] is None
     assert len(summary["per_family_by_mode"]) <= 1
+
+
+def test_epochs_are_computed_from_the_regime(tmp_path: Path) -> None:
+    """steps x batch / examples. The fraction tracks this, not steps alone."""
+
+    path = _report(tmp_path, [
+        ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.30, 0.12, True),
+        ("cascade", 3, 1.42, 0.43, False),
+    ])
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["regime"] = {"train_examples": 50_000, "steps": 20_000, "batch_size": 64}
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert describe(path)["epochs"] == pytest_approx(25.6, tol=0.05)
+
+
+def test_more_data_at_fixed_steps_lowers_epochs(tmp_path: Path) -> None:
+    """The comparison that would read as a contradiction if reported in steps."""
+
+    summaries = []
+    for examples in (50_000, 200_000):
+        path = _report(tmp_path / str(examples), [
+            ("cascade", 1, 1.40, 0.44, False), ("cascade", 2, 2.30, 0.12, True),
+            ("cascade", 3, 1.42, 0.43, False),
+        ])
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        payload["regime"] = {"train_examples": examples, "steps": 20_000, "batch_size": 64}
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        summaries.append(describe(path))
+    assert summaries[0]["steps"] == summaries[1]["steps"]
+    assert summaries[0]["epochs"] > summaries[1]["epochs"] * 3
+
+
+def test_a_missing_batch_size_defaults_rather_than_crashing(tmp_path: Path) -> None:
+    path = _report(tmp_path, [("cascade", s, 1.4, 0.44, False) for s in (1, 2, 3)])
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    payload["regime"] = {"train_examples": 50_000, "steps": 20_000}
+    path.write_text(json.dumps(payload), encoding="utf-8")
+    assert describe(path)["epochs"] == pytest_approx(25.6, tol=0.05)

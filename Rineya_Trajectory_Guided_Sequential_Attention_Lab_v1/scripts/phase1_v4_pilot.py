@@ -177,10 +177,16 @@ def train_arm(regime: Regime, arm: str, train, holdout, seed: int, max_len: int)
 def run_regime(regime: Regime, seeds: list[int]) -> dict:
     # Not builtin hash(): str hashing is salted per process, so regimes run in
     # separate processes silently drew different training sets.
+    # The HOLDOUT is generated first and train excludes it. Each split excludes
+    # the signatures already taken, so whichever is generated first is the only
+    # unbiased draw. Generating train first consumed the entire 7,680-item
+    # non-trivial two-step `state_update` space on this band and left the
+    # holdout with three-step items only -- measuring competence on a harder
+    # distribution than the one being screened for.
+    holdout = make_split(regime.band, 1500, seed=987_654_321)
     train = make_split(regime.band, regime.train_examples,
-                       seed=derive_seed(1_000_000, "pilot-train-split", regime.band))
-    signatures = {e.latent_signature for e in train}
-    holdout = make_split(regime.band, 1500, seed=987_654_321, forbidden=signatures)
+                       seed=derive_seed(1_000_000, "pilot-train-split", regime.band),
+                       forbidden={e.latent_signature for e in holdout})
     max_len = max(len(e.tokens) - 1 for e in train + holdout)
     base = baselines(train, holdout)
 

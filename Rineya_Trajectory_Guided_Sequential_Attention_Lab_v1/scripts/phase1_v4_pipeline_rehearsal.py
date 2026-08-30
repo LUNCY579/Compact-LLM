@@ -90,6 +90,14 @@ def write_competence(path: Path) -> None:
         "batch_size": 64, "learning_rate": 1e-3,
         "development_seeds": [1, 2, 3], "train_split_seed": 1_234_567,
         "holdout_split_seed": 987_654_321, "holdout_examples": 300,
+        # The builder requires this, so without it the rehearsal fails at its
+        # first step -- which is exactly what happened when the builder was
+        # hardened and the rehearsal was not re-run.
+        "split_generation_order": ["holdout", "train"],
+        # ...and this makes the resulting artifact unusable for a real launch.
+        # A rehearsal writes a genuine GO report to a fixed path in order to
+        # exercise the gate; require_go refuses anything carrying this marker.
+        "development_only": True,
         "note": "REHEARSAL ONLY -- toy scale, not evidentiary",
     }
     path.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -109,6 +117,7 @@ def main() -> int:
         "--output", str(config),
         "--study-id", "tgsa-phase1-v4-pipeline-rehearsal",
         "--test-per-family", "120", "--dev-per-family", "60",
+        "--allow-development-only",
     ]):
         return 1
 
@@ -122,6 +131,19 @@ def main() -> int:
         return 1
 
     # --- the gate must actually be able to stop a launch ------------------
+    print("\n=== NEGATIVE CONTROL: require_go must refuse this very report ===", flush=True)
+    from tgsa.phase1_competence import require_go as _require_go
+    try:
+        _require_go(competence)  # deliberately WITHOUT allow_development_only
+    except ValueError as error:
+        if "development_only" not in str(error):
+            print(f"FAILED: refused, but not for the marker reason: {error}", flush=True)
+            return 1
+        print("ok -- the rehearsal's own GO report cannot certify a launch", flush=True)
+    else:
+        print("FAILED: require_go accepted a development-only report", flush=True)
+        return 1
+
     print("\n=== NEGATIVE CONTROL: the runner must refuse a NO_GO ===", flush=True)
     broken = json.loads(competence.read_text(encoding="utf-8"))
     broken["verdict"] = "NO_GO"

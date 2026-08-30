@@ -282,3 +282,52 @@ def test_a_report_with_no_recorded_order_cannot_build_a_config(tmp_path: Path) -
     with pytest.raises(ValueError, match="split_generation_order"):
         build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
               test_per_family=40, dev_per_family=20, length_margin=4)
+
+
+# --------------------------------------------------------------------------
+# The development_only marker must travel, and must not be launderable
+# --------------------------------------------------------------------------
+
+
+def _mark(competence: Path) -> Path:
+    payload = json.loads(competence.read_text(encoding="utf-8"))
+    payload["regime"]["development_only"] = True
+    competence.write_text(json.dumps(payload), encoding="utf-8")
+    return competence
+
+
+def test_a_marked_report_cannot_build_a_config_by_default(tmp_path: Path) -> None:
+    competence = _mark(_competence(tmp_path))
+    with pytest.raises(ValueError, match="development_only"):
+        build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
+              test_per_family=40, dev_per_family=20, length_margin=4)
+
+
+def test_a_marked_report_produces_a_marked_config(tmp_path: Path) -> None:
+    """The rehearsal opts in; the marker must then propagate, not vanish."""
+
+    competence = _mark(_competence(tmp_path))
+    config = build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
+                   test_per_family=40, dev_per_family=20, length_margin=4,
+                   allow_development_only=True)
+    assert config["development_only"] is True
+    assert "development_only_reason" in config["registration"]
+
+
+def test_opting_in_cannot_launder_a_marked_report_into_a_clean_config(tmp_path: Path) -> None:
+    """There must be no way to get an unmarked config from a marked report."""
+
+    competence = _mark(_competence(tmp_path))
+    config = build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
+                   test_per_family=40, dev_per_family=20, length_margin=4,
+                   allow_development_only=True)
+    assert config.get("development_only") is True
+
+
+def test_an_unmarked_report_never_marks_the_config(tmp_path: Path) -> None:
+    """The opt-in flag must not mark a config that did not earn the marker."""
+
+    config = build(_competence(tmp_path), _power(tmp_path), V3_CONFIG, study_id="x",
+                   dataset_seed=1, test_per_family=40, dev_per_family=20,
+                   length_margin=4, allow_development_only=True)
+    assert "development_only" not in config

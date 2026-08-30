@@ -9,9 +9,11 @@ v3 postmortem showed pure memorization; capacity was deliberately *not* the
 first lever, since more capacity on 5,000 examples memorizes better rather than
 generalizing.
 
-**Current state: `V4_COMPETENCE_NOT_YET_ESTABLISHED`.** A regime that clears
-every accuracy-based check exists, but it fails a reliability check added as a
-result of this pilot. See §2 and §4.
+**Current state: `V4_REGIME_FAMILY_REJECTED`** — superseded by
+`PHASE1_V4_COMPETENCE_RESULT.md`. Both registered competence measurements
+returned `NO_GO` and the escalation ladder refused further measurement. This
+report remains the record of how the thresholds were frozen and how the regime
+was screened; its §9 "next permitted experiment" is spent.
 
 ---
 
@@ -132,8 +134,12 @@ It cannot manufacture a `GO`: a stored `GO` whose raw runs fail the current
 thresholds re-gates to `NO_GO`, and the input is never modified.
 
 `tests/test_phase1_competence.py::test_a_bimodal_regime_is_refused_despite_a_healthy_mean`
-pins the exact `easy_50k_long` numbers and asserts that the other seven checks
-pass while the verdict is `NO_GO` — the gate must fail for the right reason.
+pins the exact `easy_50k_long` per-seed numbers and asserts that the verdict is
+`NO_GO` while `all_arms_beat_trivial`, `answer_nll_beats_uniform` and
+`generalization_gap_acceptable` all pass — the gate must fail for the right
+reason. It also asserts that two arms trip the coefficient-of-variation bound,
+and that every individual run clears the absolute floor, so the floor alone
+would not have caught this.
 
 Note that the 0.1167 run still clears the 0.07 absolute floor, so the mixture
 bound is the load-bearing half. A floor alone would not have caught this.
@@ -173,10 +179,14 @@ is a fresh process per regime.
 * 2 development seeds per arm per regime — which is precisely how a bimodal
   regime came to look like a competent one. The competence run uses 3 and the
   gate now requires it.
-* 7 of 10 planned regimes completed. `easy_200k_long` is in flight.
-  `easy_50k_wide` and `medium_50k_long` were **dropped**: both were scheduled at
-  10,000 steps, which §2 shows is inside the truncation window, so neither would
-  have answered the question that now matters.
+* 7 of 10 planned regimes completed, and `evidence/v4_pilot/pilot_results.json`
+  records all 7. `easy_200k_long` was started and **lost to a CUDA OOM** caused by
+  a concurrent CPU power audit exhausting host RAM; it was not retried.
+  `easy_50k_wide` and `medium_50k_long` were **dropped** without running: both
+  were scheduled at 10,000 steps, which §2 shows is inside the truncation window,
+  so neither would have answered the question that came to matter. `easy_50k_wide`
+  was the grid's only capacity regime, so capacity is untested rather than ruled
+  out — see §8.
 * Only three difficulty bands were defined, and the gap between `easy_nontrivial`
   (2 hops, 5–8 nodes) and `hard` (2–4 hops, 10–20 nodes) is large.
 
@@ -206,10 +216,14 @@ than chosen to be permissive.
 
 ## 8. CLAIM CEILING
 
-> A development pilot establishes that the v3 regime's failure is attributable to
-> band difficulty combined with training-set size, not to model capacity or
-> optimization, and that all three registered arms reach several times the
-> strongest trivial baseline on an easier band given a sufficient update budget.
+> A development pilot establishes that the v3 regime's failure is removed by
+> changing band difficulty together with training-set size, and that all three
+> registered arms then reach several times the strongest trivial baseline on the
+> easier band given a sufficient update budget. It does **not** establish that
+> capacity and optimization were not also contributing: the only capacity regime
+> in the grid (`easy_50k_wide`, 192-dim / 4-layer) was dropped without ever
+> running, and no optimizer setting was varied. Those remain untested rather than
+> ruled out.
 > It does **not** yet establish that this competence is reproducible across
 > seeds, because the one regime that reached it did so, for two of three arms, by
 > averaging over a training phase transition that some seeds did not complete.
