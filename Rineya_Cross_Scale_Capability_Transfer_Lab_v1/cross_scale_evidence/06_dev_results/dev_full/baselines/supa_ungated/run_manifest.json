@@ -1,0 +1,58 @@
+{
+  "abstain_logit_bias_control": {
+    "original": 5.156249985098839,
+    "resolved": 0.0
+  },
+  "batch_size": 1,
+  "completed_at_utc": "2026-08-30T07:38:00.518894+00:00",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "created_at_utc": "2026-08-30T07:32:44.498001+00:00",
+  "dataset_items_selected": 180,
+  "dataset_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\dev_full.jsonl",
+  "decoding": "greedy",
+  "device": "cpu",
+  "gpu_before": {
+    "available": true,
+    "returncode": 0,
+    "summary": "NVIDIA GeForce RTX 4070 Laptop GPU, 23, 739, 8188"
+  },
+  "load_seconds": 2.5857171999996353,
+  "model_class": "Qwen3AbstainForCausalLM",
+  "model_fingerprint": {
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "digest": "3c130a5813da68d64bd1705d51e70f35a974e11437a931d61effb36568a59dfa",
+    "index_sha256": null,
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "tensor_count": 310,
+    "weight_files": [
+      {
+        "bytes": 1192134784,
+        "name": "model.safetensors",
+        "sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+      }
+    ]
+  },
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "predictions_sha256": "5d73f903b5b3e0346a73375c7664b233857beb0406f9d9e388fd1f59fda49ab2",
+  "resolved_attention_implementation": "eager",
+  "resume": true,
+  "rss_after_load_bytes": 2857009152,
+  "run_identity": {
+    "abstain_logit_bias": 0.0,
+    "case_limit": null,
+    "dataset_sha256": "3f54d5322a05cda6fa0bed006273c7eba27fc41a62e3f125141e5f6e82997816",
+    "dtype": "float32",
+    "max_context_tokens": 4096,
+    "model_hash": "3c130a5813da68d64bd1705d51e70f35a974e11437a931d61effb36568a59dfa",
+    "seed": 17,
+    "split": "dev_full",
+    "threads": 16,
+    "trust_remote_code": true
+  },
+  "schema_version": "1.0",
+  "status": "complete",
+  "summary_sha256": "d8fb1c8cce80f897db93855131aede09e7812191340b725f2cd7db8579ccad3b",
+  "temperature": 0,
+  "thinking": "disabled",
+  "tokenizer_class": "Qwen2Tokenizer"
+}

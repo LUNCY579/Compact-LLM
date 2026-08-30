@@ -9,6 +9,7 @@ LAB_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(LAB_ROOT / "src"))
 
 from rineya_cross_scale.operations import merge_consensus  # noqa: E402
+from rineya_cross_scale.hashing import sha256_file  # noqa: E402
 
 
 def main() -> int:
@@ -16,6 +17,9 @@ def main() -> int:
     parser.add_argument("--supa", type=Path, required=True)
     parser.add_argument("--delta4", type=Path, required=True)
     parser.add_argument("--delta8", type=Path, required=True)
+    parser.add_argument("--delta4-manifest", type=Path, required=True)
+    parser.add_argument("--delta8-manifest", type=Path, required=True)
+    parser.add_argument("--base-validation", type=Path, required=True)
     parser.add_argument("--alpha", type=float, required=True)
     parser.add_argument("--method", choices=("mean", "sign_agree", "tensor_cosine"), default="mean")
     parser.add_argument("--cosine-threshold", type=float, default=0.0)
@@ -34,8 +38,13 @@ def main() -> int:
         output_dtype=args.output_dtype,
         max_shard_bytes=int(1.5 * 1024**3),
         overwrite=args.overwrite,
+        source_fingerprints={
+            "base_validation_sha256": sha256_file(args.base_validation),
+            "delta4_manifest_sha256": sha256_file(args.delta4_manifest),
+            "delta8_manifest_sha256": sha256_file(args.delta8_manifest),
+        },
     )
-    print(json.dumps(result, indent=2))
+    print(json.dumps({"operation": result["operation"], "coefficient": result["coefficient"], "operation_parameters": result["operation_parameters"], "storage_summary": result["storage_summary"], "output_fingerprint": result["output_fingerprint"]}, indent=2))
     return 0
 
 

@@ -51,6 +51,8 @@ def test_delta_and_task_vector_round_trip(tmp_path) -> None:
     assert torch.equal(tensor(candidate, key), base_values[key] + 0.5)
     candidate_config = json.loads((candidate / "config.json").read_text())
     assert candidate_config["abstain_logit_bias"] == 0.0
+    manifest = json.loads((candidate / "candidate_manifest.json").read_text())
+    assert manifest["storage_summary"]["stored_nonzero_coordinates"] > 0
 
 
 def test_absolute_interpolation(tmp_path) -> None:

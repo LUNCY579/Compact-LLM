@@ -188,7 +188,27 @@ def _build_candidate(
                             raise CheckpointError(f"non-finite candidate tensor: {key}")
                         delta = candidate_fp32 - b.float()
                         output = candidate_fp32.to(DTYPES[output_dtype])
-                        records.append(tensor_delta_stats(key, delta, base=b))
+                        stats = tensor_delta_stats(key, delta, base=b)
+                        stored_delta = output.float() - b.float()
+                        intended_norm = float(torch.linalg.vector_norm(delta).item())
+                        stored_norm = float(torch.linalg.vector_norm(stored_delta).item())
+                        rounding_error = float(
+                            torch.linalg.vector_norm(stored_delta - delta).item()
+                        )
+                        stats["storage"] = {
+                            "stored_nonzero": int((stored_delta != 0).sum().item()),
+                            "stored_fraction_nonzero": float(
+                                (stored_delta != 0).sum().item()
+                                / max(1, stored_delta.numel())
+                            ),
+                            "stored_delta_l2": stored_norm,
+                            "intended_delta_l2": intended_norm,
+                            "retained_norm_ratio": stored_norm
+                            / max(intended_norm, 1e-30),
+                            "rounding_relative_error": rounding_error
+                            / max(intended_norm, 1e-30),
+                        }
+                        records.append(stats)
                     elif all(torch.equal(b, value) for value in values):
                         output = b
                     else:
@@ -215,6 +235,18 @@ def _build_candidate(
             "output_index": output_index,
             "sidecars": sidecars,
             "tensor_diagnostics_sha256": canonical_sha256(records),
+            "storage_summary": {
+                "total_coordinates": sum(record["count"] for record in records),
+                "stored_nonzero_coordinates": sum(
+                    record["storage"]["stored_nonzero"] for record in records
+                ),
+                "intended_delta_l2": math_is_finite_norm(
+                    record["storage"]["intended_delta_l2"] for record in records
+                ),
+                "stored_delta_l2": math_is_finite_norm(
+                    record["storage"]["stored_delta_l2"] for record in records
+                ),
+            },
         }
         atomic_write_json(staging / "candidate_tensor_stats.json", records)
         atomic_write_json(staging / "candidate_manifest.json", manifest)
@@ -251,6 +283,17 @@ def math_is_finite(value: float) -> bool:
     import math
 
     return math.isfinite(float(value))
+
+
+def math_is_finite_norm(values: Any) -> float:
+    import math
+
+    total = 0.0
+    for value in values:
+        if not math.isfinite(float(value)):
+            raise CheckpointError("non-finite tensor norm in storage summary")
+        total += float(value) ** 2
+    return math.sqrt(total)
 
 
 def merge_absolute(
