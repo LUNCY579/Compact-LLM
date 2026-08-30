@@ -71,11 +71,28 @@ python scripts/regate_competence_report.py --input <stored.json> --output <regat
 It cannot manufacture a `GO` — a stored `GO` whose raw runs fail the current
 thresholds re-gates to `NO_GO` — and it never modifies its input.
 
-**Read the reasons on a `NO_GO`.** A dispersion failure
-(`competence_is_reliable_across_seeds`) means the update budget is truncating a
-training phase transition, and the registered escalation is one step to 30,000
-updates. It is not licence to keep tuning until the gate passes; see
-`PHASE1_V4_PREREGISTRATION.md` §9 of the pilot report.
+**Read the reasons on a `NO_GO`, then ask the ladder what is permitted:**
+
+```bash
+python scripts/phase1_v4_escalation.py <report1.json> <report2.json>
+```
+
+It answers with the one move the registered ladder allows, moving a single axis
+of the regime that failed, and refuses past four distinct regimes. It is not
+licence to keep tuning until the gate passes — see
+`PHASE1_V4_PREREGISTRATION.md` §Escalation.
+
+`OBSERVED` Diagnose *before* escalating. A dispersion failure has two possible
+causes with opposite responses, and only one is on the ladder:
+
+```bash
+python scripts/phase1_v4_convergence_diagnostic.py <report1.json> <report2.json>
+```
+
+Stalled runs still descending at the final step mean the budget truncated a
+phase transition, and more updates is the registered response. Stalled runs that
+have plateaued mean the transition is stochastic, which more updates will not
+fix.
 
 ## 2. Re-run the power audit at the realised seed variance
 
@@ -120,6 +137,15 @@ python scripts/build_phase1_v4_config.py --competence <competence.json> --power 
 
 Copy the competence report **next to the config**: the runner resolves
 `competence_report` relative to the config's own directory.
+
+`OBSERVED` The generated config sets `dataset.split_generation_order` to
+`["test", "dev", "train"]`. Do not "simplify" this away. Splits are generated in
+sequence and each excludes the signatures already taken, so whichever runs first
+is the only unbiased draw. Generating train first on this band consumed the
+entire 7,680-item non-trivial two-step `state_update` space and left the test
+split with three-step items only — an unintended difficulty shift, and one that
+cut the primary estimand from three strata to two. Check
+`dataset_manifest.json`'s `unbiased_split` field after preparing data.
 
 ## 4. Rehearse before dispatching
 
