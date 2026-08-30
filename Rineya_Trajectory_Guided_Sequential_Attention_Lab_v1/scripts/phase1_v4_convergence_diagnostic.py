@@ -12,6 +12,14 @@ prediction: the transitioned fraction stays roughly constant as the budget grows
 The two demand different responses, and only one of them is on the registered
 escalation ladder, so telling them apart matters more than either result.
 
+Report the budget in **epochs**, not steps. `steps x batch_size / train_examples`
+is the number of times the model sees each example, and it is what the
+transitioned fraction actually tracks. Two comparisons isolate it from its
+components: at fixed data, more steps raises the fraction; at fixed steps, more
+data lowers it. Both are the same move in epochs, in opposite directions, so a
+diagnostic that reported only steps or only data volume would read the second
+comparison as a contradiction of the first.
+
 This script classifies each run from its recorded loss curve and reports the
 transitioned fraction per budget. It reports every arm because the gate is
 arm-blind and needs all of them; **it must not be used to compare arms.** A
@@ -106,11 +114,17 @@ def describe(path: Path) -> dict:
                 for family in families
                 if any(family in r["per_family"] for r in group)
             }
+    examples = regime.get("train_examples")
+    steps = regime.get("steps")
+    batch = regime.get("batch_size") or 64
+    epochs = (steps * batch / examples) if (steps and examples) else None
     return {
         "per_family_by_mode": by_mode,
         "report": path.name,
-        "train_examples": regime.get("train_examples"),
-        "steps": regime.get("steps"),
+        "train_examples": examples,
+        "steps": steps,
+        "batch_size": batch,
+        "epochs": epochs,
         "split_point": cut,
         "runs": rows,
         "transitioned_fraction": None if cut is None else len(transitioned) / len(rows),
@@ -126,8 +140,10 @@ def main() -> int:
 
     summaries = [describe(path) for path in args.reports]
     for summary in summaries:
+        epochs = summary.get("epochs")
         print(f"\n=== {summary['report']}  "
-              f"{summary['train_examples']} ex x {summary['steps']} steps ===")
+              f"{summary['train_examples']} ex x {summary['steps']} steps"
+              f"{'' if epochs is None else f'  ({epochs:.1f} epochs)'} ===")
         if summary["split_point"] is None:
             print("  no bimodal split in final loss: the population is unimodal")
         else:
@@ -151,14 +167,19 @@ def main() -> int:
 
     graded = [s for s in summaries if s["transitioned_fraction"] is not None]
     if len(graded) >= 2:
-        print("\n=== budget response ===")
-        for summary in sorted(graded, key=lambda s: (s["train_examples"] or 0, s["steps"] or 0)):
-            print(f"  {summary['train_examples']:>7} ex x {summary['steps']:>6} steps: "
-                  f"{summary['transitioned_fraction']:.0%} transitioned")
-        print("\n  A RISING fraction with budget supports truncation, and the registered")
-        print("  response is more updates. A FLAT fraction supports a stochastic")
-        print("  transition, which more updates will not fix -- and which is not on the")
-        print("  escalation ladder, so it rejects the regime family.")
+        print("\n=== budget response, ordered by epochs ===")
+        for summary in sorted(graded, key=lambda s: s.get("epochs") or 0):
+            epochs = summary.get("epochs")
+            print(f"  {summary['train_examples']:>7} ex x {summary['steps']:>6} steps"
+                  f" = {('  n/a' if epochs is None else format(epochs, '5.1f'))} epochs: "
+                  f"{summary['transitioned_fraction']:.0%} transitioned "
+                  f"({summary['stalled_still_descending']} of the stalled still descending)")
+        print("\n  A fraction RISING WITH EPOCHS means the budget is the lever, and the")
+        print("  registered response to a mixture -- more updates at fixed data -- applies.")
+        print("  A FLAT fraction means the transition is stochastic, which more updates")
+        print("  will not fix, and which no rung of the ladder addresses.")
+        print("\n  Read epochs, not steps: raising data at fixed steps LOWERS epochs, so")
+        print("  it moves the fraction the opposite way from raising steps at fixed data.")
     print("\nReported for every arm because the gate is arm-blind. Do NOT read a")
     print("between-arm difference in transition reliability as a mechanism result.")
     return 0
