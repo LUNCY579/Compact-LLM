@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA × MTP is implemented as a competence-gated rehearsal.** 309 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA × MTP is implemented as a competence-gated rehearsal.** 312 tests.
 
 ### What has been demonstrated
 
