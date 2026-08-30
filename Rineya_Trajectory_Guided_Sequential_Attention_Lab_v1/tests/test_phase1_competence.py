@@ -253,3 +253,68 @@ def test_report_never_claims_anything_about_the_mechanism() -> None:
     report = _evaluate(_arms())
     scope = str(report["claim_scope"]).lower()
     assert "says nothing about the mechanism" in scope
+
+
+# --------------------------------------------------------------------------
+# The confirmatory runner itself must refuse to launch
+# --------------------------------------------------------------------------
+
+
+def test_confirmatory_runner_refuses_to_launch_on_no_go(tmp_path: Path) -> None:
+    """End-to-end: run_study_matrix must abort before touching any data.
+
+    This is the check that would have prevented the v3 spend.
+    """
+
+    from tgsa.phase1_runner import run_study_matrix
+
+    lab = Path(__file__).resolve().parents[1]
+    study = json.loads((lab / "configs" / "phase1_identifiability_v3.json").read_text(encoding="utf-8"))
+    study["competence_report"] = "competence.json"
+    config_path = tmp_path / "study.json"
+    config_path.write_text(json.dumps(study), encoding="utf-8")
+
+    arms = _arms()
+    arms[0] = _competent_arm("cascade", accuracy=0.04)  # a control at floor
+    (tmp_path / "competence.json").write_text(json.dumps(_evaluate(arms)), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="NO_GO"):
+        run_study_matrix(
+            study_config_path=config_path,
+            dataset_dir=tmp_path / "dataset",
+            output_root=tmp_path / "study",
+            repo_root=lab.parent,
+            phase="train",
+        )
+    assert not (tmp_path / "study").exists(), "runner must abort before creating an output root"
+
+
+def test_confirmatory_runner_refuses_a_missing_competence_report(tmp_path: Path) -> None:
+    from tgsa.phase1_runner import run_study_matrix
+
+    lab = Path(__file__).resolve().parents[1]
+    study = json.loads((lab / "configs" / "phase1_identifiability_v3.json").read_text(encoding="utf-8"))
+    study["competence_report"] = "absent.json"
+    config_path = tmp_path / "study.json"
+    config_path.write_text(json.dumps(study), encoding="utf-8")
+
+    with pytest.raises(FileNotFoundError, match="competence report not found"):
+        run_study_matrix(
+            study_config_path=config_path,
+            dataset_dir=tmp_path / "dataset",
+            output_root=tmp_path / "study",
+            repo_root=lab.parent,
+            phase="train",
+        )
+
+
+def test_a_smoke_config_is_not_blocked_by_the_gate(tmp_path: Path) -> None:
+    """The gate applies to confirmatory studies only; smoke must still run."""
+
+    from tgsa.phase1_competence import require_go
+
+    lab = Path(__file__).resolve().parents[1]
+    study = json.loads((lab / "configs" / "phase1_identifiability_v3_smoke.json").read_text(encoding="utf-8"))
+    assert study["confirmatory"] is False
+    # No competence_report key and confirmatory False -> the gate is not consulted.
+    assert "competence_report" not in study

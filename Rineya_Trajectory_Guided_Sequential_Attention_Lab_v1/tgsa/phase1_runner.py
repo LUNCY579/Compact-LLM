@@ -1392,6 +1392,17 @@ def run_study_matrix(
         raise ValueError(f"unsupported phase {phase!r}; expected all|train|barrier|evaluate")
     study = load_study_config(study_config_path)
     confirmatory = bool(study["confirmatory"])
+    # v4 COMPETENCE GATE. v3 produced an uninformative result because it compared
+    # three arms that had all memorised the training set, and nothing in the
+    # registered design asked whether any arm could perform the task above a
+    # trivial baseline. A confirmatory matrix may not be dispatched without a
+    # frozen GO verdict, and `require_go` fails closed on a missing, malformed,
+    # or NO_GO report.
+    competence_report = study.get("competence_report")
+    if confirmatory and competence_report:
+        from .phase1_competence import require_go
+
+        require_go(study_config_path.parent / str(competence_report))
     if confirmatory and force_data:
         raise ValueError(
             "--force-data regenerates the materialized dataset and is forbidden for a "
