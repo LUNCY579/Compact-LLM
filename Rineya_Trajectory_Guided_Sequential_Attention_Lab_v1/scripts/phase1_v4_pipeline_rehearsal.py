@@ -76,7 +76,7 @@ def write_competence(path: Path) -> None:
             minimum_margin_over_trivial=0.030, minimum_absolute_accuracy=0.070,
             maximum_answer_nll_fraction_of_uniform=0.97, minimum_distinct_predictions=4,
             maximum_family_accuracy=0.95, maximum_generalization_gap=0.10,
-            maximum_seed_sd=0.04, minimum_seed_runs=3,
+            maximum_seed_coefficient_of_variation=0.35, minimum_seed_runs=3,
         ),
         trivial_baselines={"uniform": 0.03125, "eval_majority": 0.039},
         uniform_answer_nll=math.log(32),
