@@ -39,6 +39,8 @@ def _thresholds(**overrides) -> CompetenceThresholds:
         minimum_distinct_predictions=4,
         maximum_family_accuracy=0.95,
         maximum_generalization_gap=0.10,
+        maximum_seed_sd=0.04,
+        minimum_seed_runs=3,
     )
     base.update(overrides)
     return CompetenceThresholds(**base)
@@ -52,6 +54,7 @@ def _competent_arm(name: str, accuracy: float = 0.094, **overrides) -> ArmCompet
         answer_nll=3.18,
         distinct_predictions=30,
         per_family_accuracy={"pointer_chase": accuracy, "state_update": accuracy},
+        per_seed_holdout_accuracy=[accuracy - 0.004, accuracy, accuracy + 0.004],
     )
     base.update(overrides)
     return ArmCompetence(**base)
@@ -107,6 +110,7 @@ def test_the_actual_v3_regime_is_refused() -> None:
             answer_nll=4.03,
             distinct_predictions=33,
             per_family_accuracy={"pointer_chase": 0.044, "state_update": 0.028},
+            per_seed_holdout_accuracy=[0.043, 0.045, 0.047],
         )
         for name in ("cascade", "history_control", "learned_delta")
     ]
@@ -318,3 +322,102 @@ def test_a_smoke_config_is_not_blocked_by_the_gate(tmp_path: Path) -> None:
     assert study["confirmatory"] is False
     # No competence_report key and confirmatory False -> the gate is not consulted.
     assert "competence_report" not in study
+
+
+# --------------------------------------------------------------------------
+# Reliability: the v4 pilot failure this check was added for
+# --------------------------------------------------------------------------
+
+
+def test_a_bimodal_regime_is_refused_despite_a_healthy_mean() -> None:
+    """The v4 `easy_50k_long` regime, with its real numbers.
+
+    Every arm's MEAN cleared every other check — 0.263 against a 0.040 baseline,
+    NLL 2.06 against ln(32)=3.47, memorization gap 0.068. But the individual runs
+    were 0.117 and 0.410 for the same arm: a training phase transition that some
+    seeds completed and others were truncated mid-descent. Without this check the
+    gate returns GO on a regime with sigma_a ~ 0.2.
+    """
+
+    arms = [
+        ArmCompetence(
+            arm="cascade", holdout_accuracy=0.2633, seen_accuracy=0.3325,
+            answer_nll=2.0532, distinct_predictions=32,
+            per_family_accuracy={"pointer_chase": 0.25, "state_update": 0.24},
+            per_seed_holdout_accuracy=[0.1167, 0.4100, 0.2600],
+        ),
+        ArmCompetence(
+            arm="history_control", holdout_accuracy=0.2637, seen_accuracy=0.3325,
+            answer_nll=2.0628, distinct_predictions=32,
+            per_family_accuracy={"pointer_chase": 0.25, "state_update": 0.24},
+            per_seed_holdout_accuracy=[0.3993, 0.1280, 0.2600],
+        ),
+        ArmCompetence(
+            arm="learned_delta", holdout_accuracy=0.3737, seen_accuracy=0.4405,
+            answer_nll=1.6885, distinct_predictions=32,
+            per_family_accuracy={"pointer_chase": 0.36, "state_update": 0.35},
+            per_seed_holdout_accuracy=[0.3167, 0.4307, 0.3737],
+        ),
+    ]
+    report = _evaluate(arms)
+
+    # Everything except reliability passes -- that is precisely the danger.
+    assert report["checks"]["all_arms_beat_trivial"] is True
+    assert report["checks"]["answer_nll_beats_uniform"] is True
+    assert report["checks"]["generalization_gap_acceptable"] is True
+    assert report["checks"]["competence_is_reliable_across_seeds"] is False
+    assert report["verdict"] == "NO_GO"
+    # The 0.1167 run still clears the 0.07 absolute floor, so the dispersion
+    # bound is the load-bearing one here -- a floor alone would not have caught it.
+    assert all(v >= 0.07 for arm in arms for v in arm.per_seed_holdout_accuracy)
+    assert sum("between-seed SD" in r for r in report["reasons"]) == 3  # all three arms
+    assert report["detail"]["per_seed_holdout_accuracy"]["cascade"]["worst"] == 0.1167
+
+
+def test_a_single_truncated_run_blocks_the_regime() -> None:
+    """One unconverged seed is enough: the mean would hide it."""
+
+    arms = _arms()
+    arms[0] = _competent_arm("cascade", per_seed_holdout_accuracy=[0.094, 0.094, 0.030])
+    report = _evaluate(arms)
+    assert report["verdict"] == "NO_GO"
+    assert report["checks"]["competence_is_reliable_across_seeds"] is False
+
+
+def test_too_few_development_runs_fails_closed() -> None:
+    """Two seeds cannot establish that a third would behave the same way."""
+
+    arms = _arms()
+    arms[1] = _competent_arm("history_control", per_seed_holdout_accuracy=[0.094, 0.096])
+    report = _evaluate(arms)
+    assert report["verdict"] == "NO_GO"
+    assert any("at least 3 are required" in r for r in report["reasons"])
+
+
+def test_unrecorded_per_seed_evidence_fails_closed() -> None:
+    """A gate cannot certify reliability it has no data for."""
+
+    arms = _arms()
+    arms[2] = _competent_arm("learned_delta", per_seed_holdout_accuracy=[])
+    report = _evaluate(arms)
+    assert report["verdict"] == "NO_GO"
+    assert report["checks"]["competence_is_reliable_across_seeds"] is False
+
+
+def test_seed_sd_threshold_is_the_registered_robustness_value() -> None:
+    """The bound is traceable to the power analysis, not chosen for convenience."""
+
+    assert CompetenceThresholds(
+        minimum_margin_over_trivial=0.03, minimum_absolute_accuracy=0.07
+    ).maximum_seed_sd == 0.04
+
+
+def test_a_v1_report_is_rejected_on_load(tmp_path: Path) -> None:
+    """Reports predating the reliability check must not satisfy the gate."""
+
+    path = tmp_path / "competence.json"
+    stale = _evaluate(_arms())
+    stale["schema_version"] = "tgsa.phase1-competence-gate.v1"
+    path.write_text(json.dumps(stale), encoding="utf-8")
+    with pytest.raises(ValueError, match="unsupported competence report schema"):
+        require_go(path)

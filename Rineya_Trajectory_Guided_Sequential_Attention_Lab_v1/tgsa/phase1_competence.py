@@ -39,6 +39,18 @@ competence verdict from **development-only** evidence and emits a machine-readab
     The v3 signature was a large gap between seen and held-out accuracy. A regime
     that only memorizes must not qualify however high its seen accuracy is.
 
+``competence_is_reliable_across_seeds``
+    Added after the v4 pilot produced a regime whose *mean* held-out accuracy
+    cleared every other check while its individual seeds were bimodal — 0.12 and
+    0.41 for the same arm, because a phase transition in training completed for
+    some seeds and was truncated mid-descent for others. A mean that averages a
+    converged and an unconverged run describes no model that exists, and the
+    resulting between-seed variance (sigma_a ~ 0.20) is an order of magnitude
+    above the value the confirmatory design is powered for, so no realistic seed
+    count could detect the target effect. The check therefore requires the worst
+    individual *run* to clear the floor, and the within-arm seed SD to stay within
+    the registered robustness value the power analysis assumed.
+
 Thresholds are supplied by the caller and must be frozen from the outcome-blind
 development pilot **before** any confirmatory run. This module does not invent
 them, and it never reads a confirmatory outcome.
@@ -48,11 +60,14 @@ from __future__ import annotations
 
 import json
 import math
+import statistics
 from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
 
-COMPETENCE_SCHEMA_VERSION = "tgsa.phase1-competence-gate.v1"
+# v2 adds competence_is_reliable_across_seeds. v1 reports are rejected on load:
+# a report produced before the check existed cannot certify what it never tested.
+COMPETENCE_SCHEMA_VERSION = "tgsa.phase1-competence-gate.v2"
 
 
 @dataclass(frozen=True, slots=True)
@@ -65,6 +80,10 @@ class CompetenceThresholds:
     minimum_distinct_predictions: int = 4
     maximum_family_accuracy: float = 0.95
     maximum_generalization_gap: float = 0.10
+    # Tied to the registered power analysis: sigma_a = 0.02 central, 0.04 as the
+    # robustness value. A regime above 0.04 invalidates the seed count.
+    maximum_seed_sd: float = 0.04
+    minimum_seed_runs: int = 3
 
     def to_dict(self) -> dict[str, object]:
         return asdict(self)
@@ -80,6 +99,9 @@ class ArmCompetence:
     answer_nll: float
     distinct_predictions: int
     per_family_accuracy: dict[str, float]
+    # Held-out accuracy of every individual development run for this arm.
+    # Empty means the evidence was never recorded, which fails the gate.
+    per_seed_holdout_accuracy: list[float] = field(default_factory=list)
 
     def to_dict(self) -> dict[str, object]:
         return asdict(self)
@@ -168,6 +190,45 @@ def evaluate_competence(
     if not checks["generalization_gap_acceptable"]:
         bad = {k: round(v, 4) for k, v in gaps.items() if v > thresholds.maximum_generalization_gap}
         reasons.append(f"memorization: seen-minus-holdout gap too large: {bad}")
+
+    # Reliability. The mean is not the unit of competence: a regime whose seeds
+    # straddle a training phase transition has a healthy mean and no reproducible
+    # behaviour, and its between-seed variance destroys the power analysis.
+    reliability_ok = True
+    seed_detail: dict[str, dict[str, object]] = {}
+    for arm in arms:
+        values = list(arm.per_seed_holdout_accuracy)
+        entry: dict[str, object] = {
+            "runs": values,
+            "count": len(values),
+            "worst": min(values) if values else None,
+            "sd": statistics.stdev(values) if len(values) > 1 else None,
+        }
+        seed_detail[arm.arm] = entry
+        if len(values) < thresholds.minimum_seed_runs:
+            reliability_ok = False
+            reasons.append(
+                f"arm {arm.arm} recorded {len(values)} development run(s); at least "
+                f"{thresholds.minimum_seed_runs} are required to estimate seed variance"
+            )
+            continue
+        if min(values) < thresholds.minimum_absolute_accuracy:
+            reliability_ok = False
+            reasons.append(
+                f"arm {arm.arm} has an individual run at {min(values):.4f}, below the "
+                f"absolute floor {thresholds.minimum_absolute_accuracy:.4f}; the mean "
+                f"{arm.holdout_accuracy:.4f} averages runs that behave differently"
+            )
+        sd = statistics.stdev(values)
+        if sd > thresholds.maximum_seed_sd:
+            reliability_ok = False
+            reasons.append(
+                f"arm {arm.arm} has between-seed SD {sd:.4f}, above the registered "
+                f"robustness value {thresholds.maximum_seed_sd:.4f} the power analysis "
+                f"assumes; the confirmatory seed count would not be adequate"
+            )
+    checks["competence_is_reliable_across_seeds"] = reliability_ok
+    detail["per_seed_holdout_accuracy"] = seed_detail
 
     verdict = "GO" if all(checks.values()) else "NO_GO"
     return {
