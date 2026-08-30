@@ -153,10 +153,31 @@ not separate the two failures. Difficulty extrapolation remains a registered
 **non-gating secondary** analysis (below), so the question is deferred, not
 dropped.
 
-`OBSERVED` The in-band band is narrow (2 hops fixed; 2–3 state steps), so the
-secondary difficulty-response analysis has a correspondingly narrow range in
-v4. This is a stated limitation of choosing a certified-competent band, and it
-is not to be widened after seeing outcomes.
+`OBSERVED` The in-band band is narrow, and the cost is measured rather than
+asserted. A full pipeline rehearsal at toy scale (below) produced the registered
+secondary difficulty-response analysis and **2 of its 7 variables collapse to a
+single bin**:
+
+| variable | bins on `easy_nontrivial` |
+|---|---:|
+| `context_bucket` | 1 — degenerate |
+| `effective_hops` | 1 — degenerate |
+| `effective_steps` | 2 |
+| `distractor_count` | 3 |
+| `node_count` | 3 |
+| `evidence_position` | 4 |
+| `evidence_span` | 4 |
+
+`effective_hops` is degenerate by construction: the certified band fixes pointer
+chains at 2 hops. The analyzer reports these honestly rather than failing, and
+no trend contrast is estimable for them.
+
+This is a stated limitation of choosing a band that has been certified
+competent, and it is **not** to be repaired by widening the band after the fact
+— a wider band is a different regime and would need its own competence
+certification. If difficulty response becomes the question of interest, it
+belongs in a follow-up study, not in a post-hoc amendment to this one. The
+primary endpoint does not depend on these two variables.
 
 ---
 
@@ -192,6 +213,21 @@ arm/seed matrix **and** the study ID matches **and** the config hash matches.
 PREPARE → **COMPETENCE GATE** → TRAIN → BARRIER → SINGLE EVALUATE → VERIFY →
 ANALYZE. No confirmatory outcome is inspected before the barrier. Failed
 attempts are recorded immutably and are not overwritten by retries.
+
+### Rehearsal before dispatch
+
+v4 changes the regime by an order of magnitude in both data volume and update
+count, on a band the registered pipeline had never generated, with no
+`split_overrides` and a new gate in front of the runner. The identical sequence
+is therefore rehearsed at toy scale first — 3 arms × 3 seeds, 2,400 examples,
+150 steps — including a **negative control** in which the gate is flipped to
+`NO_GO` and the runner must refuse before creating an output root.
+
+The rehearsal is not evidentiary and declares its own study id. Its purpose is
+that a defect costs minutes rather than ~18 GPU-hours and an immutable failure
+record inside the confirmatory chain. It has already earned that: it found a
+provenance probe that would have aborted the first cell of the matrix
+(`8fc5607`).
 
 ## Secondary difficulty-response analyses (non-gating, unchanged from v3)
 
