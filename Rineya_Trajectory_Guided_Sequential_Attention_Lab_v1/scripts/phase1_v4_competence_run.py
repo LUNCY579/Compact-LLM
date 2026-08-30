@@ -77,7 +77,31 @@ BANDS = {
 }
 
 
-CELL_SCHEMA_VERSION = "tgsa.phase1-competence-cell.v1"
+# v2 adds the compute backend. A v1 cell recorded none, so it cannot be checked
+# and is refused rather than guessed at.
+CELL_SCHEMA_VERSION = "tgsa.phase1-competence-cell.v2"
+
+
+def compute_backend() -> dict[str, object]:
+    """What actually executed the measurement.
+
+    Twenty thousand optimizer steps through a different BLAS backend is a
+    different measurement. This is the one input to `train_one` that comes from
+    the environment rather than from an argument, so it is the one the caller
+    cannot see in the command line.
+    """
+
+    backend: dict[str, object] = {
+        "device_type": DEVICE.type,
+        "torch": torch.__version__,
+    }
+    if DEVICE.type == "cuda":
+        try:
+            backend["gpu_name"] = torch.cuda.get_device_name(DEVICE)
+            backend["capability"] = list(torch.cuda.get_device_capability(DEVICE))
+        except Exception as error:  # noqa: BLE001 - provenance must not be fatal
+            backend["gpu_name"] = f"unavailable: {type(error).__name__}"
+    return backend
 
 
 def regime_fingerprint(args, train_seed: int) -> str:
@@ -86,10 +110,15 @@ def regime_fingerprint(args, train_seed: int) -> str:
     A cell may only be reused by an invocation that would have produced it.
     Seeds are deliberately EXCLUDED: adding seed 4 later must not invalidate the
     cells for 1, 2 and 3, and each cell already records which seed it is. Every
-    other knob is included, because changing any of them changes the measurement.
+    other knob is included, because changing any of them changes the measurement
+    -- including the compute backend, which is the only one that comes from the
+    environment rather than the command line and so is the one a caller cannot
+    see going wrong.
     """
 
     payload = {
+        # The backend is part of what a cell measures, not merely provenance.
+        "backend": compute_backend(),
         "band": args.band,
         "band_spec": BANDS[args.band],
         "train_examples": args.train_examples,
@@ -139,11 +168,17 @@ def load_cell(path: pathlib.Path, fingerprint: str, arm: str, seed: int):
                                 CELL_SCHEMA_VERSION)
         )
     if payload.get("regime_fingerprint") != fingerprint:
+        recorded = payload.get("backend")
+        current = compute_backend()
+        detail = ""
+        if isinstance(recorded, dict) and recorded != current:
+            detail = f" Its backend was {recorded}, this run's is {current}."
         raise ValueError(
-            "{0} was measured under a different regime ({1} != {2}). A competence "
+            "{0} was measured under a different regime ({1} != {2}).{3} A competence "
             "report assembled from cells measured under two regimes certifies "
             "neither. Use a fresh --cell-dir, or delete this one".format(
-                path.name, str(payload.get("regime_fingerprint"))[:12], fingerprint[:12])
+                path.name, str(payload.get("regime_fingerprint"))[:12],
+                fingerprint[:12], detail)
         )
     cell = payload.get("run")
     if not isinstance(cell, dict):
@@ -308,6 +343,9 @@ def main() -> int:
             write_cell_atomically(cell_path, {
                 "schema_version": CELL_SCHEMA_VERSION,
                 "regime_fingerprint": fingerprint,
+                # Recorded as well as fingerprinted, so a refusal can say WHAT
+                # differs instead of only that the digests disagree.
+                "backend": compute_backend(),
                 "run": result,
             })
             runs.append(result)
@@ -357,6 +395,11 @@ def main() -> int:
         "holdout_examples": len(holdout),
         "split_generation_order": ["holdout", "train"],
         "regime_fingerprint": fingerprint,
+        # Every other artifact in this repository records the backend -- the
+        # screening pilot, the study runner, the doctor. The one artifact that
+        # GATES a multi-hour confirmatory matrix, and gets SHA-256 bound into the
+        # registered config, did not.
+        "backend": compute_backend(),
     }
     report["runs"] = runs
     report["provenance"] = {

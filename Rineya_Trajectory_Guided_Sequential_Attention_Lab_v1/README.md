@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development.** 316 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development.** 320 tests.
 
 ### What has been demonstrated
 
@@ -44,10 +44,20 @@ arm-blind checks, every threshold frozen from an outcome-blind pilot. The purpos
 is not to make TGSA win; it is to build a system in which TGSA can win or lose
 for a scientifically meaningful reason.
 
-Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
-reaching ~6.6× the strongest trivial baseline, but its seeds are bimodal — a
-training phase transition that some seeds complete and others do not — so it
-fails the reliability check. The registered escalation ladder is running.
+Status: **`V4_REGIME_FAMILY_REJECTED`** — see `PHASE1_V4_COMPETENCE_RESULT.md`.
+
+Both registered competence measurements returned `NO_GO` and the escalation
+ladder returned `NO FURTHER MEASUREMENT PERMITTED`. No confirmatory matrix was
+dispatched. The deciding observation: on this band only `state_update` ever
+learns, crossing floor-to-ceiling (Δ +0.95), while both pointer families sit
+inert at 0.15–0.18 and do not distinguish one hop from two. `state_update`
+saturates at 0.98 and `pointer_chase` has no dynamic range, so neither primary
+family can support the mechanism contrast. The band is revisited under a new
+preregistration.
+
+The gate cost ~8 GPU-hours and prevented a 9–26 GPU-hour confirmatory matrix from
+running on a band where the contrast family is inert. v3 spent its full matrix to
+learn an equivalent lesson afterwards.
 
 ## Core recurrence
 
@@ -110,6 +120,7 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `PHASE1_V3_COMPETENCE_POSTMORTEM.md` | Why v3 returned `inconclusive` |
 | `PHASE1_V4_PREREGISTRATION.md` | v4 design, competence gate, escalation ladder |
 | `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and the frozen thresholds |
+| `PHASE1_V4_COMPETENCE_RESULT.md` | Why the v4 regime family was rejected |
 | `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
 
 ## Non-negotiable research rules

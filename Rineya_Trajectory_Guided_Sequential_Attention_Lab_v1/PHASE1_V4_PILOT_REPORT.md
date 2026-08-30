@@ -9,9 +9,11 @@ v3 postmortem showed pure memorization; capacity was deliberately *not* the
 first lever, since more capacity on 5,000 examples memorizes better rather than
 generalizing.
 
-**Current state: `V4_COMPETENCE_NOT_YET_ESTABLISHED`.** A regime that clears
-every accuracy-based check exists, but it fails a reliability check added as a
-result of this pilot. See §2 and §4.
+**Current state: `V4_REGIME_FAMILY_REJECTED`** — superseded by
+`PHASE1_V4_COMPETENCE_RESULT.md`. Both registered competence measurements
+returned `NO_GO` and the escalation ladder refused further measurement. This
+report remains the record of how the thresholds were frozen and how the regime
+was screened; its §9 "next permitted experiment" is spent.
 
 ---
 
