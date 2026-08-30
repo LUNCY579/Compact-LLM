@@ -1,0 +1,111 @@
+{
+  "generator": "procedural_v1",
+  "prompt_hash_overlap": {
+    "calibration__dev_full": 0,
+    "calibration__mergedev": 0,
+    "calibration__sealed": 0,
+    "dev_full__sealed": 0,
+    "mergedev__dev_full": 0,
+    "mergedev__sealed": 0
+  },
+  "schema_version": "1.0",
+  "sealed_answers_not_printed": true,
+  "splits": {
+    "calibration": {
+      "families": {
+        "common_sense": 4,
+        "counterfactual_reasoning": 4,
+        "general_reasoning": 4,
+        "grounded_qa_rag": 4,
+        "instruction_following": 4,
+        "long_context_retrieval": 2,
+        "lost_in_the_middle": 1,
+        "mathematics": 4,
+        "multi_hop_binding": 4,
+        "normal_conversation": 4,
+        "paraphrase_robustness": 12,
+        "science": 4,
+        "short_response": 4,
+        "unanswerable_abstention": 4
+      },
+      "items": 59,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\calibration.jsonl",
+      "scenarios": 49,
+      "scenarios_per_family": 4,
+      "seed": 271828,
+      "sha256": "d2f1f415e3cf34a8c7bb7a8cdef4240a8ce993c41d9b25a5d1471f19b8f453a1"
+    },
+    "dev_full": {
+      "families": {
+        "common_sense": 12,
+        "counterfactual_reasoning": 12,
+        "general_reasoning": 12,
+        "grounded_qa_rag": 12,
+        "instruction_following": 12,
+        "long_context_retrieval": 8,
+        "lost_in_the_middle": 4,
+        "mathematics": 12,
+        "multi_hop_binding": 12,
+        "normal_conversation": 12,
+        "paraphrase_robustness": 36,
+        "science": 12,
+        "short_response": 12,
+        "unanswerable_abstention": 12
+      },
+      "items": 180,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\dev_full.jsonl",
+      "scenarios": 148,
+      "scenarios_per_family": 12,
+      "seed": 161803,
+      "sha256": "3f54d5322a05cda6fa0bed006273c7eba27fc41a62e3f125141e5f6e82997816"
+    },
+    "mergedev": {
+      "families": {
+        "common_sense": 4,
+        "counterfactual_reasoning": 4,
+        "general_reasoning": 4,
+        "grounded_qa_rag": 4,
+        "instruction_following": 4,
+        "long_context_retrieval": 2,
+        "lost_in_the_middle": 1,
+        "mathematics": 4,
+        "multi_hop_binding": 4,
+        "normal_conversation": 4,
+        "paraphrase_robustness": 12,
+        "science": 4,
+        "short_response": 4,
+        "unanswerable_abstention": 4
+      },
+      "items": 59,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\mergedev.jsonl",
+      "scenarios": 49,
+      "scenarios_per_family": 4,
+      "seed": 314159,
+      "sha256": "48e07594589fd69e9715c0e6c80b28233cae368fd5dea1c27169655058403bcd"
+    },
+    "sealed": {
+      "families": {
+        "common_sense": 16,
+        "counterfactual_reasoning": 16,
+        "general_reasoning": 16,
+        "grounded_qa_rag": 16,
+        "instruction_following": 16,
+        "long_context_retrieval": 10,
+        "lost_in_the_middle": 5,
+        "mathematics": 16,
+        "multi_hop_binding": 16,
+        "normal_conversation": 16,
+        "paraphrase_robustness": 48,
+        "science": 16,
+        "short_response": 16,
+        "unanswerable_abstention": 16
+      },
+      "items": 239,
+      "path": "PRIVATE",
+      "scenarios": 197,
+      "scenarios_per_family": 16,
+      "seed": 141421,
+      "sha256": "2beffd932e699cfa5eb4f98ba90e8e301ccb3721448c7ad8459f5bf3aace84fe"
+    }
+  }
+}

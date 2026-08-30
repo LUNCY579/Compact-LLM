@@ -8,6 +8,7 @@ from rineya_cross_scale.checkpoint import CheckpointError
 from rineya_cross_scale.projection import (
     ProjectionPlan,
     build_projection_plan,
+    build_norm_ranked_projection_plan,
     donor_key_for_target,
     project_tensor,
     project_checkpoint,
@@ -169,3 +170,28 @@ def test_project_checkpoint_is_shape_exact_and_deterministic(tmp_path) -> None:
         projected = handle.get_tensor("model.layers.1.self_attn.q_proj.weight")
     expected = donor_tensors["model.layers.2.self_attn.q_proj.weight"][:4, :4]
     assert torch.equal(projected, expected)
+
+
+def test_norm_ranked_projection_selects_structured_counts(tmp_path) -> None:
+    from rineya_cross_scale.checkpoint import CheckpointReader
+
+    target_config = tiny_config(hidden=4, mlp=6, q_heads=2, kv_heads=1, layers=3)
+    donor_config = tiny_config(hidden=8, mlp=10, q_heads=4, kv_heads=2, layers=5)
+    target = write_checkpoint(
+        tmp_path / "target", target_config, tiny_tensors(target_config)
+    )
+    donor = write_checkpoint(
+        tmp_path / "donor", donor_config, tiny_tensors(donor_config)
+    )
+    with CheckpointReader(target) as target_reader, CheckpointReader(donor) as donor_reader:
+        value = build_norm_ranked_projection_plan(
+            target_reader,
+            donor_reader,
+            depth_strategy="D2",
+            tied_projection="embedding",
+        )
+    assert value.width_strategy == "W3"
+    assert len(value.hidden_indices) == 4
+    assert len(value.query_head_indices) == 2
+    assert len(value.mlp_indices) == 6
+    assert tuple(sorted(value.hidden_indices)) == value.hidden_indices

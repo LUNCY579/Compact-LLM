@@ -48,6 +48,7 @@ class ProjectionPlan:
     target_tied_embeddings: bool
     donor_tied_embeddings: bool
     tied_projection: str
+    selection_metadata: dict[str, Any]
 
     @property
     def id(self) -> str:
@@ -134,6 +135,118 @@ def build_projection_plan(
         target_tied_embeddings=target_tied,
         donor_tied_embeddings=donor_tied,
         tied_projection=tied_projection,
+        selection_metadata={"method": "prefix", "ordering": "ascending_donor_index"},
+    )
+
+
+def _top_indices(scores: torch.Tensor, count: int) -> tuple[int, ...]:
+    if scores.ndim != 1 or count <= 0 or count > scores.numel():
+        raise CheckpointError("invalid structured-selection score vector")
+    values = scores.detach().cpu().tolist()
+    ranked = sorted(range(len(values)), key=lambda index: (-float(values[index]), index))
+    return tuple(sorted(ranked[:count]))
+
+
+def _column_norm_scores(tensor: torch.Tensor, chunk_rows: int = 2048) -> torch.Tensor:
+    if tensor.ndim != 2:
+        raise CheckpointError("column norm selection requires a matrix")
+    scores = torch.zeros(tensor.shape[1], dtype=torch.float64)
+    for start in range(0, tensor.shape[0], chunk_rows):
+        chunk = tensor[start : start + chunk_rows].float()
+        scores.add_(chunk.square().sum(dim=0, dtype=torch.float64))
+        del chunk
+    return scores
+
+
+def build_norm_ranked_projection_plan(
+    target: CheckpointReader,
+    donor: CheckpointReader,
+    *,
+    depth_strategy: str,
+    tied_projection: str,
+) -> ProjectionPlan:
+    target_config = target.config()
+    donor_config = donor.config()
+    prefix = build_projection_plan(
+        target_config,
+        donor_config,
+        depth_strategy=depth_strategy,
+        width_strategy="W2",
+        tied_projection=tied_projection,
+    )
+    donor_hidden = int(donor_config["hidden_size"])
+    donor_mlp = int(donor_config["intermediate_size"])
+    donor_q_heads = int(donor_config["num_attention_heads"])
+    target_hidden = int(target_config["hidden_size"])
+    target_mlp = int(target_config["intermediate_size"])
+    target_q_heads = int(target_config["num_attention_heads"])
+    head_dim = int(target_config["head_dim"])
+
+    embedding = donor.get_tensor("model.embed_tokens.weight")
+    hidden_scores = _column_norm_scores(embedding)
+    del embedding
+    query_scores = torch.zeros(donor_q_heads, dtype=torch.float64)
+    mlp_scores = torch.zeros(donor_mlp, dtype=torch.float64)
+    mapped_layers = sorted(set(prefix.layer_mapping))
+    for donor_layer in mapped_layers:
+        layer_prefix = f"model.layers.{donor_layer}."
+        q = donor.get_tensor(layer_prefix + "self_attn.q_proj.weight").float()
+        q = q.reshape(donor_q_heads, head_dim, donor_hidden)
+        query_scores.add_(q.square().sum(dim=(1, 2), dtype=torch.float64))
+        del q
+        o = donor.get_tensor(layer_prefix + "self_attn.o_proj.weight").float()
+        o = o.reshape(donor_hidden, donor_q_heads, head_dim)
+        query_scores.add_(o.square().sum(dim=(0, 2), dtype=torch.float64))
+        del o
+        for name in ("gate_proj", "up_proj"):
+            matrix = donor.get_tensor(layer_prefix + f"mlp.{name}.weight").float()
+            mlp_scores.add_(matrix.square().sum(dim=1, dtype=torch.float64))
+            del matrix
+        down = donor.get_tensor(layer_prefix + "mlp.down_proj.weight").float()
+        mlp_scores.add_(down.square().sum(dim=0, dtype=torch.float64))
+        del down
+        gc.collect()
+
+    hidden_indices = _top_indices(hidden_scores, target_hidden)
+    query_indices = _top_indices(query_scores, target_q_heads)
+    mlp_indices = _top_indices(mlp_scores, target_mlp)
+    return ProjectionPlan(
+        strategy="P1",
+        depth_strategy=depth_strategy,
+        width_strategy="W3",
+        target_layers=prefix.target_layers,
+        donor_layers=prefix.donor_layers,
+        layer_mapping=prefix.layer_mapping,
+        hidden_indices=hidden_indices,
+        query_head_indices=query_indices,
+        kv_head_indices=prefix.kv_head_indices,
+        mlp_indices=mlp_indices,
+        head_dim=prefix.head_dim,
+        target_tied_embeddings=prefix.target_tied_embeddings,
+        donor_tied_embeddings=prefix.donor_tied_embeddings,
+        tied_projection=prefix.tied_projection,
+        selection_metadata={
+            "method": "deterministic_weight_norm",
+            "hidden_score": "input_embedding_column_l2_squared",
+            "query_head_score": "sum_q_rows_and_o_columns_l2_squared_over_mapped_layers",
+            "mlp_score": "sum_gate_up_rows_and_down_columns_l2_squared_over_mapped_layers",
+            "mapped_donor_layers": mapped_layers,
+            "ordering": "selected_indices_sorted_in_original_donor_order",
+            "score_summaries": {
+                "hidden": {
+                    "minimum": float(hidden_scores.min().item()),
+                    "maximum": float(hidden_scores.max().item()),
+                },
+                "query_head": {
+                    "minimum": float(query_scores.min().item()),
+                    "maximum": float(query_scores.max().item()),
+                },
+                "mlp": {
+                    "minimum": float(mlp_scores.min().item()),
+                    "maximum": float(mlp_scores.max().item()),
+                },
+            },
+        },
     )
 
 
@@ -280,13 +393,21 @@ def project_checkpoint(
         ) as donor:
             if template.is_quantized() or donor.is_quantized():
                 raise CheckpointError("projection requires floating-point checkpoints")
-            plan = build_projection_plan(
-                template.config(),
-                donor.config(),
-                depth_strategy=depth_strategy,
-                width_strategy=width_strategy,
-                tied_projection=tied_projection,
-            )
+            if width_strategy == "W3":
+                plan = build_norm_ranked_projection_plan(
+                    template,
+                    donor,
+                    depth_strategy=depth_strategy,
+                    tied_projection=tied_projection,
+                )
+            else:
+                plan = build_projection_plan(
+                    template.config(),
+                    donor.config(),
+                    depth_strategy=depth_strategy,
+                    width_strategy=width_strategy,
+                    tied_projection=tied_projection,
+                )
             writer = StreamingSafetensorsWriter(staging, max_shard_bytes)
             for ordinal, target_key in enumerate(template.keys, 1):
                 target_descriptor = template.descriptor(target_key)
