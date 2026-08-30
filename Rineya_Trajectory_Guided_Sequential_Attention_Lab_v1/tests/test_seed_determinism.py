@@ -106,3 +106,42 @@ def test_power_simulation_is_reproducible() -> None:
     first = simulate_power(**kwargs)
     second = simulate_power(**kwargs)
     assert first == second
+
+
+# --------------------------------------------------------------------------
+# Provenance probes must never be able to abort a run
+# --------------------------------------------------------------------------
+
+
+def test_environment_snapshot_survives_a_failing_probe(monkeypatch) -> None:
+    """torch reports cuda_available on a CUDA build with every device masked,
+    and cudnn.version() then raises. Uncaught, that killed the first cell of a
+    matrix over an environment note."""
+
+    import torch
+
+    from tgsa.phase1_runner import environment_snapshot
+
+    def explode() -> int:
+        raise ValueError("min() arg is an empty sequence")
+
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.backends.cudnn, "version", explode)
+
+    snapshot = environment_snapshot(torch.device("cpu"))
+    assert isinstance(snapshot["cudnn_version"], str)
+    assert "min() arg is an empty sequence" in snapshot["cudnn_version"]
+    assert snapshot["device"] == "cpu"
+    assert snapshot["torch"] == torch.__version__
+
+
+def test_environment_snapshot_reports_a_working_probe_normally(monkeypatch) -> None:
+    """The rescue must not swallow a real value."""
+
+    import torch
+
+    from tgsa.phase1_runner import environment_snapshot
+
+    monkeypatch.setattr(torch.cuda, "is_available", lambda: True)
+    monkeypatch.setattr(torch.backends.cudnn, "version", lambda: 91002)
+    assert environment_snapshot(torch.device("cpu"))["cudnn_version"] == 91002

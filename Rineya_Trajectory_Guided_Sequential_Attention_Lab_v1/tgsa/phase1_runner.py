@@ -26,7 +26,7 @@ from contextlib import nullcontext
 from dataclasses import asdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable, Mapping, Sequence, cast
+from typing import Any, Callable, Iterable, Mapping, Sequence, cast
 
 import torch
 from torch import Tensor
@@ -217,6 +217,23 @@ def git_snapshot(repo_root: Path, expected_base_commit: str) -> dict[str, object
     }
 
 
+def _probe(label: str, function: Callable[[], object]) -> object:
+    """Best-effort environment probe.
+
+    Recording provenance must never be able to abort a run. torch reports
+    cuda_available True on a build with CUDA support even when every device is
+    masked, and cudnn.version() then raises `min() arg is an empty sequence` --
+    which, uncaught, kills the first cell of a confirmatory matrix and writes a
+    failure record for an environment note nobody reads. The failure itself is
+    recorded instead.
+    """
+
+    try:
+        return function()
+    except Exception as error:  # noqa: BLE001 - provenance must not be fatal
+        return f"unavailable: {type(error).__name__}: {error}"
+
+
 def environment_snapshot(device: torch.device) -> dict[str, object]:
     cuda_available = torch.cuda.is_available()
     return {
@@ -227,8 +244,10 @@ def environment_snapshot(device: torch.device) -> dict[str, object]:
         "device": str(device),
         "cuda_available": cuda_available,
         "cuda_version": torch.version.cuda,
-        "cudnn_version": torch.backends.cudnn.version() if cuda_available else None,
-        "gpu_name": torch.cuda.get_device_name(device) if device.type == "cuda" else None,
+        "cudnn_version": _probe("cudnn", torch.backends.cudnn.version) if cuda_available else None,
+        "gpu_name": _probe("gpu_name", lambda: torch.cuda.get_device_name(device))
+        if device.type == "cuda"
+        else None,
         "cpu_threads": torch.get_num_threads(),
     }
 
