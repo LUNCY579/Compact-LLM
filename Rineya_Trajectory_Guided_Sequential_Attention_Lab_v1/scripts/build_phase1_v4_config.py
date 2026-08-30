@@ -116,6 +116,13 @@ def build(competence_path: Path, power_path: Path, v3_config_path: Path,
             "seed": dataset_seed,
             "vocabulary": vocabulary,
             "families": band_spec,
+            # Evaluation splits are generated FIRST. Each split excludes the
+            # signatures already taken, so whichever runs first is the only
+            # unbiased draw. Generating train first on this band consumed the
+            # entire 7,680-item non-trivial two-step `state_update` space and
+            # left dev and test with three-step items only -- an unintended
+            # difficulty shift in a study whose premise is that they are in-band.
+            "split_generation_order": ["test", "dev", "train"],
             # No split_overrides. v3 made dev and test HARDER than train, which
             # stacks difficulty extrapolation on top of the mechanism contrast;
             # with no arm competent, the result was uninterpretable. v4 tests

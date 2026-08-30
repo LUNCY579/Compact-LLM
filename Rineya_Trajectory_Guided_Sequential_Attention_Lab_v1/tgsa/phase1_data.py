@@ -570,11 +570,36 @@ def materialize_dataset(
     if not isinstance(splits_cfg, Mapping):
         raise TypeError("dataset.splits must be an object")
 
+    # Splits are generated in sequence and each excludes the signatures already
+    # taken, so whichever split runs FIRST is the unbiased draw and the rest are
+    # draws from its complement. Generating train first therefore biases the
+    # evaluation splits whenever train saturates any sub-region of the space.
+    #
+    # That is not hypothetical. On the v4 `easy_nontrivial` band the non-trivial
+    # two-step `state_update` space is exactly 32 starts x 16 first steps x 15
+    # non-cancelling second steps = 7,680 items. A 200,000-example train split
+    # takes 66,666 state_update examples and consumes all 7,680, so dev and test
+    # end up containing *only* three-step items -- a difficulty shift introduced
+    # by generation order rather than by design, in a study whose whole premise
+    # is that dev and test are in-band.
+    #
+    # Defaults to the original order so an existing configuration regenerates
+    # byte-identically; v4 configurations set the evaluation-first order.
+    order = dataset_config.get("split_generation_order", ["train", "dev", "test"])
+    if not isinstance(order, Sequence) or isinstance(order, (str, bytes)):
+        raise TypeError("dataset.split_generation_order must be a list of split names")
+    order = [str(name) for name in order]
+    if sorted(order) != ["dev", "test", "train"]:
+        raise ValueError(
+            f"dataset.split_generation_order must be a permutation of "
+            f"train/dev/test; got {order}"
+        )
+
     all_signatures: set[str] = set()
     split_entries: dict[str, object] = {}
     generated_families: set[str] = set()
     output_dir.mkdir(parents=True, exist_ok=True)
-    for split in ("train", "dev", "test"):
+    for split in order:
         counts = splits_cfg.get(split)
         if not isinstance(counts, Mapping):
             raise TypeError(f"dataset split must be an object: {split}")
@@ -614,6 +639,12 @@ def materialize_dataset(
         "vocabulary": vocab.to_dict(),
         "splits": split_entries,
         "cross_split_unique_latent_signatures": True,
+        # Which split was the unbiased draw. Every later split is a draw from
+        # the complement of the earlier ones, so this determines whether the
+        # evaluation splits are representative of the band or merely of whatever
+        # the training split did not exhaust.
+        "split_generation_order": list(order),
+        "unbiased_split": order[0],
         "difficulty_policy": {
             family: bool(
                 _family_spec(dataset_config, family, split="train").get("reject_trivial", False)

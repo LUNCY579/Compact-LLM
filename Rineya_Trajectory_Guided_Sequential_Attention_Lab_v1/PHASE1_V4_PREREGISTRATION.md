@@ -153,24 +153,8 @@ not separate the two failures. Difficulty extrapolation remains a registered
 **non-gating secondary** analysis (below), so the question is deferred, not
 dropped.
 
-`OBSERVED` The in-band band is narrow, and the cost is measured rather than
-asserted. A full pipeline rehearsal at toy scale (below) produced the registered
-secondary difficulty-response analysis and **2 of its 7 variables collapse to a
-single bin**:
-
-| variable | bins on `easy_nontrivial` |
-|---|---:|
-| `context_bucket` | 1 — degenerate |
-| `effective_hops` | 1 — degenerate |
-| `effective_steps` | 2 |
-| `distractor_count` | 3 |
-| `node_count` | 3 |
-| `evidence_position` | 4 |
-| `evidence_span` | 4 |
-
-`effective_hops` is degenerate by construction: the certified band fixes pointer
-chains at 2 hops. The analyzer reports these honestly rather than failing, and
-no trend contrast is estimable for them.
+`OBSERVED` The narrow band's cost to the secondary analyses is recorded under
+§Stratum structure above, measured rather than asserted.
 
 This is a stated limitation of choosing a band that has been certified
 competent, and it is **not** to be repaired by widening the band after the fact
@@ -181,41 +165,75 @@ primary endpoint does not depend on these two variables.
 
 ---
 
-### Stratum structure — a registered consequence of the narrow band
+### Split generation order — a defect found at confirmatory scale
 
-`OBSERVED` The stratum key is `family:hops-or-steps:context_bucket`. On the
-certified band that yields **3 primary strata**, against v3's 17:
+`OBSERVED` Splits are generated in sequence and each excludes the latent
+signatures already taken, so **whichever split is generated first is the only
+unbiased draw**. The pipeline generated `train` first.
+
+On this band the non-trivial two-step `state_update` space is exactly
+32 starts × 16 first steps × 15 non-cancelling second steps = **7,680 items**. A
+200,000-example train split takes 66,666 `state_update` examples and consumed
+all 7,680 of them, so dev and test contained **only three-step items** — an
+unintended difficulty shift in a study whose whole premise is that dev and test
+are in-band. It is not visible at pilot scale, which is why it was not found
+until the dataset was materialized at confirmatory size.
+
+Fixed by making the order explicit. v4 configurations generate **test, then dev,
+then train**, so the evaluation splits are drawn from the full band and train
+takes the remainder — which is the correct direction to lose data, since train
+only needs to be large, not representative in the same strict sense. The order
+and the identity of the unbiased split are recorded in the dataset manifest.
+
+The default remains `["train", "dev", "test"]` so any existing configuration,
+including v3's, regenerates byte-identically.
+
+Measured at 200k, 2,000 test examples per family:
+
+| | train-first (defect) | test-first (fixed) |
+|---|---|---|
+| test `state_update:s2` | **0** | 983 |
+| test `state_update:s3` | 2000 | 1017 |
+| primary strata | 2 | **3** |
+
+### Stratum structure
+
+`OBSERVED` The stratum key is `family:hops-or-steps:context_bucket`. With the
+order fixed, the certified band yields **3 primary strata** against v3's 17:
 
 | | v4 `easy_nontrivial` | v3 |
 |---|---|---|
-| `pointer_chase` | `h2:short` — **1** stratum | h4–h8 × {medium, long} — **10** strata |
-| `state_update` | `s2:short`, `s3:short` — **2** strata | s6–s12 — **7** strata |
+| `pointer_chase` | `h2:short` — **1** stratum | h4–h8 × {medium, long} — **10** |
+| `state_update` | `s2:short`, `s3:short` — **2** strata | s6–s12 — **7** |
 | guardrail `direct_lookup` | `h1:short` — 1 | `h1:{medium, long}` — 2 |
 
 Every sequence on this band is ≤ 32 tokens, so `context_bucket` is constant, and
-the band fixes pointer chains at 2 hops. Both collapses are structural, not
-sampling artifacts.
+the band fixes pointer chains at 2 hops. Both collapses are structural.
 
 Three consequences, registered rather than discovered later:
 
 1. **The estimand's family weighting changes.** The macro-average weights strata
    equally, so v4 weights `pointer_chase` 1/3 and `state_update` 2/3, where v3
    weighted them 10/17 and 7/17. The *rule* is unchanged — RULE 1 — but its
-   realization is not, and a mechanism effect concentrated in `pointer_chase`
-   is down-weighted about 2:1 relative to a family-balanced view. This is why
+   realization is not, and a mechanism effect concentrated in `pointer_chase` is
+   down-weighted about 2:1 relative to a family-balanced view. This is why
    `per_family_accuracy_delta` is reported alongside the primary estimand and
    must be read with it.
-2. **Each stratum is far better sampled.** At 2,000 test examples per family the
-   primary strata hold ~2,000 / ~1,000 / ~1,000 examples, against v3's ~40–90.
-   The within-stratum component of the variance is therefore much smaller; the
-   between-stratum component is estimated from 3 units instead of 17 and is
-   correspondingly less stable. Which effect dominates is an empirical question
-   for the power audit, not something to assert here.
+2. **Each stratum is far better sampled.** The primary strata hold ~2,000 /
+   ~1,000 / ~1,000 examples against v3's ~40–90, so the within-stratum variance
+   component is much smaller while the between-stratum component is estimated
+   from 3 units instead of 17. Which dominates is an empirical question for the
+   power audit, not something to assert here.
 3. **The power audit must be run at `--stratum-count 3`**, not v3's 17, with
    `--examples-per-stratum` ~1333. Running it at v3's structure would report the
    power of a study nobody is going to run.
 
-This was found by the toy-scale rehearsal, before any confirmatory run.
+`OBSERVED` The narrow band also leaves registered **secondary** difficulty
+variables degenerate at confirmatory scale: `context_bucket` and, within the
+primary families, `effective_hops`. These are reported with a single bin and no
+trend contrast is estimable. The band is **not** to be widened after the fact to
+recover them — a wider band is a different regime needing its own competence
+certification. The primary endpoint does not depend on them.
 
 ## Primary estimand (unchanged from v3)
 

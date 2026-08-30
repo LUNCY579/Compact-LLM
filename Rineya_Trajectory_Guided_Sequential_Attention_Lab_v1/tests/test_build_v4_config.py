@@ -241,3 +241,15 @@ def test_the_build_is_deterministic(tmp_path: Path) -> None:
                   dev_per_family=20, length_margin=4)
     assert build(competence, power, V3_CONFIG, **kwargs) == build(
         competence, power, V3_CONFIG, **kwargs)
+
+
+def test_the_evaluation_splits_are_generated_first(tmp_path: Path) -> None:
+    """Train-first generation left test with only three-step state_update items.
+
+    Every split excludes the signatures already taken, so the first split
+    generated is the only unbiased one. On this band a 200k train split exhausts
+    the entire 7,680-item two-step space.
+    """
+
+    config = _build(tmp_path)
+    assert config["dataset"]["split_generation_order"] == ["test", "dev", "train"]
