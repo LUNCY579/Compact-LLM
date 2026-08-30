@@ -160,9 +160,15 @@ def main() -> int:
     # builtin hash(), which is salted per process, so its exact dataset draw
     # was not reproducible from its own record. This one is.
     train_seed = derive_seed(args.train_split_seed, "pilot-train-split", args.band)
-    train = make_split(args.band, args.train_examples, seed=train_seed)
-    holdout = make_split(args.band, args.holdout, seed=args.holdout_split_seed,
-                         forbidden={e.latent_signature for e in train})
+    # The HOLDOUT is generated first, then train excludes it. Each split excludes
+    # the signatures already taken, so whichever is generated first is the only
+    # unbiased draw. Generating train first consumed the entire 7,680-item
+    # non-trivial two-step `state_update` space and left the holdout with
+    # three-step items only -- a competence measurement on a harder distribution
+    # than the confirmatory test set it is certifying.
+    holdout = make_split(args.band, args.holdout, seed=args.holdout_split_seed)
+    train = make_split(args.band, args.train_examples, seed=train_seed,
+                       forbidden={e.latent_signature for e in holdout})
     assert not ({e.latent_signature for e in train}
                 & {e.latent_signature for e in holdout}), "train/holdout leak"
     max_len = max(len(e.tokens) - 1 for e in train + holdout)
@@ -228,6 +234,7 @@ def main() -> int:
         "train_split_seed": train_seed,
         "holdout_split_seed": args.holdout_split_seed,
         "holdout_examples": len(holdout),
+        "split_generation_order": ["holdout", "train"],
     }
     report["runs"] = runs
     args.output.parent.mkdir(parents=True, exist_ok=True)

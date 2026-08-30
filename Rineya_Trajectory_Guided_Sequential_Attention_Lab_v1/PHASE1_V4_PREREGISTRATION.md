@@ -307,8 +307,16 @@ pilot's first `NO_GO` had an obvious mechanistic cause and refusing to act on it
 would have thrown away the diagnosis.
 
 The line between them is that the moves are fixed in advance, each is tied to
-the specific check that failed, each may be taken **at most once**, and the total
-number of competence measurements is capped at **four**.
+the specific check that failed, each may be taken **at most once**, and the
+number of distinct **regimes** measured is capped at **four**.
+
+The cap counts regimes rather than raw measurements, deliberately. Re-measuring
+the *same* regime after a documented harness defect is a correction, not an
+escalation — it does not change what is being tested, so it cannot be a way of
+searching for a regime that passes. Re-measuring the same regime *without* such a
+fix is exactly the dice-rolling the cap exists to stop, and it is refused
+separately as a rung already attempted. Every measurement, corrected or
+superseded, stays in the record.
 
 | failed check | registered response | why that response |
 |---|---|---|
@@ -327,6 +335,15 @@ v3 produced at far greater cost.
 what is permitted next, refusing past the cap, so the rule is enforceable rather
 than aspirational. `tests/test_v4_escalation.py` proves by exhaustion that no
 sequence of permitted moves can run forever.
+
+`OBSERVED` The two competence measurements launched before the split-order fix
+generated their **training** split first, so their holdouts inherited the same
+depletion: `state_update` holdout items are three-step only. That makes those
+measurements **conservative** — the holdout is strictly harder than the
+confirmatory test set will be, so competence measured on it under-states
+competence on the registered distribution, and a `GO` from them is trustworthy in
+the direction that matters. `scripts/phase1_v4_competence_run.py` now generates
+the holdout first, so the certified distribution matches the confirmatory one.
 
 `OBSERVED` The 200k × 20k measurement was launched on a single partial
 observation — one arm, one seed, showing a 0.168 memorization gap — before this

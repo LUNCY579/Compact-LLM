@@ -113,12 +113,30 @@ def test_a_rung_cannot_be_taken_twice() -> None:
     assert "at most once" in reason
 
 
-def test_the_measurement_cap_is_enforced() -> None:
-    history = [_report(50_000, 20_000, MIXTURE_CHECK) for _ in range(MEASUREMENT_CAP)]
+def test_the_cap_counts_distinct_regimes() -> None:
+    history = [
+        _report(50_000, 20_000, MIXTURE_CHECK),
+        _report(50_000, 30_000, MIXTURE_CHECK),
+        _report(200_000, 20_000, MIXTURE_CHECK),
+        _report(200_000, 30_000, MIXTURE_CHECK),
+    ]
     step, reason = next_step(history)
     assert step is None
     assert "REJECTED" in reason
-    assert "do not\ntake a fifth measurement".replace("\n", " ") in " ".join(reason.split())
+    assert f"{MEASUREMENT_CAP} distinct regimes" in reason
+
+
+def test_re_measuring_one_regime_does_not_consume_the_cap() -> None:
+    """A correction after a documented harness fix is not an escalation.
+
+    It does not change what is being tested, so it cannot be a way of searching
+    for a regime that passes. Repeated re-measurement WITHOUT a fix is caught by
+    the rung-already-attempted rule instead.
+    """
+
+    history = [_report(50_000, 20_000, MEMORIZATION_CHECK) for _ in range(6)]
+    step, reason = next_step(history)
+    assert step == MORE_DATA, reason
 
 
 def test_the_ladder_terminates_from_every_starting_point() -> None:

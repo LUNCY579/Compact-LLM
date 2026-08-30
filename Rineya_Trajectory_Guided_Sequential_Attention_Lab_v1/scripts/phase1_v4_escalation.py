@@ -36,8 +36,15 @@ BASE_STEPS = 20_000
 ESCALATED_EXAMPLES = 200_000
 ESCALATED_STEPS = 30_000
 
-#: At most this many competence measurements, ever. Four is the size of the
-#: ladder; a fifth would mean the moves stopped being pre-stated.
+#: At most this many distinct REGIMES, ever. Four is the size of the ladder;
+#: a fifth would mean the moves stopped being pre-stated.
+#:
+#: Counting regimes rather than raw reports is deliberate. Re-measuring the
+#: SAME regime after a documented harness defect is a correction, not an
+#: escalation -- it does not change what is being tested, so it cannot be a
+#: way of searching for a regime that passes. Re-measuring it repeatedly
+#: WITHOUT such a fix is exactly the dice-rolling this cap exists to stop, and
+#: shows up as a rung already attempted, which is refused below.
 MEASUREMENT_CAP = 4
 
 #: The only two failures with a registered mechanistic response.
@@ -88,18 +95,18 @@ def next_step(reports: list[dict]) -> tuple[Step | None, str]:
 
     if any(report.get("verdict") == "GO" for report in reports):
         return None, "a GO report already exists; the ladder is complete"
-    if len(reports) >= MEASUREMENT_CAP:
+    attempted = {(int(r["regime"]["train_examples"]), int(r["regime"]["steps"]))
+                 for r in reports if "regime" in r}
+    if len(attempted) >= MEASUREMENT_CAP:
         return None, (
-            f"{len(reports)} competence measurements have been taken and the "
+            f"{len(attempted)} distinct regimes have been measured and the "
             f"registered cap is {MEASUREMENT_CAP}; the regime family is REJECTED. "
             f"Revisit the difficulty band under a new preregistration -- do not "
-            f"take a fifth measurement"
+            f"take a fifth"
         )
     if not reports:
         return BASE, "no measurement taken yet"
 
-    attempted = {(int(r["regime"]["train_examples"]), int(r["regime"]["steps"]))
-                 for r in reports if "regime" in r}
     latest = failed_checks(reports[-1])
 
     # Only these two failures have a registered response. Anything else -- a
