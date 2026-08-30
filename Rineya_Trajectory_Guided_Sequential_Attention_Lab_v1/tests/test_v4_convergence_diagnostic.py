@@ -105,3 +105,52 @@ def test_a_report_without_loss_is_refused(tmp_path: Path) -> None:
     }), encoding="utf-8")
     with pytest.raises(ValueError, match="final_train_loss"):
         describe(path)
+
+
+def _report_with_families(tmp_path: Path, spec) -> Path:
+    runs = []
+    for arm, seed, loss, families, descending in spec:
+        runs.append({
+            "arm": arm, "seed": seed, "final_train_loss": loss,
+            "holdout": {
+                "accuracy": sum(families.values()) / len(families),
+                "per_family_accuracy": families,
+            },
+            "loss_curve": _curve(4.6, loss, flat_tail=not descending),
+        })
+    path = tmp_path / "competence.json"
+    path.write_text(json.dumps({
+        "runs": runs, "regime": {"train_examples": 200000, "steps": 20000},
+    }), encoding="utf-8")
+    return path
+
+
+def test_the_transition_is_localized_to_the_composed_families(tmp_path: Path) -> None:
+    """A stalled run that already solves the one-hop family points at depth.
+
+    If only the composed families move across the transition, the model is
+    discovering a composition circuit rather than gaining general competence --
+    and neither more data nor more updates is the indicated response.
+    """
+
+    high = {"direct_lookup": 0.92, "pointer_chase": 0.30, "state_update": 0.28}
+    low = {"direct_lookup": 0.90, "pointer_chase": 0.03, "state_update": 0.04}
+    path = _report_with_families(tmp_path, [
+        ("cascade", 1, 1.35, high, False), ("cascade", 2, 2.45, low, False),
+        ("history_control", 1, 1.40, high, False), ("history_control", 2, 2.50, low, False),
+        ("learned_delta", 1, 1.33, high, False), ("learned_delta", 2, 2.47, low, False),
+    ])
+    modes = describe(path)["per_family_by_mode"]
+    assert set(modes) == {"transitioned", "stalled"}
+    assert modes["transitioned"]["direct_lookup"] - modes["stalled"]["direct_lookup"] < 0.05
+    assert modes["transitioned"]["pointer_chase"] - modes["stalled"]["pointer_chase"] > 0.20
+
+
+def test_per_family_modes_are_absent_when_nothing_is_bimodal(tmp_path: Path) -> None:
+    same = {"direct_lookup": 0.9, "pointer_chase": 0.3, "state_update": 0.3}
+    path = _report_with_families(tmp_path, [
+        ("cascade", s, 1.40 + s * 0.01, same, False) for s in (1, 2, 3)
+    ])
+    summary = describe(path)
+    assert summary["split_point"] is None
+    assert len(summary["per_family_by_mode"]) <= 1

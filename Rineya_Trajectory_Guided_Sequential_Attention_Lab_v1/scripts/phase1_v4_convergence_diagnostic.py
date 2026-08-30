@@ -84,13 +84,30 @@ def describe(path: Path) -> dict:
         rows.append({
             "arm": run["arm"], "seed": run["seed"],
             "holdout": run["holdout"]["accuracy"],
+            "per_family": dict(run["holdout"].get("per_family_accuracy") or {}),
             "final_loss": loss,
             "transitioned": None if cut is None else loss < cut,
             "still_descending": still_descending(run.get("loss_curve") or []),
         })
     transitioned = [r for r in rows if r["transitioned"]]
     stalled = [r for r in rows if r["transitioned"] is False]
+
+    # What the transition consists of. If the stalled runs already solve the
+    # one-hop guardrail family and only the composed families move, the
+    # transition is the discovery of a composition circuit rather than general
+    # competence -- which points at depth, not data or budget.
+    families = sorted({f for r in rows for f in r["per_family"]})
+    by_mode: dict[str, dict[str, float]] = {}
+    for label, group in (("transitioned", transitioned), ("stalled", stalled)):
+        if group:
+            by_mode[label] = {
+                family: statistics.fmean(r["per_family"][family] for r in group
+                                         if family in r["per_family"])
+                for family in families
+                if any(family in r["per_family"] for r in group)
+            }
     return {
+        "per_family_by_mode": by_mode,
         "report": path.name,
         "train_examples": regime.get("train_examples"),
         "steps": regime.get("steps"),
@@ -124,6 +141,13 @@ def main() -> int:
         if summary["split_point"] is not None:
             print(f"  stalled runs: {summary['stalled_still_descending']} still descending, "
                   f"{summary['stalled_plateaued']} plateaued")
+        modes = summary.get("per_family_by_mode") or {}
+        if len(modes) == 2:
+            families = sorted(set(modes["transitioned"]) & set(modes["stalled"]))
+            print(f"  {'family':18s} {'stalled':>9s} {'transitioned':>13s} {'delta':>9s}")
+            for family in families:
+                low, high = modes["stalled"][family], modes["transitioned"][family]
+                print(f"  {family:18s} {low:9.4f} {high:13.4f} {high - low:+9.4f}")
 
     graded = [s for s in summaries if s["transitioned_fraction"] is not None]
     if len(graded) >= 2:
