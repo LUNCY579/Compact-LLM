@@ -84,10 +84,17 @@ jobs:
           report_schema = json.loads(
               (lab / "evidence/phase2_mtp_report.schema.json").read_text(encoding="utf-8")
           )
+          # The report schema's relative $ref is normalized against its absolute
+          # $id.  Register both spellings so validation remains local and never
+          # attempts a network fetch from the deliberately non-routable schema host.
+          resolved_run_schema_id = (
+              "https://rineya.invalid/schemas/phase2_mtp_run.schema.json"
+          )
           resolver = jsonschema.RefResolver.from_schema(
               report_schema,
               store={
                   "phase2_mtp_run.schema.json": run_schema,
+                  resolved_run_schema_id: run_schema,
                   run_schema["$id"]: run_schema,
               },
           )
