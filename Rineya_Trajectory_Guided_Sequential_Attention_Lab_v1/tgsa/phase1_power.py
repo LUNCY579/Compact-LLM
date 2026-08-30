@@ -19,6 +19,7 @@ from dataclasses import dataclass
 from typing import Mapping, Sequence
 
 from .phase1_analysis import resolve_bootstrap
+from .phase1_data import derive_seed
 
 POWER_SCHEMA_VERSION = "tgsa.phase1-power-simulation.v1"
 
@@ -120,7 +121,10 @@ def simulate_power(
     strata = [f"stratum_{index}" for index in range(strata_count)]
     results: list[dict[str, object]] = []
     for scenario in scenarios:
-        rng = random.Random(rng_seed + abs(hash(scenario.name)) % 10_000)
+        # Not builtin hash(): str hashing is salted per process (PYTHONHASHSEED),
+        # so the same audit run twice drew different streams and could not be
+        # reproduced from its own record. derive_seed is a SHA-256 digest.
+        rng = random.Random(derive_seed(rng_seed, "power-scenario", scenario.name))
         fired = 0
         observed_values: list[float] = []
         lower_bounds: list[float] = []
