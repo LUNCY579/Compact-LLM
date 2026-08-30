@@ -1,0 +1,152 @@
+name: TGSA Phase 2 MTP complementarity
+
+on:
+  push:
+    branches:
+      - research/tgsa-phase2-mtp-complementarity
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-phase2-mtp.yml"
+  pull_request:
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-phase2-mtp.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tgsa-phase2-mtp-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
+  CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase2_tgsa_mtp_smoke.json
+  ROOT: ci_artifacts/tgsa_phase2_mtp
+  PYTHONUNBUFFERED: "1"
+
+jobs:
+  unit-and-rehearsal:
+    name: MTP tests and competence-safe rehearsal
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+
+    steps:
+      - name: Check out full lineage
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "${{ env.LAB }}/pyproject.toml"
+
+      - name: Install CPU package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
+          python -m pip install -e "${LAB}[dev]"
+
+      - name: Run TGSA x MTP unit and full-ladder tests
+        run: |
+          python -m pytest \
+            "${LAB}/tests/test_mtp.py" \
+            "${LAB}/tests/test_mtp_ladder.py" \
+            -q --tb=short --durations=15
+
+      - name: Run the eight-cell non-evidentiary rehearsal
+        run: |
+          rm -rf "${ROOT}"
+          mkdir -p "${ROOT}"
+          python "${LAB}/scripts/phase2_tgsa_mtp_rehearsal.py" \
+            --config "${CONFIG}" \
+            --dataset-dir "${ROOT}/dataset" \
+            --output-dir "${ROOT}/study" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Validate Phase-2 artifacts against JSON schemas
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          import jsonschema
+
+          lab = Path("Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1")
+          root = Path("ci_artifacts/tgsa_phase2_mtp/study")
+          run_schema = json.loads(
+              (lab / "evidence/phase2_mtp_run.schema.json").read_text(encoding="utf-8")
+          )
+          report_schema = json.loads(
+              (lab / "evidence/phase2_mtp_report.schema.json").read_text(encoding="utf-8")
+          )
+          resolver = jsonschema.RefResolver.from_schema(
+              report_schema,
+              store={
+                  "phase2_mtp_run.schema.json": run_schema,
+                  run_schema["$id"]: run_schema,
+              },
+          )
+          report = json.loads((root / "phase2_report.json").read_text(encoding="utf-8"))
+          jsonschema.validate(report, report_schema, resolver=resolver)
+          manifests = sorted(root.glob("runs/*/seed_*/run_manifest.json"))
+          assert manifests, "no run manifests were produced"
+          for manifest_path in manifests:
+              jsonschema.validate(
+                  json.loads(manifest_path.read_text(encoding="utf-8")),
+                  run_schema,
+              )
+          print(f"validated one study report and {len(manifests)} run manifests")
+          PY
+
+      - name: Verify competence, initialization, gradient, and leakage contracts
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          root = Path("ci_artifacts/tgsa_phase2_mtp")
+          report = json.loads(
+              (root / "study/phase2_report.json").read_text(encoding="utf-8")
+          )
+          assert report["status"] == "complete", report
+          assert report["confirmatory"] is False
+          assert report["decision"] == "smoke_only"
+          assert report["competence_precondition"]["required"] is False
+          assert len(report["runs"]) == 8
+          assert report["analysis"]["decision"] == "descriptive_only"
+
+          for audit in report["initialization_audits"]:
+              assert audit["all_mtp_heads_identical"] is True
+              assert audit["backbone_identical_within_tgsa_arm"] is True
+
+          for run in report["runs"]:
+              gradient = run["gradient_audit"]
+              assert gradient["mtp_head_gradient_norm"] > 0
+              if run["cell"]["mtp_mode"] == "trajectory":
+                  assert gradient["trajectory_control_requires_grad"] is True
+                  assert gradient["trajectory_control_gradient_norm"] > 0
+                  assert run["evaluation"]["trajectory_control_rms"] > 0
+              else:
+                  assert run["evaluation"]["trajectory_control_rms"] == 0
+              scope = run["evaluation"]["teacher_forced_future_prefix"]["claim_scope"]
+              assert scope.endswith("not throughput")
+
+          forbidden = list((root / "study").rglob("predictions_test*.jsonl"))
+          assert not forbidden, forbidden
+          assert (root / "dataset/test.jsonl").is_file()
+          print("TGSA Phase 2 MTP contracts verified")
+          PY
+
+      - name: Upload rehearsal evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tgsa-phase2-mtp-${{ github.run_id }}
+          path: ci_artifacts/tgsa_phase2_mtp
+          if-no-files-found: warn
+          retention-days: 14
