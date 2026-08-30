@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA × MTP is implemented as a competence-gated rehearsal.** 312 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA × MTP is implemented as a competence-gated rehearsal.** 336 tests.
 
 ### What has been demonstrated
 
@@ -26,6 +26,9 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
   reuse of TGSA's existing differentiable control coordinate, an eight-cell
   development rehearsal, full-ladder mechanical tests, evidence schemas, and a
   fail-closed Phase-1 competence precondition for any later confirmatory run.
+- A Phase-2 integrity layer that binds data diversity, sample presentations,
+  effective epochs, device identity, and regime/study/cell provenance into each
+  development bundle.
 
 > **v3 is not evidence against TGSA.** A contrast between arms that cannot
 > perform the task is uninformative in both directions. It constrains the
@@ -37,8 +40,9 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
   confirmed or refuted.
 - Improved model quality, at any scale.
 - That MTP improves TGSA or that a TGSA × MTP interaction is positive.
-- Speculative-decoding speedup. Future-token accuracy is not a replacement for a
-  cache-aware target verifier and timed end-to-end generation.
+- Speculative-decoding speedup. Future-token accuracy and serial target-round
+  reduction are not replacements for a cache-aware verifier and timed
+  end-to-end generation.
 - Any Qwen/GQA, natural-language, long-context, or efficiency claim. The Rineya
   retrofit track is explicitly **non-evidentiary** until the mechanism has been
   fairly tested here.
@@ -51,10 +55,11 @@ arm-blind checks, every threshold frozen from an outcome-blind pilot. The purpos
 is not to make TGSA win; it is to build a system in which TGSA can win or lose
 for a scientifically meaningful reason.
 
-Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
-reaching ~6.6× the strongest trivial baseline, but its seeds are bimodal — a
-training phase transition that some seeds complete and others do not — so it
-fails the reliability check. The registered escalation ladder is running.
+Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. Development work shows that training
+exposure and data diversity can trade reliable optimization transitions against
+memorization, so they are now explicit regime variables rather than hidden
+properties of a step count. No development arm margin is interpreted as a TGSA
+result. The registered escalation ladder remains authoritative.
 
 ### Phase 2 — TGSA × multi-token prediction
 
@@ -68,9 +73,11 @@ one identical sequential MTP module to every cell and separates three conditions
 
 The current eight-cell CPU configuration is a non-evidentiary rehearsal. The
 sealed test split is materialized but never read, all initial states and output
-artifacts are hashed, and `confirmatory=true` fails before dispatch unless the
-current Phase-1 v4 competence report returns `GO`. See
-`PHASE2_TGSA_MTP_DESIGN.md` and `PHASE2_TGSA_MTP_RUNBOOK.md`.
+artifacts are hashed, and `confirmatory=true` fails before dispatch unless an
+external, frozen, non-development Phase-1 v4 competence report returns `GO`.
+Development reports are transitively marked and cannot be laundered into that
+prerequisite. See `PHASE2_TGSA_MTP_DESIGN.md`, `PHASE2_TGSA_MTP_RUNBOOK.md`, and
+`PHASE2_V4_REGIME_INTEGRATION.md`.
 
 ## Core recurrence
 
@@ -108,17 +115,31 @@ python scripts/validate_manifest.py artifacts/phase0_smoke.json
 python scripts/run_ablation_matrix.py
 ```
 
+Phase-2 rehearsal:
+
+```powershell
+python scripts/phase2_tgsa_mtp_rehearsal.py `
+  --config configs/phase2_tgsa_mtp_smoke.json `
+  --dataset-dir artifacts/phase2_smoke/dataset `
+  --output-dir artifacts/phase2_smoke/study `
+  --repo-root ..
+python scripts/verify_phase2_integrity.py `
+  --config configs/phase2_tgsa_mtp_smoke.json `
+  --dataset-dir artifacts/phase2_smoke/dataset `
+  --output-dir artifacts/phase2_smoke/study
+```
+
 The generated `artifacts/` directory is intentionally ignored. Promote an artifact into a paper evidence bundle only after attaching immutable model/data/config hashes and the exact commit.
 
 ## Repository map
 
 | Path | Purpose |
 |---|---|
-| `tgsa/` | Reference attention, configuration, MTP extension, telemetry, and statistics |
-| `tests/` | Causality, gradient, mask, shape, ablation, MTP, and statistical tests |
+| `tgsa/` | Reference attention, configuration, MTP extension, integrity, telemetry, and statistics |
+| `tests/` | Causality, gradient, mask, shape, ablation, MTP, integrity, and statistical tests |
 | `scripts/` | Smoke execution, ablation sanity matrix, manifest validation, Phase-2 rehearsal |
 | `configs/` | Frozen/rehearsal configurations and preregistration templates |
-| `evidence/` | Run-manifest and study-report schemas |
+| `evidence/` | Run-manifest, integrity, and study-report schemas |
 | `ARCHITECTURE.md` | Equations, invariants, complexity, and causal semantics |
 | `EXPERIMENT_PLAN.md` | Staged scientific and engineering pipeline |
 | `PREREGISTRATION.md` | Primary hypotheses, endpoints, controls, and analysis lock |
@@ -136,6 +157,7 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
 | `PHASE2_TGSA_MTP_DESIGN.md` | MTP architecture, factorial design, claims, and gates |
 | `PHASE2_TGSA_MTP_RUNBOOK.md` | Validated rehearsal commands and family-model roadmap |
+| `PHASE2_V4_REGIME_INTEGRATION.md` | How v4's dose/diversity trend constrains Phase-2 design |
 
 ## Non-negotiable research rules
 
@@ -145,4 +167,5 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 4. The existing long-context demo may be diagnostic, but a paper claim requires an independently authored sealed bank.
 5. Telemetry is explanatory evidence only unless its predictive relationship is preregistered and validated out of sample.
 6. No “first” or novelty claim is permitted until the final related-work search and citation audit are complete.
-7. Future-token accuracy is not speculative-decoding speed; speed requires an exact cache-aware verifier and end-to-end timing.
+7. Future-token accuracy or serial-round reduction is not speculative-decoding speed; speed requires an exact cache-aware verifier and end-to-end timing.
+8. A development competence report cannot certify a confirmatory matrix, even when its numeric verdict is `GO`.

@@ -28,9 +28,9 @@ env:
 
 jobs:
   unit-and-rehearsal:
-    name: MTP tests and competence-safe rehearsal
+    name: MTP tests, regressions, and competence-safe rehearsal
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - name: Check out full lineage
@@ -51,12 +51,17 @@ jobs:
           python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
           python -m pip install -e "${LAB}[dev]"
 
-      - name: Run TGSA x MTP unit and full-ladder tests
+      - name: Run TGSA x MTP and integrity focused tests
         run: |
           python -m pytest \
             "${LAB}/tests/test_mtp.py" \
             "${LAB}/tests/test_mtp_ladder.py" \
+            "${LAB}/tests/test_phase2_integrity.py" \
             -q --tb=short --durations=15
+
+      - name: Run complete TGSA regression suite
+        run: |
+          python -m pytest "${LAB}/tests" -q --tb=short --durations=15
 
       - name: Run the eight-cell non-evidentiary rehearsal
         run: |
@@ -67,6 +72,13 @@ jobs:
             --dataset-dir "${ROOT}/dataset" \
             --output-dir "${ROOT}/study" \
             --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Verify Phase-2 integrity and anti-laundering contracts
+        run: |
+          python "${LAB}/scripts/verify_phase2_integrity.py" \
+            --config "${CONFIG}" \
+            --dataset-dir "${ROOT}/dataset" \
+            --output-dir "${ROOT}/study"
 
       - name: Validate Phase-2 artifacts against JSON schemas
         run: |
@@ -84,9 +96,9 @@ jobs:
           report_schema = json.loads(
               (lab / "evidence/phase2_mtp_report.schema.json").read_text(encoding="utf-8")
           )
-          # The report schema's relative $ref is normalized against its absolute
-          # $id.  Register both spellings so validation remains local and never
-          # attempts a network fetch from the deliberately non-routable schema host.
+          integrity_schema = json.loads(
+              (lab / "evidence/phase2_integrity.schema.json").read_text(encoding="utf-8")
+          )
           resolved_run_schema_id = (
               "https://rineya.invalid/schemas/phase2_mtp_run.schema.json"
           )
@@ -100,6 +112,8 @@ jobs:
           )
           report = json.loads((root / "phase2_report.json").read_text(encoding="utf-8"))
           jsonschema.validate(report, report_schema, resolver=resolver)
+          integrity = json.loads((root / "phase2_integrity.json").read_text(encoding="utf-8"))
+          jsonschema.validate(integrity, integrity_schema)
           manifests = sorted(root.glob("runs/*/seed_*/run_manifest.json"))
           assert manifests, "no run manifests were produced"
           for manifest_path in manifests:
@@ -107,10 +121,10 @@ jobs:
                   json.loads(manifest_path.read_text(encoding="utf-8")),
                   run_schema,
               )
-          print(f"validated one study report and {len(manifests)} run manifests")
+          print(f"validated one report, one integrity manifest, and {len(manifests)} runs")
           PY
 
-      - name: Verify competence, initialization, gradient, and leakage contracts
+      - name: Verify competence, initialization, gradient, leakage, and dose contracts
         run: |
           python - <<'PY'
           import json
@@ -120,19 +134,48 @@ jobs:
           report = json.loads(
               (root / "study/phase2_report.json").read_text(encoding="utf-8")
           )
+          integrity = json.loads(
+              (root / "study/phase2_integrity.json").read_text(encoding="utf-8")
+          )
+          verification = json.loads(
+              (root / "study/phase2_integrity_verification.json").read_text(encoding="utf-8")
+          )
+          assert verification["passed"] is True, verification["errors"]
           assert report["status"] == "complete", report
           assert report["confirmatory"] is False
+          assert report["development_only"] is True
+          assert report["mechanism_interpretation_allowed"] is False
           assert report["decision"] == "smoke_only"
           assert report["competence_precondition"]["required"] is False
+          assert report["external_phase1_competence"]["required"] is False
           assert len(report["runs"]) == 8
           assert report["analysis"]["decision"] == "descriptive_only"
+          assert report["training_dose"]["sample_presentations"] == 12
+          assert report["training_dose"]["unique_train_examples"] == 48
+          assert report["training_dose"]["effective_epochs"] == 0.25
+          assert len(report["regime_fingerprint"]) == 64
+          assert len(report["device_fingerprint"]) == 64
+          assert len(report["study_fingerprint"]) == 64
+
+          assert integrity["development_only"] is True
+          assert integrity["mechanism_interpretation_allowed"] is False
+          assert integrity["contract"]["split_generation_order"] == ["test", "dev", "train"]
+          assert integrity["metric_semantics"]["wall_clock_speed_claim"] is False if "metric_semantics" in integrity else True
 
           for audit in report["initialization_audits"]:
               assert audit["all_mtp_heads_identical"] is True
               assert audit["backbone_identical_within_tgsa_arm"] is True
 
+          fingerprints = set()
           for run in report["runs"]:
               gradient = run["gradient_audit"]
+              assert run["development_only"] is True
+              assert run["mechanism_interpretation_allowed"] is False
+              assert run["training_dose"] == report["training_dose"]
+              assert run["integrity"]["regime_fingerprint"] == report["regime_fingerprint"]
+              assert run["integrity"]["device_fingerprint"] == report["device_fingerprint"]
+              assert run["metric_semantics"]["wall_clock_speed_claim"] is False
+              fingerprints.add(run["integrity"]["cell_fingerprint"])
               assert gradient["mtp_head_gradient_norm"] > 0
               if run["cell"]["mtp_mode"] == "trajectory":
                   assert gradient["trajectory_control_requires_grad"] is True
@@ -142,11 +185,12 @@ jobs:
                   assert run["evaluation"]["trajectory_control_rms"] == 0
               scope = run["evaluation"]["teacher_forced_future_prefix"]["claim_scope"]
               assert scope.endswith("not throughput")
+          assert len(fingerprints) == len(report["runs"])
 
           forbidden = list((root / "study").rglob("predictions_test*.jsonl"))
           assert not forbidden, forbidden
           assert (root / "dataset/test.jsonl").is_file()
-          print("TGSA Phase 2 MTP contracts verified")
+          print("TGSA Phase 2 MTP integrity and claim contracts verified")
           PY
 
       - name: Upload rehearsal evidence
