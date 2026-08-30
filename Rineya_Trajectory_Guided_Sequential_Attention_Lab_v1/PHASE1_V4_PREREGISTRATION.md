@@ -341,6 +341,23 @@ is revisited under a new preregistration. That is a result about the
 experimental setup, not a failure of nerve, and it is the same kind of result
 v3 produced at far greater cost.
 
+`OBSERVED` **The ladder's answer must not depend on report order, and an earlier
+revision's did.** Regimes are routinely measured in parallel — two competence
+runs on one GPU is the documented throughput ceiling — so "the most recent
+report" is whichever finished first. Reading only the last report returned a
+permitted move for one ordering and `REJECT` for the other on identical
+evidence. Every failing report's registered response is now considered,
+responses already measured are dropped, and the smallest remaining regime wins
+on a fixed tiebreak that cannot depend on which report scored better.
+
+This was found while two parallel measurements were at eight of nine cells, with
+partial results already indicating that the fix changes the answer from `REJECT`
+to one further permitted run. Recording that plainly because it is the kind of
+change that must not be made quietly: it removes an arbitrary dependence rather
+than adding any move, every move it can return was already registered in the
+table above, and the four-regime cap still binds. The fix would equally have
+produced `REJECT` had both regimes failed the same way.
+
 `scripts/phase1_v4_escalation.py` reads the reports produced so far and answers
 what is permitted next, refusing past the cap, so the rule is enforceable rather
 than aspirational. `tests/test_v4_escalation.py` proves by exhaustion that no

@@ -15,6 +15,15 @@ result, not a failure of nerve.
 This module reads the competence reports produced so far and answers one
 question: what, if anything, is permitted next? It refuses past the cap.
 
+The answer must not depend on the order the reports are listed in. Regimes are
+routinely measured in parallel -- two competence runs on one GPU is the
+documented throughput ceiling -- so "the most recent report" is whichever
+happened to finish first. An earlier revision keyed off the last report and gave
+opposite answers for the same evidence depending on that order. Every failing
+report's registered response is now considered, responses already measured are
+dropped, and the smallest remaining regime wins on a fixed tiebreak that cannot
+depend on which report scored better.
+
 Registered before any 20,000-update result existed. See
 `PHASE1_V4_PREREGISTRATION.md` §Escalation.
 """
@@ -138,41 +147,71 @@ def next_step(reports: list[dict]) -> tuple[Step | None, str]:
     if not reports:
         return BASE, "no measurement taken yet"
 
-    latest = failed_checks(reports[-1])
+    # Every failing report gets its registered response considered, not just the
+    # last one. Regimes are routinely measured in PARALLEL -- two competence runs
+    # on one GPU is the documented throughput ceiling -- so "the latest report"
+    # is whichever finished first, or whichever the caller happened to list
+    # second. An earlier revision read reports[-1] and returned opposite answers
+    # for the same evidence depending on that order, which is not a rule at all.
+    proposals: list[tuple[Step, str, tuple[str, ...]]] = []
+    blocked: list[str] = []
+    for report in reports:
+        if report.get("verdict") == "GO":
+            continue
+        failed = failed_checks(report)
+        if not failed:
+            continue
 
-    # Only these two failures have a registered response. Anything else -- a
-    # dead family, a saturated ceiling, NLL worse than uniform -- is not a
-    # budget or volume problem and no rung of this ladder addresses it.
-    unanswerable = latest - {MIXTURE_CHECK, MEMORIZATION_CHECK}
-    if unanswerable:
-        return None, (
-            f"failed checks with no registered response: {sorted(unanswerable)}. "
-            f"The ladder only answers a truncated transition or an epoch-driven "
-            f"memorization gap. REJECT the regime family and revisit the band"
+        # Only these two failures have a registered response. Anything else -- a
+        # dead family, a saturated ceiling, NLL worse than uniform -- is not a
+        # budget or volume problem and no rung of this ladder addresses it.
+        unanswerable = failed - {MIXTURE_CHECK, MEMORIZATION_CHECK}
+        if unanswerable:
+            return None, (
+                f"failed checks with no registered response: {sorted(unanswerable)}. "
+                f"The ladder only answers a truncated transition or an epoch-driven "
+                f"memorization gap. REJECT the regime family and revisit the band"
+            )
+
+        regime = report.get("regime", {})
+        candidate, reason = respond(
+            int(regime.get("train_examples", BASE_EXAMPLES)),
+            int(regime.get("steps", BASE_STEPS)),
+            mixture=MIXTURE_CHECK in failed,
+            memorization=MEMORIZATION_CHECK in failed,
         )
+        if candidate is None:
+            blocked.append(reason)
+        elif (candidate.train_examples, candidate.steps) in attempted:
+            blocked.append(
+                f"the registered response to {sorted(failed)} at "
+                f"{regime.get('train_examples')} x {regime.get('steps')} is "
+                f"{candidate.train_examples} examples x {candidate.steps} updates, "
+                f"which has already been measured"
+            )
+        else:
+            proposals.append((candidate, candidate.rationale, tuple(sorted(failed))))
 
-    mixture = MIXTURE_CHECK in latest
-    memorization = MEMORIZATION_CHECK in latest
-    if not (mixture or memorization):
-        return None, "NO_GO with no failed checks recorded; the report is malformed"
+    if not proposals:
+        if blocked:
+            return None, (
+                "every registered response is exhausted. "
+                + "; ".join(blocked)
+                + ". Each rung may be taken at most once. REJECT the regime family "
+                  "and revisit the band under a new preregistration"
+            )
+        return None, "no NO_GO report carries a failed check; the reports are malformed"
 
-    failed_regime = reports[-1].get("regime", {})
-    candidate, reason = respond(
-        int(failed_regime.get("train_examples", BASE_EXAMPLES)),
-        int(failed_regime.get("steps", BASE_STEPS)),
-        mixture=mixture, memorization=memorization,
-    )
-    if candidate is None:
-        return None, reason
-
-    if (candidate.train_examples, candidate.steps) in attempted:
-        return None, (
-            f"the registered response to {sorted(latest)} is "
-            f"{candidate.train_examples} examples x {candidate.steps} updates, "
-            f"which has already been measured. Each rung may be taken at most "
-            f"once. REJECT the regime family and revisit the band"
-        )
-    return candidate, candidate.rationale
+    # Deterministic, outcome-independent tiebreak: the smallest permitted regime.
+    # It must not depend on which report scored better, or the ladder would be
+    # selecting on outcomes.
+    proposals.sort(key=lambda entry: (entry[0].train_examples, entry[0].steps))
+    candidate, rationale, failed = proposals[0]
+    note = ""
+    if len(proposals) > 1:
+        others = ", ".join(f"{c.train_examples}x{c.steps}" for c, _, _ in proposals[1:])
+        note = f" (also permitted, deferred as larger: {others})"
+    return candidate, f"{rationale}; answering {sorted(failed)}{note}"
 
 
 def main() -> int:
