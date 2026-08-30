@@ -71,6 +71,7 @@ def _competence(tmp_path: Path, *, verdict_arms=None, train_examples: int = 300)
         "batch_size": 64, "learning_rate": 1e-3,
         "development_seeds": [1, 2, 3], "train_split_seed": 1_234_567,
         "holdout_split_seed": 987_654_321, "holdout_examples": 300,
+        "split_generation_order": ["holdout", "train"],
     }
     path = tmp_path / "competence.json"
     path.write_text(json.dumps(report), encoding="utf-8")
@@ -253,3 +254,31 @@ def test_the_evaluation_splits_are_generated_first(tmp_path: Path) -> None:
 
     config = _build(tmp_path)
     assert config["dataset"]["split_generation_order"] == ["test", "dev", "train"]
+
+
+def test_a_report_from_the_defective_harness_cannot_build_a_config(tmp_path: Path) -> None:
+    """A holdout drawn from what training left over is not the study's distribution.
+
+    Such a report is conservative -- its holdout is harder -- so it is valid
+    evidence that a regime FAILS. It is not a certificate to dispatch on.
+    """
+
+    competence = _competence(tmp_path)
+    payload = json.loads(competence.read_text(encoding="utf-8"))
+    payload["regime"]["split_generation_order"] = ["train", "holdout"]
+    competence.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="split_generation_order"):
+        build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
+              test_per_family=40, dev_per_family=20, length_margin=4)
+
+
+def test_a_report_with_no_recorded_order_cannot_build_a_config(tmp_path: Path) -> None:
+    """Silence is not a certificate. Older reports predate the field entirely."""
+
+    competence = _competence(tmp_path)
+    payload = json.loads(competence.read_text(encoding="utf-8"))
+    payload["regime"].pop("split_generation_order")
+    competence.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="split_generation_order"):
+        build(competence, _power(tmp_path), V3_CONFIG, study_id="x", dataset_seed=1,
+              test_per_family=40, dev_per_family=20, length_margin=4)

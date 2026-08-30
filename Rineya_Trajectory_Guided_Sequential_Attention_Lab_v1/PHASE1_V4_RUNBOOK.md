@@ -47,11 +47,19 @@ Two consequences:
   that looked like a GPU problem and was not. The audit is cheap (under an hour)
   and can wait for a free slot.
 
-`OBSERVED` **The test suite is one of those processes.** Run in full while two
-200k jobs held the GPU, `tests/test_phase1_evidence_chain.py` produced 13 errors
-that vanish when the file is run on its own. Those tests train real models. A
-suite failure during a matrix run is a resource symptom until proven otherwise —
-re-run the failing file alone before believing it.
+> **Do not run the full test suite while GPU work is in flight.** Parts of it
+> train real models on the GPU. Run in full alongside two 200k jobs it produced
+> 13 errors in `tests/test_phase1_evidence_chain.py` that vanish when the file
+> runs alone — and, an hour later, it killed one of the production runs outright
+> with `CUDA error: CUBLAS_STATUS_EXECUTION_FAILED` in `loss.backward()`, three
+> of nine cells in, discarding roughly ninety minutes of GPU time.
+>
+> The 13 errors were the warning. Reading them as "the suite is a victim of
+> contention" and moving on missed that the suite was also a *cause*.
+>
+> Run individual test files if you must check something mid-flight. A suite
+> failure during a matrix run is a resource symptom until proven otherwise —
+> re-run the failing file alone before believing it.
 
 Check free RAM before adding any process:
 

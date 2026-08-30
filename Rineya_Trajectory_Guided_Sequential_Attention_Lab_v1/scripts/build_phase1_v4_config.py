@@ -79,6 +79,24 @@ def build(competence_path: Path, power_path: Path, v3_config_path: Path,
     v3 = json.loads(v3_config_path.read_text(encoding="utf-8"))
 
     regime = competence["regime"]
+
+    # The gate artifact must certify the distribution the study will actually
+    # evaluate on. Competence runs that generated their TRAINING split first drew
+    # their holdout from what was left, which on this band means the holdout is
+    # missing an entire difficulty stratum. Such a report is conservative -- its
+    # holdout is harder -- so it is fine as evidence that a regime FAILS, but it
+    # must not be the certificate a confirmatory matrix is dispatched on.
+    if regime.get("split_generation_order") != ["holdout", "train"]:
+        raise ValueError(
+            f"competence report was produced with split_generation_order="
+            f"{regime.get('split_generation_order')!r}; a confirmatory config "
+            f"requires ['holdout', 'train'] so the certified distribution matches "
+            f"the one the study evaluates on. Re-measure this regime with the "
+            f"corrected harness -- per the registered ladder, re-measuring the "
+            f"same regime after a documented harness fix is a correction and does "
+            f"not consume a rung"
+        )
+
     seed_count = power.get("recommended_seed_count")
     if not seed_count:
         raise ValueError(
