@@ -88,6 +88,25 @@ Exit code 0 means `GO`, 1 means `NO_GO`. The report records per-seed held-out
 accuracy, per-family accuracy, distinct prediction counts, and the loss curve of
 every run — all of which the gate consumes and none of which the pilot recorded.
 
+**It resumes.** Each (arm, seed) cell is written to `--cell-dir` (default
+`<output>.cells`) the moment it finishes, so an interrupted run restarts from
+where it stopped. Re-issue the *same* command; finished cells print `[resumed]`.
+
+`OBSERVED` This exists because a nine-cell run at this scale is four hours and
+was lost whole twice in one morning — once to GPU contention from a concurrent
+test suite, once to a machine reboot — with nothing written either time, because
+results lived only in memory until the final report.
+
+Reuse is fail-closed. Each cell carries a SHA-256 fingerprint of the regime that
+produced it: band, data volume, update budget, model shape, optimizer settings,
+split seeds, and split generation order. Change any of them and the cell is
+**refused**, not silently skipped — a report assembled from cells measured under
+two regimes certifies neither, and nothing downstream would notice because the
+gate reads the report, not the cells. Seeds are deliberately excluded from the
+fingerprint so adding a fourth seed does not discard the first three.
+
+Pass `--no-resume` to recompute everything, or point `--cell-dir` somewhere fresh.
+
 If the gate itself has changed since a report was written, `require_go` rejects
 it on schema version rather than honouring a stale rule. Recompute the verdict
 from the stored raw runs instead of re-measuring:

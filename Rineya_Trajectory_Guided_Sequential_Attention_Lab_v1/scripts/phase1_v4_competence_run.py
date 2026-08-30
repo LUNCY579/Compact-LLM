@@ -7,13 +7,30 @@ GO / NO_GO that the confirmatory runner consumes.
 
 Development-only. The regime was selected arm-blind, on the minimum held-out
 accuracy across all three arms, before this ran.
+
+## Resume
+
+A nine-cell run at this scale is four hours, and it has twice been lost whole --
+once to GPU contention, once to a machine reboot -- because results existed only
+in memory until the final write. Each (arm, seed) cell is therefore written to
+its own file the moment it finishes, and a restart skips the cells it already
+has.
+
+Reuse is fail-closed. Every cell records a fingerprint of the regime that
+produced it: band, data volume, update budget, model shape, optimizer settings,
+split seeds, and split generation order. A cell whose fingerprint does not match
+the current invocation is REFUSED rather than skipped or silently mixed in,
+because a competence report assembled from cells measured under two different
+regimes would certify neither of them.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
+import os
 import pathlib
 import statistics
 import sys
@@ -58,6 +75,86 @@ BANDS = {
     "state_update": {"min_steps": 3, "max_steps": 4, "reject_trivial": True},
   },
 }
+
+
+CELL_SCHEMA_VERSION = "tgsa.phase1-competence-cell.v1"
+
+
+def regime_fingerprint(args, train_seed: int) -> str:
+    """Everything that changes what a cell measures.
+
+    A cell may only be reused by an invocation that would have produced it.
+    Seeds are deliberately EXCLUDED: adding seed 4 later must not invalidate the
+    cells for 1, 2 and 3, and each cell already records which seed it is. Every
+    other knob is included, because changing any of them changes the measurement.
+    """
+
+    payload = {
+        "band": args.band,
+        "band_spec": BANDS[args.band],
+        "train_examples": args.train_examples,
+        "holdout": args.holdout,
+        "steps": args.steps,
+        "embed_dim": args.embed_dim,
+        "num_layers": args.layers,
+        "num_heads": args.heads,
+        "batch_size": args.batch_size,
+        "learning_rate": args.lr,
+        "train_split_seed": train_seed,
+        "holdout_split_seed": args.holdout_split_seed,
+        "split_generation_order": ["holdout", "train"],
+        "vocabulary": VOCAB.to_dict(),
+        "schema": CELL_SCHEMA_VERSION,
+    }
+    blob = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(blob).hexdigest()
+
+
+def write_cell_atomically(path: pathlib.Path, payload: dict) -> None:
+    """A half-written cell is worse than a missing one, because it gets reused."""
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + ".partial")
+    temporary.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n",
+                         encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def load_cell(path: pathlib.Path, fingerprint: str, arm: str, seed: int):
+    """Return a reusable cell, or None if absent. Refuse anything ambiguous."""
+
+    if not path.is_file():
+        return None
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        raise ValueError(
+            "{0} is not valid JSON ({1}); delete it and re-measure rather than "
+            "guessing what it contained".format(path.name, error)
+        ) from error
+    if payload.get("schema_version") != CELL_SCHEMA_VERSION:
+        raise ValueError(
+            "{0} has schema {1!r}, expected {2!r}; delete the cell directory and "
+            "re-measure".format(path.name, payload.get("schema_version"),
+                                CELL_SCHEMA_VERSION)
+        )
+    if payload.get("regime_fingerprint") != fingerprint:
+        raise ValueError(
+            "{0} was measured under a different regime ({1} != {2}). A competence "
+            "report assembled from cells measured under two regimes certifies "
+            "neither. Use a fresh --cell-dir, or delete this one".format(
+                path.name, str(payload.get("regime_fingerprint"))[:12], fingerprint[:12])
+        )
+    cell = payload.get("run")
+    if not isinstance(cell, dict):
+        raise ValueError("{0} has no run payload".format(path.name))
+    if cell.get("arm") != arm or cell.get("seed") != seed:
+        raise ValueError(
+            "{0} holds {1!r}/{2!r} but is named for {3!r}/{4!r}; the cell "
+            "directory is inconsistent".format(
+                path.name, cell.get("arm"), cell.get("seed"), arm, seed)
+        )
+    return cell
 
 
 def make_split(band: str, count: int, seed: int, forbidden=None):
@@ -153,6 +250,10 @@ def main() -> int:
     parser.add_argument("--train-split-seed", type=int, default=1_000_000)
     parser.add_argument("--holdout-split-seed", type=int, default=987_654_321)
     parser.add_argument("--band", default="easy_nontrivial")
+    parser.add_argument("--cell-dir", type=pathlib.Path, default=None,
+                        help="per-cell results for resume; defaults to <output>.cells")
+    parser.add_argument("--no-resume", action="store_true",
+                        help="recompute every cell even if one is already on disk")
     args = parser.parse_args()
     seeds = [int(v) for v in args.seeds.split(",")]
 
@@ -183,12 +284,32 @@ def main() -> int:
     print(f"device={DEVICE}  train={len(train)}  holdout={len(holdout)}  max_len={max_len}", flush=True)
     print(f"trivial baselines: {trivial}", flush=True)
 
+    cell_dir = args.cell_dir or args.output.with_name(args.output.stem + ".cells")
+    fingerprint = regime_fingerprint(args, train_seed)
+    print(f"cells: {cell_dir}  fingerprint={fingerprint[:12]}", flush=True)
+
     runs = []
+    resumed: list[str] = []
     for arm in ARMS:
         for seed in seeds:
+            cell_path = cell_dir / f"{arm}__seed{seed}.json"
+            cached = None if args.no_resume else load_cell(cell_path, fingerprint, arm, seed)
+            if cached is not None:
+                runs.append(cached)
+                resumed.append(f"{arm}:{seed}")
+                print(f"  {arm:16s} seed={seed} "
+                      f"holdout={cached['holdout']['accuracy']:.4f} "
+                      f"seen={cached['seen']['accuracy']:.4f} "
+                      f"nll={cached['holdout']['answer_nll']:.3f}  [resumed]", flush=True)
+                continue
             result = train_one(arm, train, holdout, seed, max_len, args.steps,
                                args.embed_dim, args.layers, args.heads,
                                args.batch_size, args.lr)
+            write_cell_atomically(cell_path, {
+                "schema_version": CELL_SCHEMA_VERSION,
+                "regime_fingerprint": fingerprint,
+                "run": result,
+            })
             runs.append(result)
             print(f"  {arm:16s} seed={seed} holdout={result['holdout']['accuracy']:.4f} "
                   f"seen={result['seen']['accuracy']:.4f} nll={result['holdout']['answer_nll']:.3f}",
@@ -235,8 +356,17 @@ def main() -> int:
         "holdout_split_seed": args.holdout_split_seed,
         "holdout_examples": len(holdout),
         "split_generation_order": ["holdout", "train"],
+        "regime_fingerprint": fingerprint,
     }
     report["runs"] = runs
+    report["provenance"] = {
+        "cell_dir": str(cell_dir),
+        "resumed_cells": sorted(resumed),
+        "computed_cells": sorted(
+            key for key in (f"{r['arm']}:{r['seed']}" for r in runs)
+            if key not in set(resumed)
+        ),
+    }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
