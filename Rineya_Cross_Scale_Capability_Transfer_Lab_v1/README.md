@@ -17,6 +17,9 @@ hashes, metrics, failure records, and reports are versioned.
 - Protocol state: frozen before architecture inspection or model evaluation
 - GPU policy: an unrelated GPU job was active at protocol freeze; do not
   interrupt it. Merges and 0.6B evaluation are CPU-first.
+- Outcome: no confirmatory GO. A spectral-consensus candidate improved
+  MERGEDEV by one case but tied Supa on DEV-FULL; sealed evaluation was not run.
+- Final report: `cross_scale_evidence/11_report/final_report.md`
 
 ## Evidence layout
 
