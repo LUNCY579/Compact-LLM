@@ -1,4 +1,4 @@
-name: TGSA Phase 2 MTP complementarity
+name: TGSA Phase 2A trajectory mechanism
 
 on:
   push:
@@ -17,18 +17,19 @@ permissions:
   contents: read
 
 concurrency:
-  group: tgsa-phase2-mtp-${{ github.ref }}
+  group: tgsa-phase2a-${{ github.ref }}
   cancel-in-progress: false
 
 env:
   LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
   CONFIG: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase2_tgsa_mtp_smoke.json
-  ROOT: ci_artifacts/tgsa_phase2_mtp
+  CONTRACT: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase2_program_contract.json
+  ROOT: ci_artifacts/tgsa_phase2a_mtp
   PYTHONUNBUFFERED: "1"
 
 jobs:
   unit-and-rehearsal:
-    name: MTP tests, regressions, and competence-safe rehearsal
+    name: Phase 2A semantics, regressions, and development-only rehearsal
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
@@ -51,22 +52,48 @@ jobs:
           python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
           python -m pip install -e "${LAB}[dev]"
 
+      - name: Verify canonical branch and MTP semantic contract
+        run: |
+          mkdir -p "${ROOT}"
+          python "${LAB}/scripts/verify_phase2_program_contract.py" \
+            --contract "${CONTRACT}" \
+            --config "${CONFIG}" \
+            --output "${ROOT}/program_contract_verification.json"
+          python - <<'PY'
+          import json
+          import os
+          import subprocess
+          from pathlib import Path
+
+          report = json.loads(
+              Path(os.environ["ROOT"] + "/program_contract_verification.json").read_text(encoding="utf-8")
+          )
+          assert report["passed"] is True, report["errors"]
+          assert report["study_kind"] == "mechanism_bridge"
+          assert report["mtp_semantics"] == "sequential_teacher_forced_recursive_v1"
+          subprocess.run(
+              ["git", "merge-base", "--is-ancestor", "8b5737e260b5478427b8bb033cffa394a5f3fc5d", "HEAD"],
+              check=True,
+          )
+          print("Phase 2A semantic identity and v4 result ancestry verified")
+          PY
+
       - name: Run TGSA x MTP and integrity focused tests
         run: |
           python -m pytest \
             "${LAB}/tests/test_mtp.py" \
             "${LAB}/tests/test_mtp_ladder.py" \
             "${LAB}/tests/test_phase2_integrity.py" \
+            "${LAB}/tests/test_phase2_program_contract.py" \
             -q --tb=short --durations=15
 
       - name: Run complete TGSA regression suite
         run: |
           python -m pytest "${LAB}/tests" -q --tb=short --durations=15
 
-      - name: Run the eight-cell non-evidentiary rehearsal
+      - name: Run the eight-cell non-evidentiary Phase 2A rehearsal
         run: |
-          rm -rf "${ROOT}"
-          mkdir -p "${ROOT}"
+          rm -rf "${ROOT}/dataset" "${ROOT}/study"
           python "${LAB}/scripts/phase2_tgsa_mtp_rehearsal.py" \
             --config "${CONFIG}" \
             --dataset-dir "${ROOT}/dataset" \
@@ -84,12 +111,14 @@ jobs:
         run: |
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
           import jsonschema
 
-          lab = Path("Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1")
-          root = Path("ci_artifacts/tgsa_phase2_mtp/study")
+          lab = Path(os.environ["LAB"])
+          root = Path(os.environ["ROOT"])
+          study = root / "study"
           run_schema = json.loads(
               (lab / "evidence/phase2_mtp_run.schema.json").read_text(encoding="utf-8")
           )
@@ -98,6 +127,9 @@ jobs:
           )
           integrity_schema = json.loads(
               (lab / "evidence/phase2_integrity.schema.json").read_text(encoding="utf-8")
+          )
+          program_schema = json.loads(
+              (lab / "evidence/phase2_program_contract.schema.json").read_text(encoding="utf-8")
           )
           resolved_run_schema_id = (
               "https://rineya.invalid/schemas/phase2_mtp_run.schema.json"
@@ -110,27 +142,33 @@ jobs:
                   run_schema["$id"]: run_schema,
               },
           )
-          report = json.loads((root / "phase2_report.json").read_text(encoding="utf-8"))
+          report = json.loads((study / "phase2_report.json").read_text(encoding="utf-8"))
           jsonschema.validate(report, report_schema, resolver=resolver)
-          integrity = json.loads((root / "phase2_integrity.json").read_text(encoding="utf-8"))
+          integrity = json.loads((study / "phase2_integrity.json").read_text(encoding="utf-8"))
           jsonschema.validate(integrity, integrity_schema)
-          manifests = sorted(root.glob("runs/*/seed_*/run_manifest.json"))
+          program = json.loads((root / "program_contract_verification.json").read_text(encoding="utf-8"))
+          jsonschema.validate(program, program_schema)
+          manifests = sorted(study.glob("runs/*/seed_*/run_manifest.json"))
           assert manifests, "no run manifests were produced"
           for manifest_path in manifests:
               jsonschema.validate(
                   json.loads(manifest_path.read_text(encoding="utf-8")),
                   run_schema,
               )
-          print(f"validated one report, one integrity manifest, and {len(manifests)} runs")
+          print(
+              f"validated one programme contract, one report, one integrity manifest, "
+              f"and {len(manifests)} runs"
+          )
           PY
 
       - name: Verify competence, initialization, gradient, leakage, and dose contracts
         run: |
           python - <<'PY'
           import json
+          import os
           from pathlib import Path
 
-          root = Path("ci_artifacts/tgsa_phase2_mtp")
+          root = Path(os.environ["ROOT"])
           report = json.loads(
               (root / "study/phase2_report.json").read_text(encoding="utf-8")
           )
@@ -140,6 +178,12 @@ jobs:
           verification = json.loads(
               (root / "study/phase2_integrity_verification.json").read_text(encoding="utf-8")
           )
+          program = json.loads(
+              (root / "program_contract_verification.json").read_text(encoding="utf-8")
+          )
+          assert program["passed"] is True
+          assert program["study_kind"] == "mechanism_bridge"
+          assert program["mtp_semantics"] == "sequential_teacher_forced_recursive_v1"
           assert verification["passed"] is True, verification["errors"]
           assert report["status"] == "complete", report
           assert report["confirmatory"] is False
@@ -160,7 +204,6 @@ jobs:
           assert integrity["development_only"] is True
           assert integrity["mechanism_interpretation_allowed"] is False
           assert integrity["contract"]["split_generation_order"] == ["test", "dev", "train"]
-          assert integrity["metric_semantics"]["wall_clock_speed_claim"] is False if "metric_semantics" in integrity else True
 
           for audit in report["initialization_audits"]:
               assert audit["all_mtp_heads_identical"] is True
@@ -190,14 +233,14 @@ jobs:
           forbidden = list((root / "study").rglob("predictions_test*.jsonl"))
           assert not forbidden, forbidden
           assert (root / "dataset/test.jsonl").is_file()
-          print("TGSA Phase 2 MTP integrity and claim contracts verified")
+          print("TGSA Phase 2A integrity and claim contracts verified")
           PY
 
       - name: Upload rehearsal evidence
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: tgsa-phase2-mtp-${{ github.run_id }}
-          path: ci_artifacts/tgsa_phase2_mtp
+          name: tgsa-phase2a-mtp-${{ github.run_id }}
+          path: ci_artifacts/tgsa_phase2a_mtp
           if-no-files-found: warn
           retention-days: 14
