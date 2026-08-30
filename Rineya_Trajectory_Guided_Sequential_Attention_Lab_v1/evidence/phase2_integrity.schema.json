@@ -1,0 +1,116 @@
+{
+  "$id": "https://rineya.invalid/schemas/tgsa.phase2-integrity.v1.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "config_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "confirmatory": {
+      "type": "boolean"
+    },
+    "dataset_manifest_sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "development_only": {
+      "type": "boolean"
+    },
+    "device_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "implementation": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "mechanism_interpretation_allowed": {
+      "type": "boolean"
+    },
+    "regime_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "run_manifest_hashes": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "minProperties": 1,
+      "type": "object"
+    },
+    "study_fingerprint": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "supporting_artifact_hashes": {
+      "additionalProperties": {
+        "pattern": "^[0-9a-f]{64}$",
+        "type": "string"
+      },
+      "type": "object"
+    },
+    "top_level_artifact": {
+      "enum": [
+        "phase2_report.json",
+        "matrix_manifest.json"
+      ]
+    },
+    "training_dose": {
+      "additionalProperties": true,
+      "properties": {
+        "effective_epochs": {
+          "exclusiveMinimum": 0,
+          "type": "number"
+        },
+        "microbatch_size": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "optimizer_steps": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "sample_presentations": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "unique_train_examples": {
+          "minimum": 1,
+          "type": "integer"
+        }
+      },
+      "required": [
+        "optimizer_steps",
+        "microbatch_size",
+        "unique_train_examples",
+        "sample_presentations",
+        "effective_epochs"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "implementation",
+    "contract",
+    "config_sha256",
+    "dataset_manifest_sha256",
+    "training_dose",
+    "device_identity",
+    "device_fingerprint",
+    "regime_payload",
+    "regime_fingerprint",
+    "study_payload",
+    "study_fingerprint",
+    "development_only",
+    "confirmatory",
+    "mechanism_interpretation_allowed",
+    "run_manifest_hashes",
+    "supporting_artifact_hashes",
+    "top_level_artifact"
+  ],
+  "title": "TGSA Phase-2 integrity manifest",
+  "type": "object"
+}
