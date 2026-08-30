@@ -3,22 +3,52 @@
   "study_id": "tgsa-phase2-mtp-complementarity-smoke",
   "confirmatory": false,
   "expected_base_branch": "research/tgsa-phase1-v4-competence-first",
-  "expected_base_commit": "9b5fe9e000994d7f84c9f42326aff3d5f4682aa1",
+  "expected_base_commit": "d9054b248cf65890d83a43959d34b1ab58c8f99a",
   "claim_scope": "Development/CI rehearsal only; never evidentiary.",
   "cells": [
-    {"tgsa_arm": "cascade", "mtp_mode": "dormant"},
-    {"tgsa_arm": "cascade", "mtp_mode": "backbone"},
-    {"tgsa_arm": "history_control", "mtp_mode": "dormant"},
-    {"tgsa_arm": "history_control", "mtp_mode": "backbone"},
-    {"tgsa_arm": "history_control", "mtp_mode": "trajectory"},
-    {"tgsa_arm": "learned_delta", "mtp_mode": "dormant"},
-    {"tgsa_arm": "learned_delta", "mtp_mode": "backbone"},
-    {"tgsa_arm": "learned_delta", "mtp_mode": "trajectory"}
+    {
+      "tgsa_arm": "cascade",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "cascade",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "history_control",
+      "mtp_mode": "trajectory"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "dormant"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "backbone"
+    },
+    {
+      "tgsa_arm": "learned_delta",
+      "mtp_mode": "trajectory"
+    }
   ],
-  "seeds": [7],
+  "seeds": [
+    7
+  ],
   "dataset": {
     "seed": 26083021,
-    "split_generation_order": ["test", "dev", "train"],
+    "split_generation_order": [
+      "test",
+      "dev",
+      "train"
+    ],
     "vocabulary": {
       "domain_size": 16,
       "max_hops": 4,
@@ -77,7 +107,10 @@
     "max_horizon": 3,
     "transition_rank": 8,
     "loss_weight": 0.2,
-    "horizon_weights": [1.0, 0.5],
+    "horizon_weights": [
+      1.0,
+      0.5
+    ],
     "control_block_index": -1,
     "pad_token_id": 0,
     "bias": false
@@ -88,7 +121,7 @@
     "learning_rate": 0.001,
     "beta1": 0.9,
     "beta2": 0.95,
-    "epsilon": 1e-8,
+    "epsilon": 1e-08,
     "weight_decay": 0.0,
     "gradient_clip_norm": 1.0,
     "fixed_final_checkpoint": true,
@@ -110,6 +143,8 @@
     "design": "PHASE2_TGSA_MTP_DESIGN.md",
     "runbook": "PHASE2_TGSA_MTP_RUNBOOK.md",
     "phase1_competence_report": null,
-    "confirmatory_thresholds_frozen": false
-  }
+    "confirmatory_thresholds_frozen": false,
+    "phase1_v4_hardening_commit": "d9054b248cf65890d83a43959d34b1ab58c8f99a"
+  },
+  "development_only": true
 }

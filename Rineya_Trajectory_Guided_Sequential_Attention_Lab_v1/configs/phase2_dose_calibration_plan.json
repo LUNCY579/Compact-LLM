@@ -1,0 +1,49 @@
+{
+  "claim_scope": "Outcome-blind planning metadata; not an executable study and not evidence.",
+  "development_only": true,
+  "mandatory_records": [
+    "split_generation_order",
+    "unbiased_split",
+    "unique_train_examples",
+    "sample_presentations",
+    "effective_epochs",
+    "device_fingerprint",
+    "regime_fingerprint",
+    "study_fingerprint",
+    "cell_fingerprint",
+    "external_phase1_competence_sha256"
+  ],
+  "promotion_gates": [
+    "external current-schema non-development Phase-1 competence GO",
+    "all required cells competent across seeds",
+    "generalization gap within the frozen bound",
+    "no dead or saturated primary family",
+    "realized variance supports the registered seed count",
+    "exact verified decoding",
+    "separate cache-aware wall-clock benchmark before any speed claim"
+  ],
+  "required_axes": {
+    "architecture": [
+      "TGSA arm",
+      "model depth only under a new preregistration"
+    ],
+    "data_diversity": "unique training examples",
+    "mtp": [
+      "max horizon or offset",
+      "auxiliary loss weight",
+      "transition rank"
+    ],
+    "training_exposure": "sample presentations and effective epochs"
+  },
+  "schema_version": "tgsa.phase2-dose-calibration-plan.v1",
+  "selection_rule": {
+    "arm_blind": true,
+    "prohibited": [
+      "selecting a regime because learned_delta has the largest development margin",
+      "treating an internally generated development GO as confirmatory",
+      "adding an unregistered escalation rung after seeing outcomes"
+    ],
+    "score": "minimum absolute held-out competence across every required factorial cell"
+  },
+  "status": "BLOCKED_PENDING_PHASE1_V4_COMPETENCE_AND_FINAL_REPORTS"
+}

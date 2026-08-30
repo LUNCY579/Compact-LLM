@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the competence-gated TGSA x MTP development workflow."""
+"""Run the hardened competence-gated TGSA x MTP development workflow."""
 
 from __future__ import annotations
 
@@ -13,7 +13,7 @@ REPO_ROOT = LAB_ROOT.parent
 if str(LAB_ROOT) not in sys.path:
     sys.path.insert(0, str(LAB_ROOT))
 
-from tgsa.phase2_mtp import run_phase2_study
+from tgsa.phase2_hardened import run_phase2_study
 
 
 def main() -> int:
