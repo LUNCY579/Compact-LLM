@@ -20,6 +20,8 @@ hashes, metrics, failure records, and reports are versioned.
 - Outcome: no confirmatory GO. A spectral-consensus candidate improved
   MERGEDEV by one case but tied Supa on DEV-FULL; sealed evaluation was not run.
 - Final report: `cross_scale_evidence/11_report/final_report.md`
+- v2 exploratory follow-up: `cross_scale_evidence/00_protocol/amendment_v2_exploratory.md`
+  and `cross_scale_evidence/12_v2_followup/`. v1 protocol and report are unchanged.
 
 ## Evidence layout
 

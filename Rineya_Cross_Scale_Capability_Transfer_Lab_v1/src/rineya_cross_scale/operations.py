@@ -296,6 +296,35 @@ def math_is_finite_norm(values: Any) -> float:
     return math.sqrt(total)
 
 
+def average_checkpoints(
+    *,
+    source_paths: list[Path],
+    destination: Path,
+    max_shard_bytes: int = 1536 * 1024 * 1024,
+    overwrite: bool = False,
+    source_fingerprints: dict[str, Any] | None = None,
+) -> dict[str, Any]:
+    if len(source_paths) < 2:
+        raise CheckpointError("averaging requires at least two checkpoints")
+
+    def operation(key: str, base: torch.Tensor, values: list[torch.Tensor]) -> torch.Tensor:
+        stacked = torch.stack([base] + [value.float() for value in values])
+        return stacked.mean(dim=0)
+
+    return _build_candidate(
+        base_path=source_paths[0],
+        source_paths=source_paths[1:],
+        destination=destination,
+        operation="checkpoint_mean",
+        coefficient=1.0 / len(source_paths),
+        tensor_operation=operation,
+        output_dtype="float32",
+        max_shard_bytes=max_shard_bytes,
+        overwrite=overwrite,
+        source_fingerprints=source_fingerprints,
+    )
+
+
 def merge_absolute(
     *, base_path: Path, projected_path: Path, destination: Path, alpha: float, **kwargs: Any
 ) -> dict[str, Any]:

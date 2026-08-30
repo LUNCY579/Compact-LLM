@@ -7,6 +7,7 @@ from safetensors import safe_open
 
 from helpers import tiny_config, tiny_tensors, write_checkpoint
 from rineya_cross_scale.operations import (
+    average_checkpoints,
     build_delta,
     merge_absolute,
     merge_task_vector,
@@ -73,3 +74,21 @@ def test_absolute_interpolation(tmp_path) -> None:
     )
     key = "model.layers.0.mlp.down_proj.weight"
     assert torch.equal(tensor(candidate, key), base_values[key] + 0.5)
+
+
+def test_average_checkpoints(tmp_path) -> None:
+    config = tiny_config(hidden=4, mlp=6, q_heads=2, kv_heads=1, layers=2)
+    first_values = tiny_tensors(config, offset=0.0)
+    second_values = tiny_tensors(config, offset=4.0)
+    first = write_checkpoint(tmp_path / "first", config, first_values)
+    second = write_checkpoint(tmp_path / "second", config, second_values)
+    averaged = tmp_path / "averaged"
+    average_checkpoints(
+        source_paths=[first, second],
+        destination=averaged,
+        max_shard_bytes=1024 * 1024,
+    )
+    key = "model.layers.0.self_attn.q_proj.weight"
+    assert torch.allclose(
+        tensor(averaged, key), (first_values[key] + second_values[key]) / 2
+    )

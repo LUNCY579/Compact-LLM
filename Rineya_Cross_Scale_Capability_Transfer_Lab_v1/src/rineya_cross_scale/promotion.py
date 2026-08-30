@@ -75,6 +75,32 @@ def evaluate_candidate(
     }
 
 
+def evaluate_two_control(
+    supa: dict[str, Any],
+    consensus: dict[str, Any],
+    candidate: dict[str, Any],
+) -> dict[str, Any]:
+    """v2 rule: preserve vs Supa and strictly beat both Supa and v1 consensus."""
+    versus_supa = evaluate_candidate(supa, candidate)
+    versus_consensus = evaluate_candidate(
+        consensus, candidate, require_overall_improvement=True
+    )
+    reasons = [f"supa:{reason}" for reason in versus_supa["rejection_reasons"]]
+    reasons.extend(
+        f"consensus:{reason}" for reason in versus_consensus["rejection_reasons"]
+    )
+    return {
+        "eligible": versus_supa["eligible"] and versus_consensus["eligible"],
+        "rejection_reasons": reasons,
+        "versus_supa": versus_supa,
+        "versus_consensus": versus_consensus,
+        "overall_delta_vs_supa": versus_supa["overall_delta"],
+        "overall_delta_vs_consensus": versus_consensus["overall_delta"],
+        "worst_family_score": versus_supa["worst_family_score"],
+        "scenario_macro_delta_vs_supa": versus_supa["scenario_macro_delta"],
+    }
+
+
 def promote(
     *,
     baseline_path: Path,

@@ -6,7 +6,7 @@ from rineya_cross_scale.evidence import (
     build_evidence_manifest,
     verify_evidence_manifest,
 )
-from rineya_cross_scale.promotion import evaluate_candidate
+from rineya_cross_scale.promotion import evaluate_candidate, evaluate_two_control
 
 
 def summary(overall: float, family: float, *, dataset: str = "x"):
@@ -30,6 +30,13 @@ def test_promotion_requires_gain_and_preservation() -> None:
     assert not tied["eligible"]
     regressed = evaluate_candidate(baseline, summary(0.7, 0.3))
     assert not regressed["eligible"]
+
+
+def test_two_control_promotion_beats_both_parents() -> None:
+    supa = summary(0.6, 0.6)
+    consensus = summary(0.65, 0.6)
+    assert not evaluate_two_control(supa, consensus, summary(0.62, 0.62))["eligible"]
+    assert evaluate_two_control(supa, consensus, summary(0.7, 0.7))["eligible"]
 
 
 def test_evidence_manifest_excludes_private_and_verifies(tmp_path) -> None:
