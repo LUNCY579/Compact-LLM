@@ -33,11 +33,25 @@ Two concurrent runner processes fit in 8 GB (each holds ~1.2 GB) and push the
 GPU from ~40% to ~85%, so the wall clock is roughly 60% of the table. Do not run
 more than two: the third contends without adding throughput.
 
-`OBSERVED` Host RAM, not GPU memory, is the binding constraint when anything
-else is running. A CPU power audit at 22 workers exhausted system RAM and killed
-a GPU training process with a CUDA OOM that looked like a GPU problem and was
-not. Keep ≥4 GB host RAM free, and do not run the power audit and the matrix at
-the same time on this machine.
+`OBSERVED` **Host RAM, not GPU memory, is the binding constraint.** Measured on
+this 16 GB machine with two concurrent 200,000-example runs: GPU memory sits at
+1.9 GB of 8 GB while host RAM drops to **1.6 GB free of 15.6 GB**. The dataset,
+held as Python objects, is what costs — not the 255k-parameter model.
+
+Two consequences:
+
+* At 200,000 examples, **two concurrent processes is the ceiling**, and it is a
+  memory ceiling rather than a throughput one. At 50,000 there is more room.
+* **Do not run the power audit while the matrix is running.** A CPU audit at 22
+  workers exhausted system RAM and killed a GPU training process with a CUDA OOM
+  that looked like a GPU problem and was not. The audit is cheap (under an hour)
+  and can wait for a free slot.
+
+Check free RAM before adding any process:
+
+```bash
+powershell -NoProfile -Command "[math]::Round((Get-CimInstance Win32_OperatingSystem).FreePhysicalMemory/1KB,0)"
+```
 
 ---
 
