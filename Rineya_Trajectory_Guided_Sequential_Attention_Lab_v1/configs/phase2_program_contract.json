@@ -1,0 +1,45 @@
+{
+  "schema_version": "tgsa.mtp-program-contract.v1",
+  "required_phase1_branch": "research/tgsa-phase1-v4-competence-first",
+  "required_phase1_commit": "8b5737e260b5478427b8bb033cffa394a5f3fc5d",
+  "phase1_regime_status": "rejected",
+  "old_regime_permitted_uses": [
+    "unit_test",
+    "mechanical_smoke",
+    "gradient_audit",
+    "initialization_audit",
+    "integrity_rehearsal",
+    "resume_rehearsal"
+  ],
+  "old_regime_forbidden_claims": [
+    "tgsa_mechanism",
+    "mtp_quality",
+    "tgsa_mtp_complementarity",
+    "broad_capability",
+    "wall_clock_speed"
+  ],
+  "stages": {
+    "phase2a": {
+      "branch": "research/tgsa-phase2-mtp-complementarity",
+      "study_kind": "mechanism_bridge",
+      "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+      "priority": 1,
+      "claim_scope": "incremental future-token information in the registered TGSA trajectory coordinate"
+    },
+    "phase2b": {
+      "branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "study_kind": "system_factorial",
+      "mtp_semantics": "parallel_independent_offsets_v1",
+      "priority": 2,
+      "claim_scope": "quality-preserving verified serial target-round complementarity at system level"
+    }
+  },
+  "evidence_may_be_pooled_across_stages": false,
+  "confirmatory_requirements": {
+    "new_competence_preregistration": true,
+    "external_program_prerequisite": true,
+    "within_study_qualification": true,
+    "scope_hash_match": true,
+    "environment_lock": true
+  }
+}
