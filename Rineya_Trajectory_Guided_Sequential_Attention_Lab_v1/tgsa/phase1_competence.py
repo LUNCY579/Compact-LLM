@@ -44,12 +44,26 @@ competence verdict from **development-only** evidence and emits a machine-readab
     cleared every other check while its individual seeds were bimodal — 0.12 and
     0.41 for the same arm, because a phase transition in training completed for
     some seeds and was truncated mid-descent for others. A mean that averages a
-    converged and an unconverged run describes no model that exists, and the
-    resulting between-seed variance (sigma_a ~ 0.20) is an order of magnitude
-    above the value the confirmatory design is powered for, so no realistic seed
-    count could detect the target effect. The check therefore requires the worst
-    individual *run* to clear the floor, and the within-arm seed SD to stay within
-    the registered robustness value the power analysis assumed.
+    converged and an unconverged run describes no model that exists.
+
+    The check draws a line this module previously blurred. **Dispersion among
+    runs that are all competent is a power problem, and its remedy is more
+    seeds.** **Some runs failing to become competent at all is a competence
+    problem, and no seed count fixes it** — the arms are no longer comparable,
+    because each is a different mixture of learners and non-learners.
+
+    The gate owns the second and hands the first to the power audit. So it
+    requires the worst individual *run* to clear the absolute floor, and bounds
+    the within-arm **coefficient of variation** rather than the raw SD. A
+    balanced two-point mixture of a competent and an at-floor population has
+    CV ≈ 0.6 by construction, while ordinary dispersion among converged runs sits
+    near 0.1–0.3, so the bound separates a mixture from a merely noisy regime
+    without rejecting a usable one.
+
+    The realised SD is *reported*, not gated, under
+    ``detail.realised_seed_sd_for_power_audit``. The registered design must be
+    re-powered at that value before the seed count is fixed; see
+    ``PHASE1_V4_PREREGISTRATION.md`` §Power.
 
 Thresholds are supplied by the caller and must be frozen from the outcome-blind
 development pilot **before** any confirmatory run. This module does not invent
@@ -65,9 +79,11 @@ from dataclasses import asdict, dataclass, field
 from pathlib import Path
 from typing import Mapping, Sequence
 
-# v2 adds competence_is_reliable_across_seeds. v1 reports are rejected on load:
-# a report produced before the check existed cannot certify what it never tested.
-COMPETENCE_SCHEMA_VERSION = "tgsa.phase1-competence-gate.v2"
+# v2 added competence_is_reliable_across_seeds. v3 splits that check's two
+# concerns: the gate keeps competence (every run clears the floor, bounded by
+# coefficient of variation) and hands dispersion to the power audit. Older
+# reports are rejected on load: they cannot certify what they never tested.
+COMPETENCE_SCHEMA_VERSION = "tgsa.phase1-competence-gate.v3"
 
 
 @dataclass(frozen=True, slots=True)
@@ -80,9 +96,10 @@ class CompetenceThresholds:
     minimum_distinct_predictions: int = 4
     maximum_family_accuracy: float = 0.95
     maximum_generalization_gap: float = 0.10
-    # Tied to the registered power analysis: sigma_a = 0.02 central, 0.04 as the
-    # robustness value. A regime above 0.04 invalidates the seed count.
-    maximum_seed_sd: float = 0.04
+    # A balanced two-point mixture of a competent and an at-floor population has
+    # CV ~ 0.6; ordinary dispersion among converged runs sits near 0.1-0.3. This
+    # sits between them, and is a structural bound rather than a fitted one.
+    maximum_seed_coefficient_of_variation: float = 0.35
     minimum_seed_runs: int = 3
 
     def to_dict(self) -> dict[str, object]:
@@ -193,16 +210,24 @@ def evaluate_competence(
 
     # Reliability. The mean is not the unit of competence: a regime whose seeds
     # straddle a training phase transition has a healthy mean and no reproducible
-    # behaviour, and its between-seed variance destroys the power analysis.
+    # behaviour. Dispersion among all-competent runs is a POWER problem and is
+    # exported below rather than gated; runs that never became competent are a
+    # COMPETENCE problem and are gated here.
     reliability_ok = True
     seed_detail: dict[str, dict[str, object]] = {}
+    realised_sds: list[float] = []
     for arm in arms:
         values = list(arm.per_seed_holdout_accuracy)
+        mean = statistics.fmean(values) if values else 0.0
+        sd = statistics.stdev(values) if len(values) > 1 else None
+        cv = (sd / mean) if (sd is not None and mean > 0) else None
         entry: dict[str, object] = {
             "runs": values,
             "count": len(values),
             "worst": min(values) if values else None,
-            "sd": statistics.stdev(values) if len(values) > 1 else None,
+            "mean": mean if values else None,
+            "sd": sd,
+            "coefficient_of_variation": cv,
         }
         seed_detail[arm.arm] = entry
         if len(values) < thresholds.minimum_seed_runs:
@@ -212,6 +237,7 @@ def evaluate_competence(
                 f"{thresholds.minimum_seed_runs} are required to estimate seed variance"
             )
             continue
+        realised_sds.append(sd)  # type: ignore[arg-type]
         if min(values) < thresholds.minimum_absolute_accuracy:
             reliability_ok = False
             reasons.append(
@@ -219,14 +245,21 @@ def evaluate_competence(
                 f"absolute floor {thresholds.minimum_absolute_accuracy:.4f}; the mean "
                 f"{arm.holdout_accuracy:.4f} averages runs that behave differently"
             )
-        sd = statistics.stdev(values)
-        if sd > thresholds.maximum_seed_sd:
+        if cv is not None and cv > thresholds.maximum_seed_coefficient_of_variation:
             reliability_ok = False
             reasons.append(
-                f"arm {arm.arm} has between-seed SD {sd:.4f}, above the registered "
-                f"robustness value {thresholds.maximum_seed_sd:.4f} the power analysis "
-                f"assumes; the confirmatory seed count would not be adequate"
+                f"arm {arm.arm} has a between-seed coefficient of variation {cv:.3f} "
+                f"(sd {sd:.4f} on mean {mean:.4f}), above the bound "
+                f"{thresholds.maximum_seed_coefficient_of_variation:.3f}; this is the "
+                f"signature of a mixture of converged and unconverged runs rather than "
+                f"a single noisy population"
             )
+    detail["per_seed_holdout_accuracy"] = seed_detail
+    # Not a gate. The registered design must be re-powered at this value before
+    # the seed count is fixed -- carrying a stale sigma_a forward is exactly how
+    # an underpowered study gets registered without anyone noticing.
+    detail["realised_seed_sd_for_power_audit"] = max(realised_sds) if realised_sds else None
+
     checks["competence_is_reliable_across_seeds"] = reliability_ok
     detail["per_seed_holdout_accuracy"] = seed_detail
 

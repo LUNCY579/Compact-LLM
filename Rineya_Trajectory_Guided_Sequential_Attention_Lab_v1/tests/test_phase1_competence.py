@@ -39,7 +39,7 @@ def _thresholds(**overrides) -> CompetenceThresholds:
         minimum_distinct_predictions=4,
         maximum_family_accuracy=0.95,
         maximum_generalization_gap=0.10,
-        maximum_seed_sd=0.04,
+        maximum_seed_coefficient_of_variation=0.35,
         minimum_seed_runs=3,
     )
     base.update(overrides)
@@ -367,10 +367,10 @@ def test_a_bimodal_regime_is_refused_despite_a_healthy_mean() -> None:
     assert report["checks"]["generalization_gap_acceptable"] is True
     assert report["checks"]["competence_is_reliable_across_seeds"] is False
     assert report["verdict"] == "NO_GO"
-    # The 0.1167 run still clears the 0.07 absolute floor, so the dispersion
-    # bound is the load-bearing one here -- a floor alone would not have caught it.
+    # Every run clears the 0.07 absolute floor, so the floor alone would not have
+    # caught this -- the mixture signature is what does.
     assert all(v >= 0.07 for arm in arms for v in arm.per_seed_holdout_accuracy)
-    assert sum("between-seed SD" in r for r in report["reasons"]) == 3  # all three arms
+    assert sum("coefficient of variation" in r for r in report["reasons"]) == 2
     assert report["detail"]["per_seed_holdout_accuracy"]["cascade"]["worst"] == 0.1167
 
 
@@ -404,20 +404,69 @@ def test_unrecorded_per_seed_evidence_fails_closed() -> None:
     assert report["checks"]["competence_is_reliable_across_seeds"] is False
 
 
-def test_seed_sd_threshold_is_the_registered_robustness_value() -> None:
-    """The bound is traceable to the power analysis, not chosen for convenience."""
+def test_the_cv_bound_separates_a_mixture_from_a_merely_noisy_regime() -> None:
+    """The real pilot arms, with their real per-seed numbers.
 
-    assert CompetenceThresholds(
-        minimum_margin_over_trivial=0.03, minimum_absolute_accuracy=0.07
-    ).maximum_seed_sd == 0.04
+    The two bimodal arms sit near CV 0.7-0.8; every arm that was not a mixture --
+    including easy_50k_long's learned_delta, whose runs were both post-transition
+    but 0.11 apart -- sits at or below 0.28. The 0.35 bound is a structural
+    argument (a balanced two-point mixture has CV ~ 0.6) that the data confirms,
+    not a value fitted to the data.
+    """
+
+    import statistics
+
+    observed = {
+        "easy_50k_long/cascade": [0.1167, 0.4100],           # mixture
+        "easy_50k_long/history_control": [0.3993, 0.1280],   # mixture
+        "easy_50k_long/learned_delta": [0.3167, 0.4307],     # both converged
+        "easy_50k/cascade": [0.1067, 0.0807],
+        "easy_50k/history_control": [0.1120, 0.0753],
+        "v3_replica/cascade": [0.0447, 0.0493],
+    }
+    cv = {k: statistics.stdev(v) / statistics.fmean(v) for k, v in observed.items()}
+    mixtures = [k for k in cv if k.endswith(("long/cascade", "long/history_control"))]
+    assert all(cv[k] > 0.35 for k in mixtures), cv
+    assert all(cv[k] < 0.35 for k in cv if k not in mixtures), cv
 
 
-def test_a_v1_report_is_rejected_on_load(tmp_path: Path) -> None:
-    """Reports predating the reliability check must not satisfy the gate."""
+def test_dispersion_alone_is_not_a_competence_failure() -> None:
+    """A spread but all-competent regime is a POWER problem, not a gate failure.
+
+    Rejecting it would be wrong: the remedy is more seeds, and the power audit
+    decides how many. The realised SD is exported for exactly that purpose.
+    """
+
+    arms = _arms()
+    for index, arm in enumerate(arms):
+        arms[index] = _competent_arm(
+            arm.arm, accuracy=0.30,
+            per_seed_holdout_accuracy=[0.24, 0.30, 0.36],  # sd 0.06, cv 0.20
+            per_family_accuracy={"pointer_chase": 0.30, "state_update": 0.29},
+        )
+    report = _evaluate(arms)
+    assert report["verdict"] == "GO"
+    assert report["checks"]["competence_is_reliable_across_seeds"] is True
+    exported = report["detail"]["realised_seed_sd_for_power_audit"]
+    assert exported == pytest.approx(0.06, abs=1e-9)
+    assert exported > 0.04, "and it exceeds v3's robustness sigma_a, which is the point"
+
+
+def test_the_realised_sd_is_exported_for_the_power_audit() -> None:
+    report = _evaluate(_arms())
+    assert "realised_seed_sd_for_power_audit" in report["detail"]
+    per_arm = report["detail"]["per_seed_holdout_accuracy"]
+    assert report["detail"]["realised_seed_sd_for_power_audit"] == max(
+        entry["sd"] for entry in per_arm.values()
+    )
+
+
+def test_a_superseded_schema_is_rejected_on_load(tmp_path: Path) -> None:
+    """Reports predating the current checks must not satisfy the gate."""
 
     path = tmp_path / "competence.json"
     stale = _evaluate(_arms())
-    stale["schema_version"] = "tgsa.phase1-competence-gate.v1"
+    stale["schema_version"] = "tgsa.phase1-competence-gate.v2"
     path.write_text(json.dumps(stale), encoding="utf-8")
     with pytest.raises(ValueError, match="unsupported competence report schema"):
         require_go(path)

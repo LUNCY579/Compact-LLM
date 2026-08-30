@@ -67,7 +67,7 @@ Eight checks, every threshold frozen from the outcome-blind pilot
 | `predictions_are_input_dependent` | rejects a constant predictor scoring at the majority baseline |
 | `no_primary_family_saturated` | a ceiling is as uninformative as a floor — no room for a decrement |
 | `generalization_gap_acceptable` | seen − holdout ≤ 0.10; memorization must never substitute for competence |
-| `competence_is_reliable_across_seeds` | the worst individual **run** must clear the floor and per-arm between-seed SD must be ≤ 0.04 |
+| `competence_is_reliable_across_seeds` | the worst individual **run** must clear the floor, and per-arm coefficient of variation must be ≤ 0.35 — the signature of a mixture of converged and unconverged runs, as distinct from ordinary dispersion, which is a power problem and is handled below |
 
 The gate is **arm-blind**: every check is evaluated on the weakest arm or on all
 arms, never on a between-arm difference.

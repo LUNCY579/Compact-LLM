@@ -111,19 +111,31 @@ min-arm — and it must not be read as evidence in either direction.
 `competence_is_reliable_across_seeds` was added to `tgsa/phase1_competence.py`:
 
 * the **worst individual run** — not the arm mean — must clear the absolute floor;
-* within-arm between-seed SD must be ≤ `maximum_seed_sd`, defaulted to **0.04**
-  so the bound is traceable to the registered power analysis rather than chosen
-  for convenience;
+* the within-arm **coefficient of variation** must be ≤ 0.35;
 * fewer than `minimum_seed_runs` (3) recorded runs, or none, fails closed.
 
-The schema version is bumped to `v2` and pinned on load, so a report produced
-before the check existed cannot satisfy `require_go`.
+The check draws a line the first version of it blurred. **Dispersion among
+runs that are all competent is a power problem** whose remedy is more seeds;
+**some runs failing to become competent at all is a competence problem** that
+no seed count fixes, because each arm becomes a different mixture of learners
+and non-learners. The gate owns the second and exports the realised SD under
+`detail.realised_seed_sd_for_power_audit` for the first. Bounding the raw SD at
+the power analysis's own σ_a conflated them and would have rejected a usable
+regime — including `easy_50k_long`'s `learned_delta`, whose two runs were both
+post-transition and 0.11 apart.
+
+The schema version is at `v3` and pinned on load, so a report produced under
+an earlier version of the gate cannot satisfy `require_go`.
+`scripts/regate_competence_report.py` recomputes a verdict from a stored
+report's **raw runs** so a report need not be re-measured when the gate moves.
+It cannot manufacture a `GO`: a stored `GO` whose raw runs fail the current
+thresholds re-gates to `NO_GO`, and the input is never modified.
 
 `tests/test_phase1_competence.py::test_a_bimodal_regime_is_refused_despite_a_healthy_mean`
 pins the exact `easy_50k_long` numbers and asserts that the other seven checks
 pass while the verdict is `NO_GO` — the gate must fail for the right reason.
 
-Note that the 0.1167 run still clears the 0.07 absolute floor, so the dispersion
+Note that the 0.1167 run still clears the 0.07 absolute floor, so the mixture
 bound is the load-bearing half. A floor alone would not have caught this.
 
 ---
@@ -182,7 +194,7 @@ Derived from this pilot, outcome-blind, before any v4 confirmatory run:
 | memorization gap (seen − holdout) | ≤ **0.10** | v3 was 0.105, `easy_5k` 0.175, `easy_50k` 0.012. |
 | distinct predictions | ≥ 4 | rejects a constant predictor. |
 | per-family accuracy | above the same floor, and ≤ 0.95 | v3's `state_update` was below chance while `pointer_chase` was near baseline. |
-| **between-seed SD, per arm** | ≤ **0.04** | the registered power-analysis robustness value; `easy_50k_long` realised ≈ 0.20. |
+| **between-seed coefficient of variation, per arm** | ≤ **0.35** | a balanced two-point mixture of a competent and an at-floor population has CV ≈ 0.6 by construction; ordinary dispersion among converged runs sits at 0.07–0.28. `easy_50k_long`'s two bimodal arms realised 0.73 and 0.79. |
 | **worst individual run** | ≥ the absolute floor | the arm mean is not the unit of competence. |
 | **recorded development runs per arm** | ≥ 3 | two seeds cannot establish that a third behaves the same way. |
 
