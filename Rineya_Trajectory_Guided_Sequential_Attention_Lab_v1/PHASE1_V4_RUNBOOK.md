@@ -91,8 +91,12 @@ Read the realised per-arm between-seed SD out of the competence report
 python scripts/phase1_power_simulation.py --output power/v4_power.json --trials 10000 --seed-counts 10,15,20,25,30,40 --effects 0.000,0.010,0.015,0.020,0.030 --seed-sds <realised>,<2x realised> --central-seed-sd <realised> --elevated-seed-sd <2x realised> --stratum-count 3 --examples-per-stratum 1333 --workers 8
 ```
 
-Target the grid at the realised value. A full crossed sweep at v4's example
-counts and 50 seeds is ~10⁹ operations per condition and will not finish.
+`OBSERVED` The simulator is cheap at v4's structure — measured 1.2 ms/trial at
+10 seeds rising to 6.9 ms at 60, so a 10,000-trial condition costs 0.2–1.1 min
+and a 200-condition sweep finishes in well under an hour on 4 workers. An
+earlier revision of this runbook claimed a full sweep was ~10⁹ operations per
+condition and would not finish; that was wrong, and it was wrong because it was
+estimated rather than measured. Sweep the whole σ_a range.
 
 `OBSERVED` **`--stratum-count 3`, not v3's 17.** The certified band fixes pointer
 chains at 2 hops and every sequence is ≤ 32 tokens, so `context_bucket` is
