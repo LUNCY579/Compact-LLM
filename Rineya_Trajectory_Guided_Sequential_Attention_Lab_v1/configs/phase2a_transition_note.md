@@ -1,0 +1,1 @@
+Effective epochs must be recorded, but they are not assumed to transfer unchanged across architecture, task, or objective changes. Calibration varies data diversity and sample presentations separately.
