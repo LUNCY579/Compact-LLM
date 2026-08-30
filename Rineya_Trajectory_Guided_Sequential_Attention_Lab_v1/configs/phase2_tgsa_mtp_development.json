@@ -1,0 +1,77 @@
+{
+  "schema_version": "tgsa.mtp-factorial-study.v1",
+  "study_id": "tgsa-mtp-phase2-development-v1",
+  "confirmatory": false,
+  "expected_base_commit": "9b5fe9e000994d7f84c9f42326aff3d5f4682aa1",
+  "tgsa_arm": "full",
+  "include_auxiliary_controls": true,
+  "seeds": [101, 211, 307],
+  "dataset": {
+    "seed": 20260830,
+    "vocabulary": {"domain_size": 32},
+    "continuation_lengths": [8, 10, 12],
+    "split_generation_order": ["test", "dev", "train"],
+    "splits": {
+      "train": {"affine": 1000, "second_order": 1000, "switch": 1000},
+      "dev": {"affine": 160, "second_order": 160, "switch": 160},
+      "test": {"affine": 160, "second_order": 160, "switch": 160}
+    }
+  },
+  "model": {
+    "embed_dim": 96,
+    "num_heads": 6,
+    "num_layers": 2,
+    "ffn_multiplier": 4.0,
+    "dropout": 0.0,
+    "bias": false,
+    "trajectory_rank": 16,
+    "tie_embeddings": true
+  },
+  "mtp": {
+    "max_offset": 4,
+    "rank": 32,
+    "loss_weight": 0.3,
+    "offset_decay": 0.75,
+    "detach_backbone": false,
+    "normalize_hidden": true,
+    "tie_output_embeddings": true,
+    "min_proposal_confidence": 0.0,
+    "ignore_index": -100
+  },
+  "training": {
+    "steps": 2000,
+    "batch_size": 64,
+    "learning_rate": 0.001,
+    "warmup_steps": 100,
+    "weight_decay": 0.0,
+    "gradient_clip": 1.0,
+    "log_every": 100
+  },
+  "evaluation": {
+    "batch_size": 64,
+    "train_metric_examples": 1000,
+    "generation_examples": 64
+  },
+  "competence": {
+    "minimum_margin_over_trivial": 0.03,
+    "minimum_absolute_accuracy": 0.15,
+    "maximum_answer_nll_fraction_of_uniform": 0.97,
+    "minimum_distinct_predictions": 8,
+    "maximum_family_accuracy": 0.95,
+    "maximum_generalization_gap": 0.10,
+    "maximum_seed_coefficient_of_variation": 0.35,
+    "minimum_seed_runs": 3
+  },
+  "analysis": {
+    "confidence": 0.95,
+    "bootstrap_samples": 10000,
+    "quality_noninferiority_margin": 0.01,
+    "minimum_serial_round_gain": 0.10,
+    "require_positive_interaction": false
+  },
+  "runtime": {
+    "device": "auto",
+    "num_threads": 0,
+    "deterministic_algorithms": true
+  }
+}

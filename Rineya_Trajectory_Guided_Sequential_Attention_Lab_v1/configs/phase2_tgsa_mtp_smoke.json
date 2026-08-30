@@ -1,0 +1,77 @@
+{
+  "schema_version": "tgsa.mtp-factorial-study.v1",
+  "study_id": "tgsa-mtp-phase2-smoke-v1",
+  "confirmatory": false,
+  "expected_base_commit": "9b5fe9e000994d7f84c9f42326aff3d5f4682aa1",
+  "tgsa_arm": "full",
+  "include_auxiliary_controls": true,
+  "seeds": [7, 11],
+  "dataset": {
+    "seed": 20260830,
+    "vocabulary": {"domain_size": 16},
+    "continuation_lengths": [5, 6],
+    "split_generation_order": ["test", "dev", "train"],
+    "splits": {
+      "train": {"affine": 32, "second_order": 32, "switch": 32},
+      "dev": {"affine": 8, "second_order": 8, "switch": 8},
+      "test": {"affine": 8, "second_order": 8, "switch": 8}
+    }
+  },
+  "model": {
+    "embed_dim": 32,
+    "num_heads": 4,
+    "num_layers": 1,
+    "ffn_multiplier": 2.0,
+    "dropout": 0.0,
+    "bias": false,
+    "trajectory_rank": 8,
+    "tie_embeddings": true
+  },
+  "mtp": {
+    "max_offset": 4,
+    "rank": 8,
+    "loss_weight": 0.3,
+    "offset_decay": 0.75,
+    "detach_backbone": false,
+    "normalize_hidden": true,
+    "tie_output_embeddings": true,
+    "min_proposal_confidence": 0.0,
+    "ignore_index": -100
+  },
+  "training": {
+    "steps": 12,
+    "batch_size": 8,
+    "learning_rate": 0.001,
+    "warmup_steps": 2,
+    "weight_decay": 0.0,
+    "gradient_clip": 1.0,
+    "log_every": 4
+  },
+  "evaluation": {
+    "batch_size": 12,
+    "train_metric_examples": 48,
+    "generation_examples": 4
+  },
+  "competence": {
+    "minimum_margin_over_trivial": 0.02,
+    "minimum_absolute_accuracy": 0.12,
+    "maximum_answer_nll_fraction_of_uniform": 1.0,
+    "minimum_distinct_predictions": 4,
+    "maximum_family_accuracy": 0.98,
+    "maximum_generalization_gap": 0.20,
+    "maximum_seed_coefficient_of_variation": 0.75,
+    "minimum_seed_runs": 2
+  },
+  "analysis": {
+    "confidence": 0.95,
+    "bootstrap_samples": 1000,
+    "quality_noninferiority_margin": 0.02,
+    "minimum_serial_round_gain": 0.05,
+    "require_positive_interaction": false
+  },
+  "runtime": {
+    "device": "cpu",
+    "num_threads": 2,
+    "deterministic_algorithms": true
+  }
+}

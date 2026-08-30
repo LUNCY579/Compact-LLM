@@ -1,0 +1,159 @@
+{
+  "schema_version": "rineya.tgsa-real-conversion-damage.v1",
+  "model_dir": "C:\\Users\\clclc\\.cache\\huggingface\\hub\\models--Luncy1978--rineya-published-cores\\snapshots\\d11707ee75481c245ef44491079737fde1f6b910\\Rineya-Supa-A1-1.0.0-devfreeze",
+  "prompts": 8,
+  "sequence_length": 19,
+  "results": [
+    {
+      "logit_abs_diff_max": 0.0,
+      "logit_abs_diff_mean": 0.0,
+      "kl_max": 0.0,
+      "kl_mean": 0.0,
+      "kl_median": 0.0,
+      "top1_agreement": 1.0,
+      "top5_agreement": 1.0,
+      "nll_native": 7.97246789932251,
+      "nll_retrofit": 7.97246789932251,
+      "nll_delta": 0.0,
+      "bitwise_identical": true,
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "condition": "neutral",
+      "converted_layers": [
+        0,
+        7,
+        14,
+        21,
+        27
+      ],
+      "conversion_record": {
+        "converted_layers": [
+          0,
+          7,
+          14,
+          21,
+          27
+        ],
+        "total_layers": 28,
+        "layers": [
+          {
+            "layer_index": 0,
+            "reused_tensors": [
+              "k_norm.weight",
+              "k_proj.weight",
+              "o_proj.weight",
+              "q_norm.weight",
+              "q_proj.weight",
+              "v_proj.weight"
+            ],
+            "new_tensor_count": 129,
+            "conditioning_is_neutral": true,
+            "effective_conditioned_heads": 15
+          },
+          {
+            "layer_index": 7,
+            "reused_tensors": [
+              "k_norm.weight",
+              "k_proj.weight",
+              "o_proj.weight",
+              "q_norm.weight",
+              "q_proj.weight",
+              "v_proj.weight"
+            ],
+            "new_tensor_count": 129,
+            "conditioning_is_neutral": true,
+            "effective_conditioned_heads": 15
+          },
+          {
+            "layer_index": 14,
+            "reused_tensors": [
+              "k_norm.weight",
+              "k_proj.weight",
+              "o_proj.weight",
+              "q_norm.weight",
+              "q_proj.weight",
+              "v_proj.weight"
+            ],
+            "new_tensor_count": 129,
+            "conditioning_is_neutral": true,
+            "effective_conditioned_heads": 15
+          },
+          {
+            "layer_index": 21,
+            "reused_tensors": [
+              "k_norm.weight",
+              "k_proj.weight",
+              "o_proj.weight",
+              "q_norm.weight",
+              "q_proj.weight",
+              "v_proj.weight"
+            ],
+            "new_tensor_count": 129,
+            "conditioning_is_neutral": true,
+            "effective_conditioned_heads": 15
+          },
+          {
+            "layer_index": 27,
+            "reused_tensors": [
+              "k_norm.weight",
+              "k_proj.weight",
+              "o_proj.weight",
+              "q_norm.weight",
+              "q_proj.weight",
+              "v_proj.weight"
+            ],
+            "new_tensor_count": 129,
+            "conditioning_is_neutral": true,
+            "effective_conditioned_heads": 15
+          }
+        ]
+      }
+    },
+    {
+      "logit_abs_diff_max": 1.4024991989135742,
+      "logit_abs_diff_mean": 0.023289980366826057,
+      "kl_max": 0.028260082006454468,
+      "kl_mean": 0.001096454099752009,
+      "kl_median": 2.119255077559501e-05,
+      "top1_agreement": 0.9736841917037964,
+      "top5_agreement": 1.0,
+      "nll_native": 7.97246789932251,
+      "nll_retrofit": 7.96622896194458,
+      "nll_delta": -0.0062389373779296875,
+      "bitwise_identical": false,
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "condition": "positive_control_std=0.001",
+      "converted_layers": [
+        0,
+        7,
+        14,
+        21,
+        27
+      ]
+    },
+    {
+      "logit_abs_diff_max": 15.210237503051758,
+      "logit_abs_diff_mean": 0.7664793133735657,
+      "kl_max": 4.746779918670654,
+      "kl_mean": 0.4855962097644806,
+      "kl_median": 0.08054625242948532,
+      "top1_agreement": 0.7236841917037964,
+      "top5_agreement": 0.9210526347160339,
+      "nll_native": 7.97246789932251,
+      "nll_retrofit": 8.006928443908691,
+      "nll_delta": 0.03446054458618164,
+      "bitwise_identical": false,
+      "dtype": "float32",
+      "attn_implementation": "eager",
+      "condition": "positive_control_std=0.1",
+      "converted_layers": [
+        0,
+        7,
+        14,
+        21,
+        27
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.example/schemas/tgsa-mtp-phase2-run-v1.json",
+  "title": "TGSA x MTP Phase-2 run manifest",
+  "type": "object",
+  "required": [
+    "schema_version", "status", "study_id", "confirmatory", "arm", "seed",
+    "spec", "config_sha256", "dataset_manifest_sha256",
+    "batch_schedule_sha256", "initial_state_sha256", "training",
+    "train_metrics", "holdout_metrics", "generation_metrics"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.mtp-factorial-run.v1"},
+    "status": {"const": "complete"},
+    "study_id": {"type": "string", "minLength": 1},
+    "confirmatory": {"type": "boolean"},
+    "arm": {"type": "string", "minLength": 1},
+    "seed": {"type": "integer"},
+    "spec": {
+      "type": "object",
+      "required": ["name", "attention_family", "attention_arm", "mtp_enabled", "primary"]
+    },
+    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "batch_schedule_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "initial_state_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "training": {
+      "type": "object",
+      "required": [
+        "fixed_final_checkpoint", "early_stopping", "steps", "batch_size",
+        "final_checkpoint", "final_checkpoint_sha256", "final_state_sha256",
+        "trace", "trace_sha256"
+      ],
+      "properties": {
+        "fixed_final_checkpoint": {"const": true},
+        "early_stopping": {"const": false}
+      }
+    },
+    "holdout_metrics": {
+      "type": "object",
+      "required": ["main_nll", "main_accuracy", "supervised_tokens", "per_family_accuracy"]
+    },
+    "generation_metrics": {
+      "type": "object",
+      "required": [
+        "exact_greedy_equivalence", "generated_tokens", "target_forward_calls",
+        "serial_round_speedup_vs_ar", "serial_round_reduction_fraction_vs_ar",
+        "auxiliary_acceptance_rate"
+      ],
+      "properties": {
+        "exact_greedy_equivalence": {"const": true}
+      }
+    }
+  },
+  "additionalProperties": true
+}

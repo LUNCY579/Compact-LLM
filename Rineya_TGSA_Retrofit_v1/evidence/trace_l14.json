@@ -1,0 +1,195 @@
+{
+  "schema_version": "rineya.tgsa-trace.v1",
+  "model_dir": "C:\\Users\\clclc\\.cache\\huggingface\\hub\\models--Luncy1978--rineya-published-cores\\snapshots\\d11707ee75481c245ef44491079737fde1f6b910\\Rineya-Supa-A1-1.0.0-devfreeze",
+  "dtype": "bfloat16",
+  "attn_implementation": "eager",
+  "prompt": "The capital of France is",
+  "token_count": 5,
+  "converted_layers": [
+    14
+  ],
+  "traced_layers": [
+    14
+  ],
+  "head_zero_semantics": "head 0 is the bootstrap head: it has no previous carrier, so its velocity and control are identically zero and its conditioning weights receive no gradient. Heads 1..H-1 carry valid trajectory finite differences.",
+  "top_next_tokens": [
+    {
+      "token_id": 12095,
+      "token": " Paris",
+      "logit": 18.875
+    },
+    {
+      "token_id": 21718,
+      "token": " Rome",
+      "logit": 14.25
+    },
+    {
+      "token_id": 55201,
+      "token": " Lyon",
+      "logit": 14.25
+    },
+    {
+      "token_id": 32671,
+      "token": " ______",
+      "logit": 14.0625
+    },
+    {
+      "token_id": 30743,
+      "token": " ____",
+      "logit": 14.0
+    }
+  ],
+  "layers": [
+    {
+      "layer": 14,
+      "effective_conditioned_heads": 15,
+      "conditioning_is_neutral": true,
+      "heads": [
+        {
+          "head": 0,
+          "role": "bootstrap",
+          "carrier_rms": 0.8695672154426575,
+          "velocity_rms": 0.0,
+          "control_rms": 0.0,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.4539639353752136
+        },
+        {
+          "head": 1,
+          "role": "trajectory",
+          "carrier_rms": 0.9998467564582825,
+          "velocity_rms": 0.22745318710803986,
+          "control_rms": 0.22745318710803986,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.22026094794273376
+        },
+        {
+          "head": 2,
+          "role": "trajectory",
+          "carrier_rms": 1.0009410381317139,
+          "velocity_rms": 0.018971780315041542,
+          "control_rms": 0.018971780315041542,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6036279797554016
+        },
+        {
+          "head": 3,
+          "role": "trajectory",
+          "carrier_rms": 0.999809741973877,
+          "velocity_rms": 0.027871023863554,
+          "control_rms": 0.027871023863554,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.44693318009376526
+        },
+        {
+          "head": 4,
+          "role": "trajectory",
+          "carrier_rms": 0.9993105530738831,
+          "velocity_rms": 0.018079187721014023,
+          "control_rms": 0.018079187721014023,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6963530778884888
+        },
+        {
+          "head": 5,
+          "role": "trajectory",
+          "carrier_rms": 1.0003163814544678,
+          "velocity_rms": 0.03144119307398796,
+          "control_rms": 0.03144119307398796,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6770399808883667
+        },
+        {
+          "head": 6,
+          "role": "trajectory",
+          "carrier_rms": 1.0004841089248657,
+          "velocity_rms": 0.03970296308398247,
+          "control_rms": 0.03970296308398247,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.07746198028326035
+        },
+        {
+          "head": 7,
+          "role": "trajectory",
+          "carrier_rms": 1.0005512237548828,
+          "velocity_rms": 0.009810726158320904,
+          "control_rms": 0.009810726158320904,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.09391909837722778
+        },
+        {
+          "head": 8,
+          "role": "trajectory",
+          "carrier_rms": 1.0005970001220703,
+          "velocity_rms": 0.01029567513614893,
+          "control_rms": 0.01029567513614893,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.8575676083564758
+        },
+        {
+          "head": 9,
+          "role": "trajectory",
+          "carrier_rms": 1.0004860162734985,
+          "velocity_rms": 0.04971368983387947,
+          "control_rms": 0.04971368983387947,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6751264333724976
+        },
+        {
+          "head": 10,
+          "role": "trajectory",
+          "carrier_rms": 1.0001174211502075,
+          "velocity_rms": 0.036972079426050186,
+          "control_rms": 0.036972079426050186,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.20634326338768005
+        },
+        {
+          "head": 11,
+          "role": "trajectory",
+          "carrier_rms": 0.9999606013298035,
+          "velocity_rms": 0.012597697786986828,
+          "control_rms": 0.012597697786986828,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6742070913314819
+        },
+        {
+          "head": 12,
+          "role": "trajectory",
+          "carrier_rms": 0.9997098445892334,
+          "velocity_rms": 0.027023158967494965,
+          "control_rms": 0.027023158967494965,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.5425952672958374
+        },
+        {
+          "head": 13,
+          "role": "trajectory",
+          "carrier_rms": 0.9997923374176025,
+          "velocity_rms": 0.05822713300585747,
+          "control_rms": 0.05822713300585747,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.6913813948631287
+        },
+        {
+          "head": 14,
+          "role": "trajectory",
+          "carrier_rms": 1.0001078844070435,
+          "velocity_rms": 0.03893657401204109,
+          "control_rms": 0.03893657401204109,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.12606461346149445
+        },
+        {
+          "head": 15,
+          "role": "trajectory",
+          "carrier_rms": 0.9991796016693115,
+          "velocity_rms": 0.012202688492834568,
+          "control_rms": 0.012202688492834568,
+          "conditioning_rms": 0.0,
+          "attention_entropy": 0.3530632555484772
+        }
+      ]
+    }
+  ]
+}

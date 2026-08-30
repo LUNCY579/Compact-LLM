@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.example/schemas/tgsa-mtp-phase2-verification-v1.json",
+  "title": "TGSA x MTP Phase-2 evidence verification",
+  "type": "object",
+  "required": [
+    "schema_version", "passed", "checks", "errors", "verified_run_count",
+    "config_sha256", "dataset_manifest_sha256"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.mtp-evidence-verification.v1"},
+    "passed": {"type": "boolean"},
+    "checks": {"type": "object", "additionalProperties": {"type": "boolean"}},
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "verified_run_count": {"type": "integer", "minimum": 4},
+    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_manifest_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rineya-tgsa-retrofit"
+version = "0.2.0"
+description = "Function-preserving Rineya/Qwen TGSA retrofit with optional multi-token prediction"
+requires-python = ">=3.10"
+dependencies = ["torch>=2.1", "numpy>=1.24"]
+
+[project.optional-dependencies]
+test = ["pytest>=8", "jsonschema>=4.21"]
+dev = ["pytest>=8", "jsonschema>=4.21"]
+hf = ["transformers>=4.51,<6"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["rineya_tgsa*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"

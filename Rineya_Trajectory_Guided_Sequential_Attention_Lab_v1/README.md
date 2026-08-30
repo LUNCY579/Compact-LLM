@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development.** 299 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA + MTP is executable and non-evidentiary.** 311 tests.
 
 ### What has been demonstrated
 
@@ -22,6 +22,10 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
   scored at the majority baseline on held-out data — an in-band held-out test
   (same difficulty, novel instances, zero latent-signature overlap) gave 0.236
   seen against 0.045 held-out, versus a 0.0407 majority baseline.
+- An executable TGSA × multi-token-prediction (MTP) pipeline with paired
+  initialization, prompt-masked future-token objectives, exact verified block
+  decoding, factorial analysis, arm-blind competence gating, and a closed
+  evidence verifier. Its smoke configuration is intentionally `SMOKE_ONLY`.
 
 > **v3 is not evidence against TGSA.** A contrast between arms that cannot
 > perform the task is uninformative in both directions. It constrains the
@@ -32,9 +36,9 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 - Anything about the TGSA mechanism. No hypothesis in the ladder has been
   confirmed or refuted.
 - Improved model quality, at any scale.
-- Any Qwen/GQA, natural-language, long-context, or efficiency claim. The Rineya
-  retrofit track is explicitly **non-evidentiary** until the mechanism has been
-  fairly tested here.
+- A real Rineya TGSA + MTP quality result or wall-clock speedup. The combined
+  retrofit track is explicitly **non-evidentiary** until a real checkpoint,
+  held-out evaluation, and deployment-path timing are completed.
 
 ### Phase 1 v4 — competence-first (in development)
 
@@ -48,6 +52,20 @@ Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
 reaching ~6.6× the strongest trivial baseline, but its seeds are bimodal — a
 training phase transition that some seeds complete and others do not — so it
 fails the reliability check. The registered escalation ladder is running.
+
+### Phase 2 — TGSA + multi-token prediction complementarity
+
+Phase 2 keeps mechanism identification separate from product-level
+complementarity. Its primary paired design is parallel/TGSA × AR/MTP. Every
+cell carries the same MTP parameter structure; AR cells keep it dormant, and
+within-family cells are byte-identical at initialization. Auxiliary duplicate-
+next controls distinguish future-horizon supervision from extra parameters or
+gradient signal.
+
+The reference decoder verifies every MTP block against the main LM head and
+must reproduce ordinary greedy decoding exactly. It reports serial-round
+speedup and fractional round reduction, not an unmeasured wall-clock claim. See
+`TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md` and `PHASE2_RUNBOOK.md`.
 
 ## Core recurrence
 
@@ -85,17 +103,30 @@ python scripts/validate_manifest.py artifacts/phase0_smoke.json
 python scripts/run_ablation_matrix.py
 ```
 
+Phase-2 smoke:
+
+```powershell
+python scripts/run_phase2_mtp_study.py `
+  --config configs/phase2_tgsa_mtp_smoke.json `
+  --dataset-dir artifacts/phase2_smoke/dataset `
+  --output-dir artifacts/phase2_smoke/study
+python scripts/verify_phase2_mtp_evidence.py `
+  --config configs/phase2_tgsa_mtp_smoke.json `
+  --dataset-dir artifacts/phase2_smoke/dataset `
+  --output-dir artifacts/phase2_smoke/study
+```
+
 The generated `artifacts/` directory is intentionally ignored. Promote an artifact into a paper evidence bundle only after attaching immutable model/data/config hashes and the exact commit.
 
 ## Repository map
 
 | Path | Purpose |
 |---|---|
-| `tgsa/` | Reference attention, configuration, telemetry, and statistics |
-| `tests/` | Causality, gradient, mask, shape, ablation, and statistical tests |
-| `scripts/` | Smoke execution, ablation sanity matrix, manifest validation |
-| `configs/` | Frozen Phase-0 config and Phase-1 preregistration template |
-| `evidence/` | Run-manifest schema and artifact contract |
+| `tgsa/` | Reference attention, configuration, telemetry, MTP, and statistics |
+| `tests/` | Causality, gradient, mask, shape, ablation, decoding, and statistical tests |
+| `scripts/` | Smoke execution, ablation matrices, Phase-2 execution, and verification |
+| `configs/` | Frozen Phase-0/1 configs and Phase-2 smoke/development configs |
+| `evidence/` | Run-manifest schemas and artifact contracts |
 | `ARCHITECTURE.md` | Equations, invariants, complexity, and causal semantics |
 | `EXPERIMENT_PLAN.md` | Staged scientific and engineering pipeline |
 | `PREREGISTRATION.md` | Primary hypotheses, endpoints, controls, and analysis lock |
@@ -111,6 +142,9 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `PHASE1_V4_PREREGISTRATION.md` | v4 design, competence gate, escalation ladder |
 | `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and the frozen thresholds |
 | `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
+| `TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md` | Combined mechanism, controls, estimands, gates, and claim ceiling |
+| `PHASE2_RUNBOOK.md` | Synthetic and real-Rineya execution sequence |
+| `PHASE2_IMPLEMENTATION_SUMMARY.md` | Added modules, reused safeguards, and validation record |
 
 ## Non-negotiable research rules
 
