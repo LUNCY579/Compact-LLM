@@ -1,0 +1,1 @@
+Initialization evidence must report main-path neutrality, auxiliary-output identity, trajectory-gradient connectivity, and dormant parameter matching separately; no single `initialization_exact` flag is sufficient.
