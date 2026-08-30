@@ -242,6 +242,46 @@ Accuracy and capability come first. Throughput and memory are recorded with
 
 ---
 
+## Escalation
+
+Registered **before any 20,000-update result existed** — the base regime had one
+partial arm/seed measurement on disk and nothing else.
+
+A gate that can be re-run until it passes is not a gate. But a gate that permits
+no response to a diagnosable failure is superstition rather than rigour: the
+pilot's first `NO_GO` had an obvious mechanistic cause and refusing to act on it
+would have thrown away the diagnosis.
+
+The line between them is that the moves are fixed in advance, each is tied to
+the specific check that failed, each may be taken **at most once**, and the total
+number of competence measurements is capped at **four**.
+
+| failed check | registered response | why that response |
+|---|---|---|
+| `competence_is_reliable_across_seeds` | 50k examples × **30k** updates | a mixture of converged and unconverged runs means the budget truncates the training phase transition; the truncated runs were still descending at the final step |
+| `generalization_gap_acceptable` | **200k** examples × 20k updates | at a fixed batch size the gap is a function of epochs — 20k updates over 50k examples is ~25.6 epochs, over 200k it is ~6.4. More *updates* would make it worse, so the response is data, not budget |
+| both | 200k × 30k | the two responses are independent and compose |
+| anything else | **REJECT** | a dead family, a saturated ceiling, or NLL worse than uniform is neither a budget nor a volume problem, and no rung of this ladder addresses it |
+
+On exhaustion — four measurements taken, a rung repeated, or a failure with no
+registered response — the regime family is **rejected** and the difficulty band
+is revisited under a new preregistration. That is a result about the
+experimental setup, not a failure of nerve, and it is the same kind of result
+v3 produced at far greater cost.
+
+`scripts/phase1_v4_escalation.py` reads the reports produced so far and answers
+what is permitted next, refusing past the cap, so the rule is enforceable rather
+than aspirational. `tests/test_v4_escalation.py` proves by exhaustion that no
+sequence of permitted moves can run forever.
+
+`OBSERVED` The 200k × 20k measurement was launched on a single partial
+observation — one arm, one seed, showing a 0.168 memorization gap — before this
+ladder was written down. The scheduling decision preceded the rule; the rule
+makes it a registered rung rather than an improvisation, and it is recorded here
+in that order rather than presented as though the ladder came first.
+
+---
+
 ## Power
 
 The v3 seed count of 20 was powered for σ_a = 0.02 central / 0.04 robustness at

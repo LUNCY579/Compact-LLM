@@ -228,6 +228,8 @@ Nothing here bears on the TGSA mechanism.
 3. On `GO`, re-run the outcome-blind power simulation with the *realised* σ_a
    from step 1 before confirming the seed count. The v3 count of 20 was powered
    for σ_a = 0.02; it is retained only if the realised value supports it.
-4. On `NO_GO` for dispersion only, escalate the budget to 30,000 steps **once**.
-   If dispersion persists, the regime is rejected and the band is revisited — the
-   step budget is not to be tuned until the gate happens to pass.
+4. On `NO_GO`, follow the registered escalation ladder in
+   `PHASE1_V4_PREREGISTRATION.md` §Escalation — at most four competence
+   measurements, each rung at most once, each tied to the specific check that
+   failed, and rejection of the regime family on exhaustion. The step budget is
+   not to be tuned until the gate happens to pass.
