@@ -68,22 +68,53 @@ class Step:
 
 BASE = Step(BASE_EXAMPLES, BASE_STEPS, "registered base regime")
 
-# Each response is tied to the arithmetic of the check it answers.
-MORE_UPDATES = Step(
-    BASE_EXAMPLES, ESCALATED_STEPS,
+#: Each response is RELATIVE to the regime that failed, not an absolute rung.
+#: An earlier revision hard-coded the rungs as fixed (examples, steps) pairs,
+#: which meant a 200k regime failing on mixture was told to escalate to
+#: "50k x 30k" -- a REDUCTION in data. The axis to move is a property of the
+#: check that failed; the regime it moves from is whatever just failed.
+MIXTURE_RATIONALE = (
     "a mixture of converged and unconverged runs means the budget truncates the "
-    "training phase transition; the truncated runs were still descending",
+    "training phase transition"
 )
-MORE_DATA = Step(
-    ESCALATED_EXAMPLES, BASE_STEPS,
+MEMORIZATION_RATIONALE = (
     "a memorization gap at a fixed batch size is a function of epochs: 20k "
     "updates over 50k examples is ~25.6 epochs, over 200k is ~6.4. More updates "
-    "would make it worse, so the response is data, not budget",
+    "would make it worse, so the response is data, not budget"
 )
-BOTH = Step(
-    ESCALATED_EXAMPLES, ESCALATED_STEPS,
-    "both failures at once; the two responses are independent and compose",
-)
+BOTH_RATIONALE = "both failures at once; the two responses are independent and compose"
+
+# Retained as names because the preregistration's table refers to them.
+MORE_UPDATES = Step(BASE_EXAMPLES, ESCALATED_STEPS, MIXTURE_RATIONALE)
+MORE_DATA = Step(ESCALATED_EXAMPLES, BASE_STEPS, MEMORIZATION_RATIONALE)
+BOTH = Step(ESCALATED_EXAMPLES, ESCALATED_STEPS, BOTH_RATIONALE)
+
+
+def respond(examples: int, steps: int, *, mixture: bool,
+            memorization: bool) -> tuple[Step | None, str]:
+    """The registered response to a failure, relative to the regime that failed."""
+
+    target_examples = ESCALATED_EXAMPLES if memorization else examples
+    target_steps = ESCALATED_STEPS if mixture else steps
+    if memorization and examples >= ESCALATED_EXAMPLES:
+        return None, (
+            f"the response to a memorization gap is more data, but this regime is "
+            f"already at the registered maximum of {ESCALATED_EXAMPLES} examples. "
+            f"REJECT the regime family and revisit the band"
+        )
+    if mixture and steps >= ESCALATED_STEPS:
+        return None, (
+            f"the response to a mixture is a larger update budget, but this regime "
+            f"is already at the registered maximum of {ESCALATED_STEPS} updates. "
+            f"REJECT the regime family and revisit the band"
+        )
+    if mixture and memorization:
+        rationale = BOTH_RATIONALE
+    elif memorization:
+        rationale = MEMORIZATION_RATIONALE
+    else:
+        rationale = MIXTURE_RATIONALE
+    return Step(target_examples, target_steps, rationale), rationale
 
 
 def failed_checks(report: dict) -> set[str]:
@@ -122,14 +153,17 @@ def next_step(reports: list[dict]) -> tuple[Step | None, str]:
 
     mixture = MIXTURE_CHECK in latest
     memorization = MEMORIZATION_CHECK in latest
-    if mixture and memorization:
-        candidate = BOTH
-    elif memorization:
-        candidate = MORE_DATA
-    elif mixture:
-        candidate = MORE_UPDATES
-    else:
+    if not (mixture or memorization):
         return None, "NO_GO with no failed checks recorded; the report is malformed"
+
+    failed_regime = reports[-1].get("regime", {})
+    candidate, reason = respond(
+        int(failed_regime.get("train_examples", BASE_EXAMPLES)),
+        int(failed_regime.get("steps", BASE_STEPS)),
+        mixture=mixture, memorization=memorization,
+    )
+    if candidate is None:
+        return None, reason
 
     if (candidate.train_examples, candidate.steps) in attempted:
         return None, (

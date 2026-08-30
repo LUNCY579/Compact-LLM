@@ -95,11 +95,16 @@ def test_the_schema_version_is_not_stale_in_the_pilot_report() -> None:
 
 
 def test_the_escalation_table_matches_the_ladder_code() -> None:
-    from phase1_v4_escalation import BOTH, MEASUREMENT_CAP, MORE_DATA, MORE_UPDATES
+    from phase1_v4_escalation import (
+        ESCALATED_EXAMPLES,
+        ESCALATED_STEPS,
+        MEASUREMENT_CAP,
+    )
 
-    assert f"{MORE_UPDATES.steps // 1000}k" in PREREG
-    assert f"{MORE_DATA.train_examples // 1000}k" in PREREG
-    assert f"{BOTH.train_examples // 1000}k × {BOTH.steps // 1000}k" in PREREG
+    assert f"**{ESCALATED_STEPS // 1000}k**" in PREREG
+    assert f"**{ESCALATED_EXAMPLES // 1000}k**" in PREREG
+    assert f"**{ESCALATED_EXAMPLES:,}** examples" in PREREG
+    assert f"**{ESCALATED_STEPS:,}** updates" in PREREG
     assert "capped at **four**" in PREREG and MEASUREMENT_CAP == 4
 
 

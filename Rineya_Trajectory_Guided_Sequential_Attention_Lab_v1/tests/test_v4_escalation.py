@@ -100,17 +100,68 @@ def test_a_mixed_failure_is_unanswerable_if_any_part_is() -> None:
     assert "answer_nll_beats_uniform" in reason
 
 
-def test_a_rung_cannot_be_taken_twice() -> None:
-    """The same response failing twice means the diagnosis was wrong."""
+def test_the_response_is_relative_to_the_regime_that_failed() -> None:
+    """A 200k regime failing on mixture must escalate updates, not cut data.
 
-    history = [
+    An earlier revision hard-coded the rungs as absolute (examples, steps) pairs,
+    so this case returned "50k x 30k" -- a REDUCTION in data as the response to a
+    problem data had already solved.
+    """
+
+    step, _ = next_step([
+        _report(50_000, 20_000, MEMORIZATION_CHECK),
+        _report(200_000, 20_000, MIXTURE_CHECK),
+    ])
+    assert step is not None
+    assert (step.train_examples, step.steps) == (200_000, 30_000)
+
+
+def test_a_mid_ladder_memorization_failure_keeps_the_larger_budget() -> None:
+    step, _ = next_step([
+        _report(50_000, 20_000, MIXTURE_CHECK),
+        _report(50_000, 30_000, MEMORIZATION_CHECK),
+    ])
+    assert step is not None
+    assert (step.train_examples, step.steps) == (200_000, 30_000)
+
+
+def test_a_regime_already_at_maximum_data_is_rejected() -> None:
+    step, reason = next_step([
         _report(50_000, 20_000, MEMORIZATION_CHECK),
         _report(200_000, 20_000, MEMORIZATION_CHECK),
-    ]
-    step, reason = next_step(history)
+    ])
+    assert step is None
+    assert "already at the registered maximum of 200000 examples" in reason
+    assert "REJECT" in reason
+
+
+def test_a_regime_already_at_maximum_updates_is_rejected() -> None:
+    step, reason = next_step([
+        _report(50_000, 30_000, MIXTURE_CHECK),
+    ])
+    assert step is None
+    assert "already at the registered maximum of 30000 updates" in reason
+
+
+def test_the_top_of_the_ladder_rejects_rather_than_repeating() -> None:
+    step, reason = next_step([
+        _report(50_000, 20_000, MIXTURE_CHECK, MEMORIZATION_CHECK),
+        _report(200_000, 30_000, MIXTURE_CHECK, MEMORIZATION_CHECK),
+    ])
+    assert step is None
+    assert "REJECT" in reason
+
+
+def test_a_rung_cannot_be_taken_twice() -> None:
+    """If the registered response was already measured, the diagnosis was wrong."""
+
+    step, reason = next_step([
+        _report(200_000, 20_000, MIXTURE_CHECK),
+        _report(200_000, 30_000, MEMORIZATION_CHECK),
+        _report(200_000, 20_000, MIXTURE_CHECK),
+    ])
     assert step is None
     assert "already been measured" in reason
-    assert "at most once" in reason
 
 
 def test_the_cap_counts_distinct_regimes() -> None:

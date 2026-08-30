@@ -318,12 +318,22 @@ fix is exactly the dice-rolling the cap exists to stop, and it is refused
 separately as a rung already attempted. Every measurement, corrected or
 superseded, stays in the record.
 
+Each response moves **one axis of the regime that failed**, not to a fixed rung:
+
 | failed check | registered response | why that response |
 |---|---|---|
-| `competence_is_reliable_across_seeds` | 50k examples × **30k** updates | a mixture of converged and unconverged runs means the budget truncates the training phase transition; the truncated runs were still descending at the final step |
-| `generalization_gap_acceptable` | **200k** examples × 20k updates | at a fixed batch size the gap is a function of epochs — 20k updates over 50k examples is ~25.6 epochs, over 200k it is ~6.4. More *updates* would make it worse, so the response is data, not budget |
-| both | 200k × 30k | the two responses are independent and compose |
-| anything else | **REJECT** | a dead family, a saturated ceiling, or NLL worse than uniform is neither a budget nor a volume problem, and no rung of this ladder addresses it |
+| `competence_is_reliable_across_seeds` | raise updates to **30k**, data unchanged | a mixture of converged and unconverged runs means the budget truncates the training phase transition |
+| `generalization_gap_acceptable` | raise data to **200k**, updates unchanged | at a fixed batch size the gap is a function of epochs — 20k updates over 50k examples is ~25.6 epochs, over 200k it is ~6.4. More *updates* would make it worse, so the response is data, not budget |
+| both | raise both | the two responses are independent and compose |
+| the axis is already at its registered maximum | **REJECT** | the ladder has no move left on the axis the diagnosis points at |
+| anything else | **REJECT** | a dead family, a saturated ceiling, or NLL worse than uniform is neither a budget nor a volume problem, and no rung addresses it |
+
+Registered maxima: **200,000** examples and **30,000** updates.
+
+`OBSERVED` The responses are relative because an absolute-rung formulation was
+wrong. It told a 200k regime failing on mixture to escalate to "50k × 30k" — a
+*reduction* in data as the response to a problem data had already solved. Caught
+before the 200k measurement produced a report.
 
 On exhaustion — four measurements taken, a rung repeated, or a failure with no
 registered response — the regime family is **rejected** and the difficulty band
