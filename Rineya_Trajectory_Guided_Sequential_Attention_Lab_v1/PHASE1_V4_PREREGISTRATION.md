@@ -181,6 +181,42 @@ primary endpoint does not depend on these two variables.
 
 ---
 
+### Stratum structure — a registered consequence of the narrow band
+
+`OBSERVED` The stratum key is `family:hops-or-steps:context_bucket`. On the
+certified band that yields **3 primary strata**, against v3's 17:
+
+| | v4 `easy_nontrivial` | v3 |
+|---|---|---|
+| `pointer_chase` | `h2:short` — **1** stratum | h4–h8 × {medium, long} — **10** strata |
+| `state_update` | `s2:short`, `s3:short` — **2** strata | s6–s12 — **7** strata |
+| guardrail `direct_lookup` | `h1:short` — 1 | `h1:{medium, long}` — 2 |
+
+Every sequence on this band is ≤ 32 tokens, so `context_bucket` is constant, and
+the band fixes pointer chains at 2 hops. Both collapses are structural, not
+sampling artifacts.
+
+Three consequences, registered rather than discovered later:
+
+1. **The estimand's family weighting changes.** The macro-average weights strata
+   equally, so v4 weights `pointer_chase` 1/3 and `state_update` 2/3, where v3
+   weighted them 10/17 and 7/17. The *rule* is unchanged — RULE 1 — but its
+   realization is not, and a mechanism effect concentrated in `pointer_chase`
+   is down-weighted about 2:1 relative to a family-balanced view. This is why
+   `per_family_accuracy_delta` is reported alongside the primary estimand and
+   must be read with it.
+2. **Each stratum is far better sampled.** At 2,000 test examples per family the
+   primary strata hold ~2,000 / ~1,000 / ~1,000 examples, against v3's ~40–90.
+   The within-stratum component of the variance is therefore much smaller; the
+   between-stratum component is estimated from 3 units instead of 17 and is
+   correspondingly less stable. Which effect dominates is an empirical question
+   for the power audit, not something to assert here.
+3. **The power audit must be run at `--stratum-count 3`**, not v3's 17, with
+   `--examples-per-stratum` ~1333. Running it at v3's structure would report the
+   power of a study nobody is going to run.
+
+This was found by the toy-scale rehearsal, before any confirmatory run.
+
 ## Primary estimand (unchanged from v3)
 
 For each paired seed and each registered non-guardrail stratum: paired

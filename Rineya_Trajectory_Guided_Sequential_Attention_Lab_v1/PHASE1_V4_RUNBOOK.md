@@ -88,12 +88,18 @@ Read the realised per-arm between-seed SD out of the competence report
 (`detail.per_seed_holdout_accuracy.<arm>.sd`), then audit around it:
 
 ```bash
-python scripts/phase1_power_simulation.py --output power/v4_power.json --trials 10000 --seed-counts 10,15,20,25,30,40 --effects 0.000,0.010,0.015,0.020,0.030 --seed-sds <realised>,<2x realised> --central-seed-sd <realised> --elevated-seed-sd <2x realised> --stratum-count 17 --examples-per-stratum 235 --workers 8
+python scripts/phase1_power_simulation.py --output power/v4_power.json --trials 10000 --seed-counts 10,15,20,25,30,40 --effects 0.000,0.010,0.015,0.020,0.030 --seed-sds <realised>,<2x realised> --central-seed-sd <realised> --elevated-seed-sd <2x realised> --stratum-count 3 --examples-per-stratum 1333 --workers 8
 ```
 
-Target the grid at the realised value. A full crossed sweep at 235
-examples/stratum and 50 seeds is ~10⁹ operations per condition and will not
-finish.
+Target the grid at the realised value. A full crossed sweep at v4's example
+counts and 50 seeds is ~10⁹ operations per condition and will not finish.
+
+`OBSERVED` **`--stratum-count 3`, not v3's 17.** The certified band fixes pointer
+chains at 2 hops and every sequence is ≤ 32 tokens, so `context_bucket` is
+constant and the primary estimand has three strata:
+`pointer_chase:h2:short`, `state_update:s2:short`, `state_update:s3:short`.
+Auditing at v3's structure would report the power of a study nobody is going to
+run. See `PHASE1_V4_PREREGISTRATION.md` §Stratum structure.
 
 If `recommended_seed_count` is null, the design is not powered and **must not be
 registered**. `build_phase1_v4_config.py` enforces this.
