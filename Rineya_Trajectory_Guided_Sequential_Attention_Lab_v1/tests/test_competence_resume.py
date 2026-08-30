@@ -225,3 +225,80 @@ def test_the_fingerprint_is_stable_across_processes() -> None:
         values.add(completed.stdout.strip())
     assert len(values) == 1, f"fingerprint varied with PYTHONHASHSEED: {values}"
     assert values.pop() == regime_fingerprint(_args(), train_seed=1234)
+
+
+# --------------------------------------------------------------------------
+# The compute backend is part of what a cell measures
+# --------------------------------------------------------------------------
+
+
+def test_the_backend_is_in_the_fingerprint(monkeypatch) -> None:
+    """The one measurement input that comes from the environment, not the CLI.
+
+    Twenty thousand optimizer steps through a different BLAS backend is a
+    different measurement. A CPU fallback -- a wedged driver, an empty
+    CUDA_VISIBLE_DEVICES, a venv without a CUDA wheel -- is silent, and the loop
+    order splits an interrupted run exactly along an arm boundary, which is the
+    worst possible split for a gate whose headline check is an arm-blind minimum.
+    """
+
+    import phase1_v4_competence_run as runner
+
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cuda", "torch": "x"})
+    on_cuda = runner.regime_fingerprint(_args(), train_seed=1234)
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cpu", "torch": "x"})
+    on_cpu = runner.regime_fingerprint(_args(), train_seed=1234)
+    assert on_cuda != on_cpu, "a CPU cell would be reused by a CUDA run"
+
+
+def test_a_cell_from_another_backend_is_refused(tmp_path: Path, monkeypatch) -> None:
+    import phase1_v4_competence_run as runner
+
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cpu", "torch": "x"})
+    cpu_print = runner.regime_fingerprint(_args(), train_seed=1234)
+    path = tmp_path / "cascade__seed1.json"
+    runner.write_cell_atomically(path, {
+        "schema_version": runner.CELL_SCHEMA_VERSION,
+        "regime_fingerprint": cpu_print,
+        "backend": {"device_type": "cpu", "torch": "x"},
+        "run": {"arm": "cascade", "seed": 1, "holdout": {"accuracy": 0.42},
+                "seen": {"accuracy": 0.45}},
+    })
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cuda", "torch": "x"})
+    cuda_print = runner.regime_fingerprint(_args(), train_seed=1234)
+    with pytest.raises(ValueError, match="different regime"):
+        runner.load_cell(path, cuda_print, "cascade", 1)
+
+
+def test_the_refusal_names_the_backend_difference(tmp_path: Path, monkeypatch) -> None:
+    """A digest mismatch alone tells an operator nothing actionable."""
+
+    import phase1_v4_competence_run as runner
+
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cpu", "torch": "x"})
+    path = tmp_path / "cascade__seed1.json"
+    runner.write_cell_atomically(path, {
+        "schema_version": runner.CELL_SCHEMA_VERSION,
+        "regime_fingerprint": runner.regime_fingerprint(_args(), train_seed=1234),
+        "backend": {"device_type": "cpu", "torch": "x"},
+        "run": {"arm": "cascade", "seed": 1, "holdout": {"accuracy": 0.42},
+                "seen": {"accuracy": 0.45}},
+    })
+    monkeypatch.setattr(runner, "compute_backend", lambda: {"device_type": "cuda", "torch": "x"})
+    with pytest.raises(ValueError, match="backend"):
+        runner.load_cell(path, runner.regime_fingerprint(_args(), train_seed=1234), "cascade", 1)
+
+
+def test_v1_cells_are_refused_because_they_recorded_no_backend(tmp_path: Path) -> None:
+    """There is nothing to compare a v1 cell against, and guessing defeats the point."""
+
+    import phase1_v4_competence_run as runner
+
+    path = tmp_path / "cascade__seed1.json"
+    path.write_text(json.dumps({
+        "schema_version": "tgsa.phase1-competence-cell.v1",
+        "regime_fingerprint": runner.regime_fingerprint(_args(), train_seed=1234),
+        "run": {"arm": "cascade", "seed": 1},
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="schema"):
+        runner.load_cell(path, runner.regime_fingerprint(_args(), train_seed=1234), "cascade", 1)

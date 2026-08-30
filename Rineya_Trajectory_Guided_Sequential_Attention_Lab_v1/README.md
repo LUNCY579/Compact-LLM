@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA + MTP is executable and non-evidentiary.** 349 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. Phase 2B TGSA + MTP is executable and non-evidentiary.** 349 tests.
 
 ### What has been demonstrated
 
@@ -51,15 +51,25 @@ arm-blind checks, every threshold frozen from an outcome-blind pilot. The purpos
 is not to make TGSA win; it is to build a system in which TGSA can win or lose
 for a scientifically meaningful reason.
 
-Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. A development pilot found a regime
-reaching several times the strongest trivial baseline, but its seeds are
-bimodal — a training phase transition that some seeds complete and others do
-not — so it fails the reliability check. The registered escalation ladder is
-running. No development margin is interpreted as a TGSA result.
+Status: **`V4_REGIME_FAMILY_REJECTED`** — see `PHASE1_V4_COMPETENCE_RESULT.md`.
 
-### Phase 2 — TGSA + multi-token prediction complementarity
+Both registered competence measurements returned `NO_GO` and the escalation
+ladder returned `NO FURTHER MEASUREMENT PERMITTED`. No confirmatory matrix was
+dispatched. The deciding observation: on this band only `state_update` ever
+learns, crossing floor-to-ceiling (Δ +0.95), while both pointer families sit
+inert at 0.15–0.18 and do not distinguish one hop from two. `state_update`
+saturates at 0.98 and `pointer_chase` has no dynamic range, so neither primary
+family can support the mechanism contrast. The band is revisited under a new
+preregistration.
 
-Phase 2 keeps mechanism identification separate from product-level
+The gate cost ~8 GPU-hours and prevented a 9–26 GPU-hour confirmatory matrix from
+running on a band where the contrast family is inert. v3 spent its full matrix to
+learn an equivalent lesson afterwards.
+
+### Phase 2B — TGSA + multi-token prediction complementarity
+
+Phase 2B is the system-factorial stage (`parallel_independent_offsets_v1`). It
+keeps mechanism identification (Phase 2A) separate from product-level
 complementarity. Its primary paired design is parallel/TGSA × AR/MTP. Every
 cell carries the same MTP parameter structure; AR cells keep it dormant, and
 within-family cells are byte-identical at initialization. Auxiliary duplicate-
@@ -71,8 +81,9 @@ must reproduce ordinary greedy decoding exactly. It reports target-forward
 amortization and fractional serial-round reduction as algorithmic proxies, not
 an unmeasured wall-clock claim. Every non-confirmatory run is explicitly marked
 `development_only=true`, and an internal development GO cannot certify a later
-confirmatory matrix. See `TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md`,
-`PHASE2_RUNBOOK.md`, and `PHASE2_V4_REGIME_INTEGRATION.md`.
+confirmatory matrix. Old-band use remains rehearsal-only. See
+`TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md`, `PHASE2_RUNBOOK.md`, and
+`PHASE2_V4_REGIME_INTEGRATION.md`.
 
 ## Core recurrence
 
@@ -148,6 +159,7 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `PHASE1_V3_COMPETENCE_POSTMORTEM.md` | Why v3 returned `inconclusive` |
 | `PHASE1_V4_PREREGISTRATION.md` | v4 design, competence gate, escalation ladder |
 | `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and the frozen thresholds |
+| `PHASE1_V4_COMPETENCE_RESULT.md` | Why the v4 regime family was rejected |
 | `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
 | `TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md` | Combined mechanism, controls, estimands, gates, and claim ceiling |
 | `PHASE2_RUNBOOK.md` | Synthetic and real-Rineya execution sequence |
