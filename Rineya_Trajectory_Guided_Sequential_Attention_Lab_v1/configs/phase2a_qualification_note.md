@@ -1,1 +1,0 @@
-An external programme prerequisite does not replace same-study qualification. Any future confirmatory Phase 2A config must bind a competence report for the actual task, model, objective, split, and metric scope.
