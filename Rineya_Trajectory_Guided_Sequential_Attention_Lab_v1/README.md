@@ -6,78 +6,57 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 is in development. Phase 2 TGSA × MTP is implemented as a competence-gated rehearsal.** 336 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. This branch is the canonical Phase 2A trajectory-mechanism branch; all current TGSA × MTP runs remain development-only.** 342 tests.
+
+### Canonical branch role
+
+The TGSA × MTP programme uses the existing branches as a staged chain rather than merging two different MTP interventions into one ambiguous implementation:
+
+1. `research/tgsa-phase1-v4-competence-first` is the frozen scientific boundary. Its registered task/regime family is rejected and must not receive Phase-2 implementation commits.
+2. `research/tgsa-phase2-mtp-complementarity` (this branch) is **Phase 2A: trajectory-mechanism identification**. Its MTP semantics are `sequential_teacher_forced_recursive_v1`.
+3. `research/tgsa-mtp-rineya-complementarity-v1` is **Phase 2B: system and decoding complementarity**. Its MTP semantics are `parallel_independent_offsets_v1`.
+
+The Phase 2A and Phase 2B branches are related stages, not replications. Their checkpoints, evidence roots, estimands, and schema identities must remain distinct. See `TGSA_MTP_CANONICAL_PATH.md`.
 
 ### What has been demonstrated
 
-- A typed PyTorch reference kernel, a conventional parallel-MHA control, seven
-  mechanism-preserving TGSA ablations, a shared carrier state, learned trajectory
-  encoding, bounded predictor/corrector gates, Q/K/V conditioning, and soft
-  token-importance biasing.
-- A **completed confirmatory study** (`tgsa-phase1-identifiability-v3-2026-08-29`):
-  60/60 cells, a clean train → barrier → single-evaluate sequence, 2001 passing
-  evidence-chain checks. Tagged `tgsa-phase1-v3-result-2026-08-29` and immutable.
-- The v3 `decision` was **`inconclusive`**, and the reason is now understood: no
-  arm was competent. All three memorized the 5,000-example training set and
-  scored at the majority baseline on held-out data — an in-band held-out test
-  (same difficulty, novel instances, zero latent-signature overlap) gave 0.236
-  seen against 0.045 held-out, versus a 0.0407 majority baseline.
-- A parameter-matched sequential multi-token-prediction reference module, direct
-  reuse of TGSA's existing differentiable control coordinate, an eight-cell
-  development rehearsal, full-ladder mechanical tests, evidence schemas, and a
-  fail-closed Phase-1 competence precondition for any later confirmatory run.
-- A Phase-2 integrity layer that binds data diversity, sample presentations,
-  effective epochs, device identity, and regime/study/cell provenance into each
-  development bundle.
+- A typed PyTorch reference kernel, a conventional parallel-MHA control, seven mechanism-preserving TGSA ablations, a shared carrier state, learned trajectory encoding, bounded predictor/corrector gates, Q/K/V conditioning, and soft token-importance biasing.
+- A completed Phase 1 v3 confirmatory study (`tgsa-phase1-identifiability-v3-2026-08-29`) whose decision was `inconclusive` because no arm was competent.
+- A completed Phase 1 v4 competence programme whose registered regime family was rejected before a confirmatory mechanism matrix was dispatched. The apparent transition was state-update arithmetic crossing from floor to saturation; the pointer families remained inert. This is an apparatus result, not evidence for or against TGSA.
+- A parameter-matched sequential future-prediction reference module that directly reuses TGSA's existing differentiable control coordinate, plus an eight-cell development rehearsal, full-ladder mechanical tests, evidence schemas, and a fail-closed competence precondition.
+- A Phase-2 integrity layer that binds MTP semantics, data diversity, sample presentations, effective epochs, device identity, and regime/study/cell provenance into each development bundle.
 
-> **v3 is not evidence against TGSA.** A contrast between arms that cannot
-> perform the task is uninformative in both directions. It constrains the
-> experimental setup, not the mechanism.
+> **Neither v3 nor v4 is evidence against TGSA.** A contrast over non-learning, inert, or saturated task families cannot identify the mechanism in either direction.
 
 ### What has NOT been demonstrated
 
-- Anything about the TGSA mechanism. No hypothesis in the ladder has been
-  confirmed or refuted.
+- Anything about the TGSA mechanism. No hypothesis in the H1a/H1b/H1c ladder has been confirmed or refuted.
 - Improved model quality, at any scale.
-- That MTP improves TGSA or that a TGSA × MTP interaction is positive.
-- Speculative-decoding speedup. Future-token accuracy and serial target-round
-  reduction are not replacements for a cache-aware verifier and timed
-  end-to-end generation.
-- Any Qwen/GQA, natural-language, long-context, or efficiency claim. The Rineya
-  retrofit track is explicitly **non-evidentiary** until the mechanism has been
-  fairly tested here.
+- That trajectory-conditioned sequential future prediction improves TGSA.
+- That this Phase 2A predictor provides useful speculative-decoding acceleration; it is a mechanism/training reference, not the production verifier path.
+- Any Qwen/GQA, natural-language, long-context, or wall-clock efficiency claim.
 
-### Phase 1 v4 — competence-first (in development)
+### Phase 1 v4 — frozen result boundary
 
-v4 changes only the regime in which the contrast is run, plus a **competence
-gate** the confirmatory runner consults before it creates an output root. Eight
-arm-blind checks, every threshold frozen from an outcome-blind pilot. The purpose
-is not to make TGSA win; it is to build a system in which TGSA can win or lose
-for a scientifically meaningful reason.
+The v4 gate prevented a 9–26 GPU-hour confirmatory matrix from being run on an uninformative band. At equal 1.28 million sample presentations, 25.6 effective epochs made the arithmetic transition common but produced excessive memorization, while 6.4 effective epochs reduced memorization but made transition completion unreliable. More importantly, `direct_lookup` and `pointer_chase` remained inert and `state_update` saturated.
 
-Status: `V4_COMPETENCE_NOT_YET_ESTABLISHED`. Development work shows that training
-exposure and data diversity can trade reliable optimization transitions against
-memorization, so they are now explicit regime variables rather than hidden
-properties of a step count. No development arm margin is interpreted as a TGSA
-result. The registered escalation ladder remains authoritative.
+Status: `V4_REGIME_FAMILY_REJECTED`. The old task/regime family is permitted only for regression, integrity, and smoke testing. Any new mechanism study requires a new competence preregistration with data diversity and sample presentations varied separately, and with primary families that are both learnable and non-saturated.
 
-### Phase 2 — TGSA × multi-token prediction
+### Phase 2A — trajectory mechanism bridge
 
-Phase 2 keeps the Phase-1 kernel and control definitions authoritative. It adds
-one identical sequential MTP module to every cell and separates three conditions:
+This branch adds one identical sequential future-prediction module to every cell and separates three conditions:
 
 - `dormant`: module present, auxiliary objective excluded;
 - `backbone`: future-token supervision from the backbone state with zero control;
-- `trajectory`: the same module receives TGSA's registered finite-difference or
-  information-matched history coordinate.
+- `trajectory`: the same module receives TGSA's registered finite-difference or information-matched history coordinate.
 
-The current eight-cell CPU configuration is a non-evidentiary rehearsal. The
-sealed test split is materialized but never read, all initial states and output
-artifacts are hashed, and `confirmatory=true` fails before dispatch unless an
-external, frozen, non-development Phase-1 v4 competence report returns `GO`.
-Development reports are transitively marked and cannot be laundered into that
-prerequisite. See `PHASE2_TGSA_MTP_DESIGN.md`, `PHASE2_TGSA_MTP_RUNBOOK.md`, and
-`PHASE2_V4_REGIME_INTEGRATION.md`.
+The predictor is sequential across future horizons. During teacher-forced training, the previous true future-token embedding can enter the next horizon transition; recursive inference instead consumes the previous prediction. This is intentionally a different intervention from Phase 2B's independent offset heads.
+
+The permitted Phase 2A claim, after a new competence-qualified regime exists, is narrow:
+
+> Whether the registered TGSA trajectory coordinate contributes incremental future-token predictive information beyond parameter-matched backbone and history controls.
+
+The supplied configuration is explicitly `development_only` and `obsolete_regime`; it may exercise mechanics and evidence closure, but it cannot authorize a mechanism claim or a confirmatory launch.
 
 ## Core recurrence
 
@@ -115,18 +94,18 @@ python scripts/validate_manifest.py artifacts/phase0_smoke.json
 python scripts/run_ablation_matrix.py
 ```
 
-Phase-2 rehearsal:
+Phase-2A rehearsal:
 
 ```powershell
 python scripts/phase2_tgsa_mtp_rehearsal.py `
   --config configs/phase2_tgsa_mtp_smoke.json `
-  --dataset-dir artifacts/phase2_smoke/dataset `
-  --output-dir artifacts/phase2_smoke/study `
+  --dataset-dir artifacts/phase2a_smoke/dataset `
+  --output-dir artifacts/phase2a_smoke/study `
   --repo-root ..
 python scripts/verify_phase2_integrity.py `
   --config configs/phase2_tgsa_mtp_smoke.json `
-  --dataset-dir artifacts/phase2_smoke/dataset `
-  --output-dir artifacts/phase2_smoke/study
+  --dataset-dir artifacts/phase2a_smoke/dataset `
+  --output-dir artifacts/phase2a_smoke/study
 ```
 
 The generated `artifacts/` directory is intentionally ignored. Promote an artifact into a paper evidence bundle only after attaching immutable model/data/config hashes and the exact commit.
@@ -135,9 +114,10 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 
 | Path | Purpose |
 |---|---|
-| `tgsa/` | Reference attention, configuration, MTP extension, integrity, telemetry, and statistics |
+| `TGSA_MTP_CANONICAL_PATH.md` | Branch/stage map, semantic split, and promotion gates |
+| `tgsa/` | Reference attention, configuration, sequential future predictor, integrity, telemetry, and statistics |
 | `tests/` | Causality, gradient, mask, shape, ablation, MTP, integrity, and statistical tests |
-| `scripts/` | Smoke execution, ablation sanity matrix, manifest validation, Phase-2 rehearsal |
+| `scripts/` | Smoke execution, ablation sanity matrix, manifest validation, Phase-2A rehearsal |
 | `configs/` | Frozen/rehearsal configurations and preregistration templates |
 | `evidence/` | Run-manifest, integrity, and study-report schemas |
 | `ARCHITECTURE.md` | Equations, invariants, complexity, and causal semantics |
@@ -153,11 +133,12 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 | `PHASE1_V3_RESULT.md` | The v3 result and what it does and does not support |
 | `PHASE1_V3_COMPETENCE_POSTMORTEM.md` | Why v3 returned `inconclusive` |
 | `PHASE1_V4_PREREGISTRATION.md` | v4 design, competence gate, escalation ladder |
-| `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and the frozen thresholds |
+| `PHASE1_V4_COMPETENCE_RESULT.md` | Frozen rejection of the registered v4 regime family |
+| `PHASE1_V4_PILOT_REPORT.md` | Outcome-blind pilot and frozen thresholds |
 | `PHASE1_V4_RUNBOOK.md` | Validated v4 execution sequence and budget |
-| `PHASE2_TGSA_MTP_DESIGN.md` | MTP architecture, factorial design, claims, and gates |
-| `PHASE2_TGSA_MTP_RUNBOOK.md` | Validated rehearsal commands and family-model roadmap |
-| `PHASE2_V4_REGIME_INTEGRATION.md` | How v4's dose/diversity trend constrains Phase-2 design |
+| `PHASE2_TGSA_MTP_DESIGN.md` | Phase 2A architecture, mechanism estimands, claims, and gates |
+| `PHASE2_TGSA_MTP_RUNBOOK.md` | Phase 2A rehearsal and future-regime roadmap |
+| `PHASE2_V4_REGIME_INTEGRATION.md` | How the v4 result constrains all Phase-2 work |
 
 ## Non-negotiable research rules
 
@@ -169,3 +150,5 @@ The generated `artifacts/` directory is intentionally ignored. Promote an artifa
 6. No “first” or novelty claim is permitted until the final related-work search and citation audit are complete.
 7. Future-token accuracy or serial-round reduction is not speculative-decoding speed; speed requires an exact cache-aware verifier and end-to-end timing.
 8. A development competence report cannot certify a confirmatory matrix, even when its numeric verdict is `GO`.
+9. `study_kind` and `mtp_semantics` are part of scientific identity; evidence from Phase 2A and Phase 2B may never be pooled or relabeled as replications.
+10. The rejected v4 regime may not be revived by adding MTP, changing the objective, or increasing steps under the same registration.
