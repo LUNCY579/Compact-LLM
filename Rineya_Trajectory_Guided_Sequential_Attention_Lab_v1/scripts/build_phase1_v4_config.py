@@ -73,8 +73,12 @@ def measure_sequence_length(band_spec: dict, counts: dict[str, int], seed: int,
 
 def build(competence_path: Path, power_path: Path, v3_config_path: Path,
           *, study_id: str, dataset_seed: int, test_per_family: int,
-          dev_per_family: int, length_margin: int) -> dict:
-    competence = require_go(competence_path)  # fails closed on NO_GO
+          dev_per_family: int, length_margin: int,
+          allow_development_only: bool = False) -> dict:
+    # fails closed on NO_GO, on a superseded schema, and -- unless the caller is
+    # the rehearsal -- on a report marked development_only
+    competence = require_go(competence_path,
+                            allow_development_only=allow_development_only)
     power = json.loads(power_path.read_text(encoding="utf-8"))
     v3 = json.loads(v3_config_path.read_text(encoding="utf-8"))
 
@@ -120,7 +124,7 @@ def build(competence_path: Path, power_path: Path, v3_config_path: Path,
 
     seeds = [101 * (index + 1) for index in range(int(seed_count))]
 
-    return {
+    config: dict = {
         "schema_version": v3["schema_version"],
         "study_id": study_id,
         "confirmatory": True,
@@ -192,6 +196,17 @@ def build(competence_path: Path, power_path: Path, v3_config_path: Path,
         },
     }
 
+    # The marker propagates. A development-only report can only produce a
+    # development-only config, whose runner is the only thing that will accept
+    # a development-only report. Neither end launders it.
+    if competence.get("regime", {}).get("development_only"):
+        config["development_only"] = True
+        config["registration"]["development_only_reason"] = (
+            "built from a competence report marked development_only; this "
+            "configuration certifies nothing and exists to exercise the pipeline"
+        )
+    return config
+
 
 def main() -> int:
     parser = argparse.ArgumentParser()
@@ -206,6 +221,11 @@ def main() -> int:
     parser.add_argument("--test-per-family", type=int, default=2000)
     parser.add_argument("--dev-per-family", type=int, default=1000)
     parser.add_argument("--length-margin", type=int, default=4)
+    parser.add_argument(
+        "--allow-development-only", action="store_true",
+        help="accept a report marked development_only and mark the config to "
+             "match; for the pipeline rehearsal only",
+    )
     args = parser.parse_args()
 
     config = build(
@@ -213,6 +233,7 @@ def main() -> int:
         study_id=args.study_id, dataset_seed=args.dataset_seed,
         test_per_family=args.test_per_family, dev_per_family=args.dev_per_family,
         length_margin=args.length_margin,
+        allow_development_only=args.allow_development_only,
     )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(config, indent=2) + "\n", encoding="utf-8")
