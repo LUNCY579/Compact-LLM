@@ -64,6 +64,53 @@
       "reason": "TRANSFER_POSITIVE but production REJECT: all-256 gains 3 and all-four packs gain 7, while base/paraphrase both-correct packs lose 9 and Showcase loses 1. The undeclared general-quality profile forbids that material answerable regression."
     },
     {
+      "id": "historical-a11-dose-1p0625",
+      "candidate": "Supa-A1.1 with exact checkpoint-200 adapter dose 1.0625",
+      "classification": "ELIGIBLE",
+      "source_branch": "historical repository program",
+      "source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+      "research_status": "The 1.0625 dose was measured in the historical positive long-context geometry region and queued before rank-1 outcomes",
+      "research_evidence": [
+        "Rineya_Long_Context_Weight_Geometry_Lab_v1/README.md",
+        "Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md",
+        "Rineya_TGSA_Retrofit_v1/evidence/historical_dose_a11_1p0625_transfer_outcome.json"
+      ],
+      "parent_checkpoint": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "parent_hash": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "retrofit_configuration": {
+        "base": "Rineya-Nimbus-1.6.0-devfreeze",
+        "adapter_hash": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+        "adapter_scale": 1.0625,
+        "accumulation_dtype": "float32",
+        "output_dtype": "float16",
+        "product_profile": "general_quality_first"
+      },
+      "parent_score": 170,
+      "retrofit_score": 170,
+      "delta": 0,
+      "fidelity_status": "PASS",
+      "regression_status": "FAIL",
+      "latency_delta": null,
+      "throughput_delta": null,
+      "memory_delta": null,
+      "artifact_hash": "59f3f5bab81594d9fd8682fe3e245a2c3a1a5f797894fe41206a1bf13c52ca35",
+      "demo_status": "NOT_RUN",
+      "gates": {
+        "positive_source_evidence": true,
+        "parent_identity_verified": true,
+        "conversion_fidelity_pass": true,
+        "baked_effect_verified": true,
+        "strict_quality_gain": false,
+        "no_blocking_regression": false,
+        "production_budget_pass": null,
+        "artifact_integrity_pass": true,
+        "demo_smoke_pass": null,
+        "provenance_complete": true
+      },
+      "decision": "REJECT",
+      "reason": "TRANSFER_FAIL: all-256 ties 170/256, Showcase loses 1, and base/paraphrase both-correct packs lose 11. Exact 0.8125 reconstruction passed 310/310 tensors, so this is a transfer result rather than a builder defect."
+    },
+    {
       "id": "tgsa-v5-mechanism",
       "candidate": "TGSA learned-delta mechanism under the Phase-1 v5 competence-first path",
       "classification": "WAITING_FOR_EVIDENCE",

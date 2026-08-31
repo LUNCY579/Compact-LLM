@@ -51,9 +51,11 @@ def filter_predictions(source: Path, ids: set[str], target: Path) -> None:
     write_jsonl(target, selected)
 
 
-def run_evaluator(key: Path, predictions: Path, stem: str) -> Path:
-    report = EVIDENCE / f"{stem}_report.json"
-    markdown = EVIDENCE / f"{stem}_report.md"
+def run_evaluator(
+    key: Path, predictions: Path, stem: str, *, evidence_dir: Path = EVIDENCE
+) -> Path:
+    report = evidence_dir / f"{stem}_report.json"
+    markdown = evidence_dir / f"{stem}_report.md"
     env = dict(os.environ)
     env["PYTHONUTF8"] = "1"
     subprocess.run(

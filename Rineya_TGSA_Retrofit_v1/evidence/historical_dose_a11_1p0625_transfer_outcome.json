@@ -1,0 +1,45 @@
+{
+  "schema_version": "rineya.historical-dose-transfer-outcome.v1",
+  "trial_id": "historical-dose-a11-1p0625-v1",
+  "historical_source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+  "registration_sha256": "7d4edf232779acc6fdfd7412384c9d83a8260ec162f3a0e8dafa31b0a2cae422",
+  "runner_sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022",
+  "evaluator_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+  "parent_predictions_reused_from": "historical-soup-a11-baya-midpoint-v1",
+  "fidelity_control": {
+    "scale": 0.8125,
+    "tensor_count": 310,
+    "bitwise_mismatches": 0,
+    "max_abs_diff": 0.0,
+    "status": "PASS"
+  },
+  "candidate": {
+    "scale": 1.0625,
+    "artifact_manifest_sha256": "59f3f5bab81594d9fd8682fe3e245a2c3a1a5f797894fe41206a1bf13c52ca35",
+    "weight_bytes": 1192134496,
+    "weight_shards": {
+      "model-00001-of-00005.safetensors": "55cffb17969c303013594a34c149757b84158b281c6c9500216940439affb4f9",
+      "model-00002-of-00005.safetensors": "2e2ebab3ce1592e25fdc1b034ea7ca27ba0de388f17a252bf9c78964817ce055",
+      "model-00003-of-00005.safetensors": "2792395edb2e54637c281cebc5ce40d5fbf782a364c9ce4406519700cdae2c62",
+      "model-00004-of-00005.safetensors": "766fae79190e2ea7be8b9dafed42e3921eb10b36e32e7774cc9f1fab6f50dc2d",
+      "model-00005-of-00005.safetensors": "32d79dd820ca96a8b78b528916d4f6d44ed9bfc60d79d5d68098491d6104ad51"
+    },
+    "fresh_process_reload": "PASS"
+  },
+  "quality": {
+    "showcase64": {"parent": 45, "candidate": 44, "delta": -1},
+    "stability192": {"parent": 125, "candidate": 126, "delta": 1},
+    "all256": {"parent": 170, "candidate": 170, "delta": 0},
+    "all_four_packs": {"parent": 20, "candidate": 25, "delta": 5},
+    "base_paraphrase_both_correct_packs": {"parent": 51, "candidate": 40, "delta": -11},
+    "counterfactual_pair_packs": {"parent": 34, "candidate": 36, "delta": 2},
+    "unanswerable_hits": {"parent": 22, "candidate": 37, "delta": 15}
+  },
+  "failed_transfer_gates": [
+    "strict_all256_gain",
+    "base_paraphrase_packs_preserved"
+  ],
+  "transfer_result": "TRANSFER_FAIL",
+  "production_decision": "REJECT",
+  "reason": "No strict all-256 gain and a material 11-pack answerable regression. The positive historical dose does not transfer to the A1.1 quality-first parent."
+}

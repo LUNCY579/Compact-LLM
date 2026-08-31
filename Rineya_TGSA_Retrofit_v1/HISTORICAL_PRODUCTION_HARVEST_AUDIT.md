@@ -137,6 +137,27 @@ rises by 15. The −9 base/paraphrase pack regression and −1 Showcase result a
 material and may not be hidden by the aggregate. No resource/demo work is
 authorized for this rejected artifact.
 
+## Second transfer outcome
+
+The prequeued exact adapter dose `1.0625` is **`TRANSFER_FAIL`**.
+
+The build first reconstructed scale `0.8125` through the same FP32 LoRA formula
+and matched all 310 A1.1 tensors bitwise (`max_abs_diff=0`). That rules out a
+conversion defect. The one 1.0625 candidate then produced:
+
+| Metric | Parent | Candidate | Delta |
+|---|---:|---:|---:|
+| Showcase64 strict hits | 45 | 44 | −1 |
+| Stability192 strict hits | 125 | 126 | +1 |
+| All-256 strict hits | 170 | 170 | 0 |
+| All-four packs | 20 | 25 | +5 |
+| Base/paraphrase both-correct packs | 51 | 40 | **−11** |
+| Counterfactual pair packs | 34 | 36 | +2 |
+| Unanswerable hits | 22 | 37 | +15 |
+
+The strict-gain and answerable-preservation gates both fail. This repeats the
+rank-1 readout trade more strongly and is rejected without dose rescue.
+
 Because production validation failed, the queue moves to the single
 historically measured adapter dose 1.0625, then the Pulse negative-vector trial,
 without coefficient rescue or evaluation changes. If all reasonable checkpoint candidates fail,

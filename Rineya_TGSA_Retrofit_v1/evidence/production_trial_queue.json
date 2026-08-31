@@ -74,9 +74,9 @@
         "abstention_policy": "preserve A1.1 S4 offset unchanged"
       },
       "trial_rank": 2,
-      "trial_status": "QUEUED",
-      "transfer_result": "NOT_RUN",
-      "reason": "Second bounded checkpoint trial if the midpoint soup fails; 1.0625 was explicitly measured in the historical positive dose region, avoiding a new sweep."
+      "trial_status": "FAIL",
+      "transfer_result": "TRANSFER_FAIL",
+      "reason": "Exact reconstruction control passed 310/310 tensors bitwise, but the 1.0625 candidate tied A1.1 at 170/256 and lost 11 base/paraphrase both-correct packs. Strict-gain and answerable-preservation gates failed."
     },
     {
       "id": "cross-depth-layerwise-soup",

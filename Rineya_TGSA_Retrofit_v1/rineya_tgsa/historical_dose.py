@@ -227,7 +227,12 @@ def materialize_dose(
                             a_key, b_key = pairs[key]
                             a = adapter_file.get_tensor(a_key).float()
                             b = adapter_file.get_tensor(b_key).float()
-                            merged = base_tensor.float().add_(torch.matmul(b, a), alpha=multiplier)
+                            # Match PEFT's merge order exactly: materialize and round
+                            # ``B @ A * scaling`` in float32 before adding it to the
+                            # float32 base. ``add_(..., alpha=scaling)`` may use a fused
+                            # multiply-add and move an FP16 rounding boundary by one ULP.
+                            delta = torch.matmul(b, a) * multiplier
+                            merged = base_tensor.float() + delta
                         else:
                             merged = base_tensor.float()
                         output = merged.to(torch.float16)
