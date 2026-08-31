@@ -20,25 +20,45 @@ sitting at 0.15–0.18 against a 0.0377 trivial baseline — "roughly 4.4× base
 this registration.**
 
 `pointer_chase` and `direct_lookup` answer with one of the values *shown in the
-context*. A model that has learned only "the answer is one of these" scores
-`1/node_count`. Computed on the exact registered v4 holdout (seed 987654321, the
-`easy_nontrivial` band, 1000 examples per family):
+context*, so a model that has learned only "the answer is one of these" already
+scores well above a uniform baseline. Everything below is measured on the exact
+registered v4 holdout: seed 987654321, the `easy_nontrivial` band, 1000 examples
+per family.
 
-| family | node counts present | in-context candidate null |
-|---|---|---:|
-| `direct_lookup` | 5:250, 6:243, 7:268, 8:239 | **0.1587** |
-| `pointer_chase` | 5:224, 6:218, 7:275, 8:283 | **0.1558** |
+`OBSERVED` **A first draft of this section got the null wrong, too permissively,
+and the correction matters more than the original claim.** `pointer_chase`
+carries `reject_trivial`, which removes `value(start)` from the candidate set.
+Measured: the answer equals the start value in **0 of 1000** held-out
+`pointer_chase` items, and in **156 of 1000** `direct_lookup` items, which has no
+`reject_trivial`. The candidate set is therefore `n-1` for one family and `n` for
+the other, and using `1/n` for both understates `pointer_chase`'s null by ~0.030
+-- exactly the size of the registered margin.
 
-v4 measured `direct_lookup` at 0.147–0.171 and `pointer_chase` at 0.159–0.177.
+`OBSERVED` **The candidate set is not the only trivial strategy, and the repo
+could already measure the others.** `tgsa/phase1_difficulty.py::shortcut_baselines`
+computes `copy_start_accuracy` and `copy_last_value_accuracy`, and **nothing
+outside that module reads it**, verified by grep across every `.py` in the lab.
+The registered null must be the maximum over every strategy that involves no task
+competence:
 
-**Both families were at chance for the correct null.** They were not weakly
-learning; they had learned the answer *space* and nothing else.
+| family | candidate chance | `copy_start` | `copy_last_value` | **registered null** | v4 measured |
+|---|---:|---:|---:|---:|---|
+| `direct_lookup` | 0.1587 | **0.1560** | 0.1390 | **0.1587** | 0.1470-0.1710 |
+| `pointer_chase` | **0.1859** | 0.0000 | 0.1730 | **0.1859** | 0.1590-0.1770 |
+| `state_update` | 0.0312 | 0.0000 | 0.0000 | 0.0340 | 0.354-0.987 |
+
+**`pointer_chase` sat BELOW its own null in every one of v4's runs.** Not at
+chance -- below the best strategy that ignores the task entirely. And
+`direct_lookup`'s entire measured range is explicable by *copy the start value*,
+a strategy scoring 0.1560 that the repository could compute before launch.
+
+They had not learned the task at all.
 
 `OBSERVED` **The v4 gate certified them anyway.** In the 200k report,
 `every_primary_family_competent` is `true` and `all_arms_beat_trivial` is `true`,
 because the gate compared each family against a global 0.070 absolute floor and a
 global 0.0377 majority baseline. `pointer_chase` at 0.1590–0.1733 clears both
-comfortably while sitting on top of a 0.1558 null.
+comfortably while sitting *below* its own 0.1859 null.
 
 `SUPPORTED` **A global baseline systematically overstates competence on any
 family whose answer space is an in-context candidate set.** That is not a
@@ -56,7 +76,7 @@ scored against its own null.**
 |---|---|---|
 | per-family comparison | global floor 0.070 | **that family's own null + margin** |
 | one-hop learnability | assumed | **prerequisite probe, gates the study** |
-| hop-count modulation | assumed | **registered check** |
+| hop-count modulation | assumed, and unmeasurable | **registered diagnostic, null-matched within bucket** |
 | depth / capacity | fixed at 2 layers; wider rung never run | **registered ladder, depth first** |
 | data volume vs updates | coupled through steps | **separate registered axes** |
 | saturation | terminal reject | **terminal reject, unchanged** |
@@ -71,28 +91,51 @@ statistical design was never what failed.
 
 ## 3. The registered band
 
-`state_update` is **removed from the primary families.** It saturated at 0.98 in
+`state_update` is **removed from the primary family set.** It saturated at 0.98 in
 v4, it is accumulation arithmetic rather than the iterative pointer-following the
 mechanism targets, and a ceiling is as uninformative as a floor. It is retained
-as a **secondary descriptive family only**, and cannot contribute to any gate.
+as a **non-gating canary**, and cannot contribute to any gate.
 
-Primary families are `pointer_1hop` and `pointer_2hop` — the same generator, with
-hop count as the only difference between them, so that hop count is an
-*experimental variable* rather than a property confounded with family identity.
+`OBSERVED` **A first draft proposed renaming the families to `pointer_chase` at hops=1 and
+`pointer_chase` at hops=3. That would have silently broken the analysis.**
+`tgsa/phase1_response.py` binds six difficulty variables -- `effective_hops`,
+`context_bucket`, `evidence_position`, `evidence_span`, `distractor_count`,
+`node_count` -- to the *literal* family name `"pointer_chase"`, and no-ops on
+anything else. `tgsa/phase1_difficulty.py` hard-codes
+`{"pointer_chase", "direct_lookup"}`. Renaming disables the entire
+difficulty-response analysis without raising.
+
+`OBSERVED` **And it would have confounded hop with the instruction token.**
+`phase1_data.py:250` forces `hops = 1` for `direct_lookup`, and line 258 emits
+`TASK_LOOKUP` for it against `TASK_POINTER` for `pointer_chase`. A one-hop family
+and a two-hop family therefore differ by a *different task token*, not only by
+hop count -- which is why v4's "one-hop and two-hop are indistinguishable" could
+never have been evidence about composition in the first place.
+
+**Hop varies WITHIN one family, under one task token, with no generator change:**
 
 ```
 vocabulary:      domain_size 32, max_hops 8, max_abs_step 8
-pointer_1hop:    min_nodes 4, max_nodes 6, hops 1        (null ~0.204)
-pointer_2hop:    min_nodes 4, max_nodes 6, hops 2, reject_trivial
-                                                          (null ~0.204)
-state_update:    min_steps 2, max_steps 3, reject_trivial   SECONDARY, non-gating
-guardrail:       pointer_1hop doubles as the non-inferiority guardrail
+pointer_chase:   min_nodes 6, max_nodes 12, min_hops 1, max_hops 3,
+                 reject_trivial          PRIMARY; hop is a within-family covariate
+direct_lookup:   min_nodes 6, max_nodes 12, hops forced to 1,
+                 reject_trivial          GUARDRAIL  (reject_trivial is NEW in v5)
+state_update:    min_steps 6, max_steps 10, reject_trivial   CANARY, non-gating
 ```
 
-`node_count` is narrowed from v4's 5–8 to 4–6 deliberately. It is simultaneously
-the interference level and the null (`1/node_count`), so it is the one lever that
-moves difficulty and the comparison point together, keeping "beat your own null"
-well defined at every setting.
+`primary_families = ["pointer_chase"]`, `guardrail_family = "direct_lookup"`.
+
+`OBSERVED` Adding `reject_trivial` to `direct_lookup`, which v4 omitted, drops
+its `copy_start` shortcut from **0.1560 to 0.0000** (measured). That single
+change removes the strategy accounting for v4's entire `direct_lookup` range.
+
+`OBSERVED` **Hop is null-matched within a context bucket.** Measured on 3,000
+held-out items, the registered null varies by **0.00012** across hops 1-3 in the
+`medium` bucket and **0.00212** in `short`. A hop contrast *inside a bucket*
+therefore compares conditions sharing a task token and a null to within 0.2
+accuracy points, differing only in chain length. **Every hop contrast is
+evaluated within a bucket, never pooled** -- pooling reintroduces the node-count
+shift that rejection sampling induces across hop.
 
 `split_generation_order` is `["test", "dev", "train"]`. The evaluation splits are
 the unbiased draw; v4 shipped a band whose test split was whatever training had
@@ -105,7 +148,7 @@ not exhausted.
 v4 spent roughly eight GPU-hours to discover its band could not carry a contrast.
 The probe is designed to reach the same class of answer in well under one.
 
-**Measure:** `pointer_1hop` only, `cascade` only, 3 seeds, at the smallest rung of
+**Measure:** `pointer_chase` restricted to hops=1, `cascade` only, 3 seeds, at the smallest rung of
 the capacity ladder, on 50,000 unique examples and 1.28 M sample presentations.
 
 **Pass rule — all three must hold:**
@@ -189,15 +232,18 @@ between a demonstrated failure and a demonstrated pass:*
 cannot make a comparison it was never given the terms for, and defaulting to a
 global baseline is exactly the error being corrected.
 
-The null is **computed from the materialized holdout**, not asserted: for each
-example, `1/node_count` where the answer is drawn from an in-context candidate
-set, and `1/domain_size` where it is not.
+The null is **computed from the materialized holdout**, not asserted, and is the
+**maximum over every trivial strategy**: in-context candidate chance
+(`1/(n-1)` under `reject_trivial`, `1/n` otherwise), `copy_start`,
+`copy_last_value`, and the train and eval majority answers. `shortcut_baselines`
+already computed the copy strategies before v4 launched. The defect was never
+that they were unavailable; it was that no gate read them.
 
 ### `hop_count_modulates_accuracy`
 
 Registered as a **reported diagnostic, not a gate**, at this stage.
 
-`pointer_1hop` accuracy must exceed `pointer_2hop` accuracy. If it does not, hop
+Within a context bucket, hops=1 accuracy must exceed hops=3 accuracy. If it does not, hop
 count is not the operative difficulty and the composition interpretation of any
 subsequent contrast is unsupported — v4's two pointer families differed by
 0.005–0.019, which is why its "2-hop composition" framing was unfounded.
@@ -251,9 +297,11 @@ study matching them.
   probe for this mechanism and the cost of learning that is roughly three short
   development runs rather than v4's eight GPU-hours. That is the intended
   trade.
-* **Narrowing `node_count` to 4–6 raises the null to ~0.204**, so the absolute
-  accuracy required is higher than v4's. This is deliberate — a higher null is
-  a *more* honest bar — but it may prove unreachable at these capacities.
+* **`node_count` 6-12 gives a pooled `pointer_chase` null of ~0.131** (measured),
+  lower than v4's 0.186 because there are more candidates. The bar is lower in
+  absolute terms but honest, where v4's was not. The risk runs opposite to the
+  first draft's: more candidates means harder retrieval, and the probe may fail
+  at every rung for that reason.
 * **Depth may fix one-hop and not two-hop.** That would be a real and reportable
   finding about the task, and would still leave the mechanism untested.
 * **`state_update`'s removal from the primary families costs continuity** with

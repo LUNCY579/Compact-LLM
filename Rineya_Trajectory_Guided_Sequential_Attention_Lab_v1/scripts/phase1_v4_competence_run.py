@@ -192,31 +192,67 @@ def load_cell(path: pathlib.Path, fingerprint: str, arm: str, seed: int):
     return cell
 
 
-def in_context_candidate_null(examples, domain_size: int) -> dict[str, float]:
-    """Chance accuracy for a model that has learned only the ANSWER SPACE.
+def registered_null(
+    holdout,
+    train,
+    band_spec: dict,
+    domain_size: int,
+    vocab,
+) -> dict[str, float]:
+    """The best trivial strategy available on this band, per family.
 
-    A global majority baseline is the wrong comparison for any family whose
-    answer is one of the values shown in the context. `pointer_chase` and
-    `direct_lookup` answer with one of `node_count` in-context values, so a model
-    that has learned nothing but "the answer is one of these" scores
-    1/node_count -- 0.1558 and 0.1587 on the v4 registered holdout.
+    A null is not "uniform over the answer space". It is the score of the best
+    strategy that involves no task competence at all, and this generator offers
+    several:
 
-    v4 measured 0.147-0.177 on both families and its gate certified them
-    competent, because it compared against a 0.070 global floor and a 0.0377
-    global majority baseline. They were at chance the whole time.
+    * **in-context candidate chance.** The answer is one of the value tokens in
+      the prompt, so guessing among them scores 1/candidates. Under
+      ``reject_trivial`` the answer is never ``value(start)``, so the candidate
+      set is ``node_count - 1``, not ``node_count``. Using 1/n there understates
+      the null by ~0.030 at n=6 -- the whole size of the registered margin.
+    * **copy_start** and **copy_last_value**, already computed by
+      ``tgsa.phase1_difficulty.shortcut_baselines`` but read by nothing.
+    * the train and eval majority answers.
 
-    Families with no in-context candidate set fall back to the uniform answer
-    space, which for them is the correct null.
+    Measured on the v4 band, `pointer_chase`'s true null is 0.1859 and its
+    `copy_last_value` shortcut scores 0.1730, while v4's models reached
+    0.1590-0.1770. `direct_lookup` had no ``reject_trivial``, so a bare
+    copy-the-start-value strategy scored 0.1560 against models reaching
+    0.1470-0.1710. Both families were at or below the best strategy that ignores
+    the task, and the gate certified them because it compared against a global
+    0.0377 majority baseline.
+
+    The registered null is the MAXIMUM of these, because a family is only
+    competent if it beats every way of not doing the task.
     """
 
+    from tgsa.phase1_difficulty import shortcut_baselines
+
+    shortcuts = shortcut_baselines(train, holdout, vocab=vocab)
+
     by_family: dict[str, list[float]] = {}
-    for example in examples:
+    for example in holdout:
         candidates = (example.metadata or {}).get("node_count")
-        chance = 1.0 / float(candidates) if candidates else 1.0 / float(domain_size)
+        if candidates:
+            # reject_trivial removes value(start) from the candidate set.
+            spec = band_spec.get(example.family, {})
+            effective = candidates - 1 if spec.get("reject_trivial") else candidates
+            chance = 1.0 / float(max(effective, 1))
+        else:
+            chance = 1.0 / float(domain_size)
         by_family.setdefault(example.family, []).append(chance)
-    return {
-        family: statistics.fmean(values) for family, values in sorted(by_family.items())
-    }
+
+    nulls: dict[str, float] = {}
+    for family, chances in sorted(by_family.items()):
+        candidate_chance = statistics.fmean(chances)
+        shortcut = shortcuts.get(family) or {}
+        nulls[family] = max(
+            candidate_chance,
+            float(shortcut.get("copy_start_accuracy", 0.0)),
+            float(shortcut.get("copy_last_value_accuracy", 0.0)),
+            float(shortcut.get("train_majority_accuracy", 0.0)),
+        )
+    return nulls
 
 
 def make_split(band: str, count: int, seed: int, forbidden=None):
@@ -407,8 +443,8 @@ def main() -> int:
         maximum_seed_coefficient_of_variation=0.35,
         minimum_seed_runs=3,
     )
-    family_null = in_context_candidate_null(holdout, VOCAB.domain_size)
-    print(f"per-family null (in-context candidate chance): "
+    family_null = registered_null(holdout, train, BANDS[args.band], VOCAB.domain_size, VOCAB)
+    print(f"registered null (max over every trivial strategy): "
           f"{ {k: round(v, 4) for k, v in family_null.items()} }", flush=True)
     report = evaluate_competence(
         arms, thresholds=thresholds, trivial_baselines=trivial,
