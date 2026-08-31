@@ -146,12 +146,42 @@ def test_the_readme_test_count_is_not_stale() -> None:
     )
 
 
-def test_the_readme_does_not_overclaim() -> None:
-    """The v3 result must not be readable as evidence about the mechanism."""
+#: Properties the README must carry, each with the phrasings that satisfy it.
+#:
+#: The property is what matters, not one sentence. An earlier revision pinned
+#: the single literal "not evidence against TGSA" and broke when the README was
+#: rewritten to say the same thing more strongly -- "Neither v3 nor v4 is
+#: evidence against TGSA" and "not evidence for or against TGSA". A guard that
+#: fails on a correct rewrite teaches people to delete the guard, which is worse
+#: than having no guard at all. Each property still fails closed when NO accepted
+#: phrasing is present, which is verified by removing each in turn.
+REQUIRED_README_PROPERTIES: dict[str, tuple[str, ...]] = {
+    "the completed studies are not evidence against the mechanism": (
+        r"not evidence (?:for or )?against TGSA",
+        r"[Nn]either v3 nor v4 is evidence against TGSA",
+        r"cannot identify the mechanism in either direction",
+    ),
+    "nothing about the mechanism has been demonstrated": (
+        r"Anything about the TGSA mechanism",
+        r"[Nn]o hypothesis in the H1a/H1b/H1c ladder has been (?:confirmed|refuted)",
+    ),
+    "the current MTP work cannot certify a claim": (
+        r"non-evidentiary",
+        r"development[_ ]only",
+        r"cannot authorize a mechanism claim",
+    ),
+}
 
-    assert "not evidence against TGSA" in README
-    assert "Anything about the TGSA mechanism." in README
-    assert "non-evidentiary" in README
+
+@pytest.mark.parametrize("prop", sorted(REQUIRED_README_PROPERTIES))
+def test_the_readme_does_not_overclaim(prop: str) -> None:
+    """No completed study may be readable as evidence about the mechanism."""
+
+    accepted = REQUIRED_README_PROPERTIES[prop]
+    assert any(re.search(pattern, README) for pattern in accepted), (
+        f"the README no longer states that {prop}. Accepted phrasings: "
+        f"{list(accepted)}. Rewording is fine; dropping the property is not."
+    )
 
 
 def test_the_readme_repository_map_lists_files_that_exist() -> None:

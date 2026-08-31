@@ -159,3 +159,8 @@ Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/evaluation_progress.json
 # very rehearsal that creates it.
 .rehearsal/
 Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/.rehearsal/
+
+# Local reproduction of the CI jobs writes here; CI uploads it as an artifact.
+# Without this, anyone who reproduces a workflow locally gets a dirty tree and
+# the confirmatory runner refuses to dispatch on a dirty checkout.
+ci_artifacts/
