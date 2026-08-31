@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. This branch is the canonical Phase 2A trajectory-mechanism branch; all current TGSA × MTP runs remain development-only.** 390 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. This branch is the canonical Phase 2A trajectory-mechanism branch; all current TGSA × MTP runs remain development-only.** 396 tests.
 
 ### Canonical branch role
 

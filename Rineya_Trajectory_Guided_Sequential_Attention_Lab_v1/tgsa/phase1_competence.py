@@ -106,6 +106,9 @@ class CompetenceThresholds:
     # CV ~ 0.6; ordinary dispersion among converged runs sits near 0.1-0.3. This
     # sits between them, and is a structural bound rather than a fitted one.
     maximum_seed_coefficient_of_variation: float = 0.35
+    #: Each primary family must beat ITS OWN null by this much. A global
+    #: baseline cannot serve: see `every_primary_family_beats_its_own_null`.
+    minimum_family_margin_over_null: float = 0.030
     minimum_seed_runs: int = 3
 
     def to_dict(self) -> dict[str, object]:
@@ -137,6 +140,7 @@ def evaluate_competence(
     trivial_baselines: Mapping[str, float],
     uniform_answer_nll: float,
     primary_families: Sequence[str],
+    family_null: Mapping[str, float] | None = None,
 ) -> dict[str, object]:
     """Return a machine-readable GO / NO_GO verdict with per-check detail."""
 
@@ -188,6 +192,53 @@ def evaluate_competence(
             reasons.append(f"family {family!r} is below the absolute floor for some arm")
     checks["every_primary_family_competent"] = family_ok
     detail["per_family_accuracy"] = family_detail
+
+    # Each primary family against ITS OWN null, not a global constant.
+    #
+    # v4 certified `every_primary_family_competent` for `pointer_chase` at
+    # 0.159-0.173 against a 0.070 global floor and a 0.0377 global majority
+    # baseline. But that family's answer is one of the values shown in the
+    # context, so a model that has learned only "the answer is one of these"
+    # scores 1/node_count -- measured at 0.1558 on the registered holdout, and
+    # 0.1587 for `direct_lookup`. Both families sat AT CHANCE for the correct
+    # null while clearing every global bar the gate had.
+    #
+    # A global baseline systematically overstates competence on any family whose
+    # answer space is an in-context candidate set. That is not a threshold that
+    # was set too low; it is the wrong comparison.
+    if family_null is None:
+        checks["every_primary_family_beats_its_own_null"] = False
+        reasons.append(
+            "no per-family null was supplied. A family whose answers come from an "
+            "in-context candidate set can sit at chance and still clear a global "
+            "floor, which is exactly what v4 certified. Supply family_null"
+        )
+        detail["family_null"] = None
+    else:
+        null_ok = True
+        null_detail: dict[str, dict[str, float]] = {}
+        for family in primary_families:
+            null = float(family_null.get(family, 0.0))
+            weakest_value = min(
+                a.per_family_accuracy.get(family, 0.0) for a in arms
+            )
+            margin = weakest_value - null
+            null_detail[family] = {
+                "null": null,
+                "weakest_arm_accuracy": weakest_value,
+                "margin_over_null": margin,
+            }
+            if margin < thresholds.minimum_family_margin_over_null:
+                null_ok = False
+                reasons.append(
+                    f"family {family!r} clears its own null by only {margin:+.4f} "
+                    f"(weakest arm {weakest_value:.4f} against null {null:.4f}), "
+                    f"below the required "
+                    f"{thresholds.minimum_family_margin_over_null:+.4f}; it is at or "
+                    f"near chance for what that family actually asks"
+                )
+        checks["every_primary_family_beats_its_own_null"] = null_ok
+        detail["family_null"] = null_detail
 
     checks["predictions_are_input_dependent"] = all(
         a.distinct_predictions >= thresholds.minimum_distinct_predictions for a in arms

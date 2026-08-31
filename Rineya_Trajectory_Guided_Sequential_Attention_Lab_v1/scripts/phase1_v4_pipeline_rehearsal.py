@@ -81,6 +81,9 @@ def write_competence(path: Path) -> None:
         trivial_baselines={"uniform": 0.03125, "eval_majority": 0.039},
         uniform_answer_nll=math.log(32),
         primary_families=("pointer_chase", "state_update"),
+        # Synthetic, like every other number in this rehearsal. A real run
+        # computes this from the holdout's candidate sets.
+        family_null={"pointer_chase": 0.1558, "state_update": 0.0312},
     )
     assert report["verdict"] == "GO", report["reasons"]
     report["regime"] = {

@@ -29,6 +29,11 @@ from tgsa.phase1_competence import (
 UNIFORM_NLL = math.log(32)
 PRIMARY = ("pointer_chase", "state_update")
 BASELINES = {"uniform": 0.0312, "train_majority": 0.0360, "eval_majority": 0.0407}
+#: A properly specified study gives each primary family its own null. These
+#: are the uniform answer space, correct for families with no in-context
+#: candidate set. A family whose answer is one of the values shown in the
+#: context needs 1/candidates instead -- see the v4 pointer families below.
+DEFAULT_FAMILY_NULL = {"pointer_chase": 0.0312, "state_update": 0.0312}
 
 
 def _thresholds(**overrides) -> CompetenceThresholds:
@@ -68,13 +73,14 @@ def _arms(**overrides) -> list[ArmCompetence]:
     ]
 
 
-def _evaluate(arms) -> dict:
+def _evaluate(arms, family_null=None) -> dict:
     return evaluate_competence(
         arms,
         thresholds=_thresholds(),
         trivial_baselines=BASELINES,
         uniform_answer_nll=UNIFORM_NLL,
         primary_families=PRIMARY,
+        family_null=DEFAULT_FAMILY_NULL if family_null is None else family_null,
     )
 
 
@@ -541,3 +547,106 @@ def test_the_runner_accepts_a_marked_report_only_for_a_marked_study(tmp_path: Pa
             output_root=tmp_path / "study", repo_root=lab.parent, phase="train",
         )
     assert not (tmp_path / "study").exists()
+
+
+# --------------------------------------------------------------------------
+# Each primary family against ITS OWN null
+# --------------------------------------------------------------------------
+#
+# The v4 measurement that forced this check. `pointer_chase` answers are one of
+# the values shown in the context, so a model that has learned only "the answer
+# is one of these" scores 1/node_count. On the registered holdout that is 0.1558
+# for pointer_chase and 0.1587 for direct_lookup. v4 measured 0.147-0.177 on
+# both -- at chance -- and the gate certified them, because it compared against a
+# global 0.070 floor and a global 0.0377 majority baseline.
+
+V4_POINTER_NULL = {"pointer_chase": 0.1558, "direct_lookup": 0.1587}
+
+
+def _null_evaluate(arms, family_null=None):
+    """Deliberately passes family_null straight through, including None, so the
+    fail-closed path can be tested."""
+
+    return evaluate_competence(
+        arms, thresholds=_thresholds(), trivial_baselines=BASELINES,
+        uniform_answer_nll=UNIFORM_NLL, primary_families=PRIMARY,
+        family_null=family_null,
+    )
+
+
+def test_the_v4_pointer_families_are_refused_against_their_own_null() -> None:
+    """The exact numbers the old gate passed."""
+
+    arms = [
+        ArmCompetence(
+            arm=name, holdout_accuracy=0.2244, seen_accuracy=0.2582,
+            answer_nll=2.086, distinct_predictions=32,
+            per_family_accuracy={"pointer_chase": value, "state_update": 0.36},
+            per_seed_holdout_accuracy=[0.22, 0.224, 0.229],
+        )
+        for name, value in (("cascade", 0.1590), ("history_control", 0.1703),
+                            ("learned_delta", 0.1733))
+    ]
+    report = _null_evaluate(arms, V4_POINTER_NULL)
+    assert report["checks"]["every_primary_family_beats_its_own_null"] is False
+    assert any("at or near chance" in r for r in report["reasons"])
+    detail = report["detail"]["family_null"]["pointer_chase"]
+    assert detail["margin_over_null"] < 0.01
+
+
+def test_the_old_global_floor_would_still_have_passed_them() -> None:
+    """Establishes that the new check is doing work the old ones did not.
+
+    If the global checks also rejected these numbers, the new check would be
+    redundant rather than load-bearing.
+    """
+
+    arms = [
+        ArmCompetence(
+            arm=name, holdout_accuracy=0.2244, seen_accuracy=0.2582,
+            answer_nll=2.086, distinct_predictions=32,
+            per_family_accuracy={"pointer_chase": value, "state_update": 0.36},
+            per_seed_holdout_accuracy=[0.22, 0.224, 0.229],
+        )
+        for name, value in (("cascade", 0.1590), ("history_control", 0.1703),
+                            ("learned_delta", 0.1733))
+    ]
+    report = _null_evaluate(arms, V4_POINTER_NULL)
+    assert report["checks"]["every_primary_family_competent"] is True
+    assert report["checks"]["all_arms_beat_trivial"] is True
+
+
+def test_a_family_genuinely_above_its_null_passes() -> None:
+    arms = _arms()
+    for index, arm in enumerate(arms):
+        arms[index] = _competent_arm(
+            arm.arm, accuracy=0.42,
+            per_family_accuracy={"pointer_chase": 0.42, "state_update": 0.40},
+            per_seed_holdout_accuracy=[0.41, 0.42, 0.43],
+        )
+    report = _null_evaluate(arms, V4_POINTER_NULL)
+    assert report["checks"]["every_primary_family_beats_its_own_null"] is True
+
+
+def test_an_absent_null_fails_closed() -> None:
+    """A gate cannot compare against a null it was never given."""
+
+    report = _null_evaluate(_arms(), None)
+    assert report["checks"]["every_primary_family_beats_its_own_null"] is False
+    assert any("no per-family null was supplied" in r for r in report["reasons"])
+
+
+def test_the_null_is_per_family_not_global() -> None:
+    """One family clearing its null must not cover another that does not."""
+
+    arms = _arms()
+    for index, arm in enumerate(arms):
+        arms[index] = _competent_arm(
+            arm.arm, accuracy=0.30,
+            per_family_accuracy={"pointer_chase": 0.16, "state_update": 0.44},
+            per_seed_holdout_accuracy=[0.29, 0.30, 0.31],
+        )
+    report = _null_evaluate(arms, {"pointer_chase": 0.1558, "state_update": 0.0312})
+    assert report["checks"]["every_primary_family_beats_its_own_null"] is False
+    assert any("'pointer_chase'" in r for r in report["reasons"])
+    assert not any("'state_update'" in r for r in report["reasons"])

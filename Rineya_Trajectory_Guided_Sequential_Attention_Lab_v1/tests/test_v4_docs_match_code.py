@@ -61,8 +61,18 @@ def test_no_document_still_quotes_the_withdrawn_sd_bound() -> None:
         assert "between-seed SD, per arm" not in text, f"{name} still gates on raw SD"
 
 
+#: Every registration document a check may be registered in. A check enforced by
+#: code must appear in at least one, or it is an unregistered gate. v4 is frozen
+#: and its regime rejected, so checks added afterwards are registered in v5.
+REGISTRATION_DOCUMENTS = {
+    "v4": PREREG,
+    "v5": (LAB / "PHASE1_V5_PREREGISTRATION.md").read_text(encoding="utf-8")
+          if (LAB / "PHASE1_V5_PREREGISTRATION.md").is_file() else "",
+}
+
+
 def test_the_prereg_gate_table_lists_every_check() -> None:
-    """A check that exists in code but not in the prereg is an unregistered gate."""
+    """A check that exists in code but not in any registration is unregistered."""
 
     from tgsa.phase1_competence import (
         ArmCompetence,
@@ -82,9 +92,15 @@ def test_the_prereg_gate_table_lists_every_check() -> None:
         trivial_baselines={"uniform": 0.03125, "eval_majority": 0.039},
         uniform_answer_nll=math.log(32),
         primary_families=("pointer_chase", "state_update"),
+        family_null={"pointer_chase": 0.0312, "state_update": 0.0312},
     )
     for check in report["checks"]:
-        assert check in PREREG, f"check {check!r} is enforced by code but not registered"
+        where = [name for name, text in REGISTRATION_DOCUMENTS.items() if check in text]
+        assert where, (
+            f"check {check!r} is enforced by code but appears in no registration "
+            f"document ({sorted(REGISTRATION_DOCUMENTS)}). An enforced check that is "
+            f"registered nowhere is an unregistered gate"
+        )
 
 
 def test_the_schema_version_is_not_stale_in_the_pilot_report() -> None:

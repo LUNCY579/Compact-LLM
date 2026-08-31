@@ -65,6 +65,12 @@ def _write(tmp_path: Path, runs: list[dict], verdict: str = "GO") -> Path:
         "verdict": verdict,
         "trivial_baselines": {"uniform": 0.03125, "eval_majority": 0.039},
         "regime": {"band": "easy_nontrivial", "steps": 20000},
+        # A properly measured report records the per-family null it was judged
+        # against. Re-gating reads it rather than inventing one.
+        "detail": {"family_null": {
+            "pointer_chase": {"null": 0.0312},
+            "state_update": {"null": 0.0312},
+        }},
         "runs": runs,
     }), encoding="utf-8")
     return path
@@ -143,3 +149,21 @@ def test_the_source_is_hash_bound_into_the_output(tmp_path: Path) -> None:
     source = _write(tmp_path, runs)
     _, payload = _regate(tmp_path, source)
     assert payload["derived_from"]["sha256"] == hashlib.sha256(source.read_bytes()).hexdigest()
+
+
+def test_a_stored_report_without_a_recorded_null_fails_closed(tmp_path: Path) -> None:
+    """v4-era reports were judged against a global baseline and recorded no
+    per-family null. Re-gating one must not invent the comparison it lacked."""
+
+    runs = [_run(a, s, h, h + 0.02)
+            for a in ("cascade", "history_control", "learned_delta")
+            for s, h in zip((1, 2, 3), (0.40, 0.44, 0.42))]
+    source = _write(tmp_path, runs)
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    del payload["detail"]
+    source.write_text(json.dumps(payload), encoding="utf-8")
+
+    code, regated = _regate(tmp_path, source)
+    assert code == 1
+    assert regated["verdict"] == "NO_GO"
+    assert regated["checks"]["every_primary_family_beats_its_own_null"] is False

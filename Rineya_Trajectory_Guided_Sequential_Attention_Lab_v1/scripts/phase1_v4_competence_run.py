@@ -192,6 +192,33 @@ def load_cell(path: pathlib.Path, fingerprint: str, arm: str, seed: int):
     return cell
 
 
+def in_context_candidate_null(examples, domain_size: int) -> dict[str, float]:
+    """Chance accuracy for a model that has learned only the ANSWER SPACE.
+
+    A global majority baseline is the wrong comparison for any family whose
+    answer is one of the values shown in the context. `pointer_chase` and
+    `direct_lookup` answer with one of `node_count` in-context values, so a model
+    that has learned nothing but "the answer is one of these" scores
+    1/node_count -- 0.1558 and 0.1587 on the v4 registered holdout.
+
+    v4 measured 0.147-0.177 on both families and its gate certified them
+    competent, because it compared against a 0.070 global floor and a 0.0377
+    global majority baseline. They were at chance the whole time.
+
+    Families with no in-context candidate set fall back to the uniform answer
+    space, which for them is the correct null.
+    """
+
+    by_family: dict[str, list[float]] = {}
+    for example in examples:
+        candidates = (example.metadata or {}).get("node_count")
+        chance = 1.0 / float(candidates) if candidates else 1.0 / float(domain_size)
+        by_family.setdefault(example.family, []).append(chance)
+    return {
+        family: statistics.fmean(values) for family, values in sorted(by_family.items())
+    }
+
+
 def make_split(band: str, count: int, seed: int, forbidden=None):
     per_family = max(1, count // 3)
     return generate_split(
@@ -380,9 +407,13 @@ def main() -> int:
         maximum_seed_coefficient_of_variation=0.35,
         minimum_seed_runs=3,
     )
+    family_null = in_context_candidate_null(holdout, VOCAB.domain_size)
+    print(f"per-family null (in-context candidate chance): "
+          f"{ {k: round(v, 4) for k, v in family_null.items()} }", flush=True)
     report = evaluate_competence(
         arms, thresholds=thresholds, trivial_baselines=trivial,
         uniform_answer_nll=math.log(VOCAB.domain_size), primary_families=PRIMARY,
+        family_null=family_null,
     )
     report["regime"] = {
         "band": args.band, "band_spec": BANDS[args.band],

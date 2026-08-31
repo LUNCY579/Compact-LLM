@@ -53,6 +53,27 @@ FROZEN = CompetenceThresholds(
 PRIMARY_FAMILIES = ("pointer_chase", "state_update")
 
 
+def _recorded_family_null(source: dict) -> dict[str, float] | None:
+    """The per-family null the original run recorded, if it recorded one.
+
+    Re-gating recomputes a verdict from stored measurements; it must not invent a
+    null the original run never had. A report measured under a gate that could
+    not make this comparison fails the per-family check closed, which is the
+    correct outcome rather than a nuisance.
+    """
+
+    recorded = (source.get("detail") or {}).get("family_null")
+    if not isinstance(recorded, dict) or not recorded:
+        return None
+    values: dict[str, float] = {}
+    for family, entry in recorded.items():
+        if isinstance(entry, dict) and "null" in entry:
+            values[str(family)] = float(entry["null"])
+        elif isinstance(entry, (int, float)):
+            values[str(family)] = float(entry)
+    return values or None
+
+
 def arms_from_runs(runs: list[dict]) -> list[ArmCompetence]:
     """Rebuild per-arm evidence from the raw per-run measurements."""
 
@@ -102,6 +123,7 @@ def main() -> int:
         trivial_baselines=source["trivial_baselines"],
         uniform_answer_nll=math.log(args.domain_size),
         primary_families=PRIMARY_FAMILIES,
+        family_null=_recorded_family_null(source),
     )
     report["regime"] = source["regime"]
     report["runs"] = runs

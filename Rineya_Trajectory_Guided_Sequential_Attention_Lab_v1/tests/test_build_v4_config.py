@@ -63,6 +63,7 @@ def _competence(tmp_path: Path, *, verdict_arms=None, train_examples: int = 300)
         trivial_baselines={"uniform": 0.03125, "eval_majority": 0.039},
         uniform_answer_nll=math.log(32),
         primary_families=("pointer_chase", "state_update"),
+        family_null={"pointer_chase": 0.0312, "state_update": 0.0312},
     )
     report["regime"] = {
         "band": "easy_nontrivial", "band_spec": BAND,
