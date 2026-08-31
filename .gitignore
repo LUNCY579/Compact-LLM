@@ -159,3 +159,11 @@ Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/evaluation_progress.json
 # very rehearsal that creates it.
 .rehearsal/
 Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/.rehearsal/
+
+# Scratch output of the Phase-2 TGSA x MTP eight-cell rehearsal. The runbook
+# defines ROOT=evidence/phase2_mtp_smoke_local at the repo root and begins by
+# deleting it, so this tree is regenerated, not preserved. It is a CPU-only,
+# three-update, confirmatory=false rehearsal: development-only output, never
+# admissible evidence. Same reason as .rehearsal/ above -- leaving it untracked
+# dirties the checkout and the runner refuses to dispatch on a dirty checkout.
+/evidence/phase2_mtp_smoke_local/
