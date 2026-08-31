@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/production-trial-queue.v1.json",
+  "title": "Rineya historical production-transfer trial queue",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "audited_at_utc",
+    "retrofit_branch",
+    "retrofit_commit",
+    "selected_trial_id",
+    "selection_policy",
+    "trials"
+  ],
+  "properties": {
+    "schema_version": {"const": "rineya.production-trial-queue.v1"},
+    "audited_at_utc": {"type": "string", "format": "date-time"},
+    "retrofit_branch": {"const": "research/tgsa-rineya-pretrained-retrofit"},
+    "retrofit_commit": {"$ref": "#/$defs/commit"},
+    "selected_trial_id": {"type": ["string", "null"]},
+    "selection_policy": {"type": "string", "minLength": 1},
+    "trials": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/trial"}
+    }
+  },
+  "$defs": {
+    "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "string_or_null": {"type": ["string", "null"]},
+    "trial": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "mechanism",
+        "mechanism_class",
+        "eligibility_stage",
+        "source_era_phase",
+        "source_commit",
+        "source_checkpoint",
+        "positive_result",
+        "control_baseline",
+        "preservation_result",
+        "artifact_type",
+        "bakeability",
+        "current_parent_compatibility",
+        "expected_integration_cost",
+        "known_negative_transfers",
+        "trial_configuration",
+        "trial_rank",
+        "trial_status",
+        "transfer_result",
+        "reason"
+      ],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9._-]*$"},
+        "mechanism": {"type": "string", "minLength": 1},
+        "mechanism_class": {"enum": ["CHECKPOINT", "RUNTIME", "PRODUCT_POLICY", "SYSTEM"]},
+        "eligibility_stage": {
+          "enum": [
+            "RESEARCH_POSITIVE_TRIAL_ELIGIBLE",
+            "ALREADY_INTEGRATED",
+            "NOT_TRIAL_ELIGIBLE"
+          ]
+        },
+        "source_era_phase": {"type": "string", "minLength": 1},
+        "source_commit": {"$ref": "#/$defs/commit"},
+        "source_checkpoint": {"$ref": "#/$defs/string_or_null"},
+        "positive_result": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"type": "string", "minLength": 1}
+        },
+        "control_baseline": {"type": "string", "minLength": 1},
+        "preservation_result": {"type": "string", "minLength": 1},
+        "artifact_type": {"type": "string", "minLength": 1},
+        "bakeability": {"type": "string", "minLength": 1},
+        "current_parent_compatibility": {"type": "string", "minLength": 1},
+        "expected_integration_cost": {"enum": ["SMALL", "MEDIUM", "LARGE"]},
+        "known_negative_transfers": {
+          "type": "array",
+          "items": {"type": "string", "minLength": 1}
+        },
+        "trial_configuration": {"type": ["object", "null"]},
+        "trial_rank": {"type": ["integer", "null"], "minimum": 1},
+        "trial_status": {
+          "enum": [
+            "QUEUED",
+            "RUNNING",
+            "PASS",
+            "FAIL",
+            "DEFER_MISSING_ARTIFACT",
+            "ALREADY_INTEGRATED",
+            "EXCLUDED"
+          ]
+        },
+        "transfer_result": {
+          "enum": [
+            "NOT_RUN",
+            "TRANSFER_POSITIVE",
+            "TRANSFER_FAIL",
+            "DEFER_MISSING_ARTIFACT",
+            "NOT_APPLICABLE"
+          ]
+        },
+        "reason": {"type": "string", "minLength": 1}
+      }
+    }
+  }
+}

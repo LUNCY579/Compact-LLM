@@ -52,7 +52,9 @@ jobs:
           PY
 
       - name: Verify candidate intake and promotion decisions
-        run: python "${LAB}/scripts/verify_candidate_ledger.py"
+        run: |
+          python "${LAB}/scripts/verify_production_trial_queue.py"
+          python "${LAB}/scripts/verify_candidate_ledger.py"
 
       - name: Run complete retrofit suite
         run: python -m pytest "${LAB}/tests" -q --tb=short --durations=15

@@ -17,6 +17,11 @@ from .promotion import (
     validate_candidate,
     validate_ledger,
 )
+from .trial_queue import (
+    TRIAL_QUEUE_SCHEMA_VERSION,
+    validate_trial,
+    validate_trial_queue,
+)
 
 __all__ = [
     "NativeReferenceAttention",
@@ -27,9 +32,12 @@ __all__ = [
     "RotaryEmbedding",
     "TrajectoryEncoder",
     "TrajectoryTelemetry",
+    "TRIAL_QUEUE_SCHEMA_VERSION",
     "apply_rotary",
     "rotate_half",
     "promotion_failures",
     "validate_candidate",
     "validate_ledger",
+    "validate_trial",
+    "validate_trial_queue",
 ]

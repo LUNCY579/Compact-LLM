@@ -3,6 +3,30 @@
 Every command fails closed. All commands are development-only: none reads the
 Phase-1 confirmatory bank.
 
+## Two-ledger production flow
+
+The historical harvest and shipping decisions are deliberately separate:
+
+```text
+historical empirical positive
+  -> PRODUCTION_TRIAL_QUEUE (worth one bounded transfer; never promotable)
+  -> TRANSFER_POSITIVE against the exact modern parent
+  -> candidate_ledger.json ten-gate production validation
+  -> PROMOTE only when every shipping gate is true
+```
+
+Validate both ledgers before any trial:
+
+```powershell
+python .\scripts\verify_production_trial_queue.py
+python .\scripts\verify_candidate_ledger.py
+```
+
+The current frozen bounded trial is
+`configs/historical_soup_a11_baya_midpoint_trial.json`. Its one candidate,
+coefficient, parent, ingredient, evaluation hashes, and no-tie transfer gate
+must not change after outcome generation begins.
+
 ```powershell
 $ErrorActionPreference = "Stop"
 Set-Location C:\Users\clclc\BusinessProject\Chat-Bubble-rineya-retrofit\Rineya_TGSA_Retrofit_v1
@@ -147,11 +171,13 @@ python -m pytest .\tests -q
 
 ## Status of these commands
 
-Steps 1, 2, 4, 7, 8, 9, and candidate-ledger verification are implemented.
+Steps 1, 2, 4, 7, 8, 9, candidate-ledger verification, and historical trial-
+queue verification are implemented.
 Real Supa-A1 conversion evidence exists for the older BF16 A1 parent. Steps 3,
 5, and 6 lack standalone drivers/artifacts. No command currently writes and
 fresh-process reloads a self-contained trained retrofit checkpoint, benchmarks
 serving, packages a release, or smoke-tests the exact artifact in a production
-demo. Supa-A1.1 and Baya weights are not cached locally. The active candidate
-ledger contains no `ELIGIBLE` mechanism, so conversion/training must remain
-parked until positive source evidence exists.
+demo. Supa-A1.1 and Baya weights are absent from this worktree but have been
+located and hash-verified in the sibling canonical ChatBubble checkout. The
+strict shipping ledger contains no `ELIGIBLE` model; the separate historical
+queue now authorizes only the frozen bounded midpoint-soup transfer trial.

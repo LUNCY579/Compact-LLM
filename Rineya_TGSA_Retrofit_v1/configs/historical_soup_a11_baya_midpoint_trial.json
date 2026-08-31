@@ -1,0 +1,157 @@
+{
+  "schema_version": "rineya.historical-transfer-trial.v1",
+  "trial_id": "historical-soup-a11-baya-midpoint-v1",
+  "registration_status": "FROZEN_BEFORE_OUTCOME",
+  "registered_at_utc": "2026-08-31T05:20:12Z",
+  "registration_base_commit": "3d481b959ff4bb35150a42836ee33f6709f20598",
+  "purpose": "Test whether the historically positive uniform FP32 model-soup technique transfers to the strongest compatible dense Supa parent using the same-base, same-adapter Supa/Baya dose pair.",
+  "historical_evidence": [
+    {
+      "mechanism": "uniform reconstructed-delta soup",
+      "source_commit": "a07abdb99826072cff9079d986302b6cb4fa221e",
+      "artifacts": [
+        "short-response-model-phase-0-1-2/reports/PHASE_4_phase2c_balanced_training_STOP_GATE.md",
+        "short-response-model-phase-0-1-2/reports/MODEL_SOUP_REPORT_phase2c_balanced_training.md"
+      ]
+    },
+    {
+      "mechanism": "bounded adapter dose geometry",
+      "source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+      "artifacts": [
+        "Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md",
+        "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/CORE.json",
+        "Rineya_Published_Cores/Rineya-Baya-1.7.0-devfreeze/CORE.json"
+      ]
+    }
+  ],
+  "parent": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "core_id": "rineya.core.supa-a1.1.v1.1.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-fp16-abstain-b5p15625",
+    "weight_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "weight_bytes": 1192134784,
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "load_dtype": "float16",
+    "trust_remote_code": true,
+    "required_class": "Qwen3AbstainForCausalLM",
+    "abstain_token_id": 51378,
+    "abstain_logit_bias": 5.156249985098839
+  },
+  "ingredient": {
+    "name": "Rineya-Baya-1.7.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Baya-1.7.0-devfreeze",
+    "core_id": "rineya.core.baya.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25",
+    "weight_sha256": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+    "weight_bytes": 1192135096,
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "historical_adapter_scale": 1.25
+  },
+  "compatibility_freeze": {
+    "tensor_count_each": 310,
+    "tensor_key_sets_identical": true,
+    "tensor_shapes_identical": true,
+    "tokenizer_sha256_identical": true,
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "hidden_size": 1024,
+    "intermediate_size": 3072,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "vocab_size": 151936,
+    "tie_word_embeddings": true,
+    "lineage": "Both endpoints equal Nimbus 1.6 plus the same Stage-A checkpoint-200 rank-16 LoRA, densely merged at scales 0.8125 and 1.25; A1.1 is stored FP16 and Baya BF16.",
+    "metadata_policy": "Retain only A1.1 runtime/tokenizer/config assets and its S4 abstention offset; never copy Baya identity metadata into the candidate."
+  },
+  "recipe": {
+    "kind": "uniform_dense_lerp",
+    "parent_coefficient": 0.5,
+    "ingredient_coefficient": 0.5,
+    "accumulation_dtype": "float32",
+    "output_dtype": "float16",
+    "candidate_count": 1,
+    "effective_adapter_scale_if_linearity_and_unrounded_sources_hold": 1.03125,
+    "forbidden_adaptation": [
+      "no coefficient refinement",
+      "no layerwise search",
+      "no prompt or threshold changes",
+      "no gate retuning",
+      "no sealed-data access"
+    ]
+  },
+  "candidate": {
+    "name": "Rineya-Supa-A1.1-BayaMid-Soup-0.5-transfer-v1",
+    "artifact_root": "artifacts/historical_soup_a11_baya_midpoint_v1/candidate",
+    "evidence_root": "artifacts/historical_soup_a11_baya_midpoint_v1/evidence",
+    "required_runtime_assets": [
+      "config.json",
+      "generation_config.json",
+      "modeling_supa_a11.py",
+      "tokenizer_config.json",
+      "tokenizer.json",
+      "vocab.json",
+      "merges.txt"
+    ],
+    "forbidden_inherited_identity_assets": [
+      "CORE.json",
+      "FILES.json",
+      "SOURCE_CHECKPOINT.json",
+      "evidence"
+    ]
+  },
+  "evaluation": {
+    "runner": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
+      "sha256": "8c6762adda325a8a80630a30cf4b3432337059806ebdf8f2067c8a765894a6a5"
+    },
+    "evaluator": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+      "sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5"
+    },
+    "showcase": {
+      "prompts": "Rineya_Long_Context_Demo_v1/data/showcase_prompts.jsonl",
+      "prompts_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+      "key": "Rineya_Long_Context_Demo_v1/data/showcase_answer_key.jsonl",
+      "key_sha256": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+      "role": "previously used selection surface; reported separately, never used to alter this one-candidate recipe"
+    },
+    "stability": {
+      "prompts": "Rineya_Long_Context_Demo_v1/data/stability_prompts.jsonl",
+      "prompts_sha256": "7dc1454cd8fc9e22f536f3acb10a4e302343896ce1837ff9a0ad4f163dc73901",
+      "key": "Rineya_Long_Context_Demo_v1/data/stability_answer_key.jsonl",
+      "key_sha256": "248bdc5592ba9eac05737e6cf160d5e6ec85d03590ee4ba8778f28e4098d01d9",
+      "role": "previously inspected frozen validation; preservation gate only, not a clean new sealed test"
+    },
+    "protocol": {
+      "decoding": "greedy",
+      "seed": 17,
+      "enable_thinking": false,
+      "max_new_tokens": 24,
+      "max_context": 4096,
+      "truncation": "forbidden",
+      "torch_dtype": "float16",
+      "trust_remote_code": true,
+      "candidate_and_parent_same_process_contract": false,
+      "fresh_process_per_artifact": true,
+      "rerun_exact_parent": true
+    }
+  },
+  "transfer_gate": {
+    "result_on_pass": "TRANSFER_POSITIVE",
+    "result_on_failure": "TRANSFER_FAIL",
+    "logical_operator": "AND",
+    "requirements": [
+      "candidate all-256 strict exact hits >= fresh parent hits + 1",
+      "candidate Stability192 strict exact hits >= fresh parent hits",
+      "candidate all-four-variants-correct packs >= fresh parent packs",
+      "candidate prediction coverage = 1.0 with no duplicates or unexpected IDs",
+      "candidate generation has no non-finite values, empty outputs, or repetition failure introduced",
+      "candidate artifact reloads in a fresh process as Qwen3AbstainForCausalLM with the frozen S4 offset",
+      "candidate artifact and evaluation provenance hashes are complete"
+    ],
+    "tie_policy": "FAIL",
+    "post_pass_scope": "A pass authorizes broader production preservation/resource/demo validation, not promotion. The unchanged ten-gate shipping predicate remains mandatory."
+  }
+}
