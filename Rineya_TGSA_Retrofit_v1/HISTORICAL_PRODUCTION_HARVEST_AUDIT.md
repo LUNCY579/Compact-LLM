@@ -113,12 +113,32 @@ the first four archived parent fixtures before use. All model weights, prompts,
 seed, decoding, attention, cache, dtype, threshold, and evaluator settings
 remain unchanged.
 
-## Outcome
+## First transfer outcome
 
-`PENDING — registration must be committed before merge or inference.`
+`TRANSFER_POSITIVE` under the frozen gate; production decision **`REJECT`**.
 
-If the transfer fails, the queue moves to the single historically measured
-adapter dose 1.0625, then the Pulse negative-vector trial, without coefficient
-rescue or evaluation changes. If all reasonable checkpoint candidates fail,
+| Metric | Parent | Candidate | Delta |
+|---|---:|---:|---:|
+| Showcase64 strict hits | 45 | 44 | −1 |
+| Stability192 strict hits | 125 | 129 | +4 |
+| All-256 strict hits | 170 | 173 | +3 |
+| All-four packs | 20 | 27 | +7 |
+| Base/paraphrase both-correct packs | 51 | 42 | **−9** |
+| Counterfactual pair packs | 34 | 36 | +2 |
+| Unanswerable hits | 22 | 37 | +15 |
+
+The transfer gate passes exactly as registered: aggregate strict quality rises,
+Stability and all-four packs are preserved/improved, coverage and generation
+health pass, the custom artifact reloads, and portable S4 behavior is fixture-
+equivalent. The general production profile nevertheless fails
+`no_blocking_regression`: the aggregate gain is a readout trade, with base,
+paraphrase, and counterfactual hits falling by 5, 6, and 1 while unanswerable
+rises by 15. The −9 base/paraphrase pack regression and −1 Showcase result are
+material and may not be hidden by the aggregate. No resource/demo work is
+authorized for this rejected artifact.
+
+Because production validation failed, the queue moves to the single
+historically measured adapter dose 1.0625, then the Pulse negative-vector trial,
+without coefficient rescue or evaluation changes. If all reasonable checkpoint candidates fail,
 the runtime-only context-compaction profile is assessed separately rather than
 misrepresented as a new model.

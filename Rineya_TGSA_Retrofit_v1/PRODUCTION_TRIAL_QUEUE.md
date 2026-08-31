@@ -12,7 +12,7 @@ still requires the separate unchanged ten-gate promotion ledger.
 
 | Rank | Mechanism | Class | Historical signal | Modern target/status | Why this position |
 |---:|---|---|---|---|---|
-| 1 | Uniform FP32 reconstructed-delta soup | CHECKPOINT | Phase-4 seed_37/seed_49 soup improved mean quality, preserved worst decile, zero hard/critical failures, human PASS | Supa-A1.1 + Baya midpoint; `QUEUED` | Same base, adapter, tensors, tokenizer, and topology; one candidate; no training/runtime cost |
+| 1 | Uniform FP32 reconstructed-delta soup | CHECKPOINT | Phase-4 seed_37/seed_49 soup improved mean quality, preserved worst decile, zero hard/critical failures, human PASS | `TRANSFER_POSITIVE`; production `REJECT` | +3/256 and +7 all-four packs, but −9 base/paraphrase both-correct packs and −1 Showcase block general promotion |
 | 2 | Long-context adapter dose 1.0625 | CHECKPOINT | Nimbus + checkpoint-200 dose region created Supa/Baya and large long-context gains | Supa-A1.1 lineage; `QUEUED` | Exact same adapter lineage and one historically measured dose, but less directly supported than the midpoint soup |
 | 3 | Pulse negative task vector | CHECKPOINT | Pulse improved from 31/64 to 41/64 and 117/192 | A1.1 transfer; `QUEUED` only after ranks 1–2 fail | Strong gain and bakeable, but historical evidence says the effect is anchor-dependent |
 | 4 | Context compaction | RUNTIME | 29.10% memory-token reduction with complete measured recall and no reported quality loss | Efficiency profile; `QUEUED` | Real product-stack win, but cannot satisfy the immediate one-checkpoint objective |

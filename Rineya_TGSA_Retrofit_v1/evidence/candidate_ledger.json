@@ -17,6 +17,53 @@
   ],
   "candidates": [
     {
+      "id": "historical-a11-baya-midpoint-soup",
+      "candidate": "Supa-A1.1/Baya 1.7 uniform 50/50 FP32 dense soup",
+      "classification": "ELIGIBLE",
+      "source_branch": "historical repository program",
+      "source_commit": "a07abdb99826072cff9079d986302b6cb4fa221e",
+      "research_status": "Historical Phase-4 uniform soup passed its quality/tail/failure/human gates and justified one bounded modern transfer",
+      "research_evidence": [
+        "short-response-model-phase-0-1-2/reports/PHASE_4_phase2c_balanced_training_STOP_GATE.md",
+        "short-response-model-phase-0-1-2/reports/MODEL_SOUP_REPORT_phase2c_balanced_training.md",
+        "Rineya_TGSA_Retrofit_v1/evidence/historical_soup_a11_baya_midpoint_transfer_outcome.json"
+      ],
+      "parent_checkpoint": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "parent_hash": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "retrofit_configuration": {
+        "ingredient": "Rineya-Baya-1.7.0-devfreeze",
+        "ingredient_hash": "1737cd1ee2bdde714c259adf2012ae44c89ad82a06797653343bad7e3cf88bba",
+        "ingredient_coefficient": 0.5,
+        "accumulation_dtype": "float32",
+        "output_dtype": "float16",
+        "product_profile": "general_quality_first"
+      },
+      "parent_score": 170,
+      "retrofit_score": 173,
+      "delta": 3,
+      "fidelity_status": "PASS",
+      "regression_status": "FAIL",
+      "latency_delta": null,
+      "throughput_delta": null,
+      "memory_delta": null,
+      "artifact_hash": "73312805252d10b903f6262d1d431fe7b97341dbdbbc183e0f9936ace5415767",
+      "demo_status": "NOT_RUN",
+      "gates": {
+        "positive_source_evidence": true,
+        "parent_identity_verified": true,
+        "conversion_fidelity_pass": true,
+        "baked_effect_verified": true,
+        "strict_quality_gain": true,
+        "no_blocking_regression": false,
+        "production_budget_pass": null,
+        "artifact_integrity_pass": true,
+        "demo_smoke_pass": null,
+        "provenance_complete": true
+      },
+      "decision": "REJECT",
+      "reason": "TRANSFER_POSITIVE but production REJECT: all-256 gains 3 and all-four packs gain 7, while base/paraphrase both-correct packs lose 9 and Showcase loses 1. The undeclared general-quality profile forbids that material answerable regression."
+    },
+    {
       "id": "tgsa-v5-mechanism",
       "candidate": "TGSA learned-delta mechanism under the Phase-1 v5 competence-first path",
       "classification": "WAITING_FOR_EVIDENCE",

@@ -30,6 +30,14 @@ from .historical_soup import (
     preflight,
     verify_candidate,
 )
+from .historical_dose import (
+    DOSE_ARTIFACT_SCHEMA_VERSION,
+    DOSE_TRIAL_SCHEMA_VERSION,
+    build_dose_trial,
+    compare_tensors_exact,
+    materialize_dose,
+    preflight_dose,
+)
 
 __all__ = [
     "NativeReferenceAttention",
@@ -44,6 +52,8 @@ __all__ = [
     "TRIAL_SCHEMA_VERSION",
     "PREFLIGHT_SCHEMA_VERSION",
     "ARTIFACT_SCHEMA_VERSION",
+    "DOSE_ARTIFACT_SCHEMA_VERSION",
+    "DOSE_TRIAL_SCHEMA_VERSION",
     "apply_rotary",
     "rotate_half",
     "promotion_failures",
@@ -54,4 +64,8 @@ __all__ = [
     "build_candidate",
     "preflight",
     "verify_candidate",
+    "build_dose_trial",
+    "compare_tensors_exact",
+    "materialize_dose",
+    "preflight_dose",
 ]

@@ -38,9 +38,9 @@
         "output_dtype": "float16"
       },
       "trial_rank": 1,
-      "trial_status": "RUNNING",
-      "transfer_result": "NOT_RUN",
-      "reason": "Best first trial: real historical PASS, exact compatible modern ingredients, one deterministic candidate, one-checkpoint output, no training, no added runtime, and immediate rollback."
+      "trial_status": "PASS",
+      "transfer_result": "TRANSFER_POSITIVE",
+      "reason": "Frozen trial passed its transfer gate: all-256 170→173, Stability 125→129, and all-four packs 20→27. Production promotion is separately rejected because base/paraphrase both-correct packs regressed 51→42 and Showcase fell 45→44."
     },
     {
       "id": "long-context-adapter-dose",

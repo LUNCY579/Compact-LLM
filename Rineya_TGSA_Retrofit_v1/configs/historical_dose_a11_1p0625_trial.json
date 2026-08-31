@@ -1,0 +1,119 @@
+{
+  "schema_version": "rineya.historical-dose-transfer-trial.v1",
+  "trial_id": "historical-dose-a11-1p0625-v1",
+  "registration_status": "FROZEN_BEFORE_OUTCOME",
+  "registered_at_utc": "2026-08-31T05:55:00Z",
+  "registration_base_commit": "0536d15",
+  "queue_freeze_commit": "027da580afa35e8e455f5e1ca35257bf14a2ac7c",
+  "purpose": "Run the already-queued single historically measured 1.0625 long-context adapter dose against exact Supa-A1.1 after the rank-1 soup failed production preservation.",
+  "historical_evidence": {
+    "source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+    "artifacts": [
+      "Rineya_Long_Context_Weight_Geometry_Lab_v1/README.md",
+      "Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md"
+    ],
+    "recorded_result": "Nimbus plus checkpoint-200 at scale 1.0625 reached 42/64 Showcase and emphasized abstention; this value was measured historically and is not selected from the rank-1 outcome."
+  },
+  "parent": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "weight_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config_sha256": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "required_class": "Qwen3AbstainForCausalLM",
+    "abstain_token_id": 51378,
+    "abstain_logit_bias": 5.156249985098839
+  },
+  "base": {
+    "name": "Rineya-Nimbus-1.6.0-devfreeze",
+    "locator_from_retrofit_repo": "../Chat-Bubble/Rineya_Published_Cores/Rineya-Nimbus-1.6.0-devfreeze",
+    "weight_sha256": "7b66b8d0ef06cf7f71bc9001b0c9a330d5f8a0eec1d11eb173ece70ca66ef49c",
+    "weight_bytes": 1503300328,
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+  },
+  "adapter": {
+    "name": "Halo Stage-A checkpoint-200",
+    "locator_from_retrofit_repo": "../Chat-Bubble/artifacts/rineya_long_context_weight_geometry_v1/selected/halo_stage_a_step200_adapter",
+    "weights_sha256": "517966d7564c083f12504e4c3ff1ac3e82a0abb97d2845ea3dd116174b01efb4",
+    "weights_bytes": 40422168,
+    "config_sha256": "beb2bf72b46b8256957e66282ee326ae3f6a0b01c406af9d92033dfff37db471",
+    "rank": 16,
+    "lora_alpha": 32,
+    "target_modules": [
+      "down_proj",
+      "gate_proj",
+      "k_proj",
+      "o_proj",
+      "q_proj",
+      "up_proj",
+      "v_proj"
+    ],
+    "expected_lora_slots": 196
+  },
+  "recipe": {
+    "control_scale": 0.8125,
+    "candidate_scale": 1.0625,
+    "candidate_count": 1,
+    "merge_formula": "FP16(FP32(Nimbus tensor) + FP32(B @ A) * (lora_alpha/rank) * scale)",
+    "accumulation_dtype": "float32",
+    "output_dtype": "float16",
+    "forbidden_adaptation": [
+      "no additional dose",
+      "no coefficient refinement",
+      "no layer/profile changes",
+      "no threshold retuning",
+      "no evaluation changes"
+    ]
+  },
+  "fidelity_gate": {
+    "control": "Reconstruct scale 0.8125 through the same streaming formula",
+    "requirement": "All 310 serialized parent tensors must be bitwise equal to Supa-A1.1 before the 1.0625 candidate may be materialized",
+    "tie_handling": "not applicable"
+  },
+  "outputs": {
+    "root": "artifacts/historical_dose_a11_1p0625_v1",
+    "control": "artifacts/historical_dose_a11_1p0625_v1/control_0p8125",
+    "candidate": "artifacts/historical_dose_a11_1p0625_v1/candidate_1p0625",
+    "evidence": "artifacts/historical_dose_a11_1p0625_v1/evidence"
+  },
+  "evaluation": {
+    "runner": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
+      "sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022"
+    },
+    "evaluator": {
+      "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
+      "sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5"
+    },
+    "reuse_exact_parent_predictions_from_trial": "historical-soup-a11-baya-midpoint-v1",
+    "protocol": {
+      "decoding": "greedy",
+      "seed": 17,
+      "enable_thinking": false,
+      "max_new_tokens": 24,
+      "max_context": 4096,
+      "truncation": "forbidden",
+      "torch_dtype": "float16",
+      "logits_to_keep": 1,
+      "trust_remote_code": false,
+      "portable_logit_bias_token_id": 51378,
+      "portable_logit_bias": 5.156249985098839,
+      "fresh_process_candidate": true
+    }
+  },
+  "transfer_gate": {
+    "logical_operator": "AND",
+    "tie_policy": "FAIL",
+    "requirements": [
+      "candidate all-256 strict exact hits >= exact parent hits + 1",
+      "candidate Stability192 strict exact hits >= exact parent hits",
+      "candidate all-four-variants-correct packs >= exact parent packs",
+      "candidate base/paraphrase both-correct packs >= exact parent packs",
+      "candidate prediction coverage = 1.0 with no duplicates, unexpected IDs, errors, empty outputs, or fourfold word repetition",
+      "candidate reloads in a fresh process as Qwen3AbstainForCausalLM with frozen S4 offset",
+      "artifact and evaluation provenance hashes are complete"
+    ],
+    "note": "Unlike rank 1, this predeclared second trial promotes answerable-pack preservation into the transfer gate because rank 1 demonstrated that aggregate exact and all-four metrics can hide a material readout trade. No candidate outcome from rank 2 existed when this rule was written."
+  }
+}
