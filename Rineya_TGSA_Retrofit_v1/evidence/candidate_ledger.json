@@ -111,6 +111,53 @@
       "reason": "TRANSFER_FAIL: all-256 ties 170/256, Showcase loses 1, and base/paraphrase both-correct packs lose 11. Exact 0.8125 reconstruction passed 310/310 tensors, so this is a transfer result rather than a builder defect."
     },
     {
+      "id": "historical-a11-pulse-negative-vector",
+      "candidate": "Supa-A1.1 plus exact Pulse-selected 1.25*delta200 - 0.25*delta250 task vector",
+      "classification": "ELIGIBLE",
+      "source_branch": "historical repository program",
+      "source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+      "research_status": "The selected vector produced a large Pulse gain and was queued before outcomes, with anchor dependence explicitly treated as the transfer risk",
+      "research_evidence": [
+        "Rineya_Long_Context_Weight_Geometry_Lab_v1/PUBLISHED_FAMILY_SEARCH_REPORT.md",
+        "artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p25_m0p25/soup_manifest.json",
+        "Rineya_TGSA_Retrofit_v1/evidence/historical_pulse_vector_a11_transfer_outcome.json"
+      ],
+      "parent_checkpoint": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+      "parent_hash": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "retrofit_configuration": {
+        "adapter_hash": "c2d9fb2a5b71567b72e04f30ef6e30d8c18112d8e84ac03c934ed283e995ad82",
+        "source_formula": "1.25*delta200 - 0.25*delta250",
+        "adapter_scale": 1.0,
+        "accumulation_dtype": "float32",
+        "output_dtype": "float16",
+        "product_profile": "general_quality_first"
+      },
+      "parent_score": 170,
+      "retrofit_score": 60,
+      "delta": -110,
+      "fidelity_status": "PASS",
+      "regression_status": "FAIL",
+      "latency_delta": null,
+      "throughput_delta": null,
+      "memory_delta": null,
+      "artifact_hash": "783c2c942351609b6f25af193bb5d468d2243fa0e594d80dccbc3699b1b9fd76",
+      "demo_status": "NOT_RUN",
+      "gates": {
+        "positive_source_evidence": true,
+        "parent_identity_verified": true,
+        "conversion_fidelity_pass": true,
+        "baked_effect_verified": true,
+        "strict_quality_gain": false,
+        "no_blocking_regression": false,
+        "production_budget_pass": null,
+        "artifact_integrity_pass": true,
+        "demo_smoke_pass": null,
+        "provenance_complete": true
+      },
+      "decision": "REJECT",
+      "reason": "TRANSFER_FAIL: all-256 falls 170→60, Stability 125→45, all-four packs 20→0, and base/paraphrase packs 51→2. Zero-scale reconstruction was bitwise exact, confirming the historical vector is anchor-incompatible with A1.1."
+    },
+    {
       "id": "tgsa-v5-mechanism",
       "candidate": "TGSA learned-delta mechanism under the Phase-1 v5 competence-first path",
       "classification": "WAITING_FOR_EVIDENCE",

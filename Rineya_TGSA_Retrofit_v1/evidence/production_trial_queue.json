@@ -138,9 +138,9 @@
         "requires_prior_trials_to_fail": true
       },
       "trial_rank": 3,
-      "trial_status": "QUEUED",
-      "transfer_result": "NOT_RUN",
-      "reason": "Credible large historical gain and bakeable artifact, but lower priority because its positive evidence is anchor-specific."
+      "trial_status": "FAIL",
+      "transfer_result": "TRANSFER_FAIL",
+      "reason": "The exact selected 1.25/-0.25 vector is catastrophically anchor-incompatible on A1.1: all-256 170→60, Stability 125→45, and all-four packs 20→0. Zero-scale fidelity passed 310/310 tensors."
     },
     {
       "id": "phase1-dense-sft",
@@ -264,10 +264,10 @@
         "product_profile": "efficiency",
         "requires_checkpoint_trials_to_exhaust": true
       },
-      "trial_rank": 4,
-      "trial_status": "QUEUED",
-      "transfer_result": "NOT_RUN",
-      "reason": "Credible product-stack win, but ranked after checkpoint candidates because it cannot create the immediate standalone model."
+      "trial_rank": null,
+      "trial_status": "EXCLUDED",
+      "transfer_result": "NOT_APPLICABLE",
+      "reason": "Credible product-stack win retained for a separately preregistered efficiency profile. It is not a checkpoint mechanism and cannot satisfy this pass's immediate standalone-model objective."
     },
     {
       "id": "supa-a11-fp16-abstention",

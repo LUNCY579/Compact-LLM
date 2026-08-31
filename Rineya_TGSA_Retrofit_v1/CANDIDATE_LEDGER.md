@@ -10,14 +10,16 @@ Retrofit base: `research/tgsa-rineya-pretrained-retrofit` at `0703ba41e7b7d0a31f
 
 ## Intake result
 
-There is no `ELIGIBLE` mechanism in the current remote research set. No
-checkpoint conversion, training, bake, quality evaluation, packaging, or demo
-promotion is authorized by this audit.
+The first-pass current remote research set contained no eligible mechanism. The
+second-pass historical harvest admitted three bounded checkpoint trials. One
+was transfer-positive but failed production preservation; two failed transfer.
+No candidate is promotable, and no resource/demo promotion work is authorized.
 
 | Candidate | Source commit | Research classification | Exact parent | Decision | Reason |
 |---|---|---|---|---|---|
 | A1.1/Baya 50/50 soup | `a07abdb` | `ELIGIBLE`; transfer-positive | Supa-A1.1 | `REJECT` | 170→173/256 and 20→27 all-four packs, but 51→42 base/paraphrase both-correct packs and Showcase 45→44 block general promotion. |
 | A1.1 adapter dose 1.0625 | `8324995` | `ELIGIBLE`; transfer-fail | Supa-A1.1 | `REJECT` | Exact reconstruction fidelity passes, but 170→170/256 and 51→40 base/paraphrase packs fail strict gain and preservation. |
+| A1.1 + Pulse negative vector | `8324995` | `ELIGIBLE`; transfer-fail | Supa-A1.1 | `REJECT` | Zero-scale fidelity passes, but 170→60/256, 125→45 Stability, and 20→0 all-four packs confirm catastrophic anchor incompatibility. |
 | TGSA Phase-1 v5 mechanism | `d16ea1c` | `WAITING_FOR_EVIDENCE` | Supa-A1.1 | `DEFER` | V5 is a draft competence preregistration. V3 was inconclusive; v4 rejected the regime before a confirmatory mechanism matrix. |
 | TGSA + MTP Phase 2A | `d16ea1c` | `WAITING_FOR_EVIDENCE` | Supa-A1.1 | `DEFER` | CI, rehearsal, and integrity gates are not a positive result; within-study qualification has not produced a GO. |
 | PSA / SGSA interventions | `ee13448f` | `WAITING_FOR_EVIDENCE` | Supa-A1.1 | `DEFER` | Measurement phases exist, but no treatment result, model selection, preservation run, sealed test, or final report exists. |
@@ -36,6 +38,7 @@ the research intake gate, so production measurement was not run.
 |---|---|---:|---:|---:|---|---|---|---|
 | A1.1/Baya 50/50 soup | all-256 strict hits | 170 | 173 | +3 | pass | **fail** | `73312805…` | not run |
 | A1.1 adapter dose 1.0625 | all-256 strict hits | 170 | 170 | 0 | pass | **fail** | `59f3f5ba…` | not run |
+| A1.1 + Pulse negative vector | all-256 strict hits | 170 | 60 | −110 | pass | **fail** | `783c2c94…` | not run |
 | 4B/8B spectral consensus | DEV-FULL semantic hits / 180 | 144 | 144 | 0 | not run here | fail | none | not run |
 | Normalized KV retention | registered answer hits / 12 | 6 | 5 | −1 | n/a | fail | none | not run |
 | Supa-A1.1 FP16 + abstention | Showcase hits / 64 | 43 | 45 | +2 | pass (publisher) | pass (publisher bounds) | `a99f079d…` | not run here |

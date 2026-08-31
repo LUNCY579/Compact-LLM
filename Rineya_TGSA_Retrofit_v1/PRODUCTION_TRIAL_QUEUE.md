@@ -14,8 +14,8 @@ still requires the separate unchanged ten-gate promotion ledger.
 |---:|---|---|---|---|---|
 | 1 | Uniform FP32 reconstructed-delta soup | CHECKPOINT | Phase-4 seed_37/seed_49 soup improved mean quality, preserved worst decile, zero hard/critical failures, human PASS | `TRANSFER_POSITIVE`; production `REJECT` | +3/256 and +7 all-four packs, but −9 base/paraphrase both-correct packs and −1 Showcase block general promotion |
 | 2 | Long-context adapter dose 1.0625 | CHECKPOINT | Nimbus + checkpoint-200 dose region created Supa/Baya and large long-context gains | `TRANSFER_FAIL` | 310/310 reconstruction fidelity passes, but all-256 ties and base/paraphrase packs fall by 11 |
-| 3 | Pulse negative task vector | CHECKPOINT | Pulse improved from 31/64 to 41/64 and 117/192 | A1.1 transfer; `QUEUED` only after ranks 1–2 fail | Strong gain and bakeable, but historical evidence says the effect is anchor-dependent |
-| 4 | Context compaction | RUNTIME | 29.10% memory-token reduction with complete measured recall and no reported quality loss | Efficiency profile; `QUEUED` | Real product-stack win, but cannot satisfy the immediate one-checkpoint objective |
+| 3 | Pulse negative task vector | CHECKPOINT | Pulse improved from 31/64 to 41/64 and 117/192 | `TRANSFER_FAIL` | A1.1 collapses 170→60/256; exact zero-scale fidelity confirms the historical anchor-dependence warning |
+| — | Context compaction | RUNTIME | 29.10% memory-token reduction with complete measured recall and no reported quality loss | `EXCLUDED` from this pass | Retained for a separately preregistered efficiency profile; cannot create the immediate standalone model |
 
 ## Positive mechanisms not entering the immediate queue
 

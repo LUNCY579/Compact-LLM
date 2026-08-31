@@ -2,8 +2,8 @@
 
 ## Registration state
 
-**Historical scan complete enough to freeze the first bounded trial. Outcome
-generation has not started.**
+**Historical scan and bounded quality-first checkpoint queue complete. No
+candidate is ship-positive.**
 
 This document supplements, and does not replace,
 `PRODUCTION_RETROFIT_AUDIT.md`. The first audit correctly described active
@@ -157,6 +157,49 @@ conversion defect. The one 1.0625 candidate then produced:
 
 The strict-gain and answerable-preservation gates both fail. This repeats the
 rank-1 readout trade more strongly and is rejected without dose rescue.
+
+## Third transfer outcome
+
+The exact Pulse-selected vector `1.25*delta200 - 0.25*delta250` is
+**`TRANSFER_FAIL`** on A1.1.
+
+The zero-scale control matched all 310 parent tensors bitwise before the vector
+was applied. The candidate reloaded in a fresh process and completed all rows,
+but the historical anchor-dependence warning realized decisively:
+
+| Metric | Parent | Candidate | Delta |
+|---|---:|---:|---:|
+| Showcase64 strict hits | 45 | 15 | −30 |
+| Stability192 strict hits | 125 | 45 | −80 |
+| All-256 strict hits | 170 | 60 | −110 |
+| All-four packs | 20 | 0 | −20 |
+| Base/paraphrase both-correct packs | 51 | 2 | −49 |
+| Counterfactual pair packs | 34 | 0 | −34 |
+| Unanswerable hits | 22 | 51 | +29 |
+
+No stronger system vector, scale adjustment, layer search, or threshold rescue
+is authorized.
+
+## Queue exhaustion and final decision
+
+All reasonable, artifact-available **checkpoint** positives in the ranked queue
+have been attempted:
+
+1. midpoint uniform soup — `TRANSFER_POSITIVE`, then production `REJECT` for
+   answerable regression;
+2. exact 1.0625 dose — `TRANSFER_FAIL`;
+3. Pulse-selected negative vector — `TRANSFER_FAIL`.
+
+Other checkpoint positives are already integrated, incompatible with A1.1,
+bound to missing/old parent artifacts, or require a new research/training
+program. Context compaction remains a genuine runtime result, but is excluded
+from this immediate standalone-model pass and requires a separately declared
+efficiency profile.
+
+**Final shipping decision: `DEFER — CHECKPOINT QUEUE EXHAUSTED WITHOUT A
+SHIP_POSITIVE ARTIFACT`.** No candidate proceeds to resource benchmarking or
+demo smoke because each fails a mandatory quality or regression gate. Supa-A1.1
+remains the production parent and exact rollback.
 
 Because production validation failed, the queue moves to the single
 historically measured adapter dose 1.0625, then the Pulse negative-vector trial,

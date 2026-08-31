@@ -1,0 +1,55 @@
+{
+  "schema_version": "rineya.historical-dose-transfer-outcome.v1",
+  "trial_id": "historical-pulse-vector-a11-v1",
+  "historical_source_commit": "8324995579f9c1273abedcbbb383a2e6dd024c2b",
+  "registration_sha256": "3f7e962fa6af27423afe163641f3abe07c6e7f0c1f34bdc9f76034ecc47bbd1f",
+  "runner_sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022",
+  "evaluator_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+  "parent_predictions_reused_from": "historical-soup-a11-baya-midpoint-v1",
+  "fidelity_control": {
+    "scale": 0.0,
+    "tensor_count": 310,
+    "bitwise_mismatches": 0,
+    "max_abs_diff": 0.0,
+    "status": "PASS"
+  },
+  "candidate": {
+    "source_formula": "1.25*delta200 - 0.25*delta250",
+    "source_adapter_sha256": "c2d9fb2a5b71567b72e04f30ef6e30d8c18112d8e84ac03c934ed283e995ad82",
+    "artifact_manifest_sha256": "783c2c942351609b6f25af193bb5d468d2243fa0e594d80dccbc3699b1b9fd76",
+    "weight_bytes": 1192134496,
+    "weight_shards": {
+      "model-00001-of-00005.safetensors": "55cffb17969c303013594a34c149757b84158b281c6c9500216940439affb4f9",
+      "model-00002-of-00005.safetensors": "cf81e486426b1eab839e37fe352f51a3fa5ed5435f3d41fbf4f45f8e9c8a3c8e",
+      "model-00003-of-00005.safetensors": "d089f892f7a062e8e0e5a8d7a28b2c1c72c68801587dc9c13af5ab78e4abe88b",
+      "model-00004-of-00005.safetensors": "8b62d01f208c0145cf906f8a8b294d6d666a707e5b2a6924689bc06c29077dd9",
+      "model-00005-of-00005.safetensors": "3097688dc8737350892e9a80437c50f52583bed9ad20ed1703c6d7b68f910a70"
+    },
+    "fresh_process_reload": "PASS"
+  },
+  "quality": {
+    "showcase64": {"parent": 45, "candidate": 15, "delta": -30},
+    "stability192": {"parent": 125, "candidate": 45, "delta": -80},
+    "all256": {"parent": 170, "candidate": 60, "delta": -110},
+    "all_four_packs": {"parent": 20, "candidate": 0, "delta": -20},
+    "base_paraphrase_both_correct_packs": {"parent": 51, "candidate": 2, "delta": -49},
+    "counterfactual_pair_packs": {"parent": 34, "candidate": 0, "delta": -34},
+    "unanswerable_hits": {"parent": 22, "candidate": 51, "delta": 29}
+  },
+  "passed_transfer_gates": [
+    "control_reconstruction_bitwise_exact",
+    "coverage_and_identity",
+    "candidate_generation_health",
+    "fresh_process_reload",
+    "artifact_provenance_complete"
+  ],
+  "failed_transfer_gates": [
+    "strict_all256_gain",
+    "stability_preserved",
+    "all_four_packs_preserved",
+    "base_paraphrase_packs_preserved"
+  ],
+  "transfer_result": "TRANSFER_FAIL",
+  "production_decision": "REJECT",
+  "reason": "The Pulse-selected vector is strongly anchor-dependent and catastrophically degrades A1.1. No stronger vector, scale rescue, layer search, or threshold retuning is authorized."
+}

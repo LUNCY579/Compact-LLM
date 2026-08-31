@@ -22,10 +22,14 @@ python .\scripts\verify_production_trial_queue.py
 python .\scripts\verify_candidate_ledger.py
 ```
 
-The current frozen bounded trial is
-`configs/historical_soup_a11_baya_midpoint_trial.json`. Its one candidate,
-coefficient, parent, ingredient, evaluation hashes, and no-tie transfer gate
-must not change after outcome generation begins.
+The completed historical trial registrations are:
+
+- `configs/historical_soup_a11_baya_midpoint_trial.json`
+- `configs/historical_dose_a11_1p0625_trial.json`
+- `configs/historical_pulse_vector_a11_trial.json`
+
+Their coefficients, parents, artifacts, evaluation hashes, and no-tie gates
+must never be changed to rescue the recorded outcomes.
 
 ```powershell
 $ErrorActionPreference = "Stop"
@@ -36,6 +40,48 @@ $SourceConfig = ".\tests\fixtures\rineya_supa_a1_config.json"
 $Evidence     = ".\evidence"
 $ModelDir    = "<PATH_TO_EXACT_PARENT_MODEL_DIRECTORY>"
 ```
+
+## Historical transfer reproduction
+
+The streaming builders refuse an existing destination and fail closed on every
+registered source hash. The dose/vector builder materializes its control first
+and refuses the candidate unless all 310 parent tensors match bitwise.
+
+```powershell
+# Rank 1: 50/50 A1.1/Baya soup
+python .\scripts\historical_soup_trial.py preflight
+python .\scripts\historical_soup_trial.py build
+python .\scripts\historical_soup_trial.py verify
+python .\scripts\historical_soup_trial.py smoke-load
+python .\scripts\summarize_historical_soup_trial.py
+
+# Rank 2: exact checkpoint-200 dose 1.0625
+python .\scripts\historical_dose_trial.py preflight `
+  --config .\configs\historical_dose_a11_1p0625_trial.json
+python .\scripts\historical_dose_trial.py build `
+  --config .\configs\historical_dose_a11_1p0625_trial.json
+python .\scripts\historical_dose_trial.py smoke-load `
+  --config .\configs\historical_dose_a11_1p0625_trial.json
+python .\scripts\summarize_historical_dose_trial.py `
+  --config .\configs\historical_dose_a11_1p0625_trial.json
+
+# Rank 3: exact selected Pulse negative vector
+python .\scripts\historical_dose_trial.py preflight `
+  --config .\configs\historical_pulse_vector_a11_trial.json
+python .\scripts\historical_dose_trial.py build `
+  --config .\configs\historical_pulse_vector_a11_trial.json
+python .\scripts\historical_dose_trial.py smoke-load `
+  --config .\configs\historical_pulse_vector_a11_trial.json
+python .\scripts\summarize_historical_dose_trial.py `
+  --config .\configs\historical_pulse_vector_a11_trial.json
+```
+
+The inference invocations themselves are pinned in each registration. They use
+the same exact A1.1 parent outputs, greedy seed 17, float16, thinking disabled,
+4096 context, 24 generated tokens, `logits_to_keep=1`, and the fixture-verified
+portable S4 logit bias. Raw predictions and large trial checkpoints remain under
+ignored `artifacts/`; compact outcome/provenance summaries are committed under
+`evidence/`.
 
 ## 1. Doctor — correctness gate
 
