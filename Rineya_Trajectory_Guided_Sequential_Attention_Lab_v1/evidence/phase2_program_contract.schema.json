@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://rineya.invalid/schemas/phase2_program_contract.schema.json",
+  "title": "TGSA MTP programme contract verification",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "passed",
+    "checks",
+    "errors",
+    "contract_sha256",
+    "config_sha256",
+    "study_kind",
+    "mtp_semantics",
+    "claim_scope"
+  ],
+  "properties": {
+    "schema_version": {"const": "tgsa.mtp-program-contract-verification.v1"},
+    "passed": {"type": "boolean"},
+    "checks": {
+      "type": "object",
+      "required": [
+        "semantic_identity",
+        "rejected_regime_disclosed",
+        "development_only",
+        "evaluation_first_splits",
+        "cross_stage_pooling_forbidden"
+      ],
+      "additionalProperties": {"type": "boolean"}
+    },
+    "errors": {"type": "array", "items": {"type": "string"}},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "config_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "study_kind": {"enum": ["mechanism_bridge", "system_factorial"]},
+    "mtp_semantics": {
+      "enum": [
+        "sequential_teacher_forced_recursive_v1",
+        "parallel_independent_offsets_v1"
+      ]
+    },
+    "claim_scope": {"type": "string"}
+  },
+  "additionalProperties": false
+}

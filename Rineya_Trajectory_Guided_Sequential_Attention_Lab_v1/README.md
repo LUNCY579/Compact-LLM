@@ -6,7 +6,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 
 ## Current status
 
-**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. Phase 2B TGSA + MTP is executable and non-evidentiary.** 349 tests.
+**Phase 1 v3 is complete and frozen. Phase 1 v4 rejected its registered regime family. Phase 2B TGSA + MTP is executable and non-evidentiary.** 359 tests.
 
 ### What has been demonstrated
 

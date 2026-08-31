@@ -1,8 +1,13 @@
 {
   "schema_version": "tgsa.mtp-factorial-study.v1",
   "study_id": "tgsa-mtp-phase2-smoke-v1",
+  "study_kind": "system_factorial",
+  "mtp_semantics": "parallel_independent_offsets_v1",
   "confirmatory": false,
-  "expected_base_commit": "d9054b248cf65890d83a43959d34b1ab58c8f99a",
+  "development_only": true,
+  "phase1_regime_status": "rejected",
+  "obsolete_regime": true,
+  "expected_base_commit": "8b5737e260b5478427b8bb033cffa394a5f3fc5d",
   "tgsa_arm": "full",
   "include_auxiliary_controls": true,
   "seeds": [
@@ -99,11 +104,15 @@
     "num_threads": 2,
     "deterministic_algorithms": true
   },
-  "development_only": true,
   "registration": {
     "status": "draft",
     "phase1_competence_report": null,
     "phase1_v4_hardening_commit": "d9054b248cf65890d83a43959d34b1ab58c8f99a",
-    "confirmatory_thresholds_frozen": false
+    "phase1_v4_result_commit": "8b5737e260b5478427b8bb033cffa394a5f3fc5d",
+    "phase1_regime_status": "rejected",
+    "obsolete_regime": true,
+    "program_contract": "configs/phase2_program_contract.json",
+    "confirmatory_thresholds_frozen": false,
+    "cross_stage_evidence_pooling_allowed": false
   }
 }
