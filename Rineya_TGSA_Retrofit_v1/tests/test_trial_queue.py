@@ -97,3 +97,7 @@ def test_frozen_transfer_trial_has_one_candidate_and_strict_tie_failure() -> Non
     assert config["recipe"]["ingredient_coefficient"] == 0.5
     assert config["transfer_gate"]["logical_operator"] == "AND"
     assert config["transfer_gate"]["tie_policy"] == "FAIL"
+    amendment = config["compute_only_amendment"]
+    assert amendment["invalidated_rows"] == 21
+    assert config["evaluation"]["protocol"]["logits_to_keep"] == 1
+    assert amendment["amended_runner_sha256"] == config["evaluation"]["runner"]["sha256"]

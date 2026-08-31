@@ -437,6 +437,16 @@ def main() -> None:
         help="First-step candidates recorded when --emit-logprobs is set.",
     )
     parser.add_argument(
+        "--logits-to-keep",
+        type=int,
+        default=None,
+        help=(
+            "Forward-compatible model hint limiting prompt logits to the final N "
+            "positions during generation. Use 1 for Qwen3 evaluation after an "
+            "outcome-blind equivalence check; decoding still sees the same final logits."
+        ),
+    )
+    parser.add_argument(
         "--torch-dtype",
         default="auto",
         choices=("auto", "float32", "float16", "bfloat16"),
@@ -466,6 +476,8 @@ def main() -> None:
         parser.error("--adapter-scale-profile requires --adapter")
     if args.logprob_top_k < 1:
         parser.error("--logprob-top-k must be positive")
+    if args.logits_to_keep is not None and args.logits_to_keep < 1:
+        parser.error("--logits-to-keep must be positive")
 
     adapter_scale_profile: dict[str, Any] | None = None
     adapter_scale_profile_sha256: str | None = None
@@ -644,6 +656,8 @@ def main() -> None:
                         "pad_token_id": tokenizer.pad_token_id,
                         "eos_token_id": tokenizer.eos_token_id,
                     }
+                    if args.logits_to_keep is not None:
+                        generate_kwargs["logits_to_keep"] = args.logits_to_keep
                     if args.emit_logprobs:
                         generate_kwargs["return_dict_in_generate"] = True
                         generate_kwargs["output_logits"] = True
@@ -676,6 +690,7 @@ def main() -> None:
                         "latency_seconds": round(latency, 6),
                         "seed": args.seed,
                         "decoding": "greedy",
+                        "logits_to_keep": args.logits_to_keep,
                     }
                     if args.adapter:
                         result["adapter_scale"] = args.adapter_scale

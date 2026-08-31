@@ -22,6 +22,14 @@ from .trial_queue import (
     validate_trial,
     validate_trial_queue,
 )
+from .historical_soup import (
+    ARTIFACT_SCHEMA_VERSION,
+    PREFLIGHT_SCHEMA_VERSION,
+    TRIAL_SCHEMA_VERSION,
+    build_candidate,
+    preflight,
+    verify_candidate,
+)
 
 __all__ = [
     "NativeReferenceAttention",
@@ -33,6 +41,9 @@ __all__ = [
     "TrajectoryEncoder",
     "TrajectoryTelemetry",
     "TRIAL_QUEUE_SCHEMA_VERSION",
+    "TRIAL_SCHEMA_VERSION",
+    "PREFLIGHT_SCHEMA_VERSION",
+    "ARTIFACT_SCHEMA_VERSION",
     "apply_rotary",
     "rotate_half",
     "promotion_failures",
@@ -40,4 +51,7 @@ __all__ = [
     "validate_ledger",
     "validate_trial",
     "validate_trial_queue",
+    "build_candidate",
+    "preflight",
+    "verify_candidate",
 ]

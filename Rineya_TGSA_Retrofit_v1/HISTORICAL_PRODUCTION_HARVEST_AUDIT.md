@@ -98,6 +98,17 @@ all-256 strict-exact hit, loses no Stability hit or all-four pack, has complete
 generation coverage, reloads fresh as the required custom class, and has full
 artifact/evaluation provenance. A tie is failure.
 
+### Outcome-blind compute amendment
+
+The original runner reached only 21/256 parent rows while materializing
+full-vocabulary logits for every prompt token. The partial JSONL was archived
+unscored; its content and answer keys were not inspected. Before any full
+outcome run, the registration was amended to pass `logits_to_keep=1`, which
+limits only the returned prompt-logit positions. The amended runner hash is
+`e6413a1f…` and must reproduce identical raw predictions and token counts on the
+first four parent fixtures before use. All model, prompt, seed, decoding,
+attention, cache, dtype, threshold, and evaluator settings remain unchanged.
+
 ## Outcome
 
 `PENDING — registration must be committed before merge or inference.`

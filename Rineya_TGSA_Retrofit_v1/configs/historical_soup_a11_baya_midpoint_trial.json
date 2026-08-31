@@ -3,6 +3,17 @@
   "trial_id": "historical-soup-a11-baya-midpoint-v1",
   "registration_status": "FROZEN_BEFORE_OUTCOME",
   "registered_at_utc": "2026-08-31T05:20:12Z",
+  "compute_only_amendment": {
+    "amended_at_utc": "2026-08-31T05:41:20Z",
+    "reason": "The registered runner emitted full-vocabulary logits for every prompt token. A live parent run reached only 21/256 rows at sustained 100% GPU utilization, making the two-artifact comparison impractically slow.",
+    "outcome_blinding": "The partial prediction file was never opened, decoded, joined to an answer key, or scored. Only its line count and byte count were observed before archival.",
+    "invalidated_partial_artifact": "artifacts/historical_soup_a11_baya_midpoint_v1/evidence/invalidated_pre_amendment/parent_all256_partial_unscored.jsonl",
+    "invalidated_rows": 21,
+    "original_runner_sha256": "8c6762adda325a8a80630a30cf4b3432337059806ebdf8f2067c8a765894a6a5",
+    "amended_runner_sha256": "e6413a1f31b2a3f4484db6d0952f97d56ae9f82dff33772f68e804bf2e497c6e",
+    "change": "Pass logits_to_keep=1 to Qwen3 generation so only final-position prompt logits are materialized; prompts, model, dtype, attention, cache, decoding, seed, output tokens, and evaluator remain unchanged.",
+    "precondition": "Before any full scored run, the first four registered parent fixtures must produce byte-identical prediction text and token counts under the original and amended settings. Any mismatch aborts the amendment and the trial."
+  },
   "registration_base_commit": "3d481b959ff4bb35150a42836ee33f6709f20598",
   "purpose": "Test whether the historically positive uniform FP32 model-soup technique transfers to the strongest compatible dense Supa parent using the same-base, same-adapter Supa/Baya dose pair.",
   "historical_evidence": [
@@ -104,7 +115,7 @@
   "evaluation": {
     "runner": {
       "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
-      "sha256": "8c6762adda325a8a80630a30cf4b3432337059806ebdf8f2067c8a765894a6a5"
+      "sha256": "e6413a1f31b2a3f4484db6d0952f97d56ae9f82dff33772f68e804bf2e497c6e"
     },
     "evaluator": {
       "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
@@ -132,6 +143,7 @@
       "max_context": 4096,
       "truncation": "forbidden",
       "torch_dtype": "float16",
+      "logits_to_keep": 1,
       "trust_remote_code": true,
       "candidate_and_parent_same_process_contract": false,
       "fresh_process_per_artifact": true,
