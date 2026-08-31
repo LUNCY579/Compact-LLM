@@ -15,7 +15,13 @@ def _study() -> dict[str, object]:
         "development_only": True,
         "confirmatory": False,
         "seeds": [1],
+        "cells": [
+            {"tgsa_arm": "cascade", "mtp_mode": "dormant"},
+            {"tgsa_arm": "cascade", "mtp_mode": "trajectory"},
+        ],
         "dataset": {
+            "vocabulary": {"domain_size": 8},
+            "families": {"task": {"min_nodes": 4, "max_nodes": 5}},
             "split_generation_order": ["test", "dev", "train"],
             "splits": {
                 "train": {"task": 100},
@@ -107,6 +113,11 @@ def test_external_non_development_go_is_hashed(
         "status": "frozen",
         "phase1_competence_report": str(report),
     }
+    # The stub must carry the scope it certifies. Within-study qualification is
+    # now part of the confirmatory contract: a report that cannot be shown to
+    # describe THIS study is refused, however valid its verdict.
+    from tgsa.scope import compute_scope
+
     monkeypatch.setattr(
         integrity,
         "require_go",
@@ -115,6 +126,7 @@ def test_external_non_development_go_is_hashed(
             "development_only": False,
             "schema_version": "test",
             "regime": {"fingerprint": "abc"},
+            "scope": compute_scope(study, auxiliary=study["mtp"]),
         },
     )
     contract = integrity.validate_phase2_contract(
@@ -228,3 +240,135 @@ def test_integrity_bundle_verifies_and_detects_tampering(tmp_path: Path) -> None
     )
     assert tampered["passed"] is False
     assert any("run manifest hash mismatch" in error for error in tampered["errors"])
+
+
+# --------------------------------------------------------------------------
+# Within-study qualification: the report must be ABOUT this study
+# --------------------------------------------------------------------------
+
+
+def _confirmatory_study(tmp_path, **overrides):
+    """A minimal confirmatory Phase-2 config plus a matching competence report."""
+
+    import json as _json
+
+    from tgsa.scope import compute_scope
+
+    study = {
+        "development_only": False,
+        "confirmatory": True,
+        "arms": ["cascade", "history_control", "learned_delta"],
+        "dataset": {
+            "vocabulary": {"domain_size": 32, "max_hops": 8, "max_abs_step": 8},
+            "families": {"direct_lookup": {"min_nodes": 5, "max_nodes": 8,
+                                           "min_hops": 1, "max_hops": 1}},
+            "split_generation_order": ["test", "dev", "train"],
+            "splits": {"train": {"direct_lookup": 100}},
+        },
+        "model": {"embed_dim": 96, "num_heads": 6, "num_layers": 2,
+                  "ffn_multiplier": 4.0, "trajectory_rank": 16,
+                  "tie_embeddings": True, "bias": False, "dropout": 0.0,
+                  "max_sequence_length": 35},
+        "training": {"learning_rate": 1e-3, "batch_size": 64,
+                     "gradient_accumulation_steps": 1},
+        "runtime": {"world_size": 1},
+        "analysis": {"primary_families": ["direct_lookup"],
+                     "interval_estimator": "crossed_cluster_t",
+                     "primary_gate": "lower_bound_above_zero"},
+        "registration": {"status": "frozen",
+                         "phase1_competence_report": "competence.json"},
+    }
+    study.update(overrides)
+
+    report_scope = compute_scope(dict(study, **overrides.get("_report_study", {})))
+    report = {
+        "schema_version": "tgsa.phase1-competence-gate.v3",
+        "verdict": "GO",
+        "development_only": False,
+        "checks": {}, "reasons": [],
+        "regime": {"split_generation_order": ["holdout", "train"]},
+        "scope": report_scope,
+    }
+    (tmp_path / "competence.json").write_text(_json.dumps(report), encoding="utf-8")
+    config_path = tmp_path / "study.json"
+    config_path.write_text(_json.dumps(study), encoding="utf-8")
+    return study, config_path
+
+
+def test_a_confirmatory_study_accepts_a_report_on_its_own_scope(tmp_path) -> None:
+    from tgsa.phase2_integrity import validate_phase2_contract
+
+    study, config_path = _confirmatory_study(tmp_path)
+    contract = validate_phase2_contract(study, config_path=config_path)
+    qualification = contract["external_phase1_competence"]["within_study_qualification"]
+    assert set(qualification["matched_fields"]) >= {
+        "task_scope_sha256", "model_scope_sha256",
+        "objective_scope_sha256", "competence_scope_sha256",
+    }
+
+
+def test_a_report_from_a_different_depth_cannot_certify(tmp_path) -> None:
+    """v4 never ran its wider rung. A GO at depth 2 says nothing about depth 4."""
+
+    import json as _json
+
+    from tgsa.phase2_integrity import Phase2IntegrityError, validate_phase2_contract
+    from tgsa.scope import compute_scope
+
+    study, config_path = _confirmatory_study(tmp_path)
+    shallower = _json.loads(_json.dumps(study))
+    shallower["model"]["num_layers"] = 4
+    report = _json.loads((tmp_path / "competence.json").read_text(encoding="utf-8"))
+    report["scope"] = compute_scope(shallower)
+    (tmp_path / "competence.json").write_text(_json.dumps(report), encoding="utf-8")
+
+    with pytest.raises((Phase2IntegrityError, ValueError), match="different science"):
+        validate_phase2_contract(study, config_path=config_path)
+
+
+def test_a_report_from_a_different_band_cannot_certify(tmp_path) -> None:
+    """The v4 lesson: a GO is about the families that were actually measured."""
+
+    import json as _json
+
+    from tgsa.phase2_integrity import Phase2IntegrityError, validate_phase2_contract
+    from tgsa.scope import compute_scope
+
+    study, config_path = _confirmatory_study(tmp_path)
+    other_band = _json.loads(_json.dumps(study))
+    other_band["dataset"]["families"]["direct_lookup"]["max_nodes"] = 20
+    report = _json.loads((tmp_path / "competence.json").read_text(encoding="utf-8"))
+    report["scope"] = compute_scope(other_band)
+    (tmp_path / "competence.json").write_text(_json.dumps(report), encoding="utf-8")
+
+    with pytest.raises((Phase2IntegrityError, ValueError), match="different science"):
+        validate_phase2_contract(study, config_path=config_path)
+
+
+def test_a_report_with_no_scope_block_cannot_certify(tmp_path) -> None:
+    import json as _json
+
+    from tgsa.phase2_integrity import Phase2IntegrityError, validate_phase2_contract
+
+    study, config_path = _confirmatory_study(tmp_path)
+    report = _json.loads((tmp_path / "competence.json").read_text(encoding="utf-8"))
+    del report["scope"]
+    (tmp_path / "competence.json").write_text(_json.dumps(report), encoding="utf-8")
+
+    with pytest.raises((Phase2IntegrityError, ValueError), match="no `scope` block"):
+        validate_phase2_contract(study, config_path=config_path)
+
+
+def test_development_runs_are_not_scope_gated(tmp_path) -> None:
+    """The gate applies to confirmatory studies; the rehearsal must still run."""
+
+    import json as _json
+
+    from tgsa.phase2_integrity import validate_phase2_contract
+
+    study, config_path = _confirmatory_study(tmp_path)
+    study["confirmatory"] = False
+    study["development_only"] = True
+    config_path.write_text(_json.dumps(study), encoding="utf-8")
+    contract = validate_phase2_contract(study, config_path=config_path)
+    assert contract["external_phase1_competence"]["required"] is False

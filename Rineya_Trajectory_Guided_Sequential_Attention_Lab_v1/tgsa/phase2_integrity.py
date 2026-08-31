@@ -25,6 +25,7 @@ from typing import Any, cast
 import torch
 
 from .phase1_competence import require_go
+from .scope import compute_scope, require_scope_match
 
 INTEGRITY_SCHEMA_VERSION = "tgsa.phase2-integrity.v1"
 INTEGRITY_VERIFICATION_VERSION = "tgsa.phase2-integrity-verification.v1"
@@ -193,6 +194,30 @@ def validate_phase2_contract(
             raise Phase2IntegrityError(
                 "development-only competence evidence cannot certify Phase 2"
             )
+        # WITHIN-STUDY QUALIFICATION. require_go proves the report exists,
+        # parses, is not development-only, and says GO. It cannot prove the
+        # report is ABOUT this study. TGSA_MTP_CANONICAL_PATH.md: "An
+        # external Phase-1 report may never replace within-study
+        # qualification when Phase 2 changes the generator, families,
+        # difficulty band, depth, objective, tokenizer, split, or metric."
+        # Until this call the five scope identifiers that document named as
+        # hard evidence-integrity fields appeared in no Python at all, so a
+        # GO earned on one band would have certified a study on another --
+        # the v4 failure mode (families inert on the measured scope) carried
+        # forward, undetectable because the gate reads the verdict not the
+        # scope.
+        scope_match = require_scope_match(
+            report,
+            compute_scope(
+                study,
+                auxiliary=study.get("mtp") if isinstance(study.get("mtp"), Mapping) else None,
+            ),
+            ignore_environment=bool(
+                cast(Mapping[str, object], registration).get(
+                    "allow_foreign_environment", False
+                )
+            ),
+        )
         external = {
             "required": True,
             "path": str(report_path),
@@ -200,6 +225,7 @@ def validate_phase2_contract(
             "verdict": str(report.get("verdict")),
             "schema_version": report.get("schema_version"),
             "development_only": False,
+            "within_study_qualification": scope_match,
             "regime_fingerprint": (
                 cast(Mapping[str, object], report.get("regime", {})).get(
                     "fingerprint"
