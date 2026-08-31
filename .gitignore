@@ -164,3 +164,11 @@ Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/.rehearsal/
 # Without this, anyone who reproduces a workflow locally gets a dirty tree and
 # the confirmatory runner refuses to dispatch on a dirty checkout.
 ci_artifacts/
+
+# Scratch output of the Phase-2 TGSA x MTP eight-cell rehearsal. The runbook
+# defines ROOT=evidence/phase2_mtp_smoke_local at the repo root and begins by
+# deleting it, so this tree is regenerated, not preserved. It is a CPU-only,
+# three-update, confirmatory=false rehearsal: development-only output, never
+# admissible evidence. Same reason as .rehearsal/ above -- leaving it untracked
+# dirties the checkout and the runner refuses to dispatch on a dirty checkout.
+/evidence/phase2_mtp_smoke_local/
