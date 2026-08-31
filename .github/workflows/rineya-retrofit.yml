@@ -1,0 +1,61 @@
+name: Rineya production retrofit
+
+on:
+  push:
+    branches:
+      - research/tgsa-rineya-pretrained-retrofit
+    paths:
+      - "Rineya_TGSA_Retrofit_v1/**"
+      - ".github/workflows/rineya-retrofit.yml"
+  pull_request:
+    paths:
+      - "Rineya_TGSA_Retrofit_v1/**"
+      - ".github/workflows/rineya-retrofit.yml"
+
+permissions:
+  contents: read
+
+env:
+  LAB: Rineya_TGSA_Retrofit_v1
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out complete provenance history
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "${{ env.LAB }}/pyproject.toml"
+
+      - name: Install verified runtime and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
+          python -m pip install -e "${LAB}[dev]"
+          python - <<'PY'
+          import importlib.util
+          import sys
+
+          required = ("jsonschema", "numpy", "pytest", "safetensors", "torch", "transformers")
+          missing = [name for name in required if importlib.util.find_spec(name) is None]
+          if missing:
+              print(f"::error::missing dependencies: {missing}")
+              sys.exit(1)
+          PY
+
+      - name: Verify candidate intake and promotion decisions
+        run: python "${LAB}/scripts/verify_candidate_ledger.py"
+
+      - name: Run complete retrofit suite
+        run: python -m pytest "${LAB}/tests" -q --tb=short --durations=15
+
+      - name: Compile operator code
+        run: python -m compileall -q "${LAB}/rineya_tgsa" "${LAB}/scripts"

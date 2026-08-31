@@ -10,6 +10,7 @@ python -m pip install -e ".[dev]"
 
 $SourceConfig = ".\tests\fixtures\rineya_supa_a1_config.json"
 $Evidence     = ".\evidence"
+$ModelDir    = "<PATH_TO_EXACT_PARENT_MODEL_DIRECTORY>"
 ```
 
 ## 1. Doctor — correctness gate
@@ -18,39 +19,42 @@ $Evidence     = ".\evidence"
 python -m pytest .\tests -q --tb=short --durations=15
 ```
 
-44 checks: bitwise exactness against an independent parallel GQA reference,
+The suite covers strict numerical exactness against an independent parallel GQA reference,
 RoPE rotation and relativity, GQA grouping, KV-cache layout, cached-vs-uncached
 agreement, prefill/decode agreement, causal-prefix and padding invariance,
 batch-size consistency, mixed precision, save/reload identity, gradient
-connectivity, conversion reproducibility, and manifest tamper detection.
+connectivity, conversion reproducibility, manifest tamper detection, and the
+fail-closed production promotion predicate. The real Qwen adapter separately
+checks bitwise equality against transformers' native eager implementation.
 
 ## 2. Conversion
 
 ```powershell
 python .\scripts\convert_rineya.py `
-  --source-checkpoint <PATH_TO_SAFETENSORS_OR_DIR> `
-  --source-config $SourceConfig `
-  --convert-layers "0,7,14,21" `
+  --model-dir $ModelDir `
+  --output-dir (Join-Path $Evidence "converted") `
+  --layers "0,7,14,21,27" `
   --trajectory-rank 32 `
   --master-seed 20260829 `
-  --output (Join-Path $Evidence "converted") `
-  --manifest (Join-Path $Evidence "conversion_manifest.json")
+  --dtype float32 `
+  --attn-impl eager `
+  --save-weights
 ```
 
-Reuses `q_proj`, `k_proj`, `v_proj`, `o_proj` verbatim. Refuses a shape
-mismatch, a silently dropped pretrained bias, an out-of-range layer, or a config
-whose RoPE convention it cannot reproduce.
+Reuses `q_proj`, `k_proj`, `v_proj`, `o_proj`, `q_norm`, and `k_norm` verbatim.
+It refuses an out-of-range layer, an unknown conditioning target, a config whose
+RoPE convention it cannot reproduce, or non-neutral conditioning. The current
+output is a manifest plus optional converted-attention state, not a standalone
+Hugging Face checkpoint; that is a documented production gap, not a baked model.
 
 ## 3. Conversion validation
 
-```powershell
-python .\scripts\verify_conversion.py `
-  --manifest (Join-Path $Evidence "conversion_manifest.json") `
-  --source-checkpoint <PATH> `
-  --converted (Join-Path $Evidence "converted")
-```
-
-Re-derives every hash and fails on any drift in a reused tensor.
+There is no `scripts/verify_conversion.py` in this branch. Conversion performs
+native-tensor completeness and neutrality checks in-process, while
+`build_source_manifest.py`, `real_layer_exactness.py`, and
+`real_conversion_damage.py` provide the separately persisted source/fidelity
+evidence. Do not claim independent artifact reload verification until a
+self-contained artifact writer and verifier exist.
 
 ## 4. Conversion-damage report — run BEFORE training
 
@@ -67,38 +71,29 @@ asserted; the full distribution is produced.
 
 ## 5. Layer-placement development study
 
-```powershell
-python .\scripts\run_placement_study.py `
-  --source-config $SourceConfig `
-  --output (Join-Path $Evidence "layer_placement.json") `
-  --steps 400 --seeds "1,2,3"
-```
-
-Runs the registered ladder: `none` → five single layers sampled across depth →
-distributed → contiguous early/middle/late blocks → half → all.
+The candidate generator and unit tests exist in `rineya_tgsa.schedule`, but no
+`scripts/run_placement_study.py` driver or real-model result exists. The intended
+ladder is `none` → depth-sampled single layers → distributed → contiguous
+early/middle/late blocks → half → all. Research evidence must select a placement
+before a production bake; this branch must not launch an exploratory sweep.
 
 ## 6. Warm-start / freeze-unfreeze development study
 
-```powershell
-python .\scripts\run_warm_start_study.py `
-  --source-config $SourceConfig `
-  --output (Join-Path $Evidence "warm_start.json") `
-  --steps 400 --seeds "1,2,3"
-```
-
-Compares the progressive schedule (`trajectory` → `attention` →
-`converted_layers` → `all`) against `immediate_full`. Records learning curves and
-the trainable-parameter count at every stage transition.
+`FreezeSchedule` and `apply_stage` are implemented and unit-tested, but no
+`scripts/run_warm_start_study.py` driver or real-model result exists. The
+development-only `train_retrofit.py` exposes bounded R0/R1/R2 stages; it is not
+an evidence-bearing bake or a substitute for a positive source configuration.
 
 ## 7. Training and resume
 
 ```powershell
 python .\scripts\train_retrofit.py `
-  --config .\configs\rineya_supa_a1_bake.json `
-  --output-dir <RUN_DIR> --schedule progressive --steps 4000
+  --model-dir $ModelDir `
+  --output-dir <RUN_DIR> --stage r0 `
+  --layers "0,14,27" --steps 40
 
 python .\scripts\train_retrofit.py `
-  --config .\configs\rineya_supa_a1_bake.json `
+  --model-dir $ModelDir `
   --output-dir <RUN_DIR> --resume
 ```
 
@@ -106,10 +101,10 @@ python .\scripts\train_retrofit.py `
 
 ```powershell
 python .\scripts\generation_test.py `
-  --converted (Join-Path $Evidence "converted") `
-  --source-config $SourceConfig `
-  --prompt "Explain why the sky is blue." --max-new-tokens 64 --greedy `
-  --compare-cached-vs-uncached
+  --model-dir $ModelDir `
+  --output (Join-Path $Evidence "generation_test.json") `
+  --layers "0,7,14,21,27" `
+  --max-new-tokens 12 --dtype float32 --attn-impl eager
 ```
 
 The published core requires greedy decoding and `trust_remote_code=True`.
@@ -118,20 +113,20 @@ The published core requires greedy decoding and `trust_remote_code=True`.
 
 ```powershell
 python .\scripts\trace_retrofit.py `
-  --converted (Join-Path $Evidence "converted") `
-  --source-config $SourceConfig `
-  --prompt "..." --layer 14 --report (Join-Path $Evidence "trace_l14.json")
+  --model-dir $ModelDir `
+  --prompt "The capital of France is" `
+  --layers "14" --trace-layers "14" `
+  --report (Join-Path $Evidence "trace_l14.json")
 ```
 
-Per layer and per sequential head: carrier summary, velocity, acceleration
-(where present), encoded control, control/state/predictor/correction gates,
-attention entropy, significance score, and top-token evolution. Summaries by
-default; `--dump-tensors` opts into full tensors.
+Per selected layer and sequential head this records carrier, velocity, encoded
+control, conditioning magnitude, attention entropy, and top-token evolution.
+Summaries are the default; `--dump-tensors` is opt-in.
 
 ## 10. Evidence verification
 
 ```powershell
-python .\scripts\verify_conversion.py --manifest ... --strict
+python .\scripts\verify_candidate_ledger.py
 python -m pytest .\tests -q
 ```
 
@@ -139,23 +134,24 @@ python -m pytest .\tests -q
 
 | question | artifact |
 |---|---|
-| source model, config, core id | `conversion_manifest.json` → `source_*` |
-| source commit / branch | run manifest → `git` |
-| converted layer indices | `conversion_manifest.json` → `converted_layers` |
+| source model and config | `conversion_manifest.json` → `source` |
+| source commit / branch | `candidate_ledger.json` → `source_branch`, `source_commit` |
+| converted layer indices | `conversion_manifest.json` → `conversion.converted_layers` |
 | trajectory architecture | `conversion_manifest.json` → `retrofit_config` |
-| which tensors were reused vs new | `layers[].reused_tensors`, `layers[].new_tensor_groups` |
-| dataset hashes | training config → `dataset` |
+| which tensors were reused vs new | `conversion.layers[].reused_tensors`, trajectory hashes |
+| research evidence | `candidate_ledger.json` → `research_evidence` |
 | seed, step, optimizer state | latest checkpoint payload |
-| resume ancestry | run manifest → `training.resumed_from_step`, `train_log_repair` |
+| resume ancestry | R0/R1/R2 report and `trajectory_state.pt` |
 | gradient / trajectory / gate statistics | `trace_retrofit.py` output |
 | prediction traces | `generation_test.py` output |
 
 ## Status of these commands
 
-Steps 1, 4, and the placement/warm-start ladders are implemented and exercised.
-Steps 2, 3, 7, 8, 9 depend on `scripts/convert_rineya.py`,
-`train_retrofit.py`, `generation_test.py`, and `trace_retrofit.py`, which are
-**not yet written** — the Rineya-Supa-A1 weights are not cached locally, so
-there is nothing for them to load. The library functions they will call
-(`convert_checkpoint`, `verify_conversion_manifest`, `apply_stage`,
-`measure_conversion_damage`) are implemented and tested.
+Steps 1, 2, 4, 7, 8, 9, and candidate-ledger verification are implemented.
+Real Supa-A1 conversion evidence exists for the older BF16 A1 parent. Steps 3,
+5, and 6 lack standalone drivers/artifacts. No command currently writes and
+fresh-process reloads a self-contained trained retrofit checkpoint, benchmarks
+serving, packages a release, or smoke-tests the exact artifact in a production
+demo. Supa-A1.1 and Baya weights are not cached locally. The active candidate
+ledger contains no `ELIGIBLE` mechanism, so conversion/training must remain
+parked until positive source evidence exists.
