@@ -7,7 +7,7 @@ The programme keeps the existing branches, but assigns them non-overlapping scie
 | Stage | Branch | Scientific role | MTP semantics |
 |---|---|---|---|
 | Phase 1 v4 | `research/tgsa-phase1-v4-competence-first` | Frozen competence and regime-selection boundary | none |
-| Phase 2A | `research/tgsa-phase2-mtp-complementarity` | TGSA trajectory-coordinate mechanism identification | `sequential_teacher_forced_recursive_v1` |
+| Phase 2A | `research/tgsa-phase2a-ci-and-competence` | TGSA trajectory-coordinate mechanism identification | `sequential_teacher_forced_recursive_v1` |
 | Phase 2B | `research/tgsa-mtp-rineya-complementarity-v1` | System factorial, exact verified decoding, and real-model integration | `parallel_independent_offsets_v1` |
 
 Phase 2A is the canonical next scientific stage because the research priority is TGSA mechanism identification. Phase 2B is downstream and may validate system-level complementarity even if Phase 2A is negative, but it must not reinterpret a system interaction as evidence that TGSA's trajectory coordinate caused the result.
@@ -141,7 +141,24 @@ Tolerance must not be relaxed merely to make CI green. First lock PyTorch, Trans
 ## Branch lifecycle
 
 - `research/tgsa-phase1-v4-competence-first`: frozen evidence branch; no Phase-2 code merges.
-- `research/tgsa-phase2-mtp-complementarity`: active Phase 2A mechanism branch and PR review surface; never merge into the frozen v4 branch.
+- `research/tgsa-phase2a-ci-and-competence`: active Phase 2A mechanism branch and PR review surface; never merge into the frozen v4 branch.
+- `research/tgsa-phase2-mtp-complementarity`: **archived predecessor of the Phase 2A branch**, tagged `archive/tgsa-phase2a-superseded-2026-08-31`. It carried the Phase 2A role until 2026-08-31 and is now fully contained in `research/tgsa-phase2a-ci-and-competence`. Do not commit to it; read it through the tag.
 - `research/tgsa-mtp-rineya-complementarity-v1`: active Phase 2B system branch; downstream of the programme boundary, not a replacement for Phase 2A.
+- `research/tgsa-programme-ledger`: records-only index of programme progress and provenance. Never receives implementation code.
 
 Preserve both branch histories for provenance. Do not delete, squash together, or relabel their artifacts under one generic “TGSA+MTP” identity.
+
+### Phase 2A branch redesignation, 2026-08-31
+
+The Phase 2A role moved from `research/tgsa-phase2-mtp-complementarity` to
+`research/tgsa-phase2a-ci-and-competence`, which had grown as an undeclared
+continuation of it: same stage, same `sequential_teacher_forced_recursive_v1`
+semantics, same lineage, but 396 tests against 349, and the sole holder of the
+v5 preregistration, the within-study qualification gate, per-family null
+scoring, and the programme contract. The predecessor's remaining doc
+corrections were merged in, so nothing was stranded.
+
+This is a within-stage rename, not a cross-stage merge. It does not pool
+evidence, does not touch the Phase 2A/2B separation, and does not alter any
+registered estimand. Two branches claiming the same stage was itself an
+evidence-identity risk, which is what this removes.

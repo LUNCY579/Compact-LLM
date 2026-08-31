@@ -10,7 +10,7 @@ Expected lineage:
 ```text
 research/tgsa-phase1-v4-competence-first
   8b5737e260b5478427b8bb033cffa394a5f3fc5d
-    └── research/tgsa-phase2-mtp-complementarity
+    └── research/tgsa-phase2a-ci-and-competence
 ```
 
 From the repository root on PowerShell:

@@ -13,7 +13,7 @@ The working name is **Trajectory-Guided Sequential Attention (TGSA)**. This name
 The TGSA × MTP programme uses the existing branches as a staged chain rather than merging two different MTP interventions into one ambiguous implementation:
 
 1. `research/tgsa-phase1-v4-competence-first` is the frozen scientific boundary. Its registered task/regime family is rejected and must not receive Phase-2 implementation commits.
-2. `research/tgsa-phase2-mtp-complementarity` (this branch) is **Phase 2A: trajectory-mechanism identification**. Its MTP semantics are `sequential_teacher_forced_recursive_v1`.
+2. `research/tgsa-phase2a-ci-and-competence` (this branch) is **Phase 2A: trajectory-mechanism identification**. Its MTP semantics are `sequential_teacher_forced_recursive_v1`. Its archived predecessor `research/tgsa-phase2-mtp-complementarity` held this role until 2026-08-31 and is fully contained here; read it through `archive/tgsa-phase2a-superseded-2026-08-31`.
 3. `research/tgsa-mtp-rineya-complementarity-v1` is **Phase 2B: system and decoding complementarity**. Its MTP semantics are `parallel_independent_offsets_v1`.
 
 The Phase 2A and Phase 2B branches are related stages, not replications. Their checkpoints, evidence roots, estimands, and schema identities must remain distinct. See `TGSA_MTP_CANONICAL_PATH.md`.
