@@ -9,7 +9,7 @@ Expected lineage:
 
 ```text
 research/tgsa-phase1-v4-competence-first
-  9b5fe9e000994d7f84c9f42326aff3d5f4682aa1
+  8b5737e260b5478427b8bb033cffa394a5f3fc5d
     └── research/tgsa-phase2-mtp-complementarity
 ```
 

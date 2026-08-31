@@ -3,14 +3,16 @@
 **Implementation status:** reference implementation and non-evidentiary rehearsal are available.
 
 **Parent baseline:** `research/tgsa-phase1-v4-competence-first` at
-`9b5fe9e000994d7f84c9f42326aff3d5f4682aa1`.
+`8b5737e260b5478427b8bb033cffa394a5f3fc5d`.
 
 **Current claim ceiling:** this phase can validate mechanics, gradients, paired
 initialization, future-token learning, development-set contrasts, and the shape
 of a future speculative decoder. It does **not** yet establish TGSA efficacy,
-Rineya quality gains, or tokens-per-second gains. Phase 1 v4 has not yet produced
-a frozen competence `GO`, and the reference TinyLM has no production KV-cache
-verifier.
+Rineya quality gains, or tokens-per-second gains. Phase 1 v4 produced a frozen
+regime-family **rejection** (`V4_REGIME_FAMILY_REJECTED`): both competence
+measurements returned `NO_GO`, the pointer families remained inert, and
+`no_primary_family_saturated` closed the ladder. The reference TinyLM has no
+production KV-cache verifier. Old-band Phase 2A runs remain development-only.
 
 ---
 
@@ -223,10 +225,12 @@ competence and MTP depth are calibrated.
 
 ### Stage 2 — competence-certified calibration
 
-Only after Phase 1 v4 returns `GO`, calibrate a small frozen development grid
-for horizon, auxiliary-loss weight, transition rank, and training budget.
-Selection must be arm-blind: use the weakest required cell's absolute competence,
-not a favorable learned-delta contrast.
+Phase 1 v4 will not return `GO` on this band. Calibrate a small frozen
+development grid only after a **new** competence preregistration produces
+`GO` on a learnable, non-saturated primary-family regime. Vary horizon,
+auxiliary-loss weight, transition rank, and training budget. Selection must
+be arm-blind: use the weakest required cell's absolute competence, not a
+favorable learned-delta contrast.
 
 ### Stage 3 — full TGSA ladder
 
@@ -310,7 +314,7 @@ Every run preserves:
 
 ## 9. Competence and leakage gates
 
-Phase 1 v4 currently records `V4_COMPETENCE_NOT_YET_ESTABLISHED`. Therefore:
+Phase 1 v4 records `V4_REGIME_FAMILY_REJECTED`. Therefore:
 
 1. a non-confirmatory rehearsal may run on development data to validate code and
    estimate training behavior;
