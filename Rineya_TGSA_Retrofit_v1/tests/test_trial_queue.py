@@ -101,3 +101,6 @@ def test_frozen_transfer_trial_has_one_candidate_and_strict_tie_failure() -> Non
     assert amendment["invalidated_rows"] == 21
     assert config["evaluation"]["protocol"]["logits_to_keep"] == 1
     assert amendment["amended_runner_sha256"] == config["evaluation"]["runner"]["sha256"]
+    assert amendment["attempt_1_status"].startswith("REJECTED_BEFORE_PREDICTION")
+    assert config["evaluation"]["protocol"]["trust_remote_code"] is False
+    assert config["evaluation"]["protocol"]["portable_logit_bias_token_id"] == 51378

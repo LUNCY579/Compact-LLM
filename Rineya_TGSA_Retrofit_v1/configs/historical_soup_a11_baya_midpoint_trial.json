@@ -4,15 +4,17 @@
   "registration_status": "FROZEN_BEFORE_OUTCOME",
   "registered_at_utc": "2026-08-31T05:20:12Z",
   "compute_only_amendment": {
-    "amended_at_utc": "2026-08-31T05:41:20Z",
+    "amended_at_utc": "2026-08-31T05:44:54Z",
     "reason": "The registered runner emitted full-vocabulary logits for every prompt token. A live parent run reached only 21/256 rows at sustained 100% GPU utilization, making the two-artifact comparison impractically slow.",
     "outcome_blinding": "The partial prediction file was never opened, decoded, joined to an answer key, or scored. Only its line count and byte count were observed before archival.",
     "invalidated_partial_artifact": "artifacts/historical_soup_a11_baya_midpoint_v1/evidence/invalidated_pre_amendment/parent_all256_partial_unscored.jsonl",
     "invalidated_rows": 21,
     "original_runner_sha256": "8c6762adda325a8a80630a30cf4b3432337059806ebdf8f2067c8a765894a6a5",
-    "amended_runner_sha256": "e6413a1f31b2a3f4484db6d0952f97d56ae9f82dff33772f68e804bf2e497c6e",
-    "change": "Pass logits_to_keep=1 to Qwen3 generation so only final-position prompt logits are materialized; prompts, model, dtype, attention, cache, decoding, seed, output tokens, and evaluator remain unchanged.",
-    "precondition": "Before any full scored run, the first four registered parent fixtures must produce byte-identical prediction text and token counts under the original and amended settings. Any mismatch aborts the amendment and the trial."
+    "attempt_1_runner_sha256": "e6413a1f31b2a3f4484db6d0952f97d56ae9f82dff33772f68e804bf2e497c6e",
+    "attempt_1_status": "REJECTED_BEFORE_PREDICTION — Transformers GenerationMixin could not recognize logits_to_keep through the custom forward(*args, **kwargs) signature",
+    "amended_runner_sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022",
+    "change": "Load the same weights as plain local Qwen3, pass logits_to_keep=1, and apply the frozen S4 +5.156249985098839 offset to token 51378 through a constant logits processor. This is the published portable algebraic equivalent of the custom class. Prompts, weights, dtype, attention, cache, decoding, seed, output policy, and evaluator remain unchanged.",
+    "precondition": "Before any full scored run, the first four registered parent fixtures must produce byte-identical prediction text, input-token counts, and generated-token counts between the archived custom-class run and the amended plain-Qwen-plus-logit-bias path. Any mismatch aborts the amendment and the trial."
   },
   "registration_base_commit": "3d481b959ff4bb35150a42836ee33f6709f20598",
   "purpose": "Test whether the historically positive uniform FP32 model-soup technique transfers to the strongest compatible dense Supa parent using the same-base, same-adapter Supa/Baya dose pair.",
@@ -115,7 +117,7 @@
   "evaluation": {
     "runner": {
       "path": "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py",
-      "sha256": "e6413a1f31b2a3f4484db6d0952f97d56ae9f82dff33772f68e804bf2e497c6e"
+      "sha256": "cdf156ef08fe719e3d64dd588c11669563e082e656b8c01e8fd32f5ed6562022"
     },
     "evaluator": {
       "path": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py",
@@ -144,10 +146,13 @@
       "truncation": "forbidden",
       "torch_dtype": "float16",
       "logits_to_keep": 1,
-      "trust_remote_code": true,
+      "trust_remote_code": false,
       "candidate_and_parent_same_process_contract": false,
       "fresh_process_per_artifact": true,
-      "rerun_exact_parent": true
+      "rerun_exact_parent": true,
+      "portable_logit_bias_token_id": 51378,
+      "portable_logit_bias": 5.156249985098839,
+      "portable_policy_equivalence_fixture_count": 4
     }
   },
   "transfer_gate": {

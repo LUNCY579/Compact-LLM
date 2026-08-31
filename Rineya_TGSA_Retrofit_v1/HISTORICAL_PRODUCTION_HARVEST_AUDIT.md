@@ -102,12 +102,16 @@ artifact/evaluation provenance. A tie is failure.
 
 The original runner reached only 21/256 parent rows while materializing
 full-vocabulary logits for every prompt token. The partial JSONL was archived
-unscored; its content and answer keys were not inspected. Before any full
-outcome run, the registration was amended to pass `logits_to_keep=1`, which
-limits only the returned prompt-logit positions. The amended runner hash is
-`e6413a1f…` and must reproduce identical raw predictions and token counts on the
-first four parent fixtures before use. All model, prompt, seed, decoding,
-attention, cache, dtype, threshold, and evaluator settings remain unchanged.
+unscored; its content and answer keys were not inspected. A first amendment
+attempt failed before producing a prediction because the custom wrapper's
+generic signature hid Qwen3's supported `logits_to_keep` parameter from
+GenerationMixin. The final outcome-blind path loads the identical local weights
+as plain Qwen3, requests the last prompt logits only, and applies the published
+portable S4 offset through a constant logits processor. The amended runner hash
+is `cdf156ef…` and must reproduce identical raw predictions and token counts on
+the first four archived parent fixtures before use. All model weights, prompts,
+seed, decoding, attention, cache, dtype, threshold, and evaluator settings
+remain unchanged.
 
 ## Outcome
 

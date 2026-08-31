@@ -5,12 +5,21 @@ import json
 from pathlib import Path
 
 import pytest
+import torch
 
 SCRIPT = Path(__file__).resolve().parents[1] / "scripts" / "run_local_hf.py"
 SPEC = importlib.util.spec_from_file_location("rineya_run_local_hf", SCRIPT)
 assert SPEC is not None and SPEC.loader is not None
 MODULE = importlib.util.module_from_spec(SPEC)
 SPEC.loader.exec_module(MODULE)
+
+
+def test_constant_token_bias_changes_only_the_selected_logit() -> None:
+    scores = torch.zeros(2, 8)
+    result = MODULE.ConstantTokenBiasProcessor(token_id=3, bias=5.25)(None, scores)
+    assert result is scores
+    assert torch.count_nonzero(result) == 2
+    torch.testing.assert_close(result[:, 3], torch.full((2,), 5.25))
 
 
 def test_profile_resolution_combines_global_layer_and_module_scales(tmp_path: Path) -> None:

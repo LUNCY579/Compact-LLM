@@ -12,6 +12,18 @@ import time
 from pathlib import Path
 from typing import Any
 
+
+class ConstantTokenBiasProcessor:
+    """Add one frozen constant to one vocabulary logit at every decode step."""
+
+    def __init__(self, token_id: int, bias: float) -> None:
+        self.token_id = int(token_id)
+        self.bias = float(bias)
+
+    def __call__(self, input_ids: Any, scores: Any) -> Any:
+        scores[..., self.token_id] = scores[..., self.token_id] + self.bias
+        return scores
+
 LORA_PROJECTION_NAMES = {
     "q_proj",
     "k_proj",
@@ -447,6 +459,18 @@ def main() -> None:
         ),
     )
     parser.add_argument(
+        "--logit-bias-token-id",
+        type=int,
+        default=None,
+        help="Optional vocabulary token receiving a constant greedy-decode logit bias.",
+    )
+    parser.add_argument(
+        "--logit-bias",
+        type=float,
+        default=None,
+        help="Constant added to --logit-bias-token-id at every decode step.",
+    )
+    parser.add_argument(
         "--torch-dtype",
         default="auto",
         choices=("auto", "float32", "float16", "bfloat16"),
@@ -478,6 +502,15 @@ def main() -> None:
         parser.error("--logprob-top-k must be positive")
     if args.logits_to_keep is not None and args.logits_to_keep < 1:
         parser.error("--logits-to-keep must be positive")
+    if (args.logit_bias_token_id is None) != (args.logit_bias is None):
+        parser.error("--logit-bias-token-id and --logit-bias must be supplied together")
+    if args.logit_bias is not None and not math.isfinite(args.logit_bias):
+        parser.error("--logit-bias must be finite")
+    if args.trust_remote_code and args.logit_bias is not None:
+        parser.error(
+            "refusing --trust-remote-code with --logit-bias: a custom model may already "
+            "apply the offset, which would double-count the policy"
+        )
 
     adapter_scale_profile: dict[str, Any] | None = None
     adapter_scale_profile_sha256: str | None = None
@@ -503,6 +536,8 @@ def main() -> None:
         args.model,
         trust_remote_code=args.trust_remote_code,
     )
+    if args.logit_bias_token_id is not None and not 0 <= args.logit_bias_token_id < len(tokenizer):
+        parser.error("--logit-bias-token-id is outside the tokenizer vocabulary")
 
     model_kwargs = {
         "device_map": args.device_map,
@@ -658,6 +693,13 @@ def main() -> None:
                     }
                     if args.logits_to_keep is not None:
                         generate_kwargs["logits_to_keep"] = args.logits_to_keep
+                    if args.logit_bias is not None:
+                        generate_kwargs["logits_processor"] = [
+                            ConstantTokenBiasProcessor(
+                                token_id=args.logit_bias_token_id,
+                                bias=args.logit_bias,
+                            )
+                        ]
                     if args.emit_logprobs:
                         generate_kwargs["return_dict_in_generate"] = True
                         generate_kwargs["output_logits"] = True
@@ -691,6 +733,8 @@ def main() -> None:
                         "seed": args.seed,
                         "decoding": "greedy",
                         "logits_to_keep": args.logits_to_keep,
+                        "logit_bias_token_id": args.logit_bias_token_id,
+                        "logit_bias": args.logit_bias,
                     }
                     if args.adapter:
                         result["adapter_scale"] = args.adapter_scale
