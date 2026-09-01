@@ -75,6 +75,7 @@ class FWAAttentionWrapper(nn.Module):
                     break
         valid = token_valid_mask(mask, hidden_states)
         delta = self.block(hidden_states, valid)
+        delta = torch.nan_to_num(delta, nan=0.0, posinf=0.0, neginf=0.0)
         merged = attn_h + alpha.to(dtype=attn_h.dtype) * delta.to(dtype=attn_h.dtype)
         if rest:
             return (merged, *rest)
@@ -143,7 +144,8 @@ def install_fwa(model: Any, cfg: FWAConfig, layers: Iterable[int]) -> InstalledF
             block = FastWeightBlock(layer_cfg)
             wrapper = FWAAttentionWrapper(current, block)
             param = next(model.parameters())
-            wrapper.to(device=param.device, dtype=param.dtype)
+            wrapper.to(device=param.device)
+            wrapper.block.float()
             originals[idx] = current
             wrappers[idx] = wrapper
             blocks[idx].self_attn = wrapper

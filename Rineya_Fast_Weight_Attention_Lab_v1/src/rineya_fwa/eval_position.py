@@ -59,9 +59,14 @@ def normalize(text: str) -> str:
 
 def greedy_answer(model: Any, tokenizer: Any, messages: list[dict[str, str]], max_new: int = 16) -> str:
     device = next(model.parameters()).device
-    input_ids = tokenizer.apply_chat_template(
-        messages, add_generation_prompt=True, return_tensors="pt"
-    )
+    try:
+        input_ids = tokenizer.apply_chat_template(
+            messages, add_generation_prompt=True, return_tensors="pt", enable_thinking=False
+        )
+    except TypeError:
+        input_ids = tokenizer.apply_chat_template(
+            messages, add_generation_prompt=True, return_tensors="pt"
+        )
     if not torch.is_tensor(input_ids):
         input_ids = torch.tensor(input_ids, dtype=torch.long).unsqueeze(0)
     input_ids = input_ids.to(device)

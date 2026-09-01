@@ -33,16 +33,32 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def _as_id_list(ids) -> list[int]:
+    if isinstance(ids, dict) or hasattr(ids, "keys"):
+        ids = ids["input_ids"]
+    if torch.is_tensor(ids):
+        ids = ids.detach().cpu().tolist()
+    if isinstance(ids, list) and ids and isinstance(ids[0], list):
+        ids = ids[0]
+    return list(ids)
+
+
 def encode_row(tokenizer: Any, row: dict[str, Any], max_len: int) -> dict[str, torch.Tensor]:
     messages = list(row["messages"])
     prompt = messages[:-1]
     full = messages
-    prompt_ids = tokenizer.apply_chat_template(prompt, add_generation_prompt=True, tokenize=True)
-    full_ids = tokenizer.apply_chat_template(full, add_generation_prompt=False, tokenize=True)
-    if not isinstance(prompt_ids, list):
-        prompt_ids = prompt_ids.tolist()
-    if not isinstance(full_ids, list):
-        full_ids = full_ids.tolist()
+    try:
+        prompt_ids = tokenizer.apply_chat_template(
+            prompt, add_generation_prompt=True, tokenize=True, enable_thinking=False
+        )
+        full_ids = tokenizer.apply_chat_template(
+            full, add_generation_prompt=False, tokenize=True, enable_thinking=False
+        )
+    except TypeError:
+        prompt_ids = tokenizer.apply_chat_template(prompt, add_generation_prompt=True, tokenize=True)
+        full_ids = tokenizer.apply_chat_template(full, add_generation_prompt=False, tokenize=True)
+    prompt_ids = _as_id_list(prompt_ids)
+    full_ids = _as_id_list(full_ids)
     if len(full_ids) > max_len:
         overflow = len(full_ids) - max_len
         full_ids = full_ids[overflow:]
@@ -92,16 +108,14 @@ def train_arm(
     tokenizer = load_tokenizer()
     model = load_supa(device=device, eval_mode=False)
     freeze_backbone(model)
-    handle = apply_arm(model, arm, layers=layers, rank=rank, init_alpha=0.0)
+    handle = apply_arm(model, arm, layers=layers, rank=rank, init_alpha=0.05)
     if handle is not None:
         for block in handle.blocks():
             for param in block.parameters():
                 param.requires_grad = True
-        if hasattr(model, "gradient_checkpointing_enable"):
-            model.gradient_checkpointing_enable()
-            if hasattr(model, "enable_input_require_grads"):
-                model.enable_input_require_grads()
-        model.train()
+        model.eval()
+        for wrapper in handle.wrappers.values():
+            wrapper.block.train()
         params = handle.trainable_parameters()
         optimizer = AdamW(params, lr=learning_rate, weight_decay=weight_decay)
     else:
@@ -125,27 +139,31 @@ def train_arm(
     if optimizer is not None:
         optimizer.zero_grad(set_to_none=True)
 
+    skipped_nonfinite = 0
     while step < max_steps and optimizer is not None:
         row = rows[examples_seen % len(rows)]
+        examples_seen += 1
         batch = encode_row(tokenizer, row, max_sequence_length)
         input_ids = batch["input_ids"].unsqueeze(0).to(device)
         labels = batch["labels"].unsqueeze(0).to(device)
         attn = batch["attention_mask"].unsqueeze(0).to(device)
         out = model(input_ids=input_ids, attention_mask=attn, labels=labels)
         loss = out.loss
+        if loss is None or not torch.isfinite(loss):
+            skipped_nonfinite += 1
+            if skipped_nonfinite > 16:
+                aborted = "non_finite_loss"
+                break
+            continue
         loss_value = float(loss.detach().cpu())
         if first_loss is None:
             first_loss = loss_value
-        if not torch.isfinite(loss):
-            aborted = "non_finite_loss"
-            break
-        if first_loss and loss_value > nan_abort_factor * first_loss and step > 3:
+        if first_loss and first_loss > 0 and loss_value > nan_abort_factor * max(first_loss, 0.5) and step > 3:
             aborted = "divergence"
             break
         (loss / grad_accum).backward()
         accum += 1
         tokens_seen += int(attn.sum().item())
-        examples_seen += 1
         if accum % grad_accum == 0:
             torch.nn.utils.clip_grad_norm_(params, 1.0)
             optimizer.step()
@@ -188,6 +206,7 @@ def train_arm(
         "first_loss": first_loss,
         "last_loss": history[-1]["loss"] if history else None,
         "aborted": aborted,
+        "skipped_nonfinite": skipped_nonfinite,
         "adapter_path": str(adapter_path) if handle is not None else None,
         "max_sequence_length": max_sequence_length,
         "checkpoint_bytes": adapter_path.stat().st_size if adapter_path.exists() else 0,

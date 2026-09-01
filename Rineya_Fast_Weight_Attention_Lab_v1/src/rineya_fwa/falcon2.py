@@ -88,10 +88,11 @@ def falcon2_scan(
         pred = torch.einsum("bhrd,bhr->bhd", state, xt)
         residual = vt - pred
         denom = (xt * xt).sum(dim=-1, keepdim=True) + lam_t + eps
-        eta = beta_t / denom.clamp_min(eps)
-        decay = 1.0 - lam_t * eta
+        eta = (beta_t / denom.clamp_min(eps)).clamp(0.0, 1.5)
+        residual = residual.clamp(-50.0, 50.0)
+        decay = (1.0 - lam_t * eta).clamp(0.0, 1.0)
         write = torch.einsum("bhr,bhd->bhrd", xt, eta * residual)
-        new_state = state * decay.unsqueeze(-2) + write
+        new_state = (state * decay.unsqueeze(-2) + write).clamp(-1.0e4, 1.0e4)
         state = torch.where(gate.unsqueeze(-1).bool(), new_state, state)
         mem = torch.einsum("bhrd,bhr->bhd", state, qt)
         outputs[:, t] = mem * gate.squeeze(-1)
@@ -184,13 +185,13 @@ class FastWeightBlock(nn.Module):
         *,
         return_state: bool = False,
     ) -> torch.Tensor | tuple[torch.Tensor, torch.Tensor]:
-        q, k, v = self._features(hidden)
-        beta, lam, _ = self.rates(hidden)
+        q, k, v = self._features(hidden.float())
+        beta, lam, _ = self.rates(hidden.float())
         memory, state = falcon2_scan(
             q, k, v, valid, beta, lam, self.cfg.eps, recurrent=self.cfg.recurrent
         )
         batch, length, heads, rank = memory.shape
-        projected = self.P(memory.reshape(batch, length, heads * rank).to(hidden.dtype))
+        projected = self.P(memory.reshape(batch, length, heads * rank).float()).to(dtype=hidden.dtype)
         if return_state:
             return projected, state
         return projected

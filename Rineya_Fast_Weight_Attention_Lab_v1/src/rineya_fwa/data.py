@@ -40,7 +40,7 @@ FILLER_SENTENCE = (
     "standing watch roster for this interval."
 )
 
-STRATUM_PROXY = {"2k": 400, "4k": 800}  # synthetic filler sentence counts
+STRATUM_PROXY = {"2k": 14, "4k": 20}  # sentence counts that fit the 512-token P1/P2 budget
 STRATUM_BOUNDS = {
     "2k": (1843, 2252),
     "4k": (3768, 4423),
@@ -171,10 +171,11 @@ def build_lab_mix(
     strata: list[str],
     seed: int,
     dest: Path | None = None,
+    force_synthetic: bool = False,
 ) -> dict[str, Any]:
     dest = dest or (DATA / "unsealed")
     dest.mkdir(parents=True, exist_ok=True)
-    official = official_cc0_train()
+    official = None if force_synthetic else official_cc0_train()
     source = "lab_unsealed_synthetic"
     train: list[dict[str, Any]] = []
     dev: list[dict[str, Any]] = []

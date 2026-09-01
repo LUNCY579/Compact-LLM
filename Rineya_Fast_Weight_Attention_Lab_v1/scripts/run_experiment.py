@@ -43,7 +43,8 @@ def run_p1() -> dict:
         dev_rows=int(cfg["data"]["dev_rows"]),
         strata=list(cfg["data"]["strata"]),
         seed=int(cfg["training"]["seed"]),
-        dest=DATA / "unsealed",
+        dest=DATA / "synthetic",
+        force_synthetic=True,
     )
     out = ARTIFACTS / "p1_pilot" / "arm_C" / "seed_11"
     seq = int(cfg["training"]["max_sequence_length"])
@@ -52,7 +53,7 @@ def run_p1() -> dict:
         man = train_arm(
             arm="C",
             layers=list(cfg["fwa"]["layers"]),
-            train_file=DATA / "unsealed" / "train.jsonl",
+            train_file=DATA / "synthetic" / "train.jsonl",
             output_dir=out,
             seed=int(cfg["training"]["seed"]),
             rank=int(cfg["fwa"]["rank"]),
@@ -67,7 +68,7 @@ def run_p1() -> dict:
         man = train_arm(
             arm="C",
             layers=list(cfg["fwa"]["layers"]),
-            train_file=DATA / "unsealed" / "train.jsonl",
+            train_file=DATA / "synthetic" / "train.jsonl",
             output_dir=out,
             seed=int(cfg["training"]["seed"]),
             rank=int(cfg["fwa"]["rank"]),
@@ -137,7 +138,8 @@ def run_p2() -> dict:
         dev_rows=int(cfg["data"]["dev_rows"]),
         strata=list(cfg["data"]["strata"]),
         seed=11,
-        dest=DATA / "unsealed",
+        dest=DATA / "synthetic",
+        force_synthetic=True,
     )
     layers = list(cfg["fwa"]["layers"])
     rank = int(cfg["fwa"]["rank"])
@@ -152,7 +154,7 @@ def run_p2() -> dict:
                 man = train_arm(
                     arm=arm,
                     layers=layers,
-                    train_file=DATA / "unsealed" / "train.jsonl",
+                    train_file=DATA / "synthetic" / "train.jsonl",
                     output_dir=out,
                     seed=seed,
                     rank=rank,
@@ -167,7 +169,7 @@ def run_p2() -> dict:
                 man = train_arm(
                     arm=arm,
                     layers=layers,
-                    train_file=DATA / "unsealed" / "train.jsonl",
+                    train_file=DATA / "synthetic" / "train.jsonl",
                     output_dir=out,
                     seed=seed,
                     rank=rank,
