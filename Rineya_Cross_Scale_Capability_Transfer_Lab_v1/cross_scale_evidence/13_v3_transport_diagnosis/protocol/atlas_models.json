@@ -1,0 +1,55 @@
+{
+  "schema_version": "1.0",
+  "note": "Every 0.6B-shaped checkpoint still resident on this host. Qwen3-4B and Qwen3-8B are absent from the Hugging Face cache, so the donor side of the atlas is blocked and recorded as such.",
+  "models": [
+    {
+      "name": "qwen06",
+      "role": "reference_base",
+      "path": "C:/Users/clclc/.cache/huggingface/hub/models--Qwen--Qwen3-0.6B/snapshots/c1899de289a04d12100db370d81485cdf75e47ca"
+    },
+    {
+      "name": "supa",
+      "role": "target",
+      "path": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze"
+    },
+    {
+      "name": "p4_4b_s010",
+      "role": "transported_donor",
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/local_models/projected/P4_D2_W4/qwen4b_spectral_rank8_s010"
+    },
+    {
+      "name": "p4_8b_s010",
+      "role": "transported_donor",
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/local_models/projected/P4_D2_W4/qwen8b_spectral_rank8_s010"
+    },
+    {
+      "name": "p5_4b_s010",
+      "role": "transported_donor",
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/local_models/projected/P5_D2_WDIR/qwen4b_dir_s010"
+    },
+    {
+      "name": "cons_mean_a1500",
+      "role": "v1_best_candidate",
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/local_models/candidate_scratch"
+    },
+    {
+      "name": "ties_k50_a1500",
+      "role": "v2_candidate",
+      "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/local_models/v2_candidates/TIES_K50_delta4+delta8_A1500"
+    }
+  ],
+  "blocked": [
+    {
+      "name": "qwen4b",
+      "role": "donor",
+      "status": "blocked_no_donor_weights",
+      "revision": "1cfa9a7208912126459214e8b04321603b3df60c"
+    },
+    {
+      "name": "qwen8b",
+      "role": "donor",
+      "status": "blocked_no_donor_weights",
+      "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+    }
+  ]
+}
