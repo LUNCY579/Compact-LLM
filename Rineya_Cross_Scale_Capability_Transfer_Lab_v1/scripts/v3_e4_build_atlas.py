@@ -92,6 +92,7 @@ def main() -> int:
     started = time.perf_counter()
     index = json.loads((args.captures / "capture_index.json").read_text("utf-8"))
     slots = index["models"][0]["capture_slots"]
+    pooling = index.get("pooling", "last")
     names = [m["model"] for m in index["models"]]
 
     hidden = {n: np.load(args.captures / f"{n}.npz")["hidden"] for n in names}
@@ -162,6 +163,7 @@ def main() -> int:
         "experiment": "v3_e4_functional_alignment_atlas",
         "protocol": "amendment_v3_transport_diagnosis.md 3.0.0-diagnostic",
         "split": "calibration",
+        "pooling": pooling,
         "dataset_sha256": index["dataset_sha256"],
         "prompts": prompts,
         "capture_slots": slots,
@@ -185,7 +187,11 @@ def main() -> int:
     lines = [
         "# v3 E4 — Cross-Model Functional Alignment Atlas",
         "",
-        f"{prompts} frozen calibration prompts, prompts only, final prompt token, CPU float32.",
+        f"{prompts} frozen calibration prompts, prompts only, CPU float32.",
+        f"Token pooling: **{pooling}**"
+        + (" (the final prompt token, which is what produces the next token)."
+           if pooling == "last" else
+           " (mean over all prompt positions, a robustness check on the final-token view)."),
         f"Depth slots: {', '.join(slots)}.",
         "",
         "Donor-side rows (Qwen3-4B, Qwen3-8B) are absent: those checkpoints are no longer",
@@ -194,7 +200,7 @@ def main() -> int:
     ]
 
     lines += table(
-        "Representation similarity vs the reference base (mean cosine of final-token hidden state)",
+        f"Representation similarity vs the reference base (mean cosine, {pooling} pooling)",
         ["pair"] + slots,
         [[pair] + [f"{d['mean_cosine']:.4f}" for d in data["depths"]]
          for pair, data in representation.items() if pair.startswith(f"{BASE}__vs__")],

@@ -1,12 +1,13 @@
 # v3 E4 — Cross-Model Functional Alignment Atlas
 
-59 frozen calibration prompts, prompts only, final prompt token, CPU float32.
+59 frozen calibration prompts, prompts only, CPU float32.
+Token pooling: **last** (the final prompt token, which is what produces the next token).
 Depth slots: embedding, layer_0, layer_7, layer_14, layer_21, layer_27.
 
 Donor-side rows (Qwen3-4B, Qwen3-8B) are absent: those checkpoints are no longer
 resident on this host. See `protocol/atlas_models.json`.
 
-## Representation similarity vs the reference base (mean cosine of final-token hidden state)
+## Representation similarity vs the reference base (mean cosine, last pooling)
 
 | pair | embedding | layer_0 | layer_7 | layer_14 | layer_21 | layer_27 |
 |---|---|---|---|---|---|---|

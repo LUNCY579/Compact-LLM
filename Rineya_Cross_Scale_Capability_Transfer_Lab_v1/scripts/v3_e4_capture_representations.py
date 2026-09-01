@@ -63,6 +63,7 @@ def capture_model(
     destination: Path,
     threads: int,
     max_context_tokens: int,
+    pooling: str = "last",
 ) -> dict[str, Any]:
     from transformers import AutoModelForCausalLM, AutoTokenizer
 
@@ -95,9 +96,17 @@ def capture_model(
                 **encoded, output_hidden_states=True, use_cache=False, logits_to_keep=1
             )
             states = output.hidden_states
-            hidden[index, 0] = states[0][0, -1].float().numpy()
+
+            def reduce(tensor: torch.Tensor) -> np.ndarray:
+                # "last" is the final prompt token. "mean" pools every prompt
+                # position, which avoids the final-token slot being dominated by
+                # the chat template's trailing token.
+                view = tensor[0].float()
+                return (view.mean(dim=0) if pooling == "mean" else view[-1]).numpy()
+
+            hidden[index, 0] = reduce(states[0])
             for slot, layer in enumerate(CAPTURE_LAYERS, start=1):
-                hidden[index, slot] = states[layer + 1][0, -1].float().numpy()
+                hidden[index, slot] = reduce(states[layer + 1])
             logits[index] = output.logits[0, -1].float().numpy().astype(np.float16)
             del output, states, encoded
             if index % 10 == 9:
@@ -120,6 +129,7 @@ def capture_model(
         "vocab_size": int(model.config.vocab_size),
         "num_hidden_layers": int(model.config.num_hidden_layers),
         "capture_layers": list(CAPTURE_LAYERS),
+        "pooling": pooling,
         "capture_slots": ["embedding"] + [f"layer_{layer}" for layer in CAPTURE_LAYERS],
         "rows": len(rows),
         "total_prompt_tokens": int(token_counts.sum()),
@@ -152,6 +162,7 @@ def main() -> int:
     parser.add_argument("--threads", type=int, default=8)
     parser.add_argument("--max-context-tokens", type=int, default=4096)
     parser.add_argument("--only", type=str, default=None)
+    parser.add_argument("--pooling", choices=("last", "mean"), default="last")
     args = parser.parse_args()
 
     dataset_sha = sha256_file(args.dataset)
@@ -177,6 +188,7 @@ def main() -> int:
             destination=args.destination,
             threads=args.threads,
             max_context_tokens=args.max_context_tokens,
+            pooling=args.pooling,
         )
         print(f"[done] {entry['name']} {record['resources']['wall_seconds']:.1f}s", flush=True)
         records.append(record)
@@ -192,6 +204,7 @@ def main() -> int:
             "prompts_only": True,
             "seed": SEED,
             "capture_layers": list(CAPTURE_LAYERS),
+            "pooling": args.pooling,
             "models": records,
         },
     )
