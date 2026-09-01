@@ -6,7 +6,7 @@
 - Frozen Supa-A1.1, FWA tensors in **float32**, backbone float16.
 - 24 optimizer steps, microbatch 1, accumulation 8, max length 512.
 - Training mix: lab unsealed synthetic colour-retrieval (`data/synthetic/`, sha256
-  `bf7c30ee596b5741b431a834652453b2817b22fe24c4b0eafec6fc61c52d7042`).
+  `0d830fe7f55cde3ab848351c33ceb6aae72e53cbdbfda289c87a0a81f5bdc211`).
 - Official CC0 2k subset was also built (`data/unsealed/`, train sha256
   `14bcddb3bbb275539e03b45e9b45a4024cb9aa352f82af7376bc61bce39d8c2c`) but **not
   used for P1**: untruncated 2k rows plus fp16 FWA adapters produced non-finite

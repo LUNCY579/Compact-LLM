@@ -71,4 +71,5 @@ Do not open, train on, or iterate against:
 
 ## Status
 
-See `reports/` and `FINAL_INTERPRETATION.md` after P2.
+P2 complete for seeds 11 and 22. Decision: **NO-GO**. See
+`reports/FINAL_INTERPRETATION.md`.
