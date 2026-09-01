@@ -1,0 +1,35 @@
+[build-system]
+requires = ["setuptools>=75", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rineya-fwa-lab"
+version = "0.1.0"
+description = "FALCON-2 auxiliary fast-weight memory experiment on frozen Rineya Supa-A1.1."
+readme = "README.md"
+requires-python = ">=3.11,<3.14"
+license = { text = "Research-only until a repository license is selected" }
+dependencies = [
+  "numpy>=1.26,<3",
+  "PyYAML>=6.0,<7",
+]
+
+[project.optional-dependencies]
+model = ["torch>=2.7,<3", "transformers==5.14.1", "safetensors>=0.5,<1", "accelerate>=1.10,<2"]
+dev = ["pytest>=8.3,<10"]
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra --strict-markers --strict-config"
+markers = [
+  "model: requires the local Supa-A1.1 checkpoint",
+  "gpu: requires CUDA",
+  "slow: exceeds the fast test budget",
+]

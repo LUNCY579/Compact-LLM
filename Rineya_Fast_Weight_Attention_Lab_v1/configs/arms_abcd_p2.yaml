@@ -1,0 +1,52 @@
+schema_version: "1.0"
+experiment:
+  name: supa_a1_1_fwa_p2_abcd
+  status: EXPLORATORY_NOT_CONFIRMATORY
+  phase: p2
+model:
+  key: supa_a11
+  path: Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze
+  dtype: float16
+  trust_remote_code: true
+  expected_arch: Qwen3AbstainForCausalLM
+  freeze_backbone: true
+fwa:
+  variant: falcon2_prefix_aligned
+  rank: 16
+  layers: [14]
+  n_kv_heads: 8
+  epsilon: 1.0e-6
+  init_alpha: 0.0
+training:
+  seeds: [11, 22, 33]
+  learning_rate: 1.0e-4
+  epochs: 1.0
+  max_steps: 80
+  per_device_batch_size: 1
+  gradient_accumulation_steps: 8
+  max_sequence_length: 1024
+  warmup_ratio: 0.03
+  weight_decay: 0.01
+  logging_steps: 2
+  nan_abort_factor: 10.0
+  gradient_checkpointing: true
+data:
+  train_rows: 512
+  dev_rows: 64
+  strata: [2k, 4k]
+  source: lab_unsealed_synthetic
+decode:
+  max_new_tokens: 16
+  do_sample: false
+  normalization: trim
+eval:
+  positions: [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95]
+  lengths: [512, 1024, 2048, 4096]
+  skip_on_oom: true
+paths:
+  output_dir: artifacts/supa_a1_1_fast_weight_attention_v1/p2_abcd
+arms:
+  A: {recurrent: false, significance_gate: false, install: false}
+  B: {recurrent: false, significance_gate: false, install: true}
+  C: {recurrent: true, significance_gate: false, install: true}
+  D: {recurrent: true, significance_gate: true, install: true}
