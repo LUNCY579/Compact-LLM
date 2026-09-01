@@ -11,7 +11,21 @@ CONFIGS = LAB_ROOT / "configs"
 REPORTS = LAB_ROOT / "reports"
 DATA = LAB_ROOT / "data"
 ARTIFACTS = REPO_ROOT / "artifacts" / "supa_a1_1_fast_weight_attention_v1"
-SUPA_PATH = REPO_ROOT / "Rineya_Published_Cores" / "Rineya-Supa-A1.1-1.1.0-devfreeze"
+SUPA_REL = Path("Rineya_Published_Cores") / "Rineya-Supa-A1.1-1.1.0-devfreeze"
+SUPA_PATH = REPO_ROOT / SUPA_REL
+SIBLING_CHATBUBBLE = REPO_ROOT.parent / "Chat-Bubble"
+
+
+def resolve_supa_path() -> Path:
+    """Read-only checkpoint location. Worktree metadata may lack gitignored weights."""
+    candidates = [
+        SUPA_PATH,
+        SIBLING_CHATBUBBLE / SUPA_REL,
+    ]
+    for path in candidates:
+        if (path / "model.safetensors").is_file() and (path / "config.json").is_file():
+            return path
+    return SUPA_PATH
 
 PUBLISHED_CORES = REPO_ROOT / "Rineya_Published_Cores"
 PSA_SEALED = REPO_ROOT / "rineya_positional_sequential_attention_lab" / "data" / "sealed"
@@ -27,6 +41,9 @@ FORBIDDEN_READ_HINTS = (
 def assert_readonly_target(path: Path) -> None:
     resolved = Path(path).resolve()
     protected = [PUBLISHED_CORES, PSA_SEALED, CC0_SEALED]
+    sibling_cores = SIBLING_CHATBUBBLE / "Rineya_Published_Cores"
+    if sibling_cores.exists():
+        protected.append(sibling_cores)
     qwen = REPO_ROOT / "Qwen3-0.6B"
     if qwen.is_dir():
         protected.append(qwen)

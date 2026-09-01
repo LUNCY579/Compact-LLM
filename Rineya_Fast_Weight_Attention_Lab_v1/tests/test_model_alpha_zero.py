@@ -7,13 +7,14 @@ import torch
 
 from rineya_fwa.arms import apply_arm
 from rineya_fwa.loading import load_supa, load_tokenizer
-from rineya_fwa.paths import SUPA_PATH
+from rineya_fwa.paths import resolve_supa_path
 
 
 @pytest.mark.model
 @pytest.mark.gpu
 def test_supa_alpha_zero_logits():
-    if not (SUPA_PATH / "model.safetensors").is_file():
+    path = resolve_supa_path()
+    if not (path / "model.safetensors").is_file():
         pytest.skip("Supa-A1.1 weights are not on disk")
     if not torch.cuda.is_available():
         pytest.skip("CUDA required")

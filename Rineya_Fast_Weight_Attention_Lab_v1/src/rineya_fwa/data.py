@@ -11,6 +11,7 @@ from __future__ import annotations
 import hashlib
 import json
 import random
+import re
 from pathlib import Path
 from typing import Any
 
@@ -39,7 +40,12 @@ FILLER_SENTENCE = (
     "standing watch roster for this interval."
 )
 
-STRATUM_PROXY = {"2k": 400, "4k": 800}  # proxy words; tokenizer length is measured later
+STRATUM_PROXY = {"2k": 400, "4k": 800}  # synthetic filler sentence counts
+STRATUM_BOUNDS = {
+    "2k": (1843, 2252),
+    "4k": (3768, 4423),
+}
+_WORD_RE = re.compile(r"\w+|[^\w\s]", flags=re.UNICODE)
 
 
 def _sha256_file(path: Path) -> str:
@@ -59,6 +65,55 @@ def official_cc0_train() -> Path | None:
     if sibling.is_dir() and any(sibling.glob("*.jsonl")):
         return sibling
     return None
+
+
+def first_user_text(row: dict[str, Any]) -> str:
+    for message in row.get("messages") or []:
+        if message.get("role") == "user":
+            return str(message.get("content") or "")
+    return ""
+
+
+def infer_stratum(row: dict[str, Any]) -> str | None:
+    metadata = row.get("metadata") if isinstance(row.get("metadata"), dict) else {}
+    for key in ("context_stratum", "stratum"):
+        raw = metadata.get(key)
+        if raw:
+            text = str(raw).strip().lower().replace(" ", "")
+            if text in STRATUM_BOUNDS:
+                return text
+    count = len(_WORD_RE.findall(first_user_text(row)))
+    for name, (low, high) in STRATUM_BOUNDS.items():
+        if low <= count <= high:
+            return name
+    return None
+
+
+def collect_official_subset(root: Path, *, n: int, strata: list[str], seed: int) -> list[dict[str, Any]]:
+    wanted = set(strata)
+    matched: list[dict[str, Any]] = []
+    for shard in sorted(root.glob("*.jsonl")):
+        assert_unsealed_source(shard)
+        with shard.open("r", encoding="utf-8") as handle:
+            for line in handle:
+                if not line.strip():
+                    continue
+                row = json.loads(line)
+                messages = row.get("messages")
+                if not isinstance(messages, list) or not messages:
+                    continue
+                if messages[-1].get("role") != "assistant":
+                    continue
+                if infer_stratum(row) not in wanted:
+                    continue
+                matched.append(row)
+                if len(matched) >= n:
+                    rng = random.Random(seed)
+                    rng.shuffle(matched)
+                    return matched
+    rng = random.Random(seed)
+    rng.shuffle(matched)
+    return matched
 
 
 def _place(fact: str, filler_n: int, position: float, rng: random.Random) -> str:
@@ -120,28 +175,19 @@ def build_lab_mix(
     dest = dest or (DATA / "unsealed")
     dest.mkdir(parents=True, exist_ok=True)
     official = official_cc0_train()
-    source = "official_cc0_unsealed" if official is not None else "lab_unsealed_synthetic"
+    source = "lab_unsealed_synthetic"
+    train: list[dict[str, Any]] = []
+    dev: list[dict[str, Any]] = []
     if official is not None:
-        # Copy a deterministic subset out of CC0 train into the lab tree.
-        rows: list[dict[str, Any]] = []
-        for shard in sorted(official.glob("*.jsonl")):
-            assert_unsealed_source(shard)
-            with shard.open("r", encoding="utf-8") as handle:
-                for line in handle:
-                    if not line.strip():
-                        continue
-                    rows.append(json.loads(line))
-                    if len(rows) >= train_rows + dev_rows:
-                        break
-            if len(rows) >= train_rows + dev_rows:
-                break
-        rng = random.Random(seed)
-        rng.shuffle(rows)
-        train, dev = rows[:train_rows], rows[train_rows : train_rows + dev_rows]
-        if not train:
+        rows = collect_official_subset(
+            official, n=train_rows + dev_rows, strata=strata, seed=seed
+        )
+        if len(rows) >= max(8, train_rows // 4):
+            train, dev = rows[:train_rows], rows[train_rows : train_rows + dev_rows]
+            source = "official_cc0_unsealed"
+        else:
             official = None
-            source = "lab_unsealed_synthetic"
-    if official is None:
+    if source == "lab_unsealed_synthetic":
         train = []
         n_per = max(1, train_rows // max(len(strata), 1))
         i = 0
