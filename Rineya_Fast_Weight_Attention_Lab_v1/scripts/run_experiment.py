@@ -84,8 +84,12 @@ def run_p1() -> dict:
 
 
 def _eval_arm(arm: str, layers: list[int], rank: int, adapter: Path | None, lengths: list[int]) -> dict:
+    import gc
     import torch
 
+    gc.collect()
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
     device = _device()
     tokenizer = load_tokenizer()
     model = load_supa(device=device, eval_mode=True)
@@ -150,43 +154,59 @@ def run_p2() -> dict:
     for seed in seeds:
         for arm in ("B", "C", "D"):
             out = ARTIFACTS / "p2_abcd" / f"arm_{arm}" / f"seed_{seed}"
-            try:
-                man = train_arm(
-                    arm=arm,
-                    layers=layers,
-                    train_file=DATA / "synthetic" / "train.jsonl",
-                    output_dir=out,
-                    seed=seed,
-                    rank=rank,
-                    max_steps=int(cfg["training"]["max_steps"]),
-                    max_sequence_length=int(cfg["training"]["max_sequence_length"]),
-                    learning_rate=float(cfg["training"]["learning_rate"]),
-                    grad_accum=int(cfg["training"]["gradient_accumulation_steps"]),
-                )
-            except RuntimeError as exc:
-                if "out of memory" not in str(exc).lower():
-                    raise
-                man = train_arm(
-                    arm=arm,
-                    layers=layers,
-                    train_file=DATA / "synthetic" / "train.jsonl",
-                    output_dir=out,
-                    seed=seed,
-                    rank=rank,
-                    max_steps=max(16, int(cfg["training"]["max_steps"]) // 2),
-                    max_sequence_length=512,
-                    learning_rate=float(cfg["training"]["learning_rate"]),
-                    grad_accum=int(cfg["training"]["gradient_accumulation_steps"]),
-                )
-                man["oom_fallback"] = True
+            man_path = out / "training_manifest.json"
+            if man_path.is_file() and (out / "fwa_adapter.pt").is_file():
+                man = json.loads(man_path.read_text(encoding="utf-8"))
+            else:
+                try:
+                    man = train_arm(
+                        arm=arm,
+                        layers=layers,
+                        train_file=DATA / "synthetic" / "train.jsonl",
+                        output_dir=out,
+                        seed=seed,
+                        rank=rank,
+                        max_steps=int(cfg["training"]["max_steps"]),
+                        max_sequence_length=int(cfg["training"]["max_sequence_length"]),
+                        learning_rate=float(cfg["training"]["learning_rate"]),
+                        grad_accum=int(cfg["training"]["gradient_accumulation_steps"]),
+                    )
+                except Exception as exc:
+                    if "out of memory" not in str(exc).lower():
+                        raise
+                    man = train_arm(
+                        arm=arm,
+                        layers=layers,
+                        train_file=DATA / "synthetic" / "train.jsonl",
+                        output_dir=out,
+                        seed=seed,
+                        rank=rank,
+                        max_steps=max(16, int(cfg["training"]["max_steps"]) // 2),
+                        max_sequence_length=512,
+                        learning_rate=float(cfg["training"]["learning_rate"]),
+                        grad_accum=int(cfg["training"]["gradient_accumulation_steps"]),
+                    )
+                    man["oom_fallback"] = True
             train_summaries.append(man)
-            adapter = Path(man["adapter_path"]) if man.get("adapter_path") else None
-            ev = _eval_arm(arm, layers, rank, adapter, lengths)
+            ev_path = out / "eval.json"
+            if ev_path.is_file():
+                ev = json.loads(ev_path.read_text(encoding="utf-8"))
+            else:
+                adapter = Path(man["adapter_path"]) if man.get("adapter_path") else None
+                ev = _eval_arm(arm, layers, rank, adapter, lengths)
+                ev["seed"] = seed
+                write_json(ev_path, ev, config={"arm": arm, "seed": seed})
             ev["seed"] = seed
             evals.append(ev)
 
     # Arm A once (eval-only)
-    ev_a = _eval_arm("A", layers, rank, None, lengths)
+    a_path = ARTIFACTS / "p2_abcd" / "arm_A" / "eval.json"
+    if a_path.is_file():
+        ev_a = json.loads(a_path.read_text(encoding="utf-8"))
+    else:
+        ev_a = _eval_arm("A", layers, rank, None, lengths)
+        ev_a["seed"] = None
+        write_json(a_path, ev_a, config={"arm": "A"})
     ev_a["seed"] = None
     evals.append(ev_a)
 

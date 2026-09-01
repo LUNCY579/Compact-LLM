@@ -53,7 +53,14 @@ class FWAAttentionWrapper(nn.Module):
 
     def forward(self, hidden_states: torch.Tensor, *args: Any, **kwargs: Any) -> Any:
         past = kwargs.get("past_key_values")
+        past_len = 0
         if past is not None:
+            getter = getattr(past, "get_seq_length", None)
+            if callable(getter):
+                past_len = int(getter() or 0)
+            else:
+                past_len = 1
+        if past_len > 0:
             raise RuntimeError(
                 "FWA refuses KV-cache mixing; load with use_cache=False and recompute the prefix"
             )

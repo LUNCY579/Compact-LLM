@@ -103,6 +103,10 @@ def train_arm(
     if device is None:
         device = "cuda" if torch.cuda.is_available() else "cpu"
     if torch.cuda.is_available():
+        import gc
+
+        gc.collect()
+        torch.cuda.empty_cache()
         torch.cuda.reset_peak_memory_stats()
 
     tokenizer = load_tokenizer()
