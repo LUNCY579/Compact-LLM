@@ -86,11 +86,14 @@ def main() -> int:
                         default=LAB_ROOT / "cross_scale_evidence" / "13_v3_transport_diagnosis"
                         / "e6_functional_translator")
     parser.add_argument("--train-prompts", type=int, default=40)
+    parser.add_argument("--donors", nargs="+", default=["qwen4b", "qwen8b"])
     args = parser.parse_args()
 
     started = time.perf_counter()
     index = json.loads((args.states / "token_state_index.json").read_text("utf-8"))
-    data = {r["model"]: np.load(args.states / f"{r['model']}.npz") for r in index["models"]}
+    wanted = set(args.donors) | {"qwen06", "supa"}
+    data = {r["model"]: np.load(args.states / f"{r['model']}.npz")
+            for r in index["models"] if r["model"] in wanted}
     states = {name: blob["states"] for name, blob in data.items()}
     prompt_index = data["qwen06"]["prompt_index"]
     prompts = int(prompt_index.max()) + 1
@@ -103,7 +106,7 @@ def main() -> int:
     depths = states["qwen06"].shape[1]
 
     results: list[dict[str, Any]] = []
-    for donor in ("qwen4b", "qwen8b"):
+    for donor in args.donors:
         for target in ("qwen06", "supa"):
             for depth in range(depths):
                 x_all = states[donor][:, depth, :].astype(np.float64)
@@ -139,7 +142,7 @@ def main() -> int:
 
     # --- the incremental test: does the donor add anything over the base? ---
     incremental = []
-    for donor in ("qwen4b", "qwen8b"):
+    for donor in args.donors:
         for depth in range(depths):
             base = states["qwen06"][:, depth, :].astype(np.float64)
             extra = states[donor][:, depth, :].astype(np.float64)
