@@ -140,13 +140,22 @@ Tolerance must not be relaxed merely to make CI green. First lock PyTorch, Trans
 
 ## Branch lifecycle
 
-- `research/tgsa-phase1-v4-competence-first`: frozen evidence branch; no Phase-2 code merges.
-- `research/tgsa-phase2a-ci-and-competence`: active Phase 2A mechanism branch and PR review surface; never merge into the frozen v4 branch.
-- `research/tgsa-phase2-mtp-complementarity`: **archived predecessor of the Phase 2A branch**, tagged `archive/tgsa-phase2a-superseded-2026-08-31`. It carried the Phase 2A role until 2026-08-31 and is now fully contained in `research/tgsa-phase2a-ci-and-competence`. Do not commit to it; read it through the tag.
-- `research/tgsa-mtp-rineya-complementarity-v1`: active Phase 2B system branch; downstream of the programme boundary, not a replacement for Phase 2A.
-- `research/tgsa-programme-ledger`: records-only index of programme progress and provenance. Never receives implementation code.
+Live branches:
 
-Preserve both branch histories for provenance. Do not delete, squash together, or relabel their artifacts under one generic “TGSA+MTP” identity.
+- `research/tgsa-phase2a-ci-and-competence`: active Phase 2A mechanism branch and PR review surface; never merge into the frozen v4 evidence.
+- `research/tgsa-mtp-rineya-complementarity-v1`: active Phase 2B system branch; downstream of the programme boundary, not a replacement for Phase 2A.
+- `research/tgsa-rineya-pretrained-retrofit`: parked real-model path, third in sequence; anchored at `parked/tgsa-rineya-retrofit-2026-08-31`.
+- `research/tgsa-programme-ledger`: records-only index of programme progress and provenance. An orphan branch — it shares no history with any implementation branch and never receives implementation code.
+
+Retired to tags — no branch on origin:
+
+- `archive/tgsa-phase1-v4-regime-rejected` (`8b5737e`): the **frozen v4 evidence boundary**, formerly `research/tgsa-phase1-v4-competence-first`. It is the programme contract's `required_phase1_commit`. The remote branch was retired on 2026-08-31 precisely because it must never receive Phase-2 code merges — a branch that does not exist on origin cannot be pushed to. The contract's `required_phase1_branch` field is a documentation string; the verifier compares commits, not refs, so nothing breaks. A read-only local checkout is retained at `C:/Users/clclc/BusinessProject/Chat-Bubble-v4` for convenience; it is not a work surface and must not be pushed.
+- `archive/tgsa-phase2a-superseded-2026-08-31` (`d71b558`): archived predecessor of the Phase 2A branch. Carried the Phase 2A role until 2026-08-31; fully contained in `research/tgsa-phase2a-ci-and-competence`.
+- `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-launch-audit`: the Phase 1 chain, all contained in the active branch.
+
+Read any of these with `git show <tag>:<path>`. Restore one with `git branch <name> <tag>` if a working checkout is genuinely needed.
+
+Preserve both branch histories for provenance. Do not delete, squash together, or relabel their artifacts under one generic “TGSA+MTP” identity. Retiring a branch ref to an annotated tag that is pushed to origin is preservation, not deletion: the commit, its tree and its message are unchanged and remain reachable.
 
 ### Phase 2A branch redesignation, 2026-08-31
 
