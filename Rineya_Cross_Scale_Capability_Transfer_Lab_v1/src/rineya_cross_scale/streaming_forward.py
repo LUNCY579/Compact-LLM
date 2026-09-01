@@ -196,12 +196,16 @@ def streaming_forward_many(
     is therefore one layer's weights plus that activation set, still far below
     one model.
     """
-    if pooling not in ("last", "mean"):
+    if pooling not in ("last", "mean", "all"):
         raise ValueError(f"unsupported pooling: {pooling}")
     geometry = Qwen3Geometry.from_config(weights.config)
     groups = geometry.num_attention_heads // geometry.num_key_value_heads
 
     def reduce(state: torch.Tensor) -> torch.Tensor:
+        # "all" keeps every token position, which E6's translator needs: 59
+        # prompts cannot fit a map into a 1024-dimensional target space.
+        if pooling == "all":
+            return state
         return state.mean(dim=0) if pooling == "mean" else state[-1]
 
     states = [weights.rows("model.embed_tokens.weight", ids) for ids in prompts]
