@@ -105,7 +105,7 @@
       "id": "C4",
       "branch": "research/tgsa-phase1-v4-competence-first",
       "commit": "8b5737e",
-      "upstream": "in sync",
+      "upstream": "retired to tag 2026-08-31; no branch on origin",
       "archive_tag": "archive/tgsa-phase1-v4-regime-rejected",
       "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v4",
       "role": "frozen competence and regime-selection boundary",
@@ -144,13 +144,14 @@
         "escalation": "NO FURTHER MEASUREMENT PERMITTED; no confirmatory matrix dispatched"
       },
       "evidence_root": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/evidence/v4_competence/",
-      "lifecycle": "frozen; must not receive Phase-2 implementation commits"
+      "lifecycle": "frozen; must not receive Phase-2 implementation commits",
+      "branch_ref": "no branch on origin; read-only local checkout retained at Chat-Bubble-v4, not a work surface"
     },
     {
       "id": "C5",
       "branch": "research/tgsa-phase2-mtp-complementarity",
       "commit": "d71b558",
-      "upstream": "pushed to origin 2026-08-31; branch ref then deleted",
+      "upstream": "retired to tag 2026-08-31; no branch anywhere",
       "archive_tag": "archive/tgsa-phase2a-superseded-2026-08-31",
       "worktree": null,
       "branch_ref": "deleted 2026-08-31; read via the archive tag",
@@ -164,7 +165,7 @@
     {
       "id": "C6",
       "branch": "research/tgsa-phase2a-ci-and-competence",
-      "commit": "188ed21",
+      "commit": "4caace5",
       "upstream": "in sync with origin",
       "archive_tag": null,
       "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2a-next",
@@ -378,7 +379,7 @@
     "also_active": [
       "research/tgsa-mtp-rineya-complementarity-v1 (Phase 2B, must stay separate)",
       "research/tgsa-rineya-pretrained-retrofit (parked, third in sequence)",
-      "research/tgsa-programme-ledger (records only)"
+      "research/tgsa-programme-ledger (records only; ORPHAN branch, no shared history)"
     ],
     "archived_branch_refs_deleted_2026_08_31": {
       "note": "these four branch refs no longer exist locally or on origin. Their commits are preserved by annotated tags pushed to origin and are contained in the active branch. Read them through the tag; restore with: git branch <name> <tag>",
@@ -389,7 +390,8 @@
         "archive/tgsa-phase2a-superseded-2026-08-31"
       ]
     },
-    "frozen_evidence_branch": "research/tgsa-phase1-v4-competence-first"
+    "frozen_evidence": "archive/tgsa-phase1-v4-regime-rejected -- tag only, no branch on origin. A branch that does not exist cannot be pushed to, which is the strongest form of the contract's no-Phase-2-merges rule.",
+    "branches_visible_on_github": 4
   },
   "consolidation_2026_08_31": {
     "merge": "ce4f134 folded C5 into C6; within-stage, same semantics, one additive .gitignore conflict resolved by keeping both rules",
@@ -401,7 +403,17 @@
     ],
     "pushed": "all five branches and three new tags pushed to origin; every push was a clean fast-forward, no force, no divergence",
     "cleanup": "four archived branch refs deleted with git branch -d (merge-verified, not forced) after their tags were confirmed on origin; two archived worktrees removed. TGSA branches went from 8 to 5, worktrees from 6 to 4",
-    "result": "every TGSA stage now has a durable anchor; C1-C5 all contained in C6"
+    "result": "GitHub shows 4 TGSA branches; 5 stages reachable only through tags; 0 open pull requests",
+    "pull_requests_closed": [
+      "#2 research(tgsa) add competence-gated MTP complementarity -- targeted the FROZEN v4 branch, which TGSA_MTP_CANONICAL_PATH.md forbids in two places, and was MERGEABLE. Head fully contained in the active branch, so nothing was lost.",
+      "#3 fix(tgsa) green Phase 2A CI -- pointed backwards after the redesignation; its head IS the active branch."
+    ],
+    "remote_branches_retired_to_tags": [
+      "research/tgsa-phase2-mtp-complementarity -> archive/tgsa-phase2a-superseded-2026-08-31",
+      "research/tgsa-phase1-v4-competence-first -> archive/tgsa-phase1-v4-regime-rejected"
+    ],
+    "ledger_rebuilt_as_orphan": "the ledger had descended from the Phase 2A branch and so carried a full copy of the lab, which made it read as the most advanced branch to experiment on. Rebuilt with no shared history and nothing but TGSA_PROGRAMME/ in the tree.",
+    "ci_fix": "tgsa-phase1.yml triggered on push to four deleted branches, so it could only fire on pull_request or manual dispatch. Retargeted to the active branch."
   },
   "open_items": [
     "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",

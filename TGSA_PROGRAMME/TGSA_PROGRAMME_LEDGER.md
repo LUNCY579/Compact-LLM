@@ -70,13 +70,26 @@ records-only.
 | Separate active stage — never merge into Phase 2A | `research/tgsa-mtp-rineya-complementarity-v1` (Phase 2B) |
 | Parked, third in sequence | `research/tgsa-rineya-pretrained-retrofit` |
 | Records only, no code | `research/tgsa-programme-ledger` |
-| Frozen evidence, no commits | `research/tgsa-phase1-v4-competence-first` |
-| **Archived — branch refs deleted, read through the tag** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31` |
+| Frozen evidence — tag only, no branch | `archive/tgsa-phase1-v4-regime-rejected` |
+| **Archived — tag only, no branch** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31` |
 
-The four archived branch refs were deleted on 2026-08-31 after their annotated
-tags were confirmed on origin. Nothing was lost: each tag points at the exact
-commit the branch pointed at, each is on the remote, and all four are contained
-in the active branch. To bring one back:
+GitHub shows exactly four TGSA branches. The other five stages are reachable
+only through annotated tags, all of which are on origin.
+
+Retiring a ref to a pushed tag is preservation, not deletion — the commit, tree
+and message are unchanged and reachable. Each tag was verified to point at the
+exact commit its branch pointed at, confirmed present on origin, and confirmed
+contained in the active branch before any ref was removed. Trees remain fully
+readable: 4,109–4,202 files each.
+
+For the frozen v4 boundary this is also an enforcement mechanism. The contract
+says it must never receive Phase-2 code merges; a branch that does not exist on
+origin cannot be pushed to. A read-only local checkout remains at
+`Chat-Bubble-v4` for convenience — it is not a work surface.
+
+```bash
+git show archive/tgsa-phase1-v3-inconclusive:Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE1_V3_RESULT.md
+```
 
 ```bash
 git branch research/tgsa-phase1-identifiability-v3-powered-confirmatory archive/tgsa-phase1-v3-inconclusive
@@ -112,7 +125,7 @@ tags. Four worktrees remain, one per live branch, plus the frozen v4 checkout.
 | C1 | `…phase1-model-identifiability-launch-audit` | Phase 1 launch audit | — | archived, ref deleted | yes |
 | C2 | `…phase1-identifiability-v2-launch-ready` | Phase 1 v2 | — | archived, ref deleted | yes |
 | C3 | `…phase1-identifiability-v3-powered-confirmatory` | Phase 1 v3 confirmatory | — | **INCONCLUSIVE**, ref deleted | yes |
-| C4 | `…phase1-v4-competence-first` | competence / regime boundary | — | **V4_REGIME_FAMILY_REJECTED**, frozen, branch kept | yes |
+| C4 | `…phase1-v4-competence-first` | competence / regime boundary | — | **V4_REGIME_FAMILY_REJECTED**, frozen, tag only | yes |
 | C5 | `…phase2-mtp-complementarity` | Phase 2A predecessor | `sequential_teacher_forced_recursive_v1` | archived 2026-08-31, ref deleted | yes |
 | **C6** | **`…phase2a-ci-and-competence`** | **Phase 2A, canonical** | `sequential_teacher_forced_recursive_v1` | **ACTIVE**, no result yet | — |
 | C7 | `…mtp-rineya-complementarity-v1` | Phase 2B system factorial | `parallel_independent_offsets_v1` | active, no result yet | no |
@@ -223,8 +236,16 @@ No promotion is authorized.
    refresh it as part of lifting the hold, not before.
 
 Closed on 2026-08-31: the C5/C6 designation conflict; C5's divergence from the
-Phase 2A lineage; and the unpushed backlog — all five branches and three new
-tags are on origin, every push a clean fast-forward with no force.
+Phase 2A lineage; the unpushed backlog; and the ledger's own ambiguity, which is
+now resolved structurally by making this an orphan branch.
+
+Also resolved, and worth recording because it was a live risk rather than
+untidiness: **PR #2 was open and `MERGEABLE` against the frozen v4 branch.**
+`TGSA_MTP_CANONICAL_PATH.md` forbids exactly that in two places, so the frozen
+evidence boundary — the contract's `required_phase1_commit` — sat one click from
+receiving 5,183 lines of Phase-2 code. It is closed, and v4 no longer exists as
+a branch on origin, so the path is closed twice over. PR #3 was closed as
+superseded; its head is the active branch. No pull requests remain open.
 
 ---
 
