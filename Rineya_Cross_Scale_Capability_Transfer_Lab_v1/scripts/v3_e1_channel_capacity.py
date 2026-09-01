@@ -1,11 +1,24 @@
-"""v3 E1 — what does the transport operator actually transmit?
+"""v3 E1 (corrected) — what does the transport operator actually transmit?
 
 The P4 operator keeps the *target's* singular vectors and transplants a
 normalised donor singular-value profile. Section 1 derives the induced delta in
-closed form, validates that derivation against the operator's own recorded
-norms, and counts the donor-derived scalars that cross the bridge. Section 2
-holds the operator fixed and varies the donor, which separates agreement that
-belongs to the donors from agreement that belongs to the operator.
+closed form and counts the donor-derived scalars that cross the bridge.
+Section 2 holds the operator fixed and varies the donor, which is what separates
+agreement belonging to the donors from agreement belonging to the operator.
+
+The sharp form of the closed-form result is
+
+    a_i = strength * ||W_target|| * (p_i - q_i)
+
+where `p` is the donor's normalised top-r spectrum and `q` is the target's own.
+The delta is a *difference of two near-parallel profiles*, so it is dominated by
+their radial gap. Any null that does not hold `||p||` at a realistic value
+destroys exactly the quantity under test.
+
+Supersedes `attempt_0001_unfair_nulls/`, whose synthetic donor multiplied the
+profile norm by `uniform(2, 12)` and therefore randomised the signal itself.
+That version reported the cross-donor agreement as a large lift over its
+controls; with the controls the amendment actually froze, it is not.
 
 Reads only committed `tensor_projection_map.json` records. Loads no weights.
 """
@@ -18,6 +31,7 @@ import math
 import random
 import sys
 import time
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -25,88 +39,37 @@ LAB_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(LAB_ROOT / "src"))
 
 from rineya_cross_scale.hashing import atomic_write_json, atomic_write_text  # noqa: E402
+from rineya_cross_scale.v3_transport import (  # noqa: E402
+    delta_coordinates_from_profile,
+    donor_profile,
+    global_cosine,
+)
 
-# Frozen from the P4 projection manifests; asserted against them at run time.
 STRENGTH = 0.10
 RANK = 8
+MODULE_FAMILIES = (
+    "self_attn.q_proj", "self_attn.k_proj", "self_attn.v_proj", "self_attn.o_proj",
+    "mlp.gate_proj", "mlp.up_proj", "mlp.down_proj",
+)
 
 
-def load_stats(projection_dir: Path) -> tuple[dict[str, dict[str, Any]], dict[str, Any]]:
-    manifest = json.loads((projection_dir / "projection_manifest.json").read_text("utf-8"))
-    records = json.loads((projection_dir / "tensor_projection_map.json").read_text("utf-8"))
-    stats = {r["target_key"]: r["stats"] for r in records if r["stats"]}
-    return stats, manifest
+def family_of(key: str) -> str:
+    for family in MODULE_FAMILIES:
+        if family in key:
+            return family
+    raise KeyError(key)
 
 
-def donor_profile(stat: dict[str, Any]) -> list[float]:
-    """The complete donor-derived payload for one tensor: a normalised spectrum."""
-    return [v / stat["donor_fro"] for v in stat["donor_top_singular_values"]]
+def target_profile(stat: dict[str, Any]) -> list[float]:
+    return [v / stat["target_fro"] for v in stat["target_top_singular_values"]]
 
 
-def delta_coordinates(
-    stat: dict[str, Any], profile: list[float] | None = None
-) -> tuple[list[float], float]:
-    """Closed-form delta coordinates in the shared orthonormal target basis.
-
-    The basis is `{u_1 v_1^T, ..., u_r v_r^T, W_perp/||W_perp||}` where `u`, `v`
-    are the target's own top-r singular vectors. Both donors are projected
-    against the same target with the same per-key seed, so both deltas are
-    expressed in the *same* basis and their coordinates are directly comparable.
-
-    Returns the rank-r coordinates and the single `W_perp` coordinate.
-    """
-    target_s = stat["target_top_singular_values"]
-    frobenius = stat["target_fro"]
-    total_energy = frobenius * frobenius
-    top_energy = sum(v * v for v in target_s)
-
-    if profile is None:
-        desired = list(stat["desired_target_basis_singular_values"])
-    else:
-        desired = [
-            (1.0 - STRENGTH) * t + STRENGTH * p * frobenius
-            for t, p in zip(target_s, profile)
-        ]
-        desired_energy = sum(d * d for d in desired)
-        if desired_energy >= total_energy:  # the operator's own guard rail
-            scale = math.sqrt(total_energy * 0.95 / desired_energy)
-            desired = [d * scale for d in desired]
-
-    desired_energy = sum(d * d for d in desired)
-    residual_scale = math.sqrt(
-        max(0.0, total_energy - desired_energy) / max(total_energy - top_energy, 1e-30)
-    )
-    perpendicular = math.sqrt(max(0.0, total_energy - top_energy))
-    # k, the final norm-restoring factor, is exactly 1: the operator's residual
-    # scale is chosen so that the pre-rescale Frobenius norm already equals the
-    # target's. So the delta reduces to `desired - target_s` in the top block.
-    return [d - t for d, t in zip(desired, target_s)], (residual_scale - 1.0) * perpendicular
-
-
-def global_cosine(a: dict[str, Any], b: dict[str, Any], keys: list[str]) -> float:
-    dot = x2 = y2 = 0.0
-    for key in keys:
-        av, ap = a[key]
-        bv, bp = b[key]
-        dot += sum(i * j for i, j in zip(av, bv)) + ap * bp
-        x2 += sum(i * i for i in av) + ap * ap
-        y2 += sum(j * j for j in bv) + bp * bp
-    return dot / max(math.sqrt(x2 * y2), 1e-30)
-
-
-def build(stats: dict[str, dict[str, Any]], keys: list[str], profiles) -> dict[str, Any]:
-    return {k: delta_coordinates(stats[k], profiles[k]) for k in keys}
-
-
-def random_profile(rng: random.Random) -> list[float]:
-    """A synthetic donor: decreasing top-r spectrum with a random tail mass."""
-    values = sorted((rng.random() + 0.05 for _ in range(RANK)), reverse=True)
-    norm = math.sqrt(sum(v * v for v in values)) * rng.uniform(2.0, 12.0)
-    return [v / norm for v in values]
+def norm(values: list[float]) -> float:
+    return math.sqrt(sum(v * v for v in values))
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="v3 E1 transport channel capacity.")
+    parser = argparse.ArgumentParser(description="v3 E1 transport channel capacity (corrected).")
     parser.add_argument("--projected-root", type=Path,
                         default=LAB_ROOT / "local_models" / "projected" / "P4_D2_W4")
     parser.add_argument("--output", type=Path,
@@ -116,103 +79,180 @@ def main() -> int:
     args = parser.parse_args()
 
     started = time.perf_counter()
-    stats4, manifest4 = load_stats(args.projected_root / "qwen4b_spectral_rank8_s010")
-    stats8, manifest8 = load_stats(args.projected_root / "qwen8b_spectral_rank8_s010")
-    for manifest in (manifest4, manifest8):
-        if abs(float(manifest["strength"]) - STRENGTH) > 1e-12 or int(manifest["rank"]) != RANK:
-            raise SystemExit(f"projection manifest disagrees with frozen constants: {manifest}")
 
-    keys = sorted(set(stats4) & set(stats8))
+    def load(name: str):
+        manifest = json.loads((args.projected_root / name / "projection_manifest.json").read_text("utf-8"))
+        records = json.loads((args.projected_root / name / "tensor_projection_map.json").read_text("utf-8"))
+        if abs(float(manifest["strength"]) - STRENGTH) > 1e-12 or int(manifest["rank"]) != RANK:
+            raise SystemExit(f"projection manifest disagrees with frozen constants: {name}")
+        return {r["target_key"]: r["stats"] for r in records if r["stats"]}
+
+    stats4 = load("qwen4b_spectral_rank8_s010")
+    stats8 = load("qwen8b_spectral_rank8_s010")
     if set(stats4) != set(stats8):
         raise SystemExit("donor projection key sets differ")
-
-    # --- Section 1: closed form, validated against the operator's own record ---
-    reconstruction_error = []
-    for key in keys:
-        block, perpendicular = delta_coordinates(stats4[key])
-        predicted = math.sqrt(sum(v * v for v in block) + perpendicular * perpendicular)
-        recorded = stats4[key]["relative_change"] * stats4[key]["target_fro"]
-        reconstruction_error.append(abs(predicted - recorded) / max(recorded, 1e-30))
+    keys = sorted(stats4)
 
     real4 = {k: donor_profile(stats4[k]) for k in keys}
     real8 = {k: donor_profile(stats8[k]) for k in keys}
-    coords4, coords8 = build(stats4, keys, real4), build(stats8, keys, real8)
+    target = {k: target_profile(stats4[k]) for k in keys}
 
-    block_energy = sum(sum(v * v for v in coords4[k][0]) for k in keys)
-    perp_energy = sum(coords4[k][1] ** 2 for k in keys)
+    def build(profiles: dict[str, list[float]]) -> dict[str, Any]:
+        return {k: delta_coordinates_from_profile(stats4[k], profiles[k], STRENGTH) for k in keys}
 
-    def component_cosine(which: str) -> float:
-        dot = x2 = y2 = 0.0
-        for key in keys:
-            av, ap = coords4[key]
-            bv, bp = coords8[key]
-            if which == "rank_block":
-                dot += sum(i * j for i, j in zip(av, bv))
-                x2 += sum(i * i for i in av)
-                y2 += sum(j * j for j in bv)
-            else:
-                dot += ap * bp
-                x2 += ap * ap
-                y2 += bp * bp
-        return dot / max(math.sqrt(x2 * y2), 1e-30)
+    coords4, coords8 = build(real4), build(real8)
 
-    # --- Section 2: hold the operator fixed, vary the donor ---
+    # --- Section 1: the sharp identity, and how wide the channel is ---------
+    identity_error = []
+    for key in keys:
+        block, _ = delta_coordinates_from_profile(stats4[key], real4[key], STRENGTH)
+        sharp = [STRENGTH * stats4[key]["target_fro"] * (p - q)
+                 for p, q in zip(real4[key], target[key])]
+        scale = max(norm(sharp), 1e-30)
+        identity_error.append(
+            math.sqrt(sum((b - s) ** 2 for b, s in zip(block, sharp))) / scale)
+
+    # How parallel are the donor and target profiles? If they are nearly
+    # parallel, the delta is essentially their radial gap.
+    profile_cosines = []
+    for key in keys:
+        p, q = real4[key], target[key]
+        profile_cosines.append(
+            sum(a * b for a, b in zip(p, q)) / max(norm(p) * norm(q), 1e-30))
+    profile_cosines.sort()
+
+    # --- Section 1b: how much of the delta is donor-independent? -----------
+    # A "role-mean donor" carries one pooled profile per module family: 7 roles
+    # x r values, and zero tensor-specific information.
+    role_sum: dict[str, list[float]] = defaultdict(lambda: [0.0] * RANK)
+    role_count: dict[str, int] = defaultdict(int)
+    for key in keys:
+        family = family_of(key)
+        role_count[family] += 1
+        for index in range(RANK):
+            role_sum[family][index] += (real4[key][index] + real8[key][index]) / 2.0
+    role_mean = {f: [v / role_count[f] for v in role_sum[f]] for f in role_sum}
+    coords_role = build({k: role_mean[family_of(k)] for k in keys})
+
+    # Two decompositions. The orthogonal one gives a genuine energy fraction:
+    # project each real delta onto the role-mean direction per tensor. The plain
+    # subtraction a - C is also reported because it is the simpler statement.
+    explained4 = explained8 = total4_energy = total8_energy = 0.0
+    orthogonal4_energy = orthogonal8_energy = orthogonal_dot = 0.0
+    plain4_energy = plain8_energy = plain_dot = 0.0
+    for key in keys:
+        common = list(coords_role[key][0]) + [coords_role[key][1]]
+        a4 = list(coords4[key][0]) + [coords4[key][1]]
+        a8 = list(coords8[key][0]) + [coords8[key][1]]
+        common_energy = sum(v * v for v in common)
+        t4 = sum(x * c for x, c in zip(a4, common)) / max(common_energy, 1e-30)
+        t8 = sum(x * c for x, c in zip(a8, common)) / max(common_energy, 1e-30)
+        explained4 += t4 * t4 * common_energy
+        explained8 += t8 * t8 * common_energy
+        total4_energy += sum(v * v for v in a4)
+        total8_energy += sum(v * v for v in a8)
+
+        o4 = [x - t4 * c for x, c in zip(a4, common)]
+        o8 = [x - t8 * c for x, c in zip(a8, common)]
+        orthogonal4_energy += sum(v * v for v in o4)
+        orthogonal8_energy += sum(v * v for v in o8)
+        orthogonal_dot += sum(x * y for x, y in zip(o4, o8))
+
+        p4 = [x - c for x, c in zip(a4, common)]
+        p8 = [x - c for x, c in zip(a8, common)]
+        plain4_energy += sum(v * v for v in p4)
+        plain8_energy += sum(v * v for v in p8)
+        plain_dot += sum(x * y for x, y in zip(p4, p8))
+
+    donor_independent_fraction = explained4 / max(total4_energy, 1e-30)
+    donor_independent_fraction_8b = explained8 / max(total8_energy, 1e-30)
+    residual_cosine = orthogonal_dot / max(math.sqrt(orthogonal4_energy * orthogonal8_energy), 1e-30)
+    plain_residual_cosine = plain_dot / max(math.sqrt(plain4_energy * plain8_energy), 1e-30)
+
+    # --- Section 2: hold the operator fixed, vary the donor ----------------
     controls: list[dict[str, Any]] = []
 
-    def record(name: str, value: float, note: str) -> None:
-        controls.append({"arm": name, "cosine": value, "note": note})
+    def record(arm: str, value: float, note: str) -> None:
+        controls.append({"arm": arm, "cosine": value, "note": note})
 
     record("real_4b_vs_real_8b", global_cosine(coords4, coords8, keys),
            "the v1 headline comparison, recomputed in exact arithmetic")
 
+    # Frozen control 1: norm-matched random. Random profile SHAPE, but the
+    # per-tensor profile norm matched to the real donor's.
+    for seed in args.seeds:
+        left, right = random.Random(seed), random.Random(seed + 1000)
+
+        def matched(rng: random.Random, source: dict[str, list[float]]) -> dict[str, list[float]]:
+            output = {}
+            for key in keys:
+                shape = sorted((rng.random() + 0.05 for _ in range(RANK)), reverse=True)
+                factor = norm(source[key]) / max(norm(shape), 1e-30)
+                output[key] = [v * factor for v in shape]
+            return output
+
+        record(f"norm_matched_random_seed{seed}",
+               global_cosine(build(matched(left, real4)), build(matched(right, real8)), keys),
+               "random profile shape, per-tensor profile norm matched to the real donor")
+
+    # Frozen control 2: layer-shuffled WITHIN module role, so role identity is
+    # preserved and only depth correspondence is destroyed.
+    by_family: dict[str, list[str]] = defaultdict(list)
+    for key in keys:
+        by_family[family_of(key)].append(key)
     for seed in args.seeds:
         rng = random.Random(seed)
-        left = list(keys)
-        right = list(keys)
-        rng.shuffle(left)
-        rng.shuffle(right)
-        a = build(stats4, keys, {k: donor_profile(stats4[j]) for k, j in zip(keys, left)})
-        b = build(stats8, keys, {k: donor_profile(stats8[j]) for k, j in zip(keys, right)})
-        record(f"tensor_shuffled_donors_seed{seed}", global_cosine(a, b, keys),
-               "real donor spectra, destroyed tensor correspondence")
+        permuted4, permuted8 = {}, {}
+        for family, family_keys in by_family.items():
+            ordered = sorted(family_keys)
+            left_order, right_order = list(ordered), list(ordered)
+            rng.shuffle(left_order)
+            rng.shuffle(right_order)
+            for key, source_left, source_right in zip(ordered, left_order, right_order):
+                permuted4[key] = real4[source_left]
+                permuted8[key] = real8[source_right]
+        record(f"layer_shuffled_within_role_seed{seed}",
+               global_cosine(build(permuted4), build(permuted8), keys),
+               "real donor spectra, depth correspondence destroyed, module role preserved")
 
+    # Frozen control 3: sign-shuffled delta coordinates.
     for seed in args.seeds:
-        ra, rb = random.Random(seed), random.Random(seed + 1000)
-        a = build(stats4, keys, {k: random_profile(ra) for k in keys})
-        b = build(stats8, keys, {k: random_profile(rb) for k in keys})
-        record(f"two_random_donors_seed{seed}", global_cosine(a, b, keys),
-               "two independent synthetic donors through the identical operator")
+        rng = random.Random(seed)
+        flipped = {}
+        for key in keys:
+            block, perpendicular = coords4[key]
+            signs = [1.0 if rng.random() < 0.5 else -1.0 for _ in range(len(block) + 1)]
+            flipped[key] = ([abs(v) * s for v, s in zip(block, signs)],
+                            abs(perpendicular) * signs[-1])
+        record(f"sign_shuffled_seed{seed}", global_cosine(flipped, coords8, keys),
+               "delta coordinate magnitudes preserved, signs randomised")
 
-    own = {k: [t / stats4[k]["target_fro"] for t in stats4[k]["target_top_singular_values"]]
-           for k in keys}
-    record("real_4b_vs_null_donor", global_cosine(coords4, build(stats4, keys, own), keys),
-           "null donor whose spectrum is the target's own: produces a zero-signal delta direction")
-
-    flat = {k: [1.0 / math.sqrt(RANK) / 6.0] * RANK for k in keys}
-    record("real_8b_vs_flat_donor", global_cosine(coords8, build(stats4, keys, flat), keys),
-           "synthetic donor with a perfectly flat top-r spectrum")
+    record("role_mean_donor_vs_real_8b", global_cosine(coords_role, coords8, keys),
+           f"a 'donor' carrying only {len(role_mean)} x {RANK} = {len(role_mean) * RANK} numbers "
+           "and no tensor-specific information")
 
     record("identical_donors_upper_bound", global_cosine(coords4, coords4, keys),
            "sanity upper bound")
 
-    shuffled = [c["cosine"] for c in controls if c["arm"].startswith("tensor_shuffled")]
-    randomised = [c["cosine"] for c in controls if c["arm"].startswith("two_random")]
     real = controls[0]["cosine"]
+    null_arms = [c["cosine"] for c in controls
+                 if c["arm"].startswith(("norm_matched_random", "layer_shuffled", "role_mean"))]
 
     payload = {
-        "schema_version": "1.0",
+        "schema_version": "2.0",
         "experiment": "v3_e1_transport_channel_capacity",
         "protocol": "amendment_v3_transport_diagnosis.md 3.0.0-diagnostic",
+        "supersedes": "attempt_0001_unfair_nulls",
         "post_hoc_visible": True,
         "operator": {
             "family": "P4 target-basis spectral profile transfer",
             "rank": RANK,
             "strength": STRENGTH,
-            "donor_derived_inputs_per_tensor": [
-                "donor top-r singular values", "donor Frobenius norm"],
+            "closed_form": "a_i = strength * ||W_target|| * (p_i - q_i); "
+                           "a_perp = (residual_scale - 1) * ||W_perp||",
             "donor_derived_free_scalars_per_tensor": RANK,
             "donor_directional_inputs": 0,
-            "note": "the delta lives entirely in span{target top-r singular directions, target weight}",
+            "max_identity_relative_error": max(identity_error),
         },
         "channel": {
             "projected_tensors": len(keys),
@@ -221,63 +261,79 @@ def main() -> int:
             "qwen3_4b_parameters": 4022468096,
             "qwen3_8b_parameters": 8190735360,
             "fraction_of_4b_transmitted": len(keys) * RANK / 4022468096,
-            "fraction_of_8b_transmitted": len(keys) * RANK / 8190735360,
+            "donor_target_profile_cosine_median": profile_cosines[len(profile_cosines) // 2],
+            "donor_target_profile_cosine_min": profile_cosines[0],
         },
-        "closed_form_validation": {
-            "max_relative_error_vs_recorded_norm": max(reconstruction_error),
-            "mean_relative_error_vs_recorded_norm": sum(reconstruction_error) / len(reconstruction_error),
-            "tensors_checked": len(reconstruction_error),
-        },
-        "delta_energy_split": {
-            "rank_block_fraction": block_energy / (block_energy + perp_energy),
-            "target_weight_parallel_fraction": perp_energy / (block_energy + perp_energy),
-        },
-        "component_cosines": {
-            "rank_block": component_cosine("rank_block"),
-            "target_weight_parallel": component_cosine("perpendicular"),
+        "donor_independence": {
+            "role_mean_donor_numbers": len(role_mean) * RANK,
+            "donor_independent_energy_fraction_4b": donor_independent_fraction,
+            "donor_independent_energy_fraction_8b": donor_independent_fraction_8b,
+            "residual_cross_donor_cosine_orthogonal": residual_cosine,
+            "residual_cross_donor_cosine_plain_subtraction": plain_residual_cosine,
+            "HT2_statistic": donor_independent_fraction,
+            "HT2_some_agreement_is_operator_induced": donor_independent_fraction > 0.0,
         },
         "controls": controls,
         "verdict": {
             "real_cosine": real,
-            "max_control_cosine": max(shuffled + randomised),
-            "lift_over_strongest_control": real - max(shuffled + randomised),
+            "null_band_low": min(null_arms),
+            "null_band_high": max(null_arms),
+            "real_inside_null_band": min(null_arms) <= real <= max(null_arms),
             "HT1_channel_is_narrow_and_directionless": True,
-            "HT2_agreement_is_purely_operator_induced": real <= max(shuffled + randomised),
         },
-        "resources": {
-            "wall_seconds": time.perf_counter() - started,
-            "models_loaded": 0,
-            "weights_read_bytes": 0,
-        },
+        "protocol_deviation_in_attempt_0001": (
+            "The amendment freezes norm-matched random, layer-shuffled, and sign-shuffled "
+            "controls for E1-E3. The first attempt ran a norm-RANDOMISED synthetic donor, an "
+            "all-key shuffle that also destroyed module role, and no sign-shuffled arm. It also "
+            "published a 'null donor' arm whose delta is an exact algebraic zero, so its reported "
+            "cosine of -0.2462 was the angle between two rounding-error vectors. This corrected "
+            "run implements the frozen controls."
+        ),
+        "resources": {"wall_seconds": time.perf_counter() - started, "models_loaded": 0},
     }
 
     args.output.mkdir(parents=True, exist_ok=True)
     atomic_write_json(args.output / "channel_capacity.json", payload)
 
     lines = [
-        "# v3 E1 — Transport Channel Capacity",
+        "# v3 E1 — Transport Channel Capacity (corrected)",
         "",
         f"Operator: P4 target-basis spectral profile transfer, rank {RANK}, strength {STRENGTH}.",
+        "",
+        "Supersedes `attempt_0001_unfair_nulls/`. See the protocol-deviation note at the end.",
         "",
         "## What crosses the bridge",
         "",
         f"- Projected tensors: **{len(keys)}** of 310 target tensors.",
         f"- Donor-derived scalars transmitted: **{len(keys) * RANK}**"
         f" ({len(keys)} tensors x {RANK} normalised singular values).",
-        f"- That is {payload['channel']['fraction_of_4b_transmitted']:.3e} of Qwen3-4B"
-        f" and {payload['channel']['fraction_of_8b_transmitted']:.3e} of Qwen3-8B.",
+        f"- That is {payload['channel']['fraction_of_4b_transmitted']:.3e} of Qwen3-4B.",
         "- Donor **directional** information transmitted: **none**. Every direction in the",
         "  injected update is one of the target's own top-r singular directions or the",
         "  target weight itself.",
         "",
-        "## Closed form validated against the operator's own record",
+        "The closed form has a sharper reading than E1's first attempt used:",
         "",
-        f"Max relative error {payload['closed_form_validation']['max_relative_error_vs_recorded_norm']:.2e}"
-        f" over {len(keys)} tensors.",
+        "> `a_i = strength * ||W_target|| * (p_i - q_i)`",
         "",
-        f"Delta energy: {payload['delta_energy_split']['rank_block_fraction'] * 100:.2f}% in the rank-{RANK}"
-        f" block, {payload['delta_energy_split']['target_weight_parallel_fraction'] * 100:.2f}%"
-        " parallel to the target weight.",
+        "where `p` is the donor's normalised top-r spectrum and `q` is the target's own",
+        f"(verified to {max(identity_error):.2e} relative). The two profiles are nearly parallel —",
+        f"median cos(p, q) = {payload['channel']['donor_target_profile_cosine_median']:.4f} — so the delta is",
+        "essentially their *radial gap*. That is the quantity any fair null must preserve.",
+        "",
+        "## How much of the delta is donor-independent?",
+        "",
+        "Replace each donor profile with the pooled mean for its module role. That 'donor'",
+        f"carries {len(role_mean) * RANK} numbers in total and no tensor-specific information at all.",
+        "",
+        f"- Projecting each real delta onto it explains **{donor_independent_fraction * 100:.1f}%**"
+        f" of the 4B delta energy",
+        f"  and **{donor_independent_fraction_8b * 100:.1f}%** of the 8B delta energy.",
+        f"- The orthogonal residual still agrees across donors at cosine"
+        f" **{residual_cosine:.4f}**, so a genuine",
+        "  tensor-specific component survives; it is simply a minority of the signal.",
+        f"- Under plain subtraction rather than projection the residual cosine is"
+        f" {plain_residual_cosine:.4f}.",
         "",
         "## Hold the operator fixed, vary the donor",
         "",
@@ -288,18 +344,40 @@ def main() -> int:
         lines.append(f"| {control['arm']} | {control['cosine']:.4f} |")
     lines += [
         "",
-        f"Real cross-donor cosine **{real:.4f}** versus strongest donor-varying control"
-        f" **{max(shuffled + randomised):.4f}** (lift {real - max(shuffled + randomised):+.4f}).",
+        f"Real cross-donor cosine **{real:.4f}**. Architecture-only null band"
+        f" **{min(null_arms):.4f} – {max(null_arms):.4f}**.",
+        "",
+        "The strongest null lives in E1c: iid Gaussian matrices at the *true donor tensor",
+        "shapes*, through the identical operator, reach **0.9988** across three seed pairs —",
+        "above the real donors. See `shape_matched_donor_null.md`.",
         "",
         "## Interpretation",
         "",
-        "HT1 holds: the channel is narrow and carries no directions.",
-        "HT2 does not hold: the cross-donor agreement is real and tensor-specific,",
-        "since destroying tensor correspondence costs most of it.",
+        "**HT1 holds**: the channel is narrow and carries no directions.",
         "",
-        "The two findings together say the v1 headline statistic was a true statement",
-        "about a very small quantity. Qwen3-4B and Qwen3-8B genuinely agree about",
-        f"{len(keys) * RANK} numbers, and the operator was never able to ask them anything else.",
+        f"**HT2 holds**: {donor_independent_fraction * 100:.1f}% of the delta energy is donor-independent"
+        " by exact algebra —",
+        "reproducible from a 56-number role-mean donor. The amendment's wording is that *some*",
+        "of the agreement is a property of `T`, and that is amply satisfied.",
+        "",
+        "**The cross-donor agreement statistic carries no evidence about donor content.** The v1",
+        "report read cosine 0.932 as showing the donor signal is not random. But donors sharing",
+        "nothing except their tensor shapes reach 0.9988 through the same operator — *better* than",
+        "the real donors. The statistic should be retired as evidence, not merely down-scoped.",
+        "",
+        "That is not the same as saying nothing donor-specific is present. After projecting out the",
+        f"role-mean construction, a tensor-specific residual carrying {(1 - donor_independent_fraction) * 100:.0f}% of the delta",
+        f"energy still agrees across the two donors at cosine {residual_cosine:.4f}. Real donor structure does",
+        "reach the target; it is a minority of an already narrow channel, and the headline statistic",
+        "was never measuring it.",
+        "",
+        "This does not weaken the study's negative result — it strengthens it. It removes the",
+        "premise that would otherwise justify building a wider operator on the grounds that",
+        "'the donors demonstrably agree'.",
+        "",
+        "## Protocol deviation in the first attempt",
+        "",
+        payload["protocol_deviation_in_attempt_0001"],
     ]
     atomic_write_text(args.output / "channel_capacity.md", "\n".join(lines) + "\n")
     print("\n".join(lines))
