@@ -1,0 +1,210 @@
+"""Frozen-backbone trainer for FWA tensors only."""
+
+from __future__ import annotations
+
+import json
+import random
+import time
+from pathlib import Path
+from typing import Any
+
+import torch
+from torch.optim import AdamW
+
+from rineya_fwa.arms import apply_arm, count_trainable
+from rineya_fwa.loading import freeze_backbone, load_supa, load_tokenizer
+from rineya_fwa.paths import ARTIFACTS, assert_readonly_target
+from rineya_fwa.provenance import write_json
+
+
+def seed_everything(seed: int) -> None:
+    random.seed(seed)
+    torch.manual_seed(seed)
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(seed)
+
+
+def read_jsonl(path: Path) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    with path.open("r", encoding="utf-8") as handle:
+        for line in handle:
+            if line.strip():
+                rows.append(json.loads(line))
+    return rows
+
+
+def encode_row(tokenizer: Any, row: dict[str, Any], max_len: int) -> dict[str, torch.Tensor]:
+    messages = list(row["messages"])
+    prompt = messages[:-1]
+    full = messages
+    prompt_ids = tokenizer.apply_chat_template(prompt, add_generation_prompt=True, tokenize=True)
+    full_ids = tokenizer.apply_chat_template(full, add_generation_prompt=False, tokenize=True)
+    if not isinstance(prompt_ids, list):
+        prompt_ids = prompt_ids.tolist()
+    if not isinstance(full_ids, list):
+        full_ids = full_ids.tolist()
+    if len(full_ids) > max_len:
+        overflow = len(full_ids) - max_len
+        full_ids = full_ids[overflow:]
+        prompt_ids = prompt_ids[overflow:] if overflow < len(prompt_ids) else []
+    labels = list(full_ids)
+    n_prompt = min(len(prompt_ids), len(labels))
+    for i in range(n_prompt):
+        labels[i] = -100
+    if all(v == -100 for v in labels):
+        labels[-1] = full_ids[-1]
+    return {
+        "input_ids": torch.tensor(full_ids, dtype=torch.long),
+        "labels": torch.tensor(labels, dtype=torch.long),
+        "attention_mask": torch.ones(len(full_ids), dtype=torch.long),
+    }
+
+
+def _peak_vram() -> int | None:
+    if not torch.cuda.is_available():
+        return None
+    return int(torch.cuda.max_memory_allocated())
+
+
+def train_arm(
+    *,
+    arm: str,
+    layers: list[int],
+    train_file: Path,
+    output_dir: Path,
+    seed: int,
+    rank: int = 16,
+    max_steps: int = 64,
+    max_sequence_length: int = 1024,
+    learning_rate: float = 1e-4,
+    grad_accum: int = 8,
+    warmup_ratio: float = 0.03,
+    weight_decay: float = 0.01,
+    nan_abort_factor: float = 10.0,
+    device: str | None = None,
+) -> dict[str, Any]:
+    seed_everything(seed)
+    if device is None:
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+    if torch.cuda.is_available():
+        torch.cuda.reset_peak_memory_stats()
+
+    tokenizer = load_tokenizer()
+    model = load_supa(device=device, eval_mode=False)
+    freeze_backbone(model)
+    handle = apply_arm(model, arm, layers=layers, rank=rank, init_alpha=0.0)
+    if handle is not None:
+        for block in handle.blocks():
+            for param in block.parameters():
+                param.requires_grad = True
+        if hasattr(model, "gradient_checkpointing_enable"):
+            model.gradient_checkpointing_enable()
+            if hasattr(model, "enable_input_require_grads"):
+                model.enable_input_require_grads()
+        model.train()
+        params = handle.trainable_parameters()
+        optimizer = AdamW(params, lr=learning_rate, weight_decay=weight_decay)
+    else:
+        params = []
+        optimizer = None
+
+    rows = read_jsonl(train_file)
+    rng = random.Random(seed)
+    rng.shuffle(rows)
+
+    output_dir.mkdir(parents=True, exist_ok=True)
+    assert_readonly_target(output_dir / "dummy")
+    t0 = time.perf_counter()
+    history: list[dict[str, Any]] = []
+    tokens_seen = 0
+    examples_seen = 0
+    aborted = None
+    first_loss: float | None = None
+    step = 0
+    accum = 0
+    if optimizer is not None:
+        optimizer.zero_grad(set_to_none=True)
+
+    while step < max_steps and optimizer is not None:
+        row = rows[examples_seen % len(rows)]
+        batch = encode_row(tokenizer, row, max_sequence_length)
+        input_ids = batch["input_ids"].unsqueeze(0).to(device)
+        labels = batch["labels"].unsqueeze(0).to(device)
+        attn = batch["attention_mask"].unsqueeze(0).to(device)
+        out = model(input_ids=input_ids, attention_mask=attn, labels=labels)
+        loss = out.loss
+        loss_value = float(loss.detach().cpu())
+        if first_loss is None:
+            first_loss = loss_value
+        if not torch.isfinite(loss):
+            aborted = "non_finite_loss"
+            break
+        if first_loss and loss_value > nan_abort_factor * first_loss and step > 3:
+            aborted = "divergence"
+            break
+        (loss / grad_accum).backward()
+        accum += 1
+        tokens_seen += int(attn.sum().item())
+        examples_seen += 1
+        if accum % grad_accum == 0:
+            torch.nn.utils.clip_grad_norm_(params, 1.0)
+            optimizer.step()
+            optimizer.zero_grad(set_to_none=True)
+            step += 1
+            history.append({"step": step, "loss": loss_value})
+            if step >= max_steps:
+                break
+
+    wall = time.perf_counter() - t0
+    adapter_path = output_dir / "fwa_adapter.pt"
+    if handle is not None:
+        payload = {
+            "arm": arm,
+            "layers": layers,
+            "rank": rank,
+            "state_dict": {
+                f"layer{idx}." + name: tensor.detach().cpu()
+                for idx, wrapper in handle.wrappers.items()
+                for name, tensor in wrapper.block.state_dict().items()
+            },
+        }
+        assert_readonly_target(adapter_path)
+        torch.save(payload, adapter_path)
+
+    manifest = {
+        "arm": arm,
+        "layers": layers,
+        "rank": rank,
+        "seed": seed,
+        "device": device,
+        "optimizer_steps": step,
+        "examples_seen": examples_seen,
+        "tokens_seen": tokens_seen,
+        "wall_seconds": wall,
+        "gpu_hours": wall / 3600.0 if device.startswith("cuda") else 0.0,
+        "peak_vram_bytes": _peak_vram(),
+        "trainable_parameters": count_trainable(handle),
+        "loss_history": history,
+        "first_loss": first_loss,
+        "last_loss": history[-1]["loss"] if history else None,
+        "aborted": aborted,
+        "adapter_path": str(adapter_path) if handle is not None else None,
+        "max_sequence_length": max_sequence_length,
+        "checkpoint_bytes": adapter_path.stat().st_size if adapter_path.exists() else 0,
+    }
+    write_json(output_dir / "training_manifest.json", manifest, config=manifest)
+    if handle is not None:
+        handle.uninstall()
+    del model
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+    return manifest
+
+
+def load_adapter(handle, adapter_path: Path) -> None:
+    payload = torch.load(adapter_path, map_location="cpu", weights_only=False)
+    state = payload["state_dict"]
+    for idx, wrapper in handle.wrappers.items():
+        prefix = f"layer{idx}."
+        subset = {k[len(prefix) :]: v for k, v in state.items() if k.startswith(prefix)}
+        wrapper.block.load_state_dict(subset)
