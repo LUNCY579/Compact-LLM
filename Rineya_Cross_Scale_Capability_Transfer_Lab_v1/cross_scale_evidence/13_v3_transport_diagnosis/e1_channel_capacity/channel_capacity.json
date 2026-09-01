@@ -3,10 +3,40 @@
     "donor_scalars_transmitted": 1568,
     "donor_target_profile_cosine_median": 0.9973681474506684,
     "donor_target_profile_cosine_min": 0.8786847143391405,
+    "effective_donor_scalars_transmitted": 275,
     "fraction_of_4b_transmitted": 3.8981042548460277e-07,
     "projected_tensors": 196,
     "qwen3_4b_parameters": 4022468096,
     "qwen3_8b_parameters": 8190735360,
+    "raw_4b_vs_8b_profile_cosine_median": 0.9994014294209602,
+    "realized_information": {
+      "qwen4b": {
+        "participation_ratio": 1.4020465983011117,
+        "variance_shares": [
+          0.8302366230774745,
+          0.15420542886714386,
+          0.012958953323199816,
+          0.0016172288148949077,
+          0.0004906580596593586,
+          0.0002710354883296068,
+          0.00014733708704453108,
+          7.273528225337076e-05
+        ]
+      },
+      "qwen8b": {
+        "participation_ratio": 1.4181826396369848,
+        "variance_shares": [
+          0.8245629023838377,
+          0.15823052721995085,
+          0.013369628340569742,
+          0.002768560183377535,
+          0.0006653382778627532,
+          0.00019895181969487304,
+          0.0001336147627030437,
+          7.047701200348132e-05
+        ]
+      }
+    },
     "target_tensors_total": 310
   },
   "controls": [
@@ -95,7 +125,7 @@
   "protocol_deviation_in_attempt_0001": "The amendment freezes norm-matched random, layer-shuffled, and sign-shuffled controls for E1-E3. The first attempt ran a norm-RANDOMISED synthetic donor, an all-key shuffle that also destroyed module role, and no sign-shuffled arm. It also published a 'null donor' arm whose delta is an exact algebraic zero, so its reported cosine of -0.2462 was the angle between two rounding-error vectors. This corrected run implements the frozen controls.",
   "resources": {
     "models_loaded": 0,
-    "wall_seconds": 0.05721459999995204
+    "wall_seconds": 0.08721470000000409
   },
   "schema_version": "2.0",
   "supersedes": "attempt_0001_unfair_nulls",

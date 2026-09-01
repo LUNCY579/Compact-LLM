@@ -68,6 +68,32 @@ def norm(values: list[float]) -> float:
     return math.sqrt(sum(v * v for v in values))
 
 
+def _symmetric_eigenvalues(matrix: list[list[float]], sweeps: int = 60) -> list[float]:
+    """Eigenvalues of a small symmetric matrix by cyclic Jacobi rotation."""
+    size = len(matrix)
+    work = [row[:] for row in matrix]
+    for _ in range(sweeps):
+        off = sum(work[i][j] ** 2 for i in range(size) for j in range(size) if i != j)
+        if off < 1e-24:
+            break
+        for i in range(size - 1):
+            for j in range(i + 1, size):
+                if abs(work[i][j]) < 1e-30:
+                    continue
+                theta = (work[j][j] - work[i][i]) / (2.0 * work[i][j])
+                sign = 1.0 if theta >= 0 else -1.0
+                t = sign / (abs(theta) + math.sqrt(theta * theta + 1.0))
+                c = 1.0 / math.sqrt(t * t + 1.0)
+                s_ = t * c
+                for k in range(size):
+                    ik, jk = work[i][k], work[j][k]
+                    work[i][k], work[j][k] = c * ik - s_ * jk, s_ * ik + c * jk
+                for k in range(size):
+                    ki, kj = work[k][i], work[k][j]
+                    work[k][i], work[k][j] = c * ki - s_ * kj, s_ * ki + c * kj
+    return [work[i][i] for i in range(size)]
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="v3 E1 transport channel capacity (corrected).")
     parser.add_argument("--projected-root", type=Path,
@@ -85,7 +111,19 @@ def main() -> int:
         records = json.loads((args.projected_root / name / "tensor_projection_map.json").read_text("utf-8"))
         if abs(float(manifest["strength"]) - STRENGTH) > 1e-12 or int(manifest["rank"]) != RANK:
             raise SystemExit(f"projection manifest disagrees with frozen constants: {name}")
-        return {r["target_key"]: r["stats"] for r in records if r["stats"]}
+        stats = {r["target_key"]: r["stats"] for r in records if r["stats"]}
+        # The whole cosine reconstruction assumes both donors were projected
+        # against the SAME target basis. `effective_rank` depends on the donor's
+        # shape, and it feeds `q` inside the randomised SVD, so a donor tensor
+        # with a dimension below RANK would silently change the target basis.
+        # Check every record, not just the manifest's declared rank.
+        off_rank = [k for k, v in stats.items() if int(v["rank"]) != RANK]
+        if off_rank:
+            raise SystemExit(
+                f"{name}: {len(off_rank)} records have rank != {RANK}; the shared-basis "
+                f"premise fails and the cosine reconstruction would be meaningless. "
+                f"First offenders: {off_rank[:3]}")
+        return stats
 
     stats4 = load("qwen4b_spectral_rank8_s010")
     stats8 = load("qwen8b_spectral_rank8_s010")
@@ -120,6 +158,27 @@ def main() -> int:
         profile_cosines.append(
             sum(a * b for a, b in zip(p, q)) / max(norm(p) * norm(q), 1e-30))
     profile_cosines.sort()
+
+    # How much of the r-wide channel is actually used? Mean-centre the
+    # tensors-by-r profile matrix and look at its variance spectrum. A
+    # participation ratio near 1 means the donors vary along essentially one
+    # scalar per tensor, whatever the nominal channel width.
+    def participation(profiles: dict[str, list[float]]) -> dict[str, Any]:
+        rows = [profiles[k] for k in keys]
+        centre = [sum(r[i] for r in rows) / len(rows) for i in range(RANK)]
+        centred = [[v - c for v, c in zip(r, centre)] for r in rows]
+        gram = [[sum(r[i] * r[j] for r in centred) for j in range(RANK)] for i in range(RANK)]
+        eigenvalues = sorted(_symmetric_eigenvalues(gram), reverse=True)
+        total = sum(eigenvalues) or 1e-30
+        return {
+            "variance_shares": [v / total for v in eigenvalues],
+            "participation_ratio": (total ** 2) / max(sum(v * v for v in eigenvalues), 1e-30),
+        }
+
+    realized = {"qwen4b": participation(real4), "qwen8b": participation(real8)}
+    raw_profile_cosines = sorted(
+        sum(a * b for a, b in zip(real4[k], real8[k]))
+        / max(norm(real4[k]) * norm(real8[k]), 1e-30) for k in keys)
 
     # --- Section 1b: how much of the delta is donor-independent? -----------
     # A "role-mean donor" carries one pooled profile per module family: 7 roles
@@ -263,6 +322,10 @@ def main() -> int:
             "fraction_of_4b_transmitted": len(keys) * RANK / 4022468096,
             "donor_target_profile_cosine_median": profile_cosines[len(profile_cosines) // 2],
             "donor_target_profile_cosine_min": profile_cosines[0],
+            "realized_information": realized,
+            "effective_donor_scalars_transmitted": round(
+                len(keys) * realized["qwen4b"]["participation_ratio"]),
+            "raw_4b_vs_8b_profile_cosine_median": raw_profile_cosines[len(raw_profile_cosines) // 2],
         },
         "donor_independence": {
             "role_mean_donor_numbers": len(role_mean) * RANK,
@@ -311,6 +374,13 @@ def main() -> int:
         "- Donor **directional** information transmitted: **none**. Every direction in the",
         "  injected update is one of the target's own top-r singular directions or the",
         "  target weight itself.",
+        "",
+        "That count is the channel *width*, not the information realised through it. Mean-centred",
+        f"across tensors, the donor profile matrix puts {realized['qwen4b']['variance_shares'][0] * 100:.0f}% of its variance in one component",
+        f"(participation ratio {realized['qwen4b']['participation_ratio']:.2f}), and the median per-tensor 4B-vs-8B profile",
+        f"cosine is {raw_profile_cosines[len(raw_profile_cosines) // 2]:.4f}. The donors effectively vary along about **one scalar per",
+        f"tensor** — how fast that tensor's spectrum decays — so the realised payload is nearer",
+        f"**{round(len(keys) * realized['qwen4b']['participation_ratio'])}** numbers than {len(keys) * RANK}.",
         "",
         "The closed form has a sharper reading than E1's first attempt used:",
         "",

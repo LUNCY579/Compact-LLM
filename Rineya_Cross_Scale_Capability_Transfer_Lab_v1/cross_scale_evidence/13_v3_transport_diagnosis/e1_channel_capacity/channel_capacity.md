@@ -13,6 +13,13 @@ Supersedes `attempt_0001_unfair_nulls/`. See the protocol-deviation note at the 
   injected update is one of the target's own top-r singular directions or the
   target weight itself.
 
+That count is the channel *width*, not the information realised through it. Mean-centred
+across tensors, the donor profile matrix puts 83% of its variance in one component
+(participation ratio 1.40), and the median per-tensor 4B-vs-8B profile
+cosine is 0.9994. The donors effectively vary along about **one scalar per
+tensor** — how fast that tensor's spectrum decays — so the realised payload is nearer
+**275** numbers than 1568.
+
 The closed form has a sharper reading than E1's first attempt used:
 
 > `a_i = strength * ||W_target|| * (p_i - q_i)`
