@@ -111,19 +111,20 @@ ranking, whatever target was chosen.
   remain characterised, and the withdrawn 0.932 statistic stays withdrawn.
 - **The one conclusion that must be re-opened** is the strategic one: v3.1 read
   outcome D partly from "there is little distinctive signal to send through the
-  channel." A 13-point Showcase gap is a large distinctive signal. The channel
+  channel." An 8-point Showcase gap against the real target is a distinctive signal. The channel
   result (E6: correspondence exists at cosine 0.982 but is not low-rank, and
   donor representations are redundant *for predicting Supa's representations*)
   stands on its own, but it no longer licenses "there is nothing to transfer".
 
 ## Next experiment this justifies
 
-Re-score Qwen3-8B and Supa on the frozen Showcase64 rows with the family's own
+Re-score Qwen3-8B and Supa-A1.1 on the frozen Showcase64 rows with the family's own
 committed scorer, in one controlled run, at matched storage precision, both
 `enable_thinking` settings. 64 prompts x 2 models x 2 flags, no new tooling. It
-is the gate on everything downstream: if the 13-point gap reproduces under one
+is the gate on everything downstream: if the 8-point gap reproduces under one
 scorer and one precision, a real capability gap exists and the transfer question
-is live again — with **Supa** as the target, not Aegis.
+is live again — with **Supa-A1.1** as the target, not Aegis. Qwen3-4B is retired
+as a donor either way, since it scores below the target.
 
 If it does not reproduce, the line closes on the transport evidence alone.
 
