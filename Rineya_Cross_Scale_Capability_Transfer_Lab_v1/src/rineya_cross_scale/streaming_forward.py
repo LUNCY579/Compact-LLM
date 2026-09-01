@@ -184,6 +184,7 @@ def streaming_forward_many(
     logit_block: int = 16384,
     pooling: str = "last",
     progress: Any = None,
+    logit_positions: list[torch.Tensor] | None = None,
 ) -> list[dict[str, Any]]:
     """Run every prompt through the checkpoint with ONE pass over the weights.
 
@@ -267,11 +268,20 @@ def streaming_forward_many(
     norm_weight = weights.tensor("model.norm.weight")
     last = geometry.num_hidden_layers - 1
     finals = []
+    counts = []
     for index, hidden in enumerate(states):
         normalised = rms_norm(hidden, norm_weight, geometry.rms_norm_eps)
         if last in capture_layers:
             captured[index][f"layer_{last}"] = reduce(normalised).clone()
-        finals.append(normalised[-1].clone())
+        # `logit_positions` lets a caller score specific token positions -- E7
+        # needs the log-probability of a reference answer, not just the next
+        # token -- without ever materialising logits for the whole sequence.
+        if logit_positions is not None:
+            selected = normalised[logit_positions[index]].clone()
+        else:
+            selected = normalised[-1:].clone()
+        counts.append(selected.shape[0])
+        finals.append(selected)
         states[index] = None
     del norm_weight, states
     gc.collect()
@@ -280,13 +290,18 @@ def streaming_forward_many(
     if want_logits:
         head_key = ("lm_head.weight" if weights.has("lm_head.weight")
                     else "model.embed_tokens.weight")
-        stacked = torch.stack(finals)
+        stacked = torch.cat(finals, dim=0)
         pieces = []
         for chunk in weights.row_blocks(head_key, logit_block):
             pieces.append(stacked @ chunk.T)
             del chunk
         combined = torch.cat(pieces, dim=1)[:, : geometry.vocab_size]
-        logits = [combined[i].clone() for i in range(len(prompts))]
+        offset = 0
+        logits = []
+        for count in counts:
+            block = combined[offset: offset + count]
+            logits.append(block.squeeze(0).clone() if logit_positions is None else block.clone())
+            offset += count
         del pieces, combined, stacked
     del finals
     gc.collect()
