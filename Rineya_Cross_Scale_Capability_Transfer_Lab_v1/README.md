@@ -22,6 +22,14 @@ hashes, metrics, failure records, and reports are versioned.
 - Final report: `cross_scale_evidence/11_report/final_report.md`
 - v2 exploratory follow-up: `cross_scale_evidence/00_protocol/amendment_v2_exploratory.md`
   and `cross_scale_evidence/12_v2_followup/`. v1 protocol and report are unchanged.
+- v3 transport diagnosis: `cross_scale_evidence/13_v3_transport_diagnosis/`. A
+  diagnostic stage that built zero candidates. It characterises what the P4 and
+  P5 operators actually transmit, and withdraws the cross-donor agreement
+  statistic that v1 and v2 both cited: shape-matched random donors reproduce it
+  better than the real donors do. v1 and v2 files are unchanged; the corrections
+  are recorded in `13_v3_transport_diagnosis/report/v3_report.md`.
+  Donor-side work is blocked — Qwen3-4B and Qwen3-8B are no longer resident in
+  the Hugging Face cache.
 
 ## Evidence layout
 

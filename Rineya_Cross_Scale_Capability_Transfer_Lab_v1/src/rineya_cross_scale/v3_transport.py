@@ -17,6 +17,22 @@ seed, the 4B and 8B deltas are expressed in the *same* orthonormal basis. Their
 inner products are therefore computable exactly from the recorded scalars, with
 no tensor arithmetic.
 
+Two preconditions, both verified to hold on all 392 real tensor-projections:
+
+* `total_energy > target_top_energy` strictly, so `W_perp` is non-degenerate and
+  `residual_scale` is well defined. This is a live failure mode for a target
+  tensor of rank <= r, which none of the 196 are.
+* The operator's `desired_energy >= total_energy` guard rail never fires; the
+  maximum observed ratio is 0.149, roughly seven times below the trigger. The
+  closed form is stated in terms of the post-guard `desired`, which is also what
+  the operator records, so it stays correct if the guard ever does fire.
+
+Note that the derivation does not require `svd_lowrank`'s singular triples to be
+accurate. It requires only `U^T W V = diag(s)` exactly, which that routine
+satisfies by construction: it forms `B = Q^H A` exactly and takes a dense SVD of
+`B`. A poor randomised range approximation changes which basis is used, not the
+exactness of the coordinates in it.
+
 Shared by v3 E1 and E1c so that both use one implementation of the geometry.
 """
 
