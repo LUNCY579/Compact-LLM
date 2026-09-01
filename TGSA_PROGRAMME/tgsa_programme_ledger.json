@@ -1,0 +1,411 @@
+{
+  "schema_version": "tgsa.programme-ledger.v1",
+  "generated_on": "2026-08-31",
+  "purpose": "Single read-only index of TGSA programme progress, results and provenance. This branch aggregates RECORDS only. It does not merge, pool or reimplement any stage's code, and it is not a scientific artifact in its own right.",
+  "governing_document": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_CANONICAL_PATH.md",
+  "constraints_honoured": [
+    "the two MTP histories are not merged into one implementation namespace",
+    "evidence is not pooled across stages",
+    "no artifact is relabelled under a generic TGSA+MTP identity",
+    "both branch histories are preserved for provenance"
+  ],
+  "programme_status": {
+    "mechanism_hypotheses_resolved": 0,
+    "hypothesis_ladder": [
+      "H1a",
+      "H1b",
+      "H1c"
+    ],
+    "confirmed_tgsa_results": null,
+    "blocking_gate": "a new competence preregistration with learnable, non-saturated primary families; the v4 band is rejected and permits no further measurement",
+    "next_scientific_step": "Phase 2A trajectory-mechanism identification, after a competence GO"
+  },
+  "lineage": {
+    "root_commit": "bef44ce",
+    "shape": "near-linear chain; two side branches diverge at 04d3c02 and 8b5737e",
+    "note": "C1..C5 are fully contained in research/tgsa-phase2a-ci-and-competence. Only the Phase 2B and retrofit branches hold commits outside that chain."
+  },
+  "stages": [
+    {
+      "id": "C1",
+      "branch": "research/tgsa-phase1-model-identifiability-launch-audit",
+      "commit": "bef44ce",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-launch-audit",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 launch audit",
+      "mtp_semantics": null,
+      "decision": "superseded",
+      "contained_in_spine": true,
+      "note": "ancestor of every other TGSA branch; reachable even if the branch ref is deleted"
+    },
+    {
+      "id": "C2",
+      "branch": "research/tgsa-phase1-identifiability-v2-launch-ready",
+      "commit": "e0063f0",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-v2-launch-ready",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 v2 launch-ready",
+      "mtp_semantics": null,
+      "decision": "superseded",
+      "contained_in_spine": true,
+      "note": "tagged; safe to delete the branch ref"
+    },
+    {
+      "id": "C3",
+      "branch": "research/tgsa-phase1-identifiability-v3-powered-confirmatory",
+      "commit": "6c97ac1",
+      "upstream": "gone",
+      "archive_tag": "archive/tgsa-phase1-v3-inconclusive",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "Phase 1 v3 powered confirmatory study",
+      "mtp_semantics": null,
+      "decision": "INCONCLUSIVE",
+      "contained_in_spine": true,
+      "study_id": "tgsa-phase1-identifiability-v3-2026-08-29",
+      "result": {
+        "matrix": "3 arms x 20 seeds = 60 cells, 2500 updates each, 60/60 completed",
+        "evidence_checks": "2001 passed, 0 errors",
+        "H1a_delta_minus_history": {
+          "estimate": 0.0014,
+          "ci95": [
+            -0.0021,
+            0.0048
+          ],
+          "p_gt_0": 0.79,
+          "negative_seeds": "9/20"
+        },
+        "H1b_delta_minus_cascade": {
+          "estimate": 0.0004,
+          "ci95": [
+            -0.0025,
+            0.0034
+          ],
+          "p_gt_0": 0.619,
+          "negative_seeds": "8/20"
+        },
+        "H1c_aligned_minus_replay_deranged": {
+          "estimate": 0.0019,
+          "ci95": [
+            -0.0003,
+            0.004
+          ],
+          "p_gt_0": 0.959
+        },
+        "reason": "no arm was competent; the contrast is uninterpretable",
+        "estimator_robustness": "all four sensitivity estimators agree on H1a"
+      },
+      "evidence_root": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/evidence/v3_result/"
+    },
+    {
+      "id": "C4",
+      "branch": "research/tgsa-phase1-v4-competence-first",
+      "commit": "8b5737e",
+      "upstream": "in sync",
+      "archive_tag": "archive/tgsa-phase1-v4-regime-rejected",
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v4",
+      "role": "frozen competence and regime-selection boundary",
+      "mtp_semantics": null,
+      "decision": "V4_REGIME_FAMILY_REJECTED",
+      "contained_in_spine": true,
+      "result": {
+        "regimes": {
+          "easy_50k_20k": {
+            "distinct_examples": 49998,
+            "effective_epochs": 25.6,
+            "verdict": "NO_GO",
+            "failed": [
+              "reliability",
+              "memorization",
+              "saturation"
+            ]
+          },
+          "easy_200k_20k": {
+            "distinct_examples": 199998,
+            "effective_epochs": 6.4,
+            "verdict": "NO_GO",
+            "failed": [
+              "reliability"
+            ]
+          }
+        },
+        "sample_presentations_both": 1280000,
+        "deciding_check": "no_primary_family_saturated",
+        "family_behaviour": {
+          "direct_lookup": "inert (guardrail)",
+          "pointer_chase": "inert (primary)",
+          "state_update": "floor to saturation, +0.947 / +0.890"
+        },
+        "interpretation": "apparatus result; says nothing about the TGSA mechanism in either direction",
+        "escalation": "NO FURTHER MEASUREMENT PERMITTED; no confirmatory matrix dispatched"
+      },
+      "evidence_root": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/evidence/v4_competence/",
+      "lifecycle": "frozen; must not receive Phase-2 implementation commits"
+    },
+    {
+      "id": "C5",
+      "branch": "research/tgsa-phase2-mtp-complementarity",
+      "commit": "d71b558",
+      "upstream": "pushed to origin 2026-08-31; branch ref then deleted",
+      "archive_tag": "archive/tgsa-phase2a-superseded-2026-08-31",
+      "worktree": null,
+      "branch_ref": "deleted 2026-08-31; read via the archive tag",
+      "role": "ARCHIVED predecessor of the Phase 2A branch",
+      "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+      "decision": "ARCHIVED 2026-08-31; superseded by C6; no result",
+      "contained_in_spine": true,
+      "tests": 349,
+      "note": "held the Phase 2A role and the PR review surface until 2026-08-31. Fully contained in C6 as of merge ce4f134; nothing here is unique. Read through the tag; do not commit to this branch."
+    },
+    {
+      "id": "C6",
+      "branch": "research/tgsa-phase2a-ci-and-competence",
+      "commit": "188ed21",
+      "upstream": "in sync with origin",
+      "archive_tag": null,
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2a-next",
+      "role": "Phase 2A: trajectory-mechanism identification. THE CANONICAL ACTIVE BRANCH and PR review surface, redesignated 2026-08-31.",
+      "mtp_semantics": "sequential_teacher_forced_recursive_v1",
+      "decision": "ACTIVE; development-only; no result yet",
+      "contained_in_spine": "is the spine tip",
+      "tests": 396,
+      "contains": [
+        "C1",
+        "C2",
+        "C3",
+        "C4",
+        "C5"
+      ],
+      "unique_content": [
+        "v5 preregistration",
+        "within-study qualification gate",
+        "per-family null scoring",
+        "README overclaim property guard",
+        "phase2_program_contract (all four files)"
+      ],
+      "note": "work here. C1-C5 are all contained, so this single branch carries the entire Phase 1 chain plus Phase 2A."
+    },
+    {
+      "id": "C7",
+      "branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "commit": "49aa961",
+      "upstream": "in sync with origin",
+      "archive_tag": null,
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-phase2b",
+      "role": "Phase 2B: system factorial, exact verified decoding, real-model integration",
+      "mtp_semantics": "parallel_independent_offsets_v1",
+      "decision": "active; development-only; no result",
+      "contained_in_spine": false,
+      "tests": 359,
+      "unique_commits_vs_spine": 6,
+      "unique_content": [
+        "parallel independent-offset factorial",
+        "warm-start source device/dose binding",
+        "regime-laundering hardening",
+        ".github/workflows/tgsa-mtp.yml",
+        "3 docs imported under TGSA_PROGRAMME/imported/phase2b/"
+      ],
+      "pooling": "outputs must not be pooled with C5/C6; the causal graphs differ"
+    },
+    {
+      "id": "C8",
+      "branch": "research/tgsa-rineya-pretrained-retrofit",
+      "commit": "eea4f64",
+      "upstream": "in sync with origin",
+      "archive_tag": "parked/tgsa-rineya-retrofit-2026-08-31",
+      "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-retrofit",
+      "role": "real pretrained Qwen3/Rineya retrofit path",
+      "mtp_semantics": null,
+      "decision": "PARKED; sequenced third, after Phase 2A and Phase 2B",
+      "contained_in_spine": false,
+      "diverged_at": "04d3c02 (mid-v3)",
+      "unique_commits_vs_spine": 13,
+      "stale_by": "63 lab files behind the spine; lacks the v3 final result, the v4 rejection and all Phase 2 work",
+      "result": {
+        "candidate_intake": "no candidate is ship-positive; no promotion authorized",
+        "rejected": [
+          "A1.1/Baya 50/50 soup (transfer-positive, failed preservation)",
+          "A1.1 adapter dose 1.0625 (transfer-fail)",
+          "A1.1 + Pulse negative vector (catastrophic anchor incompatibility)",
+          "4B/8B spectral consensus (development +1 vanished on DEV-FULL)",
+          "normalized significance/count KV retention (quality 5/12 vs 6/12)",
+          "Supa abstention threshold copied to Baya (Showcase 40 -> 35)"
+        ],
+        "deferred": [
+          "TGSA Phase-1 v5",
+          "TGSA + MTP Phase 2A",
+          "PSA / SGSA interventions"
+        ],
+        "already_integrated": [
+          "Supa-A1.1 FP16 + abstention"
+        ]
+      },
+      "lift_condition": "a competence-qualified regime from a new preregistration, not the rejected v4 band"
+    }
+  ],
+  "shared_facts": [
+    "all eight branches descend from bef44ce and share the Phase-1 chain",
+    "all report under the PART 11 standard with OBSERVED / SUPPORTED / HYPOTHESIS marking",
+    "C7 and C8 hold a near-identical retrofit codebase: of 27 co-modified files only 3 differ, and C8 is authoritative (59 files vs C7's 37)",
+    "the retrofit tree and the lab tree are near-disjoint: the spine has 0 retrofit files; C8 has a stale 84-file lab against the spine's 147",
+    "the programme contract is stage-neutral: it defines phase2a and phase2b and the verifier routes on study_kind, so C6 and C7 carry byte-identical copies"
+  ],
+  "imported_records": [
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/PHASE2_IMPLEMENTATION_SUMMARY.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE2_IMPLEMENTATION_SUMMARY.md",
+      "sha256": "ec3deb7ad3f1cee8d581322ca9c183b61e786883cb8ffddb215c15c54331bfcf",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/PHASE2_RUNBOOK.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE2_RUNBOOK.md",
+      "sha256": "757b8370c7ccab7b1ab54d811fe8a5042d96a77e04f27d3ac3b57b7a8b4f20ce",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/phase2b/TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md",
+      "source_branch": "research/tgsa-mtp-rineya-complementarity-v1",
+      "source_commit": "49aa961",
+      "source_path": "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_COMPLEMENTARITY_PROTOCOL.md",
+      "sha256": "d51ade0d3d6c95bc803ddd0f2c041c78ab05d160fbfa3203ee57e24b130b7761",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/CANDIDATE_LEDGER.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/CANDIDATE_LEDGER.md",
+      "sha256": "e4f1c2e82597e251310a0650a268e8de425e7e661e07ad15c7efb6d6169988ea",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/HISTORICAL_PRODUCTION_HARVEST_AUDIT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/HISTORICAL_PRODUCTION_HARVEST_AUDIT.md",
+      "sha256": "fcac73cf4b8b4f7c8abcc769676fb45903e1d299272e306e4e413a4c50844761",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_RETROFIT_AUDIT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PRODUCTION_RETROFIT_AUDIT.md",
+      "sha256": "401670e6cbb6ddad08555aa4524bacc1bc396922e511921047b36062c316cc87",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_TRIAL_QUEUE.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PRODUCTION_TRIAL_QUEUE.md",
+      "sha256": "95cff06cf7f696fa3956dba596901c0a1a7a0c4f66baf78f4a9b1feca20635b7",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/HANDOFF_REPORT.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/HANDOFF_REPORT.md",
+      "sha256": "7f5eaa3489a7adcd97ac044824a8ea51e1416a496f884be67265824e0604cc30",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/RETROFIT_RUNBOOK.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/RETROFIT_RUNBOOK.md",
+      "sha256": "8ddfe311d4bd91359d368048202c2b18544f1eb2f0b14a06a71440e57ea7d6d4",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE1B_CONDITIONING_LADDER.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE1B_CONDITIONING_LADDER.md",
+      "sha256": "30b37c334adac52789bdd5b3d301f1841b7ca6989eaf2e712ffe81f7312f4414",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE1_V3_EXECUTION_HANDOFF.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE1_V3_EXECUTION_HANDOFF.md",
+      "sha256": "6e09ab6389d08a73aef6d515df074d29f5cf65765de58a945927e08da01a2c67",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/PHASE2A_PREREQUISITE_HOLD.md",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/PHASE2A_PREREQUISITE_HOLD.md",
+      "sha256": "a186a17114858f163c3c58e7f4a6c5ebf2bf4da67d0769731dad5cca67fc8bef",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.json",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/evidence/candidate_ledger.json",
+      "sha256": "4971afd792eeae44f90896a6a8dd7234074228059f683025289c9dccc3a40fd4",
+      "verbatim_copy": true
+    },
+    {
+      "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.schema.json",
+      "source_branch": "research/tgsa-rineya-pretrained-retrofit",
+      "source_commit": "eea4f64",
+      "source_path": "Rineya_TGSA_Retrofit_v1/schemas/candidate_ledger.schema.json",
+      "sha256": "9cad375a0bfbea90eed6a1a5813fb86acb1e254d8272084ae8c43c82084da631",
+      "verbatim_copy": true
+    }
+  ],
+  "not_imported": {
+    "source_code": "no implementation file from any stage is copied here; read it on its own branch",
+    "rehearsal_output": "evidence/phase2_mtp_smoke_local/ on C5 is regenerated scratch (CPU, one seed, three updates, confirmatory=false) and is gitignored, not archived",
+    "checkpoints": "*.pt / *.pth are excluded programme-wide; the repo tracks zero of them"
+  },
+  "active_branches": {
+    "work_here": "research/tgsa-phase2a-ci-and-competence",
+    "also_active": [
+      "research/tgsa-mtp-rineya-complementarity-v1 (Phase 2B, must stay separate)",
+      "research/tgsa-rineya-pretrained-retrofit (parked, third in sequence)",
+      "research/tgsa-programme-ledger (records only)"
+    ],
+    "archived_branch_refs_deleted_2026_08_31": {
+      "note": "these four branch refs no longer exist locally or on origin. Their commits are preserved by annotated tags pushed to origin and are contained in the active branch. Read them through the tag; restore with: git branch <name> <tag>",
+      "tags": [
+        "archive/tgsa-phase1-launch-audit",
+        "archive/tgsa-phase1-v2-launch-ready",
+        "archive/tgsa-phase1-v3-inconclusive",
+        "archive/tgsa-phase2a-superseded-2026-08-31"
+      ]
+    },
+    "frozen_evidence_branch": "research/tgsa-phase1-v4-competence-first"
+  },
+  "consolidation_2026_08_31": {
+    "merge": "ce4f134 folded C5 into C6; within-stage, same semantics, one additive .gitignore conflict resolved by keeping both rules",
+    "redesignation": "188ed21 moved the Phase 2A designation from C5 to C6 across all six references: canonical path stages table and branch lifecycle, README chain, runbook lineage, programme contract stage field, CI trigger",
+    "tags_created": [
+      "archive/tgsa-phase1-launch-audit -> bef44ce",
+      "archive/tgsa-phase2a-superseded-2026-08-31 -> d71b558",
+      "parked/tgsa-rineya-retrofit-2026-08-31 -> eea4f64"
+    ],
+    "pushed": "all five branches and three new tags pushed to origin; every push was a clean fast-forward, no force, no divergence",
+    "cleanup": "four archived branch refs deleted with git branch -d (merge-verified, not forced) after their tags were confirmed on origin; two archived worktrees removed. TGSA branches went from 8 to 5, worktrees from 6 to 4",
+    "result": "every TGSA stage now has a durable anchor; C1-C5 all contained in C6"
+  },
+  "open_items": [
+    "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
+    "C8's CANDIDATE_LEDGER.md routing table still names the old Phase 2A branch; it is parked, so this is stale-on-purpose until the hold lifts",
+    "no competence-qualified regime exists, so no Phase 2 confirmatory run is authorized; this is the single blocking gate for the whole programme"
+  ]
+}
