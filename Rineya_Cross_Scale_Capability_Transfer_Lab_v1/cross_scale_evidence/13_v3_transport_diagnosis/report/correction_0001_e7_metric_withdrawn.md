@@ -41,13 +41,29 @@ protocol (`comparison.md`, "Reference: official Qwen3 scale"):
 |---|---:|---:|
 | Aegis 1.1 | 4/64 | — |
 | Qwen3-0.6B | 14/64 | 4.41 |
-| **Supa 1.7** | **40/64** | — |
+| Supa 1.7 | 40/64 | — |
 | Qwen3-4B (NF4) | 43/64 | 3.59 |
+| **Supa-A1.1 (the actual study target)** | **45/64** | — |
 | **Qwen3-8B (NF4)** | **53/64** | **2.50** |
 
-So on a real task-level scorer there is a **13-point gap** in the 8B's favour,
-monotone in donor scale, and the 8B is the **tersest** model in the table — the
-opposite of E7's premise that the donors are penalised for being verbose.
+So on a real task-level scorer there is a gap in the 8B's favour, monotone in
+donor scale, and the 8B is the **tersest** model in the table — the opposite of
+E7's premise that the donors are penalised for being verbose.
+
+**Amended 2026-09-01.** This section first quoted Supa 1.7 at 40/64 and called
+the gap 13 points. That is the wrong model. Every stage of this study — v1, v2,
+v3 and v3.1 — used `Rineya-Supa-A1.1-1.1.0-devfreeze` as the target, and its own
+`CORE.json` claims **45/64** Showcase. Against the real target the gap to
+Qwen3-8B is **8 points**, not 13.
+
+Two consequences follow. First, **Qwen3-4B at 43/64 is below the target** and
+should be retired as a donor; that retrospectively explains v1's H7, the 4B's
+poor showing in E7, and its failure to beat controls in v2. Second, the gap
+estimate is soft in both directions: A1.1's own card labels its 45/64 a
+"tuning-split checkpoint evaluation" and claims no statistical significance,
+while the 8B's 53/64 was measured at NF4 4-bit and was never selected on this
+bank. Those biases run opposite ways, which is precisely why the confirmatory
+re-run below is needed before anything is built on the number.
 
 Two features of that table make the gap conservative rather than generous. The
 donors were run at NF4 4-bit while the family cores were bf16/float16, and
