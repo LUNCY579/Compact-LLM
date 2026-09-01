@@ -6,10 +6,10 @@ weight. E2 then measured the *on-disk* delta's effective rank at 448-539, which
 is incompatible with a rank-8 construction.
 
 The reconciliation is storage precision. The projected checkpoints were written
-in bfloat16, whose ~0.4% relative resolution is the same order as the injected
-delta's ~0.55% relative magnitude. The delta that was actually merged into every
-v1 and v2 candidate is therefore the intended rank-8 signal plus a full-rank
-quantisation term.
+in bfloat16, so the delta that was actually merged into every v1 and v2 candidate
+is the intended rank-8 signal plus a small full-rank quantisation term. The
+quantisation is minor in energy but spread over every direction, which is enough
+to inflate an entropy-based effective rank.
 
 This script measures the split directly: for every projected tensor it compares
 the on-disk delta against the operator's own FP32 record, and decomposes the
@@ -35,6 +35,7 @@ sys.path.insert(0, str(LAB_ROOT / "src"))
 from rineya_cross_scale.checkpoint import CheckpointReader  # noqa: E402
 from rineya_cross_scale.hashing import atomic_write_json, atomic_write_text  # noqa: E402
 from rineya_cross_scale.spectral_projection import _low_rank_spectrum, _seed  # noqa: E402
+from rineya_cross_scale.v3_transport import delta_coordinates_from_profile  # noqa: E402
 
 RANK = 8
 
@@ -77,17 +78,28 @@ def main() -> int:
             weight_energy = float(torch.dot(weight_flat, weight_flat))
             parallel_energy = float(torch.dot(flat, weight_flat)) ** 2 / max(weight_energy, 1e-30)
 
+            # Coordinate-level check of E1's closed form. Validating only the
+            # delta's norm would pass any coordinate vector of the right length,
+            # and E1's cross-donor cosine depends on the coordinates themselves.
+            predicted, _ = delta_coordinates_from_profile(statistics, None, 0.10)
+            predicted_tensor = torch.tensor(predicted, dtype=torch.float32)
+            coordinate_error = float(
+                torch.linalg.vector_norm(coefficients - predicted_tensor)
+                / max(float(torch.linalg.vector_norm(predicted_tensor)), 1e-30)
+            )
+
             intended_norm = statistics["relative_change"] * statistics["target_fro"]
             rows.append({
                 "key": key,
                 "observed_norm": math.sqrt(observed_energy),
                 "intended_norm_fp32": intended_norm,
+                "closed_form_coordinate_relative_error": coordinate_error,
                 "observed_over_intended": math.sqrt(observed_energy) / max(intended_norm, 1e-30),
                 "fraction_in_intended_subspace": subspace_energy / max(observed_energy, 1e-30),
                 "fraction_parallel_to_weight": parallel_energy / max(observed_energy, 1e-30),
                 "weight_relative_delta": math.sqrt(observed_energy) / max(math.sqrt(weight_energy), 1e-30),
             })
-            del observed, weight, u, v, coefficients, flat, weight_flat
+            del observed, weight, u, v, coefficients, flat, weight_flat, predicted_tensor
             if position % 20 == 19:
                 gc.collect()
 
@@ -115,6 +127,10 @@ def main() -> int:
             "mean_fraction_parallel_to_weight": mean("fraction_parallel_to_weight"),
             "mean_delta_relative_to_weight": mean("weight_relative_delta"),
             "implied_noise_energy_fraction": 1.0 - signal_fraction,
+            "max_closed_form_coordinate_relative_error": max(
+                r["closed_form_coordinate_relative_error"] for r in rows),
+            "median_closed_form_coordinate_relative_error": sorted(
+                r["closed_form_coordinate_relative_error"] for r in rows)[len(rows) // 2],
         },
         "per_tensor": rows,
         "resources": {"wall_seconds": time.perf_counter() - started, "models_loaded": 0},
@@ -126,9 +142,15 @@ def main() -> int:
     lines = [
         "# v3 E1b — Intended Signal versus Storage Noise",
         "",
-        "The projected donors were serialised in bfloat16. The injected delta is about",
-        f"{aggregate['mean_delta_relative_to_weight'] * 100:.2f}% of the weight norm, and bfloat16's",
-        "relative resolution is roughly 0.4%, so the two are the same order of magnitude.",
+        "The projected donor *checkpoints* were serialised in bfloat16. The delta files",
+        "themselves are float32; they faithfully record a difference whose minuend had already",
+        "been quantised. The injected delta is",
+        f"{aggregate['mean_delta_relative_to_weight'] * 100:.2f}% of the weight norm, against a bfloat16 RMS rounding",
+        "residual of roughly 0.15% of the weight norm -- a noise-to-signal ratio near 25% in",
+        "amplitude and a few percent in energy, not parity.",
+        "",
+        "Note that the P5 checkpoint is stored float16, not bfloat16, so this arithmetic does not",
+        "transfer to the P5 delta.",
         "",
         "| Quantity | Value |",
         "|---|---:|",
@@ -139,6 +161,15 @@ def main() -> int:
         f"| Mean energy inside the intended rank-{RANK} subspace | **{signal_fraction:.4f}** |",
         f"| Mean energy elsewhere (quantisation) | **{1.0 - signal_fraction:.4f}** |",
         f"| Mean energy parallel to the weight | {aggregate['mean_fraction_parallel_to_weight']:.4e} |",
+        f"| Closed-form COORDINATE error vs stored delta, median | {aggregate['median_closed_form_coordinate_relative_error']:.3e} |",
+        f"| Closed-form COORDINATE error vs stored delta, max | {aggregate['max_closed_form_coordinate_relative_error']:.3e} |",
+        "",
+        "The coordinate check is the one that matters. E1 validated only the delta's scalar",
+        "norm against a float32 number recorded by the same operator, which any coordinate",
+        "vector of the right length would have passed, and which put a float32 precision floor",
+        "under the reported error. Here the closed-form coordinates are compared directly against",
+        "the stored delta projected onto the same basis, so the residual below is the real",
+        "disagreement between the derivation and the artifact.",
         "",
         "## Interpretation",
         "",

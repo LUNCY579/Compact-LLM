@@ -1,8 +1,14 @@
 # v3 E1b — Intended Signal versus Storage Noise
 
-The projected donors were serialised in bfloat16. The injected delta is about
-0.56% of the weight norm, and bfloat16's
-relative resolution is roughly 0.4%, so the two are the same order of magnitude.
+The projected donor *checkpoints* were serialised in bfloat16. The delta files
+themselves are float32; they faithfully record a difference whose minuend had already
+been quantised. The injected delta is
+0.56% of the weight norm, against a bfloat16 RMS rounding
+residual of roughly 0.15% of the weight norm -- a noise-to-signal ratio near 25% in
+amplitude and a few percent in energy, not parity.
+
+Note that the P5 checkpoint is stored float16, not bfloat16, so this arithmetic does not
+transfer to the P5 delta.
 
 | Quantity | Value |
 |---|---:|
@@ -13,6 +19,15 @@ relative resolution is roughly 0.4%, so the two are the same order of magnitude.
 | Mean energy inside the intended rank-8 subspace | **0.8614** |
 | Mean energy elsewhere (quantisation) | **0.1386** |
 | Mean energy parallel to the weight | 4.1290e-04 |
+| Closed-form COORDINATE error vs stored delta, median | 1.384e-02 |
+| Closed-form COORDINATE error vs stored delta, max | 6.371e-01 |
+
+The coordinate check is the one that matters. E1 validated only the delta's scalar
+norm against a float32 number recorded by the same operator, which any coordinate
+vector of the right length would have passed, and which put a float32 precision floor
+under the reported error. Here the closed-form coordinates are compared directly against
+the stored delta projected onto the same basis, so the residual below is the real
+disagreement between the derivation and the artifact.
 
 ## Interpretation
 
