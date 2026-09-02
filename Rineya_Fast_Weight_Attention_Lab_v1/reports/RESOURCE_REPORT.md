@@ -107,3 +107,34 @@ No efficiency improvement may be claimed from this experiment.
 The 0.64 GPU-hours of P1+P2 training recorded above bought no testable result;
 see `reports/MECHANISM_DIAGNOSTIC.md`. It is retained in the cost accounting
 because it was really spent.
+
+## Training memory and time (P2b instrumentation, measured)
+
+One optimizer step, arm C, 1024-token contexts (sequence 1152), RTX 4070 Laptop:
+
+| Configuration | Peak VRAM | Wall (1 step) |
+|---|---:|---:|
+| labels to the model, gradient checkpointing **on** | 6.91 GiB | 15545 s |
+| labels to the model, checkpointing off | 4.98 GiB | 20 s |
+| `tail_loss`, checkpointing off | see `artifacts/.../diagnostics/` | — |
+
+Two results worth keeping:
+
+**Gradient checkpointing is strictly worse for this configuration** — more memory
+*and* ~800x slower. Both configs have declared `gradient_checkpointing: true`
+since P1, and no run ever enabled it, so nothing regressed; but had it been
+enabled it would have hurt. The cause is specific to a frozen backbone: enabling
+it needs `enable_input_require_grads()`, which forces layers 0-13 to build an
+autograd graph they otherwise skip entirely (only layer 14 is trainable, so
+nothing below it needs one), and the recompute pass re-runs layer 14's
+python-loop scan a second time.
+
+**Full-length logits dominated training memory.** Passing `labels` makes the
+model compute logits at every position: 1152 x 151936 is ~350 MB in fp16, plus
+an fp32 copy inside the cross-entropy and a gradient of the same size — roughly
+1.4 GB — to supervise a single answer token. `tail_loss` requests only the
+trailing positions covering the supervised span and is numerically identical to
+the model's own loss (`tests/test_tail_loss.py`).
+
+This mattered operationally: the card is shared with an unrelated sweep, and a
+launch at 4808 MiB free against a 4.98 GiB peak would have OOMed.
