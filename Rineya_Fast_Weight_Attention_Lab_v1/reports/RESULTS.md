@@ -1,5 +1,13 @@
 # Results (P2)
 
+> **WITHDRAWN.** The contrasts below are retained as the record of what P2
+> measured, but they do not support the conclusion P2 drew from them. Every arm
+> was already correct on every scored item, the fast memory's retention horizon
+> (87.5 tokens) was two orders of magnitude shorter than the context, and one
+> item per cell could not have reached significance. See
+> `reports/MECHANISM_DIAGNOSTIC.md` and `reports/FINAL_INTERPRETATION.md`.
+> P2b re-runs the matched arms; its results will be added below.
+
 Classification: `EXPLORATORY_NOT_CONFIRMATORY`.
 
 Matched arms A/B/C/D. Seeds **11 and 22** completed. Seed **33** was not finished
