@@ -324,3 +324,68 @@ forced to behave like a per-token transform, which is exactly what arm B is.
 Training-loss behaviour is held-in and is *not* the test of H6; the held-out
 C vs C-short contrast is. This amendment fixes the prediction so that whichever
 way it falls, it cannot be reinterpreted after the fact.
+
+---
+
+# Amendment 5 — analysis focus, fixed after the arm-A baseline and before any contrast
+
+Arm A (unmodified Supa-A1.1) has been scored on the P2b suite. **No treatment arm
+has been scored and no contrast has been computed.** Recording three properties of
+the baseline now, because each one changes how a contrast should be read, and
+deciding that after seeing the contrasts would be choosing the analysis to fit
+the answer.
+
+Arm A, n = 168, exact 0.8214 [0.757, 0.872], abstention rate 0.000:
+
+| position | 0.05 | 0.10 | 0.25 | 0.50 | 0.75 | 0.90 | 0.95 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| exact | **0.417** | 0.708 | 0.792 | 0.917 | 0.958 | 1.000 | 0.958 |
+
+| length | 1024 | 2048 | 4096 |
+|---|---:|---:|---:|
+| exact | 0.857 | 0.786 | 0.821 |
+
+## 1. The interference battery is at ceiling and cannot discriminate
+
+Arm A scores **55/56 (0.982)** — every category 8/8 except B at 7/8.
+
+The position suite was calibrated off ceiling; the interference battery never
+was. That is my omission, and it reproduces the exact defect P2b exists to
+remove, on the interference dimension. With one item of headroom no arm can
+separate from another.
+
+**Agreed now: any interference result in P2b is uninformative and will be
+reported as such.** It is not evidence of "no interference difference"; the
+instrument cannot see one. Section 14 of the brief is therefore *not* answered by
+this run. Rebuilding the battery harder is follow-up work, not a P2b patch.
+
+## 2. The middle-vs-edge metric presupposes the wrong deficit
+
+H3 was worded as "C reduces the middle-vs-edge gap", assuming a
+lost-in-the-middle deficit. This backbone does not have one. Accuracy rises
+monotonically with position, 0.417 at 0.05 to 1.000 at 0.90: a **primacy
+deficit**, i.e. a recency gradient. Middle beats edge (+0.118) only because the
+edge average pools the very weak 0.05/0.10 cells with the perfect 0.90/0.95 ones.
+
+"Reducing the middle-edge gap" is therefore not a meaningful goal here — it could
+be achieved by making the middle *worse*. The metric is retained for continuity
+but is demoted.
+
+**Primary positional quantity, fixed now: exact match at the early positions
+{0.05, 0.10}**, where arm A scores 0.417 and 0.708 and there is real headroom.
+That is where a memory that carries early evidence forward would show up.
+Middle-edge gap is still reported, with its sign, as a secondary number.
+
+## 3. There is no length degradation to explain
+
+0.857 / 0.786 / 0.821 across 1024 / 2048 / 4096 is flat within the interval.
+Difficulty in this suite lives on the **position** axis, not the length axis.
+Accuracy-vs-length is still reported, but a null there is expected and carries
+little information, and "length robustness" claims should not be made from it.
+
+## Unchanged
+
+Arms, horizons, seeds, the paired exact McNemar test, Wilson intervals,
+Amendment 3's sensitivity limits and Amendment 1's GO rule all stand. This
+amendment changes which numbers are foregrounded, not how any of them is
+computed.
