@@ -96,6 +96,38 @@ def encode_row(
     }
 
 
+def tail_loss(
+    model: Any, input_ids: torch.Tensor, attention_mask: torch.Tensor, labels: torch.Tensor
+) -> torch.Tensor | None:
+    """Cross-entropy over the supervised tokens only, without materialising the
+    full-length logit tensor.
+
+    Passing ``labels`` to the model computes logits at every position: at
+    T=1152 that is 1152 x 151936 values, ~350 MB in fp16 plus an fp32 copy in
+    the loss and a gradient of the same size — roughly 1.4 GB — to supervise a
+    single answer token. Since the supervised span is at the end of the
+    sequence, we ask for just enough trailing positions to cover it.
+
+    Numerically identical to the model's own loss: the logit at position p
+    predicts the token at p+1, and the abstention bias is applied inside
+    ``forward`` either way.
+    """
+    sup = (labels[0] != -100).nonzero(as_tuple=True)[0]
+    if sup.numel() == 0:
+        return None
+    total = int(input_ids.shape[1])
+    first_pred = int(sup.min()) - 1
+    if first_pred < 0:  # nothing before the first supervised token to predict it
+        return None
+    keep = total - first_pred
+    out = model(input_ids=input_ids, attention_mask=attention_mask, logits_to_keep=keep)
+    logits = out.logits[0]  # (keep, V), covering positions [total-keep, total)
+    idx = sup - 1 - (total - keep)
+    return torch.nn.functional.cross_entropy(
+        logits.index_select(0, idx).float(), labels[0].index_select(0, sup)
+    )
+
+
 def _peak_vram() -> int | None:
     if not torch.cuda.is_available():
         return None
@@ -202,8 +234,7 @@ def train_arm(
         input_ids = batch["input_ids"].unsqueeze(0).to(device)
         labels = batch["labels"].unsqueeze(0).to(device)
         attn = batch["attention_mask"].unsqueeze(0).to(device)
-        out = model(input_ids=input_ids, attention_mask=attn, labels=labels)
-        loss = out.loss
+        loss = tail_loss(model, input_ids, attn, labels)
         if loss is None or not torch.isfinite(loss):
             skipped_nonfinite += 1
             if skipped_nonfinite > 16:
