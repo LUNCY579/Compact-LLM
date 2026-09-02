@@ -91,6 +91,14 @@ error. They were **untested**, and are now reclassified:
   **0.778** at 2048 tokens with **0.333** at relative position 0.05.
 - **H6** (new): whether the retention horizon is the binding constraint. Arm
   C-short holds the original short horizon; predicted to match arm B.
+- **The layer placement itself.** The brief (section 6) asked for a
+  layer-location pilot over early / middle / late / distributed placements before
+  settling on one. That pilot was never run: P1 fixed layer 14 (the 0-based middle
+  of 28) and every result since, including P2b, inherits it unexamined. So every
+  number in this lab is conditional on one arbitrary placement, and a null result
+  is a null result *at layer 14*, not for auxiliary fast-weight memory on
+  Supa-A1.1 in general. Adding placements now would confound the preregistered
+  contrasts, so it belongs in a follow-up rather than in P2b.
 - Contexts 8K and 16K — not measurable on this GPU.
 - Arm E (attention replacement), the only variant that could trade KV cache for
   bounded state.
