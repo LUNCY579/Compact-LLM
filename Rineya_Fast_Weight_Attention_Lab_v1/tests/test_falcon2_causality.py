@@ -147,12 +147,18 @@ def test_token_valid_mask_2d():
 
 
 def test_batch_isolation_and_batch_gt_one():
-    """Regression: the scan crashed for any batch > 1.
+    """Regression: ``outputs[:, t] = mem * gate.squeeze(-1)``.
 
-    ``outputs[:, t] = mem * gate.squeeze(-1)`` made the validity gate (B,1)
-    against a (B,H,R) memory, so broadcasting aligned H against B. Every P1/P2
-    run used batch 1, so it never fired. Also checks that rows in a batch do not
-    influence each other.
+    The squeeze made the validity gate (B,1) against a (B,H,R) memory, so
+    broadcasting aligned the gate's batch axis with the memory's HEAD axis:
+
+    * B != H  -> RuntimeError;
+    * B == H  -> silently applies row j's validity to head j.
+
+    ``test_batch_isolation`` above uses batch=2, heads=2 and all-valid tokens, so
+    B == H and the gate was all ones: it passed while the bug was present. Every
+    P1/P2 run used batch 1, so nothing ever exercised it. This test uses B=3,
+    H=4 so the shapes cannot coincide.
     """
     import torch
 
@@ -199,3 +205,38 @@ def test_padding_is_masked_out():
     h2[:, 6:] = torch.randn_like(h2[:, 6:])
     out2 = block(h2, valid)
     assert torch.allclose(out[:, :6], out2[:, :6], atol=1e-6)
+
+
+def test_padding_gate_is_applied_per_row_not_per_head():
+    """The silent half of the squeeze bug: B == H with real padding.
+
+    With B == H the broken broadcast does not raise, it applies row j's validity
+    to head j. Constructing B == H == 4 and masking exactly one row makes that
+    visible: only the masked row may go to zero, and only in its padded span.
+    """
+    import torch
+
+    from rineya_fwa.falcon2 import falcon2_scan
+
+    g = torch.Generator().manual_seed(3)
+    B = H = 4
+    T, R = 6, 5
+    q = torch.randn(B, T, H, R, generator=g)
+    k = torch.randn(B, T, H, R, generator=g)
+    v = torch.randn(B, T, H, R, generator=g)
+    beta = torch.full((H, R), 0.8)
+    lam = torch.full((H, R), 0.1)
+
+    valid = torch.ones(B, T, dtype=torch.bool)
+    valid[1, 3:] = False  # only row 1 is padded, from t=3
+
+    mem, _ = falcon2_scan(q, k, v, valid, beta, lam, 1e-6, recurrent=True)
+
+    assert torch.count_nonzero(mem[1, 3:]) == 0, "padded span of row 1 must be zero"
+    for b in range(B):
+        if b == 1:
+            assert torch.count_nonzero(mem[b, :3]) > 0
+        else:
+            assert torch.count_nonzero(mem[b]) > 0, (
+                f"row {b} is fully valid but was zeroed; the gate is being applied per-head"
+            )
