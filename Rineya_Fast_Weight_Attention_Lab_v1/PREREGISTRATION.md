@@ -277,3 +277,50 @@ discordance would not reach p < 0.05 here.**
   is more items or more seeds, not a NO-GO.
 - The GO rule in Amendment 1 is unchanged. What changes is that a failure to meet
   it will be labelled by regime: *no effect*, *underpowered*, or *effect against*.
+
+---
+
+# Amendment 4 — a falsifiable prediction for arm C-short, logged before its result
+
+Written while arm C-short is training and before its manifest exists. Six of
+seven training runs are complete; no evaluation has run.
+
+Amendment 1's central justification for P2b is the claim that the P1/P2 retention
+horizon (half-life 87.5 tokens, with `beta = 1.0` fully overwriting along the
+written key direction) was too short to carry a fact across the context. That
+claim is load-bearing: it is why the horizon was changed, and therefore why any
+arm-C win in P2b is not simply a consequence of my having picked a friendlier
+setting. It deserves to be exposed to falsification rather than assumed.
+
+Arm C-short is arm C with the original short horizon, everything else identical.
+
+## The prediction
+
+Observed so far, at the long horizon:
+
+| Arm | alpha (from 0.05) | final loss |
+|---|---:|---:|
+| B (static, no state carry) | 0.099 – 0.101 | ~0.003 |
+| C (recurrent, long horizon) | 0.070 | 0.0002 – 0.0004 |
+| D (gated, long horizon) | 0.068 – 0.070 | 0.0002 – 0.0004 |
+
+**Predicted: arm C-short resembles arm B, not arm C** — a larger merge gate
+(alpha nearer 0.10 than 0.070) and a final training loss nearer 0.003 than
+0.0003. Reasoning: with an 87.5-token half-life the recurrent state cannot carry
+information across a 1024-token training context, so arm C-short should be
+forced to behave like a per-token transform, which is exactly what arm B is.
+
+## What each outcome means
+
+- **C-short looks like B** — consistent with the diagnosis. The horizon is the
+  binding constraint, and changing it was justified rather than convenient.
+- **C-short looks like C** — the diagnosis is **wrong**. The retention horizon is
+  not what separated the arms, the stated rationale for Amendment 1 does not
+  hold, and any arm-C advantage in P2b needs a different explanation. This would
+  be recorded as a failed prediction of mine, not quietly dropped.
+- **C-short beats C** — the long-horizon init is actively harmful and the change
+  was a mistake.
+
+Training-loss behaviour is held-in and is *not* the test of H6; the held-out
+C vs C-short contrast is. This amendment fixes the prediction so that whichever
+way it falls, it cannot be reinterpreted after the fact.
