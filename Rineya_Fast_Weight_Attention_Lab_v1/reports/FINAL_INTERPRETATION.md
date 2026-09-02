@@ -127,14 +127,32 @@ obtaining a positive one:
 
 ## Status of P2b
 
-Apparatus committed, calibrated and preregistered. **Not yet run**: the single
-8 GB GPU is being used by an unrelated experiment in
-`/c/Users/clclc/BusinessProject/SupaExperiment/`, which holds ~5.7 GB. Training
-needs more headroom than is currently free, and pre-empting another session's
-run is not an acceptable way to get it.
+**Running, incomplete.** Started 2026-09-02 07:15:22 on the shared 8 GB card.
 
-Nothing in this file claims a P2b result. When P2b runs, `RESULTS.md` and this
-file are updated with the paired McNemar outcomes and the decision label from
+Progress at last check: 3 of 7 training runs finished (arms B, C and D at seed
+11), 1.59 training GPU-hours spent, no aborts. **Zero evaluations have run**,
+and there is no `summary.json`.
+
+So there is **no P2b outcome of any kind** — no accuracy, no contrast, no
+position curve, no GO/NO-GO. Nothing in this file claims one. The training
+diagnostics below are held-in fit on the training distribution and are *not*
+evidence for any hypothesis:
+
+| Arm (seed 11) | alpha, from 0.05 | opening-window loss | last-25-step mean |
+|---|---:|---:|---:|
+| B (static) | 0.0987 | 0.618 | 0.00363 |
+| C (recurrent) | 0.0696 | 0.602 | 0.00049 |
+| D (sig-gated) | 0.0677 | 0.604 | 0.00040 |
+
+Arms C and D reach a lower training loss than B while opening the merge gate
+*less*. That is consistent with the mechanism measurement (C's contribution was
+11x B's at equal alpha) but it is measured on data the adapters were fit to, and
+arm B — which has no recurrent state at all — also cut its loss ~170x. Whether
+any of this survives on held-out items at 1K/2K/4K is exactly what the eval
+phase will decide, and it has not run.
+
+When it completes, `RESULTS_P2B.md` (via `scripts/make_report.py`), `RESULTS.md`
+and this file get the paired McNemar outcomes and the decision label from
 Amendment 1's rule.
 
 ## Terminology

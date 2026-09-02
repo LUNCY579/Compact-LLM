@@ -176,3 +176,54 @@ PSA `data/sealed/` remain closed. P2b reads only `data/unsealed/` (already
 committed with hashes) and lab-generated rows. The PSA benchmark generator was
 inspected but **not** invoked, because it writes into another lab's tree and
 owns a `sealed` split.
+
+---
+
+# Amendment 2 — suite difficulty, fixed before any P2b arm was trained
+
+Amendment 1's table says "48 decoy facts of identical surface form" and does not
+mention indirection. The run uses **24 decoys and two-hop binding**. Recording the
+change here rather than editing Amendment 1, and recording *why*, because a
+preregistration that quietly matches the run after the fact is worth nothing.
+
+## What changed
+
+| Amendment 1 | Actual run |
+|---|---|
+| 48 decoys | `n_decoys: 24` |
+| one hop (`vault -> code`) | two hops (`vault -> unit -> code`), `hops: 2` |
+
+## Why, with the calibration that forced it
+
+Amendment 1 was written before the difficulty calibration had been run. When it
+was run — on **arm A only**, with no adapter loaded and no arm compared, so it
+cannot bias the A/B/C/D contrast — the one-hop design turned out to still be at
+ceiling:
+
+| Design | length | decoys | arm A exact | arm A at position 0.05 |
+|---|---:|---:|---:|---:|
+| one hop, random keys | 1024 | 24 | 0.833 | 0.75 |
+| one hop, confusable keys | 1024 | 24 | 0.889 | 1.00 |
+| one hop, confusable keys | 2048 | 24 | 0.889 | 0.833 |
+| one hop, confusable keys | 2048 | 48 | 0.889 | 0.833 |
+| **two hop, confusable keys** | **2048** | **24** | **0.778** | **0.333** |
+| two hop, confusable keys | 2048 | 48 | 0.889 | 0.833 |
+
+A single `vault -> code` lookup stays near ceiling even with 48 confusable
+decoys, because it is a surface match attention can do directly. More decoys did
+not help: 48 was *easier* than 24 in both one- and two-hop settings, since more
+fact sentences displace filler and make the pattern more salient. Two-hop
+binding at 24 decoys is the only configuration that put the frozen backbone off
+ceiling (0.778) with a real primacy deficit (0.333 at relative position 0.05).
+
+The purpose of Amendment 1 was a suite that can discriminate. Keeping "48
+decoys, one hop" would have reproduced the exact defect Amendment 1 exists to
+remove.
+
+## Timing, so this is checkable
+
+Calibration ran, the config changed, and both were committed
+(`51311b6 Calibrate P2b off ceiling`) **before** the P2b run started
+(`07:15:22`, 2026-09-02) and therefore before any arm was trained. No P2b
+outcome had been observed. Nothing else in Amendment 1 changes: the arms,
+horizons, statistics, seeds and decision rule stand as written.
