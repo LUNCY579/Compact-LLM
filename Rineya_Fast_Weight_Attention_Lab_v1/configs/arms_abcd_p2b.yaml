@@ -59,8 +59,9 @@ eval:
   positions: [0.05, 0.10, 0.25, 0.50, 0.75, 0.90, 0.95]
   lengths: [1024, 2048, 4096]
   n_per_cell: 8            # 168 position items, vs 14 total in P2
-  n_decoys: 48
+  n_decoys: 24
   n_candidates: 32
+  hops: 2                  # two-hop indirection: vault -> unit -> code
   interference_length: 2048
   n_per_category: 8        # 56 interference items, vs 7 total in P2
   statistics: paired_two_sided_exact_mcnemar

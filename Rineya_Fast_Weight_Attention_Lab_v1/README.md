@@ -71,5 +71,30 @@ Do not open, train on, or iterate against:
 
 ## Status
 
-P2 complete for seeds 11 and 22. Decision: **NO-GO**. See
-`reports/FINAL_INTERPRETATION.md`.
+**The P2 NO-GO is withdrawn as unsupported.** It was the null result of an
+experiment that could not have produced anything else:
+
+| What P2 concluded | What measurement shows |
+|---|---|
+| "C = B, so recurrence adds nothing" | The arms differed by 0.12 % / 1.41 % / 3.22 % of the attention output (B/C/D) and up to 3.4 logits. The eval could not see it. |
+| "no position benefit" | Retention half-life was **87.5 tokens** against ~990-token contexts, with full overwrite on key collision. No fact could reach its query. |
+| "14/14 on the position suite" | Filler was one sentence repeated; answer space was 10 colours; one item per cell, so a paired test needed 6/14 items to flip for p<0.05. |
+| lengths 512-4096 per config | `run_experiment.py` hardcoded `[256, 512]`. |
+| `init_alpha: 0.0` per config | `train.py` hardcoded `0.05`. |
+| corpus = unsealed CC0 | runs used `data/synthetic/` (10 answers); the committed CC0 shard was never read. |
+
+See `reports/MECHANISM_DIAGNOSTIC.md`.
+
+**P2b** re-runs the matched arms with each defect fixed (`PREREGISTRATION.md`
+Amendment 1, `configs/arms_abcd_p2b.yaml`): token-exact 1K/2K/4K contexts, real
+CC0 filler, two-hop `vault -> unit -> code` binding with 24 confusable decoys, a
+552-code single-token answer space scored by candidate argmax in one forward
+pass, 168 position items, 56 interference items, paired exact McNemar with
+Wilson intervals, and a retention horizon matched across arms that can actually
+span the context — plus an arm C-short ablation holding the original horizon.
+
+Calibrated so the frozen backbone is **off ceiling**: arm A scores 0.778 at 2048
+tokens, and 0.333 at relative position 0.05.
+
+Hardware envelope, measured: 1K/2K/4K native (3.64 GiB at 4K); 8K only via
+host-memory spill at ~6x slowdown; **16K OOMs and is not evaluated**.

@@ -102,6 +102,7 @@ def train_arm(
     beta_raw_init: float = 0.0,
     lambda_raw_init: float = -2.0,
     train_rows: list[dict[str, Any]] | None = None,
+    gradient_checkpointing: bool = False,
 ) -> dict[str, Any]:
     seed_everything(seed)
     if device is None:
@@ -134,6 +135,14 @@ def train_arm(
             wrapper.block.train()
         params = handle.trainable_parameters()
         optimizer = AdamW(params, lr=learning_rate, weight_decay=weight_decay)
+        if gradient_checkpointing:
+            # Both configs declared gradient_checkpointing: true, but no run ever
+            # enabled it. The backbone is frozen, so the checkpointed blocks need
+            # a grad-requiring input to build a graph at all.
+            model.enable_input_require_grads()
+            model.gradient_checkpointing_enable(
+                gradient_checkpointing_kwargs={"use_reentrant": False}
+            )
     else:
         params = []
         optimizer = None
@@ -233,6 +242,7 @@ def train_arm(
         "grad_accum": grad_accum,
         "train_rows_source": "in_memory" if train_rows is not None else str(train_file),
         "n_train_rows": len(rows),
+        "gradient_checkpointing": gradient_checkpointing,
         "final_alpha": (
             float(next(iter(handle.blocks())).alpha.detach()) if handle is not None else None
         ),

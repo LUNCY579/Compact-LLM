@@ -73,7 +73,8 @@ def main() -> int:
     ap.add_argument("--rank", type=int, default=16)
     ap.add_argument("--eval-lengths", type=int, nargs="+", default=[1024, 2048, 4096])
     ap.add_argument("--n-per-cell", type=int, default=8)
-    ap.add_argument("--n-decoys", type=int, default=48)
+    ap.add_argument("--n-decoys", type=int, default=24)
+    ap.add_argument("--hops", type=int, default=2)
     ap.add_argument("--interference-length", type=int, default=2048)
     ap.add_argument("--n-per-category", type=int, default=8)
     ap.add_argument("--train-rows", type=int, default=512)
@@ -82,6 +83,7 @@ def main() -> int:
     ap.add_argument("--grad-accum", type=int, default=4)
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--init-alpha", type=float, default=0.05)
+    ap.add_argument("--grad-checkpointing", action="store_true")
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-short-ablation", action="store_true")
     args = ap.parse_args()
@@ -95,7 +97,8 @@ def main() -> int:
     # ---------------- data ----------------
     print("[data] building long-context TRAIN split (disjoint from eval)", flush=True)
     train_rows = build_train_rows(
-        tok, n_rows=args.train_rows, lengths=args.train_lengths, n_decoys=args.n_decoys, seed=909
+        tok, n_rows=args.train_rows, lengths=args.train_lengths,
+        n_decoys=args.n_decoys, seed=909, hops=args.hops,
     )
     write_jsonl(DATA / "longctx" / "train.jsonl", train_rows)
     print(f"[data] {len(train_rows)} train rows -> data/longctx/train.jsonl", flush=True)
@@ -104,7 +107,7 @@ def main() -> int:
     pos_items = build_position_suite_v2(
         tok, lengths=args.eval_lengths, n_per_cell=args.n_per_cell,
         n_decoys=args.n_decoys, n_candidates=32, seed=101, split="eval",
-        key_mode="confusable",
+        key_mode="confusable", hops=args.hops,
     )
     int_items = build_interference_battery_v2(
         tok, target_tokens=args.interference_length, n_per_category=args.n_per_category, seed=202
@@ -148,6 +151,7 @@ def main() -> int:
                 grad_accum=args.grad_accum,
                 init_alpha=args.init_alpha,
                 train_rows=train_rows,
+                gradient_checkpointing=args.grad_checkpointing,
                 **horizon,
             )
             man["tag"] = tag
