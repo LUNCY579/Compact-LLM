@@ -5,7 +5,9 @@ from __future__ import annotations
 import copy
 import json
 import math
+from collections.abc import Callable
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -32,10 +34,13 @@ from tgsa.phase1_v5 import (
 LAB_ROOT = Path(__file__).resolve().parents[1]
 FULL_PLAN = LAB_ROOT / "configs" / "phase1_v5_plan.json"
 SMOKE_PLAN = LAB_ROOT / "configs" / "phase1_v5_smoke.json"
+PlanMutation = Callable[[dict[str, Any]], None]
 
 
-def _load_raw(path: Path = FULL_PLAN) -> dict[str, object]:
-    return json.loads(path.read_text(encoding="utf-8"))
+def _load_raw(path: Path = FULL_PLAN) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    assert isinstance(value, dict)
+    return value
 
 
 def _pointer_example(
@@ -136,6 +141,26 @@ def _null_report() -> dict[str, dict[str, object]]:
     }
 
 
+def _enable_confirmatory(value: dict[str, Any]) -> None:
+    value["confirmatory"] = True
+
+
+def _enable_mtp(value: dict[str, Any]) -> None:
+    value["mtp"]["enabled"] = True
+
+
+def _reverse_split_order(value: dict[str, Any]) -> None:
+    value["dataset"]["split_generation_order"] = ["train", "dev", "test"]
+
+
+def _weaken_probe_margin(value: dict[str, Any]) -> None:
+    value["probe"]["thresholds"]["minimum_margin_over_family_null"] = 0.149
+
+
+def _weaken_family_margin(value: dict[str, Any]) -> None:
+    value["qualification"]["thresholds"]["minimum_family_margin_over_null"] = 0.029
+
+
 def test_registered_and_smoke_plans_validate() -> None:
     full = load_v5_plan(FULL_PLAN)
     smoke = load_v5_plan(SMOKE_PLAN)
@@ -158,41 +183,24 @@ def test_registered_and_smoke_plans_validate() -> None:
 @pytest.mark.parametrize(
     ("mutation", "message"),
     [
-        (lambda value: value.__setitem__("confirmatory", True), "confirmatory"),
-        (
-            lambda value: value["mtp"].__setitem__("enabled", True),
-            "MTP",
-        ),
-        (
-            lambda value["dataset"].__setitem__(
-                "split_generation_order", ["train", "dev", "test"]
-            ),
-            "split_generation_order",
-        ),
-        (
-            lambda value: value["probe"]["thresholds"].__setitem__(
-                "minimum_margin_over_family_null", 0.149
-            ),
-            "0.150",
-        ),
-        (
-            lambda value["qualification"]["thresholds"].__setitem__(
-                "minimum_family_margin_over_null", 0.029
-            ),
-            "0.030",
-        ),
+        (_enable_confirmatory, "confirmatory"),
+        (_enable_mtp, "MTP"),
+        (_reverse_split_order, "split_generation_order"),
+        (_weaken_probe_margin, "0.150"),
+        (_weaken_family_margin, "0.030"),
     ],
 )
-def test_plan_rejects_semantic_weakening(mutation, message: str, tmp_path: Path) -> None:
+def test_plan_rejects_semantic_weakening(
+    mutation: PlanMutation,
+    message: str,
+    tmp_path: Path,
+) -> None:
     value = copy.deepcopy(_load_raw())
     mutation(value)
     temporary = tmp_path / "invalid_v5_plan.json"
-    try:
-        temporary.write_text(json.dumps(value), encoding="utf-8")
-        with pytest.raises(V5ContractError, match=message):
-            load_v5_plan(temporary)
-    finally:
-        temporary.unlink(missing_ok=True)
+    temporary.write_text(json.dumps(value), encoding="utf-8")
+    with pytest.raises(V5ContractError, match=message):
+        load_v5_plan(temporary)
 
 
 def test_family_allocation_preserves_exact_total() -> None:
@@ -236,17 +244,15 @@ def test_stage_dataset_configs_preserve_registered_boundaries() -> None:
 def test_registered_null_includes_evaluation_majority() -> None:
     vocab = SyntheticVocabulary()
     train = [
-        _pointer_example(
-            identifier="train-a", split="train", answer_domain=4
-        ),
-        _pointer_example(
-            identifier="train-b", split="train", answer_domain=5
-        ),
+        _pointer_example(identifier="train-a", split="train", answer_domain=4),
+        _pointer_example(identifier="train-b", split="train", answer_domain=5),
     ]
     holdout = [
         _pointer_example(
-            identifier=f"test-{index}", split="test", answer_domain=3
-       )
+            identifier=f"test-{index}",
+            split="test",
+            answer_domain=3,
+        )
         for index in range(5)
     ]
     report = registered_family_null_report(
@@ -385,7 +391,9 @@ def test_exposure_selection_requires_full_grid_and_uses_resource_order() -> None
                 "schema_version": V5_QUALIFICATION_REPORT_SCHEMA_VERSION,
                 "rung_id": "C1",
                 "exposure_id": cell.exposure_id,
-                "verdict": "GO" if cell.exposure_id in {"E1", "E2", "E3"} else "NO_GO",
+                "verdict": (
+                    "GO" if cell.exposure_id in {"E1", "E2", "E3"} else "NO_GO"
+                ),
             }
         )
     selected = select_qualified_exposure(
