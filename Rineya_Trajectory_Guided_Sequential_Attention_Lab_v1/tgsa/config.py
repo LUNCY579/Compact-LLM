@@ -7,7 +7,7 @@ from typing import Literal
 
 TrajectoryMode = Literal["none", "raw", "learned"]
 ControlSource = Literal["velocity", "history_mean"]
-TelemetryLevel = Literal["none", "summary", "full"]
+TelemetryLevel = Literal["none", "summary", "control_only", "full"]
 AblationArm = Literal[
     "cascade",
     "history_control",
@@ -26,6 +26,10 @@ class TGSAConfig:
     The configuration intentionally exposes the mechanism boundaries required by
     the preregistered ablation ladder. A disabled mechanism must not silently
     remain active through another path.
+
+    ``control_only`` telemetry retains the exact control tensor consumed by each
+    trajectory encoder while declining all quadratic attention-map retention.
+    It is the required telemetry level for long-context trajectory readouts.
     """
 
     embed_dim: int
@@ -63,11 +67,22 @@ class TGSAConfig:
         if self.trajectory_rank <= 0:
             raise ValueError("trajectory_rank must be positive")
         if self.trajectory_mode not in {"none", "raw", "learned"}:
-            raise ValueError(f"unsupported trajectory_mode: {self.trajectory_mode}")
+            raise ValueError(
+                f"unsupported trajectory_mode: {self.trajectory_mode}"
+            )
         if self.control_source not in {"velocity", "history_mean"}:
-            raise ValueError(f"unsupported control_source: {self.control_source}")
-        if self.telemetry_level not in {"none", "summary", "full"}:
-            raise ValueError(f"unsupported telemetry_level: {self.telemetry_level}")
+            raise ValueError(
+                f"unsupported control_source: {self.control_source}"
+            )
+        if self.telemetry_level not in {
+            "none",
+            "summary",
+            "control_only",
+            "full",
+        }:
+            raise ValueError(
+                f"unsupported telemetry_level: {self.telemetry_level}"
+            )
         if self.trajectory_scale < 0.0:
             raise ValueError("trajectory_scale must be non-negative")
         if self.max_predictor_step < 0.0:
@@ -77,7 +92,9 @@ class TGSAConfig:
         if not 0.0 < self.importance_floor <= 1.0:
             raise ValueError("importance_floor must be in (0, 1]")
         if self.importance_logit_scale < 0.0:
-            raise ValueError("importance_logit_scale must be non-negative")
+            raise ValueError(
+                "importance_logit_scale must be non-negative"
+            )
 
     @property
     def head_dim(self) -> int:
