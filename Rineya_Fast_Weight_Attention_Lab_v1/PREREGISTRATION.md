@@ -227,3 +227,53 @@ Calibration ran, the config changed, and both were committed
 (`07:15:22`, 2026-09-02) and therefore before any arm was trained. No P2b
 outcome had been observed. Nothing else in Amendment 1 changes: the arms,
 horizons, statistics, seeds and decision rule stand as written.
+
+---
+
+# Amendment 3 — design sensitivity, computed before any P2b result exists
+
+Written while P2b is still training (3 of 7 arms, zero evaluations). No outcome
+has been observed. This fixes in advance what the design *can* and *cannot*
+detect, so that a null result is interpretable rather than being read as "no
+effect" — which is precisely the error the withdrawn P2 conclusion made.
+
+Paired two-sided exact McNemar, alpha = 0.05, n = 168 paired position items.
+Significance depends on the DISCORDANT pairs only, not on n.
+
+## Smallest detectable win
+
+| Discordant pairs, all favouring one arm | p |
+|---:|---:|
+| 4 | 0.125 |
+| 5 | 0.0625 |
+| **6** | **0.0312 — first significant** |
+| 8 | 0.0078 |
+
+Six clean wins and zero losses (a 3.6 pp net gap) is detectable. That is a
+sensitive design *when the advantage is consistent*.
+
+## Where the design goes blind
+
+| C wins / B wins | net gap | p |
+|---|---:|---:|
+| 12 / 3 | 5.4 pp | 0.035 — significant |
+| 14 / 5 | 5.4 pp | 0.064 |
+| 20 / 10 | 6.0 pp | 0.099 |
+| 24 / 13 | 6.5 pp | 0.099 |
+| 30 / 18 | 7.1 pp | 0.111 — **not** significant |
+
+The same net gap can be significant or not depending on how much both arms
+disagree with each other. A **+7.1 pp advantage for arm C buried in high
+discordance would not reach p < 0.05 here.**
+
+## Therefore, agreed in advance
+
+- A null on C−B means **"no consistent per-item advantage at this sample size"**.
+  It does **not** mean "no effect", and must not be written up as one.
+- Every contrast is reported with its discordant counts (`b_better`, `a_better`),
+  never with the p-value alone, so a reader can see which regime it fell in.
+- If a contrast lands in the blind region — a net gap of roughly 5 pp or more
+  with p > 0.05 — that is reported as **underpowered**, and the honest next step
+  is more items or more seeds, not a NO-GO.
+- The GO rule in Amendment 1 is unchanged. What changes is that a failure to meet
+  it will be labelled by regime: *no effect*, *underpowered*, or *effect against*.
