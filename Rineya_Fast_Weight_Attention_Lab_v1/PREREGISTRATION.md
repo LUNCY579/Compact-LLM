@@ -518,3 +518,52 @@ seeds per arm, which is follow-up work.
 
 I made this error by reading a single seed as mechanism because the pattern
 matched a story I expected. The second seed is what caught it.
+
+---
+
+# Amendment 9 — Amendment 8 over-retracted; the within-seed pairing was the right analysis
+
+Amendment 8 withdrew the claim that recurrence costs interference performance,
+because arm B at seed 22 showed the same category-F drop (4/8) that I had
+attributed to recurrent overwriting in arm C at seed 11.
+
+That retraction was right about the *mechanism* and wrong about the *effect*. It
+compared arms **across** seeds, which confounds architecture with training seed.
+The preregistered comparison is **within** seed, and it replicates:
+
+| within-seed paired, interference | C better | B better | p | totals |
+|---|---:|---:|---:|---|
+| seed 11 | 0 | 5 | 0.0625 | B 55/56 -> C 50/56 |
+| seed 22 | 0 | 5 | 0.0625 | B 51/56 -> C 46/56 |
+
+Same direction, same magnitude, **zero gains for arm C in 10 discordant pairs
+across two independent training runs**. The absolute level moves with the seed
+(B scores 55 and 51); the paired difference does not.
+
+## Restated, with the mechanism claim still withdrawn
+
+- **Stands (re-established):** adding the recurrent state costs about 5
+  interference items relative to the parameter-matched static control, replicated
+  across seeds, with no compensating gains.
+- **Still withdrawn:** that this is specifically the category-F early-fact
+  overwrite. The losses do not sit in one category consistently — seed 11 is F
+  (4/8) plus category C; seed 22 spreads across category B (5/8), C (7/8) and F
+  (2/8). Arm B at seed 22 also drops in F. So a cost is real; the story I told
+  about *where and why* was not supported.
+- **Still withdrawn pending arm D at seed 22:** that the significance gate
+  repairs the cost. One seed is not a replication.
+- Each seed individually gives p = 0.0625, short of the preregistered 0.05. The
+  two tests reuse the same 56 items, so they are not independent replications and
+  I will not multiply them into a combined p-value.
+
+## What I should have done
+
+The within-seed pairing was available from the start and is what the
+preregistration specifies. I reached for a cross-seed comparison because it was
+the first thing that contradicted me, and over-corrected on the strength of it.
+Amendment 8's caution about the battery's seed noise remains correct and is
+exactly why the pairing must be within seed.
+
+**Revised position on section 14:** no claim about interference *mechanism* from
+this run. A replicated interference *cost* for recurrence, at p = 0.0625 per
+seed, is reportable as suggestive and not as established.
