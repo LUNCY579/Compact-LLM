@@ -1,0 +1,178 @@
+{
+  "capacity_ladder": [
+    {
+      "embed_dim": 48,
+      "id": "S1",
+      "num_heads": 6,
+      "num_layers": 2,
+      "trajectory_rank": 8
+    }
+  ],
+  "claim_ceiling": "Software and evidence-contract rehearsal only; certifies no competence, mechanism, model quality, or runtime property.",
+  "confirmatory": false,
+  "dataset": {
+    "dev_examples": 96,
+    "families": {
+      "direct_lookup": {
+        "max_hops": 1,
+        "max_nodes": 8,
+        "min_hops": 1,
+        "min_nodes": 6,
+        "reject_trivial": true
+      },
+      "pointer_chase": {
+        "max_hops": 3,
+        "max_nodes": 8,
+        "min_hops": 1,
+        "min_nodes": 6,
+        "reject_trivial": true
+      },
+      "state_update": {
+        "max_steps": 3,
+        "min_steps": 2,
+        "reject_trivial": true
+      }
+    },
+    "family_weights": {
+      "direct_lookup": 0.25,
+      "pointer_chase": 0.5,
+      "state_update": 0.25
+    },
+    "seed": 2026090291,
+    "split_generation_order": [
+      "test",
+      "dev",
+      "train"
+    ],
+    "test_examples": 192,
+    "vocabulary": {
+      "domain_size": 32,
+      "max_abs_step": 8,
+      "max_hops": 8
+    }
+  },
+  "development_only": true,
+  "evidence_policy": {
+    "overwrite": "forbidden; use a fresh root or archive the old root",
+    "resume": "fingerprint-bound per arm/seed cell with periodic optimizer checkpoints",
+    "scientific_no_go_exit_code": 0,
+    "sealed_evaluation": "reserved for the later mechanism and Rineya stages",
+    "selection": "verified reports only"
+  },
+  "expected_base_commit": "de3bd632b491df294f9b8736079bdcbbdd64e4d3",
+  "exposure_grid": [
+    {
+      "batch_size": 16,
+      "id": "SE1",
+      "sample_presentations": 192,
+      "unique_train_examples": 192
+    }
+  ],
+  "family_roles": {
+    "canary": [
+      "state_update"
+    ],
+    "guardrail": [
+      "direct_lookup"
+    ],
+    "primary": [
+      "pointer_chase"
+    ]
+  },
+  "mechanism_semantics": "none",
+  "mechanism_test_authorized": false,
+  "mtp": {
+    "enabled": false,
+    "reason": "V5 qualifies the apparatus before any auxiliary future-prediction objective is allowed to shape the trajectory."
+  },
+  "phase": "phase1_v5",
+  "probe": {
+    "arm": "cascade",
+    "dataset_seed": 2026090292,
+    "dev_examples": 96,
+    "exposure": {
+      "batch_size": 16,
+      "id": "SP1",
+      "sample_presentations": 192,
+      "unique_train_examples": 96
+    },
+    "family": "pointer_chase",
+    "seeds": [
+      7,
+      11,
+      13
+    ],
+    "test_examples": 192,
+    "thresholds": {
+      "maximum_generalization_gap": 0.1,
+      "maximum_mean_accuracy": 0.95,
+      "maximum_seed_coefficient_of_variation": 0.35,
+      "minimum_margin_over_family_null": 0.15,
+      "minimum_seed_runs": 3
+    }
+  },
+  "promotion_boundaries": {
+    "after_probe": "freeze the first passing capacity rung; no mechanism claim",
+    "after_qualification": "complete all four exposure cells, then select by the registered resource-order rule",
+    "next_stage": "separately preregistered MTP-free mechanism comparison",
+    "rineya": "forbidden until a positive mechanism result survives serial-depth and alignment controls"
+  },
+  "qualification": {
+    "evaluation_batch_size": 64,
+    "guardrail_minimum_margin_over_null": 0.15,
+    "require_complete_exposure_grid": true,
+    "seeds": [
+      7,
+      11,
+      13
+    ],
+    "seen_examples": 96,
+    "selection_policy": [
+      "minimum_sample_presentations",
+      "maximum_unique_train_examples",
+      "lexicographic_exposure_id"
+    ],
+    "thresholds": {
+      "maximum_answer_nll_fraction_of_uniform": 0.97,
+      "maximum_family_accuracy": 0.95,
+      "maximum_generalization_gap": 0.1,
+      "maximum_seed_coefficient_of_variation": 0.35,
+      "minimum_absolute_accuracy": 0.07,
+      "minimum_distinct_predictions": 4,
+      "minimum_family_margin_over_null": 0.03,
+      "minimum_margin_over_trivial": 0.03,
+      "minimum_seed_runs": 3
+    }
+  },
+  "registered_arms": [
+    "cascade",
+    "history_control",
+    "learned_delta"
+  ],
+  "registration_status": "development_only",
+  "runtime": {
+    "deterministic_algorithms": true,
+    "device": "cpu",
+    "num_threads": 1
+  },
+  "schema_version": "tgsa.phase1-v5-plan.v1",
+  "study_id": "tgsa-phase1-v5-development-smoke-2026-09-02",
+  "study_kind": "apparatus_qualification",
+  "training": {
+    "betas": [
+      0.9,
+      0.95
+    ],
+    "bias": false,
+    "checkpoint_interval_steps": 4,
+    "dropout": 0.0,
+    "early_stopping": false,
+    "ffn_multiplier": 4.0,
+    "fixed_final_checkpoint": true,
+    "gradient_clip_norm": 1.0,
+    "learning_rate": 0.001,
+    "tie_embeddings": true,
+    "warmup_fraction": 0.05,
+    "weight_decay": 0.01
+  }
+}

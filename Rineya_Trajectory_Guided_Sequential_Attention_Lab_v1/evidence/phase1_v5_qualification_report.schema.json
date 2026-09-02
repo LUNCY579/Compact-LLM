@@ -1,0 +1,149 @@
+{
+  "$defs": {
+    "cell": {
+      "properties": {
+        "execution_fingerprint": {
+          "$ref": "#/$defs/sha"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha"
+        }
+      },
+      "required": [
+        "arm",
+        "seed",
+        "path",
+        "sha256",
+        "execution_fingerprint"
+      ],
+      "type": "object"
+    },
+    "sha": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    }
+  },
+  "$id": "https://chatbubble.local/tgsa/phase1_v5_qualification_report.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": true,
+  "properties": {
+    "authorization": {
+      "properties": {
+        "mechanism_test": {
+          "const": false
+        },
+        "rineya_retrofit": {
+          "const": false
+        }
+      },
+      "required": [
+        "mechanism_test",
+        "rineya_retrofit"
+      ],
+      "type": "object"
+    },
+    "cells": {
+      "items": {
+        "$ref": "#/$defs/cell"
+      },
+      "minItems": 9,
+      "type": "array"
+    },
+    "checks": {
+      "minProperties": 9,
+      "type": "object"
+    },
+    "claim_scope": {
+      "minLength": 1,
+      "type": "string"
+    },
+    "dataset_manifest_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "decision": {
+      "enum": [
+        "QUALIFIED_CELL",
+        "UNQUALIFIED_CELL"
+      ]
+    },
+    "execution_schema_version": {
+      "const": "tgsa.phase1-v5-execution.v1"
+    },
+    "family_null_report": {
+      "required": [
+        "pointer_chase",
+        "direct_lookup",
+        "state_update"
+      ],
+      "type": "object"
+    },
+    "hop_count_modulation": {
+      "properties": {
+        "gating": {
+          "const": false
+        },
+        "pooled_across_arms": {
+          "const": false
+        }
+      },
+      "required": [
+        "gating",
+        "pooled_across_arms"
+      ],
+      "type": "object"
+    },
+    "plan_sha256": {
+      "$ref": "#/$defs/sha"
+    },
+    "schema_version": {
+      "const": "tgsa.phase1-v5-qualification-report.v1"
+    },
+    "software_success": {
+      "const": true
+    },
+    "stage": {
+      "const": "qualification_cell"
+    },
+    "stage_execution": {
+      "const": "qualification"
+    },
+    "status": {
+      "const": "complete"
+    },
+    "verdict": {
+      "enum": [
+        "GO",
+        "NO_GO"
+      ]
+    }
+  },
+  "required": [
+    "schema_version",
+    "execution_schema_version",
+    "study_id",
+    "stage",
+    "stage_execution",
+    "status",
+    "software_success",
+    "verdict",
+    "decision",
+    "checks",
+    "family_null_report",
+    "primary_gate_detail",
+    "guardrail_detail",
+    "canary_metrics",
+    "hop_count_modulation",
+    "authorization",
+    "plan_sha256",
+    "dataset_manifest_sha256",
+    "rung_id",
+    "rung",
+    "exposure_id",
+    "exposure",
+    "cells",
+    "initialization_audit",
+    "claim_scope"
+  ],
+  "title": "TGSA Phase 1 v5 qualification-cell report",
+  "type": "object"
+}
