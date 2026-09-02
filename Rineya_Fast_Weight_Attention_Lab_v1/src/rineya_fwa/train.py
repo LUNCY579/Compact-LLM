@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import random
 import time
+from collections import deque
 from pathlib import Path
 from typing import Any
 
@@ -224,6 +225,8 @@ def train_arm(
         optimizer.zero_grad(set_to_none=True)
 
     skipped_nonfinite = 0
+    recent: deque[float] = deque(maxlen=16)
+    baseline: float | None = None
     while step < max_steps and optimizer is not None:
         row = rows[examples_seen % len(rows)]
         examples_seen += 1
@@ -244,7 +247,26 @@ def train_arm(
         loss_value = float(loss.detach().cpu())
         if first_loss is None:
             first_loss = loss_value
-        if first_loss and first_loss > 0 and loss_value > nan_abort_factor * max(first_loss, 0.5) and step > 3:
+        # Divergence is a property of the trend, not of one example.
+        #
+        # The old guard aborted when a SINGLE example exceeded
+        # nan_abort_factor * max(first_loss, 0.5). That was survivable when the
+        # loss was diluted across the answer plus <|im_end|> plus a newline and
+        # never spiked, but supervising only the answer token makes it a
+        # per-example retrieval cross-entropy: one confidently-wrong item scores
+        # 5-15 nats as a matter of course. It fired on example 35 of a 400-example
+        # run and stopped arm B at 8 of 100 steps with aborted="divergence".
+        #
+        # Compare a trailing window against the opening window instead.
+        recent.append(loss_value)
+        if baseline is None and len(recent) == recent.maxlen:
+            baseline = sum(recent) / len(recent)
+        if (
+            baseline is not None
+            and len(recent) == recent.maxlen
+            and step > 8
+            and sum(recent) / len(recent) > nan_abort_factor * max(baseline, 0.5)
+        ):
             aborted = "divergence"
             break
         (loss / grad_accum).backward()
@@ -294,6 +316,8 @@ def train_arm(
         "last_loss": history[-1]["loss"] if history else None,
         "aborted": aborted,
         "skipped_nonfinite": skipped_nonfinite,
+        "loss_baseline_window_mean": baseline,
+        "loss_recent_window_mean": (sum(recent) / len(recent)) if recent else None,
         "adapter_path": str(adapter_path) if handle is not None else None,
         "max_sequence_length": max_sequence_length,
         "checkpoint_bytes": adapter_path.stat().st_size if adapter_path.exists() else 0,

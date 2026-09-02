@@ -83,3 +83,44 @@ def test_tail_loss_returns_none_when_nothing_is_supervised():
     ids = torch.randint(0, VOCAB, (1, 8))
     labels = torch.full((1, 8), -100)
     assert tail_loss(model, ids, torch.ones_like(ids), labels) is None
+
+
+def test_divergence_guard_tolerates_a_single_hard_example():
+    """A spiky per-example loss is not divergence.
+
+    Supervising only the answer token makes the loss a per-example retrieval
+    cross-entropy: a confidently-wrong item scores 5-15 nats routinely. The old
+    guard aborted when ANY single example exceeded
+    nan_abort_factor * max(first_loss, 0.5), which for first_loss ~ 1e-3 is 5.0.
+    It fired on example 35 of a 400-example run and stopped arm B at 8 of 100
+    steps. The guard now compares a trailing window against the opening window.
+    """
+    from collections import deque
+
+    def aborts(losses, nan_abort_factor=10.0, window=16, min_step=8):
+        recent, baseline = deque(maxlen=window), None
+        for i, lv in enumerate(losses):
+            recent.append(lv)
+            if baseline is None and len(recent) == recent.maxlen:
+                baseline = sum(recent) / len(recent)
+            step = i // 4  # grad_accum = 4
+            if (
+                baseline is not None
+                and len(recent) == recent.maxlen
+                and step > min_step
+                and sum(recent) / len(recent) > nan_abort_factor * max(baseline, 0.5)
+            ):
+                return True
+        return False
+
+    calm = [0.02] * 200
+    # the real arm-B trace: mostly small, with occasional large spikes
+    spiky = list(calm)
+    for i in range(20, 200, 17):
+        spiky[i] = 8.0
+    assert not aborts(calm)
+    assert not aborts(spiky), "isolated hard examples must not count as divergence"
+
+    # a genuine blow-up still aborts
+    diverging = [0.02] * 60 + [40.0] * 60
+    assert aborts(diverging)
