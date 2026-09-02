@@ -165,10 +165,20 @@ def main() -> int:
     print(f"[data] position n={len(pos_items)}  interference n={len(int_items)}", flush=True)
 
     # Identifies the exact scored items, so a cached eval.json from a different
-    # suite (different lengths / decoys / hops) is never silently reused.
+    # suite is never silently reused.
+    #
+    # Hashes item CONTENT, not just ids. Ids encode length/position/index, so an
+    # id-only hash is stable across any change to the assembler or the fact
+    # templates: data_longctx.py could be edited and every cached score would
+    # still look valid. That is the same "trusted the filename, not the thing"
+    # failure as the adapter resume check, which already bit once.
     suite_fingerprint = hashlib.sha256(
         json.dumps(
-            [i["id"] for i in pos_items] + [i["id"] for i in int_items], sort_keys=True
+            [
+                [i["id"], i["messages"][1]["content"], i["answer"], i["candidate_token_ids"]]
+                for i in list(pos_items) + list(int_items)
+            ],
+            sort_keys=True,
         ).encode("utf-8")
     ).hexdigest()[:16]
     print(f"[data] suite fingerprint {suite_fingerprint}", flush=True)
