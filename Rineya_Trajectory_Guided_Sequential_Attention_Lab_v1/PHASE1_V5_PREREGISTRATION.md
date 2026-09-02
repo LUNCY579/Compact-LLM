@@ -96,8 +96,9 @@ v4, it is accumulation arithmetic rather than the iterative pointer-following th
 mechanism targets, and a ceiling is as uninformative as a floor. It is retained
 as a **non-gating canary**, and cannot contribute to any gate.
 
-`OBSERVED` **A first draft proposed renaming the families to `pointer_chase` at hops=1 and
-`pointer_chase` at hops=3. That would have silently broken the analysis.**
+`OBSERVED` **A first draft proposed splitting the pointer task into two
+separate families, one per hop count. That would have silently broken the
+analysis.**
 `tgsa/phase1_response.py` binds six difficulty variables -- `effective_hops`,
 `context_bucket`, `evidence_position`, `evidence_span`, `distractor_count`,
 `node_count` -- to the *literal* family name `"pointer_chase"`, and no-ops on
