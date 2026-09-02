@@ -155,6 +155,57 @@ When it completes, `RESULTS_P2B.md` (via `scripts/make_report.py`), `RESULTS.md`
 and this file get the paired McNemar outcomes and the decision label from
 Amendment 1's rule.
 
+## A prediction of mine that failed (recorded, not dropped)
+
+`PREREGISTRATION.md` Amendment 4 logged a falsifiable prediction before arm
+C-short's result existed: that C-short, carrying the original 87.5-token
+retention horizon, would resemble arm B (alpha near 0.10, training loss near
+0.003) rather than arm C (alpha 0.070, loss 0.0003). The reasoning was that a
+horizon that short cannot carry information across a 1024-token training
+context, so the arm would be forced to act as a per-token transform.
+
+**It did not.** Training behaviour, mean over seeds:
+
+| Arm | alpha | final training loss |
+|---|---:|---:|
+| B (static, no state carry) | 0.1001 | 0.00580 |
+| C (recurrent, long horizon) | 0.0699 | 0.00092 |
+| **C-short (recurrent, 87.5-token horizon)** | **0.0762** | **0.00090** |
+
+C-short is indistinguishable from C and 6.4x better than B. Per Amendment 4 this
+is the outcome that says **the diagnosis is wrong**: on the training
+distribution, the retention horizon is not what separates the recurrent arms
+from the static one.
+
+### What this does and does not overturn
+
+It does **not** retract the P2 withdrawal. The measurements that withdrew it —
+the pathway being live at 0.12/1.41/3.22 %, the eval being saturated at 14/14,
+one item per cell — stand on their own and are unaffected.
+
+It **does** undercut the *rationale* given in Amendment 1 for changing the
+horizon. I argued the horizon was the binding constraint. On this evidence it
+was not, and an arm-C advantage in P2b cannot be attributed to having fixed it.
+
+### The likely reason, which is a flaw in my own suite
+
+In the two-hop design the two decisive sentences are placed at relative
+positions `p` and `p + 0.03`. At 1024 tokens that is roughly **31 tokens
+apart** — comfortably inside an 87.5-token half-life. So binding hop 1 to hop 2
+never required a long horizon; only carrying the bound result to the query at
+the end of the context would, and arm B, which has no recurrent state at all,
+already recovers most of the loss (0.6 -> 0.0058, a 100x reduction).
+
+The residual gap between B and the recurrent arms is ~6x and is **horizon-
+independent**, which is evidence that whatever the recurrence contributes here
+is local rather than long-range. Co-locating the two hops was a deliberate
+choice so that "position" kept a single unambiguous meaning; the cost is that
+the task does not demand the long-range binding it appears to.
+
+Held-in training loss is not the test of H6 — the held-out C vs C-short contrast
+is, and it has not run. But the prediction was made about exactly this quantity
+and it was wrong, so it is recorded as wrong.
+
 ## Terminology
 
 Throughout: **fast-weight state**, **recurrent memory**, **inference-time state
