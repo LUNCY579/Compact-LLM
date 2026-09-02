@@ -71,30 +71,38 @@ Do not open, train on, or iterate against:
 
 ## Status
 
-**The P2 NO-GO is withdrawn as unsupported.** It was the null result of an
-experiment that could not have produced anything else:
+**P2b complete. Decision: NO-GO**, at layer 14, in a compressed range.
+See `reports/RESULTS_P2B.md`, `reports/FINAL_INTERPRETATION.md`, `reports/figures/`.
 
-| What P2 concluded | What measurement shows |
-|---|---|
-| "C = B, so recurrence adds nothing" | The arms differed by 0.12 % / 1.41 % / 3.22 % of the attention output (B/C/D) and up to 3.4 logits. The eval could not see it. |
-| "no position benefit" | Retention half-life was **87.5 tokens** against ~990-token contexts, with full overwrite on key collision. No fact could reach its query. |
-| "14/14 on the position suite" | Filler was one sentence repeated; answer space was 10 colours; one item per cell, so a paired test needed 6/14 items to flip for p<0.05. |
-| lengths 512-4096 per config | `run_experiment.py` hardcoded `[256, 512]`. |
-| `init_alpha: 0.0` per config | `train.py` hardcoded `0.05`. |
-| corpus = unsealed CC0 | runs used `data/synthetic/` (10 answers); the committed CC0 shard was never read. |
+A bounded FALCON-2 fast-weight memory on frozen Supa-A1.1 gives **no positional
+benefit over a parameter-matched static control**, and **costs** interference
+performance.
 
-See `reports/MECHANISM_DIAGNOSTIC.md`.
+| Arm | position (of 168) | interference (of 56) |
+|---|---:|---:|
+| A frozen | 138 | 55 |
+| B static control | 159 / 159 | 55 / 51 |
+| C recurrent | 160 / 161 | 50 / 46 |
+| D significance-gated | 161 / 160 | 55 / 51 |
+| C-short (original horizon) | **163** | 55 |
 
-**P2b** re-runs the matched arms with each defect fixed (`PREREGISTRATION.md`
-Amendment 1, `configs/arms_abcd_p2b.yaml`): token-exact 1K/2K/4K contexts, real
-CC0 filler, two-hop `vault -> unit -> code` binding with 24 confusable decoys, a
-552-code single-token answer space scored by candidate argmax in one forward
-pass, 168 position items, 56 interference items, paired exact McNemar with
-Wilson intervals, and a retention horizon matched across arms that can actually
-span the context — plus an arm C-short ablation holding the original horizon.
+- **C vs B, position: 2/1 and 3/1 discordant of 168.** Null at both seeds. Arm B
+  alone repairs the primacy deficit (position 0.05: 0.417 -> 0.917).
+- **C loses 5 interference items to B at both seeds**, zero gains in 10
+  discordant pairs; worse than the *untrained* backbone (p = 0.0039 at seed 22).
+- **D is identical to B on interference** at both seeds. The significance gate's
+  whole demonstrated value is cancelling a cost recurrence introduced.
+- **C-short — the horizon I argued was too short — is the best arm.** The
+  interference cost tracks the horizon, not recurrence. My Amendment 1 horizon
+  change caused the only harm attributable to the fast memory.
 
-Calibrated so the frozen backbone is **off ceiling**: arm A scores 0.778 at 2048
-tokens, and 0.333 at relative position 0.05.
+Limits carried with the decision: one layer (the brief's layer pilot was never
+run), two seeds, a range compressed by calibrating against the frozen rather than
+the trained control, and an interference battery that is ceilinged for gains and
+seed-noisy. The earlier P2 NO-GO remains withdrawn — it measured nothing; this
+one measures something.
 
-Hardware envelope, measured: 1K/2K/4K native (3.64 GiB at 4K); 8K only via
-host-memory spill at ~6x slowdown; **16K OOMs and is not evaluated**.
+Prior status, retained: the P2 withdrawal is documented in
+`reports/MECHANISM_DIAGNOSTIC.md`; preregistration and its eight amendments,
+including four corrections to my own errors and one failed prediction, are in
+`PREREGISTRATION.md`.

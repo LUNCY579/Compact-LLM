@@ -1,6 +1,55 @@
 # Final interpretation
 
-## Decision: the P2 NO-GO is WITHDRAWN as unsupported
+## Decision: NO-GO (P2b), at layer 14, in a compressed range
+
+P2b is complete: arms A/B/C/D at seeds 11 and 22, plus the C-short horizon
+ablation. 4.20 training GPU-hours. Numbers in `reports/RESULTS_P2B.md`.
+
+**A bounded FALCON-2 fast-weight memory attached to frozen Supa-A1.1 gives no
+positional benefit over a parameter-matched static control, and costs
+interference performance.**
+
+| Contrast (position, 168 paired items) | seed 11 | seed 22 |
+|---|---|---|
+| C vs A | 25/3, p < 0.0001 | 26/3, p < 0.0001 |
+| **C vs B** | 2/1, p = 1.00 | 3/1, p = 0.63 |
+| **D vs C** | 3/2, p = 1.00 | 2/3, p = 1.00 |
+
+Arm B — same trainable parameter count, no recurrent state carry — takes the
+frozen backbone from 138/168 to 159/168 and repairs the primacy deficit on its
+own (position 0.05: 0.417 -> 0.917). Arm C adds one to two further items.
+Recurrence is not what is doing the work.
+
+Meanwhile arm C loses 5 interference items to arm B at **both** seeds, zero
+gains across 10 discordant pairs, and is worse than the *untrained* backbone
+(0/9, p = 0.0039 at seed 22). Arm D restores exactly arm B's interference score
+at both seeds (0/0, 1/1) — so the significance gate works, and its entire
+demonstrated value is cancelling a liability the recurrence introduced.
+
+This is the previous NO-GO's conclusion reached again — but for the first time on
+an instrument that could have shown otherwise, and with the P2 version's
+reasoning replaced. The earlier NO-GO was withdrawn because it measured nothing;
+this one measures something.
+
+## The result that most undermines my own design
+
+Arm **C-short** keeps the original 87.5-token horizon that Amendment 1 argued was
+too short to be worth testing. It is the **best arm in the run**: 163/168, the
+only arm with zero losses against baseline (25/0), no interference degradation,
+and ahead of long-horizon arm C on both dimensions.
+
+The interference cost tracks the **horizon**, not recurrence: per-seed category F
+is B 8/8 and 4/8, C 4/8 and 2/8, C-short 8/8. A longer-horizon state accumulates
+more, and the accumulation interferes.
+
+**The horizon change I introduced in Amendment 1 caused the only harm
+attributable to the fast memory.** I changed it on a diagnosis that two separate
+results then contradicted: C-short trained indistinguishably from C
+(Amendment 4's prediction, failed), and now evaluates better. Suggestive rather
+than established — C-short is one seed and categories hold 8 items — but the
+direction is unambiguous and it is the opposite of what I argued for.
+
+## Appendix: why the earlier P2 NO-GO was withdrawn
 
 The previous version of this file recorded **NO-GO**. That decision is withdrawn.
 It was not wrong about the numbers; it was wrong about what the numbers could
