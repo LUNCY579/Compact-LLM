@@ -436,3 +436,33 @@ form: I checked the instrument against the wrong arm.
   memory. That is a genuine finding and it favours the H2 null.
 
 Nothing about the test, the arms or the GO rule changes.
+
+---
+
+# Amendment 7 — correcting Amendment 5: a ceiling blocks gains, not losses
+
+Amendment 5 said "any interference result in P2b is uninformative and will be
+reported as such". **That was too strong and I am correcting it before relying
+on it.**
+
+A ceiling limits the detection of **improvement**. It does not limit the
+detection of **degradation**. With arms A and B at 55/56 there is one item of
+headroom above and fifty-five items of room below. So:
+
+- An interference **tie** between arms remains uninformative — that part of
+  Amendment 5 stands.
+- An interference **drop** is a real, detectable signal, and the battery is if
+  anything well suited to catching one.
+
+This matters because arm C (seed 11) scores 50/56 against 55/56 for both A and
+B: five paired discordant items, **all five against arm C**, p = 0.0625, with the
+loss concentrated in category **F** (decisive fact early, twelve distractors
+after), where C scores 4/8 against 8/8 for A and B.
+
+That is exactly the failure mode a bounded recurrent state predicts: later writes
+overwriting an early fact. Amendment 5's blanket wording would have let a real
+finding be discarded as instrument noise. It is retained as a finding, with the
+caveat that five discordant pairs give p = 0.0625 and fall just short of the
+preregistered 0.05 threshold, and that seed 22 has not been scored.
+
+No change to any test, arm, or decision rule.
