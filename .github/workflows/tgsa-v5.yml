@@ -1,0 +1,139 @@
+name: TGSA Phase 1 v5 apparatus qualification
+
+on:
+  push:
+    branches:
+      - research/tgsa-v5-competence-and-mechanism
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-v5.yml"
+  pull_request:
+    paths:
+      - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
+      - ".github/workflows/tgsa-v5.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tgsa-v5-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
+  SMOKE_PLAN: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_v5_smoke.json
+  REGISTERED_PLAN: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_v5_plan.json
+  ARTIFACT_ROOT: ci_artifacts/tgsa_phase1_v5_smoke
+  PYTHONUNBUFFERED: "1"
+  TOKENIZERS_PARALLELISM: "false"
+
+jobs:
+  contract-and-smoke:
+    name: Unit, schema, and closed-chain smoke rehearsal
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+
+    steps:
+      - name: Check out full lineage
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "${{ env.LAB }}/pyproject.toml"
+
+      - name: Install CPU package and test dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu "torch>=2.1"
+          python -m pip install -e "${LAB}[dev]"
+
+      - name: Run the complete TGSA laboratory test suite
+        run: |
+          python -m pytest "${LAB}/tests" -q --tb=short --durations=20
+
+      - name: Validate registered and smoke plans
+        run: |
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/phase1_v5_plan.schema.json" \
+            --document "${REGISTERED_PLAN}" \
+            --document "${SMOKE_PLAN}"
+
+      - name: Run resumable one-hop probe smoke
+        run: |
+          rm -rf "${ARTIFACT_ROOT}"
+          python "${LAB}/scripts/phase1_v5_qualify.py" \
+            --plan "${SMOKE_PLAN}" \
+            --stage probe \
+            --rung S1 \
+            --output-dir "${ARTIFACT_ROOT}/probe" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Verify and schema-check probe evidence
+        run: |
+          python "${LAB}/scripts/verify_phase1_v5.py" \
+            --plan "${SMOKE_PLAN}" \
+            --report "${ARTIFACT_ROOT}/probe/probe_report.json" \
+            --output "${ARTIFACT_ROOT}/probe/verification.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/phase1_v5_probe_report.schema.json" \
+            --document "${ARTIFACT_ROOT}/probe/probe_report.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/phase1_v5_verification.schema.json" \
+            --document "${ARTIFACT_ROOT}/probe/verification.json"
+
+      - name: Run three-arm qualification smoke
+        run: |
+          python "${LAB}/scripts/phase1_v5_qualify.py" \
+            --plan "${SMOKE_PLAN}" \
+            --stage qualification \
+            --rung S1 \
+            --exposure SE1 \
+            --output-dir "${ARTIFACT_ROOT}/qualification" \
+            --repo-root "${GITHUB_WORKSPACE}"
+
+      - name: Verify and schema-check qualification evidence
+        run: |
+          python "${LAB}/scripts/verify_phase1_v5.py" \
+            --plan "${SMOKE_PLAN}" \
+            --report "${ARTIFACT_ROOT}/qualification/qualification_report.json" \
+            --output "${ARTIFACT_ROOT}/qualification/verification.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/phase1_v5_qualification_report.schema.json" \
+            --document "${ARTIFACT_ROOT}/qualification/qualification_report.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/phase1_v5_verification.schema.json" \
+            --document "${ARTIFACT_ROOT}/qualification/verification.json"
+
+      - name: Assert smoke claim boundaries
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          root = Path(os.environ["ARTIFACT_ROOT"])
+          for relative in ("probe/probe_report.json", "qualification/qualification_report.json"):
+              report = json.loads((root / relative).read_text(encoding="utf-8"))
+              assert report["software_success"] is True
+              assert report["status"] == "complete"
+              assert report["verdict"] in {"GO", "NO_GO"}
+              assert report["authorization"]["mechanism_test"] is False
+              assert report["authorization"]["rineya_retrofit"] is False
+              assert report["development_only"] is True
+          print("v5 smoke bundles preserve apparatus-only claim boundaries")
+          PY
+
+      - name: Upload non-evidentiary smoke bundle
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: tgsa-phase1-v5-smoke-${{ github.run_id }}
+          path: "${{ env.ARTIFACT_ROOT }}"
+          if-no-files-found: warn
+          retention-days: 14
