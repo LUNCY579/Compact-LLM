@@ -164,3 +164,31 @@ def test_p2_suite_would_have_failed_these_contracts(tok):
     )
     n_tok = len(tok.encode(ctx, add_special_tokens=False))
     assert n_tok > 800, f"old 'length 512' item is really {n_tok} tokens"
+
+
+def test_supervision_is_restricted_to_the_answer_token(tok):
+    """The loss must measure retrieval, not template completion.
+
+    With the default chat template the assistant turn is
+    ``<code> <|im_end|> \n``: two of the three supervised tokens are free to
+    predict, so the reported loss is ~3x lower than the retrieval
+    cross-entropy it is read as. P1/P2's "final loss 2e-4" is diluted this way.
+    """
+    from rineya_fwa.train import encode_row
+
+    rows = build_train_rows(tok, n_rows=2, lengths=[512], n_decoys=8, seed=909, hops=2)
+    for row in rows:
+        gold = row["messages"][-1]["content"]
+        gold_ids = tok.encode(gold, add_special_tokens=False)
+
+        default = encode_row(tok, row, 768)
+        n_default = int((default["labels"] != -100).sum())
+
+        answer_only = encode_row(tok, row, 768, supervise_answer_only=True)
+        sup = [
+            int(i)
+            for i, t in zip(answer_only["input_ids"].tolist(), answer_only["labels"].tolist())
+            if t != -100
+        ]
+        assert sup == gold_ids, f"expected exactly {gold!r}, got {tok.decode(sup)!r}"
+        assert n_default > len(sup), "the default path should supervise more than the answer"

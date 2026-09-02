@@ -43,7 +43,22 @@ def _as_id_list(ids) -> list[int]:
     return list(ids)
 
 
-def encode_row(tokenizer: Any, row: dict[str, Any], max_len: int) -> dict[str, torch.Tensor]:
+def encode_row(
+    tokenizer: Any,
+    row: dict[str, Any],
+    max_len: int,
+    *,
+    supervise_answer_only: bool = False,
+) -> dict[str, torch.Tensor]:
+    """Tokenise one chat row into input_ids / labels / attention_mask.
+
+    ``supervise_answer_only`` restricts the loss to the assistant's content
+    tokens. By default the trailing ``<|im_end|>`` and newline are supervised
+    too; for the retrieval task those are free to predict, so two of every three
+    supervised tokens carry no signal and the reported loss is ~3x smaller than
+    the retrieval cross-entropy it is taken to represent. (P1/P2's 2e-4 "final
+    loss" is diluted this way.)
+    """
     messages = list(row["messages"])
     prompt = messages[:-1]
     full = messages
@@ -67,6 +82,11 @@ def encode_row(tokenizer: Any, row: dict[str, Any], max_len: int) -> dict[str, t
     n_prompt = min(len(prompt_ids), len(labels))
     for i in range(n_prompt):
         labels[i] = -100
+    if supervise_answer_only:
+        answer = str(row["messages"][-1].get("content") or "")
+        n_answer = len(tokenizer.encode(answer, add_special_tokens=False))
+        for i in range(n_prompt + n_answer, len(labels)):
+            labels[i] = -100
     if all(v == -100 for v in labels):
         labels[-1] = full_ids[-1]
     return {
@@ -103,6 +123,7 @@ def train_arm(
     lambda_raw_init: float = -2.0,
     train_rows: list[dict[str, Any]] | None = None,
     gradient_checkpointing: bool = False,
+    supervise_answer_only: bool = True,
 ) -> dict[str, Any]:
     seed_everything(seed)
     if device is None:
@@ -156,6 +177,7 @@ def train_arm(
     t0 = time.perf_counter()
     history: list[dict[str, Any]] = []
     tokens_seen = 0
+    supervised_tokens = 0
     examples_seen = 0
     aborted = None
     first_loss: float | None = None
@@ -168,7 +190,10 @@ def train_arm(
     while step < max_steps and optimizer is not None:
         row = rows[examples_seen % len(rows)]
         examples_seen += 1
-        batch = encode_row(tokenizer, row, max_sequence_length)
+        batch = encode_row(
+            tokenizer, row, max_sequence_length,
+            supervise_answer_only=supervise_answer_only,
+        )
         input_ids = batch["input_ids"].unsqueeze(0).to(device)
         labels = batch["labels"].unsqueeze(0).to(device)
         attn = batch["attention_mask"].unsqueeze(0).to(device)
@@ -189,6 +214,7 @@ def train_arm(
         (loss / grad_accum).backward()
         accum += 1
         tokens_seen += int(attn.sum().item())
+        supervised_tokens += int((labels != -100).sum().item())
         if accum % grad_accum == 0:
             torch.nn.utils.clip_grad_norm_(params, 1.0)
             optimizer.step()
@@ -243,6 +269,8 @@ def train_arm(
         "train_rows_source": "in_memory" if train_rows is not None else str(train_file),
         "n_train_rows": len(rows),
         "gradient_checkpointing": gradient_checkpointing,
+        "supervise_answer_only": supervise_answer_only,
+        "supervised_tokens": supervised_tokens,
         "final_alpha": (
             float(next(iter(handle.blocks())).alpha.detach()) if handle is not None else None
         ),
