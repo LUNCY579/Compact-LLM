@@ -50,7 +50,11 @@ from rineya_fwa.paths import ARTIFACTS, DATA  # noqa: E402
 from rineya_fwa.provenance import write_json  # noqa: E402
 from rineya_fwa.train import load_adapter, train_arm  # noqa: E402
 
-OUT = ARTIFACTS / "p2b_longctx"
+DEFAULT_OUT_NAME = "p2b_longctx"
+# Rebound from --out-name in main(). A smoke run MUST use a different name: the
+# resume check keys off this directory, and a short adapter left here would be
+# adopted by the real run.
+OUT = ARTIFACTS / DEFAULT_OUT_NAME
 
 # Long-horizon init: lambda = softplus(-5.9) = 2.74e-3, beta = 2*sigmoid(-1.1) = 0.499.
 # With ||x||^2 = 16 that is eta = 0.0312, ridge decay 0.99991/token (half-life
@@ -64,6 +68,44 @@ def free_cuda() -> None:
     gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
+
+
+def adapter_matches(out_dir: Path, args: Any, horizon: dict[str, float]) -> bool:
+    """Is there already an adapter trained with *this* configuration?
+
+    Resuming on "fwa_adapter.pt exists" alone is unsafe: a short smoke run writes
+    an adapter at the same path, and a subsequent real run silently adopts it and
+    reports it as a 100-step result. (Observed: a 2-step smoke adapter was picked
+    up as arms B and C for seed 11.) Require the recorded manifest to agree on the
+    fields that define the run.
+    """
+    adapter = out_dir / "fwa_adapter.pt"
+    manifest = out_dir / "training_manifest.json"
+    if not adapter.is_file() or not manifest.is_file():
+        return False
+    try:
+        man = json.loads(manifest.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    expected = {
+        "optimizer_steps": args.max_steps,
+        "max_sequence_length": max(args.train_lengths) + 128,
+        "learning_rate": args.lr,
+        "grad_accum": args.grad_accum,
+        "rank": args.rank,
+        "init_alpha": args.init_alpha,
+        "beta_raw_init": horizon["beta_raw_init"],
+        "lambda_raw_init": horizon["lambda_raw_init"],
+        "n_train_rows": args.train_rows,
+    }
+    for key, want in expected.items():
+        got = man.get(key)
+        if got is None or (isinstance(want, float) and abs(float(got) - want) > 1e-9) or (
+            not isinstance(want, float) and got != want
+        ):
+            print(f"[train] {out_dir.name}: manifest {key}={got!r} != {want!r}; retraining", flush=True)
+            return False
+    return man.get("aborted") is None
 
 
 def main() -> int:
@@ -84,12 +126,17 @@ def main() -> int:
     ap.add_argument("--lr", type=float, default=1e-3)
     ap.add_argument("--init-alpha", type=float, default=0.05)
     ap.add_argument("--grad-checkpointing", action="store_true")
+    ap.add_argument("--out-name", type=str, default=DEFAULT_OUT_NAME,
+                    help="artifact subdirectory; use a different one for smoke runs so a "
+                         "short adapter can never be adopted by the real run")
     ap.add_argument("--skip-train", action="store_true")
     ap.add_argument("--skip-short-ablation", action="store_true")
     args = ap.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     layers = [args.layer]
+    global OUT
+    OUT = ARTIFACTS / args.out_name
     OUT.mkdir(parents=True, exist_ok=True)
 
     tok = load_tokenizer()
@@ -133,8 +180,8 @@ def main() -> int:
     if not args.skip_train:
         for arm, seed, horizon, tag in plan:
             out_dir = OUT / tag
-            if (out_dir / "fwa_adapter.pt").is_file():
-                print(f"[train] {tag} already done, skipping", flush=True)
+            if adapter_matches(out_dir, args, horizon):
+                print(f"[train] {tag} already trained with this config, skipping", flush=True)
                 continue
             print(f"[train] {tag} horizon={horizon}", flush=True)
             t0 = time.perf_counter()

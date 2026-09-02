@@ -114,6 +114,11 @@ def train_arm(
     max_sequence_length: int = 1024,
     learning_rate: float = 1e-4,
     grad_accum: int = 8,
+    # Accepted for config compatibility and RECORDED AS UNUSED. There is no LR
+    # scheduler in this trainer, so the P1/P2 configs' `warmup_ratio: 0.03`
+    # never took effect. Kept as a parameter rather than deleted so the manifest
+    # can say so explicitly instead of the config implying a warmup that is not
+    # there.
     warmup_ratio: float = 0.03,
     weight_decay: float = 0.01,
     nan_abort_factor: float = 10.0,
@@ -270,6 +275,7 @@ def train_arm(
         "n_train_rows": len(rows),
         "gradient_checkpointing": gradient_checkpointing,
         "supervise_answer_only": supervise_answer_only,
+        "warmup_ratio_declared_but_unused": warmup_ratio,
         "supervised_tokens": supervised_tokens,
         "final_alpha": (
             float(next(iter(handle.blocks())).alpha.detach()) if handle is not None else None
