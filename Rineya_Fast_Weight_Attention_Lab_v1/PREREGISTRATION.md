@@ -466,3 +466,55 @@ caveat that five discordant pairs give p = 0.0625 and fall just short of the
 preregistered 0.05 threshold, and that seed 22 has not been scored.
 
 No change to any test, arm, or decision rule.
+
+---
+
+# Amendment 8 — retracting my category-F interpretation
+
+On seed 11 I reported arm C's interference drop (50/56, with category F at 4/8
+against 8/8 for A and B) as the predicted overwrite failure of a bounded
+recurrent state — "exactly where theory says it should" appear. Amendment 7 was
+written specifically to keep that finding from being dismissed as ceiling noise.
+
+**Arm B at seed 22 scores category F at 4/8.** Arm B is the static control. It
+has no recurrent state to overwrite.
+
+| arm | F | interference total |
+|---|---:|---:|
+| A (frozen) | 8/8 | 55/56 |
+| B seed 11 (static) | 8/8 | 55/56 |
+| C seed 11 (recurrent) | 4/8 | 50/56 |
+| D seed 11 (gated) | 8/8 | 55/56 |
+| **B seed 22 (static)** | **4/8** | **51/56** |
+
+The same category, the same magnitude, in an architecture that cannot exhibit the
+mechanism I invoked. **The interpretation is withdrawn.**
+
+## What this changes
+
+- **Retracted:** that arm C's interference loss is a recurrence-specific
+  overwrite effect. It is not attributable to recurrence on this evidence.
+- **Retracted:** that arm D "repairs" that damage, and therefore the seed-11
+  reading of H4. D-vs-C differed by 5 interference items; B-vs-B across seeds
+  differs by 4. The D-C gap sits inside the seed-to-seed variation of a *single*
+  architecture, so it is not evidence for the significance gate.
+- **Stands:** Amendment 7's methodological point that a ceiling blocks detection
+  of gains but not losses. That reasoning was sound; the finding it protected was
+  not specific.
+- **Stands:** every position result. Position is stable across seeds
+  (arm B: 0.9464 at both seeds), and C vs B remains 2/1 discordant out of 168.
+
+## The battery's real defect, now visible
+
+Amendment 5 called the interference battery ceilinged. That was incomplete. It is
+**also too seed-noisy to attribute a drop to an architecture**: the same arm B
+scores 55/56 and 51/56 at two seeds, a 4-item swing concentrated in one
+8-item category.
+
+**Agreed now: no interference claim of any kind — gain or loss — may be made from
+this battery in P2b.** Per-category counts of 8 cannot separate architecture from
+training noise. A usable battery needs many more items per category and multiple
+seeds per arm, which is follow-up work.
+
+I made this error by reading a single seed as mechanism because the pattern
+matched a story I expected. The second seed is what caught it.
