@@ -389,3 +389,50 @@ Arms, horizons, seeds, the paired exact McNemar test, Wilson intervals,
 Amendment 3's sensitivity limits and Amendment 1's GO rule all stand. This
 amendment changes which numbers are foregrounded, not how any of them is
 computed.
+
+---
+
+# Amendment 6 — a calibration error of mine, recorded before the C-B contrast exists
+
+Arms A and B are scored. **Arm C has not been scored and no contrast has been
+computed.** Recording this now because it bounds what the headline contrast can
+show, and noticing it after the fact would look like excuse-making.
+
+## What arm B did
+
+| position | 0.05 | 0.10 | 0.25 | 0.50 | 0.75 | 0.90 | 0.95 | total |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| A (frozen) | 0.417 | 0.708 | 0.792 | 0.917 | 0.958 | 1.000 | 0.958 | 138/168 |
+| B (static control, seed 11) | 0.917 | 0.792 | 0.958 | 1.000 | 1.000 | 1.000 | 0.958 | 159/168 |
+
+The parameter-matched **static** control — 524,593 trained parameters, no
+recurrent state carry — recovers most of the primacy deficit on its own
+(0.417 -> 0.917 at position 0.05; early positions 27/48 -> 41/48).
+
+## The calibration error
+
+I calibrated the suite so that **arm A** was off ceiling (0.821). But arm A is
+not the comparison that matters. The preregistered headline contrast is
+**C vs B**, and B is a *trained* arm. Calibrating difficulty against the
+untrained baseline set the wrong reference: training lifts the control to
+0.946, leaving **9 items** of headroom for arm C.
+
+This is the same mistake as the interference battery in Amendment 5, in a subtler
+form: I checked the instrument against the wrong arm.
+
+## Consequences, agreed now
+
+- By Amendment 3, arm C needs **6 clean discordant wins** for p < 0.05. With only
+  9 of B's items left wrong, C must fix at least two thirds of B's residual
+  errors and break none. That is a demanding bar, and **failing it is weak
+  evidence**, not strong evidence of no effect.
+- A C-B null in this run must therefore be reported as **compressed-range and
+  underpowered for the true effect size**, not as "recurrence adds nothing".
+- The correct fix is a suite calibrated against a *trained* control, not against
+  the frozen backbone. That is follow-up work; it cannot be retrofitted to this
+  run without invalidating the preregistration.
+- **What arm B already establishes stands regardless of arm C**: on this task,
+  most of the positional gain needs only extra parameters applied per token, not
+  memory. That is a genuine finding and it favours the H2 null.
+
+Nothing about the test, the arms or the GO rule changes.
