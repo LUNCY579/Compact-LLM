@@ -98,6 +98,10 @@ def train_arm(
     weight_decay: float = 0.01,
     nan_abort_factor: float = 10.0,
     device: str | None = None,
+    init_alpha: float = 0.05,
+    beta_raw_init: float = 0.0,
+    lambda_raw_init: float = -2.0,
+    train_rows: list[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     seed_everything(seed)
     if device is None:
@@ -112,7 +116,15 @@ def train_arm(
     tokenizer = load_tokenizer()
     model = load_supa(device=device, eval_mode=False)
     freeze_backbone(model)
-    handle = apply_arm(model, arm, layers=layers, rank=rank, init_alpha=0.05)
+    handle = apply_arm(
+        model,
+        arm,
+        layers=layers,
+        rank=rank,
+        init_alpha=init_alpha,
+        beta_raw_init=beta_raw_init,
+        lambda_raw_init=lambda_raw_init,
+    )
     if handle is not None:
         for block in handle.blocks():
             for param in block.parameters():
@@ -126,7 +138,7 @@ def train_arm(
         params = []
         optimizer = None
 
-    rows = read_jsonl(train_file)
+    rows = list(train_rows) if train_rows is not None else read_jsonl(train_file)
     rng = random.Random(seed)
     rng.shuffle(rows)
 
@@ -214,11 +226,29 @@ def train_arm(
         "adapter_path": str(adapter_path) if handle is not None else None,
         "max_sequence_length": max_sequence_length,
         "checkpoint_bytes": adapter_path.stat().st_size if adapter_path.exists() else 0,
+        "init_alpha": init_alpha,
+        "beta_raw_init": beta_raw_init,
+        "lambda_raw_init": lambda_raw_init,
+        "learning_rate": learning_rate,
+        "grad_accum": grad_accum,
+        "train_rows_source": "in_memory" if train_rows is not None else str(train_file),
+        "n_train_rows": len(rows),
+        "final_alpha": (
+            float(next(iter(handle.blocks())).alpha.detach()) if handle is not None else None
+        ),
     }
     write_json(output_dir / "training_manifest.json", manifest, config=manifest)
     if handle is not None:
         handle.uninstall()
+    # Release every GPU reference before returning. The P2 seed-33 OOM happened
+    # because the model stayed pinned across sequential train+eval loads.
+    del handle
+    del optimizer
+    del params
     del model
+    import gc
+
+    gc.collect()
     if torch.cuda.is_available():
         torch.cuda.empty_cache()
     return manifest

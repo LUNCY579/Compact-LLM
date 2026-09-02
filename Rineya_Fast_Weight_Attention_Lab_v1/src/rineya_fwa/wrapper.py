@@ -147,6 +147,9 @@ def install_fwa(model: Any, cfg: FWAConfig, layers: Iterable[int]) -> InstalledF
                 recurrent=cfg.recurrent,
                 significance_gate=cfg.significance_gate,
                 init_alpha=cfg.init_alpha,
+                beta_raw_init=cfg.beta_raw_init,
+                lambda_raw_init=cfg.lambda_raw_init,
+                significance_span=cfg.significance_span,
             )
             block = FastWeightBlock(layer_cfg)
             wrapper = FWAAttentionWrapper(current, block)

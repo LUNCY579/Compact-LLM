@@ -40,6 +40,8 @@ def apply_arm(
     rank: int = 16,
     eps: float = 1e-6,
     init_alpha: float = 0.0,
+    beta_raw_init: float = 0.0,
+    lambda_raw_init: float = -2.0,
 ) -> InstalledFWA | None:
     spec = arm_spec(name)
     if not spec.install:
@@ -52,6 +54,8 @@ def apply_arm(
         recurrent=spec.recurrent,
         significance_gate=spec.significance_gate,
         init_alpha=init_alpha,
+        beta_raw_init=beta_raw_init,
+        lambda_raw_init=lambda_raw_init,
     )
     return install_fwa(model, cfg, layers)
 

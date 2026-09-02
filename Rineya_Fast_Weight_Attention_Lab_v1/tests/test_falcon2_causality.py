@@ -144,3 +144,58 @@ def test_token_valid_mask_2d():
     mask = torch.tensor([[0, 0, 1, 1], [1, 1, 1, 0]])
     got = token_valid_mask(mask, hidden)
     assert got.tolist() == [[False, False, True, True], [True, True, True, False]]
+
+
+def test_batch_isolation_and_batch_gt_one():
+    """Regression: the scan crashed for any batch > 1.
+
+    ``outputs[:, t] = mem * gate.squeeze(-1)`` made the validity gate (B,1)
+    against a (B,H,R) memory, so broadcasting aligned H against B. Every P1/P2
+    run used batch 1, so it never fired. Also checks that rows in a batch do not
+    influence each other.
+    """
+    import torch
+
+    from rineya_fwa.falcon2 import FastWeightBlock, FWAConfig
+
+    torch.manual_seed(0)
+    cfg = FWAConfig(hidden_size=32, n_kv_heads=4, rank=8, recurrent=True)
+    block = FastWeightBlock(cfg)
+    block.P.weight.data.normal_(0, 0.05)  # P is zero-init; make the output observable
+
+    h = torch.randn(3, 12, cfg.hidden_size)
+    valid = torch.ones(3, 12, dtype=torch.bool)
+
+    batched = block(h, valid)
+    assert batched.shape == (3, 12, cfg.hidden_size)
+
+    for i in range(3):
+        alone = block(h[i : i + 1], valid[i : i + 1])
+        assert torch.allclose(batched[i : i + 1], alone, atol=1e-5), (
+            f"row {i} differs when batched; rows are leaking into each other"
+        )
+
+
+def test_padding_is_masked_out():
+    """Invalid tokens must neither write to the state nor emit memory."""
+    import torch
+
+    from rineya_fwa.falcon2 import FastWeightBlock, FWAConfig
+
+    torch.manual_seed(1)
+    cfg = FWAConfig(hidden_size=32, n_kv_heads=4, rank=8, recurrent=True)
+    block = FastWeightBlock(cfg)
+    block.P.weight.data.normal_(0, 0.05)
+
+    h = torch.randn(2, 10, cfg.hidden_size)
+    valid = torch.ones(2, 10, dtype=torch.bool)
+    valid[:, 6:] = False  # last four are padding
+
+    out = block(h, valid)
+    assert torch.count_nonzero(out[:, 6:]) == 0, "padded positions must emit zero memory"
+
+    # perturbing only the padded region must not change any real position
+    h2 = h.clone()
+    h2[:, 6:] = torch.randn_like(h2[:, 6:])
+    out2 = block(h2, valid)
+    assert torch.allclose(out[:, :6], out2[:, :6], atol=1e-6)

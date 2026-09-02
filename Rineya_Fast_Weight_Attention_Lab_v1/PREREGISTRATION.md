@@ -83,3 +83,96 @@ A negative result remains committed.
 
 All P2 arms share seed, data order, max steps, sequence length, decode settings,
 and evaluation items. Arm A is eval-only (no training).
+
+---
+
+# Amendment 1 — P2b (appended; nothing above was altered)
+
+Written **after** the P2 post-mortem in `reports/MECHANISM_DIAGNOSTIC.md` and
+**before** any P2b arm was trained or evaluated.
+
+## Why P2 is withdrawn rather than believed
+
+The P2 NO-GO is withdrawn as unsupported. Measurement, not opinion:
+
+- the fast memory's retention half-life was **87.5 tokens** with total overwrite
+  on key collision (`beta = 1.0`, the NLMS deadbeat point), against contexts of
+  ~990 tokens — it could not carry any scored fact to its query;
+- arms B/C/D nevertheless differed mechanically (contribution to the attention
+  output 0.12 % / 1.41 % / 3.22 %; up to 3.4 logits, 0.25 nats KL), so the
+  identical predictions were a property of a saturated eval, not of the pathway;
+- the eval was one repeated filler sentence, a 10-word answer space, and one
+  item per (length, position) cell — a paired exact test would have needed 6 of
+  14 items to flip to reach p < 0.05;
+- `run_experiment.py` hardcoded `lengths = [256, 512]` over the config's
+  `[512, 1024, 2048, 4096]`, and `train.py` hardcoded `init_alpha = 0.05` over
+  the config's `0.0`.
+
+H1–H5 were not tested. P2b tests them.
+
+## What changes, and why each change is forced
+
+| Change | Reason |
+|---|---|
+| Token-exact 1K / 2K / 4K contexts, verified per item | P2's "512" items were 990 tokens; no length was what it claimed |
+| Real CC0 filler from the already-committed `data/unsealed/` shard | P2's filler was one sentence repeated 21-42x, making the needle the only non-duplicated sentence |
+| 48 decoy facts of identical surface form, confusable keys from one numeric band | removes both "spot the odd sentence" and literal key matching |
+| 552-code single-token answer space, 32 candidates per item | P2's answer space was 10 colour words |
+| Candidate-argmax scoring in one forward pass | removes the malformed-output artifact that produced P2's only arm-A "miss" (`color slate`); also makes long-context eval affordable given the wrapper's KV-cache refusal |
+| n_per_cell = 8 (168 position items), 8 per interference category (56 items) | P2 had 1 per cell and could not reach significance |
+| Long-horizon init, **matched across B/C/D**: `beta_raw = -1.1`, `lambda_raw = -5.9` | gives `beta = 0.499` (partial write, not deadbeat) and half-life ~8100 tokens, so the memory can span the evaluated context |
+| Training on a long-context split disjoint from eval, not front-truncated | P2 trained on the 10-colour synthetic corpus and front-truncated long rows, destroying the needle |
+| 100 optimizer steps at lr 1e-3 (Adam movement bound 0.1 vs P2's 0.0024) | in P2 alpha was still ramping at 67-83 % of its maximum rate when training stopped |
+| `init_alpha` read from the caller and recorded in the manifest | P2's configs did not describe P2's run |
+
+## New arm
+
+**Arm C-short** — arm C with the *original* P1/P2 short-horizon init
+(`beta_raw = 0.0`, `lambda_raw = -2.0`), one seed. This makes the horizon change
+a measured ablation rather than an assumption. Predicted: C-short ~= arm B.
+
+## Hypotheses (unchanged in substance, now testable)
+
+H1 (Q1) C > A. H2 (Q2) C > B. H3 (Q3) C narrows the middle-vs-edge gap.
+H4 (Q4) D > C. H5 (Q5) bounded state vs growing KV cache.
+
+Added: **H6.** C (long horizon) > C-short. If H6 fails, the retention horizon is
+not the binding constraint and the P2 diagnosis was wrong.
+
+## Statistics, fixed in advance
+
+- Primary metric: strict candidate-argmax exact match on the position suite.
+- Primary contrasts: C-A, C-B, D-C, C vs C-short, each by **paired two-sided
+  exact McNemar** on matched item ids, reported per seed.
+- Wilson 95 % intervals on every reported rate.
+- Middle = {0.25, 0.50, 0.75}; edge = {0.05, 0.10, 0.90, 0.95}.
+- Seeds {11, 22}. Seed 33 only if wall-clock allows; its absence is reported.
+- No metric, length, or arm may be added after seeing P2b results. Anything
+  added later is labelled exploratory.
+
+## Decision rule (supersedes the P2 rule for P2b only)
+
+| Label | Rule |
+|---|---|
+| GO | C > B at p < 0.05 in both seeds, or D > C at p < 0.05 in both seeds, with acceptable resource cost |
+| WEAK GO | consistent directional C > B in both seeds without significance, or a position-restricted effect |
+| REDESIGN | fast memory measurably active and interference-dominated (interference battery worse than A while position improves) |
+| NO-GO | B >= C, no positional benefit, instability, or overhead dominates |
+
+A NO-GO here means something, because the mechanism is measured live, the
+horizon spans the context, and the suite is off ceiling.
+
+## Hardware envelope (measured, not assumed)
+
+RTX 4070 Laptop, 8188 MiB. 1K/2K/4K run natively (peak 3.64 GiB at 4K). 8K only
+via host-memory spill at ~6x slowdown. **16K OOMs and is not evaluated.** The
+brief's 8K/16K tiers are therefore reported as not measurable on this hardware
+rather than silently dropped.
+
+## Sealing (unchanged)
+
+CC0 `sealed_eval/`, Invisible-Limit TEST/TEST2, showcase64 / stability192, and
+PSA `data/sealed/` remain closed. P2b reads only `data/unsealed/` (already
+committed with hashes) and lab-generated rows. The PSA benchmark generator was
+inspected but **not** invoked, because it writes into another lab's tree and
+owns a `sealed` split.

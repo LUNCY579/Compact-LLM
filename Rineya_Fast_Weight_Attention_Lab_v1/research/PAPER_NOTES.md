@@ -156,3 +156,68 @@ Interpretation (hypothesis, not a result): high significance → stronger write,
 slower forget; low significance → weak write, faster forget.
 
 Arm C and Arm D differ by this gate only. Do not assume it helps.
+
+---
+
+## Addendum 1 — retention horizon of the Falcon-2 recurrence (measured)
+
+Appended after the P2 post-mortem. Part A analysis (a property of the paper's
+algebra), plus one correction to part B.
+
+### A.9 The `β = 1` deadbeat point, and what sets the memory horizon
+
+Two *different* forgetting scales act in A.3, and only one is `λ`.
+
+**Ridge decay** applies to every stored direction:
+
+```
+decay = 1 − λ η,    η = β / (‖x‖² + λ + ε)
+```
+
+**Replacement along the written direction.** Projecting the Falcon-2 update onto
+the current key `x`:
+
+```
+S_t^T x = (1 − λη) S_{t−1}^T x + η‖x‖² (v − S_{t−1}^T x)
+        = (decay − η‖x‖²) S_{t−1}^T x + η‖x‖² v
+```
+
+so retention along `x` is `decay − η‖x‖²`. Since `η‖x‖² = β‖x‖²/(‖x‖²+λ+ε)`,
+this is `≈ 1 − β` for small `λ`. At **`β = 1` the term vanishes**: the write
+*completely replaces* whatever was stored along that direction. This is the
+NLMS/RLS deadbeat (exact-projection) point. `β ∈ (0,2)` is the descent interval
+(A.3), but `β = 1` is its most destructive interior point for retention.
+
+With the P1/P2 initialisation (`β_raw = 0 → β = 1.0`, `λ_raw = −2 → λ = 0.1269`)
+and an RMSNorm'd rank-16 key (`‖x‖² = 16`):
+
+- `η = 0.0622`
+- ridge decay `= 0.99211` per token → **half-life 87.5 tokens**
+- retention along the written direction `= 0.992107 − 0.992129 = −2.2e−5 ≈ 0`
+
+Measured on the trained P2 adapters, not derived from the prompt. The state norm
+saturates (`‖S_t‖_F` peaks at t≈390 on a 990-token item, then declines), which
+is the signature of a bounded state at its steady state rather than one
+accumulating a long prefix.
+
+**Consequence for experiment design.** The horizon is set by `(β, λ, ‖x‖²)`, and
+`‖x‖²` is pinned to `rank` by the RMSNorm on the key features. So the horizon is
+effectively an initialisation choice. Testing long-context retention with a
+horizon shorter than the context tests nothing. P2b matches
+`β_raw = −1.1` (`β = 0.499`, ~50 % replacement) and `λ_raw = −5.9`
+(`λ = 2.74e−3`, half-life ~8100 tokens) across arms B/C/D.
+
+This is an observation about the paper's recurrence, not a modification of it.
+
+### Correction to B.1
+
+B.1 states the merge gate is "initialized at **0**". That is what both YAML
+configs declare, but `train.py` hardcoded `init_alpha = 0.05` and never read the
+config key, so **every P1/P2 run started at α = 0.05.**
+
+The `α = 0` claim in B.1 is also load-bearing in a way worth recording: `P` is
+zero-initialised, so at exactly `α = 0` both `dL/dα` and `dL/dP` are identically
+zero and the whole block is a permanent no-op. `α = 0` is therefore correct as
+the *equivalence* check (the zero-gate test in ZERO_TRAINING_SANITY.md) but
+cannot be a *training* initialisation. From P2b the value is passed by the
+caller and recorded in the training manifest.

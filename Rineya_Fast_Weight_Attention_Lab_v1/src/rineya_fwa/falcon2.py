@@ -95,7 +95,10 @@ def falcon2_scan(
         new_state = (state * decay.unsqueeze(-2) + write).clamp(-1.0e4, 1.0e4)
         state = torch.where(gate.unsqueeze(-1).bool(), new_state, state)
         mem = torch.einsum("bhrd,bhr->bhd", state, qt)
-        outputs[:, t] = mem * gate.squeeze(-1)
+        # gate is (B,1,1) and mem is (B,H,R); squeezing the gate to (B,1) makes
+        # broadcasting align H against B and raises for any batch > 1. Every P1/P2
+        # run used batch 1, so this never fired.
+        outputs[:, t] = mem * gate
         if recurrent:
             k_prev = torch.where(gate.bool(), kt, k_prev)
 
@@ -124,6 +127,23 @@ class FWAConfig:
     recurrent: bool = True
     significance_gate: bool = False
     init_alpha: float = 0.0
+    # Plasticity / forgetting initialisation.
+    #
+    # These set the memory's retention horizon before any training. The P1/P2
+    # runs used the defaults below, which give lambda = softplus(-2) = 0.1269
+    # and beta = 2*sigmoid(0) = 1.0. With an RMSNorm'd rank-16 key, ||x||^2 = 16,
+    # so eta = 0.0622, the ridge decay is 1 - lambda*eta = 0.99211 per token
+    # (half-life 87.5 tokens) and beta = 1.0 is the NLMS deadbeat point, which
+    # fully replaces the stored value along the current key direction. Measured,
+    # not assumed -- see reports/MECHANISM_DIAGNOSTIC.md.
+    #
+    # A horizon of ~87 tokens cannot carry a fact across a 1K-4K context, so P2b
+    # makes these configurable and matches them across arms B/C/D.
+    beta_raw_init: float = 0.0
+    lambda_raw_init: float = -2.0
+    # Arm D only: how far significance may push beta/lambda around their base
+    # values, as a fraction. 0.9 => beta in [0.1*beta0, 1.9*beta0].
+    significance_span: float = 0.9
 
 
 class FastWeightBlock(nn.Module):
@@ -143,15 +163,18 @@ class FastWeightBlock(nn.Module):
         self.q_norm = RMSNorm(cfg.rank)
         self.k_norm = RMSNorm(cfg.rank)
         self.v_norm = RMSNorm(cfg.rank)
-        self.beta_raw = nn.Parameter(torch.zeros(cfg.n_kv_heads, cfg.rank))
-        self.lambda_raw = nn.Parameter(torch.full((cfg.n_kv_heads, cfg.rank), -2.0))
+        self.beta_raw = nn.Parameter(
+            torch.full((cfg.n_kv_heads, cfg.rank), float(cfg.beta_raw_init))
+        )
+        self.lambda_raw = nn.Parameter(
+            torch.full((cfg.n_kv_heads, cfg.rank), float(cfg.lambda_raw_init))
+        )
         self.alpha = nn.Parameter(torch.tensor(float(cfg.init_alpha)))
         if cfg.significance_gate:
             self.sig_gate = nn.Linear(cfg.hidden_size, 1)
-            self.beta_min = 0.05
-            self.beta_max = 1.9
-            self.lambda_min = 0.01
-            self.lambda_max = 0.5
+            nn.init.zeros_(self.sig_gate.weight)
+            nn.init.zeros_(self.sig_gate.bias)
+            self.sig_span = cfg.significance_span
         else:
             self.sig_gate = None
         nn.init.zeros_(self.P.weight)
@@ -165,17 +188,37 @@ class FastWeightBlock(nn.Module):
         return q, k, v
 
     def rates(self, hidden: torch.Tensor) -> tuple[torch.Tensor, torch.Tensor, torch.Tensor | None]:
-        beta = beta_from_raw(self.beta_raw)
-        lam = lambda_from_raw(self.lambda_raw)
+        """Plasticity beta and forgetting lambda, optionally significance-modulated.
+
+        Arm D must differ from arm C by the *minimum* mechanism (brief section 9),
+        so the gate is a symmetric multiplicative deviation around arm C's own
+        trained rates rather than an independent range:
+
+            u_t  = 2*s_t - 1          in (-1, 1)
+            beta_t   = beta0   * (1 + span * u_t)
+            lambda_t = lambda0 * (1 - span * u_t)
+
+        High significance -> stronger write, slower forgetting. At s_t = 0.5 this
+        is exactly arm C, and ``sig_gate`` is zero-initialised so s_t = 0.5
+        identically at step 0: arm D *starts* as arm C and can only depart from
+        it by learning. beta0/lambda0 stay in the graph, so beta_raw/lambda_raw
+        keep receiving gradient in arm D (in P1/P2 they were orphaned and stayed
+        bit-identical to their init).
+
+        Earlier versions used hardcoded ranges (beta 0.05-1.9, lambda 0.01-0.5),
+        which would have made arm D differ from arm C in the retention horizon as
+        well as the gate, confounding the D-C contrast.
+        """
+        beta0 = beta_from_raw(self.beta_raw)
+        lam0 = lambda_from_raw(self.lambda_raw)
         scores = None
-        if self.sig_gate is not None:
-            scores = torch.sigmoid(self.sig_gate(hidden.float())).squeeze(-1)  # (B, T)
-            # paper-C / Rineya: scale β up and λ down with significance
-            s = scores.unsqueeze(-1).unsqueeze(-1)  # (B,T,1,1)
-            beta = self.beta_min + s * (self.beta_max - self.beta_min)
-            lam = self.lambda_max - s * (self.lambda_max - self.lambda_min)
-            beta = beta.expand(-1, -1, self.cfg.n_kv_heads, self.cfg.rank)
-            lam = lam.expand(-1, -1, self.cfg.n_kv_heads, self.cfg.rank)
+        if self.sig_gate is None:
+            return beta0, lam0, scores
+        scores = torch.sigmoid(self.sig_gate(hidden.float())).squeeze(-1)  # (B, T)
+        u = (2.0 * scores - 1.0).unsqueeze(-1).unsqueeze(-1)  # (B,T,1,1)
+        span = float(self.sig_span)
+        beta = (beta0 * (1.0 + span * u)).clamp(1e-4, 1.9999)
+        lam = (lam0 * (1.0 - span * u)).clamp_min(0.0)
         return beta, lam, scores
 
     def forward(
