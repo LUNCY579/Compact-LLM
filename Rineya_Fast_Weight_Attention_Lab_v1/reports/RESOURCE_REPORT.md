@@ -116,7 +116,16 @@ One optimizer step, arm C, 1024-token contexts (sequence 1152), RTX 4070 Laptop:
 |---|---:|---:|
 | labels to the model, gradient checkpointing **on** | 6.91 GiB | 15545 s |
 | labels to the model, checkpointing off | 4.98 GiB | 20 s |
-| `tail_loss`, checkpointing off | see `artifacts/.../diagnostics/` | — |
+| `tail_loss`, checkpointing off | **3.09 GiB** | 20 s* |
+
+\* the 3.09 GiB row's wall time is not comparable: it was taken while an
+unrelated job had the card at 92 MiB free, and measured 43.8 s/example against
+~3.3 s/example uncontended. The **memory** figure is contention-independent
+(it is `torch.cuda.max_memory_allocated`).
+
+`tail_loss` saves **1.89 GiB**, which is what brings training inside the
+headroom this shared card actually offers. Note the eval phase now dominates:
+4096-token scoring peaks at 3.64 GiB.
 
 Two results worth keeping:
 

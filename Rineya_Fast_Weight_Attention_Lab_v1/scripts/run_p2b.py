@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import argparse
 import gc
+import hashlib
 import json
 import sys
 import time
@@ -163,6 +164,15 @@ def main() -> int:
     write_jsonl(DATA / "longctx" / "interference_suite.jsonl", int_items)
     print(f"[data] position n={len(pos_items)}  interference n={len(int_items)}", flush=True)
 
+    # Identifies the exact scored items, so a cached eval.json from a different
+    # suite (different lengths / decoys / hops) is never silently reused.
+    suite_fingerprint = hashlib.sha256(
+        json.dumps(
+            [i["id"] for i in pos_items] + [i["id"] for i in int_items], sort_keys=True
+        ).encode("utf-8")
+    ).hexdigest()[:16]
+    print(f"[data] suite fingerprint {suite_fingerprint}", flush=True)
+
     # sanity: no train/eval key collision
     train_keys = {r["id"] for r in train_rows}
     eval_keys = {i["id"] for i in pos_items}
@@ -229,6 +239,20 @@ def main() -> int:
         if adapter is not None and not adapter.is_file():
             print(f"[eval] {tag}: no adapter, skipping", flush=True)
             continue
+        cached = OUT / tag / "eval.json"
+        if cached.is_file():
+            # Resume: the eval phase is the memory-hungry half (4096-token
+            # scoring peaks at 3.64 GiB) and this card is shared, so an OOM part
+            # way through must not discard the arms already scored.
+            try:
+                rec = json.loads(cached.read_text(encoding="utf-8"))
+                if rec.get("suite_fingerprint") == suite_fingerprint:
+                    evals.append(rec)
+                    print(f"[eval] {tag} loaded from cache exact={rec['position']['exact']:.4f}", flush=True)
+                    continue
+                print(f"[eval] {tag}: cached eval is for a different suite; rescoring", flush=True)
+            except (OSError, json.JSONDecodeError, KeyError):
+                print(f"[eval] {tag}: unreadable cache; rescoring", flush=True)
         print(f"[eval] {tag}", flush=True)
         handle = apply_arm(
             model, arm, layers=layers, rank=args.rank, init_alpha=0.0,
@@ -251,6 +275,7 @@ def main() -> int:
                 "interference": {k: v for k, v in inter.items() if k != "rows"},
                 "interference_rows": inter["rows"],
                 "eval_seconds": time.perf_counter() - t0,
+                "suite_fingerprint": suite_fingerprint,
             }
             evals.append(rec)
             write_json(OUT / tag / "eval.json", rec, config=vars(args))
