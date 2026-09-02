@@ -53,8 +53,9 @@ def test_context_length_is_token_exact(tok, length):
     )
     for item in items:
         n = item["n_context_tokens"]
-        # the assembler stops on a sentence boundary, so allow one sentence of slack
-        assert length * 0.90 <= n <= length, f"{item['id']}: {n} tokens for target {length}"
+        # the assembler fills with whichever sentence fits the remaining budget,
+        # so the shortfall is bounded by the shortest sentence in the pool
+        assert length * 0.97 <= n <= length, f"{item['id']}: {n} tokens for target {length}"
 
 
 def test_needle_is_present_and_positioned(tok):

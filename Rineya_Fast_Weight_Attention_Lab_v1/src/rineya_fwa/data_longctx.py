@@ -212,11 +212,21 @@ def assemble_context(
             used += n
             next_fact += 1
             continue
-        sent = pool[order[cursor % len(order)]]
-        cursor += 1
+        # Take the next filler sentence that fits the remaining budget rather
+        # than stopping at the first one that does not. CC0 sentences run to
+        # ~70 tokens, so breaking on the first overflow leaves up to ~13% of a
+        # 512-token target unfilled and "token-exact" stops being true.
+        room = target_tokens - used
+        sent = None
+        for probe in range(len(order)):
+            candidate = pool[order[(cursor + probe) % len(order)]]
+            if tlen(candidate + " ") <= room:
+                sent = candidate
+                cursor += probe + 1
+                break
+        if sent is None:
+            break  # nothing in the pool fits; we are as close as we can get
         n = tlen(sent + " ")
-        if used + n > target_tokens:
-            break
         pieces.append(sent)
         used += n
 
@@ -229,8 +239,30 @@ def assemble_context(
         next_fact += 1
 
     text = " ".join(pieces)
-    # trim to exact length from the tail, never cutting a fact
+    # Per-sentence token counts are not additive under joining -- tokenizers
+    # merge across the separator -- so `used` drifts a few percent above the
+    # true length. Top up against the encoded count so the realised context is
+    # actually close to the target rather than only close by estimate.
     ids = tokenizer.encode(text, add_special_tokens=False)
+    shortest = min(_cached_tlen(pool[i] + " ") for i in order[:64])
+    for _ in range(32):
+        room = target_tokens - len(ids)
+        if room < shortest:
+            break
+        pick = None
+        for probe in range(len(order)):
+            candidate = pool[order[(cursor + probe) % len(order)]]
+            if _cached_tlen(candidate + " ") <= room:
+                pick = candidate
+                cursor += probe + 1
+                break
+        if pick is None:
+            break
+        pieces.append(pick)
+        text = " ".join(pieces)
+        ids = tokenizer.encode(text, add_special_tokens=False)
+
+    # trim to exact length from the tail, never cutting a fact
     if len(ids) > target_tokens:
         last_fact_end = max(
             (off + tlen(s + " ") for s, off in fact_offsets.items()), default=0
