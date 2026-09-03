@@ -170,11 +170,12 @@ paths, exact commits and per-stage results are in the JSON.
 
 | stage | commit | collected | README claimed |
 |---|---|---:|---:|
+| C5 | `d71b558` | 350 | 349 |
 | C6 / C9 | `de3bd63` | 396 | 396 |
 | C10 | `b091490` | 436 | 396 |
 | C11 | `9106f2e` | 444 | 444 |
 
-All three measured, not asserted. C11's 444 = 436 at C10, plus 4
+All four measured, not asserted. C11's 444 = 436 at C10, plus 4
 programme-contract regressions, plus 4 auto-parametrized
 `test_seed_determinism` cases — one per newly registered source file. The
 `440` that v5.1's own draft carried counted only the first four, which is the
@@ -184,7 +185,7 @@ count drift the materialization corrected.
 
 Two branches had been claiming the Phase 2A role. C6 had grown as an undeclared
 continuation of C5 — same stage, same semantics, same lineage — but held 396
-tests against 349 and was the sole holder of the v5 preregistration, the
+tests against 350 and was the sole holder of the v5 preregistration, the
 within-study qualification gate, per-family null scoring and the programme
 contract. Meanwhile C5's README named itself Phase 2A and
 `TGSA_MTP_CANONICAL_PATH.md` did not mention C6 at all.
