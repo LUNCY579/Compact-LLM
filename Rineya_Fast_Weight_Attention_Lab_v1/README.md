@@ -60,6 +60,30 @@ Rineya_Fast_Weight_Attention_Lab_v1/
 artifacts/supa_a1_1_fast_weight_attention_v1/   # gitignored run outputs
 ```
 
+## Tooling status — what was built and whether it was run
+
+Recorded so a reader does not mistake a committed script for evidence.
+
+| Script | Run? | Notes |
+|---|---|---|
+| `run_experiment.py` (P1/P2) | yes | produced the **withdrawn** P1/P2 results |
+| `diagnose_mechanism.py` | yes | the measurements that withdrew the P2 NO-GO |
+| `profile_scaling.py` | yes | resource scaling 1K-16K |
+| `calibrate_suite.py` | yes | arm-A difficulty calibration (Amendment 2) |
+| `run_p2b.py` | yes | the P2b A/B/C/D run |
+| `make_report.py` | yes | `RESULTS_P2B.md` + figures |
+| `probe_layers.py` | yes | 28-layer zero-training probe |
+| `run_cshort_replication.py` | yes | Amendment 11 step 0 |
+| `run_h7_early.py` | yes | Amendment 12 step 1 |
+| `run_layer_pilot.py` | **NO** | **cancelled by Amendment 10** before running. Its design was reviewed and rejected: it reused a suite with 9 items of headroom and would have returned four foregone nulls at ~9 GPU-h. Kept as the record of a rejected design, not as pending work. |
+| `analyze_interference.py` | **NO** | built to add the "blended" outcome the main scorer cannot see (brief section 14). Not run because Amendment 9 established this battery is both ceilinged for gains and too seed-noisy to attribute anything to an architecture. Running it would produce numbers no claim may rest on. It becomes useful only against a rebuilt battery. |
+| `eval_p2_on_v2.py` | **NO** | written as a fallback to ask whether the P2 adapters separate on a discriminative suite. P2b answered that question directly and better. Superseded, not pending. |
+| `smoke_babysit.py` | yes | P1-era smoke helper |
+
+**Section 14 of the brief is not answered by this lab.** The interference battery
+could not support a claim in either direction, and the tool that would have
+characterised failure modes was deliberately not run against it.
+
 ## Sealed-data ban
 
 Do not open, train on, or iterate against:
