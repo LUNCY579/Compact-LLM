@@ -49,6 +49,57 @@ results then contradicted: C-short trained indistinguishably from C
 than established — C-short is one seed and categories hold 8 items — but the
 direction is unambiguous and it is the opposite of what I argued for.
 
+
+## H7: the one positive signal, tested and rejected
+
+P2b's residuals suggested a narrower hypothesis than the one it rejected: that
+short-horizon recurrence helps specifically at *early* positions, where B's
+errors concentrated and where C-short's whole 4/0 edge sat. That is memory-shaped
+— early evidence surviving to a distant query — so it was worth one properly
+powered test.
+
+It was preregistered as H7 (Amendments 11-12), replicated directionally at a
+second seed on the old suite, then tested on a purpose-built 320-item
+early-position suite where arm B has 33 errors of headroom instead of 9.
+
+**Result: rejected.**
+
+| | seed 11 | seed 22 |
+|---|---|---|
+| B (static) | 287/320 | 288/320 |
+| C-short (recurrent) | **301/320** | **285/320** |
+| C-short vs B | 18/4, **p = 0.0043** | 8/11, p = 0.65 — *B ahead* |
+
+Seed 11 was significant. Seed 22 reversed. The criterion — p < 0.05 at both
+seeds, fixed before the run — is not met.
+
+### What the failure explains
+
+Arm B lands within **1 item** across seeds (287, 288). Arm C-short moves **16**
+(301, 285) and disagrees with itself on 28 of 320 items against arm B's 15.
+Position 0.02, the cell that drove seed 11's significance, swings **+10 to −8**.
+
+So this was not a small true effect that missed significance. **The recurrent
+state roughly doubles seed-to-seed variance without improving the mean.** At seed
+11 that variance landed favourably; at seed 22 it did not.
+
+That is a coherent, mechanistic addition to the P2b NO-GO rather than a
+contradiction of it: recurrence does not merely fail to help, it makes the
+trained outcome less reproducible.
+
+### Why this did not become a reported false positive
+
+At seed 11 alone the result was a persuasive win: +14 items, p = 0.0043, properly
+powered, in exactly the regime theory predicted. Two guards fixed before the data
+existed caught it — the both-seeds criterion, and labelling the finding
+exploratory because the suite was built to oversample where the effect had
+already been seen.
+
+The step-0 replication that justified building the suite (4/0 and 5/0, zero
+losses in 9 discordant pairs) was the same illusion at smaller scale: small
+discordant counts on 48 items looked like strict dominance; at 320 items the arm
+loses 4 then 11.
+
 ## Appendix: why the earlier P2 NO-GO was withdrawn
 
 The previous version of this file recorded **NO-GO**. That decision is withdrawn.

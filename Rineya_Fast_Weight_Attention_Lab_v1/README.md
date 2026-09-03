@@ -120,8 +120,15 @@ performance.
   interference cost tracks the horizon, not recurrence. My Amendment 1 horizon
   change caused the only harm attributable to the fast memory.
 
-Limits carried with the decision: one layer (the brief's layer pilot was never
-run), two seeds, a range compressed by calibrating against the frozen rather than
+**H7, the one follow-up hypothesis, was also rejected.** P2b's residuals
+suggested short-horizon recurrence might help specifically at early positions. On
+a purpose-built 320-item suite it gave 18/4 (p=0.0043) at seed 11 and 8/11
+(B ahead) at seed 22. Arm B varies 1 item across seeds; arm C-short varies 16.
+Recurrence roughly doubles seed variance without improving the mean. See
+`reports/RESULTS_H7.md`.
+
+Limits carried with the decision: one layer (a zero-training probe ranks layer 14
+13th of 28 by leverage; no trained sweep was run), two seeds, a range compressed by calibrating against the frozen rather than
 the trained control, and an interference battery that is ceilinged for gains and
 seed-noisy. The earlier P2 NO-GO remains withdrawn — it measured nothing; this
 one measures something.
