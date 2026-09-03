@@ -643,3 +643,82 @@ suite is rebuilt against a *trained* control first so the contrast has headroom.
 
 Nothing in P2b's decision changes. The NO-GO stands as recorded, still
 explicitly qualified as "at layer 14".
+
+---
+
+# Amendment 11 — H7 and a two-step plan, written before either step runs
+
+P2b returned NO-GO and the suite is now exhausted: arm B leaves 9 wrong items of
+168, only 3 of which no trained arm ever solves. Further C-vs-B work on that
+suite measures noise. But the run left exactly one thread where theory and data
+agree, and it is worth one cheap test before the auxiliary design is closed.
+
+## The observation
+
+Arm B's residual errors are not spread out. **Seven of nine sit at positions
+0.05-0.10**, and both 0.05 failures are at 4096 tokens — early evidence, long
+context. That is where the only positive signal also lives:
+
+| position | 0.05 | 0.10 |
+|---|---:|---:|
+| A (frozen) | 0.417 | 0.708 |
+| B (static control) | 0.917 | 0.792 |
+| **C-short (recurrent, 87.5-token horizon)** | **0.958** | **0.917** |
+
+C-short's whole 4/0 discordant edge over arm B (p = 0.125) is concentrated at
+early positions. That is memory-shaped: information that must survive from early
+context to a distant query is precisely what a recurrent state is for.
+
+It rests on **one seed**, and arm C-short is the arm whose horizon I wrongly
+argued against, so I have already been wrong about it once in each direction.
+
+## H7 (new)
+
+**Short-horizon recurrent memory improves early-position retrieval over a
+parameter-matched static control**, i.e. C-short > B restricted to positions
+{0.05, 0.10}.
+
+H7 is a *restriction* of the failed H2, not a replacement. H2 (C > B overall)
+stands as rejected; the claim here is narrower and was identified from P2b's
+residuals, so it is **exploratory and requires its own confirmation**.
+
+## Step 0 — replication, before anything is built
+
+Train and score **C-short at seed 22** on the **identical P2b items**, recovered
+from `data/longctx/*.jsonl`. Those files are verified to be the scored items:
+their id-only fingerprint reproduces the run's recorded `dcdf2b6f1e7a5d06`, and
+an exhaustive check of 1344 scored rows across all arms found 0 gold mismatches.
+Regenerating is not an option — Amendment 10's seeding bug means the generator no
+longer produces those items.
+
+**Stopping rule, fixed now.** If C-short at seed 22 does not beat arm B at seed
+22 *directionally* on positions {0.05, 0.10} — that is, if `b_better <= a_better`
+on the early-position subset — the signal is seed noise, H7 is abandoned, and the
+auxiliary design is closed with the NO-GO as recorded. No suite is built.
+
+## Step 1 — only if step 0 replicates
+
+A focused instrument, because the present one cannot see an effect this size:
+
+- **Calibrated against a TRAINED arm B**, targeting B ~0.60-0.80, not 0.95. This
+  is Amendment 6's correction, which has never been made. Calibration costs one
+  training run per candidate difficulty and is done on arm B alone.
+- **Oversample the hard regime**: positions {0.02, 0.05, 0.10, 0.25} at lengths
+  {2048, 4096}, many items per cell, since that is where B's residual errors and
+  C-short's edge both live.
+- Arms **B and C-short only**, two seeds, layer 14.
+- Same paired exact McNemar, Wilson intervals, and Amendment 3's sensitivity
+  reporting. Primary contrast: C-short vs B on the early-position subset.
+
+Interference is not measured: Amendment 9 established the battery cannot support
+a claim in either direction.
+
+## What a positive result would and would not mean
+
+It would mean a bounded recurrent state helps carry early evidence forward on a
+synthetic two-hop retrieval task at one layer, relative to matched parameters.
+
+It would **not** overturn the P2b NO-GO on the overall contrast, would not show
+any efficiency benefit (measured absent, and structurally impossible in an
+auxiliary design), and would not transfer to natural long-context work without
+separate evidence.
