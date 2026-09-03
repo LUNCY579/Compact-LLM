@@ -140,9 +140,11 @@ C9 and C10 are all contained in C11** — verified, not assumed. Only C7
 separate stages.
 
 `fd6e20f` is one plain commit on `b091490`, and it is what origin now holds,
-with CI green (run `33774170876`). It replaced a three-commit bootstrap
-(`26c563b`, `b6a42a6`, `6c94adb`) whose entire diff was ten binary parts plus a
-materialization workflow, so discarding it dropped no real content.
+with CI green (run `33774170876`). It replaced a **four**-commit bootstrap
+(`26c563b`, `b6a42a6`, `6c94adb`, `b7b2cbe`) whose entire diff was ten binary
+parts, a materialization workflow and a documentation whitespace repair, so
+discarding it dropped no real content. origin's tip immediately before the plain
+materialization was `b7b2cbe`, not `6c94adb`.
 
 ---
 
@@ -206,12 +208,29 @@ programme — ten binary parts under `.v51-bootstrap/` plus a `contents:write`
 workflow that reassembled a tarball, verified it, and force-pushed a
 materialized commit.
 
-That workflow failed three times, and the last failure was **not scientific**.
-In run `33700347537` all 444 tests, contract verification, schema validation and
-the probe-plus-qualification smoke chain passed, and it printed *"bootstrap
-validation passed for the exact final v5.1 tree"* — then died on
-`git diff --check`, because `V5_1_UNIFIED_PROGRAMME.md` lines 3 and 4 end in two
-trailing spaces (Markdown hard breaks).
+That workflow failed **four** times — runs `33699105352`, `33699971132`,
+`33700347537`, `33772927517` — and no failure was scientific.
+
+Run `33700347537`, the **third**, is the well-known one: all 444 tests, contract
+verification, schema validation and the probe-plus-qualification smoke chain
+passed, and it printed *"bootstrap validation passed for the exact final v5.1
+tree"* — then it died on `git diff --check`, because
+`V5_1_UNIFIED_PROGRAMME.md` lines 3 and 4 end in two trailing spaces (Markdown
+hard breaks).
+
+The **fourth and last**, run `33772927517` on `b7b2cbe`, repaired exactly those
+two lines, cleared `git diff --check`, again passed all 444 tests and printed the
+same validation line — and then had its push rejected outright:
+
+```text
+! [remote rejected] HEAD -> research/tgsa-v5-1-unified-programme
+  (refusing to allow a GitHub App to create or update workflow
+   `.github/workflows/tgsa-v5.yml` without `workflows` permission)
+```
+
+That permission boundary, not the whitespace guard, is what finally ended the
+bootstrap route. A `contents: write` token cannot rewrite a workflow file, and
+the package contains one.
 
 It was replaced rather than repaired. The opaque blob made the content
 unreviewable in the diff and had already accreted an inline CI string-patch
@@ -231,12 +250,18 @@ verification report validated against its schema; the development-only probe and
 qualification smoke chain both returned `status=complete` and exit `0`; and
 `git diff --check b091490..HEAD` is clean.
 
-**Package hash integrity is not package correctness.** The sha256-verified
-package shipped two latent defects, and `fd6e20f` fixes both: the plan schema
-listed `famili_roles` in its `required` array, so `family_roles` was never
-actually enforced, and `tgsa-v5.yml` resolved `${{ runner.temp }}` in a
-job-level `env:` block before runner allocation, leaving `ARTIFACT_ROOT` and
-`PROGRAMME_REPORT` empty. Three scripts also needed the exec bit
+`fd6e20f` fixes two latent defects, but **only one came from the package**:
+`tgsa-v5.yml` resolved `${{ runner.temp }}` in a job-level `env:` block before
+runner allocation, leaving `ARTIFACT_ROOT` and `PROGRAMME_REPORT` empty. For
+that one, **reassembling a package to its exact sha256 proves integrity, not
+correctness.**
+
+The other defect was *not* in the package. The plan schema listed
+`famili_roles` in its `required` array — so `family_roles` was never actually
+enforced — but `evidence/phase1_v5_plan.schema.json` is not among the package's
+16 entries, and the extracted tarball contains zero occurrences of the byte
+string `famili`. That typo was pre-existing repository content at the audited
+base `b091490`, introduced by `9602d3d`. Three scripts also needed the exec bit
 `materialize.sh` applied with `chmod +x`.
 
 Three annotated tags were created and the two surviving superseded refs were
@@ -315,12 +340,16 @@ No promotion is authorized.
   `tests/test_retrofit_correctness.py`). C8 is authoritative: 59 retrofit files
   against C7's 37. This makes promotion-order step 7 a small job.
 - **The retrofit tree and the lab tree are near-disjoint.** The spine carries
-  zero retrofit files; C8 carries a stale 84-file lab against the spine's 147,
-  missing the v3 final result, the v4 rejection, all Phase 2 work and the
-  whole v5/v5.1 programme.
+  zero retrofit files; C8 carries a stale 84-file lab against the C11 spine's
+  **175** — so it is 91 files behind, not the 63 the 2026-08-31 snapshot recorded
+  against the old `de3bd63` spine — missing the v3 final result, the v4
+  rejection, all Phase 2 work and the whole v5/v5.1 programme.
 - **The programme contract is stage-neutral.** It defines both `phase2a` and
-  `phase2b`, and the verifier routes on `study_kind`, so C6 and C7 carry
-  byte-identical copies rather than divergent forks. C11 adds a *second*,
+  `phase2b`, and the verifier routes on `study_kind`, so C6 and C7 carry copies
+  that differ only in the phase2a stage's `branch` field — one line — rather than
+  divergent forks. They are **not** byte-identical: `188ed21` moved the Phase 2A
+  designation across six references, and that field is one of them. C11 adds a
+  *second*,
   separate contract (`v5_1_programme_contract.json`) that pins six SHAs and
   keeps the two Phase 2 causal identities apart by construction.
 - Checkpoints are excluded programme-wide. `*.pt` / `*.pth` are gitignored and
