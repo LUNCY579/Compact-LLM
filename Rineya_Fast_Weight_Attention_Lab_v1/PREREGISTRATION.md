@@ -722,3 +722,67 @@ It would **not** overturn the P2b NO-GO on the overall contrast, would not show
 any efficiency benefit (measured absent, and structurally impossible in an
 auxiliary design), and would not transfer to natural long-context work without
 separate evidence.
+
+---
+
+# Amendment 12 — step 0 replicated; step 1 is simpler and cheaper than planned
+
+## Step 0 result
+
+C-short at seed 22, scored on the identical P2b items:
+
+| | overall | early {0.05, 0.10} |
+|---|---|---|
+| seed 11 | C-short 163 vs B 159 — 4/0, p = 0.125 | 45/48 vs 41/48 — 4/0 |
+| seed 22 | C-short 164 vs B 159 — 5/0, p = 0.0625 | 44/48 vs 40/48 — 4/0 |
+
+**Zero losses for C-short in 9 discordant pairs across two independent training
+runs.** Neither seed reaches p < 0.05, and per Amendment 9 the two tests reuse
+the same 168 items so they are not independent replications and are not combined.
+The stopping rule (early-position `b_better > a_better`) is met at seed 22:
+4/0. Step 1 proceeds.
+
+## Step 1, revised: add items where the effect lives, do not rebuild difficulty
+
+Amendment 11 specified calibrating a *harder* suite against a trained arm B
+(target 0.60-0.80). Having seen the step-0 numbers, that is the wrong fix and
+more expensive than necessary.
+
+Arm B is **not at ceiling on early positions**: it scores 40/48 and 41/48, i.e.
+0.833. There is 17 % headroom there already. The problem was never that early
+items are too easy — it is that there are only **48 of them**, so a real effect of
+~8 % of early items shows up as 4 flips and cannot reach significance.
+
+The fix is therefore **more items in the regime where the effect lives**, not
+harder items:
+
+- positions **{0.02, 0.05, 0.10, 0.15}** — extending below 0.05, where difficulty
+  rises fastest
+- lengths **{2048, 4096}** — where both of B's 0.05 failures sat
+- **40 items per cell → 320 items**, versus 48 early items today
+- a **fresh eval seed**, so these are new items, disjoint from anything scored
+
+At B's observed early-position error rate (~17 %) this gives ~53 wrong items for
+C-short to act on. If the observed flip rate holds, that is ~25 clean discordant
+wins against Amendment 3's threshold of 6.
+
+## No retraining, and why that is legitimate
+
+The four adapters already exist (B and C-short at seeds 11 and 22) and are
+scored as-is. This is sound because the training split is disjoint from every
+eval suite by construction, and the new items come from a fresh eval seed. It is
+the same relationship P2b's arms had to P2b's suite. Training is unchanged, so
+the arms remain matched.
+
+Cost falls from ~4.5 GPU-hours to ~2, and no new confound is introduced by
+retraining on a shifted distribution.
+
+**Arm A is scored too**, as a reference point, since a new suite has no baseline.
+
+## Primary contrast and what would falsify H7
+
+Paired two-sided exact McNemar, **within seed**, C-short vs B on all 320 items,
+with the by-position breakdown reported. H7 survives only if C-short beats B at
+**both** seeds with p < 0.05. A directional-but-not-significant result at 320
+items — after being directional at 168 — would mean the effect is smaller than
+the step-0 numbers suggest, and would be reported as such rather than as support.
