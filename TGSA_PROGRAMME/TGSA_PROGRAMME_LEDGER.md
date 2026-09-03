@@ -5,7 +5,7 @@ established, where each record lives, and what blocks the next step.
 
 Machine-readable source: [`tgsa_programme_ledger.json`](tgsa_programme_ledger.json)
 
-Generated: 2026-08-31.
+Generated: 2026-09-03.
 
 ---
 
@@ -25,13 +25,13 @@ carried a full copy of the lab, which made it look like somewhere you could
 work — and someone reasonably concluded it was the most advanced branch to
 experiment on. It is not. It has no code, and it must never acquire any.
 
-**To run TGSA experiments, use `research/tgsa-phase2a-ci-and-competence`.**
+**To run TGSA experiments, use `research/tgsa-v5-1-unified-programme`.**
 Nothing here is a substitute for it, and this branch is deliberately missing the
 Phase 2B and retrofit code entirely — those live only on their own branches and
 cannot be combined.
 
 This is deliberate, and it is not a stylistic choice.
-`TGSA_MTP_CANONICAL_PATH.md` (read with `git show research/tgsa-phase2a-ci-and-competence:Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_CANONICAL_PATH.md`)
+`TGSA_MTP_CANONICAL_PATH.md` (read with `git show research/tgsa-v5-1-unified-programme:Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/TGSA_MTP_CANONICAL_PATH.md`)
 governs the programme and states that the two MTP histories must not be merged
 into one implementation namespace, that outputs from the two Phase 2 stages
 cannot be pooled or described as replications, and that both branch histories
@@ -55,37 +55,58 @@ non-saturated primary families. The v4 band is rejected and permits no further
 measurement, so the next step is not more Phase 2 implementation — that code is
 already written and gated. It is a regime that can actually carry a contrast.
 
+**v5.1 is that preregistration, and it is now frozen** on
+`research/tgsa-v5-1-unified-programme`. It has *not* been executed. Stage 0
+apparatus qualification is prepared and costed, but it cannot start until the
+human operator supplies `--attest-no-prior-outcome-inspection`. That flag
+records a *human* attestation that no nondevelopment outcome was inspected
+before the prospective lock; the contract must be frozen **before** any
+nondevelopment run, because running first and locking after destroys the
+prospective registration irrecoverably. Every run to date is
+`development_only=true`.
+
 ---
 
 ## 2. Which branch do I use?
 
-**Work on `research/tgsa-phase2a-ci-and-competence`.** It is the canonical
-Phase 2A branch as of 2026-08-31 and contains the entire Phase 1 chain (C1–C5).
-Everything else is either archived, a separate stage that must stay separate, or
-records-only.
+**Work on `research/tgsa-v5-1-unified-programme`.** It is the canonical branch
+as of 2026-09-03 and contains the entire Phase 1 chain plus Phase 2A (C1–C6)
+and the whole v5 chain (C9–C10). Everything else is either archived, a separate
+stage that must stay separate, or records-only.
 
 | Use | Branch |
 |---|---|
-| **Active work** | `research/tgsa-phase2a-ci-and-competence` |
+| **Active work** | `research/tgsa-v5-1-unified-programme` |
 | Separate active stage — never merge into Phase 2A | `research/tgsa-mtp-rineya-complementarity-v1` (Phase 2B) |
 | Parked, third in sequence | `research/tgsa-rineya-pretrained-retrofit` |
 | Records only, no code | `research/tgsa-programme-ledger` |
 | Frozen evidence — tag only, no branch | `archive/tgsa-phase1-v4-regime-rejected` |
-| **Archived — tag only, no branch** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31` |
+| **Archived — tag only, no branch** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31`, `archive/tgsa-v5-competence-execution-superseded-2026-09-03` |
+| **Tagged, retirement proposed — refs still on origin** | `research/tgsa-phase2a-ci-and-competence`, `research/tgsa-v5-competence-and-mechanism` |
 
-GitHub shows exactly four TGSA branches. The other five stages are reachable
-only through annotated tags, all of which are on origin.
+GitHub currently shows six TGSA branches. Four remain once the two proposed
+retirements are approved; the other stages are reachable only through annotated
+tags.
 
 Retiring a ref to a pushed tag is preservation, not deletion — the commit, tree
 and message are unchanged and reachable. Each tag was verified to point at the
-exact commit its branch pointed at, confirmed present on origin, and confirmed
-contained in the active branch before any ref was removed. Trees remain fully
-readable: 4,109–4,202 files each.
+exact commit its branch pointed at and confirmed contained in the active branch
+before any ref was removed. For the two refs proposed on 2026-09-03, containment
+was verified twice over: `merge-base` returns the branch tip itself, and
+`git rev-list --count <tip> ^9106f2e` returns 0.
 
 For the frozen v4 boundary this is also an enforcement mechanism. The contract
 says it must never receive Phase-2 code merges; a branch that does not exist on
 origin cannot be pushed to. A read-only local checkout remains at
-`Chat-Bubble-v4` for convenience — it is not a work surface.
+`Chat-Bubble-v4` for convenience — it is not a work surface. The same now
+applies to `Chat-Bubble-phase2a-next`, which still has the superseded Phase 2A
+branch checked out.
+
+**Tags are safe, but they are not free.** `tgsa/v5_1_programme.py` resolves
+lineage with `cat-file -e <sha>` and `merge-base`, never by branch name, so a
+retired branch breaks nothing — provided the object is present locally. A v5.1
+CI run already failed on exactly this after v4 was retired. Always fetch with
+`--tags` before running any verifier.
 
 ```bash
 git show archive/tgsa-phase1-v3-inconclusive:Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/PHASE1_V3_RESULT.md
@@ -100,38 +121,64 @@ git branch research/tgsa-phase1-identifiability-v3-powered-confirmatory archive/
 ```text
 bef44ce  C1  phase1-model-identifiability-launch-audit    ARCHIVED  archive/tgsa-phase1-launch-audit
    └─ e0063f0  C2  phase1-identifiability-v2-launch-ready ARCHIVED  archive/tgsa-phase1-v2-launch-ready
-        ├─ 04d3c02 ─ C8 rineya-pretrained-retrofit eea4f64  PARKED  parked/tgsa-rineya-retrofit-2026-08-31
+        ├─ 04d3c02 ─ C8 rineya-pretrained-retrofit ef5194b  PARKED  parked/tgsa-rineya-retrofit-2026-08-31 (covers eea4f64 only)
         └─ 6c97ac1  C3  phase1-v3-powered-confirmatory     ARCHIVED  archive/tgsa-phase1-v3-inconclusive
              └─ 8b5737e  C4  phase1-v4-competence-first     FROZEN   archive/tgsa-phase1-v4-regime-rejected
                   ├─ d71b558  C5  phase2-mtp-complementarity  ARCHIVED  archive/tgsa-phase2a-superseded-2026-08-31
-                  │    └─ 188ed21  C6  phase2a-ci-and-competence   <-- ACTIVE, work here
+                  │    └─ de3bd63  C6 phase2a-ci-and-competence  SUPERSEDED  archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03
+                  │         │       C9 v5-competence-execution   SUPERSEDED  archive/tgsa-v5-competence-execution-superseded-2026-09-03
+                  │         │          (same commit — two branch names, one object)
+                  │         └─ b091490  C10 v5-competence-and-mechanism  SUPERSEDED  archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03
+                  │              └─ 9106f2e  C11 v5-1-unified-programme  <-- ACTIVE, work here
                   └─ 49aa961  C7  mtp-rineya-complementarity-v1    ACTIVE (Phase 2B)
 ```
 
-Six of the eight branches are a single linear chain. **C1 through C5 are all
-contained in C6** — verified, not assumed. Only C7 (6 commits) and C8 (13
-commits) hold work outside it, and both are deliberately separate stages.
+The v5 chain is a strict linear extension of the spine, not a set of divergent
+forks: `de3bd63` → `b091490` (+5 commits) → `9106f2e` (+1). **C1 through C6,
+C9 and C10 are all contained in C11** — verified, not assumed. Only C7
+(7 commits) and C8 (15 commits) hold work outside it, and both are deliberately
+separate stages.
 
-Five branch names remain: the active Phase 2A branch, Phase 2B, the retrofit,
-this ledger, and the frozen v4 evidence branch. The other four exist only as
-tags. Four worktrees remain, one per live branch, plus the frozen v4 checkout.
+`9106f2e` is one plain commit on `b091490`. It replaced a three-commit bootstrap
+(`26c563b`, `b6a42a6`, `6c94adb`) whose entire diff was ten binary parts plus a
+materialization workflow, so discarding it dropped no real content. Note that
+origin still holds `6c94adb`, which is **not** an ancestor of `9106f2e`: the
+v5.1 push is a non-fast-forward and needs `--force-with-lease`.
 
 ---
 
 ## 4. Stage table
 
-| ID | Branch | Role | MTP semantics | Status | In C6? |
+| ID | Branch | Role | MTP semantics | Status | In C11? |
 |---|---|---|---|---|---|
 | C1 | `…phase1-model-identifiability-launch-audit` | Phase 1 launch audit | — | archived, ref deleted | yes |
 | C2 | `…phase1-identifiability-v2-launch-ready` | Phase 1 v2 | — | archived, ref deleted | yes |
 | C3 | `…phase1-identifiability-v3-powered-confirmatory` | Phase 1 v3 confirmatory | — | **INCONCLUSIVE**, ref deleted | yes |
 | C4 | `…phase1-v4-competence-first` | competence / regime boundary | — | **V4_REGIME_FAMILY_REJECTED**, frozen, tag only | yes |
 | C5 | `…phase2-mtp-complementarity` | Phase 2A predecessor | `sequential_teacher_forced_recursive_v1` | archived 2026-08-31, ref deleted | yes |
-| **C6** | **`…phase2a-ci-and-competence`** | **Phase 2A, canonical** | `sequential_teacher_forced_recursive_v1` | **ACTIVE**, no result yet | — |
+| C6 | `…phase2a-ci-and-competence` | Phase 2A; v5 execution base | `sequential_teacher_forced_recursive_v1` | **SUPERSEDED** 2026-09-03, retirement proposed | yes |
 | C7 | `…mtp-rineya-complementarity-v1` | Phase 2B system factorial | `parallel_independent_offsets_v1` | active, no result yet | no |
 | C8 | `…rineya-pretrained-retrofit` | real Qwen3/Rineya retrofit | — | **PARKED**, sequenced third | no |
+| C9 | `…v5-competence-execution` | v5 competence execution | — | **SUPERSEDED** 2026-09-03, ref already gone | yes |
+| C10 | `…v5-competence-and-mechanism` | v5 competence + mechanism; v5.1 base | — | **SUPERSEDED** 2026-09-03, retirement proposed | yes |
+| **C11** | **`…v5-1-unified-programme`** | **Phase 1 v5.1 unified programme, canonical** | none at this stage | **ACTIVE**, frozen, no result yet | — |
 
-Worktree paths, exact commits and per-stage results are in the JSON.
+C6 and C9 are the same commit (`de3bd63`) under two branch names. Worktree
+paths, exact commits and per-stage results are in the JSON.
+
+### Test counts across the chain
+
+| stage | commit | collected | README claimed |
+|---|---|---:|---:|
+| C6 / C9 | `de3bd63` | 396 | 396 |
+| C10 | `b091490` | 436 | 396 |
+| C11 | `9106f2e` | 444 | 444 |
+
+All three measured, not asserted. C11's 444 = 436 at C10, plus 4
+programme-contract regressions, plus 4 auto-parametrized
+`test_seed_determinism` cases — one per newly registered source file. The
+`440` that v5.1's own draft carried counted only the first four, which is the
+count drift the materialization corrected.
 
 ### Consolidation of 2026-08-31
 
@@ -148,6 +195,47 @@ table and branch lifecycle, README chain, runbook lineage, programme contract
 stage field, CI trigger). A within-stage rename — no evidence pooled, the
 Phase 2A/2B separation untouched, no registered estimand changed. Two branches
 claiming one stage was itself an evidence-identity risk.
+
+### Consolidation of 2026-09-03
+
+Three branches were claiming the v5 lineage, and the canonical tip was not
+reviewable content. `research/tgsa-v5-competence-execution` was identical to
+C6; `research/tgsa-v5-competence-and-mechanism` was its strict descendant; and
+`research/tgsa-v5-1-unified-programme` held a *bootstrap* rather than the
+programme — ten binary parts under `.v51-bootstrap/` plus a `contents:write`
+workflow that reassembled a tarball, verified it, and force-pushed a
+materialized commit.
+
+That workflow failed three times, and the last failure was **not scientific**.
+In run `33700347537` all 444 tests, contract verification, schema validation and
+the probe-plus-qualification smoke chain passed, and it printed *"bootstrap
+validation passed for the exact final v5.1 tree"* — then died on
+`git diff --check`, because `V5_1_UNIFIED_PROGRAMME.md` lines 3 and 4 end in two
+trailing spaces (Markdown hard breaks).
+
+It was replaced rather than repaired. The opaque blob made the content
+unreviewable in the diff and had already accreted an inline CI string-patch
+hack. The package was reassembled from both the git blobs and the working tree,
+both matching sha256
+`b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a`, and the 15
+real files were committed plainly on `b091490` as `9106f2e`. The 16th packaged
+file, `.v51-bootstrap/materialize.sh`, was bootstrap machinery and was dropped.
+Two corrections were applied fail-closed on exactly one occurrence each
+(`440 tests` → `444 tests`; `records 440 tests` → `records 444 tests`), and the
+two trailing-space line endings were stripped after confirming no other line in
+the package carried trailing whitespace.
+
+Verified before hand-off: 444 tests passed; the contract schema validated;
+`verify_v5_1_programme_contract.py` passed with all ten checks green; the
+verification report validated against its schema; the development-only probe and
+qualification smoke chain both returned `status=complete` and exit `0`; and
+`git diff --check b091490..HEAD` is clean.
+
+Three annotated tags were created and the two surviving superseded refs were
+proposed for retirement. Nothing is pushed. **Ordering matters:**
+`verify_programme_ledger.py` resolves every stage commit locally, so this ledger
+refresh must not reach origin before `9106f2e`, or C11's commit will not resolve
+in a fresh clone and the provenance check will fail.
 
 ---
 
@@ -206,18 +294,27 @@ No promotion is authorized.
 
 ## 6. Facts that span the branches
 
-- All eight descend from `bef44ce` and share the Phase-1 chain and the PART 11
-  reporting standard with `OBSERVED` / `SUPPORTED` / `HYPOTHESIS` marking.
+- Every implementation branch descends from `bef44ce` and shares the Phase-1
+  chain and the PART 11 reporting standard with `OBSERVED` / `SUPPORTED` /
+  `HYPOTHESIS` marking. This ledger is the one exception — an orphan with no
+  shared history.
+- **The v5 chain introduced no new MTP semantics.** v5 and v5.1 qualify the
+  apparatus first; `mtp.enabled` is `false` in the v5 plans, on the stated
+  ground that no auxiliary future-prediction objective may shape the
+  trajectory before the apparatus is qualified.
 - **C7 and C8 share a near-identical retrofit codebase.** Of 27 co-modified
   files, only three differ (`pyproject.toml`, `rineya_tgsa/__init__.py`,
   `tests/test_retrofit_correctness.py`). C8 is authoritative: 59 retrofit files
   against C7's 37. This makes promotion-order step 7 a small job.
 - **The retrofit tree and the lab tree are near-disjoint.** The spine carries
   zero retrofit files; C8 carries a stale 84-file lab against the spine's 147,
-  missing the v3 final result, the v4 rejection, and all Phase 2 work.
+  missing the v3 final result, the v4 rejection, all Phase 2 work and the
+  whole v5/v5.1 programme.
 - **The programme contract is stage-neutral.** It defines both `phase2a` and
   `phase2b`, and the verifier routes on `study_kind`, so C6 and C7 carry
-  byte-identical copies rather than divergent forks.
+  byte-identical copies rather than divergent forks. C11 adds a *second*,
+  separate contract (`v5_1_programme_contract.json`) that pins six SHAs and
+  keeps the two Phase 2 causal identities apart by construction.
 - Checkpoints are excluded programme-wide. `*.pt` / `*.pth` are gitignored and
   the repository tracks zero of them.
 
@@ -228,12 +325,29 @@ No promotion is authorized.
 1. **No competence-qualified regime exists.** This is the single blocking gate
    for the whole programme. No Phase 2 confirmatory run is authorized until a new
    preregistration produces a `GO` on learnable, non-saturated primary families.
-2. **Promotion-order step 7 is not started** — the port manifest reconciling
+2. **Stage 0 apparatus qualification is prepared and costed but not run.** It
+   cannot start until the human operator supplies
+   `--attest-no-prior-outcome-inspection`. Running first and locking after would
+   destroy the prospective registration irrecoverably.
+3. **`9106f2e`, three archive tags and this ledger refresh are unpushed** and
+   await approval. The v5.1 push needs `--force-with-lease` and must land before
+   this ledger, for the ordering reason in section 4.
+4. **Two remote refs are tagged and proposed for retirement but still exist on
+   origin:** `research/tgsa-phase2a-ci-and-competence` and
+   `research/tgsa-v5-competence-and-mechanism`.
+5. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-3. **C8's `CANDIDATE_LEDGER.md` routing table still names the old Phase 2A
-   branch.** C8 is parked, so this is stale-on-purpose until the hold lifts;
-   refresh it as part of lifting the hold, not before.
+6. **Two C8 documents name branches that are going away.** Its
+   `CANDIDATE_LEDGER.md` routing table still names the old Phase 2A branch, and
+   its `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — now names
+   `research/tgsa-phase2a-ci-and-competence`, which is itself being retired. C8
+   is parked, so both are stale-on-purpose; refresh them as part of lifting the
+   hold, not before.
+
+Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
+bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
+2026-08-31.
 
 Closed on 2026-08-31: the C5/C6 designation conflict; C5's divergence from the
 Phase 2A lineage; the unpushed backlog; and the ledger's own ambiguity, which is
@@ -258,7 +372,10 @@ branch and commit, never this path.
 
 - `imported/phase2b/` — 3 documents from C7 at `49aa961`
 - `imported/retrofit/` — 11 documents plus `candidate_ledger.json` and its
-  schema from C8 at `eea4f64`
+  schema from C8, at `eea4f64` except `PHASE2A_PREREQUISITE_HOLD.md`, which
+  was **re-imported at `ef5194b`** on 2026-09-03 (sha256 `44008d5822d6…`)
+  after C8's tip moved and changed it. The superseded `eea4f64` copy hashed
+  `a186a17114…`.
 
 **Not imported:** any source code; the `evidence/phase2_mtp_smoke_local/`
 rehearsal output on C5 (regenerated scratch — CPU, one seed, three updates,
@@ -272,6 +389,11 @@ The ledger is a snapshot, and a stale ledger is worse than none. Refresh it when
 a stage reaches a decision, a branch tip moves in a way that changes a recorded
 result, or an open item closes. Update the JSON first — it holds the hashes and
 commits — then reconcile this document to it.
+
+`verify_programme_ledger.py` resolves every stage commit in the local
+repository, so never push a ledger refresh ahead of the commits it records —
+a stage commit that has not reached origin will not resolve in a fresh clone,
+and the provenance check fails closed.
 
 Do not add implementation code to this branch. If that ever becomes tempting,
 the thing that is actually needed is a port manifest on the target branch.
