@@ -193,3 +193,83 @@ def test_supervision_is_restricted_to_the_answer_token(tok):
         ]
         assert sup == gold_ids, f"expected exactly {gold!r}, got {tok.decode(sup)!r}"
         assert n_default > len(sup), "the default path should supervise more than the answer"
+
+
+def test_suite_is_reproducible_across_processes():
+    """The generator must not depend on PYTHONHASHSEED.
+
+    Seeding used ``tuple.__hash__()`` over a tuple containing strings, which
+    Python randomises per process. Two fresh interpreters produced different
+    gold answers and different target keys for the same item id, so the suite
+    was not reproducible and the recorded fingerprint could not be regenerated.
+    This runs the generator in a subprocess with an explicit, different
+    PYTHONHASHSEED and requires byte-identical output.
+    """
+    import os
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    src = str(Path(__file__).resolve().parents[1] / "src")
+    code = (
+        "import sys; sys.path.insert(0, %r)\n" % src
+        + "from rineya_fwa.loading import load_tokenizer\n"
+          "from rineya_fwa.data_longctx import build_position_suite_v2\n"
+          "tok = load_tokenizer()\n"
+          "it = build_position_suite_v2(tok, lengths=[512], positions=(0.5,), n_per_cell=1,\n"
+          "                             n_decoys=8, seed=101, split='eval', hops=2)[0]\n"
+          "print(it['answer'], it['target_key'], len(it['messages'][1]['content']))\n"
+    )
+    outs = []
+    for hashseed in ("0", "12345"):
+        env = dict(os.environ, PYTHONHASHSEED=hashseed, PYTHONUTF8="1")
+        r = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True, env=env)
+        assert r.returncode == 0, r.stderr[-2000:]
+        outs.append(r.stdout.strip())
+    assert outs[0] == outs[1], f"suite depends on PYTHONHASHSEED: {outs[0]!r} vs {outs[1]!r}"
+
+
+def test_arm_b_is_horizon_invariant_but_arm_c_is_not():
+    """Arm B has no retention horizon to match; arm C does.
+
+    With ``recurrent=False`` the state is zeroed every token, so the scan
+    collapses to ``m_t = (x_t . q_t) * (eta (*) v_t)`` and eta is a per-channel
+    constant: changing beta/lambda rescales the output by a scalar, which the
+    trained projection absorbs. That makes a "B-short" arm redundant, and it
+    means comparing C-short against a long-horizon arm B is NOT confounded by
+    the horizon.
+    """
+    import torch
+
+    from rineya_fwa.falcon2 import FWAConfig, FastWeightBlock
+
+    def pair(recurrent):
+        torch.manual_seed(0)
+        s = FastWeightBlock(FWAConfig(hidden_size=64, n_kv_heads=4, rank=8,
+                                      recurrent=recurrent, beta_raw_init=0.0,
+                                      lambda_raw_init=-2.0))
+        torch.manual_seed(0)
+        lg = FastWeightBlock(FWAConfig(hidden_size=64, n_kv_heads=4, rank=8,
+                                       recurrent=recurrent, beta_raw_init=-1.1,
+                                       lambda_raw_init=-5.9))
+        torch.manual_seed(7)
+        s.P.weight.data.normal_(0, 0.05)
+        lg.load_state_dict(s.state_dict(), strict=False)
+        lg.beta_raw.data.fill_(-1.1)
+        lg.lambda_raw.data.fill_(-5.9)
+        return s, lg
+
+    h = torch.randn(2, 12, 64)
+    valid = torch.ones(2, 12, dtype=torch.bool)
+
+    s, lg = pair(False)
+    with torch.no_grad():
+        a, b = s(h, valid).flatten(), lg(h, valid).flatten()
+    k = float((a @ b) / (a @ a))
+    assert float((b - k * a).norm() / b.norm()) < 1e-5, "arm B should be a pure rescaling"
+
+    s, lg = pair(True)
+    with torch.no_grad():
+        a, b = s(h, valid).flatten(), lg(h, valid).flatten()
+    k = float((a @ b) / (a @ a))
+    assert float((b - k * a).norm() / b.norm()) > 1e-2, "arm C's horizon must actually matter"

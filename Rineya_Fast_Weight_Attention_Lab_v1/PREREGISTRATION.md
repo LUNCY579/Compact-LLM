@@ -567,3 +567,79 @@ exactly why the pairing must be within seed.
 **Revised position on section 14:** no claim about interference *mechanism* from
 this run. A replicated interference *cost* for recurrence, at p = 0.0625 per
 seed, is reportable as suggestive and not as established.
+
+---
+
+# Amendment 10 — a reproducibility bug, a corrected claim, and a cancelled sweep
+
+An adversarial design review of the layer pilot, run before any of its compute
+was spent, found three things. Two are defects in work already reported.
+
+## 1. The suite generator was not reproducible
+
+`data_longctx.py` seeded every item from `tuple.__hash__()` over a tuple
+containing strings. Python randomises string hashing per process, so **identical
+arguments produced a different suite in every interpreter**. Verified: two fresh
+processes returned different gold answers and different target keys for the same
+item id.
+
+**Blast radius, stated precisely:**
+
+- **P2b's internal validity is intact.** A single process built the suite once
+  and scored every arm against those same items, so all paired contrasts — the
+  C-vs-B nulls, the interference costs, every number in `RESULTS_P2B.md` — are
+  sound. Nothing in the P2b conclusion changes.
+- **P2b is not reproducible.** Re-running generates different items and the
+  recorded fingerprint `dcdf2b6f1e7a5d06` cannot be regenerated.
+- The eval-resume cache keyed on that fingerprint could never have hit across
+  processes. It was inert, not wrong.
+- The layer pilot's premise — "same generator arguments as P2b, so the
+  fingerprint matches and every number is directly comparable" — was **false**.
+
+Fixed with a blake2b-based seed; three fresh processes now agree exactly.
+Regression test: `test_suite_is_reproducible_across_processes`.
+
+## 2. Arm B has no retention horizon — correcting Amendment 6's framing
+
+I claimed a matched "B-short" was needed because P2b's arm B carried the long
+horizon, making "C-short 163 vs B 159" differ in horizon *and* recurrence.
+
+**That was wrong.** With `recurrent=False` the state is zeroed every token and
+the scan collapses to `m_t = (x_t . q_t) * (eta (*) v_t)`, where eta is a
+per-channel constant. Changing the horizon rescales arm B's output by a scalar,
+which the trained projection absorbs. Measured: cosine 1.00000000, residual
+2e-7 — a pure rescaling by k = 0.507. For arm C the same change gives cosine
+0.951, residual 0.31, so the horizon genuinely matters there.
+
+Consequences: training a B-short would have yielded ~zero information, and the
+existing **C-short vs B comparison (4/0 discordant, p = 0.125) was never
+confounded**. It stands as reported. Regression test:
+`test_arm_b_is_horizon_invariant_but_arm_c_is_not`.
+
+## 3. The layer sweep as designed is cancelled
+
+The pilot reused the P2b suite, on which the *trained* control scores 159/168.
+Amendment 3 requires 6 clean discordant wins for p < 0.05; P2b's measured C-vs-B
+discordance was 3 and 4 **in total**. So arm C would have to fix at least 6 of
+B's at most 9 residual errors and break none, at every placement, with one seed.
+
+**Four nulls were close to certain regardless of whether placement matters** —
+the same compressed-range defect Amendment 6 already recorded, inherited by
+reusing the same instrument. Spending 9 GPU-hours (the review's estimate; my
+"~6" was 50-60 % low) to buy a foregone conclusion is not worth doing.
+
+Two further design faults, both mine: `mid/arm_C` duplicates the existing
+`arm_Cshort/seed_11` artifact field-for-field (~0.9 GPU-h of recomputation), and
+the script emitted `C_vs_B_distributed` beside the single-layer contrasts with
+raw totals and no parameter count, inviting a cross-placement comparison that is
+invalid because the distributed arm has 3x the parameters.
+
+**Replaced by a zero-training layer probe**, costing minutes rather than hours:
+sweep all 28 layers with an untrained block at fixed alpha and measure the
+contribution fraction and recurrent state norm. If the profile is flat, a trained
+sweep cannot be justified and the layer question is answered cheaply in the
+negative. If it is peaked, the trained arms go where the evidence points, and the
+suite is rebuilt against a *trained* control first so the contrast has headroom.
+
+Nothing in P2b's decision changes. The NO-GO stands as recorded, still
+explicitly qualified as "at layer 14".

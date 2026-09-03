@@ -37,6 +37,7 @@ Nothing here reads a sealed source.
 
 from __future__ import annotations
 
+import hashlib
 import itertools
 import json
 import random
@@ -78,6 +79,24 @@ UNITS = (
 
 # Interference battery categories, per the experiment brief section 14.
 INTERFERENCE_CATEGORIES = ("A", "B", "C", "D", "E", "F", "G")
+
+
+def _stable_seed(*parts: Any) -> int:
+    """Process-stable seed from arbitrary parts, including strings.
+
+    ``tuple.__hash__()`` over a tuple containing str is randomised per process by
+    PYTHONHASHSEED, so the previous seeding produced a DIFFERENT suite in every
+    process for identical arguments. Verified: two fresh interpreters returned
+    different gold answers and different target keys for the same item id.
+
+    Consequence for the completed P2b run: its internal validity is intact,
+    because a single process built the suite once and scored every arm against
+    those same items -- the paired contrasts are sound. But the run is not
+    reproducible, and the recorded suite fingerprint cannot be regenerated. See
+    PREREGISTRATION Amendment 10.
+    """
+    blob = "".join(repr(x) for x in parts).encode("utf-8")
+    return int.from_bytes(hashlib.blake2b(blob, digest_size=8).digest(), "big") & 0xFFFFFFFF
 
 
 @lru_cache(maxsize=1)
@@ -309,8 +328,7 @@ def make_position_item(
     hops: int = 1,
 ) -> dict[str, Any]:
     rng = random.Random(
-        (seed, idx, target_tokens, round(position * 1000), split, key_mode, hops).__hash__()
-        & 0xFFFFFFFF
+        _stable_seed(seed, idx, target_tokens, round(position * 1000), split, key_mode, hops)
     )
     codes = list(single_token_codes())
     rng.shuffle(codes)
@@ -434,7 +452,7 @@ def make_interference_item(
     seed: int,
     n_candidates: int = 32,
 ) -> dict[str, Any]:
-    rng = random.Random((seed, category, idx, target_tokens).__hash__() & 0xFFFFFFFF)
+    rng = random.Random(_stable_seed(seed, category, idx, target_tokens))
     codes = list(single_token_codes())
     rng.shuffle(codes)
     keys = _keys(rng, 40)
