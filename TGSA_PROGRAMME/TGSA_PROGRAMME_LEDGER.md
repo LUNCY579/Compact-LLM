@@ -93,7 +93,7 @@ and message are unchanged and reachable. Each tag was verified to point at the
 exact commit its branch pointed at and confirmed contained in the active branch
 before any ref was removed. For the two refs proposed on 2026-09-03, containment
 was verified twice over: `merge-base` returns the branch tip itself, and
-`git rev-list --count <tip> ^9106f2e` returns 0.
+`git rev-list --count <tip> ^fd6e20f` returns 0.
 
 For the frozen v4 boundary this is also an enforcement mechanism. The contract
 says it must never receive Phase-2 code merges; a branch that does not exist on
@@ -129,21 +129,20 @@ bef44ce  C1  phase1-model-identifiability-launch-audit    ARCHIVED  archive/tgsa
                   │         │       C9 v5-competence-execution   SUPERSEDED  archive/tgsa-v5-competence-execution-superseded-2026-09-03
                   │         │          (same commit — two branch names, one object)
                   │         └─ b091490  C10 v5-competence-and-mechanism  SUPERSEDED  archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03
-                  │              └─ 9106f2e  C11 v5-1-unified-programme  <-- ACTIVE, work here
+                  │              └─ fd6e20f  C11 v5-1-unified-programme  <-- ACTIVE, work here
                   └─ 49aa961  C7  mtp-rineya-complementarity-v1    ACTIVE (Phase 2B)
 ```
 
 The v5 chain is a strict linear extension of the spine, not a set of divergent
-forks: `de3bd63` → `b091490` (+5 commits) → `9106f2e` (+1). **C1 through C6,
+forks: `de3bd63` → `b091490` (+5 commits) → `fd6e20f` (+1). **C1 through C6,
 C9 and C10 are all contained in C11** — verified, not assumed. Only C7
 (7 commits) and C8 (15 commits) hold work outside it, and both are deliberately
 separate stages.
 
-`9106f2e` is one plain commit on `b091490`. It replaced a three-commit bootstrap
+`fd6e20f` is one plain commit on `b091490`, and it is what origin now holds,
+with CI green (run `33774170876`). It replaced a three-commit bootstrap
 (`26c563b`, `b6a42a6`, `6c94adb`) whose entire diff was ten binary parts plus a
-materialization workflow, so discarding it dropped no real content. Note that
-origin still holds `6c94adb`, which is **not** an ancestor of `9106f2e`: the
-v5.1 push is a non-fast-forward and needs `--force-with-lease`.
+materialization workflow, so discarding it dropped no real content.
 
 ---
 
@@ -173,7 +172,7 @@ paths, exact commits and per-stage results are in the JSON.
 | C5 | `d71b558` | 350 | 349 |
 | C6 / C9 | `de3bd63` | 396 | 396 |
 | C10 | `b091490` | 436 | 396 |
-| C11 | `9106f2e` | 444 | 444 |
+| C11 | `fd6e20f` | 444 | 444 |
 
 All four measured, not asserted. C11's 444 = 436 at C10, plus 4
 programme-contract regressions, plus 4 auto-parametrized
@@ -219,7 +218,7 @@ unreviewable in the diff and had already accreted an inline CI string-patch
 hack. The package was reassembled from both the git blobs and the working tree,
 both matching sha256
 `b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a`, and the 15
-real files were committed plainly on `b091490` as `9106f2e`. The 16th packaged
+real files were committed plainly on `b091490` as `fd6e20f`. The 16th packaged
 file, `.v51-bootstrap/materialize.sh`, was bootstrap machinery and was dropped.
 Two corrections were applied fail-closed on exactly one occurrence each
 (`440 tests` → `444 tests`; `records 440 tests` → `records 444 tests`), and the
@@ -232,11 +231,19 @@ verification report validated against its schema; the development-only probe and
 qualification smoke chain both returned `status=complete` and exit `0`; and
 `git diff --check b091490..HEAD` is clean.
 
+**Package hash integrity is not package correctness.** The sha256-verified
+package shipped two latent defects, and `fd6e20f` fixes both: the plan schema
+listed `famili_roles` in its `required` array, so `family_roles` was never
+actually enforced, and `tgsa-v5.yml` resolved `${{ runner.temp }}` in a
+job-level `env:` block before runner allocation, leaving `ARTIFACT_ROOT` and
+`PROGRAMME_REPORT` empty. Three scripts also needed the exec bit
+`materialize.sh` applied with `chmod +x`.
+
 Three annotated tags were created and the two surviving superseded refs were
-proposed for retirement. Nothing is pushed. **Ordering matters:**
-`verify_programme_ledger.py` resolves every stage commit locally, so this ledger
-refresh must not reach origin before `9106f2e`, or C11's commit will not resolve
-in a fresh clone and the provenance check will fail.
+tagged for retirement, deferred until CI is confirmed green on the materialized
+tree. **Ordering matters:** `verify_programme_ledger.py` resolves every stage
+commit locally, so this ledger refresh must not reach origin before `fd6e20f` —
+an ordering now satisfied, since v5.1 landed first.
 
 ---
 
@@ -330,16 +337,14 @@ No promotion is authorized.
    cannot start until the human operator supplies
    `--attest-no-prior-outcome-inspection`. Running first and locking after would
    destroy the prospective registration irrecoverably.
-3. **`9106f2e`, three archive tags and this ledger refresh are unpushed** and
-   await approval. The v5.1 push needs `--force-with-lease` and must land before
-   this ledger, for the ordering reason in section 4.
-4. **Two remote refs are tagged and proposed for retirement but still exist on
+3. **Two remote refs are tagged and proposed for retirement but still exist on
    origin:** `research/tgsa-phase2a-ci-and-competence` and
-   `research/tgsa-v5-competence-and-mechanism`.
-5. **Promotion-order step 7 is not started** — the port manifest reconciling
+   `research/tgsa-v5-competence-and-mechanism`. Deferred by decision until CI is
+   confirmed green on the materialized tree.
+4. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-6. **Two C8 documents name branches that are going away.** Its
+5. **Two C8 documents name branches that are going away.** Its
    `CANDIDATE_LEDGER.md` routing table still names the old Phase 2A branch, and
    its `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — now names
    `research/tgsa-phase2a-ci-and-competence`, which is itself being retired. C8

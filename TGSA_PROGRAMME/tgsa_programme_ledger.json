@@ -22,7 +22,7 @@
   },
   "lineage": {
     "root_commit": "bef44ce",
-    "shape": "near-linear chain; two side branches diverge at 04d3c02 and 8b5737e. The v5 chain extends the spine linearly: de3bd63 -> b091490 -> 9106f2e.",
+    "shape": "near-linear chain; two side branches diverge at 04d3c02 and 8b5737e. The v5 chain extends the spine linearly: de3bd63 -> b091490 -> fd6e20f.",
     "note": "C1..C6 and C9..C10 are fully contained in research/tgsa-v5-1-unified-programme, which is now the spine tip. Only the Phase 2B (C7) and retrofit (C8) branches hold commits outside that chain."
   },
   "stages": [
@@ -289,8 +289,8 @@
     {
       "id": "C11",
       "branch": "research/tgsa-v5-1-unified-programme",
-      "commit": "9106f2e",
-      "upstream": "ahead of origin by 1; origin still holds the superseded 3-commit bootstrap (6c94adb)",
+      "commit": "fd6e20f",
+      "upstream": "in sync with origin",
       "archive_tag": null,
       "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v51",
       "role": "Phase 1 v5.1 unified programme. THE CANONICAL ACTIVE BRANCH and PR review surface, redesignated 2026-09-03. A prospectively frozen staged research programme.",
@@ -314,12 +314,15 @@
         "configs/v5_1_programme_contract.json and its three evidence schemas",
         "tgsa/v5_1_programme.py (resolves lineage by SHA, never by branch name)",
         "scripts/verify_v5_1_programme_contract.py, phase1_v5_1_qualify.py, select_phase1_v5_1.py",
-        "tests/test_v5_1_programme_contract.py (4 programme-contract regressions)"
+        "tests/test_v5_1_programme_contract.py (4 programme-contract regressions)",
+        "phase1_v5_plan.schema.json: required key typo famili_roles -> family_roles",
+        ".github/workflows/tgsa-v5.yml: runner-temporary paths initialized after runner allocation"
       ],
       "test_count_derivation": "444 = 436 at C10 + 4 programme-contract regressions + 4 auto-parametrized test_seed_determinism cases, one per newly registered source file. Measured, not asserted.",
       "pooling": "preserves separate Phase 2A and Phase 2B causal identities; sequential_teacher_forced_recursive_v1 and parallel_independent_offsets_v1 outputs must never be pooled or called replications",
       "authorization_state": "the contract is frozen but NOT yet locked against a nondevelopment run: --attest-no-prior-outcome-inspection records a HUMAN operator's attestation and has not been given. Every run so far is development_only=true.",
-      "note": "work here. Materialized as one plain reviewable commit on C10, replacing a .v51-bootstrap ten-part binary blob plus a contents:write materialization workflow that had failed three times -- the last on `git diff --check`, over two Markdown hard-break trailing spaces, after all 444 tests and every verifier had already passed. The package was reassembled and verified to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a before use."
+      "note": "work here. Materialized as one plain reviewable commit on C10, replacing a .v51-bootstrap ten-part binary blob plus a contents:write materialization workflow that had failed three times -- the last on `git diff --check`, over two Markdown hard-break trailing spaces, after all 444 tests and every verifier had already passed. The package reassembled to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a and contained 16 files; 15 are real content and the 16th, .v51-bootstrap/materialize.sh, was bootstrap machinery and was dropped. Beyond the package this commit also fixes two latent defects the package itself shipped: the plan schema listed `famili_roles` in its required array, so it never actually required `family_roles`, and tgsa-v5.yml resolved ${{ runner.temp }} in a job-level env block before runner allocation, leaving ARTIFACT_ROOT and PROGRAMME_REPORT empty. Package hash integrity is not package correctness.",
+      "ci": "green: run 33774170876, 'TGSA Phase 1 v5 apparatus qualification', success in 2m13s on 2026-09-03"
     }
   ],
   "shared_facts": [
@@ -470,13 +473,13 @@
     "frozen_evidence": "archive/tgsa-phase1-v4-regime-rejected -- tag only, no branch on origin. A branch that does not exist cannot be pushed to, which is the strongest form of the contract's no-Phase-2-merges rule.",
     "branches_visible_on_github": 6,
     "archived_branch_refs_deleted_2026_09_03": {
-      "note": "research/tgsa-v5-competence-execution was already absent from origin when this snapshot was taken. The other two are tagged and PROPOSED for deletion pending the operator's approval; until then they still exist on origin. All three tips are strict ancestors of C11, so no deletion can orphan an object. Restore with: git branch <name> <tag>",
+      "note": "research/tgsa-v5-competence-execution was already absent from origin when this snapshot was taken. The other two are tagged and PROPOSED for deletion, deferred by decision until CI is confirmed green on the materialized tree; until then they still exist on origin. All three tips are strict ancestors of C11 (fd6e20f), so no deletion can orphan an object. Restore with: git branch <name> <tag>",
       "tags": [
         "archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03 -> de3bd63",
         "archive/tgsa-v5-competence-execution-superseded-2026-09-03 -> de3bd63",
         "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03 -> b091490"
       ],
-      "status": "tags created locally; NOT yet pushed; no remote ref deleted yet"
+      "status": "tags created locally and pushed to origin; no remote ref deleted"
     },
     "branches_visible_on_github_after_proposed_retirement": 4,
     "lineage_objects_must_stay_fetchable": "configs/v5_1_programme_contract.json pins six SHAs -- 0538faf (the phase1_v5_plan.json blob), 49aa961, 8b5737e, b091490, de3bd63 and ef5194b -- and tgsa/v5_1_programme.py resolves them with `cat-file -e` and `merge-base`, never by branch name. Always fetch with --tags before running any verifier: a v5.1 CI run already failed on exactly this after v4 was retired to a tag."
@@ -506,13 +509,12 @@
   "open_items": [
     "no competence-qualified regime exists, so no Phase 2 confirmatory run is authorized; this remains the single blocking gate for the whole programme",
     "Stage 0 apparatus qualification is prepared and costed but NOT run. It cannot start until the human operator supplies --attest-no-prior-outcome-inspection: the contract must be frozen before any nondevelopment run, and running first would destroy the prospective registration irrecoverably",
-    "9106f2e, the three archive tags and this ledger refresh are unpushed and await approval; the v5.1 push needs --force-with-lease and must land before this ledger",
-    "two remote refs are tagged and proposed for retirement but still exist on origin: research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism",
+    "two remote refs are tagged and proposed for retirement but still exist on origin: research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism. Deferred by decision until CI is confirmed green on the materialized tree",
     "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
     "C8's CANDIDATE_LEDGER.md routing table still names the old Phase 2A branch, and its PHASE2A_PREREQUISITE_HOLD.md now names research/tgsa-phase2a-ci-and-competence, which is itself being retired. C8 is parked, so both are stale-on-purpose until the hold lifts; refresh them as part of lifting the hold, not before"
   ],
   "consolidation_2026_09_03": {
-    "materialization": "9106f2e replaced the v5.1 bootstrap. origin's tip 6c94adb was a three-commit bootstrap carrying ten binary parts under .v51-bootstrap/ plus .github/workflows/tgsa-v5-1-bootstrap.yml, a contents:write workflow that reassembled a tarball, verified it, and force-pushed a materialized commit. It failed three times. The final failure was not scientific: in run 33700347537 all 444 tests, contract verification, schema validation and the probe+qualification smoke chain passed and it printed 'bootstrap validation passed for the exact final v5.1 tree', then died on `git diff --check` because V5_1_UNIFIED_PROGRAMME.md lines 3 and 4 end in two trailing spaces (Markdown hard breaks).",
+    "materialization": "fd6e20f replaced the v5.1 bootstrap. origin's tip 6c94adb was a three-commit bootstrap carrying ten binary parts under .v51-bootstrap/ plus .github/workflows/tgsa-v5-1-bootstrap.yml, a contents:write workflow that reassembled a tarball, verified it, and force-pushed a materialized commit. It failed three times. The final failure was not scientific: in run 33700347537 all 444 tests, contract verification, schema validation and the probe+qualification smoke chain passed and it printed 'bootstrap validation passed for the exact final v5.1 tree', then died on `git diff --check` because V5_1_UNIFIED_PROGRAMME.md lines 3 and 4 end in two trailing spaces (Markdown hard breaks).",
     "why_replaced_not_repaired": "the opaque blob made the content unreviewable in the diff and had already accreted an inline CI string-patch hack. With the package verified, the 15 real files were committed plainly instead.",
     "package_provenance": "the ten parts reassembled to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a from both the git blobs and the working tree, containing 16 files. 15 are real content; the 16th, .v51-bootstrap/materialize.sh, was bootstrap machinery and was dropped.",
     "corrections_applied": [
@@ -528,7 +530,8 @@
       "archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03 -> b091490"
     ],
     "ledger_refresh": "two stage tips had moved since the 2026-08-31 snapshot and were refreshed: C6 4caace5 -> de3bd63 and C8 eea4f64 -> ef5194b. C8's advance changed an imported record, so imported/retrofit/PHASE2A_PREREQUISITE_HOLD.md was re-imported at ef5194b (sha256 44008d5822d6...).",
-    "pushed": "nothing. 9106f2e, the three archive tags and this ledger refresh are all local, awaiting the operator's approval. The v5.1 push is a non-fast-forward: origin holds 6c94adb, which is not an ancestor of 9106f2e, so it needs --force-with-lease.",
-    "ordering_constraint": "verify_programme_ledger.py resolves every stage commit locally, so this ledger refresh must not be pushed before 9106f2e, or C11's commit will not resolve in a fresh clone and the provenance check will fail."
+    "pushed": "v5.1 is on origin as fd6e20f with CI green (run 33774170876). The three archive tags and this ledger refresh follow. No remote ref has been deleted: retirement of research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism is deferred until after CI is confirmed green on the materialized tree.",
+    "ordering_constraint": "verify_programme_ledger.py resolves every stage commit locally, so this ledger refresh must not reach origin before fd6e20f. That ordering is now satisfied: v5.1 landed first.",
+    "defects_found_beyond_the_package": "the sha256-verified package shipped two latent defects, both fixed in fd6e20f and neither detectable from the hash: `famili_roles` in the plan schema's required array (so family_roles was never enforced), and a job-level env block resolving ${{ runner.temp }} before runner allocation. Three scripts also needed the exec bit that materialize.sh had applied with chmod +x."
   }
 }
