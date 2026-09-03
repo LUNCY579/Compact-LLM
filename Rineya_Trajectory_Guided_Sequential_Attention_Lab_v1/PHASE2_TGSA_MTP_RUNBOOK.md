@@ -1,215 +1,308 @@
-# TGSA Phase 2 × MTP runbook
+# TGSA v5.1 Staged Runbook
 
-This runbook executes the implemented development workflow. It deliberately does
-not bypass the Phase-1 v4 competence gate or evaluate the Phase-2 test split.
+This is the operator path for `research/tgsa-v5-1-unified-programme`. It replaces
+older wording that treated a v4 competence `GO` as possible. V4 is frozen as a
+rejected regime boundary; all new apparatus work begins with v5.1.
 
-## 1. Branch and environment
+## 0. Non-negotiable operating rules
 
-Expected lineage:
+- Keep the checkout clean before every v5.1 wrapper invocation.
+- Place evidence outside the repository. Untracked evidence inside the checkout
+  intentionally fails the clean-worktree gate.
+- Never edit `configs/phase1_v5_plan.json` in place. Its exact Git blob is part
+  of the prospective registration.
+- A scientific `NO_GO` exits zero after a complete valid run. Read the verified
+  verdict; do not interpret the process exit code as scientific success.
+- Do not open a sealed mechanism, Rineya, or wall-clock bank during apparatus
+  qualification.
+- Phase 2A and Phase 2B use different MTP semantics and evidence roots.
 
-```text
-research/tgsa-phase1-v4-competence-first
-  8b5737e260b5478427b8bb033cffa394a5f3fc5d
-    └── research/tgsa-phase2a-ci-and-competence
-```
-
-From the repository root on PowerShell:
+## 1. Checkout and install
 
 ```powershell
-$Lab = "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1"
+git fetch origin --prune --tags
+git switch research/tgsa-v5-1-unified-programme
+git pull --ff-only origin research/tgsa-v5-1-unified-programme
+
+git status --short
+cd Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
 python -m pip install --upgrade pip
-python -m pip install -e ".\$Lab[dev]"
-python -m pytest ".\$Lab\tests\test_mtp.py" -q --tb=short
+python -m pip install -e ".[dev]"
 ```
 
-Linux/macOS equivalent:
+`git status --short` must print nothing.
 
-```bash
-LAB=Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
-python -m pip install --upgrade pip
-python -m pip install -e "./${LAB}[dev]"
-python -m pytest "./${LAB}/tests/test_mtp.py" -q --tb=short
-```
-
-The complete historical TGSA suite should also remain green:
+## 2. Verify the frozen programme before any run
 
 ```powershell
-python -m pytest ".\$Lab\tests" -q --tb=short
+python scripts/verify_v5_1_programme_contract.py `
+  --contract configs/v5_1_programme_contract.json `
+  --repo-root .. `
+  --output "$env:TEMP\tgsa_v5_1_programme_verification.json"
 ```
 
-## 2. Run the fixed eight-cell rehearsal
+Required result: `passed: true`. This verifies the exact source-plan blob, clean
+checkout, complete pinned lineage, and the distinct Phase 2A/Phase 2B semantic
+identities. It does not evaluate model quality.
 
-PowerShell:
+## 3. Optional development smoke
+
+The smoke plan is development-only and can certify only software/evidence
+closure.
 
 ```powershell
-$Root = "evidence\phase2_mtp_smoke_local"
-Remove-Item $Root -Recurse -Force -ErrorAction SilentlyContinue
+$SmokeRoot = Join-Path $env:TEMP "tgsa_v5_1_smoke"
+Remove-Item -Recurse -Force $SmokeRoot -ErrorAction SilentlyContinue
 
-python ".\$Lab\scripts\phase2_tgsa_mtp_rehearsal.py" `
-  --config ".\$Lab\configs\phase2_tgsa_mtp_smoke.json" `
-  --dataset-dir "$Root\dataset" `
-  --output-dir "$Root\study" `
-  --repo-root "."
+python scripts/phase1_v5_1_qualify.py `
+  --contract configs/v5_1_programme_contract.json `
+  --plan configs/phase1_v5_smoke.json `
+  --stage probe `
+  --rung S1 `
+  --output-dir "$SmokeRoot\probe" `
+  --repo-root ..
+
+python scripts/verify_phase1_v5.py `
+  --plan configs/phase1_v5_smoke.json `
+  --report "$SmokeRoot\probe\probe_report.json"
+
+python scripts/phase1_v5_1_qualify.py `
+  --contract configs/v5_1_programme_contract.json `
+  --plan configs/phase1_v5_smoke.json `
+  --stage qualification `
+  --rung S1 `
+  --exposure SE1 `
+  --output-dir "$SmokeRoot\qualification" `
+  --repo-root ..
+
+python scripts/verify_phase1_v5.py `
+  --plan configs/phase1_v5_smoke.json `
+  --report "$SmokeRoot\qualification\qualification_report.json"
 ```
 
-Linux/macOS:
+Expected scope: development-only reports, no mechanism or Rineya authorization.
 
-```bash
-ROOT=evidence/phase2_mtp_smoke_local
-rm -rf "${ROOT}"
-python "${LAB}/scripts/phase2_tgsa_mtp_rehearsal.py" \
-  --config "${LAB}/configs/phase2_tgsa_mtp_smoke.json" \
-  --dataset-dir "${ROOT}/dataset" \
-  --output-dir "${ROOT}/study" \
-  --repo-root .
-```
+## 4. Prospective operator attestation
 
-The command is intentionally a **rehearsal**. The bundled config sets
-`confirmatory=false`, uses CPU, one seed, three update steps, and evaluates only
-the development split.
-
-## 3. Expected artifact tree
+The nondevelopment wrapper requires:
 
 ```text
-phase2_mtp_smoke_local/
-├── dataset/
-│   ├── dataset_manifest.json
-│   ├── train.jsonl
-│   ├── dev.jsonl
-│   └── test.jsonl
-└── study/
-    ├── phase2_report.json
-    └── runs/
-        └── <tgsa-arm>__mtp_<mode>/
-            └── seed_<n>/
-                ├── final_model.pt
-                ├── training.jsonl
-                ├── predictions_dev.jsonl
-                └── run_manifest.json
+--attest-no-prior-outcome-inspection
 ```
 
-The test file is materialized and hash-sealed to pin the split, but this runner
-never opens it for evaluation. There must be no `predictions_test*.jsonl` under
-the Phase-2 evidence root.
+Use the flag only when this statement is true:
 
-## 4. Mechanical acceptance checks
+> No nondevelopment outcome produced under the locked v5 plan was inspected
+> before the prospective v5.1 lock.
 
-A valid rehearsal must show all of the following:
+If it is not true, stop. Create a newly reviewed amendment with fresh decisions
+and evidence roots rather than retroactively calling the existing plan
+preregistered.
 
-1. every requested cell finishes;
-2. all cells in a seed have one identical MTP-head initialization hash;
-3. `dormant`, `backbone`, and `trajectory` cells within a TGSA arm have identical
-   backbone initialization hashes;
-4. ordinary next-token logits agree across MTP modes at initialization;
-5. the auxiliary-only audit gives a nonzero MTP-head gradient;
-6. every trajectory-conditioned cell gives a nonzero gradient on TGSA's existing
-   control tensor;
-7. dormant MTP parameters do not enter the training objective;
-8. fixed-step training completes with finite losses;
-9. reports validate against `phase2_mtp_run.schema.json` and
-   `phase2_mtp_report.schema.json`;
-10. the top-level decision remains `smoke_only` and efficiency fields remain
-    explicitly non-gating.
+## 5. Capacity prerequisite
 
-The dedicated GitHub Actions workflow performs these checks automatically and
-uploads the rehearsal bundle.
+Choose an evidence root outside the checkout:
 
-## 5. Read the development report correctly
-
-The report answers four separate questions:
-
-1. `answer_accuracy` / `answer_nll`: did task behavior change?
-2. `mtp_horizons`: can the auxiliary head predict held-out future tokens at each
-   trained horizon?
-3. `answer_horizons`: can the answer be predicted earlier, rather than merely
-   learning prompt formatting?
-4. `teacher_forced_future_prefix`: how many consecutive future tokens are
-   correct when the preceding future token is teacher-forced?
-
-The fourth is a quality/feasibility surrogate only. It excludes target
-verification, KV-cache mutation, rollback, sampling, and draft overhead, so it
-must never be reported as speculative speed.
-
-The two most informative interaction keys are:
-
-```text
-mtp_x_trajectory_mechanism
-trajectory_readout_specificity
+```powershell
+$Root = "D:\TGSA_Evidence\v5_1"
+$Plan = "configs/phase1_v5_plan.json"
+$Contract = "configs/v5_1_programme_contract.json"
 ```
 
-A positive rehearsal number is not a result. It is only evidence that the
-estimand is wired and available for later power planning.
+Run `C1` first:
 
-## 6. Confirmatory fail-closed check
+```powershell
+python scripts/phase1_v5_1_qualify.py `
+  --contract $Contract `
+  --plan $Plan `
+  --stage probe `
+  --rung C1 `
+  --output-dir "$Root\probe_C1" `
+  --repo-root .. `
+  --attest-no-prior-outcome-inspection
 
-Copying the smoke config and changing only `confirmatory` to `true` must fail. A
-valid confirmatory config additionally requires:
+python scripts/verify_phase1_v5.py `
+  --plan $Plan `
+  --report "$Root\probe_C1\probe_report.json"
+```
 
-```json
-"registration": {
-  "status": "frozen",
-  "phase1_competence_report": "<path-to-current-GO-report>"
+Read `probe_report.json` and `verification.json` together.
+
+- If `C1` is verified `GO`, do not run `C2` or `C3`.
+- If `C1` is verified `NO_GO`, run `C2` with otherwise identical commands.
+- Run `C3` only after verified `NO_GO` at both `C1` and `C2`.
+- If `C3` is also `NO_GO`, stop the registered ladder. Do not add `C4`, more
+  steps, another seed, or a new family under this registration.
+
+Freeze the first passing rung using every probe report up to that rung, in
+registered order. Example for a `C2` pass:
+
+```powershell
+python scripts/select_phase1_v5_1.py `
+  --contract $Contract `
+  --repo-root .. `
+  capacity `
+  --plan $Plan `
+  --report "$Root\probe_C1\probe_report.json" `
+  --report "$Root\probe_C2\probe_report.json" `
+  --output "$Root\frozen_apparatus_band.json"
+```
+
+The frozen band cannot authorize a mechanism test by itself.
+
+## 6. Complete exposure qualification
+
+After a passing capacity rung is frozen, run **all** four exposures for that
+same rung. The example below assumes `C2`.
+
+```powershell
+foreach ($Exposure in @("E1", "E2", "E3", "E4")) {
+  $Out = "$Root\qualification_C2_$Exposure"
+
+  python scripts/phase1_v5_1_qualify.py `
+    --contract $Contract `
+    --plan $Plan `
+    --stage qualification `
+    --rung C2 `
+    --exposure $Exposure `
+    --frozen-band "$Root\frozen_apparatus_band.json" `
+    --output-dir $Out `
+    --repo-root .. `
+    --attest-no-prior-outcome-inspection
+
+  python scripts/verify_phase1_v5.py `
+    --plan $Plan `
+    --report "$Out\qualification_report.json"
 }
 ```
 
-The report must pass the current Phase-1 competence loader. Missing, malformed,
-obsolete-schema, or `NO_GO` evidence stops execution before either the output
-root or dataset is created.
+Do not select the highest score. Apply the registered resource-order rule only
+after the complete verified grid exists:
 
-Do not manufacture a `GO`, substitute the v4 pilot mean, or relax the gate for
-Phase 2. The v4 pilot explicitly found a mixture of converged and truncated
-runs.
-
-## 7. First real development run after Phase-1 competence
-
-After the registered v4 competence run returns `GO`:
-
-1. retain the same competence-certified task/model regime;
-2. calibrate a small, outcome-blind MTP grid, for example:
-
-```text
-max_horizon:      2, 3, 4
-loss_weight:      0.05, 0.10, 0.20
-transition_rank:  8, 16, 32
+```powershell
+python scripts/select_phase1_v5_1.py `
+  --contract $Contract `
+  --repo-root .. `
+  exposure `
+  --plan $Plan `
+  --frozen-band "$Root\frozen_apparatus_band.json" `
+  --report "$Root\qualification_C2_E1\qualification_report.json" `
+  --report "$Root\qualification_C2_E2\qualification_report.json" `
+  --report "$Root\qualification_C2_E3\qualification_report.json" `
+  --report "$Root\qualification_C2_E4\qualification_report.json" `
+  --output "$Root\selected_apparatus_exposure.json"
 ```
 
-3. select by minimum absolute competence across all required cells—not by a
-   favorable learned-delta contrast;
-4. verify that every required cell remains competent and no primary family is
-   saturated;
-5. estimate realized paired variance and set the seed count;
-6. freeze cells, thresholds, estimator, test-bank hash, and one-evaluation
-   barrier;
-7. only then run the sealed Phase-2 test evaluation.
+A selected apparatus exposure still supports no TGSA mechanism claim.
 
-The advanced `raw_delta`, `qkv_conditioned`, `predictor_corrector`, and `full`
-arms should be run under the selected MTP setting as a secondary full-ladder
-screen, or separately powered if they acquire primary status.
+## 7. MTP-free mechanism stage
 
-## 8. Rineya-family checkpoint retrofit
+A verified apparatus `GO` licenses preparation—not execution—of a separate
+MTP-free mechanism preregistration. Freeze before dispatch:
 
-The TinyLM workflow is a mechanism gate. A family-model implementation should
-start from the selected Supa/Rineya checkpoint and preserve its RoPE, GQA, cache,
-tokenizer, quantization, and tied-head contracts.
+- selected capacity and exposure;
+- `cascade`, `history_control`, `learned_delta`, `replay_control`, and
+  `deranged_control`;
+- the primary, serial-depth, and alignment estimands;
+- new seeds and a sealed bank;
+- paired initialization and matched training dose;
+- stop rules and multiplicity handling.
 
-Recommended order:
+No MTP loss may shape this stage. A mechanism `NO_GO` is carried forward
+honestly; it does not prevent the independent system-utility lane, but it blocks
+mechanism interpretation downstream.
 
-1. attach parameter-matched MTP modules without TGSA conditioning and prove
-   target alignment, loss, and gradients;
-2. expose the production TGSA control coordinate without enabling full
-   quadratic telemetry;
-3. add a compact readout at selected layers and verify no ordinary-logit change
-   at installation;
-4. train `dormant`, `backbone`, and `trajectory` cells from byte-identical model
-   and optimizer states;
-5. evaluate quality and horizon acceptance potential before writing custom
-   decoding kernels;
-6. implement recursive drafting plus an exact fixed-shape target verifier;
-7. test cache commit, rejection rollback, EOS, sampling, batch, and context
-   boundary behavior;
-8. benchmark accepted tokens per verifier call, draft cost, target cost, TTFT,
-   TPOT, decode tokens/s, VRAM, GPU utilization, and output parity.
+## 8. Phase 2A trajectory-MTP bridge
 
-A quality gain without a timed verifier is a quality result. A faster draft head
-without end-to-end target speed is a microbenchmark. Neither alone establishes
-that MTP compensates for TGSA's sequential inference cost.
+Use a separate branch/evidence root and semantic identity:
+
+```text
+study_kind = mechanism_bridge
+mtp_semantics = sequential_teacher_forced_recursive_v1
+```
+
+Required conditions are `dormant`, `backbone`, and `trajectory` with identical
+MTP capacity. Run gradient modes in the frozen order:
+
+1. `frozen_probe` — primary;
+2. `stop_gradient` — secondary;
+3. `joint` — tertiary co-training utility.
+
+Only one registered TGSA block may expose `control_only` telemetry. The cascade
+control may not receive a trajectory tensor through a side channel. Phase 2A
+cannot support speculative-decoding or wall-clock claims.
+
+## 9. Phase 2B system factorial
+
+Use the independently pinned Phase 2B implementation and a different evidence
+root:
+
+```text
+study_kind = system_factorial
+mtp_semantics = parallel_independent_offsets_v1
+```
+
+The mandatory paired block is:
+
+```text
+parallel_ar
+parallel_mtp
+tgsa_ar
+tgsa_mtp
+```
+
+Do not omit a cell. All cells retain the same MTP structure; AR cells keep it
+dormant and frozen. Preserve:
+
+- within-family exact state;
+- cross-family compatible-tensor identity;
+- real-path main-logit drift tolerance;
+- exact token IDs and termination reason;
+- accepted-prefix order and first-mismatch rollback;
+- registered quality non-inferiority;
+- registered minimum TGSA serial-round reduction;
+- closed artifact verification.
+
+A Phase 2B `GO` is a system result even when the mechanism lane is `NO_GO`.
+It cannot be described as proof that trajectory guidance caused the effect.
+
+## 10. First real Rineya checkpoint
+
+The first real run must use a full source-tree hash and the same four Phase 2B
+cells. Start with a small distributed converted-layer set and adapter-only
+training. Advance only after the previous stage preserves the registered
+baseline:
+
+```text
+adapters -> attention -> converted_layers -> all
+```
+
+A combined `GO` requires initialization drift, exact decode, closed evidence,
+within-scope competence, quality non-inferiority, and serial-round reduction.
+It supports only a checkpoint-scoped conclusion.
+
+## 11. Wall-clock benchmark
+
+Do not time opportunistically and promote the result. Freeze a separate hardware
+protocol after checkpoint qualification. Include warm-up, compilation,
+synchronization, cache behavior, batch/context/generation shape, TTFT, TPOT,
+decode throughput, memory, utilization, repeated trials, and uncertainty.
+
+A serial-round reduction with slower wall-clock is not a speed success. A
+wall-clock improvement with quality outside the registered margin is not a
+combined success.
+
+## 12. Minimum evidence to preserve
+
+For every stage retain:
+
+- exact config and programme-contract hashes;
+- Git commit and clean-tree state;
+- source checkpoint/data/tokenizer hashes where applicable;
+- environment and device identity;
+- paired-initialization audits;
+- fixed final checkpoints and periodic resume state;
+- raw per-example predictions;
+- exact-decoding traces where applicable;
+- competence, analysis, gate-input, gate, and verification reports;
+- the stage-specific claim ceiling.

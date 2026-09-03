@@ -1,9 +1,9 @@
-name: TGSA Phase 1 v5 apparatus qualification
+name: TGSA v5.1 unified programme contract and apparatus smoke
 
 on:
   push:
     branches:
-      - research/tgsa-v5-competence-and-mechanism
+      - research/tgsa-v5-1-unified-programme
     paths:
       - "Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/**"
       - ".github/workflows/tgsa-v5.yml"
@@ -17,28 +17,39 @@ permissions:
   contents: read
 
 concurrency:
-  group: tgsa-v5-${{ github.ref }}
+  group: tgsa-v5-1-${{ github.ref }}
   cancel-in-progress: false
 
 env:
   LAB: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1
   SMOKE_PLAN: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_v5_smoke.json
   REGISTERED_PLAN: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/phase1_v5_plan.json
-  ARTIFACT_ROOT: ci_artifacts/tgsa_phase1_v5_smoke
+  PROGRAMME_CONTRACT: Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1/configs/v5_1_programme_contract.json
+  V5_SOURCE_BRANCH: research/tgsa-v5-competence-and-mechanism
   PYTHONUNBUFFERED: "1"
   TOKENIZERS_PARALLELISM: "false"
 
 jobs:
   contract-and-smoke:
-    name: Unit, schema, and closed-chain smoke rehearsal
+    name: Full suite, frozen programme, and closed-chain smoke
     runs-on: ubuntu-latest
     timeout-minutes: 60
 
     steps:
-      - name: Check out full lineage
+      - name: Check out full pinned lineage
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
+      - name: Fetch every current source branch and immutable archive tag
+        run: |
+          git fetch --prune --tags origin '+refs/heads/*:refs/remotes/origin/*'
+
+      - name: Configure runner-temporary non-evidentiary paths
+        shell: bash
+        run: |
+          echo "ARTIFACT_ROOT=${RUNNER_TEMP}/tgsa_phase1_v5_1_smoke" >> "${GITHUB_ENV}"
+          echo "PROGRAMME_REPORT=${RUNNER_TEMP}/tgsa_v5_1_programme_verification.json" >> "${GITHUB_ENV}"
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -57,17 +68,31 @@ jobs:
         run: |
           python -m pytest "${LAB}/tests" -q --tb=short --durations=20
 
-      - name: Validate registered and smoke plans
+      - name: Validate inherited plans and v5.1 schemas
         run: |
           python "${LAB}/scripts/validate_json_artifact.py" \
             --schema "${LAB}/evidence/phase1_v5_plan.schema.json" \
             --document "${REGISTERED_PLAN}" \
             --document "${SMOKE_PLAN}"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/v5_1_programme_contract.schema.json" \
+            --document "${PROGRAMME_CONTRACT}"
 
-      - name: Run resumable one-hop probe smoke
+      - name: Verify prospective programme and exact source-plan lineage
+        run: |
+          python "${LAB}/scripts/verify_v5_1_programme_contract.py" \
+            --contract "${PROGRAMME_CONTRACT}" \
+            --repo-root "${GITHUB_WORKSPACE}" \
+            --output "${PROGRAMME_REPORT}"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/v5_1_programme_verification.schema.json" \
+            --document "${PROGRAMME_REPORT}"
+
+      - name: Run locked resumable one-hop probe smoke
         run: |
           rm -rf "${ARTIFACT_ROOT}"
-          python "${LAB}/scripts/phase1_v5_qualify.py" \
+          python "${LAB}/scripts/phase1_v5_1_qualify.py" \
+            --contract "${PROGRAMME_CONTRACT}" \
             --plan "${SMOKE_PLAN}" \
             --stage probe \
             --rung S1 \
@@ -86,10 +111,14 @@ jobs:
           python "${LAB}/scripts/validate_json_artifact.py" \
             --schema "${LAB}/evidence/phase1_v5_verification.schema.json" \
             --document "${ARTIFACT_ROOT}/probe/verification.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/v5_1_run_registration.schema.json" \
+            --document "${ARTIFACT_ROOT}/probe/v5_1_registration_verification.json"
 
-      - name: Run three-arm qualification smoke
+      - name: Run locked three-arm qualification smoke
         run: |
-          python "${LAB}/scripts/phase1_v5_qualify.py" \
+          python "${LAB}/scripts/phase1_v5_1_qualify.py" \
+            --contract "${PROGRAMME_CONTRACT}" \
             --plan "${SMOKE_PLAN}" \
             --stage qualification \
             --rung S1 \
@@ -109,8 +138,11 @@ jobs:
           python "${LAB}/scripts/validate_json_artifact.py" \
             --schema "${LAB}/evidence/phase1_v5_verification.schema.json" \
             --document "${ARTIFACT_ROOT}/qualification/verification.json"
+          python "${LAB}/scripts/validate_json_artifact.py" \
+            --schema "${LAB}/evidence/v5_1_run_registration.schema.json" \
+            --document "${ARTIFACT_ROOT}/qualification/v5_1_registration_verification.json"
 
-      - name: Assert smoke claim boundaries
+      - name: Assert v5.1 smoke claim and registration boundaries
         run: |
           python - <<'PY'
           import json
@@ -118,22 +150,38 @@ jobs:
           from pathlib import Path
 
           root = Path(os.environ["ARTIFACT_ROOT"])
-          for relative in ("probe/probe_report.json", "qualification/qualification_report.json"):
-              report = json.loads((root / relative).read_text(encoding="utf-8"))
+          programme = json.loads(Path(os.environ["PROGRAMME_REPORT"]).read_text(encoding="utf-8"))
+          assert programme["passed"] is True
+          expected = programme["programme_sha256"]
+          for directory, report_name in (
+              ("probe", "probe_report.json"),
+              ("qualification", "qualification_report.json"),
+          ):
+              report = json.loads((root / directory / report_name).read_text(encoding="utf-8"))
+              registration = json.loads(
+                  (root / directory / "v5_1_registration_verification.json").read_text(
+                      encoding="utf-8"
+                  )
+              )
               assert report["software_success"] is True
               assert report["status"] == "complete"
               assert report["verdict"] in {"GO", "NO_GO"}
               assert report["authorization"]["mechanism_test"] is False
               assert report["authorization"]["rineya_retrofit"] is False
               assert report["development_only"] is True
-          print("v5 smoke bundles preserve apparatus-only claim boundaries")
+              assert registration["programme_sha256"] == expected
+              assert registration["development_only"] is True
+              assert registration["operator_attestation"]["required"] is False
+          print("v5.1 smoke bundles preserve prospective identity and apparatus-only claims")
           PY
 
-      - name: Upload non-evidentiary smoke bundle
+      - name: Upload non-evidentiary v5.1 smoke bundle
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: tgsa-phase1-v5-smoke-${{ github.run_id }}
-          path: "${{ env.ARTIFACT_ROOT }}"
+          name: tgsa-v5-1-smoke-${{ github.run_id }}
+          path: |
+            ${{ runner.temp }}/tgsa_phase1_v5_1_smoke
+            ${{ runner.temp }}/tgsa_v5_1_programme_verification.json
           if-no-files-found: warn
           retention-days: 14

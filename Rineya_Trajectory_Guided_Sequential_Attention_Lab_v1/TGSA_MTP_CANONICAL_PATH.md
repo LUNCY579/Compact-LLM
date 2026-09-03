@@ -1,173 +1,141 @@
-# Canonical TGSA × MTP programme path
+# Canonical TGSA + MTP Programme Path — v5.1
 
-## Decision
+## Status
 
-The programme keeps the existing branches, but assigns them non-overlapping scientific roles. No additional v5 branch is required and the two MTP histories must not be merged into one implementation namespace.
+`research/tgsa-v5-1-unified-programme` is the coordination branch for the next
+TGSA programme. It starts from `research/tgsa-v5-competence-and-mechanism` at
+`b09149002a7892a87a461af0b3c852ed14842905` and leaves every source branch
+unchanged.
 
-| Stage | Branch | Scientific role | MTP semantics |
-|---|---|---|---|
-| Phase 1 v4 | `research/tgsa-phase1-v4-competence-first` | Frozen competence and regime-selection boundary | none |
-| Phase 2A | `research/tgsa-phase2a-ci-and-competence` | TGSA trajectory-coordinate mechanism identification | `sequential_teacher_forced_recursive_v1` |
-| Phase 2B | `research/tgsa-mtp-rineya-complementarity-v1` | System factorial, exact verified decoding, and real-model integration | `parallel_independent_offsets_v1` |
+The branch is not a monolithic merge of Phase 2A and Phase 2B. Those stages use
+different MTP causal graphs and remain separately identified implementations.
+V5.1 unifies their prerequisites, evidence identity, promotion rules, and claim
+ceilings.
 
-Phase 2A is the canonical next scientific stage because the research priority is TGSA mechanism identification. Phase 2B is downstream and may validate system-level complementarity even if Phase 2A is negative, but it must not reinterpret a system interaction as evidence that TGSA's trajectory coordinate caused the result.
+## Frozen lineage
 
-## Frozen Phase 1 boundary
+| Role | Branch | Commit |
+|---|---|---|
+| Rejected v4 regime boundary | historical branch `research/tgsa-phase1-v4-competence-first`; live tag `archive/tgsa-phase1-v4-regime-rejected` | `8b5737e260b5478427b8bb033cffa394a5f3fc5d` |
+| v5 design/execution source | `research/tgsa-v5-competence-execution` | `de3bd632b491df294f9b8736079bdcbbdd64e4d3` |
+| v5 executable/mechanism source | `research/tgsa-v5-competence-and-mechanism` | `b09149002a7892a87a461af0b3c852ed14842905` |
+| Phase 2A source | `research/tgsa-phase2a-ci-and-competence` | `de3bd632b491df294f9b8736079bdcbbdd64e4d3` |
+| Phase 2B source | `research/tgsa-mtp-rineya-complementarity-v1` | `49aa961265c7b248be5c81244cc5d80d49db13c7` |
+| Pretrained retrofit source | `research/tgsa-rineya-pretrained-retrofit` | `ef5194b36583f31bd59508cfe04aec1f5dcfdaec` |
 
-The v4 registered regime family is rejected:
+The v5 executable/mechanism source contains the v5 design/execution source.
+There is therefore no missing merge between the two v5 branches.
 
-- `direct_lookup` and `pointer_chase` remained inert;
-- `state_update` alone crossed from floor to saturation;
-- equal total sample presentations produced different transition reliability at different effective epochs/data diversity;
-- no TGSA mechanism hypothesis was tested;
-- no further measurement is permitted under the v4 registration.
+## Prospective registration boundary
 
-Therefore supplied old-band Phase-2 configurations are valid only for deterministic mechanics, gradient-path, initialization, schema, integrity, resume, and leakage tests. They are not admissible competence, mechanism, quality, complementarity, or speed evidence.
+The inherited v5 plan remains byte-identical at Git blob
+`0538faf4d2ad142dbce9c408910f9dcbcf1fd064`. Its internal status remains
+`implementation_complete_not_registered`; v5.1 does not rewrite history.
+Instead, `configs/v5_1_programme_contract.json` freezes the reviewed bytes,
+lineage, stage order, and promotion boundaries before nondevelopment execution.
 
-## Why the MTP implementations stay separate
+A nondevelopment v5 run must use `scripts/phase1_v5_1_qualify.py` and include the
+operator attestation that no nondevelopment outcome was inspected before the
+v5.1 lock. If that statement is not true, do not use the flag: create and review
+a new prospective amendment instead.
 
-### Phase 2A: sequential trajectory-conditioned future prediction
+## Stage identities
 
-A later future horizon can consume:
+### V5 apparatus
 
-1. the current causal hidden state;
-2. the previous future-token embedding;
-3. TGSA's existing trajectory or information-matched history coordinate.
+- `study_kind`: `apparatus_qualification`
+- MTP: absent
+- arms: `cascade`, `history_control`, `learned_delta`
+- purpose: find a competent, non-saturated, stable scratch-model regime
+- forbidden interpretation: TGSA mechanism, Rineya quality, serial-round, or
+  wall-clock evidence
 
-Teacher-forced training and recursive inference therefore have distinct conditioning distributions. The design is useful for testing whether the trajectory coordinate contains incremental predictive information, but it is not the canonical deployment verifier.
+### MTP-free mechanism study
 
-### Phase 2B: parallel independent-offset prediction
+- `study_kind`: `mechanism_identification`
+- MTP: absent
+- controls: cascade, history, aligned trajectory, replay, deranged alignment
+- purpose: isolate trajectory alignment from serial depth, history, capacity,
+  and pathway availability
 
-Offsets `2..K` are predicted directly from the same causal hidden state. Future tokens are labels only; one predicted future token is not fed to the next auxiliary head. This supports a clean architecture × MTP factorial and exact target-model block verification, but a positive interaction does not isolate the trajectory coordinate.
+### Phase 2A
 
-Because the causal graphs differ, Phase 2A and Phase 2B outputs cannot be pooled, averaged, or described as replications.
+- `study_kind`: `mechanism_bridge`
+- `mtp_semantics`: `sequential_teacher_forced_recursive_v1`
+- modes: `dormant`, `backbone`, `trajectory`
+- gradient order: `frozen_probe`, `stop_gradient`, `joint`
+- purpose: test incremental future-token information in the registered
+  trajectory coordinate
+- not a speculative-decoding speed experiment
 
-## Required scientific identity
+### Phase 2B
 
-Every configuration, run manifest, checkpoint manifest, matrix, verifier result, and evidence fingerprint must identify:
+- `study_kind`: `system_factorial`
+- `mtp_semantics`: `parallel_independent_offsets_v1`
+- cells: `parallel_ar`, `parallel_mtp`, `tgsa_ar`, `tgsa_mtp`
+- purpose: test exact-decoding quality/serial-round complementarity
+- no mechanism interpretation; no wall-clock inference
+
+### Real Rineya checkpoint qualification
+
+- retains the complete Phase 2B four-cell block;
+- adds source-checkpoint hashing, real-dtype initialization drift, exact decode,
+  within-scope competence, registered quality, serial-round, and closed-evidence
+  gates;
+- may support only checkpoint-scoped conclusions.
+
+### Wall-clock benchmark
+
+A separate post-qualification preregistration. Serial target-round reduction is
+never accepted as a substitute.
+
+## Evidence separation
+
+The following are evidence-integrity requirements, not documentation advice:
+
+1. Phase 1, Phase 2A, Phase 2B, real-checkpoint, and wall-clock artifacts use
+   distinct evidence roots and schema identities.
+2. Checkpoints are not promoted across stages without a manifest recording the
+   originating stage and scope.
+3. Task, model, objective, competence, and environment scope hashes must match.
+4. Development evidence cannot certify confirmatory execution.
+5. A sealed bank is single-use for the preregistration that first opens it.
+6. Phase 2A and Phase 2B evidence may not be pooled or described as
+   replications.
+7. A system-level `GO` after a mechanism `NO_GO` is permitted, but mechanism
+   interpretation remains forbidden.
+
+## Promotion graph
 
 ```text
-study_kind
-mtp_semantics
-required_ancestor_commit
-source_branch
-source_commit
-development_only
-confirmatory
-registration_status
-phase1_regime_status
-obsolete_regime
-task_scope_sha256
-model_scope_sha256
-objective_scope_sha256
-competence_scope_sha256
-unique_train_examples
-sample_presentations
-optimizer_steps
-microbatch_size
-gradient_accumulation
-effective_epochs
-device_fingerprint
-environment_lock_sha256
-study_fingerprint
-cell_fingerprint
+v5 apparatus GO
+       |
+       +--> MTP-free mechanism GO --> Phase 2A GO --> mechanism-interpretable Rineya lane
+       |
+       +--> within-scope pretrained competence --> Phase 2B GO --> system-utility Rineya lane
+                                                                    |
+                                                                    +--> wall-clock benchmark
 ```
 
-Allowed semantic identifiers in this programme are:
+The two downstream lanes answer different questions. A system-utility result
+cannot be used to rescue or reinterpret a negative mechanism result.
+
+## Canonical entry points
 
 ```text
-sequential_teacher_forced_recursive_v1
-parallel_independent_offsets_v1
+scripts/verify_v5_1_programme_contract.py
+scripts/phase1_v5_1_qualify.py
+scripts/select_phase1_v5_1.py
 ```
 
-A missing or mismatched identifier is an evidence-integrity failure, not a documentation warning.
+The lower-level v5 scripts remain available for development smoke and historical
+reproduction. Nondevelopment apparatus execution and selection use the v5.1
+wrappers so the prospective lock is attached before any evidence root is
+created.
 
-## Competence and qualification gates
+## Present claim ceiling
 
-Two gates are distinct:
-
-1. **External programme prerequisite** — confirms the predecessor scientific rationale and ancestry.
-2. **Within-study qualification** — confirms that every primary cell on the actual Phase-2 task/model/objective scope is competent, non-saturated, sufficiently generalizing, and reliable across seeds.
-
-An external Phase-1 report may never replace within-study qualification when Phase 2 changes the generator, families, difficulty band, depth, objective, tokenizer, split, or metric.
-
-## Exposure contract
-
-At minimum every study records:
-
-```text
-unique_train_examples
-sample_presentations
-optimizer_steps
-microbatch_size
-gradient_accumulation
-effective_epochs = sample_presentations / unique_train_examples
-```
-
-Calibration varies data diversity and sample presentations as separate axes. Effective epochs are a required descriptor and calibration variable, not a universal transition law; architecture, objective, and task changes can move the transition.
-
-## Initialization contract
-
-Evidence reports separate booleans/metrics for:
-
-- main causal-LM path neutrality;
-- auxiliary-head output identity where intended;
-- trajectory-control gradient connectivity;
-- dormant-control parameter and initialization matching.
-
-No single field called `initialization_exact` may collapse these distinct claims.
-
-## Cache and conversion contract
-
-The real-model path separates:
-
-1. bitwise conversion identity on the same execution path;
-2. cached-versus-uncached numerical agreement under a locked dependency/backend environment;
-3. exact generated-token, verifier-decision, accepted-prefix, rollback, and final-sequence equality.
-
-Tolerance must not be relaxed merely to make CI green. First lock PyTorch, Transformers, attention backend, dtype, device class, and deterministic settings; then diagnose any remaining drift.
-
-## Promotion order
-
-1. Keep the v4 result branch frozen.
-2. Repair and keep both v5 branch CI suites green.
-3. Write a new competence preregistration with learnable, non-saturated primary families, explicit depth/capacity controls, and separate diversity/presentation axes.
-4. Obtain a genuine within-scope competence `GO`.
-5. Run Phase 2A first for trajectory-mechanism identification.
-6. Run Phase 2B for system-level quality and verified serial-round complementarity.
-7. Reconcile the real-model additions against `research/tgsa-rineya-pretrained-retrofit` with a machine-readable port manifest and revalidated prerequisite artifacts.
-8. Make wall-clock claims only after cache-aware end-to-end target/draft timing.
-
-## Branch lifecycle
-
-Live branches:
-
-- `research/tgsa-phase2a-ci-and-competence`: active Phase 2A mechanism branch and PR review surface; never merge into the frozen v4 evidence.
-- `research/tgsa-mtp-rineya-complementarity-v1`: active Phase 2B system branch; downstream of the programme boundary, not a replacement for Phase 2A.
-- `research/tgsa-rineya-pretrained-retrofit`: parked real-model path, third in sequence; anchored at `parked/tgsa-rineya-retrofit-2026-08-31`.
-- `research/tgsa-programme-ledger`: records-only index of programme progress and provenance. An orphan branch — it shares no history with any implementation branch and never receives implementation code.
-
-Retired to tags — no branch on origin:
-
-- `archive/tgsa-phase1-v4-regime-rejected` (`8b5737e`): the **frozen v4 evidence boundary**, formerly `research/tgsa-phase1-v4-competence-first`. It is the programme contract's `required_phase1_commit`. The remote branch was retired on 2026-08-31 precisely because it must never receive Phase-2 code merges — a branch that does not exist on origin cannot be pushed to. The contract's `required_phase1_branch` field is a documentation string; the verifier compares commits, not refs, so nothing breaks. A read-only local checkout is retained at `C:/Users/clclc/BusinessProject/Chat-Bubble-v4` for convenience; it is not a work surface and must not be pushed.
-- `archive/tgsa-phase2a-superseded-2026-08-31` (`d71b558`): archived predecessor of the Phase 2A branch. Carried the Phase 2A role until 2026-08-31; fully contained in `research/tgsa-phase2a-ci-and-competence`.
-- `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-launch-audit`: the Phase 1 chain, all contained in the active branch.
-
-Read any of these with `git show <tag>:<path>`. Restore one with `git branch <name> <tag>` if a working checkout is genuinely needed.
-
-Preserve both branch histories for provenance. Do not delete, squash together, or relabel their artifacts under one generic “TGSA+MTP” identity. Retiring a branch ref to an annotated tag that is pushed to origin is preservation, not deletion: the commit, its tree and its message are unchanged and remain reachable.
-
-### Phase 2A branch redesignation, 2026-08-31
-
-The Phase 2A role moved from `research/tgsa-phase2-mtp-complementarity` to
-`research/tgsa-phase2a-ci-and-competence`, which had grown as an undeclared
-continuation of it: same stage, same `sequential_teacher_forced_recursive_v1`
-semantics, same lineage, but 396 tests against 349, and the sole holder of the
-v5 preregistration, the within-study qualification gate, per-family null
-scoring, and the programme contract. The predecessor's remaining doc
-corrections were merged in, so nothing was stranded.
-
-This is a within-stage rename, not a cross-stage merge. It does not pool
-evidence, does not touch the Phase 2A/2B separation, and does not alter any
-registered estimand. Two branches claiming the same stage was itself an
-evidence-identity risk, which is what this removes.
+The current branch is implementation and protocol evidence only. Real v5
+apparatus evidence, TGSA mechanism evidence, Phase 2A/2B real evidence, Rineya
+quality evidence, and wall-clock evidence remain unrun unless a later immutable
+result bundle says otherwise.
