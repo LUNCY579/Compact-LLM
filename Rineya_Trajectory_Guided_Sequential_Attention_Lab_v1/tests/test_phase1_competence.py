@@ -650,3 +650,119 @@ def test_the_null_is_per_family_not_global() -> None:
     assert report["checks"]["every_primary_family_beats_its_own_null"] is False
     assert any("'pointer_chase'" in r for r in report["reasons"])
     assert not any("'state_update'" in r for r in report["reasons"])
+
+
+#: The null a family whose answer is an in-context candidate actually has.
+#: Measured at 0.13184 for `pointer_chase` on the registered v5 E1 holdout.
+#: `DEFAULT_FAMILY_NULL` above uses the uniform answer space, which is correct
+#: only for families with no candidate set -- the distinction v5 exists to make.
+CANDIDATE_FAMILY_NULL = {"pointer_chase": 0.13184, "state_update": 0.0312}
+
+
+def _one_below_null_arm(name: str) -> ArmCompetence:
+    """An arm whose mean is competent and one of whose three runs is not.
+
+    Every number here is chosen so that EVERY other registered check passes:
+    the mean clears the trivial baseline, the absolute floor, the family null by
+    +0.0302, the NLL bound and the memorization gap, and the seed CV is 0.3498
+    against a bound of 0.35. The only thing wrong with it is that one run sits
+    below chance for what the primary family asks.
+    """
+
+    return ArmCompetence(
+        arm=name,
+        holdout_accuracy=0.16207,
+        seen_accuracy=0.20000,
+        answer_nll=2.0,
+        distinct_predictions=32,
+        per_family_accuracy={"pointer_chase": 0.16207, "state_update": 0.30},
+        per_seed_holdout_accuracy=[0.0966, 0.1948, 0.1948],
+    )
+
+
+def test_a_run_below_its_family_null_is_refused_despite_a_healthy_mean() -> None:
+    """A seed that learned nothing must not be averaged into a passing arm.
+
+    This is the v3 and v4 failure in its last remaining hiding place. The gate
+    corrected the ARM-level comparison to each family's own null, but the
+    per-RUN comparison was left against `minimum_absolute_accuracy` = 0.070 --
+    a global floor placed in v4 against a 0.0377 majority baseline. Measured
+    against the real `pointer_chase` null of 0.13184 that floor is 0.53x chance,
+    so a run at 0.0966 clears it while sitting 0.0352 BELOW chance.
+
+    Without `every_seed_beats_its_family_null` this regime returns GO with an
+    empty `reasons` list, and the arms then compared are mixtures of learners
+    and non-learners in unknown proportion.
+    """
+
+    arms = [_one_below_null_arm(n) for n in ("cascade", "history_control", "learned_delta")]
+    report = _evaluate(arms, family_null=CANDIDATE_FAMILY_NULL)
+
+    checks = report["checks"]
+    assert checks["every_seed_beats_its_family_null"] is False
+    assert report["verdict"] == "NO_GO"
+
+    # The point of the test: every OTHER check passes, so this one is load-bearing.
+    others = {k: v for k, v in checks.items() if k != "every_seed_beats_its_family_null"}
+    assert all(others.values()), f"expected only the seed-null check to fail, got {others}"
+
+    # Including the two that look like they should have caught it.
+    assert checks["competence_is_reliable_across_seeds"] is True
+    assert checks["every_primary_family_beats_its_own_null"] is True
+
+    assert any("below chance" in r or "at or below chance" in r for r in report["reasons"])
+
+
+def test_the_absolute_floor_alone_cannot_detect_a_below_chance_run() -> None:
+    """Pins WHY the check is against the null and not a raised global floor.
+
+    0.0966 clears the registered absolute floor of 0.070 by +0.0266 and is still
+    0.0352 below the family's null. No value of a single global floor is correct
+    for both `pointer_chase` (candidate chance ~0.132) and `state_update`
+    (uniform chance ~0.031) at once, which is exactly why the comparison, not
+    the threshold, had to change.
+    """
+
+    thresholds = _thresholds()
+    worst_run = 0.0966
+    assert worst_run >= thresholds.minimum_absolute_accuracy
+    assert worst_run < CANDIDATE_FAMILY_NULL["pointer_chase"]
+    assert CANDIDATE_FAMILY_NULL["pointer_chase"] > thresholds.minimum_absolute_accuracy
+
+
+def test_the_seed_null_check_fails_closed_without_a_family_null() -> None:
+    """A gate cannot make a comparison it was never given the terms for."""
+
+    report = evaluate_competence(
+        _arms(),
+        thresholds=_thresholds(),
+        trivial_baselines=BASELINES,
+        uniform_answer_nll=UNIFORM_NLL,
+        primary_families=PRIMARY,
+        family_null=None,
+    )
+    assert report["checks"]["every_seed_beats_its_family_null"] is False
+    assert report["verdict"] == "NO_GO"
+
+
+def test_a_regime_whose_every_run_clears_its_null_still_passes() -> None:
+    """The check must not reject a usable regime: it only adds a floor at chance.
+
+    Note the accuracy has to be raised to 0.25 here. The module's default
+    `_competent_arm` sits at 0.094, which clears the uniform null of 0.0312 that
+    `DEFAULT_FAMILY_NULL` supplies but is BELOW the 0.13184 candidate-chance null
+    a family like `pointer_chase` actually has. That fixture is calibrated for a
+    family with no in-context candidate set, and reusing it here would assert
+    the wrong thing.
+    """
+
+    arms = _arms(
+        cascade={"accuracy": 0.25},
+        history_control={"accuracy": 0.25},
+        learned_delta={"accuracy": 0.25},
+    )
+    report = _evaluate(arms, family_null=CANDIDATE_FAMILY_NULL)
+    assert report["checks"]["every_seed_beats_its_family_null"] is True
+    assert report["verdict"] == "GO", report["reasons"]
+    margin = report["detail"]["per_seed_family_null_margin"]["cascade"]
+    assert margin["margin_over_null"] > 0

@@ -320,6 +320,69 @@ def evaluate_competence(
     checks["competence_is_reliable_across_seeds"] = reliability_ok
     detail["per_seed_holdout_accuracy"] = seed_detail
 
+    # The same correction this module already applies at the arm level, applied
+    # at the level the reliability check actually operates on.
+    #
+    # `competence_is_reliable_across_seeds` above compares the worst individual
+    # run to `minimum_absolute_accuracy`, a GLOBAL floor. That floor was
+    # calibrated in v4 against a global majority baseline of 0.0377, where 0.070
+    # was a sane ~1.9x bar. v5 corrected the baseline to each family's own null
+    # -- measured at ~0.1318 for `pointer_chase` -- but the per-run floor was
+    # never re-derived, leaving it at roughly HALF of chance. A run at 0.10 is
+    # below chance for what the primary family actually asks and still clears
+    # 0.070, so a seed that demonstrably learned nothing can be averaged into a
+    # passing arm mean whenever the CV bound happens to hold.
+    #
+    # That is the identical error described at the top of the family-null block:
+    # not a threshold set too low, but the wrong comparison. The module's own
+    # stated contract is that "some runs failing to become competent at all is a
+    # competence problem, and no seed count fixes it". A run at chance has not
+    # become competent, so it is gated here against the family's own null, by
+    # the same registered margin the arm-level check uses.
+    #
+    # This is added rather than substituted: the absolute floor and the CV bound
+    # both still apply unchanged. It can only ever turn a GO into a NO_GO.
+    # `per_seed_holdout_accuracy` is filled from the FIRST primary family (see
+    # `_aggregate_qualification_arms`), so that is the null it must be read
+    # against. Comparing it to any other family's null would repeat the
+    # wrong-comparison error in a new place.
+    if family_null is None or not primary_families:
+        checks["every_seed_beats_its_family_null"] = False
+        if family_null is not None:
+            reasons.append(
+                "no primary family was supplied, so per-run competence cannot be "
+                "read against the null the runs were scored on"
+            )
+    else:
+        seed_family = primary_families[0]
+        primary_null = float(family_null.get(seed_family, 0.0))
+        required = primary_null + thresholds.minimum_family_margin_over_null
+        seed_null_ok = True
+        seed_null_detail: dict[str, dict[str, object]] = {}
+        for arm in arms:
+            values = list(arm.per_seed_holdout_accuracy)
+            worst = min(values) if values else None
+            seed_null_detail[arm.arm] = {
+                "worst_run": worst,
+                "family_null": primary_null,
+                "required_minimum": required,
+                "margin_over_null": (None if worst is None else worst - primary_null),
+            }
+            if worst is None or worst < required:
+                seed_null_ok = False
+                shown = "no runs" if worst is None else f"{worst:.4f}"
+                reasons.append(
+                    f"arm {arm.arm} has an individual run at {shown}, which clears "
+                    f"the {seed_family!r} null {primary_null:.4f} by only "
+                    f"{'n/a' if worst is None else format(worst - primary_null, '+.4f')} "
+                    f"and so falls below the required {required:.4f}. That run is at "
+                    f"or below chance for what the primary family asks; averaging it "
+                    f"into the arm mean would compare mixtures of learners and "
+                    f"non-learners, which is what v3 and v4 each failed on"
+                )
+        checks["every_seed_beats_its_family_null"] = seed_null_ok
+        detail["per_seed_family_null_margin"] = seed_null_detail
+
     verdict = "GO" if all(checks.values()) else "NO_GO"
     return {
         "schema_version": COMPETENCE_SCHEMA_VERSION,

@@ -214,7 +214,19 @@ Every bundle records: `unique_train_examples`, `sample_presentations`,
 
 ## 7. The competence gate
 
-All eight v4 checks are retained unchanged. **One is added**, registered here:
+All eight v4 checks are retained unchanged. **Two are added**, registered here.
+
+> **Amendment, 2026-09-04.** `every_seed_beats_its_family_null` was added on
+> 2026-09-04, after the v5.1 lock but **before any nondevelopment run of this
+> plan**. No nondevelopment outcome existed when it was written and none was
+> inspected. It is **strictly stronger** than what it supplements — it adds a
+> condition and removes none, so it can only ever turn a `GO` into a `NO_GO`,
+> never the reverse. It changes no threshold value, no plan field, and no
+> registered estimand, so `configs/phase1_v5_plan.json` and its locked blob
+> `0538faf4d2ad142dbce9c408910f9dcbcf1fd064` are untouched. Recorded here rather
+> than silently, because a check enforced in code and registered nowhere is an
+> unregistered gate — which `test_the_prereg_gate_table_lists_every_check`
+> enforces, and which is how the omission was caught.
 
 ### `every_primary_family_beats_its_own_null`
 
@@ -239,6 +251,55 @@ The null is **computed from the materialized holdout**, not asserted, and is the
 `copy_last_value`, and the train and eval majority answers. `shortcut_baselines`
 already computed the copy strategies before v4 launched. The defect was never
 that they were unavailable; it was that no gate read them.
+
+### `every_seed_beats_its_family_null`
+
+Every **individual run** must exceed the **primary family's null** by
+`minimum_family_margin_over_null` = **0.030**, on the same family the run was
+scored on (`per_seed_holdout_accuracy` is filled from the first primary family).
+
+This is the correction of §1 applied at the level the reliability check actually
+operates on. `competence_is_reliable_across_seeds` compares the worst individual
+run to `minimum_absolute_accuracy` = **0.070** — a *global* floor. That value was
+placed in v4 against a global majority baseline of **0.0377**, where it was a
+sane ~1.9× bar. v5 replaced that baseline with each family's own null, measured
+at **0.1318** for `pointer_chase` on the registered E1 holdout, but the per-run
+floor was never re-derived. It therefore sits at **0.53× chance**: a run at 0.10
+has learned nothing and still clears it.
+
+That is the identical defect §1 corrects at the arm level — *not a threshold set
+too low, but the wrong comparison* — reproduced one level down. The gate's own
+contract is that **"some runs failing to become competent at all is a competence
+problem, and no seed count fixes it."** A run at chance has not become
+competent, so it is measured against the null, not against a global floor.
+
+*Threshold placement, in the manner of the other registered thresholds:*
+
+* **demonstrated failure:** per-seed `pointer_chase` accuracies of
+  `[0.0966, 0.1948, 0.1948]` give mean 0.16207 and CV 0.3498, so they clear
+  `minimum_family_margin_over_null` on the arm mean and sit inside the CV bound
+  of 0.35 — and the old gate returns `GO`, all checks true and `reasons` empty,
+  with one run **0.0352 below** the family null. Reproduced against the measured
+  E1 null on 2026-09-04. The passing region is not a corner: arm means from
+  0.1618 to 0.2213 admit a worst run as low as 0.0964.
+* **the same 0.030 margin** as `every_primary_family_beats_its_own_null`, so the
+  per-run bar and the per-arm bar are the same bar. A run below the arm-level
+  margin cannot be described as competent while the arm containing it is.
+
+The CV bound does not close this. It separates a *balanced* two-point mixture
+(CV ≈ 0.6) from ordinary dispersion, but a 1-of-3 mixture near the decision
+threshold sits at CV ≈ 0.35 by construction and passes.
+
+**Fail-closed:** if no per-family null is supplied, or no primary family is
+supplied, the check fails — for the same reason
+`every_primary_family_beats_its_own_null` fails closed.
+
+**Why the probe does not already cover this.** The prerequisite probe *does*
+make the correct comparison, requiring the weakest seed to clear the null by
+0.150 (§4). But `probe.arm` is `cascade` alone, at `hops=1`, on a separate
+dataset seed. `history_control` and `learned_delta` are never probed, and they
+are the arms the mechanism contrast is built from. The qualification gate is the
+only place their individual runs are tested at all.
 
 ### `hop_count_modulates_accuracy`
 
