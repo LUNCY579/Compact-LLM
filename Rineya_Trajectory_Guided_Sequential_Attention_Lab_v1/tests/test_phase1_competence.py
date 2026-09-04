@@ -766,3 +766,25 @@ def test_a_regime_whose_every_run_clears_its_null_still_passes() -> None:
     assert report["verdict"] == "GO", report["reasons"]
     margin = report["detail"]["per_seed_family_null_margin"]["cascade"]
     assert margin["margin_over_null"] > 0
+
+
+def test_the_seed_null_check_fails_closed_when_the_primary_family_has_no_null() -> None:
+    """A missing null must not default to 0.0 and quietly lower the bar.
+
+    `family_null.get(family, 0.0)` would put the bar at
+    `minimum_family_margin_over_null` alone -- 0.030 -- which almost any run
+    clears, so the check would certify exactly what it exists to catch. The
+    arm-level check has the same shape; this pins the per-seed one.
+    """
+
+    report = evaluate_competence(
+        _arms(),
+        thresholds=_thresholds(),
+        trivial_baselines=BASELINES,
+        uniform_answer_nll=UNIFORM_NLL,
+        primary_families=PRIMARY,
+        family_null={"state_update": 0.0312},  # pointer_chase deliberately absent
+    )
+    assert report["checks"]["every_seed_beats_its_family_null"] is False
+    assert report["verdict"] == "NO_GO"
+    assert any("no entry in the supplied family_null" in r for r in report["reasons"])

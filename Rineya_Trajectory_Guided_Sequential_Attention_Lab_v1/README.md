@@ -8,7 +8,7 @@ independent parallel projections.
 ## Current status
 
 **TGSA v5.1 is prospectively frozen as a staged research programme on
-`research/tgsa-v5-1-unified-programme`. The laboratory contains 450 tests.**
+`research/tgsa-v5-1-unified-programme`. The laboratory contains 451 tests.**
 
 The branch starts from
 `research/tgsa-v5-competence-and-mechanism` at

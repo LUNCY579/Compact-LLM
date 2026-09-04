@@ -639,10 +639,15 @@ def _train_cell(
                     "optimizer.step() and the step bookkeeping, or part-way through "
                     "the step itself. Re-running resumes from training_state.pt, the "
                     "last periodic checkpoint, which is consistent by construction. "
-                    "Compare optimizer_applied_steps.applied_steps against next_step "
-                    "to see which window it was: equal means the bookkeeping had not "
-                    "run yet, and all_parameters_agree=false means the step itself "
-                    "was torn."
+                    "To read which window it was, compare "
+                    "optimizer_applied_steps.applied_steps with the next_step "
+                    "recorded here. applied_steps == next_step means the snapshot is "
+                    "untorn -- the step bookkeeping had already run, or no step had "
+                    "begun. applied_steps == next_step + 1 is the stale-counter "
+                    "window this file exists for: the optimizer advanced and the "
+                    "bookkeeping did not, so resuming from it would apply that step "
+                    "twice. all_parameters_agree=false means the step itself was "
+                    "torn part-way through, which no bookkeeping can repair."
                 ),
             },
         )

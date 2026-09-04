@@ -353,9 +353,24 @@ def evaluate_competence(
                 "no primary family was supplied, so per-run competence cannot be "
                 "read against the null the runs were scored on"
             )
+    elif primary_families[0] not in family_null:
+        # Fail closed rather than defaulting the null to 0.0. A missing null would
+        # put the bar at `minimum_family_margin_over_null` alone -- 0.030, which
+        # almost any run clears -- and the check would silently certify what it
+        # exists to catch. Not reachable for the registered plan, where the
+        # primary family is always in the materialized holdout, but a default of
+        # 0.0 here is a fail-open path in a gate whose whole contract is to fail
+        # closed on a comparison it was not given the terms for.
+        checks["every_seed_beats_its_family_null"] = False
+        reasons.append(
+            f"family {primary_families[0]!r} carries the per-seed accuracies but has "
+            f"no entry in the supplied family_null mapping "
+            f"({sorted(family_null)}), so per-run competence cannot be measured "
+            f"against the null those runs were scored on"
+        )
     else:
         seed_family = primary_families[0]
-        primary_null = float(family_null.get(seed_family, 0.0))
+        primary_null = float(family_null[seed_family])
         required = primary_null + thresholds.minimum_family_margin_over_null
         seed_null_ok = True
         seed_null_detail: dict[str, dict[str, object]] = {}
