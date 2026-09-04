@@ -877,6 +877,9 @@ def _aggregate_qualification_arms(
                     )
                 ),
                 per_family_accuracy=per_family,
+                # Declare what the per-run numbers below measure, so the gate
+                # reads them against the right null instead of assuming.
+                per_seed_family=primary,
                 per_seed_holdout_accuracy=[
                     _family_metric(
                         cast(

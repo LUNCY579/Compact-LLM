@@ -676,6 +676,7 @@ def _one_below_null_arm(name: str) -> ArmCompetence:
         answer_nll=2.0,
         distinct_predictions=32,
         per_family_accuracy={"pointer_chase": 0.16207, "state_update": 0.30},
+        per_seed_family="pointer_chase",
         per_seed_holdout_accuracy=[0.0966, 0.1948, 0.1948],
     )
 
@@ -731,10 +732,17 @@ def test_the_absolute_floor_alone_cannot_detect_a_below_chance_run() -> None:
 
 
 def test_the_seed_null_check_fails_closed_without_a_family_null() -> None:
-    """A gate cannot make a comparison it was never given the terms for."""
+    """A gate cannot make a comparison it was never given the terms for.
+
+    Only meaningful for an arm that DECLARES which family its per-run scores
+    measure. A pooled arm needs no family null -- it is held to the strongest
+    trivial baseline instead -- so it must not be used to test this.
+    """
 
     report = evaluate_competence(
-        _arms(),
+        _arms(cascade={"per_seed_family": "pointer_chase"},
+              history_control={"per_seed_family": "pointer_chase"},
+              learned_delta={"per_seed_family": "pointer_chase"}),
         thresholds=_thresholds(),
         trivial_baselines=BASELINES,
         uniform_answer_nll=UNIFORM_NLL,
@@ -757,15 +765,16 @@ def test_a_regime_whose_every_run_clears_its_null_still_passes() -> None:
     """
 
     arms = _arms(
-        cascade={"accuracy": 0.25},
-        history_control={"accuracy": 0.25},
-        learned_delta={"accuracy": 0.25},
+        cascade={"accuracy": 0.25, "per_seed_family": "pointer_chase"},
+        history_control={"accuracy": 0.25, "per_seed_family": "pointer_chase"},
+        learned_delta={"accuracy": 0.25, "per_seed_family": "pointer_chase"},
     )
     report = _evaluate(arms, family_null=CANDIDATE_FAMILY_NULL)
     assert report["checks"]["every_seed_beats_its_family_null"] is True
     assert report["verdict"] == "GO", report["reasons"]
     margin = report["detail"]["per_seed_family_null_margin"]["cascade"]
-    assert margin["margin_over_null"] > 0
+    assert margin["margin_over_baseline"] > 0
+    assert margin["per_seed_family"] == "pointer_chase"
 
 
 def test_the_seed_null_check_fails_closed_when_the_primary_family_has_no_null() -> None:
@@ -778,7 +787,9 @@ def test_the_seed_null_check_fails_closed_when_the_primary_family_has_no_null() 
     """
 
     report = evaluate_competence(
-        _arms(),
+        _arms(cascade={"per_seed_family": "pointer_chase"},
+              history_control={"per_seed_family": "pointer_chase"},
+              learned_delta={"per_seed_family": "pointer_chase"}),
         thresholds=_thresholds(),
         trivial_baselines=BASELINES,
         uniform_answer_nll=UNIFORM_NLL,
@@ -787,4 +798,32 @@ def test_the_seed_null_check_fails_closed_when_the_primary_family_has_no_null() 
     )
     assert report["checks"]["every_seed_beats_its_family_null"] is False
     assert report["verdict"] == "NO_GO"
-    assert any("no entry in the supplied family_null" in r for r in report["reasons"])
+    assert any("absent from the supplied mapping" in r for r in report["reasons"])
+
+
+def test_pooled_per_run_scores_are_held_to_the_trivial_baseline() -> None:
+    """The v4-era callers pass POOLED per-run accuracy, not one family's.
+
+    `phase1_v4_competence_run`, `regate_competence_report` and
+    `phase1_v4_pipeline_rehearsal` all fill `per_seed_holdout_accuracy` from the
+    across-family holdout accuracy. Comparing a pooled number against one
+    family's null would be fail-open on this task, because `state_update`
+    saturates while `pointer_chase` sits near chance. An arm that declares no
+    family is therefore measured against the strongest trivial baseline, which
+    is the comparison that number actually supports.
+    """
+
+    report = _evaluate(_arms(), family_null=CANDIDATE_FAMILY_NULL)
+    detail = report["detail"]["per_seed_family_null_margin"]["cascade"]
+    assert detail["per_seed_family"] is None
+    assert detail["baseline"] == max(BASELINES.values())
+    assert "pooled" in detail["comparison_basis"]
+    # 0.090 is the worst default run; the bar is 0.0407 + 0.030.
+    assert report["checks"]["every_seed_beats_its_family_null"] is True
+
+    # And a pooled run below THAT bar is still caught.
+    weak = _evaluate(
+        _arms(cascade={"per_seed_holdout_accuracy": [0.05, 0.094, 0.098]}),
+        family_null=CANDIDATE_FAMILY_NULL,
+    )
+    assert weak["checks"]["every_seed_beats_its_family_null"] is False

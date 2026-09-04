@@ -128,6 +128,24 @@ class ArmCompetence:
     # Held-out accuracy of every individual development run for this arm.
     # Empty means the evidence was never recorded, which fails the gate.
     per_seed_holdout_accuracy: list[float] = field(default_factory=list)
+    #: Which family `per_seed_holdout_accuracy` measures, when it measures one.
+    #:
+    #: Callers disagree, and the difference decides which null those numbers may
+    #: be compared against. `phase1_v5_runner._aggregate_qualification_arms`
+    #: fills them from the FIRST primary family, so they carry that family's
+    #: null. The v4-era callers -- `phase1_v4_competence_run`,
+    #: `regate_competence_report` and `phase1_v4_pipeline_rehearsal` -- fill them
+    #: with POOLED across-family accuracy, which no single family's null
+    #: describes: on this task `state_update` saturates while `pointer_chase`
+    #: sits near chance, so a pooled number compared against the pointer null
+    #: would be fail-open by a wide margin.
+    #:
+    #: Declaring it makes that difference machine-checked instead of an
+    #: assumption in a comment. `None` means pooled, and
+    #: `every_seed_beats_its_family_null` then measures each run against the
+    #: strongest trivial baseline instead -- the comparison that is correct for a
+    #: pooled number -- and records which one it used.
+    per_seed_family: str | None = None
 
     def to_dict(self) -> dict[str, object]:
         return asdict(self)
@@ -342,61 +360,75 @@ def evaluate_competence(
     #
     # This is added rather than substituted: the absolute floor and the CV bound
     # both still apply unchanged. It can only ever turn a GO into a NO_GO.
-    # `per_seed_holdout_accuracy` is filled from the FIRST primary family (see
-    # `_aggregate_qualification_arms`), so that is the null it must be read
-    # against. Comparing it to any other family's null would repeat the
-    # wrong-comparison error in a new place.
-    if family_null is None or not primary_families:
-        checks["every_seed_beats_its_family_null"] = False
-        if family_null is not None:
-            reasons.append(
-                "no primary family was supplied, so per-run competence cannot be "
-                "read against the null the runs were scored on"
+    # Which baseline an individual run must clear depends on what that run's
+    # number MEASURES, and callers differ -- see `ArmCompetence.per_seed_family`.
+    # An arm that declares a family carries that family's null; an arm that
+    # declares none carries a pooled across-family score, which no single
+    # family's null describes, so it is held to the strongest trivial baseline
+    # instead. Both are real comparisons; picking the wrong one would reproduce
+    # the wrong-comparison error this module exists to correct.
+    seed_null_ok = True
+    seed_null_detail: dict[str, dict[str, object]] = {}
+    for arm in arms:
+        values = list(arm.per_seed_holdout_accuracy)
+        worst = min(values) if values else None
+        declared = arm.per_seed_family
+
+        if declared is None:
+            baseline: float | None = strongest_trivial
+            basis = "strongest trivial baseline (per-run scores are pooled)"
+        elif family_null is None:
+            baseline, basis = None, f"{declared!r} null (not supplied)"
+        elif declared not in family_null:
+            # Fail closed rather than defaulting the null to 0.0. A missing null
+            # would put the bar at `minimum_family_margin_over_null` alone --
+            # 0.030, which almost any run clears -- so the check would silently
+            # certify what it exists to catch.
+            baseline, basis = None, (
+                f"{declared!r} null (absent from the supplied mapping "
+                f"{sorted(family_null)})"
             )
-    elif primary_families[0] not in family_null:
-        # Fail closed rather than defaulting the null to 0.0. A missing null would
-        # put the bar at `minimum_family_margin_over_null` alone -- 0.030, which
-        # almost any run clears -- and the check would silently certify what it
-        # exists to catch. Not reachable for the registered plan, where the
-        # primary family is always in the materialized holdout, but a default of
-        # 0.0 here is a fail-open path in a gate whose whole contract is to fail
-        # closed on a comparison it was not given the terms for.
-        checks["every_seed_beats_its_family_null"] = False
-        reasons.append(
-            f"family {primary_families[0]!r} carries the per-seed accuracies but has "
-            f"no entry in the supplied family_null mapping "
-            f"({sorted(family_null)}), so per-run competence cannot be measured "
-            f"against the null those runs were scored on"
+        else:
+            baseline = float(family_null[declared])
+            basis = f"{declared!r} null"
+
+        required = (
+            None if baseline is None
+            else baseline + thresholds.minimum_family_margin_over_null
         )
-    else:
-        seed_family = primary_families[0]
-        primary_null = float(family_null[seed_family])
-        required = primary_null + thresholds.minimum_family_margin_over_null
-        seed_null_ok = True
-        seed_null_detail: dict[str, dict[str, object]] = {}
-        for arm in arms:
-            values = list(arm.per_seed_holdout_accuracy)
-            worst = min(values) if values else None
-            seed_null_detail[arm.arm] = {
-                "worst_run": worst,
-                "family_null": primary_null,
-                "required_minimum": required,
-                "margin_over_null": (None if worst is None else worst - primary_null),
-            }
-            if worst is None or worst < required:
-                seed_null_ok = False
-                shown = "no runs" if worst is None else f"{worst:.4f}"
-                reasons.append(
-                    f"arm {arm.arm} has an individual run at {shown}, which clears "
-                    f"the {seed_family!r} null {primary_null:.4f} by only "
-                    f"{'n/a' if worst is None else format(worst - primary_null, '+.4f')} "
-                    f"and so falls below the required {required:.4f}. That run is at "
-                    f"or below chance for what the primary family asks; averaging it "
-                    f"into the arm mean would compare mixtures of learners and "
-                    f"non-learners, which is what v3 and v4 each failed on"
-                )
-        checks["every_seed_beats_its_family_null"] = seed_null_ok
-        detail["per_seed_family_null_margin"] = seed_null_detail
+        seed_null_detail[arm.arm] = {
+            "worst_run": worst,
+            "per_seed_family": declared,
+            "comparison_basis": basis,
+            "baseline": baseline,
+            "required_minimum": required,
+            "margin_over_baseline": (
+                None if (worst is None or baseline is None) else worst - baseline
+            ),
+        }
+        if baseline is None or required is None:
+            seed_null_ok = False
+            reasons.append(
+                f"arm {arm.arm} carries per-run scores that cannot be measured: the "
+                f"comparison basis is the {basis}, and a gate may not make a "
+                f"comparison it was not given the terms for"
+            )
+        elif worst is None or worst < required:
+            seed_null_ok = False
+            shown = "no runs" if worst is None else f"{worst:.4f}"
+            margin = (
+                "n/a" if worst is None else format(worst - baseline, "+.4f")
+            )
+            reasons.append(
+                f"arm {arm.arm} has an individual run at {shown}, which clears the "
+                f"{basis} of {baseline:.4f} by only {margin} and so falls below the "
+                f"required {required:.4f}. That run is at or below chance for what "
+                f"it was scored on; averaging it into the arm mean would compare "
+                f"mixtures of learners and non-learners, which is what v3 and v4 "
+                f"each failed on"
+            )
+    checks["every_seed_beats_its_family_null"] = seed_null_ok
+    detail["per_seed_family_null_margin"] = seed_null_detail
 
     verdict = "GO" if all(checks.values()) else "NO_GO"
     return {
