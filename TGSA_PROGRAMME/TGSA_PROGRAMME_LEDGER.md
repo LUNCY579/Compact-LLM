@@ -5,7 +5,7 @@ established, where each record lives, and what blocks the next step.
 
 Machine-readable source: [`tgsa_programme_ledger.json`](tgsa_programme_ledger.json)
 
-Generated: 2026-09-03.
+Generated: 2026-09-04.
 
 ---
 
@@ -284,6 +284,42 @@ tree. **Ordering matters:** `verify_programme_ledger.py` resolves every stage
 commit locally, so this ledger refresh must not reach origin before `fd6e20f` —
 an ordering now satisfied, since v5.1 landed first.
 
+### Apparatus review of 2026-09-04
+
+Three adversarial passes were run over the v5 apparatus and then over the fixes
+to it. **Four defects were confirmed, three of them high severity, and no
+existing verifier would have caught any of them.**
+
+| defect | consequence |
+|---|---|
+| per-run floor left at v4's `0.070` | a cell could be certified `GO` with one of three seeds **below** the family null of `0.1318` |
+| interrupt between `optimizer.step()` and its bookkeeping | resume re-applied that step; measured divergence `0b48dd27…` vs `a9d1dadf…` |
+| `select_qualified_exposure` checked no report provenance | the mechanism-study authorization could be issued from foreign or development-only evidence |
+| `CUBLAS_WORKSPACE_CONFIG` in no fingerprint | a resume could silently change CUDA arithmetic |
+
+All four are fixed on `research/tgsa-v5-1-gate-hardening` (`1af0b5a`, five
+commits on `fd6e20f`), which is on origin and **not merged**. C11 itself is
+untouched, so the frozen registration is unchanged pending a merge decision.
+
+**Two things about this are worth carrying forward.**
+
+*Development mode hid two of the four.* `_validate_frozen_band` returns early
+when `development_only` is true, so no smoke run could ever reach the missing
+`--frozen-band`; and the smoke plan's null is low enough that the
+below-chance-seed hole never opened. The escape hatch that makes the apparatus
+testable is the same thing that concealed the defects that only matter in a real
+run.
+
+*The first review reported a clean result for work it had not examined.* It
+returned `confirmed: []` with every candidate counted as refuted. Four refuters
+had in fact died and returned null verdicts, and the tally counted null as
+refuted; two finder dimensions had not run at all. Re-run with unadjudicated
+findings tracked separately, the same review returned the four confirmed defects
+above. A verification harness that cannot distinguish *refuted* from *never
+checked* will report success for whatever it skipped.
+
+---
+
 ---
 
 ## 5. The two results that exist
@@ -380,14 +416,20 @@ No promotion is authorized.
    cannot start until the human operator supplies
    `--attest-no-prior-outcome-inspection`. Running first and locking after would
    destroy the prospective registration irrecoverably.
-3. **Two remote refs are tagged and proposed for retirement but still exist on
+3. **`research/tgsa-v5-1-gate-hardening` (`1af0b5a`) awaits a merge decision
+   into C11.** It fixes the four apparatus defects above and registers one new
+   gate in `PHASE1_V5_PREREGISTRATION.md` §7. **Stage 0 should not run before it
+   lands:** on `fd6e20f` the qualification gate can certify a cell `GO` with a
+   seed below the family null, and an interrupt can silently diverge a resumed
+   cell.
+4. **Two remote refs are tagged and proposed for retirement but still exist on
    origin:** `research/tgsa-phase2a-ci-and-competence` and
    `research/tgsa-v5-competence-and-mechanism`. Deferred by decision until CI is
    confirmed green on the materialized tree.
-4. **Promotion-order step 7 is not started** — the port manifest reconciling
+5. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-5. **Two C8 documents name branches that are going away.** Its
+6. **Two C8 documents name branches that are going away.** Its
    `candidate_ledger.json` names `research/tgsa-phase2a-ci-and-competence` five
    times, three of them `origin/<branch>:<path>` evidence pointers that stop
    resolving if that ref is retired; `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
