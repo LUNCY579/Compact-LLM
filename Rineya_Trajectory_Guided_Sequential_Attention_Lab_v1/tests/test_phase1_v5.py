@@ -25,8 +25,10 @@ from tgsa.phase1_v5 import (
     freeze_band_after_probe,
     hop_count_modulation_diagnostic,
     load_v5_plan,
+    plan_sha256,
     probe_exposure,
     registered_family_null_report,
+    resolve_rung,
     select_qualified_exposure,
     stage_dataset_config,
 )
@@ -106,7 +108,7 @@ def _probe(
             "minimum_seed_runs": 3,
         },
         development_only=False,
-    )
+    ) | {"plan_sha256": plan_sha256(load_v5_plan(FULL_PLAN))}
 
 
 def _arm(name: str, *, direct: float = 0.50) -> ArmCompetence:
@@ -389,6 +391,8 @@ def test_exposure_selection_requires_full_grid_and_uses_resource_order() -> None
         reports.append(
             {
                 "schema_version": V5_QUALIFICATION_REPORT_SCHEMA_VERSION,
+                "plan_sha256": plan_sha256(plan),
+                "development_only": False,
                 "rung_id": "C1",
                 "exposure_id": cell.exposure_id,
                 "verdict": (
@@ -413,3 +417,123 @@ def test_exposure_selection_requires_full_grid_and_uses_resource_order() -> None
             frozen_band=frozen,
             qualification_reports=reports[:-1],
         )
+
+
+# ---------------------------------------------------------------------------
+# Selection provenance: the function that emits
+# AUTHORIZE_MTP_FREE_MECHANISM_STUDY must establish where its evidence came from.
+# ---------------------------------------------------------------------------
+
+
+def _grid_reports(plan, *, verdict: str = "GO", **overrides) -> list[dict[str, object]]:
+    reports = []
+    for cell in exposure_grid(plan):
+        report = {
+            "schema_version": V5_QUALIFICATION_REPORT_SCHEMA_VERSION,
+            "plan_sha256": plan_sha256(plan),
+            "development_only": False,
+            "rung_id": "C1",
+            "exposure_id": cell.exposure_id,
+            "verdict": verdict,
+        }
+        report.update(overrides)
+        reports.append(report)
+    return reports
+
+
+def test_selection_refuses_a_development_only_qualification_report() -> None:
+    """A toy report must not be able to authorize the mechanism study.
+
+    `freeze_band_after_probe` already refused development-only reports; this
+    function accepted any report with a matching schema, rung and exposure, so
+    the two were asymmetric at the point that issues the authorization.
+    """
+
+    plan = load_v5_plan(FULL_PLAN)
+    frozen = freeze_band_after_probe(plan=plan, probe_reports=[_probe(rung="C1", index=0)])
+    with pytest.raises(V5ContractError, match="development-only qualification report"):
+        select_qualified_exposure(
+            plan=plan,
+            frozen_band=frozen,
+            qualification_reports=_grid_reports(plan, development_only=True),
+        )
+
+
+def test_selection_refuses_a_report_from_a_different_plan() -> None:
+    """Evidence must be registered against the plan being selected for."""
+
+    plan = load_v5_plan(FULL_PLAN)
+    frozen = freeze_band_after_probe(plan=plan, probe_reports=[_probe(rung="C1", index=0)])
+    with pytest.raises(V5ContractError, match="different v5 plan"):
+        select_qualified_exposure(
+            plan=plan,
+            frozen_band=frozen,
+            qualification_reports=_grid_reports(plan, plan_sha256="0" * 64),
+        )
+
+
+def test_selection_refuses_a_development_only_plan() -> None:
+    """The smoke plan cannot reach a mechanism-study authorization at all."""
+
+    plan = load_v5_plan(FULL_PLAN)
+    frozen = freeze_band_after_probe(plan=plan, probe_reports=[_probe(rung="C1", index=0)])
+    smoke = load_v5_plan(SMOKE_PLAN)
+    with pytest.raises(V5ContractError, match="development-only plan cannot select"):
+        select_qualified_exposure(
+            plan=smoke,
+            frozen_band=frozen,
+            qualification_reports=_grid_reports(plan),
+        )
+
+
+def test_band_freezing_refuses_a_probe_report_from_a_different_plan() -> None:
+    """A 36-cell grid must not be run against a band frozen from foreign evidence."""
+
+    plan = load_v5_plan(FULL_PLAN)
+    foreign = _probe(rung="C1", index=0) | {"plan_sha256": "0" * 64}
+    with pytest.raises(V5ContractError, match="different v5 plan"):
+        freeze_band_after_probe(plan=plan, probe_reports=[foreign])
+
+
+def test_the_cell_identity_binds_the_cublas_workspace_setting() -> None:
+    """`configure_runtime` only `setdefault`s CUBLAS_WORKSPACE_CONFIG.
+
+    An inherited value therefore wins and selects different cuBLAS GEMM
+    behaviour. Unless it is in the fingerprint, a cell can resume from a
+    checkpoint produced under different CUDA arithmetic and still match.
+    """
+
+    import torch
+
+    from tgsa.phase1_runner import environment_snapshot
+    from tgsa.phase1_v5_runner import _cell_identity
+
+    env = environment_snapshot(torch.device("cpu"))
+    assert "cublas_workspace_config" in env
+
+    plan = load_v5_plan(FULL_PLAN)
+    identity = _cell_identity(
+        plan_hash=plan_sha256(plan),
+        stage="qualification",
+        rung=resolve_rung(plan, "C1"),
+        exposure=exposure_grid(plan)[0],
+        dataset_manifest_sha256="0" * 64,
+        arm="cascade",
+        seed=17,
+        git={"head": "0" * 40},
+        environment={**env, "cublas_workspace_config": ":4096:8"},
+    )
+    assert identity["environment"]["cublas_workspace_config"] == ":4096:8"
+
+    other = _cell_identity(
+        plan_hash=plan_sha256(plan),
+        stage="qualification",
+        rung=resolve_rung(plan, "C1"),
+        exposure=exposure_grid(plan)[0],
+        dataset_manifest_sha256="0" * 64,
+        arm="cascade",
+        seed=17,
+        git={"head": "0" * 40},
+        environment={**env, "cublas_workspace_config": ":16:8"},
+    )
+    assert identity != other, "a different cuBLAS setting must change the fingerprint"

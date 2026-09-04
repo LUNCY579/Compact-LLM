@@ -249,6 +249,13 @@ def environment_snapshot(device: torch.device) -> dict[str, object]:
         if device.type == "cuda"
         else None,
         "cpu_threads": torch.get_num_threads(),
+        # `configure_runtime` sets this with `setdefault`, so a value already in
+        # the environment WINS and silently selects different cuBLAS GEMM
+        # workspace behaviour. Recorded here, and carried into the cell identity,
+        # so a resume under a different setting fails the fingerprint instead of
+        # continuing with different CUDA arithmetic than the checkpoint was
+        # produced under.
+        "cublas_workspace_config": os.environ.get("CUBLAS_WORKSPACE_CONFIG"),
     }
 
 

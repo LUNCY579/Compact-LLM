@@ -82,7 +82,7 @@ attestation that no nondevelopment outcome was inspected before this lock.
 The source README identified an older Phase 2A branch as “this branch” and
 claimed 396 tests while the source suite collected 436. The source CI therefore
 reported 435 passing tests plus one stale-documentation failure. V5.1 updates
-branch identity and records 451 tests: 444 after adding four programme-contract
+branch identity and records 456 tests: 444 after adding four programme-contract
 regressions, four more after registering `every_seed_beats_its_family_null`
 (see PHASE1_V5_PREREGISTRATION.md §7), and two covering interrupt-safe resume.
 

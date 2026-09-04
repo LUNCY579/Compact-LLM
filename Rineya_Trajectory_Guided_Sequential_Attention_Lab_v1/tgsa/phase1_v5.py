@@ -1089,6 +1089,15 @@ def freeze_band_after_probe(
             raise V5ContractError(f"rung {rung.rung_id} has an incompatible probe report")
         if bool(report.get("development_only")):
             raise V5ContractError("development-only report cannot freeze a band")
+        # Symmetric with `select_qualified_exposure`: the band a whole 36-cell
+        # grid is run against must be frozen from probe evidence registered
+        # against this exact plan, not merely from a well-shaped report.
+        if report.get("plan_sha256") != plan_sha256(validated):
+            raise V5ContractError(
+                f"rung {rung.rung_id} probe report was produced from a different "
+                "v5 plan; a band may only be frozen from reports registered "
+                "against this plan"
+            )
         ordered_reports.append(
             {
                 "rung_id": rung.rung_id,
@@ -1175,6 +1184,19 @@ def select_qualified_exposure(
     """Select a qualified exposure only after the complete frozen grid exists."""
 
     validated = validate_v5_plan(source_plan(plan))
+    # This function is what emits AUTHORIZE_MTP_FREE_MECHANISM_STUDY, so it must
+    # establish where its evidence came from. It previously validated the frozen
+    # band's `plan_sha256` but accepted any report carrying a matching
+    # `schema_version`, `rung_id` and `exposure_id` -- so a development-only or
+    # foreign-plan report could reach the authorization. Every other layer of
+    # this apparatus is hash-pinned and fail-closed; this one was not.
+    # `freeze_band_after_probe` already refuses a development-only plan and
+    # development-only reports, and the two are now symmetric.
+    if bool(validated["development_only"]):
+        raise V5ContractError(
+            "development-only plan cannot select a qualified exposure or authorize "
+            "a mechanism study"
+        )
     if frozen_band.get("schema_version") != V5_FROZEN_BAND_SCHEMA_VERSION:
         raise V5ContractError("frozen_band has an incompatible schema")
     if frozen_band.get("plan_sha256") != plan_sha256(validated):
@@ -1190,6 +1212,16 @@ def select_qualified_exposure(
     for report in qualification_reports:
         if report.get("schema_version") != V5_QUALIFICATION_REPORT_SCHEMA_VERSION:
             raise V5ContractError("qualification report has an incompatible schema")
+        if bool(report.get("development_only")):
+            raise V5ContractError(
+                "development-only qualification report cannot authorize a mechanism "
+                "study"
+            )
+        if report.get("plan_sha256") != plan_sha256(validated):
+            raise V5ContractError(
+                "qualification report was produced from a different v5 plan; "
+                "selection may only read reports registered against this plan"
+            )
         if str(report.get("rung_id")) != selected_rung_id:
             raise V5ContractError("qualification report uses a non-frozen capacity rung")
         exposure_id = str(report.get("exposure_id", ""))

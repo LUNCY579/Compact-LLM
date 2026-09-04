@@ -322,6 +322,11 @@ def _cell_identity(
             "cuda_version": environment.get("cuda_version"),
             "gpu_name": environment.get("gpu_name"),
             "platform": environment.get("platform"),
+            # Determines cuBLAS GEMM workspace behaviour, and `configure_runtime`
+            # only `setdefault`s it, so an inherited value wins. Without it in the
+            # identity a cell could resume from a checkpoint produced under
+            # different CUDA arithmetic and still match its fingerprint.
+            "cublas_workspace_config": environment.get("cublas_workspace_config"),
         },
     }
 
