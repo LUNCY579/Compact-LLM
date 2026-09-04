@@ -94,7 +94,8 @@
             -0.0003,
             0.004
           ],
-          "p_gt_0": 0.959
+          "p_gt_0": 0.959,
+          "negative_seeds": "7/20"
         },
         "reason": "no arm was competent; the contrast is uninterpretable",
         "estimator_robustness": "all four sensitivity estimators agree on H1a"
@@ -186,11 +187,11 @@
         "v5 preregistration",
         "within-study qualification gate",
         "per-family null scoring",
-        "README overclaim property guard",
-        "phase2_program_contract (all four files)"
+        "README overclaim property guard"
       ],
       "note": "tip advanced 4caace5 -> de3bd63 after the 2026-08-31 ledger snapshot (one commit: docs repair of a sentence a blanket replace mangled in the v5 prereg). Fully contained in C11: merge-base == de3bd63 and 0 commits outside. Still the value of expected_base_commit in configs/phase1_v5_smoke.json, and one of the six SHAs pinned by configs/v5_1_programme_contract.json, so this object must stay fetchable. A local worktree remains at Chat-Bubble-phase2a-next; it is no longer a work surface. Read through the tag; do not commit to this branch.",
-      "also_known_as": "research/tgsa-v5-competence-execution (C9) pointed at this same commit"
+      "also_known_as": "research/tgsa-v5-competence-execution (C9) pointed at this same commit",
+      "shared_not_unique": "the four phase2_program_contract files are NOT unique to C6: C5 (d71b558) carries all four byte-identically, introduced by 1c14521 before the C5/C6 merge-base 81755bf, and C7 carries them too. What C6 alone held against C5 was PHASE1_V5_PREREGISTRATION.md, tgsa/scope.py and tests/test_scope.py."
     },
     {
       "id": "C7",
@@ -328,7 +329,7 @@
   "shared_facts": [
     "every implementation branch descends from bef44ce and shares the Phase-1 chain and the PART 11 reporting standard with OBSERVED / SUPPORTED / HYPOTHESIS marking; research/tgsa-programme-ledger is the one exception, an orphan with no shared history",
     "all report under the PART 11 standard with OBSERVED / SUPPORTED / HYPOTHESIS marking",
-    "C7 and C8 hold a near-identical retrofit codebase: of 27 co-modified files only 3 differ, and C8 is authoritative (59 files vs C7's 37)",
+    "C7 and C8 hold a near-identical retrofit codebase: of 27 co-modified files only 3 differ, and C8 is authoritative (60 files vs C7's 37)",
     "the retrofit tree and the lab tree are near-disjoint: the spine has 0 retrofit files; C8 carries a stale 84-file lab against the C11 spine's 175",
     "the programme contract is stage-neutral: it defines phase2a and phase2b and the verifier routes on study_kind, so C6 and C7 carry copies that differ only in the phase2a stage's `branch` field -- one line -- rather than being divergent forks. They are NOT byte-identical: 188ed21 moved the Phase 2A designation across six references including that field.",
     "the v5 chain introduced no new MTP semantics: v5 and v5.1 qualify the apparatus, and mtp.enabled is false in the v5 plans"
@@ -503,7 +504,7 @@
       "research/tgsa-phase2-mtp-complementarity -> archive/tgsa-phase2a-superseded-2026-08-31",
       "research/tgsa-phase1-v4-competence-first -> archive/tgsa-phase1-v4-regime-rejected"
     ],
-    "ledger_rebuilt_as_orphan": "the ledger had descended from the Phase 2A branch and so carried a full copy of the lab, which made it read as the most advanced branch to experiment on. Rebuilt with no shared history and nothing but TGSA_PROGRAMME/ in the tree.",
+    "ledger_rebuilt_as_orphan": "the ledger had descended from the Phase 2A branch and so carried a full copy of the lab, which made it read as the most advanced branch to experiment on. Rebuilt with no shared history and nothing but TGSA_PROGRAMME/ and a .gitignore in the tree.",
     "ci_fix": "tgsa-phase1.yml triggered on push to four deleted branches, so it could only fire on pull_request or manual dispatch. Retargeted to the active branch."
   },
   "open_items": [
@@ -511,7 +512,7 @@
     "Stage 0 apparatus qualification is prepared and costed but NOT run. It cannot start until the human operator supplies --attest-no-prior-outcome-inspection: the contract must be frozen before any nondevelopment run, and running first would destroy the prospective registration irrecoverably",
     "two remote refs are tagged and proposed for retirement but still exist on origin: research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism. Deferred by decision until CI is confirmed green on the materialized tree",
     "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
-    "C8's CANDIDATE_LEDGER.md routing table still names the old Phase 2A branch, and its PHASE2A_PREREQUISITE_HOLD.md now names research/tgsa-phase2a-ci-and-competence, which is itself being retired. C8 is parked, so both are stale-on-purpose until the hold lifts; refresh them as part of lifting the hold, not before"
+    "two C8 documents name branches that are going away, and the ledger previously mis-named them. CANDIDATE_LEDGER.md's routing table cites commits (d16ea1c), not branches. The Phase 2A branch name actually appears in candidate_ledger.json five times, including origin/<branch>:<path> evidence pointers that stop resolving if the ref is retired, and in PRODUCTION_RETROFIT_AUDIT.md's ref-scan table, which still names both the old Phase 2A branch and the retired v4 branch. C8 is parked, so all of this is stale-on-purpose until the hold lifts; refresh as part of lifting it."
   ],
   "consolidation_2026_09_03": {
     "materialization": "fd6e20f replaced the v5.1 bootstrap. The bootstrap was FOUR commits -- 26c563b, b6a42a6, 6c94adb and b7b2cbe -- carrying ten binary parts under .v51-bootstrap/ plus .github/workflows/tgsa-v5-1-bootstrap.yml, a contents:write workflow that reassembled a tarball, verified it, and force-pushed a materialized commit. It failed FOUR times (runs 33699105352, 33699971132, 33700347537, 33772927517), and no failure was scientific. Run 33700347537, the THIRD, is the well-known one: all 444 tests, contract verification, schema validation and the probe+qualification smoke chain passed and it printed 'bootstrap validation passed for the exact final v5.1 tree', then it died on `git diff --check` because V5_1_UNIFIED_PROGRAMME.md lines 3 and 4 end in two trailing spaces (Markdown hard breaks). The FOURTH and last, run 33772927517 on b7b2cbe, repaired exactly those two lines, cleared `git diff --check`, again passed all 444 tests and printed the same validation line -- and then had its push rejected outright: 'refusing to allow a GitHub App to create or update workflow .github/workflows/tgsa-v5.yml without `workflows` permission'. That permission boundary, not the whitespace guard, is what finally ended the bootstrap route.",
@@ -533,6 +534,6 @@
     "pushed": "v5.1 is on origin as fd6e20f with CI green (run 33774170876). The three archive tags and this ledger refresh follow. No remote ref has been deleted: retirement of research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism is deferred until after CI is confirmed green on the materialized tree.",
     "ordering_constraint": "verify_programme_ledger.py resolves every stage commit locally, so this ledger refresh must not reach origin before fd6e20f. That ordering is now satisfied: v5.1 landed first.",
     "defects_found_beyond_the_package": "fd6e20f fixes two latent defects, but only ONE of them came from the package: .github/workflows/tgsa-v5.yml resolved ${{ runner.temp }} in a job-level env block, before runner allocation, leaving ARTIFACT_ROOT and PROGRAMME_REPORT empty. The other -- `famili_roles` in the plan schema's required array, so family_roles was never actually enforced -- was NOT in the package: evidence/phase1_v5_plan.schema.json is not among the package's 16 entries, and the extracted tarball contains zero occurrences of the byte string 'famili'. That typo was pre-existing repository content at the audited base b091490, introduced by 9602d3d. Three scripts also needed the exec bit materialize.sh had applied with chmod +x. The narrower lesson still holds for the workflow defect: reassembling a package to its exact sha256 proves integrity, not correctness.",
-    "audit_trail": "two independent adversarial audits were run against this refresh. The first confirmed two errors (C7 unique_commits_vs_spine 6 -> 7; C5 tests 349 -> 350). The second confirmed thirteen, of which five distinct root causes are corrected here; three of its six dimensions hit a 3-finding verification cap, so roughly fourteen further candidate findings were never adjudicated. verify_programme_ledger.py catches none of this class of error: it checks imported-file hashes and that each stage commit resolves, never counts, run histories, or cross-branch byte-identity claims."
+    "audit_trail": "three independent adversarial audits were run against this refresh. The first confirmed 2 errors, the second 13 (five root causes), the third -- run uncapped -- confirmed 16 of 28 candidates, reducing to the seven corrected here plus four in the Stage 0 plan document. The single high-severity finding was not in the ledger at all: the Stage 0 plan's qualification commands omitted the mandatory --frozen-band argument and the select_phase1_v5_1.py capacity step that produces it, so every qualification invocation would have raised V5ContractError before creating output. Development-only smoke runs could not have caught it, because _validate_frozen_band returns early when development_only is true. verify_programme_ledger.py catches none of this class of error: it checks imported-file hashes and stage-commit resolution, never counts, run histories, cross-branch byte-identity, or command validity."
   }
 }

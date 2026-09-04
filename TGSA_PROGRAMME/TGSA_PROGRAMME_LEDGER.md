@@ -19,7 +19,8 @@ the main chain.
 evidence is pooled. Nothing is relabelled under a generic "TGSA+MTP" identity.
 
 **This is an orphan branch.** It shares no history with any implementation
-branch and its tree contains nothing but `TGSA_PROGRAMME/`. That is deliberate.
+branch and its tree contains nothing but `TGSA_PROGRAMME/` and a `.gitignore`.
+That is deliberate.
 An earlier version of this branch descended from the Phase 2A branch and so
 carried a full copy of the lab, which made it look like somewhere you could
 work — and someone reasonably concluded it was the most advanced branch to
@@ -120,17 +121,28 @@ git branch research/tgsa-phase1-identifiability-v3-powered-confirmatory archive/
 
 ```text
 bef44ce  C1  phase1-model-identifiability-launch-audit    ARCHIVED  archive/tgsa-phase1-launch-audit
-   └─ e0063f0  C2  phase1-identifiability-v2-launch-ready ARCHIVED  archive/tgsa-phase1-v2-launch-ready
-        ├─ 04d3c02 ─ C8 rineya-pretrained-retrofit ef5194b  PARKED  parked/tgsa-rineya-retrofit-2026-08-31 (covers eea4f64 only)
-        └─ 6c97ac1  C3  phase1-v3-powered-confirmatory     ARCHIVED  archive/tgsa-phase1-v3-inconclusive
-             └─ 8b5737e  C4  phase1-v4-competence-first     FROZEN   archive/tgsa-phase1-v4-regime-rejected
-                  ├─ d71b558  C5  phase2-mtp-complementarity  ARCHIVED  archive/tgsa-phase2a-superseded-2026-08-31
-                  │    └─ de3bd63  C6 phase2a-ci-and-competence  SUPERSEDED  archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03
-                  │         │       C9 v5-competence-execution   SUPERSEDED  archive/tgsa-v5-competence-execution-superseded-2026-09-03
-                  │         │          (same commit — two branch names, one object)
-                  │         └─ b091490  C10 v5-competence-and-mechanism  SUPERSEDED  archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03
-                  │              └─ fd6e20f  C11 v5-1-unified-programme  <-- ACTIVE, work here
-                  └─ 49aa961  C7  mtp-rineya-complementarity-v1    ACTIVE (Phase 2B)
+   |
+e0063f0  C2  phase1-identifiability-v2-launch-ready       ARCHIVED  archive/tgsa-phase1-v2-launch-ready
+   |
+04d3c02  (mid-v3; C8 forks here)
+   |\
+   | `- ef5194b  C8  rineya-pretrained-retrofit           PARKED    parked/tgsa-rineya-retrofit-2026-08-31 (covers eea4f64 only)
+   |
+6c97ac1  C3  phase1-v3-powered-confirmatory              ARCHIVED  archive/tgsa-phase1-v3-inconclusive
+   |
+8b5737e  C4  phase1-v4-competence-first                  FROZEN    archive/tgsa-phase1-v4-regime-rejected
+   |\
+   | `- 49aa961  C7  mtp-rineya-complementarity-v1        ACTIVE (Phase 2B)
+   |
+d71b558  C5  phase2-mtp-complementarity                  ARCHIVED  archive/tgsa-phase2a-superseded-2026-08-31
+   |
+de3bd63  C6  phase2a-ci-and-competence                   SUPERSEDED  archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03
+         C9  v5-competence-execution                     SUPERSEDED  archive/tgsa-v5-competence-execution-superseded-2026-09-03
+             (C6 and C9 are the same commit -- two branch names, one object)
+   |
+b091490  C10 v5-competence-and-mechanism                 SUPERSEDED  archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03
+   |
+fd6e20f  C11 v5-1-unified-programme                      <-- ACTIVE, work here
 ```
 
 The v5 chain is a strict linear extension of the spine, not a set of divergent
@@ -187,8 +199,10 @@ count drift the materialization corrected.
 Two branches had been claiming the Phase 2A role. C6 had grown as an undeclared
 continuation of C5 — same stage, same semantics, same lineage — but held 396
 tests against 350 and was the sole holder of the v5 preregistration, the
-within-study qualification gate, per-family null scoring and the programme
-contract. Meanwhile C5's README named itself Phase 2A and
+within-study qualification gate and per-family null scoring. It was *not* the
+sole holder of the programme contract: C5 carried all four
+`phase2_program_contract` files byte-identically, inherited from `1c14521`
+before the C5/C6 merge-base `81755bf`. Meanwhile C5's README named itself Phase 2A and
 `TGSA_MTP_CANONICAL_PATH.md` did not mention C6 at all.
 
 Resolved toward C6: `ce4f134` merged C5 in so nothing was stranded, and
@@ -283,7 +297,7 @@ Study `tgsa-phase1-identifiability-v3-2026-08-29`. 3 arms × 20 seeds = 60 cells
 |---|---:|---|---:|---:|
 | H1a delta − history | +0.0014 | [−0.0021, +0.0048] | 0.790 | 9/20 |
 | H1b delta − cascade | +0.0004 | [−0.0025, +0.0034] | 0.619 | 8/20 |
-| H1c aligned − replay-deranged | +0.0019 | [−0.0003, +0.0040] | 0.959 | — |
+| H1c aligned − replay-deranged | +0.0019 | [−0.0003, +0.0040] | 0.959 | 7/20 |
 
 The decision was `inconclusive` because **no arm was competent**, not because the
 contrast was small. All four sensitivity estimators agree on H1a, so the
@@ -337,7 +351,7 @@ No promotion is authorized.
   trajectory before the apparatus is qualified.
 - **C7 and C8 share a near-identical retrofit codebase.** Of 27 co-modified
   files, only three differ (`pyproject.toml`, `rineya_tgsa/__init__.py`,
-  `tests/test_retrofit_correctness.py`). C8 is authoritative: 59 retrofit files
+  `tests/test_retrofit_correctness.py`). C8 is authoritative: 60 retrofit files
   against C7's 37. This makes promotion-order step 7 a small job.
 - **The retrofit tree and the lab tree are near-disjoint.** The spine carries
   zero retrofit files; C8 carries a stale 84-file lab against the C11 spine's
@@ -374,11 +388,14 @@ No promotion is authorized.
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
 5. **Two C8 documents name branches that are going away.** Its
-   `CANDIDATE_LEDGER.md` routing table still names the old Phase 2A branch, and
-   its `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — now names
-   `research/tgsa-phase2a-ci-and-competence`, which is itself being retired. C8
-   is parked, so both are stale-on-purpose; refresh them as part of lifting the
-   hold, not before.
+   `candidate_ledger.json` names `research/tgsa-phase2a-ci-and-competence` five
+   times, three of them `origin/<branch>:<path>` evidence pointers that stop
+   resolving if that ref is retired; `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
+   table still names both the *old* Phase 2A branch and the retired v4 branch;
+   and `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — names the
+   branch now being retired. `CANDIDATE_LEDGER.md` itself cites commits
+   (`d16ea1c`), not branches. C8 is parked, so all of this is stale-on-purpose;
+   refresh as part of lifting the hold, not before.
 
 Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
 bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
@@ -406,7 +423,7 @@ new artifacts, and they are not evidence in their own right — cite the source
 branch and commit, never this path.
 
 - `imported/phase2b/` — 3 documents from C7 at `49aa961`
-- `imported/retrofit/` — 11 documents plus `candidate_ledger.json` and its
+- `imported/retrofit/` — 9 documents plus `candidate_ledger.json` and its
   schema from C8, at `eea4f64` except `PHASE2A_PREREQUISITE_HOLD.md`, which
   was **re-imported at `ef5194b`** on 2026-09-03 (sha256 `44008d5822d6…`)
   after C8's tip moved and changed it. The superseded `eea4f64` copy hashed
