@@ -290,7 +290,7 @@
     {
       "id": "C11",
       "branch": "research/tgsa-v5-1-unified-programme",
-      "commit": "fd6e20f",
+      "commit": "b60d470",
       "upstream": "in sync with origin",
       "archive_tag": null,
       "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-v51",
@@ -298,7 +298,7 @@
       "mtp_semantics": "none at this stage; v5 qualifies the apparatus before any auxiliary future-prediction objective may shape the trajectory",
       "decision": "ACTIVE; FROZEN and prospectively registered; development-only; no result yet",
       "contained_in_spine": "is the spine tip",
-      "tests": 444,
+      "tests": 458,
       "contains": [
         "C1",
         "C2",
@@ -319,16 +319,17 @@
         "phase1_v5_plan.schema.json: required key typo famili_roles -> family_roles",
         ".github/workflows/tgsa-v5.yml: runner-temporary paths initialized after runner allocation"
       ],
-      "test_count_derivation": "444 = 436 at C10 + 4 programme-contract regressions + 4 auto-parametrized test_seed_determinism cases, one per newly registered source file. Measured, not asserted.",
+      "test_count_derivation": "458 = 436 at C10, plus 4 programme-contract regressions, plus 4 auto-parametrized test_seed_determinism cases (444), plus 14 covering the gate-hardening fixes. Measured, not asserted.",
       "pooling": "preserves separate Phase 2A and Phase 2B causal identities; sequential_teacher_forced_recursive_v1 and parallel_independent_offsets_v1 outputs must never be pooled or called replications",
       "authorization_state": "the contract is frozen but NOT yet locked against a nondevelopment run: --attest-no-prior-outcome-inspection records a HUMAN operator's attestation and has not been given. Every run so far is development_only=true.",
       "note": "work here. Materialized as one plain reviewable commit on C10, replacing a four-commit bootstrap (26c563b, b6a42a6, 6c94adb, b7b2cbe) built from a .v51-bootstrap ten-part binary blob plus a contents:write materialization workflow that failed four times. The third failure died on `git diff --check` over two Markdown hard-break trailing spaces; the fourth repaired them, cleared every gate, and then had its push rejected for lack of `workflows` permission on .github/workflows/tgsa-v5.yml. The package reassembled to sha256 b03f5032a4ffe315653e35307bd1256017bb669b31ae814adac6fdc742d5217a and contained 16 files; 15 are real content and the 16th, .v51-bootstrap/materialize.sh, was bootstrap machinery and was dropped. Beyond the package this commit also fixes the tgsa-v5.yml runner-temp env defect that the package did ship, and the `famili_roles` required-key typo that it did not -- that one was inherited from b091490 via 9602d3d.",
       "ci": "green: run 33774170876, 'TGSA Phase 1 v5 apparatus qualification', success in 2m13s on 2026-09-03",
-      "proposed_amendment": {
+      "predecessor_tip": "fd6e20f held this branch from 2026-09-03 to 2026-09-04 and is preserved by archive/tgsa-v5-1-pre-gate-hardening-2026-09-04. DO NOT RUN STAGE 0 FROM THAT COMMIT: its qualification gate can certify a cell GO with a seed below the primary family's null, and an interrupt can silently diverge a resumed cell.",
+      "merged_amendment": {
         "branch": "research/tgsa-v5-1-gate-hardening",
-        "tip": "1af0b5a",
+        "tip": "b60d470",
         "base": "fd6e20f",
-        "status": "on origin, NOT merged into C11. Five commits, 457 tests passing, contract verifier green on all ten checks with programme_sha256 unchanged at d52d89a3..., and the locked plan blob 0538faf4d2ad142dbce9c408910f9dcbcf1fd064 byte-unchanged. Awaiting a merge decision.",
+        "status": "MERGED into C11 on 2026-09-04 by fast-forward -- fd6e20f is an ancestor of b60d470, so no merge commit exists and the history stays linear. Six commits. 458 tests pass, the contract verifier is green on all ten checks with programme_sha256 unchanged at d52d89a3..., the locked plan blob 0538faf4d2ad142dbce9c408910f9dcbcf1fd064 is byte-unchanged, and no file under configs/ or evidence/ was touched. The branch research/tgsa-v5-1-gate-hardening remains on origin at the same commit as a review surface.",
         "why": "an adversarial review of the v5 apparatus confirmed four defects, three of them high severity, none of which any existing verifier would have caught. All were fixed before any nondevelopment run, which is the only point at which strengthening a frozen prospective registration is legitimate.",
         "defects_fixed": [
           "the qualification gate could certify a cell GO with one of three seeds BELOW the family null. minimum_absolute_accuracy stayed at v4's 0.070, which was ~1.9x v4's wrong 0.0377 baseline but only 0.53x the corrected pointer_chase null of 0.1318. Reproduced: seeds [0.0966, 0.1948, 0.1948] gave GO with all checks true and reasons empty. Fixed by adding every_seed_beats_its_family_null, registered in PHASE1_V5_PREREGISTRATION.md section 7",
@@ -342,7 +343,8 @@
           "the new check assumed per_seed_holdout_accuracy always carries the first primary family. Only phase1_v5_runner does; the three v4-era callers pass POOLED across-family accuracy, where comparing against one family's null is fail-open. ArmCompetence now declares per_seed_family and a pooled arm is held to the strongest trivial baseline instead",
           "V5_1_DOCUMENTATION_STATUS.md still said of PHASE1_V5_PREREGISTRATION.md that 'the file itself is not rewritten' after 32f1253 amended it. Corrected, along with a pre-existing error in the same index: it listed PHASE2_IMPLEMENTATION_SUMMARY.md, which exists only on C7 at 49aa961"
         ],
-        "not_weakened": "measured at the tip: gate checks 9 -> 10 with none removed, zero pre-existing tests removed across the five touched test files, zero skip or xfail markers added, and no file under configs/ or evidence/ touched. Two pre-existing selection tests were given the plan provenance a real report carries, so they exercise the stronger contract rather than a looser one."
+        "not_weakened": "measured at the tip: gate checks 9 -> 10 with none removed, zero pre-existing tests removed across the five touched test files, zero skip or xfail markers added, and no file under configs/ or evidence/ touched. Two pre-existing selection tests were given the plan provenance a real report carries, so they exercise the stronger contract rather than a looser one.",
+        "diff_scope": "839 insertions, 9 deletions across 11 files. A sixth commit restored tests/test_phase1_v5.py to LF: a Python write_text() had flipped it to CRLF while making a 125-line change, which inflated the branch diff to 1253/423 and made it read as a whole-file rewrite. The lab has mixed conventions on purpose -- bootstrap-package files are LF, older sources CRLF -- so an edit must match the file's existing endings."
       }
     }
   ],
@@ -529,8 +531,8 @@
   },
   "open_items": [
     "no competence-qualified regime exists, so no Phase 2 confirmatory run is authorized; this remains the single blocking gate for the whole programme",
+    "the four apparatus defects are fixed and merged: C11 is at b60d470. The remaining blocker on Stage 0 is the operator's --attest-no-prior-outcome-inspection attestation and nothing else.",
     "Stage 0 apparatus qualification is prepared and costed but NOT run. It cannot start until the human operator supplies --attest-no-prior-outcome-inspection: the contract must be frozen before any nondevelopment run, and running first would destroy the prospective registration irrecoverably",
-    "research/tgsa-v5-1-gate-hardening (1af0b5a, five commits on fd6e20f) is on origin and awaits a merge decision into C11. It fixes four confirmed apparatus defects, three high severity, and registers one new gate in PHASE1_V5_PREREGISTRATION.md section 7. Stage 0 should not run before this lands: the qualification gate on fd6e20f can certify a cell GO with a seed below the family null, and an interrupt can silently diverge a resumed cell.",
     "two remote refs are tagged and proposed for retirement but still exist on origin: research/tgsa-phase2a-ci-and-competence and research/tgsa-v5-competence-and-mechanism. Deferred by decision until CI is confirmed green on the materialized tree",
     "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
     "two C8 documents name branches that are going away, and the ledger previously mis-named them. CANDIDATE_LEDGER.md's routing table cites commits (d16ea1c), not branches. The Phase 2A branch name actually appears in candidate_ledger.json five times, including origin/<branch>:<path> evidence pointers that stop resolving if the ref is retired, and in PRODUCTION_RETROFIT_AUDIT.md's ref-scan table, which still names both the old Phase 2A branch and the retired v4 branch. C8 is parked, so all of this is stale-on-purpose until the hold lifts; refresh as part of lifting it.",
@@ -562,6 +564,7 @@
     "apparatus_review": "three adversarial review passes were run against the v5 apparatus and the fixes to it. The first swept scoring, nulls, arm isolation, gates, determinism and data generation: 19 candidates, 4 confirmed, 3 of them high. The second reviewed the fixes themselves and caught an inverted operator diagnostic in one of them. Coverage was incomplete in both cases -- agents died on a session limit -- and the accounting bug that hid it is recorded below.",
     "review_accounting_bug": "the first review reported 'confirmed: []' with every candidate counted as refuted, which read as a clean apparatus. It was not: four refuters had died and returned null verdicts, and the tally counted null as refuted. Two finder dimensions had not run at all. Re-run with unadjudicated tracked separately, the same review returned 4 confirmed defects including 3 high. A verification harness that cannot distinguish 'refuted' from 'never checked' will report a clean result for work it never examined.",
     "lesson": "two of the four defects were invisible to every test the programme permits at this stage, because development mode bypasses the code that was wrong: _validate_frozen_band returns early when development_only is true, so no smoke run could reach the missing --frozen-band, and the smoke plan's null is low enough that the below-chance seed hole never opened. Development-mode escape hatches hide exactly the defects that only matter in a real run.",
-    "pushed": "research/tgsa-v5-1-gate-hardening at 1af0b5a is on origin as a separate branch. C11 itself is untouched at fd6e20f, so the frozen registration is unchanged until a merge decision is taken."
+    "pushed": "research/tgsa-v5-1-gate-hardening at 1af0b5a is on origin as a separate branch. C11 itself is untouched at fd6e20f, so the frozen registration is unchanged until a merge decision is taken.",
+    "merged": "research/tgsa-v5-1-unified-programme was fast-forwarded fd6e20f -> b60d470 on 2026-09-04, after the pre-merge tip was pinned by archive/tgsa-v5-1-pre-gate-hardening-2026-09-04 (pushed) and every ref was captured in an off-GitHub bundle at BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04.bundle, verified as recording a complete history. Stage 0 is no longer blocked on the apparatus; it is blocked only on the operator's attestation."
   }
 }

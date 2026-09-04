@@ -142,11 +142,14 @@ de3bd63  C6  phase2a-ci-and-competence                   SUPERSEDED  archive/tgs
    |
 b091490  C10 v5-competence-and-mechanism                 SUPERSEDED  archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03
    |
-fd6e20f  C11 v5-1-unified-programme                      <-- ACTIVE, work here
+b60d470  C11 v5-1-unified-programme                      <-- ACTIVE, work here
+         fd6e20f held this branch 2026-09-03 to 2026-09-04; preserved by
+         archive/tgsa-v5-1-pre-gate-hardening-2026-09-04. Do NOT run
+         Stage 0 from that commit -- see section 4.
 ```
 
 The v5 chain is a strict linear extension of the spine, not a set of divergent
-forks: `de3bd63` → `b091490` (+5 commits) → `fd6e20f` (+1). **C1 through C6,
+forks: `de3bd63` → `b091490` (+5) → `fd6e20f` (+1) → `b60d470` (+6). **C1 through C6,
 C9 and C10 are all contained in C11** — verified, not assumed. Only C7
 (7 commits) and C8 (15 commits) hold work outside it, and both are deliberately
 separate stages.
@@ -186,7 +189,7 @@ paths, exact commits and per-stage results are in the JSON.
 | C5 | `d71b558` | 350 | 349 |
 | C6 / C9 | `de3bd63` | 396 | 396 |
 | C10 | `b091490` | 436 | 396 |
-| C11 | `fd6e20f` | 444 | 444 |
+| C11 | `b60d470` | 458 | 458 |
 
 All four measured, not asserted. C11's 444 = 436 at C10, plus 4
 programme-contract regressions, plus 4 auto-parametrized
@@ -297,9 +300,28 @@ existing verifier would have caught any of them.**
 | `select_qualified_exposure` checked no report provenance | the mechanism-study authorization could be issued from foreign or development-only evidence |
 | `CUBLAS_WORKSPACE_CONFIG` in no fingerprint | a resume could silently change CUDA arithmetic |
 
-All four are fixed on `research/tgsa-v5-1-gate-hardening` (`1af0b5a`, five
-commits on `fd6e20f`), which is on origin and **not merged**. C11 itself is
-untouched, so the frozen registration is unchanged pending a merge decision.
+All four are fixed and **merged**. C11 was fast-forwarded `fd6e20f` → `b60d470`
+on 2026-09-04: six commits, 839 insertions and 9 deletions across 11 files, no
+merge commit, history still linear. 458 tests pass, the contract verifier is
+green on all ten checks, `programme_sha256` is unchanged at `d52d89a3…`, the
+locked plan blob `0538faf4…` is byte-unchanged, and **no file under `configs/`
+or `evidence/` was touched** — the registration itself is unaltered.
+
+Three backups were taken before the merge, all verified:
+
+| backup | where |
+|---|---|
+| the pre-merge frozen tip | tag `archive/tgsa-v5-1-pre-gate-hardening-2026-09-04` → `fd6e20f`, on origin |
+| the change as a reviewable branch | `research/tgsa-v5-1-gate-hardening` → `b60d470`, on origin |
+| every ref, off GitHub | `BusinessProject/tgsa-backups/tgsa-all-refs-2026-09-04.bundle`, verified as recording a complete history |
+
+A fourth review pass returned 13 candidates, **0 confirmed and 0
+unadjudicated** across 16 agents. That last number is the one that matters: the
+first pass reported clean while four of its refuters had died, and the fix
+distinguishing *refuted* from *never checked* is what makes this readable. It
+was launched against `1af0b5a` and the branch moved to `b60d470` beneath it, so
+the final two commits — the diagnostic-totality fix and the line-ending
+restoration — were not its declared target.
 
 **Two things about this are worth carrying forward.**
 
@@ -412,24 +434,19 @@ No promotion is authorized.
 1. **No competence-qualified regime exists.** This is the single blocking gate
    for the whole programme. No Phase 2 confirmatory run is authorized until a new
    preregistration produces a `GO` on learnable, non-saturated primary families.
-2. **Stage 0 apparatus qualification is prepared and costed but not run.** It
-   cannot start until the human operator supplies
+2. **Stage 0 is prepared, costed, and no longer blocked on the apparatus** —
+   the four defects are merged as of `b60d470`. It still cannot start until the
+   human operator supplies
    `--attest-no-prior-outcome-inspection`. Running first and locking after would
    destroy the prospective registration irrecoverably.
-3. **`research/tgsa-v5-1-gate-hardening` (`1af0b5a`) awaits a merge decision
-   into C11.** It fixes the four apparatus defects above and registers one new
-   gate in `PHASE1_V5_PREREGISTRATION.md` §7. **Stage 0 should not run before it
-   lands:** on `fd6e20f` the qualification gate can certify a cell `GO` with a
-   seed below the family null, and an interrupt can silently diverge a resumed
-   cell.
-4. **Two remote refs are tagged and proposed for retirement but still exist on
+3. **Two remote refs are tagged and proposed for retirement but still exist on
    origin:** `research/tgsa-phase2a-ci-and-competence` and
    `research/tgsa-v5-competence-and-mechanism`. Deferred by decision until CI is
    confirmed green on the materialized tree.
-5. **Promotion-order step 7 is not started** — the port manifest reconciling
+4. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-6. **Two C8 documents name branches that are going away.** Its
+5. **Two C8 documents name branches that are going away.** Its
    `candidate_ledger.json` names `research/tgsa-phase2a-ci-and-competence` five
    times, three of them `origin/<branch>:<path>` evidence pointers that stop
    resolving if that ref is retired; `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
