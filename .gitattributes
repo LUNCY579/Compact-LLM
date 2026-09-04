@@ -1,0 +1,10 @@
+# This branch is records-only and uniform CRLF. Both attributes matter:
+#   -text                  freeze the bytes; never normalise EOL on checkout or
+#                          commit, so an imported record stays byte-identical.
+#   whitespace=-trailing-space
+#                          the CR of every CRLF line otherwise reads as trailing
+#                          whitespace and buries `git diff --check` in noise.
+# Neither changes a stored blob. Converting this branch to LF instead would
+# rewrite every file whole, which is exactly the unreviewable diff the v5.1
+# bootstrap was replaced for.
+* -text whitespace=-trailing-space

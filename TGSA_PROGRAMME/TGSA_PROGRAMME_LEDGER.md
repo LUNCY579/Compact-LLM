@@ -82,12 +82,14 @@ stage that must stay separate, or records-only.
 | Parked, third in sequence | `research/tgsa-rineya-pretrained-retrofit` |
 | Records only, no code | `research/tgsa-programme-ledger` |
 | Frozen evidence — tag only, no branch | `archive/tgsa-phase1-v4-regime-rejected` |
-| **Archived — tag only, no branch** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31`, `archive/tgsa-v5-competence-execution-superseded-2026-09-03` |
-| **Tagged, retirement proposed — refs still on origin** | `research/tgsa-phase2a-ci-and-competence`, `research/tgsa-v5-competence-and-mechanism` |
+| Review surface, same commit as canonical | `research/tgsa-v5-1-gate-hardening` (`b60d470`) |
+| **Archived — tag only, no branch** | `archive/tgsa-phase1-launch-audit`, `archive/tgsa-phase1-v2-launch-ready`, `archive/tgsa-phase1-v3-inconclusive`, `archive/tgsa-phase2a-superseded-2026-08-31`, `archive/tgsa-v5-competence-execution-superseded-2026-09-03`, `archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03`, `archive/tgsa-v5-competence-and-mechanism-superseded-2026-09-03` |
 
-GitHub currently shows six TGSA branches. Four remain once the two proposed
-retirements are approved; the other stages are reachable only through annotated
-tags.
+GitHub now shows five TGSA branches. The two proposed retirements were carried out
+on 2026-09-04, so every other stage is reachable only through annotated tags.
+`research/tgsa-v5-1-gate-hardening` is the fifth and points at the same commit as
+the canonical branch; it is kept deliberately as a review surface and a third
+independent path to `b60d470`, not as a work surface.
 
 Retiring a ref to a pushed tag is preservation, not deletion — the commit, tree
 and message are unchanged and reachable. Each tag was verified to point at the
@@ -172,11 +174,11 @@ materialization was `b7b2cbe`, not `6c94adb`.
 | C3 | `…phase1-identifiability-v3-powered-confirmatory` | Phase 1 v3 confirmatory | — | **INCONCLUSIVE**, ref deleted | yes |
 | C4 | `…phase1-v4-competence-first` | competence / regime boundary | — | **V4_REGIME_FAMILY_REJECTED**, frozen, tag only | yes |
 | C5 | `…phase2-mtp-complementarity` | Phase 2A predecessor | `sequential_teacher_forced_recursive_v1` | archived 2026-08-31, ref deleted | yes |
-| C6 | `…phase2a-ci-and-competence` | Phase 2A; v5 execution base | `sequential_teacher_forced_recursive_v1` | **SUPERSEDED** 2026-09-03, retirement proposed | yes |
+| C6 | `…phase2a-ci-and-competence` | Phase 2A; v5 execution base | `sequential_teacher_forced_recursive_v1` | **SUPERSEDED** 2026-09-03, ref deleted 2026-09-04 | yes |
 | C7 | `…mtp-rineya-complementarity-v1` | Phase 2B system factorial | `parallel_independent_offsets_v1` | active, no result yet | no |
 | C8 | `…rineya-pretrained-retrofit` | real Qwen3/Rineya retrofit | — | **PARKED**, sequenced third | no |
 | C9 | `…v5-competence-execution` | v5 competence execution | — | **SUPERSEDED** 2026-09-03, ref already gone | yes |
-| C10 | `…v5-competence-and-mechanism` | v5 competence + mechanism; v5.1 base | — | **SUPERSEDED** 2026-09-03, retirement proposed | yes |
+| C10 | `…v5-competence-and-mechanism` | v5 competence + mechanism; v5.1 base | — | **SUPERSEDED** 2026-09-03, ref deleted 2026-09-04 | yes |
 | **C11** | **`…v5-1-unified-programme`** | **Phase 1 v5.1 unified programme, canonical** | none at this stage | **ACTIVE**, frozen, no result yet | — |
 
 C6 and C9 are the same commit (`de3bd63`) under two branch names. Worktree
@@ -283,7 +285,11 @@ base `b091490`, introduced by `9602d3d`. Three scripts also needed the exec bit
 
 Three annotated tags were created and the two surviving superseded refs were
 tagged for retirement, deferred until CI is confirmed green on the materialized
-tree. **Ordering matters:** `verify_programme_ledger.py` resolves every stage
+tree. That condition was met by CI run `33889037837` on `b60d470` and both
+refs were deleted on 2026-09-04 — see *Ref retirement and backups of
+2026-09-04* below.
+
+**Ordering matters:** `verify_programme_ledger.py` resolves every stage
 commit locally, so this ledger refresh must not reach origin before `fd6e20f` —
 an ordering now satisfied, since v5.1 landed first.
 
@@ -341,6 +347,79 @@ above. A verification harness that cannot distinguish *refuted* from *never
 checked* will report success for whatever it skipped.
 
 ---
+
+### Ref retirement and backups of 2026-09-04
+
+The gate-hardening work was merged into the registered branch as a **pure
+fast-forward**, `fd6e20f` -> `b60d470`, so the history stayed linear and no
+merge commit exists. Measured on the merged tip: **458 tests pass**, the
+contract verifier exits `0` on all ten checks with `programme_sha256` unchanged
+at `d52d89a3020972dde7935120094d55dfe50dc8d3e8b6fe288860daa14e8142e9`, the
+locked plan blob `0538faf4d2ad142dbce9c408910f9dcbcf1fd064` is byte-unchanged,
+and **zero files under `configs/` or `evidence/` were touched**. The
+registration itself is unaltered; only the code that enforces it changed. CI run
+`33889037837` succeeded on `headSha b60d470` exactly.
+
+**The two superseded refs were then deleted from origin.** The condition the
+operator set — CI green on the materialized tree — was met on the right commit
+rather than an approximate one.
+
+| deleted from origin | commit | still reachable via |
+|---|---|---|
+| `research/tgsa-phase2a-ci-and-competence` | `de3bd63` | ancestry of `b60d470`; two archive tags; two bundles |
+| `research/tgsa-v5-competence-and-mechanism` | `b091490` | ancestry of `b60d470`; one archive tag; two bundles |
+
+Both commits turned out to be **ancestors of the canonical tip**, so they would
+survive with no tag at all — `merge-base` returns each tip itself. Only the
+*remote* refs were removed; the local branch and the `Chat-Bubble-phase2a-next`
+worktree were left untouched, as were the other eleven worktrees.
+
+*This was measured, not inferred.* `tgsa/v5_1_programme.py` resolves the pinned
+lineage with `cat-file -e` and `merge-base`, never by branch name, so the
+question is whether the **objects** reach a fresh clone, not whether the branch
+names exist. A clone was taken from origin **after** both deletions: HEAD
+`b60d470`, worktree clean, all five pinned commits (`de3bd63`, `b091490`,
+`49aa961`, `ef5194b`, `8b5737e`) resolved, the contract verifier exited `0` with
+an identical `programme_sha256`, and the full suite passed 458 tests inside the
+clone. A reviewer needs nothing but origin.
+
+**Backups.** Two verified bundles are kept off GitHub under
+`C:/Users/clclc/BusinessProject/tgsa-backups/`:
+`tgsa-all-refs-2026-09-04.bundle` (pre-merge: unified-programme at `fd6e20f`,
+ledger at `2e0e3fe`) and `tgsa-all-refs-2026-09-04-post-merge.bundle`
+(post-merge, taken *before* the deletions, so it holds `b60d470`, ledger
+`4581fc0`, and both retired refs). The first is retained deliberately: it
+predates the ledger commit recording the merge, and is the only off-GitHub copy
+of the pre-merge registered tip as it stood when the merge decision was taken.
+Recovery is
+`git branch <name> archive/tgsa-v5-1-pre-gate-hardening-2026-09-04`; that tag's
+annotation carries a **DO NOT RUN STAGE 0 FROM THIS COMMIT** warning and the
+reason, so the pre-hardening apparatus cannot be restored and then used by
+mistake.
+
+**The Stage 0 execution plan is now a record**, at
+`TGSA_PROGRAMME/STAGE0_EXECUTION_PLAN.md`. It had existed only in a
+session-scoped OS temp directory, which is not a backup. Its probe thresholds
+were re-checked field by field against the locked plan and match. It remains
+**PREPARED, NOT RUN**.
+
+**What the remaining blocker actually says.** The flag
+`--attest-no-prior-outcome-inspection` records one narrow sentence:
+
+> No nondevelopment outcome produced under the locked v5 plan was inspected
+> before the prospective v5.1 lock.
+
+It concerns outcomes produced *under the locked v5 plan* — not any prior TGSA
+result. v4's rejected-regime evidence was produced under a different plan and is
+frozen historical evidence, so having inspected it does not bear on this
+attestation. The supporting facts were checked on 2026-09-04: **no
+`probe_report.json`, `qualification_report.json`, frozen band or
+`v5_1_registration_verification.json` has ever been committed on any ref or tag
+in this repository**, no `runs/`, `results/` or `outputs/` directory exists in
+the v5.1 worktree, the worktree is clean, and every run made during preparation
+used a `development_only=true` plan. Those facts are recorded so the operator's
+attestation can be *informed*; **only the human operator may assert it**, and it
+was not asserted by the assistant.
 
 ---
 
@@ -439,22 +518,27 @@ No promotion is authorized.
    human operator supplies
    `--attest-no-prior-outcome-inspection`. Running first and locking after would
    destroy the prospective registration irrecoverably.
-3. **Two remote refs are tagged and proposed for retirement but still exist on
-   origin:** `research/tgsa-phase2a-ci-and-competence` and
-   `research/tgsa-v5-competence-and-mechanism`. Deferred by decision until CI is
-   confirmed green on the materialized tree.
-4. **Promotion-order step 7 is not started** — the port manifest reconciling
+3. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-5. **Two C8 documents name branches that are going away.** Its
+4. **Two C8 documents name branches that no longer exist.** Its
    `candidate_ledger.json` names `research/tgsa-phase2a-ci-and-competence` five
-   times, three of them `origin/<branch>:<path>` evidence pointers that stop
-   resolving if that ref is retired; `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
+   times, three of them `origin/<branch>:<path>` evidence pointers. Those three
+   pointers **stopped resolving on 2026-09-04**, when that ref was deleted; this
+   is no longer hypothetical. The commit is unharmed, so the fix is a mechanical
+   rewrite of the prefix to either the archive tag
+   `archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03` or the commit
+   `de3bd63`, which is what the lineage code itself resolves by. Also,
+   `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
    table still names both the *old* Phase 2A branch and the retired v4 branch;
    and `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — names the
    branch now being retired. `CANDIDATE_LEDGER.md` itself cites commits
    (`d16ea1c`), not branches. C8 is parked, so all of this is stale-on-purpose;
    refresh as part of lifting the hold, not before.
+
+Closed on 2026-09-04: the apparatus-defect block on Stage 0, merged at
+`b60d470`; and the retirement of the last two superseded refs, verified
+non-destructive by a fresh clone taken after the deletions.
 
 Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
 bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
