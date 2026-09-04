@@ -232,3 +232,55 @@ def test_the_emergency_snapshot_never_overwrites_the_periodic_checkpoint(
     assert periodic["next_step"] == 4
     # The emergency snapshot carries the stale counter that made resume unsafe.
     assert emergency["next_step"] == 5
+
+
+def test_the_interrupt_diagnostic_can_never_replace_the_real_exception() -> None:
+    """Code in an `except` block must be total.
+
+    `_optimizer_applied_steps` is the only diagnostic on the failure path. If it
+    raised, it would replace the exception being handled -- losing the actual
+    error, and skipping both the emergency snapshot and failure.json. It is not
+    reachable with a real AdamW, whose step counter is always a tensor or a
+    number, but the failure path is precisely where a defensive guarantee is
+    worth having.
+    """
+
+    from tgsa.phase1_v5_runner import _optimizer_applied_steps
+
+    class _Fake:
+        def __init__(self, state):
+            self.state = state
+
+    hostile = [
+        {},                                            # no step taken yet
+        {"p": {"step": torch.tensor(7.0)}},            # tensor
+        {"p": {"step": 7.0}},                          # float
+        {"p": {"step": 7}},                            # int
+        {"p": {"exp_avg": torch.zeros(1)}},            # no step key
+        {"p": object()},                               # entry is not a Mapping
+        {"p": {"step": None}},                         # explicit None
+        {"p": {"step": "seven"}},                      # unconvertible
+        {"p": {"step": [1, 2]}},                       # unconvertible sequence
+        {"a": {"step": 9}, "b": {"step": 10}},         # torn step
+    ]
+    for state in hostile:
+        result = _optimizer_applied_steps(_Fake(state))  # must not raise
+        assert set(result) >= {
+            "per_parameter_step_counts",
+            "all_parameters_agree",
+            "applied_steps",
+            "unreadable_step_counters",
+        }
+
+    # An unreadable counter cannot be reported as agreeing with the others.
+    assert _optimizer_applied_steps(_Fake({"p": {"step": "seven"}}))[
+        "all_parameters_agree"
+    ] is False
+    # A torn step is still reported as disagreement.
+    assert _optimizer_applied_steps(_Fake({"a": {"step": 9}, "b": {"step": 10}}))[
+        "all_parameters_agree"
+    ] is False
+    # And the untorn case still agrees.
+    assert _optimizer_applied_steps(_Fake({"a": {"step": 9}, "b": {"step": 9}}))[
+        "all_parameters_agree"
+    ] is True

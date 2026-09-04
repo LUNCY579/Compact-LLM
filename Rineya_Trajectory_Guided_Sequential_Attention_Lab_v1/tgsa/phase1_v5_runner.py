@@ -437,15 +437,28 @@ def _optimizer_applied_steps(optimizer: torch.optim.Optimizer) -> dict[str, obje
     """
 
     counts: set[int] = set()
+    unreadable = 0
     for entry in optimizer.state.values():
         step = entry.get("step") if isinstance(entry, Mapping) else None
         if step is None:
             continue
-        counts.add(int(step.item()) if hasattr(step, "item") else int(step))
+        # This function runs inside an `except` block. Anything that raises here
+        # would REPLACE the exception being handled -- losing the real failure,
+        # and skipping both the emergency snapshot and failure.json. A step
+        # counter is a tensor or a number for every optimizer this apparatus
+        # uses, but that is not a reason for the only diagnostic on the failure
+        # path to be capable of failing. Unreadable values are counted, never
+        # raised, and they also clear `all_parameters_agree`, since a counter
+        # that cannot be read cannot be shown to agree with the others.
+        try:
+            counts.add(int(step.item()) if hasattr(step, "item") else int(step))
+        except (TypeError, ValueError):
+            unreadable += 1
     return {
         "per_parameter_step_counts": sorted(counts),
-        "all_parameters_agree": len(counts) <= 1,
+        "all_parameters_agree": len(counts) <= 1 and unreadable == 0,
         "applied_steps": max(counts) if counts else None,
+        "unreadable_step_counters": unreadable,
     }
 
 
@@ -613,7 +626,19 @@ def _train_cell(
         # most `checkpoint_interval_steps` of recomputation; the alternative is
         # silent divergence, which no downstream verifier would catch.
         interrupted_path = cell_dir / INTERRUPTED_STATE_NAME
-        applied = _optimizer_applied_steps(optimizer)
+        # `_optimizer_applied_steps` is written not to raise, and this guard is
+        # the second line of that defence rather than a substitute for it. The
+        # original exception must survive this handler: it is the thing that
+        # actually tells an operator what went wrong, and a diagnostic is never
+        # worth losing it for.
+        try:
+            applied: dict[str, object] = _optimizer_applied_steps(optimizer)
+        except BaseException as diagnostic_error:  # pragma: no cover - defensive
+            applied = {
+                "unavailable": True,
+                "error_type": type(diagnostic_error).__name__,
+                "error": str(diagnostic_error),
+            }
         _save_training_state(
             interrupted_path,
             fingerprint=fingerprint,
