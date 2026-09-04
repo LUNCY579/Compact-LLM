@@ -413,6 +413,37 @@ def _save_training_state(
     )
 
 
+#: Emergency snapshot written when a cell dies mid-training. Deliberately NOT
+#: the resume source; see the exception handler in `_train_cell`.
+INTERRUPTED_STATE_NAME = "interrupted_state.pt"
+
+
+def _optimizer_applied_steps(optimizer: torch.optim.Optimizer) -> dict[str, object]:
+    """Read the optimizer's own per-parameter step counters.
+
+    AdamW increments ``state[p]["step"]`` inside ``optimizer.step()``. If every
+    parameter reports the same count then the step either completed for all of
+    them or had not begun, and the tensors are mutually consistent. If they
+    disagree, ``optimizer.step()`` was interrupted part-way through and no
+    amount of bookkeeping can make them consistent again — that state is not a
+    model at any point in the registered trajectory.
+
+    Reported for diagnosis only. It is not used to decide where to resume.
+    """
+
+    counts: set[int] = set()
+    for entry in optimizer.state.values():
+        step = entry.get("step") if isinstance(entry, Mapping) else None
+        if step is None:
+            continue
+        counts.add(int(step.item()) if hasattr(step, "item") else int(step))
+    return {
+        "per_parameter_step_counts": sorted(counts),
+        "all_parameters_agree": len(counts) <= 1,
+        "applied_steps": max(counts) if counts else None,
+    }
+
+
 def _train_cell(
     *,
     plan: Mapping[str, object],
@@ -557,8 +588,29 @@ def _train_cell(
                     loss_curve=loss_curve,
                 )
     except BaseException as error:
+        # The emergency snapshot is DIAGNOSTIC ONLY, and is deliberately written
+        # somewhere other than `state_path`.
+        #
+        # `next_step` is assigned on the line after `optimizer.step()` returns.
+        # A signal can be delivered between any two bytecodes, so a Ctrl-C
+        # landing in that window leaves the parameters advanced by one step while
+        # `next_step` still names that same step. Saving the pair to `state_path`
+        # would make resume re-apply it: one optimizer step applied twice, and a
+        # cell that silently diverges from an uninterrupted run while still
+        # producing a well-formed, fingerprint-matching report. A CUDA OOM raised
+        # *inside* `optimizer.step()` is worse -- some parameters are updated and
+        # some are not, and no bookkeeping can repair that.
+        #
+        # So the handler does not nominate a resume point at all. Resume uses the
+        # last periodic checkpoint, which is written inside the loop after the
+        # bookkeeping, through `atomic_torch_save`, and is therefore always a
+        # point the registered trajectory actually passes through. The cost is at
+        # most `checkpoint_interval_steps` of recomputation; the alternative is
+        # silent divergence, which no downstream verifier would catch.
+        interrupted_path = cell_dir / INTERRUPTED_STATE_NAME
+        applied = _optimizer_applied_steps(optimizer)
         _save_training_state(
-            state_path,
+            interrupted_path,
             fingerprint=fingerprint,
             next_step=next_step,
             model=model,
@@ -568,13 +620,30 @@ def _train_cell(
         atomic_write_json(
             cell_dir / "failure.json",
             {
-                "schema_version": "tgsa.phase1-v5-cell-failure.v1",
+                "schema_version": "tgsa.phase1-v5-cell-failure.v2",
                 "execution_fingerprint": fingerprint,
                 "failed_at_utc": utc_now(),
                 "next_step": next_step,
                 "error_type": type(error).__name__,
                 "error": str(error),
                 "traceback": traceback.format_exc(),
+                "optimizer_applied_steps": applied,
+                "interrupted_state": interrupted_path.name,
+                "interrupted_state_is_resumable": False,
+                "resume_source": (
+                    state_path.name if state_path.is_file() else None
+                ),
+                "resume_note": (
+                    "interrupted_state.pt records where this cell died and is not a "
+                    "resume source: the interrupt may have landed between "
+                    "optimizer.step() and the step bookkeeping, or part-way through "
+                    "the step itself. Re-running resumes from training_state.pt, the "
+                    "last periodic checkpoint, which is consistent by construction. "
+                    "Compare optimizer_applied_steps.applied_steps against next_step "
+                    "to see which window it was: equal means the bookkeeping had not "
+                    "run yet, and all_parameters_agree=false means the step itself "
+                    "was torn."
+                ),
             },
         )
         raise
