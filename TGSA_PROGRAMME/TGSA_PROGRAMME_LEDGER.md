@@ -526,6 +526,13 @@ No promotion is authorized.
 3. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
+4. **The Stage 0 pre-flight audit is incomplete and must be finished before the
+   operator attests.** Three of seven dimensions never ran — `gate-arithmetic`,
+   `data-flow-chain` and `plan-contract-schema`, the last being the dimension the
+   `famili_roles` typo lived in — the completeness critic never ran, and seven
+   candidate findings were never adjudicated because their refuters died on a
+   usage limit. One confirmed defect was found and fixed. **Treat the remainder as
+   unexamined, not clean.**
 
 Closed on 2026-09-04: the apparatus-defect block on Stage 0, merged at
 `b60d470`; the retirement of the last two superseded refs, verified
@@ -599,6 +606,66 @@ evidence boundary — the contract's `required_phase1_commit` — sat one click 
 receiving 5,183 lines of Phase-2 code. It is closed, and v4 no longer exists as
 a branch on origin, so the path is closed twice over. PR #3 was closed as
 superseded; its head is the active branch. No pull requests remain open.
+
+---
+
+### Stage 0 pre-flight audit of 2026-09-05
+
+Stage 0 is a *prospective* registration: running it before the lock destroys the
+registration irrecoverably. So the last cheap moment to catch an apparatus or
+runbook defect is **before the operator attests**. The 2026-09-04 round had
+already caught one defect of the only class that really threatens this — a
+command defect invisible to every permitted test, because the code it would trip
+sits behind `if not development_only`. This audit went hunting for more of that
+class: static, read-only, no pipeline execution, no attestation flag.
+
+**One confirmed defect, and it is the same shape as the last one.**
+`STAGE0_EXECUTION_PLAN.md` §4.0 told the operator to *"point `--report` at
+whichever rung passed."* That is correct only when `C1` is the rung that passes.
+`freeze_band_after_probe` walks the registered ladder `C1 -> C2 -> C3` from the
+**first** rung and raises `probe report for rung C1 is missing; rung selection
+must follow the registered order` the moment a rung has no report — a *failing*
+rung's report is still required, because it is the evidence that the climb was
+registered. `ADVANCE_CAPACITY_RUNG` is deliberately not one of the loop's break
+conditions, so the loop advances and demands the next rung's report too.
+Symmetrically, a report *after* the first pass is refused. The document stated
+neither constraint.
+
+Concretely: probe `C1` returns `NO_GO` after ~0.79 h, probe `C2` returns `GO`
+after ~1.60 h, the operator follows §4.0 as written, and the selector dies
+naming rung `C1` — no band written, the whole 36-cell qualification blocked, and
+the doc pointing away from the fix. It fails closed, so nothing is destroyed and
+a re-run recovers it; the cost is the operator stopped mid-climb by their own
+runbook.
+
+Why nothing caught it: for the registered plan `freeze_band_after_probe` raises
+`development-only probe reports cannot freeze a real band`
+(`tgsa/phase1_v5.py:1075`) *before* the ladder loop is entered, so no
+development-mode run reaches the check — and every `freeze_band_after_probe`
+test uses `C1` as the passing rung, so the "`C1` failed, a later rung passed"
+path has **no coverage at all**. Fixed in the document; the code is correct and
+was not touched. `--report` is `action="append"` on both subcommands, so
+repetition was always supported — this was a documentation defect, not a missing
+capability. The uncovered ladder path remains an open recommendation, deliberately
+not acted on because adding that test would touch C11, the frozen tree.
+
+> **This audit cleared nothing, and must not be read as if it did.** 26 of its 32
+> agents died on a usage limit. Three dimensions never ran at all, including
+> `plan-contract-schema` — where the `famili_roles` typo lived — and
+> `gate-arithmetic`, where a threshold compared in the wrong direction would live.
+> Seven candidate findings were never adjudicated.
+
+**And the accounting bug recurred — inside the audit harness itself.** The
+survivor rule was `confirmed >= 2 || (confirmed >= 1 && refuted == 0)`, so a
+finding whose three refuters *all died* scored `confirmed = 0` and fell into the
+**refuted** bucket having never been examined. Seven findings were mislabelled
+that way. The run was only readable because the harness *also* tracked
+unadjudicated separately and emitted an incomplete-adjudication list — the only
+reason the mislabelling was visible instead of silent. The lesson, restated
+because restating it on 2026-09-04 did not prevent it: a three-way verdict
+— confirmed / refuted / **never-checked** — has to be carried into the *final
+bucketing*, not just into the tally. Defaulting an unexamined finding to
+"refuted" turns a dead verifier into a clean bill of health.
 
 ---
 

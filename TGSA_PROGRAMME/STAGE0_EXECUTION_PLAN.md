@@ -159,14 +159,53 @@ V5ContractError: non-development qualification requires --frozen-band
 produced from the passing prerequisite probe
 ```
 
-before any output is created. Produce the band from the **passing** probe rung:
+before any output is created. Produce the band from the probe rungs you actually
+ran — **one `--report` per rung from `C1` up to and including the passing one, in
+ladder order, and none after it**. If `C1` passes, that is a single report:
 
 ```bash
 cd C:/Users/clclc/BusinessProject/Chat-Bubble-v51/Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1 && PYTHONPATH=$PWD C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe scripts/select_phase1_v5_1.py --contract configs/v5_1_programme_contract.json --repo-root C:/Users/clclc/BusinessProject/Chat-Bubble-v51 capacity --plan configs/phase1_v5_plan.json --report C:/Users/clclc/tgsa-v5-stage0/probe_C1/probe_report.json --output C:/Users/clclc/tgsa-v5-stage0/frozen_band.json
 ```
 
 Note the argument order: `--contract` and `--repo-root` are **global** and come
-*before* the `capacity` subcommand. Point `--report` at whichever rung passed.
+*before* the `capacity` subcommand.
+
+> **The ladder is not skippable, and a failing rung's report is still required.**
+> Do **not** simply point `--report` at whichever rung passed.
+> `freeze_band_after_probe` walks the registered ladder `C1 -> C2 -> C3` from the
+> *first* rung and raises
+>
+> ```text
+> V5ContractError: probe report for rung C1 is missing; rung selection must
+> follow the registered order
+> ```
+>
+> the moment a rung has no report. A failing rung's report is the evidence that
+> the climb was registered, so it must be supplied. A `NO_GO` rung yields
+> `decision: ADVANCE_CAPACITY_RUNG`, which is deliberately *not* one of the
+> loop's break conditions (`REJECT_SATURATED_BAND`, `REJECT_TASK_FAMILY`), so the
+> loop advances and demands the next rung's report too. If `C1` fails and `C2`
+> passes, pass **both**, in order:
+>
+> ```bash
+> cd C:/Users/clclc/BusinessProject/Chat-Bubble-v51/Rineya_Trajectory_Guided_Sequential_Attention_Lab_v1 && PYTHONPATH=$PWD C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe scripts/select_phase1_v5_1.py --contract configs/v5_1_programme_contract.json --repo-root C:/Users/clclc/BusinessProject/Chat-Bubble-v51 capacity --plan configs/phase1_v5_plan.json --report C:/Users/clclc/tgsa-v5-stage0/probe_C1/probe_report.json --report C:/Users/clclc/tgsa-v5-stage0/probe_C2/probe_report.json --output C:/Users/clclc/tgsa-v5-stage0/frozen_band.json
+> ```
+>
+> Symmetrically, a report *after* the first pass is refused — `probe reports
+> exist after the first passing rung; the registered ladder must stop at first
+> pass` — so never include `C3` once `C2` has passed. `--report` is
+> `action="append"` on both the `capacity` and `exposure` subcommands
+> (`scripts/select_phase1_v5_1.py:79,85`), so repetition is supported; this was a
+> documentation defect, not a missing capability.
+>
+> **Why no test caught this.** For the registered plan
+> `freeze_band_after_probe` raises `development-only probe reports cannot freeze
+> a real band` (`tgsa/phase1_v5.py:1075`) *before* the ladder loop is entered, so
+> no development-mode run can reach the missing-report check. Every
+> `freeze_band_after_probe` test in `tests/test_phase1_v5.py` uses `C1` as the
+> passing rung, so the "`C1` failed, a later rung passed" path has no coverage at
+> all. Found by the 2026-09-05 pre-flight audit; same shape as the missing
+> `--frozen-band` defect found on 2026-09-04.
 
 `--report` takes the *report* path, but `_load_registered_report` also reads two
 **siblings in the same directory** and fails if either is missing or fails:
