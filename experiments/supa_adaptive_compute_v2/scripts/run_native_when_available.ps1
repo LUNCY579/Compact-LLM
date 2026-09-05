@@ -4,6 +4,10 @@
 param(
     [ValidateSet('architecture_dev','confirmatory_dev','confirmatory_diagnostics')]
     [string]$Role = 'architecture_dev',
+    [ValidateSet('protocol_gpu_v2_2.json','protocol_gpu_v2_3.json')]
+    [string]$ConfigName = 'protocol_gpu_v2_2.json',
+    [ValidateSet('registered','control-first')]
+    [string]$ArmOrder = 'registered',
     [ValidateRange(1,86400)][int]$MaxQueueSeconds = 7200,
     [switch]$InspectOnly
 )
@@ -12,12 +16,19 @@ $PSNativeCommandUseErrorActionPreference = $false
 $programmeRoot = Split-Path -Parent $PSScriptRoot
 $repositoryRoot = Split-Path -Parent (Split-Path -Parent $programmeRoot)
 $researchPython = 'C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe'
-$configPath = Join-Path $programmeRoot 'native_armr/configs/protocol_gpu_v2_2.json'
+$configPath = Join-Path $programmeRoot "native_armr/configs/$ConfigName"
 $manifestPath = Join-Path $programmeRoot 'data/generated/v2/native_armr/manifest.json'
 $caller = Join-Path $PSScriptRoot 'run_native_campaign.py'
 $roleStage = if ($Role -eq 'architecture_dev') { '01_architecture_dev' } else { '02_confirmatory_run' }
 $scientificEvidence = Join-Path $programmeRoot "native_armr/evidence/$roleStage"
 $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
+$campaignArms = @('A0','A1','A3','A16','AM')
+if ($ArmOrder -eq 'control-first') {
+    if ($Role -ne 'architecture_dev' -or $ConfigName -ne 'protocol_gpu_v2_3.json') {
+        throw 'Control-first scheduling is registered only for the v2.3 architecture stage'
+    }
+    $campaignArms = @('A0','AM','A1','A3','A16')
+}
 
 function Read-Resources {
     $systemMemory = Get-CimInstance Win32_OperatingSystem
@@ -48,6 +59,8 @@ $events = Join-Path $queueDirectory 'events.jsonl'
 $queueStarted = [DateTime]::UtcNow
 $queueManifest = [ordered]@{
     status = 'STARTED'; pid = $PID; role = $Role
+    config_path = $configPath
+    arms = $campaignArms
     start_utc = $queueStarted.ToString('o')
     script_sha256 = (Get-FileHash -LiteralPath $PSCommandPath -Algorithm SHA256).Hash.ToLowerInvariant()
     config_sha256 = (Get-FileHash -LiteralPath $configPath -Algorithm SHA256).Hash.ToLowerInvariant()
@@ -73,7 +86,7 @@ try {
         $launched = [DateTime]::UtcNow
         $log = Join-Path $queueDirectory ('campaign_{0:D3}.log' -f $attempt)
         Write-Output "RESUME role=$Role attempt=$attempt"
-        & $researchPython $caller --config $configPath --manifest $manifestPath --role $Role 2>&1 | Tee-Object -FilePath $log
+        & $researchPython $caller --config $configPath --manifest $manifestPath --role $Role --arms $campaignArms 2>&1 | Tee-Object -FilePath $log
         $childExit = $LASTEXITCODE
         if ($childExit -eq 0) {
             $queueManifest.status = 'CAMPAIGN_COMPLETE'

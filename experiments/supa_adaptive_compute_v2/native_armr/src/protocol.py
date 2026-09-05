@@ -1,14 +1,21 @@
 """Validate Track A scientific choices before delegating to shared execution."""
 from __future__ import annotations
 
+from copy import deepcopy
 from pathlib import Path
 import json
+import math
+import re
 
 from .operators import REGISTERED_ARMS
 
 
 DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "configs/protocol.json"
 GPU_CONFIG = DEFAULT_CONFIG.with_name("protocol_gpu_v2_2.json")
+CALIBRATED_GPU_CONFIG = DEFAULT_CONFIG.with_name("protocol_gpu_v2_3.json")
+CALIBRATED_PROTOCOL_VERSION = "native_armr_v2.3_gpu_fp32_calibrated_control"
+CALIBRATED_CONTROL_SELECTION = "calibration_only_scenario_balanced_ordinary_residual_energy"
+CALIBRATED_RUNTIME_QUALIFICATION = "native_gpu_fp32_v2_3"
 GPU_RUNTIME_AMENDMENT = {
     "protocol_version": "native_armr_v2.2_gpu_fp32",
     "device": "cuda:0",
@@ -35,16 +42,69 @@ def require_config_path(path: Path) -> Path:
     """Execution and audit use a frozen named protocol, never an ad-hoc copy."""
     from shared.guards import guard_non_sealed_path
     path = guard_non_sealed_path(path)
-    if path not in (DEFAULT_CONFIG.resolve(), GPU_CONFIG.resolve()):
+    if path not in (DEFAULT_CONFIG.resolve(), GPU_CONFIG.resolve(), CALIBRATED_GPU_CONFIG.resolve()):
         raise ValueError("native execution requires the registered CPU or GPU protocol path")
     return path
+
+
+def calibrated_gpu_config(binding: dict, alpha: float) -> dict:
+    """Construct the sole prospective change, without licensing an input alpha.
+
+    The freeze caller and loader independently verify the artifact; this pure
+    constructor only defines the exact allowed difference from the old science.
+    """
+    if isinstance(alpha, bool) or not isinstance(alpha, (float, int)) or not math.isfinite(alpha) or alpha <= 0:
+        raise ValueError("calibrated control alpha must be finite and positive")
+    reference = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+    return deepcopy({**reference, **GPU_RUNTIME_AMENDMENT,
+            "protocol_version": CALIBRATED_PROTOCOL_VERSION,
+            "runtime_qualification": CALIBRATED_RUNTIME_QUALIFICATION,
+            "control": {**reference["control"], "alpha": alpha,
+                        "selection": CALIBRATED_CONTROL_SELECTION},
+            "control_calibration": dict(binding)})
+
+
+def verify_control_calibration(config: dict) -> dict:
+    """Recompute and verify the committed label-free alpha before inference."""
+    from shared.guards import require_within
+    from shared.legacy import REPO, ROOT
+    from .control_calibration import verify_calibration_artifact
+    if config.get("protocol_version") != CALIBRATED_PROTOCOL_VERSION:
+        raise ValueError("calibration binding requires the registered v2.3 protocol")
+    binding = config.get("control_calibration")
+    if not isinstance(binding, dict) or set(binding) != {"artifact_path", "artifact_sha256"}:
+        raise ValueError("calibrated control requires its exact artifact path/hash binding")
+    relative, digest = binding["artifact_path"], binding["artifact_sha256"]
+    if not isinstance(relative, str) or not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("invalid calibrated control artifact path/hash")
+    path = require_within(REPO / relative, ROOT / "native_armr/evidence/00_control_calibration")
+    if path.name != "report.json" or path.relative_to(REPO).as_posix() != relative:
+        raise ValueError("calibration artifact must use its canonical repository-relative report path")
+    report = verify_calibration_artifact(path, digest, require_committed=True)
+    alpha = config.get("control", {}).get("alpha")
+    if (isinstance(alpha, bool) or not isinstance(alpha, (int, float)) or
+            not math.isfinite(alpha) or alpha <= 0 or alpha != report["alpha"]):
+        raise ValueError("control alpha differs from the exact fitted calibration artifact")
+    expected_control = {key: config["control"][key] for key in
+                        ("seed", "std", "intermediate_size", "insertion_layer")}
+    if any(report["control"].get(key) != value for key, value in expected_control.items()):
+        raise ValueError("calibration artifact control differs from the registered operator")
+    if report["checkpoint_files_before"].get("model.safetensors") != config["checkpoint_sha256"]:
+        raise ValueError("calibration artifact used a different canonical checkpoint")
+    return report
 
 
 def load_protocol(path: Path) -> dict:
     from shared.guards import guard_non_sealed_path, require_runtime
     config = json.loads(guard_non_sealed_path(path).read_text(encoding="utf-8"))
     require_runtime(config)
-    if config.get("device") == "cuda:0":
+    calibrated = config.get("protocol_version") == CALIBRATED_PROTOCOL_VERSION
+    if calibrated:
+        expected = calibrated_gpu_config(config.get("control_calibration", {}), config.get("control", {}).get("alpha"))
+        if config != expected:
+            raise ValueError("v2.3 may change only the registered calibration binding and control scale; native science must match the reference")
+        verify_control_calibration(config)
+    elif config.get("device") == "cuda:0":
         reference = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
         if config != {**reference, **GPU_RUNTIME_AMENDMENT}:
             raise ValueError("GPU amendment may change only registered runtime settings; native science must match CPU reference")
@@ -61,7 +121,8 @@ def load_protocol(path: Path) -> dict:
         raise ValueError("candidate operators differ from preregistration")
     control = config["control"]
     if any(control.get(key) != value for key, value in {
-        "insertion_layer": 13, "seed": 7301, "std": .02, "alpha": 1.,
+        "insertion_layer": 13, "seed": 7301, "std": .02,
+        "alpha": control["alpha"] if calibrated else 1.,
         "hidden_size": 1024, "intermediate_size": 10240,
         "additional_matrix_parameters": 31457280,
         "additional_matmul_flops_per_token": 62914560, "training": False,

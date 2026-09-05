@@ -1,0 +1,14 @@
+{
+  "audit_utc": "2026-09-05T22:30:53.510759+00:00",
+  "checks": {
+    "failed_status": true,
+    "failure_backbone_frozen": true,
+    "failure_checkpoint_before_after_match": true,
+    "failure_post_error_canonical_unchanged": true,
+    "failure_state_before_after_match": true,
+    "generic_guard_only": true,
+    "no_complete_control_postcheck_claim": true
+  },
+  "failure_manifest_sha256": "38a7430a11950715e8a901539ec0db7f98442ccb03435420eefca66df7569fa9",
+  "interpretation": "Failure-time backbone integrity is verified from the saved receipt; final extra-control state/freeze check is absent because the shard failed. This does not prove control mutation and does not turn the failed shard into a complete shard. Guard subtype is not recorded."
+}

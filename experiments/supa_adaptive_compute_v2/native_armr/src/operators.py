@@ -150,11 +150,19 @@ def operator_factory(model: Any, arm: str, config: dict) -> Reapplication:
         wrapper = Reapplication(model, layer=16, applications=2, emergency_bounds=bounds)
     else:
         control = config["control"]
-        if (control["insertion_layer"], control["seed"], control["std"], control["alpha"]) != (13, 7301, .02, 1.0):
+        from .protocol import CALIBRATED_PROTOCOL_VERSION, verify_control_calibration
+        calibrated = config.get("protocol_version") == CALIBRATED_PROTOCOL_VERSION
+        calibration = verify_control_calibration(config) if calibrated else None
+        alpha = calibration["alpha"] if calibrated else 1.0
+        if (control["insertion_layer"], control["seed"], control["std"], control["alpha"]) != (13, 7301, .02, alpha):
             raise ValueError("unregistered compute-control settings")
-        wrapper = NativeComputeControl(model, layer=13, seed=7301, std=.02, alpha=1.,
+        wrapper = NativeComputeControl(model, layer=13, seed=7301, std=.02, alpha=alpha,
                                        intermediate_size=control["intermediate_size"],
                                        emergency_bounds=bounds)
+        if calibration is not None:
+            from shared.integrity import state_hash
+            if state_hash(wrapper.transform) != calibration["control_state_sha256"]:
+                raise ValueError("compute-control tensors differ from the calibrated frozen transform")
     wrapper.arm = arm
     if arm != "AM":
         wrapper.added_parameter_count = 0
