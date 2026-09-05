@@ -7,7 +7,7 @@ The scientific questions remain open. No confirmatory generation has run.
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
-| Native ARMR | Does bounded recurrence generalize? | GPU runtime PASS; A0/A1/A3/A16 completed 128 architecture cases each; original AM failed a malformed-generation guard | Original matrix incomplete; prospective label-free AM scale calibration under development | 0 confirmation examples | CLOSED pending a valid complete architecture matrix |
+| Native ARMR | Does bounded recurrence generalize? | Original GPU runtime PASS; A0/A1/A3/A16 completed 128 architecture cases each; original AM failed a malformed-generation guard | Label-free v2.3 AM scale calibrated and frozen; new runtime qualification pending | 0 confirmation examples | CLOSED pending new qualification and a valid complete architecture matrix |
 | Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | Six objectives across 16 pairs frozen; fitting pending, none selected | Not licensed | Alignment mechanism screen first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
@@ -29,15 +29,28 @@ result follows from capture alone.
 
 The original AM guard failure is an engineering rejection, not evidence for
 recurrence efficacy. Its arm, scale, source registration, partial outputs and
-failure receipts remain intact. A separate v2.3 amendment will calibrate only
-the frozen random control's scalar using Track A calibration activation energy.
-The formula will be preregistered before calibration; no accuracy, answers,
-architecture outputs or confirmation examples select the scalar. A replacement
-configuration requires committed calibration evidence, a new registration,
-fresh runtime qualification and a complete fresh architecture matrix.
+failure receipts remain intact. The separate v2.3 label-free calibration rule
+was frozen in registration `cf1440a9bbf3344bcc0cca316a1d5f9cb172a448b06bf1696b27646fc673fe57`
+and committed at `4791635ac1a1ad22511c355bc59ab42956407dee` before execution.
+Calibration completed in 62.75 seconds, peak RSS 1,236,889,600 bytes, with all
+state/buffer/checkpoint identities preserved and zero trainable parameters or
+gradients. Report:
+`native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/report.json`.
+
+The exact fitted scalar is **1.091369554461779**, slightly above the original
+1.0. Fit relative residual energy is 0.0955958067 for A3 and the scaled control.
+Held-out energy is 0.0960649343 for A3 versus 0.0957779170 for the scaled control.
+The formula was applied without search or clipping; held-out measurements did
+not select alpha. No accuracy, answers, architecture outputs or confirmation
+examples entered fitting. Energy matching is not generation validity or efficacy.
+The verified calibration artifact was committed at
+`a6126f2a3c51bba5d312ae6db2f7cb4af1092522` before deriving the new GPU config.
+Fresh runtime qualification and a complete fresh architecture matrix remain
+required; original generation guards are unchanged.
 
 Current execution registrations:
 
+- Native GPU v2.3: `86e768e08bf3576dd8ce80ec939b7e876fb5fb7449d41a3aa51c497ce6607b44`.
 - Original native GPU v2.2: `7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5`.
 - Track B CPU reference on current shared source: `f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea`.
 - Failed Track B GPU profile: `beec1869aad324d29191cd21e5f300bd6da3bdc0a52d8c5f11839ac4b98f5b7c`.
@@ -49,7 +62,11 @@ recomputation reproduced all 40 native logit comparison triples from 80
 hash-verified saved tensors. Evidence is in
 `00_audit/gpu_validation_v1/` and
 `00_audit/runtime_independent_review_20260905/`.
-New amendment tests and provenance checks must pass before its execution.
+The amendment additionally passed **215 tests and 148 subtests** in 76.71 seconds;
+49 new calibration/integration tests also passed in a focused 20.76-second run.
+Exact commands and hashed logs: `00_audit/native_control_v2_3_validation/`.
+The calibration artifact verifier reconstructed all 128 scenario aggregates,
+the fit-only formula, frozen partitions and state/buffer preservation checks.
 
 See [GPU_STATUS.md](GPU_STATUS.md) for qualification measurements and receipts.
 All full-model jobs execute sequentially under a machine lease; engineering
