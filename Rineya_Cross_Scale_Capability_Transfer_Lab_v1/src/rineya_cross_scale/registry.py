@@ -187,3 +187,37 @@ class ExperimentRegistry:
                     "details": details,
                 }
             )
+
+    def record_diagnostic(
+        self,
+        *,
+        experiment_id: str,
+        hypothesis: str,
+        transformation: str,
+        verdict: str,
+        resource_usage: dict[str, Any] | None = None,
+        quantitative_result: dict[str, Any] | None = None,
+        interpretation: str = "",
+        next_action: str = "",
+        source_hashes: dict[str, str] | None = None,
+    ) -> None:
+        """Append a v3+ diagnostic event (PASS / FAIL / INCONCLUSIVE)."""
+        if verdict not in {"PASS", "FAIL", "INCONCLUSIVE"}:
+            raise RegistryError(f"unsupported diagnostic verdict: {verdict}")
+        with registry_lock(self.path):
+            self._append(
+                {
+                    "schema_version": "3.0",
+                    "at_utc": utc_now(),
+                    "event": "diagnostic",
+                    "experiment_id": experiment_id,
+                    "hypothesis": hypothesis,
+                    "transformation": transformation,
+                    "verdict": verdict,
+                    "resource_usage": resource_usage or {},
+                    "quantitative_result": quantitative_result or {},
+                    "interpretation": interpretation,
+                    "next_action": next_action,
+                    "source_hashes": source_hashes or {},
+                }
+            )
