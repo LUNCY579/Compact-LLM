@@ -1,0 +1,26 @@
+{
+  "cli_help_passed": true,
+  "execution_prerequisite": "All 16 registered pairs, no unfinished pair attempts, exactly one COMPLETE attempt per pair, and exactly one COMPLETE aggregate with no unfinished aggregate attempt.",
+  "frozen_scientific_sources_checked": 139,
+  "full_matrix_audit_executed": false,
+  "later_audit_command": "& 'C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe' 'C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/cross_scale/evidence/07_independent_audit/tools/audit_alignment_matrix_v2.py' --run-id alignment-cpu-v2-002 --output-dir 'C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/cross_scale/evidence/07_independent_audit/alignment-cpu-v2-002-audit-001'",
+  "limits": "Only metadata, scalar bounds and ranking arithmetic. Activations/bridges are hashed as opaque bytes, never deserialized; no model/GPU/checkpoint load, hidden/bridge numerical recomputation or Git.",
+  "outputs": [
+    "attempt_inventory.json",
+    "input_hashes.json",
+    "audit_receipt.json"
+  ],
+  "prepared_utc": "2026-09-05T23:06:44.634932+00:00",
+  "real_partial_selection_computed": false,
+  "script_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\cross_scale\\evidence\\07_independent_audit\\tools\\audit_alignment_matrix_v2.py",
+  "script_sha256": "28cbed3dd382265d2ed663c34a9f2f7a6fc02b81bad91b90c67e7158a7ac29ae",
+  "source_hash_mismatches": [],
+  "status": "READY_FOR_COMPLETE_MATRIX_ONLY",
+  "test_script_sha256": "bb0eb138489ed5b84989c907d323ace85d1be5bb09470c99412d1bd183f44ebe",
+  "tests": {
+    "command": "& 'C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe' 'experiments/supa_adaptive_compute_v2/cross_scale/evidence/07_independent_audit/tools/test_audit_alignment_matrix_v2.py'",
+    "fixtures": "synthetic metadata/scalars only; no real partial selection",
+    "passed": 12
+  },
+  "tool_files_outside_frozen_source_map": true
+}

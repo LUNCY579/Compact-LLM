@@ -21,7 +21,7 @@ earlier delivery snapshot without modifying [FINAL_REPORT.md](FINAL_REPORT.md).
 | Track | Question | Completed evidence | Current decision |
 |---|---|---|---|
 | A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Original GPU qualification passed; four native arms completed architecture coverage; original AM failed its generation guard; separate v2.3 scalar calibration completed | No efficacy GO/NO-GO; fresh v2.3 qualification and complete architecture matrix required |
-| B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; unchanged CPU reference capture completed | No fitted/selected bridge or new held-out alignment result; mechanism matrix pending |
+| B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; CPU capture and first six-objective pair completed | 15 pairs pending; no selected bridge or generation license |
 | Downstream mechanisms | Routing, MLA/MHA, MTP, 8B, backbone recovery and distillation | Not executed or licensed | All gates CLOSED |
 
 The resource queue is active; a queued stage is not a running model. At this
@@ -154,7 +154,8 @@ objectives per pair. B0 is historical absolute ridge; B1 token-normalized state
 alignment; B2 delta-aware alignment; B3 both; BS cross-scenario shuffled pairs;
 BR seeded random bridges. B2/B3 fit only upward affine bridge parameters through
 the actual frozen donor transformation, for the fixed 96-step budget. Backbones
-and downward maps stay frozen. No bridge has been fitted or selected in this run.
+and downward maps stay frozen. Six bridges have been fitted for S8/D12;
+none is selected while the other 15 depth pairs remain incomplete.
 
 Track B GPU qualification recorded 656 comparisons; 161 exceeded the frozen
 absolute-error cap .002 (116 state, 45 projected-delta). Maximum absolute error
@@ -266,5 +267,5 @@ Exactly one next causal experiment per track:
   followed by complete independent audit and the registered statistical hierarchy.
 - **Track B:** execute the frozen CPU 16-pair/six-objective alignment matrix using
   verified `alignment-cpu-v2-002` captures, then apply its complete held-out
-  mechanism gate and deterministic selection. The first pending pair is S8/D12;
+  mechanism gate and deterministic selection. The first pending pair is S8/D16;
   no efficacy generation or dose selection is part of this experiment.
