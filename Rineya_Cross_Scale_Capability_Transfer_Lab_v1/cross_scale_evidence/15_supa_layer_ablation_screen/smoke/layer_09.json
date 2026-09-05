@@ -1,0 +1,181 @@
+{
+  "catastrophe_score": 0.09025365702387678,
+  "condition": "skip_layer_09",
+  "critical": false,
+  "invalid_rate": 0.0,
+  "layer": 9,
+  "mean_logit_cosine_vs_intact": 0.9548731714880616,
+  "mean_nll": 0.1994039463070294,
+  "n_prompts": 8,
+  "predictions": [
+    {
+      "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+      "family": "common_sense",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9788070857502351,
+      "mean_nll": 0.29491785168647766,
+      "response": "Ice melts into water.",
+      "short_period_repetition": false,
+      "token_ids": [
+        51330,
+        98091,
+        1119,
+        3015,
+        13,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_mathematics_429ca310e753b947",
+      "family": "mathematics",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9777158396592877,
+      "mean_nll": 0.6476797461509705,
+      "response": "873",
+      "short_period_repetition": false,
+      "token_ids": [
+        23,
+        22,
+        18,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_instruction_following_1d15f77eca5d17f0",
+      "family": "instruction_following",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.952927366462243,
+      "mean_nll": 0.004190631676465273,
+      "response": "{\"label\":\"tag-813637\",\"ok\":true}",
+      "short_period_repetition": false,
+      "token_ids": [
+        4913,
+        1502,
+        3252,
+        4578,
+        12,
+        23,
+        16,
+        18,
+        21,
+        18,
+        22,
+        2198,
+        562,
+        788,
+        1866,
+        92,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_science_9cf33d8dbb5fd050",
+      "family": "science",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9820245649400082,
+      "mean_nll": 0.3142247498035431,
+      "response": "Ampere (A)",
+      "short_period_repetition": false,
+      "token_ids": [
+        32,
+        1307,
+        485,
+        320,
+        32,
+        8,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "family": "multi_hop_binding",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9612677129624183,
+      "mean_nll": 0.02994878590106964,
+      "response": "Faye",
+      "short_period_repetition": false,
+      "token_ids": [
+        37,
+        59955,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_short_response_15273c49b438f1a9",
+      "family": "short_response",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.8473012266168689,
+      "mean_nll": 0.12562835216522217,
+      "response": "F",
+      "short_period_repetition": false,
+      "token_ids": [
+        37,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_normal_conversation_029382dc0a778c44",
+      "family": "normal_conversation",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9646762648208194,
+      "mean_nll": 0.17861779034137726,
+      "response": "Greet Eatgrn warmly in between three and seven words.",
+      "short_period_repetition": false,
+      "token_ids": [
+        38,
+        3744,
+        44514,
+        901,
+        77,
+        96370,
+        304,
+        1948,
+        2326,
+        323,
+        8094,
+        4244,
+        13,
+        151645
+      ],
+      "top1_vs_intact": 0,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "family": "unanswerable_abstention",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9742653106926117,
+      "mean_nll": 2.3662731109652668e-05,
+      "response": "UNKNOWN",
+      "short_period_repetition": false,
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    }
+  ],
+  "wall_seconds": 17.875,
+  "weird_hits_ge_0_25": 0
+}
