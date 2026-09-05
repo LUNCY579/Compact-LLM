@@ -1,7 +1,10 @@
 # Operational scheduling only; all science remains in committed Python callers.
 # Execute exactly one ready stage, then return its result for review.
 [CmdletBinding()]
-param([ValidateRange(1,86400)][int]$MaxQueueSeconds = 3600)
+param(
+    [ValidateRange(1,86400)][int]$MaxQueueSeconds = 3600,
+    [switch]$RetryNativeAdmission
+)
 $ErrorActionPreference = 'Stop'
 $PSNativeCommandUseErrorActionPreference = $false
 $programmeRoot = Split-Path -Parent $PSScriptRoot
@@ -16,6 +19,7 @@ $receipt = [ordered]@{
     script_sha256 = (Get-FileHash -LiteralPath $PSCommandPath -Algorithm SHA256).Hash.ToLowerInvariant()
     policy = 'One stage only: prefer pending native v2.3 GPU qualification; otherwise next original CPU bridge pair. No retries of failed science.'
     max_queue_seconds = $MaxQueueSeconds
+    retry_native_zero_artifact_admission = [bool]$RetryNativeAdmission
 }
 $receipt | ConvertTo-Json -Depth 5 | Set-Content -LiteralPath (Join-Path $queueDirectory 'started.json') -Encoding utf8
 Write-Output "QUEUE_DIR=$queueDirectory"
@@ -34,13 +38,30 @@ try {
         $arguments = $null
         if (!$leasePresent -and $hostGiB -ge 4.0) {
             $qualificationReceipts = @(Get-ChildItem -Path (Join-Path $programmeRoot 'native_armr/evidence/00_runtime_qualification/*/run_manifest.json') |
-                ForEach-Object { Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json } |
-                Where-Object { $_.runtime_qualification -eq 'native_gpu_fp32_v2_3' })
-            if (!$qualificationReceipts.Count -and $gpuMiB -ge 3584) {
+                ForEach-Object {
+                    $qualification = Get-Content -LiteralPath $_.FullName -Raw | ConvertFrom-Json
+                    if ($qualification.runtime_qualification -eq 'native_gpu_fp32_v2_3') {
+                        [pscustomobject]@{ receipt=$qualification; directory=$_.DirectoryName }
+                    }
+                })
+            $qualificationPending = !$qualificationReceipts.Count
+            if (!$qualificationPending -and $RetryNativeAdmission) {
+                $admissionFailures = @($qualificationReceipts | Where-Object {
+                    $_.receipt.status -eq 'FAILED' -and
+                    $_.receipt.failure_receipt.type -eq 'MemoryError' -and
+                    $_.receipt.failure_receipt.message -match '^insufficient (available physical RAM|free VRAM):' -and
+                    !(Test-Path -LiteralPath (Join-Path $_.directory 'report.json')) -and
+                    @(Get-ChildItem -LiteralPath $_.directory -Recurse -File -Filter '*.pt').Count -eq 0
+                })
+                $qualificationPending = $admissionFailures.Count -eq $qualificationReceipts.Count
+            }
+            # The qualifier initializes CUDA before its CPU reference. Reserve
+            # staging headroom for that context; the scientific floor stays 3GiB.
+            if ($qualificationPending -and $gpuMiB -ge 3584 -and $hostGiB -ge 4.25) {
                 $receipt.stage = 'native_v2_3_runtime_qualification'
                 $arguments = @((Join-Path $PSScriptRoot 'qualify_native_gpu.py'),'--config',(Join-Path $programmeRoot 'native_armr/configs/protocol_gpu_v2_3.json'),'--manifest',(Join-Path $programmeRoot 'data/generated/v2/native_armr/manifest.json'))
             }
-            elseif (!$qualificationReceipts.Count) {
+            elseif ($qualificationPending) {
                 # The original 16-pair order is fixed; stop if an earlier attempt
                 # exists without success rather than silently retrying it.
                 :findPair foreach ($supaLayer in @(8,12,16,19)) {
