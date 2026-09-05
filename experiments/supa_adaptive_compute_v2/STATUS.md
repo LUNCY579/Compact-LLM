@@ -9,7 +9,7 @@ The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
 | Native ARMR | Does bounded recurrence generalize? | Original GPU runtime PASS; A0/A1/A3/A16 completed 128 architecture cases each; original AM failed a malformed-generation guard | Label-free v2.3 AM scale calibrated and frozen; new runtime qualification pending | 0 confirmation examples | CLOSED pending new qualification and a valid complete architecture matrix |
-| Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | Six objectives across 16 pairs frozen; fitting pending, none selected | Not licensed | Alignment mechanism screen first |
+| Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | First pair S8/D12 completed all six objectives; 15 pairs pending, none selected | Not licensed | Complete 96-cell alignment mechanism screen first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
 | 8B / distillation | Escalation / compression | Out of scope | — | — | CLOSED |
@@ -27,6 +27,14 @@ the activation bundle covers 96 fit and 32 held-out scenarios. Its SHA256 is
 The metadata-only verifier rechecked the bundle hash, source registration,
 frozen dataset, partition counts and complete receipts. No bridge or generation
 result follows from capture alone.
+
+S8/D12 completed in 128.65 seconds at 3,768,635,392 bytes peak RSS; donor state
+was unchanged and native replay was exact. Held-out ordinary-token delta cosine
+was B0=0.32144, B1=0.64488, B2=0.46854, B3=0.79367, BS=0.04241, BR=0.03288.
+B3 token-relative MSE was 0.37049 versus B0=1.39826. These are descriptive
+measurements from one pair; no eligible/selected-candidate decision is made until
+all 16 pairs complete and the independent selection audit passes. Evidence:
+`cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`.
 
 The original AM guard failure is an engineering rejection, not evidence for
 recurrence efficacy. Its arm, scale, source registration, partial outputs and

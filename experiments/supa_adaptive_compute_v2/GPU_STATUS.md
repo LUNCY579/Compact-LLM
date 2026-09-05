@@ -162,7 +162,10 @@ fixture identity passed exactly, with 96 fit and 32 held-out calibration prompts
 The metadata verifier confirmed the completed receipts and activation SHA256
 `8d132b3992a8b7599926d692e1ea776772b6fa5186e5a8a57ac3f3382dc5f872`.
 Its sources and scientific settings are independent of the Native-only amendment.
-The 16-pair bridge screen has not yet run. Actual model jobs remain sequential.
+The first of 16 pairs, S8/D12, subsequently completed all six bridge objectives
+in 128.65 seconds. B3 held-out ordinary delta cosine was 0.79367 versus B0=0.32144,
+with token-relative MSE 0.37049 versus 1.39826. These are partial-matrix descriptive
+results, not a candidate selection or mechanism GO. Actual model jobs remain sequential.
 
 The resource launcher now accepts `-ConfigName protocol_gpu_v2_3.json` explicitly;
 its default retains the original v2.2 path. It logs the selected path and hashes
@@ -170,3 +173,32 @@ and still retries only zero-example memory admission failures. PowerShell parsin
 and the read-only resource inspection passed. This operational script is excluded
 from the Python scientific source binding and does not change either track's
 registered scientific settings.
+
+## Calibrated native v2.3 profile frozen
+
+The committed label-free calibration completed in 62.75 seconds with exact
+alpha `1.091369554461779`, without search or clipping. It slightly increases the
+original control strength. Held-out relative energy is 0.0960649343 for A3 and
+0.0957779170 for the scaled control. All state/buffer/checkpoint identities were
+preserved; no weights were trained, answers scored or tokens generated.
+Report: `native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/report.json`.
+The independent standard-library audit passed 3,012 consistency checks and
+reproduced the scalar exactly from recorded scenario measurements; raw tensors
+are hash-only, so this was not independent model execution.
+
+Native GPU v2.3 registration is
+`86e768e08bf3576dd8ce80ec939b7e876fb5fb7449d41a3aa51c497ce6607b44`.
+It binds the committed calibration artifact and unchanged qualification/efficacy
+gates. Fresh CPU/GPU qualification is pending resource admission. Operationally,
+the v2.3 architecture order is A0, AM, A1, A3, A16; confirmation retains its original
+arm order. Use the registered control-first order explicitly:
+
+```powershell
+& experiments/supa_adaptive_compute_v2/scripts/run_native_when_available.ps1 -ConfigName protocol_gpu_v2_3.json -ArmOrder control-first -Role architecture_dev
+```
+
+The above command is eligible only after the new qualification passes and its
+evidence is committed. Currently a one-stage resource queue prefers that pending
+qualification when host RAM and VRAM permit, or advances the unchanged Track B
+CPU matrix when only host capacity is available. It never retries failed science
+or overlaps programme model workers.

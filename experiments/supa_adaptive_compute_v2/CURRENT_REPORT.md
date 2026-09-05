@@ -1,5 +1,16 @@
 # Two-track Supa research: current execution report
 
+Execution update after the snapshot below: S8/D12 completed all six bridge
+objectives in 128.65 seconds, with unchanged donor state and exact native replay.
+Held-out ordinary-token delta cosine is B3=0.79367 versus B0=0.32144;
+token-relative MSE is 0.37049 versus 1.39826. BS/BR cosine is 0.04241/0.03288.
+This is one of 16 pairs, with no candidate selection or generation licensed.
+Receipt: `cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`.
+The first queue completed that stage. Its successor,
+`00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/`, is waiting for
+resources, with native v2.3 GPU qualification preferred when its GPU admission
+can pass; otherwise the next fixed CPU pair is S8/D16.
+
 Snapshot: **2026-09-05 22:45:35 UTC / 17:45:35 America/Chicago**. The shared
 framework, independent banks, protocols and callers are implemented. Real runtime
 qualification, Native architecture execution, Native control calibration and
