@@ -14,6 +14,10 @@ class SafetyError(RuntimeError):
 
 
 class Reapplication:
+    @property
+    def extra_layer_applications(self) -> int:
+        return self.applications - 1 if self.enabled and self.layer is not None and not self.skip else 0
+
     def __init__(self, model: Any, layer: int | None = None, applications: int = 1,
                  *, skip: bool = False, enabled: bool = True,
                  emergency_bounds: tuple[float, float] = (.05, 10.0)):
@@ -107,6 +111,7 @@ class Reapplication:
             else:
                 del self.block.forward
             del self.block.__dict__["_armr_owner"]
+            del self.block
         self.active = False
 
 

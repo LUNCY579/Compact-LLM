@@ -1,0 +1,45 @@
+{
+  "status": "PASS",
+  "checks": {
+    "same_guard_stopped_forward": true,
+    "recorded_two_applications": true,
+    "restored_logits_bit_identical": true,
+    "state_unchanged": true,
+    "checkpoint_files_unchanged": true,
+    "no_gradients": true,
+    "no_wrapper_left": true
+  },
+  "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+  "layer": 27,
+  "applications": 2,
+  "hidden": [
+    {
+      "application": 1,
+      "rms": 22.75017547607422,
+      "l2": 3920.43017578125,
+      "variance": 517.330810546875,
+      "rms_ratio_to_normal": 1.0,
+      "cosine_to_normal": 0.9999998807907104,
+      "delta_to_normal_l2": 0.0,
+      "delta_l2": 5795.03759765625,
+      "cosine_to_previous": 0.8158643841743469,
+      "rho": null,
+      "delta_cosine": null
+    },
+    {
+      "application": 2,
+      "rms": 277.024658203125,
+      "l2": 47738.31640625,
+      "variance": 76719.25,
+      "rms_ratio_to_normal": 12.17681413026747,
+      "cosine_to_normal": -0.16627803444862366,
+      "delta_to_normal_l2": 48544.33203125,
+      "delta_l2": 48544.33203125,
+      "cosine_to_previous": -0.16627803444862366,
+      "rho": 8.376879565178887,
+      "delta_cosine": 0.1353067010641098
+    }
+  ],
+  "generation_performed": false,
+  "interpretation": "PASS means expected safety failure reproduced and isolated; L27 recurrence remains FAIL"
+}

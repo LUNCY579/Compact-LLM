@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "kind": "derived_completed_candidate_gate",
+  "config": {
+    "protocol_version": "1.0",
+    "seed": 17,
+    "threads": 4,
+    "dtype": "float32",
+    "device": "cpu",
+    "use_cache": false,
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "max_new_tokens": 24,
+    "max_prompt_seconds": 90,
+    "max_rss_gib": 8,
+    "top_k": 10,
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "minimum_mean_logit_cosine": 0.9,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "maximum_invalid_increase": 0.0,
+    "baseline_cosine_tolerance": 0.02,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "development_file": "mergedev_fast.jsonl",
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+  },
+  "source_run": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\anchor_routed_middle_recurrence_v1\\evidence\\01_middle_reapplication_screen\\20260905T040946_172756Z",
+  "source_manifest_sha256": "f1ab801cee8d7e8914f960a3fc06cab6222cff29a771e6fa6b0756a0a84a3611",
+  "source_raw_sha256": "e2a8f45d47b1c4a01a112ab656c6c0c1a51014ba914b383a087183afbadd0201",
+  "source_summary_hashes": {
+    "layer_04_apps_2_summary.json": "78becc6f43cae091e833c929bf1135ad3ec1b0e140e23d77895a7706f1b6ffd5",
+    "layer_04_apps_3_summary.json": "59f3ff3bbfc3320173b0b49790a04efad2b4c274f3f0feab8c1224eaf062002a",
+    "layer_05_apps_2_summary.json": "63d92aca908d9987acf95c2e298bfdde8c6bfc33138fd3135d47958b7e27a545",
+    "layer_05_apps_3_summary.json": "10955af3f4467e9d51dc1df4c8434c5578e2719fbe4196129e6c28bdcdefd420",
+    "layer_08_apps_2_summary.json": "d472bc14c455da2ca808fb6eb4ee4b8c66d57f599c06a0de160db0089d7224b0",
+    "layer_08_apps_3_summary.json": "361b2f2c62e84c6b2bdf8b2096f59f9e83e36bdc9e6089ebdbdf905396e50c1b",
+    "layer_12_apps_2_summary.json": "d693596ac819713043ae0e0e24bb8d801fcbc45076a46506992042ffa2b18d4c",
+    "layer_12_apps_3_summary.json": "9d3816e87f05f297af85aba1292f09f89eddbc3a4fbbfd16b1db38c9f11b40fc",
+    "layer_13_apps_2_summary.json": "649d732def9d98b5d520b056bebfd350e8d900f0c3a815b3a357efed8f0e0066",
+    "layer_13_apps_3_summary.json": "3ad07a7f66ea4e6c5001fc2615b056f0f2527452cefe4e3acff353f139cadf21",
+    "layer_14_apps_2_summary.json": "df134b006b9aa118422922b76344bfbf630669de2b9e7152e03f9fa6db67c703",
+    "layer_14_apps_3_summary.json": "01a8486a5a335b686502f840778479ab86391fe4c92bfc33685fa0183ad3aaae",
+    "layer_16_apps_2_summary.json": "bab7c64464fe84e32240c7efd5f7d085a6a88ae425899cb947a4d1bcf875b533",
+    "layer_16_apps_3_summary.json": "60587094bc3df0c28313f2ee54125228486ec92c75f5f57a88e275fbc76acc7c",
+    "layer_17_apps_2_summary.json": "ae97ef9f005002521729e56a5b6efc2ea3bd7252f6d521861baff859d4a8ad26",
+    "layer_17_apps_3_summary.json": "d19146c385e2cdce64c932cccca9da6ac4f4e313272673f365003867547877b6",
+    "layer_18_apps_2_summary.json": "9436a0665e5f543668348ae51725a4368418d71081595c44f55eef114bf7202d",
+    "layer_18_apps_3_summary.json": "2322f8e2f83c1e4f89e7b56ca98b16444c0dd23339babb2778019ed3b8ee5ea3",
+    "layer_19_apps_2_summary.json": "1adb1ae15b82c36c9c81ca2ec37b09d16faa2e50e7c26e0c5704ae43393779cc",
+    "layer_19_apps_3_summary.json": "2e727ca437773cbc5fa50d6fac45ee7d75f78fc61a91eccea5d5af312f06aaf9",
+    "layer_25_apps_2_summary.json": "6a7a6073a4d92b8744cdc73d8262bf17b40f8aa55873d5e5c4f58011a8028ba3",
+    "layer_25_apps_3_summary.json": "fa4972e1557db296796bacb15a7dfeef3d9986df26bae179d0d18e9158eab816"
+  },
+  "diagnosis": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\anchor_routed_middle_recurrence_v1\\evidence\\01b_late_failure_diagnosis\\20260905T042230_021876Z",
+  "diagnosis_manifest_sha256": "6aecaadc773f0f1159c480012e27c8b0721b4625897d0a14b31663d0277e96ac",
+  "canonical_unchanged": true,
+  "decision": {
+    "status": "PASS",
+    "fixed_recurrence": true,
+    "campaign_status": "FAIL_L27_CONTROL",
+    "selected_layer": 12,
+    "adaptive_routing": false,
+    "peft_recovery": false,
+    "sealed_evaluation": false,
+    "reason": "smoke gate only; fixed development qualification required"
+  },
+  "model_loaded": false,
+  "script_sha256": "ccfae3d90cf60b357a00f07f2faebe2bcd635b1fa72f9f762dd005c64a24d3be",
+  "scope_decision": "The campaign stopped at excluded late control L27; it remains FAIL and is not resumed. All ten prespecified middle layers (both depths, eight cases each) and L25 completed before the stop. The isolated diagnostic reproduced a 12.1768x RMS ratio under unchanged bounds and verified bit-identical restoration. These completed per-candidate gates are recomputed exactly from the immutable raw evidence; no threshold, candidate, score, or selection rule changed. The original per-candidate protocol licenses fixed development qualification for passing middle arms, independently of the already-excluded late control. This is an explicit scope decision after diagnosis, not a passing label for the failed campaign."
+}

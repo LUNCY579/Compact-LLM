@@ -55,7 +55,8 @@ def csv_file(path: Path, rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
-def screen_report(out: Path, results: list[dict], history: dict, config: dict) -> dict:
+def screen_report(out: Path, results: list[dict], history: dict, config: dict,
+                  *, campaign_status: str = "PASS", qualification_note: str = "") -> dict:
     atlas = []
     hist = {r["layer"]: r for r in history["ranked"]}
     for r in results:
@@ -73,6 +74,7 @@ def screen_report(out: Path, results: list[dict], history: dict, config: dict) -
     atlas.sort(key=lambda r: (not r["go_fixed_smoke"], -r["mean_logit_cosine"], r["layer"], r["applications"]))
     passing = [r for r in atlas if r["go_fixed_smoke"] and r["applications"] == 2 and r["layer"] < 25]
     decision = {"status": "PASS" if passing else "FAIL", "fixed_recurrence": bool(passing),
+                "campaign_status": campaign_status,
                 "selected_layer": passing[0]["layer"] if passing else None,
                 "adaptive_routing": False, "peft_recovery": False, "sealed_evaluation": False,
                 "reason": "smoke gate only; fixed development qualification required" if passing else "no middle repeat-2 arm met the frozen smoke gate"}
@@ -88,6 +90,8 @@ def screen_report(out: Path, results: list[dict], history: dict, config: dict) -
     report = f"""# Middle reapplication screen
 
 Status: {decision['status']} for the fixed-recurrence mechanical gate.
+Original campaign status: {campaign_status}.
+{qualification_note}
 
 Question: which pretrained middle operators tolerate one/two extra applications
 at their native site? Setup: Supa-A1.1, CPU FP32 eager, seed 17, 4 threads,
@@ -96,7 +100,8 @@ commit are in run_manifest.json. Lower/upper layers and abstention head retained
 
 Mechanical qualification: passing matching baseline receipt required; no-cache
 entry guard, exact argument reuse, finite hidden/logit checks, frozen parameter
-hash and checkpoint-file comparison, exact restoration at stage end.
+hash and checkpoint-file comparison. Restoration evidence and any stage stop
+must be read with the qualification note above and the source receipts.
 
 Results: see ranking.md, atlas.json, summary.csv, hidden_state_metrics.csv,
 logit_metrics.csv and raw_results.jsonl. Selected layer: {decision['selected_layer']}.

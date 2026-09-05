@@ -34,9 +34,9 @@ def resolve_model(explicit: Path | None) -> Path:
     raise FileNotFoundError("set RINEYA_SUPA_PATH to the local canonical checkpoint")
 
 
-def run_arm(model, tokenizer, cases, config, out, name, bases=None, **kwargs):
+def run_arm(model, tokenizer, cases, config, out, name, bases=None, wrapper_type=Reapplication, **kwargs):
     rows, logits = [], {}
-    with Reapplication(model, **kwargs) as wrapper, frozen_inference(model):
+    with wrapper_type(model, **kwargs) as wrapper, frozen_inference(model):
         for case in cases:
             row, first = evaluate_case(model, tokenizer, case, config, wrapper,
                                        None if bases is None else bases[case["case_id"]])

@@ -111,6 +111,6 @@ def evaluate_case(model: Any, tokenizer: Any, case: dict, config: dict,
     hd, inter = c.hidden_size, c.intermediate_size
     q, kv = c.num_attention_heads * c.head_dim, c.num_key_value_heads * c.head_dim
     per_layer = 2 * (hd*q + 2*hd*kv + q*hd + 3*hd*inter)
-    depth = c.num_hidden_layers + (wrapper.applications - 1 if wrapper.enabled and wrapper.layer is not None and not wrapper.skip else 0)
+    depth = c.num_hidden_layers + wrapper.extra_layer_applications
     row["generation_dense_matmul_flops_estimate"] = int(token_positions * depth * per_layer + len(token_ids) * 2 * hd * c.vocab_size)
     return row, first
