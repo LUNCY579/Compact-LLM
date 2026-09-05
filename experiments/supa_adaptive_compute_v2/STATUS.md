@@ -1,13 +1,15 @@
 # Programme status
 
 2026-09-05. Implementation and independent validation completed. Both banks and
-independent registrations are frozen. No v2 model evaluation or new donor
-transformation metric has been produced yet.
+independent registrations were committed at
+`067fa33b2ed78fc2a0f9361d313629549f214f08`. Execution was attempted sequentially;
+both attempts stopped at the registered physical-memory admission guard before
+model loading. No v2 model evaluation or new donor transformation metric exists.
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
-| Native ARMR | Does bounded recurrence generalize? | PASS in tiny-model/guard tests; real qualification pending | A0/A1/A3/A16/AM frozen | Not started | Complete architecture qualification required |
-| Cross-scale | Can a donor transformation transfer faithfully? | PASS in tiny-model/guard tests; real alignment pending | Six objectives across 16 pairs frozen; none selected | Not licensed | Alignment first |
+| Native ARMR | Does bounded recurrence generalize? | PASS in tiny-model/guard tests; real qualification pending | A0/A1/A3/A16/AM frozen | 0 examples; memory admission failed | Await resources, then complete architecture qualification |
+| Cross-scale | Can a donor transformation transfer faithfully? | PASS in tiny-model/guard tests; real capture pending | Six objectives across 16 pairs frozen; none selected | Not licensed | Capture memory admission failed; alignment first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
 | 8B / distillation | Escalation / compression | Out of scope | — | — | CLOSED |
@@ -35,3 +37,18 @@ Both are stored separately under each track's `evidence/00_preregistration/`.
 Execution verifies that the registrations, textual protocols, source, config and
 bank manifests have been committed before loading a model. The actual model
 execution state will be updated from immutable receipts, not inferred from tests.
+
+Sequential real execution admission attempts:
+
+- Native A0, architecture shard 0/32: **FAILED before model loading**, available
+  RAM 1.70 GiB vs registered 3.00 GiB; zero completed examples. Receipt:
+  `native_armr/evidence/01_architecture_dev/20260905T173248_727906Z_9ed863b1/run_manifest.json`.
+- Track B capture `alignment-v2-admission-001`: **FAILED before model loading**,
+  available RAM 1.80 GiB vs 3.00 GiB; no activation/bridge artifact or generation.
+  Receipt: `cross_scale/evidence/01_alignment_matrix/alignment-v2-admission-001/run_manifest.json`.
+
+Both processes are terminal; the machine lease was released. Limits were not
+changed and failures were not overwritten. These are resource failures, not
+scientific NO-GO outcomes. The full research goal remains open. Exactly one next
+causal experiment per track is specified in [FINAL_REPORT.md](FINAL_REPORT.md),
+with resumable commands in the programme and track READMEs.
