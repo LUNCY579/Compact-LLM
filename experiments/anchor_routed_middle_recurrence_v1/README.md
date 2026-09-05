@@ -20,6 +20,8 @@ places most middle layers above 0.90 cosine; do not generalize 0.71–0.89 to al
 2. Independently test the 12 prespecified layers in the JSON configuration at
    two and three TOTAL applications (one and two extra passes). Candidates span
    highly removable, moderately sensitive, and late layers. No early repeats;
+   layers 25/27 are late readout controls and cannot be selected as the initial
+   middle recurrent operator (eligible middle indices are 3 through 24).
    catastrophic skip controls already qualify the stem hypothesis. Every pass
    remains at the original site; the ordinary upper stack is unchanged.
 3. A two-application arm licenses fixed recurrence development qualification
