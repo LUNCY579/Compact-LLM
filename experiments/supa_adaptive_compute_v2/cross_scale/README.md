@@ -4,6 +4,22 @@ This caller shares loading, canonical identity, capture, hashing, frozen data, r
 
 The scientific contract is [transformation_alignment_v2.md](protocol/transformation_alignment_v2.md); executable values are [alignment_v2.json](configs/alignment_v2.json). No real alignment or efficacy claim follows from tiny-model tests. B-Stage 1 is implemented; B-Stages 2/3 are gated and not executed.
 
+Local GPU acceleration has a separate prospective [FP32 amendment](protocol/gpu_fp32_v2_1.md)
+and [GPU configuration](configs/alignment_gpu_v2_1.json). The 4B decoder is streamed
+one layer at a time; bridge autograd runs on GPU and ridge solves remain CPU FP64.
+First freeze/commit the GPU configuration with the unchanged Track B manifest,
+then run the independent runtime qualification and commit its passing receipt:
+
+```powershell
+& C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe experiments/supa_adaptive_compute_v2/cross_scale/scripts/qualify_gpu.py --config experiments/supa_adaptive_compute_v2/cross_scale/configs/alignment_gpu_v2_1.json --dataset-manifest experiments/supa_adaptive_compute_v2/data/generated/v2/cross_scale/manifest.json
+```
+
+For GPU capture/pair/aggregate commands, insert
+`--config experiments/supa_adaptive_compute_v2/cross_scale/configs/alignment_gpu_v2_1.json`
+before the action, and use a new GPU run ID. A committed qualification receipt
+is required for capture and fitting; it licenses Stage 1 only. The existing CPU
+commands below retain their original registration and RAM admission rule.
+
 From the repository root in PowerShell:
 
 ```powershell

@@ -10,6 +10,19 @@ the scientific choices; effective execution also requires the shared registratio
 receipt and committed source. No native large-evaluation result is claimed by
 the presence of this caller or its tests.
 
+GPU execution has a separate prospective amendment,
+`protocol/gpu_fp32_v2_2_amendment.md`, and configuration
+`configs/protocol_gpu_v2_2.json`. It preserves the five arms, data and scientific
+gates while using CUDA FP32/eager/no-cache and separate host/VRAM admission.
+After freezing and committing this GPU registration, run the programme's
+`scripts/qualify_native_gpu.py` CPU/reference comparison before science. A
+compatible completed qualification receipt is mandatory for GPU preflight,
+execution and aggregation. Then pass
+`--config experiments/supa_adaptive_compute_v2/native_armr/configs/protocol_gpu_v2_2.json`
+to every caller and auditor command below. All paired runs must belong to that
+same GPU registration. The commands without `--config` retain the original CPU
+protocol and its 3 GiB host-memory requirement; no CPU failure receipt is altered.
+
 From the repository root, use the qualified environment:
 
 ```powershell

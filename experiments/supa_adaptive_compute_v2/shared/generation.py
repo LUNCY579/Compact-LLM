@@ -8,34 +8,41 @@ from . import legacy
 from armr.evaluation import encode, forward_logits
 from armr.metrics import output_flags, logit_metrics
 from .scoring import canonical_answer, score_response
+from .runtime import synchronize, cuda_memory
 
 
 def evaluate_case(model, tokenizer, case, config, wrapper, base=None):
     import psutil
     import torch
+    device = config.get('device','cpu')
+    synchronize(device)
     start = time.perf_counter()
     process = psutil.Process()
     peak_rss = 0
 
     def boundary():
         nonlocal peak_rss
+        synchronize(device)
         peak_rss = max(peak_rss, process.memory_info().rss)
         if time.perf_counter() - start > config['max_prompt_seconds']:
             raise TimeoutError('registered per-example deadline exceeded (including prefill/NLL)')
         if peak_rss > config['max_rss_gib'] * 2**30:
             raise MemoryError('registered RSS limit exceeded')
+        cuda_memory(config)
 
     wrapper.records.clear()
     wrapper.calls = 0
     wrapper.min_rms_ratio = wrapper.max_rms_ratio = 1.0
     wrapper.capture = True
-    ids = encode(tokenizer, case)
+    ids = encode(tokenizer, case).to(device)
     if ids.shape[1] > config.get('max_input_tokens', 1024):
         raise RuntimeError('input token cap exceeded; no truncation of question permitted')
     boundary()
     logits = forward_logits(model, ids)
     boundary()
-    first = logits.clone()
+    first = logits.detach().cpu().clone()
+    if base is not None:
+        base = base.detach().cpu()
     hidden = list(wrapper.records)
     wrapper.capture = False
     prefill_seconds = time.perf_counter() - start
@@ -61,7 +68,7 @@ def evaluate_case(model, tokenizer, case, config, wrapper, base=None):
             finish = 'eos'
             break
         if step + 1 < cap:
-            ids = torch.cat((ids, torch.tensor([[token]], dtype=ids.dtype)), dim=1)
+            ids = torch.cat((ids, torch.tensor([[token]], dtype=ids.dtype,device=ids.device)), dim=1)
             positions += ids.shape[1]
             boundary()
             logits = forward_logits(model, ids)
@@ -73,8 +80,8 @@ def evaluate_case(model, tokenizer, case, config, wrapper, base=None):
     gold = tokenizer.encode(answer, add_special_tokens=False) if answer is not None else []
     nll = None
     if gold:
-        prompt = encode(tokenizer, case)
-        full = torch.cat((prompt, torch.tensor([gold], dtype=prompt.dtype)), dim=1)
+        prompt = encode(tokenizer, case).to(device)
+        full = torch.cat((prompt, torch.tensor([gold], dtype=prompt.dtype,device=prompt.device)), dim=1)
         boundary()
         output = model(input_ids=full, attention_mask=torch.ones_like(full), use_cache=False)
         boundary()
@@ -83,7 +90,7 @@ def evaluate_case(model, tokenizer, case, config, wrapper, base=None):
         values = output.logits[0, prompt.shape[1]-1:-1].float()
         if not torch.isfinite(values).all():
             raise FloatingPointError('nonfinite answer logits')
-        nll = float(torch.nn.functional.cross_entropy(values, torch.tensor(gold)))
+        nll = float(torch.nn.functional.cross_entropy(values, torch.tensor(gold,device=values.device)))
     score = score_response(text, case['scorer'])
     c = model.config
     q, kv = c.num_attention_heads * c.head_dim, c.num_key_value_heads * c.head_dim
@@ -99,7 +106,7 @@ def evaluate_case(model, tokenizer, case, config, wrapper, base=None):
         'score': float(score['score']), 'correct': bool(score['score'] == 1),
         'score_ambiguous': score.get('ambiguous', False), 'gold_nll': nll,
         'prefill_seconds': prefill_seconds, 'decode_seconds': decode_seconds,
-        'wall_seconds': time.perf_counter()-start, 'peak_rss_bytes': peak_rss,
+        'wall_seconds': time.perf_counter()-start, 'peak_rss_bytes': peak_rss, **cuda_memory(config),
         'processed_token_positions': positions, 'layer_calls_generation': generation_calls,
         'hidden': hidden, 'trajectory_min_rms_ratio': wrapper.min_rms_ratio,
         'trajectory_max_rms_ratio': wrapper.max_rms_ratio,

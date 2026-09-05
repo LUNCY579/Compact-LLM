@@ -15,6 +15,8 @@ from .datasets import load_frozen_dataset
 from .model_loading import load_supa
 from .integrity import assert_unchanged, frozen_inventory, state_hash, validate_inference_receipt
 from .timing import machine_lease
+from .qualifications import verify_runtime_qualification
+from .runtime import synchronize,cuda_memory
 
 
 def shard_cases(rows, index, count):
@@ -97,13 +99,13 @@ def qualify_native_architecture(config, dataset_manifest, registration):
 
 
 def run_shard(track, arm, config, dataset_manifest, role, shard_index, shard_count,
-              operator_factory, model_path=None):
+              operator_factory, model_path=None,config_path=None):
     from .generation import evaluate_case
     from armr.hooks import frozen_inference
     import torch
     require_track(track)
     require_runtime(config)
-    config_path = ROOT / track / 'configs/protocol.json'
+    config_path = Path(config_path) if config_path is not None else ROOT / track / 'configs/protocol.json'
     registration = verify_registration(track,config_path)
     if registration['config'] != config:
         raise RuntimeError('unregistered runtime configuration')
@@ -113,6 +115,7 @@ def run_shard(track, arm, config, dataset_manifest, role, shard_index, shard_cou
     relative = dataset_manifest.relative_to(REPO).as_posix()
     if registration['dataset_manifests'].get(relative) != sha256_file(dataset_manifest):
         raise RuntimeError('dataset not bound by track registration')
+    qualification = verify_runtime_qualification(config,dataset_manifest,registration)
     if role not in ('architecture_dev','confirmatory_dev','confirmatory_diagnostics'):
         raise ValueError('generation role forbidden')
     if track == 'cross_scale' and not config.get('generation_enabled',False):
@@ -128,7 +131,10 @@ def run_shard(track, arm, config, dataset_manifest, role, shard_index, shard_cou
         'registration_sha256':registration['registration_sha256'], 'sources':source_files(track),
         'shard_index':shard_index, 'shard_count':shard_count, 'example_ids':[r['example_id'] for r in cases],
         'seed':config['seed'],'threads':config['threads'],'dtype':config['dtype'],
-        'device':config['device'],'cache_mode':'full_prefix_no_cache', 'max_prompt_seconds':config['max_prompt_seconds']}
+        'device':config['device'],'cache_mode':'full_prefix_no_cache', 'max_prompt_seconds':config['max_prompt_seconds'],
+        'config_path':str(config_path.resolve()),
+        'runtime_qualification_receipt_sha256':qualification['receipt_sha256'],
+        'runtime_qualification_directory':qualification['directory']}
     base_arm = 'A0' if track == 'native_armr' else 'X0'
     baseline_path = None if arm == base_arm else _find_baseline(track,contract,config)
     contract['baseline_run_directory'] = None if baseline_path is None else str(baseline_path)
@@ -180,7 +186,7 @@ def run_shard(track, arm, config, dataset_manifest, role, shard_index, shard_cou
                     row['arm'] = arm
                     write_json(output / 'cases' / (name+'.json'),row)
                     with (output / 'logits' / (name+'.pt')).open('xb') as handle:
-                        torch.save(first,handle)
+                        torch.save(first.detach().cpu(),handle)
                     results.append(row)
                     print(f"{arm} {case['example_id']} score={row['score']} stop={row['termination']} elapsed={row['wall_seconds']:.2f}s",flush=True)
             if extra_module is not None:
@@ -207,19 +213,25 @@ def run_shard(track, arm, config, dataset_manifest, role, shard_index, shard_cou
                 manifest['failure_integrity'] = {'canonical_unchanged':False,'error':str(check_exc)}
     finally:
         import psutil
+        synchronize(config['device'])
         memory = psutil.Process().memory_info()
         manifest.update(end_utc=utc_now(),wall_seconds=time.perf_counter()-start,
                         peak_memory_bytes=getattr(memory,'peak_wset',memory.rss))
+        try:
+            manifest.update(cuda_memory(config))
+        except BaseException as exc:
+            manifest['cuda_memory_final_error'] = str(exc)
         write_json(output/'run_manifest.json',manifest)
     if failure is not None:
         raise failure
     return output
 
 
-def aggregate_runs(track,config,dataset_manifest,role,run_dirs):
+def aggregate_runs(track,config,dataset_manifest,role,run_dirs,config_path=None):
     from .statistics import paired_analysis
-    config_path = ROOT/track/'configs'/('protocol.json' if track == 'native_armr' else 'alignment_v2.json')
+    config_path = Path(config_path) if config_path is not None else ROOT/track/'configs'/('protocol.json' if track == 'native_armr' else 'alignment_v2.json')
     registration = verify_registration(track,config_path)
+    qualification = verify_runtime_qualification(config,dataset_manifest,registration)
     if registration['config'] != config:
         raise RuntimeError('aggregation configuration differs from registered contract')
     expected = load_frozen_dataset(dataset_manifest,track=track,role=role)
@@ -234,6 +246,9 @@ def aggregate_runs(track,config,dataset_manifest,role,run_dirs):
         if manifest['registration_sha256'] != registration['registration_sha256'] or manifest.get('sources') != registration['sources']:
             raise RuntimeError('aggregation requires current registered source evidence')
         validate_inference_receipt(manifest,config)
+        if (manifest.get('runtime_qualification_receipt_sha256') != qualification['receipt_sha256'] or
+            manifest.get('runtime_qualification_directory') != qualification['directory']):
+            raise RuntimeError('mixed or missing runtime qualification evidence')
         source_bindings.add(manifest['registration_sha256'])
         target = by_arm.setdefault(manifest['arm'],{})
         for row in rows:

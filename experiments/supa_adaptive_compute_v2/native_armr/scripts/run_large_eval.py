@@ -26,9 +26,8 @@ def parse_args(argv=None):
 def main(argv=None):
     args = parse_args(argv)
     from native_armr.src.operators import operator_factory
-    from native_armr.src.protocol import DEFAULT_CONFIG, load_protocol, preflight
-    if args.config.resolve() != DEFAULT_CONFIG.resolve():
-        raise ValueError("the shared runner requires the canonical native configs/protocol.json")
+    from native_armr.src.protocol import load_protocol, preflight, require_config_path
+    args.config = require_config_path(args.config)
     config = load_protocol(args.config)
     count = config["default_shard_count"] if args.shard_count is None else args.shard_count
     if args.preflight:
@@ -40,7 +39,8 @@ def main(argv=None):
     path = run_shard(track="native_armr", arm=args.arm, config=config,
                      dataset_manifest=args.manifest, role=args.role,
                      shard_index=args.shard_index, shard_count=count,
-                     operator_factory=operator_factory, model_path=args.model_path)
+                     operator_factory=operator_factory, model_path=args.model_path,
+                     config_path=args.config)
     print(f"RUN_DIR={path}")
     return 0
 

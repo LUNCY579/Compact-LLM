@@ -11,6 +11,8 @@ def quality_cost_frontier(arms):
     cost_keys = ('mean_wall_seconds','flops','added_parameters','peak_memory_bytes')
     if not arms:
         raise ValueError('no evaluated arms')
+    if any('peak_cuda_allocated_bytes' in point for point in arms.values()):
+        cost_keys += ('peak_cuda_allocated_bytes',)
     for arm, values in arms.items():
         if any(key not in values or not isinstance(values[key],(int,float)) or not math.isfinite(values[key]) for key in ('accuracy',*cost_keys)):
             raise ValueError(f'incomplete/nonfinite frontier inputs for {arm}')

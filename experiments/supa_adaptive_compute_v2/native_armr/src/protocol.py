@@ -8,12 +8,46 @@ from .operators import REGISTERED_ARMS
 
 
 DEFAULT_CONFIG = Path(__file__).resolve().parents[1] / "configs/protocol.json"
+GPU_CONFIG = DEFAULT_CONFIG.with_name("protocol_gpu_v2_2.json")
+GPU_RUNTIME_AMENDMENT = {
+    "protocol_version": "native_armr_v2.2_gpu_fp32",
+    "device": "cuda:0",
+    "min_available_gib": 0.5,
+    "min_available_vram_gib": 3.0,
+    "max_cuda_memory_gib": 6.5,
+    "tf32": False,
+    "runtime_qualification": "native_gpu_fp32_v1",
+    "qualification": {
+        "examples_per_family": 1,
+        "max_abs_logit_error": 0.002,
+        "max_relative_logit_l2": 0.0002,
+        "minimum_logit_cosine": 0.999999,
+        "max_abs_nll_error": 0.002,
+        "max_relative_hidden_l2": 0.0002,
+        "minimum_hidden_cosine": 0.999999,
+        "require_greedy_identity": True,
+        "require_gpu_repeat_identity": True,
+    },
+}
+
+
+def require_config_path(path: Path) -> Path:
+    """Execution and audit use a frozen named protocol, never an ad-hoc copy."""
+    from shared.guards import guard_non_sealed_path
+    path = guard_non_sealed_path(path)
+    if path not in (DEFAULT_CONFIG.resolve(), GPU_CONFIG.resolve()):
+        raise ValueError("native execution requires the registered CPU or GPU protocol path")
+    return path
 
 
 def load_protocol(path: Path) -> dict:
     from shared.guards import guard_non_sealed_path, require_runtime
     config = json.loads(guard_non_sealed_path(path).read_text(encoding="utf-8"))
     require_runtime(config)
+    if config.get("device") == "cuda:0":
+        reference = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+        if config != {**reference, **GPU_RUNTIME_AMENDMENT}:
+            raise ValueError("GPU amendment may change only registered runtime settings; native science must match CPU reference")
     if config.get("track") != "native_armr" or tuple(config.get("arms", {})) != REGISTERED_ARMS:
         raise ValueError("native protocol must contain exactly the preregistered ordered arms")
     expected = {
@@ -59,12 +93,15 @@ def preflight(config_path: Path, manifest_path: Path, role: str, arm: str,
     cases = shard_cases(rows, shard_index, shard_count)
     if not cases:
         raise ValueError("empty shard; choose a smaller shard count")
+    from shared.qualifications import verify_runtime_qualification
+    qualification = verify_runtime_qualification(config, manifest_path, registration)
     return {"status": "PREFLIGHT_PASS", "track": "native_armr", "arm": arm,
             "role": role, "examples_in_role": len(rows), "shard_index": shard_index,
             "shard_count": shard_count, "examples_in_shard": len(cases),
             "effective_generation_token_cap_max": max(min(config["max_new_tokens"], c.get("max_new_tokens", config["max_new_tokens"])) for c in cases),
             "dataset_manifest_sha256": sha256_file(manifest_path),
             "config_sha256": sha256_file(config_path), "registration_verified": bool(registration),
+            "runtime_qualification": qualification,
             "model_loaded": False,
             "baseline_note": "execution separately requires a complete matching A0 shard for candidates",
             "architecture_note": "confirmation execution separately requires all 128 architecture cases across all five arms"}

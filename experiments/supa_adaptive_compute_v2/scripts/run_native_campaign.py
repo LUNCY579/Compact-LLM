@@ -19,6 +19,7 @@ from native_armr.src.protocol import load_protocol
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--manifest',type=Path,required=True)
+    parser.add_argument('--config',type=Path,default=PROGRAM/'native_armr/configs/protocol.json')
     parser.add_argument('--role',choices=['architecture_dev','confirmatory_dev','confirmatory_diagnostics'],required=True)
     parser.add_argument('--arms',nargs='+',choices=['A0','A1','A3','A16','AM'],default=['A0','A1','A3','A16','AM'])
     parser.add_argument('--shard-count',type=int,default=32)
@@ -33,7 +34,7 @@ def main():
         parser.error('--arms must not contain duplicates')
     if 'A0' in args.arms and args.arms[0] != 'A0':
         parser.error('A0 must precede candidates when included')
-    config_path = PROGRAM/'native_armr/configs/protocol.json'
+    config_path = args.config
     config = load_protocol(config_path)
     registration = verify_registration('native_armr',config_path)
     rows = load_frozen_dataset(args.manifest,track='native_armr',role=args.role)
@@ -65,7 +66,7 @@ def main():
             print('CAMPAIGN_PAUSED_BETWEEN_SHARDS; repeat the same command to resume',flush=True)
             return
         command = [sys.executable,str(PROGRAM/'native_armr/scripts/run_large_eval.py'),
-                   '--manifest',str(args.manifest.resolve()),'--role',args.role,'--arm',arm,
+                   '--config',str(config_path.resolve()),'--manifest',str(args.manifest.resolve()),'--role',args.role,'--arm',arm,
                    '--shard-index',str(index),'--shard-count',str(args.shard_count)]
         subprocess.run(command,cwd=PROGRAM.parents[1],check=True)
     print('CAMPAIGN_COMPLETE; run independent native aggregation/audit',flush=True)

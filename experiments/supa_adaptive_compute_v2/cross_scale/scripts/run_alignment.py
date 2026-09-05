@@ -55,6 +55,10 @@ def configure(path):
             raise ValueError(f"invalid mechanism gate: {key}")
     if config["holdout_fraction"] != .25:
         raise ValueError("the frozen 96/32 scenario partition is required")
+    if config["device"] != "cpu":
+        if (config.get("runtime_qualification") != "cross_gpu_fp32_v1"
+                or config["delta_steps"] != 96 or config.get("tf32") is not False):
+            raise ValueError("GPU alignment requires its own qualification and unchanged 96-step FP32 objectives")
     return config
 
 
@@ -236,9 +240,8 @@ def execute(args):
         return 0
     if torch.__version__ != "2.12.1+cu126" or transformers.__version__ != "5.14.1":
         raise RuntimeError("unqualified runtime; use historical Chat-Bubble/.venv python")
-    torch.set_num_threads(config["threads"])
-    torch.manual_seed(config["seed"])
-    torch.use_deterministic_algorithms(True)
+    from shared.runtime import configure_runtime
+    configure_runtime(config)
     evidence, local = run_directories(args.run_id)
     if args.action == "capture":
         output = evidence
@@ -267,6 +270,9 @@ def execute(args):
             from cross_scale.src.donor_layers import capture_bundle
             require_available_memory(config)
             dataset = guard_non_sealed_path(args.dataset_manifest)
+            if config["device"] != "cpu":
+                from shared.qualifications import verify_runtime_qualification
+                receipt["runtime_qualification_evidence"] = verify_runtime_qualification(config, dataset, registration)
             registered_path = dataset.relative_to(PROGRAMME.parents[1]).as_posix()
             if registration["dataset_manifests"].get(registered_path) != sha256_file(dataset):
                 raise ValueError("capture requires the registered Track B dataset manifest")
@@ -289,6 +295,10 @@ def execute(args):
             from armr.provenance import checkpoint_files
             require_available_memory(config)
             capture, bundle = read_capture(args.run_id, config, registration)
+            if config["device"] != "cpu":
+                from shared.qualifications import verify_runtime_qualification
+                receipt["runtime_qualification_evidence"] = verify_runtime_qualification(
+                    config, Path(capture["dataset_manifest"]), registration)
             supa_path = guard_non_sealed_path(bundle["supa_identity"]["model_path"])
             if checkpoint_files(supa_path) != bundle["supa_files"]:
                 raise ValueError("canonical Supa checkpoint differs from capture")
@@ -332,9 +342,22 @@ def execute(args):
         memory = psutil.Process().memory_info()
         receipt.update(end_utc=utc(), wall_seconds=time.perf_counter()-started,
                        peak_rss_bytes=getattr(memory, "peak_wset", memory.rss))
+        if config["device"] != "cpu":
+            from shared.runtime import cuda_memory
+            try:
+                receipt["cuda_memory"] = cuda_memory(config)
+            except BaseException as memory_error:
+                # An exhausted CUDA context must not erase the terminal receipt.
+                receipt["cuda_memory_error"] = {"type": type(memory_error).__name__, "error": str(memory_error)}
+                if receipt["status"] != "FAILED":
+                    receipt["status"] = "FAILED"
+                    write_json(output/"failure.json", {"type": type(memory_error).__name__,
+                               "error": str(memory_error), "traceback": traceback.format_exc()})
         write_json(output/"run_manifest.json", receipt)
         if args.action == "capture" and receipt["status"] == "COMPLETE":
             write_json(output/"capture.json", receipt)
+    if receipt["status"] != "COMPLETE":
+        raise RuntimeError("alignment terminal resource check failed; failure receipt preserved")
     print(f"COMPLETE {output}")
     return 0
 

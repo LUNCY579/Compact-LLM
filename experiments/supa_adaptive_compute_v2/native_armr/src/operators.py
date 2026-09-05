@@ -52,11 +52,14 @@ class FrozenSwiGLU(nn.Module):
         generator = torch.Generator(device="cpu").manual_seed(seed)
         self.rms_epsilon = rms_epsilon
         self.gate = nn.Parameter(torch.randn(intermediate_size, hidden_size,
-                                             generator=generator) * std, requires_grad=False)
+                                             generator=generator, device="cpu",
+                                             dtype=torch.float32) * std, requires_grad=False)
         self.up = nn.Parameter(torch.randn(intermediate_size, hidden_size,
-                                           generator=generator) * std, requires_grad=False)
+                                           generator=generator, device="cpu",
+                                           dtype=torch.float32) * std, requires_grad=False)
         self.down = nn.Parameter(torch.randn(hidden_size, intermediate_size,
-                                             generator=generator) * std, requires_grad=False)
+                                             generator=generator, device="cpu",
+                                             dtype=torch.float32) * std, requires_grad=False)
         self.eval()
 
     def forward(self, hidden: torch.Tensor) -> torch.Tensor:
@@ -93,6 +96,8 @@ shared legacy dense-matmul estimator, not a claim that AM repeats layers.
         self.transform = FrozenSwiGLU(model.config.hidden_size, width, seed=seed,
                                      std=std, rms_epsilon=model.config.rms_norm_eps)
         exemplar = next(model.parameters())
+        # Draw the identical reference tensors on CPU, then transfer them. A
+        # CUDA generator would define a different AM control even with seed 7301.
         self.transform.to(device=exemplar.device, dtype=exemplar.dtype)
         self.control_calls = 0
         self.added_parameter_count = sum(p.numel() for p in self.transform.parameters())

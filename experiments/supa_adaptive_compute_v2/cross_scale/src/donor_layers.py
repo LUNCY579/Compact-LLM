@@ -54,8 +54,11 @@ def load_donor_layer(config, index, path=None):
         layer = legacy_graft().load_layer(weights, architecture, index)
     if layer.self_attn.layer_idx != index:
         raise ValueError("loaded donor layer index mismatch")
+    device = torch.device(config["device"])
+    layer = layer.to(device=device, dtype=torch.float32)
     frozen(layer)
-    return layer, Qwen3RotaryEmbedding(architecture).eval().requires_grad_(False), architecture
+    rope = Qwen3RotaryEmbedding(architecture).to(device).eval().requires_grad_(False)
+    return layer, rope, architecture
 
 
 def strip_calibration_rows(rows):
@@ -73,7 +76,7 @@ def strip_calibration_rows(rows):
 def capture_bundle(rows, config):
     from shared.model_loading import load_supa
     from shared.hidden_capture import capture_native
-    from armr.provenance import state_hash, checkpoint_files
+    from shared.integrity import state_hash, checkpoint_files
     legacy = legacy_graft()
     started = time.perf_counter()
     source_before = source_files("cross_scale")
@@ -118,14 +121,14 @@ def capture_bundle(rows, config):
     def capture_fixture(module, args, out, *, index):
         if not isinstance(out, torch.Tensor) or out.ndim != 3 or out.shape[0] != 1:
             raise TypeError("only qualified tensor-returning Qwen3 decoders are supported")
-        fixture[index] = out[0].clone()
+        fixture[index] = out[0].detach().cpu().clone()
     handles = [model.model.layers[i].register_forward_hook(
         lambda module, args, out, index=i: capture_fixture(module, args, out, index=index))
         for i in config["supa_layers"]]
     try:
         fixture_started = time.perf_counter()
         with torch.inference_mode():
-            model(encoded[0], use_cache=False, logits_to_keep=1)
+            model(encoded[0].to(next(model.parameters()).device), use_cache=False, logits_to_keep=1)
         deadline(fixture_started, config["max_prompt_seconds"])
     finally:
         for handle in handles:
@@ -139,14 +142,17 @@ def capture_bundle(rows, config):
         legacy.memory_guard(config["max_rss_gib"])
         print(f"Capture layer {index}/{final} complete", flush=True)
     capture_progress(-1, max(config["supa_layers"]))
+    capture_options = {"progress": capture_progress}
+    if config["device"] != "cpu":
+        capture_options["device"] = config["device"]
     small = capture_native(supa_path, encoded, tuple(config["supa_layers"]), config["max_rss_gib"],
-                           progress=capture_progress)
+                           **capture_options)
     for index in config["supa_layers"]:
         if not torch.equal(fixture[index], small[index][0]):
             raise RuntimeError("streamed/canonical Supa raw-state qualification failed")
     donor_depths = sorted({depth for j in config["donor_layers"] for depth in (j-1, j)})
     big = capture_native(donor_path, encoded, tuple(donor_depths), config["max_rss_gib"],
-                         progress=capture_progress)
+                         **capture_options)
     _, donor_after = donor_identity(config)
     if donor_before != donor_after or supa_before != checkpoint_files(supa_path):
         raise RuntimeError("checkpoint changed during capture")

@@ -92,6 +92,9 @@ def donor_delta(layer, rope, projected, *, config=None):
         raise ValueError("donor changed the residual stream dimensions")
     finite(result)
     if config is not None:
+        if projected.device.type == "cuda":
+            from shared.runtime import cuda_memory
+            cuda_memory(config)  # Synchronizes before timing and checks reserved VRAM.
         deadline(started, config["max_prompt_seconds"])
         ratio = float(result.detach().double().square().mean().sqrt() /
                       projected.detach().double().square().mean().sqrt().clamp_min(1e-12))

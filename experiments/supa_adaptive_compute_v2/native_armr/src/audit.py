@@ -7,7 +7,7 @@ import time
 import traceback
 
 from .analysis import analyze_complete_bank, audit_rows, linked_robustness
-from .protocol import DEFAULT_CONFIG, load_protocol
+from .protocol import load_protocol, require_config_path
 from shared.datasets import load_frozen_dataset
 from shared.evaluation import _read_complete, aggregate_runs
 from shared.hashing import canonical_sha256, sha256_file, write_json
@@ -18,14 +18,15 @@ from shared.reporting import quality_cost_frontier
 
 def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
                run_dirs: list[Path], primary_run_dirs: list[Path] | None = None) -> tuple[Path, dict]:
-    if config_path.resolve() != DEFAULT_CONFIG.resolve():
-        raise ValueError("independent audit requires the canonical registered native protocol")
+    config_path = require_config_path(config_path)
     config = load_protocol(config_path)
     if role == "confirmatory_diagnostics" and not primary_run_dirs:
         raise ValueError("diagnostic audit requires complete original evidence via --primary-run-list")
     if role != "confirmatory_diagnostics" and primary_run_dirs:
         raise ValueError("original companion evidence is only used for diagnostic auditing")
     registration = verify_registration("native_armr", config_path)
+    from shared.qualifications import verify_runtime_qualification
+    qualification = verify_runtime_qualification(config, dataset_manifest, registration)
     dataset_manifest = Path(dataset_manifest).resolve()
     if registration["dataset_manifests"].get(dataset_manifest.relative_to(REPO).as_posix()) != sha256_file(dataset_manifest):
         raise ValueError("audited dataset must belong to current Track A registration")
@@ -33,6 +34,8 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
         "role": role, "config_sha256": canonical_sha256(config),
         "dataset_manifest_sha256": sha256_file(dataset_manifest),
         "registration_sha256": registration["registration_sha256"],
+        "runtime_qualification_receipt_sha256": qualification["receipt_sha256"],
+        "runtime_qualification_directory": qualification["directory"],
         "sources": registration["sources"], "model_loaded": False,
         "audit_kind": "raw_evidence_reconciliation_and_frozen_rescoring",
         "input_runs": [str(Path(path).resolve()) for path in run_dirs],
@@ -42,10 +45,10 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
         # Shared coverage and integrity gates are deliberately followed by an
         # independent reconstruction, never trusted stored analysis summaries.
         aggregate_runs(track="native_armr", config=config, dataset_manifest=dataset_manifest,
-                       role=role, run_dirs=run_dirs)
+                       role=role, run_dirs=run_dirs, config_path=config_path)
         if primary_run_dirs:
             aggregate_runs(track="native_armr", config=config, dataset_manifest=dataset_manifest,
-                           role="confirmatory_dev", run_dirs=primary_run_dirs)
+                           role="confirmatory_dev", run_dirs=primary_run_dirs, config_path=config_path)
         cases = load_frozen_dataset(dataset_manifest, track="native_armr", role=role)
         by_arm, original_by_arm, manifests, input_hashes = {}, {}, [], {}
         for path, expected_role in ([(p, role) for p in run_dirs] + [(p, "confirmatory_dev") for p in primary_run_dirs or []]):
@@ -55,6 +58,9 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
                 raise ValueError("companion evidence role mismatch")
             if manifest["registration_sha256"] != registration["registration_sha256"] or manifest["sources"] != registration["sources"]:
                 raise ValueError("audited run does not match current scientific registration")
+            if (manifest.get("runtime_qualification_receipt_sha256") != qualification["receipt_sha256"] or
+                manifest.get("runtime_qualification_directory") != qualification["directory"]):
+                raise ValueError("audited run does not match current runtime qualification")
             for key in ("seed", "threads", "dtype", "device", "max_prompt_seconds"):
                 if manifest.get(key) != config[key]:
                     raise ValueError(f"run runtime differs from preregistration: {key}")
@@ -123,6 +129,12 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
             peak = max(m["peak_memory_bytes"] for m in manifests if m["arm"] == arm and m["role"] == role)
             report["cost"][arm]["peak_run_process_memory_bytes"] = peak
             frontier[arm]["peak_memory_bytes"] = peak
+            if config["device"] == "cuda:0":
+                arm_runs = [m for m in manifests if m["arm"] == arm and m["role"] == role]
+                for key in ("peak_cuda_allocated_bytes", "peak_cuda_reserved_bytes"):
+                    device_peak = max(m[key] for m in arm_runs)
+                    report["cost"][arm][key] = device_peak
+                    frontier[arm][key] = device_peak
         report["quality_cost_frontier"] = quality_cost_frontier(frontier)
         write_json(output / "analysis.json", report)
         receipt.update(status="COMPLETE", analysis_sha256=sha256_file(output / "analysis.json"),

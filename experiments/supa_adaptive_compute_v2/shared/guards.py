@@ -28,7 +28,16 @@ def require_track(track):
 
 
 def require_runtime(config):
-    if (config.get('device'), config.get('dtype'), config.get('use_cache'), config.get('threads')) != ('cpu', 'float32', False, 4):
-        raise ValueError('only registered CPU FP32 / four-thread / no-cache runtime is qualified')
+    if (config.get('dtype'), config.get('use_cache'), config.get('threads')) != ('float32', False, 4):
+        raise ValueError('only registered FP32 / four-thread / no-cache runtime is supported')
+    if config.get('device') not in ('cpu','cuda:0'):
+        raise ValueError('only explicit CPU or CUDA:0 execution is supported')
+    if config['device'] == 'cuda:0':
+        if config.get('tf32') is not False or not isinstance(config.get('runtime_qualification'),str) or not config['runtime_qualification']:
+            raise ValueError('CUDA requires a prospective qualification ID and TF32 disabled')
+        for key in ('min_available_gib','min_available_vram_gib','max_cuda_memory_gib'):
+            import math
+            if not isinstance(config.get(key),(int,float)) or not math.isfinite(config[key]) or config[key] <= 0:
+                raise ValueError(f'invalid CUDA resource limit {key}')
     if config.get('max_prompt_seconds', 900) <= 0 or config.get('max_rss_gib', 6) <= 0:
         raise ValueError('invalid resource limit')

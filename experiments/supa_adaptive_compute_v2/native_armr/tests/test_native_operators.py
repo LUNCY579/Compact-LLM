@@ -112,6 +112,86 @@ def test_random_control_reproducibility_and_rng_isolation():
     assert weights_hash(one) != weights_hash(other)
 
 
+def test_control_initialization_ignores_default_dtype_and_preserves_reference_draws():
+    reference = FrozenSwiGLU(16, 80, seed=7301, std=.02, rms_epsilon=1e-6)
+    prior = torch.get_default_dtype()
+    try:
+        torch.set_default_dtype(torch.float64)
+        changed_default = FrozenSwiGLU(16, 80, seed=7301, std=.02, rms_epsilon=1e-6)
+    finally:
+        torch.set_default_dtype(prior)
+    assert weights_hash(reference) == weights_hash(changed_default)
+    generator = torch.Generator(device="cpu").manual_seed(7301)
+    for shape, parameter in zip(((80, 16), (80, 16), (16, 80)), reference.parameters()):
+        expected = torch.randn(*shape, generator=generator, device="cpu", dtype=torch.float32) * .02
+        assert torch.equal(parameter, expected)
+        assert parameter.device.type == "cpu" and parameter.dtype == torch.float32
+
+
+@pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA unavailable")
+@pytest.mark.parametrize("arm", ["A0", "A1", "A3", "A16", "AM"])
+def test_cuda_native_operator_preserves_reference_weights_and_restores(tiny_model, protocol, arm):
+    # This synthetic mechanics test is not real-model runtime qualification.
+    import copy
+    cpu_model = tiny_model
+    gpu_model = copy.deepcopy(cpu_model).to("cuda:0")
+    seen = []
+    for index, block in enumerate(gpu_model.model.layers):
+        original = block.forward
+        def spy(*args, _index=index, _original=original, **kwargs):
+            seen.append((_index, kwargs["position_ids"], kwargs["position_embeddings"],
+                         kwargs["attention_mask"], kwargs.get("past_key_values")))
+            return _original(*args, **kwargs)
+        block.forward = spy
+    ids = torch.tensor([[1, 4, 6]])
+    before = weights_hash(cpu_model)
+    prior_matmul, prior_cudnn = torch.backends.cuda.matmul.allow_tf32, torch.backends.cudnn.allow_tf32
+    try:
+        torch.backends.cuda.matmul.allow_tf32 = False
+        torch.backends.cudnn.allow_tf32 = False
+        cpu_wrapper = operator_factory(cpu_model, arm, protocol)
+        gpu_wrapper = operator_factory(gpu_model, arm, protocol)
+        if arm == "AM":
+            assert weights_hash(cpu_wrapper.transform) == weights_hash(gpu_wrapper.transform)
+            assert all(p.device.type == "cuda" and p.dtype == torch.float32
+                       and not p.requires_grad and p.grad is None
+                       for p in gpu_wrapper.transform.parameters())
+        with torch.inference_mode():
+            baseline = gpu_model(ids.to("cuda:0"), use_cache=False).logits
+            was_enabled = gpu_wrapper.enabled
+            gpu_wrapper.enabled = False
+            with gpu_wrapper:
+                assert torch.equal(baseline, gpu_model(ids.to("cuda:0"), use_cache=False).logits)
+            gpu_wrapper.enabled = was_enabled
+            seen.clear()
+            with cpu_wrapper:
+                cpu_output = cpu_model(ids, use_cache=False).logits
+            with gpu_wrapper:
+                gpu_output = gpu_model(ids.to("cuda:0"), use_cache=False).logits
+                repeated = gpu_model(ids.to("cuda:0"), use_cache=False).logits
+            expected = list(range(28))
+            if arm in {"A1", "A16"}:
+                layer = 12 if arm == "A1" else 16
+                expected.insert(layer + 1, layer)
+            elif arm == "A3":
+                expected[14:14] = [12, 13]
+            assert [row[0] for row in seen] == expected * 2
+            for offset in (0, len(expected)):
+                call = seen[offset:offset + len(expected)]
+                assert [row[0] for row in call[:3]] == [0, 1, 2]
+                assert all(row[1] is call[0][1] and row[2] is call[0][2]
+                           and row[3] is call[0][3] and row[4] is None for row in call)
+            torch.testing.assert_close(gpu_output.cpu(), cpu_output, atol=2e-5, rtol=1e-4)
+            assert torch.equal(gpu_output, repeated)
+            assert torch.equal(baseline, gpu_model(ids.to("cuda:0"), use_cache=False).logits)
+        assert weights_hash(gpu_model) == before == weights_hash(cpu_model)
+        assert all(not p.requires_grad and p.grad is None for p in gpu_model.parameters())
+        assert not gpu_model._forward_pre_hooks
+    finally:
+        torch.backends.cuda.matmul.allow_tf32 = prior_matmul
+        torch.backends.cudnn.allow_tf32 = prior_cudnn
+
+
 @pytest.mark.parametrize("failure", ["gradient", "nonfinite", "rms"])
 def test_compute_control_fail_closed_and_restore(tiny_model, failure):
     model, ids = tiny_model, torch.tensor([[1, 4]])

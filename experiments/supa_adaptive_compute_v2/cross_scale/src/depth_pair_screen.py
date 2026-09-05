@@ -67,6 +67,8 @@ def validate_bundle(bundle, config):
 
 
 def evaluate_bridge(bridge, layer, rope, prompts, special_ids, config, *, check_budget=None):
+    device = next(layer.parameters()).device
+    bridge = bridge.to(device)
     results = {"up": [], "down": [], "delta": [], "native_delta": [], "small": [], "big": []}
     with torch.inference_mode():
         for prompt in prompts:
@@ -75,14 +77,15 @@ def evaluate_bridge(bridge, layer, rope, prompts, special_ids, config, *, check_
             started = time.perf_counter()
             legacy_graft().memory_guard(config["max_rss_gib"])
             # Actual execution also holds the programme-wide machine lease.
-            small, big = prompt["small"], prompt["big"]
+            small, big = prompt["small"].to(device), prompt["big"].to(device)
             z = bridge.project(small.unsqueeze(0))
-            results["up"].append(z[0])
-            results["down"].append(big@bridge.down+bridge.down_bias)
-            results["delta"].append(donor_delta(layer, rope, z, config=config)[0])
-            results["native_delta"].append(prompt["delta"])
-            results["small"].append(small)
-            results["big"].append(big)
+            # Diagnostics accumulate on CPU in FP64 across all token strata.
+            results["up"].append(z[0].cpu())
+            results["down"].append((big@bridge.down+bridge.down_bias).cpu())
+            results["delta"].append(donor_delta(layer, rope, z, config=config)[0].cpu())
+            results["native_delta"].append(prompt["delta"].cpu())
+            results["small"].append(small.cpu())
+            results["big"].append(big.cpu())
             deadline(started, config["max_prompt_seconds"])
             legacy_graft().memory_guard(config["max_rss_gib"])
             if check_budget:
@@ -91,7 +94,7 @@ def evaluate_bridge(bridge, layer, rope, prompts, special_ids, config, *, check_
     masks = token_masks([p["ids"] for p in prompts], special_ids)
     report = {name: stratified_metrics(values[pred], values[target], masks) for name, pred, target in
               (("up", "up", "big"), ("down", "down", "small"), ("delta", "delta", "native_delta"))}
-    mapped = values["delta"].double()@bridge.down.double()
+    mapped = values["delta"].double()@bridge.down.cpu().double()
     report["mapped_delta_to_supa_rms"] = float(mapped.square().mean().sqrt()/values["small"].double().square().mean().sqrt().clamp_min(1e-12))
     if not torch.isfinite(mapped).all():
         raise FloatingPointError("nonfinite mapped donor delta")
@@ -99,7 +102,7 @@ def evaluate_bridge(bridge, layer, rope, prompts, special_ids, config, *, check_
 
 
 def run_pair(bundle, config, supa_layer, donor_layer, layer, rope):
-    from armr.provenance import state_hash
+    from shared.integrity import state_hash
     validate_bundle(bundle, config)
     if (supa_layer, donor_layer) not in depth_pairs(config):
         raise ValueError("unregistered depth pair")
@@ -119,7 +122,7 @@ def run_pair(bundle, config, supa_layer, donor_layer, layer, rope):
     with torch.inference_mode():
         # Verify actual layer identity/positions against independently captured states.
         for prompt in (train[0], held[0]):
-            native = donor_delta(layer, rope, prompt["big"].unsqueeze(0), config=config)[0]
+            native = donor_delta(layer, rope, prompt["big"].to(next(layer.parameters()).device).unsqueeze(0), config=config)[0].cpu()
             if not torch.equal(native, prompt["delta"]):
                 raise ValueError("native donor replay differs from captured transformation")
     small, big = torch.cat([p["small"] for p in train]), torch.cat([p["big"] for p in train])
@@ -136,7 +139,7 @@ def run_pair(bundle, config, supa_layer, donor_layer, layer, rope):
         outcomes[objective] = {"heldout": evaluate_bridge(bridge, layer, rope, held, bundle["special_ids"], config, check_budget=pair_budget),
                                "optimizer_steps": len(history), "training_trace": history,
                                "bridge_coefficients": sum(t.numel() for t in bridge.buffers())}
-        artifacts[objective] = bridge.state_dict()
+        artifacts[objective] = {key: value.detach().cpu().clone() for key, value in bridge.state_dict().items()}
         deadline(started, config["max_pair_seconds"])
     after = state_hash(layer)
     if before != after or rope_before != state_hash(rope):

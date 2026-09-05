@@ -1,5 +1,10 @@
 # Programme status
 
+**GPU continuation:** the user has authorized GPU acceleration. Separate GPU
+FP32 configurations and runtime qualification are implemented and preregistered.
+See [GPU_STATUS.md](GPU_STATUS.md) for current execution. The CPU-only admission
+record below is preserved as the earlier stage, not the current resource strategy.
+
 2026-09-05. Implementation and independent validation completed. Both banks and
 independent registrations were committed at
 `067fa33b2ed78fc2a0f9361d313629549f214f08`. Execution was attempted sequentially;

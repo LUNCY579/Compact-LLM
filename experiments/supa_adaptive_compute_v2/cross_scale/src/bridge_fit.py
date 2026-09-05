@@ -15,7 +15,8 @@ def weighted_ridge(x, y, relative):
     """Inverse target token energy: every token has equal relative-error weight."""
     if x.ndim != 2 or y.ndim != 2 or len(x) != len(y) or len(x) < 2 or relative <= 0:
         raise ValueError("invalid weighted ridge inputs")
-    x, y = finite(x.double()), finite(y.double())
+    # Ridge deliberately retains the qualified CPU FP64 normal equations.
+    x, y = finite(x.detach().cpu().double()), finite(y.detach().cpu().double())
     weights = y.square().mean(-1).clamp_min(1e-8).reciprocal()
     weights = weights / weights.mean()
     xm, ym = (x*weights[:, None]).sum(0)/weights.sum(), (y*weights[:, None]).sum(0)/weights.sum()
@@ -54,6 +55,7 @@ def fit_initial(small, big, objective, config, scenario_ids):
     if (small.ndim != 2 or big.ndim != 2 or len(small) != len(big) or len(small) < 2
             or len(scenario_ids) != len(small) or not small.shape[1] or not big.shape[1]):
         raise ValueError("bridge dimensions or scenario count mismatch")
+    small, big = small.detach().cpu(), big.detach().cpu()
     finite(small); finite(big)
     legacy = legacy_graft()
     if objective == "BR":
@@ -76,7 +78,9 @@ def fit_delta_bridge(initial, layer, rope, prompts, config, *, token_normalized,
     if not prompts:
         raise ValueError("no training prompts")
     legacy = legacy_graft()
-    up, bias = nn.Parameter(initial.up.clone()), nn.Parameter(initial.up_bias.clone())
+    device = next(layer.parameters()).device
+    up = nn.Parameter(initial.up.detach().to(device).clone())
+    bias = nn.Parameter(initial.up_bias.detach().to(device).clone())
     optimizer = torch.optim.Adam([up, bias], lr=config["delta_learning_rate"])
     order = torch.randperm(len(prompts), generator=torch.Generator().manual_seed(config["seed"])).tolist()
     history = []
@@ -86,7 +90,9 @@ def fit_delta_bridge(initial, layer, rope, prompts, config, *, token_normalized,
         started = time.perf_counter()
         legacy.memory_guard(config["max_rss_gib"])
         prompt = prompts[order[step % len(order)]]
-        small, big, target_delta = (prompt[k].detach().unsqueeze(0) for k in ("small", "big", "delta"))
+        # Activation artifacts remain on CPU; move only one complete prompt.
+        small, big, target_delta = (prompt[k].detach().to(device).unsqueeze(0)
+                                    for k in ("small", "big", "delta"))
         optimizer.zero_grad(set_to_none=True)
         projected = finite(legacy.normalize(small) @ up + bias)
         delta = donor_delta(layer, rope, projected, config=config)
@@ -102,6 +108,9 @@ def fit_delta_bridge(initial, layer, rope, prompts, config, *, token_normalized,
         nn.utils.clip_grad_norm_([up, bias], config["gradient_clip"], error_if_nonfinite=True)
         optimizer.step()
         finite(up); finite(bias)
+        if device.type == "cuda":
+            from shared.runtime import cuda_memory
+            cuda_memory(config)
         deadline(started, config["max_prompt_seconds"])
         legacy.memory_guard(config["max_rss_gib"])
         if check_budget:
@@ -110,4 +119,4 @@ def fit_delta_bridge(initial, layer, rope, prompts, config, *, token_normalized,
                         "loss": float(loss.detach()), "delta_loss": float(delta_loss.detach())})
     frozen(layer)
     frozen(rope)
-    return legacy.Bridges(up.detach(), bias.detach(), initial.down, initial.down_bias), history
+    return legacy.Bridges(up.detach(), bias.detach(), initial.down.to(device), initial.down_bias.to(device)), history
