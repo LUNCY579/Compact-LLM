@@ -1,5 +1,12 @@
 # Anchor-Routed Middle Recurrence (ARMR), experiment v1
 
+Latest follow-up: the preregistered **90 -> 900 second CPU-budget replication**
+completed all 48 development generations with EOS. Scores: A0 12/16, A1 12/16,
+A3 13/16. All 19 fidelity checks passed. See
+[CPU_BUDGET_V2_REPORT.md](CPU_BUDGET_V2_REPORT.md) for the complete results,
+unchanged-choice audit and limited interpretation. The original 90-second
+receipts and [FINAL_REPORT.md](FINAL_REPORT.md) remain the historical checkpoint.
+
 ARMR is an experiment label. Does Supa-A1.1 tolerate iterative reuse of a
 pretrained middle operator while its indispensable early stem remains intact?
 Layer necessity, repeatability, useful refinement, router value, and training
