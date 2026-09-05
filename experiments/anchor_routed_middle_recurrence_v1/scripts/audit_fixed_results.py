@@ -30,7 +30,7 @@ def main():
         coverage[path.stem]={"completed_cases":len(complete),"planned_cases":len(rows),
                              "correct_among_completed":sum(r["score"] for r in complete),
                              "censored_cases":[{"case_id":r["case_id"],"family":r["family"],"reason":r["termination"],
-                                                "seconds":r["wall_seconds"]} for r in rows if r["safety_stopped"]}
+                                                "seconds":r["wall_seconds"]} for r in rows if r["safety_stopped"]]}
         if path.stem!="A0_dev":
             results[path.stem]=development_result(rows,base)
     intact_censored=bool(coverage["A0_dev"]["censored_cases"])
