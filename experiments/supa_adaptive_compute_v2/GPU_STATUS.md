@@ -14,7 +14,7 @@ separately from host RAM. State hashes are byte-compatible streamed hashes.
 | Track | GPU registration | Runtime qualification | Scientific execution |
 |---|---|---|---|
 | Native | `7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5` | PASS: 40/40 identical greedy comparisons; fixed numerical gates passed | Architecture campaign licensed |
-| Cross-scale | `beec1869aad324d29191cd21e5f300bd6da3bdc0a52d8c5f11839ac4b98f5b7c` | Pending streamed state/delta/gradient comparison | Pending qualification |
+| Cross-scale | `beec1869aad324d29191cd21e5f300bd6da3bdc0a52d8c5f11839ac4b98f5b7c` | FAILED frozen absolute-error criterion; relative/cosine/gradient gates passed | Use unchanged CPU reference for Stage 1 |
 
 Tests: 321 passed and 148 subtests passed; after recording driver identity,
 54 focused tests passed again and the actual CUDA runtime identity query passed.
@@ -81,3 +81,25 @@ The qualification establishes native GPU runtime compatibility, not efficacy.
 It licenses the unchanged native architecture-development matrix. Observed
 qualification latency was affected by a separate GPU workload; it is not a
 controlled accelerator speed benchmark. Track B still needs its own qualification.
+
+## Track B GPU qualification outcome
+
+The completed run is
+`cross_scale/evidence/00_runtime_qualification/20260905T193023_051203Z_29be300a/`.
+All 656 comparisons were recorded. Of these, 161 failed the frozen absolute
+component error cap of 0.002: 116 state comparisons and 45 projected-delta
+comparisons. No comparison failed relative L2 or cosine; all 16 CPU/GPU bridge
+gradient comparisons passed. All required same-GPU repeats were bit-identical.
+Maximum absolute difference was 0.021484375; maximum relative L2 difference was
+0.0001805015 and minimum mean-token cosine was 0.9999999764. The failed report
+and thresholds are preserved. This is a runtime-qualification failure, not a
+result about useful donor transfer.
+
+Track B will therefore execute its original, already qualified CPU FP32
+reference. The original CPU configuration, bridge objectives, 16 depth pairs,
+data, optimization budget and mechanism gates are unchanged. A fresh CPU
+registration binds the current implementation, whose CPU path passed the
+combined tests; it does not admit the failed GPU profile or mix runtimes in
+the alignment matrix. Track A retains its passed native GPU qualification.
+This resource/backend decision precedes any new mechanism selection or efficacy
+outcomes. Scientific thresholds are not widened after observing the GPU report.
