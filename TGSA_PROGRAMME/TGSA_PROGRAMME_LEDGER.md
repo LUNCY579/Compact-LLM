@@ -566,6 +566,24 @@ skipped regression check — `candidate_ledger.json` is consumed by
 `rineya_tgsa/promotion.py`, not just the standalone verifier, so the suite was
 the check that mattered. Run since: **71 passed**.
 
+**Pushed and proven from origin alone, 2026-09-05.** C8 went first
+(`ef5194b..927405a`), then this branch (`26b1d0d..ceadce6`) — that order is
+forced by §9: a ledger recording a stage commit origin cannot resolve fails
+closed. A clone was then taken from origin with nothing local available.
+`verify_programme_ledger.py` returned **53 checks PASSED** inside it, C8's own
+`verify_candidate_ledger.py` returned `PASS` with `promotable []`, and all four
+repointed pointers resolved under `git show` with real content. The repair now
+meets the same standard the retired refs were held to.
+
+> **Gotcha for anyone repeating that test on Windows.** Run from a deep
+> directory, the verifier reports a *false* `FAILED` with three
+> `unreadable source: 49aa961:…` errors against the `imported/phase2b` records.
+> Nothing is wrong with the ledger. `git show <rev>:<path>` falls back to
+> `stat()`ing the whole argument as a filename once it exceeds `MAX_PATH`, and
+> reports `Filename too long`. The same clone at a 17-character path passes 53/53.
+> The `phase2b` paths are the longest recorded, so they fail first and are the
+> canary.
+
 Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
 bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
 2026-08-31.
