@@ -185,6 +185,8 @@ def streaming_forward_many(
     pooling: str = "last",
     progress: Any = None,
     logit_positions: list[torch.Tensor] | None = None,
+    select_positions: list[torch.Tensor] | None = None,
+    recycle_handles_every: int = 0,
 ) -> list[dict[str, Any]]:
     """Run every prompt through the checkpoint with ONE pass over the weights.
 
@@ -197,24 +199,34 @@ def streaming_forward_many(
     is therefore one layer's weights plus that activation set, still far below
     one model.
     """
-    if pooling not in ("last", "mean", "all"):
+    if pooling not in ("last", "mean", "all", "select"):
         raise ValueError(f"unsupported pooling: {pooling}")
+    if pooling == "select" and select_positions is None:
+        raise ValueError("pooling='select' requires select_positions")
     geometry = Qwen3Geometry.from_config(weights.config)
     groups = geometry.num_attention_heads // geometry.num_key_value_heads
+
+    index_holder = {"i": 0}
 
     def reduce(state: torch.Tensor) -> torch.Tensor:
         # "all" keeps every token position, which E6's translator needs: 59
         # prompts cannot fit a map into a 1024-dimensional target space.
+        # "select" keeps a fixed subsample, which is what lets v4 capture EVERY
+        # layer at once: all 36 donor layers over all 9,013 tokens would be
+        # 5.3 GiB, and subsampling during capture keeps it under 1 GiB.
         if pooling == "all":
             return state
+        if pooling == "select":
+            return state[select_positions[index_holder["i"]]]
         return state.mean(dim=0) if pooling == "mean" else state[-1]
 
     states = [weights.rows("model.embed_tokens.weight", ids) for ids in prompts]
     tables = [rotary_tables(torch.arange(s.shape[0]), geometry.head_dim, geometry.rope_theta)
               for s in states]
-    captured: list[dict[str, torch.Tensor]] = [
-        {"embedding": reduce(s).clone()} for s in states
-    ]
+    captured: list[dict[str, torch.Tensor]] = []
+    for prompt_position, state in enumerate(states):
+        index_holder["i"] = prompt_position
+        captured.append({"embedding": reduce(state).clone()})
 
     for layer in range(geometry.num_hidden_layers):
         prefix = f"model.layers.{layer}"
@@ -232,6 +244,7 @@ def streaming_forward_many(
             "down_proj": weights.tensor(f"{prefix}.mlp.down_proj.weight"),
         }
         for index, hidden in enumerate(states):
+            index_holder["i"] = index
             cos, sin = tables[index]
             normed = rms_norm(hidden, block["input_layernorm"], geometry.rms_norm_eps)
             query = (normed @ block["q_proj"].T).view(
@@ -261,6 +274,12 @@ def streaming_forward_many(
             if layer in capture_layers:
                 captured[index][f"layer_{layer}"] = reduce(hidden).clone()
         del block
+        # Streaming a 15 GiB checkpoint leaves its pages in the OS cache, which
+        # counts against free memory even though it is reclaimable. Dropping the
+        # mmap handles periodically lets the OS release them, which keeps the
+        # amendment's free-RAM floor meaningful instead of tripping on cache.
+        if recycle_handles_every and (layer + 1) % recycle_handles_every == 0:
+            weights.close()
         gc.collect()
         if progress is not None:
             progress(layer + 1, geometry.num_hidden_layers)
@@ -270,6 +289,7 @@ def streaming_forward_many(
     finals = []
     counts = []
     for index, hidden in enumerate(states):
+        index_holder["i"] = index
         normalised = rms_norm(hidden, norm_weight, geometry.rms_norm_eps)
         if last in capture_layers:
             captured[index][f"layer_{last}"] = reduce(normalised).clone()
