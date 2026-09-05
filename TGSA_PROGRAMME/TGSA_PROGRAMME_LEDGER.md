@@ -366,8 +366,8 @@ rather than an approximate one.
 
 | deleted from origin | commit | still reachable via |
 |---|---|---|
-| `research/tgsa-phase2a-ci-and-competence` | `de3bd63` | ancestry of `b60d470`; two archive tags; two bundles |
-| `research/tgsa-v5-competence-and-mechanism` | `b091490` | ancestry of `b60d470`; one archive tag; two bundles |
+| `research/tgsa-phase2a-ci-and-competence` | `de3bd63` | ancestry of `b60d470`; two archive tags; three bundles |
+| `research/tgsa-v5-competence-and-mechanism` | `b091490` | ancestry of `b60d470`; one archive tag; three bundles |
 
 Both commits turned out to be **ancestors of the canonical tip**, so they would
 survive with no tag at all — `merge-base` returns each tip itself. Only the
@@ -383,14 +383,19 @@ names exist. A clone was taken from origin **after** both deletions: HEAD
 an identical `programme_sha256`, and the full suite passed 458 tests inside the
 clone. A reviewer needs nothing but origin.
 
-**Backups.** Two verified bundles are kept off GitHub under
+**Backups.** *Three* verified bundles are kept off GitHub under
 `C:/Users/clclc/BusinessProject/tgsa-backups/`:
 `tgsa-all-refs-2026-09-04.bundle` (pre-merge: unified-programme at `fd6e20f`,
-ledger at `2e0e3fe`) and `tgsa-all-refs-2026-09-04-post-merge.bundle`
+ledger at `2e0e3fe`), `tgsa-all-refs-2026-09-04-post-merge.bundle`
 (post-merge, taken *before* the deletions, so it holds `b60d470`, ledger
-`4581fc0`, and both retired refs). The first is retained deliberately: it
+`4581fc0`, and both retired refs) and `tgsa-all-refs-2026-09-04-final.bundle`
+(taken *after* the deletions at 15:21: `b60d470`, ledger `26b1d0d`, with the two
+retired refs surviving as local branches). The first is retained deliberately: it
 predates the ledger commit recording the merge, and is the only off-GitHub copy
 of the pre-merge registered tip as it stood when the merge decision was taken.
+The third was created on 2026-09-04 but went **unrecorded here until the
+2026-09-05 audit found it on disk** — this document said "two bundles" in three
+separate places while three existed.
 Recovery is
 `git branch <name> archive/tgsa-v5-1-pre-gate-hardening-2026-09-04`; that tag's
 annotation carries a **DO NOT RUN STAGE 0 FROM THIS COMMIT** warning and the
@@ -543,6 +548,23 @@ history, not pointers, and the `source_commit` beside each one resolves.
 `CANDIDATE_LEDGER.md` needed no change — it already cited `d16ea1c`. C8 remains
 **PARKED**: no lab file moved, nothing was merged, and
 `verify_candidate_ledger.py` still returns `promotable []`.
+
+**Audited 2026-09-05, and the repair holds — but two of its claims had been
+asserted rather than measured.** A repoint is only safe if the new target names
+the same content the old pointer resolved to, and that was never checked: if
+origin's ref had been *ahead* of the local branch at deletion, rewriting to
+`de3bd63` would have silently changed the evidence. The remote reflog died with
+the ref, but `tgsa-all-refs-2026-09-04-post-merge.bundle` was taken *before* the
+deletions and still holds
+`refs/remotes/origin/research/tgsa-phase2a-ci-and-competence` → `de3bd63` and
+`refs/heads/research/tgsa-phase1-v4-competence-first` → `8b5737e` — the exact
+two commits the pointers now name. Origin was not ahead; both repoints are
+content-preserving, proven against an artifact origin cannot retro-edit.
+Durability likewise: `git ls-remote` puts origin's tip at `b60d470` and both
+targets are ancestors of it, so both reach any fresh clone. The second gap was a
+skipped regression check — `candidate_ledger.json` is consumed by
+`rineya_tgsa/promotion.py`, not just the standalone verifier, so the suite was
+the check that mattered. Run since: **71 passed**.
 
 Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
 bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
