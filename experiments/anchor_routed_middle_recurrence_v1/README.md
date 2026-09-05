@@ -138,5 +138,41 @@ python experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py 
 python experiments/anchor_routed_middle_recurrence_v1/scripts/run_experiment.py --stage screen --baseline <passing-baseline-run>
 ```
 
-The screen requires a matching passing baseline receipt. Fixed recurrence and
-router commands will be documented only when implementation is licensed.
+The screen requires a matching passing baseline receipt. The observed pilot
+stopped at L27's frozen RMS guard. Its failed receipt remains immutable.
+The following explicit follow-up commands diagnose that failure and audit the
+already complete middle candidates; they do not resume the failed campaign:
+
+```powershell
+python experiments/anchor_routed_middle_recurrence_v1/scripts/diagnose_late_failure.py
+python experiments/anchor_routed_middle_recurrence_v1/scripts/audit_completed_screen.py <screen-run> <diagnosis-run>
+python experiments/anchor_routed_middle_recurrence_v1/scripts/summarize_results.py <audited-atlas-run>
+python experiments/anchor_routed_middle_recurrence_v1/scripts/run_fixed_recurrence.py --atlas <audited-atlas-run>
+python experiments/anchor_routed_middle_recurrence_v1/scripts/audit_fixed_results.py <fixed-run>
+```
+
+The completed-candidate audit accepts only the documented excluded L27 failure,
+unchanged checkpoint/configuration, passing isolated restoration diagnosis, and
+complete eight-case receipts for every other prespecified candidate/depth. It
+recomputes and exactly matches every archived per-arm gate. This explicit
+post-screen scope decision is documented in
+`evidence/00_audit/continuation_after_late_control_failure.md`.
+
+FixedBlock replays the complete adjacent block in its original order after the
+ordinary first pass. A1 reproduced L12's single-site screen exactly. A2 (L12 at
+three applications) was not licensed. A3 (L12–L13 twice) passed its own smoke
+gate. No learned router or training component has been enabled.
+
+Runtime deadlines are checked between complete Torch forwards; a native forward
+cannot be interrupted by the cooperative guard, so a stopped case can exceed
+90 seconds by one forward. Both longer MERGEDEV-fast retrieval prompts exceeded
+that budget for the intact baseline. Treat their quality outcomes as censored,
+not established wrong answers. `audit_fixed_results.py` applies an explicit
+baseline-completion prerequisite and cannot license routing from such a run.
+It preserves original scores/receipts and provides the final interpretation.
+
+Full per-pass hidden trajectories are retained for prefill. Min/max RMS ratios
+also cover all recurrent calls during generation and gold NLL. FLOP estimates
+cover generation's dominant linear matmuls only; they exclude optional gold NLL,
+attention, norm operations and measurement overhead. Peak Windows working set
+is recorded across the process lifetime, including model hashing.

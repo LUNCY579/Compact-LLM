@@ -19,7 +19,8 @@ def main():
     parser.add_argument("run", type=Path)
     args = parser.parse_args()
     run = args.run.resolve()
-    if not run.is_relative_to((ROOT / "evidence/01_middle_reapplication_screen").resolve()):
+    if not any(run.is_relative_to((ROOT / "evidence" / stage).resolve()) for stage in
+               ("01_middle_reapplication_screen", "01c_completed_candidate_atlas")):
         parser.error("only an ARMR middle-screen evidence directory may be analyzed")
     manifest = json.loads((run / "run_manifest.json").read_text())
     atlas = json.loads((run / "atlas.json").read_text())
@@ -31,8 +32,11 @@ def main():
     for r in raw:
         by_arm[r["arm"]].append(r)
     diagnostics = []
+    interrupted = manifest.get("kind") == "derived_completed_candidate_gate"
+    planned_layers = [i for i in manifest["config"]["candidate_layers"] if not (interrupted and i == 27)]
     checks = {"canonical_unchanged": manifest["canonical_unchanged"],
-              "all_arms_present": len(by_arm) == 1 + len(manifest["config"]["candidate_layers"]) * len(manifest["config"]["applications"])}
+              "all_completed_candidate_arms_present": len(by_arm) == 1 + len(planned_layers) * len(manifest["config"]["applications"]),
+              "excluded_control_failure_accounted_for": not interrupted or (run/"failed_late_control.json").is_file()}
     for name, rows in by_arm.items():
         checks[f"{name}_all_case_ids"] = len(rows) == len(base) and {r["case_id"] for r in rows} == set(base)
         if name == "intact":
@@ -72,10 +76,11 @@ def main():
             ax.annotate(str(r["layer"]), (r["skip_cosine"], r["mean_logit_cosine"]),
                         xytext=(4, 4), textcoords="offset points", fontsize=8)
         ax.axhline(.9, color="#777777", linestyle="--", linewidth=.8)
+        values=[r["mean_logit_cosine"] for r in atlas if r["applications"]==apps]
         ax.set(xlabel="Removal: logit cosine after identity skip", ylabel="Reuse: logit cosine after reapplication",
-               title=f"{apps} total applications ({apps-1} extra)", xlim=(.68,1.005), ylim=(0,1.015))
+               title=f"{apps} total applications ({apps-1} extra)", xlim=(.68,1.005), ylim=(min(values)-.03,1.005))
         ax.grid(alpha=.18)
-    fig.suptitle("Supa-A1.1 necessity × repeatability: 8-prompt mechanical screen\nGreen = all frozen smoke gates pass; red = at least one fails", fontsize=12)
+    fig.suptitle("Supa-A1.1 necessity × repeatability: 8-prompt mechanical screen\nGreen = all frozen smoke gates pass; red = at least one fails\nL27 stopped at 12.18× RMS: no downstream logits (not plotted); panel y-scales differ", fontsize=11)
     fig.savefig(out / "necessity_repeatability_atlas.png", dpi=180)
     fig.savefig(out / "necessity_repeatability_atlas.svg")
     plt.close(fig)

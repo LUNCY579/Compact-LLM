@@ -1,0 +1,24 @@
+{
+  "status": "PASS",
+  "evidence_level": "unit tests with tiny randomly initialized Qwen3 plus existing evaluation tests; not pretrained efficacy",
+  "python_executable": "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+  "checks": [
+    {
+      "command": "python -m pytest -q experiments/anchor_routed_middle_recurrence_v1/tests",
+      "passed": 50,
+      "failed": 0
+    },
+    {
+      "command": "python -m pytest -q Rineya_Cross_Scale_Capability_Transfer_Lab_v1/tests/test_evaluation.py Rineya_Cross_Scale_Capability_Transfer_Lab_v1/tests/test_validation.py",
+      "passed": 7,
+      "failed": 0
+    }
+  ],
+  "mechanical_receipts": {
+    "pretrained_baseline_checks": 18,
+    "pretrained_baseline_status": "PASS",
+    "isolated_late_failure_diagnosis_checks": 7,
+    "isolated_late_failure_diagnosis_status": "PASS for reproducing/isolation of the failure; L27 repeat-2 remains FAIL"
+  },
+  "conditional_test_scope": "No router, gate, anchor-injection, adapter training or cache-enabled recurrence is implemented; tests for those unlicensed components are not claimed. Fixed block tests verify early stem calls once, repeated block order, per-forward reset, and same RoPE/positions."
+}

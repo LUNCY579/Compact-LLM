@@ -36,13 +36,16 @@ def development_result(rows, baseline):
             losses.append(row["case_id"])
     deltas={k:mean(v) for k,v in family.items()}
     valid_delta=mean([r["invalid"] for r in rows])-mean([r["invalid"] for r in baseline])
-    checks={"overall_no_loss":len(wins)>=len(losses),
+    checks={"baseline_completed_without_safety_stop":not any(r["safety_stopped"] for r in baseline),
+            "overall_no_loss":len(wins)>=len(losses),
             "no_family_loss_over_0_10":all(d>=-.10 for d in deltas.values()),
             "no_invalid_increase":valid_delta<=0,
             "no_safety_stops":not any(r["safety_stopped"] for r in rows),
-            "complete":len(rows)==len(baseline) and len(base)==len(rows)}
+            "complete":bool(rows) and len(rows)==len(baseline) and len(base)==len(rows)
+                       and {r["case_id"] for r in rows}==set(base)}
     preserved=all(checks.values())
-    return {"items":len(rows),"correct":sum(r["score"] for r in rows),
+    return {"items":len(rows),"comparison_valid":checks["baseline_completed_without_safety_stop"],
+            "correct":sum(r["score"] for r in rows),
             "baseline_correct":sum(r["score"] for r in baseline),"wins":wins,"losses":losses,
             "family_score_deltas":deltas,"checks":checks,"preservation_pass":preserved,
             "router_scaffold_licensed":preserved and bool(wins),
