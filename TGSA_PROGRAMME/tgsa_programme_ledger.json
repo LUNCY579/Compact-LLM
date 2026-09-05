@@ -218,7 +218,7 @@
     {
       "id": "C8",
       "branch": "research/tgsa-rineya-pretrained-retrofit",
-      "commit": "ef5194b",
+      "commit": "927405a",
       "upstream": "in sync with origin",
       "archive_tag": "parked/tgsa-rineya-retrofit-2026-08-31",
       "worktree": "C:/Users/clclc/BusinessProject/Chat-Bubble-rineya-retrofit",
@@ -227,7 +227,7 @@
       "decision": "PARKED; sequenced third, after Phase 2A and Phase 2B",
       "contained_in_spine": false,
       "diverged_at": "04d3c02 (mid-v3)",
-      "unique_commits_vs_spine": 15,
+      "unique_commits_vs_spine": 16,
       "stale_by": "91 lab files behind the C11 spine (84 vs 175); lacks the v3 final result, the v4 rejection, all Phase 2 work and the whole v5/v5.1 programme",
       "result": {
         "candidate_intake": "no candidate is ship-positive; no promotion authorized",
@@ -249,7 +249,7 @@
         ]
       },
       "lift_condition": "a competence-qualified regime from a new preregistration, not the rejected v4 band",
-      "note": "tip advanced eea4f64 -> ef5194b after the 2026-08-31 snapshot (one commit: repointed PHASE2A_PREREQUISITE_HOLD.md at branches that still existed). The parked/tgsa-rineya-retrofit-2026-08-31 tag covers eea4f64 only, not this tip. That hold note now names research/tgsa-phase2a-ci-and-competence, which is itself being retired -- see open_items; the branch is parked, so this is stale-on-purpose."
+      "note": "tip advanced eea4f64 -> ef5194b -> 927405a. The parked/tgsa-rineya-retrofit-2026-08-31 tag covers eea4f64 only, not this tip. 927405a is pointer hygiene only, made while the branch stayed parked: after research/tgsa-phase2a-ci-and-competence was deleted from origin it repointed the broken origin/<branch>:<path> evidence pointers at commit shas and refreshed the ref-scan table and the hold note to match. No lab file changed, nothing was merged and no gate moved, so stale_by and the result block above are unchanged and the branch is still PARKED."
     },
     {
       "id": "C9",
@@ -406,10 +406,12 @@
     {
       "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_RETROFIT_AUDIT.md",
       "source_branch": "research/tgsa-rineya-pretrained-retrofit",
-      "source_commit": "eea4f64",
+      "source_commit": "927405a",
       "source_path": "Rineya_TGSA_Retrofit_v1/PRODUCTION_RETROFIT_AUDIT.md",
-      "sha256": "401670e6cbb6ddad08555aa4524bacc1bc396922e511921047b36062c316cc87",
-      "verbatim_copy": true
+      "sha256": "0d32f8026822abc9b6e137cef884e7737978ae7cce9069d5a5d12222e643d6d5",
+      "verbatim_copy": true,
+      "reimported_on": "2026-09-04",
+      "supersedes": "the eea4f64 copy (401670e6cbb6...), stale after 927405a gave the ref-scan table a ref-status column recording which inspected branches are retired"
     },
     {
       "path": "TGSA_PROGRAMME/imported/retrofit/PRODUCTION_TRIAL_QUEUE.md",
@@ -454,20 +456,22 @@
     {
       "path": "TGSA_PROGRAMME/imported/retrofit/PHASE2A_PREREQUISITE_HOLD.md",
       "source_branch": "research/tgsa-rineya-pretrained-retrofit",
-      "source_commit": "ef5194b",
+      "source_commit": "927405a",
       "source_path": "Rineya_TGSA_Retrofit_v1/PHASE2A_PREREQUISITE_HOLD.md",
-      "sha256": "44008d5822d639687f411ddcbb224aea254aa1e6571db7fc59f2bcb122a9acc8",
+      "sha256": "632d26748d95bb3353df8f8dd75d4ab73e8fa936851e3722c0a7d7d79f504a2c",
       "verbatim_copy": true,
-      "reimported_on": "2026-09-03",
-      "supersedes": "the eea4f64 copy (a186a17114...), stale after C8 repointed the hold note"
+      "reimported_on": "2026-09-04",
+      "supersedes": "the ef5194b copy (44008d5822d6...), stale after 927405a repointed the hold note at commit de3bd63 instead of the retired branch name"
     },
     {
       "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.json",
       "source_branch": "research/tgsa-rineya-pretrained-retrofit",
-      "source_commit": "eea4f64",
+      "source_commit": "927405a",
       "source_path": "Rineya_TGSA_Retrofit_v1/evidence/candidate_ledger.json",
-      "sha256": "4971afd792eeae44f90896a6a8dd7234074228059f683025289c9dccc3a40fd4",
-      "verbatim_copy": true
+      "sha256": "74a1ff79c530696c4d6877a99ad9ae6fe5052ea0e1288fce8676a7b6987d648e",
+      "verbatim_copy": true,
+      "reimported_on": "2026-09-04",
+      "supersedes": "the eea4f64 copy (4971afd792ee...), stale after 927405a repointed its origin/<branch>:<path> evidence pointers at commit shas"
     },
     {
       "path": "TGSA_PROGRAMME/imported/retrofit/candidate_ledger.schema.json",
@@ -540,7 +544,6 @@
     "the four apparatus defects are fixed and merged: C11 is at b60d470. The remaining blocker on Stage 0 is the operator's --attest-no-prior-outcome-inspection attestation and nothing else.",
     "Stage 0 apparatus qualification is prepared and costed but NOT run. It cannot start until the human operator supplies --attest-no-prior-outcome-inspection: the contract must be frozen before any nondevelopment run, and running first would destroy the prospective registration irrecoverably",
     "promotion-order step 7 (port manifest reconciling C7's retrofit snapshot against C8) is not started",
-    "two C8 documents name branches that are going away, and the ledger previously mis-named them. CANDIDATE_LEDGER.md's routing table cites commits (d16ea1c), not branches. The Phase 2A branch name actually appears in candidate_ledger.json five times, including origin/<branch>:<path> evidence pointers that stop resolving if the ref is retired, and in PRODUCTION_RETROFIT_AUDIT.md's ref-scan table, which still names both the old Phase 2A branch and the retired v4 branch. C8 is parked, so all of this is stale-on-purpose until the hold lifts; refresh as part of lifting it.",
     "the three v4-era callers of evaluate_competence pass POOLED per-run accuracy (scripts/phase1_v4_competence_run.py:433, scripts/regate_competence_report.py:99, scripts/phase1_v4_pipeline_rehearsal.py:69). They are now measured against the strongest trivial baseline rather than a family null, which is correct for a pooled number, but none of them declares per_seed_family and the v4 regime is rejected, so nothing should be re-gated through them without revisiting that first."
   ],
   "consolidation_2026_09_03": {
@@ -622,8 +625,23 @@
       "evidence_gathered_2026_09_04": "no probe_report.json, qualification_report.json, frozen band or v5_1_registration_verification.json has EVER been committed on any ref or tag in the repository: git log --all --diff-filter=A over those names returns nothing, and a tree scan of every origin ref and tag returns nothing. No runs/, results/ or outputs/ directory exists on disk in the v5.1 worktree, and the worktree is clean. Every run made during preparation used a development_only=true plan",
       "who_may_assert_it": "the human operator only. It was not asserted by the assistant and the flag was not passed. The evidence above is recorded so the operator's attestation can be informed, not to substitute for it"
     },
+    "c8_pointer_repair": {
+      "commit": "927405a on research/tgsa-rineya-pretrained-retrofit (C8), local only, not pushed",
+      "why": "deleting research/tgsa-phase2a-ci-and-competence from origin broke every evidence pointer that named it. The commit it held, de3bd63, was never at risk; the loss was purely that three pointers in C8 candidate_ledger.json were written as origin/<branch>:<path>, and a branch name is not a durable ref.",
+      "pointers_repaired": [
+        "candidate_ledger.json: 3 pointers naming research/tgsa-phase2a-ci-and-competence -> de3bd632b491df294f9b8736079bdcbbdd64e4d3",
+        "candidate_ledger.json: a FOURTH broken pointer not previously recorded, naming research/tgsa-phase1-v4-competence-first (retired 2026-08-31) -> 8b5737e260b5478427b8bb033cffa394a5f3fc5d, the frozen v4 boundary the hold note already treats as the v4 anchor. The blob is bit-identical at both commits (467da3d7), so the evidence content is unchanged",
+        "PRODUCTION_RETROFIT_AUDIT.md: the ref-scan table gained a ref-status column. THREE of its six inspected branches are retired, not the two previously recorded: research/tgsa-phase2-mtp-complementarity is gone from origin as well",
+        "PHASE2A_PREREQUISITE_HOLD.md: cites Phase 2A by commit de3bd63, records the 2026-09-04 retirement, and re-anchors its divergence figures to that commit (96 commits and 63 lab files; the 95 was stale)"
+      ],
+      "why_commits_not_tags": "tgsa/v5_1_programme.py resolves lineage with cat-file -e and merge-base on commit shas and never by branch name, so a commit pointer is the form the programme's own code trusts. An archive tag would also resolve today, but a tag is a movable ref and a commit is not.",
+      "left_deliberately": "the two source_branch fields in candidate_ledger.json still name research/tgsa-phase2a-ci-and-competence, and the audit table still lists branch names in its first column. Both are historical statements of where work happened, not resolvable pointers, and the resolvable field beside each (source_commit, and the tip column) does resolve. The 84-file stale lab tree is untouched and stays with promotion-order step 7.",
+      "verification": "all 10 ref:path pointers in candidate_ledger.json resolve under git cat-file -e; verify_candidate_ledger.py returns status PASS with promotable [], so no gate moved; line endings preserved per file (candidate_ledger.json and PRODUCTION_RETROFIT_AUDIT.md LF, PHASE2A_PREREQUISITE_HOLD.md CRLF).",
+      "one_pointer_still_unresolvable": "the historical-a11-pulse-negative-vector record cites the worktree-relative path artifacts/rineya_published_core_search_v1/negative_vectors/neg_200_250_1p25_m0p25/soup_manifest.json, which exists nowhere in the C8 worktree. That is a pre-existing missing-artifact gap, not a branch-name breakage, and repairing it would mean touching the parked stale lab tree. Left alone, recorded here so it is not rediscovered as new."
+    },
     "resolved_open_items": [
-      "the ref-retirement item is removed: both refs were deleted from origin on 2026-09-04 after CI went green on the merged tip, which was the condition the operator set. Recorded under ref_retirement above."
+      "the ref-retirement item is removed: both refs were deleted from origin on 2026-09-04 after CI went green on the merged tip, which was the condition the operator set. Recorded under ref_retirement above.",
+      "the C8 branch-naming item is removed: 927405a repointed every broken evidence pointer at a commit sha, so nothing in C8 resolves through a retired branch name any more. Recorded under c8_pointer_repair above. What that item called five occurrences was four broken pointers across two retired branches, plus two source_branch fields that are history rather than pointers; the branch stays parked and its lab tree stays stale on purpose."
     ]
   }
 }

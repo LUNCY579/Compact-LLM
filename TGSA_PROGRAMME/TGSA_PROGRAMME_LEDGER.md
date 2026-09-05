@@ -128,7 +128,7 @@ e0063f0  C2  phase1-identifiability-v2-launch-ready       ARCHIVED  archive/tgsa
    |
 04d3c02  (mid-v3; C8 forks here)
    |\
-   | `- ef5194b  C8  rineya-pretrained-retrofit           PARKED    parked/tgsa-rineya-retrofit-2026-08-31 (covers eea4f64 only)
+   | `- 927405a  C8  rineya-pretrained-retrofit           PARKED    parked/tgsa-rineya-retrofit-2026-08-31 (covers eea4f64 only)
    |
 6c97ac1  C3  phase1-v3-powered-confirmatory              ARCHIVED  archive/tgsa-phase1-v3-inconclusive
    |
@@ -521,24 +521,28 @@ No promotion is authorized.
 3. **Promotion-order step 7 is not started** — the port manifest reconciling
    C7's retrofit snapshot against C8's authoritative copy. Small job: the two
    differ in three files.
-4. **Two C8 documents name branches that no longer exist.** Its
-   `candidate_ledger.json` names `research/tgsa-phase2a-ci-and-competence` five
-   times, three of them `origin/<branch>:<path>` evidence pointers. Those three
-   pointers **stopped resolving on 2026-09-04**, when that ref was deleted; this
-   is no longer hypothetical. The commit is unharmed, so the fix is a mechanical
-   rewrite of the prefix to either the archive tag
-   `archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03` or the commit
-   `de3bd63`, which is what the lineage code itself resolves by. Also,
-   `PRODUCTION_RETROFIT_AUDIT.md`'s ref-scan
-   table still names both the *old* Phase 2A branch and the retired v4 branch;
-   and `PHASE2A_PREREQUISITE_HOLD.md` — repointed on 2026-08-31 — names the
-   branch now being retired. `CANDIDATE_LEDGER.md` itself cites commits
-   (`d16ea1c`), not branches. C8 is parked, so all of this is stale-on-purpose;
-   refresh as part of lifting the hold, not before.
 
 Closed on 2026-09-04: the apparatus-defect block on Stage 0, merged at
-`b60d470`; and the retirement of the last two superseded refs, verified
-non-destructive by a fresh clone taken after the deletions.
+`b60d470`; the retirement of the last two superseded refs, verified
+non-destructive by a fresh clone taken after the deletions; and **the C8
+branch-name evidence pointers**, repaired at `927405a`.
+
+That last item is worth its own note, because the count this ledger carried was
+wrong in both directions. `candidate_ledger.json` held **four** broken
+`origin/<branch>:<path>` pointers, not three: a fourth named
+`research/tgsa-phase1-v4-competence-first`, retired on 2026-08-31 and broken the
+same way, which no open item had recorded. And **three** of the ref-scan table's
+six inspected branches are retired, not two —
+`research/tgsa-phase2-mtp-complementarity` is gone from origin as well. All four
+pointers now name commits: `de3bd63`, and `8b5737e` for the v4 one, which is the
+frozen v4 boundary the hold note already used as its anchor and whose blob is
+bit-identical at both commits (`467da3d7`). That is the form
+`tgsa/v5_1_programme.py` resolves by, so these cannot break again. The two
+`source_branch` fields still name the retired branch deliberately: they are
+history, not pointers, and the `source_commit` beside each one resolves.
+`CANDIDATE_LEDGER.md` needed no change — it already cited `d16ea1c`. C8 remains
+**PARKED**: no lab file moved, nothing was merged, and
+`verify_candidate_ledger.py` still returns `promotable []`.
 
 Closed on 2026-09-03: the three-way v5 branch ambiguity; the unreviewable
 bootstrap tip; and the C6 and C8 tip drift this ledger had carried since
@@ -567,10 +571,14 @@ branch and commit, never this path.
 
 - `imported/phase2b/` — 3 documents from C7 at `49aa961`
 - `imported/retrofit/` — 9 documents plus `candidate_ledger.json` and its
-  schema from C8, at `eea4f64` except `PHASE2A_PREREQUISITE_HOLD.md`, which
-  was **re-imported at `ef5194b`** on 2026-09-03 (sha256 `44008d5822d6…`)
-  after C8's tip moved and changed it. The superseded `eea4f64` copy hashed
-  `a186a17114…`.
+  schema from C8, at `eea4f64` except three **re-imported at `927405a`** on
+  2026-09-04, after that commit repaired C8's broken evidence pointers:
+  `candidate_ledger.json` (`74a1ff79c530…`), `PRODUCTION_RETROFIT_AUDIT.md`
+  (`0d32f8026822…`) and `PHASE2A_PREREQUISITE_HOLD.md` (`632d26748d95…`). The
+  last of those had already been re-imported once before, at `ef5194b` on
+  2026-09-03 (`44008d5822d6…`), superseding an `eea4f64` copy that hashed
+  `a186a17114…`. Each copy is byte-identical to its source, so the two LF files
+  and the one CRLF file keep the line endings they have on C8.
 
 **Not imported:** any source code; the `evidence/phase2_mtp_smoke_local/`
 rehearsal output on C5 (regenerated scratch — CPU, one seed, three updates,
