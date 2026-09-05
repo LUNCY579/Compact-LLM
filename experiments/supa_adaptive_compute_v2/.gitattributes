@@ -1,2 +1,4 @@
 # Frozen inputs and source digests bind exact bytes across checkouts.
 * -text whitespace=blank-at-eol,blank-at-eof,space-before-tab,cr-at-eol
+# Preserve terminal output, including its final blank line, as recorded.
+**/stage.log whitespace=blank-at-eol,-blank-at-eof,space-before-tab,cr-at-eol

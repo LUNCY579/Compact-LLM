@@ -8,7 +8,11 @@ efficacy outputs, model weights or answer-bank contents were inspected for this
 plan. No implementation is supplied here.
 
 The current CPU 16-pair, six-objective mechanism matrix must finish under its
-existing frozen source map. The sole entry condition for later preparation is
+existing frozen source map. Generic verification/export and hook interfaces may
+be prepared in the isolated new subtree using tiny fixtures before the matrix
+finishes. This does not select scientific settings or license real export,
+runtime qualification or generation. The entry condition for a scientific
+generation-stage freeze and real artifact export is
 the existing complete-matrix `MECHANISM_GO` and
 `small_generation_eligible_for_separate_freeze=true`, independently verified.
 `MECHANISM_NO_GO`, an unfinished attempt, missing pair/control, ambiguous duplicate
