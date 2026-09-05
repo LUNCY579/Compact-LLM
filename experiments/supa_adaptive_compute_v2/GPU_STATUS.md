@@ -13,7 +13,7 @@ separately from host RAM. State hashes are byte-compatible streamed hashes.
 
 | Track | GPU registration | Runtime qualification | Scientific execution |
 |---|---|---|---|
-| Native | `7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5` | Pending actual CPU/GPU calibration comparison | Pending qualification |
+| Native | `7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5` | PASS: 40/40 identical greedy comparisons; fixed numerical gates passed | Architecture campaign licensed |
 | Cross-scale | `beec1869aad324d29191cd21e5f300bd6da3bdc0a52d8c5f11839ac4b98f5b7c` | Pending streamed state/delta/gradient comparison | Pending qualification |
 
 Tests: 321 passed and 148 subtests passed; after recording driver identity,
@@ -61,3 +61,23 @@ resource interruption does not change any numerical threshold or scientific
 candidate. The competing process subsequently exited, restoring about 7.1 GiB
 free VRAM and host RAM. Resume in a fresh qualification directory using the
 unchanged committed registration; never reuse this failed directory.
+
+## Native qualification passed on retry
+
+Receipt directory:
+`native_armr/evidence/00_runtime_qualification/20260905T191958_868458Z_82f1162e/`.
+The independent report validator checked all 40 case/arm comparisons, their
+frozen calibration identities, model/control hashes and every saved logit hash.
+All greedy sequences matched CPU; same-GPU repeated outputs, NLL and captured
+hidden tensors were identical, and disabled/restored behavior was exact.
+
+- Maximum absolute first-token logit error: `4.1961669921875e-05`.
+- Maximum per-token hidden relative L2 error: `7.856709228698431e-05`.
+- Maximum absolute answer-NLL error: `4.553794860839844e-05`.
+- Peak CUDA reservation: `2.50390625` GiB; total qualifier wall time 398.30 s.
+- CPU/GPU canonical state and seeded AM state hashes matched exactly.
+
+The qualification establishes native GPU runtime compatibility, not efficacy.
+It licenses the unchanged native architecture-development matrix. Observed
+qualification latency was affected by a separate GPU workload; it is not a
+controlled accelerator speed benchmark. Track B still needs its own qualification.
