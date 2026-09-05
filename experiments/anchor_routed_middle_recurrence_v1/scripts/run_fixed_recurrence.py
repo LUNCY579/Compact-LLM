@@ -18,6 +18,7 @@ from armr.hooks import Reapplication, SafetyError, frozen_inference
 from armr.evaluation import encode, forward_logits
 from armr.provenance import DATA, cases_from, checkpoint_files, new_run, sha256, state_hash, write_json
 from armr.recurrence import FixedBlock
+from armr.preregistration import load_budget_preregistration
 from armr.reporting import csv_file, mean, summarize
 from run_experiment import resolve_model, run_arm
 
@@ -58,6 +59,7 @@ def development_result(rows, baseline):
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--atlas",type=Path,required=True)
+    parser.add_argument("--preregistration",type=Path)
     args=parser.parse_args()
     atlas_path=args.atlas.resolve()
     if not atlas_path.is_relative_to((ROOT/"evidence/01c_completed_candidate_atlas").resolve()):
@@ -75,22 +77,39 @@ def main():
     a2=any(r["layer"]==layer and r["applications"]==3 and r["go_fixed_smoke"] for r in atlas)
     selected={"A1_layer":layer,"A2_licensed":a2,"A3_block":pair,
               "selection":"frozen mean-cosine ranking among passing middle arms; adjacent-pair constituent mean"}
+    registration = prior_manifest = None
+    stage = "02_fixed_recurrence"
+    if args.preregistration is not None:
+        config, registration, prior_manifest = load_budget_preregistration(
+            args.preregistration, ROOT, config, atlas_path, selected)
+        stage = "02c_fixed_cpu_budget_v2"
     model_path=resolve_model(None)
     smoke=cases_from(DATA/config["smoke_file"])
     dev=cases_from(DATA/config["development_file"])
-    out,manifest=new_run("02_fixed_recurrence",config,model_path,DATA/config["development_file"])
+    out,manifest=new_run(stage,config,model_path,DATA/config["development_file"])
     write_json(out/"selected_configuration.json",selected)
     manifest.update(atlas_receipt=str(atlas_path),atlas_receipt_sha256=sha256(atlas_path/"run_manifest.json"),selected_configuration=selected)
     print(f"RUN_DIR={out}",flush=True)
     start=time.perf_counter()
     model=None
     try:
+        if registration is not None:
+            manifest.update(preregistration=str(args.preregistration.resolve()),
+                            preregistration_sha256=sha256(args.preregistration),
+                            prior_run=registration["prior_run"],
+                            sole_configuration_change={"max_prompt_seconds":{"before":90,"after":900}})
+            write_json(out/"preregistration_snapshot.json",registration)
+            for key in ("torch","transformers","python","qwen_implementation_sha256","device","dtype","dataset_sha256"):
+                if manifest[key] != prior_manifest[key]:
+                    raise SafetyError(f"CPU replication runtime/input changed: {key}")
         torch.set_num_threads(config["threads"])
         torch.manual_seed(config["seed"])
         torch.use_deterministic_algorithms(True)
         before_files=checkpoint_files(model_path)
         if before_files["model.safetensors"]!=config["checkpoint_sha256"]:
             raise SafetyError("checkpoint hash mismatch")
+        if prior_manifest is not None and before_files != prior_manifest["checkpoint_files_before"]:
+            raise SafetyError("CPU replication checkpoint/tokenizer files changed")
         manifest["checkpoint_files_before"]=before_files
         tokenizer=AutoTokenizer.from_pretrained(model_path,local_files_only=True,trust_remote_code=True)
         model=AutoModelForCausalLM.from_pretrained(model_path,local_files_only=True,trust_remote_code=True,
@@ -98,6 +117,8 @@ def main():
         if type(model).__name__!="Qwen3AbstainForCausalLM":
             raise SafetyError("custom Supa class required")
         manifest["state_hash_before"]=state_hash(model)
+        if prior_manifest is not None and manifest["state_hash_before"] != prior_manifest["state_hash_before"]:
+            raise SafetyError("CPU replication loaded state changed")
         smoke_base,smoke_logits=run_arm(model,tokenizer,smoke,config,out,"A0_smoke")
         check_rows,_=run_arm(model,tokenizer,smoke,config,out,"A1_smoke",smoke_logits,layer=layer,applications=2)
         source_rows=[json.loads(s) for s in (atlas_path/"raw_results.jsonl").read_text(encoding="utf-8").splitlines()]
