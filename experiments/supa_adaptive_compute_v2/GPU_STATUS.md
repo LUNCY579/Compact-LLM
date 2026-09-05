@@ -103,3 +103,30 @@ combined tests; it does not admit the failed GPU profile or mix runtimes in
 the alignment matrix. Track A retains its passed native GPU qualification.
 This resource/backend decision precedes any new mechanism selection or efficacy
 outcomes. Scientific thresholds are not widened after observing the GPU report.
+
+## Native architecture execution and resource-aware resumption
+
+GPU A0 architecture shards 0 and 1 completed, preserving 9 examples. Admission
+for shard 2 then failed at 0.13 GiB available host memory versus the GPU
+profile's 0.50 GiB staging floor. A separate Python workload was concurrently
+using substantial host/GPU memory. The failed shard evaluated zero examples;
+the two completed shards remain valid and are not rerun. No candidate comparison
+or efficacy conclusion is available from this partial baseline.
+
+Track B CPU capture `alignment-cpu-v2-001` also failed admission, at 1.52 GiB
+available host memory versus the unchanged CPU profile's 3.00 GiB requirement.
+Its source registration is
+`f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea`.
+
+`scripts/run_native_when_available.ps1` is an operational launcher around the
+unchanged registered Python campaign. It waits for 2.5 GiB host RAM, 3.5 GiB
+free VRAM and a released programme lease, resumes only missing shards, and
+retries only zero-example RAM/VRAM admission failures. Other failures stop for
+review. Each queue has its own hashed-script manifest and log directory; no
+scientific source, setting, candidate, input or scorer changes. PowerShell
+parsing and a read-only resource inspection passed. The scientific registration
+was verified unchanged after adding the launcher.
+
+```powershell
+& experiments/supa_adaptive_compute_v2/scripts/run_native_when_available.ps1 -Role architecture_dev -MaxQueueSeconds 7200
+```
