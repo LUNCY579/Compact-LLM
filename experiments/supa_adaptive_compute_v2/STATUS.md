@@ -4,6 +4,7 @@
 track-specific CPU/GPU qualification. Track B's GPU profile failed its numerical
 qualification; its unchanged CPU reference completed calibration capture.
 The scientific questions remain open. No confirmatory generation has run.
+The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
@@ -67,6 +68,11 @@ The amendment additionally passed **215 tests and 148 subtests** in 76.71 second
 Exact commands and hashed logs: `00_audit/native_control_v2_3_validation/`.
 The calibration artifact verifier reconstructed all 128 scenario aggregates,
 the fit-only formula, frozen partitions and state/buffer preservation checks.
+An independent standard-library review passed 3,012 checks and reproduced the
+scalar exactly from saved per-scenario measurements. It does not claim a model
+rerun or reconstruction of raw tensors: `00_audit/native_control_v2_3_independent_review/`.
+At 22:44 UTC, a fresh streamed SHA256 check found all 198 historical files and
+the canonical checkpoint unchanged: `00_audit/integrity_20260905T2244/receipt.json`.
 
 See [GPU_STATUS.md](GPU_STATUS.md) for qualification measurements and receipts.
 All full-model jobs execute sequentially under a machine lease; engineering
