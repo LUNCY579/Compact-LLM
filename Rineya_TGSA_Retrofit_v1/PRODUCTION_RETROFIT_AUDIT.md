@@ -161,17 +161,24 @@ as an unchanged Baya transfer: source evidence reports 40/64 dropping to 35/64.
 ## 5. Research intake audit
 
 The full machine and human records are in `evidence/candidate_ledger.json` and
-`CANDIDATE_LEDGER.md`. The active remote research set was inspected at these
-tips:
+`CANDIDATE_LEDGER.md`. The research set was inspected at the tips below. Branch
+names in the first column are the names as of inspection and are not resolvable
+refs; three have since been retired. Resolve any row by its tip sha or archive
+tag, never by branch name.
 
-| Branch | Tip | Classification |
-|---|---|---|
-| `research/positional-sequential-attention` | `ee13448f11efaa7f14206dab95b277816b912ce6` | `WAITING_FOR_EVIDENCE` |
-| `research/rineya-cross-scale-qwen4b-8b` | `538687fb8ddab999f825e300e7c91d43947c5c4e` | `NEGATIVE` |
-| `research/tgsa-phase1-v4-competence-first` | `8b5737e260b5478427b8bb033cffa394a5f3fc5d` | `NEGATIVE` regime |
-| `research/tgsa-phase2-mtp-complementarity` | `81755bf216a383734d3dc599e0cb321a26d74f33` | `WAITING_FOR_EVIDENCE` |
-| `research/tgsa-phase2a-ci-and-competence` | `d16ea1cdd62ce3c49a99b382b32e4dc9b53f3c4c` | `WAITING_FOR_EVIDENCE` |
-| `research/tgsa-mtp-rineya-complementarity-v1` | `27b54322080be143f8d0b84d98daebec1b4281d8` | integration tooling only; prerequisite result absent |
+| Branch (at inspection) | Tip | Classification | Ref status |
+|---|---|---|---|
+| `research/positional-sequential-attention` | `ee13448f11efaa7f14206dab95b277816b912ce6` | `WAITING_FOR_EVIDENCE` | live on `origin` |
+| `research/rineya-cross-scale-qwen4b-8b` | `538687fb8ddab999f825e300e7c91d43947c5c4e` | `NEGATIVE` | live on `origin` |
+| `research/tgsa-phase1-v4-competence-first` | `8b5737e260b5478427b8bb033cffa394a5f3fc5d` | `NEGATIVE` regime | retired 2026-08-31; tag `archive/tgsa-phase1-v4-regime-rejected` |
+| `research/tgsa-phase2-mtp-complementarity` | `81755bf216a383734d3dc599e0cb321a26d74f33` | `WAITING_FOR_EVIDENCE` | retired 2026-08-31; tag `archive/tgsa-phase2a-superseded-2026-08-31` |
+| `research/tgsa-phase2a-ci-and-competence` | `d16ea1cdd62ce3c49a99b382b32e4dc9b53f3c4c` | `WAITING_FOR_EVIDENCE` | retired 2026-09-04; tag `archive/tgsa-phase2a-ci-and-competence-superseded-2026-09-03` |
+| `research/tgsa-mtp-rineya-complementarity-v1` | `27b54322080be143f8d0b84d98daebec1b4281d8` | integration tooling only; prerequisite result absent | live on `origin` |
+
+The three retired tips (`8b5737e`, `81755bf`, `d16ea1c`) stay reachable as
+ancestors of the canonical programme branch
+`research/tgsa-v5-1-unified-programme`, so retiring those branch names cost no
+evidence.
 
 Key exclusions:
 
