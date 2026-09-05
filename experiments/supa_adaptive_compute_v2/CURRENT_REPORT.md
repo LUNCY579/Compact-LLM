@@ -7,9 +7,15 @@ token-relative MSE is 0.37049 versus 1.39826. BS/BR cosine is 0.04241/0.03288.
 This is one of 16 pairs, with no candidate selection or generation licensed.
 Receipt: `cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`.
 The first queue completed that stage. Its successor,
-`00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/`, is waiting for
-resources, with native v2.3 GPU qualification preferred when its GPU admission
-can pass; otherwise the next fixed CPU pair is S8/D16.
+`00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/`, was closed at
+23:12 UTC after about 19 minutes without launching a model. Its immutable
+`closure.json` verifies that the owned controller exited and launched zero stages.
+The actual imported CPU caller's read-only admission probe rejected 2.39 GiB
+available host memory versus its unchanged 3.00 GiB floor; free VRAM was about
+1.84 GiB versus the native GPU profile's 3.00 GiB floor. No programme model or
+resource controller is running. Native v2.3 GPU qualification and CPU S8/D16 are
+ready to resume from their frozen inputs when capacity permits. The research
+goal remains open; resource admission failures are not scientific NO-GO results.
 
 Snapshot: **2026-09-05 22:45:35 UTC / 17:45:35 America/Chicago**. The shared
 framework, independent banks, protocols and callers are implemented. Real runtime

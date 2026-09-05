@@ -198,7 +198,19 @@ arm order. Use the registered control-first order explicitly:
 ```
 
 The above command is eligible only after the new qualification passes and its
-evidence is committed. Currently a one-stage resource queue prefers that pending
+evidence is committed. The one-stage resource launcher prefers that pending
 qualification when host RAM and VRAM permit, or advances the unchanged Track B
 CPU matrix when only host capacity is available. It never retries failed science
-or overlaps programme model workers.
+or overlaps programme model workers. Its first queue completed S8/D12. The second
+was closed at 23:12 UTC after about 19 minutes without sufficient capacity and
+without launching a model. The actual CPU caller admission probe rejected
+2.39 GiB available host RAM versus 3.00 GiB required; free VRAM was about 1.84 GiB
+versus the native profile's 3.00 GiB floor. No programme model/controller remains
+active. Pending stages resume with the same frozen scientific inputs:
+
+```powershell
+& experiments/supa_adaptive_compute_v2/scripts/run_next_stage_when_available.ps1 -MaxQueueSeconds 3600
+```
+
+The full goal remains open. Capacity limits do not establish a negative efficacy
+or donor-mechanism result.

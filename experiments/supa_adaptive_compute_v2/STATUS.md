@@ -6,6 +6,17 @@ qualification; its unchanged CPU reference completed calibration capture.
 The scientific questions remain open. No confirmatory generation has run.
 The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 
+Latest resource checkpoint (23:12 UTC): no model worker or resource controller
+is running. The idle second queue was closed after about 19 minutes without a
+stage launch. A read-only probe after importing the actual CPU caller found
+2.39 GiB available versus its unchanged 3.00 GiB admission requirement. Free
+VRAM was about 1.84 GiB, below the native profile's 3.00 GiB floor. The first
+pair remains complete; S8/D16 and new native qualification are pending capacity.
+Probe: `00_audit/resource_admission_probe_20260905T2310.json`.
+Queue closure: `00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/closure.json`.
+The research goal remains open; these are resource constraints, not efficacy
+or mechanism NO-GO results.
+
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
 | Native ARMR | Does bounded recurrence generalize? | Original GPU runtime PASS; A0/A1/A3/A16 completed 128 architecture cases each; original AM failed a malformed-generation guard | Label-free v2.3 AM scale calibrated and frozen; new runtime qualification pending | 0 confirmation examples | CLOSED pending new qualification and a valid complete architecture matrix |
