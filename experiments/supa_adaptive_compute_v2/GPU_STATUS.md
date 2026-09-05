@@ -43,3 +43,21 @@ Once qualified, native campaign commands use
 and the unchanged 32-shard schedule. Cross-scale commands use
 `--config cross_scale/configs/alignment_gpu_v2_1.json` and a fresh run ID.
 All full-model/GPU jobs remain sequential under the shared machine lease.
+
+## First real qualification attempt
+
+Native qualification directory:
+`native_armr/evidence/00_runtime_qualification/20260905T185820_846212Z_273b3b24/`.
+It completed the 40 CPU case/arm reference logit artifacts and 23 GPU artifacts.
+A separate long-context research process then occupied 6.527 GiB dedicated VRAM;
+Windows counters showed our model displaced into shared memory and available
+host RAM falling to 0.009 GiB. The owned qualification process was stopped, its
+partial tensors and immutable interruption receipt preserved, and its lease
+released after verifying process exit. No other process was stopped.
+
+Canonical checkpoint files still match the qualified reference. In-memory
+post-stop state could not be measured; qualification is **not passed**. This
+resource interruption does not change any numerical threshold or scientific
+candidate. The competing process subsequently exited, restoring about 7.1 GiB
+free VRAM and host RAM. Resume in a fresh qualification directory using the
+unchanged committed registration; never reuse this failed directory.
