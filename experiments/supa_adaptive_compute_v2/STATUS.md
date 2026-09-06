@@ -6,6 +6,14 @@ qualification; its unchanged CPU reference completed calibration capture.
 The scientific questions remain open. No confirmatory generation has run.
 The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 
+Goal state at 2026-09-06 02:11 UTC: **BLOCKED awaiting external capacity**,
+not complete. The recurring full-model admission blocker was verified across
+three consecutive goal turns. Current available host RAM is 2.04 GiB and free
+VRAM is 2,103 MiB, both below the registered 3 GiB floors. No programme model
+worker or lease is active. Code, calibration, configuration and preregistration
+for v2.4 are ready; the next licensed work requires model execution. Evidence:
+`00_audit/resource_block_20260906T0211.json`.
+
 Latest execution checkpoint (2026-09-06 UTC / September 5 local): Track B
 has two complete depth pairs, S8/D12 and S8/D16, each with all six objectives.
 Native v2.3 qualification **PASSED** in a fresh process at

@@ -1,5 +1,13 @@
 # Two-track Supa research: current execution report
 
+Current goal state (2026-09-06 02:11 UTC): **blocked on external capacity,
+not complete**. Revalidation found 2.04 GiB available RAM and 2,103 MiB free
+VRAM, below the registered full-reference/GPU floors. No programme model is
+running. The same blocker has recurred across three consecutive goal turns;
+all next licensed model stages require capacity to be released. Source,
+calibration and preregistration remain ready. Exact evidence is in
+`00_audit/resource_block_20260906T0211.json`.
+
 Latest development: calibrated random AM v2.3 failed the same architecture
 malformed-generation guard at shard 20. A0 completed 128 cases; AM has 84 cases
 in complete shards plus one preserved case in the failed attempt. Its failure
