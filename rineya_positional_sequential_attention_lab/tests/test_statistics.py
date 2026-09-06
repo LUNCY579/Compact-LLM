@@ -7,8 +7,12 @@ and by simulation where one does not (interval coverage, cluster inflation).
 
 from __future__ import annotations
 
+import hashlib
 import json
 import math
+import shutil
+import subprocess
+import warnings
 from pathlib import Path
 
 import numpy as np
@@ -411,3 +415,275 @@ def test_write_result_refuses_to_touch_a_checkpoint():
 def test_write_result_rejects_an_unsupported_suffix(tmp_path: Path):
     with pytest.raises(ValueError, match="write_result handles"):
         PV.write_result({"x": 1}, tmp_path / "result.txt")
+
+
+# --------------------------------------------------------------------------------------
+# provenance: the config a sidecar carries, and whether it came from the caller
+#
+# Audit finding (a): the Phase-3 sidecars in results/ carry "config": {} and there is no
+# field that says whether that means "this run had no config" or "the caller forgot".
+# These tests pin the distinction.
+# --------------------------------------------------------------------------------------
+
+
+def test_write_result_without_a_config_warns_and_records_the_gap(tmp_path: Path):
+    """Omitting ``config=`` must be visible *in the artifact*, not only in the terminal."""
+    with pytest.warns(PV.ProvenanceWarning, match="no config= was passed"):
+        target = PV.write_result({"x": 1}, tmp_path / "nocfg.json")
+
+    payload = json.loads(PV.sidecar_path(target).read_text(encoding="utf-8"))
+    assert payload["config"] == {}
+    assert payload["config_source"] == "missing"
+
+
+def test_an_explicitly_empty_config_is_not_the_same_as_a_forgotten_one(tmp_path: Path):
+    """``config={}`` is an assertion that there was no config; it must not warn."""
+    with warnings.catch_warnings():
+        warnings.simplefilter("error", PV.ProvenanceWarning)
+        empty = PV.write_result({"x": 1}, tmp_path / "empty.json", config={})
+        none = PV.write_result({"x": 1}, tmp_path / "none.json", config=None)
+
+    for target in (empty, none):
+        payload = json.loads(PV.sidecar_path(target).read_text(encoding="utf-8"))
+        assert payload["config"] == {}
+        assert payload["config_source"] == "caller", target.name
+
+
+def test_a_supplied_config_reaches_the_sidecar_verbatim(tmp_path: Path):
+    cfg = {"model": "halo", "positions": [0.02, 0.5, 0.98], "seed": 20260828}
+    target = PV.write_result({"x": 1}, tmp_path / "cfg.json", config=cfg)
+    payload = json.loads(PV.sidecar_path(target).read_text(encoding="utf-8"))
+    assert payload["config"] == cfg
+    assert payload["config_sha256"] == PV.config_hash(cfg)
+    assert payload["config_source"] == "caller"
+
+
+def test_sidecar_path_appends_rather_than_replacing_the_suffix():
+    """``a.parquet`` -> ``a.parquet.provenance.json``, never ``a.provenance.json``."""
+    assert PV.sidecar_path("a/b.parquet").name == "b.parquet.provenance.json"
+    assert PV.sidecar_path(Path("a/b.npz")).name == "b.npz.provenance.json"
+
+
+# --------------------------------------------------------------------------------------
+# provenance: write_sidecar, the helper for writers that serialise their own payload
+#
+# Audit finding (a): the primary Phase-3 artifacts
+# (results/baseline_position_results_{calibration,validation}_tf.parquet) have no sidecar
+# at all, because evaluation.runner.write_parquet hands the frame to pandas and never
+# stamped the result. write_result cannot help those writers; write_sidecar can.
+# --------------------------------------------------------------------------------------
+
+
+def test_write_sidecar_stamps_a_file_written_by_someone_else(tmp_path: Path):
+    pd = pytest.importorskip("pandas")
+    pytest.importorskip("pyarrow")
+
+    target = tmp_path / "rows.parquet"
+    pd.DataFrame({"position": [0.02, 0.98], "score": [1.0, 0.0]}).to_parquet(
+        target, index=False
+    )
+
+    sidecar = PV.write_sidecar(
+        target, config={"split": "validation"}, artifact_extra={"rows": 2}
+    )
+    assert sidecar == PV.sidecar_path(target)
+
+    payload = json.loads(sidecar.read_text(encoding="utf-8"))
+    assert payload["config"] == {"split": "validation"}
+    assert payload["config_source"] == "caller"
+    assert payload["artifact"]["bytes"] == target.stat().st_size
+    assert payload["artifact"]["sha256"] == hashlib.sha256(target.read_bytes()).hexdigest()
+    assert payload["artifact"]["rows"] == 2
+
+
+def test_write_sidecar_refuses_to_stamp_a_file_that_was_never_written(tmp_path: Path):
+    """A sidecar for a nonexistent artifact would be a provenance claim about nothing."""
+    with pytest.raises(FileNotFoundError, match="was not written"):
+        PV.write_sidecar(tmp_path / "ghost.parquet", config={})
+    assert not PV.sidecar_path(tmp_path / "ghost.parquet").exists()
+
+
+def test_write_sidecar_refuses_to_touch_a_checkpoint():
+    from rineya_psa.paths import MODELS
+
+    with pytest.raises(PermissionError):
+        PV.write_sidecar(MODELS["qwen3"].path / "config.json", config={})
+
+
+def test_write_sidecar_without_a_config_warns_like_write_result(tmp_path: Path):
+    target = tmp_path / "plain.json"
+    target.write_text("{}\n", encoding="utf-8")
+    with pytest.warns(PV.ProvenanceWarning, match="plain.json"):
+        sidecar = PV.write_sidecar(target)
+    assert json.loads(sidecar.read_text(encoding="utf-8"))["config_source"] == "missing"
+
+
+# --------------------------------------------------------------------------------------
+# provenance: git_state must let a reader date an artifact
+#
+# Audit finding (c): the published Phase-3 sidecar records commit 384f515 with
+# "dirty": true and a flat dirty_paths list in which an untracked sibling lab
+# (rineya_halo_long_context_sft_v1/) is indistinguishable from an edited source file
+# (scripts/phase3_analyze.py). "dirty: true" was therefore true of every sidecar in
+# results/ and carried no information.
+# --------------------------------------------------------------------------------------
+
+_GIT = shutil.which("git")
+requires_git = pytest.mark.skipif(_GIT is None, reason="git is not on PATH")
+
+
+def _init_repo(root: Path) -> None:
+    root.mkdir(parents=True, exist_ok=True)
+    for args in (
+        ("init", "-q", "-b", "main"),
+        ("config", "user.email", "t@example.invalid"),
+        ("config", "user.name", "test"),
+    ):
+        subprocess.run(["git", *args], cwd=root, check=True, capture_output=True)
+
+
+def _commit_all(root: Path, message: str) -> None:
+    subprocess.run(["git", "add", "-A"], cwd=root, check=True, capture_output=True)
+    subprocess.run(
+        ["git", "commit", "-q", "-m", message], cwd=root, check=True, capture_output=True
+    )
+
+
+@requires_git
+def test_git_state_on_a_clean_tree_says_clean(tmp_path: Path):
+    root = tmp_path / "repo"
+    _init_repo(root)
+    (root / "lab").mkdir()
+    (root / "lab" / "src.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+
+    state = PV.git_state(root, scope="lab")
+    assert state["dirty"] is False
+    assert state["code_state"] == "clean"
+    assert state["tracked_dirty_paths"] == []
+    assert state["scope_dirty"] is False
+    assert len(state["commit"]) == 40
+
+
+@requires_git
+def test_git_state_separates_edited_source_from_untracked_scratch(tmp_path: Path):
+    """An untracked sibling directory must not read as "the code that ran was modified"."""
+    root = tmp_path / "repo"
+    _init_repo(root)
+    (root / "lab").mkdir()
+    (root / "lab" / "src.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+
+    (root / "lab" / "src.py").write_text("x = 2\n", encoding="utf-8")  # tracked edit
+    (root / "scratch").mkdir()
+    (root / "scratch" / "notes.md").write_text("hi\n", encoding="utf-8")  # untracked
+
+    state = PV.git_state(root, scope="lab")
+    assert state["dirty"] is True
+    assert state["code_state"] == "dirty-tracked"
+    assert state["tracked_dirty_paths"] == ["lab/src.py"]
+    assert state["tracked_dirty_count"] == 1
+    assert [p for p in state["untracked_paths"] if p.startswith("scratch")]
+    assert "lab/src.py" not in state["untracked_paths"]
+    assert state["scope"] == "lab"
+    assert state["scope_dirty"] is True
+    assert state["scope_dirty_paths"] == ["lab/src.py"]
+    assert {e["path"] for e in state["dirty_entries"]} >= {"lab/src.py"}
+    assert next(e for e in state["dirty_entries"] if e["path"] == "lab/src.py")["status"] == " M"
+
+
+@requires_git
+def test_untracked_only_tree_is_not_reported_as_modified_code(tmp_path: Path):
+    root = tmp_path / "repo"
+    _init_repo(root)
+    (root / "lab").mkdir()
+    (root / "lab" / "src.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+    (root / "other_lab").mkdir()
+    (root / "other_lab" / "junk.txt").write_text("junk\n", encoding="utf-8")
+
+    state = PV.git_state(root, scope="lab")
+    assert state["dirty"] is True  # git status is non-empty ...
+    assert state["code_state"] == "clean-tracked-untracked-present"  # ... but no code moved
+    assert state["tracked_dirty_paths"] == []
+    assert state["scope_dirty"] is False
+
+
+@requires_git
+def test_git_state_scope_ignores_a_dirty_file_in_another_lab(tmp_path: Path):
+    root = tmp_path / "repo"
+    _init_repo(root)
+    for lab in ("lab", "other"):
+        (root / lab).mkdir()
+        (root / lab / "src.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+    (root / "other" / "src.py").write_text("x = 99\n", encoding="utf-8")
+
+    state = PV.git_state(root, scope="lab")
+    assert state["tracked_dirty_paths"] == ["other/src.py"]
+    assert state["scope_dirty"] is False
+    assert state["scope_dirty_paths"] == []
+
+
+@requires_git
+def test_diff_sha256_distinguishes_two_artifacts_stamped_at_the_same_commit(tmp_path: Path):
+    """The field that makes a stale artifact detectable: same commit, different source."""
+    root = tmp_path / "repo"
+    _init_repo(root)
+    (root / "lab").mkdir()
+    (root / "lab" / "src.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+
+    clean = PV.git_state(root, scope="lab")
+    (root / "lab" / "src.py").write_text("x = 2\n", encoding="utf-8")
+    edited = PV.git_state(root, scope="lab")
+    (root / "lab" / "src.py").write_text("x = 3\n", encoding="utf-8")
+    edited_again = PV.git_state(root, scope="lab")
+
+    assert clean["commit"] == edited["commit"] == edited_again["commit"]
+    assert len(edited["diff_sha256"]) == 64
+    assert clean["diff_sha256"] != edited["diff_sha256"]
+    assert edited["diff_sha256"] != edited_again["diff_sha256"]
+    assert clean["diff_bytes"] == 0
+    assert edited["diff_bytes"] > 0
+
+    (root / "lab" / "src.py").write_text("x = 1\n", encoding="utf-8")  # back to committed
+    assert PV.git_state(root, scope="lab")["diff_sha256"] == clean["diff_sha256"]
+
+
+@requires_git
+def test_git_state_records_a_renamed_file_by_its_destination(tmp_path: Path):
+    root = tmp_path / "repo"
+    _init_repo(root)
+    (root / "lab").mkdir()
+    (root / "lab" / "old.py").write_text("x = 1\n", encoding="utf-8")
+    _commit_all(root, "init")
+    subprocess.run(
+        ["git", "mv", "lab/old.py", "lab/new.py"], cwd=root, check=True, capture_output=True
+    )
+
+    state = PV.git_state(root, scope="lab")
+    assert "lab/new.py" in state["tracked_dirty_paths"]
+    assert not any(" -> " in p for p in state["tracked_dirty_paths"])
+
+
+def test_stamp_embeds_the_working_tree_description_and_determinism_record():
+    """SPEC 9 + SPEC 10: a sidecar answers "what code ran" and "what was seeded"."""
+    payload = PV.stamp({"a": 1})
+    git = payload["git"]
+    assert set(git) >= {
+        "code_state",
+        "diff_sha256",
+        "scope",
+        "scope_dirty",
+        "tracked_dirty_paths",
+        "untracked_paths",
+    }
+    assert git["code_state"] in {
+        "clean",
+        "clean-tracked-untracked-present",
+        "dirty-tracked",
+        "unknown",
+    }
+    assert payload["determinism"]["spec_section"] == "10"
+    json.loads(json.dumps(payload, default=PV.json_default))

@@ -10,6 +10,14 @@ produces a plausible table:
   ``state_constraint`` carry several evidence sentences; the non-decisive ones are
   pinned by construction and only the decisive one is swept. Using
   ``target_positions[0]`` collapses ``state_constraint`` onto the single constant 0.25.
+* **The NON-decisive evidence is held fixed too.** "Pinned by construction" is true of
+  ``state_constraint`` but *false* of ``multi_hop``: the ``multi_hop_pairs`` grid sweeps
+  the six start/middle/end combinations of *both* hops, so grouping on the decisive hop
+  alone builds a triangular design -- p=0.02 contains only (0.02, 0.02), p=0.50 contains
+  (0.02, 0.50) and (0.50, 0.50), p=0.98 contains all three. The cells then differ in
+  *content*, not only in the position of the sentence under study, and the nuisance
+  factor is enormous (co-locating the two hops is worth 10-13 nats). See
+  ``restrict_position_axis`` and ``reports/multi_hop_axis_investigation.md``.
 * **Local rhetorical position is held fixed.** The ``local_position_sweep`` grid only
   emits p in {0.02, 0.50, 0.98}, so pooling local positions puts a step at exactly the
   three positions that define the edge-middle gap.
@@ -59,6 +67,72 @@ def group_label(row: pd.Series) -> str:
     if row.family == "multi_hop":
         return "multi_hop_guided" if row.guided else "multi_hop_hard"
     return str(row.family)
+
+
+def nondecisive_key(target_positions: Sequence[float], primary_target: float) -> str:
+    """The sorted multiset of the NON-decisive evidence positions, as a hashable key.
+
+    One occurrence of the decisive position is removed from ``target_positions``; every
+    generator in this lab guarantees ``target_positions[decisive_index] ==
+    primary_target``, so which occurrence is removed cannot matter once the remainder is
+    sorted. That means the key needs no ``decisive_index`` lookup against the bank and is
+    correct even when two evidence sentences sit at the same anchor -- e.g. multi_hop's
+    (0.02, 0.02), where naively dropping "the one that is not the primary" is ambiguous.
+    """
+    rest = [round(float(t), 2) for t in target_positions]
+    rest.remove(round(float(primary_target), 2))
+    return ",".join(f"{t:.2f}" for t in sorted(rest))
+
+
+def restrict_position_axis(sub: pd.DataFrame) -> tuple[pd.DataFrame, dict]:
+    """Keep only rows whose non-decisive evidence sits where every position cell has it.
+
+    A positional curve is only interpretable if the cells differ *in the position of the
+    decisive sentence and nothing else*. ``multi_hop`` violates that: its grid sweeps
+    both hops, so the p=0.98 cell contains configurations (both hops at the end, i.e.
+    adjacent) that the p=0.02 cell cannot contain. Averaging those in makes the far edge
+    look artificially easy and inflates the middle-minus-edge gap.
+
+    The fix is a within-design restriction, not a reweighting: take the non-decisive
+    configuration that is present at *every* level of ``primary_target`` (ties broken by
+    row count, then by key for determinism) and drop the rest. For single-evidence
+    families the key is the empty string and nothing is dropped; for
+    ``state_constraint``, whose non-decisive updates really are pinned to constant
+    anchors, the key is constant and nothing is dropped. Only ``multi_hop`` loses rows.
+
+    Returns ``(restricted_frame, info)``; ``info["axis_restricted"]`` says whether it bit.
+    """
+    keys = [
+        nondecisive_key(tp, pt)
+        for tp, pt in zip(sub.target_positions, sub.primary_target, strict=True)
+    ]
+    work = sub.assign(_nd=keys)
+    levels = set(work.primary_target)
+    shared = [k for k, g in work.groupby("_nd") if set(g.primary_target) == levels]
+    info: dict = {
+        "nondecisive_keys": sorted(work._nd.unique().tolist()),
+        "n_before_restriction": int(len(sub)),
+    }
+    if not shared or len(work._nd.unique()) <= 1:
+        # Nothing varies (single-evidence / genuinely pinned families), or no single
+        # configuration spans the axis -- in the latter case there is no comparison to
+        # rescue, so report the unrestricted frame and flag it loudly.
+        info.update(
+            axis_restricted=False,
+            nondecisive_pinned_at=info["nondecisive_keys"][0] if not work.empty else "",
+            axis_confounded=bool(len(work._nd.unique()) > 1),
+            n_dropped=0,
+        )
+        return sub, info
+    best = max(shared, key=lambda k: (int((work._nd == k).sum()), k))
+    kept = sub[work._nd.values == best]
+    info.update(
+        axis_restricted=bool(len(kept) < len(sub)),
+        nondecisive_pinned_at=best,
+        axis_confounded=bool(len(work._nd.unique()) > 1),
+        n_dropped=int(len(sub) - len(kept)),
+    )
+    return kept, info
 
 
 def curve_stats(sub: pd.DataFrame, value: str) -> dict:
@@ -131,9 +205,23 @@ def main(argv: Sequence[str] | None = None) -> int:
                  "curves": {}, "vs_base": {}}
 
     for (arm, grp), sub in d.groupby(["arm", "group"]):
-        out["curves"][f"{arm}|{grp}"] = curve_stats(sub, args.value)
+        # The published curve is computed on the restricted axis: decisive sentence
+        # swept, every other evidence sentence held where it is in all three cells.
+        # The unrestricted curve is kept beside it under `|all_pairs` so the size of the
+        # confound stays auditable instead of vanishing from the record.
+        kept, info = restrict_position_axis(sub)
+        stats = curve_stats(kept, args.value)
+        stats.update(info)
+        out["curves"][f"{arm}|{grp}"] = stats
+        if info["axis_restricted"]:
+            unrestricted = curve_stats(sub, args.value)
+            unrestricted.update(axis_restricted=False, axis_confounded=True)
+            out["curves"][f"{arm}|{grp}|all_pairs"] = unrestricted
 
-    # Paired against the base model, on identical items.
+    # Paired against the base model, on identical items. This block deliberately does
+    # NOT apply `restrict_position_axis`: it is a between-model contrast at matched
+    # items, so the multi_hop design imbalance cancels within each pair. Restricting
+    # would only change which items the average is over, at a cost in precision.
     base = d[d.arm == BASE_ARM].set_index("item_id")
     for arm in sorted(a for a in d.arm.unique() if a != BASE_ARM):
         other = d[d.arm == arm].set_index("item_id")
@@ -167,10 +255,11 @@ def main(argv: Sequence[str] | None = None) -> int:
         if "by_pos" in v and "middle_minus_edge" in v:
             sig = "*" if v["middle_minus_edge_significant"] else " "
             lo, hi = v["middle_minus_edge_ci"]
+            tag = " [axis restricted]" if v.get("axis_restricted") else ""
             print(
-                f"{k:38s} mid-edge {v['middle_minus_edge']:+8.3f} "
+                f"{k:48s} mid-edge {v['middle_minus_edge']:+8.3f} "
                 f"[{lo:+7.3f},{hi:+7.3f}]{sig} "
-                f"worst@{v['worst_position']:.2f} range {v['range']:7.3f}"
+                f"worst@{v['worst_position']:.2f} range {v['range']:7.3f}{tag}"
             )
     return 0
 
