@@ -240,3 +240,37 @@ The complete five-arm architecture gate still precedes confirmation.
 Track B has two completed CPU pairs (S8/D12 and S8/D16) and 14 pending, with no
 selected bridge. Its prepared future export/graft interfaces passed 56 tests and
 6 subtests, but no generation protocol or real export is licensed.
+
+## v2.3 control rejected; v2.4 pretrained control frozen
+
+The v2.3 GPU campaign completed A0 (128 cases) and 84 AM cases in complete
+shards, then AM failed the same combined malformed-generation guard at shard 20.
+One additional completed case is retained in the FAILED attempt:
+`native_armr/evidence/01_architecture_dev/20260906T005825_662929Z_4a8ebe46/`.
+The failure-time integrity receipt confirms unchanged canonical state/files and
+zero backbone gradients. Its particular guard subtype is not known. No v2.3
+A1/A3/A16 or confirmation generation followed. The independent A0 audit found
+all 128 outputs, NLL values and logit-file bytes identical to original v2.2 A0.
+
+The single v2.4 replacement is a pretrained parallel FFN transform from L12/13/14
+with intact learned normalizations. It uses 90% of A3's added dominant matrix work;
+no redundant padding or weight training is added. Its implemented source and
+331-test/148-subtest validation were preregistered before actual fit-only
+calibration. The new alpha is 0.764362266301519, derived without clipping/search.
+An independent standard-library review passed 1,996 checks. The calibration
+artifact was committed before deriving the inference config and registration
+`081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e`.
+
+Current v2.4 runtime qualification is pending host-memory capacity. A new
+CPU/GPU qualification and complete five-arm run on the existing architecture
+bank are required; prior successful shards are not relabeled. Resume the
+resource-aware single-stage dispatcher with:
+
+```powershell
+& experiments/supa_adaptive_compute_v2/scripts/run_next_stage_when_available.ps1 -NativeConfigName protocol_gpu_v2_4.json -MaxQueueSeconds 3600
+```
+
+It prefers native qualification when CPU staging and GPU capacity permit;
+otherwise it can advance the unchanged original CPU donor matrix. The dedicated
+donor dispatcher is `scripts/run_alignment_when_available.ps1`. Both preserve
+pre-load admission failures and use fresh attempt directories for retries.

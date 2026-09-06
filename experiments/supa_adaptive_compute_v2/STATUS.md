@@ -53,16 +53,28 @@ work is 56,623,104 FLOPs/token, explicitly 90% of A3's 62,914,560. Its own
 fit-only scale calibration must precede a derived inference config, fresh
 CPU/GPU qualification and a complete new run on the existing architecture bank.
 The 331-test/148-subtest suite passed in 106.19 seconds; independent static
-review found no execution/integration defect. No actual v2.4 calibration has
-run and no final v2.4 inference config exists yet. Calibration registration:
+review found no execution/integration defect. Calibration registration:
 `76914b192a4d880857170caa14cde8a6f1439737c37ab2a2c49fceff09390bab`.
+After its source and registration were committed, actual calibration completed
+in 54.94 seconds, peak RSS 1,290,117,120 bytes. Its exact fitted scalar is
+0.764362266301519. Fit native/scaled-control relative energy is
+0.09559580669801247; held-out native/control energy is
+0.09606493426847566 / 0.09659610573025923. All weights remained frozen.
+Artifact: `native_armr/evidence/00_learned_control_calibration/20260906T014443_419834Z_b790e5e7/`.
+An independent standard-library review passed 1,996 checks and reproduced the
+scalar from all 128 recorded cases. It does not claim a raw-tensor/model rerun:
+`00_audit/native_v2_4_calibration_review/`. The artifact was committed at
+`c72e6df1f06251824869d16c0e324e283eb693e0` before the final v2.4 inference config
+was derived. That config and registration are committed at
+`f8c30de3dffc117243cb4bf4771f7907a70d8c21`; runtime qualification awaits host RAM.
+The resource queue is `00_audit/execution_queues/20260906T015442_9607258Z_28dcf54d/`.
 Both previous random-control failures remain intact; their scales and guards
 are not changed. This is one prospectively specified alternative, not a search
 over controls until one passes. The full research goal remains open.
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
-| Native ARMR | Does bounded recurrence generalize? | v2.3 runtime PASS but calibrated random AM mechanically rejected; v2.4 implementation tests PASS | One pretrained FFN control specified; v2.4 calibration/registration/execution pending | 0 confirmation examples | CLOSED pending v2.4 qualification and a complete valid architecture matrix |
+| Native ARMR | Does bounded recurrence generalize? | v2.3 random AM mechanically rejected; v2.4 code and calibration audited | Pretrained FFN control/config/registration frozen; qualification pending RAM | 0 confirmation examples | CLOSED pending v2.4 qualification and a complete valid architecture matrix |
 | Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | S8/D12 and S8/D16 completed all six objectives; 14 pairs pending, none selected | Not licensed | Complete 96-cell alignment mechanism screen first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
@@ -132,6 +144,7 @@ required; original generation guards are unchanged.
 
 Current execution registrations:
 
+- Native GPU v2.4: `081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e`.
 - Native GPU v2.3: `86e768e08bf3576dd8ce80ec939b7e876fb5fb7449d41a3aa51c497ce6607b44`.
 - Original native GPU v2.2: `7c99dac8b3e72ad44ec2c1eeaaa67ac897fabe6d3209d362c1f78e01c3a7cca5`.
 - Track B CPU reference on current shared source: `f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea`.
