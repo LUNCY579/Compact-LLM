@@ -1,5 +1,19 @@
 # Native ARMR: Track A
 
+Current continuation: both original and energy-calibrated random AM controls
+failed the architecture malformed-generation guard. Their evidence stays intact;
+confirmation remains unopened. The single v2.4 alternative uses parallel intact
+pretrained FFNs from L12/L13/L14, with 90% of A3's added dominant matrix work.
+Its code/tests are prepared, but it needs its own committed fit-only calibration
+before a final inference config is derived. Read
+`protocol/gpu_fp32_v2_4_amendment.md` and
+`protocol/learned_control_calibration_v2_4.md`. Use
+`scripts/calibrate_learned_control.py --preflight` after committing its separate
+calibration registration, then run that same script without a switch.
+No v2.4 generation is eligible until the derived config, registration and new
+CPU/GPU qualification are complete. Earlier command examples below are historical
+profiles and cannot admit newer source merely because their files still exist.
+
 Evaluate frozen A0, A1 (L12), A3 (L12-L13), A16 (L16) and AM (independent frozen
 SwiGLU with A3-matched dominant matrix work). All generation, data guards,
 scoring, statistics, manifests and integrity checks use the shared pipeline.

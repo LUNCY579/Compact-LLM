@@ -9,6 +9,7 @@ from collections import Counter, defaultdict
 import math
 
 from .operators import REGISTERED_ARMS
+from .protocol import LEARNED_PROTOCOL_VERSION
 from shared.statistics import paired_analysis, comparison_annotations, _clustered
 from shared.scoring import score_response
 from shared.reporting import quality_cost_frontier
@@ -151,9 +152,25 @@ def analyze_complete_bank(cases: list[dict], by_arm: dict[str, list[dict]], conf
         arm: {"accuracy": sum(r["score"] for r in values)/len(values),
               "mean_wall_seconds": report["cost"][arm]["mean_wall_seconds"],
               "flops": report["cost"][arm]["total_generation_dense_matmul_flops_estimate"],
-              "added_parameters": config["control"]["additional_matrix_parameters"] if arm == "AM" else 0,
+              "added_parameters": (config["control"]["additional_parameters"]
+                                   if config.get("protocol_version") == LEARNED_PROTOCOL_VERSION
+                                   else config["control"]["additional_matrix_parameters"]) if arm == "AM" else 0,
               "peak_memory_bytes": report["cost"][arm]["peak_case_rss_bytes"]}
         for arm, values in rows.items()})
+    if config.get("protocol_version") == LEARNED_PROTOCOL_VERSION:
+        report["control_compute_matching"] = {
+            "kind": "pretrained_parallel_ffn", "source_layers": [12, 13, 14],
+            "added_resident_copied_parameters": config["control"]["additional_parameters"],
+            "added_active_parameters": config["control"]["additional_active_parameters"],
+            "matrix_parameters": config["control"]["additional_matrix_parameters"],
+            "normalization_parameters": config["control"]["additional_normalization_parameters"],
+            "newly_learned_parameters": 0,
+            "logical_unique_coefficients_beyond_backbone": 0,
+            "control_added_matmul_flops_per_token": config["control"]["additional_matmul_flops_per_token"],
+            "a3_added_matmul_flops_per_token": 62914560,
+            "dominant_matmul_ratio_to_a3": .9,
+            "interpretation_limit": "Comparison with this fixed pretrained token-wise alternative uses 10% less added dominant linear work than A3; attention products, normalization and instrumentation are excluded. Measured latency and memory must be considered separately.",
+        }
     if role != "confirmatory_dev":
         valid = all(invalid[arm] <= invalid["A0"] for arm in REGISTERED_ARMS)
         report["decision"] = ("MECHANICS_PASS_NO_EFFICACY_CLAIM" if valid else "MECHANICS_REJECT") if role == "architecture_dev" else "DIAGNOSTIC_ONLY_NO_EFFICACY_CLAIM"
@@ -192,6 +209,8 @@ def analyze_complete_bank(cases: list[dict], by_arm: dict[str, list[dict]], conf
     if first_pass and matched_pass and meaningful and preservation_pass and validity_pass:
         report.update(decision="GO_NATIVE_RECURRENCE", efficacy_claim_licensed=True,
                       interpretation="A3 beats intact and the registered generic matched-compute control; inference remains limited to this frozen development bank.")
+        if config.get("protocol_version") == LEARNED_PROTOCOL_VERSION:
+            report["interpretation"] = "A3 beats intact and this registered pretrained parallel FFN control at 90% of A3's added dominant linear work. This supports the particular full block operator over this comparator on this frozen development bank, without establishing superiority over all equal-compute algorithms or isolating attention from block order."
     elif first_pass and meaningful and preservation_pass and validity_pass and not matched_pass:
         report.update(decision="EXTRA_COMPUTE_SIGNAL_RECURRENCE_UNRESOLVED",
                       interpretation="A3 beats A0, but superiority over matched compute was not established.")

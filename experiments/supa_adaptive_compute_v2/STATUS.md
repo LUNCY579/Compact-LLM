@@ -6,7 +6,7 @@ qualification; its unchanged CPU reference completed calibration capture.
 The scientific questions remain open. No confirmatory generation has run.
 The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 
-Latest execution checkpoint (2026-09-06 00:00 UTC / September 5 local): Track B
+Latest execution checkpoint (2026-09-06 UTC / September 5 local): Track B
 has two complete depth pairs, S8/D12 and S8/D16, each with all six objectives.
 Native v2.3 qualification **PASSED** in a fresh process at
 `native_armr/evidence/00_runtime_qualification/20260905T235200_982255Z_36998242/`.
@@ -32,13 +32,37 @@ from all 80 tensors and passed 120 numerical gates; 40/40 CPU logit files were
 byte-identical to the failed TDR attempt, which remains FAILED. That audit did
 not independently rerun hidden states or NLL:
 `00_audit/native_v2_3_gpu_independent_review/`.
-The fresh GPU architecture matrix is now executing in registered order
-A0, AM, A1, A3, A16, with original evidence excluded by registration identity.
-Queue: `native_armr/evidence/00_execution_queue/20260906T000050_6403813Z_434bb308/`.
+The v2.3 architecture campaign **STOPPED** when calibrated random AM again
+failed its malformed-generation guard at shard 20. A0 completed 128 cases;
+AM completed 84 cases in valid shards plus one saved case in the failed shard.
+Exact failure: `native_armr/evidence/01_architecture_dev/20260906T005825_662929Z_4a8ebe46/`.
+Its failure-time integrity check records unchanged canonical weights/state and
+zero backbone gradients. The rejected prefix is not retained; guard subtype
+is not inferred. A1/A3/A16 were not run under v2.3 after that rejection.
+No confirmation exists, and no efficacy inference follows from this campaign.
+
+A score-blind independent baseline review passed 5,373 checks: all 128 v2.3 A0
+token sequences, NLL values and logit-file bytes equal their original v2.2 A0
+counterparts. Evidence: `00_audit/native_v2_3_baseline_review/`.
+
+The single proposed v2.4 replacement is now implemented and tested: parallel
+intact pretrained FFNs from canonical layers 12/13/14, each retaining its own
+learned RMSNorm and consuming the same post-L13 state. It copies 28,314,624
+parameters but introduces no newly learned coefficients. Added dominant matrix
+work is 56,623,104 FLOPs/token, explicitly 90% of A3's 62,914,560. Its own
+fit-only scale calibration must precede a derived inference config, fresh
+CPU/GPU qualification and a complete new run on the existing architecture bank.
+The 331-test/148-subtest suite passed in 106.19 seconds; independent static
+review found no execution/integration defect. No actual v2.4 calibration has
+run and no final v2.4 inference config exists yet. Calibration registration:
+`76914b192a4d880857170caa14cde8a6f1439737c37ab2a2c49fceff09390bab`.
+Both previous random-control failures remain intact; their scales and guards
+are not changed. This is one prospectively specified alternative, not a search
+over controls until one passes. The full research goal remains open.
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
-| Native ARMR | Does bounded recurrence generalize? | v2.3 CPU/GPU qualification PASS; fresh architecture matrix running; original AM failure preserved | Label-free v2.3 AM scale frozen; all five arms still required | 0 confirmation examples | CLOSED pending a valid complete architecture matrix |
+| Native ARMR | Does bounded recurrence generalize? | v2.3 runtime PASS but calibrated random AM mechanically rejected; v2.4 implementation tests PASS | One pretrained FFN control specified; v2.4 calibration/registration/execution pending | 0 confirmation examples | CLOSED pending v2.4 qualification and a complete valid architecture matrix |
 | Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | S8/D12 and S8/D16 completed all six objectives; 14 pairs pending, none selected | Not licensed | Complete 96-cell alignment mechanism screen first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
@@ -71,6 +95,11 @@ delta cosine was 0.73081 versus B0=0.27899; token-relative MSE was 0.46297 versu
 48.51333. BS/BR cosine was 0.11282/0.04988. Both pairs preserve donor state and
 exact native replay. These are two partial-matrix results, not a selection or
 mechanism GO. The next fixed pair is S8/D20.
+S8/D20 attempt 000 failed pre-load RAM admission at 1.66 GiB versus the unchanged
+3.00 GiB floor; no bridge fitting occurred. Its next attempt must use a new
+number. `scripts/run_alignment_when_available.ps1` schedules the original CPU
+matrix in fixed order, resumes explicit closed interruptions, and retries only
+pre-load RAM admission failures. Other failures stop for review.
 
 Generic future-stage export/provenance and frozen graft interfaces are prepared
 under `cross_scale/generation_stage/v1/`. The suite passed 56 tests and 6 subtests

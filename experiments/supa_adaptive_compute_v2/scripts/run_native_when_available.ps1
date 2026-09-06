@@ -4,7 +4,7 @@
 param(
     [ValidateSet('architecture_dev','confirmatory_dev','confirmatory_diagnostics')]
     [string]$Role = 'architecture_dev',
-    [ValidateSet('protocol_gpu_v2_2.json','protocol_gpu_v2_3.json')]
+    [ValidateSet('protocol_gpu_v2_2.json','protocol_gpu_v2_3.json','protocol_gpu_v2_4.json')]
     [string]$ConfigName = 'protocol_gpu_v2_2.json',
     [ValidateSet('registered','control-first')]
     [string]$ArmOrder = 'registered',
@@ -24,8 +24,8 @@ $scientificEvidence = Join-Path $programmeRoot "native_armr/evidence/$roleStage"
 $config = Get-Content -LiteralPath $configPath -Raw | ConvertFrom-Json
 $campaignArms = @('A0','A1','A3','A16','AM')
 if ($ArmOrder -eq 'control-first') {
-    if ($Role -ne 'architecture_dev' -or $ConfigName -ne 'protocol_gpu_v2_3.json') {
-        throw 'Control-first scheduling is registered only for the v2.3 architecture stage'
+    if ($Role -ne 'architecture_dev' -or $ConfigName -notin @('protocol_gpu_v2_3.json','protocol_gpu_v2_4.json')) {
+        throw 'Control-first scheduling is registered only for the v2.3/v2.4 architecture stage'
     }
     $campaignArms = @('A0','AM','A1','A3','A16')
 }

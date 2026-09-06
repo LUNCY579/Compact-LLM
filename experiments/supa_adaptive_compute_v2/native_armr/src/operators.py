@@ -150,15 +150,32 @@ def operator_factory(model: Any, arm: str, config: dict) -> Reapplication:
         wrapper = Reapplication(model, layer=16, applications=2, emergency_bounds=bounds)
     else:
         control = config["control"]
-        from .protocol import CALIBRATED_PROTOCOL_VERSION, verify_control_calibration
+        from .protocol import (CALIBRATED_PROTOCOL_VERSION, LEARNED_PROTOCOL_VERSION,
+                               verify_control_calibration, verify_learned_control_calibration)
         calibrated = config.get("protocol_version") == CALIBRATED_PROTOCOL_VERSION
-        calibration = verify_control_calibration(config) if calibrated else None
-        alpha = calibration["alpha"] if calibrated else 1.0
-        if (control["insertion_layer"], control["seed"], control["std"], control["alpha"]) != (13, 7301, .02, alpha):
-            raise ValueError("unregistered compute-control settings")
-        wrapper = NativeComputeControl(model, layer=13, seed=7301, std=.02, alpha=alpha,
-                                       intermediate_size=control["intermediate_size"],
-                                       emergency_bounds=bounds)
+        learned = config.get("protocol_version") == LEARNED_PROTOCOL_VERSION
+        if learned:
+            from .learned_control import NativeFFNControl
+            calibration = verify_learned_control_calibration(config)
+            wrapper = NativeFFNControl(model, alpha=calibration["alpha"], emergency_bounds=bounds)
+            transform = wrapper.transform
+            if (transform.branch_provenance != calibration["branch_provenance"] or
+                    transform.source_hashes != calibration["source_hashes"] or
+                    transform.copy_hashes != calibration["copy_hashes"] or
+                    transform.parameter_inventory != calibration["parameter_inventory"]):
+                raise ValueError("pretrained control branch source/copy provenance differs from calibration")
+            if (wrapper.added_parameter_count != control["additional_parameters"] or
+                    wrapper.added_active_parameters != control["additional_active_parameters"] or
+                    wrapper.extra_matmul_flops_per_token != control["additional_matmul_flops_per_token"]):
+                raise ValueError("pretrained control actual copied parameters or work differ from registration")
+        else:
+            calibration = verify_control_calibration(config) if calibrated else None
+            alpha = calibration["alpha"] if calibrated else 1.0
+            if (control["insertion_layer"], control["seed"], control["std"], control["alpha"]) != (13, 7301, .02, alpha):
+                raise ValueError("unregistered compute-control settings")
+            wrapper = NativeComputeControl(model, layer=13, seed=7301, std=.02, alpha=alpha,
+                                           intermediate_size=control["intermediate_size"],
+                                           emergency_bounds=bounds)
         if calibration is not None:
             from shared.integrity import state_hash
             if state_hash(wrapper.transform) != calibration["control_state_sha256"]:

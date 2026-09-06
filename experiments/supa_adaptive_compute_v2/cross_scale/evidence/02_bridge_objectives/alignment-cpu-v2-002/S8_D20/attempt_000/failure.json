@@ -1,0 +1,5 @@
+{
+  "error": "insufficient available physical RAM: 1.66 GiB; registered start requires 3.00 GiB",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\cross_scale\\scripts\\run_alignment.py\", line 296, in execute\n    require_available_memory(config)\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\shared\\model_loading.py\", line 18, in require_available_memory\n    raise MemoryError(f'insufficient available physical RAM: {available/2**30:.2f} GiB; registered start requires {minimum/2**30:.2f} GiB')\nMemoryError: insufficient available physical RAM: 1.66 GiB; registered start requires 3.00 GiB\n",
+  "type": "MemoryError"
+}

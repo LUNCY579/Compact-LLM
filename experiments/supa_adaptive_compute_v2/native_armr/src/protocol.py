@@ -16,6 +16,14 @@ CALIBRATED_GPU_CONFIG = DEFAULT_CONFIG.with_name("protocol_gpu_v2_3.json")
 CALIBRATED_PROTOCOL_VERSION = "native_armr_v2.3_gpu_fp32_calibrated_control"
 CALIBRATED_CONTROL_SELECTION = "calibration_only_scenario_balanced_ordinary_residual_energy"
 CALIBRATED_RUNTIME_QUALIFICATION = "native_gpu_fp32_v2_3"
+LEARNED_GPU_CONFIG = DEFAULT_CONFIG.with_name("protocol_gpu_v2_4.json")
+LEARNED_PROTOCOL_VERSION = "native_armr_v2.4_gpu_fp32_pretrained_parallel_ffn_control"
+LEARNED_RUNTIME_QUALIFICATION = "native_gpu_fp32_v2_4"
+LEARNED_CONTROL_METADATA = {
+    "kind": "pretrained_parallel_ffn", "insertion_layer": 13,
+    "source_layers": [12, 13, 14], "summation_order": "(F12+F13)+F14",
+    "local_frozen_copies": True,
+}
 GPU_RUNTIME_AMENDMENT = {
     "protocol_version": "native_armr_v2.2_gpu_fp32",
     "device": "cuda:0",
@@ -42,7 +50,7 @@ def require_config_path(path: Path) -> Path:
     """Execution and audit use a frozen named protocol, never an ad-hoc copy."""
     from shared.guards import guard_non_sealed_path
     path = guard_non_sealed_path(path)
-    if path not in (DEFAULT_CONFIG.resolve(), GPU_CONFIG.resolve(), CALIBRATED_GPU_CONFIG.resolve()):
+    if path not in (DEFAULT_CONFIG.resolve(), GPU_CONFIG.resolve(), CALIBRATED_GPU_CONFIG.resolve(), LEARNED_GPU_CONFIG.resolve()):
         raise ValueError("native execution requires the registered CPU or GPU protocol path")
     return path
 
@@ -62,6 +70,71 @@ def calibrated_gpu_config(binding: dict, alpha: float) -> dict:
             "control": {**reference["control"], "alpha": alpha,
                         "selection": CALIBRATED_CONTROL_SELECTION},
             "control_calibration": dict(binding)})
+
+
+def learned_gpu_config(binding: dict, alpha: float) -> dict:
+    """Define v2.4 without granting admission to an arbitrary supplied alpha."""
+    if isinstance(alpha, bool) or not isinstance(alpha, (float, int)) or not math.isfinite(alpha) or alpha <= 0:
+        raise ValueError("pretrained control alpha must be finite and positive")
+    reference = json.loads(DEFAULT_CONFIG.read_text(encoding="utf-8"))
+    config = deepcopy({**reference, **GPU_RUNTIME_AMENDMENT})
+    config.update(protocol_version=LEARNED_PROTOCOL_VERSION,
+                  runtime_qualification=LEARNED_RUNTIME_QUALIFICATION,
+                  control_calibration=dict(binding))
+    config["arms"]["AM"] = {"operator": "pretrained_parallel_ffn", "insertion_layer": 13}
+    config["control"] = {
+        **deepcopy(LEARNED_CONTROL_METADATA), "alpha": alpha,
+        "hidden_size": 1024, "intermediate_size": 3072,
+        "normalization": "canonical_post_attention_layernorm_per_branch",
+        "activation": "canonical_silu", "branch_coefficients": [1, 1, 1],
+        "additional_matrix_parameters": 28311552,
+        "additional_normalization_parameters": 3072,
+        "additional_parameters": 28314624,
+        "additional_active_parameters": 28314624,
+        "newly_learned_parameters": 0,
+        "additional_matmul_flops_per_token": 56623104,
+        "a3_reference_matmul_flops_per_token": 62914560,
+        "dominant_matmul_ratio_to_a3": .9,
+        "training": False,
+        "selection": CALIBRATED_CONTROL_SELECTION,
+    }
+    return config
+
+
+def verify_learned_control_calibration(config: dict) -> dict:
+    """Verify the committed v2.4 scale and canonical copied-weight provenance.
+
+    The qualifier's CPU runtime copy retains the same version, control and
+    artifact. This function validates the scientific control independently of
+    device; load_protocol separately requires the exact final GPU settings.
+    """
+    from shared.guards import require_within
+    from shared.legacy import REPO, ROOT
+    from .learned_control_calibration import verify_calibration_artifact
+    if config.get("protocol_version") != LEARNED_PROTOCOL_VERSION:
+        raise ValueError("pretrained calibration binding requires the registered v2.4 protocol")
+    binding = config.get("control_calibration")
+    if not isinstance(binding, dict) or set(binding) != {"artifact_path", "artifact_sha256"}:
+        raise ValueError("pretrained control requires its exact artifact path/hash binding")
+    relative, digest = binding["artifact_path"], binding["artifact_sha256"]
+    if not isinstance(relative, str) or not isinstance(digest, str) or not re.fullmatch(r"[0-9a-f]{64}", digest):
+        raise ValueError("invalid pretrained control artifact path/hash")
+    path = require_within(REPO / relative, ROOT / "native_armr/evidence/00_learned_control_calibration")
+    if path.name != "report.json" or path.relative_to(REPO).as_posix() != relative:
+        raise ValueError("pretrained calibration artifact must use its canonical repository-relative report path")
+    report = verify_calibration_artifact(path, digest, require_committed=True)
+    alpha = config.get("control", {}).get("alpha")
+    if (isinstance(alpha, bool) or not isinstance(alpha, (int, float)) or
+            not math.isfinite(alpha) or alpha <= 0 or alpha != report["alpha"]):
+        raise ValueError("control alpha differs from the exact pretrained calibration artifact")
+    expected = learned_gpu_config(binding, report["alpha"])
+    if config.get("control") != expected["control"] or config.get("arms", {}).get("AM") != expected["arms"]["AM"]:
+        raise ValueError("pretrained control differs from the registered operator")
+    if report.get("control") != LEARNED_CONTROL_METADATA:
+        raise ValueError("pretrained calibration artifact control differs from the registered operator")
+    if report["checkpoint_files_before"].get("model.safetensors") != config["checkpoint_sha256"]:
+        raise ValueError("pretrained calibration artifact used a different canonical checkpoint")
+    return report
 
 
 def verify_control_calibration(config: dict) -> dict:
@@ -99,7 +172,13 @@ def load_protocol(path: Path) -> dict:
     config = json.loads(guard_non_sealed_path(path).read_text(encoding="utf-8"))
     require_runtime(config)
     calibrated = config.get("protocol_version") == CALIBRATED_PROTOCOL_VERSION
-    if calibrated:
+    learned = config.get("protocol_version") == LEARNED_PROTOCOL_VERSION
+    if learned:
+        expected = learned_gpu_config(config.get("control_calibration", {}), config.get("control", {}).get("alpha"))
+        if config != expected:
+            raise ValueError("v2.4 may change only the registered pretrained control and calibration binding; native science must match the reference")
+        verify_learned_control_calibration(config)
+    elif calibrated:
         expected = calibrated_gpu_config(config.get("control_calibration", {}), config.get("control", {}).get("alpha"))
         if config != expected:
             raise ValueError("v2.3 may change only the registered calibration binding and control scale; native science must match the reference")
@@ -117,10 +196,12 @@ def load_protocol(path: Path) -> dict:
         "A16": {"operator": "native_single", "layer": 16, "applications": 2},
         "AM": {"operator": "independent_frozen_swiglu", "insertion_layer": 13},
     }
+    if learned:
+        expected["AM"] = {"operator": "pretrained_parallel_ffn", "insertion_layer": 13}
     if config["arms"] != expected:
         raise ValueError("candidate operators differ from preregistration")
     control = config["control"]
-    if any(control.get(key) != value for key, value in {
+    if not learned and any(control.get(key) != value for key, value in {
         "insertion_layer": 13, "seed": 7301, "std": .02,
         "alpha": control["alpha"] if calibrated else 1.,
         "hidden_size": 1024, "intermediate_size": 10240,

@@ -7,13 +7,30 @@ import time
 import traceback
 
 from .analysis import analyze_complete_bank, audit_rows, linked_robustness
-from .protocol import load_protocol, require_config_path
+from .protocol import (LEARNED_PROTOCOL_VERSION, load_protocol, require_config_path,
+                       verify_learned_control_calibration)
 from shared.datasets import load_frozen_dataset
 from shared.evaluation import _read_complete, aggregate_runs
 from shared.hashing import canonical_sha256, sha256_file, write_json
 from shared.manifests import new_run, utc_now, verify_registration
 from shared.legacy import REPO
 from shared.reporting import quality_cost_frontier
+
+
+def expected_operator_inventory(config: dict, arm: str) -> dict:
+    """Native layer work is independent of the generic control's geometry."""
+    native_work = {"A0": 0, "A1": 31457280, "A3": 62914560, "A16": 31457280}
+    if arm in native_work:
+        return {"added_parameter_count": 0, "added_active_parameters": 0,
+                "extra_matmul_flops_per_token": native_work[arm]}
+    if arm != "AM":
+        raise ValueError("unregistered native arm inventory")
+    control = config["control"]
+    learned = config.get("protocol_version") == LEARNED_PROTOCOL_VERSION
+    count = control["additional_parameters"] if learned else control["additional_matrix_parameters"]
+    active = control["additional_active_parameters"] if learned else count
+    return {"added_parameter_count": count, "added_active_parameters": active,
+            "extra_matmul_flops_per_token": control["additional_matmul_flops_per_token"]}
 
 
 def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
@@ -98,24 +115,23 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
         for manifest in manifests:
             arm = manifest["arm"]
             if arm != "AM":
-                work = 0 if arm == "A0" else config["control"]["additional_matmul_flops_per_token"] // (1 if arm == "A3" else 2)
-                if manifest["operator"] != {"added_parameter_count": 0,
-                                            "added_active_parameters": 0,
-                                            "extra_matmul_flops_per_token": work}:
+                if manifest["operator"] != expected_operator_inventory(config, arm):
                     raise ValueError("native recurrence work/parameter inventory differs from registration")
         # Added control weights must be identical across shards and remain frozen.
         controls = [m for m in manifests if m["arm"] == "AM"]
         states = {m.get("operator_state_sha256") for m in controls}
         if len(states) != 1 or None in states:
             raise ValueError("compute-control state identity missing or changed between shards")
+        learned = config.get("protocol_version") == LEARNED_PROTOCOL_VERSION
+        if learned:
+            calibration = verify_learned_control_calibration(config)
+            if states != {calibration["control_state_sha256"]}:
+                raise ValueError("pretrained control run state differs from the committed calibration")
         for manifest in controls:
             if any(manifest.get(key) != 0 for key in ("operator_trainable_parameters", "operator_gradients",
                                                       "operator_trainable_parameters_after", "operator_gradients_after")):
                 raise ValueError("compute-control frozen inventory missing or failed")
-            if manifest["operator"] != {
-                "added_parameter_count": config["control"]["additional_matrix_parameters"],
-                "added_active_parameters": config["control"]["additional_matrix_parameters"],
-                "extra_matmul_flops_per_token": config["control"]["additional_matmul_flops_per_token"]}:
+            if manifest["operator"] != expected_operator_inventory(config, "AM"):
                 raise ValueError("compute-control budget differs from preregistration")
         report.update(registration_sha256=registration["registration_sha256"],
                       input_manifest_sha256=input_hashes,
@@ -123,7 +139,8 @@ def audit_runs(*, config_path: Path, dataset_manifest: Path, role: str,
                                           for arm in by_arm},
                       limitations=["Audit independently recomputes scoring and decisions from raw responses, but does not rerun model inference.",
                                    "Bootstrap inference concerns these generated scenario families; it does not establish external benchmark generalization.",
-                                   "A successful AM comparison concerns this fixed untrained control, not every possible compute allocation."])
+                                   ("A successful AM comparison concerns this fixed pretrained parallel FFN control at 90% of A3's dominant linear work; attention products are excluded and universal equal-compute superiority is not established."
+                                    if learned else "A successful AM comparison concerns this fixed untrained control, not every possible compute allocation.")])
         frontier = report["quality_cost_frontier"]["arms"]
         for arm in by_arm:
             peak = max(m["peak_memory_bytes"] for m in manifests if m["arm"] == arm and m["role"] == role)
