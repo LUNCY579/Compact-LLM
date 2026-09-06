@@ -26,6 +26,13 @@ the new inference configuration. Fresh v2.4 qualification and a complete new
 run on the existing architecture bank still precede untouched confirmation.
 The two random-control failures stay intact; a failure of this specified
 alternative does not license an automatic search for controls until one passes.
+The final v2.4 registration is
+`081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e`.
+Its source/config/registration were committed before execution eligibility.
+The 600-second resource queue expired at 02:05 UTC without launching a stage;
+its last observation was 0.53 GiB host RAM and 2,435 MiB free VRAM. No programme
+model worker remains running. Qualification and donor fitting await capacity.
+Queue receipt: `00_audit/execution_queues/20260906T015442_9607258Z_28dcf54d/queue_manifest.json`.
 
 Track B remains at two complete pairs. S8/D20 attempt 000 failed pre-load RAM
 admission (1.66 GiB versus 3.00 GiB), with no fitting. Its next attempt uses a

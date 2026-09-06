@@ -67,7 +67,11 @@ scalar from all 128 recorded cases. It does not claim a raw-tensor/model rerun:
 `c72e6df1f06251824869d16c0e324e283eb693e0` before the final v2.4 inference config
 was derived. That config and registration are committed at
 `f8c30de3dffc117243cb4bf4771f7907a70d8c21`; runtime qualification awaits host RAM.
-The resource queue is `00_audit/execution_queues/20260906T015442_9607258Z_28dcf54d/`.
+The resource queue `00_audit/execution_queues/20260906T015442_9607258Z_28dcf54d/`
+ended at 02:05 UTC with QUEUE_BUDGET_EXHAUSTED after 617.99 seconds and no stage
+launch. Its last observation was 0.53 GiB available host RAM and 2,435 MiB free
+VRAM. No programme model worker or lease remains active. The unchanged v2.4
+qualification and next CPU donor-pair attempt await sufficient host capacity.
 Both previous random-control failures remain intact; their scales and guards
 are not changed. This is one prospectively specified alternative, not a search
 over controls until one passes. The full research goal remains open.
