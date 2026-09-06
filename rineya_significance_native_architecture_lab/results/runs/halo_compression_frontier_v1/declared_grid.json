@@ -1,0 +1,152 @@
+{
+  "cell_count": 13,
+  "cells": [
+    {
+      "budget": 256,
+      "feasible": true,
+      "heavy_slots": 144,
+      "id": "B256_FIX48_P13",
+      "note": "confirmed reference configuration",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 64,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 96,
+      "id": "B192_FIX48_P13",
+      "note": "sinks 25% of budget, 96 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 48,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 96,
+      "id": "B192_FIX48_P9",
+      "note": "sinks 25% of budget, 96 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 9,
+      "recent": 48,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 106,
+      "id": "B192_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 48,
+      "sinks": 38
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 48,
+      "id": "B128_FIX48_P13",
+      "note": "sinks 38% of budget, 48 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 32,
+      "sinks": 48
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 48,
+      "id": "B128_FIX48_P7",
+      "note": "sinks 38% of budget, 48 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 7,
+      "recent": 32,
+      "sinks": 48
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 71,
+      "id": "B128_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 32,
+      "sinks": 25
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 24,
+      "id": "B96_FIX48_P13",
+      "note": "sinks 50% of budget, 24 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 24,
+      "sinks": 48
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 24,
+      "id": "B96_FIX48_P5",
+      "note": "sinks 50% of budget, 24 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 5,
+      "recent": 24,
+      "sinks": 48
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 53,
+      "id": "B96_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 24,
+      "sinks": 19
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 8,
+      "id": "B64_FIX48_P7",
+      "note": "sinks 75% of budget, 8 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 7,
+      "recent": 8,
+      "sinks": 48
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 8,
+      "id": "B64_FIX48_P5",
+      "note": "sinks 75% of budget, 8 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 5,
+      "recent": 8,
+      "sinks": 48
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 36,
+      "id": "B64_SCALED_P7",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 7,
+      "recent": 16,
+      "sinks": 12
+    }
+  ],
+  "coverage_rule": "every declared cell must complete; infeasible cells abort the run before model load",
+  "declared_at": "2026-08-26T04:52:40.407831Z",
+  "screening_split": "showcase (64 cases, 16 packs); the knee is confirmed separately on stability-192",
+  "sink_floor_rationale": "abstention instruction sits at token 38; sinks below ~48 lose it (N-068)"
+}

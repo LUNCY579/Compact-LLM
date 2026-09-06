@@ -1,0 +1,165 @@
+{
+  "benchmark": {
+    "answer_key_sha256_after_inference": "dc1541b6053b7a945774e3d87ca02cd3f06adb0a27a2f707f61d655001b6d53b",
+    "case_count": 64,
+    "prompt_sha256": "7fbf6a061613fa8e5f3a6ff3709b00247daac815b84b9559a90723c165182c6d",
+    "split": "showcase"
+  },
+  "cells": [
+    {
+      "budget": 256,
+      "feasible": true,
+      "heavy_slots": 144,
+      "id": "B256_FIX48_P13",
+      "note": "confirmed reference configuration",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 64,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 96,
+      "id": "B192_FIX48_P13",
+      "note": "sinks 25% of budget, 96 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 48,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 96,
+      "id": "B192_FIX48_P9",
+      "note": "sinks 25% of budget, 96 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 9,
+      "recent": 48,
+      "sinks": 48
+    },
+    {
+      "budget": 192,
+      "feasible": true,
+      "heavy_slots": 106,
+      "id": "B192_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 48,
+      "sinks": 38
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 48,
+      "id": "B128_FIX48_P13",
+      "note": "sinks 38% of budget, 48 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 32,
+      "sinks": 48
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 48,
+      "id": "B128_FIX48_P7",
+      "note": "sinks 38% of budget, 48 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 7,
+      "recent": 32,
+      "sinks": 48
+    },
+    {
+      "budget": 128,
+      "feasible": true,
+      "heavy_slots": 71,
+      "id": "B128_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 32,
+      "sinks": 25
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 24,
+      "id": "B96_FIX48_P13",
+      "note": "sinks 50% of budget, 24 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 13,
+      "recent": 24,
+      "sinks": 48
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 24,
+      "id": "B96_FIX48_P5",
+      "note": "sinks 50% of budget, 24 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 5,
+      "recent": 24,
+      "sinks": 48
+    },
+    {
+      "budget": 96,
+      "feasible": true,
+      "heavy_slots": 53,
+      "id": "B96_SCALED_P13",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 13,
+      "recent": 24,
+      "sinks": 19
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 8,
+      "id": "B64_FIX48_P7",
+      "note": "sinks 75% of budget, 8 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 7,
+      "recent": 8,
+      "sinks": 48
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 8,
+      "id": "B64_FIX48_P5",
+      "note": "sinks 75% of budget, 8 heavy slots left",
+      "policy_family": "FIX48",
+      "pool": 5,
+      "recent": 8,
+      "sinks": 48
+    },
+    {
+      "budget": 64,
+      "feasible": true,
+      "heavy_slots": 36,
+      "id": "B64_SCALED_P7",
+      "note": "proportional sinks; full prompt coverage abandoned",
+      "policy_family": "SCALED",
+      "pool": 7,
+      "recent": 16,
+      "sinks": 12
+    }
+  ],
+  "classification": "EXPLORATORY_FRONTIER_SCREEN",
+  "completed_at": "2026-08-26T05:44:33.489914Z",
+  "created_at": "2026-08-26T04:52:40.407831Z",
+  "evidence_class": "NEW_CHATBUBBLE_EVIDENCE",
+  "notes": [
+    "Maps accuracy against KV budget from 256 down to 64.",
+    "FIX48 vs SCALED tests whether full prompt coverage stays worth its share.",
+    "All declared cells validated feasible before model load; coverage asserted after."
+  ],
+  "run_id": "halo_compression_frontier_v1",
+  "schema_version": "1.0",
+  "seed": 17
+}
