@@ -1,5 +1,36 @@
 # Two-track Supa research: current execution report
 
+Latest development: calibrated random AM v2.3 failed the same architecture
+malformed-generation guard at shard 20. A0 completed 128 cases; AM has 84 cases
+in complete shards plus one preserved case in the failed attempt. Its failure
+integrity receipt confirms unchanged canonical state/checkpoints and zero
+backbone gradients. No v2.3 A1/A3/A16 or confirmation run followed the rejection.
+The full A0 baseline passed a separate 5,373-check audit, with every token
+sequence, NLL value and logit-file byte identical to original v2.2 A0.
+
+One separately preregistered v2.4 control is being prepared: three intact
+pretrained FFNs (L12/L13/L14), applied in parallel to the same post-L13 state
+through their own learned RMSNorms, with one residual injection. It uses
+56,623,104 added dominant matrix FLOPs/token, explicitly 90% of A3, and copies
+28,314,624 existing parameters without learning new coefficients. It changes
+neither original native arms nor data/scorer/statistical/validity gates.
+The 331-test/148-subtest suite and independent static review passed before its
+calibration registration was committed at `cb5dc2e66fd3971019a633550bbf8ecabd703939`.
+Calibration then completed in 54.94 seconds at 1,290,117,120 bytes peak RSS.
+Its fixed fit-only formula produced alpha **0.764362266301519**. Fit A3/scaled
+control energy is 0.09559580669801247; held-out energies are 0.09606493426847566
+and 0.09659610573025923. No labels, clipping or scale search were used.
+Artifact: `native_armr/evidence/00_learned_control_calibration/20260906T014443_419834Z_b790e5e7/`.
+It was committed at `c72e6df1f06251824869d16c0e324e283eb693e0` before deriving
+the new inference configuration. Fresh v2.4 qualification and a complete new
+run on the existing architecture bank still precede untouched confirmation.
+The two random-control failures stay intact; a failure of this specified
+alternative does not license an automatic search for controls until one passes.
+
+Track B remains at two complete pairs. S8/D20 attempt 000 failed pre-load RAM
+admission (1.66 GiB versus 3.00 GiB), with no fitting. Its next attempt uses a
+new directory. The original 139 Track B source hashes remain unchanged.
+
 Execution update at 23:52 UTC: two of 16 Track B pairs completed all six objectives,
 with unchanged donor state and exact native replay. S8/D12 took 128.65 seconds;
 B3/B0 held-out ordinary delta cosine is 0.79367/0.32144 and token-relative MSE
@@ -41,7 +72,7 @@ earlier delivery snapshot without modifying [FINAL_REPORT.md](FINAL_REPORT.md).
 
 | Track | Question | Completed evidence | Current decision |
 |---|---|---|---|
-| A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Calibrated v2.3 GPU qualification passed; fresh architecture matrix running; original AM failure preserved | No efficacy GO/NO-GO; complete fresh architecture matrix required |
+| A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Random AM v2.3 mechanically rejected; separately registered pretrained FFN calibration completed | v2.4 qualification and complete architecture matrix required; no efficacy claim |
 | B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; CPU capture and two six-objective pairs completed | 14 pairs pending; no selected bridge or generation license |
 | Downstream mechanisms | Routing, MLA/MHA, MTP, 8B, backbone recovery and distillation | Not executed or licensed | All gates CLOSED |
 
@@ -281,8 +312,8 @@ scientific failure of either capability hypothesis.
 
 Exactly one next causal experiment per track:
 
-- **Track A:** continue the frozen GPU v2.3 five-arm campaign after its passed
-  full CPU/GPU qualification, completing all five arms on the 128-scenario
+- **Track A:** execute the separately registered pretrained-FFN-control v2.4
+  campaign, first passing its full CPU/GPU qualification, then all five arms on the 128-scenario
   architecture set with unchanged guards. Only if both gates pass, run its
   untouched 1,024-scenario paired confirmation and separate linked diagnostics,
   followed by complete independent audit and the registered statistical hierarchy.
