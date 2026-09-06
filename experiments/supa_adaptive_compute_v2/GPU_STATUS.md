@@ -214,3 +214,29 @@ active. Pending stages resume with the same frozen scientific inputs:
 
 The full goal remains open. Capacity limits do not establish a negative efficacy
 or donor-mechanism result.
+
+## Native v2.3 GPU qualification passed
+
+Successful receipt:
+`native_armr/evidence/00_runtime_qualification/20260905T235200_982255Z_36998242/`.
+All 40 comparisons passed, with exact greedy identities, GPU repeats and
+disabled/restored behavior. The independent admission validator recomputed the
+gates and checked all 80 logit hashes. Maximum absolute logit error was
+4.1961669921875e-5, hidden relative L2 7.856709228698431e-5, and absolute NLL error
+4.553794860839844e-5. Peak CUDA reservation was 2,688,548,864 bytes; wall time
+313.05 seconds. Qualification/report commitment:
+`39122c92c9fa930ebab99a90135ae92aa06c4f7b`.
+
+Failed predecessors stay intact. `20260905T233146_952002Z_9d317bbe` failed RAM
+admission before loading (2.94 versus 3.00 GiB). `20260905T233921_233855Z_41832612`
+completed 40 CPU fixtures then lost its CUDA context before GPU loading. Windows
+logged an NVIDIA TDR reset during its CPU phase; a fresh-process CUDA probe
+subsequently passed. Those observations support retrying the unchanged profile,
+but do not establish which process initiated the reset. No threshold was relaxed.
+
+The fresh architecture campaign is running in the registered control-first
+order. Queue: `native_armr/evidence/00_execution_queue/20260906T000050_6403813Z_434bb308/`.
+The complete five-arm architecture gate still precedes confirmation.
+Track B has two completed CPU pairs (S8/D12 and S8/D16) and 14 pending, with no
+selected bridge. Its prepared future export/graft interfaces passed 56 tests and
+6 subtests, but no generation protocol or real export is licensed.

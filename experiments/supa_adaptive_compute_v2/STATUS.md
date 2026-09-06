@@ -6,21 +6,40 @@ qualification; its unchanged CPU reference completed calibration capture.
 The scientific questions remain open. No confirmatory generation has run.
 The consolidated evidence report is [CURRENT_REPORT.md](CURRENT_REPORT.md).
 
-Latest resource checkpoint (23:12 UTC): no model worker or resource controller
-is running. The idle second queue was closed after about 19 minutes without a
-stage launch. A read-only probe after importing the actual CPU caller found
-2.39 GiB available versus its unchanged 3.00 GiB admission requirement. Free
-VRAM was about 1.84 GiB, below the native profile's 3.00 GiB floor. The first
-pair remains complete; S8/D16 and new native qualification are pending capacity.
-Probe: `00_audit/resource_admission_probe_20260905T2310.json`.
-Queue closure: `00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/closure.json`.
-The research goal remains open; these are resource constraints, not efficacy
-or mechanism NO-GO results.
+Latest execution checkpoint (2026-09-06 00:00 UTC / September 5 local): Track B
+has two complete depth pairs, S8/D12 and S8/D16, each with all six objectives.
+Native v2.3 qualification **PASSED** in a fresh process at
+`native_armr/evidence/00_runtime_qualification/20260905T235200_982255Z_36998242/`.
+Its earlier attempt `20260905T233146_952002Z_9d317bbe` failed RAM admission before
+model loading (2.94 versus 3.00 GiB). Attempt `20260905T233921_233855Z_41832612`
+completed all 40 CPU reference fixtures, then failed with CUDA unknown error
+before GPU model loading. All 40 raw CPU logits remain preserved, but the attempt
+is FAILED and no passing qualification report exists for it.
+Windows recorded an NVIDIA TDR reset at 23:42 UTC during that attempt;
+`00_audit/gpu_driver_events_20260905T2347.json` preserves the events. A fresh
+CUDA-process health probe passed afterward (`00_audit/gpu_health_20260905T2344.json`).
+This is consistent with a lost CUDA context; the reset's initiating cause is
+not established. The successful retry used unchanged source/config/fixtures and
+thresholds. All 40 CPU/GPU comparisons, greedy identities, exact GPU repeats,
+disabled/restored checks and state identities passed. Max absolute logit error
+was 4.1961669921875e-5; max hidden relative L2 7.856709228698431e-5; max absolute
+NLL error 4.553794860839844e-5. Peak CUDA reservation was 2,688,548,864 bytes;
+qualification wall time was 313.05 seconds. The independent admission validator
+recomputed all frozen gates and checked all 80 logit artifact hashes. Receipt
+and report are committed at `39122c92c9fa930ebab99a90135ae92aa06c4f7b`.
+An additional independent NumPy audit reproduced all 40 logit metric triples
+from all 80 tensors and passed 120 numerical gates; 40/40 CPU logit files were
+byte-identical to the failed TDR attempt, which remains FAILED. That audit did
+not independently rerun hidden states or NLL:
+`00_audit/native_v2_3_gpu_independent_review/`.
+The fresh GPU architecture matrix is now executing in registered order
+A0, AM, A1, A3, A16, with original evidence excluded by registration identity.
+Queue: `native_armr/evidence/00_execution_queue/20260906T000050_6403813Z_434bb308/`.
 
 | Track | Question | Mechanics | Candidate selection | Large evaluation | Gate |
 |---|---|---|---|---|---|
-| Native ARMR | Does bounded recurrence generalize? | Original GPU runtime PASS; A0/A1/A3/A16 completed 128 architecture cases each; original AM failed a malformed-generation guard | Label-free v2.3 AM scale calibrated and frozen; new runtime qualification pending | 0 confirmation examples | CLOSED pending new qualification and a valid complete architecture matrix |
-| Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | First pair S8/D12 completed all six objectives; 15 pairs pending, none selected | Not licensed | Complete 96-cell alignment mechanism screen first |
+| Native ARMR | Does bounded recurrence generalize? | v2.3 CPU/GPU qualification PASS; fresh architecture matrix running; original AM failure preserved | Label-free v2.3 AM scale frozen; all five arms still required | 0 confirmation examples | CLOSED pending a valid complete architecture matrix |
+| Cross-scale | Can a donor transformation transfer faithfully? | GPU numerical qualification FAILED; CPU reference capture `alignment-cpu-v2-002` COMPLETE | S8/D12 and S8/D16 completed all six objectives; 14 pairs pending, none selected | Not licensed | Complete 96-cell alignment mechanism screen first |
 | Routing | Are useful operators complementary? | Out of scope | — | — | CLOSED |
 | MLA/MHA/MTP | Other adaptive mechanisms | Out of scope | — | — | CLOSED |
 | 8B / distillation | Escalation / compression | Out of scope | — | — | CLOSED |
@@ -46,6 +65,20 @@ B3 token-relative MSE was 0.37049 versus B0=1.39826. These are descriptive
 measurements from one pair; no eligible/selected-candidate decision is made until
 all 16 pairs complete and the independent selection audit passes. Evidence:
 `cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`.
+
+S8/D16 completed in 111.50 seconds, peak RSS 3,769,110,528 bytes. B3 ordinary-token
+delta cosine was 0.73081 versus B0=0.27899; token-relative MSE was 0.46297 versus
+48.51333. BS/BR cosine was 0.11282/0.04988. Both pairs preserve donor state and
+exact native replay. These are two partial-matrix results, not a selection or
+mechanism GO. The next fixed pair is S8/D20.
+
+Generic future-stage export/provenance and frozen graft interfaces are prepared
+under `cross_scale/generation_stage/v1/`. The suite passed 56 tests and 6 subtests
+in 21.86 seconds using tiny CPU decoders and synthetic/mocked receipts. Actual
+export requires complete committed mechanism GO plus its independent PASS audit;
+no real bridge export, generation protocol, dose choice or model caller exists.
+The old 139 Track B and 143 Native-calibration source hashes remain unchanged.
+Validation: `cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260905T2347/`.
 
 The original AM guard failure is an engineering rejection, not evidence for
 recurrence efficacy. Its arm, scale, source registration, partial outputs and

@@ -1,21 +1,36 @@
 # Two-track Supa research: current execution report
 
-Execution update after the snapshot below: S8/D12 completed all six bridge
-objectives in 128.65 seconds, with unchanged donor state and exact native replay.
-Held-out ordinary-token delta cosine is B3=0.79367 versus B0=0.32144;
-token-relative MSE is 0.37049 versus 1.39826. BS/BR cosine is 0.04241/0.03288.
-This is one of 16 pairs, with no candidate selection or generation licensed.
-Receipt: `cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`.
-The first queue completed that stage. Its successor,
-`00_audit/execution_queues/20260905T225342_7431795Z_d58c0e48/`, was closed at
-23:12 UTC after about 19 minutes without launching a model. Its immutable
-`closure.json` verifies that the owned controller exited and launched zero stages.
-The actual imported CPU caller's read-only admission probe rejected 2.39 GiB
-available host memory versus its unchanged 3.00 GiB floor; free VRAM was about
-1.84 GiB versus the native GPU profile's 3.00 GiB floor. No programme model or
-resource controller is running. Native v2.3 GPU qualification and CPU S8/D16 are
-ready to resume from their frozen inputs when capacity permits. The research
-goal remains open; resource admission failures are not scientific NO-GO results.
+Execution update at 23:52 UTC: two of 16 Track B pairs completed all six objectives,
+with unchanged donor state and exact native replay. S8/D12 took 128.65 seconds;
+B3/B0 held-out ordinary delta cosine is 0.79367/0.32144 and token-relative MSE
+0.37049/1.39826. S8/D16 took 111.50 seconds; B3/B0 cosine is 0.73081/0.27899 and
+MSE 0.46297/48.51333. Their evidence is under
+`cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`
+and `S8_D16/attempt_000/`. No bridge is selected; the next fixed pair is S8/D20.
+
+Native v2.3 qualification **PASSED** at
+`native_armr/evidence/00_runtime_qualification/20260905T235200_982255Z_36998242/`.
+The first attempt failed RAM admission at 2.94 GiB versus 3.00 GiB. The next
+attempt, `20260905T233921_233855Z_41832612`, preserved all 40 CPU reference logits
+but failed CUDA initialization before GPU model loading. Windows logged an NVIDIA
+TDR reset during that CPU phase; a fresh CUDA health probe passed afterward.
+The reset's initiating cause is unknown. Both failed attempts stay FAILED; the
+successful retry changed no scientific setting or threshold. All 40 comparisons,
+greedy identities, exact GPU repeats and disabled/restored checks passed. The
+admission validator recomputed frozen gates and verified all 80 logit artifact
+hashes. Max absolute logit error was 4.19617e-5, max hidden relative L2 7.85671e-5,
+and max absolute NLL error 4.55379e-5; peak CUDA reservation was 2.50391 GiB.
+The 313.05-second run and report were committed at
+`39122c92c9fa930ebab99a90135ae92aa06c4f7b`. A fresh GPU architecture matrix is
+running in order A0, AM, A1, A3, A16. Confirmation remains closed until that
+complete matrix passes its original gates.
+
+Prepared generic export and graft interfaces under `cross_scale/generation_stage/v1/`
+passed 56 tests and 6 subtests in 21.86 seconds. These use tiny CPU decoders and
+synthetic/mocked provenance fixtures. No real export, generation protocol, dose
+choice or generation caller exists. Both original source maps remain unchanged.
+Latest code/evidence commit at this update is `0bd77ad3219a1650df391a75101bb7cce2983107`.
+The research goal remains open.
 
 Snapshot: **2026-09-05 22:45:35 UTC / 17:45:35 America/Chicago**. The shared
 framework, independent banks, protocols and callers are implemented. Real runtime
@@ -26,8 +41,8 @@ earlier delivery snapshot without modifying [FINAL_REPORT.md](FINAL_REPORT.md).
 
 | Track | Question | Completed evidence | Current decision |
 |---|---|---|---|
-| A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Original GPU qualification passed; four native arms completed architecture coverage; original AM failed its generation guard; separate v2.3 scalar calibration completed | No efficacy GO/NO-GO; fresh v2.3 qualification and complete architecture matrix required |
-| B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; CPU capture and first six-objective pair completed | 15 pairs pending; no selected bridge or generation license |
+| A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Calibrated v2.3 GPU qualification passed; fresh architecture matrix running; original AM failure preserved | No efficacy GO/NO-GO; complete fresh architecture matrix required |
+| B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; CPU capture and two six-objective pairs completed | 14 pairs pending; no selected bridge or generation license |
 | Downstream mechanisms | Routing, MLA/MHA, MTP, 8B, backbone recovery and distillation | Not executed or licensed | All gates CLOSED |
 
 The resource queue is active; a queued stage is not a running model. At this
@@ -141,8 +156,8 @@ Its complete artifact was committed at
 `a6126f2a3c51bba5d312ae6db2f7cb4af1092522` before deriving the final GPU profile.
 Native GPU v2.3 registration is
 `86e768e08bf3576dd8ce80ec939b7e876fb5fb7449d41a3aa51c497ce6607b44`.
-Fresh all-arm CPU/GPU qualification and a fresh full architecture matrix are
-required; original receipts cannot be mixed into the new paired matrix.
+Fresh all-arm CPU/GPU qualification has passed. A fresh full architecture matrix
+remains required; original receipts cannot be mixed into the new paired matrix.
 
 No fresh Native accuracy gain, paired effect, preservation gain or cost frontier
 is claimed. Historical A0/A1/A3 scores 12/12/13 of 16 remain hypothesis-generating.
@@ -160,8 +175,8 @@ objectives per pair. B0 is historical absolute ridge; B1 token-normalized state
 alignment; B2 delta-aware alignment; B3 both; BS cross-scenario shuffled pairs;
 BR seeded random bridges. B2/B3 fit only upward affine bridge parameters through
 the actual frozen donor transformation, for the fixed 96-step budget. Backbones
-and downward maps stay frozen. Six bridges have been fitted for S8/D12;
-none is selected while the other 15 depth pairs remain incomplete.
+and downward maps stay frozen. Six bridges each have been fitted for S8/D12 and
+S8/D16; none is selected while the other 14 depth pairs remain incomplete.
 
 Track B GPU qualification recorded 656 comparisons; 161 exceeded the frozen
 absolute-error cap .002 (116 state, 45 projected-delta). Maximum absolute error
@@ -266,12 +281,12 @@ scientific failure of either capability hypothesis.
 
 Exactly one next causal experiment per track:
 
-- **Track A:** execute the frozen GPU v2.3 five-arm campaign. First pass its fresh
-  full CPU/GPU qualification, then complete all five arms on the 128-scenario
+- **Track A:** continue the frozen GPU v2.3 five-arm campaign after its passed
+  full CPU/GPU qualification, completing all five arms on the 128-scenario
   architecture set with unchanged guards. Only if both gates pass, run its
   untouched 1,024-scenario paired confirmation and separate linked diagnostics,
   followed by complete independent audit and the registered statistical hierarchy.
 - **Track B:** execute the frozen CPU 16-pair/six-objective alignment matrix using
   verified `alignment-cpu-v2-002` captures, then apply its complete held-out
-  mechanism gate and deterministic selection. The first pending pair is S8/D16;
+  mechanism gate and deterministic selection. The first pending pair is S8/D20;
   no efficacy generation or dose selection is part of this experiment.
