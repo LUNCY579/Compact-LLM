@@ -1,0 +1,47 @@
+extends: published_family_showcase64_v2.yaml
+
+experiment:
+  name: published_qwen3_0_6b_family_showcase64_v2_final
+  classification: BOUNDED_EXPLORATORY_FAMILY_SEPARATE_IDENTITIES
+
+finalization:
+  output: rineya_significance_native_architecture_lab/results/runs/published_family_showcase64_v2
+  expected_total_cells: 768
+  answer_key_access: finalizer_only_after_all_selected_raw_sources_validate
+  sources:
+    - id: legacy_part1_completed_cores
+      path: rineya_significance_native_architecture_lab/results/runs/halo_family_showcase64_v1_part1/complete_cores.jsonl
+      expected_sha256: c6c644ae7c95810d7aafa2ddaeee941db9474a6678ee1cf784f168de463969ea
+      select:
+        halo_uncensored: [B0]
+        lyra: [B0]
+      compare_only:
+        halo_uncensored: [B3]
+        lyra: [B3]
+      provenance_limit: >-
+        The legacy wrapper saved Halo's generic resolved config. Its actual core
+        identity is independently reconstructed from row core_id values, the
+        committed wrapper, CORE.json, and current checkpoint hashes.
+    - id: halo_uncensored_v2
+      path: rineya_significance_native_architecture_lab/results/runs/published_family_showcase64_v2_segments/halo_uncensored/predictions.unscored.jsonl
+      select: {halo_uncensored: [B2, B3]}
+    - id: lyra_v2
+      path: rineya_significance_native_architecture_lab/results/runs/published_family_showcase64_v2_segments/lyra/predictions.unscored.jsonl
+      select: {lyra: [B2, B3]}
+    - id: nimbus_v2
+      path: rineya_significance_native_architecture_lab/results/runs/published_family_showcase64_v2_segments/nimbus/predictions.unscored.jsonl
+      select: {nimbus: [B0, B2, B3]}
+    - id: pulse_v2
+      path: rineya_significance_native_architecture_lab/results/runs/published_family_showcase64_v2_segments/pulse/predictions.unscored.jsonl
+      select: {pulse: [B0, B2, B3]}
+  ignored_incomplete_attempts:
+    - rineya_significance_native_architecture_lab/results/runs/halo_family_showcase64_v1_part1/predictions.partial.jsonl
+    - rineya_significance_native_architecture_lab/results/runs/halo_family_showcase64_v1_part2/predictions.partial.jsonl
+    - rineya_significance_native_architecture_lab/results/runs/halo_family_showcase64_v1_part3/predictions.partial.jsonl
+
+analysis:
+  comparisons: [B3_minus_B2, B3_minus_B0, B2_minus_B0]
+  binary_test: exact_two_sided_sign
+  report_case_and_scenario_pack_units: true
+  prohibit_cross_core_pooling: true
+  legacy_fresh_B3_identity_gate: exact_prediction_strings_64_of_64_per_reused_core
