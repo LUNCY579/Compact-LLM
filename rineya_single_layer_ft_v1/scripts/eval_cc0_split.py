@@ -27,6 +27,7 @@ from common import (  # noqa: E402
     atomic_write_json,
     load_yaml,
     read_jsonl,
+    resolve_core_path,
     resolve_repo_path,
     write_jsonl,
 )
@@ -246,7 +247,7 @@ def main() -> int:
     if not args.resume and pred_path.exists():
         pred_path.unlink()
 
-    model_path = resolve_repo_path(cfg["model"]["path"])
+    model_path = resolve_core_path(cfg["model"]["path"])
     model, tokenizer = load_model(model_path, adapter_dir, torch.float16)
     preds_list = generate_predictions(
         model=model,

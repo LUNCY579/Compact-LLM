@@ -24,6 +24,7 @@ from common import (  # noqa: E402
     atomic_write_json,
     load_yaml,
     read_jsonl,
+    resolve_core_path,
     resolve_repo_path,
     write_jsonl,
 )
@@ -175,7 +176,7 @@ def main() -> int:
             raise FileNotFoundError(adapter_dir)
 
     dtype = torch.float16
-    model_path = resolve_repo_path(cfg["model"]["path"])
+    model_path = resolve_core_path(cfg["model"]["path"])
     model, tokenizer = load_model(model_path, adapter_dir, dtype=dtype)
     gold_rows = read_jsonl(gold_path)
     preds = generate_predictions(

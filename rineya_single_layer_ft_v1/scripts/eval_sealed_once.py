@@ -50,7 +50,7 @@ def main() -> int:
         print(json.dumps(payload, indent=2))
         return 0
 
-    model = str(resolve_repo_path(cfg["model"]["path"]))
+    model = str(resolve_core_path(cfg["model"]["path"]))
     adapter = output_root / "adapter"
     summary: dict = {"status": "ok", "limit": args.limit, "arms": {}}
 

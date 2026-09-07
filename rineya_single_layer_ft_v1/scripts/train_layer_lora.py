@@ -39,6 +39,7 @@ from common import (  # noqa: E402
     atomic_write_json,
     load_yaml,
     read_jsonl,
+    resolve_core_path,
     resolve_repo_path,
 )
 
@@ -472,7 +473,7 @@ def main() -> int:
     total = sum(p.numel() for p in model.parameters())
     manifest = {
         "experiment": cfg.get("experiment", {}),
-        "model_path": str(resolve_repo_path(cfg["model"]["path"])),
+        "model_path": str(resolve_core_path(cfg["model"]["path"])),
         "selected_layers": adapter_cfg["selected_layers"],
         "target_modules": targets,
         "trainable_parameter_count": int(trainable),

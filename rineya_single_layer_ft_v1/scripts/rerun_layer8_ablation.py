@@ -24,6 +24,7 @@ from common import (  # noqa: E402
     atomic_write_json,
     load_yaml,
     read_jsonl,
+    resolve_core_path,
     resolve_repo_path,
 )
 from layer_ablation import (  # noqa: E402
@@ -253,7 +254,7 @@ def main() -> int:
         if not adapter_dir.exists():
             raise FileNotFoundError(adapter_dir)
 
-    model_path = resolve_repo_path(cfg["model"]["path"])
+    model_path = resolve_core_path(cfg["model"]["path"])
     model, tokenizer = load_model(model_path, adapter_dir, torch.float16)
     device = next(model.parameters()).device
 

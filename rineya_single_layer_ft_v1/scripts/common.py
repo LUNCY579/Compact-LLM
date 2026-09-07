@@ -129,3 +129,32 @@ def resolve_repo_path(value: str | Path) -> Path:
     if path.is_absolute():
         return path
     return (REPO_ROOT / path).resolve()
+
+
+def resolve_core_path(value: str | Path) -> Path:
+    """Locate a published core, tolerating worktrees that lack the weights.
+
+    ``Rineya_Published_Cores/**/*.safetensors`` is git-ignored, so a fresh
+    worktree materialises a core's config/tokenizer sidecars but not
+    ``model.safetensors``. Mirrors the fallback order already used by
+    anchor_routed_middle_recurrence_v1's ``run_experiment.resolve_model``:
+    explicit env override, this repo, then a sibling Chat-Bubble checkout.
+    """
+    candidates: list[Path] = []
+    override = os.environ.get("RINEYA_SUPA_PATH")
+    if override:
+        candidates.append(Path(override))
+    path = Path(value)
+    if path.is_absolute():
+        candidates.append(path)
+    else:
+        candidates.append(REPO_ROOT / path)
+        candidates.append(REPO_ROOT.parent / "Chat-Bubble" / path)
+    for candidate in candidates:
+        if (candidate / "model.safetensors").is_file():
+            return candidate.resolve()
+    raise FileNotFoundError(
+        "no published core with model.safetensors among "
+        + ", ".join(str(c) for c in candidates)
+        + "; set RINEYA_SUPA_PATH to the local canonical checkpoint"
+    )
