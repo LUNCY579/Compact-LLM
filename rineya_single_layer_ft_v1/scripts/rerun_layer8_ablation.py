@@ -18,7 +18,14 @@ REPO_ROOT = LAB_ROOT.parent
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from common import atomic_write_json, load_yaml, read_jsonl, resolve_repo_path  # noqa: E402
+from common import (  # noqa: E402
+    abstention_overrides,
+    assert_gate_disabled,
+    atomic_write_json,
+    load_yaml,
+    read_jsonl,
+    resolve_repo_path,
+)
 from layer_ablation import (  # noqa: E402
     final_token_logits,
     logit_cosine,
@@ -209,10 +216,12 @@ def load_model(model_path: Path, adapter_dir: Path | None, dtype: torch.dtype) -
         torch_dtype=dtype,
         device_map="auto",
         trust_remote_code=True,
+        **abstention_overrides(),
     )
     if adapter_dir is not None:
         model = PeftModel.from_pretrained(model, str(adapter_dir))
     model.eval()
+    assert_gate_disabled(model)
     return model, tokenizer
 
 

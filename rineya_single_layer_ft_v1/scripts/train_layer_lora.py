@@ -33,7 +33,14 @@ REPO_ROOT = LAB_ROOT.parent
 if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
-from common import atomic_write_json, load_yaml, read_jsonl, resolve_repo_path  # noqa: E402
+from common import (  # noqa: E402
+    abstention_overrides,
+    assert_gate_disabled,
+    atomic_write_json,
+    load_yaml,
+    read_jsonl,
+    resolve_repo_path,
+)
 
 ATTENTION_TARGET_SUFFIXES = ("q_proj", "k_proj", "v_proj", "o_proj")
 MLP_TARGET_SUFFIXES = ("gate_proj", "up_proj", "down_proj")
@@ -298,6 +305,7 @@ def build_model(cfg: dict[str, Any]) -> tuple[Any, Any, list[str]]:
         }.get(dtype, torch.float16)
         model_kwargs["torch_dtype"] = torch_dtype
 
+    model_kwargs.update(abstention_overrides())
     model = AutoModelForCausalLM.from_pretrained(model_path, **model_kwargs)
     model.config.use_cache = False
     if train_cfg.get("gradient_checkpointing", True):
@@ -322,6 +330,8 @@ def build_model(cfg: dict[str, Any]) -> tuple[Any, Any, list[str]]:
     )
     model = get_peft_model(model, lora_config)
     model.print_trainable_parameters()
+    # The training loss must see the same ungated logits the evaluators do.
+    assert_gate_disabled(model)
     return model, tokenizer, targets
 
 

@@ -19,6 +19,8 @@ if str(SCRIPTS) not in sys.path:
     sys.path.insert(0, str(SCRIPTS))
 
 from common import (  # noqa: E402
+    abstention_overrides,
+    assert_gate_disabled,
     atomic_write_json,
     load_yaml,
     read_jsonl,
@@ -59,10 +61,12 @@ def load_model(
         torch_dtype=dtype,
         device_map="auto",
         trust_remote_code=True,
+        **abstention_overrides(),
     )
     if adapter_dir is not None:
         model = PeftModel.from_pretrained(model, str(adapter_dir))
     model.eval()
+    assert_gate_disabled(model)
     return model, tokenizer
 
 
