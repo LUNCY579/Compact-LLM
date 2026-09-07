@@ -1,0 +1,849 @@
+{
+  "aggregate_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\experiments\\supa_adaptive_compute_v2\\cross_scale\\evidence\\01_alignment_matrix\\alignment-cpu-v2-002\\aggregate\\attempt_000",
+  "attempt_inventory_sha256": "4497b27d831c1fb4806fc7289a1ac03ae802f4cd4fc92158839b21d1f53f013f",
+  "audit_checks": 4931,
+  "bridge_activation_deserialization": false,
+  "candidate_gate_records": 48,
+  "capture_sha256": "38ff31aa465a0cf2b05ca2db2231918b250c9a6b60918e436f53eca2b5d1c9da",
+  "checkpoint_weight_files_opened": false,
+  "config_canonical_sha256": "68b5de95cf4eca48d8a93fb26ff7cae9148afa1636d05fc834d5a628fd9655be",
+  "data": {
+    "calibration_scenarios": 128,
+    "dataset_sha256": "bf025f9b34c74fee4b6b0b16fe6aea6752293e62eda032234b75abdd0b6a7659",
+    "fit_scenarios": 96,
+    "heldout_scenarios": 32,
+    "heldout_tokens": 2555
+  },
+  "donor_state_by_layer": {
+    "12": "964805b3412b5204bc17874982d4ea2356c423f4f82a61975410917d5f4acc80",
+    "16": "f2ff027d1a9ce7a801f741fadd357a8926ead1052a528f7bd2c1031929c1646d",
+    "20": "a8a27a4f2edf43c045884bf32f7d36cf7955dd4d2abd7ff8a1fe4cbe6188b6a4",
+    "24": "501f0bc54b8826171f2d98c05232b0d45ef99a03b305582cfbac1d431c1ac414"
+  },
+  "embedded_registration_sha256": "a87248479cb5e98025c080f09c05e4ead533b7769195f6c4a2634f1d76f0d6b6",
+  "end_utc": "2026-09-07T00:48:18.591801+00:00",
+  "generation_performed": false,
+  "git_commands_run": false,
+  "input_hashes_sha256": "96754dc108299d612504e9948589dfa89fda592be4c4ddf44a10f89bb31662df",
+  "limitations": [
+    "This checks saved metadata, scalar bounds, file hashes and ranking arithmetic. It does not rerun hidden-state capture, bridge fitting, donor transformations, losses or metric tensor arithmetic.",
+    "Activation and bridge files are streamed only for SHA-256; they are not loaded or deserialized. The activation token IDs and special-ID set are not exposed in capture JSON, so ordinary/special counts can be checked for consistency across all cells but not independently reconstructed from token IDs.",
+    "Native donor replay and frozen/zero-gradient statements are receipt claims checked for complete consistent coverage; no live model/state/gradient inspection occurs. Pair JSON does not retain an independent rotary-buffer inventory.",
+    "Canonical checkpoint and donor identity claims are reconciled against registered reference metadata. Checkpoint weight files are never opened. Git commit status is not checked.",
+    "Mechanism GO is a prerequisite for a separately frozen small generation screen. It does not establish capability, license large generation, or open the 8B/routing/attention/distillation gates."
+  ],
+  "matrix_pairs": 16,
+  "models_loaded": 0,
+  "objective_cells": 96,
+  "optimizer_steps_other_objectives": 0,
+  "optimizer_steps_per_B2_B3": 96,
+  "programme_helpers_imported": false,
+  "registration_contract_sha256": "f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea",
+  "run_id": "alignment-cpu-v2-002",
+  "schema": "independent_cross_scale_alignment_v2_audit_v1",
+  "script_sha256": "28cbed3dd382265d2ed663c34a9f2f7a6fc02b81bad91b90c67e7158a7ac29ae",
+  "selection": {
+    "comparisons": [
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.644880718416746,
+        "ordinary_delta_relative_mse": 0.7551656008947569,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.46853837745737303,
+        "ordinary_delta_relative_mse": 0.8513268564612261,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7936741865003079,
+        "ordinary_delta_relative_mse": 0.3704928590810913,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6091692537619877,
+        "ordinary_delta_relative_mse": 1.056073326666908,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.3315737904128306,
+        "ordinary_delta_relative_mse": 1.4616135762127085,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.730809410207815,
+        "ordinary_delta_relative_mse": 0.46297042908668823,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6273810427964847,
+        "ordinary_delta_relative_mse": 0.8828081183340342,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.5017455481321463,
+        "ordinary_delta_relative_mse": 0.7622515228658127,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7771525017208766,
+        "ordinary_delta_relative_mse": 0.39161249544455295,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.686990114938771,
+        "ordinary_delta_relative_mse": 0.8877051982003294,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.7563039372185667,
+        "ordinary_delta_relative_mse": 0.4411172968509019,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.824086795397568,
+        "ordinary_delta_relative_mse": 0.33292867389346986,
+        "supa_layer": 8
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6494351262448982,
+        "ordinary_delta_relative_mse": 0.7356826727215416,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.48753767713694046,
+        "ordinary_delta_relative_mse": 0.8281502006198919,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7872728986732812,
+        "ordinary_delta_relative_mse": 0.3782905804485264,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6102841038400421,
+        "ordinary_delta_relative_mse": 1.0473341416870279,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.36555449021516623,
+        "ordinary_delta_relative_mse": 1.332615899137389,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7333236110801107,
+        "ordinary_delta_relative_mse": 0.4576137069560378,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6374405666418616,
+        "ordinary_delta_relative_mse": 0.8634522507141225,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.5347805801666139,
+        "ordinary_delta_relative_mse": 0.7231079313456081,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7787012587431147,
+        "ordinary_delta_relative_mse": 0.3902536845479848,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6963074784257957,
+        "ordinary_delta_relative_mse": 0.824713355243212,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.767546253996693,
+        "ordinary_delta_relative_mse": 0.42124689290873935,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8216138848065997,
+        "ordinary_delta_relative_mse": 0.3371131249633487,
+        "supa_layer": 12
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6454362815733624,
+        "ordinary_delta_relative_mse": 0.753630737118389,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.48463189125324335,
+        "ordinary_delta_relative_mse": 0.8206908818262945,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8013030742470181,
+        "ordinary_delta_relative_mse": 0.35628942304790034,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.607986949613945,
+        "ordinary_delta_relative_mse": 1.1343087006658907,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.3567064417733415,
+        "ordinary_delta_relative_mse": 1.2732405605198243,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7485301945893167,
+        "ordinary_delta_relative_mse": 0.43756808890405396,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6424487682908679,
+        "ordinary_delta_relative_mse": 0.8775905285460724,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.5366139281362506,
+        "ordinary_delta_relative_mse": 0.7273256541812911,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7965998581319775,
+        "ordinary_delta_relative_mse": 0.3598824368682295,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.696409814799065,
+        "ordinary_delta_relative_mse": 0.8579022900431302,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.7734431976353228,
+        "ordinary_delta_relative_mse": 0.41348285955451325,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8381547610189961,
+        "ordinary_delta_relative_mse": 0.3030549509313871,
+        "supa_layer": 16
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6520829899169256,
+        "ordinary_delta_relative_mse": 0.7440200183982647,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.46459656058009746,
+        "ordinary_delta_relative_mse": 0.8517582690189749,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 12,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8025764113931748,
+        "ordinary_delta_relative_mse": 0.35479753864946545,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6165662372558812,
+        "ordinary_delta_relative_mse": 0.9686348375366188,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": false,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.3364146720265313,
+        "ordinary_delta_relative_mse": 1.4128273842477825,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 16,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7442587402528302,
+        "ordinary_delta_relative_mse": 0.4438322077253354,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.6505516235320276,
+        "ordinary_delta_relative_mse": 0.8261582341733236,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": false,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.5158055986186003,
+        "ordinary_delta_relative_mse": 0.7452763546724903,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 20,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.7970114778523122,
+        "ordinary_delta_relative_mse": 0.35880128611159107,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B1",
+        "ordinary_delta_cosine": 0.7107196894564674,
+        "ordinary_delta_relative_mse": 0.821466412008622,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": false,
+          "relative_error_improvement": false,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": false,
+        "objective": "B2",
+        "ordinary_delta_cosine": 0.7699678429671175,
+        "ordinary_delta_relative_mse": 0.4165930508733622,
+        "supa_layer": 19
+      },
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8491775842112589,
+        "ordinary_delta_relative_mse": 0.2820784626027358,
+        "supa_layer": 19
+      }
+    ],
+    "large_generation_licensed": false,
+    "selected": [
+      {
+        "checks": {
+          "above_null_controls": true,
+          "absolute_delta_cosine": true,
+          "all_token_floor": true,
+          "improvement_over_B0": true,
+          "relative_error_improvement": true,
+          "scale_stability": true
+        },
+        "donor_layer": 24,
+        "go": true,
+        "objective": "B3",
+        "ordinary_delta_cosine": 0.8491775842112589,
+        "ordinary_delta_relative_mse": 0.2820784626027358,
+        "supa_layer": 19
+      }
+    ],
+    "selection_data": "cross_scale/calibration scenario-held-out activations only",
+    "small_generation_eligible_for_separate_freeze": true,
+    "status": "MECHANISM_GO"
+  },
+  "selection_recomputed": true,
+  "start_utc": "2026-09-07T00:48:13.691784+00:00",
+  "status": "PASS",
+  "stratum_counts": {
+    "all_tokens": 2555,
+    "final_prompt_token": 32,
+    "ordinary_tokens": 2395,
+    "special_tokens": 160
+  },
+  "torch_imported": false
+}
