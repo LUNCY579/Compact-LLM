@@ -88,7 +88,7 @@ an implementation of a full sparse/MoE/vision architecture.
 | `source.py`, `source_lock.json` | Frozen official Supa asset hashes, byte count, exact native tensor inventory/shapes/BF16 headers; no downloads or fallback |
 | `transfer.py` | Strict native Qwen tensor import; zero-output identity insertions; masked activation calibration; global residual and grouped-head/FFN selection; Cartesian tensor slicing; declared-donor CED conversion |
 | `losses.py` | Shifted-token CE plus exact forward teacher-to-student KL with T-squared, teacher stop-gradient, padding and packed-boundary exclusion |
-| `run.py`, `gates.py` | Offline source/readout qualification, source-bound identity/width qualification, exactly 25 optimizer smoke steps; content-bound append-only receipts |
+| `run.py`, `gates.py` | Offline source/readout qualification, source-bound identity/width qualification, exactly 25 optimizer smoke steps; content-bound append-only receipts; nonpersistent native buffer reconstruction with a materialized-on-device post-condition |
 | `measure.py` | Actual eager-reference prefill and cached-decode timing, persistent cache-byte inspection, CUDA synchronization when available; paired group-level bootstrap utility |
 | `receipt.py` | JUnit-derived mechanical evidence, explicitly incapable of licensing official-model stages |
 
@@ -154,9 +154,16 @@ claim to repeat the published core's historical runtime or showcase scores. Loca
 loading and offline CI prevent surprise model downloads or paid training launches.
 
 `requirements.txt` suffices for non-native mechanical tests. Missing Transformers
-produces an explicit native-module skip. CI installs native dependencies and separately
-requires the two random-native parity cases to pass; a skipped native suite cannot
+produces an explicit skip of both native modules. CI installs native dependencies and
+separately requires the random-native parity cases to pass; a skipped native suite cannot
 publish the foundation tag. Random native Qwen is never substituted for official Supa.
+
+`tests/test_native_loader.py` drives the actual `run._load` construction path on tiny
+random fixtures, because the metadata-only build assigns only the tensors a checkpoint
+contains and cannot supply `Qwen3RotaryEmbedding.inv_freq`, which pinned Transformers
+registers `persistent=False`. Its only substitution is the official B28 shape validator;
+the tokenizer is real, and `source.source_config`/`audit_source` still gate every real
+run. See `evidence/NATIVE_LOADER_QUALIFICATION.md`.
 
 ## 6. Executable next real milestone and gate sequence
 
@@ -250,6 +257,13 @@ and reports sample timings and actual persistent KV bytes without claiming deplo
 `evidence/` contains freshly executed local receipts and logs; `local-junit.xml.gz`
 is the losslessly compressed original JUnit report (the receipt hashes its XML bytes). Their runtime, code hash,
 passed/skipped counts and explicit lack of official model evidence are authoritative.
+The original `LOCAL_*` receipts record `92 passed, 1 skipped` on Linux with Transformers
+absent, and are preserved unchanged. `NATIVE_LOADER_*` and `native-loader-*` record a
+separate, later run of the loader qualification in the pinned native environment:
+`109 passed, 0 skipped`, still with no official weights. Note that
+`implementation_digest()` keys its manifest on the native path separator, so its value is
+platform dependent and must be compared like for like; both conventions are tabulated in
+`NATIVE_LOADER_QUALIFICATION.md`.
 The scoped GitHub workflow uploads its own JUnit/receipt/matrix/status artifacts bound
 to the pushed SHA. A green CI checks mechanics and random native compatibility, not
 that G0-G5 have run. Git metadata and remote workflow status must be inspected before

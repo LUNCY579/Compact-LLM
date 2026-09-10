@@ -52,6 +52,45 @@ def _directory(path: Path, source: Path) -> None:
     p.mkdir(parents=True, exist_ok=False)
 
 
+def _materialize_native_buffers(model, device: str) -> list[str]:
+    """Rebuild nonpersistent native buffers that a metadata-only load cannot supply.
+
+    `load_state_dict(assign=True)` only replaces keys the checkpoint actually contains,
+    and it still reports "All keys matched". A buffer registered `persistent=False` -
+    in pinned Transformers 4.51.3 that is `Qwen3RotaryEmbedding.inv_freq` - is absent
+    from the checkpoint, so it stays on `meta` and the following `.to()` raises
+    "Cannot copy out of meta tensor". Re-running the owning module's own initializer
+    on the intended device reproduces the native values exactly. Nothing is zero-filled,
+    loaded permissively, or version-upgraded, and an unrecognized unmaterialized buffer
+    fails closed rather than being guessed.
+    """
+    rebuilt = []
+    for name, module in model.named_modules():
+        stale = sorted(k for k, b in module.named_buffers(recurse=False) if b is not None and b.is_meta)
+        if not stale:
+            continue
+        if stale != ['inv_freq'] or not hasattr(module, 'rope_init_fn') or not hasattr(module, 'config'):
+            raise GateClosed(f'unmaterialized native buffer with no declared initializer: {name} {stale}')
+        # Exactly the three assignments Qwen3RotaryEmbedding.__init__ makes, on the target device.
+        inv_freq, module.attention_scaling = module.rope_init_fn(module.config, torch.device(device))
+        module.register_buffer('inv_freq', inv_freq, persistent=False)
+        module.original_inv_freq = module.inv_freq
+        rebuilt.append(f'{name}.inv_freq' if name else 'inv_freq')
+    return rebuilt
+
+
+def _require_materialized(model, device: str) -> None:
+    """Buffers, not only parameters, must be real tensors on the intended device."""
+    target = torch.device(device)
+    for kind, named in (('parameter', model.named_parameters()), ('buffer', model.named_buffers())):
+        for name, value in named:
+            if value.is_meta:
+                raise GateClosed(f'native {kind} left unmaterialized on meta: {name}')
+            if value.device.type != target.type or (target.index is not None
+                                                    and value.device.index != target.index):
+                raise GateClosed(f'native {kind} on {value.device}, expected {device}: {name}')
+
+
 def _load(source: Path, device: str, native: bool = False):
     from importlib.metadata import version
     if version('transformers') != protocol()['native_transformers_version']:
@@ -71,7 +110,9 @@ def _load(source: Path, device: str, native: bool = False):
         native_state['lm_head.weight'] = state['model.embed_tokens.weight']
         original.load_state_dict(native_state, strict=True, assign=True)
         original.tie_weights()
+        _materialize_native_buffers(original, device)
         original = original.to(device=device, dtype=torch.float32).eval()
+        _require_materialized(original, device)
     return reference, tokenizer, original
 
 
