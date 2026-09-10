@@ -193,15 +193,21 @@ can consume substantial RAM/VRAM, especially while two FP32 models and full logi
 resident. There is **no 8-GB fit promise**, no automatic device fallback, and no reliable
 training-time estimate before real qualification. A CPU run is allowed, not promised fast.
 
-| Gate | Actual boundary in foundation v1 |
-|---|---|
-| G0 | Exact source audit, unmodified native/reference logits, 24-row open prompt/parser/termination pilot and actual short-context resource execution |
-| G1_IDENTITY | Source-bound same-width 40-layer exact-output check, chunked-cache parity, unchanged source and lineage |
-| G1_WIDTH | Calibrated registered D40 tensors, complete lineage, finite forward and exact save/reload; **not quality recovery** |
-| G2 | Exactly 25 finite SGD engineering steps with connected/nonzero intended gradients over the run, teacher stop-gradient, save/reload and cost counts |
-| G3 | **Closed:** recovery campaign not implemented or licensed |
-| G4 | **Closed:** three-seed registered DEV campaign not implemented or licensed |
-| G5 | **Closed:** sealed evaluation campaign not implemented or licensed |
+| Gate | Actual boundary in foundation v1 | Official-source status |
+|---|---|---|
+| G0 | Exact source audit, unmodified native/reference logits, 24-row open prompt/parser/termination pilot and actual short-context resource execution | **PASS** on Supa 1.7.0-devfreeze |
+| G1_IDENTITY | Source-bound same-width 40-layer exact-output check, chunked-cache parity, unchanged source and lineage | **PASS**, `max_abs_logit_error 0.0` |
+| G1_WIDTH | Calibrated registered D40 tensors, complete lineage, finite forward and exact save/reload; **not quality recovery** | **PASS**, 597,263,232 parameters |
+| G2 | Exactly 25 finite SGD engineering steps with connected/nonzero intended gradients over the run, teacher stop-gradient, save/reload and cost counts | **PASS**, engineering only |
+| G3 | **Closed:** recovery campaign not implemented or licensed | BLOCKED |
+| G4 | **Closed:** three-seed registered DEV campaign not implemented or licensed | BLOCKED |
+| G5 | **Closed:** sealed evaluation campaign not implemented or licensed | BLOCKED |
+
+The G0-G2 receipts, their chained digests, the pilot breakdown and every declared
+curation decision are in `evidence/OFFICIAL_GATE_LADDER.md`. A passing ladder means the
+conversion machinery is mechanically correct on real weights. It does **not** mean the
+converted D40 retains quality: `lineage.json` records `function_preserving: false` and
+`recovery_required: true`, and no arm has been compared with any other.
 
 G0 requires at least 80% strictly parseable integer answers, 80% EOS termination, and
 at least one correct and one incorrect open-pilot response. A floor/ceiling or formatting
@@ -269,6 +275,20 @@ to the pushed SHA. A green CI checks mechanics and random native compatibility, 
 that G0-G5 have run. Git metadata and remote workflow status must be inspected before
 claiming a remote tag or CI success.
 
-The next decisive milestone is a genuine unmodified official Supa G0 receipt, followed
-by real-weight identity parity. Until then, no Rineya quality improvement, recovery,
-GPU fit, reasoning gain, latency improvement, or deployable replacement is established.
+The previously stated next milestone -- a genuine unmodified official Supa G0 receipt
+followed by real-weight identity parity -- **has been reached**; see
+`evidence/OFFICIAL_GATE_LADDER.md` for G0, G1_IDENTITY, G1_WIDTH and G2 receipts bound to
+weights `962abc5b...`. Two of the four registered arms can now be produced from official
+weights, and the 24-row pilot is graded rather than flat (6/6 at depth 1, 0/6 at depths
+2, 4 and 6), so it can discriminate in both directions.
+
+Even so, **no Rineya quality improvement, recovery, GPU fit, reasoning gain, latency
+improvement, or deployable replacement is established.** The converted D40 is pruned and
+unrecovered, its accuracy was deliberately not measured for want of a control, the G2
+losses show no trend by design, and no arm has been compared with any other.
+
+The next decisive milestone is different in kind: **there is still no registered command
+that converts official weights to CED at all.** `to_ced` is implemented and mechanically
+tested, but the CLI exposes only the ordinary D40 route, so C28 and C40 -- the actual
+subject of this benchmark -- cannot yet be built from a real checkpoint. That gap, not
+another ordinary-arm result, is what blocks the comparison this experiment exists to make.
