@@ -28,9 +28,11 @@ The measured quality/efficiency curve shows the CED design cannot be rescued by 
 much of it you apply: the task is lost entirely at a **10.7% KV saving**, long before the
 46% saving the registered arm targets.
 
-A concrete better direction exists and is measured here: **share K/V locally between
-neighbouring layers instead of globally to one encoder-final bank.** The damage tracks
-*distance* to the bank, not sharing itself.
+A cheaper sharing topology was hypothesised, implemented and **falsified**: local
+cross-layer sharing is worse than CED at matched KV budget. The two schemes lie on a single
+frontier, because every KV bank removed displaces exactly one layer by construction, and
+each displaced layer costs roughly **0.5 nats**. No rearrangement of sharing topology
+escapes that exchange rate — only training can.
 
 ---
 
@@ -109,24 +111,63 @@ Evidence: `evidence/arm-quality/CED_DEPTH_SWEEP.json`.
 
 ---
 
-## 4. What the curve's shape tells us — and the better architecture it implies
+## 4. The governing law: quality depends on how many layers are displaced, not on topology
 
-Degradation is *smooth and monotonic in N*, and the first step is almost free: N=2 costs
-+0.046 nats and keeps 6/8 pilot hits. So **sharing K/V is not itself harmful — reading a
-bank from far away is.** A layer asked to query a representation produced 14 layers earlier
-is reading something it was never trained against; a layer querying its immediate
-neighbour's keys is reading almost the same representation.
+My first reading of the curve was that damage tracks *distance* to the bank, since N=2 costs
+only +0.046 nats. That predicted local cross-layer sharing — each layer reading its immediate
+neighbour's K/V instead of one distant bank — would sit on a much better frontier.
 
-That points away from CED's single global bank and toward **local cross-layer KV sharing**:
-within each group of `g` consecutive layers, the first computes K/V and the rest reuse it.
-KV residency falls to `1/g` of the layers, every layer keeps its own queries, output
-projection and MLP, and no layer reads a bank more than `g-1` layers away.
+**I implemented it, measured it, and the prediction was wrong.** Recorded here because the
+falsification is more useful than the hypothesis was.
 
-This is the same family as published cross-layer attention designs. Implemented here as a
-zero-training conversion of the official weights (`local_shared_kv.py`) so its cost is
-directly comparable to CED at matched KV budget.
+| variant | displaced layers | CE | perplexity | KL→source | top-1 | KV ratio | pilot hits |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| source | 0 | 5.5458 | 256.2 | 0.0000 | 1.000 | 1.000x | 6/8 |
+| local group 1 *(control)* | 0 | 5.5458 | 256.2 | 0.0000 | 1.000 | 1.000x | 6/8 |
+| ced last 4 | 3 | 6.4065 | 605.8 | 1.7691 | 0.436 | 0.893x | 0/8 |
+| ced last 8 | 7 | 8.3245 | 4,123.7 | 4.1418 | 0.179 | 0.750x | 0/8 |
+| **ced last 14** | **13** | **12.5854** | 292,267 | 9.1543 | 0.014 | 0.536x | 0/8 |
+| **local group 2** | **14** | **12.9136** | 405,791 | 9.9648 | 0.002 | 0.500x | 0/8 |
+| local group 3 | 18 | 15.2306 | 4,116,880 | 12.4193 | 0.001 | 0.357x | 0/8 |
+| local group 4 | 21 | 16.8612 | 21,024,648 | 14.1379 | 0.001 | 0.250x | 0/8 |
+| local group 7 | 24 | 16.2356 | 11,247,353 | 13.3071 | 0.000 | 0.143x | 0/8 |
+| local group 14 | 26 | 15.1577 | 3,827,274 | 12.2741 | 0.001 | 0.071x | 0/8 |
 
-**Head-to-head results: see `evidence/arm-quality/ARCHITECTURE_COMPARISON.json`.**
+Local sharing is **worse**, not better: 14 displaced layers at 0.500x KV gives CE 12.91,
+against CED's 13 displaced layers at 0.536x KV giving CE 12.59. CED is the *better* of the
+two schemes at comparable budget.
+
+`local group 1` is an exact control — CE identical, KL 0.0000, top-1 1.000, kv 1.000x — so
+the harness is validated and the degradation is real.
+
+**Why the two schemes coincide.** Define a *displaced* layer as one that attends to a K/V
+bank it did not produce. Then:
+
+| scheme | banks resident | banks saved | layers displaced | ratio |
+|---|---:|---:|---:|---:|
+| ced last N | 29−N | N−1 | N−1 | **1.00** |
+| local group g | ⌈28/g⌉ | 28−⌈28/g⌉ | 28−⌈28/g⌉ | **1.00** |
+
+Every removed bank displaces exactly one layer — **by construction**, since a layer that
+does not produce its own K/V is simultaneously a saved bank and a displaced layer. So
+*CE-versus-displaced-count is CE-versus-KV-saving for any sharing topology whatsoever.*
+
+The measurement confirms it: CED at 13 displaced (12.5854) and local at 14 displaced
+(12.9136) land on the same curve despite being structurally unrelated. Distance to the bank
+is second-order; the count is what matters, and the cost is roughly **0.5 nats per bank
+removed** over the usable range.
+
+Above CE 11.93 (uniform) all variants are garbage, and differences between garbage levels
+are not meaningful — which is why `local group 14` (15.16) appears "better" than
+`local group 4` (16.86). That non-monotonicity should not be over-read.
+
+**Consequence.** There is no clever sharing topology waiting to be found. Any zero-training
+KV-sharing conversion of these weights buys its savings at ~0.5 nats per bank, and the
+budget of a usable model is about 2–3 banks. To move the frontier at all, the weights have
+to be trained for the new information flow — which makes trainability, not topology, the
+binding question.
+
+Evidence: `evidence/arm-quality/ARCHITECTURE_COMPARISON.json`, `local_shared_kv.py`.
 
 ---
 
@@ -209,7 +250,7 @@ Cheap — forward-only — and it would have failed D40, C28 and C40 immediately
 | 6 | Higher-precision encoder | not attempted — most of the model; a throughput decision, and §1 shows precision is not the binding problem | — |
 | 7 | Prospective equivalence-policy amendment | not written — would be legitimate, but §1 shows parity is not the blocker | — |
 | 8 | Function-preserving zero-gated augmentation | **implemented**, verification in progress | `gated_memory.py` |
-| 9 | **Local cross-layer KV sharing** | **implemented and measured** | §4 |
+| 9 | Local cross-layer KV sharing | **implemented and falsified** — worse than CED at matched KV; both lie on one frontier | §4 |
 | 10 | Recovery/distillation from this initialization | **infeasible as specified** — see §9 | §9 |
 | 11 | Ordinary D40 as the matched control | **invalid** — control is itself degenerate | §1 |
 
@@ -297,8 +338,13 @@ measurements, not qualifications.
    the reason this went undetected.
 3. **Retire D40 as the "ordinary control".** A degenerate control cannot support any
    comparison. The frozen source is the only valid reference today.
-4. **Pursue local cross-layer KV sharing** (§4) as the next architecture, with the measured
-   curve as its baseline to beat, and a registered quality gate from the start.
+4. **Do not pursue another sharing topology.** §4 shows the exchange rate — one displaced
+   layer per bank saved, ~0.5 nats each — is a property of sharing itself, not of CED's
+   particular wiring, and it was confirmed by two unrelated schemes landing on one curve.
+   The usable budget is 2–3 banks (~10% KV), which is not worth an architecture programme.
+   If KV cost is the real target, the honest options are a trained-from-the-start design,
+   or orthogonal methods that do not repurpose these weights (quantised or paged KV), which
+   are outside this experiment's registered scope.
 5. **Do not run a 1M-token recovery** on this hardware. If training is wanted, first
    establish a CUDA runtime and requalify under it, then run a bounded pilot against a
    registered quality endpoint — not a token budget.
