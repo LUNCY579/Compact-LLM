@@ -12,7 +12,7 @@
   "source_heldout_ce_nats": 5.667859240369006,
   "trainable_parameters": 596049920,
   "supervised_target_tokens": 4968,
-  "wall_seconds": 1060.7734086,
+  "wall_seconds": 1163.9894038000002,
   "checkpoints": [
     {
       "step": 0,
@@ -21,20 +21,11 @@
       "heldout_kl_to_source_nats": 0.0,
       "heldout_top1_agreement": 1.0,
       "exact_hits": 6,
+      "strict_hits": 6,
       "of": 6,
       "terminated": 6,
-      "distinct": 6
-    },
-    {
-      "step": 10,
-      "tokens": 1166,
-      "heldout_ce_nats": 3.017744736952501,
-      "heldout_kl_to_source_nats": 1.2319358497947366,
-      "heldout_top1_agreement": 0.5944055944055944,
-      "exact_hits": 0,
-      "of": 6,
-      "terminated": 6,
-      "distinct": 6
+      "distinct": 6,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
     },
     {
       "step": 20,
@@ -42,21 +33,12 @@
       "heldout_ce_nats": 2.1091440297983266,
       "heldout_kl_to_source_nats": 2.0538799731762376,
       "heldout_top1_agreement": 0.45354645354645357,
-      "exact_hits": 0,
+      "exact_hits": 6,
+      "strict_hits": 0,
       "of": 6,
       "terminated": 6,
-      "distinct": 6
-    },
-    {
-      "step": 30,
-      "tokens": 3774,
-      "heldout_ce_nats": 1.668877021416084,
-      "heldout_kl_to_source_nats": 3.061420269183941,
-      "heldout_top1_agreement": 0.4145854145854146,
-      "exact_hits": 0,
-      "of": 6,
-      "terminated": 6,
-      "distinct": 6
+      "distinct": 6,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
     },
     {
       "step": 40,
@@ -64,10 +46,12 @@
       "heldout_ce_nats": 1.5164760928768497,
       "heldout_kl_to_source_nats": 3.4908202759154907,
       "heldout_top1_agreement": 0.3956043956043956,
-      "exact_hits": 0,
+      "exact_hits": 6,
+      "strict_hits": 0,
       "of": 6,
       "terminated": 6,
-      "distinct": 6
+      "distinct": 6,
+      "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality"
     }
   ],
   "trajectory": [
@@ -313,30 +297,60 @@
     }
   ],
   "final_generation": {
-    "exact_hits": 0,
+    "exact_hits": 6,
+    "strict_hits": 0,
     "of": 6,
     "terminated": 6,
     "distinct": 6,
+    "scoring": "exact_hits is leading-integer match; strict_hits is full-string equality",
     "samples": [
       {
         "id": "pilot-d1-v0",
         "expected": "3",
-        "got": "3."
+        "got": "3.",
+        "leading_int": "3",
+        "strict_match": false,
+        "numeric_match": true
       },
       {
         "id": "pilot-d1-v1",
         "expected": "5",
-        "got": "5."
+        "got": "5.",
+        "leading_int": "5",
+        "strict_match": false,
+        "numeric_match": true
       },
       {
         "id": "pilot-d1-v2",
         "expected": "7",
-        "got": "7."
+        "got": "7.",
+        "leading_int": "7",
+        "strict_match": false,
+        "numeric_match": true
       },
       {
         "id": "pilot-d1-v3",
         "expected": "9",
-        "got": "9."
+        "got": "9.",
+        "leading_int": "9",
+        "strict_match": false,
+        "numeric_match": true
+      },
+      {
+        "id": "pilot-d1-v4",
+        "expected": "11",
+        "got": "11.",
+        "leading_int": "11",
+        "strict_match": false,
+        "numeric_match": true
+      },
+      {
+        "id": "pilot-d1-v5",
+        "expected": "8",
+        "got": "8.",
+        "leading_int": "8",
+        "strict_match": false,
+        "numeric_match": true
       }
     ]
   },
