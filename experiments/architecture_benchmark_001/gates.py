@@ -114,6 +114,18 @@ for arm, parent in [('C28', 'G0'), ('C40', 'G1_WIDTH')]:
                    'finite_converted_logits', 'save_reload_exact', 'strict_tail_only_parity',
                    'strict_chunked_cache_parity', 'causal_prefix_parity', 'decode_choices_exact',
                    'donor_state_unmodified', 'source_unchanged', 'pilot_unchanged', 'calibration_unchanged']}
+# Output-quality gate. Deliberately separate from construction: an arm can be structurally
+# perfect and still emit token salad, which every other stage accepts.
+for arm, parent in [('B28', 'G0'), ('D40', 'G1_WIDTH'),
+                    ('C28', 'G1_CED_C28'), ('C40', 'G1_CED_C40')]:
+    STAGES[f'G1_QUALITY_{arm}'] = {
+        'parents': [parent], 'artifacts': ['quality.json'],
+        'checks': ['ce_increase_within_margin', 'kl_to_source_within_margin',
+                   'top1_agreement_above_floor', 'generation_terminates',
+                   'generation_not_degenerate', 'source_unchanged',
+                   'calibration_unchanged', 'pilot_unchanged']}
+
+
 for arm, parents in [('B28', ['G0']), ('D40', ['G1_WIDTH']),
                      ('C28', ['G1_CED_C28', 'G2_CACHED_B28']),
                      ('C40', ['G1_CED_C40', 'G2_CACHED_D40'])]:
@@ -221,6 +233,10 @@ def data_bindings(pilot: Path, calibration: Path | None = None, training: Path |
     result = {stage: sha256_file(pilot) for stage in ('G0', 'G1_IDENTITY', 'G1_CED_C28', 'G1_CED_C40')}
     if calibration is not None:
         result['G1_WIDTH'] = sha256_file(calibration)
+        # Quality is scored on calibration; the pilot split is used only for the
+        # nondegeneracy probe and is bound separately inside the stage.
+        for arm in ('B28', 'D40', 'C28', 'C40'):
+            result[f'G1_QUALITY_{arm}'] = result['G1_WIDTH']
     if training is not None:
         for stage in ('G2', *(f'G2_CACHED_{a}' for a in ('B28', 'D40', 'C28', 'C40'))):
             result[stage] = sha256_file(training)

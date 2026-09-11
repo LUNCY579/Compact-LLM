@@ -352,3 +352,47 @@ def test_audit_evidence_surfaces_strict_failures_in_both_receipt_generations(tmp
     tampered={r['path']:r for r in review.audit_evidence(tmp_path)['records']}['current/G1_CED_C28.json']
     assert tampered['strict_parity_violation_totals']=={}
     assert tampered['failed_strict_parity_checks'] and tampered['any_recorded_strict_parity_failure']
+
+
+def test_quality_gate_is_registered_for_every_arm_with_its_construction_parent():
+    """G1_QUALITY must exist per arm, hang off that arm's construction stage, and demand
+    both divergence and nondegeneracy checks -- a CE-only gate passes a degenerate model."""
+    for arm, parent in (('B28','G0'),('D40','G1_WIDTH'),('C28','G1_CED_C28'),('C40','G1_CED_C40')):
+        stage=gates.STAGES[f'G1_QUALITY_{arm}']
+        assert stage['parents']==[parent]
+        assert stage['artifacts']==['quality.json']
+        for name in ('ce_increase_within_margin','kl_to_source_within_margin',
+                     'top1_agreement_above_floor','generation_terminates',
+                     'generation_not_degenerate','source_unchanged',
+                     'calibration_unchanged','pilot_unchanged'):
+            assert name in stage['checks'], (arm, name)
+    assert run.QUALITY_PARENTS=={'B28':'G0','D40':'G1_WIDTH','C28':'G1_CED_C28','C40':'G1_CED_C40'}
+
+
+def test_quality_policy_is_registered_hashed_and_reuses_the_g0_termination_floor():
+    p=gates.protocol()
+    q=p['G1_QUALITY']
+    assert q['scored_split']=='calibration' and q['generation_split']=='pilot'
+    assert q['max_ce_increase_nats']>0 and q['max_kl_to_source_nats']>0
+    assert 0<q['min_top1_agreement']<=1 and q['min_distinct_outputs']>=2
+    # Reused rather than invented, so the floor cannot drift from G0's.
+    assert q['min_termination_rate']==p['G0']['min_termination_rate']
+    assert q['licenses_registered_training'] is False and q['licenses_efficacy_claim'] is False
+    for forbidden in ('sealed_test_access','dev_access','threshold_tuning_on_student_outcomes'):
+        assert forbidden in q['forbidden']
+    # protocol.json is inside the implementation manifest, so thresholds cannot be edited
+    # without invalidating every receipt.
+    assert 'protocol.json' in gates.implementation_manifest()
+    assert 'amendments/HOTFIX_003.md' in gates.implementation_manifest()
+
+
+def test_quality_gate_binds_calibration_and_rejects_an_unknown_arm(tmp_path):
+    pilot=tmp_path/'p.jsonl'; pilot.write_text('pilot',encoding='utf-8')
+    cal=tmp_path/'c.jsonl'; cal.write_text('cal',encoding='utf-8')
+    bindings=gates.data_bindings(pilot,cal)
+    for arm in ('B28','D40','C28','C40'):
+        assert bindings[f'G1_QUALITY_{arm}']==bindings['G1_WIDTH']
+    assert bindings['G1_QUALITY_B28']!=bindings['G0']
+    with pytest.raises(ValueError,match='unknown quality arm'):
+        run.qualify_quality(tmp_path/'src',pilot,cal,tmp_path/'parent.json',
+                            tmp_path/'o','cpu','NOPE')

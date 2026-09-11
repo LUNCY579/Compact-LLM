@@ -4,6 +4,7 @@ import argparse
 from dataclasses import asdict, replace
 import gc
 import json
+import math
 import re
 import time
 import unicodedata
@@ -253,6 +254,99 @@ def qualify_source(source: Path, pilot: Path, out: Path, device: str) -> dict:
         'termination_rate': stop, 'eos_token_ids': sorted(eos_ids), 'max_abs_native_reference_error': largest, 'wall_seconds': time.perf_counter()-started,
         'peak_cuda_allocated_bytes': torch.cuda.max_memory_allocated(device) if device.startswith('cuda') else None,
         'resource_scope': 'actual short-context FP32 eager pilot only; no 8k fit or throughput claim'}, ['predictions.json'])
+
+
+QUALITY_PARENTS = {'B28': 'G0', 'D40': 'G1_WIDTH', 'C28': 'G1_CED_C28', 'C40': 'G1_CED_C40'}
+
+
+def qualify_quality(source: Path, pilot: Path, calibration: Path, parent_path: Path,
+                    out: Path, device: str, arm: str) -> dict:
+    """Compare a constructed arm's outputs to the frozen source on already-open splits.
+
+    Construction gates accept a structurally perfect model that emits token salad. This one
+    does not. It reads no sealed or DEV data, trains nothing, and cannot license training.
+    """
+    import torch.nn.functional as F
+    policy = protocol()['G1_QUALITY']
+    if arm not in QUALITY_PARENTS:
+        raise GateClosed('unknown quality arm')
+    audit = audit_source(source)
+    ctx = context(audit, calibration, device)
+    bindings = data_bindings(pilot, calibration)
+    parent = validate_receipt(parent_path, QUALITY_PARENTS[arm],
+                              context(audit, pilot if arm != 'D40' else calibration, device),
+                              data_by_stage=bindings)
+    scored = load_rows(calibration, 'calibration')
+    probes = load_rows(pilot, 'pilot')
+    ensure_disjoint(probes, scored)
+    _directory(out, source)
+    reference, tokenizer, _ = _load(source, device)
+    reference.eval()
+    model = reference if arm == 'B28' else _restore(parent_path.parent, device).eval()
+    eos_ids = _eos_ids(source, tokenizer)
+    torch.manual_seed(protocol()['decoding']['seed'])
+    ce_src = ce_arm = kl = 0.0
+    agree = tokens = 0
+    with torch.inference_mode():
+        for row in scored:
+            ids = _text(tokenizer, row, device)['input_ids']
+            if ids.shape[1] < 2:
+                continue
+            target = ids[:, 1:]
+            a = F.log_softmax(reference(ids).logits.float()[:, :-1], dim=-1)
+            b = a if model is reference else F.log_softmax(model(ids).logits.float()[:, :-1], dim=-1)
+            flat = target.reshape(-1)
+            ce_src += F.nll_loss(a.reshape(-1, a.shape[-1]), flat, reduction='sum').item()
+            ce_arm += F.nll_loss(b.reshape(-1, b.shape[-1]), flat, reduction='sum').item()
+            kl += (a.exp() * (a - b)).sum().item()
+            agree += int((a.argmax(-1) == b.argmax(-1)).sum())
+            tokens += target.numel()
+            del a, b
+    if not tokens:
+        raise GateClosed('no scorable calibration rows')
+    outputs, terminated = [], 0
+    with torch.inference_mode():
+        for row in probes:
+            ids = _prompt(tokenizer, row, device)
+            generated, past, current = [], None, ids
+            for _ in range(protocol()['decoding']['max_new_tokens']):
+                step = model(current, past=past, use_cache=True, last_position_only=True)
+                past = step.cache
+                token = int(step.logits[0, -1].argmax())
+                if token in eos_ids:
+                    terminated += 1
+                    break
+                generated.append(token)
+                current = torch.tensor([[token]], dtype=torch.long, device=device)
+            outputs.append({'id': row['id'], 'group_id': row['group_id'], 'answer': row['answer'],
+                            'prediction': tokenizer.decode(generated, skip_special_tokens=True).strip(),
+                            'terminated': len(generated) < protocol()['decoding']['max_new_tokens']})
+    ce_increase = (ce_arm - ce_src) / tokens
+    mean_kl = kl / tokens
+    top1 = agree / tokens
+    stop_rate = terminated / len(probes)
+    distinct = len({o['prediction'] for o in outputs})
+    write_once(out/'quality.json', {'schema': 2, 'arm': arm, 'scored_rows': len(scored),
+        'scored_target_tokens': tokens, 'generation_rows': len(probes), 'outputs': outputs,
+        'not_sealed_quality_evidence': True, 'open_splits_only': True})
+    checks = {'ce_increase_within_margin': ce_increase <= policy['max_ce_increase_nats'],
+              'kl_to_source_within_margin': mean_kl <= policy['max_kl_to_source_nats'],
+              'top1_agreement_above_floor': top1 >= policy['min_top1_agreement'],
+              'generation_terminates': stop_rate >= policy['min_termination_rate'],
+              'generation_not_degenerate': distinct >= policy['min_distinct_outputs'],
+              'source_unchanged': audit_source(source)['audit_digest'] == audit['audit_digest'],
+              'calibration_unchanged': sha256_file(calibration) == ctx['data_sha256'],
+              'pilot_unchanged': sha256_file(pilot) == bindings['G0']}
+    return _record(out, f'G1_QUALITY_{arm}', ctx, checks, {
+        'arm': arm, 'parent_stage': QUALITY_PARENTS[arm],
+        'mean_ce_source_nats': ce_src/tokens, 'mean_ce_arm_nats': ce_arm/tokens,
+        'ce_increase_nats': ce_increase, 'mean_kl_to_source_nats': mean_kl,
+        'top1_agreement_with_source': top1, 'termination_rate': stop_rate,
+        'distinct_outputs': distinct, 'generation_rows': len(probes),
+        'uniform_baseline_ce_nats': math.log(presets()['B28_1024_official_shape'].vocab_size),
+        'policy': policy, 'quality_recovery_demonstrated': False,
+        'resource_scope': 'open calibration/pilot splits only; no sealed or DEV access, no efficacy claim'},
+        ['quality.json'], [parent_path])
 
 
 def qualify_identity(source: Path, pilot: Path, g0: Path, out: Path, device: str) -> dict:
@@ -544,6 +638,14 @@ def main(argv=None) -> int:
             c.add_argument('--parent', type=Path, required=True)
             c.add_argument('--teacher-cache', type=Path, required=True)
             c.add_argument('--control', type=Path)
+    qa = subs.add_parser('qualify-quality')
+    qa.add_argument('--source', type=Path, required=True)
+    qa.add_argument('--pilot', type=Path, default=ROOT/'data/pilot.jsonl')
+    qa.add_argument('--calibration', type=Path, required=True)
+    qa.add_argument('--parent', type=Path, required=True)
+    qa.add_argument('--arm', choices=tuple(QUALITY_PARENTS), required=True)
+    qa.add_argument('--out', type=Path, required=True)
+    qa.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
     ae = subs.add_parser('audit-evidence')
     ae.add_argument('--root', type=Path, default=ROOT/'evidence')
     rd = subs.add_parser('recovery-readiness')
@@ -595,6 +697,9 @@ def main(argv=None) -> int:
                 from .engineering import smoke_cached
                 result = smoke_cached(args.source, args.pilot, args.calibration, args.train, args.parent,
                     args.teacher_cache, args.control, args.out, args.device, args.arm)
+            elif args.command == 'qualify-quality':
+                result = qualify_quality(args.source, args.pilot, args.calibration, args.parent,
+                                         args.out, args.device, args.arm)
             elif args.command == 'qualify-source': result = qualify_source(args.source, args.pilot, args.out, args.device)
             elif args.command == 'qualify-identity': result = qualify_identity(args.source, args.pilot, args.g0, args.out, args.device)
             elif args.command == 'calibrate-d40': result = calibrate_d40(args.source, args.pilot, args.calibration, args.g1, args.out, args.device)

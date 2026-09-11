@@ -146,6 +146,26 @@
   ],
   "amendments": [
     "amendments/HOTFIX_001.md",
-    "amendments/HOTFIX_002.md"
-  ]
+    "amendments/HOTFIX_002.md",
+    "amendments/HOTFIX_003.md"
+  ],
+  "G1_QUALITY": {
+    "purpose": "output_quality_and_nondegeneracy_of_a_constructed_arm",
+    "rationale": "Every other stage is satisfied by a model that emits token salad: they check tensor accounting, save/reload, parameter counts and cache-order parity, all of which are plumbing or self-consistency properties. This stage compares an arm to the frozen source on already-open splits.",
+    "threshold_provenance": "Chosen on principle, not tuned to any measured arm. CE and KL bound divergence from the frozen teacher at roughly half a nat and one nat; top-1 floor is chance-vs-majority; termination reuses the existing G0 min_termination_rate of 0.8. The already-measured arms are far outside any plausible setting, so their verdicts do not depend on these numbers.",
+    "scored_split": "calibration",
+    "generation_split": "pilot",
+    "max_ce_increase_nats": 0.5,
+    "max_kl_to_source_nats": 1.0,
+    "min_top1_agreement": 0.5,
+    "min_termination_rate": 0.8,
+    "min_distinct_outputs": 2,
+    "forbidden": [
+      "sealed_test_access",
+      "dev_access",
+      "threshold_tuning_on_student_outcomes"
+    ],
+    "licenses_registered_training": false,
+    "licenses_efficacy_claim": false
+  }
 }
