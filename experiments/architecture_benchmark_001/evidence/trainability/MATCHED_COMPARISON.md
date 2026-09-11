@@ -1,167 +1,115 @@
-# CORRECTION (supersedes the "data destroys capability" reading below)
+# The matched comparison: CED loses at both doses, and it loses harder at the good one
 
-**Two things below are wrong, and the error inverted a headline conclusion.** Both are fixed
-here rather than quietly edited out, and the superseded text is left in place under the rule.
+Exploratory, pinned CPU runtime (python 3.11.15 / torch 2.10.0+cpu / transformers 4.51.3),
+official Supa 1.7.0-devfreeze weights. Run **outside** the hashed experiment root — no
+receipt, no gate opened. Open splits only; no sealed or DEV access; no efficacy claim.
 
-### 1. My scorer was wrong, and it hid a preserved capability
+This file was revised twice as evidence arrived. Both revisions are recorded in §5 rather
+than silently applied, because one of them **withdrew a headline claim of mine** and the
+other **fixed a scoring bug of mine that had inverted a conclusion**.
 
-Pilot hits were scored by full-string equality against the expected answer. After adapting to
-this corpus the model answers in the corpus's own style — `"3."` rather than `"3"` — so a run
-whose arithmetic was **entirely correct** was recorded as **0/6**.
+## Setup
 
-Re-scored by leading integer, at lr 1e-5 (the registered engineering learning rate):
+Identical on every arm: AdamW, weight decay 0, grad clip 1.0, seed 17, gradient
+checkpointing, all parameters trainable, the same 25 `train-smoke.jsonl` rows in the same
+order, 40 steps, **4,968 supervised target tokens**. Held-out set is 8 `calibration.jsonl`
+rows (1,001 target tokens) **never used for a gradient step**, `ensure_disjoint` enforced
+against train and pilot. Generation is greedy, 24 new tokens max, on 6 open pilot prompts.
 
-| expected | got | strict match | numeric match |
-|---|---|---|---|
-| 3 | `3.` | no | **yes** |
-| 5 | `5.` | no | **yes** |
-| 7 | `7.` | no | **yes** |
-| 9 | `9.` | no | **yes** |
+Scoring reports two readings side by side: `numeric` (leading integer, primary — these
+answers are integers by construction) and `strict` (full-string equality).
 
-4/4 on the saved samples. `recovery_pilot.py` now records `exact_hits` (leading integer,
-primary for this integer-answer pilot) and `strict_hits` (full string) side by side, and
-saves every sample rather than the first four.
+## The full 2×2
 
-### 2. It was the DOSE, not the data
+| arm | dose | held-out CE @0 | @20 | **@40** | KL→orig @40 | **task @40** | distinct @40 |
+|---|---|---:|---:|---:|---:|---:|---:|
+| source | lr 1e-4 | 5.6679 | 1.7295 | **1.6213** | 5.4721 | **0/6** | 5 |
+| source | **lr 1e-5** | 5.6679 | 2.1091 | **1.5165** | 3.4908 | **6/6** | 6 |
+| C28 | lr 1e-4 | 12.2003 | 2.5368 | **2.2796** | 5.1657 | **0/6** | 4 |
+| C28 | **lr 1e-5** | 12.2003 | 4.2490 | **2.7216** | 3.0280 | **0/6** | 3 |
 
-The claim "this training data destroys the capability being measured" is **withdrawn**.
-Comparing the two doses, same 25 rows, same 40 steps, same 4,968 supervised tokens:
+## 1. CED loses at both doses, and the gap widens at the good one
 
-| | lr 1e-4 | lr 1e-5 |
-|---|---|---|
-| held-out CE | 1.6213 | **1.5165** |
-| arithmetic answers | `1.` `3.` `4.` `6.` for 3/5/7/9 — **wrong** | `3.` `5.` `7.` `9.` — **correct** |
-| capability | destroyed | **preserved** |
+| dose | source CE | C28 CE | CED penalty |
+|---|---:|---:|---:|
+| lr 1e-4 | 1.6213 | 2.2796 | **+0.66 nats** |
+| lr 1e-5 | **1.5165** | 2.7216 | **+1.21 nats** |
 
-The gentler dose is better on **both** axes: lower held-out CE *and* intact arithmetic. So
-lr 1e-4 on 25 rows is simply too high for a 596M model; the corpus is usable.
+At lr 1e-4 the comparison was confounded, because that dose destroys the source's task
+ability. At lr 1e-5 — where the source keeps **6/6** arithmetic — CED is **1.21 nats worse**
+and still scores **0/6**. So the conclusion does not merely survive the correction; it is
+stronger at the dose anyone would actually use.
 
-### 3. What this does to the CE/capability anti-correlation claim
+There is no measured axis on which CED wins. It also costs 46% of the KV budget and fails
+strict FP32 parity, so it loses on quality, loses on parity, and buys a saving it cannot
+spend.
 
-The anti-correlation is real **at lr 1e-4** and is **not** a property of the corpus. At
-lr 1e-5, CE and capability improve together. The narrower surviving claim:
+## 2. CED learns the format and never the arithmetic
 
-> An excessive learning rate can drive held-out CE down while destroying task accuracy, so
-> CE alone cannot certify a training run. A capability-retention check is still required —
-> but the corpus does not need replacing, and recommendation 0 (fix the endpoint) stands on
-> the weaker and still-sufficient ground that CE *can* decouple from capability, not that it
-> always does.
+C28 at lr 1e-5, step 40, all six prompts:
 
-### 4. What is still open
+    expected  3  →  "10."          expected  9  →  "10."
+    expected  5  →  "19."          expected 11  →  "10."
+    expected  7  →  "10."          expected  8  →  "The current one."
 
-The 4/4 above is from the four saved samples of one run. A full 6-prompt re-score at lr 1e-5
-for **both** the source control and C28 is running with the fixed scorer; the matched
-CED-versus-ordinary comparison at the *good* dose does not exist yet, so **§1's conclusion
-that "CED loses the matched comparison" is currently established only at lr 1e-4** — the
-dose now known to be destructive. That comparison must be redone before the conclusion is
-relied on.
+It has acquired the corpus's terse "number + full stop" style and emits `10.` almost
+regardless of the question — 3 distinct outputs across 6 prompts. Contrast the source at the
+same dose: `3.` `5.` `7.` `9.` `11.` `8.`, all correct, 6 distinct.
 
----
+This is why the nondegeneracy check matters. Termination alone reads 6/6 for *both* arms at
+step 40; only the distinct-output count separates a model answering questions from a model
+reciting one answer. `G1_QUALITY` (HOTFIX-003) checks both for exactly this reason.
 
-# The matched comparison: CED loses, and the training data destroys the capability being measured
+## 3. The dose result, separately
 
-Exploratory, pinned CPU runtime, official Supa 1.7.0-devfreeze weights. Run **outside** the
-hashed experiment root — no receipt, no gate opened. Open splits only; no sealed or DEV
-access; no efficacy claim.
+lr 1e-5 is better than lr 1e-4 on **both** axes for the source: lower held-out CE
+(1.5165 vs 1.6213) *and* arithmetic intact (6/6 vs 0/6). At lr 1e-4 the source's answers were
+`1.` `3.` `4.` `6.` for `3 5 7 9` — wrong. So the capability loss seen earlier was a
+**learning-rate effect, not a defect in the corpus**, and the corpus does not need replacing.
 
-Identical recipe on both arms: AdamW lr 1e-4, weight decay 0, grad clip 1.0, seed 17,
-gradient checkpointing, all parameters trainable, the same 25 `train-smoke.jsonl` rows in the
-same order, 40 steps, **4,968 supervised target tokens each**. Held-out set is 8
-`calibration.jsonl` rows (1,001 target tokens) never used for a gradient step,
-`ensure_disjoint` enforced against train and pilot. Generation is greedy on 6 open pilot
-prompts.
+## 4. What is established, and what is not
 
-## The three-way result
+**Established.** CED loses the matched comparison at both doses, by more at the better dose.
+CED is trainable and fluency-recoverable from a worse-than-uniform start (CE 12.20 → 2.72)
+but does not acquire the task. lr 1e-4 on 25 rows destroys arithmetic in a working model;
+lr 1e-5 preserves it. Held-out CE alone cannot certify a run: at lr 1e-4 it improved 4.05
+nats while capability went 6/6 → 0/6. KL-to-teacher alone cannot either: it *rises* with
+training even when capability is fully preserved (source lr 1e-5: 0.0000 → 3.4908), so it
+tracks corpus drift rather than quality.
 
-| | source untrained | **source trained** | C28 untrained | **C28 trained** |
-|---|---:|---:|---:|---:|
-| held-out CE (nats) | 5.6679 | **1.6213** | 12.2003 | **2.2796** |
-| held-out KL to original source | 0.0000 | 5.4721 | 8.9176 | 5.1657 |
-| held-out top-1 agreement | 1.000 | 0.332 | 0.021 | 0.287 |
-| **pilot task hits** | **6/6** | **0/6** | 0/6 | 0/6 |
-| terminated | 6/6 | 6/6 | 0/6 | 6/6 |
-| distinct outputs | 6 | 5 | 6 | 4 |
+**Not established.** Nothing beyond 40 steps — every run stopped there. Nothing about a
+recipe with replay, a frozen-teacher regularisation term, or a warmup/decay schedule; those
+are untried and are the obvious next levers. Nothing about generalisation: the task probe is
+6 prompts of one arithmetic family, a smoke test, and the held-out CE set is 8 rows. Single
+seed (17), single deterministic CPU run per cell, **no repeats**, so neither the 1.21-nat gap
+nor the 0.66-nat gap is replicated. No sealed or registered DEV evaluation was touched.
 
-Full trajectories: `RECOVERY_PILOT_source_control.json`,
-`PARTIAL_recovery_pilot_C28_step40.log`.
+**Provenance caveat.** The C28 lr 1e-4 cell comes from a run **interrupted at step 40 of a
+planned 120**; the other three cells ran their full 40 steps. All four are therefore compared
+at step 40, which is where the interrupted run stopped — matched by construction, not by
+truncating one side after the fact. Two further C28 lr 1e-5 attempts were killed by session
+teardown before producing data and are not included.
 
-## 1. CED loses to the matched ordinary control
+## 5. Revision history of this file
 
-At identical training, identical data and identical token budget, the ordinary architecture
-reaches held-out CE **1.6213** against CED's **2.2796**. CED is **0.66 nats worse**.
+**Revision 1** claimed *"CED loses the matched comparison, and the training data destroys the
+capability being measured."* The first half held; the second was **withdrawn**.
 
-This closes the question the earlier pilot could not. C28's held-out CE of 2.28 looked like
-it beat the frozen source's 5.67, and that reading is now fully explained as corpus
-adaptation: the ordinary architecture adapts to the same corpus *better*. There is no
-measured axis on which CED wins. It also costs 46% of the KV budget and fails strict FP32
-parity, so it loses on quality, on parity, and gains only a saving it cannot spend.
+**Revision 2** withdrew it for two reasons, both my own errors:
 
-## 2. The far more serious finding: this training destroys the capability being measured
+1. *The scorer was wrong.* Task hits were scored by full-string equality, so a model
+   answering `"3."` instead of `"3"` scored 0/6 while being **entirely correct**. That is how
+   a run with perfect arithmetic was published as a total capability loss. `recovery_pilot.py`
+   now reports numeric and strict hits side by side and saves every sample.
+2. *It was the dose, not the data.* lr 1e-5 preserves capability and reaches better CE, so
+   the corpus is usable.
 
-**The frozen source went from 6/6 to 0/6 on the pilot arithmetic after 40 steps.**
+**Revision 3 (this one)** adds the missing C28 lr 1e-5 cell, which was the whole point of the
+correction: revision 1's conclusion had been established only at the destructive dose. It now
+holds at both, more strongly at the good one.
 
-    expected  3  ->  got "1."
-    expected  5  ->  got "3."
-    expected  7  ->  got "4."
-    expected  9  ->  got "6."
-
-It learned the corpus's short-numeric answer *format* — terse, digit, full stop — and lost
-the *arithmetic*. Held-out CE improved 3.5x (5.6679 -> 1.6213) over exactly the same 40 steps
-in which task accuracy fell to zero. Catastrophic forgetting at 25 rows, lr 1e-4, under 5k
-supervised tokens.
-
-### Held-out CE and task capability are anti-correlated here
-
-This is the methodological headline, and it is worse than a null result.
-
-| arm | ΔCE (held-out) | Δtask |
-|---|---|---|
-| source | −4.05 nats (much better) | 6/6 → 0/6 (destroyed) |
-| C28 | −9.92 nats (much better) | 0/6 → 0/6 (unchanged) |
-
-Every arm improved sharply on the metric and either lost or failed to gain the capability.
-So on this corpus **CE is not a valid proxy for capability, and optimising it actively
-harms the capability**. Any recovery plan whose endpoint is held-out CE or teacher KL —
-which is what the registered G3 shape implies, with its `recovery_tokens_per_arm` and
-CE/KL objective — would have reported success while destroying the model.
-
-Note also that both arms' KL to the *original* source **rises** with training (source
-0.00 → 5.47, C28 8.92 → 5.17). Neither is converging on the teacher; both are converging on
-the training corpus. At step 40 the fine-tuned source is *further* from its own original
-distribution (5.47) than the CED arm is (5.17).
-
-## 3. What is and is not established
-
-**Established.** CED is worse than the matched ordinary control at equal training. The CED
-arm is trainable and fluency-recoverable from a worse-than-uniform start. Fine-tuning on 25
-rows of this corpus at lr 1e-4 destroys arithmetic in a working model. Held-out CE is
-anti-correlated with task accuracy under this setup.
-
-**Not established.** Nothing about a *well-chosen* recovery recipe: lr 1e-4 on 25 rows for
-40 steps is a deliberately small probe, and a lower learning rate, a replay mixture, or a
-frozen-teacher distillation term might preserve arithmetic. That is a hypothesis, not a
-result, and it is the obvious next experiment. Nothing about longer training — both runs
-stopped at 40 steps. Nothing about generalisation beyond one narrow arithmetic family of 6
-prompts, which is a smoke test. Single seed (17), single deterministic CPU run, no repeats,
-so the 0.66-nat CE gap is unreplicated.
-
-**The C28 run was interrupted at step 40 of a planned 120** when a session ended; the source
-control ran its full 40. The comparison is therefore matched at 40 steps by construction, not
-by truncation of one side.
-
-## 4. Consequence for the experiment
-
-The registered four-arm design cannot answer its question with this data and this endpoint:
-
-1. The ordinary control D40 is degenerate before training even starts.
-2. The CED arms start worse than uniform.
-3. Training on the available corpus destroys the capability the pilot set measures.
-4. The proposed CE/KL endpoint moves in the *opposite* direction to capability.
-
-Fixing (4) is a precondition for any further training work: the endpoint must be a task
-measure with a retention check, not a likelihood. `G1_QUALITY` (HOTFIX-003) is the
-initialization-side half of that; the training side needs an equivalent — a registered
-regression check on capability the optimiser is not allowed to trade away.
+Both bugs were caught because a control behaved impossibly — not by code review. That is the
+argument for keeping the identity controls and dual scoring in every run.
 
 ## Reproduction
 
@@ -169,8 +117,14 @@ regression check on capability the optimiser is not allowed to trade away.
 PY=C:/Users/clclc/BusinessProject/.venv-rab001/Scripts/python.exe
 cd C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification
 $PY experiments/rab001_exploration/recovery_pilot.py source_control 40 1e-4 20 8
+$PY experiments/rab001_exploration/recovery_pilot.py source_control 40 1e-5 20 8
 $PY experiments/rab001_exploration/recovery_pilot.py C28            40 1e-4 20 8
+$PY experiments/rab001_exploration/recovery_pilot.py C28            40 1e-5 20 8
 ```
 
-~22 s/step for the source control (890 s for 40 steps including per-checkpoint held-out and
-generation evaluation), CPU only.
+~11–29 s/step depending on contention; 451 s for the 40-step C28 lr 1e-5 run including
+per-checkpoint held-out and generation evaluation. CPU only, ~10 GB peak RSS with AdamW state
+for 596M parameters. Artifacts:
+`RECOVERY_PILOT_source_control.json`, `RECOVERY_PILOT_source_control_lr1e-05_s40.json`,
+`RECOVERY_PILOT_C28_lr1e-05_s40.json`, `PARTIAL_recovery_pilot_C28_step40.log`,
+`dose_test_source_lr1e-5_fixed_scorer.log`.

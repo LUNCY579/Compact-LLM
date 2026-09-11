@@ -49,9 +49,12 @@ escapes that exchange rate — only training can.
 
 Training was then measured, and it produced the two results that matter most.
 
-**CED loses to the matched ordinary control.** At identical recipe, identical rows and
-identical token budget, the ordinary architecture reaches held-out CE **1.6213** against
-CED's **2.2796**. There is no measured axis on which CED wins.
+**CED loses to the matched ordinary control at both doses, and loses harder at the good
+one.** At identical recipe, rows and token budget: at lr 1e-4 the ordinary architecture
+reaches held-out CE 1.6213 against CED's 2.2796 (+0.66 nats); at lr 1e-5 — the dose that
+preserves the source's arithmetic at 6/6 — it reaches **1.5165** against CED's **2.7216**
+(**+1.21 nats**), with CED still at **0/6** on the task. There is no measured axis on which
+CED wins.
 
 **An excessive learning rate destroys capability while improving the metric — but the dose,
 not the data, was the problem.** At lr 1e-4 the frozen source went from 6/6 to 0/6 on the
@@ -301,7 +304,7 @@ was needed because the mechanism forbids it; "not attempted" means exactly that.
 | # | option | status | evidence |
 |---|---|---|---|
 | 16 | Recovery from the CED initialization | **works and is fast** — ~10 nats of held-out CE in under 5k supervised tokens | §9a |
-| 17 | CED vs matched ordinary control at equal training | **CED loses** by 0.66 nats held-out CE — established at lr 1e-4; the lr 1e-5 pair is the outstanding measurement | §9b |
+| 17 | CED vs matched ordinary control at equal training | **CED loses at both doses** — +0.66 nats at lr 1e-4, **+1.21 nats** at lr 1e-5, and 0/6 task against the source's 6/6 | §9b |
 | 18 | Learning-rate dose | **measured** — lr 1e-5 preserves 6/6 arithmetic *and* reaches better CE (1.5165) than lr 1e-4 (1.6213), which destroyed it | §9c |
 | 19 | Held-out CE as the recovery endpoint | **invalid on its own** — CE improved 4.05 nats while capability went 6/6 → 0/6 at lr 1e-4 | §9c |
 | 20 | KL-to-teacher as the recovery endpoint | **invalid on its own** — rises with training even when capability is fully preserved; tracks corpus drift, not quality | §9c |
@@ -371,21 +374,32 @@ recovered in under 5k supervised tokens, and fluency returns from token salad to
 English. A 1M-token budget is not remotely required to move CE. *(This run was interrupted at
 step 40 of a planned 120 and is labelled as such.)*
 
-### 9b. But CED loses the matched comparison
+### 9b. But CED loses the matched comparison — at both doses
 
-Same recipe, same 25 rows in the same order, same 4,968 supervised target tokens, 40 steps:
+Identical recipe, rows, order and 4,968 supervised target tokens; 40 steps; held-out on 8
+calibration rows never used for a gradient step.
 
-| | source untrained | **source trained** | C28 untrained | **C28 trained** |
-|---|---:|---:|---:|---:|
-| held-out CE | 5.6679 | **1.6213** | 12.2003 | **2.2796** |
-| held-out KL to original source | 0.0000 | 5.4721 | 8.9176 | 5.1657 |
-| **pilot task hits** | **6/6** | **0/6** | 0/6 | 0/6 |
+| arm | dose | held-out CE @40 | KL→orig @40 | **task @40** | distinct @40 |
+|---|---|---:|---:|---:|---:|
+| source | lr 1e-4 | 1.6213 | 5.4721 | 0/6 | 5 |
+| source | **lr 1e-5** | **1.5165** | 3.4908 | **6/6** | 6 |
+| C28 | lr 1e-4 | 2.2796 | 5.1657 | 0/6 | 4 |
+| C28 | **lr 1e-5** | 2.7216 | 3.0280 | **0/6** | 3 |
 
-CED is **0.66 nats worse** than the ordinary architecture at equal training. C28's 2.28 had
-looked like it beat the frozen source's 5.67; that is now fully explained as corpus
-adaptation, which the ordinary architecture simply does better. Both arms also drift *away*
-from the teacher as they train (KL rises), so neither is distilling — both are converging on
-the training corpus.
+CED penalty: **+0.66 nats** at lr 1e-4, **+1.21 nats** at lr 1e-5. The lr 1e-4 comparison was
+confounded because that dose destroys the source's task ability; at lr 1e-5, where the source
+keeps 6/6, CED is further behind and still scores zero.
+
+**CED learns the format and never the arithmetic.** C28 at lr 1e-5, step 40, all six prompts:
+
+    expected  3 → "10."      expected  9 → "10."
+    expected  5 → "19."      expected 11 → "10."
+    expected  7 → "10."      expected  8 → "The current one."
+
+3 distinct outputs across 6 prompts — it emits `10.` almost regardless of the question.
+The source at the same dose gives `3. 5. 7. 9. 11. 8.`, all correct, 6 distinct. Note that
+**termination reads 6/6 for both arms**: only the distinct-output count separates a model
+answering questions from one reciting a single answer, which is why `G1_QUALITY` checks both.
 
 ### 9c. CE can decouple from capability — a dose effect, not a data defect
 
@@ -414,12 +428,15 @@ Recommendation 0 therefore stands, on the weaker ground that CE *can* decouple f
 capability rather than that it always does. The registered G3 shape — a CE/KL objective with
 `minimum_effect` on a likelihood — would still have certified the destroyed lr 1e-4 model.
 
-### 9d. The matched comparison must be redone at the good dose
+### 9d. Resolved: the comparison was redone at the good dose
 
-§9b's conclusion that CED loses to the ordinary control is established **only at lr 1e-4**,
-the dose now known to be destructive. A matched lr 1e-5 pair is running. Until it lands,
-"CED loses at equal training" is supported at one dose and **not** yet at the dose anyone
-would actually use.
+An earlier revision of this section flagged that §9b's conclusion held only at lr 1e-4, the
+destructive dose, and that the matched lr 1e-5 pair was outstanding. **It has been run.** CED
+loses at lr 1e-5 by a wider margin (1.21 vs 0.66 nats) while scoring 0/6 against the
+source's 6/6, so the conclusion is now established at both doses and is strongest at the one
+a practitioner would choose. Two earlier attempts at this cell were killed by session
+teardown and produced no data; the completed run is
+`RECOVERY_PILOT_C28_lr1e-05_s40.json`.
 
 ### 9e. Measured cost, which stands
 
@@ -481,7 +498,8 @@ measurements, not qualifications.
 
 1. **Stop the CED-by-conversion arm.** It is falsified on capability grounds, independently
    of the parity question; the trade-off curve leaves no viable operating point; and it loses
-   the matched comparison at equal training.
+   the matched comparison at equal training **at both doses tested, by more at the better
+   one** — 0/6 on the task against the ordinary control's 6/6.
 2. **Add a quality gate before any further architecture work** (§6). It is cheap and it is
    the reason this went undetected.
 3. **Retire D40 as the "ordinary control".** A degenerate control cannot support any
