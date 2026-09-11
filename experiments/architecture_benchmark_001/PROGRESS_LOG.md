@@ -551,3 +551,24 @@ The remaining routes are genuinely larger decisions, and none is taken here:
 `HOTFIX_002.md` stays in the protocol as the registered record of a diagnostic that was
 tried and did not work. The option remains default `inherit`, so nothing in the qualified
 path changed. Negative result, reported as such.
+
+---
+
+## Final requalification at digest `fc44701e` — HOTFIX-002 default proven inert
+
+| stage | 8d54f540 | fc44701e | checks identical | per-path numerics identical |
+|---|---|---|---|---|
+| G0 | PASS | PASS | yes | — |
+| G1_IDENTITY | PASS | PASS | yes | — |
+| G1_WIDTH | PASS | PASS | yes | — |
+| G1_CED_C28 | FAIL, 401,863 | FAIL, **401,863** | yes | **yes** |
+| G1_CED_C40 | FAIL, 726,228 | FAIL, **726,228** | yes | **yes** |
+| G2_CACHED_B28 | PASS 9/9 | PASS 9/9 | yes | — |
+| G2_CACHED_D40 | PASS 9/9 | PASS 9/9 | yes | — |
+
+Three digests have now been qualified end to end on official weights — `eab80e9f`,
+`8d54f540`, `fc44701e` — and all three agree to the element. Adding the audit fix and the
+registered diagnostic changed no measurement, which is the property both changes were
+designed to have and the reason each requalification was run rather than assumed.
+
+Current qualified state: **`fc44701e`**, 186 tests passed, 0 skipped.
