@@ -337,3 +337,27 @@ stages are `G1_CED_C28` / `G1_CED_C40`, which now hold FAIL receipts.
 
 No tolerance was widened, no historical result relabelled, and no permissive substitute
 implemented. B28 and D40 remain independently eligible and proceed.
+
+---
+
+## Leakage re-check against the CURRENT local evaluation assets — PASS
+
+The v3 corpus README requires re-running its leakage scan against the live repository,
+because its shipped `leakage_report.json` was built against a snapshot
+(`/mnt/data/_repofiles/...`). Done, using normalized hashes only so that **no sealed content
+is read into any training or tuning process**:
+
+    eval sources : short-response-model-phase-0-1-2/data/sealed/sealed.jsonl          110 rows
+                   .../sealed/sealed_roleplay_v2_DO_NOT_TRAIN.jsonl                   400 rows
+                   .../dev/dev.jsonl                                                  510 rows
+                   .../dev/dev_roleplay_v2.jsonl                                      400 rows
+    distinct eval keys : 1,019 last-user-turn / 1,020 full-prompt
+    corpus rows scanned: 124,000 (110k new v3 SFT + 14k preservation slice)
+
+    LAST-USER-TURN exact collisions : 0
+    FULL-PROMPT     exact collisions : 0
+
+Normalization is NFKC + casefold + whitespace collapse. This is exact-match contamination
+detection, **not** semantic or near-duplicate detection; for that the only evidence remains
+the corpus's own sampled `near_duplicate_audit.json` (12,000 sampled vs 42,000 prior,
+threshold 90, 0 hits). Open data question 3 is closed; 1, 2 and 4 remain open.
