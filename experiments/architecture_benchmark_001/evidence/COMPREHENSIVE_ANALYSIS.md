@@ -267,21 +267,69 @@ Cheap — forward-only — and it would have failed D40, C28 and C40 immediately
 
 ## 7. Every option considered, and its status
 
+Everything researched across the whole programme, with the verdict and where the evidence
+lives. "Falsified" means measured and rejected; "ruled out analytically" means no measurement
+was needed because the mechanism forbids it; "not attempted" means exactly that.
+
+### Architecture / conversion
+
 | # | option | status | evidence |
 |---|---|---|---|
-| 1 | CED as delivered (14 encoder + 14 shared-memory decoder) | **falsified** — worse than uniform, 0/24 pilot | §1 |
-| 2 | Tune how many layers are converted | **falsified** — task lost at 10.7% KV saving | §3 |
-| 3 | Higher-precision shared-memory read (HOTFIX-002) | **falsified** — no improvement, C40 worse | §5 |
-| 4 | Higher-precision bank *projection* | **ruled out analytically** — its input is already perturbed | §5 |
-| 5 | Full-context bank reconstruction | **ruled out analytically** — see §8 | §8 |
-| 6 | Higher-precision encoder | not attempted — most of the model; a throughput decision, and §1 shows precision is not the binding problem | — |
-| 7 | Prospective equivalence-policy amendment | not written — would be legitimate, but §1 shows parity is not the blocker | — |
-| 8 | Function-preserving zero-gated augmentation | **implemented, not yet verified on real weights** — the verification run OOMed against concurrent jobs and was not retried | `gated_memory.py` |
-| 9 | Local cross-layer KV sharing | **implemented and falsified** — worse than CED at matched KV; both lie on one frontier | §4 |
-| 10 | Recovery/distillation from this initialization | **measured**: recovery is fast (10 nats in <5k tokens); CED loses the matched control by 0.66 nats **at lr 1e-4 only**; lr 1e-5 preserves capability and scores better, so the matched comparison is being redone | §9 |
-| 11 | Ordinary D40 as the matched control | **invalid** — control is itself degenerate | §1 |
+| 1 | CED as delivered (C28 = 14 encoder + 14 shared-memory decoder) | **falsified on capability** — CE 12.59, worse than uniform, 0/24 pilot | §1 |
+| 2 | Dose-tune the conversion depth (convert only last *N* layers) | **falsified** — task lost by N=4 at a 10.7% KV saving | §3 |
+| 3 | Local cross-layer KV sharing (share within groups of neighbours) | **falsified** — worse than CED at matched budget; both on one frontier | §4 |
+| 4 | Function-preserving zero-gated shared-memory augmentation | **implemented, not verified on real weights** — the verification run OOMed against concurrent jobs and was never retried. Adds KV rather than saving it; value is as a training scaffold | `gated_memory.py` |
+| 5 | Identity depth expansion (G1_IDENTITY) | **works, bitwise exact** (`max_abs_logit_error = 0.0`) — the one lossless structural change available | §2 |
+| 6 | Width reduction 1024→896 (`calibrate_d40`, the "ordinary control") | **invalid** — passes every structural gate while generating a degenerate `</think>` loop | §1 |
+| 7 | Any other sharing topology | **ruled out analytically** — every removed bank displaces exactly one layer by construction, so all topologies share one frontier at ~0.5 nats/bank | §4 |
 
----
+### Numerics / parity
+
+| # | option | status | evidence |
+|---|---|---|---|
+| 8 | Strict elementwise FP32 cache-order parity as the CED gate | CED **fails** (401,863 / 726,228 violations) while the matched ordinary control passes with **zero** | §5 |
+| 9 | FP64 diagnostic lane | both arms **pass** (3.8e-13 / 4.1e-12) — proves no logic, causality or cache bug | §5 |
+| 10 | Higher-precision shared-memory **read** (HOTFIX-002) | **falsified** — C28 0.5% better, C40 10.6% *worse* | §5 |
+| 11 | Higher-precision bank **projection** | **ruled out analytically** — its input `h` is already chunk-dependent | §5 |
+| 12 | Full-context bank reconstruction | **ruled out analytically** — would need an O(T²) encoder re-run, erasing the efficiency the design exists for | §8 |
+| 13 | Single-pass prefill only (declare chunked prefill unsupported) | **viable but insufficient** — removes chunk-schedule failures, not the `tail_only` failures nor the quality problem | §8 |
+| 14 | Higher-precision **encoder** | **not attempted** — that is most of the model, a throughput/memory decision, and §5 shows precision is not the binding problem |  |
+| 15 | Prospective equivalence-policy amendment for mid-network-tensor architectures | **not written** — would be legitimate, but §1 shows parity is not the blocker |  |
+
+### Training / recovery
+
+| # | option | status | evidence |
+|---|---|---|---|
+| 16 | Recovery from the CED initialization | **works and is fast** — ~10 nats of held-out CE in under 5k supervised tokens | §9a |
+| 17 | CED vs matched ordinary control at equal training | **CED loses** by 0.66 nats held-out CE — established at lr 1e-4; the lr 1e-5 pair is the outstanding measurement | §9b |
+| 18 | Learning-rate dose | **measured** — lr 1e-5 preserves 6/6 arithmetic *and* reaches better CE (1.5165) than lr 1e-4 (1.6213), which destroyed it | §9c |
+| 19 | Held-out CE as the recovery endpoint | **invalid on its own** — CE improved 4.05 nats while capability went 6/6 → 0/6 at lr 1e-4 | §9c |
+| 20 | KL-to-teacher as the recovery endpoint | **invalid on its own** — rises with training even when capability is fully preserved; tracks corpus drift, not quality | §9c |
+| 21 | 1M supervised-token budget per arm | **wrong by ~200x for this corpus** — 5k tokens already saturates 25 rows; and ~62 h for a matched pair on the only qualified runtime | §9e |
+| 22 | Distillation from the frozen source into the gated variant | **not attempted, and gradient-free at step 0** — a function-preserving student *is* the teacher, so the distillation term starts at zero; it needs a curriculum | §9 |
+| 23 | Replay mixture / frozen-teacher regularisation to protect capability | **not attempted** — the obvious next lever now that lr is known to matter |  |
+
+### Protocol / instrumentation
+
+| # | option | status | evidence |
+|---|---|---|---|
+| 24 | `G1_QUALITY` forward-only quality gate (HOTFIX-003) | **implemented and unit-tested; NOT yet demonstrated on real arms** | §6, `amendments/HOTFIX_003.md` |
+| 25 | `audit-evidence` schema-2 strict-parity reporting | **fixed** — previously reported `{}` for every schema-2 FAIL receipt | git `fb0e2b8` |
+| 26 | Training-side capability-retention gate | **does not exist** — this is recommendation 0 and the highest-value remaining item | §11 |
+| 27 | Strict-string task scoring | **fixed** — scored a correct `"3."` as a miss and inverted a published conclusion; now reports numeric and strict side by side | §9c |
+
+### Two of my own measurement bugs, and how they were caught
+
+Both were found because an **exact control behaved impossibly**, not by reading the code:
+
+| bug | symptom | caught by |
+|---|---|---|
+| local-KV cache-bytes re-derived from hard-coded head count and scalar width, disagreeing with `budget()` | `group=1` reported `kv=2.000x` for a configuration that *is* the source | the `group=1` identity control |
+| task scoring by full-string equality | a run with perfect arithmetic scored 0/6 | the lr 1e-5 trajectory showing correct answers in the log while hits read zero |
+
+That is the strongest practical lesson here: **keep the exact controls (`ced_last1`,
+`local group 1`, inert-default requalification) and both scorings in every run.** They cost
+almost nothing and they caught both errors.
 
 ## 8. Why a full-context bank cannot work
 
