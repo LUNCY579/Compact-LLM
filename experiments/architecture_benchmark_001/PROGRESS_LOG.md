@@ -361,3 +361,68 @@ Normalization is NFKC + casefold + whitespace collapse. This is exact-match cont
 detection, **not** semantic or near-duplicate detection; for that the only evidence remains
 the corpus's own sampled `near_duplicate_audit.json` (12,000 sampled vs 42,000 prior,
 threshold 90, 0 hits). Open data question 3 is closed; 1, 2 and 4 remain open.
+
+---
+
+## Matched cached-teacher engineering (Phase 3) — B28 and D40 PASS, C28/C40 blocked by design
+
+`G2_CACHED_C28` and `G2_CACHED_C40` declare `G1_CED_C28` / `G1_CED_C40` as parents. Those
+now hold FAIL receipts, so `validate_receipt` refuses those lanes without any intervention
+from me. The two ordinary arms are independently eligible (`G2_CACHED_B28` parents `G0`;
+`G2_CACHED_D40` parents `G1_WIDTH`) and were executed.
+
+    outputs/engineering/teacher-cache/TEACHER_CACHE.json
+    outputs/engineering/g2cached-b28/G2_CACHED_B28.json   PASS 9/9
+    outputs/engineering/g2cached-d40/G2_CACHED_D40.json   PASS 9/9
+
+Identical recipe on both arms, as the protocol requires: exactly 25 steps, SGD without
+momentum at 1e-5, alpha 0.5, temperature 1.0, `head_chunk_tokens` 8, gradient checkpointing,
+seed 17, same teacher cache, same 25 training rows, same order.
+
+| | B28 | D40 |
+|---|---|---|
+| status | PASS 9/9 | PASS 9/9 |
+| student_training_tokens | 3,159 | 3,159 |
+| supervised_shifted_targets | 3,134 | 3,134 |
+| wall_seconds | 358.5 | 319.9 |
+| throughput | 8.7 targets/s | 9.8 targets/s |
+| teacher backbone tokens **inside** the student loop | **0** | **0** |
+| head projection positions (student / teacher) | 6,268 / 6,268 | 6,268 / 6,268 |
+| peak CUDA allocated | null (CPU) | null (CPU) |
+| loss first -> last (min..max) | 2.838 -> 2.621 (2.189..3.317) | 3.460 -> 3.291 (2.894..4.104) |
+
+Losses are noisy and essentially flat. That is the expected and correct outcome of 25 SGD
+steps at 1e-5 — **these are engineering checks, not recovery results**, and nothing here is
+evidence about either architecture's quality. The two arms' losses are also not comparable
+to each other: different shapes, different initialisations, no registered pairing between
+them (the registered pairings are C28↔B28 and C40↔D40, and both CED arms are blocked).
+
+`G2_CACHED_B28` was additionally re-validated through `validate_receipt` directly:
+recursive parent DAG and artifact hashes verify against G0.
+
+### Measured resources on this machine
+
+| quantity | measured |
+|---|---|
+| teacher cache | 12,981,798 B for 3,159 tokens = **4,110 B/token** (hidden 1024 x fp32) |
+| checkpoint per arm | 2.3 GB fp32 |
+| process RAM, 25-step CPU smoke | **~7.0 GB** peak working set (of 15.2 GB total) |
+| total `outputs/` after this session | 12 GB (99 GB free remains) |
+| student throughput | ~9 supervised targets/s, CPU, 16 threads |
+
+### Extrapolations that matter for any G3 plan
+
+- 1,000,000 supervised targets -> teacher cache **~4.1 GB**; 10M -> ~41 GB. A 4.1 GB cache
+  cannot be held resident beside a ~7 GB training process on a 15.2 GB machine, so
+  bounded-memory indexed shards are a hard requirement, not a nicety.
+- 1,000,000 supervised targets at ~9 targets/s = **~31 hours per arm on CPU**, so ~62 hours
+  for one complete matched recipe. **A 1M-token CPU pilot is not feasible on this machine.**
+
+### GPU: not measured, and deliberately not attempted
+
+The RTX 4070 Laptop (8 GB, ~0.9 GB already in use) was never used. `peak_cuda_allocated_bytes`
+is null in both receipts because the qualified runtime is `torch 2.10.0+cpu`. Running on CUDA
+means a different `torch` build, therefore a different runtime identity in `context()`, so
+`validate_receipt` would reject every parent receipt and the entire ladder would need
+requalifying under a CUDA runtime first. Devices were not silently switched. **No 8 GB fit,
+VRAM, latency or throughput claim is made.**

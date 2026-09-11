@@ -30,8 +30,8 @@ only), 15.2 GB RAM, 113 GB free disk.
 
 | arm | checkpoint / lineage | qualification at `eab80e9f` | numerics | engineering | next blocker |
 |---|---|---|---|---|---|
-| **B28** | frozen official source, no checkpoint | **G0 fresh PASS** 8/8 | FP32 4 violating elements in 1 row of 8; FP64 clean (3.8e-13) | `G2_CACHED_B28` executed — see engineering section | none; it is the frozen teacher and the C28 control |
-| **D40** | `outputs/ladder-eab80e9f-v1/G1_WIDTH/attempt-0001/` (from G1_IDENTITY, bitwise exact) | **G1_WIDTH fresh PASS** 7/7 | FP32 **0 violations on every path and row** | `G2_CACHED_D40` executed — see engineering section | not a *recovered* donor; recovery recipe unfrozen |
+| **B28** | frozen official source, no checkpoint | **G0 fresh PASS** 8/8 | FP32 4 violating elements total; FP64 clean (3.8e-13) | **`G2_CACHED_B28` PASS 9/9**, 358.5 s, 3,134 targets | none; it is the frozen teacher and the C28 control |
+| **D40** | `outputs/ladder-eab80e9f-v1/G1_WIDTH/attempt-0001/` (from G1_IDENTITY, bitwise exact) | **G1_WIDTH fresh PASS** 7/7 | FP32 **0 violations on every path and row** | **`G2_CACHED_D40` PASS 9/9**, 319.9 s, 3,134 targets | not a *recovered* donor; recovery recipe unfrozen |
 | **C28** | `outputs/ladder-eab80e9f-v1/G1_CED_C28/attempt-0001/` (donor B28, layer 14, 596,311,424 params) | **G1_CED_C28 fresh FAIL** 12/15 | FP32 up to 63,801 violations / 8.2e-4; FP64 clean (4.1e-12) | **BLOCKED** by failed parent | strict FP32 parity |
 | **C40** | `outputs/ladder-eab80e9f-v1/G1_CED_C40/attempt-0001/` (donor D40, layer 20, 594,279,808 params) | **G1_CED_C40 fresh FAIL** 12/15 | FP32 up to 134,197 violations / 5.9e-3 | **BLOCKED** by failed parent | strict FP32 parity |
 
@@ -60,6 +60,9 @@ argmax-based rule recorded them as PASS. Argmax agreement does not establish har
 - No arm has been compared to any other on any task.
 - No GPU/VRAM measurement at all. CUDA would be a different runtime identity and would
   require requalifying the whole ladder; devices were not silently switched.
+- **A 1M-token pilot is not feasible on this machine as configured.** Measured ~9 supervised
+  targets/s on CPU = ~31 h per arm, ~62 h per matched recipe; and a 1M-token teacher cache
+  is ~4.1 GB against 15.2 GB RAM with a ~7 GB training process.
 - G3/G4/G5 remain closed. `recovery-readiness` still reports BLOCKED with 18 missing items.
 - The workflow audit of the package was **not a clean review**: 60 of 123 agents died on a
   usage limit. Its `receipt-integrity` and `data-tooling` dimensions completed verification;
@@ -85,10 +88,11 @@ Open data questions, all of which must be settled before any budget is frozen:
 2. **Human review is pending for every row.** A 520-row audit packet and 40,000-ID pool
    exist. `data_tools.py:67` accepts `review_status: "approved"` verbatim with no reviewer
    identity, timestamp or attestation — so that field is a declaration, not evidence.
-3. The corpus leakage scan ran against a build-time snapshot; its README requires re-running
-   against the current local repo. Current assets exist at
-   `short-response-model-phase-0-1-2/data/{sealed,dev}/`. Use hashes so sealed contents never
-   reach a training process.
+3. ~~Leakage re-check against current sealed/dev~~ **CLOSED.** Re-ran against the live
+   assets (1,019 distinct eval keys vs 124,000 corpus rows): **0 last-user-turn and 0
+   full-prompt collisions**, using normalized hashes so no sealed content entered any
+   training process. Exact-match only; near-duplicate evidence remains the corpus's own
+   sampled audit.
 4. v3 rows carry `messages`, not the flat `text` field `prepare-data` requires — a rendering
    step is needed either way.
 
