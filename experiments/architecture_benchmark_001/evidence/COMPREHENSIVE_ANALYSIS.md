@@ -53,11 +53,13 @@ Training was then measured, and it produced the two results that matter most.
 identical token budget, the ordinary architecture reaches held-out CE **1.6213** against
 CED's **2.2796**. There is no measured axis on which CED wins.
 
-**The available training data destroys the capability being measured.** The frozen source
-went from **6/6 to 0/6** on the pilot arithmetic in 40 steps and under 5k supervised tokens,
-while its held-out CE *improved* 4.05 nats. Held-out CE and task accuracy are
-**anti-correlated** here, so a recovery plan with a CE or teacher-KL endpoint — which is the
-registered G3 shape — would have reported success while destroying the model.
+**An excessive learning rate destroys capability while improving the metric — but the dose,
+not the data, was the problem.** At lr 1e-4 the frozen source went from 6/6 to 0/6 on the
+pilot arithmetic while its held-out CE *improved* 4.05 nats. At lr 1e-5 the same 25 rows and
+the same 4,968 tokens give **lower** held-out CE (1.5165) with arithmetic **intact**. So CE
+can decouple from capability and cannot certify a run on its own; the corpus does not need
+replacing. An earlier revision claimed the data itself was destructive — **withdrawn**, along
+with a scorer bug that scored a correct `"3."` as a miss against `"3"`. See §9c.
 
 ---
 
@@ -276,7 +278,7 @@ Cheap — forward-only — and it would have failed D40, C28 and C40 immediately
 | 7 | Prospective equivalence-policy amendment | not written — would be legitimate, but §1 shows parity is not the blocker | — |
 | 8 | Function-preserving zero-gated augmentation | **implemented, not yet verified on real weights** — the verification run OOMed against concurrent jobs and was not retried | `gated_memory.py` |
 | 9 | Local cross-layer KV sharing | **implemented and falsified** — worse than CED at matched KV; both lie on one frontier | §4 |
-| 10 | Recovery/distillation from this initialization | **measured**: recovery is fast (10 nats in <5k tokens) but CED loses the matched control by 0.66 nats and the endpoint is invalid | §9 |
+| 10 | Recovery/distillation from this initialization | **measured**: recovery is fast (10 nats in <5k tokens); CED loses the matched control by 0.66 nats **at lr 1e-4 only**; lr 1e-5 preserves capability and scores better, so the matched comparison is being redone | §9 |
 | 11 | Ordinary D40 as the matched control | **invalid** — control is itself degenerate | §1 |
 
 ---
@@ -337,36 +339,39 @@ adaptation, which the ordinary architecture simply does better. Both arms also d
 from the teacher as they train (KL rises), so neither is distilling — both are converging on
 the training corpus.
 
-### 9c. The serious finding: the endpoint is invalid
+### 9c. CE can decouple from capability — a dose effect, not a data defect
 
-**The frozen source went 6/6 → 0/6 on pilot arithmetic after 40 steps.**
+**Corrected from an earlier revision of this section.** Two errors, both material.
 
-    expected 3 → "1."      expected 5 → "3."
-    expected 7 → "4."      expected 9 → "6."
+*The scorer was wrong.* Pilot hits used full-string equality, so a model answering in the
+corpus's own style — `"3."` rather than `"3"` — scored 0/6 while being entirely correct.
+`recovery_pilot.py` now reports leading-integer `exact_hits` (primary, since these answers
+are integers) alongside `strict_hits`, and saves every sample.
 
-It learned the corpus's terse numeric answer *format* and lost the *arithmetic*.
+*And it was the dose.* Same 25 rows, same 40 steps, same 4,968 supervised target tokens:
 
-| arm | Δ held-out CE | Δ task |
+| | lr 1e-4 | lr 1e-5 |
 |---|---|---|
-| source | −4.05 nats (much better) | 6/6 → 0/6 (**destroyed**) |
-| C28 | −9.92 nats (much better) | 0/6 → 0/6 (unchanged) |
+| held-out CE | 1.6213 | **1.5165** |
+| answers for 3 / 5 / 7 / 9 | `1.` `3.` `4.` `6.` — wrong | `3.` `5.` `7.` `9.` — **correct** |
+| capability | destroyed | **preserved** |
 
-Every arm improved sharply on the metric and either lost or failed to gain the capability.
-On this corpus, **held-out CE is not a valid proxy for capability and optimising it actively
-harms capability.** That invalidates the endpoint, not just the dose — and the registered
-G3 shape (`recovery_tokens_per_arm`, a CE/KL objective, `minimum_effect` on a likelihood)
-is built around exactly that endpoint.
+The gentler dose wins on **both** axes. The withdrawn claim was "this training data destroys
+the capability"; what survives is narrower and still sufficient:
 
-This is the failure the brief warned about, arriving in its strongest form: training-loss
-reduction is not reasoning improvement, and here it is reasoning *destruction*.
+> An excessive learning rate can drive held-out CE down while destroying task accuracy, so
+> **CE alone cannot certify a training run** and a capability-retention check is required.
 
-### 9d. Dose versus data — open
+Recommendation 0 therefore stands, on the weaker ground that CE *can* decouple from
+capability rather than that it always does. The registered G3 shape — a CE/KL objective with
+`minimum_effect` on a likelihood — would still have certified the destroyed lr 1e-4 model.
 
-lr 1e-4 on 25 rows for 40 steps is a deliberately small probe. A lower learning rate, a
-replay mixture, or a frozen-teacher distillation term might preserve arithmetic while still
-adapting. A dose test at lr 1e-5 (the registered engineering learning rate) is the direct
-experiment and its result belongs here. Until it lands, "this data is unusable" and "this
-dose is wrong" are **both live**, and only the latter is cheap to fix.
+### 9d. The matched comparison must be redone at the good dose
+
+§9b's conclusion that CED loses to the ordinary control is established **only at lr 1e-4**,
+the dose now known to be destructive. A matched lr 1e-5 pair is running. Until it lands,
+"CED loses at equal training" is supported at one dose and **not** yet at the dose anyone
+would actually use.
 
 ### 9e. Measured cost, which stands
 

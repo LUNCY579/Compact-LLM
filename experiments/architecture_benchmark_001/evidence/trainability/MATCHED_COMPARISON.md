@@ -1,3 +1,63 @@
+# CORRECTION (supersedes the "data destroys capability" reading below)
+
+**Two things below are wrong, and the error inverted a headline conclusion.** Both are fixed
+here rather than quietly edited out, and the superseded text is left in place under the rule.
+
+### 1. My scorer was wrong, and it hid a preserved capability
+
+Pilot hits were scored by full-string equality against the expected answer. After adapting to
+this corpus the model answers in the corpus's own style — `"3."` rather than `"3"` — so a run
+whose arithmetic was **entirely correct** was recorded as **0/6**.
+
+Re-scored by leading integer, at lr 1e-5 (the registered engineering learning rate):
+
+| expected | got | strict match | numeric match |
+|---|---|---|---|
+| 3 | `3.` | no | **yes** |
+| 5 | `5.` | no | **yes** |
+| 7 | `7.` | no | **yes** |
+| 9 | `9.` | no | **yes** |
+
+4/4 on the saved samples. `recovery_pilot.py` now records `exact_hits` (leading integer,
+primary for this integer-answer pilot) and `strict_hits` (full string) side by side, and
+saves every sample rather than the first four.
+
+### 2. It was the DOSE, not the data
+
+The claim "this training data destroys the capability being measured" is **withdrawn**.
+Comparing the two doses, same 25 rows, same 40 steps, same 4,968 supervised tokens:
+
+| | lr 1e-4 | lr 1e-5 |
+|---|---|---|
+| held-out CE | 1.6213 | **1.5165** |
+| arithmetic answers | `1.` `3.` `4.` `6.` for 3/5/7/9 — **wrong** | `3.` `5.` `7.` `9.` — **correct** |
+| capability | destroyed | **preserved** |
+
+The gentler dose is better on **both** axes: lower held-out CE *and* intact arithmetic. So
+lr 1e-4 on 25 rows is simply too high for a 596M model; the corpus is usable.
+
+### 3. What this does to the CE/capability anti-correlation claim
+
+The anti-correlation is real **at lr 1e-4** and is **not** a property of the corpus. At
+lr 1e-5, CE and capability improve together. The narrower surviving claim:
+
+> An excessive learning rate can drive held-out CE down while destroying task accuracy, so
+> CE alone cannot certify a training run. A capability-retention check is still required —
+> but the corpus does not need replacing, and recommendation 0 (fix the endpoint) stands on
+> the weaker and still-sufficient ground that CE *can* decouple from capability, not that it
+> always does.
+
+### 4. What is still open
+
+The 4/4 above is from the four saved samples of one run. A full 6-prompt re-score at lr 1e-5
+for **both** the source control and C28 is running with the fixed scorer; the matched
+CED-versus-ordinary comparison at the *good* dose does not exist yet, so **§1's conclusion
+that "CED loses the matched comparison" is currently established only at lr 1e-4** — the
+dose now known to be destructive. That comparison must be redone before the conclusion is
+relied on.
+
+---
+
 # The matched comparison: CED loses, and the training data destroys the capability being measured
 
 Exploratory, pinned CPU runtime, official Supa 1.7.0-devfreeze weights. Run **outside** the

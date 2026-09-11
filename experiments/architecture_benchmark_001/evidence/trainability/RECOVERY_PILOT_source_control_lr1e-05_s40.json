@@ -1,0 +1,345 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_bounded_recovery_pilot_only",
+  "note": "HELD-OUT calibration rows never used for a gradient step, plus open pilot generation. Not a sealed or DEV evaluation and not an efficacy claim. Outside the experiment package; no receipt, no gate opened.",
+  "arm": "source_control",
+  "steps": 40,
+  "optimizer": "AdamW lr=1e-05 wd=0 clip=1.0",
+  "seed": 17,
+  "train_rows": 25,
+  "heldout_rows": 8,
+  "heldout_target_tokens": 1001,
+  "source_heldout_ce_nats": 5.667859240369006,
+  "trainable_parameters": 596049920,
+  "supervised_target_tokens": 4968,
+  "wall_seconds": 1060.7734086,
+  "checkpoints": [
+    {
+      "step": 0,
+      "tokens": 0,
+      "heldout_ce_nats": 5.667859240369006,
+      "heldout_kl_to_source_nats": 0.0,
+      "heldout_top1_agreement": 1.0,
+      "exact_hits": 6,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 6
+    },
+    {
+      "step": 10,
+      "tokens": 1166,
+      "heldout_ce_nats": 3.017744736952501,
+      "heldout_kl_to_source_nats": 1.2319358497947366,
+      "heldout_top1_agreement": 0.5944055944055944,
+      "exact_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 6
+    },
+    {
+      "step": 20,
+      "tokens": 2585,
+      "heldout_ce_nats": 2.1091440297983266,
+      "heldout_kl_to_source_nats": 2.0538799731762376,
+      "heldout_top1_agreement": 0.45354645354645357,
+      "exact_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 6
+    },
+    {
+      "step": 30,
+      "tokens": 3774,
+      "heldout_ce_nats": 1.668877021416084,
+      "heldout_kl_to_source_nats": 3.061420269183941,
+      "heldout_top1_agreement": 0.4145854145854146,
+      "exact_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 6
+    },
+    {
+      "step": 40,
+      "tokens": 4968,
+      "heldout_ce_nats": 1.5164760928768497,
+      "heldout_kl_to_source_nats": 3.4908202759154907,
+      "heldout_top1_agreement": 0.3956043956043956,
+      "exact_hits": 0,
+      "of": 6,
+      "terminated": 6,
+      "distinct": 6
+    }
+  ],
+  "trajectory": [
+    {
+      "step": 1,
+      "train_ce": 5.675991535186768,
+      "grad_norm": 86.16021728515625,
+      "tokens": 88
+    },
+    {
+      "step": 2,
+      "train_ce": 4.507662296295166,
+      "grad_norm": 55.31349182128906,
+      "tokens": 263
+    },
+    {
+      "step": 3,
+      "train_ce": 5.170619964599609,
+      "grad_norm": 44.02299118041992,
+      "tokens": 354
+    },
+    {
+      "step": 4,
+      "train_ce": 3.571141004562378,
+      "grad_norm": 29.565227508544922,
+      "tokens": 493
+    },
+    {
+      "step": 5,
+      "train_ce": 3.7069904804229736,
+      "grad_norm": 26.1937255859375,
+      "tokens": 640
+    },
+    {
+      "step": 6,
+      "train_ce": 4.159892559051514,
+      "grad_norm": 34.97477722167969,
+      "tokens": 730
+    },
+    {
+      "step": 7,
+      "train_ce": 2.4816322326660156,
+      "grad_norm": 21.886804580688477,
+      "tokens": 878
+    },
+    {
+      "step": 8,
+      "train_ce": 3.2747228145599365,
+      "grad_norm": 28.627225875854492,
+      "tokens": 964
+    },
+    {
+      "step": 9,
+      "train_ce": 4.033188819885254,
+      "grad_norm": 29.83366584777832,
+      "tokens": 1079
+    },
+    {
+      "step": 10,
+      "train_ce": 3.5398967266082764,
+      "grad_norm": 31.301633834838867,
+      "tokens": 1166
+    },
+    {
+      "step": 11,
+      "train_ce": 3.3681583404541016,
+      "grad_norm": 27.462684631347656,
+      "tokens": 1271
+    },
+    {
+      "step": 12,
+      "train_ce": 3.4024548530578613,
+      "grad_norm": 23.93267059326172,
+      "tokens": 1385
+    },
+    {
+      "step": 13,
+      "train_ce": 2.9982964992523193,
+      "grad_norm": 23.300331115722656,
+      "tokens": 1565
+    },
+    {
+      "step": 14,
+      "train_ce": 3.036541700363159,
+      "grad_norm": 25.348196029663086,
+      "tokens": 1682
+    },
+    {
+      "step": 15,
+      "train_ce": 2.4404208660125732,
+      "grad_norm": 20.947998046875,
+      "tokens": 1834
+    },
+    {
+      "step": 16,
+      "train_ce": 2.6791887283325195,
+      "grad_norm": 23.24493980407715,
+      "tokens": 1952
+    },
+    {
+      "step": 17,
+      "train_ce": 2.2228360176086426,
+      "grad_norm": 18.11065101623535,
+      "tokens": 2129
+    },
+    {
+      "step": 18,
+      "train_ce": 3.044842481613159,
+      "grad_norm": 27.75646209716797,
+      "tokens": 2231
+    },
+    {
+      "step": 19,
+      "train_ce": 1.8751552104949951,
+      "grad_norm": 16.48447608947754,
+      "tokens": 2448
+    },
+    {
+      "step": 20,
+      "train_ce": 2.1035542488098145,
+      "grad_norm": 20.873300552368164,
+      "tokens": 2585
+    },
+    {
+      "step": 21,
+      "train_ce": 2.90092134475708,
+      "grad_norm": 27.941673278808594,
+      "tokens": 2710
+    },
+    {
+      "step": 22,
+      "train_ce": 2.2120749950408936,
+      "grad_norm": 22.806869506835938,
+      "tokens": 2832
+    },
+    {
+      "step": 23,
+      "train_ce": 3.010444164276123,
+      "grad_norm": 27.2042179107666,
+      "tokens": 2940
+    },
+    {
+      "step": 24,
+      "train_ce": 2.3859195709228516,
+      "grad_norm": 36.0865478515625,
+      "tokens": 3030
+    },
+    {
+      "step": 25,
+      "train_ce": 1.9100801944732666,
+      "grad_norm": 30.848846435546875,
+      "tokens": 3134
+    },
+    {
+      "step": 26,
+      "train_ce": 1.87388277053833,
+      "grad_norm": 26.658428192138672,
+      "tokens": 3222
+    },
+    {
+      "step": 27,
+      "train_ce": 1.8786591291427612,
+      "grad_norm": 18.505979537963867,
+      "tokens": 3397
+    },
+    {
+      "step": 28,
+      "train_ce": 1.8570048809051514,
+      "grad_norm": 27.082557678222656,
+      "tokens": 3488
+    },
+    {
+      "step": 29,
+      "train_ce": 1.2102528810501099,
+      "grad_norm": 21.838159561157227,
+      "tokens": 3627
+    },
+    {
+      "step": 30,
+      "train_ce": 1.2524336576461792,
+      "grad_norm": 19.88212776184082,
+      "tokens": 3774
+    },
+    {
+      "step": 31,
+      "train_ce": 1.5510382652282715,
+      "grad_norm": 25.429912567138672,
+      "tokens": 3864
+    },
+    {
+      "step": 32,
+      "train_ce": 0.9319273233413696,
+      "grad_norm": 17.10838508605957,
+      "tokens": 4012
+    },
+    {
+      "step": 33,
+      "train_ce": 0.9174915552139282,
+      "grad_norm": 21.081518173217773,
+      "tokens": 4098
+    },
+    {
+      "step": 34,
+      "train_ce": 2.311221122741699,
+      "grad_norm": 63.51123809814453,
+      "tokens": 4213
+    },
+    {
+      "step": 35,
+      "train_ce": 1.0337318181991577,
+      "grad_norm": 36.71302032470703,
+      "tokens": 4300
+    },
+    {
+      "step": 36,
+      "train_ce": 1.2632180452346802,
+      "grad_norm": 29.49776268005371,
+      "tokens": 4405
+    },
+    {
+      "step": 37,
+      "train_ce": 1.4516630172729492,
+      "grad_norm": 22.161333084106445,
+      "tokens": 4519
+    },
+    {
+      "step": 38,
+      "train_ce": 1.373502254486084,
+      "grad_norm": 18.870500564575195,
+      "tokens": 4699
+    },
+    {
+      "step": 39,
+      "train_ce": 1.2376378774642944,
+      "grad_norm": 70.48358917236328,
+      "tokens": 4816
+    },
+    {
+      "step": 40,
+      "train_ce": 1.0783941745758057,
+      "grad_norm": 24.82930564880371,
+      "tokens": 4968
+    }
+  ],
+  "final_generation": {
+    "exact_hits": 0,
+    "of": 6,
+    "terminated": 6,
+    "distinct": 6,
+    "samples": [
+      {
+        "id": "pilot-d1-v0",
+        "expected": "3",
+        "got": "3."
+      },
+      {
+        "id": "pilot-d1-v1",
+        "expected": "5",
+        "got": "5."
+      },
+      {
+        "id": "pilot-d1-v2",
+        "expected": "7",
+        "got": "7."
+      },
+      {
+        "id": "pilot-d1-v3",
+        "expected": "9",
+        "got": "9."
+      }
+    ]
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

@@ -16,7 +16,7 @@ engineering smoke and is left untouched.
 usage: recovery_pilot.py <arm> <steps> [lr] [eval_every] [heldout_rows]
   arm: C28 | C40 | ced_lastN | source_control
 """
-import gc, json, sys, time
+import gc, json, re, sys, time
 from dataclasses import replace
 from pathlib import Path
 import torch
@@ -100,6 +100,19 @@ def heldout():
             'heldout_top1_agreement': agree / ntok}
 
 
+def _leading_int(text):
+    """First integer in the decoded answer, or None.
+
+    Strict string equality is the wrong scorer here. After adapting to this corpus the model
+    answers in the corpus's own style -- "3." rather than "3" -- so exact match reported 0/6
+    for a run whose arithmetic was entirely correct. That understatement inverted a
+    conclusion, so the scorer now records BOTH readings and the tolerant one is primary for
+    the arithmetic pilot, whose answers are integers by construction.
+    """
+    m = re.search(r'-?\d+', text)
+    return m.group(0) if m else None
+
+
 def generate():
     model.eval()
     outs, term = [], 0
@@ -113,12 +126,19 @@ def generate():
                 if t in EOS:
                     term += 1; break
                 got.append(t); cur = torch.tensor([[t]], dtype=torch.long)
-            outs.append({'id': row['id'], 'expected': row['answer'],
-                         'got': tok.decode(got, skip_special_tokens=True)[:60]})
+            text = tok.decode(got, skip_special_tokens=True)[:60]
+            want = row['answer'].strip()
+            outs.append({'id': row['id'], 'expected': want, 'got': text,
+                         'leading_int': _leading_int(text),
+                         'strict_match': text.strip() == want,
+                         'numeric_match': _leading_int(text) == want})
     model.train()
-    hits = sum(1 for o in outs if o['got'].strip() == o['expected'].strip())
-    return {'exact_hits': hits, 'of': len(pilot), 'terminated': term, 'distinct': len({o['got'] for o in outs}),
-            'samples': outs[:4]}
+    return {'exact_hits': sum(o['numeric_match'] for o in outs),
+            'strict_hits': sum(o['strict_match'] for o in outs),
+            'of': len(pilot), 'terminated': term,
+            'distinct': len({o['got'] for o in outs}),
+            'scoring': 'exact_hits is leading-integer match; strict_hits is full-string equality',
+            'samples': outs}
 
 
 model.train()
