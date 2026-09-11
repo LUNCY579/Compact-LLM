@@ -1,0 +1,8 @@
+arm=C28 steps=200 lr=0.0001 trainable_params=596,311,424
+C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\rab001_exploration\trainability.py:85: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  traj.append({'step': step, 'ce': float(loss), 'grad_norm': float(gnorm), 'tokens': tokens})
+  step    0  ce= 11.4815  |g|=  415.977  tok=     88      29s
+  step   10  ce=  4.0120  |g|=   28.044  tok=   1271     709s
+  step   20  ce=  3.1998  |g|=   23.007  tok=   2710    1179s
+  step   30  ce=  1.5242  |g|=   17.473  tok=   3864    1383s
