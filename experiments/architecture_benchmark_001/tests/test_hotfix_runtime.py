@@ -302,3 +302,53 @@ def test_native_loader_tests_alone_do_not_license_native_random_parity(tmp_path)
     p.write_text('<testsuites><testsuite><testcase classname="test_native_loader" name="a"/><testcase classname="test_native_loader" name="b"/></testsuite></testsuites>')
     assert summarize(p)['native_random_model_cases_passed']==0
     with pytest.raises(ValueError): summarize(p,require_native=True)
+
+
+def _hashed_receipt(path: Path, body: dict) -> None:
+    payload={k:v for k,v in body.items() if k!='receipt_sha256'}
+    path.parent.mkdir(parents=True,exist_ok=True)
+    path.write_text(json.dumps({**payload,'receipt_sha256':source.canonical_hash(payload)},indent=2),encoding='utf-8')
+
+
+def test_audit_evidence_surfaces_strict_failures_in_both_receipt_generations(tmp_path):
+    """Regression: reading only metrics.cache_order_parity reported zero strict failures
+    for every schema-2 CED FAIL receipt, hiding the experiment's most important result."""
+    _hashed_receipt(tmp_path/'legacy/G1_CED_C28.json',{
+        'schema':1,'stage':'G1_CED_C28','status':'PASS','artifacts':{},'checks':{},
+        'metrics':{'cache_order_parity':{'tail_only':{'elementwise_g0_violations':19},
+                                         'chunked_cache':{'elementwise_g0_violations':4114}}}})
+    numerics=tmp_path/'current/numerics.json'
+    numerics.parent.mkdir(parents=True,exist_ok=True)
+    numerics.write_text(json.dumps({'rows':[{'paths':{
+        'tail_only':{'elementwise_violations':8},'prefix':{'elementwise_violations':1},
+        'chunks':{'size_1':{'elementwise_violations':39267},'size_16':{'elementwise_violations':0}}}},
+        {'paths':{'tail_only':{'elementwise_violations':2},'prefix':{'elementwise_violations':0},
+                  'chunks':{'size_1':{'elementwise_violations':10},'size_16':{'elementwise_violations':0}}}}]}),
+        encoding='utf-8')
+    current={'schema':2,'stage':'G1_CED_C28','status':'FAIL',
+             'artifacts':{'numerics.json':source.sha256_file(numerics)},
+             'checks':{'strict_tail_only_parity':False,'strict_chunked_cache_parity':False,
+                       'causal_prefix_parity':False,'decode_choices_exact':True},'metrics':{}}
+    _hashed_receipt(tmp_path/'current/G1_CED_C28.json',current)
+    _hashed_receipt(tmp_path/'clean/G0.json',{'schema':2,'stage':'G0','status':'PASS','artifacts':{},
+        'checks':{'parser_usable':True},'metrics':{}})
+
+    by_path={r['path']:r for r in review.audit_evidence(tmp_path)['records']}
+    legacy=by_path['legacy/G1_CED_C28.json']
+    assert legacy['recorded_strict_parity_failures']=={'tail_only':19,'chunked_cache':4114}
+    assert legacy['any_recorded_strict_parity_failure'] and legacy['declared_status']=='PASS'
+
+    now=by_path['current/G1_CED_C28.json']
+    assert now['recorded_strict_parity_failures']=={}
+    assert now['failed_strict_parity_checks']==['causal_prefix_parity','strict_chunked_cache_parity','strict_tail_only_parity']
+    assert now['strict_parity_violation_totals']=={'tail_only':10,'prefix':1,'chunk_size_1':39277}
+    assert now['any_recorded_strict_parity_failure']
+
+    clean=by_path['clean/G0.json']
+    assert not clean['any_recorded_strict_parity_failure'] and clean['failed_strict_parity_checks']==[]
+
+    # An unbound or edited sidecar must never contribute counts to the audit.
+    numerics.write_text(json.dumps({'rows':[{'paths':{'tail_only':{'elementwise_violations':999999}}}]}),encoding='utf-8')
+    tampered={r['path']:r for r in review.audit_evidence(tmp_path)['records']}['current/G1_CED_C28.json']
+    assert tampered['strict_parity_violation_totals']=={}
+    assert tampered['failed_strict_parity_checks'] and tampered['any_recorded_strict_parity_failure']
