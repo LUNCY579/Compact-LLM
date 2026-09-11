@@ -11,8 +11,12 @@ def summarize(junit: Path, *, require_native: bool = False) -> dict:
     cases = ET.parse(junit).getroot().findall('.//testcase')
     skipped = [c for c in cases if c.find('skipped') is not None]
     failed = [c for c in cases if c.find('failure') is not None or c.find('error') is not None]
-    native = [c for c in cases if 'test_native' in c.get('classname', '') and c not in skipped and c not in failed]
-    if not cases or failed or (require_native and (len(native) < 2 or skipped)):
+    native = [c for c in cases if c.get('classname', '').rsplit('.', 1)[-1] == 'test_native'
+              and c.get('name', '').startswith('test_native_random_qwen3_logits[')
+              and c not in skipped and c not in failed]
+    native_variants = {c.get('name') for c in native}
+    required_native = {'test_native_random_qwen3_logits[False]', 'test_native_random_qwen3_logits[True]'}
+    if not cases or failed or (require_native and (not required_native.issubset(native_variants) or skipped)):
         raise GateClosed('mechanical report failed, empty, or missing required native random-model checks')
     return {'schema': 1, 'experiment_id': 'RAB-001', 'evidence_kind': 'mechanical_tests_only',
             'status': 'PASS', 'passed': len(cases)-len(skipped)-len(failed), 'skipped': len(skipped),

@@ -1,10 +1,10 @@
 {
-  "schema": 1,
+  "schema": 2,
   "experiment_id": "RAB-001",
   "title": "First architecture benchmark: depth/width allocation and causal shared memory",
   "branch": "research/benchmark-001-architecture-ced40-v1",
   "foundation_tag": "benchmark-001-architecture-ced40-foundation-v1",
-  "status": "MECHANICAL_FOUNDATION_NOT_MODEL_SUCCESS",
+  "status": "HOTFIX_001_REQUALIFICATION_REQUIRED",
   "primary_arms": {
     "B28": "B28_1024_official_shape",
     "D40": "D40_896_near_baseline_budget",
@@ -12,19 +12,88 @@
     "C40": "C40_896_near_baseline_budget"
   },
   "parameter_relative_tolerance": 0.005,
-  "diagnostics": ["D40_1024_expansion_diagnostic", "W28_896_width_only_diagnostic", "D40_896_proportional", "C40_896_proportional"],
+  "diagnostics": [
+    "D40_1024_expansion_diagnostic",
+    "W28_896_width_only_diagnostic",
+    "D40_896_proportional",
+    "C40_896_proportional"
+  ],
   "source": "Supa_Core_1.7.0_ungated_only",
   "native_transformers_version": "4.51.3",
   "baseline_precision": "float32",
   "attention_backend": "eager",
-  "decoding": {"seed": 17, "max_new_tokens": 24, "max_context": 512, "do_sample": false, "thinking": false, "truncation": "forbidden"},
-  "G0": {"min_rows": 24, "min_parse_rate": 0.8, "min_termination_rate": 0.8, "require_correct_and_incorrect": true, "native_reference_atol": 0.0001, "native_reference_rtol": 0.0001},
-  "G1": {"identity_expansion_atol": 0.0, "identity_expansion_rtol": 0.0, "retain_all_28_original_layers": true, "head_dim": 128, "memory_donor_policy": "first_decoder_layer_of_plain_donor", "ffn_growth_policy": "cyclic_gate_up_donors_zero_down_columns"},
-  "G2": {"steps": 25, "purpose": "optimizer_engineering_only", "licenses_registered_training": false},
+  "decoding": {
+    "seed": 17,
+    "max_new_tokens": 24,
+    "max_context": 512,
+    "do_sample": false,
+    "thinking": false,
+    "truncation": "forbidden"
+  },
+  "G0": {
+    "min_rows": 24,
+    "min_parse_rate": 0.8,
+    "min_termination_rate": 0.8,
+    "require_correct_and_incorrect": true,
+    "native_reference_atol": 0.0001,
+    "native_reference_rtol": 0.0001
+  },
+  "G1": {
+    "identity_expansion_atol": 0.0,
+    "identity_expansion_rtol": 0.0,
+    "retain_all_28_original_layers": true,
+    "head_dim": 128,
+    "memory_donor_policy": "first_decoder_layer_of_plain_donor",
+    "ffn_growth_policy": "cyclic_gate_up_donors_zero_down_columns",
+    "parity_policy": {
+      "name": "elementwise_atol_plus_rtol_expected_v2",
+      "atol": 0.0001,
+      "rtol": 0.0001,
+      "rows": 8,
+      "chunk_sizes": [
+        1,
+        7,
+        16
+      ],
+      "require_argmax_exact": true,
+      "scaled_tolerance_is_diagnostic_only": true,
+      "prefix_causality_required": true
+    }
+  },
+  "G2": {
+    "steps": 25,
+    "purpose": "optimizer_engineering_only",
+    "licenses_registered_training": false,
+    "cached_teacher_engineering": {
+      "enabled": true,
+      "arms": [
+        "B28",
+        "D40",
+        "C28",
+        "C40"
+      ],
+      "steps": 25,
+      "learning_rate": 1e-05,
+      "optimizer": "SGD_no_momentum",
+      "alpha": 0.5,
+      "temperature": 1.0,
+      "head_chunk_tokens": 8,
+      "gradient_checkpointing": true,
+      "seed": 17,
+      "requires_strict_current_arm_qualification": true,
+      "C28_requires_matched_B28_engineering_control": true,
+      "C40_requires_matched_D40_engineering_control": true,
+      "licenses_recovery": false
+    }
+  },
   "G3_G5": {
     "execution_enabled": false,
     "reason": "Freeze data group splits, recovery/token/search budgets, endpoints, margins and resource envelopes after informative G0 and before training. No results-based choices.",
-    "training_seeds": [17, 29, 43],
+    "training_seeds": [
+      17,
+      29,
+      43
+    ],
     "primary_endpoint": "compositional_reasoning_exact_or_executable_verification",
     "resampling_unit": "template_or_document_family",
     "minimum_effect": null,
@@ -36,7 +105,35 @@
     "max_decode_latency_ratio": null,
     "sealed_test_manifest_sha256": null
   },
-  "mandatory_controls": ["unmodified_B28", "matched_B28_continuation", "matched_D40_continuation_for_C40", "same_shape_topology_diagnostic"],
-  "cost_ledger": ["student_training_tokens", "teacher_forward_tokens", "calibration_tokens", "failed_tuning_runs", "wall_seconds", "peak_memory", "generation_tokens"],
-  "forbidden_first_experiment": ["stock_Qwen_fallback", "R2_substitution", "abstention_readout", "quantization_changes", "new_tokenizer", "MoE", "recurrent_weight_sharing", "decoder_local_attention", "sparse_compression", "sealed_test_tuning", "best_seed_only_reporting"]
+  "mandatory_controls": [
+    "unmodified_B28",
+    "matched_B28_continuation",
+    "matched_D40_continuation_for_C40",
+    "same_shape_topology_diagnostic"
+  ],
+  "cost_ledger": [
+    "student_training_tokens",
+    "teacher_forward_tokens",
+    "calibration_tokens",
+    "failed_tuning_runs",
+    "wall_seconds",
+    "peak_memory",
+    "generation_tokens"
+  ],
+  "forbidden_first_experiment": [
+    "stock_Qwen_fallback",
+    "R2_substitution",
+    "abstention_readout",
+    "quantization_changes",
+    "new_tokenizer",
+    "MoE",
+    "recurrent_weight_sharing",
+    "decoder_local_attention",
+    "sparse_compression",
+    "sealed_test_tuning",
+    "best_seed_only_reporting"
+  ],
+  "amendments": [
+    "amendments/HOTFIX_001.md"
+  ]
 }

@@ -6,7 +6,7 @@ The CED decoder REPLACES self-attention with reads of one encoder-derived KV ban
 It intentionally has no decoder local SWA, MoE, CSA, MLA, vision, or custom kernels.
 
 The reference is for mechanical reasoning/tests. It is not HF generate-compatible,
-optimized for serving, or qualified against pretrained Qwen/Rineya weights.
+optimized for serving. Qualification is checkout- and runtime-specific; see the receipts.
 """
 from __future__ import annotations
 from dataclasses import dataclass
@@ -24,7 +24,8 @@ class RMSNorm(nn.Module):
         self.eps = eps
 
     def forward(self, x: Tensor) -> Tensor:
-        z = x.float()
+        # FP64 is a real diagnostic lane; do not silently downcast it to FP32.
+        z = x if x.dtype == torch.float64 else x.float()
         z = z * torch.rsqrt(z.square().mean(-1, keepdim=True) + self.eps)
         return z.to(x.dtype) * self.weight
 
@@ -32,8 +33,11 @@ class RMSNorm(nn.Module):
 def rope(x: Tensor, positions: Tensor, theta: float) -> Tensor:
     """x: [batch, heads, length, head_dim]; absolute positions: [batch, length]."""
     h = x.shape[-1]
-    inv = theta ** (-torch.arange(0, h, 2, device=x.device, dtype=torch.float32) / h)
-    angles = positions.float()[..., None] * inv
+    # Match pinned Qwen3's reciprocal-power construction. theta**(-exponent)
+    # is algebraically equal but rounds differently, increasingly so at long positions.
+    dtype = torch.float64 if x.dtype == torch.float64 else torch.float32
+    inv = 1.0 / (theta ** (torch.arange(0, h, 2, device=x.device, dtype=dtype) / h))
+    angles = positions.to(dtype)[..., None] * inv
     angles = torch.cat((angles, angles), dim=-1)[:, None]
     a, b = x.chunk(2, dim=-1)
     rotated = torch.cat((-b, a), dim=-1)
@@ -54,7 +58,8 @@ def dense_attention(q: Tensor, k: Tensor, v: Tensor, qp: Tensor, kp: Tensor,
     qslots = torch.arange(k.shape[2] - q.shape[2], k.shape[2], device=q.device)
     kslots = torch.arange(k.shape[2], device=q.device)
     allowed = allowed & (kslots[None, None, :] <= qslots[None, :, None])
-    scores = (q.float() @ kk.float().transpose(-1, -2)) * q.shape[-1] ** -0.5
+    accumulation_dtype = torch.float64 if q.dtype == torch.float64 else torch.float32
+    scores = (q.to(accumulation_dtype) @ kk.to(accumulation_dtype).transpose(-1, -2)) * q.shape[-1] ** -0.5
     scores = scores.masked_fill(~allowed[:, None], torch.finfo(scores.dtype).min)
     prob = scores.softmax(-1) * allowed[:, None]
     prob = prob / prob.sum(-1, keepdim=True).clamp_min(1e-20)
@@ -160,14 +165,16 @@ class Cache:
 
 @dataclass
 class Output:
-    logits: Tensor
+    logits: Optional[Tensor]
     cache: Optional[Cache]
+    hidden: Optional[Tensor] = None
 
 
 class DenseReference(nn.Module):
     def __init__(self, c: Config) -> None:
         super().__init__()
         self.config = c
+        self.gradient_checkpointing = False  # runtime-only; never changes checkpoint topology
         self.embed_tokens = nn.Embedding(c.vocab_size, c.hidden_size)
         self.encoder = nn.ModuleList(SelfBlock(c) for _ in range(c.encoder_layers))
         self.memory = SharedMemory(c) if c.architecture == "ced" else None
@@ -212,7 +219,10 @@ class DenseReference(nn.Module):
     def forward(self, input_ids: Tensor, *, attention_mask: Optional[Tensor] = None,
                 position_ids: Optional[Tensor] = None, segment_ids: Optional[Tensor] = None,
                 past: Optional[Cache] = None, use_cache: bool = False,
-                last_position_only: bool = False) -> Output:
+                last_position_only: bool = False, compute_logits: bool = True,
+                return_hidden: bool = False) -> Output:
+        if not compute_logits and not return_hidden:
+            raise ValueError("compute_logits=False requires return_hidden=True")
         if input_ids.ndim != 2 or input_ids.dtype != torch.long or input_ids.shape[1] == 0:
             raise ValueError("input_ids must be nonempty [batch,length] int64")
         if use_cache and (self.training or torch.is_grad_enabled()):
@@ -262,8 +272,17 @@ class DenseReference(nn.Module):
         h = self.embed_tokens(input_ids)
         layer_kv = []
         for i, block in enumerate(self.encoder):
-            h, pair = block(h, pos, kp, valid, kv, seg, ks, None if past is None else past.encoder[i])
-            layer_kv.append(pair)
+            if self.gradient_checkpointing and self.training and torch.is_grad_enabled():
+                from torch.utils.checkpoint import checkpoint
+                # Bind the current block: a late-bound loop closure corrupts recomputation.
+                def forward_block(value, block=block):
+                    return block(value, pos, kp, valid, kv, seg, ks, None)[0]
+                h = checkpoint(forward_block, h, use_reentrant=False)
+            else:
+                h, pair = block(h, pos, kp, valid, kv, seg, ks,
+                                None if past is None else past.encoder[i])
+                if use_cache:
+                    layer_kv.append(pair)
         memory = None
         if self.memory is not None:
             memory = self.memory(h, pos, None if past is None else past.memory)
@@ -271,13 +290,18 @@ class DenseReference(nn.Module):
             if last_position_only:
                 h, qp, qv, qs = h[:, -1:], pos[:, -1:], valid[:, -1:], seg[:, -1:]
             for block in self.decoder:
-                h = block(h, memory, qp, kp, qv, kv, qs, ks)
+                if self.gradient_checkpointing and self.training and torch.is_grad_enabled():
+                    from torch.utils.checkpoint import checkpoint
+                    h = checkpoint(block, h, memory, qp, kp, qv, kv, qs, ks, use_reentrant=False)
+                else:
+                    h = block(h, memory, qp, kp, qv, kv, qs, ks)
         elif last_position_only:
             # For an ordinary model this saves only final-logit computation.
             h = h[:, -1:]
         # Direct use of the input embedding guarantees one tied Parameter object.
-        logits = F.linear(self.final_norm(h), self.embed_tokens.weight)
+        normalized = self.final_norm(h)
+        logits = F.linear(normalized, self.embed_tokens.weight) if compute_logits else None
         cache = None
         if use_cache:
             cache = Cache(id(self), self._signature(), tuple(layer_kv), memory, kp.clone(), kv.clone(), ks.clone())
-        return Output(logits, cache)
+        return Output(logits, cache, normalized if return_hidden else None)

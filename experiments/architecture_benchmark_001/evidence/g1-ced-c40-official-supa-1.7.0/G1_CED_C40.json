@@ -1,0 +1,78 @@
+{
+  "schema": 1,
+  "stage": "G1_CED_C40",
+  "status": "PASS",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "dc212c9fc032258a3d5e844d99b7f27a41b850327e0c06b432b3b7fa852cbd0c",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "69bdc5ac3350814ad8592e79001815dde58484f16ff6030519a7d09f57e7da6b",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0+cpu",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0"
+    },
+    "device": "cpu",
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "registered_dimensions": true,
+    "exact_parameter_count": true,
+    "registered_donor_layer": true,
+    "shared_encoder_final_memory": true,
+    "decoder_local_attention_absent": true,
+    "finite_converted_logits": true,
+    "save_reload_exact": true,
+    "tail_only_decode_choice_exact": true,
+    "chunked_cache_decode_choice_exact": true,
+    "tail_only_within_scaled_tolerance": true,
+    "chunked_cache_within_scaled_tolerance": true,
+    "donor_state_unmodified": true,
+    "source_unchanged": true
+  },
+  "metrics": {
+    "arm": "C40",
+    "donor_preset": "D40_896_near_baseline_budget",
+    "donor_layer": 20,
+    "parameters": 594279808,
+    "parameter_ratio_to_B28": 0.9970302621632765,
+    "kv_bytes_per_token_batch1": 75264,
+    "analytic_kv_ratio_to_B28": 0.65625,
+    "cache_order_parity": {
+      "tail_only": {
+        "argmax_exact": true,
+        "max_abs_error": 8.916854858398438e-05,
+        "scale": 12.899374961853027,
+        "elementwise_g0_violations": 0,
+        "elements": 151936,
+        "within_scaled_tolerance": true
+      },
+      "chunked_cache": {
+        "argmax_exact": true,
+        "max_abs_error": 0.0003033876419067383,
+        "scale": 20.933685302734375,
+        "elementwise_g0_violations": 1251,
+        "elements": 2734848,
+        "within_scaled_tolerance": true
+      }
+    },
+    "function_preserving": false,
+    "quality_recovery_demonstrated": false,
+    "parity_note": "Cache-order differences are fp32 accumulation, not a behaviour change: the decoded choice is exact. elementwise_g0_violations counts elements outside the stricter atol+rtol*|expected| reading, which concentrates on near-zero logits; compare against the ordinary control before reading it as a CED defect.",
+    "resource_scope": "analytic KV counts only; no measured memory, latency or throughput claim"
+  },
+  "artifacts": {
+    "lineage.json": "e5ad8d029f49a10e190cb24c336dde77471d1a93619508b9a94a03b4c5e7ccc4",
+    "config.json": "414f75bec1ec5b1a50909f5eadecbef7e75da3b564b6fe0878c074090b93fe4c",
+    "model.safetensors": "9c24a4b86b1227822b295b316ad9ff1ebd049e660eae4e804eea69a6863a40fe"
+  },
+  "parent_receipt_sha256": "8af4f26ac0b145ff4c7bf3da7292b4c83a21428f848a17a6af2df74964148062",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "5878e9fd8f657d99da64dfb13bf5ecd0f0ccbd59070b802facc9389e1f3becbe"
+}

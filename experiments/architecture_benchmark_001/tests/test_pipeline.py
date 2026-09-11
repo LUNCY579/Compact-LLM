@@ -219,11 +219,14 @@ def test_source_missing_weights_and_registered_stages_are_closed(tmp_path):
 
 
 def receipt(tmp_path, kind='official_model_qualification'):
-    artifact=tmp_path/'observations.json'; artifact.write_text('{}')
-    ctx={'weights_sha256':source.source_lock()['assets']['model.safetensors'],'identity':'synthetic_validator_fixture'}
+    artifact=tmp_path/'predictions.json'; artifact.write_text('{}')
+    ctx=gates.context({'audit_digest':'synthetic_validator_fixture', 'assets':source.source_lock()['assets']}, artifact, 'cpu')
     p=tmp_path/'G0.json'
-    gates.write_once(p,{'stage':'G0','status':'PASS','evidence_kind':kind,'context':ctx,
-                       'checks':{'fixture_only':True},'artifacts':{'observations.json':source.sha256_file(artifact)}})
+    gates.write_once(p,{'schema':2,'stage':'G0','status':'PASS','evidence_kind':kind,'context':ctx,
+                       'checks':dict.fromkeys(gates.STAGES['G0']['checks'],True),
+                       'artifacts':{'predictions.json':source.sha256_file(artifact)},
+                       'parent_receipts':[], 'parent_receipt_sha256':None,
+                       'licenses_registered_training':False, 'licenses_efficacy_claim':False})
     return p,ctx
 
 
@@ -232,7 +235,7 @@ def test_receipt_validation_artifact_drift_and_no_overwrite(tmp_path):
     with pytest.raises(FileExistsError): gates.write_once(p,{})
     with pytest.raises(gates.GateClosed): gates.validate_receipt(p,'G1_IDENTITY',ctx)
     with pytest.raises(gates.GateClosed): gates.validate_receipt(p,'G0',{**ctx,'code':'changed'})
-    (tmp_path/'observations.json').write_text('changed')
+    (tmp_path/'predictions.json').write_text('changed')
     with pytest.raises(gates.GateClosed): gates.validate_receipt(p,'G0',ctx)
 
 
@@ -292,7 +295,7 @@ def test_loss_rejects_nonbinary_mask_and_float_segments():
 def test_mechanical_receipt_never_licenses_models(tmp_path):
     from experiments.architecture_benchmark_001.receipt import summarize
     p = tmp_path/'junit.xml'
-    p.write_text('<testsuites><testsuite><testcase classname="test_native" name="a"/><testcase classname="test_native" name="b"/></testsuite></testsuites>')
+    p.write_text('<testsuites><testsuite><testcase classname="test_native" name="test_native_random_qwen3_logits[False]"/><testcase classname="test_native" name="test_native_random_qwen3_logits[True]"/></testsuite></testsuites>')
     r = summarize(p, require_native=True)
     assert r['passed'] == 2 and r['native_random_model_cases_passed'] == 2
     assert r['evidence_kind'] == 'mechanical_tests_only'

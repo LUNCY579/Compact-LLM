@@ -79,9 +79,20 @@ def identity_expand(source: DenseReference, target_depth: int) -> tuple[DenseRef
     if source.config.architecture != 'plain':
         raise ValueError('identity expansion is qualified only for ordinary blocks')
     mapping = expansion_map(len(source.encoder), target_depth)
-    result = copy.deepcopy(source)
-    result.config = replace(source.config, encoder_layers=target_depth)
-    result.encoder = torch.nn.ModuleList(copy.deepcopy(source.encoder[x['source_layer']]) for x in mapping)
+    # Build only the destination inventory; deepcopy(source) followed by replacing
+    # all blocks needlessly allocates a second copy of the original body first.
+    with torch.device('meta'):
+        result = DenseReference(replace(source.config, encoder_layers=target_depth))
+    src = source.state_dict()
+    state = {}
+    for name in result.state_dict():
+        key = name
+        if name.startswith('encoder.'):
+            _, idx, tail = name.split('.', 2)
+            key = f"encoder.{mapping[int(idx)]['source_layer']}.{tail}"
+        state[name] = src[key].detach().clone()
+    result.load_state_dict(state, strict=True, assign=True)
+    result.train(source.training)
     with torch.no_grad():
         for block, row in zip(result.encoder, mapping):
             block.c = result.config

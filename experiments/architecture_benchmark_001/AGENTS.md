@@ -32,3 +32,11 @@ skips are not native parity. Real source qualification additionally requires the
 checkpoint and all asset hashes. Requalify after code/data/source/runtime changes.
 Do not tune on sealed TEST, report a best seed alone, or turn analytic cache savings
 into measured speed/memory claims. Preserve failures and use new output directories.
+
+## HOTFIX-001 continuation boundary
+
+Read amendments/HOTFIX_001.md, REVIEW_REPORT.md and RUNBOOK.md before continuing.
+Historical evidence/OFFICIAL_GATE_LADDER.md is preserved, not the current gate policy.
+The cached-target lane is exactly 25 engineering steps, not G3 recovery. Never bypass
+strict CED parity to launch its smoke. Preserve failed/interrupted attempts and all
+reported violation counts. Native-module skips must remain explicit blockers.
