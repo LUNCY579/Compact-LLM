@@ -426,3 +426,128 @@ means a different `torch` build, therefore a different runtime identity in `cont
 `validate_receipt` would reject every parent receipt and the entire ladder would need
 requalifying under a CUDA runtime first. Devices were not silently switched. **No 8 GB fit,
 VRAM, latency or throughput claim is made.**
+
+---
+
+## Fix 1 applied: `audit-evidence` now reports schema-2 strict failures (digest 8d54f540)
+
+`review.py:28` read violation counts only from `metrics.cache_order_parity`, the schema-1
+CED layout. The schema-2 writer records named strict checks instead and keeps per-path
+counts in the `numerics.json` artifact, so every schema-2 CED FAIL receipt was reported as
+`recorded_strict_parity_failures: {}`.
+
+The existing field keeps its exact meaning; three were added — `failed_strict_parity_checks`,
+`strict_parity_violation_totals`, and `any_recorded_strict_parity_failure` as the
+generation-independent answer. Per-path counts are read from `numerics.json` **only** when
+it is a declared artifact whose recorded hash still matches, so an unbound or edited
+sidecar contributes nothing; a tamper case is in the test.
+
+Verified against real receipts — the audit now reports what it previously hid:
+
+    G1_CED_C28  FAIL  any_recorded_strict_parity_failure=True  totals 401,863
+    G1_CED_C40  FAIL  any_recorded_strict_parity_failure=True  totals 726,228
+
+and the schema-1 historical receipts still surface 19/4,114 and 1,251 while showing
+`declared_status: PASS` — the contradiction is now visible in a single view.
+
+### Requalification at 8d54f540 — the fix is proven inert
+
+Digest moved `eab80e9f` → `8d54f540`, so the whole ladder and both engineering controls
+were re-executed. Every measured quantity reproduced **exactly**:
+
+| stage | eab80e9f | 8d54f540 | checks identical | per-path numerics identical |
+|---|---|---|---|---|
+| G0 | PASS | PASS | yes | — |
+| G1_IDENTITY | PASS | PASS | yes | — |
+| G1_WIDTH | PASS | PASS | yes | — |
+| G1_CED_C28 | FAIL 12/15, 401,863 | FAIL 12/15, **401,863** | yes | **yes** |
+| G1_CED_C40 | FAIL 12/15, 726,228 | FAIL 12/15, **726,228** | yes | **yes** |
+| G2_CACHED_B28 | PASS 9/9 | PASS 9/9 | yes | — |
+| G2_CACHED_D40 | PASS 9/9 | PASS 9/9 | yes | — |
+
+Identical to the element, not merely to the verdict. The `eab80e9f` evidence is retained
+alongside as the baseline that inertness is measured against.
+
+## Fix 2 applied: HOTFIX-002 shared-memory accumulation diagnostic (digest fc44701e)
+
+Registered in `protocol.json` under `G1.parity_policy.memory_accumulation_diagnostic`,
+default `inherit`, scoped to the `ReadBlock` attention over the shared bank only.
+`SelfBlock` — and therefore the encoder and every ordinary arm — is untouched.
+`memory_accumulation_dtype` is runtime-only and not part of `Config`, so parameter counts,
+`config` equality against `presets()` and saved `config.json` are unaffected;
+`_signature()` includes it so a cache filled in one lane cannot be reused in the other.
+
+186 passed, 0 skipped. No tolerance, acceptance rule or gate threshold changed.
+
+---
+
+## HOTFIX-002 result: the high-precision shared-memory read does NOT work — and why
+
+### Measurement (same C28/C40 checkpoints, FP32, 8 pilot rows, identical grid)
+
+| arm | `--memory-precision` | max abs err | total violations | failing paths |
+|---|---|---:|---:|---:|
+| C28 | inherit | 8.23e-04 | 401,863 | 6 |
+| C28 | **float64** | 1.00e-03 | **399,698** | 6 |
+| C40 | inherit | 5.89e-03 | 726,228 | 5 |
+| C40 | **float64** | 4.72e-03 | **803,104** | 5 |
+
+C28 improves by 0.5% (noise, and its max error gets *worse*); C40 gets 10.6% **worse**.
+The intervention fails. The same six/five paths still fail on each arm. **The hypothesis
+that the amplification is created in the read contraction is falsified.**
+
+### Where the divergence actually starts
+
+Per-layer hidden-state comparison, full forward vs chunked, C28 checkpoint:
+
+    chunk 7: enc00 3.815e-06 -> enc13 1.678e-04   shared bank  dK 2.012e-04  dV 4.597e-04
+    chunk 1: enc00 3.576e-06 -> enc13 3.906e-03   shared bank  dK 1.073e-04  dV 2.565e-04
+
+Divergence begins at **encoder layer 0** and amplifies ~1000x through encoder depth. The
+shared memory bank inherits it: **dV = 4.6e-04, already 4.6x outside the 1e-4 tolerance
+before a single decoder read happens.** No precision applied at the read can recover
+information that is already wrong in the bank. That is exactly why the intervention failed.
+
+### The ordinary control explains the whole effect
+
+Same probe on the unmodified official B28 (its first 14 layers *are* C28's encoder):
+
+    chunk 7: layer00 3.815e-06  layer13 1.678e-04  layer27 8.545e-04   (224x growth)
+    chunk 1: layer00 3.576e-06  layer13 3.906e-03  layer27 8.789e-03   (2458x growth)
+
+B28's per-layer drift is **identical** to C28's encoder drift at layer 00 and layer 13 —
+to the digit — and by its final layer B28 drifts *more* (8.8e-03) than C28's encoder does
+(3.9e-03). Yet B28's logits show 4 violating elements and C28's show 401,863.
+
+So CED does **not** create more internal drift. Both architectures carry ~1e-3 mid-network
+chunk-order drift in FP32; that is simply what FP32 transformer inference does.
+
+**The difference is what happens to that drift on the way to the logits.** In a plain
+model the drift reaches the final RMSNorm, which suppresses the correlated component, and
+1e-3 of hidden drift becomes 1.7e-4 of logit error. CED instead converts the *unnormalized
+mid-network* encoder output into a shared K/V bank and re-injects it into all 28 decoder
+layers, coherently, before the final norm. The bank's 4.6e-4 error is already out of
+tolerance and never gets the benefit of that suppression.
+
+### Consequence
+
+This is an **architectural property of CED, not a defect and not a fixable rounding
+artifact**. The strict 1e-4 elementwise logit gate is passed by plain models largely
+because the final RMSNorm cleans up accumulated drift; CED forfeits that by construction.
+No cheap numerical remedy exists at the read, and raising the *bank* projection precision
+cannot help either, because the bank's input `h` is already perturbed.
+
+The remaining routes are genuinely larger decisions, and none is taken here:
+
+1. Build the shared bank from a full-context forward instead of incrementally. Changes
+   incremental-decoding semantics and cost; needs its own design and registration.
+2. Run the encoder at higher precision. That is most of the model; it is a throughput and
+   memory decision, not a tolerance tweak.
+3. Prospectively amend the equivalence policy so cache-order parity is evaluated in a way
+   that is meaningful for an architecture which exposes a mid-network tensor. This must be
+   written **without** citing this run's failure as its justification, and reviewed
+   separately.
+
+`HOTFIX_002.md` stays in the protocol as the registered record of a diagnostic that was
+tried and did not work. The option remains default `inherit`, so nothing in the qualified
+path changed. Negative result, reported as such.
