@@ -45,8 +45,14 @@ def rope(x: Tensor, positions: Tensor, theta: float) -> Tensor:
 
 
 def dense_attention(q: Tensor, k: Tensor, v: Tensor, qp: Tensor, kp: Tensor,
-                    qvalid: Tensor, kvalid: Tensor, qseg: Tensor, kseg: Tensor) -> Tensor:
-    """Slow explicit attention with safe all-masked rows; no sparse speed claims."""
+                    qvalid: Tensor, kvalid: Tensor, qseg: Tensor, kseg: Tensor,
+                    accumulate_dtype: Optional[torch.dtype] = None) -> Tensor:
+    """Slow explicit attention with safe all-masked rows; no sparse speed claims.
+
+    `accumulate_dtype` is the registered HOTFIX-002 diagnostic override. None reproduces
+    the original arithmetic bit-for-bit; a dtype raises the score matmul, the softmax and
+    the probability/value contraction to it, casting only the result back.
+    """
     group = q.shape[1] // k.shape[1]
     # Expand only temporarily for computation; persistent KV retains KV-head count.
     kk, vv = k.repeat_interleave(group, 1), v.repeat_interleave(group, 1)
@@ -58,12 +64,17 @@ def dense_attention(q: Tensor, k: Tensor, v: Tensor, qp: Tensor, kp: Tensor,
     qslots = torch.arange(k.shape[2] - q.shape[2], k.shape[2], device=q.device)
     kslots = torch.arange(k.shape[2], device=q.device)
     allowed = allowed & (kslots[None, None, :] <= qslots[None, :, None])
-    accumulation_dtype = torch.float64 if q.dtype == torch.float64 else torch.float32
+    accumulation_dtype = accumulate_dtype or (torch.float64 if q.dtype == torch.float64 else torch.float32)
     scores = (q.to(accumulation_dtype) @ kk.to(accumulation_dtype).transpose(-1, -2)) * q.shape[-1] ** -0.5
     scores = scores.masked_fill(~allowed[:, None], torch.finfo(scores.dtype).min)
     prob = scores.softmax(-1) * allowed[:, None]
     prob = prob / prob.sum(-1, keepdim=True).clamp_min(1e-20)
-    return prob.to(vv.dtype) @ vv
+    # Default keeps the value contraction in the value dtype, exactly as before. An
+    # explicit override also accumulates the value sum, which is the reduction whose
+    # length and shape change with the chunk schedule.
+    if accumulate_dtype is None:
+        return prob.to(vv.dtype) @ vv
+    return (prob @ vv.to(accumulation_dtype)).to(v.dtype)
 
 
 class SwiGLU(nn.Module):
@@ -142,12 +153,13 @@ class ReadBlock(nn.Module):
         self.mlp = SwiGLU(c)
 
     def forward(self, x: Tensor, memory: KV, qp: Tensor, kp: Tensor,
-                qv: Tensor, kv: Tensor, qs: Tensor, ks: Tensor) -> Tensor:
+                qv: Tensor, kv: Tensor, qs: Tensor, ks: Tensor,
+                accumulate_dtype: Optional[torch.dtype] = None) -> Tensor:
         b, t, _ = x.shape
         c = self.c
         q = self.q_proj(self.input_norm(x)).view(b, t, c.num_attention_heads, c.head_dim).transpose(1, 2)
         q = rope(self.q_norm(q), qp, c.rope_theta)
-        a = dense_attention(q, *memory, qp, kp, qv, kv, qs, ks)
+        a = dense_attention(q, *memory, qp, kp, qv, kv, qs, ks, accumulate_dtype)
         x = x + self.o_proj(a.transpose(1, 2).reshape(b, t, -1))
         return x + self.mlp(self.post_norm(x))
 
@@ -175,6 +187,10 @@ class DenseReference(nn.Module):
         super().__init__()
         self.config = c
         self.gradient_checkpointing = False  # runtime-only; never changes checkpoint topology
+        # HOTFIX-002 diagnostic, runtime-only like the line above and deliberately NOT part
+        # of Config: parameter counts, config equality against presets() and the saved
+        # config.json must stay untouched. None reproduces the original arithmetic exactly.
+        self.memory_accumulation_dtype: Optional[torch.dtype] = None
         self.embed_tokens = nn.Embedding(c.vocab_size, c.hidden_size)
         self.encoder = nn.ModuleList(SelfBlock(c) for _ in range(c.encoder_layers))
         self.memory = SharedMemory(c) if c.architecture == "ced" else None
@@ -190,8 +206,10 @@ class DenseReference(nn.Module):
     def _signature(self) -> tuple:
         # Detect stale caches after load_state_dict, optimizer steps, or dtype/device moves.
         # This is a readable correctness reference, not a serving-optimized cache API.
-        return tuple((p.data_ptr(), p._version, str(p.dtype), str(p.device))
-                     for p in self.parameters())
+        # The accumulation override is included: a cache filled under one setting must not
+        # be silently reused under another, which would mix two arithmetic lanes.
+        return (str(self.memory_accumulation_dtype),) + tuple(
+            (p.data_ptr(), p._version, str(p.dtype), str(p.device)) for p in self.parameters())
 
     def _validate_cache(self, past: Cache, batch: int, device: torch.device) -> None:
         if not isinstance(past, Cache) or past.owner != id(self) or past.signature != self._signature():
@@ -292,9 +310,10 @@ class DenseReference(nn.Module):
             for block in self.decoder:
                 if self.gradient_checkpointing and self.training and torch.is_grad_enabled():
                     from torch.utils.checkpoint import checkpoint
-                    h = checkpoint(block, h, memory, qp, kp, qv, kv, qs, ks, use_reentrant=False)
+                    h = checkpoint(block, h, memory, qp, kp, qv, kv, qs, ks,
+                                   self.memory_accumulation_dtype, use_reentrant=False)
                 else:
-                    h = block(h, memory, qp, kp, qv, kv, qs, ks)
+                    h = block(h, memory, qp, kp, qv, kv, qs, ks, self.memory_accumulation_dtype)
         elif last_position_only:
             # For an ordinary model this saves only final-logit computation.
             h = h[:, -1:]

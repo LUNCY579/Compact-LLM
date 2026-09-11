@@ -143,11 +143,14 @@ def continuation_probe(model, ids: Tensor, *, steps: int, atol: float, rtol: flo
 
 
 def diagnose(source: Path, checkpoint: Path | None, pilot: Path, out: Path, device: str,
-             *, arm: str, rows: int = 8, precision: str = 'float32', continuation_steps: int = 8) -> dict:
+             *, arm: str, rows: int = 8, precision: str = 'float32', continuation_steps: int = 8,
+             memory_precision: str = 'inherit') -> dict:
     from .run import _directory, _load, _load_tokenizer, _prompt, _restore, load_rows
     from .budget import presets
     if type(rows) is not int or not 1 <= rows <= 24 or precision not in ('float32', 'float64'):
         raise GateClosed('diagnostics are bounded to 1..24 pilot rows and FP32/FP64')
+    if memory_precision not in ('inherit', 'float64'):
+        raise GateClosed('memory accumulation diagnostic is inherit or float64 only')
     if type(continuation_steps) is not int or not 0 <= continuation_steps <= 24:
         raise GateClosed('continuation diagnostic is bounded to 0..24 steps')
     audit = audit_source(source)
@@ -168,6 +171,10 @@ def diagnose(source: Path, checkpoint: Path | None, pilot: Path, out: Path, devi
     if model.config != presets()[protocol()['primary_arms'][arm]]:
         raise GateClosed('checkpoint shape does not match the declared diagnostic arm')
     model.to(dtype=getattr(torch, precision)).eval()
+    # HOTFIX-002: raise accumulation for the CED shared-memory read only. A plain arm has
+    # no such read, so this is inert there; that asymmetry is the point of the diagnostic.
+    model.memory_accumulation_dtype = torch.float64 if memory_precision == 'float64' else None
+    model_has_memory = model.memory is not None
     p = protocol()['G1']['parity_policy']
     observations = []
     with torch.inference_mode():
@@ -184,7 +191,9 @@ def diagnose(source: Path, checkpoint: Path | None, pilot: Path, out: Path, devi
         name: sha256_file(checkpoint/name) for name in bound_checkpoint}:
         raise GateClosed('diagnosed checkpoint changed during execution')
     result = {'schema': 2, 'evidence_kind': 'numerical_diagnostic_only', 'arm': arm, 'context': ctx,
-              'diagnostic_precision': precision, 'checkpoint_artifacts': bound_checkpoint, 'rows': observations,
+              'diagnostic_precision': precision, 'memory_accumulation_precision': memory_precision,
+              'memory_accumulation_applies_to_this_arm': model_has_memory,
+              'checkpoint_artifacts': bound_checkpoint, 'rows': observations,
               'status': 'OBSERVATIONS_RECORDED', 'licenses_training': False, 'licenses_efficacy_claim': False,
               'all_strict_paths_pass': all(r['paths']['all_strict_paths_pass'] and
                   r['continuation']['all_strict_paths_pass'] for r in observations),

@@ -57,7 +57,18 @@
       ],
       "require_argmax_exact": true,
       "scaled_tolerance_is_diagnostic_only": true,
-      "prefix_causality_required": true
+      "prefix_causality_required": true,
+      "memory_accumulation_diagnostic": {
+        "name": "ced_shared_memory_read_high_precision_v1",
+        "default": "inherit",
+        "options": [
+          "inherit",
+          "float64"
+        ],
+        "scope": "ReadBlock attention over the shared encoder-final K/V bank only; SelfBlock unchanged",
+        "qualification_precision_unchanged": true,
+        "diagnostic_only_cannot_qualify_a_gate": true
+      }
     }
   },
   "G2": {
@@ -134,6 +145,7 @@
     "best_seed_only_reporting"
   ],
   "amendments": [
-    "amendments/HOTFIX_001.md"
+    "amendments/HOTFIX_001.md",
+    "amendments/HOTFIX_002.md"
   ]
 }

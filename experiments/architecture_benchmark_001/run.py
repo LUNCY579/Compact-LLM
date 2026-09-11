@@ -527,6 +527,7 @@ def main(argv=None) -> int:
     diag.add_argument('--arm', choices=('B28', 'D40', 'C28', 'C40'), required=True)
     diag.add_argument('--rows', type=int, default=8)
     diag.add_argument('--precision', choices=('float32', 'float64'), default='float32')
+    diag.add_argument('--memory-precision', choices=('inherit', 'float64'), default='inherit')
     diag.add_argument('--continuation-steps', type=int, default=8)
     for name in ('cache-teacher', 'smoke-cached'):
         c = subs.add_parser(name)
@@ -585,7 +586,8 @@ def main(argv=None) -> int:
             if args.command == 'diagnose-numerics':
                 from .numerics import diagnose
                 result = diagnose(args.source, args.checkpoint, args.pilot, args.out, args.device,
-                    arm=args.arm, rows=args.rows, precision=args.precision, continuation_steps=args.continuation_steps)
+                    arm=args.arm, rows=args.rows, precision=args.precision, continuation_steps=args.continuation_steps,
+                    memory_precision=args.memory_precision)
             elif args.command == 'cache-teacher':
                 from .engineering import prepare_teacher
                 result = prepare_teacher(args.source, args.pilot, args.calibration, args.train, args.g0, args.out, args.device)

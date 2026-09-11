@@ -136,3 +136,64 @@ def test_converted_arm_serializes_and_reloads_exactly(tmp_path):
     ids = torch.tensor([[1, 2, 3, 4, 5]])
     with torch.inference_mode():
         assert torch.equal(converted(ids).logits, restored(ids).logits)
+
+
+def _built(config):
+    torch.manual_seed(17)
+    return DenseReference(config).eval()
+
+
+def test_memory_accumulation_override_defaults_to_bit_identical():
+    """Default None must reproduce the unmodified arithmetic exactly, so requalification
+    reproduces prior violation counts and this diagnostic changes no recorded result."""
+    model = _built(tiny_ced())
+    ids = torch.randint(0, 37, (1, 12))
+    assert model.memory_accumulation_dtype is None
+    with torch.inference_mode():
+        a = model(ids).logits
+        model.memory_accumulation_dtype = None
+        b = model(ids).logits
+    assert torch.equal(a, b)
+
+
+def test_memory_accumulation_override_is_runtime_only():
+    """It must not disturb Config equality, parameter count or the state dict, all of
+    which the gates compare against presets() and budget()."""
+    model = _built(tiny_ced())
+    config, keys = model.config, set(model.state_dict())
+    count = sum(p.numel() for p in model.parameters())
+    model.memory_accumulation_dtype = torch.float64
+    assert model.config == config and set(model.state_dict()) == keys
+    assert sum(p.numel() for p in model.parameters()) == count
+    assert not any('memory_accumulation' in k for k in model.state_dict())
+
+
+def test_memory_accumulation_override_is_inert_without_a_shared_bank():
+    """A plain arm has no shared-memory read, so the override cannot touch it. The CED
+    arm must actually change, otherwise the diagnostic would be measuring nothing."""
+    plain = _built(tiny_plain())
+    assert plain.memory is None
+    ids = torch.randint(0, 37, (1, 12))
+    with torch.inference_mode():
+        a = plain(ids).logits
+        plain.memory_accumulation_dtype = torch.float64
+        assert torch.equal(a, plain(ids).logits)
+    ced = _built(tiny_ced())
+    with torch.inference_mode():
+        base = ced(ids).logits
+        ced.memory_accumulation_dtype = torch.float64
+        raised = ced(ids).logits
+    assert torch.isfinite(raised).all()
+    assert not torch.equal(base, raised)
+    torch.testing.assert_close(base, raised, atol=1e-3, rtol=1e-3)
+
+
+def test_memory_accumulation_override_invalidates_a_cache_from_the_other_lane():
+    """A cache filled in one arithmetic lane must not be silently reused in the other."""
+    model = _built(tiny_ced())
+    ids = torch.randint(0, 37, (1, 10))
+    with torch.inference_mode():
+        cache = model(ids[:, :6], use_cache=True).cache
+        model.memory_accumulation_dtype = torch.float64
+        with pytest.raises(ValueError):
+            model(ids[:, 6:], past=cache, use_cache=True)
