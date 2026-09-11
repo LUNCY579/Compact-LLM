@@ -1,9 +1,22 @@
 # RAB-001 comprehensive analysis: every option researched, and what the evidence says
 
 Branch `research/ced-rab001-hotfix001-qualification-v1`, pushed to
-`LUNCY579/ChatBubble`. Qualified implementation `fc44701e`, pinned runtime
-python 3.11.15 / torch 2.10.0+cpu / transformers 4.51.3, official
-Supa 1.7.0-devfreeze weights (`audit_digest 97cd76af…`). 186 tests, 0 skipped.
+`LUNCY579/ChatBubble`. Pinned runtime python 3.11.15 / torch 2.10.0+cpu /
+transformers 4.51.3, official Supa 1.7.0-devfreeze weights (`audit_digest 97cd76af…`).
+
+**Digest state — read this before trusting any receipt reference below.** The parity and
+engineering receipts cited in §5 were produced at implementation `fc44701e` (186 tests).
+Adding the `G1_QUALITY` gate (HOTFIX-003) changed `implementation_manifest()` and the digest
+is now **`7d48de21`** with **189 tests, 0 skipped**. So:
+
+- every §1–§4 quality/architecture number is unaffected — those diagnostics run outside the
+  hashed root and bind no digest;
+- the §5 ladder receipts under `evidence/ladder-fc44701e-v1/` bind `fc44701e` and are
+  therefore **stale relative to the working tree**; requalification at `7d48de21` is pending
+  and is recorded as pending rather than assumed.
+
+HOTFIX-003 only *adds* a gate, so no previously measured number should change on
+requalification — but that is a prediction, not yet a verified result.
 
 Every number below was produced in this worktree and is reproducible from committed
 artifacts. Nothing here is an efficacy claim, and no sealed evaluation was touched.

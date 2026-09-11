@@ -11,7 +11,8 @@ every claim here. Local files plus verified artifacts are the source of truth.
 | Branch | `research/ced-rab001-hotfix001-qualification-v1` |
 | Branched from | `2f65f9e` (`research/ced-native-loader-qualification-v1`) |
 | Commits | `8b042d4` baseline → `e0ec051` ladder → `e7f760b` engineering → `fb0e2b8` audit fix → `3a604d0` requal → `f77792c` HOTFIX-002 → `0da7073` negative result → `16cac5c` final requal |
-| `implementation_sha256` | `fc44701e3f78d337d9a3a54ea06fdfb3251c4773d5bcf14dc3466a0505bec04d` |
+| `implementation_sha256` | `7d48de215b08f564f4578b52b4fb89a85ce972c812c1ce43c74064c146d6f4cd` (HOTFIX-003) |
+| receipts bind | `fc44701e…` — **stale vs the tree**; requalification at `7d48de21` pending |
 | digests qualified | `eab80e9f` → `8d54f540` → `fc44701e`, all three run end to end, all agreeing to the element |
 | Qualification runtime | `C:\Users\clclc\BusinessProject\.venv-rab001` |
 | Source weights | `C:\Users\clclc\BusinessProject\Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze` |
@@ -19,7 +20,7 @@ every claim here. Local files plus verified artifacts are the source of truth.
 
 Runtime: python 3.11.15 / Windows-10-10.0.26200-SP0 / torch 2.10.0+cpu /
 transformers 4.51.3 / safetensors 0.7.0 / numpy 2.3.5 / tokenizers 0.21.4.
-Tests: **186 passed, 0 skipped**. Hardware: RTX 4070 **Laptop** 8 GB (unused — CPU runs
+Tests: **189 passed, 0 skipped**. Hardware: RTX 4070 **Laptop** 8 GB (unused — CPU runs
 only), 15.2 GB RAM, 113 GB free disk.
 
 **`run.py:117` hard-fails any gate unless `transformers == 4.51.3`.** The shared
@@ -192,10 +193,10 @@ PY=C:/Users/clclc/BusinessProject/.venv-rab001/Scripts/python.exe
 SRC=C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze
 E=experiments/architecture_benchmark_001
 
-# 1. Confirm identity before trusting anything (expect 186 passed, 0 skipped)
+# 1. Confirm identity before trusting anything (expect 189 passed, 0 skipped)
 $PY -m pytest $E/tests -q
 $PY -c "from experiments.architecture_benchmark_001.gates import implementation_digest as d; print(d())"
-# expect fc44701e3f78d337d9a3a54ea06fdfb3251c4773d5bcf14dc3466a0505bec04d
+# expect 7d48de215b08f564f4578b52b4fb89a85ce972c812c1ce43c74064c146d6f4cd
 
 # 2. Re-read the existing verdicts WITHOUT recomputing (nothing here re-runs a gate)
 $PY -m experiments.architecture_benchmark_001 audit-evidence --root $E/outputs/ladder-fc44701e-v1

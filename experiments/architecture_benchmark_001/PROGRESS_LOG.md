@@ -572,3 +572,30 @@ registered diagnostic changed no measurement, which is the property both changes
 designed to have and the reason each requalification was run rather than assumed.
 
 Current qualified state: **`fc44701e`**, 186 tests passed, 0 skipped.
+
+---
+
+## Correction: the digest moved again after HOTFIX-003
+
+The entry above ends "Current qualified state: `fc44701e`, 186 tests passed, 0 skipped."
+That was true when written and is left in place, because this log is append-only.
+
+It is no longer the current state. Adding the `G1_QUALITY` gate (HOTFIX-003) changed
+`protocol.json`, `gates.py`, `run.py` and the test suite, all of which are inside
+`implementation_manifest()`. Measured:
+
+    implementation_digest() = 7d48de215b08f564f4578b52b4fb89a85ce972c812c1ce43c74064c146d6f4cd
+    manifest files          = 30   (amendments/HOTFIX_003.md included)
+    tests                   = 189 passed, 0 skipped
+
+Consequences, recorded rather than glossed:
+
+- The receipts under `evidence/ladder-fc44701e-v1/` and `evidence/engineering-fc44701e-v1/`
+  bind `fc44701e` and are **stale relative to the working tree**. They remain valid evidence
+  of what was measured at that digest; they are not current qualification.
+- **Requalification at `7d48de21` is PENDING, not done.** HOTFIX-003 only adds a gate and
+  touches no existing arithmetic, so the prediction is that every number reproduces exactly —
+  as happened for the two previous digest moves. That prediction is explicitly unverified.
+- The quality/architecture diagnostics in `evidence/arm-quality/` and
+  `evidence/trainability/` are unaffected either way: they run from
+  `experiments/rab001_exploration/`, outside the hashed root, and bind no digest.
