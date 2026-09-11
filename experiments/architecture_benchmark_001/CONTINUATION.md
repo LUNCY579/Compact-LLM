@@ -40,52 +40,66 @@ Status vocabulary: every PASS/FAIL above is a **fresh** result at the current im
 digest, produced this session. The older `evidence/g*-official-supa-1.7.0/` receipts are
 **historical** (schema 1, digest `dc212c9f`) and cannot qualify current code.
 
-## The one finding that drives everything — now with its mechanism
+## The one finding that drives everything
 
-CED is **mathematically correct but structurally forfeits the numerical margin** that lets
-a plain model pass a strict 1e-4 elementwise logit gate in FP32.
+**Neither conversion produces a usable model, and no gate in the ladder tested for it.**
 
-- FP64: both arms clean (B28 3.8e-13, C28 4.1e-12), every path. No logic, causality,
-  masking or cache bug. `causal_suffix_isolation_exact` is True for every row of every arm
-  at every precision.
-- FP32: D40 passes the identical grid with **zero** violations; C28/C40 fail with 401,863
-  and 726,228.
-- **CED creates no extra drift.** B28 per-layer chunk drift matches C28 encoder drift
-  digit-for-digit (3.815e-06 at layer 00, 1.678e-04 at layer 13), and B28 final layer
-  drifts *more* (8.8e-03) than the C28 encoder does (3.9e-03).
-- **The difference is the path to the logits.** A plain arm's drift reaches the final
-  RMSNorm, which suppresses the correlated component: 8.8e-03 hidden becomes 1.7e-04
-  logit. CED freezes the *unnormalized mid-network* encoder output into a shared K/V bank
-  (dV = 4.6e-04, already 4.6x outside tolerance) and re-injects it into all 28 decoder
-  layers coherently, before the final norm, so it never receives that suppression.
+| arm | CE | perplexity | pilot hits | behaviour |
+|---|---:|---:|---:|---|
+| B28 frozen source | 5.546 | 256 | **6/24** | works; answers 3, 5, 7, 9 |
+| D40 ordinary width | 5.360 | 213 | 0/24 | degenerate `</think>` loop |
+| C28 CED | **12.585** | 292,267 | 0/24 | token salad, never terminates |
+| C40 CED | **12.960** | 425,015 | 0/24 | token salad, never terminates |
 
-### CED disposition: the cheap fix was tried and failed
+`ln(151936) = 11.93`, so both CED arms are **worse than uniform**. The ordinary control is
+broken too, which invalidates the four-arm design rather than only the CED arms. Only the
+frozen source works.
 
-`--memory-precision float64` (HOTFIX-002) raises accumulation for the shared-memory read.
-Measured: C28 401,863 -> 399,698 (0.5%, max error worse); C40 726,228 -> **803,104**
-(worse). Falsified. Precision at the read cannot recover information already wrong in the
-bank, and raising the bank's *projection* precision cannot help either because its input
-`h` is already perturbed. Detail in `evidence/HOTFIX_002_DIAGNOSTIC_RESULT.md`.
+`G1_WIDTH`, `G1_CED_*` and `G2_CACHED_*` are all satisfied by a model emitting token salad:
+they test tensor accounting, save/reload, parameter counts and cache-order parity. Parity is
+self-consistency, not quality — D40 passes the full parity grid with **zero** violations
+while being degenerate.
 
-Three routes remain, all architecture-level, none taken:
-1. Build the shared bank from a full-context forward instead of incrementally — changes
-   incremental-decoding semantics and cost.
-2. Run the encoder at higher precision — that is most of the model; a throughput/memory
-   decision, not a tolerance tweak.
-3. Prospectively amend the equivalence policy for architectures that expose a mid-network
-   tensor to cache-order comparison. Must be written **without** citing this failure as
-   its justification, and reviewed separately.
+### The governing law for any KV-sharing scheme
 
-Each changes what a later CED-vs-ordinary comparison can claim, so this is a decision to
-take deliberately, not a repair to apply.
+Call a layer *displaced* if it attends to a K/V bank it did not produce. Then CE is a
+function of the displaced **count**, essentially independent of topology, and every removed
+bank displaces exactly one layer by construction:
 
-`decode_choices_exact` passes on both CED arms — which is exactly why the rejected
-argmax-based rule recorded them as PASS. Argmax agreement does not establish harmlessness.
+| scheme | displaced | CE | KV ratio |
+|---|---:|---:|---:|
+| source / local group 1 *(control)* | 0 | 5.5458 | 1.000x |
+| ced last 4 | 3 | 6.4065 | 0.893x |
+| ced last 8 | 7 | 8.3245 | 0.750x |
+| ced last 14 | 13 | 12.5854 | 0.536x |
+| local group 2 | 14 | 12.9136 | 0.500x |
+| local group 4 | 21 | 16.8612 | 0.250x |
+
+Two structurally unrelated schemes land on one curve at 13 and 14 displaced layers, at
+roughly **0.5 nats per bank removed**. Local cross-layer sharing was hypothesised to beat
+CED and is **falsified** — it is worse at matched budget. There is no clever topology to
+find; only training can move the frontier.
+
+## The earlier parity work, in its proper place
+
+Still true, still correctly measured, but secondary: both CED arms fail strict FP32
+cache-order parity (401,863 and 726,228 violations) while D40 passes with zero. Cause
+located — divergence starts at encoder layer 0, the shared bank inherits dV = 4.6e-04
+before any decoder read, and CED forfeits the final-RMSNorm suppression a plain model gets.
+FP64 is clean for both arms (3.8e-13 / 4.1e-12); `causal_suffix_isolation_exact` and
+`decode_choices_exact` hold everywhere, so there is no causality or cache bug. The
+read-side precision fix (HOTFIX-002) was implemented and **falsified**. All of it is a
+hygiene property of a model at perplexity 292,267, so the ordering of work was wrong.
 
 ## What is NOT established
 
-- No quality, recovery, efficacy, latency, memory, throughput or deployment claim.
-- No arm has been compared to any other on any task.
+- No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim.
+- No arm has been compared to another **after training**. No recovery or distillation
+  result. Every quality number is a single deterministic CPU run, no seeds.
+- The generation probe is 8-24 open pilot prompts of one narrow arithmetic family: a smoke
+  test, not a capability benchmark.
+- All quality/architecture diagnostics live in `experiments/rab001_exploration/`, outside
+  the hashed root, so they produce **no receipts** and open no gates.
 - No GPU/VRAM measurement at all. CUDA would be a different runtime identity and would
   require requalifying the whole ladder; devices were not silently switched.
 - **A 1M-token pilot is not feasible on this machine as configured.** Measured ~9 supervised
@@ -143,18 +157,32 @@ requalify, and verify the numerics reproduce to the element before trusting the 
 
 ## Single next action
 
-**This is now a decision for the operator, not a repair.** Route (a) from the previous
-handoff — higher-precision accumulation for the shared memory — was implemented, measured
-and falsified. The mechanism is understood and no cheap numerical remedy exists.
+The parity question is no longer the blocker and should not be resumed. The open question
+is **trainability**: can any of these initializations be optimised at all? A bounded
+overfitting probe (`trainability.py`, 25 rows, AdamW) is running against C28; if CE moves
+substantially the problem is budget, and if it barely moves the design has an optimisation
+pathology.
 
-Choose one of the three architecture-level routes above, or conclude that CED's
-cache-order behaviour is acceptable as-is and that the gate measures a property CED cannot
-have. That last option is legitimate but requires a prospective, separately reviewed
-amendment — not a post-hoc relabelling of this run.
+Then, in order:
 
-Ordinary B28/D40 work is independently eligible and may continue under any route. Note
-that the ordinary arms are still held to a materially weaker numerical gate (queued fix 3),
-which should be corrected before any cross-arm numerical claim is made.
+1. **Add a quality gate** before any further architecture work. Forward-only, on the
+   already-open calibration/pilot splits: bounded CE increase, bounded KL to the frozen
+   source, plus nondegeneracy (termination rate, distinct-output count). It would have
+   failed D40, C28 and C40 immediately. This is the single highest-value protocol change.
+2. **Retire D40 as the ordinary control.** A degenerate control supports no comparison; the
+   frozen source is the only valid reference today.
+3. **Stop the CED-by-conversion arm** on capability grounds, independent of parity.
+4. **Do not pursue another sharing topology** — the exchange rate is a property of sharing
+   itself, confirmed by two unrelated schemes on one curve.
+5. If KV cost is the real target, the honest options are a design trained from the start, or
+   orthogonal methods that do not repurpose these weights (quantised or paged KV), which are
+   outside this experiment's registered scope.
+6. If capability is the target, the function-preserving zero-gated augmentation
+   (`gated_memory.py`) is the only variant that starts at source quality — but it **adds**
+   KV rather than saving it, and its value is as a training scaffold, not a recovery target.
+
+Do not run a 1M-token recovery on this hardware: 31 h/arm measured, and from CE 12.6 it
+would be training a new architecture rather than recovering one.
 
 ## Exact safe resume commands
 

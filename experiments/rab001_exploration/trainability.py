@@ -38,6 +38,16 @@ target_tokens_per_step = None
 
 if ARM in ('C28', 'C40'):
     model = _restore(LAD / f'G1_CED_{ARM}/attempt-0001', 'cpu')
+elif ARM.startswith('ced_last'):
+    # Partially converted variant: N trailing layers displaced. Lets trainability be
+    # measured against damage level, not only at the registered arm's extreme.
+    from experiments.architecture_benchmark_001.transfer import to_ced
+    n = int(ARM[len('ced_last'):])
+    src, _, _ = _load(SRC, 'cpu')
+    enc = src.config.total_layers - n
+    model, _ = to_ced(src, replace(src.config, architecture='ced',
+                                   encoder_layers=enc, decoder_layers=n), donor_layer=enc)
+    del src; gc.collect()
 elif ARM == 'source_control':
     model, _, _ = _load(SRC, 'cpu')
 elif ARM == 'gated_branch_only':
@@ -63,7 +73,8 @@ print(f'arm={ARM} steps={STEPS} lr={LR} trainable_params={sum(p.numel() for p in
 traj, t0, tokens = [], time.perf_counter(), 0
 for step in range(STEPS):
     ids = batches[step % len(batches)]
-    logits = model(ids) if ARM == 'gated_branch_only' else model(ids).logits
+    out = model(ids)
+    logits = out if ARM == 'gated_branch_only' else out.logits
     tgt = ids[:, 1:]
     loss = F.cross_entropy(logits[:, :-1].reshape(-1, logits.shape[-1]).float(), tgt.reshape(-1))
     opt.zero_grad(set_to_none=True)
