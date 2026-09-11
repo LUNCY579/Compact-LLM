@@ -35,6 +35,7 @@ LR = float(sys.argv[3]) if len(sys.argv) > 3 else 1e-4
 EVERY = int(sys.argv[4]) if len(sys.argv) > 4 else 20
 HELD = int(sys.argv[5]) if len(sys.argv) > 5 else 8
 SEED, EOS = 17, {151643, 151645}
+TAG = f'{ARM}_lr{LR:g}_s{STEPS}'
 
 torch.manual_seed(SEED)
 tok = _load_tokenizer(SRC)
@@ -153,7 +154,7 @@ for step in range(1, STEPS + 1):
 final_gen = generate()
 out = E / 'outputs/recovery-pilot'
 out.mkdir(parents=True, exist_ok=True)
-(out / f'RECOVERY_PILOT_{ARM}.json').write_text(json.dumps({
+(out / f'RECOVERY_PILOT_{TAG}.json').write_text(json.dumps({
     'schema': 1, 'evidence_kind': 'exploratory_bounded_recovery_pilot_only',
     'note': 'HELD-OUT calibration rows never used for a gradient step, plus open pilot '
             'generation. Not a sealed or DEV evaluation and not an efficacy claim. Outside '
@@ -168,4 +169,4 @@ out.mkdir(parents=True, exist_ok=True)
 }, indent=2) + '\n', encoding='utf-8')
 print(f"\nsource held-out CE {ce_src:.4f} | arm held-out CE "
       f"{checkpoints[0]['heldout_ce_nats']:.4f} -> {checkpoints[-1]['heldout_ce_nats']:.4f}")
-print('wrote', out / f'RECOVERY_PILOT_{ARM}.json')
+print('wrote', out / f'RECOVERY_PILOT_{TAG}.json')

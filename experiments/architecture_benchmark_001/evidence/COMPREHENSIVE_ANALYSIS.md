@@ -47,6 +47,18 @@ frontier, because every KV bank removed displaces exactly one layer by construct
 each displaced layer costs roughly **0.5 nats**. No rearrangement of sharing topology
 escapes that exchange rate — only training can.
 
+Training was then measured, and it produced the two results that matter most.
+
+**CED loses to the matched ordinary control.** At identical recipe, identical rows and
+identical token budget, the ordinary architecture reaches held-out CE **1.6213** against
+CED's **2.2796**. There is no measured axis on which CED wins.
+
+**The available training data destroys the capability being measured.** The frozen source
+went from **6/6 to 0/6** on the pilot arithmetic in 40 steps and under 5k supervised tokens,
+while its held-out CE *improved* 4.05 nats. Held-out CE and task accuracy are
+**anti-correlated** here, so a recovery plan with a CE or teacher-KL endpoint — which is the
+registered G3 shape — would have reported success while destroying the model.
+
 ---
 
 ## 1. What each arm actually is, and what it scores
@@ -262,9 +274,9 @@ Cheap — forward-only — and it would have failed D40, C28 and C40 immediately
 | 5 | Full-context bank reconstruction | **ruled out analytically** — see §8 | §8 |
 | 6 | Higher-precision encoder | not attempted — most of the model; a throughput decision, and §1 shows precision is not the binding problem | — |
 | 7 | Prospective equivalence-policy amendment | not written — would be legitimate, but §1 shows parity is not the blocker | — |
-| 8 | Function-preserving zero-gated augmentation | **implemented**, verification in progress | `gated_memory.py` |
+| 8 | Function-preserving zero-gated augmentation | **implemented, not yet verified on real weights** — the verification run OOMed against concurrent jobs and was not retried | `gated_memory.py` |
 | 9 | Local cross-layer KV sharing | **implemented and falsified** — worse than CED at matched KV; both lie on one frontier | §4 |
-| 10 | Recovery/distillation from this initialization | **infeasible as specified** — see §9 | §9 |
+| 10 | Recovery/distillation from this initialization | **measured**: recovery is fast (10 nats in <5k tokens) but CED loses the matched control by 0.66 nats and the endpoint is invalid | §9 |
 | 11 | Ordinary D40 as the matched control | **invalid** — control is itself degenerate | §1 |
 
 ---
@@ -288,35 +300,91 @@ bank in both compared paths, and not the §1 quality problem, which is the actua
 
 ---
 
-## 9. Recovery and distillation: what is and is not possible here
+## 9. Recovery and distillation — measured, not projected
 
-Measured on this machine (RTX 4070 **Laptop** 8 GB unused; all runs CPU, 15.2 GB RAM):
+An earlier revision of this section argued a 1M-token recovery was both infeasible and
+"mislabelled", and that nothing suggested 1M tokens would be close. **The first half was
+right for the wrong reason and the second half was wrong.** Measurement:
 
-- student throughput **~9 supervised target tokens/s**, so 1M targets ≈ **31 h per arm**,
-  ~62 h per matched recipe;
-- teacher cache **4,110 bytes/token** → 1M targets ≈ **4.1 GB**, which cannot be resident
-  beside a ~7 GB training process, so bounded indexed shards are mandatory;
-- the local corpus yields ~454k assistant-only shifted targets from all 110,000 rows, or
-  ~14.9M under the full-LM windowing `prepare_data` actually implements — a policy choice
-  that is still unregistered.
+### 9a. The arms are highly trainable
 
-Two independent reasons a 1M-token "recovery" is the wrong plan:
+C28, from a worse-than-uniform start, on 25 rows with AdamW lr 1e-4:
 
-1. **Infeasible** at 31 h/arm on the only qualified runtime.
-2. **Mislabelled.** From CE 12.6 — worse than uniform — this is not recovering a model
-   toward its teacher; it is training a new architecture from an initialization worse than
-   random. Nothing in the evidence suggests 1M tokens would be close.
+| step | tokens | held-out CE | KL→source | pilot hits | generation |
+|---:|---:|---:|---:|---:|---|
+| 0 | 0 | 12.2003 | 8.9176 | 0/6 | token salad |
+| 20 | 2,585 | 2.5368 | 3.5077 | 0/6 | all 6 outputs identical |
+| 40 | 4,968 | 2.2796 | 5.1657 | 0/6 | fluent English, wrong |
 
-Distillation from the frozen source also has a subtlety worth stating: for the
-function-preserving variant (option 8) the student *is* the teacher at step 0, so the
-distillation gradient is zero. Its value is as a **training scaffold** — start at source
-quality, train the added branch to carry load, then prune self-attention — not as a recovery
-target. Evaluating that scaffold needs a curriculum and far more compute than is available
-here, and is not claimed.
+So the destroyed initialization is a starting point, not a dead end: ~10 nats of held-out CE
+recovered in under 5k supervised tokens, and fluency returns from token salad to grammatical
+English. A 1M-token budget is not remotely required to move CE. *(This run was interrupted at
+step 40 of a planned 120 and is labelled as such.)*
 
-A bounded trainability probe (`trainability.py`, overfitting 25 rows with AdamW) is the
-cheap decisive test of whether any of these initializations can be optimised at all, and is
-explicitly *not* evidence of generalisation.
+### 9b. But CED loses the matched comparison
+
+Same recipe, same 25 rows in the same order, same 4,968 supervised target tokens, 40 steps:
+
+| | source untrained | **source trained** | C28 untrained | **C28 trained** |
+|---|---:|---:|---:|---:|
+| held-out CE | 5.6679 | **1.6213** | 12.2003 | **2.2796** |
+| held-out KL to original source | 0.0000 | 5.4721 | 8.9176 | 5.1657 |
+| **pilot task hits** | **6/6** | **0/6** | 0/6 | 0/6 |
+
+CED is **0.66 nats worse** than the ordinary architecture at equal training. C28's 2.28 had
+looked like it beat the frozen source's 5.67; that is now fully explained as corpus
+adaptation, which the ordinary architecture simply does better. Both arms also drift *away*
+from the teacher as they train (KL rises), so neither is distilling — both are converging on
+the training corpus.
+
+### 9c. The serious finding: the endpoint is invalid
+
+**The frozen source went 6/6 → 0/6 on pilot arithmetic after 40 steps.**
+
+    expected 3 → "1."      expected 5 → "3."
+    expected 7 → "4."      expected 9 → "6."
+
+It learned the corpus's terse numeric answer *format* and lost the *arithmetic*.
+
+| arm | Δ held-out CE | Δ task |
+|---|---|---|
+| source | −4.05 nats (much better) | 6/6 → 0/6 (**destroyed**) |
+| C28 | −9.92 nats (much better) | 0/6 → 0/6 (unchanged) |
+
+Every arm improved sharply on the metric and either lost or failed to gain the capability.
+On this corpus, **held-out CE is not a valid proxy for capability and optimising it actively
+harms capability.** That invalidates the endpoint, not just the dose — and the registered
+G3 shape (`recovery_tokens_per_arm`, a CE/KL objective, `minimum_effect` on a likelihood)
+is built around exactly that endpoint.
+
+This is the failure the brief warned about, arriving in its strongest form: training-loss
+reduction is not reasoning improvement, and here it is reasoning *destruction*.
+
+### 9d. Dose versus data — open
+
+lr 1e-4 on 25 rows for 40 steps is a deliberately small probe. A lower learning rate, a
+replay mixture, or a frozen-teacher distillation term might preserve arithmetic while still
+adapting. A dose test at lr 1e-5 (the registered engineering learning rate) is the direct
+experiment and its result belongs here. Until it lands, "this data is unusable" and "this
+dose is wrong" are **both live**, and only the latter is cheap to fix.
+
+### 9e. Measured cost, which stands
+
+| quantity | measured |
+|---|---|
+| student throughput | ~9 supervised targets/s (25-step engineering smoke), ~22 s/step for the 40-step pilot |
+| teacher cache | 4,110 bytes/token → 1M targets ≈ 4.1 GB |
+| peak process RAM | ~7 GB engineering smoke, ~10 GB with AdamW state for 596M params |
+| 1M targets, one arm | ~31 h CPU |
+
+The infeasibility conclusion survives: a 1M-token matched pair is ~62 h on the only qualified
+runtime. But it is now beside the point, because 5k tokens already move CE by 10 nats and the
+thing CE measures is not the thing that matters.
+
+Evidence: `evidence/trainability/MATCHED_COMPARISON.md`,
+`evidence/trainability/RECOVERY_PILOT_C28.md`,
+`evidence/trainability/RECOVERY_PILOT_source_control.json`,
+`evidence/trainability/PARTIAL_recovery_pilot_C28_step40.log`.
 
 ---
 
@@ -334,8 +402,13 @@ distillation result. No sealed or registered DEV evaluation. No multi-seed anyth
 number is a single deterministic CPU run. The generation probe is 8–24 open pilot prompts of
 one narrow arithmetic family, which is a smoke test, not a capability benchmark.
 
-**Process caveats.** The adversarial package audit lost 60 of 123 agents to a usage limit
-and is not a clean review. All §1–§4 diagnostics run **outside** the hashed experiment root
+**Process caveats.** Two independent-review attempts both failed on usage limits and
+**neither is a clean review**: the adversarial audit of the delivered package lost 60 of 123
+agents, and a later adversarial audit of *this* analysis lost all 6 of 6 and returned
+nothing. So none of the conclusions here have survived an independent adversarial pass. The
+self-checks that do exist are internal: exact controls (`ced_last1`, `local group 1`,
+inert-default requalification at three digests) and cross-script reproduction of C28's CE to
+four decimals. All §1–§4 diagnostics run **outside** the hashed experiment root
 (`experiments/rab001_exploration/`), deliberately: adding a `.py` under
 `experiments/architecture_benchmark_001/` changes `implementation_digest()` and invalidates
 every receipt. They therefore produce **no receipts** and open no gates — they are
@@ -345,8 +418,17 @@ measurements, not qualifications.
 
 ## 11. Recommendation
 
+0. **Fix the endpoint before any further training work.** §9c shows held-out CE
+   anti-correlated with task accuracy on this corpus: the source's CE improved 4.05 nats
+   while its arithmetic went 6/6 → 0/6. Any budget, margin or stop rule defined on a
+   likelihood will certify a destroyed model. The endpoint must be a task measure with a
+   registered capability-retention check the optimiser may not trade away. `G1_QUALITY`
+   (HOTFIX-003) is the initialization-side half of this; the training side does not exist yet.
+   This is now the highest-priority item, ahead of anything architectural.
+
 1. **Stop the CED-by-conversion arm.** It is falsified on capability grounds, independently
-   of the parity question, and the trade-off curve leaves no viable operating point.
+   of the parity question; the trade-off curve leaves no viable operating point; and it loses
+   the matched comparison at equal training.
 2. **Add a quality gate before any further architecture work** (§6). It is cheap and it is
    the reason this went undetected.
 3. **Retire D40 as the "ordinary control".** A degenerate control cannot support any
