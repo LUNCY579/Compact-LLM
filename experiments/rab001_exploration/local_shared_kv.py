@@ -67,10 +67,18 @@ class LocalSharedKVReference(nn.Module):
                 'function_preserving': self.group == 1,
                 'max_bank_distance_layers': self.group - 1}
 
-    def kv_bytes_per_token(self) -> int:
-        c = self.config
-        producers = sum(1 for i in range(c.encoder_layers) if i % self.group == 0)
-        return 2 * producers * c.num_key_value_heads * c.head_dim * 4
+    def kv_producing_layers(self) -> int:
+        return sum(1 for i in range(self.config.encoder_layers) if i % self.group == 0)
+
+    def kv_ratio(self) -> float:
+        """KV residency relative to the plain donor.
+
+        `budget()` computes cache bytes as `2 * cache_banks * k * bytes_per_scalar`, so the
+        only term that changes here is the number of resident banks. Deriving the ratio
+        rather than re-deriving the constants avoids disagreeing with `budget()` about head
+        count or scalar width.
+        """
+        return self.kv_producing_layers() / self.config.encoder_layers
 
     def forward(self, input_ids: Tensor, *, compute_logits: bool = True) -> Tensor:
         b, t = input_ids.shape

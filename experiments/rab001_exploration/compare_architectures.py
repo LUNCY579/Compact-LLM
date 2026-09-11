@@ -83,13 +83,15 @@ for g in GROUPS:
     m.eval()
     met, _ = evaluate(lambda x: m(x), ref)
     gg = gen(lambda x: m(x))
-    kv = m.kv_bytes_per_token()
+    ratio = m.kv_ratio()
+    kv = int(round(base_kv * ratio))
     results[f'local_kv_group{g}'] = {**met, **gg, 'kv_bytes_per_token': kv,
-                                     'kv_ratio': kv / base_kv, 'family': 'local_cross_layer',
-                                     'group': g, 'info': info}
+                                     'kv_ratio': ratio, 'family': 'local_cross_layer',
+                                     'group': g, 'kv_producing_layers': m.kv_producing_layers(),
+                                     'info': info}
     print(f"local group {g:<2}  CE={met['mean_ce_nats']:8.4f} ppl={met['perplexity']:10.1f} "
           f"KL={met['mean_kl_to_source_nats']:7.4f} top1={met['top1_agreement_with_source']:.3f} "
-          f"kv={kv/base_kv:.3f}x hits={gg['exact_hits']}/{gg['of']} term={gg['terminated']} "
+          f"kv={ratio:.3f}x hits={gg['exact_hits']}/{gg['of']} term={gg['terminated']} "
           f"({time.perf_counter()-t0:.0f}s)", flush=True)
     del m; gc.collect()
 
