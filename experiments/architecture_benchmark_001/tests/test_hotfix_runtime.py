@@ -396,3 +396,25 @@ def test_quality_gate_binds_calibration_and_rejects_an_unknown_arm(tmp_path):
     with pytest.raises(ValueError,match='unknown quality arm'):
         run.qualify_quality(tmp_path/'src',pilot,cal,tmp_path/'parent.json',
                             tmp_path/'o','cpu','NOPE')
+
+
+def test_nondegeneracy_floor_scales_with_prompt_count():
+    """A fixed floor of 2 passed a degenerate model at 24 prompts (HOTFIX-004)."""
+    import math
+    q = gates.protocol()['G1_QUALITY']
+    assert q['min_distinct_output_ratio'] > 0 and q['min_distinct_outputs'] >= 2
+    floor = lambda n: max(q['min_distinct_outputs'], math.ceil(q['min_distinct_output_ratio']*n))
+    assert floor(24) >= 6          # D40 produced 4 distinct over 24 -> must now fail
+    assert floor(4) == 2           # small probes still use the absolute floor
+    assert floor(100) >= 25
+    assert 'amendments/HOTFIX_004.md' in gates.implementation_manifest()
+
+
+def test_hotfix004_records_the_threshold_knife_edge_without_moving_it():
+    """D40 sits at 0.5032 against a 0.5000 top-1 floor. The floor must stay put: tuning a
+    threshold on a measured outcome is exactly what this programme forbids elsewhere."""
+    q = gates.protocol()['G1_QUALITY']
+    assert q['min_top1_agreement'] == 0.5, 'top-1 floor must not be tuned to a measured arm'
+    prov = q['threshold_provenance']
+    assert '0.5032' in prov and 'NOT moved' in prov
+    assert 'threshold_tuning_on_student_outcomes' in q['forbidden']

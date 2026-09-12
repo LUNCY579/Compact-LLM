@@ -329,11 +329,15 @@ def qualify_quality(source: Path, pilot: Path, calibration: Path, parent_path: P
     write_once(out/'quality.json', {'schema': 2, 'arm': arm, 'scored_rows': len(scored),
         'scored_target_tokens': tokens, 'generation_rows': len(probes), 'outputs': outputs,
         'not_sealed_quality_evidence': True, 'open_splits_only': True})
+    # A fixed floor of 2 passes a degenerate model at any realistic prompt count, so the
+    # requirement scales: a quarter of prompts must yield distinct answers (HOTFIX-004).
+    distinct_floor = max(policy['min_distinct_outputs'],
+                         math.ceil(policy['min_distinct_output_ratio'] * len(probes)))
     checks = {'ce_increase_within_margin': ce_increase <= policy['max_ce_increase_nats'],
               'kl_to_source_within_margin': mean_kl <= policy['max_kl_to_source_nats'],
               'top1_agreement_above_floor': top1 >= policy['min_top1_agreement'],
               'generation_terminates': stop_rate >= policy['min_termination_rate'],
-              'generation_not_degenerate': distinct >= policy['min_distinct_outputs'],
+              'generation_not_degenerate': distinct >= distinct_floor,
               'source_unchanged': audit_source(source)['audit_digest'] == audit['audit_digest'],
               'calibration_unchanged': sha256_file(calibration) == ctx['data_sha256'],
               'pilot_unchanged': sha256_file(pilot) == bindings['G0']}
@@ -342,7 +346,8 @@ def qualify_quality(source: Path, pilot: Path, calibration: Path, parent_path: P
         'mean_ce_source_nats': ce_src/tokens, 'mean_ce_arm_nats': ce_arm/tokens,
         'ce_increase_nats': ce_increase, 'mean_kl_to_source_nats': mean_kl,
         'top1_agreement_with_source': top1, 'termination_rate': stop_rate,
-        'distinct_outputs': distinct, 'generation_rows': len(probes),
+        'distinct_outputs': distinct, 'distinct_outputs_required': distinct_floor,
+        'generation_rows': len(probes),
         'uniform_baseline_ce_nats': math.log(presets()['B28_1024_official_shape'].vocab_size),
         'policy': policy, 'quality_recovery_demonstrated': False,
         'resource_scope': 'open calibration/pilot splits only; no sealed or DEV access, no efficacy claim'},
