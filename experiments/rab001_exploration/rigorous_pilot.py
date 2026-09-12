@@ -103,6 +103,18 @@ if ARM in ('C28', 'C40'):
     model = _restore(LAD / f'G1_CED_{ARM}/attempt-0001', 'cpu')
 elif ARM == 'D40':
     model = _restore(LAD / 'G1_WIDTH/attempt-0001', 'cpu')
+elif ARM.startswith('ced_last'):
+    # Partially converted arm: N trailing layers displaced. Lets the displaced-layer law be
+    # tested against TRAINING -- does the ~0.5 nats/bank exchange rate move when the weights
+    # are allowed to adapt, or is it hard?
+    from dataclasses import replace as _replace
+    from experiments.architecture_benchmark_001.transfer import to_ced
+    n = int(ARM[len('ced_last'):])
+    src, _, _ = _load(SRC, 'cpu')
+    enc = src.config.total_layers - n
+    model, _ = to_ced(src, _replace(src.config, architecture='ced',
+                                    encoder_layers=enc, decoder_layers=n), donor_layer=enc)
+    del src; gc.collect()
 elif ARM == 'source_control':
     model, _, _ = _load(SRC, 'cpu')
 else:

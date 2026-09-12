@@ -280,7 +280,7 @@ was needed because the mechanism forbids it; "not attempted" means exactly that.
 | 1 | CED as delivered (C28 = 14 encoder + 14 shared-memory decoder) | **falsified on capability** — CE 12.59, worse than uniform, 0/24 pilot | §1 |
 | 2 | Dose-tune the conversion depth (convert only last *N* layers) | **falsified** — task lost by N=4 at a 10.7% KV saving | §3 |
 | 3 | Local cross-layer KV sharing (share within groups of neighbours) | **falsified** — worse than CED at matched budget; both on one frontier | §4 |
-| 4 | Function-preserving zero-gated shared-memory augmentation | **implemented, not verified on real weights** — the verification run OOMed against concurrent jobs and was never retried. Adds KV rather than saving it; value is as a training scaffold | `gated_memory.py` |
+| 4 | Function-preserving zero-gated shared-memory augmentation | **verified function-preserving on real weights**: bitwise identical logits (max delta 0.000e+00), CE identical, branch live under perturbation. Adds 60.8M params (10.21%) and *adds* KV rather than saving it; value is as a training scaffold, untested as one | `gated_memory.py`, `GATED_VERIFY_split14.json` |
 | 5 | Identity depth expansion (G1_IDENTITY) | **works, bitwise exact** (`max_abs_logit_error = 0.0`) — the one lossless structural change available | §2 |
 | 6 | Width reduction 1024→896 (`calibrate_d40`, the "ordinary control") | **invalid** — passes every structural gate while generating a degenerate `</think>` loop | §1 |
 | 7 | Any other sharing topology | **ruled out analytically** — every removed bank displaces exactly one layer by construction, so all topologies share one frontier at ~0.5 nats/bank | §4 |
