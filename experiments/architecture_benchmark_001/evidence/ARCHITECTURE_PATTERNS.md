@@ -131,9 +131,15 @@ budget.** Two consequences:
   discharges 82% of its CE penalty — the same fraction as `ced_last8` — and still answers 0 of
   180 prompts.
 
-Whether C28's 0/180 is structural or merely under-trained is **not settled**: every number here
-rests on ~5.2k supervised target tokens against a registered ceiling of 1,000,000. A 500k-token
-matched run is underway to test it.
+Whether C28's 0/180 is structural or merely under-trained is now **settled: structural.** A
+token-matched 500,099-per-arm run (96× this budget, 0.376 epochs, no row seen twice) leaves C28
+at **2/60** against the control's **26/60**, 95% intervals disjoint, with a lifetime peak of
+4/60. More budget does not rescue 13 displaced layers.
+
+That run also produced the sharpest likelihood/capability decoupling in this programme: the
+held-out CE gap closes **98.4%**, from 7.3098 nats to **0.1158**, while the task gap does not
+move — and C28's final dev CE of 0.4727 is **5.11 nats better than the frozen source** while it
+answers 2 of 60. See `evidence/trainability/LONG_BUDGET_RESULT.md`.
 
 The original single-seed pair, retained because it is what the earlier text rested on:
 
@@ -213,8 +219,8 @@ free 2x shape-arithmetic reduction across all ten published cores.
 three-seed recoverability frontier (real replication, but one budget and one probe of three
 numeric classes); the CE/capability decoupling.
 
-**Weak or unverified**: anything past ~5.2k supervised target tokens — a 500k-token matched run
-is underway and may change the C28 conclusion; ridge sensitivity of the whitened fit
+**Weak or unverified**: anything past 500,099 supervised target tokens per arm, and everything
+at that budget rests on a **single seed**; ridge sensitivity of the whitened fit
 (condition number 1.08e8 against a 1e-6 ridge, unswept); any recipe with replay or
 frozen-teacher regularisation; generalisation of any coefficient beyond this one 596M model.
 
