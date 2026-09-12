@@ -18,7 +18,13 @@ except Exception:
 
 E = Path(r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001')
 R = E / 'outputs/rigorous'
-ARMS = ['source_control', 'C28']
+# Every CED arm is compared against the same ordinary control at the same recipe. The
+# displaced count and KV ratio are structural facts of each topology, recorded here so the
+# table reads against the displaced-layer law rather than against arm names.
+ARMS = ['source_control', 'ced_last4', 'ced_last8', 'C28']
+STRUCTURE = {'source_control': (0, 1.000), 'ced_last4': (3, 0.893),
+             'ced_last8': (7, 0.750), 'C28': (13, 0.536)}
+CONTROL_ARM = 'source_control'
 SEEDS = [17, 29, 43]
 
 
@@ -92,22 +98,39 @@ for arm in ARMS:
 print()
 
 # ---- the comparison --------------------------------------------------------
+# Each CED arm against the ordinary control, at every checkpoint. An arm is only reported at
+# a step where BOTH arms have a run, and the seed list is printed so partial cells cannot be
+# read as complete ones.
 verdict = {}
-if 'source_control' in summary and 'C28' in summary:
-    for step in sorted(set(summary['source_control']) & set(summary['C28'])):
-        a, b = summary['source_control'][step], summary['C28'][step]
-        pen = b['dev_ce_mean'] - a['dev_ce_mean']
-        # Does the CED penalty exceed the seed-to-seed spread of either arm?
-        spread = max(a['dev_ce_max'] - a['dev_ce_min'], b['dev_ce_max'] - b['dev_ce_min'])
-        separated = (b['dev_ce_min'] > a['dev_ce_max'])
-        task_disjoint = (b['task_ci95'][1] < a['task_ci95'][0]) or (a['task_ci95'][1] < b['task_ci95'][0])
-        verdict[step] = {'ced_ce_penalty_nats': pen, 'max_within_arm_seed_spread': spread,
-                         'ce_ranges_disjoint': separated, 'task_ci95_disjoint': task_disjoint,
-                         'source_task_rate': a['task_rate_pooled'], 'c28_task_rate': b['task_rate_pooled']}
-        print(f"step {step:>3}: CED CE penalty {pen:+.4f} nats | max within-arm seed spread "
-              f"{spread:.4f} | CE ranges disjoint across arms: {separated}")
-        print(f"          task  source {a['task_rate_pooled']:.1%} {a['task_ci95']} vs "
-              f"C28 {b['task_rate_pooled']:.1%} {b['task_ci95']} | CIs disjoint: {task_disjoint}")
+if CONTROL_ARM in summary:
+    for arm in ARMS:
+        if arm == CONTROL_ARM or arm not in summary:
+            continue
+        disp, kv = STRUCTURE.get(arm, (None, None))
+        verdict[arm] = {'displaced_layers': disp, 'kv_ratio': kv, 'by_step': {}}
+        print(f'{arm} vs {CONTROL_ARM}  (displaced {disp}, kv {kv:.3f}x)')
+        for step in sorted(set(summary[CONTROL_ARM]) & set(summary[arm])):
+            a, b = summary[CONTROL_ARM][step], summary[arm][step]
+            pen = b['dev_ce_mean'] - a['dev_ce_mean']
+            spread = max(a['dev_ce_max'] - a['dev_ce_min'], b['dev_ce_max'] - b['dev_ce_min'])
+            separated = (b['dev_ce_min'] > a['dev_ce_max']) or (a['dev_ce_min'] > b['dev_ce_max'])
+            task_disjoint = (b['task_ci95'][1] < a['task_ci95'][0]) or (a['task_ci95'][1] < b['task_ci95'][0])
+            retained = (b['task_rate_pooled'] / a['task_rate_pooled']) if a['task_rate_pooled'] else None
+            verdict[arm]['by_step'][step] = {
+                'ce_penalty_nats': pen, 'max_within_arm_seed_spread': spread,
+                'ce_ranges_disjoint': separated, 'task_ci95_disjoint': task_disjoint,
+                'control_task_rate': a['task_rate_pooled'], 'arm_task_rate': b['task_rate_pooled'],
+                'task_retention_fraction_of_control': retained,
+                'ce_penalty_per_displaced_layer': (pen / disp) if disp else None,
+                'seeds_control': a['seeds'], 'seeds_arm': b['seeds'],
+                'matched_seed_sets': sorted(a['seeds']) == sorted(b['seeds'])}
+            flag = '' if sorted(a['seeds']) == sorted(b['seeds']) else '  [SEED SETS DIFFER]'
+            print(f"  step {step:>3}: CE penalty {pen:+.4f} ({pen/disp:+.4f}/displaced) | "
+                  f"spread {spread:.4f} | CE disjoint {separated} | task {b['task_rate_pooled']:.1%} "
+                  f"vs {a['task_rate_pooled']:.1%}"
+                  f"{f' = {retained:.0%} of control' if retained else ''} | "
+                  f"CIs disjoint {task_disjoint}{flag}")
+        print()
 
 out = R / 'AGGREGATE_MULTISEED.json'
 out.write_text(json.dumps({
@@ -117,6 +140,7 @@ out.write_text(json.dumps({
             'fixed budget, not sampling of the eval. Open splits only; no receipt, no gate.',
     'runs_loaded': len(runs), 'missing': missing,
     'step0_identity_control_pass': control_ok,
+    'control_arm': CONTROL_ARM, 'structure': STRUCTURE,
     'per_arm': summary, 'comparison': verdict,
     'licenses_registered_training': False, 'licenses_efficacy_claim': False,
 }, indent=2) + '\n', encoding='utf-8')
