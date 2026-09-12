@@ -70,8 +70,9 @@ the failed `G1_CED_*` receipts as parents.
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
 - No result beyond 40 training steps. No replay/regularisation recipe tried.
-- The gated function-preserving variant (`gated_memory.py`) is **implemented but never
-  verified on real weights** — its verification run OOMed and was not retried.
+- ~~The gated variant is never verified on real weights.~~ **DONE** — `gated_memory.py` is
+  verified function-preserving on real weights: bitwise identical logits (max delta 0.000e+00),
+  CE identical, branch live under perturbation. See `evidence/arm-quality/GATED_VERIFY_split14.json`.
 - **Three adversarial-review workflows all died on usage limits and produced nothing.** No
   conclusion here has survived an external adversarial pass.
 
@@ -120,21 +121,40 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-The multi-seed matched comparison (2 arms × seeds 17/29/43, lr 1e-5, 40 steps, family-
-disjoint splits, 60-prompt retention probe) is the outstanding measurement. Aggregate with
-`aggregate_rigorous.py`, which includes a step-0 identity control across seeds.
+**Finish the `source_control` 500k arm.** Its matched `C28` counterpart is COMPLETE
+(`outputs/longbudget/LONGBUDGET_C28_seed17_b500000_lr1e-05.json`, 500,099 supervised target
+tokens, 5.14 h) but the control has been interrupted three times and stands at 250,016 of
+500,000. **The paired 500k comparison must not be presented as finished until it lands.**
+Resume by re-invoking with identical arguments; the harness refuses to resume if
+`train.jsonl` has changed and drives its LR schedule from the token count, so a resume lands
+on the same schedule.
 
 Then, in order:
 
-1. **Verify `gated_memory.py` on real weights** — the one architecture claim never checked.
-   It should be bitwise identical to the source at init; if it is not, the design is wrong.
-2. **Build the training-side capability-retention gate.** `G1_QUALITY` covers initialization;
-   nothing yet stops an optimiser trading away capability, and §9c shows both candidate
-   likelihood endpoints decouple from it. This is the highest-value protocol work left.
+1. **Build the training-side capability-retention gate.** `G1_QUALITY` covers initialization;
+   nothing yet stops an optimiser trading away capability, and both candidate likelihood
+   endpoints are measured to decouple from it. Highest-value protocol work left.
+2. **Ridge-sensitivity sweep for the latent result.** `latent_kv.RIDGE = 1e-6` was chosen for
+   Cholesky well-posedness and never tuned, against a covariance with condition number 1.08e8.
+   It is the largest open hole in the only deployable finding here. `latent_ridge_sweep.py`
+   exists; no real sweep has completed.
 3. Do **not** pursue another sharing topology, read-side precision, or full-context bank —
    all falsified or ruled out.
-4. Do **not** run a 1M-token budget: ~31 h/arm on CPU, and 5k tokens already moves CE by
-   10 nats, so the budget was never the binding constraint.
+4. Budget is **no longer** the open question, and the old "~31 h/arm, do not try it" advice was
+   wrong by ~3x: the measured rate is **27.0 supervised targets/s** (500,099 targets in
+   18,496 s), i.e. ~10.3 h per 1M per arm. The run was done. It did **not** restore capability
+   — C28 went 0/60 → 2/60 (peak 4/60 at 50k) while reaching dev CE 0.4727. The advice now
+   rests on that outcome, not on an infeasibility estimate.
+
+## What is already finished (do not re-run)
+
+- **Multi-seed matched comparison** — all twelve `outputs/rigorous/RIGOROUS_*.json` exist
+  (4 arms × seeds 17/29/43), aggregated in `AGGREGATE_MULTISEED.json` (`runs_loaded: 12`,
+  `missing: []`). Written up in `evidence/trainability/MULTISEED_RESULT.md` and
+  `RECOVERABILITY_FRONTIER.md`. ~4 h of compute; do not repeat it.
+- **Latent KV sweep** — `evidence/latent/LATENT_KV_RESULT.md`, 4× reduction at no measurable
+  capability cost, zero training.
+- **Device parity** — `evidence/device-parity/DEVICE_PARITY.md`.
 
 ## Exact safe resume commands
 

@@ -193,9 +193,18 @@ for rank in RANKS:
             torch.cuda.empty_cache()
 
 # Verdict: does the headline point survive the sweep?
+# A smoke run writes the same filename as a real sweep. Emitting `ridge_sensitive` from one or
+# two points would be a one-point "sweep" presented as a sensitivity result -- an earlier smoke
+# artifact did exactly that (ridges_tested: 1, ridge_sensitive: false) and had to be deleted.
+MIN_RIDGES_FOR_VERDICT = 3
 head = [v for k, v in results.items() if v.get('rank') == PROBE_RANK and 'task_numeric_hits' in v]
 verdict = None
-if head:
+if head and len(head) < MIN_RIDGES_FOR_VERDICT:
+    verdict = {'rank': PROBE_RANK, 'ridges_tested': len(head), 'ridge_sensitive': None,
+               'insufficient': f'need >= {MIN_RIDGES_FOR_VERDICT} ridges for a sensitivity '
+                               f'verdict; this run is a smoke test, not a sweep'}
+    print(f'only {len(head)} ridge(s) at rank {PROBE_RANK} -- NO sensitivity verdict emitted')
+elif head:
     ces = [v['dev_ce_nats'] for v in head]
     tasks = [v['task_numeric_hits'] for v in head]
     verdict = {'rank': PROBE_RANK, 'ridges_tested': len(head),
@@ -223,6 +232,7 @@ OUT.mkdir(parents=True, exist_ok=True)
                             'to each other and to other runs on the same device; compare them '
                             'against the CPU corpus only through evidence/device_parity.',
     'ranks': RANKS, 'ridges': RIDGES, 'probe_rank': PROBE_RANK,
+    'is_smoke_run': len(RIDGES) < MIN_RIDGES_FOR_VERDICT or NTASK < 60 or NCAL < 256,
     'dev_rows': len(dev), 'task_rows': len(task_rows),
     'calibration': {'split': 'train', 'rows': len(calib), **health},
     'variants': results, 'verdict': verdict,

@@ -145,6 +145,9 @@ dev_resp = [response_mask(x) for x in dev]
 NRESP = int(sum(int(m.sum()) for m in dev_resp))
 if not NRESP:
     raise SystemExit('no assistant-reply positions found in DEV; the marker or template changed')
+# The resume cursor is an index into this permuted list, so the resume is only valid if the
+# split is byte-identical to the one the interrupted run used. Fingerprinted, checked below.
+train_fingerprint = hashlib.sha256((SPL / 'train.jsonl').read_bytes()).hexdigest()
 available = sum(x.shape[1] - 1 for x in train)
 if available < BUDGET:
     raise SystemExit(f'TRAIN holds {available} target tokens, below the {BUDGET} budget: the run '
@@ -239,6 +242,14 @@ checkpoints, traj = [], []
 if STATE.is_file():
     blob = torch.load(STATE, map_location=DEVICE, weights_only=False)
     model.load_state_dict(blob['model']); opt.load_state_dict(blob['opt'])
+    saved_fp = blob.get('train_fingerprint')
+    if saved_fp and saved_fp != train_fingerprint:
+        raise SystemExit(
+            'REFUSING TO RESUME: outputs/splits_large/train.jsonl has changed since this run '
+            'was interrupted (saved ' + saved_fp[:16] + ', now ' + train_fingerprint[:16] + '). '
+            'The resume cursor indexes a seed-permuted view of that file, so continuing would '
+            'revisit rows already trained and skip others while still reporting '
+            'rows_revisited: 0. Rebuild the run from scratch or restore the original split.')
     tokens, steps, row_cursor = blob['tokens'], blob['steps'], blob['row_cursor']
     checkpoints, traj = blob['checkpoints'], blob['traj']
     elapsed_prior = blob.get('elapsed', 0.0)
@@ -332,7 +343,9 @@ def checkpoint(done, milestone=None):
     return t['samples']
 
 
-last_save = [0.0]
+# Seeded with the start time, not 0.0: otherwise the first periodic call fires
+# immediately and writes 7.15 GB that is byte-identical to what is already on disk.
+last_save = [time.perf_counter()]
 
 
 def save_state(force=False):
@@ -346,6 +359,7 @@ def save_state(force=False):
     tmp = STATE.with_suffix('.tmp')
     torch.save({'model': model.state_dict(), 'opt': opt.state_dict(), 'tokens': tokens,
                 'steps': steps, 'row_cursor': row_cursor, 'checkpoints': checkpoints,
+                'train_fingerprint': train_fingerprint,
                 'traj': traj, 'elapsed': elapsed_prior + time.perf_counter() - t0}, tmp)
     os.replace(tmp, STATE)          # atomic: a crash mid-save cannot corrupt the resume point
 
@@ -376,6 +390,9 @@ while tokens < BUDGET:
         steps += 1; micro = 0
         traj.append({'step': steps, 'tokens': tokens, 'train_ce': float(loss.detach()),
                      'grad_norm': float(gnorm), 'lr': lr_at(tokens)})
+    # Periodic crash-recovery save, independent of milestones. Without this the time gate in
+    # save_state() can never fire, because milestones are hours apart late in a run.
+    save_state()
     for m in MILESTONES:
         if m and tokens >= m and m not in done_milestones:
             done_milestones.add(m)
@@ -421,7 +438,12 @@ save_state(force=True)
                 f'driven by token count so a resume lands on the same schedule',
     'train_rows_available': len(train), 'train_rows_consumed': row_cursor,
     'train_target_tokens_available': available,
-    'epochs': tokens / available, 'rows_revisited': 0,
+    'epochs': tokens / available,
+    # Justified, not asserted: the cursor is strictly monotonic within a run, and a resume
+    # refuses unless train.jsonl is byte-identical to the interrupted run's.
+    'rows_revisited': 0,
+    'rows_revisited_basis': 'monotonic row cursor + train.jsonl sha256 verified on every resume',
+    'train_fingerprint': train_fingerprint,
     'dev_rows': len(dev), 'dev_target_tokens': NTOK,
     'dev_response_target_tokens': NRESP,
     'dev_response_fraction': NRESP / NTOK,
