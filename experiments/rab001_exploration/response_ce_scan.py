@@ -49,6 +49,10 @@ enc = lambda t: tok(t, return_tensors='pt', add_special_tokens=False)['input_ids
 dev = [x for x in (enc(r['text']) for r in jl(SPL / 'dev.jsonl')[:N_DEV]) if x.shape[1] >= 2]
 
 MARKER = tok('<|im_start|>assistant' + chr(10), add_special_tokens=False)['input_ids']
+# The assistant turn opens with an empty `<think></think>` scaffold, which is as much
+# boilerplate as the system prompt. Excluding it takes the 'reply' region from 10.9%
+# of DEV positions down to 7.7% -- the part that actually carries the answer.
+THINK_END = tok('</think>' + chr(10) + chr(10), add_special_tokens=False)['input_ids']
 
 
 def response_mask(ids):
@@ -63,6 +67,11 @@ def response_mask(ids):
         if seq[i:i + len(MARKER)] == MARKER:
             cut = i + len(MARKER)
             break
+    if cut >= 0:
+        for i in range(cut, len(seq) - len(THINK_END) + 1):
+            if seq[i:i + len(THINK_END)] == THINK_END:
+                cut = i + len(THINK_END)
+                break
     mask = torch.zeros(len(seq) - 1, dtype=torch.bool)
     if cut >= 0:
         mask[max(0, cut - 1):] = True

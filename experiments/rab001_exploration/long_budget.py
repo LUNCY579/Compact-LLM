@@ -77,6 +77,7 @@ if BUDGET > CEILING:
 EOS = {151643, 151645}
 TAG = f'{ARM}_seed{SEED}_b{BUDGET}_lr{LR:g}'
 WARMUP_FRAC, MIN_LR_FRAC = 0.03, 0.10
+SAVE_EVERY_S = 1800   # the resume state is ~7.15 GB; this is crash recovery, not history
 dtype = getattr(torch, DTYPE)
 
 self_test()          # a drifted scorer already inverted one conclusion; fail loudly instead
@@ -109,6 +110,10 @@ NTOK = sum(dev_lens)
 # times, which is a candidate mechanism for the CE-vs-capability decoupling already measured
 # here. Both are reported; neither is dropped.
 MARKER = tok('<|im_start|>assistant' + chr(10), add_special_tokens=False)['input_ids']
+# The assistant turn opens with an empty reasoning scaffold. It is boilerplate too, so
+# the mask starts after it when present; otherwise the 'reply' would still be ~44%
+# scaffold and would understate the gap between arms.
+THINK_END = tok('</think>' + chr(10) + chr(10), add_special_tokens=False)['input_ids']
 
 
 def response_mask(ids):
@@ -124,6 +129,12 @@ def response_mask(ids):
         if seq[i:i + len(m)] == m:
             cut = i + len(m)
             break
+    if cut >= 0:
+        t = THINK_END
+        for i in range(cut, len(seq) - len(t) + 1):
+            if seq[i:i + len(t)] == t:
+                cut = i + len(t)
+                break
     mask = torch.zeros(len(seq) - 1, dtype=torch.bool)
     if cut >= 0:
         mask[max(0, cut - 1):] = True
@@ -321,7 +332,17 @@ def checkpoint(done, milestone=None):
     return t['samples']
 
 
-def save_state():
+last_save = [0.0]
+
+
+def save_state(force=False):
+    """Rolling crash-recovery point. ~7.15 GB per write (model 2.38 + Adam 4.77), so this is
+    time-gated rather than fired at every milestone -- eight milestone saves would be ~57 GB of
+    I/O per arm for a file that is only ever read after a crash."""
+    now = time.perf_counter()
+    if not force and now - last_save[0] < SAVE_EVERY_S:
+        return
+    last_save[0] = now
     tmp = STATE.with_suffix('.tmp')
     torch.save({'model': model.state_dict(), 'opt': opt.state_dict(), 'tokens': tokens,
                 'steps': steps, 'row_cursor': row_cursor, 'checkpoints': checkpoints,
@@ -376,7 +397,7 @@ if micro:
 completed = tokens >= BUDGET
 if completed and (not checkpoints or checkpoints[-1]['tokens'] < tokens):
     last_samples = checkpoint(tokens)
-save_state()
+save_state(force=True)
 
 (OUT / f'LONGBUDGET_{TAG}.json').write_text(json.dumps({
     'schema': 1, 'evidence_kind': 'exploratory_large_budget_matched_comparison_only',

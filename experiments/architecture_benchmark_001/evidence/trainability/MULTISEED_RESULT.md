@@ -1,5 +1,17 @@
 # Multi-seed matched comparison: CED loses, replicated, with the gap 6× the seed variance
 
+> **Partially superseded — read `RECOVERABILITY_FRONTIER.md` first.** Every C28 number below
+> stands and was replicated. What does **not** stand is the generalisation drawn from it. This
+> document concludes "training does not rescue a displaced initialization"; a later three-seed,
+> four-arm frontier shows that it *does* at small displacement — `ced_last4` (3 displaced layers)
+> reaches 69/180 against the control's 73/180, statistically indistinguishable, at the identical
+> recipe. The corrected claim is a dose-response in displacement count, not a blanket negative.
+>
+> Also note, for every CE figure below: only 7.7% of a DEV row's target positions are the
+> assistant's answer, and displacement damage is measured to be 1.3-1.5x more severe in the
+> answer than the overall CE reports. These CE numbers therefore *understate* the gap. They have
+> not been recomputed position-resolved.
+
 The first result in this programme with genuine replication, a real task probe, and
 family-disjoint data. It supersedes the single-seed 2×2 in `MATCHED_COMPARISON.md`, which
 stands but rested on one run per cell and a 6-prompt probe.
