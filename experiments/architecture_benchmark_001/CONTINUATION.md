@@ -1,189 +1,140 @@
 # RAB-001 continuation file
 
-Compact resume state. Written 2026-09-11. Read `PROGRESS_LOG.md` for the evidence behind
-every claim here. Local files plus verified artifacts are the source of truth.
+Compact resume state. `evidence/COMPREHENSIVE_ANALYSIS.md` holds the full argument;
+`evidence/REQUALIFICATION_REVIEW.md` records which results survived the bug fixes;
+`PROGRESS_LOG.md` is the append-only history. Local files and verified artifacts are the
+source of truth — prior chat summaries are not.
 
 ## Identity
 
 | | |
 |---|---|
 | Worktree | `C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification` |
-| Branch | `research/ced-rab001-hotfix001-qualification-v1` |
-| Branched from | `2f65f9e` (`research/ced-native-loader-qualification-v1`) |
-| Commits | `8b042d4` baseline → `e0ec051` ladder → `e7f760b` engineering → `fb0e2b8` audit fix → `3a604d0` requal → `f77792c` HOTFIX-002 → `0da7073` negative result → `16cac5c` final requal |
-| `implementation_sha256` | `7d48de215b08f564f4578b52b4fb89a85ce972c812c1ce43c74064c146d6f4cd` (HOTFIX-003) |
-| receipts bind | `fc44701e…` — **stale vs the tree**; requalification at `7d48de21` pending |
-| digests qualified | `eab80e9f` → `8d54f540` → `fc44701e`, all three run end to end, all agreeing to the element |
+| Branch | `research/ced-rab001-hotfix001-qualification-v1`, pushed to `LUNCY579/ChatBubble` |
+| Branched from | `2f65f9e` |
+| `implementation_sha256` | **`8b47b395`** (HOTFIX-004), 31 manifest files |
+| Tests | **191 passed, 0 skipped** |
 | Qualification runtime | `C:\Users\clclc\BusinessProject\.venv-rab001` |
-| Source weights | `C:\Users\clclc\BusinessProject\Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze` |
-| `audit_digest` | `97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8` |
+| Source weights | `Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze`, `audit_digest 97cd76af…` |
+| Current receipts | `evidence/ladder-8b47b395-v1/`, `evidence/quality-8b47b395/` |
 
-Runtime: python 3.11.15 / Windows-10-10.0.26200-SP0 / torch 2.10.0+cpu /
-transformers 4.51.3 / safetensors 0.7.0 / numpy 2.3.5 / tokenizers 0.21.4.
-Tests: **189 passed, 0 skipped**. Hardware: RTX 4070 **Laptop** 8 GB (unused — CPU runs
-only), 15.2 GB RAM, 113 GB free disk.
+Runtime: python 3.11.15 / Windows-10-10.0.26200 / torch 2.10.0+cpu / transformers 4.51.3 /
+safetensors 0.7.0 / numpy 2.3.5. Hardware: RTX 4070 **Laptop** 8 GB (**unused** — every run
+is CPU), 15.2 GB RAM, 32 logical CPUs.
 
-**`run.py:117` hard-fails any gate unless `transformers == 4.51.3`.** The shared
-`Chat-Bubble/.venv` is `2.12.1+cu126 / 5.14.1` and will not run this experiment. Always use
-`.venv-rab001`. Never create a venv under `experiments/architecture_benchmark_001/` —
-`implementation_manifest()` globs `ROOT.rglob('*.py')` and would absorb it into the digest.
+**`run.py:117` hard-fails unless `transformers == 4.51.3`.** The shared `Chat-Bubble/.venv`
+has drifted to 2.12.1/5.14.1 and will not run this experiment. Never put a venv under
+`experiments/architecture_benchmark_001/` — `implementation_manifest()` globs
+`ROOT.rglob('*.py')` and would absorb it into the digest.
+
+**Five digests have been qualified end to end** — `eab80e9f`, `8d54f540`, `fc44701e`,
+`7d48de21`, `8b47b395` — and every one reproduces the same numbers to the element. Each
+`.py`/`protocol.json` edit forces this cycle: change → run suite → requalify → verify inert.
 
 ## Four-arm state
 
-| arm | checkpoint / lineage | qualification at `eab80e9f` | numerics | engineering | next blocker |
-|---|---|---|---|---|---|
-| **B28** | frozen official source, no checkpoint | **G0 fresh PASS** 8/8 | FP32 4 violating elements total; FP64 clean (3.8e-13) | **`G2_CACHED_B28` PASS 9/9**, 358.5 s, 3,134 targets | none; it is the frozen teacher and the C28 control |
-| **D40** | `outputs/ladder-eab80e9f-v1/G1_WIDTH/attempt-0001/` (from G1_IDENTITY, bitwise exact) | **G1_WIDTH fresh PASS** 7/7 | FP32 **0 violations on every path and row** | **`G2_CACHED_D40` PASS 9/9**, 319.9 s, 3,134 targets | not a *recovered* donor; recovery recipe unfrozen |
-| **C28** | `outputs/ladder-fc44701e-v1/G1_CED_C28/attempt-0001/` (donor B28, layer 14, 596,311,424 params) | **FAIL** 12/15 | FP32 401,863 violations / 8.2e-4; FP64 clean (4.1e-12) | **BLOCKED** by failed parent | see CED disposition — no cheap fix exists |
-| **C40** | `outputs/ladder-fc44701e-v1/G1_CED_C40/attempt-0001/` (donor D40, layer 20, 594,279,808 params) | **FAIL** 12/15 | FP32 726,228 violations / 5.9e-3 | **BLOCKED** by failed parent | same |
+| arm | what it is | construction | quality | training |
+|---|---|---|---|---|
+| **B28** | frozen official source | `G0` PASS | **the only working model**: CE 5.55, 6/24 pilot, `G1_QUALITY` PASS 8/8 | see below |
+| **D40** | ordinary width 1024→896 | `G1_WIDTH` PASS 7/7 | **degenerate** `</think>` loop, CE 5.36 (better than source), `G1_QUALITY` **FAIL** on 3 | not run |
+| **C28** | CED, 14 enc + 14 shared-memory dec | `G1_CED_C28` **FAIL** 12/15 | CE 12.59, **worse than uniform** (11.93), 0/24 pilot | loses the matched comparison |
+| **C40** | CED from D40 | `G1_CED_C40` **FAIL** 12/15 | CE 12.96, worse than uniform, 0/24 | blocked by failed parent |
 
-Status vocabulary: every PASS/FAIL above is a **fresh** result at the current implementation
-digest, produced this session. The older `evidence/g*-official-supa-1.7.0/` receipts are
-**historical** (schema 1, digest `dc212c9f`) and cannot qualify current code.
+C28/C40 optimizer lanes are closed by `gates.py` unaided: their `G2_CACHED_*` stages declare
+the failed `G1_CED_*` receipts as parents.
 
-## The one finding that drives everything
+## What is established
 
-**Neither conversion produces a usable model, and no gate in the ladder tested for it.**
-
-| arm | CE | perplexity | pilot hits | behaviour |
-|---|---:|---:|---:|---|
-| B28 frozen source | 5.546 | 256 | **6/24** | works; answers 3, 5, 7, 9 |
-| D40 ordinary width | 5.360 | 213 | 0/24 | degenerate `</think>` loop |
-| C28 CED | **12.585** | 292,267 | 0/24 | token salad, never terminates |
-| C40 CED | **12.960** | 425,015 | 0/24 | token salad, never terminates |
-
-`ln(151936) = 11.93`, so both CED arms are **worse than uniform**. The ordinary control is
-broken too, which invalidates the four-arm design rather than only the CED arms. Only the
-frozen source works.
-
-`G1_WIDTH`, `G1_CED_*` and `G2_CACHED_*` are all satisfied by a model emitting token salad:
-they test tensor accounting, save/reload, parameter counts and cache-order parity. Parity is
-self-consistency, not quality — D40 passes the full parity grid with **zero** violations
-while being degenerate.
-
-### The governing law for any KV-sharing scheme
-
-Call a layer *displaced* if it attends to a K/V bank it did not produce. Then CE is a
-function of the displaced **count**, essentially independent of topology, and every removed
-bank displaces exactly one layer by construction:
-
-| scheme | displaced | CE | KV ratio |
-|---|---:|---:|---:|
-| source / local group 1 *(control)* | 0 | 5.5458 | 1.000x |
-| ced last 4 | 3 | 6.4065 | 0.893x |
-| ced last 8 | 7 | 8.3245 | 0.750x |
-| ced last 14 | 13 | 12.5854 | 0.536x |
-| local group 2 | 14 | 12.9136 | 0.500x |
-| local group 4 | 21 | 16.8612 | 0.250x |
-
-Two structurally unrelated schemes land on one curve at 13 and 14 displaced layers, at
-roughly **0.5 nats per bank removed**. Local cross-layer sharing was hypothesised to beat
-CED and is **falsified** — it is worse at matched budget. There is no clever topology to
-find; only training can move the frontier.
-
-## The earlier parity work, in its proper place
-
-Still true, still correctly measured, but secondary: both CED arms fail strict FP32
-cache-order parity (401,863 and 726,228 violations) while D40 passes with zero. Cause
-located — divergence starts at encoder layer 0, the shared bank inherits dV = 4.6e-04
-before any decoder read, and CED forfeits the final-RMSNorm suppression a plain model gets.
-FP64 is clean for both arms (3.8e-13 / 4.1e-12); `causal_suffix_isolation_exact` and
-`decode_choices_exact` hold everywhere, so there is no causality or cache bug. The
-read-side precision fix (HOTFIX-002) was implemented and **falsified**. All of it is a
-hygiene property of a model at perplexity 292,267, so the ordering of work was wrong.
+1. **Neither conversion is usable, and no construction gate tested for it.** `G1_WIDTH`,
+   `G1_CED_*` and `G2_CACHED_*` are all satisfied by a model emitting token salad. Parity is
+   self-consistency, not quality — D40 passes the full parity grid with **zero** violations
+   while degenerate. `G1_QUALITY` (HOTFIX-003/004) is the fix and catches D40 on 3 checks.
+2. **A KV-sharing law.** Every removed bank displaces exactly one layer *by construction*,
+   each displaced layer costs ~0.5 nats, and CE tracks the displaced **count**, not the
+   topology — confirmed by CED (13 displaced → 12.5854) and local cross-layer sharing
+   (14 → 12.9136) landing on one curve. Local sharing was hypothesised to win and is
+   **falsified**. Usable budget: 2–3 banks, ~10% KV. No clever topology exists.
+3. **CED is FP32-ill-conditioned, not buggy.** Clean at FP64 (4.1e-12); divergence starts at
+   encoder layer 0 and the shared bank is already 4.6e-04 out of tolerance before any decoder
+   read. CED forfeits the final-RMSNorm suppression a plain model gets. The read-side
+   precision fix (HOTFIX-002) is **falsified**; full-context bank reconstruction is ruled out
+   analytically (it needs an O(T²) encoder re-run).
+4. **Training: CED loses at both doses.** Matched recipe, same rows, same token budget:
+   +0.66 nats at lr 1e-4, **+1.21 nats at lr 1e-5**, with CED at 0/6 against the source's
+   6/6. It learns the answer *format* and never the arithmetic.
+5. **Dose, not data.** lr 1e-4 destroys the source's arithmetic (6/6 → 0/6) while improving
+   CE; lr 1e-5 preserves 6/6 **and** reaches better CE. So CE alone cannot certify a run —
+   and neither can KL, which rises even when capability is fully preserved.
 
 ## What is NOT established
 
-- No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim.
-- No arm has been compared to another **after training**. No recovery or distillation
-  result. Every quality number is a single deterministic CPU run, no seeds.
-- The generation probe is 8-24 open pilot prompts of one narrow arithmetic family: a smoke
-  test, not a capability benchmark.
-- All quality/architecture diagnostics live in `experiments/rab001_exploration/`, outside
-  the hashed root, so they produce **no receipts** and open no gates.
-- No GPU/VRAM measurement at all. CUDA would be a different runtime identity and would
-  require requalifying the whole ladder; devices were not silently switched.
-- **A 1M-token pilot is not feasible on this machine as configured.** Measured ~9 supervised
-  targets/s on CPU = ~31 h per arm, ~62 h per matched recipe; and a 1M-token teacher cache
-  is ~4.1 GB against 15.2 GB RAM with a ~7 GB training process.
-- G3/G4/G5 remain closed. `recovery-readiness` still reports BLOCKED with 18 missing items.
-- The workflow audit of the package was **not a clean review**: 60 of 123 agents died on a
-  usage limit. Its `receipt-integrity` and `data-tooling` dimensions completed verification;
-  `ced-parity-gate`, `numerics`, `teacher-cache` and `cli-tests-g3` findings are unverified
-  second-pass observations only.
+- No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
+- No result beyond 40 training steps. No replay/regularisation recipe tried.
+- The gated function-preserving variant (`gated_memory.py`) is **implemented but never
+  verified on real weights** — its verification run OOMed and was not retried.
+- **Three adversarial-review workflows all died on usage limits and produced nothing.** No
+  conclusion here has survived an external adversarial pass.
 
-## Data state
+## Bugs found in my own harness — and how
 
-Local fixtures: `pilot.jsonl` 24 rows (open diagnostic, never training),
-`calibration.jsonl` 156 rows, `train-smoke.jsonl` 25 rows. **No scientific recovery data.**
+Four defects, **none found by code review**:
 
-Candidate pool (local, no download needed):
-`Chat-Bubble/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0` — 110,000 SFT
-rows, 16,504 template families (none >8 rows), validation/leakage/near-duplicate reports all
-PASS (0 near-dup hits at threshold 90, zero exact overlap with sealed/dev/RAG splits).
+| defect | how it surfaced | impact |
+|---|---|---|
+| seed consumed nothing | two seeds gave bit-identical output | would have faked "replicated across 3 seeds" |
+| leading-integer scoring | log showed correct answers while hits read 0 | ~21% of task set inflated |
+| full-string scoring (earlier) | raw samples showed `3.` vs `3` | **inverted a published conclusion** |
+| a print could kill a run | runs died with compute spent | lost 3 C28 runs |
+| eval chosen without checking the teacher | smoke test: source 0/20 on `arithmetic_chain` | would have produced a confidently empty result |
 
-Open data questions, all of which must be settled before any budget is frozen:
-1. **Supervision policy is unregistered.** Assistant-only gives ~454k shifted targets from
-   the whole pool (1M unreachable); the delivered `prepare_data` emits no label mask and
-   counts every window token as a shifted target, giving ~14.9M (1M needs ~7,400 docs).
-   These are different experiments. Measured: mean 135.6 tokens/row rendered, mean 4.13
-   final-assistant target tokens, 0/2000 rows exceed the 512 context.
-2. **Human review is pending for every row.** A 520-row audit packet and 40,000-ID pool
-   exist. `data_tools.py:67` accepts `review_status: "approved"` verbatim with no reviewer
-   identity, timestamp or attestation — so that field is a declaration, not evidence.
-3. ~~Leakage re-check against current sealed/dev~~ **CLOSED.** Re-ran against the live
-   assets (1,019 distinct eval keys vs 124,000 corpus rows): **0 last-user-turn and 0
-   full-prompt collisions**, using normalized hashes so no sealed content entered any
-   training process. Exact-match only; near-duplicate evidence remains the corpus's own
-   sampled audit.
-4. v3 rows carry `messages`, not the flat `text` field `prepare-data` requires — a rendering
-   step is needed either way.
+**Keep the exact controls and cheap smoke tests.** `ced_last1` and `local group 1` must be
+bitwise identity; inert-default requalification must reproduce numbers to the element;
+step-0 metrics must match across seeds. Every bug above was caught by one of those or by
+reading raw samples.
 
-## Queued code fixes (each changes the digest — fix, then requalify, then proceed)
+The scorer now lives in exactly one place, `experiments/rab001_exploration/scoring.py`, with
+an 11-case self-test that **runs at import**. All 12 exploration scripts reconfigure
+stdout/stderr to UTF-8 so output formatting cannot destroy a measurement.
 
-1. ~~`review.py:28` legacy-key-only strict-parity reporting~~ **FIXED** in `fb0e2b8`,
-   requalified in `3a604d0`; the audit now reports 401,863 / 726,228.
-2. `ladder.py:101` derives the next attempt number from attempt *directories* only, while
-   the attempt *log* is created with exclusive open — a child failing before `_directory`
-   leaves a log that collides on retry.
-3. `qualify_identity` (`run.py:276`) uses one `assert_close` on a single halves split over
-   second-half positions; `G1_WIDTH` tests no cache parity at all. The ordinary arms are
-   held to a materially weaker numerical gate than the CED arms. Unequal gates across arms
-   is an experimental-design defect independent of the CED result.
-4. `engineering.py:213` `matched_control_verified` is tautologically True for non-C arms.
+## Data and evals
 
-Do **not** apply these while relying on the receipts in `evidence/ladder-fc44701e-v1/` —
-they bind `fc44701e`. The pattern used twice this session works: change, run the suite,
-requalify, and verify the numerics reproduce to the element before trusting the result.
+Local fixtures: `pilot.jsonl` 24 rows (open diagnostic, never training), `calibration.jsonl`
+156, `train-smoke.jsonl` 25. Corpus:
+`Chat-Bubble/Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0`, 110k rows,
+16,504 families, leakage/near-duplicate reports PASS, re-verified against current sealed/dev
+with **0 collisions** across 124,000 rows.
+
+Rigorous splits in `outputs/splits/` (manifest committed): **TRAIN 800** across 36 classes,
+**DEV 150**, **TASK 150** balanced over the probe classes. Zero family and zero id overlaps,
+asserted at build *and* run time. Rendering verified to reproduce all 25 existing prepared
+rows byte-for-byte.
+
+**Probe classes** `percentage_reasoning`, `ratio_proportion`, `time_duration` — chosen from
+the measured frozen-source baseline (65% / 50% / 30%) and held out of TRAIN/DEV so the task
+measures **retention**. `arithmetic_chain` is excluded: the source scores **0/20**, so it
+would measure nothing. The selection was deliberately **not re-fitted** after the scorer
+correction moved `time_duration` to exactly 30.0%.
+
+Human review is **pending for every corpus row**; `data_tools.py:67` accepts
+`review_status: "approved"` verbatim with no attestation, so that field is a declaration.
 
 ## Single next action
 
-The parity question is no longer the blocker and should not be resumed. The open question
-is **trainability**: can any of these initializations be optimised at all? A bounded
-overfitting probe (`trainability.py`, 25 rows, AdamW) is running against C28; if CE moves
-substantially the problem is budget, and if it barely moves the design has an optimisation
-pathology.
+The multi-seed matched comparison (2 arms × seeds 17/29/43, lr 1e-5, 40 steps, family-
+disjoint splits, 60-prompt retention probe) is the outstanding measurement. Aggregate with
+`aggregate_rigorous.py`, which includes a step-0 identity control across seeds.
 
 Then, in order:
 
-1. **Add a quality gate** before any further architecture work. Forward-only, on the
-   already-open calibration/pilot splits: bounded CE increase, bounded KL to the frozen
-   source, plus nondegeneracy (termination rate, distinct-output count). It would have
-   failed D40, C28 and C40 immediately. This is the single highest-value protocol change.
-2. **Retire D40 as the ordinary control.** A degenerate control supports no comparison; the
-   frozen source is the only valid reference today.
-3. **Stop the CED-by-conversion arm** on capability grounds, independent of parity.
-4. **Do not pursue another sharing topology** — the exchange rate is a property of sharing
-   itself, confirmed by two unrelated schemes on one curve.
-5. If KV cost is the real target, the honest options are a design trained from the start, or
-   orthogonal methods that do not repurpose these weights (quantised or paged KV), which are
-   outside this experiment's registered scope.
-6. If capability is the target, the function-preserving zero-gated augmentation
-   (`gated_memory.py`) is the only variant that starts at source quality — but it **adds**
-   KV rather than saving it, and its value is as a training scaffold, not a recovery target.
-
-Do not run a 1M-token recovery on this hardware: 31 h/arm measured, and from CE 12.6 it
-would be training a new architecture rather than recovering one.
+1. **Verify `gated_memory.py` on real weights** — the one architecture claim never checked.
+   It should be bitwise identical to the source at init; if it is not, the design is wrong.
+2. **Build the training-side capability-retention gate.** `G1_QUALITY` covers initialization;
+   nothing yet stops an optimiser trading away capability, and §9c shows both candidate
+   likelihood endpoints decouple from it. This is the highest-value protocol work left.
+3. Do **not** pursue another sharing topology, read-side precision, or full-context bank —
+   all falsified or ruled out.
+4. Do **not** run a 1M-token budget: ~31 h/arm on CPU, and 5k tokens already moves CE by
+   10 nats, so the budget was never the binding constraint.
 
 ## Exact safe resume commands
 
@@ -193,17 +144,19 @@ PY=C:/Users/clclc/BusinessProject/.venv-rab001/Scripts/python.exe
 SRC=C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze
 E=experiments/architecture_benchmark_001
 
-# 1. Confirm identity before trusting anything (expect 189 passed, 0 skipped)
+# 1. Confirm identity before trusting anything (expect 191 passed, 0 skipped)
 $PY -m pytest $E/tests -q
 $PY -c "from experiments.architecture_benchmark_001.gates import implementation_digest as d; print(d())"
-# expect 7d48de215b08f564f4578b52b4fb89a85ce972c812c1ce43c74064c146d6f4cd
+# expect 8b47b39595dcdd7ee82512de16e4ea30abee4642063de7f5119be76ed6d6621f
 
-# 2. Re-read the existing verdicts WITHOUT recomputing (nothing here re-runs a gate)
-$PY -m experiments.architecture_benchmark_001 audit-evidence --root $E/outputs/ladder-fc44701e-v1
-$PY -m experiments.architecture_benchmark_001 status --source $SRC
+# 2. Re-read existing verdicts without recomputing anything
+$PY -m experiments.architecture_benchmark_001 audit-evidence --root $E/outputs/ladder-8b47b395-v1
+$PY experiments/rab001_exploration/scoring.py        # scorer self-test
+
+# 3. Aggregate the multi-seed comparison
+$PY experiments/rab001_exploration/aggregate_rigorous.py
 ```
 
-Re-running the ladder is **not** needed while the digest is unchanged; use a **new** `--out`
-root if you do (`execute` refuses to reuse a root whose session context changed, and
-`--resume` only continues an identical session). Never delete `ACTIVE.lock` without first
-confirming no process is running.
+Re-running the ladder is unnecessary while the digest is unchanged; if you do, use a **new**
+`--out` root (`execute` refuses a root whose session context changed). Never delete an
+`ACTIVE.lock` without confirming no process is running.

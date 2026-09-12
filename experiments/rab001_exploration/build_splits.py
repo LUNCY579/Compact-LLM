@@ -150,7 +150,7 @@ dev = prepared([rng.choice(other[f]) for f in dev_fams], 'dev')
 task = task_rows([rng.choice(arith[f]) for f in task_fams])
 
 OUT.mkdir(parents=True, exist_ok=True)
-for name, rows in (('train', train), ('dev', dev), ('task_arithmetic', task)):
+for name, rows in (('train', train), ('dev', dev), ('task_probe', task)):
     path = OUT / f'{name}.jsonl'
     path.write_text('\n'.join(json.dumps(r, ensure_ascii=False) for r in rows) + '\n', encoding='utf-8')
     print(f'{name:16} {len(rows):>5} rows -> {path.name}')
@@ -177,7 +177,7 @@ manifest = {
     'seed': SEED, 'grouping_key': 'metadata.template_family',
     'rendering': 'official chat template, enable_thinking=False, add_generation_prompt=False; '
                  f'verified to reproduce {matched}/{checked} existing prepared rows byte-for-byte',
-    'rows': {'train': len(train), 'dev': len(dev), 'task_arithmetic': len(task)},
+    'rows': {'train': len(train), 'dev': len(dev), 'task_probe': len(task)},
     'families': {k: len(v) for k, v in fams.items()},
     'family_overlaps': overlaps, 'id_overlaps': id_overlaps,
     'train_classes': classes, 'probe_classes': list(PROBE), 'unusable_excluded': list(UNUSABLE),

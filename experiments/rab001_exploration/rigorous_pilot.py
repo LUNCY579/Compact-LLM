@@ -67,7 +67,7 @@ import random as _random
 jl = lambda p: [json.loads(l) for l in Path(p).read_text(encoding='utf-8').splitlines() if l.strip()]
 train_rows = jl(SPL / 'train.jsonl')
 dev_rows = jl(SPL / 'dev.jsonl')[:N_DEV]
-task_rows = jl(SPL / 'task_arithmetic.jsonl')[:N_TASK]
+task_rows = jl(SPL / 'task_probe.jsonl')[:N_TASK]
 
 # Family disjointness is enforced at build time; re-assert it here so a corrupted split file
 # cannot silently contaminate a run.

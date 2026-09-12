@@ -599,3 +599,63 @@ Consequences, recorded rather than glossed:
 - The quality/architecture diagnostics in `evidence/arm-quality/` and
   `evidence/trainability/` are unaffected either way: they run from
   `experiments/rab001_exploration/`, outside the hashed root, and bind no digest.
+
+---
+
+## HOTFIX-004, three harness bugs, and the rebuilt evaluation
+
+### Digest moved again
+
+    implementation_digest() = 8b47b39595dcdd7ee82512de16e4ea30abee4642063de7f5119be76ed6d6621f
+    manifest files          = 31   (amendments/HOTFIX_004.md included)
+    tests                   = 191 passed, 0 skipped
+
+Requalified at `8b47b395`: G0 / G1_IDENTITY / G1_WIDTH PASS, both CED arms FAIL, identical to
+`fc44701e` to the element. **Fifth digest qualified end to end.**
+
+### HOTFIX-004 — the quality gate was under-calibrated
+
+`G1_QUALITY_D40` now fails on **three** checks, not two: the nondegeneracy floor scales as
+`max(2, ceil(0.25·prompts))`, so at 24 prompts the floor is 6 and D40's 4 distinct outputs
+fail. Previously an absolute floor of 2 passed a `</think>` loop — the exact case the check
+exists for.
+
+HOTFIX-003's claim that "no plausible setting of these thresholds changes any arm's verdict"
+was **false** for D40's top-1 (0.5032 against a 0.5000 floor) and is corrected. **The top-1
+floor was deliberately not moved**: tuning a threshold after seeing a measured outcome is
+what this programme has criticised elsewhere. A test pins it at 0.5.
+
+### Three harness bugs
+
+1. **The seed consumed nothing.** Seeds 17 and 29 gave bit-identical output — dev CE
+   5.524462 both, task 38/100 both, trajectories matching to nine decimals. Fixed data order,
+   fixed weights, no dropout, greedy decode. Reporting those as three seeds would have been
+   one run reported three times. The seed now shuffles TRAIN; overlap of the 40 rows actually
+   used is 1/40, 3/40, 1/40 across seeds.
+2. **Leading-integer scoring.** 31 of 50 `time_duration` answers are clock times, so
+   `10:55 AM` matched `10:25 AM`; decimals collapsed identically. Now compares the full
+   number sequence. Unit-checked on 11 cases.
+3. **A print could kill a run.** Three C28 runs died on cp1252 console encoding *after* their
+   compute. All 12 exploration scripts now reconfigure stdout/stderr to UTF-8.
+
+Superseded runs retained under `outputs/rigorous/superseded_vacuous_seed/` as the evidence
+for bugs 1 and 2 rather than deleted.
+
+### Evaluation rebuilt on measured capability
+
+`arithmetic_chain` — the obvious verifiable probe — is **unusable**: the frozen source scores
+0/20. Measured baselines by class: percentage_reasoning 65%, ratio_proportion 50%,
+time_duration 30%, estimation_sanity 30%, counting_sets 10%, sequence_pattern 5%,
+unit_conversion 5%, arithmetic_chain 0%.
+
+Probe = the three classes above 30%, held out of TRAIN/DEV so the task measures **retention**
+against a real baseline. Splits: TRAIN 800 / DEV 150 / TASK 150, family-disjoint, zero
+overlaps, rendering verified byte-for-byte against the existing prepared data. The selection
+was **not re-fitted** after the scorer correction moved `time_duration` to exactly 30.0%.
+
+### GPU was evaluated and rejected for this recipe
+
+AdamW fp32 on 596M parameters needs 8.89 GB (params + grads + two moments); the RTX 4070
+Laptop has 6.86 GB free. Only SGD-no-momentum or Adafactor fit, and changing the optimizer
+would break the matched comparison. Ada also defaults fp32 matmul to TF32. Recorded as a
+measured constraint, not an untested assumption.

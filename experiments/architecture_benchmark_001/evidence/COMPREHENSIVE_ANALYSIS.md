@@ -4,19 +4,18 @@ Branch `research/ced-rab001-hotfix001-qualification-v1`, pushed to
 `LUNCY579/ChatBubble`. Pinned runtime python 3.11.15 / torch 2.10.0+cpu /
 transformers 4.51.3, official Supa 1.7.0-devfreeze weights (`audit_digest 97cd76af…`).
 
-**Digest state — read this before trusting any receipt reference below.** The parity and
-engineering receipts cited in §5 were produced at implementation `fc44701e` (186 tests).
-Adding the `G1_QUALITY` gate (HOTFIX-003) changed `implementation_manifest()` and the digest
-is now **`7d48de21`** with **189 tests, 0 skipped**. So:
+**Digest state.** Current implementation is **`8b47b395`** (HOTFIX-004), 31 manifest files,
+**191 tests, 0 skipped**. Current receipts are `evidence/ladder-8b47b395-v1/` and
+`evidence/quality-8b47b395/`; **requalification is complete, not pending.**
 
-- every §1–§4 quality/architecture number is unaffected — those diagnostics run outside the
-  hashed root and bind no digest;
-- the §5 ladder receipts under `evidence/ladder-fc44701e-v1/` bind `fc44701e` and are
-  therefore **stale relative to the working tree**; requalification at `7d48de21` is pending
-  and is recorded as pending rather than assumed.
+**Five digests have now been qualified end to end** — `eab80e9f`, `8d54f540`, `fc44701e`,
+`7d48de21`, `8b47b395` — and every one reproduces the same verdicts, the same `checks` and
+the same per-path violation counts **to the element**. That repeated inertness is the
+evidence that the audit fix, the HOTFIX-002 diagnostic and the HOTFIX-003/004 quality gate
+each changed tooling without perturbing any measurement.
 
-HOTFIX-003 only *adds* a gate, so no previously measured number should change on
-requalification — but that is a prediction, not yet a verified result.
+Sections 1–4 and 9 bind no digest at all: those diagnostics run from
+`experiments/rab001_exploration/`, outside the hashed root, and produce no receipts.
 
 Every number below was produced in this worktree and is reproducible from committed
 artifacts. Nothing here is an efficacy claim, and no sealed evaluation was touched.
@@ -319,20 +318,44 @@ was needed because the mechanism forbids it; "not attempted" means exactly that.
 | 24 | `G1_QUALITY` forward-only quality gate (HOTFIX-003) | **implemented and unit-tested; NOT yet demonstrated on real arms** | §6, `amendments/HOTFIX_003.md` |
 | 25 | `audit-evidence` schema-2 strict-parity reporting | **fixed** — previously reported `{}` for every schema-2 FAIL receipt | git `fb0e2b8` |
 | 26 | Training-side capability-retention gate | **does not exist** — this is recommendation 0 and the highest-value remaining item | §11 |
-| 27 | Strict-string task scoring | **fixed** — scored a correct `"3."` as a miss and inverted a published conclusion; now reports numeric and strict side by side | §9c |
+| 27 | Strict-string task scoring | **fixed** — scored a correct `"3."` as a miss and inverted a published conclusion | §9c |
+| 28 | Leading-integer task scoring | **fixed** — too lenient the other way: `10:55 AM` matched `10:25 AM` for the 31/50 `time_duration` clock-time answers, and `62.9` matched `62.5`. Now compares the full number sequence | §12 |
+| 29 | Seeded replication | **was vacuous, fixed** — nothing consumed the seed, so three "seeds" were one run; the seed now shuffles TRAIN | §12 |
+| 30 | `G1_QUALITY` nondegeneracy floor | **fixed (HOTFIX-004)** — an absolute floor of 2 passed a `</think>` loop at 24 prompts; now scales as `max(2, ceil(0.25·prompts))`, and D40 fails on 3 checks | §6 |
+| 31 | Task-probe class selection | **corrected** — `arithmetic_chain` is unusable (frozen source 0/20); probe is now `percentage_reasoning`/`ratio_proportion`/`time_duration`, measured at 65/50/30% | §12 |
+| 32 | Running training on the GPU | **ruled out for this recipe** — AdamW fp32 on 596M needs 8.89 GB against 6.86 GB free; only SGD/Adafactor fit, and changing the optimizer breaks the matched comparison. Ada also defaults fp32 matmul to TF32 | §12 |
 
-### Two of my own measurement bugs, and how they were caught
+### Every measurement bug found in this programme, and how each surfaced
 
-Both were found because an **exact control behaved impossibly**, not by reading the code:
+Six defects in my own harness and design. **None was found by reading code.** Each surfaced
+from an exact control, a cheap smoke test, or looking at raw samples.
 
-| bug | symptom | caught by |
-|---|---|---|
-| local-KV cache-bytes re-derived from hard-coded head count and scalar width, disagreeing with `budget()` | `group=1` reported `kv=2.000x` for a configuration that *is* the source | the `group=1` identity control |
-| task scoring by full-string equality | a run with perfect arithmetic scored 0/6 | the lr 1e-5 trajectory showing correct answers in the log while hits read zero |
+| # | defect | how it surfaced | consequence if missed |
+|---|---|---|---|
+| 1 | local-KV cache bytes re-derived from hard-coded head count and scalar width, disagreeing with `budget()` | the `group=1` identity control reported `kv=2.000x` for a config that *is* the source | every KV ratio in the comparison wrong |
+| 2 | task scored by full-string equality | raw samples showed `3.` scored as a miss against `3` | **inverted a published conclusion** ("the data destroys capability") |
+| 3 | task scored by leading integer | a trajectory log showed correct answers while hits read zero | ~21% of the probe set inflated (clock times, decimals) |
+| 4 | the seed consumed nothing | two seeds produced **bit-identical** output | would have reported **one run as three replicated seeds** |
+| 5 | a `print` could kill a run | three C28 runs died with their compute already spent | lost runs, no corrupted numbers |
+| 6 | probe class chosen without checking the teacher | smoke test: frozen source scores **0/20** on `arithmetic_chain` | a confidently empty result — 0/N for every arm, before and after |
 
-That is the strongest practical lesson here: **keep the exact controls (`ced_last1`,
-`local group 1`, inert-default requalification) and both scorings in every run.** They cost
-almost nothing and they caught both errors.
+Defect 4 is the most serious: it does not produce a wrong number, it manufactures false
+confidence in a right one. Defects 2 and 3 are the same bug in opposite directions, and both
+came from the scorer being **duplicated across scripts and drifting**. That is now
+structurally impossible: one implementation in `rab001_exploration/scoring.py`, imported
+everywhere, with an 11-case self-test that runs **at import** so a drifted scorer fails
+loudly rather than quietly producing numbers.
+
+**The operational lesson, stated plainly.** Three separate adversarial-review workflows were
+launched against this work and *all three* died on usage limits, returning nothing. Every
+defect above was instead caught by:
+
+- an **exact control** that must be bitwise identity (`ced_last1`, `local group 1`,
+  inert-default requalification across five digests, step-0 identity across seeds);
+- a **two-step smoke test** before committing hours of compute;
+- **reading the raw samples**, not just the aggregate.
+
+Those three habits found six bugs; external review found none. Keep them in every run.
 
 ## 8. Why a full-context bank cannot work
 
