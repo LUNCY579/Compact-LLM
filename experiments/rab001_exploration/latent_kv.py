@@ -55,7 +55,10 @@ except Exception:
 sys.path.insert(0, r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification')
 from experiments.architecture_benchmark_001.model import dense_attention, rope
 
-RIDGE = 1e-6   # relative to mean eigenvalue; only to make the Cholesky well-posed
+RIDGE = 1e-6   # relative to mean eigenvalue; only to make the Cholesky well-posed.
+# NOT a tuned hyperparameter. The measured input covariance has a condition number of
+# ~1.08e8, so the whitened fit could be sensitive to this value; `latent_ridge_sweep.py`
+# exists to measure that rather than assume it.
 
 
 class LatentKV(nn.Module):
@@ -69,14 +72,20 @@ class LatentKV(nn.Module):
 
     @torch.no_grad()
     def _store(self, u: Tensor, s: Tensor, right: Tensor) -> None:
-        """Split the retained spectrum symmetrically between the two factors."""
+        """Split the retained spectrum symmetrically between the two factors.
+
+        `u`, `s` and `right` are CPU float64; the parameters may live on another device, so
+        the copy specifies device as well as dtype.
+        """
         r = self.rank
         root = torch.sqrt(s[:r])
-        self.down.weight.copy_((root[:, None] * right[:r]).to(self.down.weight.dtype))
-        self.up.weight.copy_((u[:, :r] * root[None, :]).to(self.up.weight.dtype))
+        d, u_ = self.down.weight, self.up.weight
+        d.copy_((root[:, None] * right[:r]).to(device=d.device, dtype=d.dtype))
+        u_.copy_((u[:, :r] * root[None, :]).to(device=u_.device, dtype=u_.dtype))
 
     @torch.no_grad()
-    def fit(self, w_k: Tensor, w_v: Tensor, cov: Tensor | None = None) -> dict:
+    def fit(self, w_k: Tensor, w_v: Tensor, cov: Tensor | None = None,
+            ridge: float = RIDGE) -> dict:
         """Factorise [W_K ; W_V] at the configured rank.
 
         `cov` None  -> plain SVD, minimises weight-space error.
@@ -85,14 +94,15 @@ class LatentKV(nn.Module):
         The reported energy is spectral energy retained in whichever norm was optimised. It
         is a property of the factorisation, not a prediction about downstream quality.
         """
-        w = torch.cat([w_k, w_v], dim=0).to(torch.float64)      # (2*kv, hidden)
+        # Factorisation math on CPU float64 regardless of the model's device.
+        w = torch.cat([w_k, w_v], dim=0).detach().cpu().to(torch.float64)   # (2*kv, hidden)
         r = self.rank
         if cov is None:
             u, s, vh = torch.linalg.svd(w, full_matrices=False)
             right = vh
         else:
-            c = cov.to(torch.float64)
-            c = c + torch.eye(c.shape[0], dtype=c.dtype) * (RIDGE * torch.diagonal(c).mean())
+            c = cov.detach().cpu().to(torch.float64)
+            c = c + torch.eye(c.shape[0], dtype=c.dtype) * (ridge * torch.diagonal(c).mean())
             chol = torch.linalg.cholesky(c)                     # c = chol @ chol.T
             u, s, vh = torch.linalg.svd(w @ chol, full_matrices=False)
             # A_r = U_r S_r Vh_r inv(chol); fold inv(chol) into the right factor.
@@ -103,7 +113,7 @@ class LatentKV(nn.Module):
         total = float((s ** 2).sum())
         kept = float((s[:r] ** 2).sum())
         self._store(u, s, right)
-        return {'rank': r, 'full_rank': int(s.numel()),
+        return {'rank': r, 'full_rank': int(s.numel()), 'ridge': ridge if cov is not None else None,
                 'spectral_energy_retained': kept / total if total else 1.0,
                 'smallest_kept_singular_value': float(s[r - 1]),
                 'largest_dropped_singular_value': float(s[r]) if r < s.numel() else 0.0}
@@ -135,13 +145,14 @@ class LatentKVModel(nn.Module):
                                      for _ in range(c.encoder_layers))
 
     @torch.no_grad()
-    def fit(self, covs: list[Tensor] | None = None) -> dict:
+    def fit(self, covs: list[Tensor] | None = None, ridge: float = RIDGE) -> dict:
         fits = []
         for i, (blk, lat) in enumerate(zip(self.donor.encoder, self.latents)):
             fits.append(lat.fit(blk.k_proj.weight, blk.v_proj.weight,
-                                None if covs is None else covs[i]))
+                                None if covs is None else covs[i], ridge=ridge))
         return {'operation': 'per_layer_low_rank_kv_compression',
                 'fit': 'plain_svd' if covs is None else 'activation_whitened_svd',
+                'ridge': ridge if covs is not None else None,
                 'rank': self.rank, 'uncompressed_kv_per_layer': 2 * self.kv,
                 'kv_ratio': self.kv_ratio(),
                 'exact_reparameterisation': self.rank >= self.max_rank,
