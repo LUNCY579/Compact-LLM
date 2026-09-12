@@ -30,6 +30,8 @@ except Exception:
 
 sys.path.insert(0, r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification')
 from experiments.architecture_benchmark_001.run import _load, _load_tokenizer
+from experiments.rab001_exploration.scoring import answer_matches, numbers, self_test
+self_test()
 
 CORPUS = Path(r'C:\Users\clclc\BusinessProject\Chat-Bubble\Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/data/sft/by_class')
 E = Path(r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001')
@@ -45,7 +47,6 @@ CLASSES = ['arithmetic_chain', 'percentage_reasoning', 'ratio_proportion', 'coun
 tok = _load_tokenizer(SRC)
 model, _, _ = _load(SRC, 'cpu'); model.eval()
 rng = random.Random(17)
-_int = lambda s: (re.search(r'-?\d+', s).group(0) if re.search(r'-?\d+', s) else None)
 
 results = {}
 for cls in CLASSES:
@@ -68,7 +69,7 @@ for cls in CLASSES:
             if msgs[-1]['role'] != 'assistant':
                 continue
             want = msgs[-1]['content'].strip()
-            numeric_answers += _int(want) is not None
+            numeric_answers += bool(numbers(want))
             prompt = tok.apply_chat_template(msgs[:-1], tokenize=False,
                                              enable_thinking=False, add_generation_prompt=True)
             cur = tok(prompt, return_tensors='pt', add_special_tokens=False)['input_ids']
@@ -81,7 +82,7 @@ for cls in CLASSES:
                     break
                 got.append(t); cur = torch.tensor([[t]], dtype=torch.long)
             text = tok.decode(got, skip_special_tokens=True).strip()
-            ok = _int(want) is not None and _int(text) == _int(want)
+            ok = bool(numbers(want)) and answer_matches(text, want)
             numeric += ok; strict += (text == want)
             if len(outs) < 3:
                 # Console encoding on this host is cp1252; keep printed samples ASCII-safe so
@@ -105,6 +106,9 @@ out.mkdir(parents=True, exist_ok=True)
             'actually do, so a retention probe is not chosen on a capability it lacks. '
             'Measured before any arm is trained and not tuned on any student outcome. '
             'Outside the experiment package; no receipt, no gate.',
+    'scoring': 'shared scoring.answer_matches: normalised string OR full number sequence. '
+               'A previous run of this scan used leading-integer matching, which inflated '
+               'clock-time and decimal classes (time_duration is 62% clock times).',
     'rows_per_class': N, 'sampling': 'one row per template family, seed 17',
     'classes': results,
     'licenses_registered_training': False, 'licenses_efficacy_claim': False,

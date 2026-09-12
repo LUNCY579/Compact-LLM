@@ -114,31 +114,8 @@ frozen = [n for n, p in model.named_parameters() if not p.requires_grad]
 assert not frozen, f'{len(frozen)} parameters are frozen; the comparison would not be matched'
 opt = torch.optim.AdamW(trainable, lr=LR, weight_decay=0.0)
 
-_NUM = re.compile(r'-?\d+(?:\.\d+)?')
-
-
-def _numbers(text):
-    """Every number in the string, decimals included."""
-    return _NUM.findall(text)
-
-
-def _normalise(text):
-    return ' '.join(text.strip().rstrip('.').casefold().split())
-
-
-def _answer_matches(got, want):
-    """Format-tolerant but numerically strict.
-
-    Leading-integer matching was too lenient: 31 of 50 time_duration answers are clock times
-    like "10:25 AM.", so "10:55 AM" scored as correct on the hour alone; decimals collapsed
-    the same way ("62.5" vs "62.9" both read as 62). Comparing the FULL sequence of numbers
-    keeps the format tolerance that matters -- "128 units." still matches "128." -- while
-    rejecting a genuinely different value.
-    """
-    if _normalise(got) == _normalise(want):
-        return True
-    a, b = _numbers(got), _numbers(want)
-    return bool(b) and a == b
+from experiments.rab001_exploration.scoring import answer_matches, self_test
+self_test()   # a drifted scorer already inverted one conclusion; fail loudly instead
 
 
 def evaluate_dev():
@@ -178,7 +155,7 @@ def evaluate_task():
             text = tok.decode(got, skip_special_tokens=True).strip()
             distinct.add(text)
             want = r['answer']
-            n_ok = _answer_matches(text, want)
+            n_ok = answer_matches(text, want)
             numeric += n_ok; strict += (text == want)
             if len(outs) < 8:
                 outs.append({'id': r['id'], 'expected': want, 'got': text[:50], 'numeric_match': bool(n_ok)})
