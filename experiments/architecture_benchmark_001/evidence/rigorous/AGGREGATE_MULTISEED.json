@@ -1,0 +1,180 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_multiseed_aggregate_only",
+  "note": "Pooled across seeds with Wilson intervals on task rates. Seeds differ only in training-row order, so between-seed spread measures run-to-run variance at a fixed budget, not sampling of the eval. Open splits only; no receipt, no gate.",
+  "runs_loaded": 6,
+  "missing": [],
+  "step0_identity_control_pass": true,
+  "per_arm": {
+    "source_control": {
+      "0": {
+        "dev_ce_mean": 5.5781664337875325,
+        "dev_ce_min": 5.5781664337875325,
+        "dev_ce_max": 5.5781664337875325,
+        "dev_kl_mean": 0.0,
+        "task_hits_pooled": 60,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.3333333333333333,
+        "task_ci95": [
+          0.26858305601207527,
+          0.40504902725961084
+        ],
+        "per_seed_dev_ce": {
+          "17": 5.5781664337875325,
+          "29": 5.5781664337875325,
+          "43": 5.5781664337875325
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      },
+      "20": {
+        "dev_ce_mean": 2.5284578826857302,
+        "dev_ce_min": 2.4779894955786963,
+        "dev_ce_max": 2.59868487442179,
+        "dev_kl_mean": 1.9544143589926648,
+        "task_hits_pooled": 68,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.37777777777777777,
+        "task_ci95": [
+          0.3102002342705114,
+          0.45046329346205843
+        ],
+        "per_seed_dev_ce": {
+          "17": 2.59868487442179,
+          "29": 2.4779894955786963,
+          "43": 2.5086992780567052
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      },
+      "40": {
+        "dev_ce_mean": 1.7856952498426333,
+        "dev_ce_min": 1.686168573352318,
+        "dev_ce_max": 1.8506258849423438,
+        "dev_kl_mean": 3.1406000099915086,
+        "task_hits_pooled": 73,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.40555555555555556,
+        "task_ci95": [
+          0.33652509104749945,
+          0.47853308947312273
+        ],
+        "per_seed_dev_ce": {
+          "17": 1.8506258849423438,
+          "29": 1.686168573352318,
+          "43": 1.8202912912332383
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      }
+    },
+    "C28": {
+      "0": {
+        "dev_ce_mean": 12.887973752455627,
+        "dev_ce_min": 12.887973752455625,
+        "dev_ce_max": 12.887973752455625,
+        "dev_kl_mean": 9.32850643601564,
+        "task_hits_pooled": 0,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.0,
+        "task_ci95": [
+          0.0,
+          0.02089624981505818
+        ],
+        "per_seed_dev_ce": {
+          "17": 12.887973752455625,
+          "29": 12.887973752455625,
+          "43": 12.887973752455625
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      },
+      "20": {
+        "dev_ce_mean": 4.558483192478069,
+        "dev_ce_min": 4.456058401830657,
+        "dev_ce_max": 4.644160399213807,
+        "dev_kl_mean": 2.7720598592539187,
+        "task_hits_pooled": 0,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.0,
+        "task_ci95": [
+          0.0,
+          0.02089624981505818
+        ],
+        "per_seed_dev_ce": {
+          "17": 4.575230776389743,
+          "29": 4.456058401830657,
+          "43": 4.644160399213807
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      },
+      "40": {
+        "dev_ce_mean": 3.1104026539558594,
+        "dev_ce_min": 2.9979171798899125,
+        "dev_ce_max": 3.2134662512484073,
+        "dev_kl_mean": 2.9140414225015245,
+        "task_hits_pooled": 0,
+        "task_n_pooled": 180,
+        "task_rate_pooled": 0.0,
+        "task_ci95": [
+          0.0,
+          0.02089624981505818
+        ],
+        "per_seed_dev_ce": {
+          "17": 3.1198245307292582,
+          "29": 2.9979171798899125,
+          "43": 3.2134662512484073
+        },
+        "seeds": [
+          17,
+          29,
+          43
+        ]
+      }
+    }
+  },
+  "comparison": {
+    "0": {
+      "ced_ce_penalty_nats": 7.309807318668095,
+      "max_within_arm_seed_spread": 0.0,
+      "ce_ranges_disjoint": true,
+      "task_ci95_disjoint": true,
+      "source_task_rate": 0.3333333333333333,
+      "c28_task_rate": 0.0
+    },
+    "20": {
+      "ced_ce_penalty_nats": 2.0300253097923386,
+      "max_within_arm_seed_spread": 0.18810199738314992,
+      "ce_ranges_disjoint": true,
+      "task_ci95_disjoint": true,
+      "source_task_rate": 0.37777777777777777,
+      "c28_task_rate": 0.0
+    },
+    "40": {
+      "ced_ce_penalty_nats": 1.324707404113226,
+      "max_within_arm_seed_spread": 0.21554907135849488,
+      "ce_ranges_disjoint": true,
+      "task_ci95_disjoint": true,
+      "source_task_rate": 0.40555555555555556,
+      "c28_task_rate": 0.0
+    }
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}
