@@ -1,0 +1,19 @@
+{
+  "schema": 1,
+  "experiment_id": "FWT-001",
+  "version": "1.0.0",
+  "stage": "implementation_and_mechanical_qualification",
+  "source_profile": "B28_1024_official_shape",
+  "frozen_dimensions": {"hidden_size": 1024, "intermediate_size": 3072, "num_attention_heads": 16, "num_key_value_heads": 8, "head_dim": 128, "layers": 28},
+  "arms": ["B28_frozen", "M28_causal_memory", "P28_tokenwise_control"],
+  "split": 14,
+  "runtime": {"torch": "2.10.0+cpu", "transformers": "4.51.3", "device": "cpu", "dtype": "float32", "threads": 4},
+  "parity": {"atol": 0.0001, "rtol": 0.0001, "initialization": "bitwise_exact", "nonzero_output_scale": 0.001},
+  "engineering": {"steps": 25, "seed": 17, "max_tokens": 64, "optimizer": "AdamW", "learning_rate": 0.00001, "weight_decay": 0.0, "clip_norm": 1.0, "train_policy": "added_only", "ce_weight": 1.0, "kl_weight": 0.5, "temperature": 2.0, "gradient_checkpointing": true},
+  "required_checks": {
+    "P1": ["source_assets", "native_parity", "parameter_match", "initial_identity", "reload_identity", "active_cache_parity", "active_causality", "active_path", "source_unchanged"],
+    "P2": ["parent_valid", "both_arms", "matched_data_order", "finite_optimization", "outputs_awakened", "upstream_gradients", "frozen_backbones", "post_step_cache_parity", "source_unchanged"]
+  },
+  "permissions": {"registered_training": false, "open_dev": false, "sealed_evaluation": false, "pure_ced_replacement": false, "depth_expansion_campaign": false, "width_pruning": false, "efficacy_claim": false, "deployment": false},
+  "next_campaign_requirements": ["source-and-runtime-qualified P1 and P2", "independently reviewed campaign runner", "family-disjoint audited train/dev/sealed manifests", "human-reviewed capability scorers and source baselines", "pre-outcome effect and per-family retention margins", "cluster-aware power justification", "three meaningful training seeds and matched tuning budgets", "ordinary continuation and parameter-matched controls", "replay/distillation and checkpoint-selection registration", "measured resource preflight for the intended training runtime"]
+}
