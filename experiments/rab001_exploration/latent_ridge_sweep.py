@@ -39,6 +39,7 @@ from experiments.architecture_benchmark_001.run import _load, _load_tokenizer
 from experiments.rab001_exploration.latent_kv import (LatentKVModel, collect_input_covariance,
                                                       covariance_health)
 from experiments.rab001_exploration.scoring import answer_matches, self_test
+from experiments.rab001_exploration import hostbudget
 self_test()
 
 E = Path(r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification'
@@ -57,6 +58,14 @@ NTASK = int(sys.argv[5]) if len(sys.argv) > 5 else 60
 NCAL = int(sys.argv[6]) if len(sys.argv) > 6 else 256
 PROBE_RANK = 512          # the headline point; generation is the expensive part
 EOS = {151643, 151645}
+
+# This is a SECONDARY job: it must yield to a training run rather than drag the host into swap.
+# 2.5 GiB covers the model plus eval transients with margin. On GPU the weights live in VRAM,
+# but the CUDA context and the safetensors read still need host memory, so the floor applies
+# to both devices. Checked here, after DEVICE is known, and again between variants.
+MIN_FREE_GIB = 2.5
+hostbudget.require(MIN_FREE_GIB, f'latent_ridge_sweep({DEVICE})')
+print('host:', hostbudget.describe(), flush=True)
 
 if DEVICE == 'cuda':
     # cuDNN TF32 defaults to ON on Ada and would silently drop matmul mantissas 24 -> 10 bits.
@@ -166,8 +175,15 @@ print(f"source              CE={base['dev_ce_nats']:8.4f} task={base_probe['task
 
 print(f"{'rank':>6}{'ridge':>10}{'CE':>10}{'dCE':>10}{'KL':>9}{'top1':>7}{'energy':>9}"
       f"{'task':>9}{'exact err':>12}")
+aborted = None
 for rank in RANKS:
     for ridge in RIDGES:
+        try:
+            hostbudget.guard(MIN_FREE_GIB, 'latent_ridge_sweep')
+        except hostbudget.LowMemoryAbort as exc:
+            aborted = str(exc)
+            print(str(exc), flush=True)
+            break
         t = time.perf_counter()
         m = LatentKVModel(source, rank).to(DEVICE)
         info = m.fit(covs, ridge=ridge)
@@ -191,6 +207,8 @@ for rank in RANKS:
         del m; gc.collect()
         if DEVICE == 'cuda':
             torch.cuda.empty_cache()
+    if aborted:
+        break
 
 # Verdict: does the headline point survive the sweep?
 # A smoke run writes the same filename as a real sweep. Emitting `ridge_sensitive` from one or
@@ -231,6 +249,9 @@ OUT.mkdir(parents=True, exist_ok=True)
     'device_comparability': 'CUDA FP32 is not bitwise CPU FP32. These numbers are comparable '
                             'to each other and to other runs on the same device; compare them '
                             'against the CPU corpus only through evidence/device_parity.',
+    'completed': aborted is None,
+    'aborted_reason': aborted,
+    'host_at_start': hostbudget.snapshot(),
     'ranks': RANKS, 'ridges': RIDGES, 'probe_rank': PROBE_RANK,
     'is_smoke_run': len(RIDGES) < MIN_RIDGES_FOR_VERDICT or NTASK < 60 or NCAL < 256,
     'dev_rows': len(dev), 'task_rows': len(task_rows),
