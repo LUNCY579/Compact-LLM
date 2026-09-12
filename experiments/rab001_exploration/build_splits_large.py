@@ -46,7 +46,7 @@ except Exception:
     pass
 
 sys.path.insert(0, r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification')
-from experiments.architecture_benchmark_001.run import _load_tokenizer
+from experiments.architecture_benchmark_001.run import _load_tokenizer, ensure_disjoint
 
 CORPUS = Path(r'C:\Users\clclc\BusinessProject\Chat-Bubble'
               r'\Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\data\sft\by_class')
@@ -99,10 +99,37 @@ train_fams = other_fams[:N_TRAIN_ORIG]
 dev_fams = other_fams[N_TRAIN_ORIG:N_TRAIN_ORIG + N_DEV]
 task_fams = arith_fams[:N_TASK]
 spare_fams = other_fams[N_TRAIN_ORIG + N_DEV:]
+
+# The registered CALIBRATION split is drawn from this same corpus, and `build_splits.py` never
+# checked against it -- it only enforces disjointness among its own three splits. At 800 rows
+# that leaked 12 calibration families and 1 byte-identical row into TRAIN. Scaling TRAIN to
+# 10,000 scaled the leak to 94 of calibration's 156 families (60.3%) and 10 identical rows.
+# Nothing gated can consume this split (`ensure_disjoint` already guards every registered
+# training entry point, and it would refuse), and calibration is an OPEN split so no sealed
+# data is involved -- but a TRAIN set overlapping 60% of the split a later stage scores on is
+# not something to discover after spending a 1,000,000-token budget.
+cal_rows = [json.loads(l) for l in (E / 'data/calibration.jsonl').read_text(encoding='utf-8')
+            .splitlines() if l.strip()]
+pilot_rows = [json.loads(l) for l in (E / 'data/pilot.jsonl').read_text(encoding='utf-8')
+              .splitlines() if l.strip()]
+reserved = {r['group_id'] for r in cal_rows} | {r['group_id'] for r in pilot_rows}
+prefix_collisions = sorted(set(train_fams) & reserved)
+
+# The 800-row prefix is deliberately NOT cleaned. Its bit-identity is the control that makes
+# this split comparable to every run already recorded, and removing rows now would not
+# retroactively clean those runs -- it would only destroy the comparison. The 12 pre-existing
+# collisions are recorded instead, and the 9,200 APPENDED families are drawn clean.
 extra_n = N_TRAIN - N_TRAIN_ORIG
-if extra_n > len(spare_fams):
-    raise SystemExit(f'need {extra_n} more families, only {len(spare_fams)} unused remain')
-extra_fams = spare_fams[:extra_n]
+clean_spare = [f for f in spare_fams if f not in reserved]
+dropped = len(spare_fams) - len(clean_spare)
+if extra_n > len(clean_spare):
+    raise SystemExit(f'need {extra_n} more families, only {len(clean_spare)} clean ones remain '
+                     f'({dropped} excluded for colliding with calibration/pilot)')
+extra_fams = clean_spare[:extra_n]
+print(f'reserved families (calibration+pilot): {len(reserved)} | excluded {dropped} from the '
+      f'{len(spare_fams)} spare | pre-existing collisions in the 800-row prefix: '
+      f'{len(prefix_collisions)}')
+assert not (set(extra_fams) & reserved), 'an appended family collides with calibration/pilot'
 assert not (set(extra_fams) & set(dev_fams)), 'extra TRAIN would take a DEV family'
 assert not (set(extra_fams) & set(task_fams)), 'extra TRAIN would take a TASK family'
 assert not (set(extra_fams) & set(train_fams)), 'extra TRAIN would duplicate a TRAIN family'
@@ -165,6 +192,21 @@ id_overlaps = {f'{a}|{b}': len(ids[a] & ids[b]) for a in ids for b in ids if a <
 assert all(v == 0 for v in overlaps.values()), overlaps
 assert all(v == 0 for v in id_overlaps.values()), id_overlaps
 assert len(fams['train']) == len(full_train), 'a TRAIN family appears twice'
+# The APPENDED block only. Checked pairwise against calibration and against pilot separately,
+# never in one call: DEV and TASK each already share 2 families with calibration (pre-existing,
+# not introduced here), so a combined call would fail on collisions this script did not cause.
+# TASK rows are excluded from `ensure_disjoint` entirely -- they carry `messages`/`answer` and
+# no `text`, so its content test would normalise every one of them to the empty string and
+# report them as duplicates of each other. TASK is checked by family and id instead.
+for label, against in (('calibration', cal_rows), ('pilot', pilot_rows), ('dev', dev)):
+    try:
+        ensure_disjoint(extra, against)
+    except Exception as exc:
+        raise SystemExit(f'appended TRAIN is not disjoint from {label}: {exc}')
+if ({r['group_id'] for r in extra} & {r['group_id'] for r in task}
+        or {r['id'] for r in extra} & {r['id'] for r in task}):
+    raise SystemExit('appended TRAIN overlaps TASK by family or id')
+appended_clean = True
 train_classes = sorted({r['reply_class'] for r in full_train})
 for bad in (*PROBE, *UNUSABLE):
     assert bad not in train_classes, f'{bad} leaked into TRAIN'
@@ -193,7 +235,21 @@ for name, rows in (('train', full_train), ('dev', dev), ('task_probe', task)):
     'rows': {'train': len(full_train), 'dev': len(dev), 'task_probe': len(task)},
     'train_rows_original': len(old_train), 'train_rows_appended': len(extra),
     'family_overlaps': overlaps, 'id_overlaps': id_overlaps,
-    'held_in_families_available': len(other_fams), 'held_in_families_unused': len(spare_fams) - extra_n,
+    'held_in_families_available': len(other_fams),
+    'held_in_families_unused': len(clean_spare) - extra_n,
+    'calibration_pilot_guard': {
+        'reserved_families': len(reserved),
+        'spare_families_excluded': dropped,
+        'appended_disjoint_from_calibration_pilot_dev_task': appended_clean,
+        'prefix_collisions_retained': len(prefix_collisions),
+        'prefix_collision_families': prefix_collisions,
+        'why_prefix_not_cleaned': 'The 800-row prefix is bit-identical to outputs/splits/'
+                                  'train.jsonl, which is the control that makes this split '
+                                  'comparable to every run already recorded. Cleaning it now '
+                                  'would not retroactively clean those runs, only break the '
+                                  'comparison. The collisions are recorded instead.',
+        'calibration_is_open_split': True,
+        'sealed_test_involved': False},
     'one_epoch_supervised_target_tokens': target,
     'train_classes': train_classes,
     'licenses_registered_training': False, 'licenses_efficacy_claim': False,
