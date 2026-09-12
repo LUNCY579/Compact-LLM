@@ -40,7 +40,9 @@ ability. At lr 1e-5 — where the source keeps **6/6** arithmetic — CED is **1
 and still scores **0/6**. So the conclusion does not merely survive the correction; it is
 stronger at the dose anyone would actually use.
 
-There is no measured axis on which CED wins. It also costs 46% of the KV budget and fails
+There is no measured axis on which **C28** wins. (This does not generalise to smaller
+displacements: `ced_last4`, 3 displaced layers, later reached 69/180 against its own matched
+control's 73/180 with overlapping 95% intervals — `RECOVERABILITY_FRONTIER.md`.) It also costs 46% of the KV budget and fails
 strict FP32 parity, so it loses on quality, loses on parity, and buys a saving it cannot
 spend.
 

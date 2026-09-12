@@ -1,7 +1,17 @@
 # Official-source gate ladder, executed on the exact registered Supa checkpoint
 
-**All four registered arms can now be built from official weights**, with a chained receipt
-DAG. This is still **not** a model-quality, recovery, efficacy, latency, memory or deployment
+> **Superseded — historical record.** This ladder ran at implementation `dc212c9f`, *before*
+> HOTFIX-001 replaced the CED acceptance rule with strict elementwise parity. Under the
+> current rule the ladder has been re-run five times (`outputs/ladder-*-v1`), and at the two
+> most recent implementations (`7d48de21`, `8b47b395`) **`G1_CED_C28` and `G1_CED_C40` FAIL**
+> on `strict_tail_only_parity`, `strict_chunked_cache_parity` and `causal_prefix_parity`.
+> HOTFIX-002 measures that failure as FP32-specific (401,863 elementwise violations for C28
+> and 726,228 for C40 in FP32; 0 for C28 in FP64), and `protocol.json` still carries
+> `status: HOTFIX_001_REQUALIFICATION_REQUIRED`. Every PASS below is a schema-1 receipt under
+> the old rule and must not be read as current gate status.
+
+**All four registered arms could be built from official weights at `dc212c9f`**, with a
+chained receipt DAG. This is still **not** a model-quality, recovery, efficacy, latency, memory or deployment
 claim, and **no arm has been compared with any other**. G3-G5 remain closed and were verified
 closed after the run.
 
@@ -42,8 +52,8 @@ history at that commit; they are not relabelled, and nothing from them is reused
 | G1_IDENTITY | **PASS** | `24c169bacac5588d…` | G0 | ~35 s |
 | G1_WIDTH | **PASS** | `8af4f26ac0b145ff…` | G1_IDENTITY | ~100 s |
 | G2 | **PASS** | `29067288a7de0816…` | G1_WIDTH | 198.0 s |
-| G1_CED_C28 | **PASS** | `8c8929ddb1ccb441…` | G0 | ~61 s |
-| G1_CED_C40 | **PASS** | `5878e9fd8f657d99…` | G1_WIDTH | ~61 s |
+| G1_CED_C28 | **PASS at `dc212c9f` only — fails strict parity under the current rule** | `8c8929ddb1ccb441…` | G0 | ~61 s |
+| G1_CED_C40 | **PASS at `dc212c9f` only — fails strict parity under the current rule** | `5878e9fd8f657d99…` | G1_WIDTH | ~61 s |
 | G3 / G4 / G5 | **BLOCKED** (verified after the run) | – | – | – |
 
 The chain is a DAG, not a line: G0 feeds both G1_IDENTITY and G1_CED_C28, and G1_WIDTH feeds

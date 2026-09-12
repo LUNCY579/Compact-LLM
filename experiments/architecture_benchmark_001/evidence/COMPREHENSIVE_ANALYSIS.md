@@ -1,5 +1,23 @@
 # RAB-001 comprehensive analysis: every option researched, and what the evidence says
 
+> ## Superseded in part — read this first
+>
+> This document was written before three later results and **its executive summary is now
+> wrong in places**. The measurements in it stand; several conclusions drawn from them do not.
+>
+> | claim here | corrected by |
+> |---|---|
+> | "CED cannot be rescued by tuning how much of it you apply" | `ced_last4` (3 displaced) reaches **69/180** vs the matched control's **73/180**, overlapping CIs — `evidence/trainability/RECOVERABILITY_FRONTIER.md` |
+> | "each displaced layer costs roughly 0.5 nats" | that is the **initialization** price; ~80% discharges in 5.2k tokens, residual 0.06–0.10 nats/layer |
+> | "to move the frontier the weights have to be trained" | falsified with **zero training** — per-layer low-rank latent gives exact **2×** and **4×** at 19/60 vs source 20/60 — `evidence/latent/LATENT_KV_RESULT.md` |
+> | "no viable KV-reduction path for these weights" | all ten published cores admit a **free exact 2×** by shape arithmetic — `evidence/latent/FREE_EXACT_KV_REDUCTION.md` |
+> | "1M supervised-token budget is wrong by ~200x" | measured: a **completed 500,099-token** C28 run took 5.14 h at 27 targets/s. It did not saturate — and did not restore capability (0/60 → 2/60) |
+> | "No multi-seed anything" | three seeds (17/29/43) × four arms, n=180/arm — `evidence/trainability/AGGREGATE_MULTISEED.json` |
+>
+> Note also: two files named `AGGREGATE_MULTISEED.json` existed, one stale at 6 runs. Both now
+> carry the 12-run, four-arm aggregate.
+
+
 Branch `research/ced-rab001-hotfix001-qualification-v1`, pushed to
 `LUNCY579/ChatBubble`. Pinned runtime python 3.11.15 / torch 2.10.0+cpu /
 transformers 4.51.3, official Supa 1.7.0-devfreeze weights (`audit_digest 97cd76af…`).
@@ -43,8 +61,12 @@ much of it you apply: the task is lost entirely at a **10.7% KV saving**, long b
 A cheaper sharing topology was hypothesised, implemented and **falsified**: local
 cross-layer sharing is worse than CED at matched KV budget. The two schemes lie on a single
 frontier, because every KV bank removed displaces exactly one layer by construction, and
-each displaced layer costs roughly **0.5 nats**. No rearrangement of sharing topology
-escapes that exchange rate — only training can.
+each displaced layer costs roughly **0.5 nats at initialization**; ~80% of that discharges in
+5.2k supervised target tokens, leaving a flat 0.06–0.10 nats per displaced layer. No
+rearrangement of *sharing* topology escapes the exchange rate. Two things do: training (which
+restores the task only at small displacement — `ced_last4` matches the control, `C28` stays at
+0/180), and abandoning sharing altogether — a per-layer low-rank latent displaces no layer and
+buys an exact 2× KV reduction with zero training.
 
 Training was then measured, and it produced the two results that matter most.
 
@@ -192,9 +214,15 @@ are not meaningful — which is why `local group 14` (15.16) appears "better" th
 
 **Consequence.** There is no clever sharing topology waiting to be found. Any zero-training
 KV-sharing conversion of these weights buys its savings at ~0.5 nats per bank, and the
-budget of a usable model is about 2–3 banks. To move the frontier at all, the weights have
-to be trained for the new information flow — which makes trainability, not topology, the
-binding question.
+budget of a usable model is about 2–3 banks. To move the frontier *within sharing*, the
+weights have to be trained for the new information flow.
+
+But sharing is not the only family, and that is where this paragraph was wrong. A per-layer
+low-rank latent factorisation of `W_K`/`W_V` displaces no layer, so the exchange rate above
+does not price it at all. At rank 1024 it is an **exact** reparameterisation giving 0.500× KV
+for **zero training** — CE 5.5782 against its own source baseline of 5.5782, max |Δlogit|
+1.8e-04, task 20/60 identical to the source — and at rank 512 it gives 0.250× at CE 5.5725 and
+19/60. See `evidence/latent/LATENT_KV_RESULT.md`.
 
 Evidence: `evidence/arm-quality/ARCHITECTURE_COMPARISON.json`, `local_shared_kv.py`.
 

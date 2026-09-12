@@ -32,8 +32,8 @@ per layer, relative to the source's 2,048.
 **At 0.250× KV — a 4× cache reduction — the activation-whitened latent scores 19/60 against the
 source's 20/60, with dev CE 0.0057 nats *below* the source's. With no training at all.**
 
-At n=60 that is "indistinguishable", not "equal": Wilson intervals are [20.6%, 44.8%] for 19/60
-and [22.1%, 46.4%] for 20/60. The honest claim is that no capability loss is detectable at this
+At n=60 that is "indistinguishable", not "equal": Wilson intervals are [21.3%, 44.2%] for 19/60
+and [22.7%, 45.9%] for 20/60. The honest claim is that no capability loss is detectable at this
 sample size, not that none exists.
 
 The cliff is between 0.250× and 0.143×: r=293 drops to 6/60 while its CE barely moves (5.607).
@@ -100,6 +100,9 @@ the source. Both fits do, to FP32 roundoff through two matmuls:
     plain    r=1024   dev CE 5.578166   max|Δlogit| 1.726e-04   KL 0.0000   top-1 1.000
     source            dev CE 5.578166
 
+(An earlier 64-token smoke test reported 7.8e-05 for the same control. Both are FP32 roundoff;
+the 1.8e-04 figures are the ones from this sweep and are the ones to cite.)
+
 **This control already caught a real bug.** The whitened fit initially gave max|Δlogit| = **38.0**
 at r=1024. Cause: `solve_triangular(chol.T, vh, upper=True)` computes `vh @ inv(chol).T`, not
 `vh @ inv(chol)`. Without the control, the whitened arm would have been silently wrong at every
@@ -111,8 +114,13 @@ probe are scored on DEV and TASK, which are family-disjoint from TRAIN.
 **Cache realism.** The incremental decoder caches up-projected K/V rather than the latent. That
 is a speed choice, not a weakened claim — up-projection is a deterministic function of each
 token's own latent, so expanding at write time and expanding the whole cache at read time give
-bit-identical values. Verified: cache-vs-dense agreement 1.1e-05. The reported cache cost is the
-latent size, which is what an implementation would hold.
+bit-identical values. The reported cache cost is the latent size, which is what an
+implementation would hold.
+
+Verified at rank 256 on a 64-token smoke test: dense and cached decoding agreed to 1.1e-05
+(plain) and 1.5e-05 (whitened). That check was **not** re-run inside the sweep above, so it is
+evidence that the cache path is correct in general — not a per-variant measurement of the rows
+in this table.
 
 ## What this does and does not establish
 

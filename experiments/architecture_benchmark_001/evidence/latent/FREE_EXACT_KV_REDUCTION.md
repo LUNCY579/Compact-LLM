@@ -42,8 +42,10 @@ and V exactly at a strictly smaller cache:
 Every core in the family: **2.00× exact, zero training, zero quality loss.**
 
 Independently confirmed on real weights, not just on paper — the `r = 1024` control in
-`latent_sweep.py` reproduces the source logits to **7.8e-05** in FP32 (roundoff through two
-matmuls), for both the plain-SVD and activation-whitened fits.
+`latent_sweep.py` reproduces the source logits to **1.84e-04** (whitened) and **1.73e-04**
+(plain) in FP32, which is roundoff through two matmuls, and reproduces the source dev CE to all
+six recorded decimals (5.578166). An earlier 64-token smoke test of the same control reported
+7.8e-05; the sweep figures above are the ones to cite.
 
 ## What this is not
 

@@ -37,7 +37,8 @@ accepted it. This one does not.
 | termination rate | ≥ 0.8 | 1.000 | **0.750** ✗ |
 | distinct outputs / 24 | ≥ 2 | 13 | **4** |
 
-**D40 fails on only two of five quality checks.** Three findings, all against my own design:
+**At `7d48de21` D40 failed only two of the five quality checks; under HOTFIX-004 it fails
+three** (`kl_to_source_within_margin`, `generation_terminates`, `generation_not_degenerate`). Three findings, all against my own design:
 
 1. **A CE-only gate would have passed D40 outright.** Its CE is *better* than the source
    (−0.1308). This is the single strongest justification for the gate having five checks

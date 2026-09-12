@@ -1,4 +1,11 @@
-# The decisive finding: neither conversion produces a usable model, and the gate ladder never tested for it
+# Initialization finding: neither CED conversion is usable *before training*, and the gate ladder never tested for it
+
+> **Scope — untrained conversions only.** Every measurement below is taken at step 0, before
+> any gradient step. The original title said "decisive"; it is not decisive about the design,
+> only about its initialization. Two forward-looking statements here have since been measured
+> false: "they are not degraded but recoverable" (§1) and "nothing in the existing evidence
+> suggests 1M tokens would be close to sufficient" (§3). See
+> `evidence/trainability/RECOVERABILITY_FRONTIER.md` and the completed 500,099-token run.
 
 Exploratory diagnostics at implementation `fc44701e`, pinned runtime, official
 Supa 1.7.0-devfreeze weights. Run **outside** the experiment package so the implementation
@@ -6,7 +13,7 @@ digest and every existing receipt stay valid. Not receipts; these authorize noth
 
 ## 1. Teacher-forced quality on the open calibration split
 
-24 calibration rows, 3,295 scored target tokens, CPU FP32.
+24 calibration rows, 3,271 scored target tokens, CPU FP32.
 
 | arm | mean CE (nats) | perplexity | KL to source | top-1 agreement with source |
 |---|---:|---:|---:|---:|
@@ -16,8 +23,14 @@ digest and every existing receipt stay valid. Not receipts; these authorize noth
 | **C40 CED** | **12.960** | **425,015** | 9.878 | **0.004** |
 
 `ln(151936) = 11.93`. **Both CED arms score worse than a uniform distribution over the
-vocabulary.** They are not "degraded but recoverable"; as initializations they carry
-negative information about the next token.
+vocabulary.** As *initializations* they carry negative information about the next token.
+
+That is an initialization deficit, not a verdict on recoverability, and the stronger reading
+(originally written here as "they are not degraded but recoverable") has since been falsified
+for small displacements: `ced_last4`, at 3 displaced layers, recovers to 69/180 against a
+matched control's 73/180 — overlapping 95% intervals. What does **not** recover is C28 at 13
+displaced layers: 0/180 after 40 steps, and only 2/60 after a completed 500,099-token run.
+See `evidence/trainability/RECOVERABILITY_FRONTIER.md`.
 
 ## 2. Greedy generation on the open pilot split
 
@@ -60,7 +73,14 @@ the instruction, and because the negative result still rules out a route.
 **"Recovery" is the wrong word for what these arms need.** A 1M-token budget was framed as
 recovering a structurally-transplanted model toward its teacher. From CE 12.6 — worse than
 uniform — that is not recovery, it is training a new architecture from a bad initialization.
-The measured CPU throughput (~9 supervised targets/s, ~31 h per 1M tokens per arm) makes
+The ~9 supervised targets/s behind this estimate came from the 25-step *cached-distillation*
+smoke, which also projects 6,268 teacher head positions per step. A dedicated plain-supervised
+long-budget run on the same CPU FP32 runtime measures **27.0 supervised targets/s** — 500,099
+targets in 18,496 s including nine evaluation checkpoints, i.e. ~10.3 h per 1M per arm, not
+~31 h. That run has since been done, and it did **not** restore capability (0/60 → 2/60), so
+the conclusion below survives while its arithmetic does not.
+
+The original estimate (~9 supervised targets/s, ~31 h per 1M tokens per arm) makes
 that infeasible here, and nothing in the existing evidence suggests 1M tokens would be
 close to sufficient.
 
