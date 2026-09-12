@@ -135,15 +135,23 @@ The displaced-layer law's prediction for a zero-displacement design is confirmed
 - **Small evaluation.** 40 dev rows, 60 task prompts, three numeric classes. 19-vs-20 is within
   noise; a larger probe could resolve a real gap. No seeds — the procedure is deterministic
   given a calibration set, so the untested variance is across *calibration sets*, not seeds.
-- **Ridge sensitivity untested.** Condition number 1.08e8 against a ridge of 1e-6 × mean
-  eigenvalue. The result could be sensitive to that choice and it has not been swept.
+- ~~**Ridge sensitivity untested.**~~ **SWEPT AND STABLE.** `RIDGE` was set to 1e-6 for Cholesky
+  well-posedness and never tuned, against a covariance with condition number 1.08e8 — the largest
+  open hole in this result. Across **seven ridges spanning 1e-8 to 1e-2**, rank 512 moves by
+  **0.0059 nats** (CE 5.5725–5.5783) and scores **19/60 at every single one**. Rank 293 is
+  likewise flat (5.6070–5.6229). The exactness control at r=1024 holds for every ridge
+  (max |Δlogit| 1.03e-04–1.84e-04, top-1 1.000), as the algebra requires since
+  `A = (W S) S⁻¹ = W` for any positive-definite whitening. The 4× result is not a tuning
+  artifact. See `evidence/latent/LATENT_RIDGE_SWEEP_cpu.json`.
 - **No latency claim.** RoPE is not decoupled, so DeepSeek's `W_UK`-into-`W_Q` absorption — the
   thing that makes MLA *fast* — is not implemented. This is a quality-versus-cache-size result
   only.
 - **Not gated.** No receipt, no G1_QUALITY run, no sealed or registered DEV evaluation.
 
-**Recommended next, in order:** ridge sweep; a larger task probe across more capability classes;
-then the 2× exact point is deployable today on any Rineya core with no experiment at all.
+**Recommended next, in order:** ~~ridge sweep~~ (done — stable across six orders of magnitude);
+a larger task probe across more capability classes, since 19-vs-20 at n=60 is the weakest link
+that remains; then the 2× exact point is deployable today on any Rineya core with no experiment
+at all.
 
 ## Reproduction
 
