@@ -217,18 +217,26 @@ def collect_input_covariance(source, batches: list[Tensor]) -> tuple[list[Tensor
     would fit the compression to the split it is later scored on.
     """
     c = source.config
+    # Masks and position ids follow the donor's device; the float64 ACCUMULATORS deliberately
+    # do not. Consumer GPUs run fp64 at 1/64 rate with awkward cuBLAS workspaces, and a failed
+    # fp64 GEMM poisons the CUDA context so the next unrelated fp32 call dies with
+    # CUBLAS_STATUS_EXECUTION_FAILED -- which is exactly what happened. The forward stays on the
+    # GPU in fp32; only a (T x hidden) slice crosses per layer, ~0.5 MiB, which is nothing next
+    # to the forward itself.
+    device = source.embed_tokens.weight.device
     covs = [torch.zeros(c.hidden_size, c.hidden_size, dtype=torch.float64)
             for _ in range(c.encoder_layers)]
     tokens = 0
     for ids in batches:
+        ids = ids.to(device)
         b, t = ids.shape
-        valid = torch.ones((b, t), dtype=torch.bool)
-        seg = torch.zeros((b, t), dtype=torch.long)
-        pos = torch.arange(t).expand(b, t)
+        valid = torch.ones((b, t), dtype=torch.bool, device=device)
+        seg = torch.zeros((b, t), dtype=torch.long, device=device)
+        pos = torch.arange(t, device=device).expand(b, t)
         h = source.embed_tokens(ids)
         for i, blk in enumerate(source.encoder):
             n = blk.input_norm(h)
-            flat = n.reshape(-1, c.hidden_size).to(torch.float64)
+            flat = n.reshape(-1, c.hidden_size).detach().cpu().to(torch.float64)
             covs[i] += flat.T @ flat
             shape = lambda z, heads: z.view(b, t, heads, c.head_dim).transpose(1, 2)
             q = rope(blk.q_norm(shape(blk.q_proj(n), c.num_attention_heads)), pos, c.rope_theta)

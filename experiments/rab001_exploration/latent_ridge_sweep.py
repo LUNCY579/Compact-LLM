@@ -80,20 +80,36 @@ if DEVICE == 'cuda':
           f'tf32 cudnn {torch.backends.cudnn.allow_tf32}', flush=True)
 
 
+CHUNK = 32   # positions per slice; caps the full-vocab transient at ~10 MiB instead of ~470
+
+
 def ce_kl(fwd):
+    """Teacher-forced CE, plus KL and top-1 against the source, chunked over positions.
+
+    A row's log-softmax is ~78 MiB at this vocabulary, and the KL needs `s`, `lp`, `s.exp()`
+    and `(s - lp)` live simultaneously. Materialising all of that for a whole row peaked at
+    ~470 MiB and OOMed an 8 GiB card. Slicing bounds the transient without changing the sum.
+    """
     tot = kl = 0.0
     agree = n = 0
     with torch.inference_mode():
         for ids in dev:
             ids = ids.to(DEVICE)
-            s = F.log_softmax(source(ids).logits.float()[:, :-1], -1)
-            lp = F.log_softmax(fwd(ids).float()[:, :-1], -1)
+            src_logits = source(ids).logits[:, :-1]
+            arm_logits = fwd(ids)[:, :-1]
             tgt = ids[:, 1:]
-            tot += float(F.nll_loss(lp.reshape(-1, lp.shape[-1]), tgt.reshape(-1), reduction='sum'))
-            kl += float((s.exp() * (s - lp)).sum())
-            agree += int((s.argmax(-1) == lp.argmax(-1)).sum())
+            for i in range(0, tgt.shape[1], CHUNK):
+                j = min(i + CHUNK, tgt.shape[1])
+                s = F.log_softmax(src_logits[:, i:j].float(), -1)
+                lp = F.log_softmax(arm_logits[:, i:j].float(), -1)
+                t = tgt[:, i:j]
+                tot += float(F.nll_loss(lp.reshape(-1, lp.shape[-1]), t.reshape(-1),
+                                        reduction='sum'))
+                kl += float((s.exp() * (s - lp)).sum())
+                agree += int((s.argmax(-1) == lp.argmax(-1)).sum())
+                del s, lp
             n += tgt.numel()
-            del s, lp
+            del src_logits, arm_logits
     return {'dev_ce_nats': tot / n, 'dev_kl_to_source_nats': kl / n, 'dev_top1_agreement': agree / n}
 
 
@@ -131,8 +147,11 @@ def probe(step):
 
 
 t0 = time.perf_counter()
-covs, cal_tokens = collect_input_covariance(source, [c.to(DEVICE) for c in calib])
-health = covariance_health([c.cpu() for c in covs], cal_tokens, cfg.hidden_size)
+covs, cal_tokens = collect_input_covariance(source, calib)   # moves rows itself
+# `collect_input_covariance` already accumulates on CPU in float64; nothing to move.
+if DEVICE == 'cuda':
+    torch.cuda.empty_cache()
+health = covariance_health(covs, cal_tokens, cfg.hidden_size)
 print(f'covariance over {cal_tokens} TRAIN tokens ({time.perf_counter()-t0:.0f}s) | effective '
       f'rank {health["min_effective_rank"]:.1f}-{health["mean_effective_rank"]:.1f} of '
       f'{cfg.hidden_size} | condition {health["worst_condition_number"]:.2e}\n', flush=True)
