@@ -8,6 +8,15 @@ from pathlib import Path
 import torch
 import torch.nn.functional as F
 
+# This host's console is cp1252. A model emitting non-ASCII token salad would otherwise
+# kill a run inside a print AFTER the expensive compute was done -- which is exactly how
+# three C28 runs were lost. Output formatting must never destroy a measurement.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
+
 sys.path.insert(0, r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification')
 from experiments.architecture_benchmark_001.run import _load, _load_tokenizer, _text, load_rows
 from experiments.rab001_exploration.gated_memory import GatedMemoryReference

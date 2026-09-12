@@ -13,9 +13,11 @@ frozen source already has rather than in-domain learning.
 Seeds are the protocol's registered training seeds (17, 29, 43). Each (arm, seed) writes its
 own JSON immediately so a killed session loses at most one run.
 
-Scoring reports numeric (leading integer) and strict (full string) side by side. The strict
-reading collapses once a model adopts the corpus's "33." style, which previously inverted a
-conclusion; numeric is primary because these answers are integers by construction.
+Scoring reports `numeric` (normalised string, or exact match of the full number sequence) and
+`strict` (raw full-string equality) side by side. Strict collapses once a model adopts the
+corpus's "33." style, which previously inverted a conclusion, so `numeric` is primary — but it
+compares EVERY number, because leading-integer matching scored "10:55 AM" as correct against
+"10:25 AM" for the 31 of 50 time_duration answers that are clock times.
 
 Exploratory. Outside the hashed root: no receipt, no gate. Open splits only.
 
@@ -25,6 +27,15 @@ import gc, json, re, sys, time
 from pathlib import Path
 import torch
 import torch.nn.functional as F
+
+# This host's console is cp1252. A model emitting non-ASCII token salad would otherwise
+# kill a run inside a print AFTER the expensive compute was done -- which is exactly how
+# three C28 runs were lost. Output formatting must never destroy a measurement.
+try:
+    sys.stdout.reconfigure(encoding='utf-8', errors='replace')
+    sys.stderr.reconfigure(encoding='utf-8', errors='replace')
+except Exception:
+    pass
 
 sys.path.insert(0, r'C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification')
 from experiments.architecture_benchmark_001.run import _load, _restore, _load_tokenizer
@@ -46,6 +57,13 @@ TAG = f'{ARM}_seed{SEED}_lr{LR:g}_s{STEPS}'
 
 torch.manual_seed(SEED)
 tok = _load_tokenizer(SRC)
+# BUG FIX. Seeds 17 and 29 previously produced BIT-IDENTICAL results: the data order was
+# fixed, the weights are loaded from fixed checkpoints, there is no dropout and decoding is
+# greedy, so nothing in the run consumed the seed. Reporting three such runs as "replicated
+# across three seeds" would have been one run reported three times. The seed now controls the
+# training order, so each seed sees a different subset of TRAIN and the spread across seeds is
+# a real measure of run-to-run variance.
+import random as _random
 jl = lambda p: [json.loads(l) for l in Path(p).read_text(encoding='utf-8').splitlines() if l.strip()]
 train_rows = jl(SPL / 'train.jsonl')
 dev_rows = jl(SPL / 'dev.jsonl')[:N_DEV]
@@ -59,6 +77,7 @@ assert not (fam(train_rows) & fam(task_rows)), 'train/task family overlap'
 assert not (fam(dev_rows) & fam(task_rows)), 'dev/task family overlap'
 assert 'arithmetic_chain' not in {r['reply_class'] for r in train_rows}
 
+_random.Random(SEED).shuffle(train_rows)          # the seed's only job, and it must have one
 enc = lambda text: tok(text, return_tensors='pt', add_special_tokens=False)['input_ids']
 train = [enc(r['text']) for r in train_rows]
 train = [t for t in train if t.shape[1] >= 2]
@@ -95,7 +114,31 @@ frozen = [n for n, p in model.named_parameters() if not p.requires_grad]
 assert not frozen, f'{len(frozen)} parameters are frozen; the comparison would not be matched'
 opt = torch.optim.AdamW(trainable, lr=LR, weight_decay=0.0)
 
-_int = lambda s: (re.search(r'-?\d+', s).group(0) if re.search(r'-?\d+', s) else None)
+_NUM = re.compile(r'-?\d+(?:\.\d+)?')
+
+
+def _numbers(text):
+    """Every number in the string, decimals included."""
+    return _NUM.findall(text)
+
+
+def _normalise(text):
+    return ' '.join(text.strip().rstrip('.').casefold().split())
+
+
+def _answer_matches(got, want):
+    """Format-tolerant but numerically strict.
+
+    Leading-integer matching was too lenient: 31 of 50 time_duration answers are clock times
+    like "10:25 AM.", so "10:55 AM" scored as correct on the hour alone; decimals collapsed
+    the same way ("62.5" vs "62.9" both read as 62). Comparing the FULL sequence of numbers
+    keeps the format tolerance that matters -- "128 units." still matches "128." -- while
+    rejecting a genuinely different value.
+    """
+    if _normalise(got) == _normalise(want):
+        return True
+    a, b = _numbers(got), _numbers(want)
+    return bool(b) and a == b
 
 
 def evaluate_dev():
@@ -118,7 +161,7 @@ def evaluate_task():
     """Greedy decode on held-out arithmetic. Retention, not in-domain learning."""
     model.eval()
     numeric = strict = term = 0
-    outs = []
+    outs, distinct = [], set()
     with torch.inference_mode():
         for r in task_rows:
             prompt = tok.apply_chat_template(r['messages'], tokenize=False,
@@ -133,8 +176,9 @@ def evaluate_task():
                     term += 1; break
                 got.append(t); cur = torch.tensor([[t]], dtype=torch.long)
             text = tok.decode(got, skip_special_tokens=True).strip()
+            distinct.add(text)
             want = r['answer']
-            n_ok = _int(text) is not None and _int(text) == _int(want)
+            n_ok = _answer_matches(text, want)
             numeric += n_ok; strict += (text == want)
             if len(outs) < 8:
                 outs.append({'id': r['id'], 'expected': want, 'got': text[:50], 'numeric_match': bool(n_ok)})
@@ -142,7 +186,7 @@ def evaluate_task():
     n = len(task_rows)
     return {'task_numeric_hits': numeric, 'task_strict_hits': strict, 'task_n': n,
             'task_numeric_rate': numeric / n, 'task_terminated': term,
-            'task_distinct': None, 'samples': outs}
+            'task_distinct': len(distinct), 'samples': outs}
 
 
 model.train()
@@ -185,6 +229,11 @@ out.mkdir(parents=True, exist_ok=True)
             'measures retention. Open splits only; not a sealed or DEV evaluation and not an '
             'efficacy claim. Outside the experiment package; no receipt, no gate.',
     'arm': ARM, 'seed': SEED, 'steps': STEPS, 'optimizer': f'AdamW lr={LR:g} wd=0 clip=1.0',
+    'seed_controls': 'training row order (shuffle of TRAIN); nothing else in the run is '
+                     'stochastic, so this is the only source of between-seed variance',
+    'task_scoring': 'normalised-string match OR exact equality of the full number sequence '
+                    '(decimals and clock times included); leading-integer matching was too '
+                    'lenient and is not used',
     'train_rows_available': len(train), 'train_rows_seen': min(STEPS, len(train)),
     'dev_rows': len(dev), 'dev_target_tokens': ntok, 'task_rows': len(task_rows),
     'source_dev_ce_nats': ce_src,
