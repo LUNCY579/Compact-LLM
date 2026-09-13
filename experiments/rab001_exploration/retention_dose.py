@@ -36,6 +36,7 @@ Exploratory. Outside the hashed root: no receipt, no gate, open splits only, no 
 """
 from __future__ import annotations
 
+import gc
 import json
 import math
 import random
@@ -132,6 +133,11 @@ def main() -> int:
     torch.manual_seed(SEED)
     model, tok, _ = run._load(SRC, DEVICE)
     eos = run._eos_ids(SRC, tok)
+    # `_load` reads the full safetensors state dict (2.38 GB) and then builds the model from it.
+    # The dict goes out of scope on return, but nothing forces the collection, and on a host with
+    # ~8 GiB free that duplicate is the difference between running and standing down.
+    gc.collect()
+    print(f'after load + collect: {hostbudget.describe()}', flush=True)
 
     jl = lambda p: [json.loads(l) for l in Path(p).read_text(encoding='utf-8').splitlines()
                     if l.strip()]
@@ -203,6 +209,8 @@ def main() -> int:
 
     try:
         checkpoint(0, 0)
+        gc.collect()
+        print(f'after step-0 probe: {hostbudget.describe()}', flush=True)
         model.train()
         opt.zero_grad(set_to_none=True)
         done_ms = {0}

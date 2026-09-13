@@ -176,13 +176,17 @@ $PY experiments/rab001_exploration/retention_dose.py 1e-4 5200 17 cpu adamw
 $PY experiments/rab001_exploration/retention_dose.py 1e-5 5200 17 cpu adamw   # preserving control
 ```
 
-**Two attempts have been stood down by `hostbudget.guard` during training**, both after a clean
-step-0 checkpoint (dev CE 5.5782, retained 47/47): AdamW lr 1e-4 at free **0.22 GiB**, then SGD
-lr 1e-3 at free **1.05 GiB**. Dropping AdamW's moment buffers did not rescue it, so **the
-constraint is the shared host, not the optimizer** — another project
-(`SupaExperiment-nonrecurrent-adaptation-v1`) is running on this 15.2 GB machine and holds
-~5.4 GB, spiking higher. Do not retry until that job is gone; check with
-`python experiments/rab001_exploration/hostbudget.py` and for `nonrecurrent` python processes.
+**Three attempts stood down by `hostbudget.guard` during training**, all after a clean step-0
+checkpoint (dev CE 5.5782, retained 47/47). The third profiled the cause: with the host to
+itself, free physical goes 7.71 → 5.25 (model) → 4.85 (probe) → **1.01 GiB** (training), i.e. a
+job footprint of **~6.7 GiB** against ~7.7 GiB free. Neither the optimizer nor the competing job
+is the constraint — plain SGD saves ~4.7 GB and still aborts, and attempt 3 had no competitor.
+**~7 GiB of this 15.2 GiB host is the OS and desktop applications**, no single process above
+0.59 GB.
+
+The 1.5 GiB guard floor was deliberately **not** lowered to force a result. To run this: free
+~3 GiB by closing desktop applications, or use a host with 11 GiB available for AdamW. Measured
+requirement ~6.7 GiB plus margin.
 
 Why it matters: `G2_RETENTION_B28` PASSes 12/12 but `arm_answers_changed` is **0 of 150** — the
 registered engineering lane is 25 SGD steps at lr 1e-5 and changed nothing. The training-side

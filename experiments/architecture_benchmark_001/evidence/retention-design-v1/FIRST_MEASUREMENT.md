@@ -161,24 +161,40 @@ The remaining question is whether the gate fires on a *run* whose CE is improvin
 beside typed retention against the frozen 47-item reference, aimed at this programme's
 established case: lr 1e-4 destroys the source's arithmetic 6/6 → 0/6 **while improving CE**.
 
-It has not produced a result. **Two attempts, both stood down by `hostbudget.guard` during
-training, after the step-0 checkpoint:**
+It has not produced a result. **Three attempts, all stood down by `hostbudget.guard` during
+training, after a clean step-0 checkpoint.** The third ran with the competing job gone and with
+explicit collection after load, which is what turned the failure into a measurement:
 
-| attempt | optimizer | free physical at abort | commit over physical |
-|---|---|---:|---:|
-| 1 | AdamW lr 1e-4 | **0.22 GiB** | 16.4 GiB |
-| 2 | SGD lr 1e-3 | **1.05 GiB** | 8.3 GiB |
+| stage | free physical | commit over physical |
+|---|---:|---:|
+| baseline, host idle | 7.71 GiB | 1.3 GiB |
+| after model load + `gc.collect()` | 5.25 GiB | 4.0 GiB |
+| after the step-0 probe | 4.85 GiB | 4.6 GiB |
+| during training (abort) | **1.01 GiB** | 8.5 GiB |
 
-Both artifacts carry `completed: false` and `aborted_reason`. That is the guard working, not
-failing — the documented alternative is a measured 10× thrash that also degrades the other job.
+So the job's own footprint is **~6.7 GiB** — model 2.46, probe 0.40, gradients and allocator
+~3.8 — against **~7.7 GiB free**. It fits, with under 1 GiB of margin, which is below the
+script's 1.5 GiB guard floor.
 
-The cause is not this experiment's design. Another project
-(`SupaExperiment-nonrecurrent-adaptation-v1`) is running on the same 15.2 GiB host and holds
-~5.4 GB, spiking higher; the second attempt began with 7.38 GiB free and was squeezed to 1.05
-GiB while merely holding model + gradients. Dropping AdamW's moment buffers for plain SGD did
-not rescue it, which is the useful negative: **the constraint is the shared host, not the
-optimizer.** `retention_dose.py` now refuses at startup with per-optimizer floors rather than
-starting a run it cannot finish.
+Three things follow, and the third is the one that matters:
+
+1. Dropping AdamW's two moment buffers for plain SGD (a ~4.7 GB saving) did **not** rescue it.
+   The optimizer is not the binding constraint.
+2. Neither was the other project's job. Attempts 1 and 2 ran beside
+   `SupaExperiment-nonrecurrent-adaptation-v1` holding ~5.4 GB; attempt 3 ran with the host to
+   itself and still landed at 1.01 GiB.
+3. **The binding constraint is the host's own baseline.** ~7 GiB of the 15.2 is held by the OS
+   and desktop applications — no single process above 0.59 GB, so there is nothing to blame and
+   nothing to kill. Full fp32 training of a 596M model simply does not leave a safe margin here.
+
+The guard floor was not lowered to force a result. It is an arbitrary safety margin I chose, and
+moving it after seeing a measurement is the pattern this programme rejects everywhere else — and
+running a machine below 1 GiB free while its owner is away is not a trade worth making for one
+data point. All three artifacts carry `completed: false` and `aborted_reason`.
+
+**To run it:** free ~3 GiB (close desktop applications), or run it where 11 GiB is available for
+AdamW. The measured requirement is ~6.7 GiB plus whatever margin you want above the 1.5 GiB
+guard floor.
 
 Two things this did establish, both controls rather than results: the frozen source's raw
 answers re-score to **exactly** both frozen references (47 permissive, 41 strict) with no model
