@@ -1023,3 +1023,45 @@ determined by a very low-dimensional subspace of TRAIN. Nothing here tests out-o
 inputs.
 
 Write-up: `evidence/retention-design-v1/LATENT_KV_GATED.md`.
+
+### 2026-09-13, late — merged two remote CED branches; 212/225 of their tests run here
+
+Fetched and merged, both purely additive, neither touching `architecture_benchmark_001` or
+`rab001_exploration`. Digest unchanged at `a329eb7b`; the 306 retention-gate tests still pass.
+
+- `ced_native_loader_issue4_v1` — the 32-case native loader suite. Upstream:
+  `IMPLEMENTED_FRESH_NATIVE_EXECUTION_BLOCKED`, `executed_cases: 0`, remote runner died on an
+  invalid job-level env context.
+- `full_width_transition_v1` (FWT-001) and `dual28_ced_v1` (D28-001) — new CED designs.
+- `cross_scale_remote_receipt_d82_v1` — E28/D36 cross-scale receipt.
+
+**Why D28-001 matters to the displacement result.** RAB-001's CED arms convert by *displacement*:
+28 layers split 14 encoder + 14 decoder. The sweep at `edcc84f` measured what that costs — 1
+displaced bank loses 9 of 52 answers, 3 banks leaves 2 of 48, 7 banks terminates on nothing.
+**H56 displaces nothing**: it keeps all 28 decoder blocks with their self-attention intact and
+*adds* a memory read after each, with read output projections initialised to **zero**, so it
+reproduces B28 exactly at initialisation. That is the redesign the displacement measurement
+implies. It ships with real controls — P56 (same-token sigmoid memory, isolating context from
+parameter count), D56 (identity depth), C56, C28. The price is stated plainly: 596M → 1.156B
+parameters, 28 → 57 KV banks. Not a compression story; FWT-001 orders it as viability first,
+compression after.
+
+All three CED packages were blocked upstream for the same reason — the environment that wrote
+them had no weights and no Transformers. **This worktree has both.**
+
+**Their tests here: 212 passed, 13 failed — every failure a Windows environment limit, not a
+logic defect.** Both causes are in *negative* tests, which build a corrupt or hostile input to
+prove a guard rejects it:
+
+- `os error 1224` (9 tests): the test rewrites a checkpoint that safetensors still has
+  memory-mapped. POSIX allows it, Windows does not, so the guard is never reached.
+- `WinError 1314` (2 tests): creating a symlink needs Administrator or Developer Mode, and the
+  test creates one precisely to prove the scope guard rejects it.
+
+**This does NOT mean the guards work.** Thirteen safety behaviours — corrupt-tensor, NaN,
+shape/dtype and symlink-scope rejection — are **unverified on this platform** because their
+fixtures could not be built. Do not report these packages as green here. Fixes are suggested but
+deliberately not applied: they belong to those packages' own branches, and silently patching
+another experiment's negative tests from this branch is what the agent contract forbids.
+
+Write-up: `evidence/retention-design-v1/MERGED_BRANCH_PORTABILITY.md`.
