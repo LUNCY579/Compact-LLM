@@ -1,0 +1,243 @@
+{
+  "schema_version": "cross_scale_generation_screen_v1",
+  "track": "cross_scale",
+  "stage": "architecture_generation_screen",
+  "role": "architecture_dev",
+  "analysis_role": "candidate_selection",
+  "seed": 2702,
+  "threads": 4,
+  "device": "cuda:0",
+  "dtype": "float32",
+  "attention_implementation": "eager",
+  "use_cache": false,
+  "tf32": false,
+  "max_new_tokens": 48,
+  "max_input_tokens": 256,
+  "max_prompt_seconds": 900,
+  "max_rss_gib": 8.0,
+  "min_available_gib": 0.75,
+  "min_available_vram_gib": 4.0,
+  "max_cuda_memory_gib": 6.5,
+  "top_k": 10,
+  "hidden_rms_ratio_bounds": [
+    0.25,
+    4.0
+  ],
+  "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+  "model_class": "Qwen3AbstainForCausalLM",
+  "num_hidden_layers": 28,
+  "donor_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+  "selected_pair": {
+    "supa_layer": 19,
+    "donor_layer": 24
+  },
+  "selected_objective": "B3",
+  "baseline_cell": "X0",
+  "shard_count": 8,
+  "cells": {
+    "X0": {
+      "arm": "X0",
+      "gate": 0.0
+    },
+    "XG_g0.03": {
+      "arm": "XG",
+      "gate": 0.03
+    },
+    "XS_g0.03": {
+      "arm": "XS",
+      "gate": 0.03
+    },
+    "XR_g0.03": {
+      "arm": "XR",
+      "gate": 0.03
+    },
+    "XM_g0.03": {
+      "arm": "XM",
+      "gate": 0.03
+    },
+    "XG_g0.10": {
+      "arm": "XG",
+      "gate": 0.1
+    },
+    "XS_g0.10": {
+      "arm": "XS",
+      "gate": 0.1
+    },
+    "XR_g0.10": {
+      "arm": "XR",
+      "gate": 0.1
+    },
+    "XM_g0.10": {
+      "arm": "XM",
+      "gate": 0.1
+    },
+    "XG_g0.20": {
+      "arm": "XG",
+      "gate": 0.2
+    },
+    "XS_g0.20": {
+      "arm": "XS",
+      "gate": 0.2
+    },
+    "XR_g0.20": {
+      "arm": "XR",
+      "gate": 0.2
+    },
+    "XM_g0.20": {
+      "arm": "XM",
+      "gate": 0.2
+    },
+    "XG_g0.40": {
+      "arm": "XG",
+      "gate": 0.4
+    },
+    "XS_g0.40": {
+      "arm": "XS",
+      "gate": 0.4
+    },
+    "XR_g0.40": {
+      "arm": "XR",
+      "gate": 0.4
+    },
+    "XM_g0.40": {
+      "arm": "XM",
+      "gate": 0.4
+    }
+  },
+  "gate_grid": [
+    0.03,
+    0.1,
+    0.2,
+    0.4
+  ],
+  "dataset_manifest": "experiments/supa_adaptive_compute_v2/data/generated/v2/cross_scale/manifest.json",
+  "dataset_manifest_contract_sha256": "6857158ee7a360bdf2f72a21c5ee78041ab0a5ecda264c0387e1e5facf638a46",
+  "scorer_sha256": "62937db0530db2f8b43672ff1ea3e9ffa96dce5e8b7c9cf5bac6996b3d29c11e",
+  "data": {
+    "track": "cross_scale",
+    "allowed_roles": [
+      "architecture_dev"
+    ],
+    "examples": 128,
+    "independent_scenarios": 128,
+    "variant": "original",
+    "calibration_may_fit_control_only": true,
+    "sealed_access": false
+  },
+  "native_comparator": {
+    "arm": "XN",
+    "available": false,
+    "reason": "No independently selected best native operator and completed native confirmation exists at this freeze.",
+    "native_efficacy_inputs_permitted": false
+  },
+  "screen_policy": {
+    "minimum_paired_wins_vs_X0": 2,
+    "minimum_net_correct_vs_X0": 1,
+    "maximum_additional_preservation_errors": 1,
+    "preservation_families": [
+      "ordinary_qa_preservation",
+      "instruction_evidence",
+      "retrieval_multihop"
+    ],
+    "maximum_additional_invalid_outputs": 0,
+    "maximum_safety_stops": 0,
+    "require_all_same_dose_controls_complete": true,
+    "require_XG_accuracy_at_least_each_control": true,
+    "hard_failure_policy": "terminate_cell_preserve_failed_receipt_continue_other_fixed_cells",
+    "qualification_failure_policy": "reject_entire_dose",
+    "ranking": [
+      "max_XG_minus_best_control",
+      "max_XG_minus_X0",
+      "lower_gate"
+    ],
+    "bootstrap_replicates": 10000,
+    "bootstrap_seed": 2703,
+    "identity_or_kl_threshold": null,
+    "efficacy_claim_licensed": false
+  },
+  "runtime_qualification": "cross_scale_generation_screen_gpu_fp32_v1",
+  "qualification": {
+    "examples_per_family": 1,
+    "fixtures_per_cell": 8,
+    "capture_layers": [
+      2,
+      19,
+      27
+    ],
+    "cpu_min_available_gib": 3.5,
+    "max_abs_logit_error": 0.002,
+    "max_relative_logit_l2": 0.0002,
+    "minimum_logit_cosine": 0.999999,
+    "max_abs_nll_error": 0.002,
+    "max_relative_hidden_l2": 0.0002,
+    "minimum_hidden_cosine": 0.999999,
+    "require_greedy_identity": true,
+    "require_gpu_repeat_identity": true,
+    "require_disabled_restored_identity": true,
+    "baseline_pass_required": true,
+    "failed_cell_rejects_entire_dose": true
+  },
+  "confirmatory_generation_licensed": false,
+  "closed_gates": [
+    "confirmatory_generation",
+    "sealed_evaluation",
+    "qwen8b",
+    "routing",
+    "MLA",
+    "MHA",
+    "MTP",
+    "PEFT",
+    "backbone_training",
+    "distillation"
+  ],
+  "dataset_manifest_sha256": "bf025f9b34c74fee4b6b0b16fe6aea6752293e62eda032234b75abdd0b6a7659",
+  "upstream_export": {
+    "manifest_path": "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_upstream_exports/selected_20260913_001/manifest.json",
+    "manifest_sha256": "2d5dc1e41ac9b2ba432a7ab62b53aafe11a1f675383533863c70017a21459500",
+    "tensor_path": "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_upstream_exports/selected_20260913_001/bridges.pt",
+    "tensor_sha256": "b7b70f4223de4655b2de6a4115cf6f98af1fd98e63dc688e4b55a8db920aa54e",
+    "source_objectives": {
+      "XG": "B3",
+      "XR": "BR",
+      "XS": "BS"
+    },
+    "tensor_hashes": {
+      "XG": {
+        "down": "4cd3e74f5488e60f980ec33c213122f64bacdd5576acf5c826236519094daaf4",
+        "down_bias": "8f198fb9d4edd80d855442c1f84384355f8c8ad70568bee935fc8da50b089174",
+        "up": "6435b77abc85108d8237682c58d7ecba9f37f756d9fb00190672b2b8352623c7",
+        "up_bias": "f6ecb5c62c3fb8d6a4e1e8039a406201d27ba84b7a5c708dc28b89ec4970e2f8"
+      },
+      "XR": {
+        "down": "a2809cde91d6ccd7eac18add461e6fdf9ee5a1a39fee71fb3f5c4366d7ca8ae9",
+        "down_bias": "b469423d22a615b525ba3af454b662534025b625a787e4a25a2a6af0a14a5457",
+        "up": "9c606747b58a6f44b1a47b67bffcb3857fc02a094b401df2cb6cb6c326f21833",
+        "up_bias": "a3d190b47952dd8901c57c1dd5f5184d766783fa098e2abd847c12683069bf43"
+      },
+      "XS": {
+        "down": "010798bac8fcc5d42d52fd144453c3935eebed1c76c9bbf0f024eed829aa9432",
+        "down_bias": "dd03a015ee0ce02b35d4a8ee919848088b4ae17fbe21d57a39304d45198ec2ca",
+        "up": "1d546bc3a6f4366f97eeaf25e1281a8bf0734b78a49ed7e7e60e1365265f4de8",
+        "up_bias": "2e89be59ecfe0bd2e967fc8ed2e5bf3c4e2c145c7d025be85a2a62f83b1855a3"
+      }
+    }
+  },
+  "matched_control": {
+    "kind": "independent_frozen_swiglu",
+    "insertion_layer": 19,
+    "hidden_size": 1024,
+    "intermediate_size": 34560,
+    "seed": 2702,
+    "weight_std": 0.02,
+    "unit_rms_epsilon": 1e-06,
+    "additional_parameters": 106168320,
+    "additional_active_parameters": 106168320,
+    "additional_matmul_flops_per_token": 212336640,
+    "training": false,
+    "calibration": "track_B_fit_only_scenario_balanced_ordinary_residual_energy",
+    "alpha": 1.6186783995925944,
+    "state_sha256": "79f84b142a5708527fa7833e3df02f2939ffb21b1e62df321a0300336ad707d4",
+    "artifact_path": "experiments/supa_adaptive_compute_v2/cross_scale/generation_stage/v1/evidence/00_control_calibration/20260913T171252_566611Z_669e5d42/report.json",
+    "artifact_sha256": "ac87b318d56345aa5ce4719781ea92c4be8b57afcc69b532402abae9a1e8145d"
+  }
+}
