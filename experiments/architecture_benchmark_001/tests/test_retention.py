@@ -573,6 +573,20 @@ def test_retention_stages_bind_the_probe_file_not_calibration(tmp_path):
     assert 'G1_RETENTION_B28' not in gates.data_bindings(pilot, cal)
 
 
+def test_a_reference_must_be_compared_under_the_grammar_that_produced_it():
+    """Regression: the bare-policy sensitivity diagnostic scored the strict grammar against a
+    reference the PERMISSIVE grammar produced. Those disagree by construction wherever a bare
+    value is involved, so it reported 6 spurious losses and a FAIL on a checkpoint whose 150
+    answers were byte-identical to the source. Each policy now carries its own reference."""
+    permissive = {'a', 'b', 'c', 'd'}          # source got 4 right under the looser grammar
+    strict = {'a', 'b'}                        # only 2 of those survive the stricter one
+    correct_under_strict = {'a', 'b'}
+    # Mixing them invents losses that are purely a grammar difference.
+    assert retention.monitor_counts(permissive, correct_under_strict)['lost'] == 2
+    # Comparing like with like reports the truth: nothing was forgotten.
+    assert retention.monitor_counts(strict, correct_under_strict)['lost'] == 0
+
+
 def test_probe_loader_rejects_a_row_that_would_silently_measure_nothing():
     from experiments.architecture_benchmark_001 import run
     good = {'split': 'task', 'id': 'a', 'group_id': 'g', 'reply_class': 'time_duration',

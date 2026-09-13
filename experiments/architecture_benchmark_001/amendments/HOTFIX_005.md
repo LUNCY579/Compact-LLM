@@ -168,6 +168,14 @@ also reports the counts under `strict`, so the effect of the unreviewed decision
 is visible in the artifact rather than argued in prose. If the two policies ever disagree about
 a verdict, that is a blocking review item, not a rounding error.
 
+**Each policy carries its own reference set**, recorded as `reference_ids_by_policy` and
+inherited per policy by `G2_RETENTION`. This is not a detail. The first implementation compared
+the strict grammar against a reference the permissive grammar had produced; those disagree by
+construction wherever a bare value is involved, so it reported six losses and a FAIL on a
+checkpoint whose 150 answers were byte-identical to the source. A sensitivity diagnostic that
+cannot distinguish a grammar difference from a capability loss is worse than none, because it
+manufactures exactly the finding the gate exists to detect.
+
 Duration rows are exempt from the policy: only 3 of the 19 duration prompts name the requested
 unit, so for the other 16 a bare `90` cannot distinguish minutes from hours and is rejected
 under both settings. Those three row ids are fixed in the contract.
@@ -203,3 +211,26 @@ Note also that B28's pass is largely tautological: for that arm the implementati
 source to itself, so the reference is its own correct set and losses are 0 by construction. All
 of this gate's discriminating power is on converted and trained arms — the same caveat
 HOTFIX-004 recorded for `G1_QUALITY`.
+
+**A pass is uninformative when the arm did not move, and the receipt must say which case it
+is.** `arm_answers_changed` records how many of the probe answers differ from the source's. The
+first `G2_RETENTION_B28` run returned **0 of 150**: the registered engineering lane is 25 SGD
+steps at lr 1e-5 over 3,159 tokens, which left every greedy answer byte-identical. That receipt
+therefore demonstrates that the gate runs, binds its DAG and reproduces its parent — and
+demonstrates nothing whatever about retention under optimizer pressure. Read `arm_answers_changed`
+before reading `status`. The training-side gate has not yet been exercised on a checkpoint that
+actually changed, and no claim here says otherwise.
+
+**The gate's own first measurement found a defect in its own scorer.** Reading the 150 raw
+source answers — not the aggregate — showed 7 rows the legacy scorer accepts and this grammar
+rejects, and all 7 are one family: a sentence prefix the frozen contract did not anticipate
+(`It ends at 6:55 PM.`, `End time: 9:40 AM`, `The percent increase is 10%.`). Six of the seven
+are `time_duration`, which is why that class reads 10/50 here. Evidence:
+`evidence/retention-design-v1/SCORER_BIAS_B28_source.json`.
+
+That list is **not** patched in this amendment. The contract requires a scorer change to be
+versioned and reviewed with its baselines re-measured, and widening a grammar immediately after
+looking at model output is the move this programme forbids everywhere else. It is recorded as
+the first item for the pending grammar review. Note the direction: a too-narrow prefix list
+shrinks the reference set, which makes the gate **weaker** — fewer answers a candidate can be
+caught losing — so the bias does not inflate any retention claim.

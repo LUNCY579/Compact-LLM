@@ -487,8 +487,14 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
                                  context(audit, probe, device), data_by_stage=bindings)
         body = read_hashed_json(retention_parent.parent/'retention.json')
         # The reference is inherited, never recomputed: recomputing it after training would let
-        # a run redefine what it was supposed to have kept.
-        reference_ids = set(body['reference_ids'])
+        # a run redefine what it was supposed to have kept. One reference per bare policy, so
+        # the sensitivity diagnostic compares like with like -- scoring a permissive-derived
+        # reference under the strict grammar reports losses that are purely a grammar
+        # difference, which is a meaningless number rather than a finding.
+        inherited = body.get('reference_ids_by_policy')
+        if not isinstance(inherited, dict) or set(inherited) != set(retention.BARE_POLICIES):
+            raise GateClosed('parent retention artifact lacks a per-policy reference')
+        reference_ids = set(inherited[policy['bare_policy']])
         parent_source_correct = set(body['source_correct_ids'])
         if not reference_ids:
             raise GateClosed('inherited retention reference is empty')
@@ -529,33 +535,39 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
     del reference_model
     gc.collect()
 
-    source_scored = _score_probe(source_outputs, targets)
-    arm_scored = _score_probe(arm_outputs, targets)
+    # Score under every bare policy, so the one unreviewed axis is measured rather than argued.
+    scored = {name: (_score_probe(source_outputs, overlay['targets']),
+                     _score_probe(arm_outputs, overlay['targets']))
+              for name, overlay in overlays.items()}
+    references = {}
+    for name, (src, arm_rows) in scored.items():
+        if stage == 'G1_RETENTION':
+            # Union of source-correct and initialization-correct. At step zero the arm's correct
+            # set IS its initialization set, so the losses reported are exactly the
+            # source-correct answers the conversion already dropped.
+            references[name] = ({i for i, r in src.items() if r['correct']}
+                                | {i for i, r in arm_rows.items() if r['correct']})
+        else:
+            references[name] = set(inherited[name])
+    reference_ids = references[policy['bare_policy']]
+
+    source_scored, arm_scored = scored[policy['bare_policy']]
     source_correct = {i for i, r in source_scored.items() if r['correct']}
-    if stage == 'G1_RETENTION':
-        # Union of source-correct and initialization-correct. At step zero the arm's correct
-        # set IS its initialization set, so the losses reported are exactly the source-correct
-        # answers the conversion already dropped.
-        reference_ids = source_correct | {i for i, r in arm_scored.items() if r['correct']}
     counts = _retention_classes(rows, source_scored, arm_scored, reference_ids)
     monitor = retention.monitor_verdict(counts, policy)
 
-    # The one unreviewed policy axis, measured rather than argued: score the same predictions
-    # under the other bare setting and record whether the verdict would change.
     other = 'strict' if policy['bare_policy'] == 'permissive' else 'permissive'
-    other_targets = overlays[other]['targets']
-    other_source = _score_probe(source_outputs, other_targets)
-    other_arm = _score_probe(arm_outputs, other_targets)
-    other_reference = ({i for i, r in other_source.items() if r['correct']}
-                       | {i for i, r in other_arm.items() if r['correct']}
-                       ) if stage == 'G1_RETENTION' else reference_ids
-    other_counts = _retention_classes(rows, other_source, other_arm, other_reference)
+    other_source, other_arm = scored[other]
+    other_counts = _retention_classes(rows, other_source, other_arm, references[other])
     other_monitor = retention.monitor_verdict(other_counts, policy)
 
     predictions = {'schema': 2, 'stage': stage, 'arm': arm, 'probe_rows': len(rows),
                    'bare_policy': policy['bare_policy'],
                    'reference_ids': sorted(reference_ids),
+                   'reference_ids_by_policy': {k: sorted(v) for k, v in references.items()},
                    'source_correct_ids': sorted(source_correct),
+                   'arm_matches_source_verbatim': sum(
+                       1 for r in rows if source_scored[r['id']]['raw'] == arm_scored[r['id']]['raw']),
                    'rows': [{'id': r['id'], 'reply_class': r['reply_class'],
                              'group_id': r['group_id'],
                              'target': targets[r['id']],
@@ -605,6 +617,13 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
         'reference_size': len(reference_ids),
         'source_correct_total': len(source_correct),
         'arm_correct_total': sum(1 for r in arm_scored.values() if r['correct']),
+        # A pass means nothing if the arm never moved. 25 engineering steps at lr 1e-5 left all
+        # 150 greedy answers byte-identical to the source, so this number is the difference
+        # between "retention demonstrated" and "nothing happened yet".
+        'arm_answers_identical_to_source': sum(
+            1 for r in rows if source_scored[r['id']]['raw'] == arm_scored[r['id']]['raw']),
+        'arm_answers_changed': sum(
+            1 for r in rows if source_scored[r['id']]['raw'] != arm_scored[r['id']]['raw']),
         'lost_total': sum(c['lost'] for c in counts.values()),
         'gained_total': sum(c['gained'] for c in counts.values()),
         'bare_policy': policy['bare_policy'],
