@@ -29,7 +29,7 @@ ALPHA = Fraction(1, 20)
 BASE = REPO / "experiments/architecture_benchmark_001"
 EVIDENCE = BASE / "evidence/retention-design-v1"
 RUN_REGISTRY = REPO / "experiments/rab001_exploration/run_registry.json"
-SUPPORTED_RETRIES = {"B28_lr1e-05_b5200_seed17": "B28_lr1e-05_b5200_seed17_retry1"}
+SUPPORTED_RETRIES = {"B28_lr1e-05_b5200_seed17": ("B28_lr1e-05_b5200_seed17_retry1", "B28_lr1e-05_b5200_seed17_retry2")}
 
 
 class InvalidArtifact(ValueError):
@@ -60,33 +60,97 @@ def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def _validate_initial_failure(metadata, canonical):
+    require(metadata.get("no_endpoint_observed") is True, "initial failure no_endpoint_observed mismatch")
+    expected_path = EVIDENCE / f"ARM_DOSE_{canonical}.json"
+    require((REPO / metadata["failure_artifact_path"]).resolve() == expected_path.resolve(), "failure artifact path differs from canonical run")
+    require(expected_path.is_file(), "registered canonical failure artifact missing")
+    require(sha256(expected_path) == metadata["failure_artifact_sha256"], "preserved canonical failure hash mismatch")
+    failure = read_json(expected_path)
+    require(failure.get("completed") is False and failure.get("checkpoint") is None, "registered failure has a completed result or checkpoint")
+    require(failure.get("aborted_reason") == metadata["failure_reason"] and bool(metadata["failure_reason"]), "registered failure reason mismatch")
+    require(failure.get("supervised_target_tokens") == metadata["observed_supervised_target_tokens"]
+            and failure.get("optimizer_steps") == metadata["observed_optimizer_steps"], "registered failed dose mismatch")
+    require(failure.get("checkpoints") and all(point.get("tokens") == 0 and point.get("steps") == 0
+                                               and point.get("milestone") == 0 for point in failure["checkpoints"]),
+            "retry1 disallowed: a post-training checkpoint/endpoint was observed")
+    for key, value in {"arm": "B28", "lr": 1e-5, "seed": 17, "token_budget": 5200,
+                       "schedule_spec": "cosine:0.03", "beta2": .999, "reference_digest": DIGEST}.items():
+        require(failure.get(key) == value, f"canonical failure recipe {key} mismatch")
+
+
+def _validate_save_failure(metadata, canonical):
+    first_retry = SUPPORTED_RETRIES[canonical][0]
+    for key, value in {"previous_tag": first_retry, "no_endpoint_observed": False, "completed_training": True,
+                       "failure_kind": "checkpoint_save", "retry_reason": "checkpoint_save_resource_failure_only",
+                       "known_score_is_not_retry_criterion": True}.items():
+        require(metadata.get(key) == value, f"save failure retry metadata {key} mismatch")
+    path = REPO / "experiments/rab001_exploration/outputs/R4_RETRY1_SAVE_FAILURE_20260913.json"
+    require((REPO / metadata["failure_artifact_path"]).resolve() == path.resolve(), "save failure observation path mismatch")
+    require(sha256(path) == metadata["failure_artifact_sha256"], "save failure observation hash mismatch")
+    snapshot = read_json(path)
+    for key, value in {"schema": 1, "canonical_tag": canonical, "tag": first_retry, "run_label": "retry1",
+                       "completed_training": True, "checkpoint_saved": False, "overall_completed": False,
+                       "final_endpoint_observed": True, "implementation_digest": DIGEST}.items():
+        require(snapshot.get(key) == value, f"save failure observation {key} mismatch")
+    source_files = snapshot["source_files"]
+    expected_names = {"start": "START.json", "initial_probe": "probe_0000000.json", "final_probe": "probe_0005200.json", "failure": "failure.json"}
+    require(set(source_files) == set(expected_names), "save failure source-file inventory mismatch")
+    parents = set()
+    for name, binding in source_files.items():
+        source_path = (REPO / binding["path"]).resolve()
+        require(source_path.name == expected_names[name] and source_path.parent.parent == (BASE / "outputs/arm-runs").resolve()
+                and source_path.parent.name.startswith(first_retry + "_"), "save failure source path mismatch")
+        parents.add(source_path.parent)
+        require(sha256(source_path) == binding["sha256"], f"save failure source-file hash mismatch: {name}")
+        require(read_json(source_path) == snapshot["source_records"][name], f"save failure embedded record mismatch: {name}")
+    require(len(parents) == 1, "save failure records came from different runs")
+    start, final, failure = (snapshot["source_records"][name] for name in ("start", "final_probe", "failure"))
+    require(start["tag"] == first_retry and start["canonical_tag"] == canonical and start["implementation_digest"] == DIGEST,
+            "save failure START identity mismatch")
+    require(failure["tag"] == first_retry and failure["completed"] is False and "CPU checkpoint copy" in failure["message"],
+            "failure did not arise from the observed checkpoint copy guard")
+    require(metadata["failure_reason"] == snapshot["failure_reason"] == failure["message"], "save failure reason mismatch")
+    require(final["tokens"] == snapshot["supervised_target_tokens"] == metadata["observed_supervised_target_tokens"] == 5233
+            and final["steps"] == snapshot["optimizer_steps"] == metadata["observed_optimizer_steps"] == 41
+            and final["milestone"] == 5200, "save failure completed dose mismatch")
+    for key, value in metadata["observed_final_summary"].items():
+        require(snapshot["final_summary"].get(key) == value, f"known final observation mismatch: {key}")
+    require(set(metadata["observed_final_summary"]) == {"correct_total", "retained_total", "gained_total", "lost_total", "gained_by_stratum", "lost_by_stratum"},
+            "known final observation inventory mismatch")
+    require(not (EVIDENCE / f"ARM_DOSE_{first_retry}.json").exists(), "retry1 unexpectedly has a successful ARM_DOSE artifact")
+    require(not (BASE / "outputs/arm-checkpoints" / first_retry).exists(), "retry1 unexpectedly has saved checkpoint files")
+
+
 def validate_run_registry(registry):
-    """A retry is authorized by an explicit alias and an immutable pre-endpoint failure."""
+    """Validate the exact declared retry chain, retaining both different failure kinds."""
     require(registry.get("schema") == 1, "unsupported run registry schema")
     aliases, retries = registry.get("active_tags"), registry.get("retries")
     require(isinstance(aliases, dict) and isinstance(retries, dict), "registry requires active_tags and retries mappings")
-    require(set(retries) == set(aliases.values()), "registry aliases and retry metadata disagree")
+    expected_retries = set()
     for canonical, active in aliases.items():
-        require(SUPPORTED_RETRIES.get(canonical) == active, f"unsupported registry alias: {canonical} -> {active}")
-        metadata = retries[active]
-        for key, value in {"canonical_tag": canonical, "run_label": "retry1", "retry_scope": "storage_only",
-                           "no_endpoint_observed": True, "checkpoint_saved": False, "preserve_failure_bytes": True}.items():
-            require(metadata.get(key) == value, f"retry metadata {key} mismatch")
-        expected_path = EVIDENCE / f"ARM_DOSE_{canonical}.json"
-        require((REPO / metadata["failure_artifact_path"]).resolve() == expected_path.resolve(), "failure artifact path differs from canonical run")
-        require(expected_path.is_file(), "registered canonical failure artifact missing")
-        require(sha256(expected_path) == metadata["failure_artifact_sha256"], "preserved canonical failure hash mismatch")
-        failure = read_json(expected_path)
-        require(failure.get("completed") is False and failure.get("checkpoint") is None, "registered failure has a completed result or checkpoint")
-        require(failure.get("aborted_reason") == metadata["failure_reason"] and bool(metadata["failure_reason"]), "registered failure reason mismatch")
-        require(failure.get("supervised_target_tokens") == metadata["observed_supervised_target_tokens"]
-                and failure.get("optimizer_steps") == metadata["observed_optimizer_steps"], "registered failed dose mismatch")
-        require(failure.get("checkpoints") and all(point.get("tokens") == 0 and point.get("steps") == 0
-                                                   and point.get("milestone") == 0 for point in failure["checkpoints"]),
-                "retry disallowed: a post-training checkpoint/endpoint was observed")
-        for key, value in {"arm": "B28", "lr": 1e-5, "seed": 17, "token_budget": 5200,
-                           "schedule_spec": "cosine:0.03", "beta2": .999, "reference_digest": DIGEST}.items():
-            require(failure.get(key) == value, f"canonical failure recipe {key} mismatch")
+        allowed = SUPPORTED_RETRIES.get(canonical, ())
+        require(active in allowed, f"unsupported registry alias: {canonical} -> {active}")
+        chain = allowed[:allowed.index(active) + 1]
+        expected_retries.update(chain)
+        require(set(chain) <= set(retries), "registry aliases and retry chain metadata disagree")
+        for number, tag in enumerate(chain, 1):
+            metadata = retries[tag]
+            for key, value in {"canonical_tag": canonical, "run_label": f"retry{number}", "retry_scope": "storage_only",
+                               "checkpoint_saved": False, "preserve_failure_bytes": True}.items():
+                require(metadata.get(key) == value, f"retry metadata {key} mismatch")
+            if number == 1:
+                _validate_initial_failure(metadata, canonical)
+            else:
+                _validate_save_failure(metadata, canonical)
+                previous = registry.get("previous_registry", {})
+                previous_path = REPO / "experiments/rab001_exploration/outputs/RUN_REGISTRY_BEFORE_RETRY2_20260913.json"
+                require((REPO / previous.get("path", "")).resolve() == previous_path.resolve()
+                        and sha256(previous_path) == previous.get("sha256"), "previous registry snapshot binding mismatch")
+                original = read_json(previous_path)
+                require(original["active_tags"] == {canonical: chain[0]} and original["retries"][chain[0]] == retries[chain[0]],
+                        "original failure registry was not preserved")
+    require(set(retries) == expected_retries, "registry aliases and retry metadata disagree")
 
 
 def load_run_registry(path=RUN_REGISTRY):
@@ -101,13 +165,17 @@ def resolve_run(canonical_tag, evidence=EVIDENCE, registry=None):
     registry = load_run_registry() if registry is None else registry
     active = registry["active_tags"].get(canonical_tag, canonical_tag)
     failure = None
+    failures = []
     if active != canonical_tag:
-        require(SUPPORTED_RETRIES.get(canonical_tag) == active, "unsupported active run alias")
+        allowed = SUPPORTED_RETRIES.get(canonical_tag, ())
+        require(active in allowed, "unsupported active run alias")
         failure = registry["retries"].get(active)
+        label = active[len(canonical_tag) + 1:]
         require(failure is not None and failure.get("canonical_tag") == canonical_tag
-                and failure.get("run_label") == "retry1", "active alias missing or mismatched retry metadata")
+                and failure.get("run_label") == label, "active alias missing or mismatched retry metadata")
+        failures = [{"retry_tag": tag, **registry["retries"][tag]} for tag in allowed[:allowed.index(active) + 1]]
     return {"canonical_tag": canonical_tag, "active_tag": active,
-            "artifact_path": str(evidence / f"ARM_DOSE_{active}.json"), "preserved_failure": failure}
+            "artifact_path": str(evidence / f"ARM_DOSE_{active}.json"), "preserved_failure": failure, "preserved_failures": failures}
 
 
 def validate_run_identity(body, selection):
@@ -116,9 +184,9 @@ def validate_run_identity(body, selection):
         require(body.get("canonical_tag", canonical) == canonical and body.get("run_label") in (None, ""),
                 "unregistered or mismatched retry identity")
     else:
-        require(SUPPORTED_RETRIES.get(canonical) == active and selection.get("preserved_failure") is not None,
+        require(active in SUPPORTED_RETRIES.get(canonical, ()) and selection.get("preserved_failure") is not None,
                 "retry alias absent from registry")
-        require(body.get("canonical_tag") == canonical and body.get("run_label") == "retry1",
+        require(body.get("canonical_tag") == canonical and body.get("run_label") == active[len(canonical) + 1:],
                 "retry body canonical_tag/run_label mismatch")
 
 

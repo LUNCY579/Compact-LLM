@@ -152,13 +152,14 @@ class SoupTensorTests(unittest.TestCase):
     def test_stream_average_and_saved_roundtrip(self):
         import importlib.util
         import sys
-        from contextlib import ExitStack
+        from unittest import mock
         import torch
         from safetensors.torch import load_file, save_file
         sys.path.insert(0, str(HERE))
         spec = importlib.util.spec_from_file_location('soup_test_module', HERE / 'model_soup.py')
         soup = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(soup)
+        from experiments.rab001_exploration import tensor_stream
         soup.CHUNK_ELEMENTS = 3
         soup.hostbudget.guard = lambda *args, **kwargs: None
         class Tiny(torch.nn.Module):
@@ -175,11 +176,27 @@ class SoupTensorTests(unittest.TestCase):
                 path.mkdir()
                 tensors = {'matrix': torch.arange(10, dtype=torch.float32).reshape(5, 2) + index,
                            'vector': torch.arange(7, dtype=torch.float32) - index}
+                # fp32 summation would erase the middle ingredient's contribution.
+                tensors['matrix'][0, 0] = (1e10, 1.0, -1e10)[index]
                 save_file(tensors, str(path / 'trainable.safetensors'))
                 members.append({'_dir': path, 'tensor_shapes': {k: list(v.shape) for k, v in tensors.items()},
                                 '_provenance': {'tag': str(index)}, '_key': {'mode': 'B28'}})
-            soup.apply_average(model, members)
-            torch.testing.assert_close(model.matrix, torch.arange(10, dtype=torch.float32).reshape(5, 2) + 1)
+            reads = []
+            original_reader = tensor_stream.TensorFile
+            class ObservedReader(original_reader):
+                def read(self, name, start, count):
+                    reads.append((name, start, count))
+                    return super().read(name, start, count)
+            with mock.patch.object(tensor_stream, 'TensorFile', ObservedReader), \
+                    mock.patch('safetensors.safe_open', side_effect=AssertionError('averaging must not map weights')):
+                soup.apply_average(model, members)
+            self.assertTrue(reads)
+            self.assertTrue(all(0 < count <= 3 for _, _, count in reads))
+            self.assertIn(('matrix', 0, 3), reads)
+            self.assertIn(('matrix', 9, 1), reads)
+            expected_matrix = torch.arange(10, dtype=torch.float32).reshape(5, 2) + 1
+            expected_matrix[0, 0] = 1 / 3
+            torch.testing.assert_close(model.matrix, expected_matrix, rtol=0, atol=0)
             torch.testing.assert_close(model.vector, torch.arange(7, dtype=torch.float32) - 1)
             soup.save_trainables(model, members, root / 'saved', {'assets': {}})
             restored = load_file(str(root / 'saved' / 'trainable.safetensors'))

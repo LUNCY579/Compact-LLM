@@ -10,6 +10,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from experiments.rab001_exploration import alpha_sweep as alpha
 
@@ -152,6 +153,35 @@ class TensorTests(unittest.TestCase):
             manifest['tensor_shapes'][names[0]] = [4]
             with self.assertRaisesRegex(ValueError, 'shape mismatch'):
                 alpha.validate_tensor_inventory(model, checkpoint, manifest, 'B28', 1)
+
+    def test_chunked_alpha_has_no_mmap_and_keeps_float32_formula(self):
+        from experiments.rab001_exploration import tensor_stream
+        torch = self.torch
+        model = torch.nn.Linear(3, 3, bias=False)
+        source = torch.arange(9, dtype=torch.float32).reshape(3, 3).to(torch.bfloat16)
+        trained = torch.arange(9, dtype=torch.float32).reshape(3, 3) * -0.75 + 0.125
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            self.save_file({'source.weight': source}, str(folder / 'source.safetensors'))
+            self.save_file({'weight': trained}, str(folder / 'trained.safetensors'))
+            reads, guard_calls = [], []
+            original_read = tensor_stream.TensorFile.read
+            def tracked_read(reader, name, start, count):
+                reads.append((name, start, count))
+                return original_read(reader, name, start, count)
+            with patch.object(tensor_stream, 'MAX_ELEMENTS', 4), \
+                    patch.object(tensor_stream.TensorFile, 'read', tracked_read), \
+                    patch('safetensors.safe_open', side_effect=AssertionError('mmap loader forbidden')):
+                for value in (0.0, 1.0, 0.25, 0.5, 0.75):
+                    alpha.apply_alpha(model, folder / 'trained.safetensors', ['weight'], value,
+                        'b28-wise', source_weights=folder / 'source.safetensors',
+                        source_names={'weight': 'source.weight'}, guard=lambda: guard_calls.append(1))
+                    expected = source.float().mul_(1 - value).add_(trained, alpha=value)
+                    self.assertTrue(torch.equal(model.weight, expected))
+            self.assertTrue(reads)
+            self.assertTrue(all(count <= 4 for _, _, count in reads))
+            self.assertIn(('weight', 8, 1), reads)
+            self.assertEqual(len(guard_calls), 15)
 
 
 if __name__ == '__main__':

@@ -313,3 +313,30 @@ This is a resource recovery decision made without a trained endpoint score, not 
 among successful seeds or panel scores. If this retry also fails, do not silently select a
 new filename. Register any further recovery before its results. Successful remaining B28
 soup ingredients will use the same validated storage/workspace settings.
+
+### Checkpoint-save recovery registration, 2026-09-13 23:51 UTC
+
+Retry1 completed training (5233 targets /41 steps) and its final CPU probe: 73 correct,
+41 retained, 32 gained, 6 lost. Gains split 21 wrong_answer /11 format_only /0 runaway;
+all six losses are wrong_answer. Those values are already observed and are not a criterion
+for the next retry. Saving then failed because it tried to allocate a full 2.22 GiB CPU
+weight copy with only 2.36 GiB free. No trained weights survived process exit.
+
+Preserve the standalone failed-save observation
+`experiments/rab001_exploration/outputs/R4_RETRY1_SAVE_FAILURE_20260913.json`
+(SHA-256 `747e029f450d73c799b78ba46bf3da2b9bd3d1598d019e196fe323adc673dbf4`),
+which binds the actual START, source/final probes and failure records. Do not fabricate a
+successful ARM_DOSE artifact for retry1. The registry retains both failures and its prior
+version, and explicitly designates `B28_lr1e-05_b5200_seed17_retry2` next.
+
+Retry2 keeps the same training recipe and streamed optimizer /1.5 GiB workspace settings.
+After its final probe, release optimizer state and write trainables in <=1 MiB GPU-to-CPU
+chunks to a create-only standard safetensors file. CPU and CUDA writer roundtrips through
+the official reader must preserve exact F32 bits before launch. Memory floors stay fixed.
+Use only source and final probes (`probe_fractions=1.0`): retry1 already banked the three
+interior measurements. This changes observation cadence, not training tokens or updates;
+no intermediate score selects the endpoint. All fixed statistical families remain intact.
+
+The new checkpoint, if successfully saved and verified, is the B28 alpha/soup ingredient.
+Matching the known aggregate again does not establish identical historical weights or
+determinism. Preserve any further failure and register further changes before another run.

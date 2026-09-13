@@ -276,6 +276,8 @@ def main() -> int:
     optimizer_digest = file_sha256(Path(_rdg.__file__))
     storage_path = Path(__file__).with_name('streamed_adam.py') if STORAGE_BACKEND == 'streamed' else None
     storage_digest = file_sha256(storage_path) if storage_path else None
+    serialization_path = Path(__file__).with_name('tensor_stream.py')
+    serialization_digest = file_sha256(serialization_path)
     digest = implementation_digest()
     source_assets = json.loads((ROOT / 'source_lock.json').read_text(encoding='utf-8'))['assets']
     for name, expected in source_assets.items():
@@ -293,6 +295,8 @@ def main() -> int:
             raise RuntimeError('optimizer harness changed during run')
         if storage_path and file_sha256(storage_path) != storage_digest:
             raise RuntimeError('optimizer storage backend changed during run')
+        if file_sha256(serialization_path) != serialization_digest:
+            raise RuntimeError('checkpoint serialization helper changed during run')
         if any(file_sha256(path) != data_hashes[name] for name, path in data_paths.items()):
             raise RuntimeError('training/probe data changed during run')
 
@@ -302,6 +306,7 @@ def main() -> int:
         'optimizer_storage_backend': STORAGE_BACKEND,
         'optimizer_storage_harness_sha256': storage_digest,
         'gpu_workspace_reserve_gib': GPU_WORKSPACE_GIB,
+        'checkpoint_serialization_sha256': serialization_digest,
         'implementation_digest': digest, 'exploration_harness_sha256': harness_digest,
         'optimizer_harness_sha256': optimizer_digest, 'data_sha256': data_hashes,
         'source_assets_sha256': source_assets, 'host_before': host_start})
@@ -542,24 +547,29 @@ def main() -> int:
                       or checkpoints[-1]['milestone'] != milestones[-1]):
         checkpoint(tokens, milestones[-1])
     first, last = checkpoints[0], checkpoints[-1]
+    # Optimization is over; moment storage and transfer buffers are unnecessary
+    # during saving. Keep model parameters alive, release only optimizer state.
+    del opt
+    gc.collect()
+    torch.cuda.empty_cache()
+    record_resources('optimizer_released_before_save', steps)
 
-    # Keep the weights. Every dose run before this one discarded them, so the B28 fit that
-    # reached 73/150 no longer exists and neither does H56's -- weight averaging needs
-    # ingredients that survive process exit. Only the trainable tensors are written: for H/P
-    # the backbone is frozen and bit-identical to the source, so this is 0.48 GiB instead of
-    # 4.31, and the full model reconstructs exactly from source + arm + these tensors.
+    # Save trainables in bounded chunks. A prior full-B28 attempt completed its
+    # final probe but could not allocate a second 2.22 GiB CPU parameter copy.
+    # Parameter references below do not copy data; the writer transfers <=1 MiB.
     checkpoint_info = None
     if SAVE == 'final' and completed:
-        from safetensors.torch import save_file
+        from tensor_stream import write_parameters
         destination = ROOT / 'outputs' / 'arm-checkpoints' / TAG
         if destination.exists():
             raise SystemExit(f'checkpoint directory already exists (create-only): {destination}')
-        hostbudget.require(params_bytes / 2**30 + 1.2, f'arm dose {TAG} CPU checkpoint copy')
-        tensors = {name: p.detach().to('cpu', torch.float32).contiguous()
+        hostbudget.guard(1.2, f'arm dose {TAG} streamed checkpoint save')
+        tensors = {name: p.detach()
                    for name, p in model.named_parameters() if p.requires_grad}
         destination.mkdir(parents=True, exist_ok=False)
         weights = destination / 'trainable.safetensors'
-        save_file(tensors, str(weights))
+        save_details = write_parameters(
+            weights, tensors, guard=lambda: hostbudget.guard(1.2, f'arm dose {TAG} save chunk'))
         checkpoint_info = {
             'path': str(destination), 'tensors': len(tensors),
             'parameters': sum(t.numel() for t in tensors.values()),
@@ -570,6 +580,9 @@ def main() -> int:
             'source_weights_sha256': source_assets['model.safetensors'],
             'source_assets_sha256': source_assets,
             'implementation_digest': digest,
+            'save_backend': 'bounded_fp32_parameter_chunks_v1',
+            'save_max_chunk_elements': save_details['max_chunk_elements'],
+            'checkpoint_serialization_sha256': serialization_digest,
             # Everything needed to rebuild without consulting this script.
             'reconstruct': {
                 'source': str(SRC), 'mode': MODE, 'read_tail': READ_TAIL,
@@ -640,6 +653,7 @@ def main() -> int:
         'optimizer_storage_backend': STORAGE_BACKEND,
         'optimizer_storage_harness_sha256': storage_digest,
         'gpu_workspace_reserve_gib': GPU_WORKSPACE_GIB, 'resource_trace': resource_trace,
+        'checkpoint_serialization_sha256': serialization_digest,
         'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,
         'checkpoint': checkpoint_info, 'save_policy': SAVE,
         'read_o_proj_norm_end': trace[-1]['read_o_proj_norm'] if trace else 0.0,

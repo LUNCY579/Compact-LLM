@@ -265,8 +265,8 @@ def expected_trainables(model, key: dict) -> set[str]:
 
 
 def apply_average(model, members: list[dict]) -> None:
-    """Uniform average directly into CPU parameters with a small fp64 accumulator."""
-    from safetensors import safe_open
+    """Uniform average with bounded ordinary-file reads and a small fp64 accumulator."""
+    from experiments.rab001_exploration.tensor_stream import MAX_ELEMENTS, TensorFile
     names = members[0]['tensor_shapes']
     if any(m['tensor_shapes'] != names for m in members):
         raise ValueError('cannot average different tensor inventories')
@@ -276,20 +276,25 @@ def apply_average(model, members: list[dict]) -> None:
                          f'{sorted(expected - set(names))[:3]}, extra {sorted(set(names) - expected)[:3]}')
     params = dict(model.named_parameters())
     with ExitStack() as stack, torch.no_grad():
-        files = [stack.enter_context(safe_open(str(m['_dir'] / 'trainable.safetensors'),
-                                             framework='pt', device='cpu')) for m in members]
+        files = [stack.enter_context(TensorFile(m['_dir'] / 'trainable.safetensors')) for m in members]
+        for reader in files:
+            if ({name: entry['shape'] for name, entry in reader.header.items()} != names
+                    or any(entry['dtype'] != 'F32' for entry in reader.header.values())):
+                raise ValueError('opened checkpoint inventory differs from validated manifest')
         for name, shape in names.items():
             if name not in params or list(params[name].shape) != shape or params[name].device.type != 'cpu':
                 raise ValueError(f'CPU model does not match ingredient tensor: {name}')
-            views = [f.get_slice(name) for f in files]
-            for part in slices(shape):
-                total = views[0][part].to(torch.float64)
-                for view in views[1:]:
-                    total.add_(view[part])
+            target = params[name].view(-1)
+            chunk_elements = min(CHUNK_ELEMENTS, MAX_ELEMENTS)
+            for start in range(0, target.numel(), chunk_elements):
+                count = min(chunk_elements, target.numel() - start)
+                total = files[0].read(name, start, count).to(torch.float64)
+                for reader in files[1:]:
+                    total.add_(reader.read(name, start, count))
                 total.div_(len(files))
                 if not bool(torch.isfinite(total).all()):
                     raise ValueError(f'nonfinite averaged weights: {name}')
-                params[name][part].copy_(total)
+                target[start:start + count].copy_(total)
                 del total
             hostbudget.guard(1.2, 'model soup apply average')
 
@@ -481,6 +486,7 @@ def main() -> int:
         # Include external architecture/guard code as well as the hashed official
         # implementation: neither exploratory helpers nor DualStack enter that digest.
         binding_paths = {Path(__file__), Path(hostbudget.__file__),
+                         Path(__file__).with_name('tensor_stream.py'),
                          REPO / 'experiments' / 'dual28_ced_v1' / 'model.py',
                          OUT / 'DISTINGUISHABILITY_PREREG.md',
                          ONPANEL / 'dev.jsonl', destination / 'selection_rows.jsonl'}

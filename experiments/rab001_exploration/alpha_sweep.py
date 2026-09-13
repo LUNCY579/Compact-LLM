@@ -203,47 +203,59 @@ def apply_alpha(model, checkpoint: Path, names: list[str], alpha: float, kind: s
                 guard=None) -> None:
     """Reset from immutable files at every point, so evaluation order cannot compound alpha."""
     import torch
-    from safetensors import safe_open
+    from experiments.rab001_exploration.tensor_stream import MAX_ELEMENTS, TensorFile
     if alpha not in GRID or kind not in KINDS:
         raise ValueError('alpha/kind outside the fixed protocol')
     if kind == 'b28-wise' and (source_weights is None or source_names is None):
         raise ValueError('B28 interpolation requires source weights and native-name mapping')
     by_name = dict(model.named_parameters())
     with ExitStack() as stack, torch.no_grad():
-        trained = stack.enter_context(safe_open(str(checkpoint), framework='pt', device='cpu'))
-        source = (stack.enter_context(safe_open(str(source_weights), framework='pt', device='cpu'))
+        trained = stack.enter_context(TensorFile(checkpoint))
+        source = (stack.enter_context(TensorFile(source_weights))
                   if kind == 'b28-wise' else None)
         for name in names:
-            if guard is not None:
-                guard()
             target = by_name[name]
-            if target.device.type != 'cpu' or target.dtype != torch.float32:
-                raise ValueError('alpha updates require the single model on CPU in float32')
-            # Copy endpoints directly; a + alpha*(b-a) can round even at alpha=1.
-            if kind == 'p-output-gate' or alpha == 1.0:
-                value = trained.get_tensor(name)
-                if value.shape != target.shape or value.dtype != torch.float32 or not bool(torch.isfinite(value).all()):
-                    raise ValueError(f'invalid trained tensor: {name}')
-                target.copy_(value)
-                if kind == 'p-output-gate' and is_read_output(name):
-                    target.mul_(alpha)
-                del value
-            else:
+            if target.device.type != 'cpu' or target.dtype != torch.float32 or not target.is_contiguous():
+                raise ValueError('alpha updates require contiguous float32 CPU parameters')
+            info = trained.header.get(name)
+            if info is None or info['shape'] != list(target.shape) or info['dtype'] != 'F32':
+                raise ValueError(f'invalid trained tensor: {name}')
+            native_name = None
+            if kind == 'b28-wise' and alpha != 1.0:
                 native_name = source_names[name]
-                value = source.get_tensor(native_name)
-                if value.shape != target.shape or not bool(torch.isfinite(value).all()):
+                info = source.header.get(native_name)
+                if info is None or info['shape'] != list(target.shape):
                     raise ValueError(f'invalid source tensor: {name}')
-                target.copy_(value)  # BF16 -> FP32 exactly as the frozen source loader.
-                del value
-                if alpha:
-                    value = trained.get_tensor(name)
-                    if value.shape != target.shape or value.dtype != torch.float32 or not bool(torch.isfinite(value).all()):
+            flat = target.view(-1)
+            for start in range(0, target.numel(), MAX_ELEMENTS):
+                if guard is not None:
+                    guard()
+                count = min(MAX_ELEMENTS, target.numel() - start)
+                part = flat[start:start + count]
+                # Copy endpoints directly; a + alpha*(b-a) can round even at alpha=1.
+                if kind == 'p-output-gate' or alpha == 1.0:
+                    value = trained.read(name, start, count)
+                    if not bool(torch.isfinite(value).all()):
                         raise ValueError(f'invalid trained tensor: {name}')
-                    # In-place float32 convex combination, one source/trained tensor at a time.
-                    target.mul_(1.0 - alpha).add_(value, alpha=alpha)
+                    part.copy_(value)
+                    if kind == 'p-output-gate' and is_read_output(name):
+                        part.mul_(alpha)
                     del value
-            if not bool(torch.isfinite(target).all()):
-                raise ValueError(f'nonfinite interpolated tensor: {name}')
+                else:
+                    value = source.read(native_name, start, count)
+                    if not bool(torch.isfinite(value).all()):
+                        raise ValueError(f'invalid source tensor: {name}')
+                    part.copy_(value)  # BF16 -> FP32 as in the frozen source loader.
+                    del value
+                    if alpha:
+                        value = trained.read(name, start, count)
+                        if not bool(torch.isfinite(value).all()):
+                            raise ValueError(f'invalid trained tensor: {name}')
+                        # Same float32 operations as before; only IO granularity changed.
+                        part.mul_(1.0 - alpha).add_(value, alpha=alpha)
+                        del value
+                if not bool(torch.isfinite(part).all()):
+                    raise ValueError(f'nonfinite interpolated tensor: {name}')
 
 
 def build_arm(source: Path, mode: str):
@@ -378,7 +390,7 @@ def evaluate(args, report: dict, out: Path) -> None:
 
     report['numerics'] = force_tf32_off()
     report['runtime'] = runtime()
-    script_paths = [Path(__file__), EXPLORATION / 'hostbudget.py',
+    script_paths = [Path(__file__), EXPLORATION / 'hostbudget.py', EXPLORATION / 'tensor_stream.py',
                     REPO / 'experiments' / 'dual28_ced_v1' / 'model.py']
     report['provenance'] = {
         'implementation_digest': digest, 'actual_source': source_audit,
