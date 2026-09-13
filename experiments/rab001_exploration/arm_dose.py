@@ -40,11 +40,15 @@ and no D28-001 checkpoint is released.
 from __future__ import annotations
 
 import gc
+import hashlib
 import json
+import os
 import random
 import re
 import sys
 import time
+import traceback
+from datetime import datetime, timezone
 from pathlib import Path
 
 import torch
@@ -69,7 +73,12 @@ from experiments.architecture_benchmark_001.source import ROOT           # noqa:
 #: consistent with 28 branches waking at once into a backbone that is frozen and cannot
 #: compensate; if that is the mechanism, N=4 should be far more stable than N=28 at the same lr,
 #: and that is a cheap, decisive test of the mechanism rather than of the learning rate.
-_ARM_RE = re.compile(r'^(?P<mode>[HP])(?:last(?P<n>\d+))?$|^(?P<plain>B28|B28last8)$')
+#: `B28last<N>` trains the last N of 28 transformer blocks and freezes the rest. The two
+#: endpoints are measured -- 8 blocks gives 97.9% retention and 1 gain, all 28 gives 87.2% and
+#: 32 -- and nothing between them has ever been run. That interval is the only place in this
+#: programme where a real capability/retention trade-off has been observed, so N is a sweep
+#: parameter rather than the hard-coded 8 it used to be.
+_ARM_RE = re.compile(r'^(?P<mode>[HP])(?:last(?P<n>\d+))?$|^B28(?:last(?P<bn>\d+))?$')
 ARM = sys.argv[1] if len(sys.argv) > 1 else 'H'
 LR = float(sys.argv[2]) if len(sys.argv) > 2 else 1e-5
 BUDGET = int(sys.argv[3]) if len(sys.argv) > 3 else 5200
@@ -80,10 +89,13 @@ FRACTIONS = [float(x) for x in (sys.argv[5] if len(sys.argv) > 5 else '0.25,0.5,
 _M = _ARM_RE.match(ARM)
 if not _M:
     raise SystemExit(__doc__)
-MODE = _M.group('mode') or _M.group('plain')
+MODE = _M.group('mode') or 'B28'
 READ_TAIL = int(_M.group('n')) if _M.group('n') else None
-if READ_TAIL is not None and not 1 <= READ_TAIL <= 28:
-    raise SystemExit('read tail must be between 1 and 28 blocks')
+#: For B28 arms this is the number of trainable transformer blocks, not read sites.
+BLOCK_TAIL = int(_M.group('bn')) if _M.group('bn') else None
+for tail, what in ((READ_TAIL, 'read tail'), (BLOCK_TAIL, 'block tail')):
+    if tail is not None and not 1 <= tail <= 28:
+        raise SystemExit(f'{what} must be between 1 and 28 blocks')
 if not FRACTIONS or any(not 0 < f <= 1 for f in FRACTIONS) or 1.0 not in FRACTIONS:
     raise SystemExit('probe fractions must lie in (0,1] and include the endpoint 1.0')
 
@@ -150,6 +162,22 @@ if not (SRC / 'model.safetensors').is_file():
 SPL = ROOT / 'outputs' / 'splits_large'
 OUT = ROOT / 'evidence' / 'retention-design-v1'
 N_DEV = 40
+RUN_DIR = None
+
+
+def file_sha256(path: Path) -> str:
+    """Bound hashing memory even for a full 2.22 GiB trained checkpoint."""
+    digest = hashlib.sha256()
+    with path.open('rb') as handle:
+        for chunk in iter(lambda: handle.read(8 * 1024 * 1024), b''):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def write_record(path: Path, record: dict) -> None:
+    with path.open('x', encoding='utf-8') as handle:
+        json.dump(record, handle, indent=2, allow_nan=False)
+        handle.write('\n')
 
 
 def lr_at(done: int) -> float:
@@ -169,19 +197,22 @@ def lr_at(done: int) -> float:
 
 def build(device: str):
     """Returns (model, trainable, description). H/P peak at source+result, so build on the GPU."""
-    if MODE in ('B28', 'B28last8'):
+    if MODE == 'B28':
         model = run._load(SRC, device)[0]
-        if MODE == 'B28':
+        if BLOCK_TAIL is None:
             trainable = [p for p in model.parameters()]
             for p in trainable:
                 p.requires_grad_(True)
             return model, trainable, 'B28 source, all parameters'
         index = lambda n: int(m.group(2)) if (m := re.match(r'^(.*?)\.(\d+)\.', n)) else -1
         top = max(index(n) for n, _ in model.named_parameters())
+        first = top - BLOCK_TAIL + 1
         for name, p in model.named_parameters():
-            p.requires_grad_(index(name) >= top - 7)
+            p.requires_grad_(index(name) >= first)
         trainable = [p for p in model.parameters() if p.requires_grad]
-        return model, trainable, f'B28 source, blocks {top-7}..{top} trainable'
+        return (model, trainable,
+                f'B28 source, blocks {first}..{top} trainable ({BLOCK_TAIL} of {top+1}); '
+                'embeddings, final norm and all earlier blocks frozen')
     from experiments.dual28_ced_v1.model import DualStack
     src = run._load(SRC, device)[0]
     model = DualStack.from_source(src, MODE)
@@ -214,17 +245,50 @@ def build(device: str):
 
 
 def main() -> int:
+    global RUN_DIR
     if not torch.cuda.is_available():
         raise SystemExit('this harness trains on the GPU; CUDA is required')
     numerics = force_tf32_off()
     # Host peak is the probe: one fp32 copy of the arm on the CPU. H56 is 4.31 GiB, B28 2.22.
-    hostbudget.require(6.0 if ARM in ('H', 'P') else 3.6, f'arm dose {TAG}')
+    host_start = hostbudget.require(6.0 if MODE in ('H', 'P') else 3.6, f'arm dose {TAG}')
+    result_path = OUT / f'ARM_DOSE_{TAG}.json'
+    destination = ROOT / 'outputs' / 'arm-checkpoints' / TAG
+    if result_path.exists() or destination.exists():
+        raise SystemExit(f'create-only result/checkpoint already exists for {TAG}')
+    RUN_DIR = ROOT / 'outputs' / 'arm-runs' / (
+        TAG + '_' + datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%S%fZ'))
+    RUN_DIR.mkdir(parents=True, exist_ok=False)
+    harness_digest = file_sha256(Path(__file__))
+    optimizer_digest = file_sha256(Path(_rdg.__file__))
+    digest = implementation_digest()
+    source_assets = json.loads((ROOT / 'source_lock.json').read_text(encoding='utf-8'))['assets']
+    for name, expected in source_assets.items():
+        if file_sha256(SRC / name) != expected:
+            raise SystemExit(f'source asset mismatch: {name}')
+    data_paths = {'train': SPL / 'train.jsonl', 'dev': SPL / 'dev.jsonl',
+                  'monitor_probe': ROOT / 'data' / 'monitor_probe.jsonl',
+                  'probe_label_audit': OUT / 'PROBE_LABEL_AUDIT.json'}
+    data_hashes = {name: file_sha256(path) for name, path in data_paths.items()}
+
+    def verify_run_inputs():
+        if implementation_digest() != digest or file_sha256(Path(__file__)) != harness_digest:
+            raise RuntimeError('implementation or active harness changed during run')
+        if file_sha256(Path(_rdg.__file__)) != optimizer_digest:
+            raise RuntimeError('optimizer harness changed during run')
+        if any(file_sha256(path) != data_hashes[name] for name, path in data_paths.items()):
+            raise RuntimeError('training/probe data changed during run')
+
+    write_record(RUN_DIR / 'START.json', {
+        'pid': os.getpid(), 'argv': sys.argv, 'tag': TAG, 'completed': False,
+        'implementation_digest': digest, 'exploration_harness_sha256': harness_digest,
+        'optimizer_harness_sha256': optimizer_digest, 'data_sha256': data_hashes,
+        'source_assets_sha256': source_assets, 'host_before': host_start})
     free_v, total_v = torch.cuda.mem_get_info()
     print(f'{hostbudget.describe()} | VRAM free {free_v/2**30:.2f}/{total_v/2**30:.2f} GiB')
     print(f'TF32 forced off: {numerics}', flush=True)
 
     policy = protocol()['G1_RETENTION']
-    short = implementation_digest()[:8]
+    short = digest[:8]
     receipt_path = ROOT / 'outputs' / f'retention-{short}' / 'B28' / 'retention.json'
     if not receipt_path.is_file():
         raise SystemExit(f'no G1_RETENTION_B28 artifact at digest {short}: {receipt_path}')
@@ -260,7 +324,12 @@ def main() -> int:
     assert not (fam(train_rows) & fam(dev_rows)), 'train/dev family overlap'
     random.Random(SEED).shuffle(train_rows)
     enc = lambda t: tok(t, return_tensors='pt', add_special_tokens=False)['input_ids']
-    train = [x for x in (enc(r['text']) for r in train_rows) if x.shape[1] >= 2]
+    train, train_ids = [], []
+    for row in train_rows:
+        encoded = enc(row['text'])
+        if encoded.shape[1] >= 2:
+            train.append(encoded)
+            train_ids.append(row['id'])
     dev = [x for x in (enc(r['text']) for r in dev_rows) if x.shape[1] >= 2]
     ntok = sum(x.shape[1] - 1 for x in dev)
 
@@ -275,7 +344,7 @@ def main() -> int:
     params_bytes = sum(p.numel() * 4 for p in trainable)
     reserve = params_bytes + int(0.6 * 2 ** 30)
     gpu_budget = max(0, torch.cuda.mem_get_info()[0] - reserve)
-    spill = ROOT / 'outputs' / 'adam-spill'
+    spill = RUN_DIR / 'adam-spill'
     opt = OffloadedAdam(trainable, LR, gpu_budget, spill)
     print(f'Adam moments {opt.bytes()/2**30:.2f} GiB: {opt.gpu_bytes/2**30:.2f} on GPU, '
           f'{opt.disk_bytes()/2**30:.2f} on disk | VRAM free '
@@ -350,14 +419,18 @@ def main() -> int:
         p = probe()
         outputs = p.pop('_outputs')
         changed = sum(1 for o in outputs if o['text'] != source_raw[o['id']]['raw'])
+        termination_changed = sum(1 for o in outputs
+                                  if o['terminated'] != source_raw[o['id']]['terminated'])
         r = p[reg]
         rec = {'tokens': done, 'milestone': milestone, 'steps': steps, 'lr': lr_at(done),
-               'dev_ce_nats': ce, 'answers_changed_vs_source': changed, 'retention': p,
+               'dev_ce_nats': ce, 'answers_changed_vs_source': changed,
+               'termination_changed_vs_source': termination_changed, 'retention': p,
                'wall_seconds': time.perf_counter() - started}
         if milestone == milestones[-1] or milestone == 0:
             rec['outputs'] = {o['id']: {'text': o['text'], 'terminated': o['terminated']}
                               for o in outputs}
         checkpoints.append(rec)
+        write_record(RUN_DIR / f'probe_{milestone:07d}.json', rec)
         print(f"  {done:>7} tok | step {steps:>3} | devCE {ce:7.4f} | "
               f"kept {r['retained_total']:2d}/{r['reference_n']} lost {r['lost_total']:2d} "
               f"gain {r['gained_total']:2d} | correct {r['correct_total']:3d}/150 | "
@@ -367,10 +440,11 @@ def main() -> int:
 
     try:
         first = checkpoint(0, 0)
-        if first['answers_changed_vs_source'] != 0:
+        if first['answers_changed_vs_source'] != 0 or first['termination_changed_vs_source'] != 0:
             raise SystemExit(
                 f"device-integrity control FAILED: {first['answers_changed_vs_source']} of 150 "
-                'answers differ from the frozen CPU reference before any training. GPU->CPU '
+                f"texts and {first['termination_changed_vs_source']} termination flags differ "
+                'from the frozen CPU reference before any training. GPU->CPU '
                 'transfer is not answer-preserving here and no retention number would mean '
                 'anything.')
         print('  device-integrity control PASSED: 0/150 answers changed before training',
@@ -410,7 +484,12 @@ def main() -> int:
         aborted = str(exc)
         print(f'ABORTED: {exc}', flush=True)
 
-    completed = aborted is None
+    completed = aborted is None and tokens >= BUDGET
+    if not checkpoints:
+        raise RuntimeError(aborted or 'no completed probe; see preserved run directory')
+    if completed and (checkpoints[-1]['tokens'] != tokens
+                      or checkpoints[-1]['milestone'] != milestones[-1]):
+        checkpoint(tokens, milestones[-1])
     first, last = checkpoints[0], checkpoints[-1]
 
     # Keep the weights. Every dose run before this one discarded them, so the B28 fit that
@@ -419,38 +498,42 @@ def main() -> int:
     # the backbone is frozen and bit-identical to the source, so this is 0.48 GiB instead of
     # 4.31, and the full model reconstructs exactly from source + arm + these tensors.
     checkpoint_info = None
-    if SAVE == 'final':
+    if SAVE == 'final' and completed:
         from safetensors.torch import save_file
         destination = ROOT / 'outputs' / 'arm-checkpoints' / TAG
         if destination.exists():
             raise SystemExit(f'checkpoint directory already exists (create-only): {destination}')
-        hostbudget.guard(1.0, f'arm dose {TAG} checkpoint save')
+        hostbudget.require(params_bytes / 2**30 + 1.2, f'arm dose {TAG} CPU checkpoint copy')
         tensors = {name: p.detach().to('cpu', torch.float32).contiguous()
                    for name, p in model.named_parameters() if p.requires_grad}
         destination.mkdir(parents=True, exist_ok=False)
         weights = destination / 'trainable.safetensors'
         save_file(tensors, str(weights))
-        import hashlib
         checkpoint_info = {
             'path': str(destination), 'tensors': len(tensors),
             'parameters': sum(t.numel() for t in tensors.values()),
             'bytes': weights.stat().st_size,
-            'sha256': hashlib.sha256(weights.read_bytes()).hexdigest(),
+            'sha256': file_sha256(weights),
             'dtype': 'float32', 'saved_after_steps': steps, 'saved_after_tokens': tokens,
-            'complete_model': MODE in ('B28',),
+            'complete_model': MODE == 'B28' and BLOCK_TAIL is None,
+            'source_weights_sha256': source_assets['model.safetensors'],
+            'source_assets_sha256': source_assets,
+            'implementation_digest': digest,
             # Everything needed to rebuild without consulting this script.
             'reconstruct': {
                 'source': str(SRC), 'mode': MODE, 'read_tail': READ_TAIL,
+                'block_tail': BLOCK_TAIL,
                 'builder': ('run._load(source)' if MODE.startswith('B28')
                             else f'DualStack.from_source(run._load(source)[0], {MODE!r})'),
                 'then': 'load trainable.safetensors and copy_ each tensor by name'},
             # Two checkpoints may only be averaged if these agree.
-            'soup_key': {'mode': MODE, 'read_tail': READ_TAIL,
+            'soup_key': {'mode': MODE, 'read_tail': READ_TAIL, 'block_tail': BLOCK_TAIL,
                          'source_digest': frozen.get('source_state_sha256')
-                         or implementation_digest(),
+                         or digest,
                          'tensor_names_sha256': hashlib.sha256(
                              '\n'.join(sorted(tensors)).encode()).hexdigest()},
         }
+        verify_run_inputs()
         (destination / 'MANIFEST.json').write_text(json.dumps({
             'schema': 1, 'evidence_kind': 'exploratory_trained_weights_only',
             'note': 'Trainable tensors only. Exploratory: this is NOT a released model, opens '
@@ -475,7 +558,8 @@ def main() -> int:
                 'frozen reference device). Per-row correctness is recorded so arms can be '
                 'compared as matched pairs. Outside the hashed root: no receipt, no gate, no '
                 'stage opened, no efficacy claim, no checkpoint released.',
-        'arm': ARM, 'arm_description': described, 'completed': completed,
+        'arm': ARM, 'mode': MODE, 'read_tail': READ_TAIL, 'block_tail': BLOCK_TAIL,
+        'arm_description': described, 'completed': completed,
         'aborted_reason': aborted, 'lr': LR, 'token_budget': BUDGET, 'seed': SEED,
         'probe_fractions': FRACTIONS, 'probe_milestones': milestones,
         'parameters': n_all, 'trainable_parameters': n_train,
@@ -491,13 +575,20 @@ def main() -> int:
                      f'1-sqrt decay over final {DECAY_FRAC:.0%} to {MIN_LR_FRAC:.0%}'),
         'supervised_target_tokens': tokens, 'optimizer_steps': steps,
         'train_rows_consumed': cursor, 'per_step_target_tokens': consumed,
+        'train_row_ids_consumed': train_ids[:cursor],
+        'train_row_ids_sha256': hashlib.sha256('\n'.join(train_ids[:cursor]).encode()).hexdigest(),
+        'data_sha256': data_hashes, 'source_assets_sha256': source_assets,
+        'source_weights_sha256': source_assets['model.safetensors'],
+        'exploration_harness_sha256': harness_digest,
+        'optimizer_harness_sha256': optimizer_digest, 'run_directory': str(RUN_DIR),
         'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,
         'checkpoint': checkpoint_info, 'save_policy': SAVE,
         'read_o_proj_norm_end': trace[-1]['read_o_proj_norm'] if trace else 0.0,
-        'reference_receipt': str(receipt_path), 'reference_digest': implementation_digest(),
+        'reference_receipt': str(receipt_path), 'reference_digest': digest,
         'reference_sizes': {k: len(v) for k, v in references.items()},
         'registered_bare_policy': reg,
-        'device_integrity_control_passed': first['answers_changed_vs_source'] == 0,
+        'device_integrity_control_passed': (first['answers_changed_vs_source'] == 0
+                                          and first['termination_changed_vs_source'] == 0),
         'headline': {
             'dev_ce_start': first['dev_ce_nats'], 'dev_ce_end': last['dev_ce_nats'],
             'correct_start': fr['correct_total'], 'correct_end': lr_['correct_total'],
@@ -510,8 +601,9 @@ def main() -> int:
         'licenses_registered_training': False, 'licenses_efficacy_claim': False,
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / f'ARM_DOSE_{TAG}.json'
-    path.write_text(json.dumps(body, indent=2, allow_nan=False) + '\n', encoding='utf-8')
+    verify_run_inputs()
+    path = result_path
+    write_record(path, body)
     h = body['headline']
     print(f"\n{TAG}: {'COMPLETE' if completed else 'INTERRUPTED'}")
     print(f"  correct {h['correct_start']}/150 -> {h['correct_end']}/150 "
@@ -519,8 +611,16 @@ def main() -> int:
     print(f"  devCE   {h['dev_ce_start']:.4f} -> {h['dev_ce_end']:.4f} | "
           f"gate {h['status_start']} -> {h['status_end']}")
     print('  wrote', path)
-    return 0
+    return 0 if completed else 1
 
 
 if __name__ == '__main__':
-    raise SystemExit(main())
+    try:
+        status = main()
+    except BaseException as exc:
+        if RUN_DIR is not None:
+            write_record(RUN_DIR / 'failure.json', {
+                'completed': False, 'type': type(exc).__name__, 'message': str(exc),
+                'traceback': traceback.format_exc(), 'tag': TAG})
+        raise
+    raise SystemExit(status)
