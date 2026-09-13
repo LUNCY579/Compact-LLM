@@ -5,8 +5,10 @@
 CPU probes only. Average directly into one model in bounded chunks; never hold
 a full float64 checkpoint. Verify input hashes and source/selected-ingredient
 outputs. Each run preserves its selection plan, predictions and trained weights
-in a create-only directory. Seed variants are soup ingredients, not matched-order
-controls. Exploratory only: no gate, receipt, efficacy claim or release.
+in create-only directories. Reports live under evidence/model-soup-runs; large
+weight files stay under outputs/model-soup-checkpoints. Seed variants are soup
+ingredients, not matched-order controls. Exploratory only: no gate, receipt,
+efficacy claim or release.
 """
 from __future__ import annotations
 
@@ -411,12 +413,17 @@ def main() -> int:
     if not re.fullmatch(r'[A-Za-z0-9][A-Za-z0-9_.-]*', args.run_id):
         raise ValueError('run-id must be a simple directory name')
     destination = OUT / 'model-soup-runs' / args.run_id
+    checkpoint_root = ROOT / 'outputs' / 'model-soup-checkpoints' / args.run_id
+    if checkpoint_root.exists():
+        raise ValueError(f'create-only soup checkpoint directory exists: {checkpoint_root}')
     destination.mkdir(parents=True, exist_ok=False)
+    checkpoint_root.mkdir(parents=True, exist_ok=False)
     report = {'schema': 2, 'completed': False, 'evidence_kind': 'exploratory_weight_averaging_only',
               'licenses_release': False, 'licenses_efficacy_claim': False,
               'selection_metric': 'terminated normalised exact match on held-out reference answer',
               'tie_break': 'tag lexical ascending', 'greedy_acceptance': 'strict dev score increase',
-              'selection_rows': args.eval_rows, 'probe_device': 'cpu', 'groups': {}}
+              'selection_rows': args.eval_rows, 'probe_device': 'cpu',
+              'checkpoint_root': str(checkpoint_root), 'groups': {}}
     try:
         hostbudget.require(4.0, 'model soup startup')
         torch.backends.cuda.matmul.allow_tf32 = False
@@ -577,9 +584,9 @@ def main() -> int:
             selected = ranked[0][1]
             # Final panel scores cannot influence ingredient selection.
             single = evaluate(key, [selected], panel=True, control=selected['_endpoint'],
-                              save_to=group_dir / 'weights' if len(kept) == 1 else None)
+                              save_to=checkpoint_root / group_id if len(kept) == 1 else None)
             final = (single if len(kept) == 1 else
-                     evaluate(key, kept, panel=True, save_to=group_dir / 'weights'))
+                     evaluate(key, kept, panel=True, save_to=checkpoint_root / group_id))
             if single['dev_exact'] != ranked[0][0] or final['dev_exact'] != best:
                 raise ValueError('final reconstruction did not reproduce frozen dev selection scores')
             comparison = paired(final['panel_per_row'], single['panel_per_row'])

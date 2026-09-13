@@ -60,6 +60,7 @@ B28 full below is from the older RETENTION_DOSE harness and has aggregates only.
 | B28last8 | cosine .03, beta2 .999 | 47 | 46 | 1 / 0 / 0 | 1 |
 | B28last12 | cosine .03, beta2 .999 | 52 | 44 | 8 / 0 / 0 | 3 |
 | B28last16 (inherited run, now complete) | cosine .03, beta2 .999 | 55 | 40 | 9 / 6 / 0 | 7 |
+| B28last20 | cosine .03, beta2 .999 | 67 | 40 | 17 / 9 / 1 | 7 |
 | P | WSD .2/.2, beta2 .95 | 52 | 32 | 12 / 8 / 0 | 15 |
 | P | cosine .03, beta2 .999 | 48 | 34 | 7 / 7 / 0 | 13 |
 | H | WSD .2/.2, beta2 .95 | 37 | 23 | 9 / 5 / 0 | 24 |
@@ -134,10 +135,18 @@ and losses are wrong_answer. Both checkpoints' on-disk SHA-256 values were indep
 verified. The new frontier reporter validated both artifacts and preserved the incomplete
 three-comparison snapshot in outputs/depth-through-last12-20260913.json.
 
-B28last20 was launched next with endpoint-only probes and final save; inspect
-`experiments/rab001_exploration/outputs/B28last20_20260913.log` and processes for its current
-status. Its prelaunch host budget passed. Do not change arm_dose.py while it is active:
-that script hashes its own bytes and refuses evidence after an edit.
+B28last20 completed in about 324 seconds through its final probe: 67 correct /40 kept /
+27 gains /7 losses. Gains split 17 wrong_answer /9 format_only /1 runaway. Its 314,618,880
+trainable parameters were saved and independently hash-verified. The incomplete six-pair
+snapshot is outputs/depth-through-last20-20260913.json; significance remains withheld.
+
+Full B28 R4 is now RUNNING with .25/.5/.75/1 probes and final save. Inspect
+`experiments/rab001_exploration/outputs/B28_full_20260913.log` and processes for current
+status (root exec session 96525 if still available). Prelaunch host budget passed, idle
+free RAM 5.57 GiB. Do not change arm_dose.py while active: it hashes its own bytes and
+refuses evidence after an edit. When it finishes, validate its artifact/checkpoint and
+generate the complete frontier report with a NEW --out path. Then run the registered
+B28 alpha sweep; P requires the memory headroom noted below.
 
 P alpha memory: idle free physical RAM was about 5.5 GiB, below the P runtime+model envelope.
 The user has been asked to free about 1.5 GiB by closing unused applications, or leave P
