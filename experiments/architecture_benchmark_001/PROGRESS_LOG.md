@@ -934,3 +934,56 @@ why that class of bug does not announce itself; it now resolves the current dige
 otherwise); `FIRST_MEASUREMENT.md` headings contradicted bodies already corrected, and referenced
 a section 8 that did not exist; and the retention stages were absent from `RUNBOOK.md` and
 `README.md` — the latter had never listed `qualify-quality` either, since HOTFIX-003.
+
+### 2026-09-13, evening — the gate fires while CE improves; its threshold certifies nothing
+
+Ran the test the retention gate was built for and had never had. Until now the training-side gate
+was mechanically verified and behaviourally untested: the only trained arm it had seen changed
+**0 of 150** answers.
+
+Two doses, 5,233 supervised targets each, AdamW clip 1.0 seed 17, against the frozen 47-item
+reference at digest `a329eb7b`:
+
+| step | lr 1e-4 devCE / kept / lost | lr 1e-5 devCE / kept / lost |
+|---:|---|---|
+| 0 | 5.5782 / 47 / 0 PASS | 5.5782 / 47 / 0 PASS |
+| 19 | 2.2161 / **11** / 36 FAIL | 2.6280 / 40 / 7 FAIL |
+| 41 | **1.6516** / 21 / **26** FAIL | **2.2481** / **41** / **6** FAIL |
+
+**1. The gate does its job.** At lr 1e-4 held-out CE improves by **3.93 nats** while the arm loses
+**26 of 47** reference answers. Every likelihood endpoint reads that as a success; the capability
+gate fails it from the first checkpoint. `gate_fired_while_ce_improved: true`.
+
+**2. It discriminates dose.** lr 1e-5 loses 6 against lr 1e-4's 26, and the shapes differ — 1e-4
+collapses to 11 kept then partially recovers as the cosine decays, 1e-5 degrades gently to 41 and
+stabilises. 44.7% against 87.2% retention.
+
+**3. The registered threshold is too strict to certify anything.**
+`max_correct_to_incorrect_per_class` is 0, so lr 1e-5 FAILS too — a dose this programme called
+*preserving* (6/6). On 47 items rather than 6 prompts it loses 6; not contradictory, but it means
+**as registered this gate certifies no training run ever measured here.** The threshold was NOT
+moved: picking a tolerance now, having seen what a good run costs, is the exact move HOTFIX-004
+retracted from HOTFIX-003. Recorded as the first calibration finding.
+
+Related and load-bearing: at lr 1e-5 **140 of 150** answers changed while only 6 were lost. SFT
+rewrites nearly every answer's phrasing while mostly preserving content, so a zero-loss rule
+scored by a format-sensitive grammar is structurally fragile — and the grammar's known
+`It ends at …` defect bites in exactly this regime. Some of the 6 may be that; this run cannot
+separate them. **The grammar review is now a prerequisite for calibrating the tolerance.**
+
+**Device-integrity control passed in both runs: 0 of 150 answers changed before training.**
+Training on GPU, every probe on CPU; an untrained model crossing devices had to reproduce the
+frozen CPU reference exactly, and did (47/41). The models genuinely moved: 140–149 of 150 answers
+differ, against 0/150 for the engineering lane.
+
+**Why the GPU, after three CPU aborts.** The GPU was the *less* contended resource (6.90 GiB free
+against the host's ~5). Parameters and gradients on GPU (gradients resident because the recipe
+clips on global norm); the 4.44 GiB Adam moment set split **1.85 GiB GPU / 2.59 GiB disk memmap**,
+filled to whatever VRAM was actually free. The disk tier is the trick: file-backed pages are
+evictable and never add to the commit charge that killed the CPU attempts. Peak host ~4.5 GiB,
+~14 min per dose. Probes stay on CPU because CUDA/CPU FP32 differ by ~1e-4 — inside single-forward
+parity but a discrete choice 3,600 times per probe — and because the one un-root-caused
+CUBLAS_STATUS_EXECUTION_FAILED lives in exactly that workload. TF32 forced off and asserted.
+
+Write-up: `evidence/retention-design-v1/DOSE_RESPONSE_RESULT.md`. Exploratory: no receipt, no
+stage opened. Training ran on GPU so these are not comparable to the CPU-trained corpus.

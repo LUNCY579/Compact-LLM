@@ -108,6 +108,15 @@ the failed `G1_CED_*` receipts as parents.
    terminates on nothing. See `evidence/retention-design-v1/DISPLACED_BANK_CAPABILITY.md`.
    Initialization only; a trained `ced_last3` is untested.
 
+9. **The training-side gate fires while cross-entropy improves — and its threshold certifies
+   nothing.** At lr 1e-4 over 5,233 targets, held-out CE improves **3.93 nats** (5.5782 ->
+   1.6516) while the arm loses **26 of 47** reference answers: `gate_fired_while_ce_improved:
+   true`. It discriminates dose (lr 1e-5 loses 6, keeps 87.2%) but the registered zero-loss rule
+   FAILS that dose too, so **as registered the gate certifies no training run measured here**.
+   The threshold was deliberately not moved. Device-integrity control passed both runs (0/150
+   answers changed before training; trained on GPU, probed on CPU). See
+   `evidence/retention-design-v1/DOSE_RESPONSE_RESULT.md`.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
@@ -173,35 +182,16 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-**Run the under-training retention test — it is blocked on host memory, not on design.**
-`retention_dose.py` is written, controls-verified and refuses to start rather than page. It
-trains the frozen source at a chosen learning rate and records held-out CE beside typed
-retention against the frozen 47-item reference, aimed at this programme's established case:
-**lr 1e-4 destroys the source's arithmetic 6/6 → 0/6 while *improving* CE.**
+**Calibrate the retention tolerance — and do the grammar review first, because it is a
+prerequisite rather than a parallel chore.** The gate now has its behavioural result: it fires
+while CE improves (lr 1e-4, 26 of 47 lost against a 3.93-nat CE improvement) and it discriminates
+dose (lr 1e-5 loses 6). What it cannot do is certify anything, because
+`max_correct_to_incorrect_per_class` is 0 and even the preserving dose loses 6.
 
-```bash
-$PY experiments/rab001_exploration/retention_dose.py 1e-4 5200 17 cpu adamw
-$PY experiments/rab001_exploration/retention_dose.py 1e-5 5200 17 cpu adamw   # preserving control
-```
-
-**Three attempts stood down by `hostbudget.guard` during training**, all after a clean step-0
-checkpoint (dev CE 5.5782, retained 47/47). The third profiled the cause: with the host to
-itself, free physical goes 7.71 → 5.25 (model) → 4.85 (probe) → **1.01 GiB** (training), i.e. a
-job footprint of **~6.7 GiB** against ~7.7 GiB free. Neither the optimizer nor the competing job
-is the constraint — plain SGD saves ~4.7 GB and still aborts, and attempt 3 had no competitor.
-**~7 GiB of this 15.2 GiB host is the OS and desktop applications**, no single process above
-0.59 GB.
-
-The 1.5 GiB guard floor was deliberately **not** lowered to force a result. To run this: free
-~3 GiB by closing desktop applications, or use a host with 11 GiB available for AdamW. Measured
-requirement ~6.7 GiB plus margin.
-
-Why it matters: `G2_RETENTION_B28` PASSes 12/12 but `arm_answers_changed` is **0 of 150** — the
-registered engineering lane is 25 SGD steps at lr 1e-5 and changed nothing. The training-side
-gate is **mechanically verified and behaviourally untested**. The decoupling itself is already
-demonstrated at initialization: D40's CE is **0.1308 nats better than the frozen source** and it
-answers **0 of the 47** questions the source answers — a CE gate passes it, this gate fails it
-0/150.
+Do not pick a tolerance from these numbers. At lr 1e-5, **140 of 150 answers changed phrasing
+while only 6 were lost**, and the grammar is known to reject the source's own `It ends at …`
+form on 7 rows — so an unknown share of those 6 is grammar fragility, not forgetting. Resolve
+that first, then register a tolerance prospectively with its own amendment.
 
 Second, open the **grammar review** with the evidence gathered: 7 source answers are rejected
 for a sentence prefix the contract did not anticipate (`It ends at …`), 6 of them

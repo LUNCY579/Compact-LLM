@@ -1,0 +1,670 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_retention_dose_response_only",
+  "note": "Trains the frozen source at one learning rate and reports held-out CE beside typed retention against the FROZEN G1_RETENTION_B28 reference. Training runs on the GPU with Adam moments offloaded to the host; every PROBE runs on the CPU, the reference device, because CUDA/CPU FP32 differ by ~1e-4 and greedy decoding turns that into changed answers. Outside the hashed root: no receipt, no gate, open splits only, no efficacy claim.",
+  "completed": true,
+  "completion_note": "budget fully spent",
+  "aborted_reason": null,
+  "lr": 1e-05,
+  "token_budget": 5200,
+  "seed": 17,
+  "train_device": "cuda",
+  "probe_device": "cpu",
+  "dev_ce_device": "cuda",
+  "numerics": {
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "optimizer": "AdamW(offloaded) lr=1e-05 wd=0 clip=1.0 accum=1 micro_batch=1",
+  "adam_state_gib": 4.44091796875,
+  "adam_state_gpu_gib": 1.85205078125,
+  "adam_state_disk_gib": 2.5888671875,
+  "schedule": "linear warmup 3% then cosine to 10%",
+  "supervised_target_tokens": 5233,
+  "optimizer_steps": 41,
+  "train_rows_consumed": 41,
+  "dev_rows": 40,
+  "dev_target_tokens": 4979,
+  "probe_rows": 150,
+  "registered_bare_policy": "permissive",
+  "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "reference_sizes": {
+    "permissive": 47,
+    "strict": 41
+  },
+  "reference_recomputed": false,
+  "device_integrity_control_passed": true,
+  "headline": {
+    "dev_ce_start": 5.578190601453841,
+    "dev_ce_end": 2.24808167233288,
+    "dev_ce_improved": true,
+    "retained_start": 47,
+    "retained_end": 41,
+    "lost_end": 6,
+    "answers_changed_end": 140,
+    "status_start": "PASS",
+    "status_end": "FAIL",
+    "gate_fired_while_ce_improved": true
+  },
+  "checkpoints": [
+    {
+      "tokens": 0,
+      "milestone": 0,
+      "steps": 0,
+      "lr": 0.0,
+      "dev_ce_nats": 5.578190601453841,
+      "answers_changed_vs_source": 0,
+      "retention": {
+        "permissive": {
+          "status": "PASS",
+          "correct_total": 47,
+          "lost_total": 0,
+          "retained_total": 47,
+          "terminated_total": 148,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 16,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        },
+        "strict": {
+          "status": "PASS",
+          "correct_total": 41,
+          "lost_total": 0,
+          "retained_total": 41,
+          "terminated_total": 148,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 21,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 21,
+              "arm_correct": 21
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 0,
+              "lost_ids": [],
+              "retained": 10,
+              "gained": 0,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": []
+        }
+      },
+      "wall_seconds": 159.65457440000046
+    },
+    {
+      "tokens": 1397,
+      "milestone": 1300,
+      "steps": 10,
+      "lr": 8.721369758074435e-06,
+      "dev_ce_nats": 3.0607509639852615,
+      "answers_changed_vs_source": 128,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 51,
+          "lost_total": 10,
+          "retained_total": 37,
+          "terminated_total": 149,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381"
+              ],
+              "retained": 19,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970"
+              ],
+              "retained": 14,
+              "gained": 3,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 17
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 6,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345"
+              ],
+              "retained": 4,
+              "gained": 6,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 50,
+          "lost_total": 9,
+          "retained_total": 32,
+          "terminated_total": 149,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381"
+              ],
+              "retained": 19,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233"
+              ],
+              "retained": 9,
+              "gained": 7,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 16
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 6,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345"
+              ],
+              "retained": 4,
+              "gained": 6,
+              "terminated": 49,
+              "source_correct_terminated": 10,
+              "arm_correct": 10
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 349.17281340000045
+    },
+    {
+      "tokens": 2610,
+      "milestone": 2600,
+      "steps": 19,
+      "lr": 5.690531319847483e-06,
+      "dev_ce_nats": 2.6280410959673204,
+      "answers_changed_vs_source": 134,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 62,
+          "lost_total": 7,
+          "retained_total": 40,
+          "terminated_total": 150,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+              ],
+              "retained": 20,
+              "gained": 6,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 26
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 20
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 11,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 16
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 52,
+          "lost_total": 9,
+          "retained_total": 32,
+          "terminated_total": 150,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777"
+              ],
+              "retained": 19,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 4,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 12
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 5,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 5,
+              "gained": 11,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 16
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 506.24935189999997
+    },
+    {
+      "tokens": 3998,
+      "milestone": 3900,
+      "steps": 31,
+      "lr": 2.2032644253076053e-06,
+      "dev_ce_nats": 2.329287318873056,
+      "answers_changed_vs_source": 139,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 70,
+          "lost_total": 6,
+          "retained_total": 41,
+          "terminated_total": 150,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+              ],
+              "retained": 20,
+              "gained": 7,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 27
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 7,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 22
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 4,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 6,
+              "gained": 15,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 21
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 58,
+          "lost_total": 8,
+          "retained_total": 33,
+          "terminated_total": 150,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777"
+              ],
+              "retained": 19,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 24
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 4,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 6,
+              "gained": 15,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 21
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 658.2239497999999
+    },
+    {
+      "tokens": 5233,
+      "milestone": 5200,
+      "steps": 41,
+      "lr": 1.0000000000000002e-06,
+      "dev_ce_nats": 2.24808167233288,
+      "answers_changed_vs_source": 140,
+      "retention": {
+        "permissive": {
+          "status": "FAIL",
+          "correct_total": 73,
+          "lost_total": 6,
+          "retained_total": 41,
+          "terminated_total": 150,
+          "reference_n": 47,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270"
+              ],
+              "retained": 20,
+              "gained": 8,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 28
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "lost": 1,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+              ],
+              "retained": 15,
+              "gained": 7,
+              "terminated": 50,
+              "source_correct_terminated": 16,
+              "arm_correct": 22
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 4,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 6,
+              "gained": 17,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 23
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        },
+        "strict": {
+          "status": "FAIL",
+          "correct_total": 61,
+          "lost_total": 8,
+          "retained_total": 33,
+          "terminated_total": 150,
+          "reference_n": 41,
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+                "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777"
+              ],
+              "retained": 19,
+              "gained": 6,
+              "terminated": 50,
+              "source_correct_terminated": 21,
+              "arm_correct": 25
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 2,
+              "lost_ids": [
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+                "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698"
+              ],
+              "retained": 8,
+              "gained": 5,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 13
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "lost": 4,
+              "lost_ids": [
+                "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+                "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+                "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+              ],
+              "retained": 6,
+              "gained": 17,
+              "terminated": 50,
+              "source_correct_terminated": 10,
+              "arm_correct": 23
+            }
+          },
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ]
+        }
+      },
+      "wall_seconds": 811.0152728000003
+    }
+  ],
+  "wall_seconds": 811.1316436999996,
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}
