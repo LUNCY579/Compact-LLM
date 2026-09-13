@@ -739,3 +739,95 @@ the requested design checkpoint; complete pending baseline tests when memory per
 implementation, then freeze/scorer-test/amend, run the suite, requalify and verify inertness.
 
 Artifacts: `evidence/retention-design-v1/{BASELINE_AUDIT,RECONCILIATION}.json`.
+
+---
+
+## 2026-09-13 — The retention gate, built and run: a source baseline and three defects
+
+Implemented, registered, requalified and executed the training-side capability-retention gate
+designed at `f7bc290`. Starting HEAD `e7285e5`; ended at digest **`125d5481`**, 34 manifest
+files, **294 passed / 0 skipped**.
+
+### Prerequisite cleared
+
+The design's blocking item — "fresh suite pending" — is closed. 191 passed / 0 skipped in
+`.venv-rab001` at 7.12 GiB free, then 294 after the new tests.
+
+### What was built
+
+- `retention.py` (pure: no torch, no I/O) — the typed answer grammar from the frozen
+  `TYPED_SCORING_CONTRACT.md`, plus per-class loss counts and an exact one-sided binomial bound.
+  All 51 counterexample rows of the contract are tests; a test asserts the table row count still
+  equals the case list and that the document hash still matches the policy binding.
+- `G1_RETENTION_<arm>` (parent `G1_QUALITY_<arm>`) and `G2_RETENTION_<arm>` (parents
+  `G2_CACHED_<arm>` + `G1_RETENTION_<arm>`), `amendments/HOTFIX_005.md`, a `G1_RETENTION`
+  protocol block, and `data/monitor_probe.jsonl` (150 rows, sha `5f6df1c1…`) with
+  `data/.gitattributes` `* -text` so autocrlf cannot silently break `data_sha256`.
+- **`G1_QUALITY` is no longer a leaf.** Nothing in the ladder consumed it before, so an arm could
+  reach the engineering lane without its output ever being compared to the source. The full DAG
+  now validates as `G2_RETENTION_B28 → {G2_CACHED_B28 → G0, G1_RETENTION_B28 → G1_QUALITY_B28 → G0}`.
+
+### The measurement that did not exist before
+
+Frozen source on the 150-row probe under the typed grammar: **47/150 = 31.3%**, per class
+**42.0% / 32.0% / 20.0%**. The legacy headline quoted throughout this programme is 65/50/30.
+**Every class is overstated**; a floor pinned to those numbers would sit ~1.5x too high. The
+prediction that the typed grammar would score the source *lower* than the legacy 33.3% was
+recorded before the run and held.
+
+The unreviewed `bare_policy` axis is worth 6 answers, **all in `ratio_proportion`** (16 vs 10)
+and nothing in the other two classes — a precise instruction for the pending review.
+
+### Three defects, none found by code review
+
+1. **Target validation failed open.** It ran lazily inside the parse, so a `quantity` target
+   with no `unit` raised only when the prediction carried a suffix; with a bare number it scored
+   as an ordinary wrong answer, i.e. **a malformed spec would have been recorded as a capability
+   loss**. Found by the scorer's own specification tests. Now an unconditional whitelist.
+2. **The frozen grammar rejects a prefix the source actually uses.** Found by reading all 150 raw
+   answers. 7 rows the legacy scorer accepts and this grammar rejects, **all 7 one family** —
+   `It ends at 6:55 PM.`, `End time: 9:40 AM`, `The percent increase is 10%.` Six are
+   `time_duration`, which is why that class reads 20%. **Not patched**: a scorer change must be
+   versioned and reviewed with baselines re-measured, and widening a grammar right after looking
+   at model output is forbidden here. Direction matters — it shrinks the reference set, so it
+   makes the gate weaker, never more permissive about certifying.
+3. **The sensitivity diagnostic manufactured a failure.** It scored the strict grammar against a
+   reference the permissive grammar produced; those disagree by construction on exactly the six
+   bare-value rows, so it reported 6 losses and FAIL on a checkpoint whose 150 answers were
+   byte-identical to the source. Each policy now carries its own reference.
+
+### Results
+
+- `G1_RETENTION_B28` **PASS** 10/10. Tautological by construction (source vs itself).
+- `G2_RETENTION_B28` **PASS** 12/12 including both drift controls — but
+  **`arm_answers_changed` = 0 of 150**. 25 SGD steps at lr 1e-5 over 3,159 tokens changed
+  nothing. The gate runs; it has **not** been exercised on a model that moved. Read
+  `arm_answers_changed` before `status`.
+- **D40 at init: 0/150, all 47 lost**, exploratory probe (its failed quality receipt bars a
+  receipt). The arm that passes `G1_WIDTH` 7/7 and the full parity grid with zero violations
+  answers none of the 150 questions its donor answers 47 of. Raw output is the `</think>` loop.
+
+### A claim of mine this falsifies
+
+HOTFIX-005's first draft and its commit message said no recorded signal separates the capable
+from the incapable arm across the 18 checkpoints of the 500k pair. **False.** Seven of eight
+admit no threshold and four *invert*, but top-1 agreement separates — by **0.0038** (0.32798 vs
+0.32416), against a registered floor of 0.5 that fails both arms, with the capable arm still
+drifting toward the incapable plateau at ~0.001/milestone so the gap is worth ~3.8 milestones of
+its own drift. Unusable as a gate, but "unusable" and "does not exist" are different claims.
+`SIGNAL_SEPARATION.json`.
+
+### Sixth digest, reproduced to the element
+
+`G0`, `G1_IDENTITY`, `G1_WIDTH`, both CED failures and both `G1_QUALITY` verdicts: **zero**
+non-timer metric differences against `8b47b395`. D40's 0.5032 top-1 knife-edge unmoved.
+`G2_CACHED_B28` bit-identical (same `final_state_sha256`, same 25 losses).
+
+A ladder launched at `6c70d967` was stopped when an amendment edit moved the digest mid-run;
+`outputs/ladder-6c70d967-v1` is preserved untouched, lock included, after confirming by command
+line that no rab001 process was running. Note the host ran another project's job throughout;
+free memory hit 1.33 GiB and commit 13.9 GiB over physical at the worst point.
+
+Artifacts: `outputs/{ladder,quality,retention,engineering}-125d5481/`,
+`evidence/retention-design-v1/{FIRST_MEASUREMENT.md,SIGNAL_SEPARATION.json,
+SCORER_BIAS_B28_source.json,RETENTION_PROBE_D40_init.json}`.

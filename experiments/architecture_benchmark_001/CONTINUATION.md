@@ -7,9 +7,10 @@ source of truth — prior chat summaries are not.
 
 **Current design checkpoint:** read `RETENTION_GATE_DESIGN.md` before implementation. Its
 read-only reconciliation found final-update/resume defects in the 500k artifacts, additional
-scorer gaps, and overstated endpoint/review claims. Fresh tests are **pending due to host
-memory pressure**, explicitly accepted by the user; 191/0 below is the previously recorded
-result. No gate implementation or protocol edit has been made at this checkpoint.
+scorer gaps, and overstated endpoint/review claims. Those prerequisites are now **cleared**:
+the suite runs clean, and the retention gate is implemented, registered, requalified and
+executed. See the 2026-09-13 entry in `PROGRESS_LOG.md` and
+`evidence/retention-design-v1/FIRST_MEASUREMENT.md`.
 
 ## Identity
 
@@ -18,11 +19,11 @@ result. No gate implementation or protocol edit has been made at this checkpoint
 | Worktree | `C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification` |
 | Branch | `research/ced-rab001-hotfix001-qualification-v1`, pushed to `LUNCY579/ChatBubble` |
 | Branched from | `2f65f9e` |
-| `implementation_sha256` | **`8b47b395`** (HOTFIX-004), 31 manifest files |
-| Tests | Previously **191 passed, 0 skipped**; fresh verification pending |
+| `implementation_sha256` | **`125d5481`** (HOTFIX-005), 34 manifest files |
+| Tests | **294 passed, 0 skipped** (2026-09-13, `.venv-rab001`) |
 | Qualification runtime | `C:\Users\clclc\BusinessProject\.venv-rab001` |
 | Source weights | `Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze`, `audit_digest 97cd76af…` |
-| Current receipts | `evidence/ladder-8b47b395-v1/`, `evidence/quality-8b47b395/` |
+| Current receipts | `outputs/{ladder,quality,retention,engineering}-125d5481/` |
 
 The digest and receipt/artifact hashes were rechecked. The archived `evidence/` copies omit
 model binaries and retain parent paths from the live layout; use the original `outputs/`
@@ -89,6 +90,16 @@ the failed `G1_CED_*` receipts as parents.
    its executable retention criterion, margins and budgets are missing. CE/KL alone must
    not certify training. See `RETENTION_GATE_DESIGN.md` and the preserved historical JSONs.
 
+7. **A capability-side gate now exists, and its first run found three defects.**
+   `G1_RETENTION_<arm>` (parent `G1_QUALITY_<arm>`) and `G2_RETENTION_<arm>` (parents
+   `G2_CACHED_<arm>` + `G1_RETENTION_<arm>`) score *answers* on a 150-row held-out probe with a
+   typed grammar. `G1_QUALITY` is no longer a leaf. **Frozen source = 47/150 = 31.3%**
+   (42.0% / 32.0% / 20.0% by class) — the legacy 65/50/30 headline overstates every class.
+   Defects found: target validation failed open; the frozen grammar rejects a prefix the source
+   actually uses (7 rows, all one family, unpatched pending review); the bare-policy sensitivity
+   diagnostic manufactured a FAIL. **D40 scores 0/150, losing all 47**, while passing `G1_WIDTH`
+   7/7 and the full parity grid. See `evidence/retention-design-v1/FIRST_MEASUREMENT.md`.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
@@ -154,18 +165,23 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-**Review the preimplementation design in `RETENTION_GATE_DESIGN.md`.** The user requested
-this design checkpoint before writing the gate and accepted leaving fresh tests pending
-while host memory is constrained. Before implementation, complete the pinned suite and
-reconcile any disagreement. The proposed monitor permits zero loss of source/init-correct
-items by class; separate prospective confirmation targets 90% source-success retention with
-simultaneous bounds. Existing historical scores cannot be called preregistered validation.
+**Test the retention gate on a run that actually moves the model.** `G2_RETENTION_B28` PASSes
+12/12, but `arm_answers_changed` is **0 of 150**: the registered engineering lane is 25 SGD steps
+at lr 1e-5 over 3,159 tokens and it changed nothing. The training-side gate is therefore
+mechanically verified and **behaviourally untested**.
 
-`G1_QUALITY` currently diagnoses initialization only and is a leaf in the receipt DAG:
-optimizer engineering stages do not require it. New supported training must require quality
-and retention parents. Keep G3-G5 closed, preserve CED parity failures, and treat CE, reply CE
-and KL as training diagnostics. The first implementation work includes typed scoring,
-complete paired predictions, and exact optimizer-boundary/resume binding.
+The sharpest available test is the programme's own known decoupling case: **lr 1e-4, which
+destroys the source's arithmetic (6/6 → 0/6) while *improving* CE.** Run that dose through
+`retention_probe.py` against the frozen 47-item reference. If the gate fires while CE improves,
+the capability-side criterion is demonstrated to do the thing no likelihood endpoint here can.
+If it does not fire, the gate is not yet fit for purpose and that is the more important result.
+This is exploratory-lane work: the registered G2 lane is fixed at 25 steps and G3 stays closed.
+
+Second, open the **grammar review** with the evidence already gathered: 7 source answers are
+rejected for a sentence prefix the contract did not anticipate (`It ends at …`), 6 of them
+`time_duration`. Do not widen the grammar silently — version it, re-measure the baseline, and
+record both. The `bare_policy` decision only has to be settled for `ratio_proportion`; it is
+worth 0 answers in the other two classes.
 
 Then, in order:
 

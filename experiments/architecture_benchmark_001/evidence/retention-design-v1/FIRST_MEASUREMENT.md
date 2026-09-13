@@ -102,6 +102,35 @@ inherits rather than recomputes its reference, and recomputes every verdict from
 artifact. What it does not establish is any claim about capability under optimizer pressure.
 **Read `arm_answers_changed` before `status`.**
 
+## 4b. Detection, demonstrated on the arm every construction gate accepted
+
+`G1_RETENTION` declares `G1_QUALITY` as a parent, so D40 — whose quality receipt FAILs — cannot
+hold a retention receipt at all. That wiring is correct (a degenerate model has nothing to
+retain) but it means the registered gate can never be *demonstrated* on the arms it exists to
+reject. `retention_probe.py` runs the same package scorer outside the receipt system to close
+that gap. Exploratory: no receipt, no gate, no stage opened.
+
+D40 is the arm that passes `G1_WIDTH` 7/7 and the **full parity grid with zero violations**:
+
+| class | source | D40 at init | lost | terminated |
+|---|---:|---:|---:|---:|
+| `percentage_reasoning` | 21/50 | **0/50** | 21 | 39/50 |
+| `ratio_proportion` | 16/50 | **0/50** | 16 | 41/50 |
+| `time_duration` | 10/50 | **0/50** | 10 | 33/50 |
+| **total** | 47/150 | **0/150** | **47** | 113/150 |
+
+**FAIL, losing all 47.** Both bare policies agree. Two of three classes also fall below the 0.8
+termination floor. The raw output is the documented `</think>` loop — 5 distinct strings across
+24 recorded samples, 11 of them a bare `</think>`:
+
+    src '60 units.'                D40 '</think>'
+    src '9:15 AM - 8:30 AM = 45 minutes'   D40 '</think>\n</think>'
+    src '36 sensor tags.'          D40 '</think>\n</think>\n</think>...'  (did not terminate)
+
+This is the gap HOTFIX-003 opened the quality gate for, measured on capability rather than on
+divergence-from-teacher: an arm can satisfy every structural and parity property in the ladder
+and answer **none** of the 150 questions its donor answers 47 of.
+
 ## 5. Defect found: a sensitivity diagnostic that manufactured a failure
 
 The first `G2_RETENTION_B28` run reported the strict policy as **FAIL with 6 losses** on a
@@ -159,10 +188,13 @@ Artifact: `SIGNAL_SEPARATION.json`.
 
 - **No retention claim under training.** The only trained arm measured did not change a single
   answer. The gate's discriminating power is untested against an optimizer that moves a model.
-- **No claim about converted arms.** `G1_RETENTION` declares `G1_QUALITY` as a parent, and no
-  conversion in this programme passes `G1_QUALITY`, so C28, C40 and D40 cannot hold a retention
-  receipt at all. That is the wiring working as intended — a degenerate model has nothing to
-  retain — but it means the registered gate has been demonstrated only on the frozen source.
+- **No *receipted* claim about converted arms.** `G1_RETENTION` declares `G1_QUALITY` as a
+  parent, and no conversion in this programme passes `G1_QUALITY`, so C28, C40 and D40 cannot
+  hold a retention receipt at all. The D40 result in §4b is an exploratory probe outside the
+  receipt system: same scorer, no receipt, no gate. The registered gate has been demonstrated on
+  the frozen source only.
+- **D40's 0/150 is a detection demonstration, not a preregistered validation.** D40 was already
+  known to be degenerate when these thresholds were written.
 - **B28's pass is largely tautological**, exactly as HOTFIX-004 recorded for `G1_QUALITY`.
 - **Label review is pending** for all 150 references, and the grammar review is now open with a
   known defect in it.
