@@ -24,9 +24,14 @@ def output_identity(outputs):
     return {rid: {"text": out["text"], "terminated": out["terminated"]} for rid, out in outputs.items()}
 
 
-def validate_sweep(body, arm, context, dose):
+def validate_sweep(body, arm, context, dose, selection=None):
     require = common.require
-    tag, kind = SPECS[arm]
+    canonical_tag, kind = SPECS[arm]
+    selection = ({"canonical_tag": canonical_tag, "active_tag": canonical_tag, "preserved_failure": None}
+                 if selection is None else selection)
+    require(selection["canonical_tag"] == canonical_tag, "sweep canonical tag mismatch")
+    tag = selection["active_tag"]
+    common.validate_run_identity(dose, selection)
     for key, value in {"completed": True, "tag": tag, "kind": kind, "arm": arm, "mode": arm,
                        "endpoint_controls_passed": True, "registered_bare_policy": "permissive",
                        "reference_n": 47, "panel_rows": 150}.items():
@@ -69,7 +74,8 @@ def validate_sweep(body, arm, context, dose):
             require(sorted(result["gain_ids_by_stratum"][name]) == expected, "stored gain-stratum IDs mismatch")
         points[key] = {"alpha": alpha, **summary}
         rowmaps[key] = dict(result["per_row"])
-    return {"status": "VALID", "tag": tag, "kind": kind, "points": points,
+    return {"status": "VALID", "tag": tag, "canonical_tag": canonical_tag, "kind": kind, "points": points,
+            "run_selection": selection,
             "endpoint_controls_independently_verified": True, "_per_row": rowmaps}
 
 
@@ -102,16 +108,19 @@ def fixed_pair_report(sweeps):
     return pairs
 
 
-def build_report(paths, context):
+def build_report(paths, context, registry=None):
+    registry = common.load_run_registry() if registry is None else registry
+    common.validate_run_registry(registry)
     sweeps = {}
     for arm, (tag, _) in SPECS.items():
+        selection = common.resolve_run(tag, registry=registry)
         path = paths.get(arm)
         if path is None or not path.is_file():
-            sweeps[arm] = {"status": "MISSING", "path": str(path) if path else None}
+            sweeps[arm] = {"status": "MISSING", "path": str(path) if path else None, "run_selection": selection}
             continue
         try:
             body = common.read_json(path)
-            dose_path = common.EVIDENCE / f"ARM_DOSE_{tag}.json"
+            dose_path = Path(selection["artifact_path"])
             dose = common.read_json(dose_path)
             common.require(body["provenance"]["saved_endpoint_sha256"] == common.sha256(dose_path), "saved endpoint file hash mismatch")
             data_hashes = {(REPO / relative).resolve(): value for relative, value in body["provenance"]["data_hashes"].items()}
@@ -122,10 +131,10 @@ def build_report(paths, context):
             common.require(set(data_hashes) == expected_inputs, "alpha input hash inventory mismatch")
             for candidate, expected in data_hashes.items():
                 common.require(common.sha256(candidate) == expected, f"recorded alpha input hash mismatch: {candidate}")
-            sweeps[arm] = validate_sweep(body, arm, context, dose)
+            sweeps[arm] = validate_sweep(body, arm, context, dose, selection)
         except (common.InvalidArtifact, KeyError, TypeError, ValueError, OSError) as exc:
             sweeps[arm] = {"status": "INVALID", "reason": str(exc)}
-        sweeps[arm].update(path=str(path), sha256=common.sha256(path))
+        sweeps[arm].update(path=str(path), sha256=common.sha256(path), run_selection=selection)
     pairs = fixed_pair_report(sweeps)
     for sweep in sweeps.values():
         sweep.pop("_per_row", None)
@@ -135,7 +144,7 @@ def build_report(paths, context):
             "fixed_grid": list(GRID), "fixed_test_count": 12, "alpha": str(common.ALPHA),
             "correction": "Holm over all twelve fixed tests; missing/invalid pairs use p=1 placeholders",
             "selection_policy": "none; the full grid is descriptive and cannot select a promoted model or soup ingredient",
-            "sweeps": sweeps, "pairs": pairs,
+            "sweeps": sweeps, "pairs": pairs, "run_registry": registry,
             "loss_classifier": {"function": "headroom_audit.failure_stratum", "script_sha256": common.sha256(Path(common.headroom_audit.__file__))},
             "licenses_efficacy_claim": False, "licenses_release": False}
 

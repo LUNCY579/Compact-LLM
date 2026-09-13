@@ -28,6 +28,8 @@ PAIRS = tuple(combinations(ARMS, 2))
 ALPHA = Fraction(1, 20)
 BASE = REPO / "experiments/architecture_benchmark_001"
 EVIDENCE = BASE / "evidence/retention-design-v1"
+RUN_REGISTRY = REPO / "experiments/rab001_exploration/run_registry.json"
+SUPPORTED_RETRIES = {"B28_lr1e-05_b5200_seed17": "B28_lr1e-05_b5200_seed17_retry1"}
 
 
 class InvalidArtifact(ValueError):
@@ -56,6 +58,68 @@ def read_json(path):
 
 def sha256(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def validate_run_registry(registry):
+    """A retry is authorized by an explicit alias and an immutable pre-endpoint failure."""
+    require(registry.get("schema") == 1, "unsupported run registry schema")
+    aliases, retries = registry.get("active_tags"), registry.get("retries")
+    require(isinstance(aliases, dict) and isinstance(retries, dict), "registry requires active_tags and retries mappings")
+    require(set(retries) == set(aliases.values()), "registry aliases and retry metadata disagree")
+    for canonical, active in aliases.items():
+        require(SUPPORTED_RETRIES.get(canonical) == active, f"unsupported registry alias: {canonical} -> {active}")
+        metadata = retries[active]
+        for key, value in {"canonical_tag": canonical, "run_label": "retry1", "retry_scope": "storage_only",
+                           "no_endpoint_observed": True, "checkpoint_saved": False, "preserve_failure_bytes": True}.items():
+            require(metadata.get(key) == value, f"retry metadata {key} mismatch")
+        expected_path = EVIDENCE / f"ARM_DOSE_{canonical}.json"
+        require((REPO / metadata["failure_artifact_path"]).resolve() == expected_path.resolve(), "failure artifact path differs from canonical run")
+        require(expected_path.is_file(), "registered canonical failure artifact missing")
+        require(sha256(expected_path) == metadata["failure_artifact_sha256"], "preserved canonical failure hash mismatch")
+        failure = read_json(expected_path)
+        require(failure.get("completed") is False and failure.get("checkpoint") is None, "registered failure has a completed result or checkpoint")
+        require(failure.get("aborted_reason") == metadata["failure_reason"] and bool(metadata["failure_reason"]), "registered failure reason mismatch")
+        require(failure.get("supervised_target_tokens") == metadata["observed_supervised_target_tokens"]
+                and failure.get("optimizer_steps") == metadata["observed_optimizer_steps"], "registered failed dose mismatch")
+        require(failure.get("checkpoints") and all(point.get("tokens") == 0 and point.get("steps") == 0
+                                                   and point.get("milestone") == 0 for point in failure["checkpoints"]),
+                "retry disallowed: a post-training checkpoint/endpoint was observed")
+        for key, value in {"arm": "B28", "lr": 1e-5, "seed": 17, "token_budget": 5200,
+                           "schedule_spec": "cosine:0.03", "beta2": .999, "reference_digest": DIGEST}.items():
+            require(failure.get(key) == value, f"canonical failure recipe {key} mismatch")
+
+
+def load_run_registry(path=RUN_REGISTRY):
+    require(Path(path).is_file(), f"run registry unavailable: {path}")
+    registry = read_json(path)
+    validate_run_registry(registry)
+    return {**registry, "registry_path": str(Path(path).resolve()), "registry_sha256": sha256(path)}
+
+
+def resolve_run(canonical_tag, evidence=EVIDENCE, registry=None):
+    """Resolve one declared tag; never enumerate files or choose the latest result."""
+    registry = load_run_registry() if registry is None else registry
+    active = registry["active_tags"].get(canonical_tag, canonical_tag)
+    failure = None
+    if active != canonical_tag:
+        require(SUPPORTED_RETRIES.get(canonical_tag) == active, "unsupported active run alias")
+        failure = registry["retries"].get(active)
+        require(failure is not None and failure.get("canonical_tag") == canonical_tag
+                and failure.get("run_label") == "retry1", "active alias missing or mismatched retry metadata")
+    return {"canonical_tag": canonical_tag, "active_tag": active,
+            "artifact_path": str(evidence / f"ARM_DOSE_{active}.json"), "preserved_failure": failure}
+
+
+def validate_run_identity(body, selection):
+    canonical, active = selection["canonical_tag"], selection["active_tag"]
+    if active == canonical:
+        require(body.get("canonical_tag", canonical) == canonical and body.get("run_label") in (None, ""),
+                "unregistered or mismatched retry identity")
+    else:
+        require(SUPPORTED_RETRIES.get(canonical) == active and selection.get("preserved_failure") is not None,
+                "retry alias absent from registry")
+        require(body.get("canonical_tag") == canonical and body.get("run_label") == "retry1",
+                "retry body canonical_tag/run_label mismatch")
 
 
 def mcnemar_exact(b, c):
@@ -287,19 +351,24 @@ def fixed_pair_report(arms):
     return pairs
 
 
-def build_report(evidence, context):
+def build_report(evidence, context, registry=None):
+    registry = load_run_registry() if registry is None else registry
+    validate_run_registry(registry)
     arms = {}
     for arm in ARMS:
-        path = evidence / f"ARM_DOSE_{arm}_lr1e-05_b5200_seed17.json"
+        selection = resolve_run(f"{arm}_lr1e-05_b5200_seed17", evidence, registry)
+        path = Path(selection["artifact_path"])
         if not path.is_file():
-            arms[arm] = {"status": "MISSING", "path": str(path)}
+            arms[arm] = {"status": "MISSING", "path": str(path), "run_selection": selection}
             continue
         fingerprint = sha256(path)
         try:
-            arms[arm] = validate_arm(read_json(path), arm, context)
+            body = read_json(path)
+            validate_run_identity(body, selection)
+            arms[arm] = validate_arm(body, arm, context)
         except (InvalidArtifact, KeyError, TypeError, ValueError) as exc:
             arms[arm] = {"status": "INVALID", "reason": str(exc)}
-        arms[arm].update(path=str(path), sha256=fingerprint)
+        arms[arm].update(path=str(path), sha256=fingerprint, run_selection=selection)
     pairs = fixed_pair_report(arms)
     complete = all(v["status"] == "AVAILABLE" for v in pairs.values())
     for arm in arms.values():
@@ -316,6 +385,7 @@ def build_report(evidence, context):
             "trajectory_policy": "All intermediate milestones are descriptive; final completed endpoint is fixed and never selected by score.",
             "full_B28_endpoint_limit": "Full B28 also trains embeddings and final norm; tail arms freeze them, so this is not a pure layer-count control.",
             "arms": arms, "pairs": pairs, "historical_B28_aggregate_replication": replication,
+            "run_registry": registry,
             "loss_classifier": {"function": "headroom_audit.failure_stratum", "script_sha256": sha256(Path(headroom_audit.__file__))},
             "licenses_registered_training": False, "licenses_efficacy_claim": False, "licenses_release": False}
 

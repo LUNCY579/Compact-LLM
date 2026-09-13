@@ -285,3 +285,31 @@ hostbudget check before launch. Checkpoint/report directories are create-only. N
 implementation file, source weight, gate threshold or release authorization changes here.
 Historical added pairwise families must be reported with an explicitly retrospective
 multiplicity correction; this addition does not retroactively preregister them.
+
+### Resource-only B28 retry registration, 2026-09-13 23:14 UTC
+
+The first new full-B28 attempt stopped on hostbudget after one optimizer step /186 targets,
+with 0.18 GiB free physical RAM. Its only measured checkpoint was the untrained source
+control. No trained endpoint or weights were saved. Preserve its canonical artifact
+`ARM_DOSE_B28_lr1e-05_b5200_seed17.json` unchanged (SHA-256
+`408096ace7a37f0dcc7000148f0e64bb6a284c62b19098c65a9e32cb18b8b654`).
+The displayed 47/150 in that incomplete artifact is a source-control score, not a trained
+result and not a failed efficacy comparison.
+
+Before any retry scores, designate `B28_lr1e-05_b5200_seed17_retry1` as the storage-only
+retry in `experiments/rab001_exploration/run_registry.json`. It has the same arm, lr, seed,
+token budget, data order, schedule, beta2, clipping and FP32 update arithmetic. Use bounded
+file I/O for disk optimizer moments instead of persistent memmaps, and reserve 1.5 GiB
+GPU workspace instead of .6 GiB, which changes moment placement, not the update formula.
+Release unused CUDA allocator blocks after gradients/graph cleanup at each step; record
+memory before and after this resource-only change. Live parameter/moment values stay intact.
+Tiny CPU and CUDA tests must show exact parameter/moment equality against legacy updates
+before launch. Source/endpoint controls, host floors, and all statistical thresholds remain
+unchanged. Record storage backend, script hash, workspace reserve and memory observations.
+
+The fixed depth family, B28 alpha input and seed17/b5200 soup ingredient resolve through
+that explicit alias; preserve the failed attempt beside the selected retry in reports.
+This is a resource recovery decision made without a trained endpoint score, not selection
+among successful seeds or panel scores. If this retry also fails, do not silently select a
+new filename. Register any further recovery before its results. Successful remaining B28
+soup ingredients will use the same validated storage/workspace settings.

@@ -125,6 +125,15 @@ BETA2 = float(sys.argv[7]) if len(sys.argv) > 7 else 0.999
 SAVE = sys.argv[8] if len(sys.argv) > 8 else 'final'
 if SAVE not in ('final', 'none'):
     raise SystemExit('save policy is `final` or `none`')
+RUN_LABEL = sys.argv[9] if len(sys.argv) > 9 else None
+if RUN_LABEL is not None and not re.fullmatch(r'[A-Za-z0-9-]+', RUN_LABEL):
+    raise SystemExit('optional run label must contain only letters, digits and hyphens')
+STORAGE_BACKEND = os.environ.get('RAB001_ADAM_STORAGE', 'memmap')
+if STORAGE_BACKEND not in ('memmap', 'streamed'):
+    raise SystemExit('RAB001_ADAM_STORAGE must be memmap or streamed')
+GPU_WORKSPACE_GIB = float(os.environ.get('RAB001_GPU_WORKSPACE_GIB', '0.6'))
+if not 0 < GPU_WORKSPACE_GIB < 8:
+    raise SystemExit('RAB001_GPU_WORKSPACE_GIB must lie strictly between 0 and 8')
 MIN_LR_FRAC = 0.10
 
 _S = SCHEDULE.split(':')
@@ -140,6 +149,9 @@ TAG = (f'{ARM}_lr{LR:g}_b{BUDGET}_seed{SEED}'
        + (f'_{SCHED_KIND}{WARMUP_FRAC:g}' + (f'-{DECAY_FRAC:g}' if SCHED_KIND == 'wsd' else '')
           if SCHEDULE != 'cosine:0.03' else '')
        + (f'_b2{BETA2:g}' if BETA2 != 0.999 else ''))
+CANONICAL_TAG = TAG
+if RUN_LABEL:
+    TAG += '_' + RUN_LABEL
 
 # OffloadedAdam and force_tf32_off are proven in retention_dose_gpu; import rather than fork.
 # That module reads its own constants from argv at import time, so hand it the matching ones.
@@ -250,7 +262,9 @@ def main() -> int:
         raise SystemExit('this harness trains on the GPU; CUDA is required')
     numerics = force_tf32_off()
     # Host peak is the probe: one fp32 copy of the arm on the CPU. H56 is 4.31 GiB, B28 2.22.
-    host_start = hostbudget.require(6.0 if MODE in ('H', 'P') else 3.6, f'arm dose {TAG}')
+    full_memmap = MODE == 'B28' and BLOCK_TAIL is None and STORAGE_BACKEND == 'memmap'
+    host_start = hostbudget.require(6.0 if MODE in ('H', 'P') or full_memmap else 3.6,
+                                    f'arm dose {TAG}')
     result_path = OUT / f'ARM_DOSE_{TAG}.json'
     destination = ROOT / 'outputs' / 'arm-checkpoints' / TAG
     if result_path.exists() or destination.exists():
@@ -260,6 +274,8 @@ def main() -> int:
     RUN_DIR.mkdir(parents=True, exist_ok=False)
     harness_digest = file_sha256(Path(__file__))
     optimizer_digest = file_sha256(Path(_rdg.__file__))
+    storage_path = Path(__file__).with_name('streamed_adam.py') if STORAGE_BACKEND == 'streamed' else None
+    storage_digest = file_sha256(storage_path) if storage_path else None
     digest = implementation_digest()
     source_assets = json.loads((ROOT / 'source_lock.json').read_text(encoding='utf-8'))['assets']
     for name, expected in source_assets.items():
@@ -275,11 +291,17 @@ def main() -> int:
             raise RuntimeError('implementation or active harness changed during run')
         if file_sha256(Path(_rdg.__file__)) != optimizer_digest:
             raise RuntimeError('optimizer harness changed during run')
+        if storage_path and file_sha256(storage_path) != storage_digest:
+            raise RuntimeError('optimizer storage backend changed during run')
         if any(file_sha256(path) != data_hashes[name] for name, path in data_paths.items()):
             raise RuntimeError('training/probe data changed during run')
 
     write_record(RUN_DIR / 'START.json', {
         'pid': os.getpid(), 'argv': sys.argv, 'tag': TAG, 'completed': False,
+        'canonical_tag': CANONICAL_TAG, 'run_label': RUN_LABEL,
+        'optimizer_storage_backend': STORAGE_BACKEND,
+        'optimizer_storage_harness_sha256': storage_digest,
+        'gpu_workspace_reserve_gib': GPU_WORKSPACE_GIB,
         'implementation_digest': digest, 'exploration_harness_sha256': harness_digest,
         'optimizer_harness_sha256': optimizer_digest, 'data_sha256': data_hashes,
         'source_assets_sha256': source_assets, 'host_before': host_start})
@@ -342,13 +364,31 @@ def main() -> int:
           f'VRAM free {torch.cuda.mem_get_info()[0]/2**30:.2f} GiB', flush=True)
 
     params_bytes = sum(p.numel() * 4 for p in trainable)
-    reserve = params_bytes + int(0.6 * 2 ** 30)
+    reserve = params_bytes + int(GPU_WORKSPACE_GIB * 2 ** 30)
     gpu_budget = max(0, torch.cuda.mem_get_info()[0] - reserve)
     spill = RUN_DIR / 'adam-spill'
-    opt = OffloadedAdam(trainable, LR, gpu_budget, spill)
+    optimizer_class = OffloadedAdam
+    if STORAGE_BACKEND == 'streamed':
+        from streamed_adam import StreamedAdam
+        optimizer_class = StreamedAdam
+    opt = optimizer_class(trainable, LR, gpu_budget, spill)
+    print(f'Adam storage={STORAGE_BACKEND}, GPU workspace reserve={GPU_WORKSPACE_GIB:g} GiB', flush=True)
     print(f'Adam moments {opt.bytes()/2**30:.2f} GiB: {opt.gpu_bytes/2**30:.2f} on GPU, '
           f'{opt.disk_bytes()/2**30:.2f} on disk | VRAM free '
           f'{torch.cuda.mem_get_info()[0]/2**30:.2f} GiB', flush=True)
+
+    resource_trace = []
+
+    def record_resources(phase, step=0):
+        record = {'phase': phase, 'step': step, 'host': hostbudget.snapshot(),
+                  'cuda_allocated_gib': torch.cuda.memory_allocated() / 2**30,
+                  'cuda_reserved_gib': torch.cuda.memory_reserved() / 2**30,
+                  'cuda_peak_allocated_gib': torch.cuda.max_memory_allocated() / 2**30}
+        resource_trace.append(record)
+        with (RUN_DIR / 'resources.jsonl').open('a', encoding='utf-8') as handle:
+            handle.write(json.dumps(record, allow_nan=False) + '\n')
+
+    record_resources('optimizer_ready')
 
     @torch.inference_mode()
     def dev_ce() -> float:
@@ -449,6 +489,7 @@ def main() -> int:
                 'anything.')
         print('  device-integrity control PASSED: 0/150 answers changed before training',
               flush=True)
+        record_resources('initial_control_passed')
 
         model.train()
         opt.zero_grad()
@@ -458,11 +499,15 @@ def main() -> int:
                 raise SystemExit('TRAIN exhausted before the budget')
             ids = train[cursor].to('cuda')
             cursor += 1
+            if steps < 3:
+                record_resources('before_forward', steps + 1)
             logits = model(ids).logits
             tgt = ids[:, 1:]
             loss = F.cross_entropy(logits[:, :-1].reshape(-1, logits.shape[-1]).float(),
                                    tgt.reshape(-1))
             loss.backward()
+            if steps < 3:
+                record_resources('after_backward', steps + 1)
             tokens += tgt.numel()
             consumed.append(int(tgt.numel()))
             del logits
@@ -474,6 +519,12 @@ def main() -> int:
                           'train_ce': float(loss.detach()), 'grad_norm': float(gnorm),
                           'read_o_proj_norm': branch_norm()})
             del loss
+            record_resources('after_optimizer_step', steps)
+            if STORAGE_BACKEND == 'streamed':
+                # Gradients and the graph are gone. Release unused CUDA blocks;
+                # this changes allocation lifetime, not any tensor arithmetic.
+                torch.cuda.empty_cache()
+                record_resources('after_unused_cuda_cache_release', steps)
             hostbudget.guard(1.0, f'arm dose {TAG}')
             for m in milestones:
                 if m and tokens >= m and m not in done_ms:
@@ -540,6 +591,10 @@ def main() -> int:
                     'no gate and carries no receipt. Averaging is only defined against another '
                     'checkpoint with an identical soup_key.',
             'tag': TAG, 'arm': ARM, 'lr': LR, 'schedule': SCHEDULE, 'beta2': BETA2,
+            'canonical_tag': CANONICAL_TAG, 'run_label': RUN_LABEL,
+            'optimizer_storage_backend': STORAGE_BACKEND,
+            'optimizer_storage_harness_sha256': storage_digest,
+            'gpu_workspace_reserve_gib': GPU_WORKSPACE_GIB,
             'seed': SEED, 'token_budget': BUDGET, 'completed': completed,
             'headline': last['retention'][reg] if checkpoints else None,
             **checkpoint_info,
@@ -559,6 +614,7 @@ def main() -> int:
                 'compared as matched pairs. Outside the hashed root: no receipt, no gate, no '
                 'stage opened, no efficacy claim, no checkpoint released.',
         'arm': ARM, 'mode': MODE, 'read_tail': READ_TAIL, 'block_tail': BLOCK_TAIL,
+        'canonical_tag': CANONICAL_TAG, 'run_label': RUN_LABEL,
         'arm_description': described, 'completed': completed,
         'aborted_reason': aborted, 'lr': LR, 'token_budget': BUDGET, 'seed': SEED,
         'probe_fractions': FRACTIONS, 'probe_milestones': milestones,
@@ -581,6 +637,9 @@ def main() -> int:
         'source_weights_sha256': source_assets['model.safetensors'],
         'exploration_harness_sha256': harness_digest,
         'optimizer_harness_sha256': optimizer_digest, 'run_directory': str(RUN_DIR),
+        'optimizer_storage_backend': STORAGE_BACKEND,
+        'optimizer_storage_harness_sha256': storage_digest,
+        'gpu_workspace_reserve_gib': GPU_WORKSPACE_GIB, 'resource_trace': resource_trace,
         'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,
         'checkpoint': checkpoint_info, 'save_policy': SAVE,
         'read_o_proj_norm_end': trace[-1]['read_o_proj_norm'] if trace else 0.0,
@@ -606,6 +665,9 @@ def main() -> int:
     write_record(path, body)
     h = body['headline']
     print(f"\n{TAG}: {'COMPLETE' if completed else 'INTERRUPTED'}")
+    if not completed:
+        print(f"  No completed endpoint: last measured probe at {last['tokens']} tokens; "
+              f'training reached {tokens} tokens. Counts below describe that last probe.')
     print(f"  correct {h['correct_start']}/150 -> {h['correct_end']}/150 "
           f"(gained {h['gained_end']}, lost {h['lost_end']}, net {h['net_end']:+d})")
     print(f"  devCE   {h['dev_ce_start']:.4f} -> {h['dev_ce_end']:.4f} | "
