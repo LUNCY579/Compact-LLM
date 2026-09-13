@@ -165,23 +165,35 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-**Test the retention gate on a run that actually moves the model.** `G2_RETENTION_B28` PASSes
-12/12, but `arm_answers_changed` is **0 of 150**: the registered engineering lane is 25 SGD steps
-at lr 1e-5 over 3,159 tokens and it changed nothing. The training-side gate is therefore
-mechanically verified and **behaviourally untested**.
+**Run the under-training retention test — it is blocked on host memory, not on design.**
+`retention_dose.py` is written, controls-verified and refuses to start rather than page. It
+trains the frozen source at a chosen learning rate and records held-out CE beside typed
+retention against the frozen 47-item reference, aimed at this programme's established case:
+**lr 1e-4 destroys the source's arithmetic 6/6 → 0/6 while *improving* CE.**
 
-The sharpest available test is the programme's own known decoupling case: **lr 1e-4, which
-destroys the source's arithmetic (6/6 → 0/6) while *improving* CE.** Run that dose through
-`retention_probe.py` against the frozen 47-item reference. If the gate fires while CE improves,
-the capability-side criterion is demonstrated to do the thing no likelihood endpoint here can.
-If it does not fire, the gate is not yet fit for purpose and that is the more important result.
-This is exploratory-lane work: the registered G2 lane is fixed at 25 steps and G3 stays closed.
+```bash
+$PY experiments/rab001_exploration/retention_dose.py 1e-4 5200 17 cpu adamw
+$PY experiments/rab001_exploration/retention_dose.py 1e-5 5200 17 cpu adamw   # preserving control
+```
 
-Second, open the **grammar review** with the evidence already gathered: 7 source answers are
-rejected for a sentence prefix the contract did not anticipate (`It ends at …`), 6 of them
-`time_duration`. Do not widen the grammar silently — version it, re-measure the baseline, and
-record both. The `bare_policy` decision only has to be settled for `ratio_proportion`; it is
-worth 0 answers in the other two classes.
+It needs **11.0 GiB free physical** for AdamW and currently refuses: another project
+(`SupaExperiment-nonrecurrent-adaptation-v1`) holds ~5.3 GB on this 15.2 GB host. Wait for that
+job, or use the `sgd` variant (6.0 GiB) and label it as a different experiment — the established
+destructive result is AdamW. The first attempt reached step 0 (dev CE 5.5782, retained 47/47)
+and `hostbudget.guard` stood it down at free 0.22 GiB, writing `completed: false`.
+
+Why it matters: `G2_RETENTION_B28` PASSes 12/12 but `arm_answers_changed` is **0 of 150** — the
+registered engineering lane is 25 SGD steps at lr 1e-5 and changed nothing. The training-side
+gate is **mechanically verified and behaviourally untested**. The decoupling itself is already
+demonstrated at initialization: D40's CE is **0.1308 nats better than the frozen source** and it
+answers **0 of the 47** questions the source answers — a CE gate passes it, this gate fails it
+0/150.
+
+Second, open the **grammar review** with the evidence gathered: 7 source answers are rejected
+for a sentence prefix the contract did not anticipate (`It ends at …`), 6 of them
+`time_duration`. Do not widen the grammar silently — version it, re-measure the baseline, record
+both. The `bare_policy` decision only has to be settled for `ratio_proportion`; it is worth 0
+answers in the other two classes.
 
 Then, in order:
 

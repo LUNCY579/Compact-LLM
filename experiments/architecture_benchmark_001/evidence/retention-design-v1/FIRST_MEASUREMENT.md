@@ -131,6 +131,50 @@ This is the gap HOTFIX-003 opened the quality gate for, measured on capability r
 divergence-from-teacher: an arm can satisfy every structural and parity property in the ladder
 and answer **none** of the 150 questions its donor answers 47 of.
 
+## 4c. The decoupling, measured on one model by two gates
+
+D40 is not only degenerate. It is degenerate **with better cross-entropy than its own teacher**,
+and that makes it the cleanest demonstration available of why this gate had to exist.
+
+| view | quantity | value |
+|---|---|---|
+| likelihood (`G1_QUALITY`, 156 calibration rows) | frozen source CE | 5.4309 |
+| | D40 CE | **5.3001** |
+| | `ce_increase` | **−0.1308**, limit ≤ 0.5 → **PASS** |
+| capability (retention probe, 150 held-out rows) | source correct | 47/150 |
+| | D40 correct | **0/150** |
+| | reference / lost | 47 / **47** |
+| | verdict | **FAIL**, both bare policies agreeing |
+
+**The same model passes the cross-entropy check and loses every one of the 47 answers its donor
+got right.** A CE-shaped gate does not merely fail to notice; it reports D40 as *better than the
+source*. This is the `G1_QUALITY` half of the argument in HOTFIX-003 — where a CE-only gate
+would have passed D40 — now measured on capability rather than on divergence-from-teacher.
+
+Note what it is not: D40 was already known to be degenerate, so this is retrospective detection,
+and it is at initialization rather than under optimizer pressure.
+
+## 4d. Under optimizer pressure: attempted, blocked, and honestly unfinished
+
+The remaining question is whether the gate fires on a *run* whose CE is improving.
+`retention_dose.py` trains the frozen source at a chosen learning rate and records held-out CE
+beside typed retention against the frozen 47-item reference, aimed at this programme's
+established case: lr 1e-4 destroys the source's arithmetic 6/6 → 0/6 **while improving CE**.
+
+It has not produced a result. The first attempt reached its step-0 checkpoint —
+dev CE **5.5782**, reproducing the recorded source DEV CE exactly, retained 47/47 — and then
+`hostbudget.guard` stood it down mid-flight at free physical **0.22 GiB**, commit 16.4 GiB over
+physical, because another project's job on the same 15.2 GiB host held 5.3 GB while AdamW
+allocates its two moment buffers at once. The artifact is written with `completed: false` and
+`aborted_reason` recorded, which is the designed behaviour, not a failure of it.
+
+Two things this did establish, both controls rather than results: the frozen source's raw
+answers re-score to **exactly** both frozen references (47 permissive, 41 strict) with no model
+loaded, and the step-0 dev CE reproduces to four decimals.
+
+The script now refuses at startup rather than paging, with per-optimizer floors. **The
+under-training test is the open item**, and no claim here substitutes for it.
+
 ## 5. Defect found: a sensitivity diagnostic that manufactured a failure
 
 The first `G2_RETENTION_B28` run reported the strict policy as **FAIL with 6 losses** on a
