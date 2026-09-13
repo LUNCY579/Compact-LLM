@@ -1,6 +1,28 @@
 {
   "alpha": "1/20",
   "arms": {
+    "B28last8": {
+      "correct_total": 47,
+      "dev_ce_end": 3.2451680021176834,
+      "dev_ce_start": 5.578190601453841,
+      "gained": 1,
+      "gained_format_only_stratum": 0,
+      "gained_ids": [
+        "rineya_v3_sft__time_duration__reas_time_duration_s01__00538"
+      ],
+      "gained_runaway_stratum": 0,
+      "gained_wrong_answer_stratum": 1,
+      "gate_status_end": "FAIL",
+      "lost": 1,
+      "lost_ids": [
+        "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+      ],
+      "net": 0,
+      "parameters": 596049920,
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last8_lr1e-05_b5200_seed17.json",
+      "supervised_target_tokens": 5233,
+      "trainable_parameters": 125847552
+    },
     "H": {
       "correct_total": 16,
       "dev_ce_end": 2.600570059655828,
@@ -113,6 +135,16 @@
   "evidence_kind": "exploratory_paired_comparison_only",
   "note": "McNemar exact two-sided on matched probe rows. Thresholds pre-registered in DISTINGUISHABILITY_PREREG.md before any arm was trained. Outside the hashed root: no receipt, no gate, no efficacy claim.",
   "pairs": {
+    "H~B28last8": {
+      "b_only_correct": 5,
+      "c_only_correct": 36,
+      "discordant": 41,
+      "favours": "B28last8",
+      "p_exact": "431095/549755813888",
+      "p_float": 7.84157236921601e-07,
+      "rows_compared": 150,
+      "significant_at_alpha": true
+    },
     "H~P": {
       "b_only_correct": 5,
       "c_only_correct": 37,
@@ -122,6 +154,16 @@
       "p_float": 4.4337048166198656e-07,
       "rows_compared": 150,
       "significant_at_alpha": true
+    },
+    "P~B28last8": {
+      "b_only_correct": 14,
+      "c_only_correct": 13,
+      "discordant": 27,
+      "favours": null,
+      "p_exact": "1/1",
+      "p_float": 1.0,
+      "rows_compared": 150,
+      "significant_at_alpha": false
     }
   },
   "schema": 1
