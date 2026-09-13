@@ -12,8 +12,9 @@ from pathlib import Path
 import torch
 from safetensors.torch import load_file, save_file
 from .budget import Config, budget, presets
-from .gates import (GateClosed, context, implementation_digest, protocol, require_registered_stage,
-                    runtime, validate_receipt, write_once, parent_links, data_bindings, read_hashed_json)
+from .gates import (STAGES, GateClosed, context, implementation_digest, protocol,
+                    require_registered_stage, runtime, validate_receipt, write_once, parent_links,
+                    data_bindings, read_hashed_json)
 from .source import ROOT, audit_source, sha256_file, source_config
 from .transfer import (ActivationCalibration, identity_expand, import_qwen_state, narrow,
                        select_width, state_digest, to_ced)
@@ -354,6 +355,273 @@ def qualify_quality(source: Path, pilot: Path, calibration: Path, parent_path: P
         ['quality.json'], [parent_path])
 
 
+RETENTION_STAGES = ('G1_RETENTION', 'G2_RETENTION')
+
+
+def load_probe_rows(path: Path) -> list[dict]:
+    """The monitor probe: multi-turn rows with a reference answer, so `load_rows` does not fit."""
+    classes = set(protocol()['G1_RETENTION']['probe_classes'])
+    rows = [json.loads(line) for line in path.read_text(encoding='utf-8-sig').splitlines() if line.strip()]
+    seen = set()
+    for row in rows:
+        if not isinstance(row, dict):
+            raise GateClosed('each probe row must be an object')
+        if (row.get('split') != 'task' or not isinstance(row.get('id'), str) or not row['id']
+                or row['id'] in seen or not isinstance(row.get('group_id'), str) or not row['group_id']
+                or row.get('reply_class') not in classes
+                or not isinstance(row.get('answer'), str) or not row['answer'].strip()
+                or not isinstance(row.get('messages'), list) or not row['messages']):
+            raise GateClosed('probe row identity, class, answer or messages invalid')
+        seen.add(row['id'])
+    if not rows:
+        raise GateClosed('empty probe')
+    return rows
+
+
+def _probe_ids(tokenizer, row: dict, device: str) -> torch.Tensor:
+    """Rendered exactly as the exploration probe renders it, so the numbers stay comparable."""
+    text = tokenizer.apply_chat_template(row['messages'], tokenize=False,
+                                         add_generation_prompt=True, enable_thinking=False)
+    ids = tokenizer(text, return_tensors='pt', add_special_tokens=False)['input_ids'].to(device)
+    if not 1 <= ids.shape[1] <= protocol()['decoding']['max_context']:
+        raise GateClosed('probe prompt outside registered context; truncation forbidden')
+    return ids
+
+
+def _greedy_probe(model, tokenizer, rows: list[dict], eos_ids: set[int], device: str) -> list[dict]:
+    limit = protocol()['decoding']['max_new_tokens']
+    outputs = []
+    with torch.inference_mode():
+        for row in rows:
+            ids = _probe_ids(tokenizer, row, device)
+            generated, past, current, terminated = [], None, ids, False
+            for _ in range(limit):
+                step = model(current, past=past, use_cache=True, last_position_only=True)
+                past = step.cache
+                token = int(step.logits[0, -1].argmax())
+                if token in eos_ids:
+                    terminated = True
+                    break
+                generated.append(token)
+                current = torch.tensor([[token]], dtype=torch.long, device=device)
+            outputs.append({'id': row['id'], 'reply_class': row['reply_class'],
+                            'text': tokenizer.decode(generated, skip_special_tokens=True).strip(),
+                            'terminated': terminated, 'new_tokens': len(generated)})
+            del past
+    return outputs
+
+
+def _score_probe(outputs: list[dict], targets: dict) -> dict:
+    from . import retention
+    scored = {}
+    for row in outputs:
+        target = targets.get(row['id'])
+        if target is None:
+            raise GateClosed(f'no reviewed target for probe row {row["id"]}')
+        record = retention.score_prediction(row['text'], row['terminated'], target)
+        scored[row['id']] = {**record, 'reply_class': row['reply_class'],
+                             'new_tokens': row['new_tokens']}
+    if len(scored) != len(outputs):
+        raise GateClosed('duplicate probe row id in predictions')
+    return scored
+
+
+def _retention_classes(rows: list[dict], source: dict, arm: dict, reference: set) -> dict:
+    """Per-class retained/lost/gained against an immutable reference set of row ids."""
+    counts = {}
+    for cls in protocol()['G1_RETENTION']['probe_classes']:
+        ids = [r['id'] for r in rows if r['reply_class'] == cls]
+        ref = [i for i in ids if i in reference]
+        lost = sorted(i for i in ref if not arm[i]['correct'])
+        counts[cls] = {
+            'rows': len(ids), 'reference_n': len(ref), 'lost': len(lost), 'lost_ids': lost,
+            'retained': len(ref) - len(lost),
+            # Reported, never subtracted: a new right answer does not restore a destroyed one.
+            'gained': sum(1 for i in ids if arm[i]['correct'] and i not in reference),
+            'terminated': sum(1 for i in ids if arm[i]['terminated']),
+            'source_correct_terminated': sum(1 for i in ids if source[i]['correct']),
+            'arm_correct': sum(1 for i in ids if arm[i]['correct']),
+        }
+    return counts
+
+
+def _families(path: Path, loader) -> tuple[set, set]:
+    rows = loader(path)
+    return {r['group_id'] for r in rows}, {r['id'] for r in rows}
+
+
+def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
+                      parent_path: Path, out: Path, device: str, arm: str, stage: str,
+                      checkpoint: Path | None = None, retention_parent: Path | None = None,
+                      training: Path | None = None) -> dict:
+    """Score answers, not likelihood. See amendments/HOTFIX_005.md.
+
+    Every `G1_QUALITY` check is likelihood- or teacher-agreement-shaped, and at a token-matched
+    500k dose those are measured to prefer an incapable arm over a working one. This stage asks
+    only whether the arm still answers the questions the reference set answered.
+    """
+    from . import retention
+    if stage not in RETENTION_STAGES:
+        raise GateClosed(f'unknown retention stage: {stage}')
+    if arm not in QUALITY_PARENTS:
+        raise GateClosed('unknown retention arm')
+    policy = protocol()['G1_RETENTION']
+    if policy['bare_policy'] not in retention.BARE_POLICIES:
+        raise GateClosed('unregistered bare policy')
+
+    audit = audit_source(source)
+    ctx = context(audit, probe, device)
+    bindings = data_bindings(pilot, calibration, training, probe)
+    declared_parent = STAGES[f'{stage}_{arm}']['parents'][0]
+    parent_data = calibration if declared_parent.startswith('G1_QUALITY') else (training or probe)
+    parent = validate_receipt(parent_path, declared_parent, context(audit, parent_data, device),
+                              data_by_stage=bindings)
+    parents = [parent_path]
+    reference_ids, parent_source_correct = None, None
+    if stage == 'G2_RETENTION':
+        if retention_parent is None:
+            raise GateClosed('G2_RETENTION requires its G1_RETENTION reference receipt')
+        if training is None or checkpoint is None:
+            raise GateClosed('G2_RETENTION requires the trained checkpoint and its training data')
+        prior = validate_receipt(retention_parent, f'G1_RETENTION_{arm}',
+                                 context(audit, probe, device), data_by_stage=bindings)
+        body = read_hashed_json(retention_parent.parent/'retention.json')
+        # The reference is inherited, never recomputed: recomputing it after training would let
+        # a run redefine what it was supposed to have kept.
+        reference_ids = set(body['reference_ids'])
+        parent_source_correct = set(body['source_correct_ids'])
+        if not reference_ids:
+            raise GateClosed('inherited retention reference is empty')
+        parents.append(retention_parent)
+
+    rows = load_probe_rows(probe)
+    label_audit = json.loads((ROOT/'evidence/retention-design-v1/PROBE_LABEL_AUDIT.json')
+                             .read_text(encoding='utf-8'))
+    if sha256_file(ROOT/'evidence/retention-design-v1/PROBE_LABEL_AUDIT.json') != policy['label_audit_sha256']:
+        raise GateClosed('reviewed label audit does not match the registered hash')
+    overlays = {name: retention.build_overlay(label_audit, name) for name in retention.BARE_POLICIES}
+    targets = overlays[policy['bare_policy']]['targets']
+    if set(targets) != {r['id'] for r in rows}:
+        raise GateClosed('reviewed targets do not cover exactly the probe rows')
+
+    probe_families, probe_ids = {r['group_id'] for r in rows}, {r['id'] for r in rows}
+    cal_families, cal_ids = _families(calibration, lambda p: load_rows(p, 'calibration'))
+    pilot_ids = {r['id'] for r in load_rows(pilot, 'pilot')}
+    train_families, train_ids = set(), set()
+    for candidate in [ROOT/'data/train-smoke.jsonl'] + ([training] if training else []):
+        fams, tids = _families(candidate, lambda p: load_rows(p, 'train'))
+        train_families |= fams; train_ids |= tids
+
+    _directory(out, source)
+    reference_model, tokenizer, _ = _load(source, device)
+    reference_model.eval()
+    eos_ids = _eos_ids(source, tokenizer)
+    torch.manual_seed(protocol()['decoding']['seed'])
+    source_outputs = _greedy_probe(reference_model, tokenizer, rows, eos_ids, device)
+    if checkpoint is None:
+        arm_outputs, checkpoint_state = source_outputs, None
+    else:
+        model = _restore(checkpoint, device)
+        checkpoint_state = sha256_file(checkpoint/'model.safetensors')
+        arm_outputs = _greedy_probe(model, tokenizer, rows, eos_ids, device)
+        del model
+        gc.collect()
+    del reference_model
+    gc.collect()
+
+    source_scored = _score_probe(source_outputs, targets)
+    arm_scored = _score_probe(arm_outputs, targets)
+    source_correct = {i for i, r in source_scored.items() if r['correct']}
+    if stage == 'G1_RETENTION':
+        # Union of source-correct and initialization-correct. At step zero the arm's correct
+        # set IS its initialization set, so the losses reported are exactly the source-correct
+        # answers the conversion already dropped.
+        reference_ids = source_correct | {i for i, r in arm_scored.items() if r['correct']}
+    counts = _retention_classes(rows, source_scored, arm_scored, reference_ids)
+    monitor = retention.monitor_verdict(counts, policy)
+
+    # The one unreviewed policy axis, measured rather than argued: score the same predictions
+    # under the other bare setting and record whether the verdict would change.
+    other = 'strict' if policy['bare_policy'] == 'permissive' else 'permissive'
+    other_targets = overlays[other]['targets']
+    other_source = _score_probe(source_outputs, other_targets)
+    other_arm = _score_probe(arm_outputs, other_targets)
+    other_reference = ({i for i, r in other_source.items() if r['correct']}
+                       | {i for i, r in other_arm.items() if r['correct']}
+                       ) if stage == 'G1_RETENTION' else reference_ids
+    other_counts = _retention_classes(rows, other_source, other_arm, other_reference)
+    other_monitor = retention.monitor_verdict(other_counts, policy)
+
+    predictions = {'schema': 2, 'stage': stage, 'arm': arm, 'probe_rows': len(rows),
+                   'bare_policy': policy['bare_policy'],
+                   'reference_ids': sorted(reference_ids),
+                   'source_correct_ids': sorted(source_correct),
+                   'rows': [{'id': r['id'], 'reply_class': r['reply_class'],
+                             'group_id': r['group_id'],
+                             'target': targets[r['id']],
+                             'source': source_scored[r['id']], 'arm': arm_scored[r['id']]}
+                            for r in rows],
+                   'not_sealed_quality_evidence': True, 'open_splits_only': True}
+    write_once(out/'retention.json', predictions)
+
+    # Recompute every verdict from the written artifact rather than trusting what is in memory.
+    saved = read_hashed_json(out/'retention.json')
+    recomputed = all(
+        retention.score_prediction(row[side]['raw'], row[side]['terminated'],
+                                   row['target'])['correct'] is row[side]['correct']
+        for row in saved['rows'] for side in ('source', 'arm'))
+
+    checks = {
+        'source_probe_informative': all(
+            c['source_correct_terminated'] >= policy['min_source_correct_terminated_per_class']
+            for c in counts.values()),
+        'no_reference_capability_lost': all(
+            c['lost'] <= policy['max_correct_to_incorrect_per_class'] for c in counts.values()),
+        'generation_terminates_per_class': all(
+            retention.as_fraction(c['terminated']) / c['rows']
+            >= retention.as_fraction(policy['min_termination_rate_per_class'])
+            for c in counts.values()),
+        'probe_disjoint_from_training': not (probe_families & train_families) and not (probe_ids & train_ids),
+        'calibration_overlap_as_declared': (len(probe_families & cal_families)
+                                            == policy['declared_calibration_family_overlap']
+                                            and not (probe_ids & cal_ids) and not (probe_ids & pilot_ids)),
+        'typed_scorer_recomputed': recomputed,
+        'source_unchanged': audit_source(source)['audit_digest'] == audit['audit_digest'],
+        'probe_unchanged': sha256_file(probe) == ctx['data_sha256'],
+        'calibration_unchanged': sha256_file(calibration) == bindings['G1_WIDTH'],
+        'pilot_unchanged': sha256_file(pilot) == bindings['G0'],
+    }
+    if stage == 'G2_RETENTION':
+        # Re-measuring the frozen source every time is the cheap control: if its answers drift,
+        # a decode, tokenizer or scorer change has happened and no verdict here is meaningful.
+        checks['source_answers_reproduce_parent'] = source_correct == parent_source_correct
+        checks['reference_matches_parent'] = reference_ids == set(read_hashed_json(
+            retention_parent.parent/'retention.json')['reference_ids'])
+
+    return _record(out, f'{stage}_{arm}', ctx, checks, {
+        'arm': arm, 'stage': stage, 'parent_stage': declared_parent,
+        'checkpoint_state_sha256': checkpoint_state,
+        'monitor': monitor, 'per_class': counts,
+        'reference_size': len(reference_ids),
+        'source_correct_total': len(source_correct),
+        'arm_correct_total': sum(1 for r in arm_scored.values() if r['correct']),
+        'lost_total': sum(c['lost'] for c in counts.values()),
+        'gained_total': sum(c['gained'] for c in counts.values()),
+        'bare_policy': policy['bare_policy'],
+        'bare_policy_sensitivity': {
+            'other_policy': other, 'other_status': other_monitor['status'],
+            'verdicts_agree': other_monitor['status'] == monitor['status'],
+            'other_per_class': other_counts,
+            'other_source_correct_total': sum(1 for r in other_source.values() if r['correct']),
+            'other_arm_correct_total': sum(1 for r in other_arm.values() if r['correct'])},
+        'calibration_family_overlap': len(probe_families & cal_families),
+        'label_human_review_status': policy['label_human_review_status'],
+        'policy': policy, 'quality_recovery_demonstrated': False,
+        'finite_panel_not_a_population_claim': True,
+        'resource_scope': 'open probe split only; no sealed or DEV access, no efficacy claim'},
+        ['retention.json'], parents)
+
+
 def qualify_identity(source: Path, pilot: Path, g0: Path, out: Path, device: str) -> dict:
     audit = audit_source(source); ctx = context(audit, pilot, device)
     parent = validate_receipt(g0, 'G0', ctx, data_by_stage=data_bindings(pilot))
@@ -651,6 +919,20 @@ def main(argv=None) -> int:
     qa.add_argument('--arm', choices=tuple(QUALITY_PARENTS), required=True)
     qa.add_argument('--out', type=Path, required=True)
     qa.add_argument('--device', choices=('cpu', 'cuda'), default='cpu')
+    qr = subs.add_parser('qualify-retention')
+    qr.add_argument('--source', type=Path, required=True)
+    qr.add_argument('--pilot', type=Path, default=ROOT/'data/pilot.jsonl')
+    qr.add_argument('--calibration', type=Path, required=True)
+    qr.add_argument('--probe', type=Path, default=ROOT/'data/monitor_probe.jsonl')
+    qr.add_argument('--parent', type=Path, required=True)
+    qr.add_argument('--arm', choices=tuple(QUALITY_PARENTS), required=True)
+    qr.add_argument('--stage', choices=RETENTION_STAGES, default='G1_RETENTION')
+    # B28 at G1_RETENTION is the source itself, so it has no separate checkpoint.
+    qr.add_argument('--checkpoint', type=Path)
+    qr.add_argument('--g1-retention', type=Path)
+    qr.add_argument('--train', type=Path)
+    qr.add_argument('--out', type=Path, required=True)
+    qr.add_argument('--device', default='cpu', choices=('cpu', 'cuda'))
     ae = subs.add_parser('audit-evidence')
     ae.add_argument('--root', type=Path, default=ROOT/'evidence')
     rd = subs.add_parser('recovery-readiness')
@@ -705,6 +987,11 @@ def main(argv=None) -> int:
             elif args.command == 'qualify-quality':
                 result = qualify_quality(args.source, args.pilot, args.calibration, args.parent,
                                          args.out, args.device, args.arm)
+            elif args.command == 'qualify-retention':
+                result = qualify_retention(args.source, args.pilot, args.calibration, args.probe,
+                                           args.parent, args.out, args.device, args.arm, args.stage,
+                                           checkpoint=args.checkpoint,
+                                           retention_parent=args.g1_retention, training=args.train)
             elif args.command == 'qualify-source': result = qualify_source(args.source, args.pilot, args.out, args.device)
             elif args.command == 'qualify-identity': result = qualify_identity(args.source, args.pilot, args.g0, args.out, args.device)
             elif args.command == 'calibrate-d40': result = calibrate_d40(args.source, args.pilot, args.calibration, args.g1, args.out, args.device)

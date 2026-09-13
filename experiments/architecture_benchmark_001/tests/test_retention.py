@@ -467,6 +467,126 @@ def test_registered_policy_constants_are_the_design_values_and_stay_put():
     assert POLICY['authorization']['G3_G5_execution_enabled'] is False
 
 
+# ---------------------------------------------------------------------------------------
+# Stage registration (HOTFIX-005)
+# ---------------------------------------------------------------------------------------
+
+ARMS = ('B28', 'D40', 'C28', 'C40')
+
+
+def test_retention_stages_are_registered_for_every_arm_with_their_parents():
+    for arm in ARMS:
+        init = gates.STAGES[f'G1_RETENTION_{arm}']
+        assert init['parents'] == [f'G1_QUALITY_{arm}']
+        assert init['artifacts'] == ['retention.json']
+        trained = gates.STAGES[f'G2_RETENTION_{arm}']
+        # Both parents: the trained weights, and the step-zero reference they must have kept.
+        assert trained['parents'] == [f'G2_CACHED_{arm}', f'G1_RETENTION_{arm}']
+        for name in ('source_probe_informative', 'no_reference_capability_lost',
+                     'generation_terminates_per_class', 'probe_disjoint_from_training',
+                     'calibration_overlap_as_declared', 'typed_scorer_recomputed',
+                     'source_unchanged', 'probe_unchanged'):
+            assert name in init['checks'] and name in trained['checks'], (arm, name)
+        # Only the trained stage can drift from a parent measurement, so only it carries these.
+        for name in ('source_answers_reproduce_parent', 'reference_matches_parent'):
+            assert name in trained['checks'] and name not in init['checks']
+
+
+def test_quality_is_no_longer_a_leaf_in_the_receipt_dag():
+    """G1_QUALITY used to be a leaf: nothing consumed it, so an arm could reach the engineering
+    lane without its output ever being compared to the source."""
+    consumers = {stage for stage, spec in gates.STAGES.items()
+                 for parent in spec['parents'] if parent.startswith('G1_QUALITY')}
+    assert consumers == {f'G1_RETENTION_{arm}' for arm in ARMS}
+
+
+def test_retention_policy_is_registered_hashed_and_reuses_the_g0_termination_floor():
+    p = gates.protocol()
+    r = p['G1_RETENTION']
+    assert r['scored_split'] == 'monitor_probe'
+    assert r['probe_classes'] == ['percentage_reasoning', 'ratio_proportion', 'time_duration']
+    assert r['excluded_probe_class'] == 'arithmetic_chain'
+    # Reused rather than invented, so the floor cannot drift from G0's.
+    assert r['min_termination_rate_per_class'] == p['G0']['min_termination_rate']
+    assert r['max_correct_to_incorrect_per_class'] == 0
+    assert r['min_source_correct_terminated_per_class'] == 1
+    assert r['gains_offset_losses'] is False
+    assert r['licenses_registered_training'] is False and r['licenses_efficacy_claim'] is False
+    assert r['licenses_confirmation_certificate'] is False
+    for forbidden in ('sealed_test_access', 'dev_access', 'threshold_tuning_on_student_outcomes',
+                      'reference_reset_after_training'):
+        assert forbidden in r['forbidden']
+    # Thresholds live inside the hashed manifest, so they cannot move without invalidating
+    # every receipt, and the amendment that justifies them travels with them.
+    assert 'protocol.json' in gates.implementation_manifest()
+    assert 'amendments/HOTFIX_005.md' in gates.implementation_manifest()
+    assert 'amendments/HOTFIX_005.md' in p['amendments']
+
+
+def test_registered_hashes_still_match_the_documents_they_bind():
+    r = gates.protocol()['G1_RETENTION']
+    for key, path in (('grammar_contract_sha256', ROOT / 'TYPED_SCORING_CONTRACT.md'),
+                      ('label_audit_sha256',
+                       ROOT / 'evidence/retention-design-v1/PROBE_LABEL_AUDIT.json'),
+                      ('policy_proposal_sha256', ROOT / 'retention_policy.proposed.json')):
+        assert r[key] == hashlib.sha256(path.read_bytes()).hexdigest(), key
+
+
+def test_probe_panel_is_the_registered_shape_and_is_disjoint_from_training():
+    rows = [json.loads(line) for line in
+            (ROOT / 'data/monitor_probe.jsonl').read_text(encoding='utf-8-sig').splitlines()
+            if line.strip()]
+    assert len(rows) == 150
+    assert collections.Counter(r['reply_class'] for r in rows) == {
+        'percentage_reasoning': 50, 'ratio_proportion': 50, 'time_duration': 50}
+    assert {r['split'] for r in rows} == {'task'}
+    assert len({r['id'] for r in rows}) == 150 == len({r['group_id'] for r in rows})
+
+    def load(name, split):
+        return [json.loads(l) for l in (ROOT / 'data' / name).read_text(
+            encoding='utf-8-sig').splitlines() if l.strip()]
+
+    probe_fam = {r['group_id'] for r in rows}
+    probe_ids = {r['id'] for r in rows}
+    train = load('train-smoke.jsonl', 'train')
+    assert not probe_fam & {r['group_id'] for r in train}
+    assert not probe_ids & {r['id'] for r in train}
+    pilot = load('pilot.jsonl', 'pilot')
+    assert not probe_ids & {r['id'] for r in pilot}
+    # The one disclosed exposure: declared in protocol.json and asserted here, so a silent data
+    # change fails the suite rather than only the gate.
+    calibration = load('calibration.jsonl', 'calibration')
+    overlap = probe_fam & {r['group_id'] for r in calibration}
+    assert len(overlap) == gates.protocol()['G1_RETENTION']['declared_calibration_family_overlap']
+    assert not probe_ids & {r['id'] for r in calibration}
+
+
+def test_retention_stages_bind_the_probe_file_not_calibration(tmp_path):
+    pilot = tmp_path / 'p.jsonl'; pilot.write_text('pilot', encoding='utf-8')
+    cal = tmp_path / 'c.jsonl'; cal.write_text('cal', encoding='utf-8')
+    probe = tmp_path / 'm.jsonl'; probe.write_text('probe', encoding='utf-8')
+    bindings = gates.data_bindings(pilot, cal, None, probe)
+    for arm in ARMS:
+        assert bindings[f'G1_RETENTION_{arm}'] == bindings[f'G2_RETENTION_{arm}']
+        assert bindings[f'G1_RETENTION_{arm}'] != bindings[f'G1_QUALITY_{arm}']
+    # Omitting the probe must not invent a binding for a stage that scores on it.
+    assert 'G1_RETENTION_B28' not in gates.data_bindings(pilot, cal)
+
+
+def test_probe_loader_rejects_a_row_that_would_silently_measure_nothing():
+    from experiments.architecture_benchmark_001 import run
+    good = {'split': 'task', 'id': 'a', 'group_id': 'g', 'reply_class': 'time_duration',
+            'answer': '45 minutes.', 'messages': [{'role': 'user', 'content': 'q'}]}
+    for damage in ({'split': 'dev'}, {'id': ''}, {'group_id': ''}, {'answer': '  '},
+                   {'messages': []}, {'reply_class': 'arithmetic_chain'},
+                   {'reply_class': 'counting_sets'}):
+        path = Path(str(pytest.importorskip('tempfile').mktemp(suffix='.jsonl')))
+        path.write_text(json.dumps({**good, **damage}) + '\n', encoding='utf-8')
+        with pytest.raises(ValueError):
+            run.load_probe_rows(path)
+        path.unlink()
+
+
 def test_retention_module_is_pure_and_enters_the_hashed_manifest():
     """No torch: the scorer must be runnable in a test in milliseconds and identical for the
     source, the initialization and every checkpoint."""

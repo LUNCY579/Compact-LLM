@@ -135,6 +135,31 @@ for arm, parents in [('B28', ['G0']), ('D40', ['G1_WIDTH']),
                    'save_reload_exact', 'source_unchanged', 'training_data_unchanged',
                    'teacher_cache_unchanged', 'matched_control_verified', 'optimizer_steps_changed_state']}
 
+# Capability-retention gates (HOTFIX-005). Every G1_QUALITY check is likelihood- or
+# teacher-agreement-shaped, and those are measured to decouple from capability: at 500k a CED
+# arm reached held-out CE 5.11 nats BETTER than its own teacher while answering 2/60 against
+# the teacher's 20/60. These score answers instead. G1_RETENTION also makes G1_QUALITY a
+# required ancestor -- it was previously a leaf that nothing in the ladder consumed.
+RETENTION_CHECKS = ['source_probe_informative', 'no_reference_capability_lost',
+                    'generation_terminates_per_class', 'probe_disjoint_from_training',
+                    'calibration_overlap_as_declared', 'typed_scorer_recomputed',
+                    'source_unchanged', 'probe_unchanged', 'calibration_unchanged',
+                    'pilot_unchanged']
+for arm in ('B28', 'D40', 'C28', 'C40'):
+    STAGES[f'G1_RETENTION_{arm}'] = {
+        'parents': [f'G1_QUALITY_{arm}'], 'artifacts': ['retention.json'],
+        'checks': list(RETENTION_CHECKS)}
+    # The training-side sibling: same measurement on weights an optimizer has touched, against
+    # the immutable reference fixed by G1_RETENTION. Declaring both parents is what stops a
+    # trained arm claiming retention without a step-zero reference to have retained anything.
+    STAGES[f'G2_RETENTION_{arm}'] = {
+        'parents': [f'G2_CACHED_{arm}', f'G1_RETENTION_{arm}'], 'artifacts': ['retention.json'],
+        # The extra two are the drift controls: the frozen source must still give the same
+        # answers, and the reference must be the inherited one rather than a fresh convenient
+        # set computed after training.
+        'checks': RETENTION_CHECKS + ['source_answers_reproduce_parent',
+                                      'reference_matches_parent']}
+
 
 def read_hashed_json(path: Path) -> dict:
     """Check only byte-independent JSON content hash; NOT stage authorization."""
@@ -229,7 +254,8 @@ def parent_links(folder: Path, paths: list[Path]) -> list[dict]:
     return result
 
 
-def data_bindings(pilot: Path, calibration: Path | None = None, training: Path | None = None) -> dict:
+def data_bindings(pilot: Path, calibration: Path | None = None, training: Path | None = None,
+                  probe: Path | None = None) -> dict:
     result = {stage: sha256_file(pilot) for stage in ('G0', 'G1_IDENTITY', 'G1_CED_C28', 'G1_CED_C40')}
     if calibration is not None:
         result['G1_WIDTH'] = sha256_file(calibration)
@@ -237,6 +263,12 @@ def data_bindings(pilot: Path, calibration: Path | None = None, training: Path |
         # nondegeneracy probe and is bound separately inside the stage.
         for arm in ('B28', 'D40', 'C28', 'C40'):
             result[f'G1_QUALITY_{arm}'] = result['G1_WIDTH']
+    if probe is not None:
+        # Retention is scored on the monitor probe, so its stages bind that file rather than
+        # calibration. Their parents keep their own bindings, which validate_receipt checks.
+        for arm in ('B28', 'D40', 'C28', 'C40'):
+            result[f'G1_RETENTION_{arm}'] = sha256_file(probe)
+            result[f'G2_RETENTION_{arm}'] = result[f'G1_RETENTION_{arm}']
     if training is not None:
         for stage in ('G2', *(f'G2_CACHED_{a}' for a in ('B28', 'D40', 'C28', 'C40'))):
             result[stage] = sha256_file(training)

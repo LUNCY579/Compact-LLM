@@ -530,6 +530,16 @@ def build_overlay(audit: dict, bare_policy: str) -> dict:
 # Retention arithmetic
 # --------------------------------------------------------------------------------------
 
+def as_fraction(value) -> Fraction:
+    """Exact Fraction from a policy value written either as {numerator, denominator} or as a
+    plain JSON number. `Fraction(0.8)` is not 4/5, so scalars go through their string form."""
+    if isinstance(value, dict):
+        return Fraction(value['numerator'], value['denominator'])
+    if isinstance(value, Fraction):
+        return value
+    return Fraction(str(value))
+
+
 def _log_binom_cdf(k: int, n: int, p: float) -> float:
     """log P(X <= k) for X ~ Binomial(n, p), summed in log space so small tails survive."""
     if p <= 0.0:
@@ -593,8 +603,7 @@ def monitor_verdict(per_class: dict, policy: dict) -> dict:
     """
     max_lost = policy['max_correct_to_incorrect_per_class']
     min_source = policy['min_source_correct_terminated_per_class']
-    floor = policy['min_termination_rate_per_class']
-    min_term = Fraction(floor['numerator'], floor['denominator'])
+    min_term = as_fraction(policy['min_termination_rate_per_class'])
     classes, insufficient, failed = {}, [], []
     for name, counts in sorted(per_class.items()):
         rate = Fraction(counts['terminated'], counts['rows']) if counts['rows'] else Fraction(0)

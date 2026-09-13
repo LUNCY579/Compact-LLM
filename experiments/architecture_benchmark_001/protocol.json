@@ -148,7 +148,8 @@
     "amendments/HOTFIX_001.md",
     "amendments/HOTFIX_002.md",
     "amendments/HOTFIX_003.md",
-    "amendments/HOTFIX_004.md"
+    "amendments/HOTFIX_004.md",
+    "amendments/HOTFIX_005.md"
   ],
   "G1_QUALITY": {
     "purpose": "output_quality_and_nondegeneracy_of_a_constructed_arm",
@@ -170,5 +171,42 @@
     "licenses_efficacy_claim": false,
     "min_distinct_output_ratio": 0.25,
     "nondegeneracy_rule": "distinct >= max(min_distinct_outputs, ceil(ratio * generation_rows))"
+  },
+  "G1_RETENTION": {
+    "purpose": "capability_retention_of_a_constructed_or_trained_arm_against_the_frozen_source",
+    "rationale": "G1_QUALITY closed the token-salad hole at initialization, but every check it applies is likelihood- or teacher-agreement-shaped, and those are now measured to decouple from capability. At a token-matched 500,099-target dose a CED arm reached held-out CE 0.4727 against the frozen source's 5.5782 -- 5.1055 nats BETTER than its own teacher -- while answering 2 of 60 held-out questions the source answers 20 of 60, with disjoint 95% intervals. No threshold on a likelihood-shaped quantity separates those two models. This stage scores answers instead.",
+    "threshold_provenance": "Transcribed unchanged from RETENTION_GATE_DESIGN.md, committed at f7bc290 before this code existed and before any arm was scored under the typed grammar. The rules are policy tolerances, not values fitted to an arm. max_correct_to_incorrect_per_class is 0 because a gate that permits any forgetting has to justify the permitted amount, and no measurement here supports a number; min_termination_rate_per_class REUSES the existing G0.min_termination_rate of 0.8 rather than inventing a value; min_source_correct_terminated_per_class is 1, the weakest statement that rules out the arithmetic_chain failure where the teacher scores 0 and the probe measures nothing. Historical arm scores under the LEGACY number-sequence scorer were already known when these rules were written, so applying them to an already-measured arm is retrospective demonstration, never preregistered validation. Source scores under this grammar were not known.",
+    "scored_split": "monitor_probe",
+    "probe_classes": [
+      "percentage_reasoning",
+      "ratio_proportion",
+      "time_duration"
+    ],
+    "excluded_probe_class": "arithmetic_chain",
+    "excluded_probe_class_reason": "the frozen source scores 0/20, so every arm would read 0/N before and after and the probe would measure nothing",
+    "reference_rule": "union_of_frozen_source_correct_and_arm_initialization_correct",
+    "max_correct_to_incorrect_per_class": 0,
+    "min_source_correct_terminated_per_class": 1,
+    "min_termination_rate_per_class": 0.8,
+    "gains_offset_losses": false,
+    "bare_policy": "permissive",
+    "bare_policy_sensitivity_reported": true,
+    "bare_policy_review_status": "pending",
+    "declared_calibration_family_overlap": 2,
+    "declared_calibration_family_overlap_note": "Two of the 150 probe families also appear in the open calibration split, which G1_WIDTH uses for activation statistics. Disclosed rather than gated: the count is a fixed property of committed data, known before any arm was scored, and the receipt fails if the observed overlap stops matching it. The probe is fully family-disjoint and id-disjoint from the training splits, which is the exposure that would matter during training.",
+    "grammar_contract_sha256": "871d3bb860be27ff64bb613cccd51349b080412573c6517a64dee181389cedc5",
+    "label_audit_sha256": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+    "policy_proposal_sha256": "4d6cc21aecec3ce2d9010c7af431dff77b2ea0976fea336d8c5fa2feee58f37a",
+    "label_human_review_status": "pending",
+    "forbidden": [
+      "sealed_test_access",
+      "dev_access",
+      "threshold_tuning_on_student_outcomes",
+      "reference_reset_after_training",
+      "candidate_informed_alias_or_panel_changes"
+    ],
+    "licenses_registered_training": false,
+    "licenses_efficacy_claim": false,
+    "licenses_confirmation_certificate": false
   }
 }
