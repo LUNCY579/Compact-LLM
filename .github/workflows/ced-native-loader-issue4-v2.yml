@@ -30,7 +30,7 @@ jobs:
       TOKENIZERS_PARALLELISM: 'false'
       PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
       PYTHONHASHSEED: '17'
-      EVIDENCE: ${{ runner.temp }}/issue4-native-${{ github.run_id }}-${{ github.run_attempt }}
+      EVIDENCE_BASENAME: issue4-native-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - name: Checkout exact subject commit without weights or credentials
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
@@ -64,7 +64,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          python -m experiments.ced_native_loader_issue4_v1.qualify --expected-head "$GITHUB_SHA" --out "$EVIDENCE"
+          python -m experiments.ced_native_loader_issue4_v1.qualify --expected-head "$GITHUB_SHA" --out "$RUNNER_TEMP/$EVIDENCE_BASENAME"
       - name: Preserve only receipts and logs, never checkpoint fixtures
         if: always()
         uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
@@ -74,6 +74,6 @@ jobs:
           retention-days: 14
           path: |
             ${{ runner.temp }}/issue4-supervisor.log
-            ${{ env.EVIDENCE }}/*.json
-            ${{ env.EVIDENCE }}/*.xml
-            ${{ env.EVIDENCE }}/*.log
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.json
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.xml
+            ${{ runner.temp }}/${{ env.EVIDENCE_BASENAME }}/*.log
