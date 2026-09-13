@@ -60,22 +60,36 @@ the right answer, read in the units the target actually uses (clock targets carr
 
 | stratum | rows | percentage | ratio | time |
 |---|---:|---:|---:|---:|
-| **wrong_answer** — the model computed something else | **77** | 23 | 34 | 20 |
-| **format_only** — right answer present, grammar rejected it | **24** | 5 | 0 | 19 |
+| **wrong_answer** — the model computed something else | **84** | 23 | 34 | 27 |
+| **format_only** — right answer present, grammar rejected it | **17** | 5 | 0 | 12 |
 | runaway — never terminated | 2 | 1 | 0 | 1 |
+
+> **Correction.** The first version of this table read 77 / 24 / 2 with a ceiling of 71/150, and
+> it was wrong. `headroom_audit.py`'s `duration_seconds()` returned each `<number> <unit>`
+> component as a candidate answer as well as the pairwise sums, so `1 hour and 25 minutes`
+> (5100 s) was credited with asserting 1500 s because `25 minutes` is one of its components.
+> Seven answers the model simply got wrong were recorded as presentation rejections. The matcher
+> now returns a compound duration's TOTAL and nothing else, and a general guard was added: a row
+> whose scorer reason is `value mismatch` was *parsed* by the grammar, so it can never be a
+> presentation rejection whatever else its text contains.
 
 Two consequences, both load-bearing:
 
-**The panel understates the source.** 24 rows are answers like `It ends at 6:55 PM.` that are
-arithmetically correct and rejected on presentation. **A grammar fix alone reaches 71/150 without
-changing a single weight** — nearly the entire finetuning gain, for free, at zero inference cost.
-The "47/150" baseline is a grammar-limited floor, not a capability measurement.
+**The panel understates the source.** 17 rows are answers like `It ends at 6:55 PM.` that are
+arithmetically correct and rejected on presentation. **A grammar fix alone reaches 64/150 without
+changing a single weight**, at zero inference cost. The "47/150" baseline is a grammar-limited
+floor, not a capability measurement.
 
 **A finetune can score by learning format instead of arithmetic.** Gains in the `format_only`
 stratum cost the model nothing in reasoning. So gains must be reported **split by stratum**, and
 only the `wrong_answer` stratum counts as capability. Note `ratio_proportion` has **zero**
 format_only rows — every gain there is necessarily genuine, which makes it the cleanest class in
 the panel and a useful check on the other two.
+
+**The confound runs in both directions.** H56's run shows the mirror image: of the 36 reference
+answers it lost, several are presentation losses rather than arithmetic ones — it learned the
+terse output convention while destroying the arithmetic underneath. A loss count is therefore no
+more trustworthy than a gain count without the same stratum split.
 
 ### The bar an architecture has to clear
 
@@ -86,6 +100,19 @@ finetuning of B28. The gate verdict on it is **FAIL**, purely because of the 6.
 
 So `H56` is not competing against 47/150. It is competing against **73/150 at 1.00x parameters and
 1.00x KV cache**, and it has to get there while carrying 1.94x the parameters and 2.04x the cache.
+
+A7 is an **absolute** total, not a net over baseline, and it stays that way. Correcting the
+grammar can only raise B28's measured total too, so the correction makes A7 harder to clear, not
+easier. Recording that here because P56 was already running when the question was raised, and the
+figure of merit must not be chosen after seeing a score.
+
+**The budget is not a free parameter either.** `outputs/longbudget/LONGBUDGET_source_control_
+seed17_b500000_lr1e-05.json` is a completed 500,000-token, 467-step run at this same lr and
+schedule. Its task hits go 3, 7, 20, **23** at 50k tokens, then 15, 17, 19, 19 — an interior
+maximum near 25k-50k followed by decline — while `dev_ce` falls monotonically from 5.578 to
+**0.357**. Past the peak, more data makes the model worse at the task while every likelihood
+number improves. Any budget search must be bracketed in roughly 10k-60k tokens, and `dev_ce`
+must never be used to choose the stopping point.
 
 ## Four changes that make the arms distinguishable
 

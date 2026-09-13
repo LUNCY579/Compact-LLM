@@ -4,9 +4,9 @@
   "policies": {
     "permissive": {
       "buckets": {
-        "format_only": 24,
+        "format_only": 17,
         "runaway": 2,
-        "wrong_answer": 77
+        "wrong_answer": 84
       },
       "by_reply_class": {
         "percentage_reasoning": {
@@ -18,13 +18,13 @@
           "wrong_answer": 34
         },
         "time_duration": {
-          "format_only": 19,
+          "format_only": 12,
           "runaway": 1,
-          "wrong_answer": 20
+          "wrong_answer": 27
         }
       },
-      "format_only_ceiling": 24,
-      "grammar_limited_ceiling": 71,
+      "format_only_ceiling": 17,
+      "grammar_limited_ceiling": 64,
       "headroom": 103,
       "ids": {
         "format_only": [
@@ -35,23 +35,16 @@
           "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02729",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00840",
-          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
-          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281",
-          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
-          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
-          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
           "rineya_v3_sft__time_duration__reas_time_duration_s07__02114",
-          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02401",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02422",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
           "rineya_v3_sft__time_duration__reas_time_duration_s09__02720",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781"
         ],
         "runaway": [
           "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
@@ -121,10 +114,15 @@
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00597",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
           "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
           "rineya_v3_sft__time_duration__reas_time_duration_s04__01429",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01566",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01600",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01679",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01739",
@@ -132,9 +130,11 @@
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01985",
           "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02506",
           "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953"
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953",
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
         ]
       },
       "rows": 150,
@@ -142,9 +142,9 @@
     },
     "strict": {
       "buckets": {
-        "format_only": 30,
+        "format_only": 23,
         "runaway": 2,
-        "wrong_answer": 77
+        "wrong_answer": 84
       },
       "by_reply_class": {
         "percentage_reasoning": {
@@ -157,13 +157,13 @@
           "wrong_answer": 34
         },
         "time_duration": {
-          "format_only": 19,
+          "format_only": 12,
           "runaway": 1,
-          "wrong_answer": 20
+          "wrong_answer": 27
         }
       },
-      "format_only_ceiling": 30,
-      "grammar_limited_ceiling": 71,
+      "format_only_ceiling": 23,
+      "grammar_limited_ceiling": 64,
       "headroom": 109,
       "ids": {
         "format_only": [
@@ -180,23 +180,16 @@
           "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00840",
-          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
-          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281",
-          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
-          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
-          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
           "rineya_v3_sft__time_duration__reas_time_duration_s07__02114",
-          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02401",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02422",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
           "rineya_v3_sft__time_duration__reas_time_duration_s09__02720",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02781"
         ],
         "runaway": [
           "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
@@ -266,10 +259,15 @@
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00597",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
           "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
           "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01281",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
           "rineya_v3_sft__time_duration__reas_time_duration_s04__01429",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01566",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01600",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01679",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
           "rineya_v3_sft__time_duration__reas_time_duration_s05__01739",
@@ -277,9 +275,11 @@
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
           "rineya_v3_sft__time_duration__reas_time_duration_s06__01985",
           "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
           "rineya_v3_sft__time_duration__reas_time_duration_s08__02506",
           "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
-          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953"
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02953",
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
         ]
       },
       "rows": 150,

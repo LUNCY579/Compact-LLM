@@ -102,6 +102,17 @@ SCHEDULE = sys.argv[6] if len(sys.argv) > 6 else 'cosine:0.03'
 #: beta2=0.999 has a ~1000-step horizon. A 41-step run never escapes bias correction, so the
 #: second moment stays noisy and step sizes erratic. Short runs normally want ~0.95.
 BETA2 = float(sys.argv[7]) if len(sys.argv) > 7 else 0.999
+#: `final` | `none`. Every dose run before this one discarded its trained weights at process
+#: exit -- nothing in this programme has ever saved a trained model, so the B28 run that reached
+#: 73/150 no longer exists and neither does H56's. Weight averaging ("model soup") needs the
+#: ingredients to exist, so the default is now to keep them.
+#:
+#: Only the TRAINABLE tensors are written. For H/P the backbone is frozen and bit-identical to
+#: the source, so the trained delta is 119,571,072 parameters (0.48 GiB) rather than 4.31 GiB,
+#: and the full model reconstructs exactly as source -> build arm -> overwrite these tensors.
+SAVE = sys.argv[8] if len(sys.argv) > 8 else 'final'
+if SAVE not in ('final', 'none'):
+    raise SystemExit('save policy is `final` or `none`')
 MIN_LR_FRAC = 0.10
 
 _S = SCHEDULE.split(':')
@@ -401,6 +412,62 @@ def main() -> int:
 
     completed = aborted is None
     first, last = checkpoints[0], checkpoints[-1]
+
+    # Keep the weights. Every dose run before this one discarded them, so the B28 fit that
+    # reached 73/150 no longer exists and neither does H56's -- weight averaging needs
+    # ingredients that survive process exit. Only the trainable tensors are written: for H/P
+    # the backbone is frozen and bit-identical to the source, so this is 0.48 GiB instead of
+    # 4.31, and the full model reconstructs exactly from source + arm + these tensors.
+    checkpoint_info = None
+    if SAVE == 'final':
+        from safetensors.torch import save_file
+        destination = ROOT / 'outputs' / 'arm-checkpoints' / TAG
+        if destination.exists():
+            raise SystemExit(f'checkpoint directory already exists (create-only): {destination}')
+        hostbudget.guard(1.0, f'arm dose {TAG} checkpoint save')
+        tensors = {name: p.detach().to('cpu', torch.float32).contiguous()
+                   for name, p in model.named_parameters() if p.requires_grad}
+        destination.mkdir(parents=True, exist_ok=False)
+        weights = destination / 'trainable.safetensors'
+        save_file(tensors, str(weights))
+        import hashlib
+        checkpoint_info = {
+            'path': str(destination), 'tensors': len(tensors),
+            'parameters': sum(t.numel() for t in tensors.values()),
+            'bytes': weights.stat().st_size,
+            'sha256': hashlib.sha256(weights.read_bytes()).hexdigest(),
+            'dtype': 'float32', 'saved_after_steps': steps, 'saved_after_tokens': tokens,
+            'complete_model': MODE in ('B28',),
+            # Everything needed to rebuild without consulting this script.
+            'reconstruct': {
+                'source': str(SRC), 'mode': MODE, 'read_tail': READ_TAIL,
+                'builder': ('run._load(source)' if MODE.startswith('B28')
+                            else f'DualStack.from_source(run._load(source)[0], {MODE!r})'),
+                'then': 'load trainable.safetensors and copy_ each tensor by name'},
+            # Two checkpoints may only be averaged if these agree.
+            'soup_key': {'mode': MODE, 'read_tail': READ_TAIL,
+                         'source_digest': frozen.get('source_state_sha256')
+                         or implementation_digest(),
+                         'tensor_names_sha256': hashlib.sha256(
+                             '\n'.join(sorted(tensors)).encode()).hexdigest()},
+        }
+        (destination / 'MANIFEST.json').write_text(json.dumps({
+            'schema': 1, 'evidence_kind': 'exploratory_trained_weights_only',
+            'note': 'Trainable tensors only. Exploratory: this is NOT a released model, opens '
+                    'no gate and carries no receipt. Averaging is only defined against another '
+                    'checkpoint with an identical soup_key.',
+            'tag': TAG, 'arm': ARM, 'lr': LR, 'schedule': SCHEDULE, 'beta2': BETA2,
+            'seed': SEED, 'token_budget': BUDGET, 'completed': completed,
+            'headline': last['retention'][reg] if checkpoints else None,
+            **checkpoint_info,
+            'tensor_shapes': {n: list(t.shape) for n, t in sorted(tensors.items())},
+            'licenses_release': False,
+        }, indent=2, sort_keys=True) + '\n', encoding='utf-8')
+        del tensors
+        gc.collect()
+        print(f"  saved {checkpoint_info['parameters']:,} trained parameters "
+              f"({checkpoint_info['bytes']/2**30:.2f} GiB) -> {destination}", flush=True)
+
     fr, lr_ = first['retention'][reg], last['retention'][reg]
     body = {
         'schema': 1, 'evidence_kind': 'exploratory_arm_dose_response_only',
@@ -425,6 +492,7 @@ def main() -> int:
         'supervised_target_tokens': tokens, 'optimizer_steps': steps,
         'train_rows_consumed': cursor, 'per_step_target_tokens': consumed,
         'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,
+        'checkpoint': checkpoint_info, 'save_policy': SAVE,
         'read_o_proj_norm_end': trace[-1]['read_o_proj_norm'] if trace else 0.0,
         'reference_receipt': str(receipt_path), 'reference_digest': implementation_digest(),
         'reference_sizes': {k: len(v) for k, v in references.items()},

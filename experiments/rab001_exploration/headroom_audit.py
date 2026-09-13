@@ -69,12 +69,21 @@ def clock_minutes(text: str) -> set[int]:
 
 
 def duration_seconds(text: str) -> set[Fraction]:
+    """A compound duration asserts its TOTAL, not its parts.
+
+    An earlier version returned every component as a candidate as well as the pairwise sums.
+    That credited `1 hour and 25 minutes` (5100 s) with asserting 1500 s, because `25 minutes`
+    is one of its components -- so seven answers the model simply got wrong were recorded as
+    presentation rejections, and the grammar-limited ceiling was overstated as 71/150 when it
+    is 64/150. A compound answer means the sum and nothing else.
+    """
     parts = [(Fraction(n.replace(',', '')), retention.DURATION_UNITS[u.lower()])
              for n, u in DUR_RE.findall(text) if u.lower() in retention.DURATION_UNITS]
-    found = {value * scale for value, scale in parts}
-    for i in range(len(parts) - 1):                  # `1 hour 45 minutes`
-        found.add(parts[i][0] * parts[i][1] + parts[i + 1][0] * parts[i + 1][1])
-    return found
+    if not parts:
+        return set()
+    if len(parts) > 1:
+        return {sum(value * scale for value, scale in parts)}
+    return {parts[0][0] * parts[0][1]}
 
 
 def rationals(text: str) -> set[Fraction]:
@@ -122,8 +131,15 @@ def main() -> int:
             rid, target, src = row['id'], overlay['targets'][row['id']], raw[row['id']]
             if retention.score_prediction(src['raw'], src['terminated'], target)['correct']:
                 continue
+            record = retention.score_prediction(src['raw'], src['terminated'], target)
             if not src['terminated']:
                 bucket = 'runaway'
+            elif record['reason'] == 'value mismatch':
+                # The grammar PARSED this answer and the value was wrong. Whatever else the
+                # text contains, the scorer did its job, so it cannot be a presentation
+                # rejection. This is the general form of the compound-duration bug above and
+                # catches any future matcher that is too generous.
+                bucket = 'wrong_answer'
             elif asserts_target(src['raw'], target):
                 bucket = 'format_only'
             else:
