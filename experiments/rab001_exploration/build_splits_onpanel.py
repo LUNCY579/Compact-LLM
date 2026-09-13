@@ -114,7 +114,31 @@ def main() -> int:
                  'source_row_id': r['id']}
                 for r in (rng.choice(probe[f]) for f in names)]
 
-    train, dev = prepared(train_fams, 'train'), prepared(dev_fams, 'dev')
+    def scorable(names):
+        """DEV must be SCORABLE, not just trainable.
+
+        `prepared()` renders the full chat text including the assistant's reply, which is what
+        a training row needs and exactly what an evaluation row must not contain. Greedy model
+        soup has to select ingredients on a held-out set -- selecting on the 150-row panel
+        would fit the soup to the test set -- so DEV is emitted in the same shape as the panel:
+        the messages with the final assistant turn removed, plus that turn as the reference
+        answer. Mirrors `build_splits_large.py::task_rows`.
+        """
+        out = []
+        for r in (rng.choice(probe[f]) for f in names):
+            messages = r['messages']
+            if messages[-1]['role'] != 'assistant':
+                continue
+            out.append({'id': r['id'], 'group_id': r['metadata']['template_family'],
+                        'split': 'task', 'reply_class': r['metadata']['reply_class'],
+                        'messages': messages[:-1], 'answer': messages[-1]['content'].strip(),
+                        'difficulty': r['metadata'].get('difficulty'),
+                        'multi_turn': r['metadata'].get('multi_turn')})
+        return out
+
+    train, dev = prepared(train_fams, 'train'), scorable(dev_fams)
+    if len(dev) != len(dev_fams):
+        print(f'  note: {len(dev_fams)-len(dev)} dev families dropped (no assistant turn)')
 
     large = ROOT / 'outputs' / 'splits_large'
     other = {}
@@ -139,7 +163,10 @@ def main() -> int:
 
     tokens = lambda rows: sum(len(tok(r['text'], add_special_tokens=False)['input_ids']) - 1
                               for r in rows)
-    train_tokens, dev_tokens = tokens(train), tokens(dev)
+    train_tokens = tokens(train)
+    # DEV rows are scorable (messages + answer), so there is no `text` to count. Report the
+    # reference-answer length instead, which is what a generation probe actually has to produce.
+    dev_tokens = sum(len(tok(r['answer'], add_special_tokens=False)['input_ids']) for r in dev)
 
     OUT.mkdir(parents=True, exist_ok=True)
     for name, rows in (('train', train), ('dev', dev)):
@@ -160,7 +187,11 @@ def main() -> int:
                      'spare': len(spare), 'clean_spare': len(clean),
                      'train': len(train_fams), 'dev': len(dev_fams)},
         'rows': {'train': len(train), 'dev': len(dev)},
-        'supervised_target_tokens': {'train': train_tokens, 'dev': dev_tokens},
+        'supervised_target_tokens': {'train': train_tokens},
+        'dev_reference_answer_tokens': dev_tokens,
+        'dev_format': 'scorable: messages with the final assistant turn removed, plus that turn '
+                      'as `answer`. Same shape as the 150-row panel, so the same probe and '
+                      'scorer run on it unchanged.',
         'train_classes': dict(Counter(r['reply_class'] for r in train)),
         'dev_classes': dict(Counter(r['reply_class'] for r in dev)),
         'panel_replay_verified': True, 'disjointness': checks,
