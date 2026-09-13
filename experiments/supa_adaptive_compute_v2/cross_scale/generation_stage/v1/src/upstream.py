@@ -74,7 +74,8 @@ def _legacy_helpers():
         require_committed=manifests._require_committed)
 
 def _stage_sources():
-    files={p for root in (STAGE/'src',STAGE/'tests') for p in root.glob('*.py')}
+    files={p for root in (STAGE/'src',STAGE/'tests',STAGE/'scripts') for p in root.rglob('*.py')}
+    files.update(p for p in (STAGE/'protocol').rglob('*') if p.is_file() and p.suffix in ('.md','.json'))
     if (STAGE/'README.md').is_file():files.add(STAGE/'README.md')
     return {p.relative_to(REPO).as_posix():_sha(p) for p in sorted(files)}
 
