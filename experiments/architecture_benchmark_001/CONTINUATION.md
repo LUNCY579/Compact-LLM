@@ -100,6 +100,14 @@ the failed `G1_CED_*` receipts as parents.
    diagnostic manufactured a FAIL. **D40 scores 0/150, losing all 47**, while passing `G1_WIDTH`
    7/7 and the full parity grid. See `evidence/retention-design-v1/FIRST_MEASUREMENT.md`.
 
+8. **The "usable budget: 2-3 banks" figure is a CE claim, and capability contradicts it.**
+   Measured on the 150-row probe with the typed grammar at digest `a329eb7b`, displaced banks
+   cost answers non-linearly where CE is smooth: 0 banks 47/47 kept (`ced_last1`, the bitwise
+   identity control, holds exactly), 1 bank loses 9 of 52, 2 banks loses 27 of 50, **3 banks —
+   the top of the claimed usable budget — leaves 2 of 48 and terminates on 53/150**, 7 banks
+   terminates on nothing. See `evidence/retention-design-v1/DISPLACED_BANK_CAPABILITY.md`.
+   Initialization only; a trained `ced_last3` is untested.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.

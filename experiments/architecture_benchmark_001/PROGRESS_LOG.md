@@ -888,3 +888,49 @@ hashes. `G1_RETENTION_B28` PASS 11/11 and `G2_RETENTION_B28` PASS 13/13 with the
 What the review did NOT overturn: the source baseline 47/150, the D40 result (CE 0.1308 nats
 better than its teacher, 0/150 on the probe), the signal-separation analysis, and the finding
 that `arm_answers_changed` is 0/150 so the training-side gate is still behaviourally untested.
+
+### 2026-09-13, later still — the "2–3 banks usable" budget does not survive a capability measure
+
+Extended `retention_probe.py` to build `ced_lastN` arms in memory (the same `to_ced` construction
+`rigorous_pilot.py` uses) and to take its source side from the frozen `G1_RETENTION_B28` receipt
+rather than regenerating it — halving runtime and memory, and making the reference provably the
+one the registered gate uses. The run aborts unless re-scoring reproduces both frozen references
+exactly (47 permissive / 41 strict); it did, on every arm.
+
+Validated the rewrite against the known D40 result first: 0/150, lost 47, identical per-class —
+reproduced exactly, in 264 s against the old 494 s.
+
+| arm | displaced banks | source | arm | ref | lost | terminated | verdict |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `ced_last1` | **0** | 47 | **47** | 47 | **0** | 148/150 | **PASS** |
+| `ced_last2` | 1 | 47 | 43 | 52 | 9 | 149/150 | FAIL |
+| `ced_last3` | 2 | 47 | 23 | 50 | 27 | 131/150 | FAIL |
+| `ced_last4` | 3 | 47 | **2** | 48 | 46 | 53/150 | FAIL |
+| `ced_last8` | 7 | 47 | **0** | 47 | 47 | **0/150** | FAIL |
+
+**`ced_last1` is the standing bitwise-identity control and it holds**: 47/47, zero losses in all
+three classes, all 24 recorded samples byte-identical to the source. That is what makes the rest
+of the column trustworthy.
+
+**The headline "usable budget: 2–3 banks (~10% KV)" was derived from the CE exchange rate and
+does not hold on capability.** One displaced bank already costs 9 of 52 reference answers; two
+costs more than half; **three — the top of the claimed budget — leaves 2 of 48 and collapses
+termination to 53/150**; seven terminates on nothing at all. CE degrades smoothly and roughly
+linearly in the displaced count, which is the measured law and is not disputed. Capability falls
+off a cliff between one and three banks. The ~10% KV figure was never a capability claim.
+
+Smaller finding: the arms are not strictly worse than the source everywhere — `ced_last2` answers
+5 questions the source gets wrong, `ced_last3` 3, `ced_last4` 1 — which is why the reference rule
+is a union. It never compensates. This also confirms empirically what the adversarial pass
+flagged: `gained` is identically 0 wherever the reference is that union, so the probe now reports
+`arm_correct_outside_source` (= reference − source) instead.
+
+Write-up: `evidence/retention-design-v1/DISPLACED_BANK_CAPABILITY.md`. Initialization only, one
+panel, one seed; a trained `ced_last3` is a separate question this does not answer.
+
+Also this session: closed three documentation-staleness defects — `retention_dose.py` pinned its
+frozen reference to a superseded digest's directory (content happened to be identical, which is
+why that class of bug does not announce itself; it now resolves the current digest and refuses
+otherwise); `FIRST_MEASUREMENT.md` headings contradicted bodies already corrected, and referenced
+a section 8 that did not exist; and the retention stages were absent from `RUNBOOK.md` and
+`README.md` — the latter had never listed `qualify-quality` either, since HOTFIX-003.

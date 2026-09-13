@@ -1,0 +1,554 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_typed_retention_probe_only",
+  "note": "Produced by the package scorer but OUTSIDE the receipt system: no receipt, no gate, no stage opened, no efficacy claim. Exists because G1_RETENTION refuses an arm whose G1_QUALITY receipt failed, so the gate cannot otherwise be demonstrated on the arms it rejects.",
+  "label": "ced_last8",
+  "target": "ced_last8",
+  "built_from": "to_ced(encoder_layers=20, decoder_layers=8, donor_layer=20)",
+  "reference_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\outputs\\retention-a329eb7b\\B28\\retention.json",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "frozen_reference_sizes": {
+    "permissive": 47,
+    "strict": 41
+  },
+  "device": "cpu",
+  "probe_rows": 150,
+  "probe_sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+  "registered_bare_policy": "permissive",
+  "wall_seconds": 474.2146059999998,
+  "by_bare_policy": {
+    "permissive": {
+      "status": "FAIL",
+      "failed_classes": [
+        "percentage_reasoning",
+        "ratio_proportion",
+        "time_duration"
+      ],
+      "uninformative_classes": [],
+      "source_correct_total": 47,
+      "arm_correct_total": 0,
+      "reference_size": 47,
+      "lost_total": 47,
+      "gained_total": 0,
+      "per_class": {
+        "percentage_reasoning": {
+          "rows": 50,
+          "reference_n": 21,
+          "lost": 21,
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 21,
+          "arm_correct": 0
+        },
+        "ratio_proportion": {
+          "rows": 50,
+          "reference_n": 16,
+          "lost": 16,
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00529",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00538",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01017",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02658",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 16,
+          "arm_correct": 0
+        },
+        "time_duration": {
+          "rows": 50,
+          "reference_n": 10,
+          "lost": 10,
+          "lost_ids": [
+            "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 10,
+          "arm_correct": 0
+        }
+      },
+      "source_rate_by_class": {
+        "percentage_reasoning": "21/50",
+        "ratio_proportion": "16/50",
+        "time_duration": "10/50"
+      }
+    },
+    "strict": {
+      "status": "FAIL",
+      "failed_classes": [
+        "percentage_reasoning",
+        "ratio_proportion",
+        "time_duration"
+      ],
+      "uninformative_classes": [],
+      "source_correct_total": 41,
+      "arm_correct_total": 0,
+      "reference_size": 41,
+      "lost_total": 41,
+      "gained_total": 0,
+      "per_class": {
+        "percentage_reasoning": {
+          "rows": 50,
+          "reference_n": 21,
+          "lost": 21,
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00324",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00564",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00574",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00617",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00751",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00947",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__00974",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01035",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01533",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02013",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02574",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02683",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02811",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02832",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02937"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 21,
+          "arm_correct": 0
+        },
+        "ratio_proportion": {
+          "rows": 50,
+          "reference_n": 10,
+          "lost": 10,
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00035",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00094",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00720",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01181",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02248",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 10,
+          "arm_correct": 0
+        },
+        "time_duration": {
+          "rows": 50,
+          "reference_n": 10,
+          "lost": 10,
+          "lost_ids": [
+            "rineya_v3_sft__time_duration__reas_time_duration_s00__00242",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02318",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02996"
+          ],
+          "retained": 0,
+          "gained": 0,
+          "terminated": 0,
+          "source_correct_terminated": 10,
+          "arm_correct": 0
+        }
+      },
+      "source_rate_by_class": {
+        "percentage_reasoning": "21/50",
+        "ratio_proportion": "10/50",
+        "time_duration": "10/50"
+      }
+    }
+  },
+  "bare_policy_verdicts_agree": true,
+  "samples": [
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "quantity",
+        "value": "64",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": "60 units.",
+      "arm": "SOTHU billaaboox!halfstagfloor.roman // 480 units. vows ammuted",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "quantity",
+        "value": "40",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": "30 units.",
+      "arm": "150 unplopped ticketspiration\n\nWait, did I hear partial credit letters or typo typo soup cough fixation before now",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "duration",
+        "value": "2700",
+        "bare_allowed": false
+      },
+      "source": "9:15 AM - 8:30 AM = 45 minutes",
+      "arm": "Acquisition limit reduced to 125,000 effective usage value based on the shortened version.\n\nthanks for",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "duration",
+        "value": "5400",
+        "bare_allowed": false
+      },
+      "source": "2 hours",
+      "arm": "1 hour and 3\u2060: sum total of 1 hour and 30 seconds is approximately 1 hour",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": "9:15 AM to 10:85 AM",
+      "arm": "undefined trove of fallen angels, fallen angels, and fallen angels... weighing room behind the scale tilting dangerously low enough",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 980
+      },
+      "source": "4:20 PM",
+      "arm": "10th floor down from the stairs outside stairs directly down stairs directly down stairs.\n\nthanks! \ud83d\udc4d\nbumble",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "count",
+        "value": "54",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "sensor tag",
+          "sensor tags",
+          "tag",
+          "tags"
+        ]
+      },
+      "source": "36 sensor tags.",
+      "arm": "Each additional order reduces the effective usage time linearly.\n####\n1800 orifice stable strong enough to support further",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 1135
+      },
+      "source": "It ends at 6:55 PM.",
+      "arm": "Itinerary.everyapothemesystemrecommendedtoubalanceoverrideexplicitwithdrawalagependantofexplicitwithdrawalascents",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "quantity",
+        "value": "50",
+        "bare_allowed": true,
+        "unit": "unit"
+      },
+      "source": "50 units.",
+      "arm": "$ 25%-quarters = 50% quarter equivalents, or 125%-quarters emanating from",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00883",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "count",
+        "value": "18",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": "15",
+      "arm": "159: 159\u4e2a\u5143\u7d20\u7ebf\u5bf9\u9f50\uff0c(equal temperament scaling theory\u5bb6)|[](https://",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02787",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "number",
+        "value": "90",
+        "bare_allowed": true
+      },
+      "source": "A quantity of 120 decreases by 25%.",
+      "arm": "A quarter-century postponement.\u00a0\u25fb\u8fdb\u53bb\u540e\u770b\u4e0b\u8bdd Articulado 1.evolution of the scale",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02752",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "distance_km",
+        "value": "55",
+        "bare_allowed": true
+      },
+      "source": "55 km",
+      "arm": "Solenquadrilateral Jamaica Jewel wey ngay dons 15 km altogether.tram limited to 1",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "percent",
+        "value": "20",
+        "bare_allowed": true
+      },
+      "source": "200%",
+      "arm": "240%\n###### caution: Please separate Chinese promotions and other unrelated items. Report further before proceeding.\n\nSophomore",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00171",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": "9:15 AM + 70 minutes = 10:45 AM",
+      "arm": "It was scheduled for 70 minutes and ended at 10:45 AM. //= 10:",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "volume_cups",
+        "value": "8",
+        "bare_allowed": true
+      },
+      "source": "16 cups",
+      "arm": "12 \u00bd cups internal states leakedforge\n\nWait, sorry\u2014Iaponically updated the safer version.\n\nWhat is the",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02155",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "volume_cups",
+        "value": "5",
+        "bare_allowed": true
+      },
+      "source": "20 cups",
+      "arm": "Wait, did it go anywhere thus far without a breakdown breakdown breakdown?\n\nWait, did it go anywhere thus far without a",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s00__00027",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 625
+      },
+      "source": "10:45 AM",
+      "arm": "10509:45 AM.reichstag\n\nBorn under oppositional family compositions. Cockshing was",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": "It runs from 2:20 PM to 3:10 PM.",
+      "arm": "From 2:40 p.m. to 3:10 pments. Approximately thirtyor about an hour",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02114",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 970
+      },
+      "source": "It ends at 4:10 PM.",
+      "arm": "Separating before confirming donations ensures transparency and transparency governments spend wisely. Colombia cannot supportively reduce famine risk groups without transparency enough",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "clock",
+        "minute_of_day": 595
+      },
+      "source": "11:55 AM",
+      "arm": "4th floor floor dew room, room key card please take it now.\n\n\u622a\u6b62\u65f6\u95f4\uff1a4:50 PM /",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01739",
+      "reply_class": "time_duration",
+      "target": {
+        "kind": "duration",
+        "value": "3000",
+        "bare_allowed": false
+      },
+      "source": "1 hour and 40 minutes",
+      "arm": "3 hour(s) and 4 corners added invariantsially. //= apostrophe range between 3 hours before contact and",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s01__00598",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "money",
+        "value": "56",
+        "bare_allowed": true
+      },
+      "source": "$168",
+      "arm": "Roughly speaking, it costs ${(24 // 3)\u9032\u4f4d\u4e58\u4ee5 3}\u5de6\u53f3 USD\u7ea6\u5408",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+      "reply_class": "ratio_proportion",
+      "target": {
+        "kind": "count",
+        "value": "9",
+        "bare_allowed": true,
+        "unit_aliases": [
+          "timing chip",
+          "timing chips",
+          "chip",
+          "chips"
+        ]
+      },
+      "source": "9",
+      "arm": "225 bulbs internal emitterigated.formatting conventions notional.numerator.TryParse(thonemweyymce\u5927\u5956",
+      "source_terminated": true,
+      "arm_terminated": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+      "reply_class": "percentage_reasoning",
+      "target": {
+        "kind": "money",
+        "value": "108",
+        "bare_allowed": true
+      },
+      "source": "$108",
+      "arm": "Itinerary card scrambleboard gemination anomaly artifact warping bloometic solvents. \ud83d\udd25\u7624orphan caused decay rings",
+      "source_terminated": true,
+      "arm_terminated": false
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}
