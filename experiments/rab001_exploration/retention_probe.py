@@ -16,6 +16,14 @@ same code the gate runs. What it does not produce is a receipt, and it cannot op
   * `ced_lastN` -- built in memory by `to_ced` with N trailing layers displaced, the same
     construction `rigorous_pilot.py` uses, so the displaced-layer family can be measured on
     CAPABILITY rather than on cross-entropy
+  * `dual28_<H|P|C|D56|C28>` -- the D28-001 arms. H56 and P56 keep all 28 decoder blocks and
+    ADD a memory read per block whose output projection is initialised to zero, so both are
+    function-preserving at initialisation by construction and must score exactly the source's
+    47/47. D56 is the identity-expanded depth control (same prediction). C56 and C28 are
+    explicitly NOT function-preserving. These are built on the GPU when one is available --
+    H56 is 1.156B parameters and construction peaks at source + result -- then moved to the
+    CPU for scoring, because the frozen reference is a CPU measurement. The weights are exact
+    copies and zeros, never arithmetic, so the build device cannot change a value.
   * `latent_<fit>_r<rank>` -- per-layer low-rank KV compression, `fit` in {whitened, plain},
     the same construction `latent_sweep.py` uses. Calibration covariance is collected from
     TRAIN, never DEV or the probe. `latent_whitened_r1024` is an exactness control: at
@@ -195,6 +203,31 @@ def main() -> int:
             latent_info['covariance_health'] = health
         built_from = (f'LatentKVModel(rank={rank}, fit={fit}) '
                       f'kv_ratio={info["kv_ratio"]:.4f} exact={info["exact_reparameterisation"]}')
+    elif target.startswith('dual28_'):
+        from experiments.dual28_ced_v1.model import DualStack, controls, dual_budget
+        arm = target[len('dual28_'):]
+        build = 'cuda' if torch.cuda.is_available() else device
+        src = run._load(SOURCE, build)[0]
+        if arm in ('H', 'P', 'C'):
+            model = DualStack.from_source(src, arm)
+            built_from = f'DualStack.from_source(mode={arm})'
+        elif arm in ('D56', 'C28'):
+            model = controls(src, arm)
+            built_from = f'controls(arm={arm})'
+        else:
+            raise SystemExit('dual28 arm is one of H, P, C, D56, C28')
+        params = sum(p.numel() for p in model.parameters())
+        del src
+        gc.collect()
+        if build != device:
+            model = model.to(device)
+            gc.collect()
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+        latent_info = {'arm': arm, 'parameters': params, 'built_on': build,
+                       'scored_on': device,
+                       'function_preserving_by_construction': arm in ('H', 'P', 'D56')}
+        built_from += f' params={params:,} built_on={build}'
     else:
         model = run._restore(Path(target), device)
         built_from = f'checkpoint {target}'

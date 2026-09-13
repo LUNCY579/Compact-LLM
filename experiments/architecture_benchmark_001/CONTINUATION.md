@@ -129,6 +129,20 @@ the failed `G1_CED_*` receipts as parents.
     the r512 fit rests on a very low-dimensional subspace of TRAIN. See
     `evidence/retention-design-v1/LATENT_KV_GATED.md`.
 
+11. **The transition is what killed CED, not the architecture.** D28-001's H56 keeps all 28
+    decoder blocks with self-attention and ADDS a zero-init memory read per block. On the 150-row
+    panel with real weights it scores **47/47, 0 lost, byte-identical on every recorded sample**
+    — as do P56 and D56, all function-preserving by construction. C56, the *same* shared-memory
+    idea built as a **replacement** (decoder self-attention removed), scores **0/150 and
+    terminates on nothing**, as does the old 14+14 C28. Same idea, opposite outcome: shared
+    causal memory did not kill the converted arms — removing the decoder's own attention to make
+    room for it did. Also the first execution of D28-001 on real weights (upstream had
+    `official_weights_loaded: false`). **But H56's pass is expected BY CONSTRUCTION** — the read
+    branch is zero, so H56 at init IS B28 plus 560M dead parameters. It tests wiring, not
+    usefulness, and H/P/D56 are indistinguishable at init by necessity. Cost is 596M -> 1.156B
+    parameters and 28 -> 57 KV banks: more memory, not less. See
+    `evidence/retention-design-v1/DUAL28_GATED.md`.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
@@ -194,16 +208,25 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-**Calibrate the retention tolerance — and do the grammar review first, because it is a
-prerequisite rather than a parallel chore.** The gate now has its behavioural result: it fires
-while CE improves (lr 1e-4, 26 of 47 lost against a 3.93-nat CE improvement) and it discriminates
-dose (lr 1e-5 loses 6). What it cannot do is certify anything, because
-`max_correct_to_incorrect_per_class` is 0 and even the preserving dose loses 6.
+**Run D28-001's P2 engineering smoke on H56 and P56, then probe both.** The additive transition
+is now verified capability-preserving on real weights (47/47, byte-identical), which is necessary
+and nowhere near sufficient: the read branch is zero-initialised, so H56 at init is B28 plus 560M
+dead parameters and H/P/D56 are indistinguishable by construction. The live question is whether
+the read becomes *useful*.
 
-Do not pick a tolerance from these numbers. At lr 1e-5, **140 of 150 answers changed phrasing
-while only 6 were lost**, and the grammar is known to reject the source's own `It ends at …`
-form on 7 rows — so an unknown share of those 6 is grammar fragility, not forgetting. Resolve
-that first, then register a tolerance prospectively with its own amendment.
+P2 is 25 steps, added-parameters-only AdamW at lr 1e-5, H and P matched on data order and
+optimizer policy. Probe each afterwards against the frozen 47-item reference. Outcomes:
+
+- **H improves, P does not** -> the context in the shared memory is doing the work. That is the
+  result the architecture exists for.
+- **H and P improve equally** -> the gain is parameter count, not memory.
+- **Either loses reference answers** -> the added branch is a liability under training, and the
+  gate catches it as it caught lr 1e-4 (26 of 47 lost while CE improved 3.93 nats).
+
+Caveat before reading anything into it: **25 steps is a null dose here.** The registered
+engineering lane changed 0 of 150 answers on B28, so P2 may show nothing, and that is not
+evidence of safety. Consider a larger dose via `retention_dose_gpu.py` (GPU training, CPU probes)
+if P2 is inert.
 
 Second, open the **grammar review** with the evidence gathered: 7 source answers are rejected
 for a sentence prefix the contract did not anticipate (`It ends at …`), 6 of them

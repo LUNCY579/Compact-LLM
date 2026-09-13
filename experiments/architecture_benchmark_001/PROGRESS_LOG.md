@@ -1065,3 +1065,43 @@ deliberately not applied: they belong to those packages' own branches, and silen
 another experiment's negative tests from this branch is what the agent contract forbids.
 
 Write-up: `evidence/retention-design-v1/MERGED_BRANCH_PORTABILITY.md`.
+
+### 2026-09-13, night — D28-001 through the retention gate: the transition, not the architecture
+
+Ran all five D28-001 arms on the 150-row typed panel against the paired 47-item reference, real
+official weights, built on GPU and scored on CPU (the reference's device).
+
+| arm | params | KV banks | transition | source | arm | lost | term | verdict |
+|---|---:|---:|---|---:|---:|---:|---:|---|
+| **H56** | 1,156,087,424 | 57 | additive, zero-init read | 47 | **47** | **0** | 148/150 | **PASS** |
+| **P56** | 1,156,087,424 | 57 | additive, same-token sigmoid | 47 | **47** | **0** | 148/150 | **PASS** |
+| **D56** | 1,036,516,352 | 56 | identity-expanded depth | 47 | **47** | **0** | 148/150 | **PASS** |
+| C56 | 979,890,816 | 29 | memory-only **replacement** | 47 | **0** | 47 | **0/150** | FAIL |
+| C28 | 568,786,304 | 15 | 14+14 split (the old arm) | 47 | **0** | 47 | 1/150 | FAIL |
+
+All three additive arms are **byte-identical to the source on 24/24 recorded samples**. Both bare
+policies agree everywhere.
+
+**The finding.** C56 is the *same* two-stack shared-memory idea as H56, built as a replacement —
+decoder self-attention removed, reads shared encoder K/V instead. It emits token salad and
+terminates on nothing. H56 keeps the self-attention and *adds* the read. Same idea, opposite
+outcome. So **shared causal memory did not kill the converted arms; removing the decoder's own
+attention to make room for it did.** That is the first positive structural result for the CED
+family here, and it makes the earlier negative precise rather than overturning it.
+
+Also the **first execution of D28-001 on real weights** — upstream had `official_weights_loaded:
+false`, `evidence_profile: local_scoped_random_weight_mechanics`, and an `official_preflight` of
+`BLOCKED_OR_INTERRUPTED`. The 1,156,087,424 parameter count is now confirmed on real tensors.
+
+**What it is not.** H56's pass is expected BY CONSTRUCTION: with the read output projection at
+zero the branch contributes exactly 0, so H56 at init *is* B28 plus 560M dead parameters. It
+tests wiring, not usefulness. H/P/D56 are indistinguishable at init by necessity — P56 is the
+control that isolates context from parameter count and only becomes informative once trained, and
+D56 has no memory at all yet also scores 47/47. D28-001 says as much itself: *"A zero-output
+identity test alone is insufficient."* Cost is 596M → 1.156B parameters and 28 → 57 KV banks —
+more memory, not less.
+
+H56's first attempt was stood down by `hostbudget.guard` at 1.39 GiB free while moving the 4.3
+GiB model GPU→CPU; preserved as such and rerun at 6.97 GiB free.
+
+Write-up: `evidence/retention-design-v1/DUAL28_GATED.md`.
