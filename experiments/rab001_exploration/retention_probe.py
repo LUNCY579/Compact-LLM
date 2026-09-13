@@ -16,6 +16,10 @@ same code the gate runs. What it does not produce is a receipt, and it cannot op
   * `ced_lastN` -- built in memory by `to_ced` with N trailing layers displaced, the same
     construction `rigorous_pilot.py` uses, so the displaced-layer family can be measured on
     CAPABILITY rather than on cross-entropy
+  * `latent_<fit>_r<rank>` -- per-layer low-rank KV compression, `fit` in {whitened, plain},
+    the same construction `latent_sweep.py` uses. Calibration covariance is collected from
+    TRAIN, never DEV or the probe. `latent_whitened_r1024` is an exactness control: at
+    rank = 2*kv the reparameterisation is exact, so it must reproduce the source bit for bit.
 
 Writes `evidence/retention-design-v1/RETENTION_PROBE_<label>.json`.
 
@@ -31,10 +35,14 @@ Exploratory. Outside the hashed root: no receipt, no gate, open splits only, no 
 from __future__ import annotations
 
 import gc
+import hashlib
 import json
 import sys
 import time
 from pathlib import Path
+from types import SimpleNamespace
+
+import torch
 
 sys.stdout.reconfigure(encoding='utf-8')
 sys.stderr.reconfigure(encoding='utf-8')
@@ -49,9 +57,28 @@ from experiments.architecture_benchmark_001.gates import (implementation_digest,
                                                           protocol)
 from experiments.architecture_benchmark_001.source import ROOT          # noqa: E402
 
+class _LatentDecodeShim(torch.nn.Module):
+    """`run._greedy_probe` speaks the DenseReference calling convention; `LatentKVModel`
+    returns a plain `(logits, cache)` tuple and has no `last_position_only`. Adapt here rather
+    than fork the probe, so every arm in this programme is scored by the identical generation
+    loop. Ignoring `last_position_only` only costs prefill logits for positions that are then
+    discarded; it changes no value."""
+
+    def __init__(self, inner):
+        super().__init__()
+        self.inner = inner
+
+    def forward(self, ids, past=None, use_cache=False, last_position_only=False):
+        out = self.inner(ids, past=past, use_cache=use_cache)
+        logits, cache = out if use_cache else (out, None)
+        return SimpleNamespace(logits=logits, cache=cache)
+
+
 SOURCE = Path('C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/'
               'Rineya-Supa-1.7.0-devfreeze')
 OUT = ROOT / 'evidence' / 'retention-design-v1'
+#: TRAIN rows used to fit the whitened covariance, matching latent_sweep.py.
+NCAL = 256
 
 
 def main() -> int:
@@ -102,6 +129,7 @@ def main() -> int:
     tokenizer = run._load_tokenizer(SOURCE)
     eos = run._eos_ids(SOURCE, tokenizer)
     built_from = None
+    latent_info = None
     if target == 'source':
         model = run._load(SOURCE, device)[0]
         built_from = 'frozen source (tautological control)'
@@ -120,6 +148,53 @@ def main() -> int:
         del src
         gc.collect()
         built_from = f'to_ced(encoder_layers={enc}, decoder_layers={n}, donor_layer={enc})'
+    elif target.startswith('latent_'):
+        # Per-layer low-rank KV, exactly latent_sweep.py's construction. The covariance for the
+        # whitened fit is collected from TRAIN rows: fitting it on DEV or on the probe would
+        # tune the compression to the split it is then scored on.
+        from experiments.rab001_exploration.latent_kv import (LatentKVModel,
+                                                              collect_input_covariance,
+                                                              covariance_health)
+        _, fit, rank_s = target.split('_', 2)
+        if fit not in ('whitened', 'plain') or not rank_s.startswith('r'):
+            raise SystemExit('latent target is latent_<whitened|plain>_r<rank>')
+        rank = int(rank_s[1:])
+        src = run._load(SOURCE, device)[0]
+        src.eval()
+        covs = health = None
+        if fit == 'whitened':
+            jl = lambda q: [json.loads(l) for l in Path(q).read_text(
+                encoding='utf-8').splitlines() if l.strip()]
+            calib = [x for x in (run._load_tokenizer(SOURCE)(
+                r['text'], return_tensors='pt', add_special_tokens=False)['input_ids']
+                for r in jl(ROOT / 'outputs/splits_large/train.jsonl')[:NCAL])
+                if x.shape[1] >= 2]
+            key = hashlib.sha256(
+                f'{NCAL}|{run.sha256_file(ROOT / "outputs/splits_large/train.jsonl")}'.encode()
+            ).hexdigest()[:16]
+            cache = ROOT / 'outputs' / f'latent-cov-{key}.pt'
+            if cache.is_file():
+                blob = torch.load(cache)
+                covs, cal_tokens = blob['covs'], blob['tokens']
+                print(f'reused covariance cache {cache.name} ({cal_tokens} TRAIN tokens)',
+                      flush=True)
+            else:
+                print(f'collecting covariance over {len(calib)} TRAIN rows...', flush=True)
+                covs, cal_tokens = collect_input_covariance(src, calib)
+                torch.save({'covs': covs, 'tokens': cal_tokens}, cache)
+            health = covariance_health(covs, cal_tokens, src.config.hidden_size)
+            print(f'  {cal_tokens} tokens, {health["tokens_per_dimension"]:.1f} tokens/dim, '
+                  f'effective rank {health["min_effective_rank"]:.0f}-'
+                  f'{health["mean_effective_rank"]:.0f}', flush=True)
+        latent = LatentKVModel(src, rank)
+        info = latent.fit(covs)
+        latent.eval()
+        model = _LatentDecodeShim(latent)
+        latent_info = {k: v for k, v in info.items() if k != 'per_layer'}
+        if health:
+            latent_info['covariance_health'] = health
+        built_from = (f'LatentKVModel(rank={rank}, fit={fit}) '
+                      f'kv_ratio={info["kv_ratio"]:.4f} exact={info["exact_reparameterisation"]}')
     else:
         model = run._restore(Path(target), device)
         built_from = f'checkpoint {target}'
@@ -136,6 +211,7 @@ def main() -> int:
                       'G1_RETENTION refuses an arm whose G1_QUALITY receipt failed, so the '
                       'gate cannot otherwise be demonstrated on the arms it rejects.',
               'label': label, 'target': target, 'built_from': built_from,
+              'latent': latent_info,
               'reference_receipt': str(receipt_path), 'reference_digest': implementation_digest(),
               'frozen_reference_sizes': {k: len(v) for k, v in references.items()},
               'device': device, 'probe_rows': len(rows),

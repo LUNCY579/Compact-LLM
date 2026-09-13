@@ -987,3 +987,39 @@ CUBLAS_STATUS_EXECUTION_FAILED lives in exactly that workload. TF32 forced off a
 
 Write-up: `evidence/retention-design-v1/DOSE_RESPONSE_RESULT.md`. Exploratory: no receipt, no
 stage opened. Training ran on GPU so these are not comparable to the CPU-trained corpus.
+
+### 2026-09-13, late — latent KV through the retention gate
+
+Extended `retention_probe.py` with a `latent_<fit>_r<rank>` target (the same `LatentKVModel`
+construction `latent_sweep.py` uses, covariance from TRAIN, cached across arms) and a decode shim,
+because `LatentKVModel.forward` returns a bare `(logits, cache)` tuple and has no
+`last_position_only` — adapted rather than forking the probe, so every arm in this programme is
+scored by the identical generation loop.
+
+| arm | KV | exact | source | arm | ref | lost | new | term | verdict |
+|---|---:|:--:|---:|---:|---:|---:|---:|---:|---|
+| `whitened r1024` | **0.500x** | yes | 47 | 47 | 47 | **0** | 0 | 148/150 | **PASS** |
+| `whitened r512` | **0.250x** | no | 47 | **47** | 55 | **8** | 8 | 148/150 | FAIL |
+| `whitened r293` | 0.143x | no | 47 | 24 | 55 | 31 | 8 | 150/150 | FAIL |
+| `plain r512` | 0.250x | no | 47 | **0** | 47 | **47** | 0 | **0/150** | FAIL |
+
+**The 2x is exact and the exactness control holds** — 0 losses in all three classes, reference
+equals the source set (47, not 55), spectral energy 1.000000. Second bitwise-identity control
+alongside `ced_last1`. A 2x KV reduction at zero measured capability cost and zero training is
+the strongest positive result in this programme.
+
+**The 4x is not free, and only a paired reference sees it.** `whitened r512` scores 47/150 —
+*identical* to the source. A rate comparison reports no change, which is exactly what the legacy
+19/60-vs-20/60 reading said. But the reference is 55: the arm loses **8** of the source's correct
+answers and gains 8 different ones. 17% forgetting at zero net rate change. `ratio_proportion`
+takes 5 of the 8. "No measurable capability cost" is no longer defensible.
+
+**Whitening is the entire mechanism.** `plain r512` at the same rank and same 0.250x KV scores
+**0/150 and terminates on nothing**. Activation-covariance fitting is not a refinement.
+
+Caveat for anyone considering 4x: `covariance_health` reports **effective rank 4-5 of 1024** over
+33,918 calibration tokens. Token count is fine; the anisotropy is extreme, so the r512 fit is
+determined by a very low-dimensional subspace of TRAIN. Nothing here tests out-of-distribution
+inputs.
+
+Write-up: `evidence/retention-design-v1/LATENT_KV_GATED.md`.

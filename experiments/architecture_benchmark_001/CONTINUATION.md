@@ -117,6 +117,18 @@ the failed `G1_CED_*` receipts as parents.
    answers changed before training; trained on GPU, probed on CPU). See
    `evidence/retention-design-v1/DOSE_RESPONSE_RESULT.md`.
 
+10. **Latent KV through the gate: 2x is exact, 4x is not free, and whitening is everything.**
+    On the 150-row typed panel against the paired 47-item reference: `whitened r1024` (0.500x KV,
+    exact) **PASSES with 0 losses** — the programme's strongest positive result, and a second
+    bitwise-identity control. `whitened r512` (0.250x) scores **47/150, identical to the source**,
+    yet loses **8** of the source's 47 and gains 8 different ones (reference 55): a rate
+    comparison cannot see this, which is why the legacy "4x at no measurable capability cost"
+    reading was wrong. `whitened r293` loses 31 of 55. And `plain r512` — same rank, same 0.250x —
+    scores **0/150 and terminates on nothing**, so the activation-covariance whitening is the
+    entire mechanism, not a refinement. Caveat: covariance effective rank is **4-5 of 1024**, so
+    the r512 fit rests on a very low-dimensional subspace of TRAIN. See
+    `evidence/retention-design-v1/LATENT_KV_GATED.md`.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
