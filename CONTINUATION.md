@@ -140,13 +140,33 @@ B28last20 completed in about 324 seconds through its final probe: 67 correct /40
 trainable parameters were saved and independently hash-verified. The incomplete six-pair
 snapshot is outputs/depth-through-last20-20260913.json; significance remains withheld.
 
-Full B28 R4 is now RUNNING with .25/.5/.75/1 probes and final save. Inspect
-`experiments/rab001_exploration/outputs/B28_full_20260913.log` and processes for current
-status (root exec session 96525 if still available). Prelaunch host budget passed, idle
-free RAM 5.57 GiB. Do not change arm_dose.py while active: it hashes its own bytes and
-refuses evidence after an edit. When it finishes, validate its artifact/checkpoint and
-generate the complete frontier report with a NEW --out path. Then run the registered
-B28 alpha sweep; P requires the memory headroom noted below.
+The first new full-B28 R4 FAILED on hostbudget after one update /186 targets: free RAM
+0.18 GiB, committed 28 GiB. Its canonical ARM_DOSE_B28_lr1e-05_b5200_seed17.json is
+completed=false, contains only the untrained source probe, and has no saved checkpoint.
+Its displayed 47/150 is NOT a trained score. Preserve its bytes and original log
+outputs/B28_full_20260913.log. Historical successful B28 had the identical optimizer split
+(1.85 GiB GPU /2.59 GiB disk), so this is not an established placement regression.
+
+Resource-only retry1 is preregistered and committed in c5e2bae. run_registry.json explicitly
+maps the canonical B28 tag to B28_lr1e-05_b5200_seed17_retry1 and binds the preserved failure.
+Reporters use this alias and never choose the newest file. A different retry requires a
+new explicit registration, not a silent filename choice.
+
+Full B28 retry1 is now RUNNING (root exec session 89553 if still available), with .25/.5/.75/1
+probes and final save. Log: experiments/rab001_exploration/outputs/B28_retry1_20260913.log.
+It uses RAB001_ADAM_STORAGE=streamed and RAB001_GPU_WORKSPACE_GIB=1.5, plus positional final
+argument retry1. StreamedAdam preserves FP32 updates but uses at most128 MiB reusable host
+buffers instead of persistent moment mappings; unused CUDA cache is released after steps.
+Tiny CPU/CUDA tests verified exact parameters and both moments across five steps. These
+resource changes are not a proven root-cause attribution. Per-phase memory traces now land
+in its create-only outputs/arm-runs directory. All memory floors remain in force.
+
+Do not edit arm_dose.py, streamed_adam.py or retention_dose_gpu.py while retry1 is active:
+the harness hashes those files and refuses evidence after edits. When it finishes, validate
+the registered retry artifact/checkpoint and make a NEW complete frontier report. Then run
+the B28 alpha sweep on the exact retry1 tag. Use that same tag explicitly as the seed17
+baseline soup ingredient; model_soup takes exact tags and does not resolve the registry.
+All subsequent full B28 soup runs should use streamed storage and 1.5 GiB workspace.
 
 P alpha memory: idle free physical RAM was about 5.5 GiB, below the P runtime+model envelope.
 The user has been asked to free about 1.5 GiB by closing unused applications, or leave P
@@ -170,6 +190,10 @@ using that same helper and record its hash. Do not regenerate/overwrite historic
 JSON merely to use the helper. Mechanical validation passed 51 tests: tail boundaries (3),
 alpha metadata/tensor endpoint interpolation (11), soup guards/streamed roundtrip (11),
 frontier+alpha reporting and source/loss strata (26). These are not model-quality evidence.
+Subsequently eight retry-registry tests and three CPU/CUDA optimizer-storage tests passed
+(62 exploratory tests total). The required architecture package suite also passed all306
+tests (41.95s, no skips), and matrix/status checks completed at the unchanged a329eb7b digest.
+Status correctly leaves registered G3-G5 blocked; no exploratory result changes that.
 
 1. Finish/audit the inherited B28last16, run B28last12 and B28last20 at fixed recipe.
 2. Rerun full B28 with .25/.5/.75/1 probes and final checkpoint; record stratum split and
