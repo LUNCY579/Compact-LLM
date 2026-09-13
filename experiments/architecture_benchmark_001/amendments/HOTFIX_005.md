@@ -46,12 +46,39 @@ calibrated for a freshly converted model, and they are not merely uninformative 
 they are pointed the wrong way. The remaining two checks do not help: at 500k C28 terminates
 60/60 and emits 28 distinct answers over 60 prompts against a floor of 15.
 
-Every candidate signal already recorded was checked for a separating threshold, pooling all 18
-checkpoints of that matched pair. **None separates them.** The clearest inversion is
-reply-region CE, the signal most likely to be adopted as a capability proxy: the control at
-step 0 sits at reply CE 2.6492 and scores 20/60, while C28 at 500k sits at 1.1039 and scores
-2/60. Lower reply-region CE, an order of magnitude worse capability. Reply-region CE is
-therefore **not** adopted here, and is recorded as a diagnostic only.
+All eight non-task quantities the run records were checked for a separating threshold across
+all 18 checkpoints of that matched pair, labelling capable as task ≥ 16/60 and incapable as
+≤ 4/60 — the control spans 16..26 and C28 spans 0..4, so no checkpoint falls in the gap and the
+labelling needs no tie-break. Artifact:
+`evidence/retention-design-v1/SIGNAL_SEPARATION.json`.
+
+**Seven of the eight admit no separating threshold at all, and four of them invert** — the
+incapable arm reads *better* than the capable one:
+
+| signal | inverted witness |
+|---|---|
+| held-out CE | C28 @500k (2/60) 0.4727 beats control @0 (20/60) 5.5782 |
+| reply-region CE | C28 @500k (2/60) 1.1039 beats control @0 (20/60) 2.6492 |
+| KL to source | C28 @25k (0/60) 2.9378 beats control @500k (26/60) 10.0334 |
+| reply-region KL | C28 @125k (3/60) 1.6752 beats control @500k (26/60) 3.1319 |
+
+Reply-region CE is the signal most likely to be adopted as a capability proxy, and it is one of
+the four that invert. It is therefore **not** adopted here and is recorded as a diagnostic only.
+
+**One signal does separate, and saying otherwise would repeat HOTFIX-003's error.** Top-1
+agreement with the source separates the two groups — but by **0.0038**: the weakest capable
+checkpoint sits at 0.32798 and the strongest incapable one at 0.32416. Three things make that
+unusable as a gate. The registered `G1_QUALITY` floor is 0.5, which **both** arms fail. No such
+threshold was ever registered, so choosing one inside a 0.0038 window after seeing these 18
+numbers is exactly the tuning `forbidden` lists. And the separation is an artifact of where the
+run stopped: the capable arm's top-1 is still falling toward the incapable arm's plateau over
+its last three milestones (−0.0080, −0.0016, −0.0010), so the entire gap is worth about 3.8
+milestones of its own recent drift and closes at a larger budget. One seed, one arm pair.
+
+The honest summary is therefore not "no likelihood-shaped quantity can ever separate these
+models" but: **of every quantity this programme actually recorded, none supports a defensible
+registered threshold, half of the likelihood-shaped ones point the wrong way, and the single
+exception is a 0.0038 knife-edge that is still closing.**
 
 ## What is added
 

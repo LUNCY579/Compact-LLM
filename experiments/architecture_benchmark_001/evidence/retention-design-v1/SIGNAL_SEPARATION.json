@@ -1,0 +1,508 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_signal_separation_reanalysis_only",
+  "note": "Re-analysis of two committed 500k artifacts. No model was loaded and no new measurement was taken. Outside the hashed root: no receipt, no gate, open splits only, no efficacy claim.",
+  "question": "Does any threshold on a recorded non-task signal separate the capable checkpoints from the incapable ones?",
+  "labelling_rule": {
+    "capable_task_at_least": 16,
+    "incapable_task_at_most": 4,
+    "checkpoints_in_gap": 0,
+    "basis": "source_control spans 16..26 and C28 spans 0..4 over the nine milestones, so the margin needs no tie-break"
+  },
+  "checkpoints": 18,
+  "capable": 9,
+  "incapable": 9,
+  "signals_tested": [
+    "dev_ce_nats",
+    "dev_response_ce_nats",
+    "dev_kl_to_source_nats",
+    "dev_response_kl_nats",
+    "dev_top1_agreement",
+    "dev_response_top1_agreement",
+    "task_terminated",
+    "task_distinct"
+  ],
+  "signals_that_separate": [
+    "dev_top1_agreement"
+  ],
+  "separating_signal_count": 1,
+  "results": {
+    "dev_ce_nats": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        0.3568717043283451,
+        5.578166207004967
+      ],
+      "incapable_range": [
+        0.472682903080634,
+        12.88797328663198
+      ],
+      "weakest_capable": 5.578166207004967,
+      "strongest_incapable": 0.472682903080634,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 0,
+          "task": "20/60",
+          "dev_ce_nats": 5.578166207004967
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 500099,
+          "task": "2/60",
+          "dev_ce_nats": 0.472682903080634
+        },
+        "reads_better": true
+      }
+    },
+    "dev_response_ce_nats": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        0.609112311293019,
+        2.6492320762218764
+      ],
+      "incapable_range": [
+        1.1038840638175411,
+        12.21811082294294
+      ],
+      "weakest_capable": 2.6492320762218764,
+      "strongest_incapable": 1.1038840638175411,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 0,
+          "task": "20/60",
+          "dev_response_ce_nats": 2.6492320762218764
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 500099,
+          "task": "2/60",
+          "dev_response_ce_nats": 1.1038840638175411
+        },
+        "reads_better": true
+      }
+    },
+    "dev_kl_to_source_nats": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        0.0,
+        10.033357753933709
+      ],
+      "incapable_range": [
+        2.937800961916024,
+        9.328506656668948
+      ],
+      "weakest_capable": 10.033357753933709,
+      "strongest_incapable": 2.937800961916024,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 500099,
+          "task": "26/60",
+          "dev_kl_to_source_nats": 10.033357753933709
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 25046,
+          "task": "0/60",
+          "dev_kl_to_source_nats": 2.937800961916024
+        },
+        "reads_better": true
+      }
+    },
+    "dev_response_kl_nats": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        0.0,
+        3.1318893911331656
+      ],
+      "incapable_range": [
+        1.675247562526092,
+        10.482403332167097
+      ],
+      "weakest_capable": 3.1318893911331656,
+      "strongest_incapable": 1.675247562526092,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 500099,
+          "task": "26/60",
+          "dev_response_kl_nats": 3.1318893911331656
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 125070,
+          "task": "3/60",
+          "dev_response_kl_nats": 1.675247562526092
+        },
+        "reads_better": true
+      }
+    },
+    "dev_top1_agreement": {
+      "separates_capable_from_incapable": true,
+      "capable_range": [
+        0.32797750552319743,
+        1.0
+      ],
+      "incapable_range": [
+        0.013054830287206266,
+        0.3241614782084756
+      ],
+      "weakest_capable": 0.32797750552319743,
+      "strongest_incapable": 0.3241614782084756,
+      "inverted_witness": null,
+      "durability": {
+        "capable_arm_last_three_deltas": [
+          -0.008034,
+          -0.001607,
+          -0.001004
+        ],
+        "capable_arm_still_moving_toward_incapable": true,
+        "gap": 0.0038160273147218593,
+        "milestones_of_recent_drift_the_gap_is_worth": 3.8,
+        "note": "The separation is a property of where this run stopped, not an established threshold. A capable arm still drifting toward the incapable plateau will erase it at a larger budget."
+      }
+    },
+    "dev_response_top1_agreement": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        0.5669291338582677,
+        1.0
+      ],
+      "incapable_range": [
+        0.010498687664041995,
+        0.5826771653543307
+      ],
+      "weakest_capable": 0.5669291338582677,
+      "strongest_incapable": 0.5826771653543307,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 500099,
+          "task": "26/60",
+          "dev_response_top1_agreement": 0.5669291338582677
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 125070,
+          "task": "3/60",
+          "dev_response_top1_agreement": 0.5826771653543307
+        },
+        "reads_better": true
+      }
+    },
+    "task_terminated": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        59,
+        60
+      ],
+      "incapable_range": [
+        0,
+        60
+      ],
+      "weakest_capable": 59,
+      "strongest_incapable": 60,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 25046,
+          "task": "23/60",
+          "task_terminated": 59
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 50059,
+          "task": "4/60",
+          "task_terminated": 60
+        },
+        "reads_better": true
+      }
+    },
+    "task_distinct": {
+      "separates_capable_from_incapable": false,
+      "capable_range": [
+        49,
+        55
+      ],
+      "incapable_range": [
+        21,
+        60
+      ],
+      "weakest_capable": 49,
+      "strongest_incapable": 60,
+      "inverted_witness": {
+        "capable_point": {
+          "arm": "source_control",
+          "tokens": 50059,
+          "task": "26/60",
+          "task_distinct": 49
+        },
+        "incapable_point": {
+          "arm": "C28",
+          "tokens": 0,
+          "task": "0/60",
+          "task_distinct": 60
+        },
+        "reads_better": true
+      }
+    }
+  },
+  "points": [
+    {
+      "arm": "C28",
+      "tokens": 0,
+      "task": 0,
+      "n": 60,
+      "dev_ce_nats": 12.88797328663198,
+      "dev_response_ce_nats": 12.21811082294294,
+      "dev_kl_to_source_nats": 9.328506656668948,
+      "dev_response_kl_nats": 10.482403332167097,
+      "dev_top1_agreement": 0.013054830287206266,
+      "dev_response_top1_agreement": 0.010498687664041995,
+      "task_terminated": 0,
+      "task_distinct": 60
+    },
+    {
+      "arm": "C28",
+      "tokens": 2512,
+      "task": 0,
+      "n": 60,
+      "dev_ce_nats": 12.129269886648926,
+      "dev_response_ce_nats": 11.698050491453156,
+      "dev_kl_to_source_nats": 8.718777311975924,
+      "dev_response_kl_nats": 9.944582330898976,
+      "dev_top1_agreement": 0.014862422173127134,
+      "dev_response_top1_agreement": 0.010498687664041995,
+      "task_terminated": 0,
+      "task_distinct": 60
+    },
+    {
+      "arm": "C28",
+      "tokens": 7638,
+      "task": 0,
+      "n": 60,
+      "dev_ce_nats": 9.17292103151596,
+      "dev_response_ce_nats": 8.855321238360068,
+      "dev_kl_to_source_nats": 6.089549343325953,
+      "dev_response_kl_nats": 6.967572885548349,
+      "dev_top1_agreement": 0.07109861417955413,
+      "dev_response_top1_agreement": 0.08398950131233596,
+      "task_terminated": 0,
+      "task_distinct": 60
+    },
+    {
+      "arm": "C28",
+      "tokens": 25046,
+      "task": 0,
+      "n": 60,
+      "dev_ce_nats": 3.735009451806964,
+      "dev_response_ce_nats": 4.061538201930329,
+      "dev_kl_to_source_nats": 2.937800961916024,
+      "dev_response_kl_nats": 2.255201255868426,
+      "dev_top1_agreement": 0.318738702550713,
+      "dev_response_top1_agreement": 0.4881889763779528,
+      "task_terminated": 58,
+      "task_distinct": 30
+    },
+    {
+      "arm": "C28",
+      "tokens": 50059,
+      "task": 4,
+      "n": 60,
+      "dev_ce_nats": 1.9166848557520688,
+      "dev_response_ce_nats": 3.432180918107821,
+      "dev_kl_to_source_nats": 4.603986309148816,
+      "dev_response_kl_nats": 1.8341692667307816,
+      "dev_top1_agreement": 0.3219521992367945,
+      "dev_response_top1_agreement": 0.5406824146981627,
+      "task_terminated": 60,
+      "task_distinct": 21
+    },
+    {
+      "arm": "C28",
+      "tokens": 125070,
+      "task": 3,
+      "n": 60,
+      "dev_ce_nats": 0.9300582481211126,
+      "dev_response_ce_nats": 2.2480943139613143,
+      "dev_kl_to_source_nats": 6.415371905754167,
+      "dev_response_kl_nats": 1.675247562526092,
+      "dev_top1_agreement": 0.3241614782084756,
+      "dev_response_top1_agreement": 0.5826771653543307,
+      "task_terminated": 60,
+      "task_distinct": 26
+    },
+    {
+      "arm": "C28",
+      "tokens": 250016,
+      "task": 3,
+      "n": 60,
+      "dev_ce_nats": 0.6265797742424923,
+      "dev_response_ce_nats": 1.515401815648467,
+      "dev_kl_to_source_nats": 7.587738276150457,
+      "dev_response_kl_nats": 1.9488410449090592,
+      "dev_top1_agreement": 0.3237597911227154,
+      "dev_response_top1_agreement": 0.5616797900262467,
+      "task_terminated": 60,
+      "task_distinct": 29
+    },
+    {
+      "arm": "C28",
+      "tokens": 375167,
+      "task": 3,
+      "n": 60,
+      "dev_ce_nats": 0.511133242620716,
+      "dev_response_ce_nats": 1.25085121438181,
+      "dev_kl_to_source_nats": 8.18962659527437,
+      "dev_response_kl_nats": 2.288953894392399,
+      "dev_top1_agreement": 0.3227555734083149,
+      "dev_response_top1_agreement": 0.5511811023622047,
+      "task_terminated": 60,
+      "task_distinct": 24
+    },
+    {
+      "arm": "C28",
+      "tokens": 500099,
+      "task": 2,
+      "n": 60,
+      "dev_ce_nats": 0.472682903080634,
+      "dev_response_ce_nats": 1.1038840638175411,
+      "dev_kl_to_source_nats": 8.584288324929547,
+      "dev_response_kl_nats": 2.590371257989738,
+      "dev_top1_agreement": 0.32235388632255474,
+      "dev_response_top1_agreement": 0.5643044619422573,
+      "task_terminated": 60,
+      "task_distinct": 28
+    },
+    {
+      "arm": "source_control",
+      "tokens": 0,
+      "task": 20,
+      "n": 60,
+      "dev_ce_nats": 5.578166207004967,
+      "dev_response_ce_nats": 2.6492320762218764,
+      "dev_kl_to_source_nats": 0.0,
+      "dev_response_kl_nats": 0.0,
+      "dev_top1_agreement": 1.0,
+      "dev_response_top1_agreement": 1.0,
+      "task_terminated": 60,
+      "task_distinct": 52
+    },
+    {
+      "arm": "source_control",
+      "tokens": 2512,
+      "task": 19,
+      "n": 60,
+      "dev_ce_nats": 4.9500637908708764,
+      "dev_response_ce_nats": 2.620687366157692,
+      "dev_kl_to_source_nats": 0.04881442802262177,
+      "dev_response_kl_nats": 0.0017022486220619928,
+      "dev_top1_agreement": 0.9566177947378992,
+      "dev_response_top1_agreement": 0.984251968503937,
+      "task_terminated": 60,
+      "task_distinct": 53
+    },
+    {
+      "arm": "source_control",
+      "tokens": 7638,
+      "task": 18,
+      "n": 60,
+      "dev_ce_nats": 3.7469150706404397,
+      "dev_response_ce_nats": 2.505150907621609,
+      "dev_kl_to_source_nats": 0.6331133937280229,
+      "dev_response_kl_nats": 0.09413370802959432,
+      "dev_top1_agreement": 0.7611970275155654,
+      "dev_response_top1_agreement": 0.889763779527559,
+      "task_terminated": 60,
+      "task_distinct": 55
+    },
+    {
+      "arm": "source_control",
+      "tokens": 25046,
+      "task": 23,
+      "n": 60,
+      "dev_ce_nats": 1.8740628072597292,
+      "dev_response_ce_nats": 2.1629065078465644,
+      "dev_kl_to_source_nats": 3.3693978638504376,
+      "dev_response_kl_nats": 0.6198044809613015,
+      "dev_top1_agreement": 0.42157059650532236,
+      "dev_response_top1_agreement": 0.7375328083989501,
+      "task_terminated": 59,
+      "task_distinct": 51
+    },
+    {
+      "arm": "source_control",
+      "tokens": 50059,
+      "task": 26,
+      "n": 60,
+      "dev_ce_nats": 1.0840996280447215,
+      "dev_response_ce_nats": 1.8913741868742182,
+      "dev_kl_to_source_nats": 5.743038614966061,
+      "dev_response_kl_nats": 0.7558181791950086,
+      "dev_top1_agreement": 0.36111669009841335,
+      "dev_response_top1_agreement": 0.7165354330708661,
+      "task_terminated": 60,
+      "task_distinct": 49
+    },
+    {
+      "arm": "source_control",
+      "tokens": 125070,
+      "task": 16,
+      "n": 60,
+      "dev_ce_nats": 0.6127430114623509,
+      "dev_response_ce_nats": 1.284032576556105,
+      "dev_kl_to_source_nats": 7.590947703008887,
+      "dev_response_kl_nats": 1.3046391354458227,
+      "dev_top1_agreement": 0.3386222132958425,
+      "dev_response_top1_agreement": 0.6482939632545932,
+      "task_terminated": 60,
+      "task_distinct": 49
+    },
+    {
+      "arm": "source_control",
+      "tokens": 250016,
+      "task": 23,
+      "n": 60,
+      "dev_ce_nats": 0.44174986197829225,
+      "dev_response_ce_nats": 0.9063925609485126,
+      "dev_kl_to_source_nats": 8.550947696144117,
+      "dev_response_kl_nats": 2.0289847625522164,
+      "dev_top1_agreement": 0.3305884715806387,
+      "dev_response_top1_agreement": 0.6036745406824147,
+      "task_terminated": 60,
+      "task_distinct": 49
+    },
+    {
+      "arm": "source_control",
+      "tokens": 375167,
+      "task": 26,
+      "n": 60,
+      "dev_ce_nats": 0.37937516547465666,
+      "dev_response_ce_nats": 0.694751329595355,
+      "dev_kl_to_source_nats": 9.290257815736249,
+      "dev_response_kl_nats": 2.384061794581376,
+      "dev_top1_agreement": 0.3289817232375979,
+      "dev_response_top1_agreement": 0.5695538057742782,
+      "task_terminated": 60,
+      "task_distinct": 50
+    },
+    {
+      "arm": "source_control",
+      "tokens": 500099,
+      "task": 26,
+      "n": 60,
+      "dev_ce_nats": 0.3568717043283451,
+      "dev_response_ce_nats": 0.609112311293019,
+      "dev_kl_to_source_nats": 10.033357753933709,
+      "dev_response_kl_nats": 3.1318893911331656,
+      "dev_top1_agreement": 0.32797750552319743,
+      "dev_response_top1_agreement": 0.5669291338582677,
+      "task_terminated": 60,
+      "task_distinct": 49
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}
