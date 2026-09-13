@@ -26,6 +26,8 @@ v2.4 CPU/GPU qualification **passed all 40 comparisons**, exact greedy/repeated-
 
 The independent 978-check resume audit at **03:21:25 UTC**, consistent with all 37 registration-bound attempt receipts inspected again at 17:13 UTC, found **A0 has 128 cases in 30 complete nonempty shards; AM has 16 cases in five complete shards; A1/A3/A16 have no v2.4 completed cases yet**. The nominal 32-shard schedule has two naturally empty shards. Two AM attempts failed RAM admission before any examples; the latest at 03:05 UTC saw 0.31 GiB versus the unchanged 0.50 GiB GPU staging floor. These are capacity failures, not mechanical rejection. The old queue's missing session and absent PID 230268 were recorded in an additional interruption receipt without inventing its stop time or post-run integrity. A new controller started at 17:13:49 UTC in `00_execution_queue/20260913T171349_1363153Z_2732bedc/`; later progress requires current run receipts. Partial AM output is not an accuracy denominator. A later terminal-manifest snapshot at **17:21:16 UTC** counts **A0 128/128 and AM 51/128 (12 complete shards)**, with A1/A3/A16 still pending. The two earlier RAM failures remain the only failed attempts; this count snapshot is not a new independent numerical audit. Evidence: `00_audit/execution_snapshot_20260913T172116.json`.
 
+An additional score-blind baseline audit passed **5,383 checks**: all 128 v2.4 A0 token sequences, reference NLL values and saved logit-file bytes equal v2.3 exactly. It rehashed 1,071 files including all 147 current Native source files; it does not claim a model or tensor rerun. Evidence: `00_audit/native_v2_4_baseline_review_20260913/`.
+
 Original random-control v2.2 and calibrated-random v2.3 mechanical failures remain preserved and are not relabeled. The complete new five-arm architecture gate precedes untouched confirmation. The confirmatory criterion remains at least +2 accuracy points or 5% relative error reduction, supportive paired 95% CI and McNemar, then A3 versus matched compute, with preservation/validity and quality-per-cost requirements. **Current Native GO/NO-GO: unresolved; confirmation closed.** Historical 12/16, 12/16 and 13/16 A0/A1/A3 results remain hypothesis-generating.
 
 ## Track B — donor transfer
@@ -38,6 +40,8 @@ The complete-matrix selector chose **B3 at Supa L19 / donor L24** using held-out
 |---|---:|---:|---:|---:|
 | Donor delta cosine | 0.710979 | **0.849178** | 0.213387 | 0.051463 |
 | Token-relative delta MSE | 0.507394 | **0.282078** | 0.994955 | 8.000689 |
+
+Full 96-cell figures: [ordinary-token cosine](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/00_audit/alignment_matrix_visual_20260913/ordinary_delta_cosine.png) and [relative MSE](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/00_audit/alignment_matrix_visual_20260913/ordinary_delta_relative_mse.png). Vector PDFs, full-precision values, renderer and input hashes accompany the plots.
 
 B3 ordinary delta RMS ratio is 0.922427; all-token delta cosine is 0.845053; final-token cosine is 0.916452. Ordinary up/down-map cosines are 0.911083/0.966440. Special-token fidelity is worse than same-pair B0: B3 cosine/MSE is **0.783316 / 1.351649**, versus B0 **0.922944 / 0.162114**. Strong ordinary-token alignment does not imply uniform improvement. All frozen mechanism gates passed. **MECHANISM_GO licenses a separate small-screen freeze, not donor efficacy or large generation.**
 
