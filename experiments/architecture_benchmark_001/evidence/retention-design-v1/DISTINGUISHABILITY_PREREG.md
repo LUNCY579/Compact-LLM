@@ -213,3 +213,75 @@ binds to specific, hashed official weights — is preserved exactly; only the pa
 
 `Supa/` is untracked and must never be committed (1.2 GB of weights). It is not in `.gitignore`,
 so do not run `git add -A` in this worktree.
+
+## Continuation registration, 2026-09-13 22:31 UTC
+
+This addition preserves A1-A7 and the original retention policy. It fixes the following
+analyses before this continuation launches new model jobs or sees new depth/alpha/soup scores.
+The six existing ARM_DOSE endpoints, including Hlast4, and historical B28 aggregates were
+already observed. An inherited B28last16 process was already running when this registration
+was written; its final artifact was absent and its scores had not been inspected here.
+Accordingly this is prospective analysis registration for that inherited run, not a claim
+that its training was preregistered by this session. Historical comparisons remain retrospective.
+
+### Depth and B28 replication
+
+- Fixed depth set: existing B28last8, B28last12, inherited B28last16, B28last20, and full B28.
+  The tail arms freeze embeddings and final norm; full B28 also trains those tensors. Thus
+  full B28 is a practical endpoint, not a pure layer-count control for the tails.
+- All new controlled runs: lr 1e-5, requested budget 5200 supervised target tokens, seed 17,
+  cosine:0.03, beta2 0.999, final checkpoint saved. Sequence completion may overshoot 5200.
+  Report actual token count, steps, consumed row IDs/hash, and training-token sequence.
+- Primary comparisons: all ten unordered pairs of those five arms, endpoint correctness on
+  the same 150 IDs, exact two-sided McNemar tests, Holm familywise correction at 0.05 over
+  the fixed ten tests. Missing/invalid pairs remain unavailable (p=1 for correction); do not
+  shrink the family after outcomes are seen. Report unadjusted and adjusted values.
+- Report correct, retained, lost, terminated, and acquisition strata separately; no gain may
+  compensate for a loss in the retention gate. Intermediate milestones are descriptive and
+  cannot select the endpoint. No small score difference is an established effect.
+- B28 final aggregates are compared with the historical 73 correct / 41 kept / 32 gained /
+  6 lost. Agreement is aggregate replication only. Without historical per-row outputs or
+  weights it cannot demonstrate bitwise determinism or identify the original trained model.
+
+### Source interpolation and P output gates
+
+- Fixed checkpoints: the new full B28 seed17/lr1e-5/b5200 endpoint and the existing
+  P seed17/lr1e-5/b5200/wsd:0.2:0.2/beta2=.95 endpoint.
+- Fixed alpha grid for each: 0, .25, .5, .75, 1. B28 interpolates trainable weights from the
+  source to the checkpoint. P holds all trained tensors fixed except read output projections,
+  which are multiplied by alpha. This is a per-site output gate. Interpolating all of P's
+  trainable Q/K/V/normalization tensors toward initialization is a different experiment.
+- Evaluate endpoints first. Alpha zero must reproduce frozen source text AND termination on
+  all 150 rows, and alpha one must reproduce the saved trained endpoint text AND termination.
+  Any mismatch blocks interpretation of intermediate scores until investigated.
+- For each of the three interior alphas and each architecture, compare correctness with
+  both source and its alpha-one endpoint: twelve fixed exact two-sided McNemar tests, Holm
+  familywise 0.05. Endpoint checks are integrity controls, not additional efficacy tests.
+- No alpha is chosen on the panel for a promoted model, soup ingredient, or generalization
+  claim. The complete grid is a descriptive acquisition/retention response curve; report all
+  points, strata, failures and corrected comparisons.
+
+### Held-out soup experiment
+
+- Build and freeze the in-domain DEV split with the existing seed17 family rule and 120 dev
+  families. Verify IDs AND family disjointness against actual data/monitor_probe.jsonl,
+  splits_large train/dev, calibration and pilot. Freeze the exact first 60 emitted DEV rows
+  and hashes before candidate scoring. Do not use dev CE to rank or stop.
+- Fixed B28 candidates: lr1e-5/b5200 at seeds 17, 23, 41; lr3e-6/b5200 at seed17; and
+  lr1e-5/b25000 at seed17. All use cosine:0.03, beta2 .999 and final saved weights. Seed and
+  dose variants are soup ingredients, not matched-training-order architecture comparisons.
+- Selection metric: terminated normalized exact match on those 60 DEV rows. Sort descending
+  by score, break ties lexicographically by tag, add uniform-weight candidates greedily, and
+  accept only strict improvement. Keep every rejected candidate in the report.
+- Evaluate the selected soup and DEV-selected best single on the 150-row panel for final
+  reporting. One registered two-sided exact McNemar test at 0.05 compares these two fixed
+  DEV-selected outputs. A net panel increase alone is not a demonstrated soup benefit.
+- Save final soup weights, ingredient hashes, selection trace, per-row panel outputs, source
+  control and numerical settings. A one-ingredient outcome means no averaging benefit on DEV.
+  Do not substitute a panel-selected ingredient or choose the best seed after panel scoring.
+
+All jobs remain exploratory, one at a time, GPU training / CPU probing, TF32 off, with a
+hostbudget check before launch. Checkpoint/report directories are create-only. No hashed
+implementation file, source weight, gate threshold or release authorization changes here.
+Historical added pairwise families must be reported with an explicitly retrospective
+multiplicity correction; this addition does not retroactively preregister them.
