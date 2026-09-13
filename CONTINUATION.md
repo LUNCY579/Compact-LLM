@@ -152,19 +152,33 @@ maps the canonical B28 tag to B28_lr1e-05_b5200_seed17_retry1 and binds the pres
 Reporters use this alias and never choose the newest file. A different retry requires a
 new explicit registration, not a silent filename choice.
 
-Full B28 retry1 is now RUNNING (root exec session 89553 if still available), with .25/.5/.75/1
-probes and final save. Log: experiments/rab001_exploration/outputs/B28_retry1_20260913.log.
-It uses RAB001_ADAM_STORAGE=streamed and RAB001_GPU_WORKSPACE_GIB=1.5, plus positional final
-argument retry1. StreamedAdam preserves FP32 updates but uses at most128 MiB reusable host
-buffers instead of persistent moment mappings; unused CUDA cache is released after steps.
-Tiny CPU/CUDA tests verified exact parameters and both moments across five steps. These
-resource changes are not a proven root-cause attribution. Per-phase memory traces now land
-in its create-only outputs/arm-runs directory. All memory floors remain in force.
+Full B28 retry1 completed training and the final probe in1426s: 73 correct /41 retained /
+32 gains /6 losses, with gains21 wrong_answer +11 format_only and all6 losseswrong_answer.
+It then FAILED saving: full2.22GiB CPU copy needed3.42GiB free but only2.36GiB was available.
+NO WEIGHTS survived, and no successful ARM_DOSE retry1 artifact exists. Preserve
+outputs/B28_retry1_20260913.log and outputs/R4_RETRY1_SAVE_FAILURE_20260913.json; the latter
+binds the actual START/probe_0000000/probe_0005200/failure records and both source and
+trained per-row predictions. Do not attribute this split to the older historical73 run.
 
-Do not edit arm_dose.py, streamed_adam.py or retention_dose_gpu.py while retry1 is active:
-the harness hashes those files and refuses evidence after edits. When it finishes, validate
-the registered retry artifact/checkpoint and make a NEW complete frontier report. Then run
-the B28 alpha sweep on the exact retry1 tag. Use that same tag explicitly as the seed17
+The registry now explicitly resolves the canonical B28 tag to
+B28_lr1e-05_b5200_seed17_retry2 and preserves BOTH failures plus its prior registry snapshot.
+This save-only recovery was registered before launch in dd3cfc1. The already known73 score
+is not a criterion for choosing the retry. Retry3 or later must not be silently selected.
+
+Full B28 retry2 is now RUNNING (root exec session57215 if still available). Log:
+experiments/rab001_exploration/outputs/B28_retry2_20260913.log. It uses endpoint-only probes
+(1.0), because retry1 banked the interior measurements. Training recipe remains unchanged.
+Use RAB001_ADAM_STORAGE=streamed and RAB001_GPU_WORKSPACE_GIB=1.5, plus positional labelretry2.
+StreamedAdam preserves FP32 updates with <=128MiB buffers; unused CUDA cache is released
+after updates. Optimizer state is released after the final probe. tensor_stream.py now
+saves directly from CPU or GPU in <=1MiB chunks, eliminating the full CPU checkpoint copy.
+CPU AND CUDA roundtrips through the official safetensors reader passed with exactF32 bits.
+These resource changes do not establish a unique cause of the old memory pressure.
+
+Do not edit arm_dose.py, streamed_adam.py, tensor_stream.py or retention_dose_gpu.py while
+retry2 is active: the harness hashes them and refuses evidence after edits. On completion,
+validate its artifact/checkpoint and make a NEW complete frontier report. Then run
+the B28 alpha sweep on the exact retry2 tag. Use that same tag explicitly as the seed17
 baseline soup ingredient; model_soup takes exact tags and does not resolve the registry.
 All subsequent full B28 soup runs should use streamed storage and 1.5 GiB workspace.
 
@@ -194,6 +208,10 @@ Subsequently eight retry-registry tests and three CPU/CUDA optimizer-storage tes
 (62 exploratory tests total). The required architecture package suite also passed all306
 tests (41.95s, no skips), and matrix/status checks completed at the unchanged a329eb7b digest.
 Status correctly leaves registered G3-G5 blocked; no exploratory result changes that.
+After the bounded inference/save I/O and retry2 changes, checks passed: tail3; alpha+tensor
+reader/writer22 in CUDA runtime (no skips); soup11 including tensor roundtrip; reporters,
+registry and strata37; optimizer CPU/CUDA3. Total76 exploratory tests. Do not rerun the
+306-test unchanged architecture suite merely because another exploratory run completed.
 
 1. Finish/audit the inherited B28last16, run B28last12 and B28last20 at fixed recipe.
 2. Rerun full B28 with .25/.5/.75/1 probes and final checkpoint; record stratum split and
