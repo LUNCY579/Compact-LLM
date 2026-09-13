@@ -1,6 +1,6 @@
 # Two-track Supa research — current report
 
-Snapshot: **2026-09-13 17:21 UTC**, The research goal remains open. Track B has a complete, audited mechanism screen and a selected bridge; its separately registered control calibration is complete, committed and audited. Track A's v2.4 architecture screen has resumed and remains incomplete. **Neither track has confirmatory generation or a demonstrated capability gain.** Historical receipts and earlier reports remain preserved.
+Snapshot: **2026-09-13 17:30 UTC**, The research goal remains open. Track B has a complete, audited mechanism screen and a selected bridge; its separately registered control calibration is complete, committed and audited. Track A's v2.4 architecture screen has resumed and remains incomplete. **Neither track has confirmatory generation or a demonstrated capability gain.** Historical receipts and earlier reports remain preserved.
 
 ## Repository and scope
 
@@ -112,3 +112,5 @@ $screenConfig = "$stage/configs/generation_screen_gpu_v1.json"
 ```
 
 Official registration verification passed for all 17 CUDA cells. The independent calibration audit and its 265-check verification of all 132 committed artifacts are committed at `ffad33f`. The frozen registration and per-cell qualification must precede `run_campaign.py` using `configs/generation_screen_gpu_v1.json`; no passing runtime receipt is claimed. A screen GO would still require a separate confirmation freeze.
+
+Latest operational snapshot (**17:30:42 UTC**): A0 128/128; AM 91/128 in 21 complete shards; A1/A3/A16 pending. AM shard 22 stopped before model loading at 0.43 GiB available RAM versus the unchanged 0.50 GiB floor, with zero cases. There are three preserved pre-load memory failures in total and no completed-matrix efficacy result. Native queue PID 3512 and B qualification queue PID 110104 were both confirmed live; the Native controller waits for capacity, and B waits for Native to exit. Exact terminal-manifest inventory: `00_audit/execution_snapshot_20260913T173042.json`.
