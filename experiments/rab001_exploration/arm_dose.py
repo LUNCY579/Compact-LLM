@@ -64,12 +64,28 @@ from experiments.architecture_benchmark_001.gates import (implementation_digest,
                                                           protocol)
 from experiments.architecture_benchmark_001.source import ROOT           # noqa: E402
 
+#: `H`/`P` train all 28 reads. `Hlast<N>`/`Plast<N>` train only the last N, freezing the rest at
+#: their zero output projection so they stay exactly inert. H56's collapse at lr 1e-5 is
+#: consistent with 28 branches waking at once into a backbone that is frozen and cannot
+#: compensate; if that is the mechanism, N=4 should be far more stable than N=28 at the same lr,
+#: and that is a cheap, decisive test of the mechanism rather than of the learning rate.
+_ARM_RE = re.compile(r'^(?P<mode>[HP])(?:last(?P<n>\d+))?$|^(?P<plain>B28|B28last8)$')
 ARM = sys.argv[1] if len(sys.argv) > 1 else 'H'
 LR = float(sys.argv[2]) if len(sys.argv) > 2 else 1e-5
 BUDGET = int(sys.argv[3]) if len(sys.argv) > 3 else 5200
 SEED = int(sys.argv[4]) if len(sys.argv) > 4 else 17
-if ARM not in ('B28', 'B28last8', 'H', 'P'):
+#: Probe fractions of the budget. A CPU probe of a 1.156B arm costs ~379 s, so a 5-point curve
+#: is most of the wall clock of an H56 run; pass "1.0" to buy a sweep point for two probes.
+FRACTIONS = [float(x) for x in (sys.argv[5] if len(sys.argv) > 5 else '0.25,0.5,0.75,1.0').split(',')]
+_M = _ARM_RE.match(ARM)
+if not _M:
     raise SystemExit(__doc__)
+MODE = _M.group('mode') or _M.group('plain')
+READ_TAIL = int(_M.group('n')) if _M.group('n') else None
+if READ_TAIL is not None and not 1 <= READ_TAIL <= 28:
+    raise SystemExit('read tail must be between 1 and 28 blocks')
+if not FRACTIONS or any(not 0 < f <= 1 for f in FRACTIONS) or 1.0 not in FRACTIONS:
+    raise SystemExit('probe fractions must lie in (0,1] and include the endpoint 1.0')
 TAG = f'{ARM}_lr{LR:g}_b{BUDGET}_seed{SEED}'
 
 # OffloadedAdam and force_tf32_off are proven in retention_dose_gpu; import rather than fork.
@@ -103,9 +119,9 @@ def lr_at(done: int) -> float:
 
 def build(device: str):
     """Returns (model, trainable, description). H/P peak at source+result, so build on the GPU."""
-    if ARM in ('B28', 'B28last8'):
+    if MODE in ('B28', 'B28last8'):
         model = run._load(SRC, device)[0]
-        if ARM == 'B28':
+        if MODE == 'B28':
             trainable = [p for p in model.parameters()]
             for p in trainable:
                 p.requires_grad_(True)
@@ -118,13 +134,33 @@ def build(device: str):
         return model, trainable, f'B28 source, blocks {top-7}..{top} trainable'
     from experiments.dual28_ced_v1.model import DualStack
     src = run._load(SRC, device)[0]
-    model = DualStack.from_source(src, ARM)
+    model = DualStack.from_source(src, MODE)
     del src
     gc.collect()
     if device == 'cuda':
         torch.cuda.empty_cache()
     model.gradient_checkpointing = False
-    return model, model.freeze_backbones(), f'DualStack.from_source(mode={ARM}), memory+reads'
+    trainable = model.freeze_backbones()
+    if READ_TAIL is None:
+        return model, trainable, f'DualStack.from_source(mode={MODE}), all 28 reads + memory'
+    # Freeze the early reads. Their o_proj stays exactly zero, so those blocks contribute
+    # nothing for the whole run -- the arm is genuinely "reads on the last N blocks only",
+    # not "all 28 reads with a small early contribution".
+    depth = len(model.reads)
+    keep = depth - READ_TAIL
+    frozen_reads = 0
+    for name, p in model.named_parameters():
+        m = re.match(r'^reads\.(\d+)\.', name)
+        if m and int(m.group(1)) < keep:
+            p.requires_grad_(False)
+            frozen_reads += 1
+    trainable = [p for p in model.parameters() if p.requires_grad]
+    for i, block in enumerate(model.reads):
+        if i < keep and bool((block.o_proj.weight != 0).any()):
+            raise SystemExit(f'frozen read {i} is not inert at build time')
+    return (model, trainable,
+            f'DualStack.from_source(mode={MODE}), reads on blocks {keep}..{depth-1} only '
+            f'({READ_TAIL} of {depth}) + memory; {frozen_reads} early read tensors frozen inert')
 
 
 def main() -> int:
@@ -238,8 +274,23 @@ def main() -> int:
         record['_outputs'] = outputs
         return record
 
-    milestones = sorted({0, *(int(BUDGET * f) for f in (0.25, 0.5, 0.75, 1.0))})
+    # How loud is the added branch? o_proj starts at exactly zero, so its Frobenius norm is a
+    # direct, probe-free readout of how far the read has woken up. A probe costs 379 s on a
+    # 1.156B arm; this costs a GPU reduction, so an lr can be rejected in seconds rather than
+    # in an hour of decoding. Adam's early update is ~lr*sign(g) regardless of gradient size,
+    # so a zero-init tensor moves at a rate set by lr alone -- this is what that looks like.
+    read_o_proj = [p for n, p in model.named_parameters()
+                   if n.startswith('reads.') and n.endswith('o_proj.weight') and p.requires_grad]
+
+    def branch_norm() -> float:
+        if not read_o_proj:
+            return 0.0
+        with torch.inference_mode():
+            return float(torch.sqrt(sum((p.detach().float() ** 2).sum() for p in read_o_proj)))
+
+    milestones = sorted({0, *(int(BUDGET * f) for f in FRACTIONS)})
     checkpoints, tokens, steps, cursor, consumed = [], 0, 0, 0, []
+    trace = []
     started = time.perf_counter()
     aborted = None
     reg = policy['bare_policy']
@@ -291,10 +342,14 @@ def main() -> int:
             tokens += tgt.numel()
             consumed.append(int(tgt.numel()))
             del logits
-            torch.nn.utils.clip_grad_norm_(opt.params, 1.0)
+            gnorm = torch.nn.utils.clip_grad_norm_(opt.params, 1.0)
             opt.step(lr_at(tokens))
             opt.zero_grad()
             steps += 1
+            trace.append({'step': steps, 'tokens': tokens, 'lr': lr_at(tokens),
+                          'train_ce': float(loss.detach()), 'grad_norm': float(gnorm),
+                          'read_o_proj_norm': branch_norm()})
+            del loss
             hostbudget.guard(1.0, f'arm dose {TAG}')
             for m in milestones:
                 if m and tokens >= m and m not in done_ms:
@@ -316,12 +371,15 @@ def main() -> int:
                 'stage opened, no efficacy claim, no checkpoint released.',
         'arm': ARM, 'arm_description': described, 'completed': completed,
         'aborted_reason': aborted, 'lr': LR, 'token_budget': BUDGET, 'seed': SEED,
+        'probe_fractions': FRACTIONS, 'probe_milestones': milestones,
         'parameters': n_all, 'trainable_parameters': n_train,
         'train_device': 'cuda', 'probe_device': 'cpu', 'numerics': numerics,
         'optimizer': f'AdamW(offloaded) lr={LR:g} wd=0 clip=1.0 micro_batch=1',
         'schedule': f'linear warmup {WARMUP_FRAC:.0%} then cosine to {MIN_LR_FRAC:.0%}',
         'supervised_target_tokens': tokens, 'optimizer_steps': steps,
         'train_rows_consumed': cursor, 'per_step_target_tokens': consumed,
+        'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,
+        'read_o_proj_norm_end': trace[-1]['read_o_proj_norm'] if trace else 0.0,
         'reference_receipt': str(receipt_path), 'reference_digest': implementation_digest(),
         'reference_sizes': {k: len(v) for k, v in references.items()},
         'registered_bare_policy': reg,
