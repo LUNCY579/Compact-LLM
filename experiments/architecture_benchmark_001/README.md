@@ -38,9 +38,13 @@ First qualify unmodified native/reference behavior. Then qualify same-width iden
 | `smoke` | Preserved legacy D40 G2: 25 optimizer engineering steps |
 | `cache-teacher` | Offline normalized teacher features, exact token/source/data bindings; no training authorization |
 | `smoke-cached` | G2_CACHED: 25 steps; C28/C40 require matching B28/D40 controls |
+| `qualify-quality` | G1_QUALITY: an arm's output vs the frozen source on open splits; catches token salad that every construction gate accepts |
+| `qualify-retention` | G1_RETENTION / G2_RETENTION: typed answer scoring on the held-out probe, against an immutable reference; the only capability-side gate |
 | `prepare-data` | Group-first, source-declared, short-context data preparation; no download or training |
 | `recovery-readiness` | Reports missing preregistration fields; always keeps G3–G5 blocked |
 | `python -m ...architecture_benchmark_001.ladder` | Foreground local process-isolated ladder; validated resume, failed attempts preserved |
+
+Quality and retention are deliberately separate from construction: an arm can be structurally perfect, pass the full parity grid with zero violations, and answer none of the questions its donor answers. Likelihood is not a substitute — at a token-matched 500k dose a CED arm reached held-out CE 5.11 nats better than its own teacher while answering 2/60 against the teacher's 20/60, and D40 has better cross-entropy than the source while scoring 0/150 on the retention probe.
 
 Strict CED elementwise parity is mandatory. Argmax agreement and a global-scale bound do not replace it. Schema-1 historical receipts are retained but cannot authorize the new code. Schema-2 parents are recursively validated. Rerun after code, protocol, data, source or runtime changes. A passing 25-step smoke is never a recovery result.
 

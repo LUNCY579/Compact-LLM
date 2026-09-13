@@ -1,4 +1,4 @@
-# The retention gate's first measurement, and the three defects it found
+# The retention gate's first measurement, and the defects it found
 
 `G1_RETENTION` and `G2_RETENTION` are implemented, registered and executed. This records what
 they measured, and — more usefully — what running them broke.
@@ -49,7 +49,7 @@ expectation rather than a preregistration. The like-for-like comparison against 
 legacy figure of 33.3% is the typed grammar's own 60-row prefix score, **17/60 = 28.3%**, not
 the 150-row 31.3%; comparing 31.3% to 33.3% crosses two different panels.
 
-## 2. The unreviewed bare-value decision is load-bearing in exactly one class
+## 2. The unreviewed bare-value decision moved one class of this source's answers
 
 `bare_policy` is the one axis the label audit left to human review — whether `54` is accepted
 for a `54 sensor tags` target. Rather than argue it, both settings are scored on identical
@@ -124,7 +124,7 @@ rule — a manufactured loss. So the defect cuts both ways, and neither directio
 
 ## 4. The training-side gate runs — and demonstrates nothing about training yet
 
-`G2_RETENTION_B28` PASSes 12/12 checks against the reference inherited from step zero, including
+`G2_RETENTION_B28` PASSes 13/13 checks against the reference inherited from step zero, including
 both drift controls: the frozen source reproduced its correct set exactly, and the reference
 matched its parent's.
 
@@ -245,6 +245,9 @@ under-training test is the open item**, and no claim here substitutes for it.
 
 ## 5. Defect found: a sensitivity diagnostic that manufactured a failure
 
+*(Sections 5 and 6 were found while building the gate. Section 8 lists six more that an
+adversarial pass found afterwards, in this work.)*
+
 The first `G2_RETENTION_B28` run reported the strict policy as **FAIL with 6 losses** on a
 checkpoint whose 150 answers were byte-identical to the source. No answer had changed, so no
 answer could have been lost.
@@ -268,9 +271,9 @@ capability loss**. Validation is now an unconditional whitelist: a typo like `ba
 loud error rather than a silently missing permission, and a regression test crosses malformed
 targets with six prediction shapes so no path can skip it.
 
-## 7. A sixth digest reproduces everything to the element
+## 7. A seventh digest reproduces everything to the element
 
-Requalification from `8b47b395` through `a329eb7b`, across three intervening digests:
+Requalification from `8b47b395` through `a329eb7b`, across five intervening digests:
 
 - `G0`, `G1_IDENTITY`, `G1_WIDTH`, `G1_CED_C28`, `G1_CED_C40`: **zero** non-timer metric
   differences, identical checks, identical statuses. Both CED arms still FAIL on the same three
@@ -283,6 +286,38 @@ Requalification from `8b47b395` through `a329eb7b`, across three intervening dig
   `eab80e9f`. The only two differing fields are `teacher_cache_sha256` and `recipe_sha256`, both
   of which embed the implementation digest by construction; the `recipe` dict itself is
   identical.
+
+## 8. What an adversarial pass found in this work afterwards
+
+The gate above was reviewed adversarially across six dimensions after it shipped. The verify
+stage died on a usage limit, so every finding below was reproduced by hand before being acted
+on — an unverified finding is not a finding. Six defects were confirmed by execution:
+
+| # | defect | status |
+|---|---|---|
+| 1 | `monitor_verdict({})` returned PASS with `permits_next_block` True — the "no evidence" answer was "proceed" | fixed |
+| 2 | `--checkpoint` was loaded, hashed, reported and never compared to the parent that authorised it | fixed |
+| 3 | the source-vs-arm branch keyed on the CLI **flag**, not the arm, so `--arm C28` with no checkpoint scored the source against itself | fixed |
+| 4 | the duration parser deleted every comma and `and`, accepting `45 minutes and` at 2700 s while rejecting the legal `3,600 seconds` | fixed |
+| 5 | `confirmation_verdict` counted nine statements without checking they were the registered nine | fixed |
+| 6 | a permissive/strict disagreement lived in `metrics`, not `checks`, so the "blocking review item" blocked nothing | fixed |
+
+Plus one recorded rather than repaired: the confirmation certificate's 9/10 retention floor
+**can never bind** — for alpha=1/180 the exact upper limit always exceeds k/m, so
+`bound <= 0.10` already implies `retention > 0.9` (verified for m ≤ 600) — and at the registered
+minimum m=50 only **zero** losses clear the bound, so it demands 100% retention, not 90%. The
+first m admitting one loss is 70. In `protocol.json`; the confirmation lane is not implemented.
+
+And six claims of mine it forced me to retract, all corrected in place above and marked inline:
+`protocol.json` still carried the sweeping "no threshold separates those two models" that I had
+already retracted in the amendment — the exact shape HOTFIX-004 retracted from HOTFIX-003, live
+in the registered policy and four shipped receipts; "four of them invert" undercounted my own
+artifact (seven do); §1 blamed the grammar for a gap that is almost entirely the panel; the
+direction-of-bias sentence was self-contradictory; the DAG change does **not** interlock
+training; and the "prediction recorded before the run" has no pre-run artifact.
+
+What the review did **not** overturn: the 47/150 source baseline, the D40 result, the
+signal-separation analysis, and `arm_answers_changed` = 0/150.
 
 ## A claim of mine this falsifies
 

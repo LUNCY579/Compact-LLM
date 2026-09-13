@@ -57,14 +57,32 @@ if str(REPO) not in sys.path:
 import hostbudget                                                       # noqa: E402
 from hostbudget import LowMemoryAbort                                   # noqa: E402
 from experiments.architecture_benchmark_001 import retention, run       # noqa: E402
-from experiments.architecture_benchmark_001.gates import protocol       # noqa: E402
+from experiments.architecture_benchmark_001.gates import (implementation_digest,       # noqa: E402
+                                                          protocol)
 from experiments.architecture_benchmark_001.source import ROOT          # noqa: E402
 
 SRC = Path('C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/'
            'Rineya-Supa-1.7.0-devfreeze')
 SPL = ROOT / 'outputs' / 'splits_large'
-REFERENCE_RECEIPT = ROOT / 'outputs' / 'retention-125d5481' / 'B28' / 'retention.json'
 OUT = ROOT / 'evidence' / 'retention-design-v1'
+
+
+def _reference_receipt() -> Path:
+    """The G1_RETENTION_B28 artifact for the CURRENT implementation digest.
+
+    This was pinned to a literal `retention-125d5481` path, which is the class of staleness this
+    programme keeps finding in its own documents: the reference happened to be byte-identical
+    after the next requalification, so a wrong result would not have announced itself. Resolve it
+    from the digest instead, and refuse rather than silently reach for a superseded receipt.
+    """
+    short = implementation_digest()[:8]
+    path = ROOT / 'outputs' / f'retention-{short}' / 'B28' / 'retention.json'
+    if not path.is_file():
+        raise SystemExit(
+            f'no G1_RETENTION_B28 artifact at the current digest {short}: {path}\n'
+            'Run the retention stage at this digest first -- the frozen reference must come '
+            'from the same implementation that will score the candidate.')
+    return path
 
 LR = float(sys.argv[1]) if len(sys.argv) > 1 else 1e-4
 BUDGET = int(sys.argv[2]) if len(sys.argv) > 2 else 5200
@@ -98,7 +116,8 @@ def main() -> int:
     print(hostbudget.describe(), flush=True)
     policy = protocol()['G1_RETENTION']
 
-    frozen = json.loads(REFERENCE_RECEIPT.read_text(encoding='utf-8'))
+    receipt = _reference_receipt()
+    frozen = json.loads(receipt.read_text(encoding='utf-8'))
     references = {k: set(v) for k, v in frozen['reference_ids_by_policy'].items()}
     source_correct = set(frozen['source_correct_ids'])
     print(f'frozen reference: {len(references[policy["bare_policy"]])} items '
@@ -261,7 +280,8 @@ def main() -> int:
         'supervised_target_tokens': tokens, 'optimizer_steps': steps,
         'train_rows_consumed': cursor, 'dev_rows': len(dev), 'dev_target_tokens': ntok,
         'probe_rows': len(rows), 'registered_bare_policy': reg,
-        'reference_receipt': str(REFERENCE_RECEIPT),
+        'reference_receipt': str(receipt),
+        'reference_digest': implementation_digest(),
         'reference_sizes': {k: len(v) for k, v in references.items()},
         'reference_recomputed': False,
         'headline': {

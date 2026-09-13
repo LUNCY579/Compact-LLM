@@ -132,6 +132,39 @@ For 1M tokens, FP32 1,024-wide teacher states are about **4.096 GB** before toke
 
 Full FP32 parameters plus gradients alone are about 4.77 GB at 596M parameters. Adam-style two FP32 moment buffers would add about another 4.77 GB before activations and workspaces. This package does not quietly substitute Adam, QLoRA, BF16 or offloaded optimizers. The RTX 4070 8-GB fit must be measured; a fit claim is not warranted by the memory-saving design alone.
 
+## 6b. Capability-retention qualification (HOTFIX-005)
+
+`G1_QUALITY` scores an arm's output against the frozen teacher; every check it applies is
+likelihood- or teacher-agreement-shaped, and those are measured to decouple from capability.
+`G1_RETENTION_<arm>` and `G2_RETENTION_<arm>` score **answers** on the 150-row held-out probe
+`data/monitor_probe.jsonl`, with the typed grammar in `retention.py`.
+
+```powershell
+$Q = 'outputs/quality-<digest8>'
+$RT = 'outputs/retention-<digest8>'
+# Step-zero retention. B28 IS the frozen source, so it takes no --checkpoint; every other arm
+# must supply one, and it must hash to the model.safetensors its parent lineage declares.
+python -m experiments.architecture_benchmark_001 qualify-retention --source "$S" --calibration "$D/calibration.jsonl" --parent "$Q/B28/G1_QUALITY_B28.json" --arm B28 --stage G1_RETENTION --device cpu --out "$RT/B28"
+# Training-side. Needs the trained checkpoint, its training data, and the step-zero receipt
+# whose reference it inherits rather than recomputes.
+python -m experiments.architecture_benchmark_001 qualify-retention --source "$S" --calibration "$D/calibration.jsonl" --parent "$E/b28/G2_CACHED_B28.json" --arm B28 --stage G2_RETENTION --g1-retention "$RT/B28/G1_RETENTION_B28.json" --checkpoint "$E/b28" --train "$D/train-smoke.jsonl" --device cpu --out "$RT/B28-trained"
+```
+
+An arm whose `G1_QUALITY` receipt FAILs cannot hold a retention receipt at all — `validate_receipt`
+refuses the parent. That is intended: a degenerate model has nothing to retain. It also means the
+registered gate cannot be demonstrated on the arms it exists to reject, so
+`experiments/rab001_exploration/retention_probe.py` runs the same package scorer outside the
+receipt system for that purpose. It emits no receipt and opens no stage.
+
+**Read `arm_answers_changed` before `status`.** A PASS on a checkpoint whose answers are
+byte-identical to the source says the stage executed, not that anything was retained: the
+registered 25-step engineering lane changes 0 of 150 answers.
+
+Two limits to state when reporting: this is a finite-panel measurement, not a population claim,
+and the separately designed 300-family confirmation certificate is **not** implemented or
+licensed. Its 9/10 retention floor is also inert by construction — see
+`protocol.json:G1_RETENTION.confirmation_min_retention_is_inert`.
+
 ## 7. Preparing recovery data is not opening G3
 
 See RECOVERY_DATASETS.md for source choices and raw JSONL schema. The preparation command uses only local files and the official tokenizer:
