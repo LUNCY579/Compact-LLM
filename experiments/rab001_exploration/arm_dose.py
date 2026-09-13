@@ -86,17 +86,51 @@ if READ_TAIL is not None and not 1 <= READ_TAIL <= 28:
     raise SystemExit('read tail must be between 1 and 28 blocks')
 if not FRACTIONS or any(not 0 < f <= 1 for f in FRACTIONS) or 1.0 not in FRACTIONS:
     raise SystemExit('probe fractions must lie in (0,1] and include the endpoint 1.0')
-TAG = f'{ARM}_lr{LR:g}_b{BUDGET}_seed{SEED}'
+
+#: Schedule spec: `cosine:<warmup>` or `wsd:<warmup>:<decay>`, fractions of the token budget.
+#:
+#: The inherited default is `cosine:0.03`, and at a 5,200-token budget that ends warmup at 156
+#: tokens -- ONE optimizer step. That is very close to no warmup at all, and it is the worst
+#: possible setting for a zero-initialised branch: Adam's first update is -lr*sign(g) for every
+#: element regardless of gradient magnitude (at t=1, sqrt(v/bc2) = |g| and m/bc1 = g exactly),
+#: so H56's 28 read projections each move by a full lr on step one, into a frozen backbone.
+#:
+#: WSD (Warmup-Stable-Decay) holds lr flat through the middle and decays late, which lets the
+#: warmup be long without spending the budget climbing. The decay uses the 1-sqrt form, which
+#: is the variant with the strongest published support and is flat early in the decay phase.
+SCHEDULE = sys.argv[6] if len(sys.argv) > 6 else 'cosine:0.03'
+#: beta2=0.999 has a ~1000-step horizon. A 41-step run never escapes bias correction, so the
+#: second moment stays noisy and step sizes erratic. Short runs normally want ~0.95.
+BETA2 = float(sys.argv[7]) if len(sys.argv) > 7 else 0.999
+MIN_LR_FRAC = 0.10
+
+_S = SCHEDULE.split(':')
+SCHED_KIND = _S[0]
+WARMUP_FRAC = float(_S[1]) if len(_S) > 1 else 0.03
+DECAY_FRAC = float(_S[2]) if len(_S) > 2 else 0.20
+if SCHED_KIND not in ('cosine', 'wsd'):
+    raise SystemExit('schedule must be cosine:<warmup> or wsd:<warmup>:<decay>')
+if not 0 <= WARMUP_FRAC < 1 or not 0 < DECAY_FRAC < 1 or WARMUP_FRAC + DECAY_FRAC >= 1:
+    raise SystemExit('warmup and decay fractions must be in [0,1) and leave a stable phase')
+
+TAG = (f'{ARM}_lr{LR:g}_b{BUDGET}_seed{SEED}'
+       + (f'_{SCHED_KIND}{WARMUP_FRAC:g}' + (f'-{DECAY_FRAC:g}' if SCHED_KIND == 'wsd' else '')
+          if SCHEDULE != 'cosine:0.03' else '')
+       + (f'_b2{BETA2:g}' if BETA2 != 0.999 else ''))
 
 # OffloadedAdam and force_tf32_off are proven in retention_dose_gpu; import rather than fork.
 # That module reads its own constants from argv at import time, so hand it the matching ones.
 _saved_argv = sys.argv
 sys.argv = ['retention_dose_gpu', str(LR), str(BUDGET), str(SEED)]
 try:
+    from experiments.rab001_exploration import retention_dose_gpu as _rdg            # noqa: E402
     from experiments.rab001_exploration.retention_dose_gpu import (OffloadedAdam,   # noqa: E402
                                                                    force_tf32_off)
 finally:
     sys.argv = _saved_argv
+# OffloadedAdam reads its betas from that module's globals. Overriding here keeps the proven
+# optimizer and makes beta2 a swept variable; the value used is recorded in every artifact.
+_rdg.B2 = BETA2
 
 SRC = REPO / 'Supa'
 if not (SRC / 'model.safetensors').is_file():
@@ -105,16 +139,21 @@ if not (SRC / 'model.safetensors').is_file():
 SPL = ROOT / 'outputs' / 'splits_large'
 OUT = ROOT / 'evidence' / 'retention-design-v1'
 N_DEV = 40
-WARMUP_FRAC, MIN_LR_FRAC = 0.03, 0.10
 
 
 def lr_at(done: int) -> float:
     import math
     frac = min(1.0, done / BUDGET)
-    if frac < WARMUP_FRAC:
+    if WARMUP_FRAC and frac < WARMUP_FRAC:
         return LR * frac / WARMUP_FRAC
-    p = (frac - WARMUP_FRAC) / (1 - WARMUP_FRAC)
-    return LR * (MIN_LR_FRAC + (1 - MIN_LR_FRAC) * 0.5 * (1 + math.cos(math.pi * p)))
+    if SCHED_KIND == 'cosine':
+        p = (frac - WARMUP_FRAC) / max(1e-9, 1 - WARMUP_FRAC)
+        return LR * (MIN_LR_FRAC + (1 - MIN_LR_FRAC) * 0.5 * (1 + math.cos(math.pi * p)))
+    start = 1 - DECAY_FRAC
+    if frac < start:                                   # stable phase: hold lr flat
+        return LR
+    p = (frac - start) / DECAY_FRAC                    # decay phase: 1 - sqrt to the floor
+    return LR * (MIN_LR_FRAC + (1 - MIN_LR_FRAC) * max(0.0, 1 - math.sqrt(p)))
 
 
 def build(device: str):
@@ -374,8 +413,15 @@ def main() -> int:
         'probe_fractions': FRACTIONS, 'probe_milestones': milestones,
         'parameters': n_all, 'trainable_parameters': n_train,
         'train_device': 'cuda', 'probe_device': 'cpu', 'numerics': numerics,
-        'optimizer': f'AdamW(offloaded) lr={LR:g} wd=0 clip=1.0 micro_batch=1',
-        'schedule': f'linear warmup {WARMUP_FRAC:.0%} then cosine to {MIN_LR_FRAC:.0%}',
+        'optimizer': f'AdamW(offloaded) lr={LR:g} wd=0 clip=1.0 micro_batch=1 '
+                     f'betas=(0.9,{BETA2:g}) eps=1e-8',
+        'beta2': BETA2, 'schedule_spec': SCHEDULE, 'schedule_kind': SCHED_KIND,
+        'warmup_fraction': WARMUP_FRAC, 'decay_fraction': DECAY_FRAC if SCHED_KIND == 'wsd' else None,
+        'warmup_tokens': int(BUDGET * WARMUP_FRAC),
+        'schedule': (f'linear warmup {WARMUP_FRAC:.0%} then cosine to {MIN_LR_FRAC:.0%}'
+                     if SCHED_KIND == 'cosine' else
+                     f'WSD: linear warmup {WARMUP_FRAC:.0%}, stable, '
+                     f'1-sqrt decay over final {DECAY_FRAC:.0%} to {MIN_LR_FRAC:.0%}'),
         'supervised_target_tokens': tokens, 'optimizer_steps': steps,
         'train_rows_consumed': cursor, 'per_step_target_tokens': consumed,
         'read_o_proj_tensors': len(read_o_proj), 'step_trace': trace,

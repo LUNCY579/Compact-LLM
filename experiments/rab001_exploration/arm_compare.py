@@ -51,15 +51,35 @@ def mcnemar_exact(b: int, c: int) -> Fraction:
     return min(Fraction(1), 2 * tail)
 
 
-def load(arm: str) -> dict | None:
-    hits = sorted(OUT.glob(f'ARM_DOSE_{arm}_lr*.json'))
+def load(name: str) -> dict | None:
+    """Accepts a bare arm (`H`) or a full tag (`H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95`).
+
+    A bare arm that matches several artifacts is REFUSED rather than silently resolved. Once
+    variants exist -- a cosine run and a WSD run of the same arm at the same lr and budget --
+    `sorted(...)[-1]` picks by filename, which is not a scientific criterion and would quietly
+    compare the wrong pair.
+    """
+    exact = OUT / f'ARM_DOSE_{name}.json'
+    if exact.is_file():
+        hits = [exact]
+    else:
+        hits = sorted(OUT.glob(f'ARM_DOSE_{name}_lr*.json'))
     if not hits:
         return None
-    body = json.loads(hits[-1].read_text(encoding='utf-8'))
+    if len(hits) > 1:
+        print(f'  AMBIGUOUS: {name} matches {len(hits)} artifacts; pass one of these tags '
+              f'explicitly instead of the bare arm:')
+        for h in hits:
+            print(f'      {h.stem[len("ARM_DOSE_"):]}')
+        return None
+    body = json.loads(hits[0].read_text(encoding='utf-8'))
     final = body['checkpoints'][-1]
+    if 'per_row' not in final['retention']:
+        print(f'  SKIPPED {hits[0].name}: no per_row record, cannot be paired')
+        return None
     body['_per_row'] = final['retention']['per_row']
     body['_final'] = final
-    body['_path'] = hits[-1]
+    body['_path'] = hits[0]
     return body
 
 
@@ -67,15 +87,15 @@ def main() -> int:
     audit = json.loads((OUT / 'HEADROOM_AUDIT.json').read_text(encoding='utf-8'))
     strata = audit['policies']['permissive']['ids']
     of_stratum = {rid: name for name, ids in strata.items() for rid in ids}
-    reference = None
 
     loaded = {}
     for arm in ARMS:
         body = load(arm)
         if body is None:
-            print(f'  (no ARM_DOSE artifact for {arm}; skipping)')
+            print(f'  (no usable ARM_DOSE artifact for {arm}; skipping)')
             continue
         loaded[arm] = body
+        print(f'  {arm:<12} <- {body["_path"].name}')
     if len(loaded) < 1:
         raise SystemExit('nothing to compare')
 
@@ -90,8 +110,12 @@ def main() -> int:
           f'{"real":>5} {"fmt":>4} {"lost":>5} {"net":>5} {"devCE":>7}')
     for arm, body in loaded.items():
         rowmap = body['_per_row']
+        # The strata cover exactly the headroom, so anything outside them is a reference row.
         ref_ids = {i for i in rowmap if i not in of_stratum}
-        reference = ref_ids if reference is None else reference
+        expected = audit['policies']['permissive']['source_correct']
+        if len(ref_ids) != expected:
+            raise SystemExit(f'{arm}: {len(ref_ids)} reference rows derived from the strata, '
+                             f'expected {expected}; HEADROOM_AUDIT and this run disagree')
         gained = [i for i, ok in rowmap.items() if ok and i in of_stratum]
         real = sum(1 for i in gained if of_stratum[i] == 'wrong_answer')
         fmt = sum(1 for i in gained if of_stratum[i] == 'format_only')
