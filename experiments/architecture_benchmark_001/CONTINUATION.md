@@ -5,6 +5,12 @@ Compact resume state. `evidence/COMPREHENSIVE_ANALYSIS.md` holds the full argume
 `PROGRESS_LOG.md` is the append-only history. Local files and verified artifacts are the
 source of truth — prior chat summaries are not.
 
+**Current design checkpoint:** read `RETENTION_GATE_DESIGN.md` before implementation. Its
+read-only reconciliation found final-update/resume defects in the 500k artifacts, additional
+scorer gaps, and overstated endpoint/review claims. Fresh tests are **pending due to host
+memory pressure**, explicitly accepted by the user; 191/0 below is the previously recorded
+result. No gate implementation or protocol edit has been made at this checkpoint.
+
 ## Identity
 
 | | |
@@ -13,10 +19,14 @@ source of truth — prior chat summaries are not.
 | Branch | `research/ced-rab001-hotfix001-qualification-v1`, pushed to `LUNCY579/ChatBubble` |
 | Branched from | `2f65f9e` |
 | `implementation_sha256` | **`8b47b395`** (HOTFIX-004), 31 manifest files |
-| Tests | **191 passed, 0 skipped** |
+| Tests | Previously **191 passed, 0 skipped**; fresh verification pending |
 | Qualification runtime | `C:\Users\clclc\BusinessProject\.venv-rab001` |
 | Source weights | `Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze`, `audit_digest 97cd76af…` |
 | Current receipts | `evidence/ladder-8b47b395-v1/`, `evidence/quality-8b47b395/` |
+
+The digest and receipt/artifact hashes were rechecked. The archived `evidence/` copies omit
+model binaries and retain parent paths from the live layout; use the original `outputs/`
+trees for recursive authorization. Live PASS DAGs validate against their recorded contexts.
 
 Runtime: python 3.11.15 / Windows-10-10.0.26200 / torch 2.10.0+cpu / transformers 4.51.3 /
 safetensors 0.7.0 / numpy 2.3.5. Hardware: RTX 4070 **Laptop** 8 GB (**unused** — every run
@@ -49,12 +59,14 @@ the failed `G1_CED_*` receipts as parents.
    `G1_CED_*` and `G2_CACHED_*` are all satisfied by a model emitting token salad. Parity is
    self-consistency, not quality — D40 passes the full parity grid with **zero** violations
    while degenerate. `G1_QUALITY` (HOTFIX-003/004) is the fix and catches D40 on 3 checks.
-2. **A KV-sharing law.** Every removed bank displaces exactly one layer *by construction*,
-   each displaced layer costs ~0.5 nats, and CE tracks the displaced **count**, not the
-   topology — confirmed by CED (13 displaced → 12.5854) and local cross-layer sharing
-   (14 → 12.9136) landing on one curve. Local sharing was hypothesised to win and is
-   **falsified**. Usable budget: 2–3 banks, ~10% KV. No clever topology exists.
-3. **CED is FP32-ill-conditioned, not buggy.** Clean at FP64 (4.1e-12); divergence starts at
+2. **An initialization trend in the tested sharing layouts.** Every removed bank displaces
+   one layer in these constructions. The measured initialization cost is roughly 0.5 nats
+   per displaced layer: CED (13 displaced → 12.5854), local sharing (14 → 12.9136).
+   Local sharing did not beat CED. This does not prove that every topology has the same CE
+   cost. Later small-displacement training and latent-KV results qualify the original
+   blanket conclusions; see the supersession header in `COMPREHENSIVE_ANALYSIS.md`.
+3. **CED has a measured FP32 conditioning problem on the tested grid.** Clean at FP64
+   (4.1e-12); divergence starts at
    encoder layer 0 and the shared bank is already 4.6e-04 out of tolerance before any decoder
    read. CED forfeits the final-RMSNorm suppression a plain model gets. The read-side
    precision fix (HOTFIX-002) is **falsified**; full-context bank reconstruction is ruled out
@@ -66,19 +78,33 @@ the failed `G1_CED_*` receipts as parents.
    CE; lr 1e-5 preserves 6/6 **and** reaches better CE. So CE alone cannot certify a run —
    and neither can KL, which rises even when capability is fully preserved.
 
+6. **Recorded likelihood and task scores diverge, with new audit limitations.** The last
+   reported 500k evaluations have CE gap **0.1158** (98.4% closure), reply gap **0.4948**
+   (4.27x concentration), and task C28 **2/60** versus control **26/60**. These arithmetic
+   summaries reproduce, but C28's evaluation is at step 467 before its final step 468.
+   Resume also drops pending accumulated gradients; update boundaries first disagree at
+   step 117. Only eight truncated final samples survive. Thus the exact final matched-pair
+   claim is not verified, and the legacy task counts cannot be fully rescored.
+   `protocol.json` already names exact/executable capability as the G3 primary endpoint;
+   its executable retention criterion, margins and budgets are missing. CE/KL alone must
+   not certify training. See `RETENTION_GATE_DESIGN.md` and the preserved historical JSONs.
+
 ## What is NOT established
 
 - No efficacy, latency, memory, throughput, 8-GB-fit or deployment claim. GPU unused.
-- No result beyond 40 training steps. No replay/regularisation recipe tried.
+- No result beyond the recorded 500k attempts (C28 468 optimizer updates, control 467).
+  Reported cursors indicate 0.376 epochs; applied work and exact final matching have the
+  resume/evaluation limitations above. No replay/regularisation recipe tried.
 - ~~The gated variant is never verified on real weights.~~ **DONE** — `gated_memory.py` is
   verified function-preserving on real weights: bitwise identical logits (max delta 0.000e+00),
   CE identical, branch live under perturbation. See `evidence/arm-quality/GATED_VERIFY_split14.json`.
-- **Three adversarial-review workflows all died on usage limits and produced nothing.** No
-  conclusion here has survived an external adversarial pass.
+- Earlier review workflows failed, but commit `c8b9e28` records a completed 28-agent internal
+  review. Two read-only internal reviews also completed at this design checkpoint.
+  Independent external review is still not established.
 
 ## Bugs found in my own harness — and how
 
-Four defects, **none found by code review**:
+Five earlier defects, **none found by code review**:
 
 | defect | how it surfaced | impact |
 |---|---|---|
@@ -93,9 +119,11 @@ bitwise identity; inert-default requalification must reproduce numbers to the el
 step-0 metrics must match across seeds. Every bug above was caught by one of those or by
 reading raw samples.
 
-The scorer now lives in exactly one place, `experiments/rab001_exploration/scoring.py`, with
-an 11-case self-test that **runs at import**. All 12 exploration scripts reconfigure
-stdout/stderr to UTF-8 so output formatting cannot destroy a measurement.
+The legacy scorer lives in `experiments/rab001_exploration/scoring.py`; its 11-case self-test
+is explicitly called by consumers or under `__main__`, not at import. New cheap tests show
+AM/PM, unit and negation false positives and equivalent-duration false negatives. A TASK
+reference also names the wrong counted object. Typed scoring and reviewed labels are required
+before certification. Keep UTF-8-safe logging and complete, untruncated prediction artifacts.
 
 ## Data and evals
 
@@ -110,6 +138,11 @@ Rigorous splits in `outputs/splits/` (manifest committed): **TRAIN 800** across 
 asserted at build *and* run time. Rendering verified to reproduce all 25 existing prepared
 rows byte-for-byte.
 
+The 500k runs use `outputs/splits_large/`: **TRAIN 10,000**, with the original DEV/TASK.
+TRAIN/DEV/TASK are mutually disjoint, but TRAIN overlaps calibration on 12 families and one
+source row; DEV and TASK each overlap two calibration families. The repeatedly inspected
+TASK panel is suitable for an open engineering monitor, not untouched confirmation data.
+
 **Probe classes** `percentage_reasoning`, `ratio_proportion`, `time_duration` — chosen from
 the measured frozen-source baseline (65% / 50% / 30%) and held out of TRAIN/DEV so the task
 measures **retention**. `arithmetic_chain` is excluded: the source scores **0/20**, so it
@@ -121,60 +154,82 @@ Human review is **pending for every corpus row**; `data_tools.py:67` accepts
 
 ## Single next action
 
-**Finish the `source_control` 500k arm.** Its matched `C28` counterpart is COMPLETE
-(`outputs/longbudget/LONGBUDGET_C28_seed17_b500000_lr1e-05.json`, 500,099 supervised target
-tokens, 5.14 h) but the control has been interrupted three times and stands at 250,016 of
-500,000. **The paired 500k comparison must not be presented as finished until it lands.**
-Resume by re-invoking with identical arguments; the harness refuses to resume if
-`train.jsonl` has changed and drives its LR schedule from the token count, so a resume lands
-on the same schedule.
+**Review the preimplementation design in `RETENTION_GATE_DESIGN.md`.** The user requested
+this design checkpoint before writing the gate and accepted leaving fresh tests pending
+while host memory is constrained. Before implementation, complete the pinned suite and
+reconcile any disagreement. The proposed monitor permits zero loss of source/init-correct
+items by class; separate prospective confirmation targets 90% source-success retention with
+simultaneous bounds. Existing historical scores cannot be called preregistered validation.
+
+`G1_QUALITY` currently diagnoses initialization only and is a leaf in the receipt DAG:
+optimizer engineering stages do not require it. New supported training must require quality
+and retention parents. Keep G3-G5 closed, preserve CED parity failures, and treat CE, reply CE
+and KL as training diagnostics. The first implementation work includes typed scoring,
+complete paired predictions, and exact optimizer-boundary/resume binding.
 
 Then, in order:
 
-1. **Build the training-side capability-retention gate.** `G1_QUALITY` covers initialization;
-   nothing yet stops an optimiser trading away capability, and both candidate likelihood
-   endpoints are measured to decouple from it. Highest-value protocol work left.
-2. **Ridge-sensitivity sweep for the latent result.** `latent_kv.RIDGE = 1e-6` was chosen for
-   Cholesky well-posedness and never tuned, against a covariance with condition number 1.08e8.
-   It is the largest open hole in the only deployable finding here. `latent_ridge_sweep.py`
-   exists; no real sweep has completed.
-3. Do **not** pursue another sharing topology, read-side precision, or full-context bank —
-   all falsified or ruled out.
-4. Budget is **no longer** the open question, and the old "~31 h/arm, do not try it" advice was
+1. No new topology or precision experiment is planned. Focus on retention measurement and
+   enforcement; do not turn the failed local-sharing intervention into a universal theorem.
+2. Budget is **closed** as an open question, and the old "~31 h/arm, do not try it" advice was
    wrong by ~3x: the measured rate is **27.0 supervised targets/s** (500,099 targets in
-   18,496 s), i.e. ~10.3 h per 1M per arm. The run was done. It did **not** restore capability
+   18,496 s), i.e. ~10.3 h per 1M for C28 (control extrapolates to ~13.0 h). The recorded
+   evaluation did **not** show restored capability
    — C28 went 0/60 → 2/60 (peak 4/60 at 50k) while reaching dev CE 0.4727. The advice now
-   rests on that outcome, not on an infeasibility estimate.
+   rests on the recorded exploratory observations and their audit limitations, not on an
+   infeasibility estimate. Those timers omit initialization/cache and discarded crash work.
+3. Independent external adversarial review remains unestablished; completed internal review
+   must be distinguished from that missing process step.
 
 ## What is already finished (do not re-run)
 
 - **Multi-seed matched comparison** — all twelve `outputs/rigorous/RIGOROUS_*.json` exist
   (4 arms × seeds 17/29/43), aggregated in `AGGREGATE_MULTISEED.json` (`runs_loaded: 12`,
   `missing: []`). Written up in `evidence/trainability/MULTISEED_RESULT.md` and
-  `RECOVERABILITY_FRONTIER.md`. ~4 h of compute; do not repeat it.
-- **Latent KV sweep** — `evidence/latent/LATENT_KV_RESULT.md`, 4× reduction at no measurable
-  capability cost, zero training.
+  `RECOVERABILITY_FRONTIER.md`. ~4 h of compute; do not repeat it. All twelve per-seed
+  artifacts are now **committed** under `evidence/rigorous/` (`e7285e5`); six previously
+  existed only under gitignored `outputs/`.
+- **500k recorded attempts** — `outputs/longbudget/LONGBUDGET_{C28,source_control}_seed17_b500000_lr1e-05.json`,
+  both `completed: true` with counters at 500,099 tokens and 3,743 rows. Recorded wall time
+  is **5.14 h C28 / 6.50 h control**, not 10.3 h each. Preserve both; do not repeat them for
+  this design. Final-update/matching limits are documented above; `ffc52a0`'s unqualified
+  matched-final conclusion is superseded by the new reconciliation.
+- **Ridge-sensitivity sweep** — `evidence/latent/LATENT_RIDGE_SWEEP_cpu.json`
+  (`completed: true`, `is_smoke_run: false`, `aborted_reason: null`). Ridge 1e-8 to 1e-2 at
+  three ranks: rank 512 holds **19/60 at every ridge**, dev CE spread 0.0059 nats; the
+  rank-1024 exactness control reproduces the source at every ridge. This demonstrates
+  insensitivity within the tested ridge range (`279277c`), not certified retention.
+- **Latent KV sweep** — `evidence/latent/LATENT_KV_RESULT.md`, zero-training 4× KV result
+  with recorded legacy task scores 19/60 versus source 20/60. Exploratory, not a capability
+  retention certificate under the new typed-scoring design.
 - **Device parity** — `evidence/device-parity/DEVICE_PARITY.md`.
+- **Host-memory budget** — `experiments/rab001_exploration/hostbudget.py` (`42eb390`).
+  `require(min_free_gib, label)` at startup, `guard(...)` between units of work; secondary
+  jobs stand down instead of thrashing. Measured: a second model job on this 15.2 GiB host
+  drove the pagefile to 13.9 GiB and 62 s → 670 s per unit of work. **Idle cores are not
+  headroom; free physical memory is.**
 
 ## Exact safe resume commands
 
-```bash
-cd C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification
-PY=C:/Users/clclc/BusinessProject/.venv-rab001/Scripts/python.exe
-SRC=C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze
-E=experiments/architecture_benchmark_001
+Tests are pending by user choice. Use these only when memory is available, from this
+worktree root; do not start another model job beside them.
 
-# 1. Confirm identity before trusting anything (expect 191 passed, 0 skipped)
-$PY -m pytest $E/tests -q
-$PY -c "from experiments.architecture_benchmark_001.gates import implementation_digest as d; print(d())"
-# expect 8b47b39595dcdd7ee82512de16e4ea30abee4642063de7f5119be76ed6d6621f
-
-# 2. Re-read existing verdicts without recomputing anything
-$PY -m experiments.architecture_benchmark_001 audit-evidence --root $E/outputs/ladder-8b47b395-v1
-$PY experiments/rab001_exploration/scoring.py        # scorer self-test
-
-# 3. Aggregate the multi-seed comparison
-$PY experiments/rab001_exploration/aggregate_rigorous.py
+```powershell
+$PY = 'C:/Users/clclc/BusinessProject/.venv-rab001/Scripts/python.exe'
+@'
+from experiments.rab001_exploration.hostbudget import require, guard
+require(4.0, 'RAB-001 baseline verification')
+from experiments.architecture_benchmark_001.gates import implementation_digest
+assert implementation_digest() == '8b47b39595dcdd7ee82512de16e4ea30abee4642063de7f5119be76ed6d6621f'
+import pytest
+class MemoryGuard:
+    def pytest_runtest_setup(self, item):
+        guard(1.0, 'RAB-001 baseline test ' + item.nodeid)
+raise SystemExit(pytest.main(['experiments/architecture_benchmark_001/tests', '-q'],
+                            plugins=[MemoryGuard()]))
+'@ | & $PY -
+if ($LASTEXITCODE -ne 0) { throw 'Baseline verification incomplete; reconcile before editing code.' }
+# Expect 191 passed, 0 skipped. Do not substitute the old documented result.
 ```
 
 Re-running the ladder is unnecessary while the digest is unchanged; if you do, use a **new**

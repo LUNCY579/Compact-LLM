@@ -659,3 +659,83 @@ AdamW fp32 on 596M parameters needs 8.89 GB (params + grads + two moments); the 
 Laptop has 6.86 GB free. Only SGD-no-momentum or Adafactor fit, and changing the optimizer
 would break the matched comparison. Ada also defaults fp32 matmul to TF32. Recorded as a
 measured constraint, not an untested assumption.
+
+---
+
+## 2026-09-12 — Training retention design checkpoint and evidence reconciliation
+
+Read CONTINUATION, this log, COMPREHENSIVE_ANALYSIS and REQUALIFICATION_REVIEW in order,
+then the agent contract and referenced implementation/runbook materials. Starting HEAD
+`e7285e5`, requested worktree/branch unchanged. Two bounded read-only internal agent reviews
+completed; no model job ran and no implementation/protocol file was edited.
+
+### State verification
+
+The digest reproduces exactly:
+`8b47b39595dcdd7ee82512de16e4ea30abee4642063de7f5119be76ed6d6621f`, 31 files.
+To avoid importing torch under memory pressure, the exact stdlib-only repository function
+bodies were executed via AST extraction. All 14 inspected current live/archive receipt JSON
+hashes match; present bound artifacts match. Live PASS DAGs validate against their recorded
+contexts. CED retains the three strict-parity failures; D40 quality retains its three failures.
+Archived evidence copies omit model binaries and retain relocated parent paths, so their
+original live outputs remain necessary for authorization.
+
+**Fresh tests are pending, not passed in this session.** `hostbudget.require(4.0, ...)`
+refused before torch/pytest import: 0.06 GiB free, 99% load. Subsequent snapshots reached only
+0.40-1.04 GiB free. The user explicitly chose "Record tests as pending". The prior 191/0
+result is preserved as historical, and native/runtime execution was not reverified. Installed
+dependency metadata matches the pinned versions. No lock or process was removed.
+
+### Newly verified defects and corrections
+
+- The binding G3 primary endpoint is already exact/executable capability verification.
+  The claim that both registered endpoints are exclusively likelihood-shaped is unsupported.
+  Executable retention enforcement and the other frozen campaign fields remain absent.
+- G1_QUALITY is a leaf: the existing G2/G2_CACHED parent DAG does not consume it.
+- C28's 500k artifact records 468 optimizer updates but evaluates update 467; the final
+  seven-row partial update occurs afterward. The token-only final-evaluation guard misses it.
+- Longbudget resume omits pending gradients/microbatch count. The first mismatched applied
+  update is step 117 (125,834 versus 126,070 tokens, different learning rates). The control's
+  3,743 consumed rows exceed its 467 full eight-row windows by seven rows. This is consistent
+  with discarded accumulation on resume. Exact matched-final claims are not established.
+- Full paired capability vectors were not saved: only eight truncated final samples remain.
+  The legacy 2/60 versus 26/60 scores cannot be independently rescored in full. Their CE-gap
+  arithmetic does reproduce: 0.115811 nats, 98.4157% closure, reply concentration 4.27223x.
+- Both longbudget JSONs are committed and byte-identical to their live copies. C28's JSON
+  lacks a TRAIN fingerprint. Recorded times are 5.14 h and 6.50 h; 10.3 h refers to the C28
+  1M extrapolation. Timers omit initialization/cache and discarded crash work. Pair count
+  1,000,198 exceeds a 1,000,000 pair ceiling by 198, contrary to the historical prose.
+- Legacy scorer self-test: 11/11 pass when explicitly invoked, but extra smoke cases accept
+  wrong AM/PM, wrong units and negation, and reject equivalent duration units. A retained
+  question asks for sensor tags while its reference says spare fuses. Typed scoring requires
+  reviewed labels, not simply a stricter regex. Tests do not automatically run at import.
+- Current large TRAIN has 10,000 families. TRAIN/DEV/TASK are mutually disjoint, but overlap
+  with calibration remains (12 TRAIN families/one source row; two DEV and two TASK families).
+  Reused TASK families across seeds are not independent observations for pooled Wilson CIs.
+- Commit `c8b9e28` records a completed 28-agent internal review. Earlier universal claims that
+  no review completed are stale; independent external review is still not established.
+
+The old JSON evidence is preserved. These findings qualify the exact matching and endpoint
+claims; they do not erase the recorded exploratory likelihood/capability discrepancy or the
+earlier motivation for a retention gate. See the new design document for precise scope.
+
+### Proposed rules, before implementation or new candidate scores
+
+`RETENTION_GATE_DESIGN.md` records an open 150-row monitor with zero losses from the union
+of frozen-source-correct and initialization-correct items, separately by class; termination
+floor 80% per class; step-zero, every 5,000 applied-token boundary after an optimizer update,
+and terminal evaluation after the final update. Gains cannot offset lost source successes.
+
+Separate prospective confirmation proposes 300 fresh families/class and seeds 17/29/43,
+one terminal look, a 90% source-success retention floor, exact binomial forgetting UCB <=0.10
+at alpha 0.05/9, and at least 50 source successes/class. The sample is explicitly a bounded
+feasibility design, not guaranteed power. Missing evidence yields INSUFFICIENT, never a
+threshold change. Historical scores are already known and cannot provide preregistered
+validation. CE/reply CE/KL remain diagnostics, and G3-G5 remain closed.
+
+The user's pending CONTINUATION update was corrected to reflect these findings before
+commit. The design and audit records do not change the implementation digest. Next: deliver
+the requested design checkpoint; complete pending baseline tests when memory permits before
+implementation, then freeze/scorer-test/amend, run the suite, requalify and verify inertness.
+
+Artifacts: `evidence/retention-design-v1/{BASELINE_AUDIT,RECONCILIATION}.json`.
