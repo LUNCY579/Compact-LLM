@@ -500,6 +500,29 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
             raise GateClosed('inherited retention reference is empty')
         parents.append(retention_parent)
 
+    # Bind the weights that will actually be scored to the receipt lineage that authorises them.
+    # Two holes closed here. `--checkpoint` used to be a free CLI path that was loaded, hashed
+    # and reported but never compared to anything, so a valid parent receipt could authorise a
+    # measurement of entirely different weights. And the "is this the source?" branch keyed on
+    # whether the FLAG was supplied rather than on the arm, so `--arm C28` with no `--checkpoint`
+    # silently scored the frozen source against itself and reported 0 losses.
+    expected_state = None
+    if stage == 'G1_RETENTION' and arm == 'B28':
+        if checkpoint is not None:
+            raise GateClosed('B28 at G1_RETENTION is the frozen source and takes no checkpoint')
+    else:
+        if checkpoint is None:
+            raise GateClosed(f'{stage}_{arm} requires the evaluated checkpoint')
+        if stage == 'G2_RETENTION':
+            expected_state = parent['artifacts'].get('model.safetensors')
+        else:
+            # G1_QUALITY binds only quality.json; the weights live in its construction parent.
+            link = parent['parent_receipts'][0]
+            forebear = read_hashed_json((parent_path.parent/link['path']).resolve())
+            expected_state = forebear['artifacts'].get('model.safetensors')
+        if not expected_state:
+            raise GateClosed('parent lineage declares no model.safetensors to bind')
+
     rows = load_probe_rows(probe)
     label_audit = json.loads((ROOT/'evidence/retention-design-v1/PROBE_LABEL_AUDIT.json')
                              .read_text(encoding='utf-8'))
@@ -527,8 +550,10 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
     if checkpoint is None:
         arm_outputs, checkpoint_state = source_outputs, None
     else:
-        model = _restore(checkpoint, device)
         checkpoint_state = sha256_file(checkpoint/'model.safetensors')
+        if checkpoint_state != expected_state:
+            raise GateClosed('evaluated checkpoint is not the one this receipt lineage declares')
+        model = _restore(checkpoint, device)
         arm_outputs = _greedy_probe(model, tokenizer, rows, eos_ids, device)
         del model
         gc.collect()
@@ -554,12 +579,12 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
     source_scored, arm_scored = scored[policy['bare_policy']]
     source_correct = {i for i, r in source_scored.items() if r['correct']}
     counts = _retention_classes(rows, source_scored, arm_scored, reference_ids)
-    monitor = retention.monitor_verdict(counts, policy)
+    monitor = retention.monitor_verdict(counts, policy, policy['probe_classes'])
 
     other = 'strict' if policy['bare_policy'] == 'permissive' else 'permissive'
     other_source, other_arm = scored[other]
     other_counts = _retention_classes(rows, other_source, other_arm, references[other])
-    other_monitor = retention.monitor_verdict(other_counts, policy)
+    other_monitor = retention.monitor_verdict(other_counts, policy, policy['probe_classes'])
 
     predictions = {'schema': 2, 'stage': stage, 'arm': arm, 'probe_rows': len(rows),
                    'bare_policy': policy['bare_policy'],
@@ -598,6 +623,9 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
                                             == policy['declared_calibration_family_overlap']
                                             and not (probe_ids & cal_ids) and not (probe_ids & pilot_ids)),
         'typed_scorer_recomputed': recomputed,
+        # The amendment calls a permissive/strict disagreement "a blocking review item, not a
+        # rounding error". It was only recorded in metrics, so it could not block anything.
+        'bare_policy_verdicts_agree': other_monitor['status'] == monitor['status'],
         'source_unchanged': audit_source(source)['audit_digest'] == audit['audit_digest'],
         'probe_unchanged': sha256_file(probe) == ctx['data_sha256'],
         'calibration_unchanged': sha256_file(calibration) == bindings['G1_WIDTH'],
@@ -613,6 +641,7 @@ def qualify_retention(source: Path, pilot: Path, calibration: Path, probe: Path,
     return _record(out, f'{stage}_{arm}', ctx, checks, {
         'arm': arm, 'stage': stage, 'parent_stage': declared_parent,
         'checkpoint_state_sha256': checkpoint_state,
+        'checkpoint_bound_to_lineage': expected_state is None or checkpoint_state == expected_state,
         'monitor': monitor, 'per_class': counts,
         'reference_size': len(reference_ids),
         'source_correct_total': len(source_correct),

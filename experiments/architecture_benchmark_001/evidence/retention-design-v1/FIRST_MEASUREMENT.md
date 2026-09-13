@@ -3,31 +3,51 @@
 `G1_RETENTION` and `G2_RETENTION` are implemented, registered and executed. This records what
 they measured, and — more usefully — what running them broke.
 
-Every number below is from a schema-2 receipt at implementation digest `125d5481`, CPU FP32,
-greedy, 24 new tokens, on the 150-row monitor probe. Open splits only: no sealed or DEV access,
-no efficacy claim, and G3–G5 remain closed.
+Receipted numbers below are from schema-2 receipts at implementation digest `125d5481`, CPU
+FP32, greedy, 24 new tokens, on the 150-row monitor probe. **Sections 3, 4b, 4d and the
+falsification section are NOT receipted** — they come from `evidence_kind: exploratory_*`
+artifacts (`SCORER_BIAS_*`, `RETENTION_PROBE_*`, `SIGNAL_SEPARATION`, `RETENTION_DOSE_*`), and
+§4c's CE figures are `G1_QUALITY` numbers on the 156-row calibration split, not the probe. Open
+splits only: no sealed or DEV access, no efficacy claim, and G3–G5 remain closed.
+
+The code and the claims here were put through an adversarial review after the fact; six defects
+it confirmed are fixed or recorded, and the corrections it forced are marked inline below.
 
 ## 1. The frozen source's typed-grammar baseline, measured for the first time
 
 Every retention threshold in the design is expressed relative to what the source can do, and
 that number had never been measured under the grammar the gate actually uses. It is now:
 
-| class | typed grammar | legacy headline | termination |
+| class | typed, 150 rows | legacy, **same** 150 rows | legacy headline, 20 rows/class |
 |---|---:|---:|---:|
-| `percentage_reasoning` | **21/50 = 42.0%** | 65% | 49/50 |
-| `ratio_proportion` | **16/50 = 32.0%** | 50% | 50/50 |
-| `time_duration` | **10/50 = 20.0%** | 30% | 49/50 |
-| **total** | **47/150 = 31.3%** | — | 148/150 |
+| `percentage_reasoning` | **21/50 = 42.0%** | 22/50 = 44.0% | 65% |
+| `ratio_proportion` | **16/50 = 32.0%** | 16/50 = 32.0% | 50% |
+| `time_duration` | **10/50 = 20.0%** | 15/50 = 30.0% | 30% |
+| **total** | **47/150 = 31.3%** | 53/150 = 35.3% | — |
 
-**The legacy per-class baseline overstates the source in every class.** A retention floor pinned
-to "65% / 50% / 30%" — the figures quoted throughout this programme's documents and in the
-handoff that commissioned this gate — would have been calibrated against numbers roughly 1.5×
-too high. This is the concrete reason the design refused to carry the old baseline over.
+**The 65/50/30 figures do not transfer to this panel**, and that is the operative point: they
+come from `baseline_scan` at **20 rows per class**, not from the 150-row probe the gate scores.
+A retention floor pinned to them would have been calibrated against a different sample.
 
-Recorded before the run, so this is a prediction rather than a rationalisation: the typed
-grammar was expected to score the source *lower* than the legacy scorer's 33.3% on the 60-row
-prefix, because it requires the whole answer to parse and rejects type and unit disagreement.
-It does: 31.3%.
+An earlier draft of this section attributed that whole gap to the typed grammar. **That was
+wrong**, and the middle column is the decomposition it omitted. Running the *legacy* scorer on
+the identical 150 rows gives 44.0 / 32.0 / 30.0, so:
+
+- `ratio_proportion` — the two scorers agree **exactly** (16/50 each). The entire 50% → 32% drop
+  is the panel. The grammar contributes nothing.
+- `percentage_reasoning` — the grammar costs 2 points (44.0 → 42.0); the panel costs the rest.
+- `time_duration` — the grammar costs 10 points (30.0 → 20.0), and §3 shows all of that is one
+  unanticipated sentence prefix.
+
+So the grammar accounts for 6 of the 150 answers; the panel change accounts for the rest.
+
+Recorded before the run: the typed grammar was expected to score the source *lower* than the
+legacy scorer. It does, on the same rows, 47 against 53. Note this prediction was written in
+prose at the time and is not backed by a pre-run artifact in the repository — unlike this
+programme's hashed contract and pinned policy, it rests on my word, so treat it as a stated
+expectation rather than a preregistration. The like-for-like comparison against the 60-row
+legacy figure of 33.3% is the typed grammar's own 60-row prefix score, **17/60 = 28.3%**, not
+the 150-row 31.3%; comparing 31.3% to 33.3% crosses two different panels.
 
 ## 2. The unreviewed bare-value decision is load-bearing in exactly one class
 
@@ -42,10 +62,18 @@ predictions:
 | `time_duration` | 10/50 | 10/50 | 0 |
 | total | 47/150 | 41/150 | 6 |
 
-The decision is worth six answers, **all of them in `ratio_proportion`**, and nothing at all in
-the other two classes. That is a precise instruction for the pending review: it only has to
-settle bare values for counts, money, distance and cup volume, and the answer cannot affect
-`percentage_reasoning` or `time_duration`. Both settings agree on the verdict.
+The decision is worth six answers on **this** source's output, all in `ratio_proportion`, and
+all six are `count` targets — five `timing chips`, one `folding chairs`. Both settings agree on
+the verdict.
+
+Two cautions an earlier draft of this section got wrong. The six are `count` rows specifically,
+not "counts, money, distance and cup volume". And "the answer cannot affect
+`percentage_reasoning` or `time_duration`" is false as a property of the grammar: 86 of the 150
+targets differ between the two overlays, including 36 of the 50 `percentage_reasoning` rows
+(money, percent and quantity kinds). What is true is narrower — on the answers *this source
+actually produced*, the decision moved nothing outside `ratio_proportion`. A different candidate
+can be affected in any class except `time_duration`, whose 50 rows are structurally insensitive
+because clock and duration targets carry no bare permission.
 
 ## 3. Defect found: the frozen grammar rejects a prefix the source actually uses
 
@@ -82,9 +110,17 @@ with its baselines re-measured, and widening a grammar immediately after looking
 is precisely the move this programme forbids elsewhere. It is the first item for the pending
 grammar review, with the evidence attached.
 
-Note the direction, because it is not the dangerous one: a too-narrow prefix list **shrinks the
-reference set**, so there are fewer answers a candidate can be caught losing. The bias makes the
-gate weaker, not more likely to certify something it should not.
+The direction of this bias needs stating carefully, and an earlier draft stated it wrongly. It
+said the narrow prefix list "makes the gate weaker, not more likely to certify something it
+should not" — but those are the same thing. A smaller reference set means fewer answers a
+candidate can be caught losing, which **is** the false-PASS direction. Stripping only the four
+prefixes this source actually emits raises the reference from 47 to 54, so the gate is currently
+blind to 7 answers it should be protecting.
+
+There is a second, opposite effect at `G2_RETENTION`, where the reference is inherited and the
+candidate's fresh answers are scored with the same closed list: a reference item whose phrasing
+drifts into `It ends at …` is recorded as a correct-to-incorrect transition under a zero-loss
+rule — a manufactured loss. So the defect cuts both ways, and neither direction is benign.
 
 ## 4. The training-side gate runs — and demonstrates nothing about training yet
 
@@ -241,9 +277,12 @@ Requalification from `8b47b395` through `125d5481`, across three intervening dig
   strict-parity checks.
 - `G1_QUALITY`: B28 PASS 8/8; D40 FAIL on KL 1.4909, termination 0.750, distinct 4/24 — and the
   top-1 knife-edge is preserved unmoved at **0.5032** against its 0.5000 floor.
-- `G2_CACHED_B28`: **bit-identical** — same `final_state_sha256`, same 25 losses. The only two
-  differing fields are `teacher_cache_sha256` and `recipe_sha256`, both of which embed the
-  implementation digest by construction; the `recipe` dict itself is identical.
+- `G2_CACHED_B28`: **bit-identical** — same `final_state_sha256`, same 25 losses. Note this one
+  is not against `8b47b395`: no engineering run exists at that digest. The prior `G2_CACHED_B28`
+  receipts bind `eab80e9f`, `8d54f540` and `fc44701e`, and the comparison above is against
+  `eab80e9f`. The only two differing fields are `teacher_cache_sha256` and `recipe_sha256`, both
+  of which embed the implementation digest by construction; the `recipe` dict itself is
+  identical.
 
 ## A claim of mine this falsifies
 

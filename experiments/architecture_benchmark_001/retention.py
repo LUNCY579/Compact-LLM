@@ -81,6 +81,11 @@ _DEC_RE = re.compile(f'^{_SIGN}(?:{_INTBODY}\\.\\d+|\\.\\d+)$')
 _LEAD_NUM_RE = re.compile(r'^[+-]?(?:\d[\d,]*(?:\.\d+)?|\.\d+)(?:\s*/\s*[+-]?\d+)?')
 _CLOCK_RE = re.compile(r'^(\d{1,2}):(\d{2})$')
 _BARE_HOUR_RE = re.compile(r'^(\d{1,2})$')
+# One `<number> <unit>` component of a duration, and the separators allowed between components.
+# Commas inside a number survive because the separator is matched rather than stripped.
+_DUR_PART_RE = re.compile(r'(?P<num>[+-]?(?:\d[\d,]*(?:\.\d+)?|\.\d+)(?:\s*/\s*[+-]?\d+)?)'
+                          r'\s*(?P<unit>[a-z]+)')
+_DUR_SEP_RE = re.compile(r'(?:\s*,\s*|\s+)(?:and\s+)?')
 
 
 class ParseError(ValueError):
@@ -251,25 +256,39 @@ def _match_qualified_noun(rest: str, target: dict) -> None:
 
 
 def _parse_duration_seconds(rest: str, target: dict) -> Fraction:
-    """One quantity/unit, or a compound of DISTINCT units summed exactly."""
-    text = rest.replace(',', ' ')
-    tokens = [t for t in text.split() if t and t != 'and']
-    if not tokens:
-        raise ParseError('empty duration')
-    if len(tokens) % 2:
-        raise ParseError(f'duration is not number/unit pairs: {rest!r}')
-    total, seen = Fraction(0), set()
-    for number, unit in zip(tokens[0::2], tokens[1::2]):
+    """One quantity/unit, or a compound of DISTINCT units summed exactly.
+
+    Separators are matched, not deleted. An earlier version replaced every comma with a space
+    and dropped every `and` token anywhere in the string, which accepted `45 minutes and`,
+    `45 minutes,` and `45 and minutes` as 2700 seconds, and simultaneously made the legal
+    comma-grouped `3,600 seconds` unparseable. Both violate the contract: separators are
+    structure, and "no other text is stripped".
+    """
+    total, seen, pos, first = Fraction(0), set(), 0, True
+    while pos < len(rest):
+        if not first:
+            sep = _DUR_SEP_RE.match(rest, pos)
+            if not sep or sep.end() == pos:
+                raise ParseError(f'duration parts must be separated by whitespace, a comma '
+                                 f'or "and": {rest!r}')
+            pos = sep.end()
+        part = _DUR_PART_RE.match(rest, pos)
+        if not part:
+            raise ParseError(f'duration is not number/unit pairs: {rest!r}')
+        unit = part.group('unit')
         if unit not in DURATION_UNITS:
             raise ParseError(f'unknown duration unit {unit!r}')
         scale = DURATION_UNITS[unit]
         if scale in seen:
             raise ParseError(f'repeated duration unit {unit!r}')
         seen.add(scale)
-        value = parse_rational(number)
+        value = parse_rational(part.group('num'))
         if value < 0:
             raise ParseError('negative duration')
         total += value * scale
+        pos, first = part.end(), False
+    if first:
+        raise ParseError('empty duration')
     return total
 
 
@@ -595,12 +614,24 @@ def monitor_counts(reference_ids, candidate_correct_ids) -> dict:
             'lost_ids': sorted(reference - correct)}
 
 
-def monitor_verdict(per_class: dict, policy: dict) -> dict:
+def monitor_verdict(per_class: dict, policy: dict, expected_classes=None) -> dict:
     """Apply the fixed monitor rules to already-computed per-class counts.
 
     `per_class[cls]` supplies reference_n, lost, source_correct_terminated and
     termination_rate. Every rule is a policy constant; none is computed from the candidate.
+
+    `expected_classes` is required in anything that gates work. Without it this function used
+    to iterate whatever the caller supplied and nothing else, so an EMPTY dict returned
+    `PASS` with `permits_next_block` True — a gate primitive whose "no evidence" answer was
+    "proceed to the next optimizer block". A missing class is now INVALID, not a pass.
     """
+    if not isinstance(per_class, dict) or not per_class:
+        raise ValueError('monitor_verdict needs per-class counts; an empty result is not a pass')
+    if expected_classes is not None and set(per_class) != set(expected_classes):
+        missing = sorted(set(expected_classes) - set(per_class))
+        extra = sorted(set(per_class) - set(expected_classes))
+        raise ValueError(f'per-class counts do not match the registered classes; '
+                         f'missing {missing}, unexpected {extra}')
     max_lost = policy['max_correct_to_incorrect_per_class']
     min_source = policy['min_source_correct_terminated_per_class']
     min_term = as_fraction(policy['min_termination_rate_per_class'])
@@ -628,7 +659,7 @@ def monitor_verdict(per_class: dict, policy: dict) -> dict:
             'permits_next_block': status == 'PASS'}
 
 
-def confirmation_verdict(per_class_seed: dict, policy: dict) -> dict:
+def confirmation_verdict(per_class_seed: dict, policy: dict, expected_statements=None) -> dict:
     """Terminal confirmation: an exact binomial bound per seed and class, all required to pass.
 
     `per_class_seed[(seed, cls)]` supplies source_successes and losses. Bounds are computed at
@@ -666,6 +697,14 @@ def confirmation_verdict(per_class_seed: dict, policy: dict) -> dict:
         return {'status': 'INVALID', 'statements': statements,
                 'reason': f'{len(statements)} statements against a registered '
                           f'{policy["simultaneous_statement_count"]}'}
+    if expected_statements is not None and set(per_class_seed) != set(expected_statements):
+        # Counting nine statements is not the same as checking they are the NINE that were
+        # registered. Without this, nine fabricated seed/class labels returned PASS carrying
+        # the registered family-wise alpha.
+        return {'status': 'INVALID', 'statements': statements,
+                'reason': 'statement identities do not match the registered seed x class grid',
+                'missing': sorted(map(str, set(expected_statements) - set(per_class_seed))),
+                'unexpected': sorted(map(str, set(per_class_seed) - set(expected_statements)))}
     if insufficient:
         status = 'INSUFFICIENT'
     elif failed:

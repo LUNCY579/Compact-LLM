@@ -52,8 +52,8 @@ all 18 checkpoints of that matched pair, labelling capable as task ≥ 16/60 and
 labelling needs no tie-break. Artifact:
 `evidence/retention-design-v1/SIGNAL_SEPARATION.json`.
 
-**Seven of the eight admit no separating threshold at all, and four of them invert** — the
-incapable arm reads *better* than the capable one:
+**Seven of the eight admit no separating threshold at all, and all seven invert** — for each,
+some incapable checkpoint reads *better* than the weakest capable one. Four of the sharpest:
 
 | signal | inverted witness |
 |---|---|
@@ -62,8 +62,11 @@ incapable arm reads *better* than the capable one:
 | KL to source | C28 @25k (0/60) 2.9378 beats control @500k (26/60) 10.0334 |
 | reply-region KL | C28 @125k (3/60) 1.6752 beats control @500k (26/60) 3.1319 |
 
-Reply-region CE is the signal most likely to be adopted as a capability proxy, and it is one of
-the four that invert. It is therefore **not** adopted here and is recorded as a diagnostic only.
+The remaining three that invert are reply-region top-1 agreement, termination count and
+distinct-output count. Reply-region CE is the signal most likely to be adopted as a capability
+proxy, and it is one of the seven. It is therefore **not** adopted here and is recorded as a
+diagnostic only. Counts are from `SIGNAL_SEPARATION.json`'s own `inverted_witness` fields; an
+earlier draft of this table said "four of them invert", which undercounted its own artifact.
 
 **One signal does separate, and saying otherwise would repeat HOTFIX-003's error.** Top-1
 agreement with the source separates the two groups — but by **0.0038**: the weakest capable
@@ -77,7 +80,7 @@ milestones of its own recent drift and closes at a larger budget. One seed, one 
 
 The honest summary is therefore not "no likelihood-shaped quantity can ever separate these
 models" but: **of every quantity this programme actually recorded, none supports a defensible
-registered threshold, half of the likelihood-shaped ones point the wrong way, and the single
+registered threshold, seven of the eight point the wrong way somewhere, and the single
 exception is a 0.0038 knife-edge that is still closing.**
 
 ## What is added
@@ -97,7 +100,13 @@ training-side gate. Checks:
     probe_disjoint_from_training      zero family and id overlap with the training splits
     calibration_overlap_as_declared   observed overlap still equals the registered 2
     typed_scorer_recomputed           checks recomputed from the prediction artifact
+    bare_policy_verdicts_agree        the strict and permissive policies reach the same verdict
     source_unchanged, probe_unchanged, calibration_unchanged, pilot_unchanged
+
+`G2_RETENTION` adds two drift controls, `source_answers_reproduce_parent` and
+`reference_matches_parent`, and both stages additionally bind the evaluated weights: the
+`--checkpoint` supplied must hash to the `model.safetensors` its parent lineage declares, and
+B28 at `G1_RETENTION` is the frozen source and may not be given one at all.
 
 The reference is the **union of frozen-source-correct and arm-initialization-correct** items.
 At step zero the arm's correct set is its initialization set, so the losses this reports are
@@ -109,11 +118,18 @@ recomputed after training: `reference_reset_after_training` is in `forbidden`.
 
 ### The DAG change
 
-`G1_QUALITY` was a **leaf**: nothing in the ladder consumed it, so an arm could reach the
-engineering lane without its output ever being checked against the source. `G1_RETENTION_<arm>`
-now declares it as a parent, and `G2_RETENTION_<arm>` declares both the trained checkpoint and
-the step-zero retention receipt. Retention therefore cannot be claimed without quality lineage,
-and quality cannot be claimed without construction lineage.
+`G1_QUALITY` was a **leaf**: nothing in the ladder consumed it. `G1_RETENTION_<arm>` now
+declares it as a parent, and `G2_RETENTION_<arm>` declares both the trained checkpoint and the
+step-zero retention receipt. Retention therefore cannot be claimed without quality lineage, and
+quality cannot be claimed without construction lineage.
+
+**This does not interlock training, and an earlier draft of this amendment overstated it.**
+`G2_CACHED_<arm>` — the only optimizer path in the supported runner — has exactly the parents it
+had before HOTFIX-005 and still validates only its construction receipt and matched control. An
+arm whose `G1_QUALITY` FAILs can still run 25 engineering steps; what it cannot now do is hold a
+retention receipt afterwards. These are terminal certifying stages, not a training guard. A real
+interlock would require `G2_CACHED` to declare a quality or step-zero-retention parent, which
+would invalidate the existing engineering lineage and is not done here.
 
 ## Scoring: why a new scorer was required
 

@@ -357,6 +357,7 @@ def test_a_gain_never_offsets_a_lost_source_success():
     assert counts == {'reference_n': 3, 'retained': 2, 'lost': 1, 'gained': 3, 'lost_ids': ['c']}
 
 
+CLASSES = ('percentage_reasoning', 'ratio_proportion', 'time_duration')
 POLICY = json.loads(
     (ROOT / 'retention_policy.proposed.json').read_text(encoding='utf-8'))
 
@@ -369,10 +370,10 @@ def _cls(rows=50, lost=0, terminated=50, source_ok=20):
 def test_monitor_passes_only_with_zero_losses_in_every_class():
     monitor = POLICY['monitor']
     clean = {c: _cls() for c in POLICY['probe_classes']}
-    assert retention.monitor_verdict(clean, monitor)['status'] == 'PASS'
-    assert retention.monitor_verdict(clean, monitor)['permits_next_block'] is True
+    assert retention.monitor_verdict(clean, monitor, CLASSES)['status'] == 'PASS'
+    assert retention.monitor_verdict(clean, monitor, CLASSES)['permits_next_block'] is True
     one_loss = dict(clean, time_duration=_cls(lost=1))
-    verdict = retention.monitor_verdict(one_loss, monitor)
+    verdict = retention.monitor_verdict(one_loss, monitor, CLASSES)
     assert verdict['status'] == 'FAIL'
     assert verdict['failed_classes'] == ['time_duration']
     assert verdict['permits_next_block'] is False
@@ -382,7 +383,7 @@ def test_a_class_collapse_is_not_hidden_by_the_other_classes():
     """Two healthy classes must not average away a third that lost everything."""
     counts = {c: _cls() for c in POLICY['probe_classes']}
     counts['ratio_proportion'] = _cls(lost=20)
-    verdict = retention.monitor_verdict(counts, POLICY['monitor'])
+    verdict = retention.monitor_verdict(counts, POLICY['monitor'], CLASSES)
     assert verdict['status'] == 'FAIL' and verdict['failed_classes'] == ['ratio_proportion']
 
 
@@ -391,7 +392,7 @@ def test_monitor_reports_insufficient_when_the_source_cannot_do_the_class():
     never read as a clean PASS."""
     counts = {c: _cls() for c in POLICY['probe_classes']}
     counts['percentage_reasoning'] = _cls(source_ok=0)
-    verdict = retention.monitor_verdict(counts, POLICY['monitor'])
+    verdict = retention.monitor_verdict(counts, POLICY['monitor'], CLASSES)
     assert verdict['status'] == 'INSUFFICIENT'
     assert verdict['uninformative_classes'] == ['percentage_reasoning']
     assert verdict['permits_next_block'] is False
@@ -401,15 +402,15 @@ def test_insufficient_outranks_fail_so_a_broken_probe_never_reads_as_a_model_ver
     counts = {c: _cls() for c in POLICY['probe_classes']}
     counts['percentage_reasoning'] = _cls(source_ok=0)
     counts['ratio_proportion'] = _cls(lost=5)
-    assert retention.monitor_verdict(counts, POLICY['monitor'])['status'] == 'INSUFFICIENT'
+    assert retention.monitor_verdict(counts, POLICY['monitor'], CLASSES)['status'] == 'INSUFFICIENT'
 
 
 def test_termination_floor_is_applied_per_class():
     counts = {c: _cls() for c in POLICY['probe_classes']}
     counts['time_duration'] = _cls(terminated=39)          # 39/50 = 0.78 < 0.8
-    assert retention.monitor_verdict(counts, POLICY['monitor'])['status'] == 'FAIL'
+    assert retention.monitor_verdict(counts, POLICY['monitor'], CLASSES)['status'] == 'FAIL'
     counts['time_duration'] = _cls(terminated=40)          # exactly 0.8 passes
-    assert retention.monitor_verdict(counts, POLICY['monitor'])['status'] == 'PASS'
+    assert retention.monitor_verdict(counts, POLICY['monitor'], CLASSES)['status'] == 'PASS'
 
 
 def _statements(losses=0, m=50):
@@ -419,10 +420,10 @@ def _statements(losses=0, m=50):
 
 def test_confirmation_requires_every_seed_and_class_to_clear_its_own_bound():
     conf = POLICY['confirmation']
-    assert retention.confirmation_verdict(_statements(), conf)['status'] == 'PASS'
+    assert retention.confirmation_verdict(_statements(), conf, _statements())['status'] == 'PASS'
     partial = _statements()
     partial[(29, 'time_duration')] = {'source_successes': 50, 'losses': 9}
-    verdict = retention.confirmation_verdict(partial, conf)
+    verdict = retention.confirmation_verdict(partial, conf, _statements())
     assert verdict['status'] == 'FAIL'
     assert verdict['failed_statements'] == ['seed29:time_duration']
 
@@ -433,14 +434,14 @@ def test_confirmation_refuses_a_statement_count_it_did_not_budget_alpha_for():
     conf = POLICY['confirmation']
     extra = _statements()
     extra[(17, 'extra_class')] = {'source_successes': 50, 'losses': 0}
-    assert retention.confirmation_verdict(extra, conf)['status'] == 'INVALID'
+    assert retention.confirmation_verdict(extra, conf, _statements())['status'] == 'INVALID'
     assert conf['simultaneous_statement_count'] == 9
 
 
 def test_confirmation_is_insufficient_below_the_registered_source_success_floor():
     conf = POLICY['confirmation']
     thin = _statements(m=49)
-    verdict = retention.confirmation_verdict(thin, conf)
+    verdict = retention.confirmation_verdict(thin, conf, _statements(m=49))
     assert verdict['status'] == 'INSUFFICIENT'
     assert len(verdict['insufficient_statements']) == 9
     # Zero observed losses on too little evidence is not a pass: absence of evidence cannot
@@ -599,6 +600,78 @@ def test_probe_loader_rejects_a_row_that_would_silently_measure_nothing():
         with pytest.raises(ValueError):
             run.load_probe_rows(path)
         path.unlink()
+
+
+# ---------------------------------------------------------------------------------------
+# Regressions from the adversarial review (all six confirmed by reproduction)
+# ---------------------------------------------------------------------------------------
+
+def test_an_empty_or_partial_class_set_is_never_a_pass():
+    """`monitor_verdict({})` returned PASS with permits_next_block True -- a gate primitive
+    whose 'no evidence' answer was 'proceed to the next optimizer block'."""
+    with pytest.raises(ValueError, match='empty result is not a pass'):
+        retention.monitor_verdict({}, POLICY['monitor'], CLASSES)
+    with pytest.raises(ValueError, match='do not match the registered classes'):
+        retention.monitor_verdict({'percentage_reasoning': _cls()}, POLICY['monitor'], CLASSES)
+    with pytest.raises(ValueError, match='do not match the registered classes'):
+        retention.monitor_verdict({**{c: _cls() for c in CLASSES}, 'invented': _cls()},
+                                  POLICY['monitor'], CLASSES)
+
+
+@pytest.mark.parametrize('prediction,ok', [
+    ('45 minutes and', False), ('45 minutes,', False), ('45 and minutes', False),
+    ('45 minutes and and 0 hours', False), ('45 minutes', True),
+    ('and 45 minutes', False), ('45 minutes 0 hours', True),
+])
+def test_duration_separators_are_matched_not_deleted(prediction, ok):
+    """Commas and `and` used to be stripped everywhere before tokenising, so dangling and
+    interpolated separators scored correct at exactly the right value."""
+    target = {'kind': 'duration', 'value': '2700', 'bare_allowed': False}
+    assert retention.score_prediction(prediction, True, target)['correct'] is ok
+
+
+def test_comma_grouped_numbers_survive_inside_a_duration():
+    """The same blanket comma deletion made a legal grouped numeral unparseable, and 7200 s is
+    a real target in the monitor panel."""
+    for text, seconds in (('3,600 seconds', '3600'), ('7,200 seconds', '7200')):
+        target = {'kind': 'duration', 'value': seconds, 'bare_allowed': False}
+        assert retention.score_prediction(text, True, target)['correct'] is True
+
+
+def test_confirmation_checks_statement_identity_not_just_count():
+    """Nine fabricated seed/class labels returned PASS carrying the registered family-wise
+    alpha. Counting nine statements is not checking they are the registered nine."""
+    conf = POLICY['confirmation']
+    fabricated = {(1, f'x{i}'): {'source_successes': 60, 'losses': 0} for i in range(9)}
+    verdict = retention.confirmation_verdict(fabricated, conf, _statements())
+    assert verdict['status'] == 'INVALID'
+    assert 'identities do not match' in verdict['reason']
+
+
+def test_the_registered_retention_floor_is_inert_and_that_is_recorded():
+    """The 9/10 floor can never bind: for alpha=1/180 the exact upper limit always exceeds the
+    point estimate, so bound <= 0.10 already implies retention > 0.9. And at the registered
+    minimum m=50 only ZERO losses clear the bound, so the certificate demands 100% there.
+    Recorded in protocol.json rather than silently repaired."""
+    alpha = 1 / 180
+    for m in (50, 70, 126, 300):
+        passing = [k for k in range(m + 1)
+                   if retention.exact_binomial_upper_bound(k, m, alpha) <= 0.10]
+        assert all((m - k) / m > 0.9 for k in passing), m
+    assert [k for k in range(51)
+            if retention.exact_binomial_upper_bound(k, 50, alpha) <= 0.10] == [0]
+    assert retention.exact_binomial_upper_bound(1, 70, alpha) <= 0.10
+    assert retention.exact_binomial_upper_bound(1, 69, alpha) > 0.10
+    note = gates.protocol()['G1_RETENTION']['confirmation_min_retention_is_inert']
+    assert 'can never bind' in note and '100% retention' in note
+
+
+def test_a_bare_policy_disagreement_can_fail_the_receipt():
+    """The amendment calls a permissive/strict disagreement 'a blocking review item, not a
+    rounding error'. It was recorded only in metrics, so it could block nothing."""
+    for arm in ARMS:
+        assert 'bare_policy_verdicts_agree' in gates.STAGES[f'G1_RETENTION_{arm}']['checks']
+        assert 'bare_policy_verdicts_agree' in gates.STAGES[f'G2_RETENTION_{arm}']['checks']
 
 
 def test_retention_module_is_pure_and_enters_the_hashed_manifest():

@@ -143,8 +143,8 @@ for arm, parents in [('B28', ['G0']), ('D40', ['G1_WIDTH']),
 RETENTION_CHECKS = ['source_probe_informative', 'no_reference_capability_lost',
                     'generation_terminates_per_class', 'probe_disjoint_from_training',
                     'calibration_overlap_as_declared', 'typed_scorer_recomputed',
-                    'source_unchanged', 'probe_unchanged', 'calibration_unchanged',
-                    'pilot_unchanged']
+                    'bare_policy_verdicts_agree', 'source_unchanged', 'probe_unchanged',
+                    'calibration_unchanged', 'pilot_unchanged']
 for arm in ('B28', 'D40', 'C28', 'C40'):
     STAGES[f'G1_RETENTION_{arm}'] = {
         'parents': [f'G1_QUALITY_{arm}'], 'artifacts': ['retention.json'],
