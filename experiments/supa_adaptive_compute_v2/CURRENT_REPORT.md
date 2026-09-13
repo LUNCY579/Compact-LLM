@@ -1,338 +1,110 @@
-# Two-track Supa research: current execution report
+# Two-track Supa research — current report
 
-Current goal state (2026-09-06 02:11 UTC): **blocked on external capacity,
-not complete**. Revalidation found 2.04 GiB available RAM and 2,103 MiB free
-VRAM, below the registered full-reference/GPU floors. No programme model is
-running. The same blocker has recurred across three consecutive goal turns;
-all next licensed model stages require capacity to be released. Source,
-calibration and preregistration remain ready. Exact evidence is in
-`00_audit/resource_block_20260906T0211.json`.
+Snapshot: **2026-09-13 17:21 UTC**, The research goal remains open. Track B has a complete, audited mechanism screen and a selected bridge; its separately registered control calibration is complete, committed and audited. Track A's v2.4 architecture screen has resumed and remains incomplete. **Neither track has confirmatory generation or a demonstrated capability gain.** Historical receipts and earlier reports remain preserved.
 
-Latest development: calibrated random AM v2.3 failed the same architecture
-malformed-generation guard at shard 20. A0 completed 128 cases; AM has 84 cases
-in complete shards plus one preserved case in the failed attempt. Its failure
-integrity receipt confirms unchanged canonical state/checkpoints and zero
-backbone gradients. No v2.3 A1/A3/A16 or confirmation run followed the rejection.
-The full A0 baseline passed a separate 5,373-check audit, with every token
-sequence, NLL value and logit-file byte identical to original v2.2 A0.
+## Repository and scope
 
-One separately preregistered v2.4 control is being prepared: three intact
-pretrained FFNs (L12/L13/L14), applied in parallel to the same post-L13 state
-through their own learned RMSNorms, with one residual injection. It uses
-56,623,104 added dominant matrix FLOPs/token, explicitly 90% of A3, and copies
-28,314,624 existing parameters without learning new coefficients. It changes
-neither original native arms nor data/scorer/statistical/validity gates.
-The 331-test/148-subtest suite and independent static review passed before its
-calibration registration was committed at `cb5dc2e66fd3971019a633550bbf8ecabd703939`.
-Calibration then completed in 54.94 seconds at 1,290,117,120 bytes peak RSS.
-Its fixed fit-only formula produced alpha **0.764362266301519**. Fit A3/scaled
-control energy is 0.09559580669801247; held-out energies are 0.09606493426847566
-and 0.09659610573025923. No labels, clipping or scale search were used.
-Artifact: `native_armr/evidence/00_learned_control_calibration/20260906T014443_419834Z_b790e5e7/`.
-It was committed at `c72e6df1f06251824869d16c0e324e283eb693e0` before deriving
-the new inference configuration. Fresh v2.4 qualification and a complete new
-run on the existing architecture bank still precede untouched confirmation.
-The two random-control failures stay intact; a failure of this specified
-alternative does not license an automatic search for controls until one passes.
-The final v2.4 registration is
-`081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e`.
-Its source/config/registration were committed before execution eligibility.
-The 600-second resource queue expired at 02:05 UTC without launching a stage;
-its last observation was 0.53 GiB host RAM and 2,435 MiB free VRAM. No programme
-model worker remains running. Qualification and donor fitting await capacity.
-Queue receipt: `00_audit/execution_queues/20260906T015442_9607258Z_28dcf54d/queue_manifest.json`.
+Repository: `C:/Users/clclc/BusinessProject/ChatBubble-cross-scale`; origin: [LUNCY579/ChatBubble](https://github.com/LUNCY579/ChatBubble). Branch: `codex/supa-adaptive-compute-v2`. Inspected local HEAD: `ffad33f26920de5f0b1274968a1d87e45298fe63`; live remote HEAD: `a6ee824584a9e28881826ab92a11db48e124d90c` (`git ls-remote origin HEAD`, this snapshot). No push is claimed. The worktree retains untracked historical graft work; new execution evidence may accumulate while queues run. These status-document edits are pending commitment, so it is not clean.
 
-Track B remains at two complete pairs. S8/D20 attempt 000 failed pre-load RAM
-admission (1.66 GiB versus 3.00 GiB), with no fitting. Its next attempt uses a
-new directory. The original 139 Track B source hashes remain unchanged.
+The [existing-work inventory](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/00_audit/existing_work_inventory.md) records exact branches, commits and reuse classifications. Native hooks/block recurrence come from `experiments/anchor_routed_middle_recurrence_v1/src/armr`; actual donor-layer loading, masks and residual graft mechanics reuse preserved `experiments/cross_scale_layer_graft_v1/graft.py`; streamed checkpoint access comes from `Rineya_Cross_Scale_Capability_Transfer_Lab_v1`. The untracked historical graft has hash-bound local provenance, not an invented source commit.
 
-Execution update at 23:52 UTC: two of 16 Track B pairs completed all six objectives,
-with unchanged donor state and exact native replay. S8/D12 took 128.65 seconds;
-B3/B0 held-out ordinary delta cosine is 0.79367/0.32144 and token-relative MSE
-0.37049/1.39826. S8/D16 took 111.50 seconds; B3/B0 cosine is 0.73081/0.27899 and
-MSE 0.46297/48.51333. Their evidence is under
-`cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/S8_D12/attempt_000/`
-and `S8_D16/attempt_000/`. No bridge is selected; the next fixed pair is S8/D20.
+Shared model loading, generation, hidden capture, scoring, paired statistics, hashing, frozen-state checks, runtime qualification and machine leases live in `experiments/supa_adaptive_compute_v2/shared/`. Repairs add strict deadlines, sealed/role guards, immutable attempts and complete paired coverage. Candidate operators, calibration, selection, protocols and evidence remain scientifically separate. Track B Stage 2 has its own lifecycle under `cross_scale/generation_stage/v1/`; it does not reuse Stage 1's generation-closed registration.
 
-Native v2.3 qualification **PASSED** at
-`native_armr/evidence/00_runtime_qualification/20260905T235200_982255Z_36998242/`.
-The first attempt failed RAM admission at 2.94 GiB versus 3.00 GiB. The next
-attempt, `20260905T233921_233855Z_41832612`, preserved all 40 CPU reference logits
-but failed CUDA initialization before GPU model loading. Windows logged an NVIDIA
-TDR reset during that CPU phase; a fresh CUDA health probe passed afterward.
-The reset's initiating cause is unknown. Both failed attempts stay FAILED; the
-successful retry changed no scientific setting or threshold. All 40 comparisons,
-greedy identities, exact GPU repeats and disabled/restored checks passed. The
-admission validator recomputed frozen gates and verified all 80 logit artifact
-hashes. Max absolute logit error was 4.19617e-5, max hidden relative L2 7.85671e-5,
-and max absolute NLL error 4.55379e-5; peak CUDA reservation was 2.50391 GiB.
-The 313.05-second run and report were committed at
-`39122c92c9fa930ebab99a90135ae92aa06c4f7b`. A fresh GPU architecture matrix is
-running in order A0, AM, A1, A3, A16. Confirmation remains closed until that
-complete matrix passes its original gates.
+## Data and analysis
 
-Prepared generic export and graft interfaces under `cross_scale/generation_stage/v1/`
-passed 56 tests and 6 subtests in 21.86 seconds. These use tiny CPU decoders and
-synthetic/mocked provenance fixtures. No real export, generation protocol, dose
-choice or generation caller exists. Both original source maps remain unchanged.
-Latest code/evidence commit at this update is `0bd77ad3219a1650df391a75101bb7cce2983107`.
-The research goal remains open.
+Each independently frozen track bank has **128 calibration scenarios (96 fit/32 held out), 128 architecture originals, 1,024 confirmatory originals and 128 linked diagnostic variants**. Eight families cover 32 templates; eight templates are excluded from engineering. Linked variants add no independent primary N. Frozen cases/scorers are not edited after model outputs. Sealed/TEST2/private evaluation remains closed.
 
-Snapshot: **2026-09-05 22:45:35 UTC / 17:45:35 America/Chicago**. The shared
-framework, independent banks, protocols and callers are implemented. Real runtime
-qualification, Native architecture execution, Native control calibration and
-Track B activation capture have run. Both capability questions remain open;
-**zero confirmatory examples have been generated**. This report updates the
-earlier delivery snapshot without modifying [FINAL_REPORT.md](FINAL_REPORT.md).
+The eventual paired analyses report accuracy, wins/losses, exact McNemar, scenario bootstrap confidence intervals, absolute/relative error reduction, family/template/variant effects, NLL, output identity, validity and measured cost. There is presently no complete confirmatory comparison for either track and no licensed cross-track capability/cost frontier.
 
-| Track | Question | Completed evidence | Current decision |
-|---|---|---|---|
-| A: Native ARMR | Does bounded native recurrence generalize beyond the inspected pilot? | Random AM v2.3 mechanically rejected; separately registered pretrained FFN calibration completed | v2.4 qualification and complete architecture matrix required; no efficacy claim |
-| B: donor transfer | Can a frozen Qwen3-4B transformation be faithfully transferred into Supa? | GPU qualification failed its frozen absolute-error threshold; CPU capture and two six-objective pairs completed | 14 pairs pending; no selected bridge or generation license |
-| Downstream mechanisms | Routing, MLA/MHA, MTP, 8B, backbone recovery and distillation | Not executed or licensed | All gates CLOSED |
+## Track A — native recurrence
 
-The resource queue is active; a queued stage is not a running model. At this
-snapshot, queue session `27927`, PID `207960`, had no `launch.json`; its latest
-record showed 0.791 GiB available host RAM, 1,812 MiB free GPU memory and no
-programme lease. It waits for 4 GiB host RAM and prefers the pending v2.3 Native
-qualification when at least 3.5 GiB VRAM is free. Otherwise it may run the first
-pending Track B CPU pair when host admission permits. It executes at most one
-stage and returns for review. It does not retry failed science. Queue evidence:
-`00_audit/execution_queues/20260905T224301_9855922Z_043745b4/`.
+Current configuration: [protocol_gpu_v2_4.json](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/native_armr/configs/protocol_gpu_v2_4.json), with the original Native preregistration and [v2.4 amendment](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/native_armr/protocol/gpu_fp32_v2_4_amendment.md). Registration: `081a8f6bf3c7396c97f13e3d4a7d55bf7311b37dcc0b0bc7bfd32478fa44241e`.
 
-Repository: `C:/Users/clclc/BusinessProject/ChatBubble-cross-scale`; origin:
-`https://github.com/LUNCY579/ChatBubble.git`; branch:
-`codex/supa-adaptive-compute-v2`; local HEAD:
-`553f7fde97333339d54399f25b03b1dda22e2265`. Remote HEAD was verified by the root
-worker at 22:44 UTC as `a6ee824584a9e28881826ab92a11db48e124d90c`; the local
-`origin/main` ref agrees. No local remote-tracking ref exists for this new branch;
-this report does not claim it was pushed. The local historical native remote ref
-is `d8475ea3b9de3e17c5193a00ed01cc4aa6f1a136`, and the larger lab remote ref is
-`fde553c908db39e87a15a52ed239d1ba0a68bfd3`. At inspection there were no tracked
-modifications, but the working tree was not clean: preserved untracked graft work
-and new audit/queue evidence were present. This new report adds another file.
+Arms are A0 intact, A1 one additional L12, A3 one additional L12→L13 block, A16 one additional L16, and AM a frozen pretrained FFN residual after L13. AM applies intact L12/L13/L14 FFNs and their learned normalizations in parallel. It copies 28,314,624 parameters and adds 56,623,104 dominant matrix FLOPs/token, **90% of A3's added matrix work**. Its fit-only, label-free scalar is **0.764362266301519**; no backbone training, scalar search or holdout selection occurred.
 
-The [existing-work audit](00_audit/existing_work_inventory.md) classifies exact
-paths and commits as reused, repaired, historical, superseded, scientifically
-different, unsafe or missing. Native recurrence reuses the scoped wrappers in
-`experiments/anchor_routed_middle_recurrence_v1/src/armr/hooks.py` and
-`recurrence.py`; whole-block order remains L12,L13,L12,L13. Canonical resolution,
-hidden/logit/Unicode diagnostics and hashing reuse that historical implementation.
-The preserved `experiments/cross_scale_layer_graft_v1/graft.py` supplies actual HF
-layer loading and masks; the larger lab's `StreamingWeights` supplies checkpoint
-streaming. Shared paired/scenario statistics reuse audited statistical primitives.
-Repairs cover deadline checks, strict scoring, sealed/role guards, exclusive
-evidence, complete paired coverage, token-balanced alignment and delta-aware
-bridge fitting. Historical source/evidence directories remain separate and intact.
+v2.4 CPU/GPU qualification **passed all 40 comparisons**, exact greedy/repeated-GPU and disabled/restored checks. Maximum absolute first-logit error: **7.247925e-5**; hidden relative L2: **7.856709e-5**; absolute NLL error: **4.553795e-5**. Peak CUDA reservation was 2,663,383,040 bytes; wall time 313.01 seconds. This establishes runtime compatibility, not efficacy.
 
-Both scientific callers use `shared/model_loading.py`, `hidden_capture.py`,
-`generation.py`, `scoring.py`, `statistics.py`, `integrity.py`, `hashing.py`,
-`manifests.py`, `runtime.py` and `timing.py`. These provide canonical identity,
-full-prefix no-cache generation, NLL/logit/validity diagnostics, exact scoring,
-paired analysis, cost accounting, immutable receipts and sequential heavy-job
-ownership. Operators, calibration inputs, selection rules, registrations and
-evidence belong to their own tracks. Track B fitting never consumes Track A
-answers. Native v2.3 calibration exposes only its own prompt/identity fields.
+The independent 978-check resume audit at **03:21:25 UTC**, consistent with all 37 registration-bound attempt receipts inspected again at 17:13 UTC, found **A0 has 128 cases in 30 complete nonempty shards; AM has 16 cases in five complete shards; A1/A3/A16 have no v2.4 completed cases yet**. The nominal 32-shard schedule has two naturally empty shards. Two AM attempts failed RAM admission before any examples; the latest at 03:05 UTC saw 0.31 GiB versus the unchanged 0.50 GiB GPU staging floor. These are capacity failures, not mechanical rejection. The old queue's missing session and absent PID 230268 were recorded in an additional interruption receipt without inventing its stop time or post-run integrity. A new controller started at 17:13:49 UTC in `00_execution_queue/20260913T171349_1363153Z_2732bedc/`; later progress requires current run receipts. Partial AM output is not an accuracy denominator. A later terminal-manifest snapshot at **17:21:16 UTC** counts **A0 128/128 and AM 51/128 (12 complete shards)**, with A1/A3/A16 still pending. The two earlier RAM failures remain the only failed attempts; this count snapshot is not a new independent numerical audit. Evidence: `00_audit/execution_snapshot_20260913T172116.json`.
 
-Each track independently contains **1,024 primary original scenarios**, 128
-linked diagnostic variants, 128 architecture cases and 128 calibration cases
-(96 fit, 32 held out). Eight families cover 32 templates; eight templates are
-excluded from engineering. Linked variants stay with their latent scenario and
-add no independent primary N. Separate semantic oracles and tokenizer validation
-passed; frozen prompts, answers, generator and scorer were not edited after
-model output. Canonical manifest digests are Native
-`7ebdac9f8a5ce14277d6c74a138b96303495c82b9a98bcbaf74a498e8fedd4a2`
-and Track B `6857158ee7a360bdf2f72a21c5ee78041ab0a5ecda264c0387e1e5facf638a46`.
-The strict scorer identity is
-`62937db0530db2f8b43672ff1ea3e9ffa96dce5e8b7c9cf5bac6996b3d29c11e`.
+Original random-control v2.2 and calibrated-random v2.3 mechanical failures remain preserved and are not relabeled. The complete new five-arm architecture gate precedes untouched confirmation. The confirmatory criterion remains at least +2 accuracy points or 5% relative error reduction, supportive paired 95% CI and McNemar, then A3 versus matched compute, with preservation/validity and quality-per-cost requirements. **Current Native GO/NO-GO: unresolved; confirmation closed.** Historical 12/16, 12/16 and 13/16 A0/A1/A3 results remain hypothesis-generating.
 
-Track A follows the original [preregistration](native_armr/protocol/preregistration.md)
-and separately frozen [v2.3 GPU amendment](native_armr/protocol/gpu_fp32_v2_3_amendment.md).
-Arms remain A0 intact, A1 one extra L12, A3 one extra L12-L13 block, A16 one extra
-L16, and AM an independent frozen SwiGLU residual after L13. AM retains seed 7301,
-normal std .02, width 10240, 31,457,280 added matrix parameters and 62,914,560
-dominant matrix FLOPs/token, matching A3's two-layer matrix work. Attention and
-normalization costs are excluded from this approximate compute match.
+## Track B — donor transfer
 
-Original GPU v2.2 qualification passed all 40 CPU/GPU case-arm comparisons, with
-identical greedy sequences, exact same-GPU repeats and disabled/restored identity.
-Maximum absolute first-token logit error was `4.1961669921875e-05`, maximum
-per-token hidden relative L2 error `7.856709228698431e-05`, and maximum absolute
-answer-NLL error `4.553794860839844e-05`. Canonical and seeded control state hashes
-matched across CPU/GPU. This qualified that runtime; it did not measure capability.
-The first resource-interrupted qualification remains invalid and preserved.
+The unchanged CPU [alignment protocol](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/cross_scale/protocol/transformation_alignment_v2.md) completed **16/16 depth pairs and 96/96 objective cells**, using Supa post {8,12,16,19} × Qwen3-4B {12,16,20,24}. Objectives are B0 absolute ridge, B1 token-normalized state, B2 delta-aware, B3 both, BS shuffled pairs and BR seeded random. Only bridges were fitted; both backbones remained frozen. Run: `alignment-cpu-v2-002`; CPU registration: `f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea`.
 
-Under v2.2, A0/A1/A3/A16 each completed **128 cases in valid complete architecture
-shards**. Original AM has **84 admissible cases**, plus one saved case in failed
-shard 20. The exact failure was the combined repetition/script/Unicode generation
-guard. The rejected prefix was not saved, so its particular subtype is unknown.
-The original five-arm matrix is incomplete. Its four completed native arms and
-partial AM output do not license an efficacy comparison or confirmation. An
-interrupted A16 attempt remains invalid even though all five retained token/NLL/
-logit artifacts match its separate successful rerun. The architecture audit
-checked 3,514 invariants plus seven failure-integrity checks, with no failures.
+The complete-matrix selector chose **B3 at Supa L19 / donor L24** using held-out calibration activations only. The independent audit passed **4,931 checks**, reconstructing selection and checking metadata/scalar/source/artifact consistency. It did not independently rerun models or deserialize bridge/activation tensors.
 
-The prospective [v2.3 calibration](native_armr/protocol/control_calibration_v2_3.md)
-was designed after that architecture failure. Its rule and source were frozen
-under registration
-`cf1440a9bbf3344bcc0cca316a1d5f9cb172a448b06bf1696b27646fc673fe57`
-and committed at `4791635ac1a1ad22511c355bc59ab42956407dee` before execution.
-CPU FP32 streamed raw post-L13 states and actual extra L12/L13 deltas use only
-Track A calibration prompts. Each ordinary token's delta mean-square is divided
-by `max(mean-square(h13),1e-8)`; ordinary-token means are then averaged equally
-across the 96 fit scenarios. The sole scalar is
-`sqrt(fit_native_energy / fit_control_energy)`; it was written before held-out
-transformation measurements. No answer, accuracy, NLL, architecture output,
-confirmation data, scalar search, clipping or holdout selection entered fitting.
+| Same-pair held-out ordinary-token metric | B0 | Selected B3 | BS | BR |
+|---|---:|---:|---:|---:|
+| Donor delta cosine | 0.710979 | **0.849178** | 0.213387 | 0.051463 |
+| Token-relative delta MSE | 0.507394 | **0.282078** | 0.994955 | 8.000689 |
 
-The resulting **alpha is 1.091369554461779**, above the original 1.0 and retained
-without alteration. Fit native energy is `0.09559580669801247`, versus unscaled
-control `0.08025926419711565`; scaled control is `0.0955958066980125`. Holdout
-native energy is `0.09606493426847566`, versus scaled control
-`0.09577791697352757`. Execution took 62.75 seconds at 1,236,889,600 bytes peak
-RSS. All recorded checkpoint, layer, control and buffer identities were preserved,
-with zero trainable parameters and gradients. The control hash remains
-`eedbc0ca788ee8a1193b455f7cf2c94cd1b5eeab288f1f2df448fa9ae208584c`.
-Calibration establishes residual-energy matching; generation safety and efficacy
-remain unmeasured for v2.3.
+B3 ordinary delta RMS ratio is 0.922427; all-token delta cosine is 0.845053; final-token cosine is 0.916452. Ordinary up/down-map cosines are 0.911083/0.966440. Special-token fidelity is worse than same-pair B0: B3 cosine/MSE is **0.783316 / 1.351649**, versus B0 **0.922944 / 0.162114**. Strong ordinary-token alignment does not imply uniform improvement. All frozen mechanism gates passed. **MECHANISM_GO licenses a separate small-screen freeze, not donor efficacy or large generation.**
 
-The calibration report SHA256 is
-`20a552138f91ee37c3df261f576fc7ae4f0ff6214ddc9cdb8b383ff4d2e2789c`.
-Its complete artifact was committed at
-`a6126f2a3c51bba5d312ae6db2f7cb4af1092522` before deriving the final GPU profile.
-Native GPU v2.3 registration is
-`86e768e08bf3576dd8ce80ec939b7e876fb5fb7449d41a3aa51c497ce6607b44`.
-Fresh all-arm CPU/GPU qualification has passed. A fresh full architecture matrix
-remains required; original receipts cannot be mixed into the new paired matrix.
+Stage 2 source/protocol/callers passed **243 tests + 6 subtests** and were committed at `115b1d5a8d1c0c61a4acf691d938a50844623c17`. The fixed screen is 128 B architecture originals, X0 plus XG/XS/XR/XM at gates .03/.10/.20/.40: 17 cells, eight shards each. Every candidate requires a complete matching X0 baseline. Failed cells remain failed; other cells continue; any failed same-dose control makes that dose ineligible. XN is unavailable because no independently selected best Native operator is frozen.
 
-No fresh Native accuracy gain, paired effect, preservation gain or cost frontier
-is claimed. Historical A0/A1/A3 scores 12/12/13 of 16 remain hypothesis-generating.
-The frozen eventual analysis tests A3>A0, then A3>AM, requiring positive 95% paired
-CI lower bounds, exact McNemar p≤.05, and at least 2 absolute points or 5% relative
-error reduction versus A0. A1/A16 have a separate Holm family. Scenario bootstrap,
-family/template/variant analysis, canonical-answer NLL, validity and measured
-latency/RSS/VRAM accompany accuracy. Preservation must exclude a pooled loss over
-2 points in the registered families; no additional invalid output or safety stop
-is allowed. These are future gates, not passed results.
+XM is an independent frozen 1024→34560→1024 SwiGLU (seed 2702, std .02), 106,168,320 matrix parameters and 212,336,640 added matrix FLOPs/token. This exactly matches the selected donor-plus-bridge dominant matrix work; the selected graft has 100,930,816 donor parameters plus 5,246,464 bridge coefficients. Its scalar must come solely from the registered B calibration fit energies. The selected-map export `selected_20260913_001` passed full upstream verification and was committed at `96c4605`. B-only calibration registration `bf99e713104573b7aafb8f5511278fd473bcd406ff1d6fece3d0ebe5787534a0` was committed at `effb3c15198f8e7f65468ef740897403155d77bc`; its preflight returned VERIFIED.
 
-Track B follows [transformation alignment v2](cross_scale/protocol/transformation_alignment_v2.md):
-Supa post {8,12,16,19} × actual Qwen3-4B layers {12,16,20,24}, 16 pairs and six
-objectives per pair. B0 is historical absolute ridge; B1 token-normalized state
-alignment; B2 delta-aware alignment; B3 both; BS cross-scenario shuffled pairs;
-BR seeded random bridges. B2/B3 fit only upward affine bridge parameters through
-the actual frozen donor transformation, for the fixed 96-step budget. Backbones
-and downward maps stay frozen. Six bridges each have been fitted for S8/D12 and
-S8/D16; none is selected while the other 14 depth pairs remain incomplete.
+The earlier B calibration queue ended **QUEUE_BUDGET_EXHAUSTED at 03:51:35 UTC**, with no model launched. The actual fixed CPU calibration in `00_control_calibration/20260913T171252_566611Z_669e5d42/` is now **COMPLETE**: 96 fit + 32 holdout scenarios in **63.72 s**, peak RSS **2,019,373,056 bytes**, alpha **1.6186783995925944**. Fit teacher/scaled-control relative energies both equal 0.098211512; held-out energies are 0.098558545 / 0.098295374. The report records unchanged frozen states and checkpoints, zero gradients/trainable parameters, no answer labels and zero generated tokens. Official verification passed, evidence was committed at `2ae253f`, and an independent audit passed **3,373 checks with 310 input hashes**. The artifact-derived CUDA configuration is `cross_scale/generation_stage/v1/configs/generation_screen_gpu_v1.json`; registration `dcfc67e0828a3b47da41980a88ce47813b4f8b63c184502f6898bbeaf7222fd3` is committed at `513d194`. **No B Stage 2 runtime qualification, dose-screen generation or confirmation has run.** Calibration uses B-only cached activations and frozen operators, with no efficacy answers or Native calibration imported.
 
-Track B GPU qualification recorded 656 comparisons; 161 exceeded the frozen
-absolute-error cap .002 (116 state, 45 projected-delta). Maximum absolute error
-was .021484375. Relative L2/cosine and all 16 gradient comparisons passed, and
-same-GPU repeats were exact. The absolute criterion still makes this profile
-**FAILED**. Its thresholds remain unchanged. The failure concerns runtime
-agreement and says nothing about donor usefulness.
+The fixed dose screen requires all four candidate/control cells at a dose to complete 128 examples, no additional invalid outputs versus X0 and no safety stops. XG must have at least two paired wins and one net correct answer over X0, at most one additional pooled preservation error, and raw accuracy at least that of XS, XR and XM. Eligible doses rank by margin over the strongest control, then gain over X0, then lower dose. These prospective selection rules reject inert or destructive behavior; they are not confirmatory significance criteria.
 
-The unchanged CPU reference completed `alignment-cpu-v2-002` capture in
-**491.5613612 seconds**, with **4,450,623,488 bytes peak RSS** (4.45 GB / 4.15 GiB).
-All four streamed Supa sites matched direct canonical hooks exactly. Captures
-cover 96 fit and 32 held-out scenarios, without truncation or generation.
-The activation bundle SHA256 is
-`8d132b3992a8b7599926d692e1ea776772b6fa5186e5a8a57ac3f3382dc5f872`.
-Metadata verification checked completed receipts, registration, partition and
-bundle identity. The CPU registration ID remains
-`f8e4a26742effa443dfb843a00b61f34df09394db217cd9bb72120b1de7255ea`.
-Track B's top-level receipt field `registration_sha256` is instead the hash of
-the expanded runtime registration, including its path:
-`a87248479cb5e98025c080f09c05e4ead533b7769195f6c4a2634f1d76f0d6b6`.
-These are distinct digests in the preserved caller, not different registrations.
+The earlier B GPU alignment profile remains **FAILED**: 161/656 absolute-error comparisons exceeded .002, despite passing relative/cosine criteria and all 16 gradient comparisons. No threshold was widened. Stage 1 therefore used its CPU reference; Stage 2 CUDA needs its own per-cell CPU/GPU qualification.
 
-There are no new held-out donor transformation metrics, selected bridge, gate
-study or efficacy outputs. The historical delta cosine .443202525 and 16/16
-identical graft/baseline outputs remain historical evidence of mechanical viability.
-The forthcoming complete-matrix selector requires ordinary delta cosine≥.60,
-improvement≥.10 over same-pair B0 and both null controls, token-relative MSE≤.8 B0,
-all-token cosine≥.50 and a residual RMS ratio in [.25,4]. No partial matrix can
-select a winner. Only a subsequent separately frozen architecture stage could
-study doses [.03,.10,.20,.40]; Track B generation and confirmation remain closed.
+## Power, integrity and limitations
 
-[Power planning](data/generated/v2/power_planning.json) uses assumptions, not
-observed effects. At N=1,024, a 2-point paired gain has approximately 81.7%, 52.6%
-or 29.9% power when discordance is 5%, 10% or 20%. Corresponding 80%-power minimum
-detectable effects are 1.96, 2.77 and 3.92 points. Relative-error planning assumes
-a hypothetical 75% baseline. Diagnostic variants add no independent N, exact
-tests become discrete with few discordances, and multiplicity further reduces
-sensitivity. A 1,024-scenario bank cannot guarantee detection of a 1–2-point gain.
+[Power planning](C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/data/generated/v2/power_planning.json) covers +1/+2/+3 points and 5% relative error reduction at N=256/512/1024/2048. For a +2-point paired gain, approximate power at discordance 5%/10%/20% is respectively 30/17/11%, 53/30/17%, 82/53/30%, and 98/82/53%. At N=1,024, 80%-power MDE is 1.96/2.77/3.92 points. These are planning assumptions, not observed effects; multiplicity and scenario dependence matter. The 128-case screen cannot establish generalizable capability.
 
-The CPU reference remains FP32/eager, four threads, deterministic and no-cache.
-The authorized NVIDIA RTX 4070 Laptop GPU profile uses FP32, disabled TF32,
-highest matmul precision and deterministic CUDA; CPU/GPU science is kept separate.
-Resource interruptions and failed admissions are retained in fresh directories.
-The latest independent byte check at 22:44 UTC verified all 198 historical files
-unchanged and reread canonical checkpoint bytes matching
-`a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026`.
-Historical inventory root SHA256 remains
-`b2b4986d6f3abc151ab0c7ec8748c421c919dbcf648afa526e0005d4bdcbfa8f`.
-No canonical or donor checkpoint was saved or trained. Sealed/TEST2/private data
-remain closed. Source/config/data commitments are checked before model execution.
+Pinned canonical checkpoint SHA256: `a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026`; Qwen3-4B revision: `1cfa9a7208912126459214e8b04321603b3df60c`. Native/B bank contract hashes: `7ebdac9f8a5ce14277d6c74a138b96303495c82b9a98bcbaf74a498e8fedd4a2` / `6857158ee7a360bdf2f72a21c5ee78041ab0a5ecda264c0387e1e5facf638a46`. Scorer SHA256: `62937db0530db2f8b43672ff1ea3e9ffa96dce5e8b7c9cf5bac6996b3d29c11e`.
 
-Validation includes the earlier combined **321 tests and 148 subtests**, followed
-by 54 focused runtime checks, and the amendment's **215 tests and 148 subtests**
-in 76.71 seconds. The 49 new calibration/integration tests passed in a separate
-20.76-second focused run. Counts describe overlapping suites and are not summed.
-The independent runtime review checked 206 invariants; separate NumPy arithmetic
-reproduced all 40 Native logit comparison triples from 80 saved hash-verified
-tensors. The new standard-library-only calibration audit passed **3,012 checks**:
-all 128 case identities, scalar aggregation, partition separation, source/data
-hashes, control identity and recorded module-integrity fields reconcile.
+Latest Stage 2 validation records unchanged 147 Native v2.4 and 139 original B source bindings. The preserved 198-file historical inventory has root `b2b4986d6f3abc151ab0c7ec8748c421c919dbcf648afa526e0005d4bdcbfa8f`. Successful real runs require before/after checkpoint/state hashes, zero trainable backbone parameters and zero gradients. Failed/abandoned attempts retain partial artifacts and cannot become completed denominators. A fresh independent streamed-byte check at **03:22:45 UTC** reverified all 198 historical files and the canonical checkpoint SHA256 without loading tensors; receipt: `00_audit/integrity_20260913T0323/receipt.json`. The documentation worker did not load models.
 
-Exact amendment suite command recorded in its immutable receipt:
+Execution uses the pinned Python environment (torch 2.12.1+cu126, transformers 5.14.1), FP32/eager/four threads/no cache. The authorized RTX 4070 Laptop GPU uses deterministic CUDA, highest matmul precision and TF32 disabled. Heavy jobs are serial. Contending external workloads can delay admission and confound wall-time comparisons; no controlled accelerator speedup claim is made. The bank consists of bounded synthetic English tasks, not a broad external benchmark; preservation and template generalization claims must respect that scope. Routing, 8B, MLA/MHA, MTP, PEFT/backbone recovery and distillation remain closed. No cross-track efficacy winner can be declared yet.
+
+## Evidence and validation
+
+All paths below are under `C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2/`.
+
+| Evidence | Exact directory |
+|---|---|
+| Native v2.4 calibration | `native_armr/evidence/00_learned_control_calibration/20260906T014443_419834Z_b790e5e7/` |
+| Native v2.4 qualification | `native_armr/evidence/00_runtime_qualification/20260906T203929_861509Z_7b0b0fc8/` |
+| Current Native queue and shards | `native_armr/evidence/00_execution_queue/20260913T171349_1363153Z_2732bedc/`; registration-bound runs in `native_armr/evidence/01_architecture_dev/` |
+| Preserved interrupted Native queue | `native_armr/evidence/00_execution_queue/20260913T021009_4930074Z_585eaafd/`, including `interruption_observed_20260913T1713.json` |
+| B complete matrix and selection | `cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/aggregate/attempt_000/` |
+| B pair measurements | `cross_scale/evidence/02_bridge_objectives/alignment-cpu-v2-002/` |
+| B independent matrix audit | `cross_scale/evidence/07_independent_audit/matrix_audit_20260907T004813_5299633Z/` |
+| B verified committed export | `cross_scale/generation_stage/v1/evidence/00_upstream_exports/selected_20260913_001/` |
+| Stage 2 passing tests | `cross_scale/generation_stage/v1/evidence/00_preparation_validation/20260913_screen_retry1/` |
+| Native/shared passing tests | `00_audit/native_v2_4_validation_20260906/` |
+| Current Native independent audit | `00_audit/native_v2_4_resume_review_20260913/` |
+| B exhausted calibration queue | `cross_scale/generation_stage/v1/evidence/00_execution_queue/20260913T032108_4919029Z_calibration/` |
+| B completed, verified XM calibration | `cross_scale/generation_stage/v1/evidence/00_control_calibration/20260913T171252_566611Z_669e5d42/` |
+| B independent control calibration audit | `00_audit/cross_control_calibration_review_20260913/attempt_001/` |
+
+Commands below reproduce the two cited suites (overlapping coverage is not summed). Recorded results are **331 tests + 148 subtests in 106.19 s** for Native/shared and **243 tests + 6 subtests in 42.77 s** for Stage 2. The preceding Stage 2 run's three string-path failures are preserved; the retry passed after repair. Tests use small fixtures, not capability evidence.
 
 ```powershell
-& 'C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe' -m pytest experiments/supa_adaptive_compute_v2/native_armr/tests experiments/supa_adaptive_compute_v2/tests -q --junitxml=experiments/supa_adaptive_compute_v2/00_audit/native_control_v2_3_validation/junit.xml
+$researchPython = 'C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe'
+$programme = 'C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/experiments/supa_adaptive_compute_v2'
+& $researchPython -m pytest "$programme/native_armr/tests" "$programme/tests" -q
+& $researchPython -m pytest "$programme/cross_scale/generation_stage/v1/tests" -q
 ```
 
-The focused run covered `test_control_calibration.py` and
-`test_calibrated_protocol.py`. The earlier combined suite's exact invocation is
-retained in `00_audit/gpu_validation_v1/validation_receipt.json`. These are saved
-validation commands: a future invocation must use a new output path.
+## Exactly one next causal experiment per track
 
-Principal evidence paths, all relative to this programme directory:
+**A:** Finish the fixed v2.4 five-arm architecture screen, retaining its pretrained matched-compute control and unchanged guards. A complete pass is required before the frozen 1,024-case confirmation. A new controller is live; the command below is for later resumption only after verifying its worker has exited. Never launch a duplicate campaign:
 
-| Evidence | Exact location |
-|---|---|
-| Audit/reuse and requirements | `00_audit/existing_work_inventory.md`; `00_audit/requirements_audit.md` |
-| Latest historical/checkpoint verification | `00_audit/integrity_20260905T2244/receipt.json` |
-| Original Native GPU qualification | `native_armr/evidence/00_runtime_qualification/20260905T191958_868458Z_82f1162e/` |
-| Original AM failure | `native_armr/evidence/01_architecture_dev/20260905T220307_858493Z_7cc95fc0/` |
-| Complete original architecture inventory | `00_audit/native_architecture_failure_20260905/` |
-| Calibrated scalar and all cases | `native_armr/evidence/00_control_calibration/20260905T223621_219545Z_a6c46c00/` |
-| Independent calibration review | `00_audit/native_control_v2_3_independent_review/` |
-| Amendment tests and hashed logs | `00_audit/native_control_v2_3_validation/` |
-| GPU implementation validation | `00_audit/gpu_validation_v1/`; `00_audit/runtime_independent_review_20260905/` |
-| Failed Track B GPU qualification | `cross_scale/evidence/00_runtime_qualification/20260905T193023_051203Z_29be300a/` |
-| Completed CPU capture | `cross_scale/evidence/01_alignment_matrix/alignment-cpu-v2-002/` |
+```powershell
+& "$programme/scripts/run_native_when_available.ps1" -ConfigName protocol_gpu_v2_4.json -ArmOrder control-first -Role architecture_dev -MaxQueueSeconds 3600
+```
 
-Limitations remain material. These banks are bounded synthetic English tasks;
-grounded QA does not establish broad factual knowledge. AM is untrained and a
-slightly larger energy-matched alpha offers no demonstrated validity improvement.
-The v2.3 design follows an observed architecture failure and cannot rehabilitate
-the failed v2.2 matrix. Calibration saves hashes of raw tensors, so its independent
-audit reconstructs scalar arithmetic rather than each underlying token energy.
-Qualification timing was affected by other workloads and is not a controlled
-speed benchmark. Alignment capture alone establishes no transfer fidelity. The
-pre-existing `experiments/cross_scale_layer_graft_v1/` dependency remains untracked,
-hash-bound and unchanged; a clean clone needs those preserved local bytes and
-cannot attribute them to a source commit. Long CPU fitting and resource contention
-remain practical constraints. Partial outcomes establish neither success nor
-scientific failure of either capability hypothesis.
+**B:** Run the separately preregistered 17-cell dose/control screen for the selected B3 S19/D24 transformation. Its fixed label-free XM energy calibration, derived CUDA configuration and registration are committed. The next executable prerequisite is X0 CPU qualification, followed by the required per-cell CPU/GPU qualification before generation. A live one-phase queue already waits for the Native controller to exit, release its lease, and leave sufficient host memory. Its evidence is `cross_scale/generation_stage/v1/evidence/00_execution_queue/20260913T1720_X0_cpu/`; do not launch a duplicate. The direct command, for later verified resumption only, is:
 
-Exactly one next causal experiment per track:
+```powershell
+$stage = "$programme/cross_scale/generation_stage/v1"
+$screenConfig = "$stage/configs/generation_screen_gpu_v1.json"
+& $researchPython "$stage/scripts/qualify_runtime.py" --config $screenConfig phase --cell X0 --phase cpu
+```
 
-- **Track A:** execute the separately registered pretrained-FFN-control v2.4
-  campaign, first passing its full CPU/GPU qualification, then all five arms on the 128-scenario
-  architecture set with unchanged guards. Only if both gates pass, run its
-  untouched 1,024-scenario paired confirmation and separate linked diagnostics,
-  followed by complete independent audit and the registered statistical hierarchy.
-- **Track B:** execute the frozen CPU 16-pair/six-objective alignment matrix using
-  verified `alignment-cpu-v2-002` captures, then apply its complete held-out
-  mechanism gate and deterministic selection. The first pending pair is S8/D20;
-  no efficacy generation or dose selection is part of this experiment.
+Official registration verification passed for all 17 CUDA cells. The independent calibration audit and its 265-check verification of all 132 committed artifacts are committed at `ffad33f`. The frozen registration and per-cell qualification must precede `run_campaign.py` using `configs/generation_screen_gpu_v1.json`; no passing runtime receipt is claimed. A screen GO would still require a separate confirmation freeze.
