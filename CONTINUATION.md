@@ -73,22 +73,54 @@ paths only. Verify it is intact and not symlinks before relying on it.
 
 ## 3. Where things stand (verify §2c first)
 
-**Completed and believed sound:**
+All arms below ran the identical dose: lr 1e-5, 5,233 supervised tokens, 41 steps, seed 17,
+identical rows in identical order. The untrained source scores **47/150**. Read the artifacts;
+do not trust this table.
 
-- `ARM_DOSE_H_lr1e-05_b5200_seed17.json` — H56 trained at the matched dose. Ends **16/150**,
-  kept 11/47, gained 5, lost 36, net **−31**. Trajectory 47 → 2 → 6 → 17 → 16 as the cosine
-  decayed. Device-integrity control passed.
-- `HEADROOM_AUDIT.json` — of the 103 rows the source fails: **84 wrong_answer, 17 format_only,
-  2 runaway**. Grammar-limited ceiling **64/150**.
-- `DISTINGUISHABILITY_PREREG.md` — thresholds A1–A7, fixed before any arm was trained.
-- Long-budget evidence already on disk:
-  `outputs/longbudget/LONGBUDGET_source_control_seed17_b500000_lr1e-05.json`.
+| arm | schedule | panel | kept/47 | +real | +fmt | lost | net | params | KV |
+|---|---|---:|---:|---:|---:|---:|---:|---|---|
+| B28 full | cosine | **73** | 41 | ? | ? | 6 | **+26** | 1.00x | 1.00x |
+| P56 | wsd/0.95 | 52 | 32 | 12 | 8 | 15 | +5 | 1.94x | 2.04x |
+| P56 | cosine | 48 | 34 | 7 | 7 | 13 | +1 | 1.94x | 2.04x |
+| B28last8 | cosine | 47 | **46** | 1 | 0 | **1** | 0 | 1.00x | 1.00x |
+| H56 | wsd/0.95 | 37 | 23 | 9 | 5 | 24 | −10 | 1.94x | 2.04x |
+| H56 | cosine | 16 | 11 | 4 | 1 | 36 | −31 | 1.94x | 2.04x |
 
-**In flight when this was written** (may have completed or died — check §2c/§2d): P56 at
-lr 1e-5, b5200, cosine, 5 probes. At its 25% milestone it read
-`kept 24/47, gained 14, lost 23, correct 38/150, devCE 3.2466` against H56's
-`kept 1/47, gained 1, lost 46, correct 2/150, devCE 3.2601` at the same point. If it finished,
-its artifact is `ARM_DOSE_P_lr1e-05_b5200_seed17.json`.
+B28 full's artifact is `RETENTION_DOSE_gpu_lr1e-05_b5200_seed17.json` from the older harness; it
+has **no per-row record**, so its gains cannot be split into strata and it cannot be paired.
+
+Paired McNemar exact, two-sided, from `ARM_COMPARISON.json`:
+
+    H ~ P             (cosine)   b= 5  c=37  n=42  p=4.4e-07   P better
+    H ~ B28last8      (cosine)   b= 5  c=36  n=41  p=5.9e-07   B28last8 better
+    P ~ B28last8      (cosine)   b=14  c=13  n=27  p=1.0000    no effect
+    H+WSD ~ P+WSD                b= 8  c=23  n=31  p=0.0107    P better
+    H+WSD ~ B28last8             b=14  c=24  n=38  p=0.1433    no effect
+    P+WSD ~ B28last8             b=20  c=15  n=35  p=0.4996    no effect
+
+**Two load-bearing conclusions.**
+
+1. **Fixing the recipe changed the verdict by four orders of magnitude.** The H↔P
+   cross-position penalty reads p=4.4e-07 under a 1.2-step warmup and p=0.0107 under WSD. Most
+   of the apparent catastrophe was the optimizer. Anyone quoting 4.4e-07 as the architecture's
+   verdict is overstating it enormously.
+2. **At matched trainable budget the CED arms buy nothing measurable.** P56+WSD's 52 against
+   B28last8's 47 is p=0.50. And **B28 full dominates P56+WSD on BOTH axes** — 87.2% retention
+   against 68.1%, 32 gains against 20 — at half the parameters and half the KV cache. There is
+   no trade-off frontier on which CED is competitive.
+
+**The real frontier is inside the B28 family and nobody has measured it.** Training 8 of 28
+blocks gives 97.9% retention and 1 gain; training all 28 gives 87.2% retention and 32 gains.
+Everything between those two points is unexplored.
+
+**Checkpoints on disk** (`outputs/arm-checkpoints/`), trainable tensors only, each with a
+`soup_key`: `B28last8_lr1e-05_b5200_seed17`, `H_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95`,
+`P_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95`. All three are in **different** soup groups, so none
+is averageable with another. **B28 full's weights do not exist** — it predates checkpointing.
+
+**Possibly in flight** (check §2d): `Hlast4` at lr 1e-5, b5200, wsd:0.2:0.2, beta2 0.95. Its
+stdout was accidentally sent to /dev/null; the artifact still lands at
+`ARM_DOSE_Hlast4_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json`.
 
 ---
 
@@ -174,21 +206,56 @@ weights, optimizer state, or the data cursor, so probe count never changes an ar
 
 Everything below is one model job at a time. Check `hostbudget` before each launch.
 
+R0, R0b, R1 and R1b are **done** — their results are in §3. Remaining, in priority order:
+
 | # | command | question it answers |
 |---|---|---|
-| R0 | *(in flight)* `arm_dose.py P 1e-5 5200 17 0.25,0.5,0.75,1.0` | branch vs context |
-| R1 | `arm_dose.py H 1e-5 5200 17 1.0 wsd:0.2:0.2 0.95 final` | does correct technique rescue H? |
-| R1b | `arm_dose.py P 1e-5 5200 17 1.0 wsd:0.2:0.2 0.95 final` | **control for R1** — required |
-| R2 | `arm_dose.py Hlast4 1e-5 5200 17 1.0 cosine:0.03 0.999 final` | is it simultaneity (28→4 reads)? |
-| R3 | `build_splits_onpanel.py` | in-domain dev, needed for soup selection |
-| R4 | `arm_dose.py B28 1e-5 5200 17 0.25,0.5,0.75,1.0 cosine:0.03 0.999 final` | **determinism check** |
-| R5 | `arm_dose.py B28 1e-5 5200 23 1.0 … final` and `… 41 …`, plus one at lr 3e-6 | soup diversity |
-| R6 | `arm_dose.py B28 1e-5 25000 17 0.25,0.5,1.0 … final` | best single model, inside the peak window |
-| R7 | greedy model soup over R4–R6 | does averaging beat the best ingredient? |
-| R8 | CED soup — **only if R1 or R2 is non-catastrophic** | |
+| R2 | `arm_dose.py Hlast4 1e-5 5200 17 1.0 wsd:0.2:0.2 0.95 final` | fewer read sites (28→4)? *may be running* |
+| **R3** | **add last-12/16/20 arms, then sweep** | **the unmeasured depth frontier — highest value** |
+| **R4** | `arm_dose.py B28 1e-5 5200 17 0.25,0.5,0.75,1.0 cosine:0.03 0.999 final` | **determinism check vs 73/150, AND the only way to get B28 full's weights and stratum split** |
+| R5 | alpha-interpolation toward the source, no retraining | acquisition/retention decoupling |
+| R6 | `build_splits_onpanel.py` | in-domain dev; **required** before any soup |
+| R7 | `arm_dose.py B28 1e-5 5200 {23,41} …` + one at lr 3e-6 | soup diversity — first averageable set |
+| R8 | `arm_dose.py B28 1e-5 25000 17 …` | best single model, inside the 10k-60k peak window |
+| R9 | `model_soup.py` | does averaging beat the best ingredient? |
 
-**R1b is not optional.** Without a P arm under the same schedule you cannot tell whether WSD
-rescued H specifically or simply moved both arms.
+### R3 — the depth frontier (do this first)
+
+`B28last8` already exists in `arm_dose.py` via the `_ARM_RE` pattern. Extend it to an arbitrary
+tail (`B28last<N>`) and run N = 12, 16, 20. B28 probes cost ~150 s, not the 379 s a 1.156B arm
+costs, so the whole sweep is well under an hour. This traces the curve between 97.9% retention /
+1 gain and 87.2% retention / 32 gains, which is the only place in this programme where a genuine
+capability/retention trade-off has been observed.
+
+### R5 — decoupling acquisition from forgetting, without retraining
+
+P56+WSD converts the hard `wrong_answer` rows at **14.3%** against B28last8's **1.2%** — twelve
+times the acquisition rate — while retaining 68.1% against 97.9%. Those cancel in the paired
+test. If they can be separated, that arm lands near 59/150.
+
+Scale the saved trained delta by alpha in [0, 1] and re-probe. At alpha=0 the model is exactly
+the source (47/47 kept); at alpha=1 it is the trained arm. **For P56 this is precisely a post-hoc
+gate**, because the source's read output projection is zero, so alpha IS the branch magnitude —
+no retraining, the checkpoint is already saved. For B28 it is standard robust-finetuning
+interpolation and often recovers lost reference answers while keeping most gains. Reuse
+`model_soup.py`'s averaging, with the source as one ingredient.
+
+Related, all untried and all cheap:
+
+- **weight decay.** Every run so far used `wd = 0.0`. For the CED read, decay pulls `o_proj`
+  toward zero, which *is* the source, so it is an anti-forgetting regulariser costing one
+  argument.
+- **early stop at the knee.** P56 under cosine peaked at 2,610 tokens (50, kept 37) and
+  *declined* by 5,233 (48, kept 34). The knee is already visible; more milestones locate it.
+- **replay.** 6,492 unused on-panel rows exist (§ build_splits_onpanel). Mixing skill-exercising
+  data into training is the standard fix for catastrophic forgetting.
+
+### Do not lose what already works
+
+`B28last8` is the retention champion and the only arm that came close to holding the gate open;
+its checkpoint is saved. **B28 full is the best model in the programme and its weights do not
+exist.** R4 regenerates them, checks determinism against the recorded 73/150, and finally
+produces its per-row record so its 32 gains can be split into real versus formatting.
 
 **R4 is a determinism check, not a formality.** CUDA backward uses non-deterministic atomics. If
 R4 reproduces the recorded **73/150** exactly, determinism holds and regenerated weights are the
