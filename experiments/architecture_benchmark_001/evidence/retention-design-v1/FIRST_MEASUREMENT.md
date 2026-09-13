@@ -3,7 +3,7 @@
 `G1_RETENTION` and `G2_RETENTION` are implemented, registered and executed. This records what
 they measured, and — more usefully — what running them broke.
 
-Receipted numbers below are from schema-2 receipts at implementation digest `125d5481`, CPU
+Receipted numbers below are from schema-2 receipts at implementation digest `a329eb7b`, CPU
 FP32, greedy, 24 new tokens, on the 150-row monitor probe. **Sections 3, 4b, 4d and the
 falsification section are NOT receipted** — they come from `evidence_kind: exploratory_*`
 artifacts (`SCORER_BIAS_*`, `RETENTION_PROBE_*`, `SIGNAL_SEPARATION`, `RETENTION_DOSE_*`), and
@@ -270,7 +270,7 @@ targets with six prediction shapes so no path can skip it.
 
 ## 7. A sixth digest reproduces everything to the element
 
-Requalification from `8b47b395` through `125d5481`, across three intervening digests:
+Requalification from `8b47b395` through `a329eb7b`, across three intervening digests:
 
 - `G0`, `G1_IDENTITY`, `G1_WIDTH`, `G1_CED_C28`, `G1_CED_C40`: **zero** non-timer metric
   differences, identical checks, identical statuses. Both CED arms still FAIL on the same three
@@ -325,9 +325,9 @@ cd C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification
 $PY -m pytest experiments/architecture_benchmark_001/tests -q
 $PY experiments/rab001_exploration/signal_separation.py
 $PY experiments/rab001_exploration/scorer_bias_scan.py \
-    experiments/architecture_benchmark_001/outputs/retention-125d5481/B28/retention.json B28_source
+    experiments/architecture_benchmark_001/outputs/retention-a329eb7b/B28/retention.json B28_source
 ```
 
 The gate itself is driven by `qualify-retention`; the exact invocations are in `RUNBOOK.md`.
-Artifacts: `outputs/retention-125d5481/{B28,B28-trained}/`, `SIGNAL_SEPARATION.json`,
+Artifacts: `outputs/retention-a329eb7b/{B28,B28-trained}/`, `SIGNAL_SEPARATION.json`,
 `SCORER_BIAS_B28_source.json`.

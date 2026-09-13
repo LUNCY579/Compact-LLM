@@ -1,0 +1,67 @@
+{
+  "schema": 2,
+  "stage": "G1_IDENTITY",
+  "status": "PASS",
+  "evidence_kind": "official_model_qualification",
+  "context": {
+    "context_schema": 2,
+    "experiment_id": "RAB-001",
+    "implementation_sha256": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+    "source_audit_digest": "97cd76af0fb2d6064c5cb954906ac493d21e40429cebe55f0bed0000b23d9ef8",
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "data_sha256": "69bdc5ac3350814ad8592e79001815dde58484f16ff6030519a7d09f57e7da6b",
+    "runtime": {
+      "python": "3.11.15",
+      "platform": "Windows-10-10.0.26200-SP0",
+      "torch": "2.10.0",
+      "transformers": "4.51.3",
+      "safetensors": "0.7.0",
+      "numpy": "2.3.5",
+      "tokenizers": "0.21.4",
+      "numerics": {
+        "cpu_threads": 16,
+        "interop_threads": 16,
+        "float32_matmul_precision": "highest",
+        "deterministic_algorithms": false,
+        "cuda_build": null,
+        "cuda_matmul_allow_tf32": false,
+        "cudnn_allow_tf32": true,
+        "cudnn_deterministic": false,
+        "cudnn_benchmark": false
+      }
+    },
+    "device": "cpu",
+    "device_identity": {
+      "device": "cpu"
+    },
+    "precision": "float32",
+    "backend": "eager"
+  },
+  "checks": {
+    "identity_logits_exact": true,
+    "chunked_cache_parity": true,
+    "source_unchanged": true,
+    "retained_original_layer_order": true,
+    "exact_parameter_count": true
+  },
+  "metrics": {
+    "max_abs_logit_error": 0.0,
+    "tested_rows": 8,
+    "diagnostic_parameters": 784821248,
+    "budget_matched": false
+  },
+  "artifacts": {
+    "lineage.json": "daa5a78b0ce8cdfe3d053a54b18dd629f17a6362d023b4e5c95f8df55d7a1628"
+  },
+  "parent_receipts": [
+    {
+      "stage": "G0",
+      "receipt_sha256": "edff915dde09ac8314c3cb987835b011c8974a80910a62119602c26931872526",
+      "path": "../../G0/attempt-0001/G0.json"
+    }
+  ],
+  "parent_receipt_sha256": "edff915dde09ac8314c3cb987835b011c8974a80910a62119602c26931872526",
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "b5335dd05f460bf745b48ff6652fdba672d6d2d4666aaa1d38646de185ea0dae"
+}

@@ -19,11 +19,11 @@ executed. See the 2026-09-13 entry in `PROGRESS_LOG.md` and
 | Worktree | `C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification` |
 | Branch | `research/ced-rab001-hotfix001-qualification-v1`, pushed to `LUNCY579/ChatBubble` |
 | Branched from | `2f65f9e` |
-| `implementation_sha256` | **`125d5481`** (HOTFIX-005), 34 manifest files |
-| Tests | **294 passed, 0 skipped** (2026-09-13, `.venv-rab001`) |
+| `implementation_sha256` | **`a329eb7b`** (HOTFIX-005 + adversarial fixes), 34 manifest files |
+| Tests | **306 passed, 0 skipped** (2026-09-13, `.venv-rab001`) |
 | Qualification runtime | `C:\Users\clclc\BusinessProject\.venv-rab001` |
 | Source weights | `Chat-Bubble\Rineya_Published_Cores\Rineya-Supa-1.7.0-devfreeze`, `audit_digest 97cd76af…` |
-| Current receipts | `outputs/{ladder,quality,retention,engineering}-125d5481/` |
+| Current receipts | `outputs/{ladder,quality,retention,engineering}-a329eb7b/` |
 
 The digest and receipt/artifact hashes were rechecked. The archived `evidence/` copies omit
 model binaries and retain parent paths from the live layout; use the original `outputs/`

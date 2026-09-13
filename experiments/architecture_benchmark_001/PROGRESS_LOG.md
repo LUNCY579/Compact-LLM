@@ -831,3 +831,60 @@ free memory hit 1.33 GiB and commit 13.9 GiB over physical at the worst point.
 Artifacts: `outputs/{ladder,quality,retention,engineering}-125d5481/`,
 `evidence/retention-design-v1/{FIRST_MEASUREMENT.md,SIGNAL_SEPARATION.json,
 SCORER_BIAS_B28_source.json,RETENTION_PROBE_D40_init.json}`.
+
+### 2026-09-13, later — adversarial pass over the gate, and six defects in my own work
+
+Ran a six-dimension adversarial review (scorer, statistics, gate wiring, numbers, honesty,
+design) over the retention gate immediately after shipping it. The verify phase died on a usage
+limit, so every critical finding was reproduced by hand before acting on it — an unverified
+finding is not a finding.
+
+**Six fail-open or fail-silent defects, all confirmed by execution:**
+
+1. `monitor_verdict({})` → PASS with `permits_next_block` True. A gate primitive whose "no
+   evidence" answer was "proceed". Now requires the registered class set.
+2. `--checkpoint` was loaded, hashed, reported and **never compared to anything** — a valid
+   parent receipt could authorise a measurement of different weights. Now bound to the
+   `model.safetensors` its parent lineage declares.
+3. The source-vs-arm branch keyed on the CLI **flag**, not the arm: `--arm C28` with no
+   `--checkpoint` scored the source against itself and reported 0 losses.
+4. The duration parser deleted every comma and every `and` token, so `45 minutes and`,
+   `45 minutes,` and `45 and minutes` all scored correct at 2700 — while the legal
+   `3,600 seconds` was unparseable, and 7200 s is a real panel target.
+5. `confirmation_verdict` counted nine statements without checking they were the registered
+   nine; nine fabricated labels returned PASS with the registered family-wise alpha.
+6. A permissive/strict disagreement lived in `metrics`, not `checks`, so the thing the amendment
+   calls "a blocking review item" could block nothing.
+
+**Recorded, not repaired:** the confirmation certificate's 9/10 floor can never bind (for
+alpha=1/180 the exact upper limit always exceeds k/m, verified for m ≤ 600), and at the
+registered minimum m=50 only **zero** losses clear the bound — it demands 100% retention, not
+90%. First m admitting one loss is 70.
+
+**Claims of mine it forced me to retract:**
+
+- `protocol.json` still carried "No threshold on a likelihood-shaped quantity separates those two
+  models" — the exact sweeping shape HOTFIX-004 retracted from HOTFIX-003, live in the registered
+  policy and in four shipped receipts *after* I had corrected it in the amendment.
+- "four of them invert" undercounted my own artifact: **seven** of eight carry an inverted witness.
+- §1 attributed the whole 65/50/30 → 42/32/20 gap to the typed grammar. **Wrong.** On the same
+  150 rows the legacy scorer gives 44.0/32.0/30.0 — `ratio_proportion` is *identical* under both
+  scorers, so that gap is entirely the panel (20 rows/class vs 150). The grammar accounts for
+  **6 of 150** answers.
+- "makes the gate weaker, not more likely to certify something it should not" — the same thing.
+  A smaller reference set **is** the false-PASS direction; the prefix defect hides 7 answers
+  (47 → 54 if the four observed prefixes were stripped).
+- The DAG change does **not** interlock training. `G2_CACHED` has the parents it always had; a
+  failing-quality arm can still run 25 engineering steps. It just cannot hold a retention receipt.
+- The "prediction recorded before the run" has no pre-run artifact and now says so.
+- The G2_CACHED reproduction is against `eab80e9f`; no engineering run exists at `8b47b395`.
+
+Requalified at **`a329eb7b`**, 34 manifest files, **306 passed / 0 skipped**. Seventh digest,
+again reproducing to the element: G0, G1_WIDTH, both CED failures and G1_QUALITY_D40 all show
+zero non-timer metric differences; `G2_CACHED_B28` differs only in the two digest-embedding
+hashes. `G1_RETENTION_B28` PASS 11/11 and `G2_RETENTION_B28` PASS 13/13 with the two new checks
+(`bare_policy_verdicts_agree`, plus lineage binding) live and True.
+
+What the review did NOT overturn: the source baseline 47/150, the D40 result (CE 0.1308 nats
+better than its teacher, 0/150 on the probe), the signal-separation analysis, and the finding
+that `arm_answers_changed` is 0/150 so the training-side gate is still behaviourally untested.
