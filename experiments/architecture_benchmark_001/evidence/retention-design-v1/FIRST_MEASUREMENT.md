@@ -161,12 +161,28 @@ The remaining question is whether the gate fires on a *run* whose CE is improvin
 beside typed retention against the frozen 47-item reference, aimed at this programme's
 established case: lr 1e-4 destroys the source's arithmetic 6/6 → 0/6 **while improving CE**.
 
-It has not produced a result. The first attempt reached its step-0 checkpoint —
-dev CE **5.5782**, reproducing the recorded source DEV CE exactly, retained 47/47 — and then
-`hostbudget.guard` stood it down mid-flight at free physical **0.22 GiB**, commit 16.4 GiB over
-physical, because another project's job on the same 15.2 GiB host held 5.3 GB while AdamW
-allocates its two moment buffers at once. The artifact is written with `completed: false` and
-`aborted_reason` recorded, which is the designed behaviour, not a failure of it.
+It has not produced a result. **Two attempts, both stood down by `hostbudget.guard` during
+training, after the step-0 checkpoint:**
+
+| attempt | optimizer | free physical at abort | commit over physical |
+|---|---|---:|---:|
+| 1 | AdamW lr 1e-4 | **0.22 GiB** | 16.4 GiB |
+| 2 | SGD lr 1e-3 | **1.05 GiB** | 8.3 GiB |
+
+Both artifacts carry `completed: false` and `aborted_reason`. That is the guard working, not
+failing — the documented alternative is a measured 10× thrash that also degrades the other job.
+
+The cause is not this experiment's design. Another project
+(`SupaExperiment-nonrecurrent-adaptation-v1`) is running on the same 15.2 GiB host and holds
+~5.4 GB, spiking higher; the second attempt began with 7.38 GiB free and was squeezed to 1.05
+GiB while merely holding model + gradients. Dropping AdamW's moment buffers for plain SGD did
+not rescue it, which is the useful negative: **the constraint is the shared host, not the
+optimizer.** `retention_dose.py` now refuses at startup with per-optimizer floors rather than
+starting a run it cannot finish.
+
+Two things this did establish, both controls rather than results: the frozen source's raw
+answers re-score to **exactly** both frozen references (47 permissive, 41 strict) with no model
+loaded, and the step-0 dev CE reproduces the recorded source DEV CE to four decimals — twice.
 
 Two things this did establish, both controls rather than results: the frozen source's raw
 answers re-score to **exactly** both frozen references (47 permissive, 41 strict) with no model
