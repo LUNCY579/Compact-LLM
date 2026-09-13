@@ -58,6 +58,7 @@ B28 full below is from the older RETENTION_DOSE harness and has aggregates only.
 |---|---|---:|---:|---|---:|
 | B28 full (historical) | cosine .03, beta2 .999 | 73 | 41 | unknown split; 32 total | 6 |
 | B28last8 | cosine .03, beta2 .999 | 47 | 46 | 1 / 0 / 0 | 1 |
+| B28last12 | cosine .03, beta2 .999 | 52 | 44 | 8 / 0 / 0 | 3 |
 | B28last16 (inherited run, now complete) | cosine .03, beta2 .999 | 55 | 40 | 9 / 6 / 0 | 7 |
 | P | WSD .2/.2, beta2 .95 | 52 | 32 | 12 / 8 / 0 | 15 |
 | P | cosine .03, beta2 .999 | 48 | 34 | 7 / 7 / 0 | 13 |
@@ -127,11 +128,20 @@ B28last<N> extension. The user explicitly authorized taking over subsequent runs
 finishes. Preserve that run and inspect its final artifact before launching another. The
 continuation registration records that training preceded this session's registration.
 
-Current session update: B28last16 completed in 885.4 seconds; the artifact was validated by
-the new frontier reporter. B28last12 was launched next with endpoint-only probes and final
-save; inspect `experiments/rab001_exploration/outputs/B28last12_20260913.log` and processes
-for its current status. Its prelaunch host budget passed. Do not change arm_dose.py while
-it is active: that script now hashes its own bytes and refuses evidence after an edit.
+Current session update: B28last16 completed in 885.4 seconds. B28last12 completed in about
+355 seconds through its final probe, with 52 correct /44 kept /8 gains /3 losses; all gains
+and losses are wrong_answer. Both checkpoints' on-disk SHA-256 values were independently
+verified. The new frontier reporter validated both artifacts and preserved the incomplete
+three-comparison snapshot in outputs/depth-through-last12-20260913.json.
+
+B28last20 was launched next with endpoint-only probes and final save; inspect
+`experiments/rab001_exploration/outputs/B28last20_20260913.log` and processes for its current
+status. Its prelaunch host budget passed. Do not change arm_dose.py while it is active:
+that script hashes its own bytes and refuses evidence after an edit.
+
+P alpha memory: idle free physical RAM was about 5.5 GiB, below the P runtime+model envelope.
+The user has been asked to free about 1.5 GiB by closing unused applications, or leave P
+pending while B28 work proceeds. Do not lower hostbudget thresholds or start a second job.
 
 R6 data preparation is complete: outputs/splits_onpanel contains 845 TRAIN rows /111,795
 targets and 120 DEV rows /502 reference-answer tokens. No models have trained on this split.
@@ -145,6 +155,12 @@ comparisons), alpha_report.py (twelve alpha comparisons), and the repaired model
 All are under experiments/rab001_exploration. Their tests are mechanical checks only, not
 model evidence. The alpha harness uses --kind b28-wise or p-output-gate and a create-only
 --out under experiments/rab001_exploration/outputs. Soup requires --run-id and explicit tags.
+headroom_audit.py now exposes a model-free failure_stratum helper; the original source
+strata reproduce exactly under both policies. Frontier/alpha reports split losses fully
+using that same helper and record its hash. Do not regenerate/overwrite historical audit
+JSON merely to use the helper. Mechanical validation passed 51 tests: tail boundaries (3),
+alpha metadata/tensor endpoint interpolation (11), soup guards/streamed roundtrip (11),
+frontier+alpha reporting and source/loss strata (26). These are not model-quality evidence.
 
 1. Finish/audit the inherited B28last16, run B28last12 and B28last20 at fixed recipe.
 2. Rerun full B28 with .25/.5/.75/1 probes and final checkpoint; record stratum split and

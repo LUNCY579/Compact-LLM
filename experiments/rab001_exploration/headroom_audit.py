@@ -20,8 +20,8 @@ Bare-meridiem clocks are scored generously: `10:10` with no am/pm matches both i
 That biases the count TOWARD "format only", which is the conservative direction here -- it
 makes the genuine-reasoning residual a lower bound rather than an optimistic one.
 
-Writes `evidence/retention-design-v1/HEADROOM_AUDIT.json`. Pure scoring arithmetic, no model,
-no torch, no GPU -- safe to run beside a training job.
+The reusable scoring helpers import no torch or model code. The historical CLI lazily
+imports the runner and writes `evidence/retention-design-v1/HEADROOM_AUDIT.json`.
 """
 from __future__ import annotations
 
@@ -32,16 +32,13 @@ from collections import Counter, defaultdict
 from fractions import Fraction
 from pathlib import Path
 
-sys.stdout.reconfigure(encoding='utf-8')
-
 REPO = Path(__file__).resolve().parents[2]
 if str(REPO) not in sys.path:
     sys.path.insert(0, str(REPO))
 
-from experiments.architecture_benchmark_001 import retention, run        # noqa: E402
-from experiments.architecture_benchmark_001.gates import implementation_digest  # noqa: E402
-from experiments.architecture_benchmark_001.source import ROOT           # noqa: E402
+from experiments.architecture_benchmark_001 import retention             # noqa: E402
 
+ROOT = REPO / 'experiments' / 'architecture_benchmark_001'
 OUT = ROOT / 'evidence' / 'retention-design-v1'
 
 NUM_RE = re.compile(r'-?\d[\d,]*(?:\.\d+)?')
@@ -107,7 +104,28 @@ def asserts_target(text: str, target: dict) -> bool:
     return wanted in (duration_seconds(text) if kind == 'duration' else rationals(text))
 
 
+def failure_stratum(text: str, terminated: bool, target: dict) -> str | None:
+    """Classify a failed prediction; accepted predictions return None.
+
+    Preserve the audited order: nontermination, parsed value mismatch, then the
+    permissive semantic matcher. In particular, a parsed wrong value cannot become
+    a formatting failure merely because another numeral matches the target.
+    """
+    record = retention.score_prediction(text, terminated, target)
+    if record['correct']:
+        return None
+    if not terminated:
+        return 'runaway'
+    if record['reason'] == 'value mismatch':
+        return 'wrong_answer'
+    return 'format_only' if asserts_target(text, target) else 'wrong_answer'
+
+
 def main() -> int:
+    from experiments.architecture_benchmark_001 import run
+    from experiments.architecture_benchmark_001.gates import implementation_digest
+
+    sys.stdout.reconfigure(encoding='utf-8')
     digest = implementation_digest()
     receipt = ROOT / 'outputs' / f'retention-{digest[:8]}' / 'B28' / 'retention.json'
     if not receipt.is_file():
@@ -129,21 +147,9 @@ def main() -> int:
         buckets, by_class, ids = Counter(), defaultdict(Counter), defaultdict(list)
         for row in rows:
             rid, target, src = row['id'], overlay['targets'][row['id']], raw[row['id']]
-            if retention.score_prediction(src['raw'], src['terminated'], target)['correct']:
+            bucket = failure_stratum(src['raw'], src['terminated'], target)
+            if bucket is None:
                 continue
-            record = retention.score_prediction(src['raw'], src['terminated'], target)
-            if not src['terminated']:
-                bucket = 'runaway'
-            elif record['reason'] == 'value mismatch':
-                # The grammar PARSED this answer and the value was wrong. Whatever else the
-                # text contains, the scorer did its job, so it cannot be a presentation
-                # rejection. This is the general form of the compound-duration bug above and
-                # catches any future matcher that is too generous.
-                bucket = 'wrong_answer'
-            elif asserts_target(src['raw'], target):
-                bucket = 'format_only'
-            else:
-                bucket = 'wrong_answer'
             buckets[bucket] += 1
             by_class[row['reply_class']][bucket] += 1
             ids[bucket].append(rid)

@@ -1,0 +1,1377 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_fixed_depth_family_report",
+  "family_status": "INCOMPLETE",
+  "registration": "DISTINGUISHABILITY_PREREG.md continuation 2026-09-13 22:31 UTC",
+  "reference_digest": "a329eb7bb06fc003a9220ea41713e721fba575c478008240749c425774b2b58e",
+  "fixed_arms": [
+    "B28last8",
+    "B28last12",
+    "B28last16",
+    "B28last20",
+    "B28"
+  ],
+  "fixed_test_count": 10,
+  "alpha": "1/20",
+  "correction": "Holm over all ten fixed tests; missing/invalid pairs remain p=1 placeholders",
+  "trajectory_policy": "All intermediate milestones are descriptive; final completed endpoint is fixed and never selected by score.",
+  "full_B28_endpoint_limit": "Full B28 also trains embeddings and final norm; tail arms freeze them, so this is not a pure layer-count control.",
+  "arms": {
+    "B28last8": {
+      "status": "VALID",
+      "parameters": 596049920,
+      "trainable_parameters": 125847552,
+      "actual_tokens": 5233,
+      "steps": 41,
+      "seed": 17,
+      "token_sequence": [
+        186,
+        115,
+        161,
+        192,
+        106,
+        129,
+        138,
+        90,
+        156,
+        124,
+        148,
+        87,
+        173,
+        100,
+        188,
+        173,
+        112,
+        134,
+        98,
+        110,
+        91,
+        135,
+        102,
+        91,
+        85,
+        142,
+        87,
+        100,
+        134,
+        106,
+        205,
+        110,
+        177,
+        119,
+        109,
+        124,
+        140,
+        103,
+        125,
+        110,
+        118
+      ],
+      "recorded_training_bindings": {},
+      "training_identity_limit": "legacy token lengths and seed only",
+      "endpoint": {
+        "tokens": 5233,
+        "steps": 41,
+        "milestone": 5200,
+        "correct_total": 47,
+        "retained_total": 46,
+        "lost_total": 1,
+        "gained_total": 1,
+        "reference_n": 47,
+        "terminated_total": 148,
+        "status": "FAIL",
+        "failed_classes": [
+          "ratio_proportion"
+        ],
+        "per_class": {
+          "percentage_reasoning": {
+            "rows": 50,
+            "reference_n": 21,
+            "retained": 21,
+            "lost": 0,
+            "gained": 0,
+            "arm_correct": 21,
+            "source_correct_terminated": 21,
+            "terminated": 50
+          },
+          "ratio_proportion": {
+            "rows": 50,
+            "reference_n": 16,
+            "retained": 15,
+            "lost": 1,
+            "gained": 0,
+            "arm_correct": 15,
+            "source_correct_terminated": 16,
+            "terminated": 50
+          },
+          "time_duration": {
+            "rows": 50,
+            "reference_n": 10,
+            "retained": 10,
+            "lost": 0,
+            "gained": 1,
+            "arm_correct": 11,
+            "source_correct_terminated": 10,
+            "terminated": 48
+          }
+        },
+        "net": 0,
+        "gained_ids": [
+          "rineya_v3_sft__time_duration__reas_time_duration_s01__00538"
+        ],
+        "gained_by_stratum": {
+          "wrong_answer": 1,
+          "format_only": 0,
+          "runaway": 0
+        },
+        "lost_ids": [
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+        ],
+        "loss_records": [
+          {
+            "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "reply_class": "ratio_proportion",
+            "text": "15",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          }
+        ],
+        "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+        "answers_changed_vs_source": 72,
+        "output_rescored": true
+      },
+      "trajectory": [
+        {
+          "tokens": 0,
+          "steps": 0,
+          "milestone": 0,
+          "correct_total": 47,
+          "retained_total": 47,
+          "lost_total": 0,
+          "gained_total": 0,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "PASS",
+          "failed_classes": [],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 49
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 16,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 10,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 0,
+          "gained_ids": [],
+          "gained_by_stratum": {
+            "wrong_answer": 0,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [],
+          "loss_records": [],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 0,
+          "output_rescored": true
+        },
+        {
+          "tokens": 1397,
+          "steps": 10,
+          "milestone": 1300,
+          "correct_total": 48,
+          "retained_total": 47,
+          "lost_total": 0,
+          "gained_total": 1,
+          "reference_n": 47,
+          "terminated_total": 149,
+          "status": "PASS",
+          "failed_classes": [],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 1,
+              "arm_correct": 22,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 16,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 10,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 1,
+          "gained_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 1,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [],
+          "loss_records": [],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 30,
+          "output_rescored": false
+        },
+        {
+          "tokens": 2610,
+          "steps": 19,
+          "milestone": 2600,
+          "correct_total": 47,
+          "retained_total": 46,
+          "lost_total": 1,
+          "gained_total": 1,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "FAIL",
+          "failed_classes": [
+            "ratio_proportion"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 49
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 0,
+              "arm_correct": 15,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 1,
+              "arm_correct": 11,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 0,
+          "gained_ids": [
+            "rineya_v3_sft__time_duration__reas_time_duration_s01__00538"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 1,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 36,
+          "output_rescored": false
+        },
+        {
+          "tokens": 3998,
+          "steps": 31,
+          "milestone": 3900,
+          "correct_total": 47,
+          "retained_total": 46,
+          "lost_total": 1,
+          "gained_total": 1,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "FAIL",
+          "failed_classes": [
+            "ratio_proportion"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 0,
+              "arm_correct": 15,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 1,
+              "arm_correct": 11,
+              "source_correct_terminated": 10,
+              "terminated": 48
+            }
+          },
+          "net": 0,
+          "gained_ids": [
+            "rineya_v3_sft__time_duration__reas_time_duration_s01__00538"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 1,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 64,
+          "output_rescored": false
+        },
+        {
+          "tokens": 5233,
+          "steps": 41,
+          "milestone": 5200,
+          "correct_total": 47,
+          "retained_total": 46,
+          "lost_total": 1,
+          "gained_total": 1,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "FAIL",
+          "failed_classes": [
+            "ratio_proportion"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 0,
+              "arm_correct": 15,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 1,
+              "arm_correct": 11,
+              "source_correct_terminated": 10,
+              "terminated": 48
+            }
+          },
+          "net": 0,
+          "gained_ids": [
+            "rineya_v3_sft__time_duration__reas_time_duration_s01__00538"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 1,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "text": "15",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 72,
+          "output_rescored": true
+        }
+      ],
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last8_lr1e-05_b5200_seed17.json",
+      "sha256": "36722d3c6789c8f6fd37b28ff6f35eb1f7275714235e2bcdd6f7827add8b08ef"
+    },
+    "B28last12": {
+      "status": "MISSING",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last12_lr1e-05_b5200_seed17.json"
+    },
+    "B28last16": {
+      "status": "VALID",
+      "parameters": 596049920,
+      "trainable_parameters": 251695104,
+      "actual_tokens": 5233,
+      "steps": 41,
+      "seed": 17,
+      "token_sequence": [
+        186,
+        115,
+        161,
+        192,
+        106,
+        129,
+        138,
+        90,
+        156,
+        124,
+        148,
+        87,
+        173,
+        100,
+        188,
+        173,
+        112,
+        134,
+        98,
+        110,
+        91,
+        135,
+        102,
+        91,
+        85,
+        142,
+        87,
+        100,
+        134,
+        106,
+        205,
+        110,
+        177,
+        119,
+        109,
+        124,
+        140,
+        103,
+        125,
+        110,
+        118
+      ],
+      "recorded_training_bindings": {},
+      "training_identity_limit": "legacy token lengths and seed only",
+      "endpoint": {
+        "tokens": 5233,
+        "steps": 41,
+        "milestone": 5200,
+        "correct_total": 55,
+        "retained_total": 40,
+        "lost_total": 7,
+        "gained_total": 15,
+        "reference_n": 47,
+        "terminated_total": 148,
+        "status": "FAIL",
+        "failed_classes": [
+          "percentage_reasoning",
+          "ratio_proportion",
+          "time_duration"
+        ],
+        "per_class": {
+          "percentage_reasoning": {
+            "rows": 50,
+            "reference_n": 21,
+            "retained": 20,
+            "lost": 1,
+            "gained": 4,
+            "arm_correct": 24,
+            "source_correct_terminated": 21,
+            "terminated": 50
+          },
+          "ratio_proportion": {
+            "rows": 50,
+            "reference_n": 16,
+            "retained": 15,
+            "lost": 1,
+            "gained": 1,
+            "arm_correct": 16,
+            "source_correct_terminated": 16,
+            "terminated": 50
+          },
+          "time_duration": {
+            "rows": 50,
+            "reference_n": 10,
+            "retained": 5,
+            "lost": 5,
+            "gained": 10,
+            "arm_correct": 15,
+            "source_correct_terminated": 10,
+            "terminated": 48
+          }
+        },
+        "net": 8,
+        "gained_ids": [
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+          "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+          "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+          "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+        ],
+        "gained_by_stratum": {
+          "wrong_answer": 9,
+          "format_only": 6,
+          "runaway": 0
+        },
+        "lost_ids": [
+          "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+          "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+          "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+          "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+          "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+          "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+        ],
+        "loss_records": [
+          {
+            "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "reply_class": "percentage_reasoning",
+            "text": "$112.80.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          },
+          {
+            "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "reply_class": "ratio_proportion",
+            "text": "12.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          },
+          {
+            "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "reply_class": "time_duration",
+            "text": "10:55 AM.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          },
+          {
+            "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "reply_class": "time_duration",
+            "text": "10:10 AM.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          },
+          {
+            "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "reply_class": "time_duration",
+            "text": "16:05 PM.",
+            "terminated": true,
+            "scorer_reason": "12-hour clock out of range",
+            "stratum": "semantic_classification_deferred"
+          },
+          {
+            "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "reply_class": "time_duration",
+            "text": "10:40 AM.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          },
+          {
+            "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+            "reply_class": "time_duration",
+            "text": "10:55 AM.",
+            "terminated": true,
+            "scorer_reason": "value mismatch",
+            "stratum": "wrong_answer"
+          }
+        ],
+        "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+        "answers_changed_vs_source": 128,
+        "output_rescored": true
+      },
+      "trajectory": [
+        {
+          "tokens": 0,
+          "steps": 0,
+          "milestone": 0,
+          "correct_total": 47,
+          "retained_total": 47,
+          "lost_total": 0,
+          "gained_total": 0,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "PASS",
+          "failed_classes": [],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 21,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 49
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 16,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 10,
+              "lost": 0,
+              "gained": 0,
+              "arm_correct": 10,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 0,
+          "gained_ids": [],
+          "gained_by_stratum": {
+            "wrong_answer": 0,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [],
+          "loss_records": [],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 0,
+          "output_rescored": true
+        },
+        {
+          "tokens": 1397,
+          "steps": 10,
+          "milestone": 1300,
+          "correct_total": 47,
+          "retained_total": 40,
+          "lost_total": 7,
+          "gained_total": 7,
+          "reference_n": 47,
+          "terminated_total": 149,
+          "status": "FAIL",
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 19,
+              "lost": 2,
+              "gained": 1,
+              "arm_correct": 20,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 13,
+              "lost": 3,
+              "gained": 1,
+              "arm_correct": 14,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 8,
+              "lost": 2,
+              "gained": 5,
+              "arm_correct": 13,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 0,
+          "gained_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+            "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01566",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02229"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 7,
+            "format_only": 0,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349",
+              "reply_class": "percentage_reasoning",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02622",
+              "reply_class": "percentage_reasoning",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02970",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01221",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 109,
+          "output_rescored": false
+        },
+        {
+          "tokens": 2610,
+          "steps": 19,
+          "milestone": 2600,
+          "correct_total": 49,
+          "retained_total": 39,
+          "lost_total": 8,
+          "gained_total": 10,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "FAIL",
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 19,
+              "lost": 2,
+              "gained": 2,
+              "arm_correct": 21,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 1,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 5,
+              "lost": 5,
+              "gained": 7,
+              "arm_correct": 12,
+              "source_correct_terminated": 10,
+              "terminated": 48
+            }
+          },
+          "net": 2,
+          "gained_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+            "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01566",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01610",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02628"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 7,
+            "format_only": 3,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+              "reply_class": "percentage_reasoning",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00381",
+              "reply_class": "percentage_reasoning",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 124,
+          "output_rescored": false
+        },
+        {
+          "tokens": 3998,
+          "steps": 31,
+          "milestone": 3900,
+          "correct_total": 53,
+          "retained_total": 40,
+          "lost_total": 7,
+          "gained_total": 13,
+          "reference_n": 47,
+          "terminated_total": 149,
+          "status": "FAIL",
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 20,
+              "lost": 1,
+              "gained": 4,
+              "arm_correct": 24,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 1,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 5,
+              "lost": 5,
+              "gained": 8,
+              "arm_correct": 13,
+              "source_correct_terminated": 10,
+              "terminated": 49
+            }
+          },
+          "net": 6,
+          "gained_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 8,
+            "format_only": 5,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+              "reply_class": "percentage_reasoning",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+              "reply_class": "time_duration",
+              "stratum": "output_unavailable"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 127,
+          "output_rescored": false
+        },
+        {
+          "tokens": 5233,
+          "steps": 41,
+          "milestone": 5200,
+          "correct_total": 55,
+          "retained_total": 40,
+          "lost_total": 7,
+          "gained_total": 15,
+          "reference_n": 47,
+          "terminated_total": 148,
+          "status": "FAIL",
+          "failed_classes": [
+            "percentage_reasoning",
+            "ratio_proportion",
+            "time_duration"
+          ],
+          "per_class": {
+            "percentage_reasoning": {
+              "rows": 50,
+              "reference_n": 21,
+              "retained": 20,
+              "lost": 1,
+              "gained": 4,
+              "arm_correct": 24,
+              "source_correct_terminated": 21,
+              "terminated": 50
+            },
+            "ratio_proportion": {
+              "rows": 50,
+              "reference_n": 16,
+              "retained": 15,
+              "lost": 1,
+              "gained": 1,
+              "arm_correct": 16,
+              "source_correct_terminated": 16,
+              "terminated": 50
+            },
+            "time_duration": {
+              "rows": 50,
+              "reference_n": 10,
+              "retained": 5,
+              "lost": 5,
+              "gained": 10,
+              "arm_correct": 15,
+              "source_correct_terminated": 10,
+              "terminated": 48
+            }
+          },
+          "net": 8,
+          "gained_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01554",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+            "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+            "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02562",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+            "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+          ],
+          "gained_by_stratum": {
+            "wrong_answer": 9,
+            "format_only": 6,
+            "runaway": 0
+          },
+          "lost_ids": [
+            "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+            "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+            "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+            "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+            "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+            "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+          ],
+          "loss_records": [
+            {
+              "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+              "reply_class": "percentage_reasoning",
+              "text": "$112.80.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            },
+            {
+              "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+              "reply_class": "ratio_proportion",
+              "text": "12.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__01033",
+              "reply_class": "time_duration",
+              "text": "10:55 AM.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+              "reply_class": "time_duration",
+              "text": "10:10 AM.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02257",
+              "reply_class": "time_duration",
+              "text": "16:05 PM.",
+              "terminated": true,
+              "scorer_reason": "12-hour clock out of range",
+              "stratum": "semantic_classification_deferred"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+              "reply_class": "time_duration",
+              "text": "10:40 AM.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            },
+            {
+              "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02681",
+              "reply_class": "time_duration",
+              "text": "10:55 AM.",
+              "terminated": true,
+              "scorer_reason": "value mismatch",
+              "stratum": "wrong_answer"
+            }
+          ],
+          "loss_strata_status": "partial: grammar value mismatches and nontermination classified; other semantic classification deferred to avoid headroom_audit's torch import",
+          "answers_changed_vs_source": 128,
+          "output_rescored": true
+        }
+      ],
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last16_lr1e-05_b5200_seed17.json",
+      "sha256": "aa949a81a81c4f7762e3239892f4ded2c51add6296b2765691f483882fb71309"
+    },
+    "B28last20": {
+      "status": "MISSING",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28last20_lr1e-05_b5200_seed17.json"
+    },
+    "B28": {
+      "status": "MISSING",
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-ced-native-loader-qualification\\experiments\\architecture_benchmark_001\\evidence\\retention-design-v1\\ARM_DOSE_B28_lr1e-05_b5200_seed17.json"
+    }
+  },
+  "pairs": {
+    "B28last8~B28last12": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last8~B28last16": {
+      "status": "AVAILABLE",
+      "a_only_correct": 7,
+      "b_only_correct": 15,
+      "discordant": 22,
+      "rows_compared": 150,
+      "matched_training_binding_fields": [],
+      "training_identity_limit": "legacy token lengths and seed only; row identity was not recorded",
+      "p_raw_exact": "35075/262144",
+      "p_raw": 0.13380050659179688,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": false,
+      "significant": false,
+      "favours": null
+    },
+    "B28last8~B28last20": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last8~B28": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last12~B28last16": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last12~B28last20": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last12~B28": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last16~B28last20": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last16~B28": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    },
+    "B28last20~B28": {
+      "status": "UNAVAILABLE",
+      "reason": "one or both arms unavailable",
+      "p_raw_exact": "1",
+      "p_raw": 1.0,
+      "p_holm_exact": "1",
+      "p_holm": 1.0,
+      "p_is_missing_placeholder": true,
+      "significant": false,
+      "favours": null
+    }
+  },
+  "historical_B28_aggregate_replication": {
+    "status": "UNAVAILABLE",
+    "historical": {
+      "correct_total": 73,
+      "retained_total": 41,
+      "gained_total": 32,
+      "lost_total": 6
+    },
+    "limitation": "Historical row outputs and tensors were not saved; aggregate agreement cannot establish determinism or identify the historical trained weights."
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "licenses_release": false,
+  "input_sha256": {
+    "panel": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+    "reference": "ec3fca1e8b1eb418a6b848dadfea06235cf7c4317ddf6930061c84147afa9a8f",
+    "headroom": "5aaf15059cb2caf442209dfcfe82d7e2e00a33776b0a01d1bb195996304ccb5a",
+    "labels": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+    "protocol": "ead4ddf07f8098b01cb4dda1db40df451ee4495adff80e33cfe1603807830ef7"
+  }
+}
