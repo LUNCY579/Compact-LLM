@@ -85,6 +85,8 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--model', required=True, help='dense core directory')
     parser.add_argument('--label', required=True, help='short name for the artifact')
+    parser.add_argument('--checkpoint', help='arm-checkpoints tag to apply over the model, so '
+                                             'an arm can be scored without materializing it')
     parser.add_argument('--device', default='cuda')
     parser.add_argument('--max-new-tokens', type=int, default=24)
     parser.add_argument('--max-context', type=int, default=4096)
@@ -116,6 +118,23 @@ def main() -> int:
 
     model, tokenizer, _ = run._load(model_dir, args.device)
     eos = run._eos_ids(model_dir, tokenizer)
+    applied = None
+    if args.checkpoint:
+        from safetensors.torch import load_file
+        ckpt = ROOT / 'outputs' / 'arm-checkpoints' / args.checkpoint
+        manifest = json.loads((ckpt / 'MANIFEST.json').read_text(encoding='utf-8'))
+        if not manifest.get('completed'):
+            raise SystemExit(f'{args.checkpoint} did not complete; its recorded score is its '
+                             f'step-0 probe, which is the untrained source, and it must not '
+                             f'be scored')
+        state = model.state_dict()
+        trained = load_file(str(ckpt / 'trainable.safetensors'), device='cpu')
+        with torch.no_grad():
+            for name, value in trained.items():
+                state[name].copy_(value.to(state[name].dtype).to(state[name].device))
+        applied = {'tag': manifest['canonical_tag'], 'tensors': len(trained),
+                   'sha256': manifest['sha256']}
+        print(f'  applied checkpoint {applied["tag"]} ({applied["tensors"]} tensors)')
     print(f'loaded {model_dir.name} on {args.device} | eos {sorted(eos)} | '
           f'{len(rows)} rows', flush=True)
 
@@ -174,6 +193,15 @@ def main() -> int:
             bucket['items'] += 1
             bucket['hits'] += int(hit)
 
+    # Abstention is measured separately from accuracy. A model can stop emitting the UNKNOWN
+    # token while still recognising the answer is absent -- Opallo answers "The current
+    # evidence does not identify the cause." -- and "stopped abstaining" and "stopped saying
+    # the word the scorer wants" are different failures with different fixes.
+    by_id = {p['id']: p for p in predictions}
+    unanswerable = [i for i in by_id if key[i]['variant'] == 'unanswerable']
+    says_unknown = sum(1 for i in unanswerable
+                       if 'unknown' in normalize(by_id[i]['prediction']))
+
     total = sum(scored.values())
     showcase = sum(1 for i, v in scored.items() if v and key[i]['split'] == 'showcase')
     stability = sum(1 for i, v in scored.items() if v and key[i]['split'] == 'stability_test')
@@ -189,6 +217,7 @@ def main() -> int:
         'label': args.label,
         'model_directory': str(model_dir.relative_to(REPO)) if model_dir.is_relative_to(REPO)
                            else str(model_dir),
+        'checkpoint_applied': applied,
         'rows_total': len(rows),
         'rows_skipped_context_overflow': skipped,
         'max_context': args.max_context, 'max_new_tokens': args.max_new_tokens,
@@ -198,6 +227,9 @@ def main() -> int:
         'implementation_digest': implementation_digest(),
         'measured_at_utc': datetime.now(timezone.utc).isoformat(),
         'wall_seconds': time.perf_counter() - started,
+        'unanswerable_rows': len(unanswerable),
+        'unanswerable_correct': sum(scored[i] for i in unanswerable),
+        'says_unknown_on_unanswerable': says_unknown,
         'all256_hits': total,
         'showcase64_hits': showcase,
         'stability192_hits': stability,
@@ -211,6 +243,7 @@ def main() -> int:
                            encoding='utf-8')
     print(f'\n{args.label}: all256 {total}/{len(rows)} | showcase {showcase}/64 | '
           f'stability {stability}/192 | skipped {skipped}')
+    print(f'  abstention: says UNKNOWN on {says_unknown}/{len(unanswerable)} unanswerable rows (Supa 13, Opallo 2)')
     print(f'  wrote {result_path}')
     return 0
 

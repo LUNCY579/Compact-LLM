@@ -62,6 +62,7 @@ V3_FILES = ('rineya_v3_reasoning_train_50000.jsonl',
 SRC = REPO / 'Supa'
 
 _WS = re.compile(r'\s+')
+ABSTAIN_SHARE = 0.33      # set from --abstain-share; see rule_repair
 blind = lambda s: re.sub(r'\d', '#', s)
 
 
@@ -182,9 +183,64 @@ def rule_diverse(rows, meta, rng):
     return picked + spare
 
 
+_ABSTAIN = re.compile(
+    r"(do(es)?n[’']?t know|can[’']?t (tell|say|determine)|"
+    r"not (stated|given|supported|determined|enough|specified|clear)|unknown|"
+    r"no(t)? enough information|doesn[’']?t say|unclear|insufficient)", re.I)
+
+
+def final_reply(text: str) -> str:
+    """The last assistant turn with any silent-reasoning block removed."""
+    tail = text.split('<|im_start|>assistant')[-1]
+    return re.sub(r'<think>.*?</think>', '', tail, flags=re.S).replace('<|im_end|>', '').strip()
+
+
+def is_abstention(row: dict) -> bool:
+    return bool(_ABSTAIN.search(final_reply(row['text'])))
+
+
+def rule_repair(rows, meta, rng):
+    """Repair what training measurably broke, using only rows already in the pool.
+
+    Opallo lost 11 rows of abstention on the long-context suite -- Supa emits UNKNOWN on 13
+    of 64 unanswerable rows, Opallo on 2 -- and that loss is real under both a strict and a
+    containment-tolerant scorer, so it is not a formatting artifact.
+
+    248 of the pool's 10,000 rows already end in an explicit knowledge-limit reply, spread
+    over five classes (`insufficient_information`, `evidence_grounded_dialogue`,
+    `evidence_inference`, `boundary_setting`, `tactful_disagreement`). Using those costs no
+    new contamination surface, because they are the same rows the pool was already cleared
+    for.
+
+    `ABSTAIN_SHARE` of the selection is abstention rows, **interleaved** rather than
+    front-loaded: taking abstention rows first would fill the entire 5,233-token budget with
+    them (248 rows at ~130 tokens is 32k) and leave the arithmetic panel nothing to learn
+    from. Interleaving at a count ratio means the budget cut-off lands on a mixture. The
+    remainder comes from the `diverse` rule, and the share appears in the split's directory
+    name so two settings cannot collide on one create-only path.
+    """
+    abstain = [r for r in rows if is_abstention(r)]
+    other = rule_diverse([r for r in rows if not is_abstention(r)], meta, rng)
+    rng.shuffle(abstain)
+    if not abstain or ABSTAIN_SHARE <= 0:
+        return other + abstain
+    # One abstention row every `step` positions gives it ~ABSTAIN_SHARE of any prefix.
+    step = max(1, round(1 / ABSTAIN_SHARE))
+    merged, a, o = [], iter(abstain), iter(other)
+    while True:
+        nxt = next(a, None) if len(merged) % step == 0 else next(o, None)
+        if nxt is None:
+            nxt = next(o, None) or next(a, None)
+            if nxt is None:
+                break
+        merged.append(nxt)
+    seen = {r['id'] for r in merged}
+    return merged + [r for r in rows if r['id'] not in seen]
+
+
 RULES = {'random': rule_random, 'balanced': rule_balanced,
          'compositional': rule_compositional, 'basic': rule_basic,
-         'reasoning': rule_reasoning, 'diverse': rule_diverse}
+         'reasoning': rule_reasoning, 'diverse': rule_diverse, 'repair': rule_repair}
 
 
 def main() -> int:
@@ -194,7 +250,11 @@ def main() -> int:
                         help='supervised target tokens, len-1 per row')
     parser.add_argument('--seed', type=int, default=17,
                         help='selection seed; NOT the training seed')
+    parser.add_argument('--abstain-share', type=float, default=0.33,
+                        help='fraction of the repair rule that is abstention rows')
     args = parser.parse_args()
+    global ABSTAIN_SHARE
+    ABSTAIN_SHARE = args.abstain_share
 
     rows = load_pool()
     meta = load_metadata(rows)
@@ -236,7 +296,9 @@ def main() -> int:
             raise SystemExit(f'CONTAMINATION: {name} = {count}; refusing to write the split')
     print('guards clear:', leaks)
 
-    out = ROOT / 'outputs' / f'splits_curated_{args.rule}_b{args.budget}_s{args.seed}'
+    suffix = f'_a{int(round(args.abstain_share * 100))}' if args.rule == 'repair' else ''
+    out = (ROOT / 'outputs' /
+           f'splits_curated_{args.rule}{suffix}_b{args.budget}_s{args.seed}')
     if out.exists():
         raise SystemExit(f'split directory already exists (create-only): {out}')
     out.mkdir(parents=True, exist_ok=False)
@@ -274,6 +336,9 @@ def main() -> int:
         'distinct_reply_classes': len({r['reply_class'] for r in chosen}),
         'distinct_template_families': len({meta[r['source_row_id']].get('template_family')
                                            for r in chosen}),
+        'abstention_rows': sum(1 for r in chosen if is_abstention(r)),
+        'abstention_row_share': sum(1 for r in chosen if is_abstention(r)) / len(chosen),
+        'abstain_share_requested': args.abstain_share if args.rule == 'repair' else None,
         'contamination_guards': leaks,
         'dev_and_task_probe_copied_from': str(POOL),
         'licenses_registered_training': False, 'licenses_efficacy_claim': False,
@@ -287,6 +352,8 @@ def main() -> int:
           f"{manifest['distinct_template_families']} template families")
     print(f"  difficulty {manifest['composition']['difficulty']}")
     print(f"  capability {manifest['composition']['capability_group']}")
+    print(f"  abstention rows {manifest['abstention_rows']} "
+          f"({100 * manifest['abstention_row_share']:.1f}%)")
     return 0
 
 
