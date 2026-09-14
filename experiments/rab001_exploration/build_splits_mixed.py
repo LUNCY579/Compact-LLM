@@ -196,6 +196,13 @@ def main() -> int:
         'forge_token_share_actual': forge_tokens / total,
         'rows': {'total': len(merged), 'forge': len(chosen), 'large': len(picked_large)},
         'tokens': {'total': total, 'forge': forge_tokens, 'large': large_tokens},
+        # arm_dose counts SUPERVISED targets, which are len-1 per row: a next-token objective
+        # has no target for the first position. Setting a budget equal to `tokens.total` asks
+        # for more than the split can supply and the run dies with "TRAIN exhausted before the
+        # budget" AFTER consuming every row -- and that raise bypasses the artifact write, so a
+        # complete training pass is discarded over a rounding difference. Use this figure.
+        'supervised_target_tokens_available': total - len(merged),
+        'max_usable_budget': total - len(merged),
         'forge_rows_skipped_too_long': skipped_long, 'forge_rows_skipped_eval_id': skipped_id,
         'max_forge_tokens': args.max_forge_tokens,
         'contamination_guards': leaks,
