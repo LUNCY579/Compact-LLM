@@ -57,6 +57,7 @@ B28 full below is from the older RETENTION_DOSE harness and has aggregates only.
 | Arm | Recipe | Correct/150 | Kept/47 | Gains: wrong/format/runaway | Lost |
 |---|---|---:|---:|---|---:|
 | B28 full (historical) | cosine .03, beta2 .999 | 73 | 41 | unknown split; 32 total | 6 |
+| B28 full (saved retry2) | cosine .03, beta2 .999 | 73 | 41 | 21 / 11 / 0 | 6 |
 | B28last8 | cosine .03, beta2 .999 | 47 | 46 | 1 / 0 / 0 | 1 |
 | B28last12 | cosine .03, beta2 .999 | 52 | 44 | 8 / 0 / 0 | 3 |
 | B28last16 (inherited run, now complete) | cosine .03, beta2 .999 | 55 | 40 | 9 / 6 / 0 | 7 |
@@ -165,22 +166,33 @@ B28_lr1e-05_b5200_seed17_retry2 and preserves BOTH failures plus its prior regis
 This save-only recovery was registered before launch in dd3cfc1. The already known73 score
 is not a criterion for choosing the retry. Retry3 or later must not be silently selected.
 
-Full B28 retry2 is now RUNNING (root exec session57215 if still available). Log:
-experiments/rab001_exploration/outputs/B28_retry2_20260913.log. It uses endpoint-only probes
-(1.0), because retry1 banked the interior measurements. Training recipe remains unchanged.
-Use RAB001_ADAM_STORAGE=streamed and RAB001_GPU_WORKSPACE_GIB=1.5, plus positional labelretry2.
-StreamedAdam preserves FP32 updates with <=128MiB buffers; unused CUDA cache is released
-after updates. Optimizer state is released after the final probe. tensor_stream.py now
-saves directly from CPU or GPU in <=1MiB chunks, eliminating the full CPU checkpoint copy.
-CPU AND CUDA roundtrips through the official safetensors reader passed with exactF32 bits.
-These resource changes do not establish a unique cause of the old memory pressure.
+Full B28 retry2 COMPLETED in 956.4 seconds, including a successful full checkpoint save.
+It again scored 73 correct /41 retained /32 gained /6 lost. Retry1 and retry2 match on
+all 150 final text-and-termination records; historical tensor identity is still unknown.
+The checkpoint has 596,049,920 F32 parameters, 2,384,231,152 bytes, and independently
+verified SHA-256 d96937545d2f5de88430044e689a96f2f57d4bdafdb6061a9e28f6160fd85e44.
+It lives at outputs/arm-checkpoints/B28_lr1e-05_b5200_seed17_retry2 under the benchmark root.
 
-Do not edit arm_dose.py, streamed_adam.py, tensor_stream.py or retention_dose_gpu.py while
-retry2 is active: the harness hashes them and refuses evidence after edits. On completion,
-validate its artifact/checkpoint and make a NEW complete frontier report. Then run
-the B28 alpha sweep on the exact retry2 tag. Use that same tag explicitly as the seed17
-baseline soup ingredient; model_soup takes exact tags and does not resolve the registry.
-All subsequent full B28 soup runs should use streamed storage and 1.5 GiB workspace.
+The complete ten-pair result is exploration/outputs/DEPTH_FRONTIER_COMPLETE_20260913.json.
+See exploration/R3_R4_REPORT.md. After Holm correction, last20 beats last8 and last16;
+full B28 beats last8, last12 and last16. Full versus last20 is not distinguished
+(adjusted p=.57255745); last20 versus last12 also fails (.05336920). The five-arm family
+is complete, but all five arms fail the zero-loss retention rule.
+
+B28 ALPHA IS NOW RUNNING (root exec session 63806 if still available), exact checkpoint
+tag B28_lr1e-05_b5200_seed17_retry2. Log: exploration/outputs/B28_alpha_20260913.log;
+report: exploration/outputs/alpha-B28-retry2-v1/REPORT.json. Both endpoint controls have
+passed: alpha 0 reproduces source and alpha 1 reproduces saved final answers. Interior
+.25/.5/.75 points are pending. Verify the live report rather than assuming completion.
+Do not edit alpha_sweep.py, tensor_stream.py, hostbudget.py or the model code while active.
+
+Use the exact retry2 tag explicitly as the seed17 baseline soup ingredient; model_soup
+takes exact tags and does not resolve the registry. Subsequent full B28 soup runs use
+RAB001_ADAM_STORAGE=streamed and RAB001_GPU_WORKSPACE_GIB=1.5. StreamedAdam uses at most
+128 MiB of host buffers; unused CUDA cache is released after updates. Optimizer state is
+released after the final probe, and checkpoint saving transfers at most 1 MiB at a time.
+CPU and CUDA roundtrips preserved exact F32 bits. These combined resource changes do
+not establish a unique cause of the original memory pressure.
 
 P alpha memory: idle free physical RAM was about 5.5 GiB, below the P runtime+model envelope.
 The user has been asked to free about 1.5 GiB by closing unused applications, or leave P
@@ -213,16 +225,14 @@ reader/writer22 in CUDA runtime (no skips); soup11 including tensor roundtrip; r
 registry and strata37; optimizer CPU/CUDA3. Total76 exploratory tests. Do not rerun the
 306-test unchanged architecture suite merely because another exploratory run completed.
 
-1. Finish/audit the inherited B28last16, run B28last12 and B28last20 at fixed recipe.
-2. Rerun full B28 with .25/.5/.75/1 probes and final checkpoint; record stratum split and
-   compare aggregates with historical 73/41/32/6.
-3. Fixed alpha grid 0/.25/.5/.75/1 on new B28 and saved P+WSD; endpoint controls first.
+R3 depth, R4 full B28 preservation, and R6 dev preparation are DONE. Remaining:
+
+1. Finish the fixed alpha grid 0/.25/.5/.75/1 on saved B28 and P+WSD; endpoint controls first.
    Never choose alpha on the panel. See registration for twelve-test Holm family.
-4. Build and freeze in-domain DEV and its first60 selection rows. Keep it family/ID-disjoint.
-5. Bank full B28 soup candidates: seed23 and41 at lr1e-5/b5200, seed17 at lr3e-6/b5200,
+2. Bank full B28 soup candidates: seeds 23 and 41 at lr1e-5/b5200, seed 17 at lr3e-6/b5200,
    seed17 at lr1e-5/b25000. Include the new seed17/lr1e-5/b5200 baseline. All cosine .03,
    beta2 .999. Treat seed/dose variants as ingredients, not matched-order controls.
-6. Greedy uniform soup selected by terminated normalized exact match on the fixed60 DEV;
+3. Greedy uniform soup selected by terminated normalized exact match on the fixed 60 DEV;
    strict improvement only, lexical-tag ties. Final soup versus DEV-best single is one
    registered paired panel test. Save weights, all candidates, rejections and per-row outputs.
 

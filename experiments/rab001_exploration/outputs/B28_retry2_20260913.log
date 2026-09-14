@@ -1,0 +1,15 @@
+free 4.60 / 15.2 GiB | committed 18.1 GiB (over physical by 2.9) | load 69% | VRAM free 6.90/8.00 GiB
+TF32 forced off: {'cuda_matmul_allow_tf32': False, 'cudnn_allow_tf32': False, 'float32_matmul_precision': 'highest'}
+frozen reference reproduced: {'permissive': 47, 'strict': 41}
+B28: B28 source, all parameters | 596,049,920 params, 596,049,920 trainable | VRAM free 4.68 GiB
+Adam storage=streamed, GPU workspace reserve=1.5 GiB
+Adam moments 4.44 GiB: 0.95 on GPU, 3.49 on disk | VRAM free 3.70 GiB
+        0 tok | step   0 | devCE  5.5782 | kept 47/47 lost  0 gain  0 | correct  47/150 | changed   0/150 | PASS         | 170s
+  device-integrity control PASSED: 0/150 answers changed before training
+     5233 tok | step  41 | devCE  2.2481 | kept 41/47 lost  6 gain 32 | correct  73/150 | changed 140/150 | FAIL         | 952s
+  saved 596,049,920 trained parameters (2.22 GiB) -> C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\outputs\arm-checkpoints\B28_lr1e-05_b5200_seed17_retry2
+
+B28_lr1e-05_b5200_seed17_retry2: COMPLETE
+  correct 47/150 -> 73/150 (gained 32, lost 6, net +26)
+  devCE   5.5782 -> 2.2481 | gate PASS -> FAIL
+  wrote C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\evidence\retention-design-v1\ARM_DOSE_B28_lr1e-05_b5200_seed17_retry2.json
