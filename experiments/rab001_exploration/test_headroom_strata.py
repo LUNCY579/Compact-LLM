@@ -8,10 +8,12 @@ import sys
 import unittest
 
 from experiments.rab001_exploration import headroom_audit as headroom
+from experiments.rab001_exploration import torchfree
 
 
 class FailureStratumTests(unittest.TestCase):
     def test_all_150_frozen_rows_match_both_saved_policy_partitions(self):
+        already_loaded = torchfree.loaded()
         saved_path = headroom.OUT / "HEADROOM_AUDIT.json"
         before = hashlib.sha256(saved_path.read_bytes()).hexdigest()
         expected = json.loads(saved_path.read_text())
@@ -38,8 +40,8 @@ class FailureStratumTests(unittest.TestCase):
                 self.assertEqual({name: dict(counts) for name, counts in by_class.items()}, saved["by_reply_class"])
                 self.assertEqual(correct, set(frozen["reference_ids_by_policy"][policy]))
         self.assertEqual(hashlib.sha256(saved_path.read_bytes()).hexdigest(), before)
-        self.assertNotIn("torch", sys.modules)
-        self.assertNotIn("experiments.architecture_benchmark_001.run", sys.modules)
+        torchfree.assert_no_new(self, already_loaded)
+        torchfree.assert_import_is_clean(self, "experiments.rab001_exploration.headroom_audit")
 
     def test_parsed_value_mismatch_precedes_permissive_number_matching(self):
         target = {"kind": "number", "value": "1", "bare_allowed": True}

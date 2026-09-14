@@ -9,6 +9,7 @@ import tempfile
 import unittest
 
 from experiments.rab001_exploration import frontier_report as report
+from experiments.rab001_exploration import torchfree
 
 
 class FrontierTests(unittest.TestCase):
@@ -28,12 +29,13 @@ class FrontierTests(unittest.TestCase):
         return report.validate_arm(body or self.original, "B28last8", self.context)
 
     def test_saved_control_and_endpoint_recompute_without_torch(self):
-        result = self.validate()
+        with torchfree.no_new_imports(self):
+            result = self.validate()
         self.assertEqual((result["endpoint"]["correct_total"], result["endpoint"]["retained_total"]), (47, 46))
         self.assertEqual(result["endpoint"]["gained_by_stratum"], {"wrong_answer": 1, "format_only": 0, "runaway": 0})
         self.assertEqual(result["endpoint"]["loss_strata_status"], "COMPLETE")
         self.assertEqual(sum(result["endpoint"]["lost_by_stratum"].values()), result["endpoint"]["lost_total"])
-        self.assertNotIn("torch", sys.modules)
+        torchfree.assert_import_is_clean(self, "experiments.rab001_exploration.frontier_report")
 
     def test_mismatched_identity_is_rejected_instead_of_intersected(self):
         body = copy.deepcopy(self.original)

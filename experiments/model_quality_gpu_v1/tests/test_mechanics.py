@@ -66,9 +66,19 @@ def test_create_only_and_digest(tmp_path):
     with pytest.raises(FileExistsError): I.write_new(p, {})
     v = I.read_json(p); v["a"] = []
     with pytest.raises(ValueError): I.unseal(v)
-    alias = tmp_path / "link"; alias.symlink_to(p)
-    with pytest.raises(ValueError): I.file_hash(alias)
+    # Traversal rejection needs no symlink, so it runs unconditionally and stays covered
+    # even where the symlink half below cannot.
     with pytest.raises(ValueError): I.new_dir(tmp_path / ".." / "unsafe")
+    # Creating a symlink on Windows needs admin or Developer Mode, and this package's own
+    # runbook targets Windows. Unguarded, this line fails with WinError 1314 and takes the
+    # create-only, seal/unseal and traversal assertions down with it -- reporting a
+    # privilege the operator lacks as a broken integrity layer.
+    alias = tmp_path / "link"
+    try:
+        alias.symlink_to(p)
+    except (OSError, NotImplementedError) as exc:
+        pytest.skip(f"symlink creation unavailable, cannot exercise symlink rejection: {exc}")
+    with pytest.raises(ValueError): I.file_hash(alias)
 
 
 def test_chat_response_mask_includes_eos_excludes_prefix_suffix():

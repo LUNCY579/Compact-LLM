@@ -13,7 +13,15 @@ from experiments.model_quality_gpu_v1.native import hidden_states, select_tail
 def test_native_random_qwen(checkpointed):
     hf = pytest.importorskip("transformers")
     if hf.__version__ != "4.57.1":
-        pytest.fail("native fixture needs the pinned runtime")
+        # Skip, not fail. This module's own docstring promises to be "skipped honestly
+        # without the pinned runtime", and a wrong version IS the pinned runtime being
+        # unavailable. Failing here made the outcome depend on HOW the runtime was wrong --
+        # absent skipped, present-but-mismatched failed -- so the suite was green only on
+        # hosts with no Transformers at all, and red on every host that had a different
+        # one. A red suite that means "your environment differs" trains an operator to
+        # ignore red. The skip reason names both versions, so it is still visible.
+        pytest.skip(f"native fixture needs pinned transformers 4.57.1, found "
+                    f"{hf.__version__}; this is an environment mismatch, not a defect")
     torch.manual_seed(17); torch.set_num_threads(1)
     c = hf.Qwen3Config(vocab_size=41, hidden_size=16, intermediate_size=32,
                       num_hidden_layers=4, num_attention_heads=2, num_key_value_heads=1,

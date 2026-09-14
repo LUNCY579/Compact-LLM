@@ -241,8 +241,12 @@ def main() -> int:
     }
     result_path.write_text(json.dumps(record, indent=2, sort_keys=True) + '\n',
                            encoding='utf-8')
-    print(f'\n{args.label}: all256 {total}/{len(rows)} | showcase {showcase}/64 | '
-          f'stability {stability}/192 | skipped {skipped}')
+    # Denominators come from the rows actually scored. Hard-coding 64/192 printed a
+    # confident "showcase 0/64" for an 8-row smoke that never touched 64 showcase rows.
+    n_showcase = sum(1 for i in scored if key[i]['split'] == 'showcase')
+    n_stability = sum(1 for i in scored if key[i]['split'] == 'stability_test')
+    print(f'\n{args.label}: all {total}/{len(rows)} | showcase {showcase}/{n_showcase} | '
+          f'stability {stability}/{n_stability} | skipped {skipped}')
     print(f'  abstention: says UNKNOWN on {says_unknown}/{len(unanswerable)} unanswerable rows (Supa 13, Opallo 2)')
     print(f'  wrote {result_path}')
     return 0
