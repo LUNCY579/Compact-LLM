@@ -178,6 +178,12 @@ if not (SRC / 'model.safetensors').is_file():
 #: Recompute activations in backward instead of storing them. Needed for sequences much longer
 #: than the ~128-token rows this programme has trained on; costs wall time, not correctness.
 GRAD_CHECKPOINT = os.environ.get('RAB001_GRAD_CHECKPOINT', '0') == '1'
+#: Sequence positions per cross-entropy chunk; 0 disables and keeps the original single-shot
+#: loss. Only affects peak memory, never the value: the chunked path sums per-token CE over the
+#: whole sequence and divides by the same token count.
+CHUNKED_CE = int(os.environ.get('RAB001_CHUNKED_CE', '0'))
+if CHUNKED_CE < 0:
+    raise SystemExit('RAB001_CHUNKED_CE must be a non-negative chunk size')
 SPL = ROOT / 'outputs' / os.environ.get('RAB001_SPLIT_DIR', 'splits_large')
 if not (SPL / 'train.jsonl').is_file():
     raise SystemExit(f'no train.jsonl under {SPL}')
@@ -526,16 +532,46 @@ def main() -> int:
             cursor += 1
             if steps < 3:
                 record_resources('before_forward', steps + 1)
-            logits = model(ids).logits
             tgt = ids[:, 1:]
-            loss = F.cross_entropy(logits[:, :-1].reshape(-1, logits.shape[-1]).float(),
-                                   tgt.reshape(-1))
+            if CHUNKED_CE:
+                # Full logits are [1, T, 151936] fp32 -- 0.61 GiB at T=1000, and materialised
+                # again by .float(), by log_softmax and by the backward grad. That term, not
+                # attention, is what put peak allocation at 12.98 GiB on an 8 GiB card
+                # (LONG_CONTEXT_LIMIT.md), and it is why gradient checkpointing alone made
+                # things worse: it recomputes blocks but never touches the head.
+                #
+                # model.py exposes compute_logits=False/return_hidden=True precisely so the head
+                # can be applied separately. Each chunk is wrapped in checkpoint(), so its logits
+                # are recomputed during backward and only ONE chunk is resident at a time.
+                # Mathematically identical to the branch below: sum of per-token CE over the
+                # whole sequence, divided by the token count.
+                hidden = model(ids, compute_logits=False, return_hidden=True).hidden[:, :-1]
+                head = model.embed_tokens.weight
+
+                def chunk_loss(piece, targets, weight=head):
+                    values = F.linear(piece, weight).float()
+                    return F.cross_entropy(values.reshape(-1, values.shape[-1]),
+                                           targets.reshape(-1), reduction='sum')
+
+                total = None
+                for start in range(0, hidden.shape[1], CHUNKED_CE):
+                    stop = min(start + CHUNKED_CE, hidden.shape[1])
+                    part = torch.utils.checkpoint.checkpoint(
+                        chunk_loss, hidden[:, start:stop], tgt[:, start:stop],
+                        use_reentrant=False)
+                    total = part if total is None else total + part
+                loss = total / tgt.numel()
+                del hidden
+            else:
+                logits = model(ids).logits
+                loss = F.cross_entropy(logits[:, :-1].reshape(-1, logits.shape[-1]).float(),
+                                       tgt.reshape(-1))
+                del logits
             loss.backward()
             if steps < 3:
                 record_resources('after_backward', steps + 1)
             tokens += tgt.numel()
             consumed.append(int(tgt.numel()))
-            del logits
             gnorm = torch.nn.utils.clip_grad_norm_(opt.params, 1.0)
             opt.step(lr_at(tokens))
             opt.zero_grad()
