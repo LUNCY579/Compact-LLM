@@ -59,3 +59,55 @@ this and are superseded on that point.
 Gains on the narrow arithmetic panel: yes, replicated. In-distribution reasoning: preserved.
 Out-of-distribution reasoning: a small but consistent loss. The third part only became visible
 because a second evaluation split existed and four seeds were run on it.
+
+---
+
+## Addendum: the regression does not scale with trainable parameters, but output discipline does
+
+Two further checkpoints on `test_transfer`, 200 rows, paired against the source:
+
+    model                     trainable    exact    term    acc vs source
+    source                            -   44/200  184/200               -
+    SOUP of 4 WSD                314.6M   41/200  177/200   10-7, disc 17, p=0.629
+    B28last20 wsd s29            314.6M   41/200  181/200    9-6, disc 15, p=0.607
+    B28last20 wsd s41            314.6M   40/200  180/200   10-6, disc 16, p=0.455
+    B28 full wsd                   596M   39/200  168/200   12-7, disc 19, p=0.359
+    B28last20 wsd s23            314.6M   38/200  180/200   14-8, disc 22, p=0.286
+    B28last20 wsd s17            314.6M   36/200  178/200   15-7, disc 22, p=0.134
+
+**Accuracy does not scale with trainable parameters.** Full B28 updates 596M weights against the
+tail arm's 314.6M and lands at 39, inside the tail arms' 36-41 range, with a paired result no
+worse than theirs. The hypothesis that the shift regression would grow with the number of
+updated weights is not supported.
+
+**Output discipline does scale, sharply.** Full B28 against each tail arm on termination:
+
+    vs wsd_s17   13-3, disc 16, p=0.0213
+    vs wsd_s23   15-3, disc 18, p=0.0075
+    vs wsd_s29   15-2, disc 17, p=0.0023
+    vs wsd_s41   15-3, disc 18, p=0.0075
+    POOLED       58-11, disc 69, p < 1e-6
+
+Same-config termination floor on this split is 4-9 discordant (mean 6.5), so all four
+comparisons clear it and all four are individually significant -- this one does not rest on
+pooling. Training 596M weights costs roughly twice the output discipline of training 314.6M, on
+identical data with an identical schedule.
+
+**The soup remains inert.** 41/200 on transfer -- its best ingredient's score, not above it --
+and 17 discordant against the source at p=0.629. Together with its IID null this is a clean
+negative: uniform weight averaging does nothing measurable here on either axis. Two mechanisms
+were predicted for it and neither held: that averaging disjoint data draws would cancel
+draw-specific verbosity (it did not; the soup terminated worst of its group on IID), and that it
+would restore robustness under shift, which is model soup's actual published claim (it did not;
+it matched its best ingredient).
+
+## Consequence for the deliverable
+
+`B28last20 + WSD` and full `B28 + WSD` are indistinguishable on the panel (p = 0.8555) and on
+transfer accuracy. They are NOT indistinguishable on behaviour: the full arm loses 16 rows of
+termination against the source where the tail arm loses 4-6, at p < 1e-6 between them.
+
+So the tail arm is preferred on evidence rather than on cost alone -- same measurable capability,
+four more panel reference answers retained, markedly better output discipline under distribution
+shift, and half the trainable parameters. That distinction was invisible this morning, when the
+150-row panel was the only instrument and the two arms differed by two rows of noise.
