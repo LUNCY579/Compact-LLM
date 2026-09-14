@@ -39,7 +39,7 @@ block in `CATALOG.json`.
 
 ---
 
-## 1. Tier 1 — dense cores already in the vault (8) · **keep all**
+## 1. Tier 1 — dense cores already in the vault (9) · **keep all**
 
 Each is one `model.safetensors` plus `CORE.json`. Showcase figures are strict-exact
 over the frozen 64-row demo suite.
@@ -54,9 +54,20 @@ over the frozen 64-row demo suite.
 | 6 | **Halo Uncensored 1.5** | `Rineya-Halo-Uncensored-1.5.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `c5d4a17f…` | 31/64 | α=1.0 replace. Uncensored pair for Halo; **arm in System48** |
 | 7 | **Taria 1.7** → Supa | `Rineya-Supa-1.7.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `962abc5b…` | 40/64 | Nimbus + step200 @ **0.8125**, dense. Best single dense core |
 | 8 | **Lumina 1.7** → Baya | `Rineya-Baya-1.7.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `1737cd1e…` | 40/64 | Nimbus + step200 @ **1.25**, dense. High-scale abstention arm |
+| 9 | **Opallo 1.0** | `Rineya-Opallo-1.0.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `e726d6be…` | *not run* | Supa with blocks 8-27 finetuned under WSD. Measured on a different instrument — see note below |
 
 Held-out stability192 / all256 for the two 1.7 cores: **Taria 121/192, 161/256** ·
 **Lumina 112/192, 152/256**.
+
+> **Opallo is not comparable on the Showcase column.** It was produced and measured by
+> RAB-001 on a 150-row arithmetic word-problem panel, where it scores **73/150 against
+> Supa's 47**, keeping 41 of Supa's 47 correct answers. The long-context Demo suite was
+> never run on it, and the cell above says *not run* rather than carrying a blank that
+> would read as zero. Its general reasoning is unchanged (Reasoning Forge `test_iid`
+> 32 → 30 of 200, inside that instrument's noise floor) and its off-distribution output
+> discipline is slightly worse (`test_transfer` 44 → 36). Weights are Supa's for
+> embeddings, the final norm and blocks 0-7, byte-identical; the SHA differs because
+> blocks 8-27 changed. Full disclosure in that core's README.
 
 > Halo 1.2 and Nimbus 1.6 values above use the standardized 2026-08-26 vault
 > rerun: Halo `strict_exact` 0.453125 = 29/64; Nimbus 0.46875 = 30/64.

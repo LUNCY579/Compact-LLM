@@ -44,6 +44,7 @@ and frozen replay evidence.
 | `Rineya-Supa-1.7.0-devfreeze` | `rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125` | **Supa Core 1.7**, dense 40/64 low-scale dependency arm |
 | `Rineya-Baya-1.7.0-devfreeze` | `rineya.core.baya.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25` | **Baya Core 1.7**, dense 40/64 high-scale dependency arm |
 | `Rineya-Supa-A1-1.0.0-devfreeze` | `rineya.core.supa-a1.v1.0.0-devfreeze.28L.qwen3-nimbus-lcr-step200-scale-0p8125-abstain-b5p15625` | **Supa-A1**, one-pass baked abstention core: 43/64 Showcase, 125/192 Stability; custom code + greedy decoding required |
+| `Rineya-Opallo-1.0.0-devfreeze` | `rineya.core.opallo.v1.0.0-devfreeze.28L.supa-b28last20-wsd-b5200-seed17` | **Opallo**, Supa with blocks 8-27 finetuned under WSD on 5,233 supervised tokens. Arithmetic panel 73/150 against Supa's 47; Demo suite not run |
 
 **Rename aliases (2026-08-26).** Supa was formerly Taria (`rineya.core.taria.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125`); Baya was formerly Lumina (`rineya.core.lumina.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-1p25`). Weights and frozen evidence are unchanged.
 
