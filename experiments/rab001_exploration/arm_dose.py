@@ -171,7 +171,16 @@ SRC = REPO / 'Supa'
 if not (SRC / 'model.safetensors').is_file():
     SRC = Path('C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/'
                'Rineya-Supa-1.7.0-devfreeze')
-SPL = ROOT / 'outputs' / 'splits_large'
+#: The training corpus. Overridable so a mixed-length split can be tested against the banked
+#: runs without editing splits_large, which is bound into every completed run's data_sha256 and
+#: must never be rewritten. The artifact records data_sha256 over the actual files, so the
+#: corpus a run consumed is provable from the artifact regardless of this setting.
+#: Recompute activations in backward instead of storing them. Needed for sequences much longer
+#: than the ~128-token rows this programme has trained on; costs wall time, not correctness.
+GRAD_CHECKPOINT = os.environ.get('RAB001_GRAD_CHECKPOINT', '0') == '1'
+SPL = ROOT / 'outputs' / os.environ.get('RAB001_SPLIT_DIR', 'splits_large')
+if not (SPL / 'train.jsonl').is_file():
+    raise SystemExit(f'no train.jsonl under {SPL}')
 OUT = ROOT / 'evidence' / 'retention-design-v1'
 N_DEV = 40
 RUN_DIR = None
@@ -361,6 +370,17 @@ def main() -> int:
     ntok = sum(x.shape[1] - 1 for x in dev)
 
     model, trainable, described = build('cuda')
+    # Attention score matrices scale with sequence length squared: 16 heads x 1024^2 x 4 bytes is
+    # about 67 MB per layer, ~1.9 GiB across 28 layers, against roughly 1 MB per layer at the
+    # 128-token rows every earlier run used. Two mixed-length runs aborted on exactly that, at
+    # 2048 and then 1024 tokens. model.py:189 declares gradient_checkpointing as "runtime-only;
+    # never changes checkpoint topology", so setting it here recomputes activations in backward
+    # and trades wall time for memory WITHOUT touching the hashed root.
+    if GRAD_CHECKPOINT:
+        if not hasattr(model, 'gradient_checkpointing'):
+            raise SystemExit('this arm does not support gradient checkpointing')
+        model.gradient_checkpointing = True
+        print('gradient checkpointing ON (activations recomputed in backward)', flush=True)
     n_all = sum(p.numel() for p in model.parameters())
     n_train = sum(p.numel() for p in trainable)
     gc.collect()
