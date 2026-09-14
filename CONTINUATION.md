@@ -179,12 +179,30 @@ full B28 beats last8, last12 and last16. Full versus last20 is not distinguished
 (adjusted p=.57255745); last20 versus last12 also fails (.05336920). The five-arm family
 is complete, but all five arms fail the zero-loss retention rule.
 
-B28 ALPHA IS NOW RUNNING (root exec session 63806 if still available), exact checkpoint
-tag B28_lr1e-05_b5200_seed17_retry2. Log: exploration/outputs/B28_alpha_20260913.log;
-report: exploration/outputs/alpha-B28-retry2-v1/REPORT.json. Both endpoint controls have
-passed: alpha 0 reproduces source and alpha 1 reproduces saved final answers. Interior
-.25/.5/.75 points are pending. Verify the live report rather than assuming completion.
-Do not edit alpha_sweep.py, tensor_stream.py, hostbudget.py or the model code while active.
+B28 ALPHA IS COMPLETE, exact checkpoint tag B28_lr1e-05_b5200_seed17_retry2.
+Log: exploration/outputs/B28_alpha_20260913.log; report:
+exploration/outputs/alpha-B28-retry2-v1/REPORT.json. Both exact text/termination endpoint
+controls passed. The final input hashes were rechecked. Results (correct /retained /gains):
+
+| Alpha | Correct /150 | Retained /47 | Wrong gains | Format gains | Lost |
+|---|---:|---:|---:|---:|---:|
+| 0 | 47 | 47 | 0 | 0 | 0 |
+| .25 | 56 | 42 | 9 | 5 | 5 |
+| .5 | 63 | 40 | 16 | 7 | 7 |
+| .75 | 67 | 40 | 18 | 9 | 7 |
+| 1 | 73 | 41 | 21 | 11 | 6 |
+
+Every nonzero point fails the zero-loss gate. No alpha is chosen from this panel.
+The registered twelve-comparison report remains INCOMPLETE (P is pending), with six
+available comparisons and inferential significance withheld:
+exploration/outputs/ALPHA_B28_PARTIAL_20260913.json.
+
+B28 seed23 is NOW RUNNING as the first additional soup ingredient (root exec session 12391
+if still available). Command recipe: B28 1e-5 5200 23 1.0 cosine:0.03 0.999 final, streamed
+optimizer, 1.5 GiB workspace. Log: exploration/outputs/B28_seed23_20260913.log. Verify its
+artifact/checkpoint before proceeding to seed41, seed17/lr3e-6, then seed17/b25000.
+Do not edit arm_dose.py, streamed_adam.py, tensor_stream.py or retention_dose_gpu.py while
+this job is active. These files are hashed by the running harness.
 
 Use the exact retry2 tag explicitly as the seed17 baseline soup ingredient; model_soup
 takes exact tags and does not resolve the registry. Subsequent full B28 soup runs use
@@ -197,6 +215,9 @@ not establish a unique cause of the original memory pressure.
 P alpha memory: idle free physical RAM was about 5.5 GiB, below the P runtime+model envelope.
 The user has been asked to free about 1.5 GiB by closing unused applications, or leave P
 pending while B28 work proceeds. Do not lower hostbudget thresholds or start a second job.
+No reply has arrived. After B28 alpha, idle free RAM was 5.48 GiB, so P was not launched;
+exploration/outputs/P_ALPHA_RAM_PENDING_20260913.json records this resource condition.
+Recheck between jobs. P needs 6 GiB after runtime loading (plan about 6.8 GiB before it).
 
 R6 data preparation is complete: outputs/splits_onpanel contains 845 TRAIN rows /111,795
 targets and 120 DEV rows /502 reference-answer tokens. No models have trained on this split.
