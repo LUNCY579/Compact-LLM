@@ -69,3 +69,49 @@ Forge remains the better-powered instrument and every checkpoint can still be sc
 compute the loss in slices over the sequence so full-vocabulary logits are never materialised at
 once. That removes the larger of the two terms. It is real work, it belongs in `arm_dose`
 (outside the hashed root), and it should not be attempted while a conclusion depends on it.
+
+---
+
+## Addendum: forge's `test_length` split cannot be run here at all, even at inference
+
+`test_length` is the third forge evaluation split and the only instrument in this repository
+that has never been measured. It is the long-input stress set: five rows per family at word
+tiers up to 4,096, the same reasoning problems embedded in progressively more distracting
+context.
+
+Measured prompt lengths, tokenised with the source tokenizer and its chat template:
+
+    80 rows.  min 11,179   median 15,918   max 35,875 tokens
+      <= 2,048 tokens:  0 rows
+      <= 8,192 tokens:  0 rows
+      <=16,384 tokens: 42 rows
+
+The model supports 40,960 positions, so this is not a context-window limit. It is attention
+memory. `model.py:68` computes attention eagerly --
+`scores = q @ k.transpose(-1,-2) * d**-0.5` -- which materialises the full `[heads, T, T]`
+matrix:
+
+    T =  4,096  ->  1.00 GiB of scores
+    T =  8,192  ->  4.00 GiB
+    T = 11,179  ->  ~7.4 GiB        (the SHORTEST row in the split)
+
+Plus 2.22 GiB for the model itself. On an 8 GiB card **not one row of this split fits**, and
+this is inference: no gradients, no optimizer state, no stored activations. Chunked
+cross-entropy does not help, because the bottleneck is attention rather than the head.
+
+The fix would be memory-efficient attention -- `scaled_dot_product_attention` with a flash or
+mem-efficient backend, which never materialises the score matrix. That is not available here for
+two reasons. `model.py` is inside the hashed root, so changing it moves the implementation digest
+and invalidates the gate ladder. And its own docstring at line 53 states the implementation
+reproduces "the original arithmetic bit-for-bit"; a different attention kernel changes the
+numerics that every frozen comparison in this programme depends on.
+
+So the evaluation picture is complete as far as this hardware allows:
+
+    test_iid       200 rows scored, noise floor measured   -- usable
+    test_transfer  200 rows scored, noise floor measured   -- usable
+    test_length      0 rows scorable                       -- blocked by attention memory
+
+Recorded rather than worked around. A claim about this model's long-input behaviour cannot be
+made from this machine, and the earlier finding that verbosity is a *generation*-length effect
+therefore remains untested against *input* length.
