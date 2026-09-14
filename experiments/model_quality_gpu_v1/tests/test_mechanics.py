@@ -1,4 +1,5 @@
 from __future__ import annotations
+import gc
 import copy
 from dataclasses import replace
 import json
@@ -261,7 +262,15 @@ def test_checkpoint_tamper_is_atomic(tmp_path, kind):
     if kind == "binding": binding = {"scope": "other"}
     if kind == "hash": file.write_bytes(b"corrupt")
     if kind in ("shape", "moment"):
-        state = load_file(str(file))
+        # Copy out of the mapping before writing back to the same path. `load_file`
+        # memory-maps the file, and Windows refuses to write a file that still has a
+        # user-mapped section open (os error 1224). Cloning detaches the tensors so the
+        # mapping can be released. This surfaces only under the package's own pinned
+        # safetensors 0.7.0; a newer one happened to hide it.
+        loaded = load_file(str(file))
+        state = {name: tensor.clone() for name, tensor in loaded.items()}
+        del loaded
+        gc.collect()
         if kind == "shape": state["parameter"] = torch.zeros(1)
         else: state["exp_avg_sq"].fill_(-1)
         save_file(state, str(file)); manifest["entries"][0]["sha256"] = I.file_hash(file)
