@@ -106,13 +106,20 @@ grammar can only raise B28's measured total too, so the correction makes A7 hard
 easier. Recording that here because P56 was already running when the question was raised, and the
 figure of merit must not be chosen after seeing a score.
 
-**The budget is not a free parameter either.** `outputs/longbudget/LONGBUDGET_source_control_
-seed17_b500000_lr1e-05.json` is a completed 500,000-token, 467-step run at this same lr and
-schedule. Its task hits go 3, 7, 20, **23** at 50k tokens, then 15, 17, 19, 19 — an interior
-maximum near 25k-50k followed by decline — while `dev_ce` falls monotonically from 5.578 to
-**0.357**. Past the peak, more data makes the model worse at the task while every likelihood
-number improves. Any budget search must be bracketed in roughly 10k-60k tokens, and `dev_ce`
-must never be used to choose the stopping point.
+> **WITHDRAWN 2026-09-14.** This section previously claimed the long-budget run showed an
+> interior maximum near 25k-50k tokens followed by decline, and concluded that budget searches
+> must be bracketed in 10k-60k tokens. **That was wrong and the conclusion is withdrawn.**
+>
+> `LONGBUDGET_source_control_seed17_b500000_lr1e-05.json` records two scorers. The series quoted
+> was `task_strict_hits` (2, 3, 7, 20, 23, 15, 17, 19, 19). The companion `task_numeric_hits` is
+> **20, 19, 18, 23, 26, 16, 23, 26, 26** — the run *ends at its lifetime maximum*. Both series dip
+> at 125k and recover. With n=60 the binomial sd is about 3.8, so even the strict series' 23 -> 19
+> is inside noise. One scorer was quoted as though it were the task metric, and a bracketing rule
+> was derived from a decline that is not there.
+>
+> What survives: `dev_ce` falls monotonically from 5.578 to 0.357 across the same run while the
+> task metric moves within noise. `dev_ce` still must never choose a stopping point — but that is
+> because it is uninformative here, not because capability declines.
 
 ## Four changes that make the arms distinguishable
 

@@ -346,6 +346,17 @@ def assert_disjoint(left: list[dict], right: list[dict], label: str) -> None:
 def freeze_dev(count: int, panel: list[dict]) -> tuple[list[dict], dict]:
     if count <= 0:
         raise ValueError('selection row count must be positive')
+    # assert_disjoint below compares id and group_id, which is exactly the check that let this
+    # split through: different template families render identical question stems, so family
+    # disjointness does not imply question disjointness. 22 of 150 panel stems appear verbatim
+    # in this dev slice and 64 of 150 with digits blinded. Selecting ingredients on it would
+    # select on the test set, so refuse outright rather than rely on the weaker check.
+    quarantine = ONPANEL / 'CONTAMINATED.md'
+    if quarantine.is_file():
+        raise SystemExit(
+            f'selection set is quarantined: {quarantine}\n'
+            'splits_onpanel leaks the evaluation panel. Rebuild it with a text-level guard or '
+            'supply a different held-out set. Do not delete the marker to proceed.')
     path = ONPANEL / 'dev.jsonl'
     all_dev = json_rows(path)
     if len(all_dev) < count:
