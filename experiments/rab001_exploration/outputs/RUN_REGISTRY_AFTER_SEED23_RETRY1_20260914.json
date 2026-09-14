@@ -1,0 +1,30 @@
+{
+  "artifact_path": "experiments/architecture_benchmark_001/evidence/retention-design-v1/ARM_DOSE_B28_lr1e-05_b5200_seed23_retry1.json",
+  "artifact_sha256": "ce9faf20f5a7805d34adf056abd2b74a48135815f4198bbf1112dac799119d22",
+  "canonical_tag": "B28_lr1e-05_b5200_seed23",
+  "checkpoint_saved": true,
+  "checkpoint_sha256": "288ddda658e583653b831daf92faaea182d39ebd5b02a5a89d8480eab4ae3640",
+  "comparison_role": "soup_ingredient_only",
+  "created_at_utc": "2026-09-14T01:39:58.229960+00:00",
+  "evidence_kind": "storage_only_retry_outcome_record",
+  "licenses_efficacy_claim": false,
+  "licenses_release": false,
+  "observed_final_summary": {
+    "correct_total": 58,
+    "dev_ce_end": 2.2642261040069465,
+    "gained_total": 20,
+    "lost_total": 9,
+    "net": 11,
+    "retained_total": 38
+  },
+  "observed_optimizer_steps": 40,
+  "observed_supervised_target_tokens": 5284,
+  "outcome": "COMPLETED",
+  "registration_document": "experiments/architecture_benchmark_001/evidence/retention-design-v1/DISTINGUISHABILITY_PREREG.md",
+  "retry_scope": "storage_only",
+  "run_label": "retry1",
+  "schema": 1,
+  "seed_variance_observation": "Same configuration as B28_lr1e-05_b5200_seed17_retry2 (lr 1e-5, 5200-token budget, cosine, full parameters), differing only in the seed that shuffles training-row order. seed17 reached 73/150 and seed23 reached 58/150 -- a 15-row spread with near-identical dev CE (2.2481 vs 2.2642). The panel cannot certify an effect below 6 discordant rows split 6-0, so run-to-run variance may exceed most effects measured in this programme. Depth-family comparisons all used seed 17 and remain internally matched; absolute headline numbers are seed-specific and n=2.",
+  "storage_transport_note": "PROVENANCE GAP CLOSED HERE. arm_dose records optimizer_storage_backend from the RAB001_ADAM_STORAGE env value only, and optimizer_storage_harness_sha256 pins the streamed_adam.py source. Neither captures the RAB001_ADAM_DIRECT_IO runtime toggle, which is the single variable this storage_only retry changed. This run was invoked with RAB001_ADAM_STORAGE=streamed and RAB001_ADAM_DIRECT_IO=1, enabling Windows NO_BUFFERING|WRITE_THROUGH transfers so spilled Adam moments bypass the OS data cache.",
+  "why_the_previous_attempt_failed": "The prior attempt used streamed spill WITHOUT the cache bypass and was stood down by hostbudget at step 1 with 0.77 GiB free and commit 12.6 GiB over physical. This run held at about 3.0-3.4 GiB free and completed all 40 steps."
+}

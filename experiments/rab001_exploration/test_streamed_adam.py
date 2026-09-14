@@ -5,10 +5,12 @@ Run with the CUDA runtime and --require-cuda to exercise mixed GPU/disk state.
 import argparse
 from contextlib import contextmanager
 import importlib
+import os
 from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest import mock
 
 import numpy as np
 import torch
@@ -24,10 +26,10 @@ legacy = streamed._legacy
 
 
 @contextmanager
-def recipe():
+def recipe(chunk=4):
     names = ('B1', 'B2', 'EPS', 'CHUNK')
     saved = {name: getattr(legacy, name) for name in names}
-    legacy.B1, legacy.B2, legacy.EPS, legacy.CHUNK = 0.73, 0.91, 1e-6, 4
+    legacy.B1, legacy.B2, legacy.EPS, legacy.CHUNK = 0.73, 0.91, 1e-6, chunk
     try:
         yield
     finally:
@@ -52,9 +54,10 @@ def close_legacy(optimizer):
 
 
 class StreamedAdamTests(unittest.TestCase):
-    def compare_backends(self, device, gpu_budget):
-        with recipe(), tempfile.TemporaryDirectory() as tmp:
-            initial = [torch.linspace(-0.7, 0.9, n, dtype=torch.float32) for n in (15, 7, 11)]
+    def compare_backends(self, device, gpu_budget, *, direct=False, sizes=(15, 7, 11), chunk=4):
+        with recipe(chunk), tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.dict(os.environ, {'RAB001_ADAM_DIRECT_IO': '1' if direct else '0'}):
+            initial = [torch.linspace(-0.7, 0.9, n, dtype=torch.float32) for n in sizes]
             left = [torch.nn.Parameter(p.clone().to(device)) for p in initial]
             right = [torch.nn.Parameter(p.clone().to(device)) for p in initial]
             old = legacy.OffloadedAdam(left, 1e-5, gpu_budget, Path(tmp) / 'legacy')
@@ -64,7 +67,7 @@ class StreamedAdamTests(unittest.TestCase):
                 self.assertEqual(old.gpu_bytes, new.gpu_bytes)
                 self.assertEqual(old.bytes(), new.bytes())
                 self.assertEqual(old.disk_bytes(), new.disk_bytes())
-                self.assertEqual(new.host_chunk_bytes, 4 * 4 * 2)
+                self.assertEqual(new.host_chunk_bytes, min(chunk, max(sizes)) * 4 * 2)
                 self.assertFalse(any(isinstance(x, np.memmap) for store in (new.m, new.v) for x in store))
                 for step in range(5):
                     for index, (a, b) in enumerate(zip(left, right)):
@@ -90,6 +93,13 @@ class StreamedAdamTests(unittest.TestCase):
                 self.assertGreater(new.disk_read_bytes, 0)
                 self.assertEqual(new.disk_read_bytes, new.disk_write_bytes)
                 self.assertGreater(new.disk_fsync_calls, 0)
+                if direct:
+                    self.assertGreater(new.direct_read_bytes, 0)
+                    self.assertEqual(new.direct_read_bytes, new.disk_read_bytes)
+                    self.assertEqual(new.direct_write_bytes, new.disk_write_bytes)
+                    self.assertEqual(new.cached_fallback_disk_bytes, 0)
+                    self.assertTrue(all(buffer.ctypes.data % new.direct_io_alignment == 0
+                                        for buffer in new._buffers))
                 if device == 'cuda':
                     snapshot = [[state_tensor(x) for x in store] for store in (new.m, new.v)]
                     new.release_gpu()
@@ -119,6 +129,108 @@ class StreamedAdamTests(unittest.TestCase):
             parameter.grad = torch.ones_like(parameter)
             with self.assertRaises(ValueError):
                 optimizer.step(1e-5)
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows direct I/O required')
+    def test_windows_direct_cpu_exact_equality(self):
+        self.compare_backends('cpu', 0, direct=True, sizes=(8192, 4096, 12288), chunk=2048)
+
+    @unittest.skipUnless(sys.platform == 'win32' and torch.cuda.is_available(), 'Windows CUDA required')
+    def test_windows_direct_cuda_mixed_exact_equality(self):
+        self.compare_backends('cuda', 4096 * 4 * 2, direct=True,
+                              sizes=(8192, 4096, 12288), chunk=2048)
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows direct I/O required')
+    def test_large_unaligned_state_does_not_fall_back(self):
+        with recipe(2048), tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.dict(os.environ, {'RAB001_ADAM_DIRECT_IO': '1'}):
+            parameter = torch.nn.Parameter(torch.ones(16385, dtype=torch.float32))
+            with self.assertRaisesRegex(ValueError, 'no cached fallback'):
+                streamed.StreamedAdam([parameter], 1e-5, 0, Path(tmp))
+            self.assertTrue((Path(tmp) / 'm0.f32').is_file())
+
+    @unittest.skipUnless(sys.platform == 'win32', 'Windows direct I/O required')
+    def test_tiny_unaligned_fallback_is_explicit(self):
+        with recipe(), tempfile.TemporaryDirectory() as tmp, \
+                mock.patch.dict(os.environ, {'RAB001_ADAM_DIRECT_IO': '1'}):
+            parameter = torch.nn.Parameter(torch.ones(5, dtype=torch.float32))
+            optimizer = streamed.StreamedAdam([parameter], 1e-5, 0, Path(tmp))
+            self.assertEqual(optimizer.cached_fallback_disk_bytes, 5 * 4 * 2)
+            self.assertEqual(optimizer.direct_io_disk_bytes, 0)
+            parameter.grad = torch.ones_like(parameter)
+            optimizer.step(1e-5)
+            self.assertEqual(optimizer.direct_read_bytes, 0)
+
+
+@unittest.skipUnless(sys.platform == 'win32', 'Windows direct I/O required')
+class WindowsDirectFileTests(unittest.TestCase):
+    def test_roundtrip_and_alignment_range_guards(self):
+        from experiments.rab001_exploration import windows_direct_io as direct
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'moment.f32'
+            path.touch()
+            alignment = direct.storage_geometry(path)['io_alignment']
+            with path.open('r+b') as f:
+                f.truncate(2 * alignment)
+            buffer = direct.aligned_float32(alignment // 2, alignment)
+            buffer[:] = np.arange(buffer.size, dtype=np.float32)
+            expected = buffer.copy()
+            raw = memoryview(buffer).cast('B')
+            with direct.DirectFile(path, 2 * alignment) as handle:
+                self.assertEqual(handle.write(raw), 2 * alignment)
+                handle.flush()
+                buffer.fill(0)
+                handle.seek(0)
+                self.assertEqual(handle.readinto(raw), 2 * alignment)
+                np.testing.assert_array_equal(buffer, expected)
+                handle.seek(0)
+                for bad in (raw[:alignment - 1], raw[1:alignment + 1], bytes(alignment)):
+                    with self.assertRaises(ValueError):
+                        handle.write(bad)
+                with self.assertRaises(ValueError):
+                    handle.seek(1)
+                handle.seek(2 * alignment)
+                with self.assertRaises(ValueError):
+                    handle.readinto(raw[:alignment])
+
+    def test_short_write_preserves_partial_file_and_raises(self):
+        from experiments.rab001_exploration import windows_direct_io as direct
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'partial.f32'
+            path.touch()
+            alignment = direct.storage_geometry(path)['io_alignment']
+            with path.open('r+b') as f:
+                f.truncate(2 * alignment)
+            buffer = direct.aligned_float32(alignment // 2, alignment)
+            buffer.fill(7.5)
+            with direct.DirectFile(path, 2 * alignment) as handle:
+                original = handle._perform
+                def short(write, address, size, transferred):
+                    return original(write, address, size // 2, transferred)
+                with mock.patch.object(handle, '_perform', short):
+                    with self.assertRaisesRegex(OSError, 'short direct write'):
+                        handle.write(memoryview(buffer).cast('B'))
+            data = path.read_bytes()
+            self.assertEqual(data[:alignment], memoryview(buffer).cast('B')[:alignment])
+            self.assertEqual(data[alignment:], bytes(alignment))
+
+    def test_short_read_and_size_mismatch_raise(self):
+        from experiments.rab001_exploration import windows_direct_io as direct
+        with tempfile.TemporaryDirectory() as tmp:
+            path = Path(tmp) / 'partial.f32'
+            path.touch()
+            alignment = direct.storage_geometry(path)['io_alignment']
+            with path.open('r+b') as f:
+                f.truncate(2 * alignment)
+            buffer = direct.aligned_float32(alignment // 2, alignment)
+            with direct.DirectFile(path, 2 * alignment) as handle:
+                original = handle._perform
+                def short(write, address, size, transferred):
+                    return original(write, address, size // 2, transferred)
+                with mock.patch.object(handle, '_perform', short):
+                    with self.assertRaisesRegex(OSError, 'short direct read'):
+                        handle.readinto(memoryview(buffer).cast('B'))
+            with self.assertRaises(ValueError):
+                direct.DirectFile(path, alignment)
 
 
 if __name__ == '__main__':

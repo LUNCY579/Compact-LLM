@@ -120,6 +120,58 @@ class RunRegistryTests(unittest.TestCase):
         self.assertEqual(snapshot["final_summary"]["gained_by_stratum"], {"wrong_answer": 21, "format_only": 11, "runaway": 0})
         self.assertFalse((report.REPO / snapshot["successful_ARM_DOSE_artifact"]).exists())
 
+    def test_seed23_extra_alias_is_a_soup_ingredient_and_keeps_depth_family_fixed(self):
+        registry = report.load_run_registry()
+        canonical = "B28_lr1e-05_b5200_seed23"
+        selected = report.resolve_run(canonical, registry=registry)
+        self.assertEqual(selected["active_tag"], canonical + "_retry1")
+        failure = selected["preserved_failure"]
+        self.assertEqual(failure["comparison_role"], "soup_ingredient_only")
+        self.assertTrue(failure["no_endpoint_observed"])
+        self.assertEqual(failure["observed_supervised_target_tokens"], 100)
+        self.assertEqual(failure["observed_optimizer_steps"], 1)
+        self.assertEqual(report.resolve_run(self.canonical, registry=registry)["active_tag"], self.retry)
+        with tempfile.TemporaryDirectory() as directory:
+            output = report.build_report(Path(directory), {}, registry)
+        self.assertEqual(tuple(output["arms"]), ("B28last8", "B28last12", "B28last16", "B28last20", "B28"))
+        self.assertEqual(len(output["pairs"]), 10)
+        self.assertEqual(alpha_report.SPECS["B28"][0], self.canonical)
+
+    def test_extra_alias_rejects_unregistered_recipe_or_retry_number(self):
+        canonical = "B28_lr1e-05_b5200_seed23"
+        tag = canonical + "_retry1"
+        for bad_canonical, bad_tag in (("B28_lr1e-05_b5200_seed99", "B28_lr1e-05_b5200_seed99_retry1"),
+                                       (canonical, canonical + "_retry2")):
+            with self.subTest(alias=bad_tag):
+                registry = self.registry()
+                metadata = registry["retries"].pop(tag)
+                registry["active_tags"].pop(canonical)
+                registry["active_tags"][bad_canonical] = bad_tag
+                registry["retries"][bad_tag] = {**metadata, "canonical_tag": bad_canonical}
+                with self.assertRaisesRegex(report.InvalidArtifact, "unsupported registry alias"):
+                    report.validate_run_registry(registry)
+
+    def test_extra_alias_cannot_borrow_another_failure_filename(self):
+        registry = self.registry()
+        tag = "B28_lr1e-05_b5200_seed23_retry1"
+        registry["retries"][tag]["failure_artifact_path"] = registry["retries"][self.canonical + "_retry1"]["failure_artifact_path"]
+        with self.assertRaisesRegex(report.InvalidArtifact, "failure artifact path differs"):
+            report.validate_run_registry(registry)
+
+    def test_extra_alias_cannot_change_its_comparison_role(self):
+        registry = self.registry()
+        registry["retries"]["B28_lr1e-05_b5200_seed23_retry1"]["comparison_role"] = "depth_endpoint"
+        with self.assertRaisesRegex(report.InvalidArtifact, "soup ingredient"):
+            report.validate_run_registry(registry)
+
+    def test_seed17_retry_chain_is_unchanged_by_soup_alias_addition(self):
+        previous_path = report.REPO / "experiments/rab001_exploration/outputs/RUN_REGISTRY_BEFORE_SOUP_SEED23_RETRY1_20260914.json"
+        previous = report.read_json(previous_path)
+        current = self.registry()
+        self.assertEqual(previous["active_tags"][self.canonical], current["active_tags"][self.canonical])
+        for tag in (self.canonical + "_retry1", self.canonical + "_retry2"):
+            self.assertEqual(previous["retries"][tag], current["retries"][tag])
+
 
 if __name__ == "__main__":
     unittest.main()

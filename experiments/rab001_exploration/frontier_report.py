@@ -29,7 +29,19 @@ ALPHA = Fraction(1, 20)
 BASE = REPO / "experiments/architecture_benchmark_001"
 EVIDENCE = BASE / "evidence/retention-design-v1"
 RUN_REGISTRY = REPO / "experiments/rab001_exploration/run_registry.json"
-SUPPORTED_RETRIES = {"B28_lr1e-05_b5200_seed17": ("B28_lr1e-05_b5200_seed17_retry1", "B28_lr1e-05_b5200_seed17_retry2")}
+# The registry may additionally resolve the fixed soup ingredients. These identities
+# do not add members to ARMS/PAIRS, which remain the five seed17 depth endpoints.
+REGISTERED_B28_RECIPES = {
+    f"B28_lr{lr:g}_b{budget}_seed{seed}": {"arm": "B28", "lr": lr, "seed": seed, "token_budget": budget,
+                                         "schedule_spec": "cosine:0.03", "beta2": .999, "reference_digest": DIGEST}
+    for lr, budget, seed in ((1e-5, 5200, 17), (1e-5, 5200, 23), (1e-5, 5200, 41),
+                            (3e-6, 5200, 17), (1e-5, 25000, 17))
+}
+SUPPORTED_RETRIES = {
+    canonical: tuple(f"{canonical}_retry{number}" for number in
+                     (range(1, 3) if canonical == "B28_lr1e-05_b5200_seed17" else range(1, 2)))
+    for canonical in REGISTERED_B28_RECIPES
+}
 
 
 class InvalidArtifact(ValueError):
@@ -74,8 +86,9 @@ def _validate_initial_failure(metadata, canonical):
     require(failure.get("checkpoints") and all(point.get("tokens") == 0 and point.get("steps") == 0
                                                and point.get("milestone") == 0 for point in failure["checkpoints"]),
             "retry1 disallowed: a post-training checkpoint/endpoint was observed")
-    for key, value in {"arm": "B28", "lr": 1e-5, "seed": 17, "token_budget": 5200,
-                       "schedule_spec": "cosine:0.03", "beta2": .999, "reference_digest": DIGEST}.items():
+    require(failure.get("canonical_tag", canonical) == canonical and failure.get("run_label") in (None, ""),
+            "canonical failure filename/body identity mismatch")
+    for key, value in REGISTERED_B28_RECIPES[canonical].items():
         require(failure.get(key) == value, f"canonical failure recipe {key} mismatch")
 
 
@@ -139,6 +152,8 @@ def validate_run_registry(registry):
             for key, value in {"canonical_tag": canonical, "run_label": f"retry{number}", "retry_scope": "storage_only",
                                "checkpoint_saved": False, "preserve_failure_bytes": True}.items():
                 require(metadata.get(key) == value, f"retry metadata {key} mismatch")
+            if canonical != "B28_lr1e-05_b5200_seed17":
+                require(metadata.get("comparison_role") == "soup_ingredient_only", "additional retry must remain a soup ingredient")
             if number == 1:
                 _validate_initial_failure(metadata, canonical)
             else:
