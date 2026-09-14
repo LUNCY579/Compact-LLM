@@ -71,3 +71,41 @@ no such floor at p ~ 1e-22, reproduced three times.
 The cheapest confirmation available, requiring no training: score the same checkpoints on forge
 with a terse-answer system instruction or a hard length cap. If exact match recovers toward the
 source's 32/200, style is confirmed as the whole story.
+
+---
+
+## Postscript: verbosity does not mask correct answers, so no inference-time fix exists
+
+This document previously proposed the cheapest confirmation as re-scoring with a terse-answer
+instruction or a hard length cap: if exact match recovered toward the source's 32/200, style
+would be the whole story. That test can be answered from the stored generations without running
+anything, and the answer is that it would recover **nothing**.
+
+Across four models, over every forge row the model gets wrong under exact match:
+
+    model                             wrong   answer is a PREFIX   equals first line   appears anywhere
+    B28last20 + WSD                     170                    0                   0                  0
+    B28last20 + WSD seed 29             168                    0                   0                  0
+    SOUP of 4 WSD checkpoints           168                    0                   0                  0
+    B28 full, cosine                    173                    0                   0                  0
+
+Zero, on every measure. When these models are wrong the reference answer is not buried after a
+preamble, not on a later line, and not present anywhere in the output. A stop-at-first-answer
+rule, a length cap, and a terser instruction would each recover zero rows.
+
+Three consequences:
+
+* The verbosity shift is **cosmetic**. It is a deployment annoyance -- a model that rambles where
+  it used to answer in one token -- and it costs no accuracy. That is consistent with forge
+  accuracy being null in all six trained models, and with the earlier finding that on rows which
+  stopped terminating the source was correct on zero of them.
+* The models genuinely do not know these answers: 168-173 wrong of 200. No decoding change fixes
+  ignorance.
+* **Nothing has improved forge accuracy.** Every trained model scores 27-32 against the source's
+  32. Training on `splits_large` improves panel arithmetic by up to +27 rows and leaves general
+  reasoning exactly where it started.
+
+The last point is the real ceiling of the current setup, and it is not a scoring artifact,
+a schedule artifact, or a dose artifact. Improving general reasoning would require training data
+that exercises it -- which on this host is blocked by the ~250-token sequence limit recorded in
+`LONG_CONTEXT_LIMIT.md`, since forge rows run ~1,400 tokens median.
