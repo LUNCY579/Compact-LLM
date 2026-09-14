@@ -98,13 +98,27 @@ families**, sampled with seed 17 and frozen to a file before either model runs.
 and `boolean` families are two-way, `three_way_logic` is three-way. A per-family chance
 floor is computed from `answer_type` **before** scoring and published beside the result.
 
-**Pre-registered decision rule.** Let `s` be Supa's overall exact-match rate.
+**Pre-registered decision rule -- amended once, before any model ran.** The rule first
+written here was a raw band, `0.10 <= s <= 0.80`. Building the frozen sample then showed
+the majority baseline is **0.229**: always answering each family's most common answer
+scores 22.9%, because `boolean_switches` and `knights_knaves` are two-way and
+`rule_deduction` is three-way. A raw band starting at 0.10 would have admitted scores
+*below guessing* as evidence of headroom. The rule is therefore stated against the floor
+instead. This amendment is made with the sample frozen and **no model score in existence**;
+it is recorded rather than quietly substituted.
+
+Let `k` be Supa's hit count out of 450.
 
 | outcome | reading | action |
 |---|---|---|
-| `s < 0.10` | too far to reach from a 5k-token budget | **stop.** Report it; do not build a puzzle split |
-| `0.10 <= s <= 0.80` | headroom exists | proceed to P2 |
-| `s > 0.80` | nothing to gain | **stop.** Report it |
+| `k <= 118` | at or indistinguishable from guessing | **stop.** Report it; do not build a puzzle split |
+| `119 <= k <= 359` | beating the floor, with room above | proceed to P2 |
+| `k >= 360` | above 0.80, nothing to gain | **stop.** Report it |
+
+119 is the smallest count that beats the 0.229 floor on a one-sided exact binomial at
+alpha 0.05 -- `P(X >= 119 | n=450, p=0.229) = 0.0432`, against `P(X >= 118) = 0.0541`.
+Per-family rates are published against per-family floors, since an aggregate hides the case
+where every point above the floor comes from the two binary families.
 
 Opallo-vs-Supa on the same 450 rows is a paired deterministic comparison; McNemar exact,
 two-sided, alpha 0.05. Reported, not used as a gate.
