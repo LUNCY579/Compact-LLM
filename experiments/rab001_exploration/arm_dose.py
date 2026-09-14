@@ -483,6 +483,7 @@ def main() -> int:
     trace = []
     started = time.perf_counter()
     aborted = None
+    exhausted = None
     reg = policy['bare_policy']
 
     def checkpoint(done: int, milestone):
@@ -527,7 +528,27 @@ def main() -> int:
         done_ms = {0}
         while tokens < BUDGET:
             if cursor >= len(train):
-                raise SystemExit('TRAIN exhausted before the budget')
+                # Exhausting the corpus is a legitimate end state, not a crash. This used to
+                # raise SystemExit, which skipped the artifact write entirely and threw away a
+                # completed pass over all 149 rows because the requested budget exceeded the
+                # split's supervised total by 149 tokens -- arm_dose counts len-1 targets per
+                # row. Record it and fall through to the normal endpoint probe and save; the
+                # artifact carries `exhausted_corpus` so the shortfall is never mistaken for a
+                # full-budget run.
+                exhausted = (f'TRAIN exhausted after {cursor} rows and {tokens} of {BUDGET} '
+                             f'supervised tokens; the split cannot supply the requested budget')
+                print(f'  {exhausted}', flush=True)
+                # Measure what was actually trained. The endpoint probe fires on
+                # `tokens >= BUDGET`, which exhaustion guarantees never happens, so without this
+                # the artifact's only checkpoint is the step-0 probe -- and `correct_end` would
+                # report the UNTRAINED source score for a run that completed 149 rows. That is
+                # exactly the aborted-artifact trap this programme has already been caught by.
+                # `milestone` names the probe file as probe_{milestone:07d}.json, so it must be
+                # an int. Passing the token count records this probe at the point training
+                # actually stopped, which is what it measures.
+                if tokens and (not checkpoints or checkpoints[-1]['tokens'] != tokens):
+                    checkpoint(tokens, tokens)
+                break
             ids = train[cursor].to('cuda')
             cursor += 1
             if steps < 3:
@@ -596,7 +617,7 @@ def main() -> int:
         aborted = str(exc)
         print(f'ABORTED: {exc}', flush=True)
 
-    completed = aborted is None and tokens >= BUDGET
+    completed = aborted is None and exhausted is None and tokens >= BUDGET
     if not checkpoints:
         raise RuntimeError(aborted or 'no completed probe; see preserved run directory')
     if completed and (checkpoints[-1]['tokens'] != tokens
@@ -685,7 +706,7 @@ def main() -> int:
         'arm': ARM, 'mode': MODE, 'read_tail': READ_TAIL, 'block_tail': BLOCK_TAIL,
         'canonical_tag': CANONICAL_TAG, 'run_label': RUN_LABEL,
         'arm_description': described, 'completed': completed,
-        'aborted_reason': aborted, 'lr': LR, 'token_budget': BUDGET, 'seed': SEED,
+        'aborted_reason': aborted, 'exhausted_corpus': exhausted, 'lr': LR, 'token_budget': BUDGET, 'seed': SEED,
         'probe_fractions': FRACTIONS, 'probe_milestones': milestones,
         'parameters': n_all, 'trainable_parameters': n_train,
         'train_device': 'cuda', 'probe_device': 'cpu', 'numerics': numerics,
