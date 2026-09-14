@@ -1,0 +1,15 @@
+free 7.51 / 15.2 GiB | committed 16.1 GiB (over physical by 0.9) | load 50% | VRAM free 6.90/8.00 GiB
+TF32 forced off: {'cuda_matmul_allow_tf32': False, 'cudnn_allow_tf32': False, 'float32_matmul_precision': 'highest'}
+frozen reference reproduced: {'permissive': 47, 'strict': 41}
+B28last20: B28 source, blocks 8..27 trainable (20 of 28); embeddings, final norm and all earlier blocks frozen | 596,049,920 params, 314,618,880 trainable | VRAM free 4.68 GiB
+Adam storage=memmap, GPU workspace reserve=0.6 GiB
+Adam moments 2.34 GiB: 2.34 on GPU, 0.00 on disk | VRAM free 2.32 GiB
+        0 tok | step   0 | devCE  5.5782 | kept 47/47 lost  0 gain  0 | correct  47/150 | changed   0/150 | PASS         | 177s
+  device-integrity control PASSED: 0/150 answers changed before training
+     1397 tok | step  10 | devCE  3.3758 | kept 39/47 lost  8 gain  8 | correct  47/150 | changed  89/150 | FAIL         | 351s
+  saved 314,618,880 trained parameters (1.17 GiB) -> C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\outputs\arm-checkpoints\B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95
+
+B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95: COMPLETE
+  correct 47/150 -> 47/150 (gained 8, lost 8, net +0)
+  devCE   5.5782 -> 3.3758 | gate PASS -> FAIL
+  wrote C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\evidence\retention-design-v1\ARM_DOSE_B28last20_lr1e-05_b1300_seed17_wsd0.2-0.2_b20.95.json
