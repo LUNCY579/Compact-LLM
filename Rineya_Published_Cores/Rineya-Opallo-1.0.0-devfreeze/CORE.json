@@ -36,6 +36,49 @@
   "kind": "partial_finetune_dense_substitution",
   "licenses_efficacy_claim": false,
   "licenses_registered_training": false,
+  "long_context_validation": {
+    "containment_tolerant": {
+      "answerable_only_192": {
+        "opallo": 150,
+        "paired_mcnemar_p": 1.0,
+        "supa": 149
+      },
+      "note": "Post-hoc scorer added after observing that 245 of 256 outputs grew. Reported as mechanism, not as a second significance claim. Audited: of the 17 rows it rescues, zero have a gold answer short enough for spurious substring matching.",
+      "opallo_all256": 152,
+      "paired_mcnemar_p": 0.0872,
+      "preregistered": false,
+      "supa_all256": 162
+    },
+    "decomposition": {
+      "abstention": "lost -- UNKNOWN emitted on 13 of 64 unanswerable rows by Supa, 2 by Opallo, identical under both scorers",
+      "answerable_retrieval": "intact -- 150 vs 149 on 192 rows under the tolerant scorer",
+      "terse_formatting": "lost -- 17 rows where the answer is correct but wrapped in a sentence, typically a leading article and a full stop"
+    },
+    "detail": "../../LONG_CONTEXT_RETENTION.md",
+    "instrument": "Rineya_Long_Context_Demo_v1, all 256 rows, greedy, 24 new tokens",
+    "note": "Both Supa and Opallo measured in one session under Transformers 4.51.3, because the published 161/256 was produced under 5.14.1. Supa measured here reproduces the published total exactly (161/256; showcase 41 vs 40, stability 120 vs 121).",
+    "output_length": {
+      "opallo_mean_generated_tokens": 4.3,
+      "rows_longer": 245,
+      "rows_shorter": 2,
+      "sign_test_p": 2.709e-70,
+      "supa_mean_generated_tokens": 2.95,
+      "terminated": "256/256 for both"
+    },
+    "preregistration": "../../LONG_CONTEXT_RETENTION_PREREG.md",
+    "status": "REGRESSION",
+    "strict_first_line_exact": {
+      "discordant": "35 Supa-only / 9 Opallo-only",
+      "opallo_all256": 135,
+      "opallo_showcase64": 34,
+      "opallo_stability192": 101,
+      "paired_mcnemar_p": 0.000106,
+      "preregistered": true,
+      "supa_all256": 161,
+      "supa_showcase64": 41,
+      "supa_stability192": 120
+    }
+  },
   "opens_gate": false,
   "panel_validation": {
     "cast_parity": {
@@ -74,6 +117,17 @@
     }
   },
   "provisional": false,
+  "puzzle_reasoning_validation": {
+    "detail": "../../PUZZLE_CEILING.md",
+    "instrument": "Rineya-Puzzle-Reasoning-51k, frozen 450-row test sample, 30 per family",
+    "majority_guessing_floor": 0.229,
+    "note": "Both models sit at the guessing floor. Training neither gained nor cost puzzle reasoning. See PUZZLE_CEILING.md.",
+    "opallo_exact": 96,
+    "paired_mcnemar_p": 0.4408,
+    "rows": 450,
+    "status": "NO_CHANGE",
+    "supa_exact": 102
+  },
   "schema_version": "1.1",
   "source": {
     "base": {

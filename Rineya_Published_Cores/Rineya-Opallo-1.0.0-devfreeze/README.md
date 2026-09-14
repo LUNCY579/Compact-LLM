@@ -6,9 +6,14 @@ Warmup-Stable-Decay schedule. Embeddings, the final norm and blocks 0-7 are froz
 byte-identical to Supa.
 
 Opallo is the shipped form of the best arm found by RAB-001. It is an **arithmetic
-word-problem improvement that did not cost measurable in-distribution reasoning** — and
-that sentence is the whole claim. What it is not is set out under *Limits* below, which is
-the part worth reading before using it.
+word-problem improvement that costs terseness and abstention**: 47 → 73 on the panel, with
+no measurable change to in-distribution reasoning, and a real **26-row regression on the
+family's long-context Demo suite** that turns out to be presentation and abstention rather
+than lost retrieval.
+
+Both halves of that sentence are the claim. *Limits* below is the part worth reading before
+using it — in particular, **do not use Opallo where the context may not contain the
+answer.**
 
 ## Results
 
@@ -19,6 +24,11 @@ the part worth reading before using it.
 | Reference answers retained | 47 | 47 | **41** | this BF16 core |
 | Reasoning Forge `test_iid`, exact | 200 | 32 | 30 | float32 checkpoint |
 | Reasoning Forge `test_transfer`, exact | 200 | 44 | 36 | float32 checkpoint |
+| **Long-Context Demo, strict** | 256 | **161** | **135** | this BF16 core |
+| Long-Context Demo, tolerant | 256 | 162 | 152 | this BF16 core |
+| Long-Context, answerable only | 192 | 149 | **150** | this BF16 core |
+| Long-Context, unanswerable | 64 | **13** | **2** | this BF16 core |
+| Puzzle Reasoning, exact | 450 | 102 | 96 | this BF16 core |
 
 The panel is 150 arithmetic word problems in three classes — `percentage_reasoning`,
 `ratio_proportion`, `time_duration` — scored greedy on CPU against a frozen reference
@@ -61,13 +71,30 @@ number for this file**; 74 belongs to a float32 artifact that is not what ships 
 * **Out-of-distribution output discipline is slightly worse.** Forge `test_transfer` goes
   44 → 36 and termination 184 → 178. Pooled over four seeds this regression is real
   (p=0.020), though it does not survive Bonferroni correction across the four tests run.
-* **Outputs get longer off-distribution.** About 160 of 200 shifted-distribution outputs
-  are longer than the base model's (p≈1e-22). This is cosmetic: across 170 wrong outputs
-  the correct answer was present in **zero** of them, so the extra tokens are not a
-  hidden-answer scoring artifact — but they do mean the model is less terse than Supa
-  outside its training distribution.
+* **Outputs get longer, and how much that costs depends on the instrument.** On the
+  Reasoning Forge ~160 of 200 shifted outputs are longer (p≈1e-22) and the correct answer
+  appears in **zero** of 170 wrong ones, so there the extra tokens cost nothing beyond
+  terseness. On the long-context suite **245 of 256** outputs are longer (mean 2.95 → 4.30
+  tokens, p≈3e-70) and the correct answer *is* present in **17** of the wrong ones. So the
+  earlier "the verbosity shift is cosmetic" reading holds for forge and does **not**
+  generalise: under a strict first-line scorer, which is what every instrument here uses, a
+  leading article and a full stop are worth 17 rows.
 * **Six reference answers were lost.** Opallo keeps 41 of the 47 the base answered
   correctly and gains 32 it did not.
+* **It is 26 rows worse on the family's long-context Demo suite**, 161 -> 135 of 256
+  (p = 1.06e-4). That is how the roster compares cores, so it is a real regression and it is
+  stated first. What it is *not* is broken retrieval: on the 192 answerable rows, scored so
+  that a correct answer inside a sentence counts, Opallo gets **150 against Supa's 149**. The
+  26 rows decompose into 17 of lost terse formatting -- `"The power relay that failed its
+  second diagnostic."` against a gold of `"power relay that failed its second diagnostic"` --
+  and 11 of **lost abstention**: Supa emits `UNKNOWN` on 13 of the 64 unanswerable rows,
+  Opallo on 2. The abstention loss is real under either scorer. Full decomposition in
+  [`../../LONG_CONTEXT_RETENTION.md`](../../LONG_CONTEXT_RETENTION.md).
+* **Do not use Opallo where the context may not contain the answer.** It answers anyway.
+  Supa 1.7, or Supa-A1 which ships a baked abstention rule, are the right cores for that.
+* **Puzzle reasoning is unchanged and at the guessing floor**, 102 -> 96 of 450 against a
+  majority baseline of 0.229 (p = 0.44). Two independent instruments now agree this model
+  does not do multi-step reasoning; see [`../../PUZZLE_CEILING.md`](../../PUZZLE_CEILING.md).
 * **No gate is opened and no sealed test was run.** This is an exploratory research core
   promoted to a named slot. `licenses_efficacy_claim` is false in `CORE.json` and stays
   false.
