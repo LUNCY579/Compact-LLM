@@ -135,11 +135,24 @@ RAB001_SPLIT_DIR=splits_curated_repair_a33_b5233_s17 $PYG \
 Then score each arm with `long_context_probe.py --checkpoint <tag>`, which reports
 `says_unknown_on_unanswerable` directly.
 
-**The blocker:** this host idles near 3.9-4.0 GiB free against a 4.15 requirement. Working
-sets total only 6.15 GiB of 15.2, but commit charge is 20.4 GiB -- genuinely oversubscribed,
-not reclaimable cache (forcing a 3 GiB allocation moved free memory by 0.02 GiB). It had 8.14
-GiB free earlier the same day. **Closing Chrome or the other Claude sessions would unblock
-it immediately.**
+**The blocker: host memory, and it got worse over the session.** It read 8.14 GiB free when
+the deliverable trained, 3.9-4.0 GiB for most of the repair attempts, and **1.04 GiB** by the
+end -- 93% memory load, 23.5 GiB committed against 15.2 physical. `arm_dose` needs 3.6.
+
+Three things worth not re-deriving:
+
+* It is **not reclaimable cache**. Forcing a 3 GiB allocation to evict standby pages moved
+  free memory by 0.02 GiB.
+* `GlobalMemoryStatusEx.ullAvailPhys` (what `hostbudget` uses) and
+  `Win32_OperatingSystem.FreePhysicalMemory` (convenient from PowerShell) **agree** on this
+  host -- 1.04 vs 0.99 GiB measured simultaneously. Either is a fine gate. I assumed they
+  would diverge and they do not.
+* Working sets sum to only ~7 GiB of 15.2, so no single process is the culprit; the commit
+  charge is spread across the browser and the several Claude sessions.
+
+**Closing Chrome and any idle Claude sessions unblocks this immediately.** Do not raise or
+bypass the `hostbudget` floor to get around it: at 93% load and 8.2 GiB over physical, this
+is exactly the thrashing scenario that guard was written from, which cost a measured 10x.
 
 ---
 
