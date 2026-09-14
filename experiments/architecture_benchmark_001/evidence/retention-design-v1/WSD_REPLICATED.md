@@ -12,9 +12,19 @@ and the same row order, so a per-seed pair differs **only** in the schedule.
       17        67    74      +7    3 vs 10, 13 discordant, p=0.0923
       23        58    62      +4    6 vs 10, 16 discordant, p=0.4545
       29        60    73     +13    6 vs 19, 25 discordant, p=0.0146
-      mean    61.8  69.7    +7.9
+      41        62    68      +6    3 vs  9, 12 discordant, p=0.1460
+      mean   61.75 69.25    +7.50
 
-**Pooled across the three seeds: 15 vs 39 discordant, p = 0.001496.**
+**Pooled across all four seeds: 18 vs 48 discordant, p = 0.0002871.**
+
+Note what pooling does that a seed-by-seed reading cannot. Only ONE of the four individual pairs
+reaches significance (p = 0.092, 0.455, 0.015, 0.146), because each pair's 12-25 discordant rows
+sits at or inside the 15-24 row seed-noise floor. Read one seed at a time, the honest verdict
+would be "mostly not significant". Pooled over 66 disjoint discordant rows it is p = 0.0003.
+
+Retention is not the source of the gain: kept goes [40, 39, 39, 39] under cosine to
+[41, 37, 42, 39] under WSD -- flat. The +7.5 rows come from acquisition, not from trading away
+reference answers.
 
 Pooling is the right statistic here. The seeds are independent data draws -- seeds 17 and 23
 select training rows with zero overlap -- so their discordant rows are disjoint and combine
@@ -27,7 +37,7 @@ pooled test has the power to decide, and 54 discordant rows is well clear of tha
 Most single-seed results in this programme have not survived replication. Two dose claims were
 refuted within two hours of each other, in opposite directions. What separates this one:
 
-* the direction is consistent at 3 of 3 seeds;
+* the direction is consistent at 4 of 4 seeds;
 * each comparison is **paired at fixed seed**, so seed-to-seed variance -- which spans 9 rows on
   this arm and dominates most effects measured here -- is removed by construction rather than
   averaged over;
@@ -37,8 +47,8 @@ refuted within two hours of each other, in opposite directions. What separates t
 
 ## What it does not establish
 
-The effect size is uncertain. Per-seed deltas run +4, +7, +13, so "about 8 rows" is a mean over
-three draws, not a reliable per-run expectation. Nothing here says WSD helps other arms, other
+The effect size is uncertain. Per-seed deltas run +4, +6, +7, +13, so "about 7.5 rows" is a mean over
+four draws, not a reliable per-run expectation. Nothing here says WSD helps other arms, other
 budgets, or other learning rates; H56 gained +21 under it and P56 only +4, so arm sensitivity is
 already known to vary widely. And it is measured on one 150-row arithmetic panel -- the forge
 probe shows WSD does not fix the verbosity regression (186/200 termination against cosine's
