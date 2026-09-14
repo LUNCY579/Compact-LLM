@@ -67,25 +67,54 @@ question stem, which is the thing that would actually leak. **4,408 candidate ro
 dropped for normalised-prompt collision with that history**, so the guard is doing real work
 rather than passing vacuously. No exclusion-bank row is ever trained or scored on.
 
-## Two blockers, both real, neither a defect
+## Review: APPROVED by the operator
 
-**1. The review gate is a human decision.** `DATA_REVIEW_PENDING.json` binds plan
-`81c4727b…` and requires `decision: APPROVED`, a named `reviewer`, a written `rationale`, and
-four explicit boolean attestations — source rights, label/response contracts, scenario and
-generator leakage, and dev-only-no-confirmation-outputs. **I have not filled any of these
-in.** Self-approving a data review is the one thing this file exists to prevent.
+`DATA_REVIEW_APPROVED.json` (sha256 `b41b03f0…`) binds plan `81c4727b…`, passes
+`validate_review`, and is signed by the operator. The pending template is preserved beside it
+as the record of what was asked.
 
-**2. Native GPU qualification cannot run on this host.** `.venv-mq001` holds the exact pins
-but `torch 2.10.0+cpu`; qualification needs a CUDA build, and the guards require **6 GiB
-available host RAM and 6 GiB free GPU**. The host is at **~1 GiB free, 94% memory load,
-23.5 GiB committed against 15.2 physical**. Even with a CUDA wheel installed it would refuse,
-correctly.
+The rationale draws the line explicitly, because the audit only covers part of it.
+
+*Machine-verified before approval:* cross-split disjointness on id, `template_family`,
+NFKC-normalised prompt and digit-blinded prompt; 4,408 candidates removed for prompt
+collision with the RAB-001 history bank; DEV held out by family; every contract derived from
+the corpus's own answer with none invented and no `UNKNOWN` row produced; single-turn only,
+multi-turn excluded rather than flattened; plan validates at 24,910/25,000 tokens with sane
+mask boundaries.
+
+*Operator-attested, NOT machine-verified:* source rights to v3.0, and absence of semantic or
+generator-level leakage beyond those four exact keys — which `overlap_audit` itself leaves as
+`REQUIRES_INDEPENDENT_REVIEW`.
+
+*Known bias, recorded rather than buried:* DEV is enriched for scoreable short answers
+(35 exact / 6 number / 23 unscored), selected on answer shape before any model ran. It is a
+short-answer instrument, not a representative sample.
+
+## The remaining blocker is host RAM, and it is not mine to clear
+
+`resources.guard(before_load=True)` requires **6 GiB available host RAM and 6 GiB free GPU**,
+and refuses with "no automatic retry or override".
+
+| | measured | required |
+|---|---|---|
+| GPU (RTX 4070 Laptop, 8 GiB) | **7.1 GiB free** | 6 GiB — OK |
+| Host RAM | **~1.1 GiB free**, 92% load | 6 GiB — **short by ~5 GiB** |
+
+There is nothing stale to reclaim: total private commit is 11.0 GiB spread across four Claude
+sessions (~0.7 GiB each), Chrome, Defender and Radeon software. No single culprit, and no
+process of this experiment's. Closing applications is the only lever, and it belongs to the
+operator.
+
+**The guard is not to be lowered.** Its threshold exists because a second job on a paging
+host measured a 10x slowdown in this same programme.
 
 ## The operator sequence from here
 
-1. Review and approve (or reject) `mq-runs/prepared-002/DATA_REVIEW_PENDING.json`, by name.
-2. Free host memory — closing Chrome and idle Claude sessions recovered ~4 GiB earlier today.
-3. Install an official Torch 2.10.0 **CUDA** wheel into `.venv-mq001` only.
-4. `qualify` (zero updates), inspect its evidence, then run **one** explicitly chosen cell.
+1. ~~Approve the data review by name.~~ **Done** — `DATA_REVIEW_APPROVED.json`.
+2. ~~Install a Torch 2.10.0 CUDA wheel into `.venv-mq001` only.~~ **Done.**
+3. **Free host memory to 6+ GiB.** Closing Chrome and idle Claude sessions recovered ~4 GiB
+   earlier today. This is the only remaining blocker.
+4. `qualify` (zero updates) -> inspect its evidence -> run **one** explicitly chosen cell.
 
-Nothing downstream of step 1 should start before step 1 is done by a person.
+Note from the runbook: qualification and training must use the **same commit**. Do not commit
+a documentation or evidence change between them and reuse the old qualification.
