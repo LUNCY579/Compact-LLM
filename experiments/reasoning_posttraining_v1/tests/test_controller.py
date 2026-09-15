@@ -407,3 +407,20 @@ def test_phases_match_the_journal_and_exclude_unregistered_lanes():
     assert ceiling["adaptive_model_selection_rounds"] == 0
     assert ceiling["on_policy_rl_rollout_tokens"] == 0
     assert ceiling["cloud_or_teacher_spend"] == 0
+
+
+def test_every_phase_maps_to_a_measured_resource_profile():
+    """The mapping may only SELECT among existing measured profiles, never loosen one."""
+    from experiments.model_quality_gpu_v1.resources import PRELOAD_MINIMA
+
+    assert set(controller.RESOURCE_PROFILE) == set(controller.PHASES)
+    assert set(controller.RESOURCE_PROFILE.values()) <= set(PRELOAD_MINIMA)
+    # Phases that allocate CpuAdamW moments take the stricter training profile.
+    assert controller.RESOURCE_PROFILE["train"] == "train"
+    assert controller.RESOURCE_PROFILE["resume"] == "train"
+    # Phases that only load and forward take the measured no-optimizer profile.
+    assert controller.RESOURCE_PROFILE["qualify"] == "qualify"
+    assert controller.RESOURCE_PROFILE["baseline"] == "qualify"
+    # And the profiles themselves are untouched upstream values.
+    assert PRELOAD_MINIMA["qualify"] == (4.6, 3.0)
+    assert PRELOAD_MINIMA["train"] == (6.0, 6.0)

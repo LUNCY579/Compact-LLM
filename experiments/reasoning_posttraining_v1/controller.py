@@ -43,6 +43,14 @@ PHASES = ("qualify", "train", "resume", "baseline")
 # A measurement-only phase is a different registered experiment, not a wider RRP-001.
 EXPERIMENT_FOR_PHASE = {"qualify": "RRP-001-MICROFIT", "train": "RRP-001-MICROFIT",
                         "resume": "RRP-001-MICROFIT", "baseline": "RRP-002-BASELINE"}
+# Which MEASURED resources.PRELOAD_MINIMA profile each phase belongs to. This selects
+# among existing profiles; it never invents or loosens a threshold, and resources.py is
+# not edited. `baseline` maps to the `qualify` profile because both load the fp32 model
+# and run forwards with NO optimizer state, which is what that profile was measured on
+# (3.89 GiB host peak, 2.22 GiB GPU). `resume` maps to `train` because it does allocate
+# CpuAdamW's two fp32 moments. An unmapped phase falls back to the strictest profile.
+RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
+                    "baseline": "qualify"}
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -181,7 +189,8 @@ def worker(args) -> int:
             grant, plan, prepared, probe, repeated = inputs(args)
             design = design_for(plan)
             configure_runtime(design.order_seed)
-            before_load = guard(before_load=True, phase=args.command)
+            before_load = guard(before_load=True,
+                                phase=RESOURCE_PROFILE.get(args.command, "train"))
             journal = Journal(Path(args.journal), grant)
             if journal.breached:
                 raise RuntimeError("approved budget already breached; no further model work")
@@ -324,12 +333,14 @@ def main(argv=None) -> int:
     # remains the authority; this only avoids spending a launch and a retry to learn it.
     import psutil
 
-    need = PRELOAD_MINIMA.get(args.command, PRELOAD_MINIMA["train"])[0]
+    profile = RESOURCE_PROFILE.get(args.command, "train")
+    need = PRELOAD_MINIMA[profile][0]
     have = psutil.virtual_memory().available / GIB
     if have < need:
         raise SystemExit(
             f"refusing to reserve a launch: host RAM {have:.2f} GiB is below the "
-            f"{need:.1f} GiB {args.command} pre-load guard. Wait for memory to free; "
+            f"{need:.1f} GiB {profile}-profile pre-load guard for phase {args.command}. "
+            f"Wait for memory to free; "
             f"do not lower the guard.")
 
     started = time.monotonic()
