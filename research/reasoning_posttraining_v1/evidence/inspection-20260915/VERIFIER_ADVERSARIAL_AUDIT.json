@@ -1,0 +1,171 @@
+{
+  "record": "FORGE_V2_VERIFIER_ADVERSARIAL_AUDIT",
+  "worlds_scored": 280,
+  "attacks_scored": 4390,
+  "violations": 0,
+  "status": "PASS",
+  "per_attack": {
+    "duplicated_step": {
+      "n": 82,
+      "violations": 0,
+      "credited": 0
+    },
+    "false_answer_on_unanswerable": {
+      "n": 120,
+      "violations": 0,
+      "credited": 0
+    },
+    "false_impossible_on_answerable": {
+      "n": 160,
+      "violations": 0,
+      "credited": 0
+    },
+    "false_unknown_on_answerable": {
+      "n": 160,
+      "violations": 0,
+      "credited": 0
+    },
+    "gold_witness": {
+      "n": 280,
+      "violations": 0,
+      "credited": 280
+    },
+    "invalid_action_token": {
+      "n": 82,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_empty": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_json_array": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_markdown_fence": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_not_json": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_trailing_text": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "malformed_two_objects": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "manipulation_all_statuses": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "manipulation_empty_object": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "manipulation_injection_key": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "manipulation_padded_gold": {
+      "n": 280,
+      "violations": 0,
+      "credited": 280
+    },
+    "manipulation_reward_key": {
+      "n": 280,
+      "violations": 0,
+      "credited": 0
+    },
+    "nonoptimal_cost_claim": {
+      "n": 82,
+      "violations": 0,
+      "credited": 0
+    },
+    "off_by_one_value": {
+      "n": 60,
+      "violations": 0,
+      "credited": 0
+    },
+    "reversed_plan_consistency": {
+      "n": 82,
+      "violations": 0,
+      "credited": 20
+    },
+    "truncated_plan": {
+      "n": 82,
+      "violations": 0,
+      "credited": 0
+    },
+    "wrong_status_sentinel": {
+      "n": 120,
+      "violations": 0,
+      "credited": 0
+    }
+  },
+  "attacks_that_ever_earned_credit": {
+    "gold_witness": 280,
+    "manipulation_padded_gold": 280,
+    "reversed_plan_consistency": 20
+  },
+  "reasons_observed": {
+    "correct_status": 240,
+    "exact_match": 120,
+    "incorrect_status": 440,
+    "incorrect_value": 380,
+    "invalid_witness": 140,
+    "optimal_verified": 220,
+    "parse_failure": 1680,
+    "schema": 1170
+  },
+  "reasons_never_exercised": [
+    "answer_requires_status",
+    "feasible_suboptimal"
+  ],
+  "attack_classes_permitted_to_earn_credit": [
+    "gold_witness",
+    "manipulation_padded_gold",
+    "reversed_plan_consistency"
+  ],
+  "credit_leaks": {},
+  "first_failures": [],
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "semantic_and_format_separately_observable": true,
+  "feasible_is_plan_specific": "status-only abstentions report feasible=False with reason=correct_status, meaning not applicable",
+  "quality_claim": false,
+  "sampling": {
+    "scheme": "stratified by family x reference.status, up to 20 worlds per bucket",
+    "buckets": 14,
+    "worlds": 280,
+    "bucket_sizes": {
+      "budget_selection|ANSWER": 167,
+      "budget_selection|UNKNOWN": 33,
+      "continuous_replan|ANSWER": 161,
+      "continuous_replan|IMPOSSIBLE": 39,
+      "deadline_schedule|ANSWER": 123,
+      "deadline_schedule|IMPOSSIBLE": 77,
+      "evidence_chain|ANSWER": 95,
+      "evidence_chain|UNKNOWN": 105,
+      "ledger_replay|ANSWER": 200,
+      "prerequisite_plan|ANSWER": 156,
+      "prerequisite_plan|IMPOSSIBLE": 44,
+      "register_machine|ANSWER": 200,
+      "temporal_route|ANSWER": 116,
+      "temporal_route|IMPOSSIBLE": 84
+    }
+  }
+}

@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T08:34:43.836455+00:00",
+  "recorded_utc": "2026-09-15T08:41:03.894530+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -175,6 +175,19 @@
       "consequence": "RRP-002 may register a DEV of any size without amending MQ-001 or touching validate_native_design. The cap was an MQ-001 pool constraint, not a programme one.",
       "also": "MQ-001 supplies no statistics layer: evaluation.classify supports only exact and number contracts and refuses the rest, and analyze.summarize skips unscoreable rows. World-paired comparison with cluster dependence must be built, not reused.",
       "classification": "INHERITED_ASSUMPTION_CORRECTED"
+    },
+    {
+      "id": "CL-021",
+      "topic": "The Forge v2 verifier survives adversarial audit, and two of my own audit invariants were wrong first",
+      "result": "280 worlds x 22 attack classes = 4390 scored attacks, 0 violations, no credit leaks. Every class that must never earn credit earned none: 6 malformed classes (1,680 attacks), 5 reward-manipulation classes including injected reward/correct keys (1,400), false UNKNOWN and false IMPOSSIBLE in both directions (440), plus off-by-one, nonoptimal cost, infeasible, truncated, duplicated and invalid-token plans.",
+      "key_positive_finding": "20 of 82 reversed plans were accepted, empirically confirming the release comment at rewards.py:73 that equally optimal plans are not penalized. Exact-text matching against reference_text would therefore have been WRONG for the four optimization families.",
+      "my_first_two_invariants_were_wrong": [
+        "I asserted that correct=True must imply feasible=True. False: `feasible` is plan-specific, and a correct abstention returns reason=correct_status with feasible=False meaning NOT APPLICABLE. Measured: all 36 status-only golds behave this way, all 48 non-status golds report feasible=True. 72 spurious violations came from my assertion, not the verifier.",
+        "I then guessed the reason vocabulary and missed several values, producing 820 more spurious violations. The vocabulary was read off the source instead: parse_failure (rewards.py:60), schema, correct_status/incorrect_status, answer_requires_status, exact_match/incorrect_value, and optimal_verified/feasible_suboptimal/invalid_witness (oracle.py:287-365)."
+      ],
+      "honest_gap": "2 of 10 reasons were never exercised by this attack set: ['answer_requires_status', 'feasible_suboptimal']. Producing feasible_suboptimal needs a genuinely feasible but non-optimal plan, which requires solving the world; it is not claimed as tested.",
+      "why_it_matters": "Semantic correctness, format validity, schema validity, feasibility and optimality are all separately observable, which is what the programme requires before any reward or accuracy number is trusted. The audit is also tested against deliberately broken stub verifiers (credulous, stingy, inconsistent, under-rewarding, crashing) so that a passing audit means something.",
+      "classification": "INSTRUMENT_VALIDATED_AGENT_INVARIANTS_CORRECTED_TWICE"
     }
   ]
 }

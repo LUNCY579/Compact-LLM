@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-09-15T08:34:43.836455+00:00",
+  "recorded_utc": "2026-09-15T08:41:03.894530+00:00",
   "goal_status": "ACTIVE_NOT_COMPLETE",
   "branch": "research/rineya-reasoning-posttraining-v1",
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
@@ -13,7 +13,7 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 76,
+    "new_tests_passed": 93,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
@@ -33,7 +33,8 @@
     "claim_ledger_entries": 14,
     "bottleneck_candidates": "4 named with falsifying tests (BOTTLENECK_CANDIDATES.md)",
     "instrument_design": "RRP002_INSTRUMENT_PREREG.md (design only, nothing built or run)",
-    "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model"
+    "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model",
+    "verifier_adversarial_audit": "PASS - 280 worlds, 4390 attacks, 0 violations, 20 alternative optima accepted"
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -67,7 +68,7 @@
     "RRP-001 adaptive round spent; the ladder needs a registered successor and a new envelope",
     "RL lane shut: verifier adversarial pass and readiness gate not attempted"
   ],
-  "next_action": "Build the RRP-002 instrument in the registered order: scorer with five-way strata, positive-control solvers required to score 100 percent, shortcut baselines, then the DEV banks with a full overlap audit. All CPU-only.",
+  "next_action": "Instrument step 2: wire the v1 positive-control solver (scripts/verify.py solve_prompt) and require 100 percent on every bank; then the shortcut baselines; then build RRP2-DEV-V1 and RRP2-DEV-V2 with a full overlap audit.",
   "last_goal_turn_classification": "progress: pools inventoried, native token lengths measured, instrument pre-registered with its impossibilities recorded up front. No model executed this round.",
   "prepared_binding": "inspection-20260915/prepared-004",
   "superseded_prepared_binding": "prepared-003 / ad3fc4c0... (training bytes identical; see CLAIM_LEDGER CL-001)",
