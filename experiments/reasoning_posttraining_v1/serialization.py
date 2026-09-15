@@ -28,6 +28,30 @@ def compile_row(prompt: list[dict], final: str, tokenizer, *, mode="direct",
             or any(set(m) != {"role", "content"} or not isinstance(m["content"], str)
                    or not m["content"].strip() or "<|" in m["content"] for m in prompt)):
         raise ValueError("only explicit system/user evidence is allowed")
+    return _compile(prompt, final, tokenizer, mode=mode, trace=trace,
+                    max_sequence=max_sequence, completion_reserve=completion_reserve)
+
+
+def compile_dialogue(prompt: list[dict], final: str, tokenizer, *,
+                     max_sequence=2048, completion_reserve=128) -> dict:
+    """Final-turn-only supervision while preserving every previous conversation turn.
+
+    A new explicitly requested serialization mode. Historical compile_row remains
+    single-turn. Native prefix/token/EOS checks are shared, not reimplemented.
+    """
+    if (not isinstance(prompt, list) or len(prompt) < 2 or len(prompt) % 2 or
+            any(not isinstance(m, dict) or set(m) != {"role", "content"} or
+                not isinstance(m["content"], str) or not m["content"].strip() or
+                "<|" in m["content"] for m in prompt)):
+        raise ValueError("invalid complete dialogue prompt")
+    expected = ["system"] + ["user" if i % 2 else "assistant" for i in range(1, len(prompt))]
+    if [m["role"] for m in prompt] != expected:
+        raise ValueError("dialogue must alternate user/assistant and end with user")
+    return _compile(prompt, final, tokenizer, mode="direct", trace=None,
+                    max_sequence=max_sequence, completion_reserve=completion_reserve)
+
+
+def _compile(prompt, final, tokenizer, *, mode, trace, max_sequence, completion_reserve):
     if type(max_sequence) is not int or max_sequence < 3 or type(completion_reserve) is not int or completion_reserve < 1:
         raise ValueError("invalid context budget")
     assistant = assistant_record(final, trace, mode)

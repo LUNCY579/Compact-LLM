@@ -1,5 +1,11 @@
 # Continue the active dataset/retention goal
 
+**SUPERSEDED FOR EXECUTION by RRP-005.** The follow-up audit found that all procedural
+RAG prompts in the old preservation bank omit their evidence and procedures. That bank's
+hash is now blocked by the controller before any model work. Do not run the RRP-004
+command below. Its prior records are historical. Read `../rrp005/PLAN.md` for the corrected
+instrument and source-only baseline that must precede a newly bound training successor.
+
 The user's goal is not complete. No model improvement was produced in this task yet.
 Read `REVIEW_AND_PLAN.md`, `RUN_STATUS.json`, `PLAN.json`, `GRANT.json` and
 `SESSION_AUTHORIZATION.json`. Historical RRP status files describe the upstream programme;

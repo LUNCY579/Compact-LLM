@@ -19,7 +19,7 @@ from pathlib import Path
 from experiments.model_quality_gpu_v1.integrity import digest, read_json
 
 from . import budget
-from .serialization import compile_row
+from .serialization import compile_row, compile_dialogue
 from .sources import import_forge_v1_validator
 
 # ---------------------------------------------------------------- RRP-002 baseline lane
@@ -514,7 +514,15 @@ def summarize_v2(bank: list[dict], predictions: list[str], modules) -> dict:
 
 
 def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
-                              keep: int = 8) -> dict:
+                             keep: int = 8) -> dict:
+    """Historical widened-window contract; 2048 is not an expanded window."""
+    if type(window) is not int or not 2048 < window <= 16384:
+        raise ValueError("evaluation-window qualification covers 2048 < window <= 16384")
+    return qualify_inference_window(model, tokenizer, window, reserve, guard, keep=keep)
+
+
+def qualify_inference_window(model, tokenizer, window: int, reserve, guard, *,
+                             keep: int = 8) -> dict:
     """Qualify an EVALUATION window wider than the trained 2048. Forward-only.
 
     This qualifies inference at `window` tokens: cached/uncached agreement, causality and
@@ -535,8 +543,8 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
 
     from experiments.model_quality_gpu_v1.native import parameter_digest
 
-    if type(window) is not int or not 2048 < window <= 16384:
-        raise ValueError("evaluation-window qualification covers 2048 < window <= 16384")
+    if type(window) is not int or not 2048 <= window <= 16384:
+        raise ValueError("inference-window qualification covers 2048 <= window <= 16384")
     device = next(model.parameters()).device
     before = parameter_digest(model)
 
@@ -548,7 +556,8 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
     sequence[-1] = tokenizer.eos_token_id
     ids = torch.tensor([sequence], device=device)
 
-    reserve({"evaluation_and_qualification_model_calls": 4})
+    forward_calls = 2 + (window + 511) // 512
+    reserve({"evaluation_and_qualification_model_calls": forward_calls})
     model.eval()
     guard()
     with torch.no_grad():
@@ -590,6 +599,7 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
     return {"phase": "RRP_NATIVE_EVALUATION_WINDOW_QUALIFICATION",
             "status": "PASS", "window": window, "kept_logit_positions": keep,
             "optimizer_steps": 0, "backward_passes": 0,
+            "qualification_forward_calls": forward_calls,
             "cached_vs_uncached_max_abs": cache_error,
             "source_state_before": before, "source_state_after": after,
             "peak_vram_bytes": peak,
@@ -606,7 +616,7 @@ def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
                  completion_reserve: int = 128,
                  reference_field: str = "reference",
                  family_field: str = "family",
-                 stratum_field: str = "stratum") -> tuple[list[dict], list[dict]]:
+                 stratum_field: str = "stratum", serialization="single_turn") -> tuple[list[dict], list[dict]]:
     """Tokenize the bank for native evaluation. Overlength rows are REJECTED, not truncated.
 
     Returns (evaluable, rejected). The caller must report both denominators: at a 2048
@@ -620,6 +630,9 @@ def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
     passed EXPLICITLY by the caller rather than sniffed, and they default to the Forge names so
     the v1/v2 paths are byte-for-byte unchanged.
     """
+    if serialization not in ("single_turn", "dialogue_final_response_v1"):
+        raise ValueError("unknown bank serialization contract")
+    compiler = compile_dialogue if serialization == "dialogue_final_response_v1" else compile_row
     evaluable, rejected = [], []
     for row in bank:
         if family_field not in row or stratum_field not in row:
@@ -627,7 +640,7 @@ def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
                 f"row {row.get('id')!r} has no {family_field!r}/{stratum_field!r}; pass the "
                 f"field names this bank kind actually uses instead of relying on a default")
         try:
-            compiled = compile_row(row["prompt"], row[reference_field], tokenizer,
+            compiled = compiler(row["prompt"], row[reference_field], tokenizer,
                                    max_sequence=max_sequence,
                                    completion_reserve=completion_reserve)
         except ValueError as exc:

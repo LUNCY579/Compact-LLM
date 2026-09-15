@@ -37,6 +37,7 @@ from .sources import stable_hash
 # This module is torch-free, so importing it does not initialize the native runtime.
 from . import instrument as _registers_rrp002_baseline  # noqa: F401
 from . import campaign as _registers_corrected_arm
+from . import repair_preservation as _registers_preservation_repair
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
@@ -61,11 +62,19 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # Plan identities this controller will execute. Widened from a single hardcoded literal so a
 # second experiment can have its own frozen plan, and kept as an explicit allowlist so an
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
-REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT)
+REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT,
+                    _registers_preservation_repair.EXPERIMENT)
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
 DISK_FLOOR = 14 * 2 ** 30
+
+# RRP-005 audit: all 192 procedural rows omit their evidence and procedures. The
+# historical bank is preserved for diagnosis, but cannot authorize new model work.
+INVALIDATED_BANKS = {
+    "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975":
+        "RRP2-PRES-DEV omits procedural inputs; rebuild and rebaseline before execution",
+}
 
 
 def read_json_line(line: str):
@@ -159,6 +168,9 @@ def binding_for(prepared: Path, plan: dict, source: Path, grant: dict,
 
 def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     """Validate the grant against the exact prepared bytes before anything expensive."""
+    for path in ([getattr(args, "bank", None)] + (getattr(args, "heldout_bank", None) or [])):
+        if path is not None and (reason := INVALIDATED_BANKS.get(stable_hash(Path(path)))):
+            raise ValueError(f"invalidated evaluation bank: {reason}")
     prepared = Path(args.prepared)
     contract = read_json(prepared / "DATA_CONTRACT.json")
     for name, sha in contract["files"].items():
@@ -175,6 +187,8 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     probe, repeated = presentations(prepared, plan)
     if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
         _registers_corrected_arm.validate_execution_scope(args, plan, probe)
+    if plan["experiment"] == _registers_preservation_repair.EXPERIMENT:
+        _registers_preservation_repair.validate_scope(args, plan)
     return grant, plan, prepared, probe, repeated
 
 
@@ -246,7 +260,10 @@ def worker(args) -> int:
                 # A window wider than the trained 2048 must be qualified IN THIS RUN
                 # before it is used. No silent widening, no RoPE stretching.
                 window_qualification = None
-                if window > design.max_sequence:
+                if plan["experiment"] == _registers_preservation_repair.EXPERIMENT:
+                    window_qualification = ins.qualify_inference_window(
+                        model, tokenizer, window, journal.reserve, guard)
+                elif window > design.max_sequence:
                     window_qualification = ins.qualify_evaluation_window(
                         model, tokenizer, window, journal.reserve, guard)
                 # Three bank kinds, three different scoring contracts, and the worker must
@@ -270,7 +287,8 @@ def worker(args) -> int:
                 evaluable, rejected = ins.compile_bank(
                     bank, tokenizer, max_sequence=window,
                     reference_field=ref_field, family_field=fam_field,
-                    stratum_field=strat_field)
+                    stratum_field=strat_field,
+                    serialization=plan.get("baseline_protocol", {}).get("serialization", "single_turn"))
                 import torch
 
                 before = parameter_digest(model)
@@ -284,7 +302,7 @@ def worker(args) -> int:
                 if before != after:
                     raise RuntimeError("evaluation changed source parameters")
                 write_new(directory / "baseline.json", {
-                    **value, "binding": binding, "optimizer_steps": 0,
+                    **value, "scope": "REGISTERED_SOURCE_BASELINE", "binding": binding, "optimizer_steps": 0,
                     "source_state_before": before, "source_state_after": after,
                     "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
                     "bank_kind": kind,
@@ -304,6 +322,8 @@ def worker(args) -> int:
                     "refused_by_stratum": dict(collections.Counter(
                         r["stratum"] for r in rejected)),
                     "max_sequence": window,
+                    "max_new_tokens": generation_allowance(args, plan),
+                    "serialization": plan.get("baseline_protocol", {}).get("serialization", "single_turn"),
                     "trained_window": design.max_sequence,
                     "evaluation_window_qualification": window_qualification,
                     "length_bias_warning": (
@@ -482,7 +502,7 @@ def evaluate_heldout(args, design, plan, model, tokenizer, eos, journal, directo
             raise ValueError("held-out evaluation changed candidate parameters")
         name = f"heldout-{Path(bank_path).stem}.json"
         write_new(directory / name, {
-            **value, "bank": str(bank_path), "bank_sha256": bank_sha,
+            **value, "scope": "REGISTERED_HELDOUT_CANDIDATE", "bank": str(bank_path), "bank_sha256": bank_sha,
             "bank_kind": kind, "scoring_note": BANK_SCORING_NOTE[kind],
             "bank_rows": len(bank), "evaluated_rows": len(evaluable),
             "refused_rows": len(rejected), "rejected": rejected,
