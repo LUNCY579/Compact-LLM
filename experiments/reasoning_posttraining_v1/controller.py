@@ -31,6 +31,10 @@ from experiments.model_quality_gpu_v1.supervisor import bounded_child, claim_wor
 from .budget import Journal, validate_grant
 from .prepare import read_rows
 from .sources import stable_hash
+# Imported for its registration side effect: RRP-002-BASELINE must be in the registry
+# before the foreground validates a grant, which happens before any phase dispatch.
+# This module is torch-free, so importing it does not initialize the native runtime.
+from . import instrument as _registers_rrp002_baseline  # noqa: F401
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
