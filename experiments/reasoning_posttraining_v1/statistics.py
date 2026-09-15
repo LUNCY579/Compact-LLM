@@ -25,6 +25,7 @@ from __future__ import annotations
 import collections
 import itertools
 import math
+import random
 
 # Cluster unit per bank, with the rationale, so no analysis can quietly pick a looser one.
 #
@@ -141,28 +142,26 @@ def cluster_permutation_test(clusters, *, alpha: float = ALPHA, shift: float = 0
     def extreme(value: float) -> bool:
         return (value >= observed - 1e-12) if one_sided else (abs(value) >= abs(observed) - 1e-12)
 
-    if k <= EXACT_MAX_CLUSTERS:
-        total = 2 ** k
+    nonzero = [d for d in diffs if abs(d) > 1e-12]
+    if effective <= EXACT_MAX_CLUSTERS:
+        total = 2 ** effective
         hits = 0
-        for signs in itertools.product((1, -1), repeat=k):
-            if extreme(_statistic([s * d for s, d in zip(signs, diffs)])):
+        for signs in itertools.product((1, -1), repeat=effective):
+            if extreme(sum(s * d for s, d in zip(signs, nonzero)) / k):
                 hits += 1
         p = hits / total
         method, draws_used = "exact_enumeration", total
     else:
-        state = seed & 0xFFFFFFFF
+        rng = random.Random(seed)
         hits = 0
         for _ in range(draws):
             flipped = []
             for d in diffs:
-                # A small explicit LCG: deterministic, seeded, and recorded, so the p-value is
-                # reproducible without depending on a library's RNG stream staying fixed.
-                state = (1103515245 * state + 12345) & 0x7FFFFFFF
-                flipped.append(d if state & 0x10000 else -d)
+                flipped.append(d if rng.getrandbits(1) else -d)
             if extreme(_statistic(flipped)):
                 hits += 1
         p = (hits + 1) / (draws + 1)   # add-one, so a Monte Carlo p is never reported as 0
-        method, draws_used = "monte_carlo_lcg", draws
+        method, draws_used = "monte_carlo_mt19937", draws
 
     return {
         "test": "cluster sign-flip permutation on the mean per-cluster difference",
@@ -173,7 +172,7 @@ def cluster_permutation_test(clusters, *, alpha: float = ALPHA, shift: float = 0
                                    "clusters contribute nothing to the permutation distribution"),
         "observed_statistic": round(observed, 6),
         "p_value": p, "method": method, "draws": draws_used,
-        "seed": seed if method == "monte_carlo_lcg" else None,
+        "seed": seed if method == "monte_carlo_mt19937" else None,
         "null": "each cluster's paired difference is symmetric about the shift",
         "resolution": floor,
         "significant_at_alpha": bool(p <= alpha and floor["can_reject_at_alpha"]),
@@ -191,13 +190,14 @@ def cluster_bootstrap(clusters, *, draws: int = DEFAULT_BOOTSTRAP, alpha: float 
     k = len(clusters)
     diffs = [c.diff for c in clusters]
     weights = [c.n for c in clusters]
-    state = seed & 0xFFFFFFFF
+    rng = random.Random(seed)
     row_w, cluster_w = [], []
     for _ in range(draws):
         picks = []
         for _ in range(k):
-            state = (1103515245 * state + 12345) & 0x7FFFFFFF
-            picks.append(state % k)
+            # LCG low bits modulo a power of two cycle over every cluster exactly
+            # once, producing a zero-width "bootstrap". Draw with replacement.
+            picks.append(rng.randrange(k))
         cluster_w.append(sum(diffs[i] for i in picks) / k)
         total = sum(weights[i] for i in picks)
         row_w.append(sum(diffs[i] * weights[i] for i in picks) / total if total else 0.0)
@@ -210,6 +210,7 @@ def cluster_bootstrap(clusters, *, draws: int = DEFAULT_BOOTSTRAP, alpha: float 
 
     return {
         "method": "nonparametric cluster bootstrap, percentile", "draws": draws, "seed": seed,
+        "rng": "python_random_mt19937_randrange",
         "clusters": k, "alpha": alpha,
         "cluster_weighted_interval": interval(cluster_w),
         "row_weighted_interval": interval(row_w),

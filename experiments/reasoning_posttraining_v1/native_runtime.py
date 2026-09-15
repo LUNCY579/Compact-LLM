@@ -100,7 +100,7 @@ def qualify(model, tokenizer, rows, reserve, guard):
     tokens = len(probe["ids"])
     if tokens > 64:
         raise ValueError("short native parity probe exceeds its bound")
-    reserve({"evaluation_and_qualification_model_calls": 2,
+    reserve({"evaluation_and_qualification_model_calls": 5 + (tokens + 2) // 3,
              "processed_training_tokens_all_attempts": 5 * tokens + 2048})
     device = next(model.parameters()).device
     ids = torch.tensor([probe["ids"]], device=device)

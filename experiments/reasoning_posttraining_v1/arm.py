@@ -73,7 +73,13 @@ def _norm(text: str) -> str:
 
 def prompt_keys(prompt: list[dict]) -> dict[str, str]:
     """The same four axes the preservation admission audit uses, so the two are comparable."""
+    if (not isinstance(prompt, list) or not prompt or
+            any(not isinstance(m, dict) or not isinstance(m.get("content"), str)
+                or not m.get("role") for m in prompt)):
+        raise ValueError("leakage audit requires a valid prompt")
     turns = [m["content"] for m in prompt if m["role"] == "user"]
+    if not turns or any(not text.strip() for text in turns):
+        raise ValueError("leakage audit requires a nonempty user prompt")
     out = {}
     for name, text in (("first_user_turn", turns[0]), ("last_user_turn", turns[-1])):
         normal = _norm(text)
@@ -133,6 +139,7 @@ def compile_training(chosen, policy, meta, tokenizer, *, max_sequence: int = TRA
             "mode": got["mode"],
             "prompt": row["prompt"],
             "reference_text": m["reference_text"],
+            "reference": m["reference_text"],
             "ids": got["ids"], "prompt_ids": got["prompt_ids"], "labels": got["labels"],
             "answer_start": got["answer_start"], "answer_end": got["answer_end"],
             "processed_tokens": got["processed_tokens"],
@@ -150,6 +157,8 @@ def disjointness(compiled: list[dict], banks: dict[str, list[dict]]) -> dict:
     The release asserts train/validation disjointness. The programme's rule is that an
     assertion in a document is not evidence, so it is re-measured here on four axes.
     """
+    if not compiled or not banks or any(not rows for rows in banks.values()):
+        raise ValueError("training and every DEV bank must be nonempty")
     ids = {r["id"] for r in compiled}
     parents = {r["parent_id"] for r in compiled}
     cases = {r["case_sha256"] for r in compiled}
@@ -165,14 +174,11 @@ def disjointness(compiled: list[dict], banks: dict[str, list[dict]]) -> dict:
         for row in rows:
             if row.get("id") in ids:
                 hits["id"] += 1
-            if row.get("group_id", row.get("id")) in parents:
+            if any(row.get(key) in parents for key in ("parent_id", "group_id", "id")):
                 hits["parent_id"] += 1
             if row.get("case_sha256") in cases:
                 hits["case_sha256"] += 1
-            try:
-                keys = prompt_keys(row["prompt"])
-            except (KeyError, IndexError):
-                continue
+            keys = prompt_keys(row.get("prompt"))
             for a, v in keys.items():
                 if v in train_keys[a]:
                     hits[a] += 1

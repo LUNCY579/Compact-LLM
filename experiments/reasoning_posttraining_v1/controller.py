@@ -36,10 +36,13 @@ from .sources import stable_hash
 # before the foreground validates a grant, which happens before any phase dispatch.
 # This module is torch-free, so importing it does not initialize the native runtime.
 from . import instrument as _registers_rrp002_baseline  # noqa: F401
+from . import campaign as _registers_corrected_arm
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
 BASE = "58bf64cf93ff918ede4b1079b8a5716ee0e1e312"
+SUCCESSOR_BRANCH = "codex/dataset-retention-audit-v1"
+SUCCESSOR_BASE = "d417e100ac10d225145f9701914854d10c55b43f"
 PHASES = ("qualify", "train", "resume", "baseline")
 # A measurement-only phase is a different registered experiment, not a wider RRP-001.
 EXPERIMENT_FOR_PHASE = {"qualify": "RRP-001-MICROFIT", "train": "RRP-001-MICROFIT",
@@ -58,7 +61,7 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # Plan identities this controller will execute. Widened from a single hardcoded literal so a
 # second experiment can have its own frozen plan, and kept as an explicit allowlist so an
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
-REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1")
+REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT)
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -90,11 +93,13 @@ def checkout() -> str:
                                        text=True, stderr=subprocess.STDOUT).strip()
     if Path(git("rev-parse", "--show-toplevel")).resolve() != ROOT:
         raise ValueError("full repository checkout required")
-    if git("branch", "--show-current") != BRANCH:
-        raise ValueError(f"native execution requires {BRANCH}")
+    branch = git("branch", "--show-current")
+    bases = {BRANCH: BASE, SUCCESSOR_BRANCH: SUCCESSOR_BASE}
+    if branch not in bases:
+        raise ValueError(f"native execution requires {BRANCH} or {SUCCESSOR_BRANCH}")
     if git("status", "--porcelain", "--untracked-files=all"):
         raise ValueError("native execution requires a clean checkout")
-    subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", BASE, "HEAD"],
+    subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", bases[branch], "HEAD"],
                    check=True, capture_output=True)
     return git("rev-parse", "HEAD")
 
@@ -168,6 +173,8 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     validate_grant(grant, stable_hash(prepared / "DATA_CONTRACT.json"), digest(plan),
                    experiment)
     probe, repeated = presentations(prepared, plan)
+    if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
+        _registers_corrected_arm.validate_execution_scope(args, plan, probe)
     return grant, plan, prepared, probe, repeated
 
 
@@ -313,6 +320,12 @@ def worker(args) -> int:
                 write_new(directory / "qualification.json", {**result, "binding": binding})
                 return 0
 
+            if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
+                # New checkout/data/source/runtime binding earns its own zero-update
+                # qualification before any optimizer allocation or checkpoint restore.
+                qualification = qualify(model, tokenizer, probe, journal.reserve, guard)
+                write_new(directory / "qualification.json", {**qualification, "binding": binding})
+
             # The engine probes three times (baseline, midpoint, final) over whatever row
             # set it is given. RRP-001's probe was its whole 32-world microfit, which is
             # cheap; an arm's training set is thousands of rows, so probing all of it would
@@ -342,40 +355,8 @@ def worker(args) -> int:
             # tensors, which is machinery this lane does not have and would have to qualify.
             # Doing it here reuses the identical evaluation path the baselines used, so the
             # arm and its baseline are comparable by construction rather than by assertion.
-            heldout = []
-            for bank_path in (args.heldout_bank or []):
-                bank = read_bank(bank_path)
-                kind = bank_kind(bank)
-                ref_field, fam_field, strat_field = BANK_FIELDS[kind]
-                window = args.eval_max_sequence or design.max_sequence
-                if window > design.max_sequence:
-                    # A wider EVALUATION window than the trained one must be qualified in
-                    # this run before it is used, exactly as the baseline phase does.
-                    ins.qualify_evaluation_window(model, tokenizer, window,
-                                                  journal.reserve, guard)
-                evaluable, rejected = ins.compile_bank(
-                    bank, tokenizer, max_sequence=window,
-                    reference_field=ref_field, family_field=fam_field,
-                    stratum_field=strat_field)
-                import torch
-
-                with torch.no_grad():
-                    value = evaluate(model, evaluable, tokenizer, eos,
-                                     f"heldout-{Path(bank_path).stem}", journal.reserve, guard,
-                                     max_new=generation_allowance(args, plan))
-                name = f"heldout-{Path(bank_path).stem}.json"
-                write_new(directory / name, {
-                    **value, "bank": str(bank_path), "bank_sha256": stable_hash(Path(bank_path)),
-                    "bank_kind": kind, "scoring_note": BANK_SCORING_NOTE[kind],
-                    "bank_rows": len(bank), "evaluated_rows": len(evaluable),
-                    "refused_rows": len(rejected), "rejected": rejected,
-                    "refusal_reasons": dict(collections.Counter(
-                        r["reason"] for r in rejected)),
-                    "max_sequence": window, "trained_window": design.max_sequence,
-                    "is_the_trained_candidate": True,
-                    "quality_claim": False})
-                heldout.append({"bank": str(bank_path), "file": name, "kind": kind,
-                                "evaluated_rows": len(evaluable), "refused": len(rejected)})
+            heldout = evaluate_heldout(args, design, plan, model, tokenizer, eos,
+                                      journal, directory, evaluate, guard)
 
             write_new(directory / "result.json",
                       {**result, "phase": args.command, "heldout_evaluations": heldout})
@@ -450,8 +431,69 @@ def read_bank(path) -> list[dict]:
             in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
 
 
-def def_evaluate_bank(*_a, **_k):  # placeholder removed below
-    raise NotImplementedError
+def evaluate_heldout(args, design, plan, model, tokenizer, eos, journal, directory,
+                     evaluator, resource_guard) -> list[dict]:
+    """Evaluate the trained state; imports and window evidence belong to this path.
+
+    A baseline-only local import used to leave `ins` unbound here, AFTER training.
+    Qualify each shared evaluation window once and preserve its receipt. Parameter
+    hashing demonstrates that evaluation did not change the candidate.
+    """
+    from . import instrument as ins
+    from experiments.model_quality_gpu_v1.native import parameter_digest
+
+    paths = args.heldout_bank or []
+    if not paths:
+        return []
+    names = [Path(p).stem for p in paths]
+    if len(names) != len(set(names)):
+        raise ValueError("held-out banks must have distinct output names")
+    before = parameter_digest(model)
+    qualifications = {}
+    heldout = []
+    for bank_path in paths:
+        bank_sha = stable_hash(Path(bank_path))
+        protocol = plan.get("evaluation_protocols", {}).get(bank_sha)
+        window = (protocol["max_sequence"] if protocol else
+                  args.eval_max_sequence or design.max_sequence)
+        max_new = protocol["max_new_tokens"] if protocol else generation_allowance(args, plan)
+        if max_new > plan["max_new_tokens"]:
+            raise ValueError("held-out output cap exceeds the frozen plan")
+        if window > design.max_sequence and window not in qualifications:
+            qualifications[window] = ins.qualify_evaluation_window(
+                model, tokenizer, window, journal.reserve, resource_guard)
+            write_new(directory / f"heldout-window-{window}-qualification.json", qualifications[window])
+        qualification = qualifications.get(window)
+        bank = read_bank(bank_path)
+        kind = bank_kind(bank)
+        ref_field, fam_field, strat_field = BANK_FIELDS[kind]
+        evaluable, rejected = ins.compile_bank(
+            bank, tokenizer, max_sequence=window, reference_field=ref_field,
+            family_field=fam_field, stratum_field=strat_field)
+        if not evaluable:
+            raise ValueError("held-out bank has no evaluable rows")
+        value = evaluator(model, evaluable, tokenizer, eos,
+                          f"heldout-{Path(bank_path).stem}", journal.reserve, resource_guard,
+                          max_new=max_new)
+        if stable_hash(Path(bank_path)) != bank_sha:
+            raise ValueError("held-out bank changed during evaluation")
+        after = parameter_digest(model)
+        if before != after:
+            raise ValueError("held-out evaluation changed candidate parameters")
+        name = f"heldout-{Path(bank_path).stem}.json"
+        write_new(directory / name, {
+            **value, "bank": str(bank_path), "bank_sha256": bank_sha,
+            "bank_kind": kind, "scoring_note": BANK_SCORING_NOTE[kind],
+            "bank_rows": len(bank), "evaluated_rows": len(evaluable),
+            "refused_rows": len(rejected), "rejected": rejected,
+            "refusal_reasons": dict(collections.Counter(r["reason"] for r in rejected)),
+            "max_sequence": window, "max_new_tokens": max_new, "trained_window": design.max_sequence,
+            "evaluation_window_qualification": qualification,
+            "candidate_state_before": before, "candidate_state_after": after,
+            "is_the_trained_candidate": True, "quality_claim": False})
+        heldout.append({"bank": str(bank_path), "file": name, "kind": kind,
+                        "evaluated_rows": len(evaluable), "refused": len(rejected)})
+    return heldout
 
 
 def main(argv=None) -> int:
@@ -534,7 +576,7 @@ def main(argv=None) -> int:
     if args.eval_max_sequence is not None:
         child.extend(["--eval-max-sequence", str(args.eval_max_sequence)])
     for bank_path in (args.heldout_bank or []):
-        child.extend(["--heldout-bank", str(bank_path)])
+        child.extend(["--heldout-bank", str(Path(bank_path).absolute())])
     command = [sys.executable, "-m", "experiments.reasoning_posttraining_v1.controller",
                *child, "--_worker"]
 

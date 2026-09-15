@@ -7,8 +7,37 @@ stops an underpowered design reporting a p-value as if it meant something, the s
 whole module is not decoration.
 """
 import pytest
+import math
 
 from experiments.reasoning_posttraining_v1 import statistics as st
+
+
+@pytest.mark.parametrize("k", [8, 16, 32])
+def test_bootstrap_matches_independent_binomial_law_at_power_of_two_clusters(k):
+    # Half of the cluster effects are +1 and half -1. A valid with-replacement
+    # bootstrap therefore has 2*Binomial(k, .5)/k-1, independently of the code's RNG.
+    clusters = [st.Cluster(str(i), 1, int(i < k // 2), int(i >= k // 2)) for i in range(k)]
+    cdf = 0
+    expected = None
+    for successes in range(k + 1):
+        cdf += math.comb(k, successes) / 2**k
+        if cdf >= .025:
+            expected = 2 * successes / k - 1
+            break
+    got = st.cluster_bootstrap(clusters, draws=10000)
+    lo, hi = got["cluster_weighted_interval"]
+    assert lo < 0 < hi
+    assert abs(lo - expected) <= 2 / k
+    assert abs(hi + expected) <= 2 / k
+    assert got["row_weighted_interval"] == got["cluster_weighted_interval"]
+
+
+def test_zero_effect_clusters_do_not_force_monte_carlo_for_six_effects():
+    clusters = [st.Cluster(str(i), 1, 0, int(i < 6)) for i in range(100)]
+    got = st.cluster_permutation_test(clusters)
+    assert got["method"] == "exact_enumeration"
+    assert got["draws"] == 64
+    assert got["p_value"] == 2 / 64
 
 
 def rows_for(clusters_spec, *, key="cluster_id"):
@@ -129,7 +158,7 @@ def test_monte_carlo_is_seeded_reproducible_and_never_reports_p_zero():
         st.paired_clusters(rows, baseline, arm, cluster_key="cluster_id"), draws=2000)
     second = st.cluster_permutation_test(
         st.paired_clusters(rows, baseline, arm, cluster_key="cluster_id"), draws=2000)
-    assert first["method"] == "monte_carlo_lcg"
+    assert first["method"] == "monte_carlo_mt19937"
     assert first["p_value"] == second["p_value"]
     assert first["p_value"] > 0, "add-one smoothing must prevent a reported p of exactly 0"
     assert first["seed"] == 20260915

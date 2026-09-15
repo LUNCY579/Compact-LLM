@@ -280,7 +280,7 @@ def test_module_does_not_import_torch_at_module_level():
 
 def test_the_arm_never_claims_confirmation_or_quality():
     compiled = [compiled_row("t1")]
-    audit = arm.disjointness(compiled, {})
+    audit = arm.disjointness(compiled, {"dev": [compiled_row("different", question="unrelated task")]})
     assert audit["tolerance"] == "ZERO"
     assert arm.ARM_EXPERIMENT == "RRP-003-ARM-A1"
 
