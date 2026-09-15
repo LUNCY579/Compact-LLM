@@ -1,0 +1,48 @@
+{
+  "backbone_training_runs": 0,
+  "cpu_test_log": {
+    "compression": "gzip",
+    "path": "CPU_TEST_LOG.json.gz",
+    "uncompressed_sha256": "397fdfa12c49ccf8966c7075c2128bc14614b66de3465463e1260ef4334414eb"
+  },
+  "date": "2026-09-15",
+  "evidence_claim": "CPU fixture and offline tool correctness, not pretrained efficacy",
+  "fixture_optimizer_updates_per_demo": 4,
+  "git_actions_dispatched": 0,
+  "native_adapter_parity_measured": false,
+  "native_calls": 0,
+  "native_host_integration": "BLOCKED_CUSTOM_A11_POLICY_AND_ASSET_REGISTRATION",
+  "parent_commit": "fde553c908db39e87a15a52ed239d1ba0a68bfd3",
+  "qualification": {
+    "efficacy_claim": false,
+    "environment": {
+      "device": "cpu",
+      "python": "3.13.5",
+      "safetensors": "0.7.0",
+      "torch": "2.10.0+cpu",
+      "torch_threads": 1
+    },
+    "errors": 0,
+    "failures": 0,
+    "native_qualification": false,
+    "pretrained_model_calls": 0,
+    "returncode": 0,
+    "schema": "xsg-qualification-v1",
+    "skips": 0,
+    "source_digest": "fc088df10be04f903ed67ffcfec59e4c3408a437be5d8b2723633d11ca2f4590",
+    "status": "PASS_MECHANICS_ONLY",
+    "stderr": "",
+    "stdout": "",
+    "tests": 144,
+    "wall_seconds": 3.469128698000077,
+    "worker_sha256": "397fdfa12c49ccf8966c7075c2128bc14614b66de3465463e1260ef4334414eb"
+  },
+  "repository": "LUNCY579/ChatBubble",
+  "schema": "xsg-local-verification-v1",
+  "scope": "new XSG-001 package only; inherited tests not rerun",
+  "source_files_in_manifest": 26,
+  "source_mutation_policy": "one additive subtree, no inherited edits/deletions",
+  "standalone_demo_receipt_sha256": "17a069799f1bd45fed3380354603059b70cb624f9cc37d2bb161402edc743e4f",
+  "standalone_demo_repeat_bit_identical": true,
+  "transformers_available": false
+}
