@@ -336,3 +336,30 @@ def test_the_bank_never_claims_to_be_confirmation():
     assert got["confirmation_eligible"] is False
     assert got["quality_claim"] is False
     assert got["correct"] == 3
+
+
+def test_compile_bank_refuses_a_bank_whose_grouping_fields_it_was_not_told_about():
+    """CL-048: hardcoded 'family'/'stratum' killed a launch with KeyError after 35 seconds.
+
+    The preservation bank has neither field. compile_bank must now say so clearly instead of
+    raising KeyError from inside a tokenizer loop, and the caller must pass the real names.
+    """
+    from experiments.reasoning_posttraining_v1 import instrument as ins
+
+    row = {"id": "p1", "prompt": [{"role": "user", "content": "q"}],
+           "reference_text": "Atlas.", "sub_bank": "direct_reasoning", "decision": "answer"}
+    with pytest.raises(ValueError, match="pass the field names this bank kind actually uses"):
+        ins.compile_bank([row], None, reference_field="reference_text")
+
+
+def test_the_real_preservation_bank_has_no_family_or_stratum_column():
+    """Pins the fact that made CL-048 possible, so a future default cannot silently return."""
+    import json
+    from pathlib import Path
+    path = (Path(__file__).parents[3] / "research/reasoning_posttraining_v1/evidence"
+            / "inspection-20260915/RRP2_PRES_DEV_BANK.jsonl")
+    if not path.exists():
+        pytest.skip("preservation bank not present in this checkout")
+    first = json.loads(path.read_text(encoding="utf-8").splitlines()[0])
+    assert "family" not in first and "stratum" not in first
+    assert "sub_bank" in first and "decision" in first

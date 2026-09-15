@@ -567,28 +567,40 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
 
 def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
                  completion_reserve: int = 128,
-                 reference_field: str = "reference") -> tuple[list[dict], list[dict]]:
+                 reference_field: str = "reference",
+                 family_field: str = "family",
+                 stratum_field: str = "stratum") -> tuple[list[dict], list[dict]]:
     """Tokenize the bank for native evaluation. Overlength rows are REJECTED, not truncated.
 
     Returns (evaluable, rejected). The caller must report both denominators: at a 2048
     window only about 65% of Forge v1 validation fits, so the evaluable subset is
     systematically shorter than the bank and cannot be described as the release
     distribution.
+
+    `family_field` and `stratum_field` exist because the three bank kinds name their grouping
+    and stratification columns differently, and hardcoding the Forge names made the
+    preservation bank die with KeyError: 'family' after a 35-second launch (CL-048). They are
+    passed EXPLICITLY by the caller rather than sniffed, and they default to the Forge names so
+    the v1/v2 paths are byte-for-byte unchanged.
     """
     evaluable, rejected = [], []
     for row in bank:
+        if family_field not in row or stratum_field not in row:
+            raise ValueError(
+                f"row {row.get('id')!r} has no {family_field!r}/{stratum_field!r}; pass the "
+                f"field names this bank kind actually uses instead of relying on a default")
         try:
             compiled = compile_row(row["prompt"], row[reference_field], tokenizer,
                                    max_sequence=max_sequence,
                                    completion_reserve=completion_reserve)
         except ValueError as exc:
-            rejected.append({"id": row["id"], "family": row["family"],
-                             "stratum": row["stratum"], "reason": str(exc),
+            rejected.append({"id": row["id"], "family": row[family_field],
+                             "stratum": row[stratum_field], "reason": str(exc),
                              "actual_user_words": row.get("actual_user_words")})
             continue
         evaluable.append({
             "id": row["id"], "parent_id": row.get("group_id", row["id"]),
-            "family": row["family"], "stratum": row["stratum"],
+            "family": row[family_field], "stratum": row[stratum_field],
             "reference": row[reference_field], "prompt": row["prompt"],
             "ids": compiled["ids"], "prompt_ids": compiled["prompt_ids"],
             "labels": compiled["labels"], "source_split": "validation",

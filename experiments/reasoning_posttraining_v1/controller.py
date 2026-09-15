@@ -258,9 +258,20 @@ def worker(args) -> int:
                 else:
                     kind = "forge_v1"
                 v2 = kind == "forge_v2"
+                # Each kind names its grouping and stratification columns differently, so
+                # they are passed explicitly. The preservation bank has no `family`/`stratum`
+                # at all -- it carries `sub_bank` and `decision` -- and relying on the Forge
+                # defaults cost a launch to KeyError: 'family' (CL-048).
+                FIELDS = {
+                    "forge_v1": ("reference", "family", "stratum"),
+                    "forge_v2": ("reference_text", "family", "stratum"),
+                    "preservation": ("reference_text", "sub_bank", "decision"),
+                }
+                ref_field, fam_field, strat_field = FIELDS[kind]
                 evaluable, rejected = ins.compile_bank(
                     bank, tokenizer, max_sequence=window,
-                    reference_field="reference" if kind == "forge_v1" else "reference_text")
+                    reference_field=ref_field, family_field=fam_field,
+                    stratum_field=strat_field)
                 import torch
 
                 before = parameter_digest(model)
