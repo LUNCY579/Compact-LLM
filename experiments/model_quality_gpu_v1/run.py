@@ -14,26 +14,22 @@ import shutil
 import sys
 import tempfile
 import traceback
-import torch
-from torch.nn import functional as F
 
 from .config import ARMS, Design, validate_native_design
 from .data import (compile_plan, encode_row, read_rows, review_template, targets,
                    validate_plan, validate_review)
-from .engine import train_cell
-from .evaluation import classify
 from .integrity import (PACKAGE, clean_checkout, code_identity, digest, file_hash,
                         new_dir, read_json, seal, unseal, write_new)
-from .losses import chunked_sum
-from .native import (audit_assets, configure_runtime, hidden_states, load_model,
-                     load_tokenizer, lock, parameter_digest, runtime, select_tail)
 from .resources import bounded_child, guard, lease, snapshot
+from .supervisor import claim_worker
 
 CHECKS = {"source_tensors", "tokenizer_plan_recompiled", "native_hidden_logits",
           "native_cached_logits", "masked_chunk_loss_and_gradient", "frozen_parameters"}
 
 
 def native_binding(plan_value, review, source: Path) -> dict:
+    from .native import audit_assets, runtime
+
     plan = validate_plan(plan_value)
     if plan["kind"] != "native_plan":
         raise ValueError("synthetic fixture cannot authorize native work")
@@ -74,6 +70,8 @@ def verify_qualification(value: dict, binding: dict) -> dict:
 
 
 def recompile(plan_value: dict, tokenizer) -> None:
+    from .evaluation import classify
+
     plan = validate_plan(plan_value)
     raw = {}
     for split, info in plan["inputs"].items():
@@ -97,6 +95,11 @@ def recompile(plan_value: dict, tokenizer) -> None:
 
 
 def qualify(model, tokenizer, plan_value: dict, binding: dict) -> dict:
+    import torch
+    from torch.nn import functional as F
+    from .losses import chunked_sum
+    from .native import hidden_states, parameter_digest, select_tail
+
     d = Design(**validate_plan(plan_value)["design"])
     named = select_tail(model, d.trainable_tail)
     if sum(p.numel() for _, p in named) != 314618880 or len(named) != 220:
@@ -151,9 +154,19 @@ def qualify(model, tokenizer, plan_value: dict, binding: dict) -> dict:
 
 
 def worker(args) -> int:
+    # Reject direct/private entry before importing the native runtime or writing output.
+    try:
+        claim_worker(Path(args.out))
+    except Exception as exc:
+        print(f"Private worker refused: {exc}", file=sys.stderr)
+        return 2
     directory = Path(args.out)
     try:
         with lease(Path(args.resource_lock)):
+            from .engine import train_cell
+            from .native import (audit_assets, configure_runtime, load_model,
+                                 load_tokenizer)
+
             configure_runtime(Design(**validate_plan(read_json(args.plan))["design"]).order_seed)
             resource = guard(before_load=True, phase=args.command)
             plan_value, review = read_json(args.plan), read_json(args.review)
@@ -213,6 +226,8 @@ def main(argv=None) -> int:
     if args._worker:
         return worker(args)
     if args.command == "environment":
+        from .native import runtime
+
         value = {"runtime": runtime(), "resources": snapshot(), "code": code_identity(),
                  "native_qualification": "NOT_RUN", "optimizer_steps": 0}
         import json
@@ -221,6 +236,8 @@ def main(argv=None) -> int:
     if not args.source or not args.out:
         parser.error("--source and a new --out directory are required")
     if args.command == "prepare":
+        from .native import audit_assets, load_tokenizer
+
         if not all((args.train, args.dev, args.excluded)):
             parser.error("prepare needs explicit --train, --dev and --excluded files")
         directory = new_dir(Path(args.out))
@@ -242,7 +259,19 @@ def main(argv=None) -> int:
     if not args.plan or not args.review:
         parser.error("native execution needs --plan and --review")
     design = Design(**validate_plan(read_json(Path(args.plan)))["design"])
-    command = [sys.executable, "-m", "experiments.model_quality_gpu_v1", *(argv or sys.argv[1:]), "--_worker"]
+    # The child always runs in this package's ROOT. Resolve caller-relative files now
+    # so changing cwd cannot select another plan, source, output or resource lock.
+    child_args = [args.command]
+    for name in ("source", "train", "dev", "excluded", "plan", "review", "qualification",
+                 "resume", "out", "resource_lock"):
+        value = getattr(args, name)
+        if value is not None:
+            child_args.extend(["--" + name.replace("_", "-"), str(Path(value).absolute())])
+    if args.arm is not None:
+        child_args.extend(["--arm", args.arm])
+    if args.confirm_training:
+        child_args.append("--confirm-training")
+    command = [sys.executable, "-m", "experiments.model_quality_gpu_v1", *child_args, "--_worker"]
     return bounded_child(command, Path(args.out), design.timeout_seconds)
 
 

@@ -4,18 +4,19 @@ from __future__ import annotations
 from contextlib import contextmanager
 import os
 from pathlib import Path
-import signal
-import subprocess
 import time
 import uuid
-import psutil
-import torch
-from .integrity import new_dir, read_json, write_new
+from .integrity import read_json, write_new
+from .supervisor import bounded_child
 
 GIB = 2 ** 30
 
 
 def snapshot() -> dict:
+    # The foreground supervisor must not import or initialize the native runtime.
+    import psutil
+    import torch
+
     available = int(psutil.virtual_memory().available)
     for limit, usage in (("/sys/fs/cgroup/memory.max", "/sys/fs/cgroup/memory.current"),
                          ("/sys/fs/cgroup/memory/memory.limit_in_bytes",
@@ -33,23 +34,25 @@ def snapshot() -> dict:
             "gpu0": gpu, "time_unix": time.time()}
 
 
-# Pre-load minima, in GiB, as (host, gpu). MEASURED on this host, not assumed.
+# Pre-load minima, in GiB, as (host, gpu), retained from historical host estimates.
+# These observations are not a representative/max-shape fit or allocation certificate.
 #
 # The original guard used a single 6.0/6.0 for every command, and the runbook described it
 # as "conservative prerequisites, not a tested maximum-allocation certificate" -- an
 # explicit invitation to measure. Measuring showed one number was doing two different jobs:
 #
-#   qualify  loads the fp32 model on CPU, moves it to cuda:0 and runs forward passes under
-#            no_grad. No optimizer, no gradients. Measured peak: 3.89 GiB host (peak process
-#            RSS 3.85), 2.22 GiB GPU. The 6.0/6.0 gate was ~1.5x and ~2.7x over.
+#   qualify  loads the fp32 model on CPU, moves it to cuda:0, checks no_grad forwards,
+#            then performs a masked-loss backward/finite-gradient probe. No optimizer
+#            or update. Historical recorded peak: 3.89 GiB host (peak process RSS 3.85),
+#            2.22 GiB GPU, on the short qualification probe, not the full training shape.
 #
 #   train    adds CpuAdamW's two fp32 moments, which live on the CPU by construction:
 #            2 x 314,618,880 x 4 B = 2.34 GiB on top of the load path, so roughly 6.23 GiB
 #            host. There the 6.0 gate is about right -- arguably slightly under -- and is
 #            left exactly as it was.
 #
-# So this is NOT a blanket loosening. The training gate is unchanged; only qualification,
-# which provably does not allocate optimizer state, is given a gate sized to what it does.
+# This successor changes neither gate. Qualification does not allocate optimizer state;
+# its short-probe observation cannot establish that training or longer inputs will fit.
 # The default is the STRICTER training profile, so an unrecognised phase cannot loosen
 # anything by accident.
 PRELOAD_MINIMA = {
@@ -91,34 +94,3 @@ def lease(path: Path):
     finally:
         if path.exists() and read_json(path).get("token") == token:
             path.unlink()
-
-
-def bounded_child(command: list[str], directory: Path, timeout: int) -> int:
-    """Wait in foreground; only terminate this worker tree, never unrelated processes."""
-    if type(timeout) is not int or timeout <= 0:
-        raise ValueError("positive watchdog timeout required")
-    directory = new_dir(directory)
-    write_new(directory / "launch.json", {"argv": command, "timeout_seconds": timeout})
-    env = dict(os.environ, HF_HUB_OFFLINE="1", TRANSFORMERS_OFFLINE="1",
-               TOKENIZERS_PARALLELISM="false", CUBLAS_WORKSPACE_CONFIG=":4096:8")
-    options = {"start_new_session": True} if os.name != "nt" else {
-        "creationflags": subprocess.CREATE_NEW_PROCESS_GROUP}
-    with (directory / "worker.log").open("xb") as log:
-        child = subprocess.Popen(command, stdout=log, stderr=subprocess.STDOUT, env=env, **options)
-        reason = "EXITED"
-        try:
-            code = child.wait(timeout=timeout)
-        except (subprocess.TimeoutExpired, KeyboardInterrupt):
-            reason = "TIMEOUT_OR_INTERRUPTED"
-            if os.name == "nt":
-                subprocess.run(["taskkill", "/PID", str(child.pid), "/T", "/F"],
-                               check=False, capture_output=True)
-            else:
-                try:
-                    os.killpg(child.pid, signal.SIGKILL)
-                except ProcessLookupError:
-                    pass
-            code = child.wait()
-        write_new(directory / "supervisor.json", {"status": reason, "returncode": code,
-                                                   "quality_or_release_permission": False})
-    return 0 if reason == "EXITED" and code == 0 else 2

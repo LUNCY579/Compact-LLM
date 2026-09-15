@@ -1,0 +1,86 @@
+..F.........FF.....................s.................................... [ 66%]
+....................................                                     [100%]
+================================== FAILURES ===================================
+_____________ test_context_claim_cwd_one_use_and_no_native_import _____________
+
+tmp_path = WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1583/test_context_claim_cwd_one_use0')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x0000023F4B40B110>
+
+    def test_context_claim_cwd_one_use_and_no_native_import(tmp_path, monkeypatch):
+        out = tmp_path / "attempt"
+        code = """
+    import os, sys
+    from pathlib import Path
+    from experiments.model_quality_gpu_v1 import supervisor as S
+    from experiments.model_quality_gpu_v1 import integrity as I
+    token = os.environ[S.CONTEXT_ENV]
+    S.claim_worker(Path(sys.argv[1]))
+    assert Path.cwd().resolve() == I.ROOT
+    assert 'torch' not in sys.modules
+    os.environ[S.CONTEXT_ENV] = token
+    try:
+        S.claim_worker(Path(sys.argv[1]))
+    except FileExistsError:
+        pass
+    else:
+        raise AssertionError('worker context reused')
+    print('context accepted once')
+    """
+        monkeypatch.chdir(tmp_path)
+>       assert S.bounded_child([sys.executable, "-c", code, str(out)], out, 15) == 0
+E       assert 2 == 0
+E        +  where 2 = <function bounded_child at 0x0000023F4B3FF240>(['C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe', '-c', "\nimport os, sys\nfrom pathlib import P...)\n", 'C:\\Users\\clclc\\AppData\\Local\\Temp\\pytest-of-clclc\\pytest-1583\\test_context_claim_cwd_one_use0\\attempt'], WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1583/test_context_claim_cwd_one_use0/attempt'), 15)
+E        +    where <function bounded_child at 0x0000023F4B3FF240> = S.bounded_child
+
+C:\Users\clclc\BusinessProject\ChatBubble-model-quality-audit-v2\experiments\model_quality_gpu_v1\tests\test_supervisor.py:80: AssertionError
+_____ test_retired_wrapper_refuses_and_keeps_checkpoints[cell_inproc.sh] ______
+
+tmp_path = WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1583/test_retired_wrapper_refuses_a0')
+name = 'cell_inproc.sh'
+
+    @pytest.mark.parametrize("name", ["cell_inproc.sh", "run_cell.sh"])
+    def test_retired_wrapper_refuses_and_keeps_checkpoints(tmp_path, name):
+        shell = shutil.which("bash")
+        if shell is None and os.name == "nt":
+            candidate = Path("C:/Program Files/Git/bin/bash.exe")
+            if candidate.is_file(): shell = str(candidate)
+        if shell is None:
+            pytest.skip("bash unavailable; wrapper syntax/contents alone do not execute it")
+        out = I.new_dir(tmp_path / name)
+        checkpoint = I.new_dir(out / "checkpoint-00001")
+        (checkpoint / "fixture-state").write_bytes(b"unchanged")
+        result = subprocess.run([shell, str(I.PACKAGE / name), "response_1e-5", "unused", "unused", str(out)],
+                                cwd=tmp_path, capture_output=True, text=True, timeout=10)
+>       assert result.returncode == 2 and "REFUSED" in result.stderr
+E       AssertionError: assert (127 == 2)
+E        +  where 127 = CompletedProcess(args=['C:\\Windows\\system32\\bash.EXE', 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-model-quality...essProjectChatBubble-model-quality-audit-v2experimentsmodel_quality_gpu_v1cell_inproc.sh: No such file or directory\n').returncode
+
+experiments\model_quality_gpu_v1\tests\test_supervisor.py:157: AssertionError
+_______ test_retired_wrapper_refuses_and_keeps_checkpoints[run_cell.sh] _______
+
+tmp_path = WindowsPath('C:/Users/clclc/AppData/Local/Temp/pytest-of-clclc/pytest-1583/test_retired_wrapper_refuses_a1')
+name = 'run_cell.sh'
+
+    @pytest.mark.parametrize("name", ["cell_inproc.sh", "run_cell.sh"])
+    def test_retired_wrapper_refuses_and_keeps_checkpoints(tmp_path, name):
+        shell = shutil.which("bash")
+        if shell is None and os.name == "nt":
+            candidate = Path("C:/Program Files/Git/bin/bash.exe")
+            if candidate.is_file(): shell = str(candidate)
+        if shell is None:
+            pytest.skip("bash unavailable; wrapper syntax/contents alone do not execute it")
+        out = I.new_dir(tmp_path / name)
+        checkpoint = I.new_dir(out / "checkpoint-00001")
+        (checkpoint / "fixture-state").write_bytes(b"unchanged")
+        result = subprocess.run([shell, str(I.PACKAGE / name), "response_1e-5", "unused", "unused", str(out)],
+                                cwd=tmp_path, capture_output=True, text=True, timeout=10)
+>       assert result.returncode == 2 and "REFUSED" in result.stderr
+E       AssertionError: assert (127 == 2)
+E        +  where 127 = CompletedProcess(args=['C:\\Windows\\system32\\bash.EXE', 'C:\\Users\\clclc\\BusinessProject\\ChatBubble-model-quality...sinessProjectChatBubble-model-quality-audit-v2experimentsmodel_quality_gpu_v1run_cell.sh: No such file or directory\n').returncode
+
+experiments\model_quality_gpu_v1\tests\test_supervisor.py:157: AssertionError
+=========================== short test summary info ===========================
+FAILED experiments/model_quality_gpu_v1/tests/test_supervisor.py::test_context_claim_cwd_one_use_and_no_native_import
+FAILED experiments/model_quality_gpu_v1/tests/test_supervisor.py::test_retired_wrapper_refuses_and_keeps_checkpoints[cell_inproc.sh]
+FAILED experiments/model_quality_gpu_v1/tests/test_supervisor.py::test_retired_wrapper_refuses_and_keeps_checkpoints[run_cell.sh]
+3 failed, 104 passed, 1 skipped in 22.74s

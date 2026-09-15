@@ -10,8 +10,8 @@ from typing import Any
 
 PACKAGE = Path(__file__).resolve().parent
 ROOT = PACKAGE.parents[1]
-BASE = "a36de96b30eb03265db3a18e464a2e2a23ee67bf"
-BRANCH = "research/model-quality-targeted-gpu-v1"
+BASE = "8c3ed88a821b83e531ab682b3201879ea4fc928b"
+BRANCH = "codex/model-quality-audit-v2"
 
 
 def _pairs(pairs: list[tuple[str, Any]]) -> dict:
