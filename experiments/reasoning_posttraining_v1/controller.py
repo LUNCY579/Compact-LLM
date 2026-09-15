@@ -225,8 +225,14 @@ def worker(args) -> int:
                 bank_sha = stable_hash(Path(args.bank))
                 bank = [read_json_line(l) for l in
                         Path(args.bank).read_text(encoding="utf-8").splitlines() if l.strip()]
-                evaluable, rejected = ins.compile_bank(bank, tokenizer,
-                                                       max_sequence=design.max_sequence)
+                window = args.max_sequence or design.max_sequence
+                # A window wider than the trained 2048 must be qualified IN THIS RUN
+                # before it is used. No silent widening, no RoPE stretching.
+                window_qualification = None
+                if window > design.max_sequence:
+                    window_qualification = ins.qualify_evaluation_window(
+                        model, tokenizer, window, journal.reserve, guard)
+                evaluable, rejected = ins.compile_bank(bank, tokenizer, max_sequence=window)
                 import torch
 
                 before = parameter_digest(model)
@@ -244,7 +250,9 @@ def worker(args) -> int:
                     "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
                     "bank_rows": len(bank), "evaluated_rows": len(evaluable),
                     "rejected_overlength_rows": len(rejected), "rejected": rejected,
-                    "max_sequence": design.max_sequence,
+                    "max_sequence": window,
+                    "trained_window": design.max_sequence,
+                    "evaluation_window_qualification": window_qualification,
                     "length_bias_warning": (
                         "Overlength rows were REJECTED, never truncated, so the evaluated "
                         "subset is systematically shorter than the bank. Report both "
@@ -284,6 +292,8 @@ def main(argv=None) -> int:
         parser.add_argument("--" + name)
     parser.add_argument("--run-id")
     parser.add_argument("--timeout", type=int)
+    parser.add_argument("--max-sequence", type=int,
+                        help="evaluation window; above the trained 2048 it is qualified in-run")
     parser.add_argument("--confirm-model-execution", action="store_true")
     # Must stay byte-identical to MQ-001's default: a different path would silently
     # stop excluding the other native lane that shares this one GPU.
@@ -329,6 +339,8 @@ def main(argv=None) -> int:
             child.extend(["--" + name.replace("_", "-"), str(Path(value).absolute())])
     child.extend(["--out", str(out), "--run-id", args.run_id,
                   "--timeout", str(args.timeout), "--confirm-model-execution"])
+    if args.max_sequence is not None:
+        child.extend(["--max-sequence", str(args.max_sequence)])
     command = [sys.executable, "-m", "experiments.reasoning_posttraining_v1.controller",
                *child, "--_worker"]
 

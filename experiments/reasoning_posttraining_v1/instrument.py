@@ -153,6 +153,89 @@ def build_bank(root: Path, split: str, *, families: tuple[str, ...], per_family:
     return chosen
 
 
+def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
+                              keep: int = 8) -> dict:
+    """Qualify an EVALUATION window wider than the trained 2048. Forward-only.
+
+    This qualifies inference at `window` tokens: cached/uncached agreement, causality and
+    finite logits at full length, with the source parameters proven unchanged. It does
+    NOT qualify training at that window -- no backward pass is run and no optimizer state
+    is allocated, so a training claim at this window would need its own qualification.
+
+    Only the last `keep` positions' logits are materialized. A full logit tensor at 4096
+    tokens is 4096 x 151936 x 4 bytes, about 2.5 GiB, and two of them plus the fp32 model
+    exceed this host's free VRAM. The kept suffix tests the property that matters: that
+    position `window` is computed correctly given `window - 1` tokens of real context.
+    """
+    import torch
+
+    if type(window) is not int or not 2048 < window <= 16384:
+        raise ValueError("evaluation-window qualification covers 2048 < window <= 16384")
+    device = next(model.parameters()).device
+    before = parameter_digest(model)
+
+    # A separately named mechanical shape fixture, never truncated task evidence.
+    ordinary = tokenizer.encode("x y", add_special_tokens=False)
+    if not ordinary or tokenizer.eos_token_id in ordinary:
+        raise ValueError("shape fixture token identity invalid")
+    sequence = (ordinary * (window // len(ordinary) + 1))[:window]
+    sequence[-1] = tokenizer.eos_token_id
+    ids = torch.tensor([sequence], device=device)
+
+    reserve({"evaluation_and_qualification_model_calls": 4})
+    model.eval()
+    guard()
+    with torch.no_grad():
+        direct = model(input_ids=ids, use_cache=False, return_dict=True,
+                       logits_to_keep=keep).logits
+        if not torch.isfinite(direct).all():
+            raise FloatingPointError("nonfinite logits at the candidate evaluation window")
+        guard()
+        # Same sequence, streamed through the KV cache in chunks, then compared on the
+        # same kept suffix. This is the RoPE/position-handling check at full length.
+        past, tail = None, None
+        step = 512
+        for start in range(0, window, step):
+            part = model(input_ids=ids[:, start:start + step], past_key_values=past,
+                         use_cache=True, return_dict=True, logits_to_keep=keep)
+            past = part.past_key_values
+            tail = part.logits
+            guard()
+        cached = tail
+        torch.testing.assert_close(direct, cached, atol=2e-3, rtol=2e-3)
+        cache_error = float((direct - cached).abs().max())
+        del past, tail, cached
+        # Causality: perturbing a token INSIDE the kept suffix must not move the logits
+        # that precede it.
+        changed = ids.clone()
+        changed[0, -3] = tokenizer.encode("8", add_special_tokens=False)[0]
+        perturbed = model(input_ids=changed, use_cache=False, return_dict=True,
+                          logits_to_keep=keep).logits
+        torch.testing.assert_close(direct[:, :keep - 3], perturbed[:, :keep - 3],
+                                   atol=0, rtol=0)
+        if bool((direct[:, keep - 3:] == perturbed[:, keep - 3:]).all()):
+            raise ValueError("perturbation had no effect; the probe is not exercising context")
+        del direct, perturbed, changed
+
+    peak = torch.cuda.max_memory_allocated() if torch.cuda.is_available() else None
+    after = parameter_digest(model)
+    if before != after:
+        raise RuntimeError("window qualification changed source parameters")
+    return {"phase": "RRP_NATIVE_EVALUATION_WINDOW_QUALIFICATION",
+            "status": "PASS", "window": window, "kept_logit_positions": keep,
+            "optimizer_steps": 0, "backward_passes": 0,
+            "cached_vs_uncached_max_abs": cache_error,
+            "source_state_before": before, "source_state_after": after,
+            "peak_vram_bytes": peak,
+            "checks": ["finite_logits_at_window", "cached_uncached_agreement_at_window",
+                       "causality_within_kept_suffix", "context_actually_used",
+                       "frozen_source_unchanged"],
+            "qualifies": "INFERENCE ONLY at this window",
+            "does_not_qualify": ("training at this window; no backward pass was run and no "
+                                 "optimizer state was allocated"),
+            "quality_claim": False}
+
+
 def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
                  completion_reserve: int = 128) -> tuple[list[dict], list[dict]]:
     """Tokenize the bank for native evaluation. Overlength rows are REJECTED, not truncated.
