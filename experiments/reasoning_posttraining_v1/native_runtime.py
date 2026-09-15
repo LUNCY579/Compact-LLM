@@ -16,7 +16,16 @@ def canonical_answer(text: str) -> str:
     return " ".join(text.strip().split())
 
 
+@torch.no_grad()
 def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=128):
+    """Pure inference: fixed-probe CE plus greedy decode. Never needs gradients.
+
+    The decorator is load-bearing, not decoration. engine.microfit's probe() already
+    wraps this in no_grad, but a caller that forgot would build a full autograd graph
+    across 28 layers of eager attention and exhaust VRAM on the first long row -- which
+    is exactly how the first RRP-002 baseline attempt died, with the free-memory guard
+    reporting 0.00 GiB. Nesting no_grad is harmless, so the guarantee lives here.
+    """
     model.eval()
     device = next(model.parameters()).device
     records, ce_sum, ce_targets = [], 0.0, 0

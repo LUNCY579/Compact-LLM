@@ -227,9 +227,14 @@ def worker(args) -> int:
                         Path(args.bank).read_text(encoding="utf-8").splitlines() if l.strip()]
                 evaluable, rejected = ins.compile_bank(bank, tokenizer,
                                                        max_sequence=design.max_sequence)
+                import torch
+
                 before = parameter_digest(model)
-                value = evaluate(model, evaluable, tokenizer, eos, "baseline",
-                                 journal.reserve, guard, max_new=plan["max_new_tokens"])
+                # evaluate() is itself no_grad-decorated; this mirrors engine.probe()'s
+                # explicit wrapper so the intent is visible at the call site too.
+                with torch.no_grad():
+                    value = evaluate(model, evaluable, tokenizer, eos, "baseline",
+                                     journal.reserve, guard, max_new=plan["max_new_tokens"])
                 after = parameter_digest(model)
                 if before != after:
                     raise RuntimeError("evaluation changed source parameters")
