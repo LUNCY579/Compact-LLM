@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T07:22:58.036287+00:00",
+  "recorded_utc": "2026-09-15T08:34:43.836455+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -131,6 +131,50 @@
       "why_it_matters": "The two readings prescribe opposite remedies. A reasoning-capacity/shortcut reading says apply more state-history pressure and more exposures; an interference reading says more exposures of similar worlds make it worse and the ladder needs collision monitoring. The headline 31/32 conceals an interference failure.",
       "still_n_equals_1": "The corrected reading is also a single world. With 4 worlds per family and few distinct numeric answers, matching a sibling gold by accident is not rare. The falsifying test now requires reporting that chance level explicitly.",
       "classification": "AGENT_OVERCLAIM_SELF_REFUTED_BOTH_READINGS_PRESERVED"
+    },
+    {
+      "id": "CL-016",
+      "topic": "Both length-stress splits are unusable on this host, and that is a host limit not a model finding",
+      "measured": "v1 test_length 11,179-35,875 native tokens (p50 15,918); v2 test_length 26,971-61,231 (p50 42,600). Zero rows of either fit 2048, 4096, 8192 or 16384 with the 128-token completion reserve.",
+      "why_it_cannot_be_fixed_here": "attn_implementation is pinned to eager, so attention scores are materialized. At 16 heads and fp32 one layer costs roughly 1.07 GiB at 4096 tokens, 4.3 GiB at 8192 and 17 GiB at 16384, against about 7.2 GiB free VRAM. 4096 is the realistic next qualified window, 8192 is marginal, 16K is out.",
+      "consequence": "Long-context claims from these releases are unavailable on this host. Any report must state this as a host constraint and must not present it as evidence about the model, or about sub-billion models generally.",
+      "classification": "HARD_HOST_LIMIT_RECORDED_BEFORE_ANY_ARM_RUNS"
+    },
+    {
+      "id": "CL-017",
+      "topic": "No independent confirmation bank can be built from anything on this machine",
+      "evidence": "Nothing is label-sealed: every gold for every split of both releases ships in plaintext metadata/*.jsonl.gz, and the v1 DATA_CARD says its holdouts are not cryptographically sealed or independently administered. Authorship is shared: v2 oracle.py concedes shared grammar and authorship as common-mode risks, and the v1 DATA_CARD says parser and generator authorship is shared. A new seed changes instances only, and the v1 README says a new seed makes another candidate corpus, not a new independent benchmark.",
+      "strongest_honest_label": "FRESH_INSTANCE_WITHIN_GRAMMAR_SAME_AUTHOR_NOT_INDEPENDENT",
+      "mitigation": "Treat Forge v1 and v2 as two separately rendered composition domains and the non-Forge v3 corpus as a third. Cross-domain agreement is weaker than independence but stronger than one grammar alone.",
+      "instruction": "Do not let the word fresh in an artifact filename imply independence.",
+      "classification": "STRUCTURAL_LIMITATION_RECORDED_BEFORE_ANY_RESULT_DEPENDS_ON_IT"
+    },
+    {
+      "id": "CL-018",
+      "topic": "A new generator seed is not automatically fresh; collisions with the shipped release were measured",
+      "measured": "Sampling 480 new-seed (20260916) validation-index cases, 7 collided exactly on case_sha256 with the original 10,000 - 6 of 30 in hanoi (20 percent) and 1 in communication.",
+      "cause": "the generator duplicate check is within-build only and cannot see the previous release",
+      "required_build_gate": "Any regenerated bank must diff every new case against the original case and prompt hashes, drop collisions, and report how many were dropped. Published without that diff it is contaminated.",
+      "classification": "CONTAMINATION_HAZARD_MEASURED_GATE_SPECIFIED"
+    },
+    {
+      "id": "CL-019",
+      "topic": "v1 non-ANSWER strata are confounded with family, and BOTH is not abstention",
+      "measured": "v1 validation, 800 rows: reference_answer is a plain string carrying a literal sentinel. UNKNOWN 79 across 9 of 16 families; IMPOSSIBLE 10 in temporal_order only; UNREACHABLE 10 in weighted_routes only; INCONSISTENT 5 in truth_tellers only; BOTH 12 in deduction.",
+      "consequences": [
+        "BOTH is a real logical verdict and must never be counted as abstention.",
+        "The four unanswerable sentinels mean different things - missing information, no valid ordering, no path exists, premises contradict - and must not be collapsed into one bucket.",
+        "Only UNKNOWN spans families, so in v1 every other stratum IS its family and cross-family comparison of it is impossible. Use v2, which carries a structured reference.status with UNKNOWN and IMPOSSIBLE spanning families, for the stratified abstention analysis."
+      ],
+      "classification": "DATA_STRUCTURE_CONSTRAINT_VERIFIED_INDEPENDENTLY"
+    },
+    {
+      "id": "CL-020",
+      "topic": "The inherited 64-row DEV cap does not bind this successor",
+      "observed": "config.Design.max_dev_rows = 64 is enforced only in data.compile_plan and data.validate_plan. No RRP path calls either: prepare.py, preflight.py, controller.py and engine.py import Design for the trainable-tail and token constants only.",
+      "consequence": "RRP-002 may register a DEV of any size without amending MQ-001 or touching validate_native_design. The cap was an MQ-001 pool constraint, not a programme one.",
+      "also": "MQ-001 supplies no statistics layer: evaluation.classify supports only exact and number contracts and refuses the rest, and analyze.summarize skips unscoreable rows. World-paired comparison with cluster dependence must be built, not reused.",
+      "classification": "INHERITED_ASSUMPTION_CORRECTED"
     }
   ]
 }
