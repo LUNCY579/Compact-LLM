@@ -13,11 +13,19 @@ MQ-001 v1 accepts exactly one user/assistant exchange with an optional leading s
 multi-turn rows are excluded rather than flattened, since flattening would silently change
 the task.
 
-**Evaluation contracts come from the corpus's own answers, never invented.**
+**Evaluation contracts come from the corpus's own answers, never invented, and are
+punctuation-tolerant.**
 
-  * answer is a bare decimal (`9.`, `-15`, `.5`)  -> `scorer: number`
-  * answer is short prose (<= 4 words)            -> `scorer: exact`, the literal answer
-  * anything longer                               -> no `evaluation`; response CE only
+  * answer of <= 6 words (ignoring trailing `.!?`) -> `scorer: exact` over the variant set
+    `{bare, bare + '.', literal}`, so a full stop cannot decide correctness
+  * anything longer                                -> no `evaluation`; response CE only
+
+**DEV polar answers are balanced YES/NO**, globally to within one row and per class. Both
+rules exist because the first pool lacked them: 47,648 of 50,964 corpus answers end in a
+full stop, so a literal gold made punctuation the metric and the DEV baseline scored 1/41;
+and the unbalanced draw put a YES gold on all three `contradiction_detection` rows, so a
+model that simply stopped saying "No" scored 5/7 on the polar slice and was indistinguishable
+from one that had learned the task. See `../../MQ001_FIRST_PAIR.md`.
 
 No `answerable: false` / `["UNKNOWN"]` rows are produced. MQ-001 requires that such a task
 *actually request the UNKNOWN contract in its prompt*, and v3's `insufficient_information`
@@ -64,15 +72,63 @@ BLOCKED = ('<|im_start|>', '<|im_end|>', '<think>', '</think>', '<|endoftext|>')
 
 normal = lambda t: ' '.join(unicodedata.normalize('NFKC', t).casefold().split())
 
+# Longest answer, in words after trailing punctuation is stripped, that still gets a
+# scoreable `exact` contract.
+#
+# MEASURED, not chosen for neatness. The first pool used 4, which silently made the DEV
+# instrument polarity-biased: contradiction_detection has exactly two answers in the whole
+# corpus -- 'Yes, they conflict.' (3 words) and 'No, they can both be true.' (6 words) -- so
+# a 4-word cap admitted every YES and excluded every NO. That class could only ever
+# contribute YES rows, and a model that stopped saying "No" swept it.
+#
+# Coverage and both-polarity class count against the threshold:
+#     4 words -> 50.0% scoreable, 5 classes with BOTH polarities
+#     5        -> 55.9%,          5
+#     6        -> 63.4%,          8   <- contradiction_detection becomes balanced here
+#     8        -> 82.7%,          8
+#    10        -> 95.0%,          8
+# Six is the smallest value that removes the bias. Beyond it, coverage rises but no further
+# class gains its missing polarity, and longer literal golds only get more brittle.
+MAX_ANSWER_WORDS = 6
+
+
+def core(answer: str) -> str:
+    """The answer with trailing sentence punctuation removed."""
+    return answer.strip().rstrip('.!?').strip()
+
+
+def polarity(answer: str) -> str | None:
+    """YES / NO / None, from the first word. Drives DEV polarity balancing."""
+    if re.match(r'^\s*yes\b', answer, re.I):
+        return 'YES'
+    if re.match(r'^\s*no\b', answer, re.I):
+        return 'NO'
+    return None
+
 
 def contract(answer: str) -> dict | None:
-    """The evaluation specification implied by the corpus's own answer, or None."""
-    text = answer.strip()
-    if NUMERIC.fullmatch(text):
-        return {'scorer': 'number', 'answers': [text], 'answerable': True}
-    if len(text.split()) <= 4:
-        return {'scorer': 'exact', 'answers': [text], 'answerable': True}
-    return None
+    """The evaluation specification implied by the corpus's own answer, or None.
+
+    **Punctuation-tolerant by construction.** 47,648 of the corpus's 50,964 single-turn
+    answers end in a full stop and only 100 end in nothing, so a gold of the literal answer
+    makes a trailing period decide correctness. It measurably did: the first pool's DEV
+    baseline scored 1/41, and of the whole-sequence arm's six gains, five were the model
+    learning to add punctuation rather than learning anything. `classify()` accepts a LIST of
+    answers and tests `text.strip() in [a.strip() for a in answers]`, so both surface forms
+    are offered and the row scores content instead of style.
+
+    **`number` is deliberately not used.** It would seem the natural fit for numeric answers,
+    but `classify()` requires the *prediction* to `re.fullmatch` a bare-decimal pattern, which
+    a trailing period breaks -- reintroducing exactly the defect being fixed, on the one side
+    a variant list cannot reach. `exact` over {bare, bare + '.'} accepts both and is
+    predictable. The cost is that '18.0' no longer matches a gold of '18'; this model emits
+    neither, and a silent punctuation trap is worse than a narrow accepted set.
+    """
+    text = core(answer)
+    if not text or len(text.split()) > MAX_ANSWER_WORDS:
+        return None
+    variants = {text, f'{text}.', answer.strip()}
+    return {'scorer': 'exact', 'answers': sorted(variants), 'answerable': True}
 
 
 def usable(messages: list[dict]) -> bool:
@@ -218,15 +274,105 @@ def main() -> int:
     # This makes DEV a short-answer instrument rather than a representative sample of the
     # corpus, and that is recorded in the manifest. It does not bias the comparison: every
     # arm is scored on the same rows.
+    # One row per family, preferring a scoreable contract, and BALANCING POLARITY.
+    #
+    # The first pool did not balance and drew a DEV whose polar golds ran 5 YES / 2 NO with
+    # all three contradiction_detection rows YES. A model that simply stopped saying "No"
+    # then scored 5/7 on that slice and looked like it had learned contradiction detection --
+    # which is exactly what the first trained pair did, and the instrument could not tell the
+    # difference, because it contained no negative case to catch it.
+    #
+    # The corpus supports balance easily: contradiction_detection is 566 YES / 566 NO,
+    # logical_implication 493/513, evidence_inference 330/318. The imbalance was a sampling
+    # accident, not a limitation. Since a template family usually contains rows of both
+    # polarities, polarity is chosen by picking WITHIN the family, greedily against the
+    # running count.
     dev, dev_families = [], set()
+    tally = collections.Counter()
     for family in families:
         if len(dev) >= args.dev_rows:
             break
         group = sorted(by_family[family], key=lambda r: r['id'])
-        pick = next((r for r in group if contract(r['messages'][-1]['content']) is not None),
-                    group[0])
+        scoreable = [r for r in group if contract(r['messages'][-1]['content']) is not None]
+        pool_rows = scoreable or group
+        want = 'NO' if tally['YES'] > tally['NO'] else 'YES'
+        pick = (next((r for r in pool_rows
+                      if polarity(r['messages'][-1]['content']) == want), None)
+                or next((r for r in pool_rows
+                         if polarity(r['messages'][-1]['content']) is None), None)
+                or pool_rows[0])
+        tally[polarity(pick['messages'][-1]['content']) or 'non-polar'] += 1
         dev.append(pick)
         dev_families.add(family)
+
+    # Repair pass. The greedy assignment above cannot always hit balance, because a family
+    # may contain only one polarity, and by then the counts are already committed. So after
+    # selection, swap within families that can supply the under-represented polarity: the
+    # family stays in DEV, only which of its rows represents it changes. That preserves the
+    # family-level holdout exactly while moving the polarity counts.
+    # Two constraints must hold together, and satisfying only the global one is not enough:
+    # a DEV can be 4 YES / 4 NO overall while contradiction_detection is all-YES and
+    # estimation_sanity is all-NO, which leaves the per-class blind spot intact. So repair
+    # per-class one-sidedness FIRST, then fix any residual global skew using classes that
+    # contribute a single polar row, where a swap cannot create one-sidedness.
+    pol_of = lambda r: polarity(r['messages'][-1]['content'])
+
+    def alternatives(index: int, target: str):
+        group = sorted(by_family[dev[index]['template_family']], key=lambda r: r['id'])
+        scoreable = [r for r in group if contract(r['messages'][-1]['content']) is not None]
+        return next((r for r in (scoreable or group) if pol_of(r) == target), None)
+
+    def apply_swap(index: int, replacement) -> None:
+        tally[pol_of(dev[index]) or 'non-polar'] -= 1
+        tally[pol_of(replacement) or 'non-polar'] += 1
+        dev[index] = replacement
+
+    def polar_by_class():
+        out = collections.defaultdict(list)
+        for index, row in enumerate(dev):
+            if pol_of(row):
+                out[row['reply_class']].append(index)
+        return out
+
+    for _ in range(500):
+        classes = polar_by_class()
+        one_sided = [(cls, idxs) for cls, idxs in sorted(classes.items())
+                     if len(idxs) >= 2 and len({pol_of(dev[i]) for i in idxs}) == 1]
+        if one_sided:
+            cls, idxs = one_sided[0]
+            want = 'NO' if pol_of(dev[idxs[0]]) == 'YES' else 'YES'
+            moved = False
+            for i in idxs:
+                alt = alternatives(i, want)
+                if alt is not None:
+                    apply_swap(i, alt)
+                    moved = True
+                    break
+            if not moved:
+                raise SystemExit(
+                    f'DEV class {cls!r} is one-sided ({pol_of(dev[idxs[0]])}) and none of its '
+                    f'held-out families can supply the opposite polarity. A model that merely '
+                    f'flips polarity would score as though it had learned this task.')
+            continue
+        if abs(tally['YES'] - tally['NO']) <= 1:
+            break
+        short, long = ('NO', 'YES') if tally['YES'] > tally['NO'] else ('YES', 'NO')
+        # Only swap rows whose class contributes exactly one polar row; swapping those can
+        # never make a class one-sided.
+        singles = [idxs[0] for cls, idxs in sorted(classes.items())
+                   if len(idxs) == 1 and pol_of(dev[idxs[0]]) == long]
+        alt = next(((i, a) for i in singles for a in [alternatives(i, short)] if a is not None),
+                   None)
+        if alt is None:
+            raise SystemExit(
+                f'DEV polarity stuck at {tally["YES"]} YES vs {tally["NO"]} NO with no safe '
+                f'swap available. An unbalanced polar slice lets a model that merely flips '
+                f'polarity score as though it had learned the task.')
+        apply_swap(*alt)
+    else:
+        raise SystemExit('polarity repair did not converge')
+    print(f'DEV polarity balanced: {tally["YES"]} YES / {tally["NO"]} NO / '
+          f'{tally["non-polar"]} non-polar')
     train_pool = [r for r in kept if r['template_family'] not in dev_families]
     rng.shuffle(train_pool)
     train = sorted(train_pool[:args.train_rows], key=lambda r: r['id'])
@@ -243,6 +389,21 @@ def main() -> int:
         return record
 
     dev_records = [emit(r, True) for r in dev]
+
+    # A class contributing two or more polar DEV rows must not be one-sided. The global
+    # balance above can be satisfied while one class stays all-YES and another all-NO, which
+    # would leave exactly the per-class blind spot that made "learned contradiction
+    # detection" indistinguishable from "learned to say Yes" the first time.
+    per_class = collections.defaultdict(collections.Counter)
+    for row in dev:
+        pol = polarity(row['messages'][-1]['content'])
+        if pol:
+            per_class[row['reply_class']][pol] += 1
+    one_sided = {c: dict(v) for c, v in per_class.items()
+                 if sum(v.values()) >= 2 and len(v) == 1}
+    if one_sided:
+        raise SystemExit(f'one-sided polar classes in DEV: {one_sided}. A model that flips '
+                         f'polarity would score as though it had learned these tasks.')
     train_records = [emit(r, False) for r in train]
     scored = collections.Counter(r.get('evaluation', {}).get('scorer', 'not_scored')
                                  for r in dev_records)
@@ -269,6 +430,14 @@ def main() -> int:
                  'excluded': len(excluded)},
         'dev_holdout': 'by template_family',
         'dev_contracts': dict(scored),
+        'dev_polarity': {'YES': tally['YES'], 'NO': tally['NO'],
+                         'non_polar': tally['non-polar']},
+        'dev_polarity_by_class': {c: dict(v) for c, v in sorted(per_class.items())},
+        'punctuation_tolerant_golds': True,
+        'contract_note': 'exact scorer over {bare, bare+".", literal}. `number` is not used: '
+                         'classify() requires the PREDICTION to fullmatch a bare-decimal '
+                         'pattern, which a trailing period breaks -- the very defect being '
+                         'fixed, on the side a variant list cannot reach.',
         'dev_selection': 'one row per held-out family, preferring a row whose own answer '
                          'yields a scoreable contract. DEV is therefore a SHORT-ANSWER '
                          'instrument, not a representative sample of the corpus. Selection '
