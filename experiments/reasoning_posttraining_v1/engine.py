@@ -33,6 +33,10 @@ def microfit(model, rows: list[dict], design: Design, binding: dict, directory: 
     """Evaluate callbacks use a fixed probe set and cannot change training RNG."""
     if not callable(reserve) or not callable(resource_guard) or not callable(evaluate):
         raise ValueError("budget, resource and evaluator contracts are required")
+    # The result is attributed from here. A binding without it would silently mislabel the
+    # run, so refuse instead of defaulting to a literal (which is what it used to do).
+    if not isinstance(binding.get("experiment"), str) or not binding["experiment"].strip():
+        raise ValueError("binding must name its experiment; the result is attributed from it")
     params = sum(p.numel() for p in model.parameters())
     if synthetic:
         if params >= 1000000 or next(model.parameters()).device.type != "cpu":
@@ -124,7 +128,10 @@ def microfit(model, rows: list[dict], design: Design, binding: dict, directory: 
     if parameter_digest(model, frozen_only=True) != frozen_before:
         raise RuntimeError("frozen source weights changed")
     final = probe("final")
-    result = {"experiment": "RRP-001-MICROFIT", "status": "MICROFIT_EXECUTED_NOT_QUALITY_CONFIRMATION",
+    # The binding carries the experiment. Hardcoding a literal here misattributed every
+    # successor arm to RRP-001 in its own result file.
+    result = {"experiment": binding["experiment"],
+              "status": "MICROFIT_EXECUTED_NOT_QUALITY_CONFIRMATION",
               "synthetic": synthetic, "complete": progress["updates"] == len(groups), "progress": progress,
               "attempt_updates": progress["updates"] - attempt_start["updates"],
               "attempt_processed_tokens": progress["processed_tokens"] - attempt_start["processed_tokens"],

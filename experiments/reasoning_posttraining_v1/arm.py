@@ -182,7 +182,27 @@ def disjointness(compiled: list[dict], banks: dict[str, list[dict]]) -> dict:
             "against": results, "clean": clean}
 
 
-def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 128) -> dict:
+def probe_subset(compiled: list[dict], *, per_bucket: int) -> list[str]:
+    """A small stratified probe for the engine's three in-training evaluations.
+
+    The engine probes at baseline, midpoint and final over whatever row set it is given.
+    RRP-001's probe was its whole 32-world microfit, which is cheap. Probing an arm's whole
+    training set would cost thousands of evaluation calls to measure MEMORIZATION, which is
+    not the question. So the probe is a stratified handful, and the held-out banks are what
+    answer the actual question.
+    """
+    buckets = collections.defaultdict(list)
+    for row in compiled:
+        buckets[(row["family"], row["stratum"])].append(row["id"])
+    chosen = []
+    for key in sorted(buckets):
+        pool = sorted(buckets[key], key=lambda i: (digest([SALT, "probe", i]), i))
+        chosen.extend(pool[:per_bucket])
+    return chosen
+
+
+def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 128,
+               probe_per_bucket: int = 8) -> dict:
     """The frozen plan, computed from the compiled bytes so it cannot drift from them."""
     design = Design()
     repeated = [r for _ in range(exposures) for r in compiled]
@@ -206,6 +226,7 @@ def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 12
         "selection_seed": design.selection_seed,
         "order_seed": design.order_seed,
         "optimizer": frozen_optimizer(design),
+        "probe_row_ids": probe_subset(compiled, per_bucket=probe_per_bucket),
     }
 
 
@@ -237,21 +258,49 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
     return contract
 
 
+def cap_per_bucket(compiled: list[dict], *, per_bucket: int) -> list[dict]:
+    """Balance the buckets AFTER compilation, which is the only place balance is real.
+
+    Only about a third of v2 TRAIN fits the 2048 training window, and the fit rate varies
+    enormously by family -- `evidence_chain` contributes 4 of 887 ANSWER rows. Capping before
+    compilation therefore produces a set whose measured composition is nothing like the
+    requested one: a first attempt asked for 60 per bucket and got 275 rows with one family
+    represented by a single row. Selecting generously and capping afterwards makes the
+    registered balance hold on the rows that actually train.
+    """
+    buckets = collections.defaultdict(list)
+    for row in compiled:
+        buckets[(row["family"], row["stratum"])].append(row)
+    kept = []
+    for key in sorted(buckets):
+        kept.extend(buckets[key][:per_bucket])
+    # Preserve the deterministic global order rather than the bucket-walk order.
+    order = {row["id"]: i for i, row in enumerate(compiled)}
+    return sorted(kept, key=lambda r: order[r["id"]])
+
+
 def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]], *,
-          per_bucket: int, exposures: int) -> tuple[list[dict], dict, dict]:
-    """Select, compile, prove disjoint, and plan. Makes no model call and spends no budget."""
+          per_bucket: int, exposures: int,
+          candidate_multiple: int = 6) -> tuple[list[dict], dict, dict]:
+    """Select, compile, balance, prove disjoint, and plan. No model call, no budget."""
     # Every DEV id is excluded up front, so disjointness is enforced by construction as well
     # as verified afterwards. Belt and braces on purpose: the verification is what catches a
     # mistake in the exclusion.
     dev_ids = frozenset(row["id"] for rows in banks.values() for row in rows
                         if isinstance(row.get("id"), str))
-    chosen, policy, meta, per_bucket_taken = select(v2_root, per_bucket=per_bucket,
-                                                    exclude_ids=dev_ids)
+    # Select generously, because only ~a third will fit the training window, then cap.
+    candidates = per_bucket * candidate_multiple
+    chosen, policy, meta, per_bucket_offered = select(v2_root, per_bucket=candidates,
+                                                      exclude_ids=dev_ids)
     quarantine.refuse(chosen, registry, use="TRAIN")
 
-    compiled, rejected = compile_training(chosen, policy, meta, tokenizer)
-    if not compiled:
+    fitting, rejected = compile_training(chosen, policy, meta, tokenizer)
+    if not fitting:
         raise ValueError("no v2 train row fits the qualified 2048 training window")
+    compiled = cap_per_bucket(fitting, per_bucket=per_bucket)
+    per_bucket_taken = dict(collections.Counter(
+        f"{r['family']}|{r['stratum']}" for r in compiled))
+    short = {k: v for k, v in per_bucket_taken.items() if v < per_bucket}
     audit = disjointness(compiled, banks)
     if not audit["clean"]:
         raise ValueError(f"training set collides with a DEV bank: {audit['against']}")
@@ -270,12 +319,21 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
                         "is already qualified (CL-027). Training at 4096 is NOT qualified and "
                         "is not attempted. The train/eval window mismatch is a real confound "
                         "and is reported as a length-generalization split, not hidden."),
-        "selected": len(chosen),
+        "candidates_offered": len(chosen),
+        "candidates_that_fit": len(fitting),
         "compiled": len(compiled),
+        "fit_rate": round(len(fitting) / len(chosen), 4),
         "rejected_overlength": len(rejected),
         "rejected": rejected[:32],
         "per_bucket_requested": per_bucket,
+        "candidate_multiple": candidate_multiple,
+        "per_bucket_offered": per_bucket_offered,
         "per_bucket_taken": per_bucket_taken,
+        "buckets_short_of_the_request": short,
+        "buckets_short_note": ("a bucket short of the request has no more rows that fit 2048. "
+                               "evidence_chain is the extreme case -- 4 of 887 ANSWER and 9 of "
+                               "1113 UNKNOWN fit -- so the arm barely sees it and NO per-family "
+                               "claim about that family will be interpretable."),
         "composition": {
             "per_family": dict(collections.Counter(r["family"] for r in compiled)),
             "per_stratum": dict(collections.Counter(r["stratum"] for r in compiled)),
@@ -325,8 +383,11 @@ def main(argv=None):
     contract = write_prepared(args.out_prepared, compiled, report)
     write_new(args.out_plan, plan)
 
-    print(f"compiled {report['compiled']} of {report['selected']} selected "
-          f"({report['rejected_overlength']} overlength refused)")
+    print(f"offered {report['candidates_offered']} candidates, "
+          f"{report['candidates_that_fit']} fit 2048 (rate {report['fit_rate']}), "
+          f"kept {report['compiled']} after capping at {report['per_bucket_requested']}/bucket")
+    if report["buckets_short_of_the_request"]:
+        print(f"buckets SHORT of the request: {report['buckets_short_of_the_request']}")
     print(f"per stratum : {report['composition']['per_stratum']}")
     print(f"per family  : {report['composition']['per_family']}")
     print(f"tokens      : {plan['processed_tokens']} processed, "

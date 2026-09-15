@@ -283,3 +283,24 @@ def test_the_arm_never_claims_confirmation_or_quality():
     audit = arm.disjointness(compiled, {})
     assert audit["tolerance"] == "ZERO"
     assert arm.ARM_EXPERIMENT == "RRP-003-ARM-A1"
+
+
+def test_balance_is_applied_after_compilation_not_before():
+    """Only ~a third of v2 train fits 2048, and the fit rate varies hugely by family."""
+    fitting = ([compiled_row(f"a{i}", family="temporal_route", stratum="ANSWER")
+                for i in range(50)]
+               + [compiled_row(f"u{i}", family="evidence_chain", stratum="UNKNOWN")
+                  for i in range(3)])
+    kept = arm.cap_per_bucket(fitting, per_bucket=10)
+    import collections
+    counts = collections.Counter((r["family"], r["stratum"]) for r in kept)
+    assert counts[("temporal_route", "ANSWER")] == 10
+    # A depleted bucket contributes everything it has, and no more is invented.
+    assert counts[("evidence_chain", "UNKNOWN")] == 3
+    assert len(kept) == 13
+
+
+def test_capping_preserves_the_deterministic_global_order():
+    fitting = [compiled_row(f"r{i}", family="f", stratum="ANSWER") for i in range(10)]
+    kept = arm.cap_per_bucket(fitting, per_bucket=4)
+    assert [r["id"] for r in kept] == ["r0", "r1", "r2", "r3"]

@@ -93,6 +93,43 @@ BASELINE_A3_LIMITS = {
 budget.register(BASELINE_A3_EXPERIMENT, ceiling=BASELINE_A3_LIMITS,
                 phases=BASELINE_PHASES, excludes=BASELINE_EXCLUDES)
 
+# ---------------------------------------------------------------- RRP-003 arm A1 lane
+#
+# THE FIRST LANE IN THIS PROGRAMME AUTHORIZED TO TRAIN. Every lane before it listed
+# "training" in excludes and pinned processed_training_tokens_all_attempts at 0; this one
+# does neither, and that is the whole point of registering it separately rather than
+# widening an existing envelope. Everything else stays pinned: no RL, no cloud or teacher
+# spend, no model selection round, no release.
+#
+# Sized from measurement, not preference. The pool measurement found 5,297 of 16,000 v2
+# TRAIN rows fit the qualified 2048 window at a mean 1,603 processed tokens, and RRP-001
+# measured ~3.7 s per optimizer update. A 60-per-bucket dose probe is ~733 rows, ~1.18M
+# processed tokens and ~574 updates, i.e. roughly 35 minutes of GPU. The ceiling below
+# covers about two such attempts plus their held-out evaluations, and nothing more: a first
+# arm should be a dose probe that can fail cheaply, not a two-hour commitment on a host
+# where RAM is already the binding constraint.
+ARM_A1_EXPERIMENT = "RRP-003-ARM-A1"
+ARM_A1_LIMITS = {
+    "total_owned_work_wall_seconds": 16000,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 12000,
+    "processed_training_tokens_all_attempts": 4000000,
+    "evaluation_and_qualification_model_calls": 3000,
+    "generated_tokens_all_candidates": 262144,
+    "on_policy_rl_rollout_tokens": 0,
+    "new_disk_bytes": 10737418240,
+    "adaptive_model_selection_rounds": 0,
+    "model_worker_launches": 4,
+    "retries": 3,
+    "cloud_or_teacher_spend": 0,
+}
+ARM_A1_PHASES = ("train", "resume")
+# "training" is deliberately ABSENT. "broad_SFT" too: this is bounded, registered SFT on a
+# declared TRAIN split, which is what the arm is for. Everything else stays barred.
+ARM_A1_EXCLUDES = ("RL", "larger_teacher", "cloud", "release", "architectural_change")
+
+budget.register(ARM_A1_EXPERIMENT, ceiling=ARM_A1_LIMITS, phases=ARM_A1_PHASES,
+                excludes=ARM_A1_EXCLUDES)
+
 # Distinct meanings, deliberately not collapsed into one "unanswerable" bucket.
 SENTINELS = {
     "UNKNOWN": "information required to answer is absent",

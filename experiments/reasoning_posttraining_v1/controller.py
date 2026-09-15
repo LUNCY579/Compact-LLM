@@ -256,25 +256,10 @@ def worker(args) -> int:
                 #                   abstention sentences; scored offline by preserve.summarize
                 #
                 # In all three cases the worker records raw predictions and makes no claim.
-                if not bank:
-                    raise ValueError("empty bank")
-                if "sub_bank" in bank[0]:
-                    kind = "preservation"
-                elif "reference_text" in bank[0]:
-                    kind = "forge_v2"
-                else:
-                    kind = "forge_v1"
-                v2 = kind == "forge_v2"
-                # Each kind names its grouping and stratification columns differently, so
-                # they are passed explicitly. The preservation bank has no `family`/`stratum`
-                # at all -- it carries `sub_bank` and `decision` -- and relying on the Forge
-                # defaults cost a launch to KeyError: 'family' (CL-048).
-                FIELDS = {
-                    "forge_v1": ("reference", "family", "stratum"),
-                    "forge_v2": ("reference_text", "family", "stratum"),
-                    "preservation": ("reference_text", "sub_bank", "decision"),
-                }
-                ref_field, fam_field, strat_field = FIELDS[kind]
+                # One implementation, shared with the train phase's held-out evaluation, so
+                # the two cannot drift apart.
+                kind = bank_kind(bank)
+                ref_field, fam_field, strat_field = BANK_FIELDS[kind]
                 evaluable, rejected = ins.compile_bank(
                     bank, tokenizer, max_sequence=window,
                     reference_field=ref_field, family_field=fam_field,
@@ -296,19 +281,7 @@ def worker(args) -> int:
                     "source_state_before": before, "source_state_after": after,
                     "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
                     "bank_kind": kind,
-                    "scoring_note": {
-                        "forge_v2": ("canonical_training_target_match is a LOWER BOUND on a "
-                                     "forge_v2 bank: it is a text comparison, and four v2 "
-                                     "families accept alternative optima of equal cost. Score "
-                                     "the raw predictions with forge_rl.rewards.score_response."),
-                        "forge_v1": "text comparison against the v1 string contract is exact here",
-                        "preservation": ("canonical_training_target_match is a LOWER BOUND: the "
-                                         "preservation contract allows shipped aliases and a "
-                                         "declared tolerance, and it scores an answerable row "
-                                         "and an abstention row by different rules. Score the "
-                                         "raw predictions with preserve.summarize, which keeps "
-                                         "wrong_abstention_kind as its own channel."),
-                    }[kind],
+                    "scoring_note": BANK_SCORING_NOTE[kind],
                     "bank_rows": len(bank), "evaluated_rows": len(evaluable),
                     # Kept for receipt compatibility, but it is a MISNOMER: compile_bank
                     # refuses rows for more than one reason and only some are overlength. The
@@ -340,14 +313,72 @@ def worker(args) -> int:
                 write_new(directory / "qualification.json", {**result, "binding": binding})
                 return 0
 
+            # The engine probes three times (baseline, midpoint, final) over whatever row
+            # set it is given. RRP-001's probe was its whole 32-world microfit, which is
+            # cheap; an arm's training set is thousands of rows, so probing all of it would
+            # cost thousands of evaluation calls to measure MEMORIZATION rather than
+            # generalization. A plan may therefore declare a small fixed probe subset. Absent
+            # the key, behaviour is exactly RRP-001's.
+            probe_ids = plan.get("probe_row_ids")
+            if probe_ids is not None:
+                by_id = {r["id"]: r for r in probe}
+                missing = [i for i in probe_ids if i not in by_id]
+                if missing:
+                    raise ValueError(f"plan probe_row_ids not in the presentations: {missing[:5]}")
+                probe_rows = [by_id[i] for i in probe_ids]
+            else:
+                probe_rows = probe
+
             def evaluator(active, label, reserve):
-                return evaluate(active, probe, tokenizer, eos, label, reserve, guard,
-                                max_new=plan["max_new_tokens"])
+                return evaluate(active, probe_rows, tokenizer, eos, label, reserve, guard,
+                                max_new=generation_allowance(args, plan))
 
             result = microfit(model, repeated, design, binding, directory / "microfit",
                               evaluate=evaluator, reserve=journal.reserve, resource_guard=guard,
                               resume=Path(args.resume) if args.resume else None)
-            write_new(directory / "result.json", {**result, "phase": args.command})
+
+            # Held-out evaluation of the TRAINED model, in the same launch. The alternative
+            # is a second launch that loads the base weights and applies the checkpoint
+            # tensors, which is machinery this lane does not have and would have to qualify.
+            # Doing it here reuses the identical evaluation path the baselines used, so the
+            # arm and its baseline are comparable by construction rather than by assertion.
+            heldout = []
+            for bank_path in (args.heldout_bank or []):
+                bank = read_bank(bank_path)
+                kind = bank_kind(bank)
+                ref_field, fam_field, strat_field = BANK_FIELDS[kind]
+                window = args.eval_max_sequence or design.max_sequence
+                if window > design.max_sequence:
+                    # A wider EVALUATION window than the trained one must be qualified in
+                    # this run before it is used, exactly as the baseline phase does.
+                    ins.qualify_evaluation_window(model, tokenizer, window,
+                                                  journal.reserve, guard)
+                evaluable, rejected = ins.compile_bank(
+                    bank, tokenizer, max_sequence=window,
+                    reference_field=ref_field, family_field=fam_field,
+                    stratum_field=strat_field)
+                import torch
+
+                with torch.no_grad():
+                    value = evaluate(model, evaluable, tokenizer, eos,
+                                     f"heldout-{Path(bank_path).stem}", journal.reserve, guard,
+                                     max_new=generation_allowance(args, plan))
+                name = f"heldout-{Path(bank_path).stem}.json"
+                write_new(directory / name, {
+                    **value, "bank": str(bank_path), "bank_sha256": stable_hash(Path(bank_path)),
+                    "bank_kind": kind, "scoring_note": BANK_SCORING_NOTE[kind],
+                    "bank_rows": len(bank), "evaluated_rows": len(evaluable),
+                    "refused_rows": len(rejected), "rejected": rejected,
+                    "refusal_reasons": dict(collections.Counter(
+                        r["reason"] for r in rejected)),
+                    "max_sequence": window, "trained_window": design.max_sequence,
+                    "is_the_trained_candidate": True,
+                    "quality_claim": False})
+                heldout.append({"bank": str(bank_path), "file": name, "kind": kind,
+                                "evaluated_rows": len(evaluable), "refused": len(rejected)})
+
+            write_new(directory / "result.json",
+                      {**result, "phase": args.command, "heldout_evaluations": heldout})
         return 0
     except Exception as exc:
         # Preserve the attempt. Never overwrite an existing failure receipt.
@@ -379,6 +410,50 @@ def generation_allowance(args, plan) -> int:
     return wanted
 
 
+BANK_FIELDS = {
+    # kind -> (reference_field, family_field, stratum_field)
+    "forge_v1": ("reference", "family", "stratum"),
+    "forge_v2": ("reference_text", "family", "stratum"),
+    "preservation": ("reference_text", "sub_bank", "decision"),
+}
+BANK_SCORING_NOTE = {
+    "forge_v2": ("canonical_training_target_match is a LOWER BOUND on a forge_v2 bank: it is a "
+                 "text comparison, and four v2 families accept alternative optima of equal "
+                 "cost. Score the raw predictions with forge_rl.rewards.score_response."),
+    "forge_v1": "text comparison against the v1 string contract is exact here",
+    "preservation": ("canonical_training_target_match is a LOWER BOUND: the preservation "
+                     "contract allows shipped aliases and a declared tolerance, and it scores "
+                     "an answerable row and an abstention row by different rules. Score the raw "
+                     "predictions with preserve.summarize, which keeps wrong_abstention_kind as "
+                     "its own channel."),
+}
+
+
+def bank_kind(bank: list[dict]) -> str:
+    """Three kinds, three scoring contracts, and the worker must not guess.
+
+    `reference_text` alone is NOT a discriminator: the preservation bank carries it too, so a
+    two-way check scored ordinary prose with the Forge v2 JSON verifier (CL-047). Preservation
+    rows are the ones carrying `sub_bank`.
+    """
+    if not bank:
+        raise ValueError("empty bank")
+    if "sub_bank" in bank[0]:
+        return "preservation"
+    if "reference_text" in bank[0]:
+        return "forge_v2"
+    return "forge_v1"
+
+
+def read_bank(path) -> list[dict]:
+    return [read_json_line(line) for line
+            in Path(path).read_text(encoding="utf-8").splitlines() if line.strip()]
+
+
+def def_evaluate_bank(*_a, **_k):  # placeholder removed below
+    raise NotImplementedError
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("environment", *PHASES))
@@ -390,6 +465,14 @@ def main(argv=None) -> int:
                         help="an amended successor lane for this phase, e.g. RRP-002-BASELINE-A2")
     parser.add_argument("--max-sequence", type=int,
                         help="evaluation window; above the trained 2048 it is qualified in-run")
+    parser.add_argument("--heldout-bank", action="append",
+                        help="a DEV bank to evaluate the TRAINED candidate on, in the same "
+                             "launch. Repeatable. Distinct from --bank, which is the baseline "
+                             "phase's single evaluation bank.")
+    parser.add_argument("--eval-max-sequence", type=int,
+                        help="window for the train phase's held-out evaluation; above the "
+                             "trained window it is qualified in-run, same as the baseline "
+                             "phase. Defaults to the trained window.")
     parser.add_argument("--max-new-tokens", type=int,
                         help="generation allowance per row. May only LOWER the plan's value, "
                              "never raise it: the plan is the authorized ceiling. Useful when "
@@ -448,6 +531,10 @@ def main(argv=None) -> int:
         child.extend(["--experiment", args.experiment])
     if args.max_new_tokens is not None:
         child.extend(["--max-new-tokens", str(args.max_new_tokens)])
+    if args.eval_max_sequence is not None:
+        child.extend(["--eval-max-sequence", str(args.eval_max_sequence)])
+    for bank_path in (args.heldout_bank or []):
+        child.extend(["--heldout-bank", str(bank_path)])
     command = [sys.executable, "-m", "experiments.reasoning_posttraining_v1.controller",
                *child, "--_worker"]
 

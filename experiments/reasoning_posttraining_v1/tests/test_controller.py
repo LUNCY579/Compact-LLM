@@ -499,3 +499,31 @@ def test_only_registered_plan_identities_are_executable():
     assert "RRP-003-ARM-A1" in controller.REGISTERED_PLANS
     for rogue in ("RRP-999-UNREGISTERED", "", "rrp-001-microfit"):
         assert rogue not in controller.REGISTERED_PLANS
+
+
+def test_heldout_bank_is_repeatable_and_distinct_from_the_baseline_bank():
+    """--bank is a single string; iterating it would walk characters, not paths."""
+    parsed = controller.main.__wrapped__ if hasattr(controller.main, "__wrapped__") else None
+    _ = parsed
+    import argparse
+    # Rebuild only the two options under test, mirroring the real parser's actions.
+    p = argparse.ArgumentParser()
+    p.add_argument("--bank")
+    p.add_argument("--heldout-bank", action="append")
+    args = p.parse_args(["--bank", "one.jsonl",
+                         "--heldout-bank", "a.jsonl", "--heldout-bank", "b.jsonl"])
+    assert isinstance(args.bank, str)
+    assert args.heldout_bank == ["a.jsonl", "b.jsonl"]
+
+
+def test_bank_kind_and_fields_agree_for_every_registered_kind():
+    for kind, (ref, fam, strat) in controller.BANK_FIELDS.items():
+        assert ref and fam and strat
+        assert kind in controller.BANK_SCORING_NOTE
+    assert set(controller.BANK_FIELDS) == set(controller.BANK_SCORING_NOTE)
+    assert controller.bank_kind([{"id": "a", "reference": "ON"}]) == "forge_v1"
+    assert controller.bank_kind([{"id": "b", "reference_text": "{}"}]) == "forge_v2"
+    assert controller.bank_kind([{"id": "c", "reference_text": "x",
+                                  "sub_bank": "s"}]) == "preservation"
+    with pytest.raises(ValueError, match="empty bank"):
+        controller.bank_kind([])

@@ -28,10 +28,10 @@ def evaluate(model, label, reserve):
 
 def test_fresh_instance_resume_matches_complete_model(tmp_path):
     a, rows, d = fixture(); charges = []
-    first = microfit(a, rows, d, {"fixture": True}, tmp_path / "full", evaluate=evaluate,
+    first = microfit(a, rows, d, {"fixture": True, "experiment": "FIXTURE"}, tmp_path / "full", evaluate=evaluate,
                      reserve=charges.append, resource_guard=lambda: {}, synthetic=True)
     b, _, _ = fixture(); resumed_charges = []
-    second = microfit(b, rows, d, {"fixture": True}, tmp_path / "resumed", evaluate=evaluate,
+    second = microfit(b, rows, d, {"fixture": True, "experiment": "FIXTURE"}, tmp_path / "resumed", evaluate=evaluate,
                       reserve=resumed_charges.append, resource_guard=lambda: {}, synthetic=True,
                       resume=tmp_path / "full/checkpoint-00002")
     assert first["final_state_sha256"] == second["final_state_sha256"]
@@ -52,7 +52,7 @@ def test_budget_refusal_precedes_optimizer_update(tmp_path):
         if "processed_training_tokens_all_attempts" in charge:
             raise RuntimeError("budget exhausted")
     with pytest.raises(RuntimeError, match="budget exhausted"):
-        microfit(model, rows, d, {"fixture": True}, tmp_path / "refused", evaluate=evaluate,
+        microfit(model, rows, d, {"fixture": True, "experiment": "FIXTURE"}, tmp_path / "refused", evaluate=evaluate,
                  reserve=refuse, resource_guard=lambda: {}, synthetic=True)
     assert all(torch.equal(before[k], v) for k, v in model.state_dict().items())
     assert (tmp_path / "refused/baseline.json").is_file()
@@ -61,13 +61,30 @@ def test_budget_refusal_precedes_optimizer_update(tmp_path):
 
 def test_output_create_only_and_test_split_rejected(tmp_path):
     model, rows, d = fixture()
+    binding = {"experiment": "FIXTURE"}
     out = tmp_path / "existing"; out.mkdir(); (out / "original").write_bytes(b"keep")
     with pytest.raises(FileExistsError):
-        microfit(model, rows, d, {}, out, evaluate=evaluate, reserve=lambda x: None,
+        microfit(model, rows, d, binding, out, evaluate=evaluate, reserve=lambda x: None,
                  resource_guard=lambda: {}, synthetic=True)
     assert (out / "original").read_bytes() == b"keep"
     rows[0]["source_split"] = "test_iid"
     with pytest.raises(ValueError, match="TRAIN"):
-        microfit(model, rows, d, {}, tmp_path / "bad-split", evaluate=evaluate,
+        microfit(model, rows, d, binding, tmp_path / "bad-split", evaluate=evaluate,
                  reserve=lambda x: None, resource_guard=lambda: {}, synthetic=True)
     assert not (tmp_path / "bad-split").exists()
+
+
+def test_the_result_is_attributed_to_the_bindings_experiment_not_a_literal(tmp_path):
+    """A successor arm must not appear in its own result file as RRP-001-MICROFIT."""
+    model, rows, d = fixture()
+    got = microfit(model, rows, d, {"fixture": True, "experiment": "RRP-003-ARM-A1"},
+                   tmp_path / "arm", evaluate=evaluate, reserve=lambda x: None,
+                   resource_guard=lambda: {}, synthetic=True)
+    assert got["experiment"] == "RRP-003-ARM-A1"
+
+
+def test_an_unattributed_binding_is_refused(tmp_path):
+    model, rows, d = fixture()
+    with pytest.raises(ValueError, match="binding must name its experiment"):
+        microfit(model, rows, d, {"fixture": True}, tmp_path / "x", evaluate=evaluate,
+                 reserve=lambda v: None, resource_guard=lambda: {}, synthetic=True)
