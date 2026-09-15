@@ -3,7 +3,7 @@
 ## Mandatory scope
 
 Read [GOAL.md](GOAL.md), [STATUS.json](STATUS.json), [RESULTS.md](RESULTS.md),
-[CLAIM_LEDGER.json](CLAIM_LEDGER.json) (23 entries), [RRP002_INSTRUMENT_PREREG.md](RRP002_INSTRUMENT_PREREG.md),
+[CLAIM_LEDGER.json](CLAIM_LEDGER.json) (28 entries), [RRP002_INSTRUMENT_PREREG.md](RRP002_INSTRUMENT_PREREG.md),
 [BOTTLENECK_CANDIDATES.md](BOTTLENECK_CANDIDATES.md), [SOURCE_AUDIT.md](SOURCE_AUDIT.md) and the
 package [AGENTS.md](../../experiments/reasoning_posttraining_v1/AGENTS.md).
 
@@ -19,7 +19,7 @@ outward-facing and was not authorized; ask before pushing.
 git status --short; git rev-parse HEAD
 $env:PYTHONPATH = 'C:/Users/clclc/BusinessProject/ChatBubble-rineya-reasoning-posttraining-v1'
 $py = 'C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe'
-& $py -m pytest experiments/reasoning_posttraining_v1/tests -q   # 114 passed, 0 skipped
+& $py -m pytest experiments/reasoning_posttraining_v1/tests -q   # 118 passed, 0 skipped
 ```
 
 ## RRP-001: done, and exactly what it proves
@@ -84,7 +84,7 @@ Designed and pre-registered in `RRP002_INSTRUMENT_PREREG.md`, with the impossibi
   replicated across a 39% larger sample, so the 2048 length-bias caveat is now bounded rather
   than hypothetical.
 
-## Five findings that change what you should do next
+## Findings that change what you should do next
 
 1. **`test_length` is unreachable on this host** (CL-016). v1 11k–36k tokens, v2 27k–61k; zero rows
    fit any window to 16,384. With `eager` attention, one fp32 layer's scores cost ~1.07 GiB at
