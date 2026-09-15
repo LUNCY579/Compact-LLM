@@ -285,6 +285,28 @@ def positive_control_v2(bank: list[dict], modules) -> dict:
             "model_calls": 0}
 
 
+_BARE_IN_ARRAY = re.compile(r'(?<=[\[,])\s*([A-Za-z][A-Za-z0-9_]*)\s*(?=[,\]])')
+
+
+def v2_repair(text: str) -> tuple[str, list[str]]:
+    """One minimal, auditable repair: quote bare identifiers inside JSON arrays.
+
+    The measured failure it targets is exactly `{"path":[N3,N1],"cost":12}`, which is
+    structurally correct with the right keys and plausible values and fails only because
+    the array elements are unquoted. 70 of 230 v2 baseline predictions failed this way.
+
+    This is a DIAGNOSTIC channel and must never be the headline number: primary accuracy
+    stays pass@1 under the declared strict-JSON policy. It exists to separate a
+    presentation failure from a reasoning failure (bottleneck B-3), not to inflate a score.
+    Nothing here consults a reference, and no value is ever altered -- only quoting.
+    """
+    applied = []
+    fixed = _BARE_IN_ARRAY.sub(lambda m: f'"{m.group(1)}"', text)
+    if fixed != text:
+        applied.append("quoted_bare_identifiers_in_arrays")
+    return fixed, applied
+
+
 def score_v2(prediction: str, row: dict, modules) -> dict:
     """One prediction, scored by the audited verifier. Channels stay separate."""
     got = modules["rewards"].score_response(row["world"], prediction,

@@ -1,11 +1,11 @@
 {
-  "recorded_utc": "2026-09-15T14:40:04.575491+00:00",
+  "recorded_utc": "2026-09-15T15:05:53.236129+00:00",
   "goal_status": "ACTIVE_NOT_COMPLETE",
   "branch": "research/rineya-reasoning-posttraining-v1",
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "record_base_head": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "live_head_authority": "git rev-parse HEAD, plus fresh git ls-remote; this record is not a live ref",
-  "phase": "RRP002_BASELINE_REPLICATED_AT_TWO_WINDOWS_LADDER_NOT_STARTED",
+  "phase": "RRP002_TWO_DEV_BANKS_MEASURED_V2_IS_BELOW_ITS_TRIVIAL_FLOOR",
   "data_contract_sha256": "66aa9a9d582c5f426958227a001ae640d34daf4a68c6d1cd115e38509d95c2b1",
   "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
   "runtime": "Python3.11.15 / torch2.10.0+cu126 / transformers4.57.1; native model qualification unexecuted",
@@ -13,7 +13,7 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 118,
+    "new_tests_passed": 129,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
@@ -38,7 +38,9 @@
     "dev_bank": "RRP2-DEV-V1: 384 worlds, strata {'ANSWER': 328, 'UNKNOWN': 56}, positive control 384/384",
     "shortcut_floor": "0.1458 strict accuracy, reached by ['constant_train_majority', 'constant_unknown', 'copy_question_sentinel']",
     "held_out_baseline": "source 0.2553 (85/333) at the 4096 evaluation window vs a 0.1411 shortcut floor and a 1.0000 positive control; replicates the 2048 result (0.2625, 63/240)",
-    "qualified_evaluation_windows": "2048 (trained) and 4096 (inference only, CL-027)"
+    "qualified_evaluation_windows": "2048 (trained) and 4096 (inference only, CL-027)",
+    "dev_bank_v2": "RRP2-DEV-V2: 336 worlds, strata {'ANSWER': 192, 'UNKNOWN': 48, 'IMPOSSIBLE': 96}, positive control 336/336, floor 0.2857",
+    "held_out_baseline_v2": "source 0.0174 (4/230) vs a 0.2870 floor: BELOW the trivial floor by 0.2696. Format repair moves validity 139->205 and accuracy not at all."
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -73,8 +75,8 @@
     "RL lane shut: readiness gate and on-policy pilot not attempted",
     "The 384-world DEV bank is machine-verified but was never in a human review packet (CL-029)"
   ],
-  "next_action": "Three CPU-only instrument gaps still block interpretation: a slot-aware parser for B-3 (CL-026), RRP2-DEV-V2 on the v2 validation split scored with the audited rewards.score_response for the ANSWER/UNKNOWN/IMPOSSIBLE strata v1 cannot supply (CL-019), and RRP2-PRESERVE. Then the cluster-robust paired statistics and predeclared margins. Training at 4096 would need its own qualification; only inference is qualified there.",
-  "last_goal_turn_classification": "progress: 4096 evaluation window qualified, held-out baseline replicated across two windows with every pattern stable. No training, no quality claim.",
+  "next_action": "v2 is out of reach for the source at its strict-JSON contract, and a format repair proves the gap is semantic rather than presentational (CL-033). So the first ladder arm should target the v2 response contract AND its reasoning together, measured on RRP2-DEV-V2 against the 0.2870 floor, with RRP2-DEV-V1 as the cross-grammar check. Still missing beforehand: RRP2-PRESERVE, the cluster-robust paired statistics, and predeclared margins. Training at 4096 needs its own qualification; only inference is qualified there.",
+  "last_goal_turn_classification": "progress: second DEV bank built and measured. Strong negative result on v2 - the source is below its own trivial floor, and the format repair shows why that is not a formatting story.",
   "prepared_binding": "inspection-20260915/prepared-004",
   "superseded_prepared_binding": "prepared-003 / ad3fc4c0... (training bytes identical; see CLAIM_LEDGER CL-001)",
   "plan_sha256": "9208fc92fce8c6b5bb5647c83e45d3ae7bfd2ca2bff707bd58f1662fd667e069",
@@ -95,15 +97,15 @@
   "approved_model_budget_remaining_rrp002_baseline_a2": {
     "adaptive_model_selection_rounds": 0,
     "cloud_or_teacher_spend": 0,
-    "evaluation_and_qualification_model_calls": 1263,
-    "generated_tokens_all_candidates": 88448,
-    "model_worker_launches": 7,
-    "model_worker_wall_seconds_and_conservative_gpu_seconds": 3069,
-    "new_disk_bytes": 264241152,
+    "evaluation_and_qualification_model_calls": 1029,
+    "generated_tokens_all_candidates": 59008,
+    "model_worker_launches": 6,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2143,
+    "new_disk_bytes": 260046848,
     "on_policy_rl_rollout_tokens": 0,
     "processed_training_tokens_all_attempts": 0,
-    "retries": 6,
-    "total_owned_work_wall_seconds": 4869
+    "retries": 5,
+    "total_owned_work_wall_seconds": 3942
   },
   "human_data_review_status": {
     "state": "OPERATOR_ATTESTED_NOT_PER_WORLD_REVIEWED",

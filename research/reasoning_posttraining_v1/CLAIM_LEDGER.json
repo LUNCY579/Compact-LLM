@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T14:40:04.575491+00:00",
+  "recorded_utc": "2026-09-15T15:05:53.236129+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -256,6 +256,41 @@
       "what_the_dev_bank_admissibility_rests_on_instead": "The byte-verified release archive, the release's own validate_row on all 384 rows (independent oracle re-solve, hash and word-count checks, leak refusal), a 384/384 positive control, and zero prior exposure of forge_v1 validation. Honest label: MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
       "unaffected": "CL-017 stands: no independent confirmation bank is achievable here. An approval about inputs changes nothing about that, and nothing about whether any output is correct.",
       "classification": "OPERATOR_ATTESTATION_RECORDED_WITH_EXPLICIT_SCOPE_LIMIT"
+    },
+    {
+      "id": "CL-030",
+      "topic": "RRP2-DEV-V2 exists with real three-way strata, and its floor is nearly double v1's",
+      "bank": "336 forge_v2 validation worlds, 24 per family x status bucket over 14 buckets. Strata ANSWER 192 / UNKNOWN 48 / IMPOSSIBLE 96. Evidence layouts balanced, 336 distinct case_sha256, every row asserted to contain neither its reference_text nor its id in the model-visible prompt. Positive control PASSES 336/336 through the audited verifier, exercising all three scoring paths (correct_status 144, exact_match 72, optimal_verified 120). sha256 41b1806d656f26cd...",
+      "why_it_was_needed": "v1's non-UNKNOWN strata are each confined to one family (CL-019), so a cross-family abstention analysis is only possible on v2.",
+      "floor": "0.2857, reached by always answering {\"status\":\"IMPOSSIBLE\"} -- which is also the TRAIN-fitted majority (2,444 of 16,000). v1's floor is 0.1458, so the two banks' accuracies must each be read against their OWN floor and never against each other.",
+      "window": "At 2048 only 111 of 336 rows are evaluable; at the qualified 4096 evaluation window 230 are. v2 is unusable without the wider window.",
+      "classification": "SECOND_DEV_BANK_BUILT_AND_VALIDATED"
+    },
+    {
+      "id": "CL-031",
+      "topic": "One of my own v2 baselines was oracle-assisted and the test suite caught it",
+      "defect": "A baseline named empty_witness_correct_shape scored 48/48 on the UNKNOWN stratum. It keyed off answer_shape, which is DERIVED FROM THE REFERENCE, so it was not answer-agnostic and would have inflated the shortcut floor with privileged information.",
+      "fix": "Renamed oracle_shape_empty_witness, declared in V2_ORACLE_ASSISTED, excluded from the floor, kept only as a diagnostic. Two tests hold the line: one asserts every honest baseline is invariant to deleting the reference outright, the other asserts the quarantined one genuinely does depend on it so the quarantine is not decorative.",
+      "classification": "AGENT_BASELINE_WAS_CHEATING_QUARANTINED_AND_TESTED"
+    },
+    {
+      "id": "CL-032",
+      "topic": "The source cannot do v2 at all, and it is far BELOW the trivial floor",
+      "measured": "4/230 = 0.0174 on held-out RRP2-DEV-V2 at the 4096 window, against a same-subset shortcut floor of 0.2870. It clears the floor by -0.2696: dramatically WORSE than always answering {\"status\":\"IMPOSSIBLE\"}. Source weights unchanged, 0 optimizer steps, response CE 1.0475.",
+      "all_four_correct_answers_are_trivial": "Every one of the 4 is the empty plan {\"actions\":[], \"cost\":0}, correct by coincidence on 4 prerequisite_plan worlds. Zero non-trivial answers were right. The 19 feasible_suboptimal verdicts are all the degenerate empty selection.",
+      "it_never_abstains_on_v2": "Across all 99 unanswerable rows it emitted a status key ZERO times, producing empty witnesses instead. That INVERTS its v1 behaviour, where it over-abstained with 57 false abstentions on 206 answerable rows. So the abstention behaviour tracks the response contract -- on v1 the sentinel is a copyable word in the prompt, on v2 it requires emitting a JSON status object -- rather than reflecting a stable internal calibration.",
+      "fairness_checks_passed": "Gold answers in this bank are at most 29 tokens against a 128-token generation cap, so the cap is over 4x generous and the 21 truncations are model verbosity, not an instrument limit. The positive control scores 336/336 on the bank and 230/230 on the evaluated subset.",
+      "classification": "STRONG_NEGATIVE_RESULT_BELOW_TRIVIAL_FLOOR"
+    },
+    {
+      "id": "CL-033",
+      "topic": "A format repair proves B-3 is real, large, and NOT what is holding v2 back",
+      "the_defect": "70 of 230 v2 predictions failed to parse for one mechanical reason: bare identifiers inside JSON arrays, e.g. {\"path\":[N3,N1,N2],\"cost\":12} where the elements need quoting. Structurally correct, right keys, plausible values, unquoted strings.",
+      "the_test": "A single minimal repair -- quote bare identifiers inside arrays, alter no value, consult no reference -- was applied as a separately reported DIAGNOSTIC channel. Primary accuracy stays strict pass@1 under the declared policy.",
+      "the_result": "Format validity rose 139 -> 205 of 230 and schema validity 132 -> 198, while accuracy did NOT move at all: 4 -> 4 correct, 0.0174 either way.",
+      "where_the_repaired_rows_went": "34 parse_failure -> answer_requires_status (it answered a world that required abstention), 31 -> schema (wrong keys for the family), 21 stayed parse_failure (the truncations), 1 -> invalid_witness. ZERO became correct.",
+      "why_this_matters": "The format failure was MASKING a total semantic failure, not causing the low score. Reporting '40 percent parse failures, fix the formatting' would have been wrong, and only running the repair shows it. B-3 is real and affects 87 of 230 predictions, but it is not the binding constraint on v2; the reasoning is.",
+      "classification": "DIAGNOSTIC_CHANNEL_SEPARATED_PRESENTATION_FROM_REASONING"
     }
   ]
 }
