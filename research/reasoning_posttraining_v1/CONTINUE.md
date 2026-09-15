@@ -61,6 +61,28 @@ Designed and pre-registered in `RRP002_INSTRUMENT_PREREG.md`, with the impossibi
   File `evidence/inspection-20260915/RRP2_DEV_V1_BANK.jsonl`, sha256 `26206606a2b9be1a…`.
 - **Shortcut floor measured: 0.1458 strict accuracy (56/384)**, reached by three trivial
   strategies. Report it beside any model number.
+- **A 4096 EVALUATION window is qualified** (CL-027): cached/uncached agreement 5.29e-05, peak
+  VRAM 5.38 GiB, source bytes unchanged, 0 backward passes. **Inference only** — training at
+  4096 needs its own qualification.
+- **The first held-out measurement exists, replicated across both windows** (CL-024, CL-028):
+
+| | 2048 | 4096 |
+| --- | --- | --- |
+| evaluated / refused overlength | 240 / 144 | 333 / 51 |
+| model strict accuracy | 0.2625 (63/240) | 0.2553 (85/333) |
+| shortcut floor, same subset | 0.1417 | 0.1411 |
+| positive control, same subset | 1.0000 | 1.0000 (333/333) |
+| ANSWER stratum | 47/206 | 62/286 |
+| UNKNOWN stratum | 16/34 | 23/47 |
+| false abstention on answerable | 27.7% | 28.3% |
+| unsupported answer on unanswerable | 52.9% | 51.1% |
+| sibling collision rate | 0.2147 | 0.2056 |
+
+  The source clears the floor by ~11 points, so it is doing something real. But
+  `constant_unknown` **beats it outright on the UNKNOWN stratum** (47/47 vs 23/47), and both
+  abstention error directions are large. `dialogue_memory` is **0/43**. Every pattern
+  replicated across a 39% larger sample, so the 2048 length-bias caveat is now bounded rather
+  than hypothetical.
 
 ## Five findings that change what you should do next
 
@@ -104,13 +126,19 @@ CPU-only, no budget needed:
 
 Needs a new registered experiment and envelope:
 
-5. **Measure the source model on `RRP2-DEV-V1`.** This is the first genuine held-out quality number
-   the programme would have, and it is cheap (384 rows, ≤128 new tokens, no optimizer, no
-   checkpoints). It requires a registered successor: `budget.validate_grant` pins
-   `experiment == "RRP-001-MICROFIT"` and `budget.Journal` accepts only phases
-   `qualify|train|resume`, so an eval phase is a recorded amendment, not a bypass.
-6. **Register the 4,096-window qualification** before any v2 arm.
-7. Only then the A/B/C ladder, reported review-pending unless the packet is signed.
+5. ~~Measure the source on `RRP2-DEV-V1`~~ — **done**, twice, see the table above.
+6. ~~Register the 4,096-window qualification~~ — **done for inference** (CL-027). Training at
+   4096 still needs its own qualification, with a backward pass and optimizer state.
+7. **Measure a candidate's sibling-collision rate against the source's 0.2056** — that is the
+   fluency-matched null for B-1 (CL-025). Until then B-1 is untested, not supported.
+8. Only then the A/B/C ladder, reported review-pending unless the packet is signed.
+
+Budget lanes now registered in `budget.REGISTERED`: `RRP-001-MICROFIT` (spent),
+`RRP-002-BASELINE` (launch/retry counters exhausted) and `RRP-002-BASELINE-A2`
+(amendment A2, launches 4→8 and retries 2→6 — raised because **two launches died on my own
+implementation defects**, not scientific need; see `BUDGET_AMENDMENT_A2.json`). A2 has 7
+launches, 1,263 evaluation calls and 3,069 GPU-seconds left, with training, model selection,
+RL and cloud still pinned at zero.
 
 ## Hard constraints that bit during this work
 
@@ -126,6 +154,13 @@ Needs a new registered experiment and envelope:
   ANSWER 32, IMPOSSIBLE 15, UNKNOWN 6 and no PROSE. **This agent will not self-certify it.**
 - RL stays shut. The v2 verifier now passes adversarial audit, which is a prerequisite, but the
   readiness gate and on-policy pilot are not attempted and `on_policy_rl_rollout_tokens` is 0.
+- **`instrument.py` must stay torch-free at module level** — the foreground controller imports
+  it, and importing torch there costs the child ~0.6 GiB of the headroom its own pre-load guard
+  measures. Every torch-dependent name must be imported lazily inside its function; forgetting
+  `parameter_digest` cost a supervised launch. A subprocess test now asserts this.
+- **`native_runtime.evaluate` is `@torch.no_grad()`-decorated and must stay so.** Without it a
+  caller builds an autograd graph over 28 layers of eager attention and exhausts VRAM on the
+  first long row. That cost another launch.
 - Instrument defects to fix in the successor: CL-014 (`final_evaluation_sha256` hashes wall-clock
   timing and can never match across runs), CL-008 (`qualify` charges 2 calls for ~16 forwards),
   CL-009 (30 evaluation calls of headroom left — a retried resume would be refused), CL-011
