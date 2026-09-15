@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T06:26:18.685421+00:00",
+  "recorded_utc": "2026-09-15T06:53:05.468434+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -54,6 +54,63 @@
       "observed": "The GOAL brief warns that the inherited README describes an earlier implementation boundary.",
       "status": "RRP-001 native model execution had genuinely not occurred as of the inherited head: pretrained_optimizer_steps=0 and pretrained_evaluation_calls=0 in STATUS.json, and no run receipts exist on disk. The statement was accurate for this successor, not stale.",
       "classification": "VERIFIED_ACCURATE_AS_INHERITED"
+    },
+    {
+      "id": "CL-008",
+      "topic": "qualify() under-charges its model calls",
+      "observed": "native_runtime.qualify reserves evaluation_and_qualification_model_calls=2 but performs roughly 16-17 forward passes (1 direct + 1 hidden_states + ceil(31/3)=11 cached-parity chunks + 1 perturbed + 2 gradient probes). Measured probe length was 31 tokens.",
+      "allotment": "MICROFIT_PLAN evaluation_schedule allots 'at most 128 generations plus 32 qualification calls', so the physical work stayed inside its allotment even though the journal charged 2.",
+      "decision": "native_runtime.py was NOT edited and the receipt was NOT retroactively adjusted. The discrepancy is recorded here instead. The accounting is conservative in the wrong direction (under-charging), which is a fidelity defect, not a budget breach.",
+      "classification": "ACCOUNTING_FIDELITY_DEFECT_RECORDED_NOT_REWRITTEN"
+    },
+    {
+      "id": "CL-009",
+      "topic": "Evaluation-call headroom is nearly exhausted by design",
+      "observed": "LIMITS allows 160 evaluation_and_qualification_model_calls. Planned spend: qualify 2 + train 96 (baseline/midpoint/final x 32 rows) + resume 32 (final only) = 130, leaving 30.",
+      "consequence": "A retried resume attempt needs 32 further calls and would be refused (162 > 160), even though retries:1 is nominally available. The journal fails closed, which is the correct behaviour; recovering would require an explicit amendment rather than a quiet top-up.",
+      "classification": "KNOWN_TIGHT_ENVELOPE_FAILS_CLOSED"
+    },
+    {
+      "id": "CL-010",
+      "topic": "Journal replay cost was projected as a wall-clock risk and measured as minor",
+      "audit_projection": "~0.34 s per reserve() call from an O(n^2) re-read, ~100 s of the 2400 s worker budget.",
+      "measured": "Per-update wall time on the real run held at a 3.70 s median with no pathological growth (first-half mean 5.07 s including the update-2 checkpoint write, second-half mean 3.81 s). Journal bookkeeping is inside that and is not the binding cost.",
+      "classification": "PROJECTED_RISK_MEASURED_AND_NOT_MATERIAL_AT_THIS_SCALE"
+    },
+    {
+      "id": "CL-011",
+      "topic": "Checkpoint cadence forfeits work on a late abort",
+      "observed": "engine.microfit saves only at update 2 and at the final group; Design.checkpoint_every=4 exists and is ignored by this engine.",
+      "consequence": "An abort at update 104 of 105 falls back to the update-2 checkpoint and forfeits 102 already-charged updates. This is the frozen plan's stated checkpoint_policy ('Preserve update2 and final'), so it was NOT changed mid-experiment.",
+      "classification": "FROZEN_PLAN_LIMITATION_NOT_CHANGED_MID_RUN"
+    },
+    {
+      "id": "CL-012",
+      "topic": "Two audit reader claims were wrong and were overruled by direct measurement",
+      "claims": [
+        "a reader asserted compile_row always raises 'native token prefix mismatch' under transformers 5.x and proposed editing serialization.py:52",
+        "a reader asserted build_plan yields 108 update groups"
+      ],
+      "resolution": "Neither reproduced. The pinned runtime is transformers 4.57.1, and the live qualification recompiled 32/32 approved rows exactly. group_updates over the frozen 8-exposure order yields 105 groups (59 of size 2, 46 of size 3), matching the plan element-for-element, and the executed run used 105. No code was changed on the strength of either claim.",
+      "classification": "AGENT_CLAIM_REFUTED_BY_MEASUREMENT"
+    },
+    {
+      "id": "CL-013",
+      "topic": "Binding equality forbids any repo change between the train and resume attempts",
+      "observed": "binding includes code_sha256 (RRP package identity) and checkout (HEAD sha), and checkpoints.validate_checkpoint requires binding equality on resume. checkout() additionally requires an empty `git status --porcelain --untracked-files=all`.",
+      "consequence": "Editing or committing ANY repo file between the candidate and resumed attempts would invalidate the resume it is meant to verify. The resume comparator was therefore written to the session scratchpad rather than added to the package, and all record updates were deferred until after the resumed attempt finished.",
+      "classification": "OPERATIONAL_CONSTRAINT_RESPECTED"
+    },
+    {
+      "id": "CL-014",
+      "topic": "final_evaluation_sha256 is nondeterministic by construction and cannot verify a resume",
+      "found_by": "RRP-001 resume verification; the first comparator run returned FAIL on exactly this check",
+      "observed": "engine.microfit records final_evaluation_sha256 = file_hash(final.json), while native_runtime.evaluate writes generation_wall_seconds (a time.monotonic() delta) into every record. The two attempts differ in that field in all 32 of 32 records and in no other field.",
+      "verified": "Field-by-field diff of the two final.json files: prediction, generated_ids_including_terminal, canonical_training_target_match, strict_target_text_match, literal_unknown, reference, terminated, truncated, generated_tokens_including_terminal, generation_forward_calls, prefill_tokens, fixed_ce_input_tokens, reasoning_tokens, family and parent_id are all identical. Only generation_wall_seconds differs.",
+      "consequence": "The plan criterion \"final parameters and predictions must match\" IS met: parameters are bit-identical (e8c72eb4...) and every prediction and generated id sequence is identical. But the engine field advertised as the evaluation identity can never match across runs, so any determinism or resume gate built on it fails spuriously.",
+      "resolution": "The comparator now hashes the evaluation with wall-clock timing excluded, and reports the raw file-digest mismatch as an explained expected difference rather than a failure. native_runtime.py and engine.py were NOT edited after the fact: their code identity is bound into the executed runs receipts.",
+      "recommended_for_next_experiment": "Move per-row timing out of the hashed evaluation artifact (separate timings file), or exclude timing fields before hashing, so final_evaluation_sha256 becomes a usable determinism criterion.",
+      "classification": "INSTRUMENT_DEFECT_FOUND_BY_RUNNING_IT_FIXED_IN_COMPARATOR_NOT_RETROACTIVELY"
     }
   ]
 }

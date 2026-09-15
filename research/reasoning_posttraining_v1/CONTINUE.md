@@ -2,49 +2,133 @@
 
 ## Mandatory scope
 
-Read [GOAL.md](GOAL.md), [STATUS.json](STATUS.json), [SOURCE_AUDIT.md](SOURCE_AUDIT.md), [RESULTS.md](RESULTS.md), [EXPERIMENT_REGISTRY.json](EXPERIMENT_REGISTRY.json) and the package [AGENTS.md](../../experiments/reasoning_posttraining_v1/AGENTS.md). The goal is still active. Publication and passing fixtures do not complete it.
+Read [GOAL.md](GOAL.md), [STATUS.json](STATUS.json), [RESULTS.md](RESULTS.md),
+[CLAIM_LEDGER.json](CLAIM_LEDGER.json), [SOURCE_AUDIT.md](SOURCE_AUDIT.md),
+[EXPERIMENT_REGISTRY.json](EXPERIMENT_REGISTRY.json) and the package
+[AGENTS.md](../../experiments/reasoning_posttraining_v1/AGENTS.md).
+
+**The goal is still active and is not close to complete.** A qualified instrument, a met
+microfit criterion, a verified resume and a published branch are not the model-quality
+deliverable. Nothing measured so far supports any reasoning, preservation or
+generalization claim, and nothing may be reported as one.
 
 Worktree: `C:/Users/clclc/BusinessProject/ChatBubble-rineya-reasoning-posttraining-v1`.
 Branch: `research/rineya-reasoning-posttraining-v1`.
-Implementation commit: `58bf64cf93ff918ede4b1079b8a5716ee0e1e312`.
-Parent: `59df72c2e24e6c4d3c7e4e86c1dd4ae143054400`.
 
-Refresh actual state first:
+Refresh actual state before trusting anything below:
 
 ```powershell
-git status --short
-git rev-parse HEAD
-git ls-remote --heads origin research/rineya-reasoning-posttraining-v1 codex/model-quality-audit-v2 research/model-quality-targeted-gpu-v1
+git status --short; git rev-parse HEAD
+git ls-remote --heads origin research/rineya-reasoning-posttraining-v1
 ```
 
-Do not modify the original `ChatBubble-ced-native-loader-qualification` checkout: its untracked `rineya_reasoning_forge_rl_v2/` is original source data. Source assets and both archives remain read-only there/in Downloads. All previously existing research branches are preserved.
+## What is now done, and exactly what it proves
 
-## Exact prepared inputs
+Three supervised launches ran against real Supa 1.7 weights, each with a terminal
+supervisor receipt and a settled budget entry. Receipts are committed under
+`evidence/inspection-20260915/rrp001-runs/`; checkpoint tensors (~11.3 GiB) stay on disk
+only, under `rineya-reasoning-posttraining-records/rrp001-journal/`.
 
-Actual source directory: `C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/Supa`.
-Weight SHA256: `962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b`.
-Prepared directory: `C:/Users/clclc/BusinessProject/rineya-reasoning-posttraining-records/inspection-20260915/prepared-003`.
-Data contract file SHA256: `ad3fc4c052d6c7a50c08c915069911772add1088f0c1e3db746dae94b712e5c8`.
-Selected input SHA256: `ccd5d04170935874b567961dff4c1ae29771eea203cbc4f4373181b5403f3b2d`.
-Dedicated Python: `C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe`.
+| run | outcome |
+| --- | --- |
+| `qualify-001` | PASS. 596,049,920 unique / 314,618,880 trainable in 220 tensors, recounted natively. Source state byte-identical before and after. 0 optimizer steps. 32/32 approved targets reproduced by the native tokenizer. 2048-token shape qualified. |
+| `train-001` | 105/105 updates. Fixed 32-world TRAIN probe 8/32 -> 29/32 -> **31/32**, response CE 1.496 -> 0.0855 -> 0.0122. Pre-registered criterion was >= 31/32: **met**. Frozen weights unchanged. |
+| `resume-001` | PASS, 15/15 comparator checks. 103 updates from `checkpoint-00002` in a fresh process reproduced the candidate's final parameters **bit-identically** and every per-row prediction. |
 
-The source/tokenizer bind the existing4.57.1 native lane; native model execution on this successor has not occurred. Human review remains pending. All96v2/46v1 source files matched the archives before imports, and the source-weight header was counted without instantiation. Reverify bindings before actual model use.
+**This is engineering evidence only.** The probe rows are the same 32 rows that were
+trained on, so 31/32 measures fitting, not generalization. What it does establish is that
+the optimizer, label masking, EOS handling, generation path, scorer, checkpoint/resume and
+budget accounting all work end to end on real weights.
 
-## Next work and approval
+Do not treat `checkpoint-00105` as a quality candidate. Do not export, merge, quantize or
+register it.
 
-The user was asked through an asynchronous question for the exact [engineering envelope](BUDGET_REQUEST.json). **No answer had arrived when this record was written.** A preselected UI choice is not approval. Record a real session approval and its exact scope before model execution. Do not reuse old MQ reviews, consumed permits or mere goal-mode authority. The numeric request covers qualification, failed attempts/retries, the32-world microfit and fresh-process resume verification; broad SFT/RL/teachers remain closed.
+## Authorization state
 
-Continue permitted code work while awaiting that answer: implement the missing **supervised native controller** around `engine.microfit`, using the existing lightweight MQ supervisor, guarded child context and cooperative GPU lease. It must validate source/data/code/runtime bindings before load; enforce a durable all-attempt budget journal; count qualification/CE/prefill/decode/update/disk costs; fail closed on incomplete state; collect a real zero-update source/longest-shape qualification; then execute the fixed plan and a separate fresh-process resume verification. A lower-level engine callback is not a budget or native qualification.
+[MODEL_EXECUTION_AUTHORIZATION.json](MODEL_EXECUTION_AUTHORIZATION.json) records the
+operator's verbatim session grant and the numeric limits this agent instantiated from it
+(labelled agent-derived, not operator-quoted). [GRANT.json](GRANT.json) is the code-enforced
+envelope, bound to the exact prepared bytes and plan digest.
 
-Keep current resource guards. The last observed5.46GiB free host memory (23:36 local) was below the6GiB training preload threshold even before Torch overhead; it is not current telemetry. Check actual live Python jobs, RAM/VRAM/disk and unexplained locks before any model command. Never close other applications, evict workers, delete checkpoints, assume a lock proves a live process, or retry a timed-out observation as if the model died. All owned preprocessing handles recorded here are terminal; no pretrained job was launched.
+The RRP-001-MICROFIT envelope is now largely spent and **its single
+`adaptive_model_selection_rounds` is consumed**. Remaining measured headroom is in
+`STATUS.json`. Any further training requires a **registered successor experiment with its
+own envelope** — do not stretch this grant. Cloud, teacher, RL and release lanes remain
+pinned at zero and were never opened.
 
-Exact current CPU check command after controller edits:
+`human_data_review` is still **NOT_PERFORMED**. This agent did not and will not
+self-certify it. Until the operator signs `REVIEW_PACKET.md` (85 worlds prepared), no
+DEV/retention comparison may be presented as a quality claim.
+
+## Exact reproduction
 
 ```powershell
-$env:CUDA_VISIBLE_DEVICES=''
-& 'C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe' -m pytest experiments/reasoning_posttraining_v1/tests -q
+$env:PYTHONPATH = 'C:/Users/clclc/BusinessProject/ChatBubble-rineya-reasoning-posttraining-v1'
+$py = 'C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe'
+& $py -m pytest experiments/reasoning_posttraining_v1/tests -q   # 76 passed, 0 skipped
 ```
 
-There is deliberately **no claimed runnable native experiment command yet**: controller implementation and qualification are unfinished. Add the exact supervised command here once it exists and has passed fixture gates. Do not substitute the historical `--_worker` bypass or call the lower-level engine on real weights directly.
+Native commands take `--source --prepared --plan --grant --journal --run-id --timeout
+--confirm-model-execution`; see the three `launch.json` files in the evidence tree for the
+exact argv actually used. Bindings are `prepared-004` + `preflight-002`
+(`data_contract_sha256 66aa9a9d...`, `plan_sha256 9208fc92...`); the source is
+`ChatBubble-ced-native-loader-qualification/Supa`, read-only.
 
-After microfit, preserve results whether it passes or fails and select one falsifying diagnosis. A successful training-only fit opens consideration of the A/B/C ladder; it is not reasoning improvement. A failure retires or diagnoses that recipe, not sub-billion models. Keep the full remaining goal and its confirmation/retention obligations intact.
+**A native run requires a clean checkout of this branch.** `controller.checkout()` refuses
+a dirty tree, and `binding` includes the package code hash and HEAD, which
+`validate_checkpoint` enforces. Consequence, learned the hard way (CL-013): you cannot
+edit or commit **any** repo file between a candidate attempt and its resume without
+invalidating the resume.
+
+## The next work, in order
+
+None of step 1 needs a model, a GPU or a budget. Do it first.
+
+1. **Build the measurement instrument.** This is the real blocker and it does not exist:
+   - a repeatedly usable DEV bank, a preservation/abstention DEV, and a genuinely fresh
+     confirmation bank kept out of the optimizing loop (`confirmation` is still
+     `NOT_ESTABLISHED` in the data contract);
+   - UNKNOWN and IMPOSSIBLE strata — present quotas cover only `EXACT_PRIMITIVE`,
+     8 families x 4 worlds;
+   - shortcut baselines (constant-label, cue-copy, last-mentioned) and a positive-control
+     exact solver, so a broken instrument cannot be misread as a model result;
+   - same-world short/long and early/middle/late evidence variants, with operator depth
+     varied separately from distractor length.
+2. **Predeclare** primary contrasts, family weights, cluster units, practical margins,
+   uncertainty method and the allowed number of model-selection reads — before any arm runs.
+3. **Register a successor** experiment and request one concrete bounded envelope for it.
+4. **Then** run the A/B/C ladder. Report it as review-pending unless the packet is signed.
+
+The baseline probe already decomposes the source model's failures into three distinct
+mechanisms, which should not be chased with one undifferentiated mixture:
+
+- **abstention miscalibration** — the source emitted 12 literal `UNKNOWN`s against 6 true
+  `UNKNOWN` references, over-abstaining on computable items and answering `amber` where the
+  truth was `UNKNOWN`;
+- **response-contract violation** — `dialogue_memory` 0/4, emitting prose
+  ("Use Workshop for my ve...") instead of `venue=Workshop`;
+- **execution and binding errors** — `program_trace` arithmetic (`12` vs `1`) and
+  `relational_join` wrong-entity (`OrenHill` vs `MiraGlass`).
+
+The one world that 8 exposures never fitted is a `signed_ledger` arithmetic case
+(`211` vs `145`) — a useful, specific falsification target.
+
+## Known instrument defects to fix in the successor
+
+- **CL-014**: `engine.final_evaluation_sha256` hashes `final.json`, which
+  `native_runtime.evaluate` fills with `generation_wall_seconds`. It is nondeterministic by
+  construction and useless as a resume criterion. Move timing out of the hashed artifact.
+  The comparator works around it by hashing with timing excluded.
+- **CL-008**: `qualify()` charges 2 evaluation calls while performing ~16-17 forwards.
+  Under-charging, inside the plan's 32-call allotment, but not faithful accounting.
+- **CL-009**: evaluation-call headroom is 30. A retried resume needs 32 and would be
+  refused. Fails closed, correctly; needs an amendment, not a quiet top-up.
+- **CL-011**: checkpoints exist only at update 2 and the final update, so a late abort
+  forfeits ~102 updates. `Design.checkpoint_every` is ignored by this engine.
+- **CL-004**: budget-journal tail truncation is undetectable by construction. Run evidence
+  without a reservation *is* refused, which covers every worker attempt.
+- Promote `evidence/inspection-20260915/rrp001-runs/verify_resume.py` into the package.
+
+Preserve negative results. Never extend a test until significance appears, never pool seed
+measurements into artificial sample size, and keep `CLAIM_LEDGER.json` growing rather than
+resolving contradictions silently.
