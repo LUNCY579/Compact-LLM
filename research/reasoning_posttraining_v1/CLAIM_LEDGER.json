@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T06:58:19.959297+00:00",
+  "recorded_utc": "2026-09-15T07:22:58.036287+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -120,6 +120,17 @@
       "resolution": "The comparator now hashes the evaluation with wall-clock timing excluded, and reports the raw file-digest mismatch as an explained expected difference rather than a failure. native_runtime.py and engine.py were NOT edited after the fact: their code identity is bound into the executed runs receipts.",
       "recommended_for_next_experiment": "Move per-row timing out of the hashed evaluation artifact (separate timings file), or exclude timing fields before hashing, so final_evaluation_sha256 becomes a usable determinism criterion.",
       "classification": "INSTRUMENT_DEFECT_FOUND_BY_RUNNING_IT_FIXED_IN_COMPARATOR_NOT_RETROACTIVELY"
+    },
+    {
+      "id": "CL-015",
+      "topic": "This agent's own B-1 finding was over-claimed and then refuted by its own test",
+      "first_claim": "Recorded in BOTTLENECK_CANDIDATES.md and in commit 3967d06: the one unfitted world's prediction 211 was 'uniquely explained by opening + last delta only (241-30)', i.e. a last-mentioned recency shortcut, on the grounds that no other arithmetic rule tested reproduced 211.",
+      "what_was_missed": "A non-arithmetic explanation was not tested. World RRF1-7158b22893bb3c80418b in the same 32-row set is also signed_ledger and its gold answer IS 211 (opening 233 + posted sum -22). The two prompts are structurally near-identical.",
+      "discriminating_test": "The untrained source model could not have memorized anything, so its baseline prediction separates the hypotheses. Source predicted UNKNOWN on the failing world, not 211. 211 appears only at midpoint and final, after fitting, while the sibling world is answered 211 correctly.",
+      "corrected_conclusion": "The recency-shortcut reading is REFUTED: 241-30 and 233-22 both equal 211 by coincidence. The mechanism evidenced is cross-world memorization interference induced by the microfit - CE driven to 0.0000 and one world inheriting its structural sibling's answer.",
+      "why_it_matters": "The two readings prescribe opposite remedies. A reasoning-capacity/shortcut reading says apply more state-history pressure and more exposures; an interference reading says more exposures of similar worlds make it worse and the ladder needs collision monitoring. The headline 31/32 conceals an interference failure.",
+      "still_n_equals_1": "The corrected reading is also a single world. With 4 worlds per family and few distinct numeric answers, matching a sibling gold by accident is not rare. The falsifying test now requires reporting that chance level explicitly.",
+      "classification": "AGENT_OVERCLAIM_SELF_REFUTED_BOTH_READINGS_PRESERVED"
     }
   ]
 }
