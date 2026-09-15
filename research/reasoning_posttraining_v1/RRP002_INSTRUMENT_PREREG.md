@@ -217,3 +217,60 @@ and the uncertainty method, must be built for RRP-002. They do not exist to reus
 - Both length-stress splits are unusable on this host (§2), which is a host limit and says
   nothing about the model or about sub-billion models generally.
 - Human data review remains NOT PERFORMED. This agent will not self-certify it.
+
+## 10. Amendment A1 (2026-09-15): what the RRP2-PRESERVE build changed, and what it did not
+
+This section is **appended**. Nothing above it has been edited. A pre-registration that gets
+quietly rewritten to match what was built is not a pre-registration, so the deltas live here and
+in full on `evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json` under
+`corrections_to_the_registered_design`.
+
+Step 5 (`Build RRP2-PRESERVE`) is **done**: 768 rows, positive control 768/768, admission audit
+clean, shortcut floor **0.4375**. Six corrections were forced by measurement.
+
+| id | what was registered | what the data says | did a number move |
+| --- | --- | --- | --- |
+| PRES-C1 | (a) one row per (domain, reasoning_family, decision) cell -> 384 = 192+192 | 324 cells of exactly 15 rows, and `decision` is fully determined by `reasoning_family`, so one-per-cell gives 324 split 270/54 | totals kept, mechanism replaced by a deterministic largest-remainder allocation |
+| PRES-C2 | (c) cap <=4 rows per `base_template_family` | only 5 base families exist, so the cap admits <=20 rows while the same line demands 192; there are 59 `template_family` values | no accuracy; it changes which rows are admitted |
+| PRES-C3 | (c) has no decisive-evidence pairs, only shared base templates | **refuted**: 40 `counterfactual_group_id` groups of 2, every one an abstain/answerable pair differing by the decisive fact | yes -- it adds 40 within-pair calibration contrasts the design believed impossible |
+| PRES-C4 | exclude every v3 `insufficient_information` row that is not an exact-abstain final turn | that would leave 0 answerable rows where 96 are required | read as a ban on *relabelling*, which is the only non-contradictory reading |
+| PRES-C5 | abstention cause missing-vs-conflict, cross-tabulated | **two** abstention sentences exist, and `direct_reasoning` requires the missing-information one for 405/405 of its *conflicting_evidence* rows too | yes -- 48 rows would have been scored correct for abstaining with the wrong sentence |
+| PRES-C6 | zero tolerance on id / normalized first turn / digit-blinded prompt | at zero tolerance the bank refuses itself; leakage against every other bank is 0 on all four axes, but internal digit-blinded clusters are 589 for 768 rows | yes, and it is the biggest one: sub-bank (b) has **16** effective units, not 192 |
+
+### Two corrections to sections above, stated plainly
+
+**§1 was too broad.** It says "nothing is label-sealed". That holds for the two Forge releases.
+It does **not** hold for the non-Forge v2.3 corpus, which ships `direct_reasoning/fresh_sealed`
+(3,240 rows) and `procedural_rag/fresh_sealed` (720) under an explicit one-shot policy, still
+unconsumed. The honest sentence is *"no independent confirmation bank is available **to
+RRP-002**"* — because those 3,960 rows are sealed by **another programme's** pre-registration,
+and scoring them here would spend there what it bought here. Both are registered `ANY_READ` in
+`QUARANTINE.json`: digested, never parsed. See CL-035.
+
+**§3's missing-vs-conflict cross-tabulation is narrower than it reads.** It is a *contract*
+distinction only in `procedural_rag`. In `direct_reasoning` both abstention causes require the
+identical sentence, so the cross-tabulation there is a difficulty contrast over metadata, not a
+response-level comparison. No report may imply otherwise. See CL-037.
+
+### What step 6 must now assume
+
+The cluster unit is no longer a free choice. Every admitted row carries `cluster_id`
+(digit-blinded last user turn), and the effective unit counts are measured, not assumed:
+
+| sub-bank | rows | effective clusters |
+| --- | --- | --- |
+| (a) direct_reasoning | 384 | 384 |
+| (b) procedural_rag | 192 | **16** |
+| (c) v3 answer_or_abstain | 192 | 189 |
+
+Any interval on sub-bank (b) computed as though its 192 rows were independent would be far too
+narrow. The 40 complete minimal pairs in (c) are the natural paired unit and are the strictest
+available read of abstention calibration.
+
+### Unchanged
+
+`RRP2-PRESERVE` remains **DEV ONLY** and can never be quoted as confirmation: residual_v23 dev
+was read by the completed v2.3 run's dose calibration and DEV/OOD selection, and every admitted
+v3 row is `split: train` with `human_review_status: pending`. Both bars are machine-enforced.
+Human data review remains **NOT PERFORMED**, and the bank is labelled
+`MACHINE_VERIFIED_NOT_HUMAN_REVIEWED`.

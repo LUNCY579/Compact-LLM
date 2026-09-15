@@ -291,6 +291,75 @@
       "where_the_repaired_rows_went": "34 parse_failure -> answer_requires_status (it answered a world that required abstention), 31 -> schema (wrong keys for the family), 21 stayed parse_failure (the truncations), 1 -> invalid_witness. ZERO became correct.",
       "why_this_matters": "The format failure was MASKING a total semantic failure, not causing the low score. Reporting '40 percent parse failures, fix the formatting' would have been wrong, and only running the repair shows it. B-3 is real and affects 87 of 230 predictions, but it is not the binding constraint on v2; the reasoning is.",
       "classification": "DIAGNOSTIC_CHANNEL_SEPARATED_PRESENTATION_FROM_REASONING"
+    },
+    {
+      "id": "CL-034",
+      "topic": "The quarantine is a scoped registry, not a blocklist, because one flag would either leak a seal or refuse a bank we are entitled to build",
+      "the_defect": "My first instinct was a boolean 'contaminated' flag per bank. That is wrong in both directions here. residual_capability_v23 dev is selection-exposed, so it must never be trained on or quoted as confirmation -- but it is the legitimate and registered source of the preservation DEV bank. Meanwhile both fresh_sealed splits must not be opened at all. One flag makes those two cases identical.",
+      "the_test": "Every QUARANTINE.json entry carries `bars`, a subset of (ANY_READ, TRAIN, SELECTION, DEV, CONFIRMATION), and refuse(ids, registry, use=...) is scoped by use. Three tests pin it: a DEV build from a TRAIN-barred split is permitted, the same ids are refused for CONFIRMATION, and an ANY_READ entry is refused for every use including DEV.",
+      "the_result": "18 entries registered, 17 artifacts present, 3 ANY_READ-barred. Every asserted row count in RRP002_INVENTORY.json was re-measured and MATCHED exactly: forge test_iid 200, test_transfer 200, splits_onpanel 845/120, residual dev/ood_dev 4860/4860/1080/1080, the four consumed sealed TESTs 738/792/1320/4050, Long_Context_Demo 256, ILL test 1024. Zero mismatches.",
+      "why_this_matters": "The inventory's numbers were assertions in a document; they are now measured and hash-recorded. And the scoping is what lets the guard run on every build without being routinely overridden -- a guard that must be bypassed to do ordinary work gets bypassed permanently.",
+      "unresolved": "mq-data-001 is asserted SUPERSEDED by the inventory, but no SUPERSEDED.txt exists in either checkout. Recorded with present=false and no digest rather than dropped.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/QUARANTINE.json"
+      ]
+    },
+    {
+      "id": "CL-035",
+      "topic": "RRP-002 declines an unconsumed sealed split it could have used, and says so",
+      "the_defect": "RRP002_INSTRUMENT_PREREG.md section 1 states flatly that 'nothing is label-sealed' and that no independent confirmation bank is achievable here. That is true of the two Forge releases. It is NOT true of the non-Forge v2.3 corpus, which ships direct_reasoning/fresh_sealed (3,240 rows) and procedural_rag/fresh_sealed (720 rows) under an explicit one-shot policy, unconsumed.",
+      "the_test": "Read SEALED_REGISTRY.json and SEALED_DATA_POLICY.md directly. The policy says the file must not be used for mining, training, dose calibration or DEV selection, and is evaluated exactly once after the v2.3 winner is frozen.",
+      "the_result": "Those 3,960 rows are genuinely policy-sealed and genuinely unspent -- the strongest held-out surface on this machine. They are also NOT ours: the seal belongs to the v2.3 programme's pre-registration, and scoring them for RRP-002 would consume there what it bought here. Both are registered ANY_READ in QUARANTINE.json and only digested, never parsed.",
+      "why_this_matters": "This corrects the prereg's blanket claim while making the programme's position stricter, not looser. The honest sentence is 'no independent confirmation bank is available TO RRP-002', not 'nothing is sealed'.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/QUARANTINE.json",
+        "short-response-model-phase-0-1-2/data/phase_9_student_distillation/residual_capability_v23/SEALED_REGISTRY.json"
+      ]
+    },
+    {
+      "id": "CL-036",
+      "topic": "The preservation bank needed six corrections to its own pre-registered design, and one of them was found by a guard rejecting my build",
+      "the_defect": "The registered RRP2-PRES-DEV design could not be built as written. Four of its lines were arithmetically or logically impossible against the measured data, one of its stated limitations was false, and my own scorer's assumption about the abstention contract was wrong.",
+      "the_test": "Build it and let the guards refuse. PRES-C1: 'one per (domain, reasoning_family, decision) cell' yields 324 rows split 270/54, not the registered 384 split 192/192, because decision is fully determined by reasoning_family across 324 cells of exactly 15 rows. PRES-C2: a cap of <=4 per base_template_family admits at most 20 rows while the same line demands 192 (5 base families exist; 59 template_family values do). PRES-C4: excluding every non-exact-abstain insufficient_information row would leave 0 answerable rows where 96 are required. PRES-C5: my scorer assumed ONE abstention sentence and its relabelling guard rejected the build on v23_approval_app23869_v5.",
+      "the_result": "Registered totals kept where they were deliberate; mechanisms corrected and recorded on the artifact. Bank built: 768 rows, 384 answerable / 384 unanswerable, positive control 768/768, admission audit clean, shortcut floor 0.4375 by constant_abstain.",
+      "why_this_matters": "A pre-registration that is quietly edited to match what got built is worthless. All six deltas are recorded on the build artifact with what was registered, what was measured, and whether a number moved -- so the difference between the plan and the build is readable without a diff. The prereg text itself was not rewritten; it carries an amendment pointer.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-037",
+      "topic": "There are TWO abstention sentences, and direct_reasoning requires the missing-information one even when the cause is contradiction",
+      "the_defect": "I assumed abstention meant one exact sentence, \"I don't know based on the available information.\". It does not. procedural_rag conflict rows require \"The available sources conflict, so I can't give one certain answer.\", pinned in each row's response_contract.requirements.",
+      "the_test": "Count the distinct gold strings per family. direct_reasoning insufficient_information 405/405 -> the missing-information sentence; direct_reasoning conflicting_evidence 405/405 -> THE SAME SENTENCE; procedural_rag abstain 180/180 -> missing-information; procedural_rag conflict 180/180 -> the conflict sentence.",
+      "the_result": "The abstention cause is in the metadata of both sub-banks but in the RESPONSE CONTRACT of only one. So direct_reasoning cannot support a contract-level missing-vs-conflict comparison at all -- its two causes are indistinguishable from the response. The scorer now derives the required sentence per row from that row's gold, and reports wrong_abstention_kind as its own channel.",
+      "why_this_matters": "Had the first scorer shipped, emitting the missing-information sentence on a row where the sources contradict each other would have scored CORRECT for 48 of 768 rows, and the prereg's promised missing-vs-conflict cross-tabulation would have been reported as a contract distinction for 384 rows where it is only a metadata one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-038",
+      "topic": "768 rows are 589 clusters, and sub-bank (b)'s 192 rows are 16 -- so the row count is the wrong denominator",
+      "the_defect": "The registered admission check was 'MQ-001 data.overlap_audit at zero tolerance on id / normalized first user turn / digit-blinded prompt'. Applied literally, the bank refuses ITSELF: 24 internal digit-blinded collisions.",
+      "the_test": "Separate leakage from redundancy and measure both. Against every other bank -- sealed.jsonl 110, sealed_roleplay_v2_DO_NOT_TRAIN.jsonl 400, dev.jsonl 510, dev_roleplay_v2.jsonl 400, and the 32 selected TRAIN worlds -- collisions on all four axes: ZERO. Internally: all 768 rows pose distinct questions verbatim, but digit blinding collapses them to 589 clusters, 19 clusters holding 198 rows, largest 18.",
+      "the_result": "Every large cluster is sub-bank (b): its 192 rows share just 16 digit-blinded question templates, one per procedure family per contract. Sub-bank (c)'s minimal pairs collide by construction -- the pair IS the same sentence with the decisive number removed. So redundancy is measured and published, not gated, and every row now carries cluster_id = digit-blinded last user turn.",
+      "why_this_matters": "This is the largest correction of the round and it lands on the statistics layer that has not been built yet. An interval computed on 192 independent rows in sub-bank (b) would be far too narrow. The cluster unit is now carried on the data so the statistics layer cannot silently pick a looser one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-039",
+      "topic": "The registered design said the v3 stratum had no decisive-evidence pairs. It has 40, and they are the strongest unit in the bank",
+      "the_defect": "The registered design stated: 'the stratum only has 5 base families over 250 rows, so pairing is by shared base template, NOT by a decisive-evidence swap -- state that limitation on the artifact'. I nearly wrote that limitation down as given.",
+      "the_test": "Every row carries counterfactual_group_id. Group the 250 answer_or_abstain rows by it and inspect the mixed groups.",
+      "the_result": "40 groups of size 2, and all 40 hold exactly one exact-abstain row and one answerable row differing by the presence of the decisive fact. Example: 'A car travels 30 mph for 4 hours. Distance?' -> '120 miles.' against 'A car travels for 4 hours, but its speed is not given. Distance?' -> the abstain sentence. That is precisely a decisive-evidence swap. All 40 are admitted and carry pair_id.",
+      "why_this_matters": "These 40 pairs test abstention CALIBRATION rather than accuracy: the two prompts differ by the decisive fact alone, so abstaining on both, or answering both, demonstrates insensitivity to evidence rather than inaccuracy. summarize() reports that four-way split -- evidence_sensitive, abstains_regardless, answers_regardless, inverted. The registered limitation is withdrawn for these 40 and still stands for the other 112 rows of (c).",
+      "why_i_nearly_missed_it": "The limitation was written in my own registered design, in the confident voice. Inheriting it would have cost the bank its best analysis unit. It was refuted by reading one metadata field.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
     }
   ]
 }

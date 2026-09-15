@@ -1,11 +1,11 @@
 {
-  "recorded_utc": "2026-09-15T15:05:53.236129+00:00",
+  "recorded_utc": "2026-09-15T00:00:00Z",
   "goal_status": "ACTIVE_NOT_COMPLETE",
   "branch": "research/rineya-reasoning-posttraining-v1",
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "record_base_head": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "live_head_authority": "git rev-parse HEAD, plus fresh git ls-remote; this record is not a live ref",
-  "phase": "RRP002_TWO_DEV_BANKS_MEASURED_V2_IS_BELOW_ITS_TRIVIAL_FLOOR",
+  "phase": "RRP002_THREE_DEV_BANKS_BUILT_PRESERVATION_INSTRUMENT_READY_STATS_LAYER_NEXT",
   "data_contract_sha256": "66aa9a9d582c5f426958227a001ae640d34daf4a68c6d1cd115e38509d95c2b1",
   "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
   "runtime": "Python3.11.15 / torch2.10.0+cu126 / transformers4.57.1; native model qualification unexecuted",
@@ -13,7 +13,7 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 129,
+    "new_tests_passed": 160,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
@@ -30,7 +30,7 @@
     "engineering_microfit_train_probe": "31/32 (criterion >= 31)",
     "source_baseline_train_probe": "8/32",
     "resume_verification": "PASS (15/15 checks)",
-    "claim_ledger_entries": 14,
+    "claim_ledger_entries": 39,
     "bottleneck_candidates": "4 named with falsifying tests (BOTTLENECK_CANDIDATES.md)",
     "instrument_design": "RRP002_INSTRUMENT_PREREG.md (design only, nothing built or run)",
     "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model",
@@ -40,7 +40,15 @@
     "held_out_baseline": "source 0.2553 (85/333) at the 4096 evaluation window vs a 0.1411 shortcut floor and a 1.0000 positive control; replicates the 2048 result (0.2625, 63/240)",
     "qualified_evaluation_windows": "2048 (trained) and 4096 (inference only, CL-027)",
     "dev_bank_v2": "RRP2-DEV-V2: 336 worlds, strata {'ANSWER': 192, 'UNKNOWN': 48, 'IMPOSSIBLE': 96}, positive control 336/336, floor 0.2857",
-    "held_out_baseline_v2": "source 0.0174 (4/230) vs a 0.2870 floor: BELOW the trivial floor by 0.2696. Format repair moves validity 139->205 and accuracy not at all."
+    "held_out_baseline_v2": "source 0.0174 (4/230) vs a 0.2870 floor: BELOW the trivial floor by 0.2696. Format repair moves validity 139->205 and accuracy not at all.",
+    "quarantine_registry": "QUARANTINE.json: 18 entries, 17 artifacts present, 3 ANY_READ-barred, 0 row-count mismatches against the inventory's assertions",
+    "rrp2_preserve_dev_bank": "RRP2-PRES-DEV built: 768 rows, 384 answerable / 384 unanswerable, 40 complete minimal pairs, positive control 768/768, admission audit clean, shortcut floor 0.4375",
+    "rrp2_preserve_effective_clusters": {
+      "direct_reasoning": 384,
+      "procedural_rag": 16,
+      "v3_answer_or_abstain": 189
+    },
+    "preregistration_amendments": "A1: six corrections (PRES-C1..C6) appended to RRP002_INSTRUMENT_PREREG.md without editing the original text"
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -67,15 +75,16 @@
   },
   "pending_budget_request": "SATISFIED by MODEL_EXECUTION_AUTHORIZATION.json + GRANT.json; BUDGET_REQUEST.json retained as the original unmodified request",
   "blockers": [
-    "No independent confirmation bank is achievable from this machine (CL-017) - structural, and unaffected by the data approval",
+    "No independent confirmation bank is available TO RRP-002 (CL-017, bounded by CL-035): the Forge releases are unsealed, and the one genuinely sealed unconsumed surface on this machine -- residual_v23 fresh_sealed, 3,960 rows -- belongs to another programme's pre-registration and is registered ANY_READ",
     "Both length-stress splits exceed any qualifiable window on this host (CL-016)",
     "Training at 4096 is NOT qualified; only inference is (CL-027)",
-    "Still missing: RRP2-DEV-V2, RRP2-PRESERVE, a slot-aware parser for B-3, and the cluster-robust paired statistics layer",
+    "The cluster-robust paired statistics layer does not exist yet, and CL-038 now constrains it: sub-bank (b) of RRP2-PRES-DEV has 16 effective units for 192 rows, so row-level intervals there would be far too narrow",
     "Predeclared primary contrasts, family weights, cluster units and practical margins do not exist yet",
+    "A slot-aware parser for v1 dialogue_memory (B-3 on v1) is still unmeasured (CL-026)",
     "RL lane shut: readiness gate and on-policy pilot not attempted",
-    "The 384-world DEV bank is machine-verified but was never in a human review packet (CL-029)"
+    "Every DEV bank is machine-verified and none was in a human review packet (CL-029)"
   ],
-  "next_action": "v2 is out of reach for the source at its strict-JSON contract, and a format repair proves the gap is semantic rather than presentational (CL-033). So the first ladder arm should target the v2 response contract AND its reasoning together, measured on RRP2-DEV-V2 against the 0.2870 floor, with RRP2-DEV-V1 as the cross-grammar check. Still missing beforehand: RRP2-PRESERVE, the cluster-robust paired statistics, and predeclared margins. Training at 4096 needs its own qualification; only inference is qualified there.",
+  "next_action": "The instrument is now complete enough to support an arm: three DEV banks exist (RRP2-DEV-V1 384 rows floor 0.1458, RRP2-DEV-V2 336 rows floor 0.2857, RRP2-PRES-DEV 768 rows floor 0.4375), each with its own positive control at 100% and its own shortcut floor. NEXT, and it is a prerequisite rather than a nicety: the cluster-robust world-paired statistics layer, which must cluster on the `cluster_id` carried on every RRP2-PRES-DEV row (CL-038) and use the 40 complete minimal pairs as the paired unit for abstention calibration (CL-039). Then predeclare primary contrasts, family weights, cluster units, practical margins and the allowed number of model-selection reads. Only then the first ladder arm, which per CL-033 must target the v2 response contract AND its reasoning together, measured against the 0.2870 same-subset floor with RRP2-DEV-V1 as the cross-grammar check and RRP2-PRES-DEV as the preservation guard. Training at 4096 needs its own qualification; only inference is qualified there.",
   "last_goal_turn_classification": "progress: second DEV bank built and measured. Strong negative result on v2 - the source is below its own trivial floor, and the format repair shows why that is not a formatting story.",
   "prepared_binding": "inspection-20260915/prepared-004",
   "superseded_prepared_binding": "prepared-003 / ad3fc4c0... (training bytes identical; see CLAIM_LEDGER CL-001)",
@@ -111,7 +120,33 @@
     "state": "OPERATOR_ATTESTED_NOT_PER_WORLD_REVIEWED",
     "record": "OPERATOR_DATA_APPROVAL.json",
     "covers": "the 85-world review packet, including all 32 microfit training worlds",
-    "does_not_cover_per_world": "the 384-world RRP2-DEV-V1 bank (disjoint from the packet)",
+    "does_not_cover_per_world": "the 384-world RRP2-DEV-V1 bank, the 336-row RRP2-DEV-V2 bank and the 768-row RRP2-PRES-DEV bank (all disjoint from the 85-world packet)",
     "dev_bank_label": "MACHINE_VERIFIED_NOT_HUMAN_REVIEWED"
+  },
+  "instrument_banks": {
+    "RRP2-DEV-V1": {
+      "rows": 384,
+      "shortcut_floor": 0.1458,
+      "confirmation_eligible": false
+    },
+    "RRP2-DEV-V2": {
+      "rows": 336,
+      "shortcut_floor": 0.2857,
+      "confirmation_eligible": false,
+      "note": "the 4096-window evaluated subset is 230 rows, floor 0.2870"
+    },
+    "RRP2-PRES-DEV": {
+      "rows": 768,
+      "shortcut_floor": 0.4375,
+      "confirmation_eligible": false,
+      "effective_clusters": {
+        "direct_reasoning": 384,
+        "procedural_rag": 16,
+        "v3_answer_or_abstain": 189
+      },
+      "complete_minimal_pairs": 40,
+      "bank_sha256": "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975"
+    },
+    "never_compare_across_banks": "each bank has its own floor -- 0.1458, 0.2857 and 0.4375 -- so an accuracy is only meaningful against its own"
   }
 }

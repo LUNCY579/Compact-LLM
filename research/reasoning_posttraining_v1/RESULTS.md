@@ -112,19 +112,45 @@ plan asked for. It also means the recorded step log is reproducible, not a one-o
 
 ## What comes next
 
-The instrument is trustworthy; the research question is untouched. Before any arm of the
-A/B/C ladder can support a claim, the following must exist, and none of it is built yet:
+The instrument is now built and the research question is measured but not yet moved. Of the
+five prerequisites recorded here originally, three are done, one is done-with-a-caveat, and one
+is structurally impossible:
 
-1. A repeatedly usable DEV bank, a preservation/abstention DEV, and a genuinely fresh
-   confirmation bank. The data contract still records `confirmation: NOT_ESTABLISHED`.
-2. UNKNOWN and IMPOSSIBLE strata. Present selection quotas cover only `EXACT_PRIMITIVE`,
-   8 families x 4 worlds.
-3. Shortcut baselines (constant-label, cue-copy, last-mentioned) and a positive-control
-   exact solver, so a broken instrument cannot be read as a model result.
-4. ~~Operator sign-off~~ — the operator has attested the data (CL-029). Note the attestation
-   does not reach the 384-world DEV bank per-world; that bank rests on machine verification.
-5. A registered successor experiment with its own numeric envelope. This grant is scoped
-   to `RRP-001-MICROFIT` and its single adaptive round is now spent.
+1. ~~A repeatedly usable DEV bank and a preservation/abstention DEV~~ — **both built.** Three
+   banks now exist, each with its own positive control at 100% and its own shortcut floor:
+
+   | bank | rows | floor | domain |
+   | --- | --- | --- | --- |
+   | `RRP2-DEV-V1` | 384 | 0.1458 | Forge v1, plain-string answers |
+   | `RRP2-DEV-V2` | 336 | 0.2857 | Forge v2, strict-JSON answers |
+   | `RRP2-PRES-DEV` | 768 | 0.4375 | non-Forge ordinary language + abstention |
+
+   Each accuracy is meaningful **only against its own floor** and never against another bank's.
+   A genuinely fresh confirmation bank remains **NOT_ESTABLISHED** and is not achievable here
+   (CL-017), bounded precisely by CL-035: the one sealed unconsumed surface on this machine is
+   3,960 `residual_v23 fresh_sealed` rows, and they belong to another programme's
+   pre-registration, so RRP-002 registers them `ANY_READ` and declines them.
+2. ~~UNKNOWN and IMPOSSIBLE strata~~ — **present.** v1 carries a five-way sentinel split, with
+   every non-UNKNOWN stratum confounded with a single family (CL-019); v2 carries a structured
+   three-way `reference.status` that spans families, which is why the stratified abstention
+   analysis belongs on v2 with v1 as the cross-grammar replication. `RRP2-PRES-DEV` adds a
+   two-sentence abstention contract and separates missing-evidence from source conflict (CL-037).
+3. ~~Shortcut baselines and a positive-control exact solver~~ — **both built and load-bearing.**
+   Every bank reports its floor beside any model number, and two of my own baselines were caught
+   reading the reference and quarantined (CL-031, and the answer-agnostic test in the
+   preservation lane). The v2 verifier was adversarially audited at 4,390 attacks for 0 credit
+   leaks (CL-021).
+4. ~~Operator sign-off~~ — the operator has attested the data (CL-029). The attestation is an
+   attestation, not a per-world review, and it does **not** reach any of the three DEV banks
+   per-world; all three rest on machine verification and are labelled
+   `MACHINE_VERIFIED_NOT_HUMAN_REVIEWED`.
+5. **Still outstanding, and now the single blocking prerequisite:** the cluster-robust paired
+   statistics layer, plus predeclared contrasts, family weights, cluster units and practical
+   margins. CL-038 constrains it with a measured fact rather than a preference — sub-bank (b) of
+   `RRP2-PRES-DEV` has **16 effective units for 192 rows**, so every row of that bank carries a
+   `cluster_id` the statistics layer must group on. A registered successor experiment with its
+   own numeric envelope is also still required: this grant is scoped to `RRP-001-MICROFIT` and
+   its single adaptive round is spent.
 
 The source-model error decomposition from the baseline probe gives the first bottleneck
 candidates: abstention miscalibration, response-contract violation (prose instead of

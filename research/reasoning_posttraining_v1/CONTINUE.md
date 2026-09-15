@@ -44,7 +44,7 @@ export, merge, quantize or register it.**
 Final RRP-001 spend: 1,067 of 2,400 GPU-seconds, 333,987 of 400,000 processed training tokens,
 130 of 160 evaluation calls, 11.34 of 16 GiB disk. **Its single adaptive round is spent.**
 
-## RRP-002: instrument partly built
+## RRP-002: instrument built, statistics layer outstanding
 
 Designed and pre-registered in `RRP002_INSTRUMENT_PREREG.md`, with the impossibilities recorded
 *before* any result depends on them. Built so far, all CPU-only:
@@ -115,14 +115,18 @@ CPU-only, no budget needed:
 1. **`RRP2-DEV-V2`** on v2 `validation` (1,600 worlds; ANSWER 1,218 / IMPOSSIBLE 244 / UNKNOWN 138),
    scored with the audited `rewards.score_response`. Note only 532 of 1,600 fit 2,048 — either
    qualify 4,096 first or label the bank explicitly short-context and biased.
-2. **`RRP2-PRESERVE`** from `residual_capability_v23` (direct_reasoning dev 4,860 with a verbatim
-   UNKNOWN contract; procedural_rag dev 1,080 three-way answer/abstain/conflict) plus the v3
-   14,000-row preservation slice's 125-answer/125-abstain stratum. DEV only — those dev/ood_dev
-   splits were already consumed for dose calibration. **`splits_onpanel` is quarantined; keep it out.**
-3. **The statistics layer.** MQ-001 has none: `classify` grades only `exact` and `number`, and
-   `analyze.summarize` skips unscoreable rows. World-paired comparison with family-cluster
-   dependence and an uncertainty method must be built. Note the inherited `max_dev_rows = 64` cap
-   does **not** bind this successor (CL-020).
+2. ~~**`RRP2-PRESERVE`**~~ — **done**: `RRP2-PRES-DEV`, 768 rows, see below. Its build forced
+   six corrections to its own pre-registration (PRES-C1..C6, amendment A1).
+3. **The statistics layer — now the single blocking prerequisite.** MQ-001 has none: `classify`
+   grades only `exact` and `number`, and `analyze.summarize` skips unscoreable rows. World-paired
+   comparison with cluster dependence and an uncertainty method must be built. Two hard
+   constraints it must honour, both measured rather than assumed:
+   - **Cluster on `cluster_id`, which every `RRP2-PRES-DEV` row already carries** (CL-038).
+     Sub-bank (b) has **16 effective units for 192 rows**; treating them as independent would
+     make an interval there roughly three times too narrow.
+   - **Use the 40 complete minimal pairs as the paired unit for abstention calibration**
+     (CL-039), not as 80 independent rows.
+   The inherited `max_dev_rows = 64` cap does **not** bind this successor (CL-020).
 4. **Predeclare** primary contrasts, family weights, cluster units, practical margins and the
    allowed number of model-selection reads — before any arm runs.
 
@@ -178,3 +182,75 @@ Preserve negative results. Never extend a test until significance appears, never
 measurements into artificial sample size, and keep `CLAIM_LEDGER.json` growing rather than
 resolving contradictions silently — five of its entries are corrections to this agent's own
 earlier claims.
+
+## RRP2-PRES-DEV: the preservation / abstention bank (built 2026-09-15)
+
+The third lane, and the one that decides whether a reasoning gain was paid for. Ordinary useful
+short answers plus appropriate abstention, from two **non-Forge** ordinary-language corpora, so
+it is a genuinely different composition domain from both Forge grammars.
+
+| | rows | effective clusters | contract |
+| --- | --- | --- | --- |
+| (a) `residual_v23` direct_reasoning dev | 384 | 384 | prompt-contained reasoning |
+| (b) `residual_v23` procedural_rag dev | 192 | **16** | retrieval-grounded procedures |
+| (c) v3 slice `answer_or_abstain` | 192 | 189 | ordinary language, 40 minimal pairs |
+| **total** | **768** | **589** | 384 answerable / 384 unanswerable |
+
+- **Positive control 768/768.** Every gold is its own answer under the declared contract.
+- **Leakage: zero on all four axes** against `sealed.jsonl` (110),
+  `sealed_roleplay_v2_DO_NOT_TRAIN.jsonl` (400), `dev.jsonl` (510), `dev_roleplay_v2.jsonl` (400)
+  and the 32 selected TRAIN worlds. All 768 rows pose distinct questions verbatim.
+- **Shortcut floor 0.4375** (336/768), by `constant_abstain`. Strict and tolerant agree.
+- File `evidence/inspection-20260915/RRP2_PRES_DEV_BANK.jsonl`, receipt
+  `RRP2_PRES_DEV_BUILD.json`.
+
+**Three things about this bank that are easy to get wrong.**
+
+1. **There are TWO abstention sentences, not one** (CL-037). `procedural_rag` conflict rows
+   require *"The available sources conflict, so I can't give one certain answer."*; everything
+   else requires *"I don't know based on the available information."* And `direct_reasoning`
+   requires the **missing-information** sentence for 405/405 of its *conflicting_evidence* rows
+   too — so in (a) the two abstention causes are indistinguishable from the response, and the
+   missing-vs-conflict comparison is a **contract** distinction only in (b). `wrong_abstention_kind`
+   is its own scored channel; abstaining for the wrong reason is neither correct nor a plain miss.
+   This is also why the floor is 0.4375 rather than 0.5: `constant_abstain` cannot reach the 48
+   conflict rows.
+2. **Row counts are not denominators** (CL-038). 768 rows are 589 digit-blinded clusters, and
+   sub-bank (b)'s 192 rows are **16** — one question template per procedure family, numbers
+   varying. Internal redundancy is measured and published rather than gated, because deleting 198
+   legitimate rows would only flatter a statistic.
+3. **40 genuine decisive-evidence pairs exist** (CL-039), which the pre-registration said were
+   impossible here. Each pair differs by the presence of the decisive fact alone, so it tests
+   abstention *calibration*: `evidence_sensitive` / `abstains_regardless` / `answers_regardless`
+   / `inverted`. The bank's best analysis unit was nearly lost to a confident sentence in my own
+   design document.
+
+**DEV only, and machine-enforced.** `residual_v23` dev was read by the completed v2.3 run's dose
+calibration and DEV/OOD selection; every admitted v3 row is `split: train` with
+`human_review_status: pending`. `quarantine.refuse(..., use="DEV")` passes;
+`use="CONFIRMATION"` does not. Label: `MACHINE_VERIFIED_NOT_HUMAN_REVIEWED`.
+
+## RRP2-QUARANTINE: what is barred, and from what
+
+`QUARANTINE.json`, 18 entries, create-only, checked by code rather than read by a human at
+decision time — the precedent being `model_soup.py`, which already refuses to run while
+`splits_onpanel/CONTAMINATED.md` exists.
+
+Entries are **scoped**, not boolean (CL-034). Each carries `bars` ⊆ (`ANY_READ`, `TRAIN`,
+`SELECTION`, `DEV`, `CONFIRMATION`), because `residual_v23` dev must never be trained on yet is
+the legitimate source of the preservation bank, while both `fresh_sealed` splits must not be
+opened at all. One flag would either leak a seal or refuse a bank we are entitled to build.
+
+Every row count the inventory asserted was re-measured and **matched exactly** — forge test_iid
+200, test_transfer 200, `splits_onpanel` 845/120, residual dev/ood_dev 4860/4860/1080/1080, the
+four consumed sealed TESTs 738/792/1320/4050, Long_Context_Demo 256, ILL test 1024. Zero
+mismatches. One entry, `mq-data-001`, is registered `present: false`: the inventory cites a
+`SUPERSEDED.txt` that exists in neither checkout, so it carries no digest.
+
+**RRP-002 declines a sealed split it could have used** (CL-035). This bounds a claim in the
+pre-registration, which says flatly that "nothing is label-sealed". True of the Forge releases;
+**not** true of the v2.3 corpus, which ships 3,960 unconsumed `fresh_sealed` rows under a
+one-shot policy — the strongest held-out surface on this machine. It belongs to the v2.3
+programme's pre-registration, so spending it here would consume there what it bought here. Both
+files are `ANY_READ`: digested, never parsed. The honest sentence is *"no independent
+confirmation bank is available **to RRP-002**"*, not *"nothing is sealed"*.
