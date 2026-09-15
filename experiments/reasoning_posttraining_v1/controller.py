@@ -12,6 +12,7 @@ the dedicated branch, the pinned runtime, and the unlowered MQ resource guards.
 from __future__ import annotations
 
 import argparse
+import collections
 import hashlib
 from pathlib import Path
 import shutil
@@ -53,6 +54,11 @@ EXPERIMENT_FOR_PHASE = {"qualify": "RRP-001-MICROFIT", "train": "RRP-001-MICROFI
 # CpuAdamW's two fp32 moments. An unmapped phase falls back to the strictest profile.
 RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
                     "baseline": "qualify"}
+
+# Plan identities this controller will execute. Widened from a single hardcoded literal so a
+# second experiment can have its own frozen plan, and kept as an explicit allowlist so an
+# unregistered plan is still refused -- the guard's value is the refusal, not the literal.
+REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1")
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -154,7 +160,8 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
         if stable_hash(prepared / name) != sha:
             raise ValueError(f"prepared artifact changed: {name}")
     plan = read_json(Path(args.plan))
-    if plan["experiment"] != "RRP-001-MICROFIT" or plan["objective"] != "assistant_response_plus_eos":
+    if (plan["experiment"] not in REGISTERED_PLANS
+            or plan["objective"] != "assistant_response_plus_eos"):
         raise ValueError("wrong or unregistered plan")
     grant = read_json(Path(args.grant))
     experiment = getattr(args, "experiment", None) or EXPERIMENT_FOR_PHASE[args.command]
@@ -303,14 +310,28 @@ def worker(args) -> int:
                                          "wrong_abstention_kind as its own channel."),
                     }[kind],
                     "bank_rows": len(bank), "evaluated_rows": len(evaluable),
+                    # Kept for receipt compatibility, but it is a MISNOMER: compile_bank
+                    # refuses rows for more than one reason and only some are overlength. The
+                    # preservation bank's 31 refusals were all multi-turn prompts, which
+                    # compile_row rejects because it accepts exactly one system and one user
+                    # turn (CL-051). The breakdown below is the field to read.
                     "rejected_overlength_rows": len(rejected), "rejected": rejected,
+                    "refused_rows": len(rejected),
+                    "refusal_reasons": dict(collections.Counter(
+                        r["reason"] for r in rejected)),
+                    "refused_by_family": dict(collections.Counter(
+                        r["family"] for r in rejected)),
+                    "refused_by_stratum": dict(collections.Counter(
+                        r["stratum"] for r in rejected)),
                     "max_sequence": window,
                     "trained_window": design.max_sequence,
                     "evaluation_window_qualification": window_qualification,
                     "length_bias_warning": (
-                        "Overlength rows were REJECTED, never truncated, so the evaluated "
-                        "subset is systematically shorter than the bank. Report both "
-                        "denominators."),
+                        "Refused rows were REJECTED, never truncated, so the evaluated subset "
+                        "is not the bank. Report both denominators AND refusal_reasons: a "
+                        "length refusal biases the subset short, while a contract refusal "
+                        "(e.g. multi-turn) can remove a whole stratum non-randomly. Recompute "
+                        "every floor on the evaluated subset, never on the full bank."),
                     "quality_claim": False})
                 return 0
 

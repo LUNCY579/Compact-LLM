@@ -465,6 +465,79 @@
       "evidence": [
         "experiments/reasoning_posttraining_v1/controller.py"
       ]
+    },
+    {
+      "id": "CL-048",
+      "topic": "compile_bank hardcoded the Forge grouping columns, so the preservation bank died after a 35-second launch",
+      "the_defect": "instrument.compile_bank read row['family'] and row['stratum'] directly. The preservation bank has NEITHER -- it carries `sub_bank` and `decision` -- so the worker loaded the fp32 model, claimed the GPU lease, and then died with KeyError: 'family' inside the tokenizer loop.",
+      "the_test": "Launch it. The guards behaved correctly: the watchdog recorded a terminal receipt, failure.json was preserved, the reservation settled at the measured 35 seconds, and the budget shows 0 evaluation calls and 0 generated tokens consumed.",
+      "the_result": "compile_bank now takes family_field/stratum_field, defaulting to the Forge names so the v1 and v2 paths are byte-for-byte unchanged, and raises a legible error naming the missing fields instead of a KeyError from inside a loop. The controller passes the real names per bank kind from an explicit table rather than sniffing them.",
+      "why_this_matters": "This is the SECOND defect of exactly the same shape in one session: CL-047 was the baseline worker deciding bank kind from a field the preservation bank also happens to carry. Adding a third bank kind to code written for two keeps finding places where 'the bank' meant 'a Forge bank'. The lesson recorded for the arm: the next new bank should be run through the whole worker path on CPU with a stub model before any GPU launch is spent.",
+      "cost": "1 of 6 A3 launches, 35 of 2143 GPU-seconds, 0 evaluation calls",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/instrument.py",
+        "experiments/reasoning_posttraining_v1/controller.py"
+      ]
+    },
+    {
+      "id": "CL-049",
+      "topic": "`training_permission` is a misnomer, and setting it False to be safe makes a grant unrunnable",
+      "the_defect": "I wrote the A3 grant with training_permission=False, reasoning that a measurement-only lane should not carry training permission. budget.validate_grant requires `training_permission is True` on EVERY grant, so the field actually gates 'explicit session engineering-budget approval is present' -- consent to execute the model at all. The launch was refused before start() and cost nothing.",
+      "the_test": "Read validate_grant, then compare all four grants. RRP-001-MICROFIT, RRP-002-BASELINE and A2 all set it True; the two measurement-only ones do so while simultaneously pinning processed_training_tokens_all_attempts to 0 and listing 'training' in excludes. So True is the correct value for a measurement lane and the field name means something else entirely.",
+      "the_result": "Corrected to True. Verified in code that training remains barred three independent ways, none of which is this flag: registered phases are ('baseline',) and budget.py:146 refuses any phase outside the set, so the train and resume phases cannot start under this lane at all; the training token ceiling is 0 so the journal refuses any charge against it; and validate_grant requires the excludes set to match exactly, including 'training'.",
+      "why_this_matters": "The name is a trap in both directions. A careful reader who sets it False gets an unrunnable grant and may weaken something else to make the refusal go away. A careless reader who sets it True may believe they have authorized training when they have not. The grant now carries a field enumerating where the real bars are, so the next reader does not have to re-derive this from the validator.",
+      "not_fixed": "The field is NOT renamed. Renaming it would change validate_grant and every existing grant's digest, which would break the hash-chained journals that bind to those digests. Recorded instead.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/GRANT_RRP002_BASELINE_A3.json",
+        "research/reasoning_posttraining_v1/BUDGET_AMENDMENT_A3.json"
+      ]
+    },
+    {
+      "id": "CL-050",
+      "topic": "The reused-run-ID guard I added earlier refused my own retry, correctly",
+      "the_defect": "Not a defect. After the CL-048 failure I relaunched with the same run id `baseline-pres-001`, and budget.start() refused: 'reused run ID; every attempt needs its own preserved evidence'.",
+      "the_test": "That guard is the fix for the journal-bricking bug found earlier this programme, where start() appended before validating and left read() raising forever. This is the first time it has fired on a real retry.",
+      "the_result": "Relaunched as `baseline-pres-002`. The failed attempt's receipt is still on disk under runs/baseline-pres-001 with its own settled reservation, which is exactly the intended behaviour: a retry may not overwrite the evidence of why the previous attempt failed.",
+      "why_this_matters": "Worth recording because a guard that only ever fires in tests is not known to work. This one fired in anger, on me, and did the right thing -- and the instinct it blocked (reuse the id, overwrite the failure) is precisely how an inconvenient failed attempt disappears from a record.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/budget.py"
+      ]
+    },
+    {
+      "id": "CL-051",
+      "topic": "The preservation bank contains 31 rows the qualified evaluation path cannot score, and the receipt calls them 'overlength' when none of them is",
+      "the_defect": "baseline.json reports rejected_overlength_rows: 31 for a bank whose longest prompt is 143 tokens against a 2048 window. Not one refusal is a length refusal. All 31 are 'only explicit system/user evidence is allowed': serialization.compile_row accepts exactly one system turn and one user turn, and those rows are MULTI-TURN. So part of a bank I built cannot be evaluated by the path that is qualified to evaluate it, and the receipt field name actively misdescribes why.",
+      "the_test": "Read the refusal reasons out of the receipt instead of trusting the field name. 31/31 are the multi-turn contract refusal, all from sub-bank (c), all with decision=answer.",
+      "the_result": "The loss is NOT random. Sub-bank (c)'s evaluated balance shifts from 96 answer / 96 abstain to 65 / 96, which raises its constant-abstain floor from 0.5000 to 0.5963. Every floor in the measurement is recomputed on the EVALUATED SUBSET for exactly this reason. The controller now records refusal_reasons, refused_by_family and refused_by_stratum, and the length_bias_warning text no longer claims all refusals are length refusals.",
+      "why_this_matters": "A non-random refusal that silently removes part of one stratum is worse than a length bias, because it changes the floor rather than just the sample. Had the floor been quoted from the full bank the reported gap would have been wrong in my favour by 0.04 on that sub-bank. The bank build should have screened multi-turn rows against the evaluation contract; it did not, and that is the defect.",
+      "not_fixed": "The 31 rows are NOT deleted from the bank and the bank is not rebuilt. They are legitimate preservation rows; it is the single-turn evaluation contract that cannot reach them. Recorded as a known scope limit instead of quietly shrinking the bank to match the tool.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
+    },
+    {
+      "id": "CL-052",
+      "topic": "The preservation baseline is BELOW its own trivial floor, which changes what P3 can ever mean",
+      "the_defect": "P3 was pre-registered as non-inferiority against the source, which is the correct definition of preservation. I did not anticipate that the source would be 0.2307 BELOW the trivial floor on this bank. Passing P3 therefore means only 'the arm did not make a bad thing worse'.",
+      "the_test": "Measure it. Source on RRP2-PRES-DEV at the qualified 2048 window: tolerant accuracy 0.2252 (166/737) against a 0.4559 same-subset floor reached by constant_abstain. Strict accuracy 0.0651.",
+      "the_result": "Registered before any arm exists: every P3 report must carry the absolute position against the floor alongside the non-inferiority verdict. 'Non-inferiority demonstrated' may not be reported as 'preservation is good'.",
+      "why_this_matters": "This is the third of three banks on which the source sits below trivial. Only Forge v1 is cleared (0.2553 against 0.1411). The coherent reading is that the model has some short-string reasoning in the v1 contract and fails wherever the contract demands strict JSON or calibrated abstention -- and a non-inferiority margin anchored to a below-floor baseline is a weak guarantee that must be labelled as one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
+    },
+    {
+      "id": "CL-053",
+      "topic": "Zero evidence sensitivity: on 29 minimal pairs the model answered BOTH members, every time",
+      "the_defect": "Not a defect -- the headline behavioural finding, and the one the minimal pairs were built to expose.",
+      "the_test": "Each of the 40 pairs in sub-bank (c) differs only by whether the decisive fact is present: 'A car travels 30 mph for 4 hours. Distance?' against 'A car travels for 4 hours, but its speed is not given. Distance?'. 29 pairs survived the multi-turn refusals with both members present, and the pair is its own control.",
+      "the_result": "29 of 29 complete pairs: answers_regardless. evidence_sensitivity_rate 0.0000. evidence_sensitive 0, abstains_regardless 0, inverted 0. The model never once noticed that the fact it needed was absent.",
+      "corroborating_channels": "Across all 384 unanswerable rows it abstained only 96 times and answered anyway 288 times. And of the 96 abstentions, 48 used the wrong sentence: on ALL 48 conflicting-evidence rows it abstained but always with the missing-information sentence, never the conflict sentence -- 0 of 48 correct on SOURCES_CONFLICT. So it can detect unanswerability in the conflict case yet never reports the reason, and in the missing-fact case it does not detect it at all.",
+      "why_this_matters": "Row-level accuracy cannot distinguish 'inaccurate' from 'insensitive to evidence'. 0.2252 against a 0.4559 floor says the model is bad; the 29 pairs say something sharper and more actionable -- it is not reading the evidence for presence at all. That is a mechanism, not a score, and it is exactly what the first arm must move. It is also the channel most at risk FROM the arm: training the v2 abstention contract could raise abstention indiscriminately, which would show up here as abstains_regardless rather than as evidence_sensitive.",
+      "caveat": "29 pairs is a small unit count and the design's resolution floor needs 6 moving pairs to reach alpha (CL-046). A perfect 0/29 needs no test to be believed, but any future IMPROVEMENT on this channel will be power-limited.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
     }
   ]
 }

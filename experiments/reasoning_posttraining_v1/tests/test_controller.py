@@ -491,3 +491,11 @@ def test_generation_allowance_refuses_a_nonsense_value():
     for bad in (0, -1):
         with pytest.raises(ValueError, match="at least one token"):
             controller.generation_allowance(_Args(bad), {"max_new_tokens": 128})
+
+
+def test_only_registered_plan_identities_are_executable():
+    """Widened from a hardcoded literal to an allowlist; the refusal must survive."""
+    assert "RRP-001-MICROFIT" in controller.REGISTERED_PLANS
+    assert "RRP-003-ARM-A1" in controller.REGISTERED_PLANS
+    for rogue in ("RRP-999-UNREGISTERED", "", "rrp-001-microfit"):
+        assert rogue not in controller.REGISTERED_PLANS
