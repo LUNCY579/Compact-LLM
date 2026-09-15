@@ -37,8 +37,24 @@ LIMITS = {
 EXCLUDES = ("broad_SFT", "RL", "larger_teacher", "cloud", "release", "architectural_change", "training")
 budget.register(EXPERIMENT, ceiling=LIMITS, phases=("baseline",), excludes=EXCLUDES)
 
+# Quantitative amendment after baseline-001 terminated with a resource refusal.
+# Old journal remains immutable: 423 s / 554 calls / 35,072 reserved tokens spent.
+# Only call/token capacity and one launch are added; wall-time is the OLD remainder.
+AMENDED_EXPERIMENT = "RRP-005-PRESERVATION-BASELINE-A2"
+AMENDED_LIMITS = {
+    **LIMITS, "total_owned_work_wall_seconds": 4077,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 3177,
+    "evaluation_and_qualification_model_calls": 1446,
+    "generated_tokens_all_candidates": 96000,
+    "new_disk_bytes": 264241152,
+    "model_worker_launches": 2, "retries": 1,
+}
+budget.register(AMENDED_EXPERIMENT, ceiling=AMENDED_LIMITS, phases=("baseline",), excludes=EXCLUDES)
+
 
 def validate_scope(args, plan):
+    if plan.get("experiment") == EXPERIMENT:
+        raise ValueError("the nonstreamed RRP-005 attempt is retired; use its separately bound A2 successor")
     if (args.command != "baseline" or not getattr(args, "bank", None)
             or getattr(args, "heldout_bank", None)):
         raise ValueError("RRP-005 is one registered baseline measurement, not training")
@@ -47,6 +63,9 @@ def validate_scope(args, plan):
             getattr(args, "max_sequence", None) != wanted.get("max_sequence") or
             getattr(args, "max_new_tokens", None) != wanted.get("max_new_tokens")):
         raise ValueError("baseline bank or inference protocol differs from frozen RRP-005 plan")
+    if plan.get("experiment") == AMENDED_EXPERIMENT:
+        if wanted.get("prediction_storage") != "create_only_hash_chained_rows_v1" or wanted.get("cache_policy") != "release_unused_between_cases":
+            raise ValueError("amended baseline requires durable rows and the frozen cache policy")
 
 
 def corrected_rows(old_bank, sources):

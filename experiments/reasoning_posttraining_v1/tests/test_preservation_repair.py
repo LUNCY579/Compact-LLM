@@ -84,8 +84,11 @@ def test_baseline_scope_cannot_turn_into_training_or_change_generation(tmp_path)
     from experiments.reasoning_posttraining_v1.sources import stable_hash
     path = tmp_path / "bank.jsonl"
     path.write_text("[]", encoding="utf-8")
-    plan = {"baseline_protocol": {"bank_sha256": stable_hash(path), "max_sequence": 2048,
-                                   "max_new_tokens": 64}}
+    plan = {"experiment": repair.AMENDED_EXPERIMENT,
+            "baseline_protocol": {"bank_sha256": stable_hash(path), "max_sequence": 2048,
+                                   "max_new_tokens": 64,
+                                   "prediction_storage": "create_only_hash_chained_rows_v1",
+                                   "cache_policy": "release_unused_between_cases"}}
     args = SimpleNamespace(command="baseline", bank=path, heldout_bank=None,
                            max_sequence=2048, max_new_tokens=64)
     repair.validate_scope(args, plan)

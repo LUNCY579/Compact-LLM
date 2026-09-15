@@ -1,5 +1,11 @@
 # Active goal continuation after RRP-005 preparation
 
+**Update: use `A2_RUNBOOK.md` and `PLAN_A2.json` / `GRANT_A2.json`.** A real native run
+completed qualification and started 548 inputs, then stopped at the 1.5 GiB runtime RAM
+floor. Its predictions were not incrementally saved and are lost. The original lane is
+retired in code. A2 adds durable per-case records, same-binding continuation and an explicit
+budget amendment; old receipts and prior status below remain historical.
+
 The last goal turn made substantive progress: it found a broken retention instrument,
 blocked its use, built an independent visible-input procedural solver, quarantined unsafe
 gold targets, preserved multi-turn histories, and froze a corrected source measurement.

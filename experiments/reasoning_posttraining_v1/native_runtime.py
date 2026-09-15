@@ -17,7 +17,8 @@ def canonical_answer(text: str) -> str:
 
 
 @torch.no_grad()
-def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=128):
+def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=128,
+             on_record=None, release_unused_cache=False):
     """Pure inference: fixed-probe CE plus greedy decode. Never needs gradients.
 
     The decorator is load-bearing, not decoration. engine.microfit's probe() already
@@ -28,13 +29,21 @@ def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=
     """
     model.eval()
     device = next(model.parameters()).device
+    def release():
+        if release_unused_cache and device.type == "cuda":
+            # Only this process's unused allocator blocks. Live weights and KV state
+            # are unaffected; KV state is already discarded between independent rows.
+            import gc
+            gc.collect()
+            torch.cuda.empty_cache()
+    release()
     records, ce_sum, ce_targets = [], 0.0, 0
     for row in rows:
         # Charge a worst-case generation allowance before either CE or generation.
         # Actual tokens/forwards are separately retained in the prediction record.
         reserve({"evaluation_and_qualification_model_calls": 1,
                  "generated_tokens_all_candidates": max_new})
-        guard()
+        resources_before = guard()
         ids = torch.tensor([row["ids"]], dtype=torch.long, device=device)
         labels = torch.tensor([row["labels"]], dtype=torch.long, device=device)
         loss, n = chunked_sum(hidden_states(model, ids), model.lm_head.weight, labels, 64, recompute=False)
@@ -45,7 +54,7 @@ def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=
         emitted, past, terminated, calls = [], None, False, 0
         started = time.monotonic()
         for _ in range(max_new):
-            guard()
+            resources_last = guard()
             output = model(input_ids=current, past_key_values=past, use_cache=True,
                            return_dict=True, logits_to_keep=1)
             calls += 1; past = output.past_key_values
@@ -68,8 +77,13 @@ def evaluate(model, rows, tokenizer, eos_ids, label, reserve, guard, *, max_new=
             "truncated": not terminated, "generated_tokens_including_terminal": len(emitted),
             "generation_forward_calls": calls, "fixed_ce_forward_calls": 1,
             "prefill_tokens": len(row["prompt_ids"]), "fixed_ce_input_tokens": len(row["ids"]),
-            "generation_wall_seconds": time.monotonic() - started, "reasoning_tokens": 0})
+            "generation_wall_seconds": time.monotonic() - started, "reasoning_tokens": 0,
+            "response_ce_sum": float(loss), "response_ce_targets": n,
+            "resources_before": resources_before, "resources_last_generation_check": resources_last})
+        if on_record is not None:
+            on_record(records[-1])
         del output, past, loss, ids, labels, current
+        release()
     return {"scope": "FIXED_TRAIN_ONLY_MICROFIT_PROBE", "label": label, "rows": len(records),
             "canonical_correct": sum(r["canonical_training_target_match"] for r in records),
             "terminated": sum(r["terminated"] for r in records), "response_ce": ce_sum / ce_targets,

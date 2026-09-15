@@ -63,7 +63,7 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # second experiment can have its own frozen plan, and kept as an explicit allowlist so an
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
 REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT,
-                    _registers_preservation_repair.EXPERIMENT)
+                    _registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT)
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -197,7 +197,7 @@ def inputs(args, *, retain_presentations=True) -> tuple[dict, dict, Path, list[d
     if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
         review_rows = probe if retain_presentations else read_rows(prepared / "microfit-train.jsonl")
         _registers_corrected_arm.validate_execution_scope(args, plan, review_rows)
-    if plan["experiment"] == _registers_preservation_repair.EXPERIMENT:
+    if plan["experiment"] in (_registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT):
         _registers_preservation_repair.validate_scope(args, plan)
     return grant, plan, prepared, probe, repeated
 
@@ -271,12 +271,14 @@ def worker(args) -> int:
                 # A window wider than the trained 2048 must be qualified IN THIS RUN
                 # before it is used. No silent widening, no RoPE stretching.
                 window_qualification = None
-                if plan["experiment"] == _registers_preservation_repair.EXPERIMENT:
+                if plan["experiment"] in (_registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT):
                     window_qualification = ins.qualify_inference_window(
                         model, tokenizer, window, journal.reserve, guard)
                 elif window > design.max_sequence:
                     window_qualification = ins.qualify_evaluation_window(
                         model, tokenizer, window, journal.reserve, guard)
+                if window_qualification is not None:
+                    write_new(directory / "evaluation-window-qualification.json", window_qualification)
                 # Three bank kinds, three different scoring contracts, and the worker must
                 # not guess. `reference_text` alone is NOT a discriminator: the preservation
                 # bank carries it too, so the old two-way check would have scored ordinary
@@ -306,9 +308,19 @@ def worker(args) -> int:
                 # evaluate() is itself no_grad-decorated; this mirrors engine.probe()'s
                 # explicit wrapper so the intent is visible at the call site too.
                 with torch.no_grad():
-                    value = evaluate(model, evaluable, tokenizer, eos, "baseline",
-                                     journal.reserve, guard,
-                                     max_new=generation_allowance(args, plan))
+                    if plan["experiment"] == _registers_preservation_repair.AMENDED_EXPERIMENT:
+                        from .evaluation_stream import context_for, evaluate_streamed
+                        protocol = plan["baseline_protocol"]
+                        context = context_for({**binding, "source_state_sha256": before}, bank_sha, evaluable,
+                            max_sequence=window, max_new=generation_allowance(args, plan),
+                            serialization=protocol["serialization"], cache_policy=protocol["cache_policy"])
+                        value = evaluate_streamed(model, evaluable, tokenizer, eos, "baseline", journal.reserve, guard,
+                            directory=directory / "prediction-stream", context=context, evaluator=evaluate,
+                            resume=Path(args.resume_evaluation) if args.resume_evaluation else None)
+                    else:
+                        value = evaluate(model, evaluable, tokenizer, eos, "baseline",
+                                         journal.reserve, guard,
+                                         max_new=generation_allowance(args, plan))
                 after = parameter_digest(model)
                 if before != after:
                     raise RuntimeError("evaluation changed source parameters")
@@ -553,6 +565,7 @@ def main(argv=None) -> int:
                              "binding constraint -- the preservation bank's golds are <=14 "
                              "tokens measured, so 128 per row would reserve 98,304 tokens to "
                              "emit a few thousand.")
+    parser.add_argument("--resume-evaluation", help="completed prediction prefix from the identical frozen source-only A2 binding")
     parser.add_argument("--confirm-model-execution", action="store_true")
     # Must stay byte-identical to MQ-001's default: a different path would silently
     # stop excluding the other native lane that shares this one GPU.
@@ -580,6 +593,8 @@ def main(argv=None) -> int:
         parser.error("resume verification requires an explicit --resume checkpoint")
     if args.command == "baseline" and not args.bank:
         parser.error("baseline measurement requires an explicit --bank file")
+    if args.resume_evaluation and (args.command != "baseline" or args.experiment != _registers_preservation_repair.AMENDED_EXPERIMENT):
+        parser.error("prediction continuation is restricted to the registered source-only A2 baseline")
 
     # Validate the grant, plan and prepared bytes in the parent, before reserving anything.
     grant, plan, prepared, _, _ = inputs(args, retain_presentations=False)
@@ -592,7 +607,7 @@ def main(argv=None) -> int:
     # cwd cannot select another source, plan, grant, journal, output or lock.
     child = [args.command]
     for name in ("source", "prepared", "plan", "grant", "journal", "resume", "bank",
-                 "resource_lock"):
+                 "resource_lock", "resume_evaluation"):
         value = getattr(args, name)
         if value is not None:
             child.extend(["--" + name.replace("_", "-"), str(Path(value).absolute())])
