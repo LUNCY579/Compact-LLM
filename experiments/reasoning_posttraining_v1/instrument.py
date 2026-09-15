@@ -238,17 +238,31 @@ def build_bank_v2(root: Path, split: str, *, per_bucket: int, seed: int = 17,
             p, m = policy[world_id], meta[world_id]
             if [x["role"] for x in p["prompt"]] != ["system", "user"]:
                 raise ValueError("v2 policy prompt must be exactly system+user")
-            # The gold must not be reachable from anything the policy can see.
-            visible = json.dumps(p["prompt"])
-            for leak in (m["reference_text"], world_id):
-                if leak in visible:
-                    raise ValueError(f"gold or id leaked into the v2 prompt: {world_id}")
+            # What the model can actually read. This MUST be the raw concatenated content:
+            # json.dumps() escapes the inner quotes, so a needle of {"status":"UNKNOWN"}
+            # could never match a haystack of {\"status\":\"UNKNOWN\"}. That defect made this
+            # check report 0 leaks where there were 144 (CL-040).
+            visible = "\n".join(x["content"] for x in p["prompt"])
+            # An id in the prompt is a genuine build defect: refuse it.
+            if world_id in visible:
+                raise ValueError(f"world id leaked into the v2 prompt: {world_id}")
+            # The gold text is DIFFERENT. Forge v2 states the abstention contract in its own
+            # rule text -- "If either limit has no approved record, return
+            # {"status":"UNKNOWN"}" -- so for an unanswerable world the complete gold object
+            # is printed to the model by design. That is the release telling the model the
+            # contract, not a selection error, and refusing it would make the bank
+            # unbuildable. So it is MEASURED and carried on the row, and it obliges the floor
+            # to include `copy_prompt_sentinel`. A bank property that is recorded and priced
+            # in is honest; one that is asserted absent is not.
+            prints_gold = m["reference_text"] in visible
             chosen.append({
                 "id": world_id, "group_id": m["group_id"], "family": m["family"],
                 "split": split, "source_release": "forge_v2",
                 "prompt": p["prompt"],
                 "stratum": v2_stratum(m["reference"]),
                 "answer_shape": _v2_shape(m["reference"]),
+                "prompt_prints_its_gold": prints_gold,
+                "prompt_status_sentinel": _prompt_sentinel(p["prompt"]),
                 # verifier-only below this line; never placed in a model-visible prompt
                 "reference": m["reference"], "reference_text": m["reference_text"],
                 "world": m["world"], "certificate": m.get("certificate"),
@@ -293,7 +307,8 @@ def v2_repair(text: str) -> tuple[str, list[str]]:
 
     The measured failure it targets is exactly `{"path":[N3,N1],"cost":12}`, which is
     structurally correct with the right keys and plausible values and fails only because
-    the array elements are unquoted. 70 of 230 v2 baseline predictions failed this way.
+    the array elements are unquoted. Measured on the 230 v2 baseline predictions: 91 failed
+    to parse and 87 of those are repaired by this rule (CL-041 corrects an earlier 70).
 
     This is a DIAGNOSTIC channel and must never be the headline number: primary accuracy
     stays pass@1 under the declared strict-JSON policy. It exists to separate a
@@ -327,8 +342,25 @@ def score_v2(prediction: str, row: dict, modules) -> dict:
 # oracle-assisted, not answer-agnostic, and must never count toward the shortcut floor.
 # Kept as a diagnostic answering "what would a trivial witness score if the answer shape
 # were handed to you?" It was caught only because a test asserts the honest baselines are
-# invariant to stripping the reference.
+# invariant to stripping the reference -- though that test was itself too weak to catch a
+# NEW leak of this class, since it did not strip answer_shape (CL-043).
 V2_ORACLE_ASSISTED = ("oracle_shape_empty_witness",)
+
+# The v2 rule text prints the abstention contract as a complete JSON object. Measured on
+# RRP2-DEV-V2: 288 of 336 prompts print exactly ONE `{"status":"X"}` literal and 48 print
+# none, and for every one of the 144 unanswerable rows the printed literal IS the gold. So
+# copying it is a pure prompt-surface shortcut -- the direct v2 analogue of v1's
+# `copy_question_sentinel` (CL-022), which the v2 floor was missing entirely (CL-040).
+_V2_SENTINEL = re.compile(r'\{"status"\s*:\s*"([A-Z_]+)"\}')
+# Declared fallback for the 48 prompts that print no literal, so the predictor stays a total
+# function of the visible prompt and never consults a reference.
+V2_SENTINEL_FALLBACK = '{"value":0}'
+
+
+def _prompt_sentinel(prompt: list[dict]) -> str | None:
+    """The single status literal the prompt prints, or None. Reads only the prompt."""
+    found = _V2_SENTINEL.findall("\n".join(x["content"] for x in prompt))
+    return found[-1] if found else None
 
 
 def shortcut_predictions_v2(bank: list[dict], *, train_majority: str) -> dict[str, list[str]]:
@@ -347,6 +379,13 @@ def shortcut_predictions_v2(bank: list[dict], *, train_majority: str) -> dict[st
             json.dumps(V2_EMPTY_WITNESS[row["answer_shape"]]))
         # Prose: establishes that the format channel really does floor at zero.
         out["prose_non_json"].append("The answer is zero.")
+        # Copy the status literal the prompt itself prints. Answer-agnostic -- it reads the
+        # prompt and nothing else -- and it is the strongest honest shortcut on this bank, so
+        # it belongs IN the floor. Omitting it understated the v2 floor by 14 points (CL-040).
+        sentinel = _prompt_sentinel(row["prompt"])
+        out["copy_prompt_sentinel"].append(
+            json.dumps({"status": sentinel}, separators=(",", ":")) if sentinel
+            else V2_SENTINEL_FALLBACK)
         # Echo an integer out of the QUERY line without solving anything.
         match = re.search(r"QUERY\s*(\{.*\})", question)
         value = 0
@@ -364,7 +403,7 @@ def summarize_v2(bank: list[dict], predictions: list[str], modules) -> dict:
     per_shape = collections.defaultdict(lambda: {"n": 0, "correct": 0})
     reasons = collections.Counter()
     fmt = schema = 0
-    false_abstain = unsupported = wrong_sentinel = 0
+    false_abstain = unsupported = wrong_sentinel = unparseable = 0
     for row, pred in zip(bank, predictions, strict=True):
         got = score_v2(pred, row, modules)
         reasons[got["reason"]] += 1
@@ -378,7 +417,15 @@ def summarize_v2(bank: list[dict], predictions: list[str], modules) -> dict:
         if truth == "ANSWER" and guess in ("UNKNOWN", "IMPOSSIBLE"):
             false_abstain += 1
         elif truth != "ANSWER" and guess is None:
-            unsupported += 1
+            # `predicted_status is None` covers TWO different things, and booking both as an
+            # unsupported answer overstates the model's confidence: it reads a row that did
+            # not parse at all as a deliberate answer to an unanswerable world. The v2
+            # baseline's 99/99 was 34 parse failures plus 65 real unsupported answers
+            # (CL-042). Kept apart.
+            if got["format_valid"]:
+                unsupported += 1
+            else:
+                unparseable += 1
         elif truth != "ANSWER" and guess is not None and guess != truth:
             wrong_sentinel += 1
     total = len(bank)
@@ -389,6 +436,7 @@ def summarize_v2(bank: list[dict], predictions: list[str], modules) -> dict:
         "format_valid": fmt, "schema_valid": schema,
         "false_abstention_on_answerable": false_abstain,
         "unsupported_answer_on_unanswerable": unsupported,
+        "unparseable_on_unanswerable": unparseable,
         "wrong_sentinel_on_unanswerable": wrong_sentinel,
         "per_stratum": {k: dict(v) for k, v in sorted(per_stratum.items())},
         "per_family": {k: dict(v) for k, v in sorted(per_family.items())},

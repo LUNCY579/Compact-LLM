@@ -13,7 +13,7 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 160,
+    "new_tests_passed": 166,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
@@ -30,7 +30,7 @@
     "engineering_microfit_train_probe": "31/32 (criterion >= 31)",
     "source_baseline_train_probe": "8/32",
     "resume_verification": "PASS (15/15 checks)",
-    "claim_ledger_entries": 39,
+    "claim_ledger_entries": 44,
     "bottleneck_candidates": "4 named with falsifying tests (BOTTLENECK_CANDIDATES.md)",
     "instrument_design": "RRP002_INSTRUMENT_PREREG.md (design only, nothing built or run)",
     "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model",
@@ -39,8 +39,8 @@
     "shortcut_floor": "0.1458 strict accuracy, reached by ['constant_train_majority', 'constant_unknown', 'copy_question_sentinel']",
     "held_out_baseline": "source 0.2553 (85/333) at the 4096 evaluation window vs a 0.1411 shortcut floor and a 1.0000 positive control; replicates the 2048 result (0.2625, 63/240)",
     "qualified_evaluation_windows": "2048 (trained) and 4096 (inference only, CL-027)",
-    "dev_bank_v2": "RRP2-DEV-V2: 336 worlds, strata {'ANSWER': 192, 'UNKNOWN': 48, 'IMPOSSIBLE': 96}, positive control 336/336, floor 0.2857",
-    "held_out_baseline_v2": "source 0.0174 (4/230) vs a 0.2870 floor: BELOW the trivial floor by 0.2696. Format repair moves validity 139->205 and accuracy not at all.",
+    "dev_bank_v2": "RRP2-DEV-V2: 336 worlds, strata {'ANSWER': 192, 'UNKNOWN': 48, 'IMPOSSIBLE': 96}, positive control 336/336, floor 0.4345 by copy_prompt_sentinel (corrected from 0.2857, see CL-040)",
+    "held_out_baseline_v2": "source 0.0174 (4/230) vs a 0.4391 same-subset floor: BELOW the trivial floor by 0.4217. Format repair moves validity 139->205 and accuracy not at all. Floor corrected from 0.2870 per CL-040; the model number is unchanged.",
     "quarantine_registry": "QUARANTINE.json: 18 entries, 17 artifacts present, 3 ANY_READ-barred, 0 row-count mismatches against the inventory's assertions",
     "rrp2_preserve_dev_bank": "RRP2-PRES-DEV built: 768 rows, 384 answerable / 384 unanswerable, 40 complete minimal pairs, positive control 768/768, admission audit clean, shortcut floor 0.4375",
     "rrp2_preserve_effective_clusters": {
@@ -48,7 +48,8 @@
       "procedural_rag": 16,
       "v3_answer_or_abstain": 189
     },
-    "preregistration_amendments": "A1: six corrections (PRES-C1..C6) appended to RRP002_INSTRUMENT_PREREG.md without editing the original text"
+    "preregistration_amendments": "A1: six corrections (PRES-C1..C6) appended to RRP002_INSTRUMENT_PREREG.md without editing the original text",
+    "adversarial_self_review": "45 findings raised across four lenses, 39 refuted, 6 confirmed and all 6 fixed (CL-040..CL-044). A tool I drove, NOT an independent human review."
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -82,9 +83,10 @@
     "Predeclared primary contrasts, family weights, cluster units and practical margins do not exist yet",
     "A slot-aware parser for v1 dialogue_memory (B-3 on v1) is still unmeasured (CL-026)",
     "RL lane shut: readiness gate and on-policy pilot not attempted",
-    "Every DEV bank is machine-verified and none was in a human review packet (CL-029)"
+    "Every DEV bank is machine-verified and none was in a human review packet (CL-029)",
+    "A guard that returned PASS without testing anything shipped undetected until an adversarial review (CL-040). Every remaining asserted-absence property in the evidence records should be re-checked against the data it describes, not trusted."
   ],
-  "next_action": "The instrument is now complete enough to support an arm: three DEV banks exist (RRP2-DEV-V1 384 rows floor 0.1458, RRP2-DEV-V2 336 rows floor 0.2857, RRP2-PRES-DEV 768 rows floor 0.4375), each with its own positive control at 100% and its own shortcut floor. NEXT, and it is a prerequisite rather than a nicety: the cluster-robust world-paired statistics layer, which must cluster on the `cluster_id` carried on every RRP2-PRES-DEV row (CL-038) and use the 40 complete minimal pairs as the paired unit for abstention calibration (CL-039). Then predeclare primary contrasts, family weights, cluster units, practical margins and the allowed number of model-selection reads. Only then the first ladder arm, which per CL-033 must target the v2 response contract AND its reasoning together, measured against the 0.2870 same-subset floor with RRP2-DEV-V1 as the cross-grammar check and RRP2-PRES-DEV as the preservation guard. Training at 4096 needs its own qualification; only inference is qualified there.",
+  "next_action": "The instrument is now complete enough to support an arm: three DEV banks exist (RRP2-DEV-V1 384 rows floor 0.1458, RRP2-DEV-V2 336 rows floor 0.4345, RRP2-PRES-DEV 768 rows floor 0.4375), each with its own positive control at 100% and its own shortcut floor. NEXT, and it is a prerequisite rather than a nicety: the cluster-robust world-paired statistics layer, which must cluster on the `cluster_id` carried on every RRP2-PRES-DEV row (CL-038) and use the 40 complete minimal pairs as the paired unit for abstention calibration (CL-039). Then predeclare primary contrasts, family weights, cluster units, practical margins and the allowed number of model-selection reads. Only then the first ladder arm, which per CL-033 must target the v2 response contract AND its reasoning together, measured against the corrected 0.4391 same-subset floor (CL-040) with RRP2-DEV-V1 as the cross-grammar check and RRP2-PRES-DEV as the preservation guard. Training at 4096 needs its own qualification; only inference is qualified there.",
   "last_goal_turn_classification": "progress: second DEV bank built and measured. Strong negative result on v2 - the source is below its own trivial floor, and the format repair shows why that is not a formatting story.",
   "prepared_binding": "inspection-20260915/prepared-004",
   "superseded_prepared_binding": "prepared-003 / ad3fc4c0... (training bytes identical; see CLAIM_LEDGER CL-001)",
@@ -131,9 +133,10 @@
     },
     "RRP2-DEV-V2": {
       "rows": 336,
-      "shortcut_floor": 0.2857,
+      "shortcut_floor": 0.4345,
       "confirmation_eligible": false,
-      "note": "the 4096-window evaluated subset is 230 rows, floor 0.2870"
+      "shortcut_floor_predictor": "copy_prompt_sentinel",
+      "note": "the 4096-window evaluated subset is 230 rows with floor 0.4391. The earlier published floor of 0.2857/0.2870 was WRONG in the flattering direction: the leak check compared against json.dumps(prompt) and so reported 0 of 144 prompt-printed golds (CL-040). The model's 0.0174 is unchanged; the gap widens from -0.2696 to -0.4217."
     },
     "RRP2-PRES-DEV": {
       "rows": 768,
@@ -147,6 +150,6 @@
       "complete_minimal_pairs": 40,
       "bank_sha256": "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975"
     },
-    "never_compare_across_banks": "each bank has its own floor -- 0.1458, 0.2857 and 0.4375 -- so an accuracy is only meaningful against its own"
+    "never_compare_across_banks": "each bank has its own floor -- 0.1458, 0.4345 and 0.4375 -- so an accuracy is only meaningful against its own"
   }
 }

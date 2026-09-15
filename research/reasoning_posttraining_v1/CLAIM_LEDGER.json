@@ -280,7 +280,9 @@
       "all_four_correct_answers_are_trivial": "Every one of the 4 is the empty plan {\"actions\":[], \"cost\":0}, correct by coincidence on 4 prerequisite_plan worlds. Zero non-trivial answers were right. The 19 feasible_suboptimal verdicts are all the degenerate empty selection.",
       "it_never_abstains_on_v2": "Across all 99 unanswerable rows it emitted a status key ZERO times, producing empty witnesses instead. That INVERTS its v1 behaviour, where it over-abstained with 57 false abstentions on 206 answerable rows. So the abstention behaviour tracks the response contract -- on v1 the sentinel is a copyable word in the prompt, on v2 it requires emitting a JSON status object -- rather than reflecting a stable internal calibration.",
       "fairness_checks_passed": "Gold answers in this bank are at most 29 tokens against a 128-token generation cap, so the cap is over 4x generous and the 21 truncations are model verbosity, not an instrument limit. The positive control scores 336/336 on the bank and 230/230 on the evaluated subset.",
-      "classification": "STRONG_NEGATIVE_RESULT_BELOW_TRIVIAL_FLOOR"
+      "classification": "STRONG_NEGATIVE_RESULT_BELOW_TRIVIAL_FLOOR",
+      "corrected_by": "CL-040, CL-042",
+      "correction": "PARTLY WITHDRAWN. The observation stands: the source over-abstains on v1 and emitted a status key zero times on all 99 unanswerable v2 rows. The stated MECHANISM does not: this entry explained the inversion by saying the v1 sentinel is a copyable word in the prompt while v2 requires emitting a JSON status object. Measured, v2 prints the COMPLETE gold object in its own rule text for 144 of 144 unanswerable rows, so there is no copyable-versus-not asymmetry to rest on (CL-040). Separately, 46 of the 99 rows did not parse, so calling all 99 unsupported answers overstated the model's confidence (CL-042). What survives is that v2 additionally demands strict JSON, which is a different mechanism and is not evidence about internal calibration."
     },
     {
       "id": "CL-033",
@@ -290,7 +292,9 @@
       "the_result": "Format validity rose 139 -> 205 of 230 and schema validity 132 -> 198, while accuracy did NOT move at all: 4 -> 4 correct, 0.0174 either way.",
       "where_the_repaired_rows_went": "34 parse_failure -> answer_requires_status (it answered a world that required abstention), 31 -> schema (wrong keys for the family), 21 stayed parse_failure (the truncations), 1 -> invalid_witness. ZERO became correct.",
       "why_this_matters": "The format failure was MASKING a total semantic failure, not causing the low score. Reporting '40 percent parse failures, fix the formatting' would have been wrong, and only running the repair shows it. B-3 is real and affects 87 of 230 predictions, but it is not the binding constraint on v2; the reasoning is.",
-      "classification": "DIAGNOSTIC_CHANNEL_SEPARATED_PRESENTATION_FROM_REASONING"
+      "classification": "DIAGNOSTIC_CHANNEL_SEPARATED_PRESENTATION_FROM_REASONING",
+      "corrected_by": "CL-041",
+      "correction": "COUNT CORRECTED. '70 of 230' appears in no receipt. Measured: 91 predictions fail to parse and 87 of those are repaired by the rule. Every conclusion in this entry stands unchanged -- format validity 139 -> 205, schema 132 -> 198, accuracy 4 -> 4."
     },
     {
       "id": "CL-034",
@@ -359,6 +363,69 @@
       "why_i_nearly_missed_it": "The limitation was written in my own registered design, in the confident voice. Inheriting it would have cost the bank its best analysis unit. It was refuted by reading one metadata field.",
       "evidence": [
         "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-040",
+      "topic": "The v2 leak check reported 0 leaks where there were 144, and the published v2 floor was wrong in the flattering direction",
+      "the_defect": "RRP002_DEV_V2_FLOOR.json records that every row was 'asserted to contain neither its reference_text nor its id in the model-visible prompt'. That assertion is FALSE for 144 of 336 rows. The implementing code compared its needle against json.dumps(prompt), which escapes the inner quotes, so a needle of {\"status\":\"UNKNOWN\"} could never match a haystack of {\\\"status\\\":\\\"UNKNOWN\\\"}. The world_id half of the same check has no quotes in it, which is why the check looked like it worked.",
+      "the_test": "Compare each row's reference_text against the RAW concatenated prompt content instead of the dumped JSON. Measured: 144 of 144 unanswerable rows print their complete gold object verbatim in the prompt's own rule text -- e.g. 'If either limit has no approved record, return {\"status\":\"UNKNOWN\"}'. Caught by the old dumped-string check: 0.",
+      "the_result": "288 of 336 prompts print exactly one {\"status\":\"X\"} literal and 48 print none; for every unanswerable row the printed literal IS the gold. So a pure prompt-copying predictor -- the direct v2 analogue of v1's copy_question_sentinel, which CL-022 already obliged the programme to use -- scores 146/336 = 0.4345 on the bank and 101/230 = 0.4391 on the evaluated subset. The published floor was 0.2857/0.2870.",
+      "what_changes": "The model's 0.0174 accuracy is UNCHANGED; nothing about the model measurement was wrong. The FLOOR it is read against rises, so the gap widens from -0.2696 to -0.4217. The negative result gets stronger.",
+      "is_the_bank_broken": "No. Forge v2 states its abstention contract in the rule text by design -- it is telling the model what to return, and refusing that would make the bank unbuildable. The error was asserting the absence of something present and then pricing the floor as if it were absent. build_bank_v2 now measures it, carries prompt_prints_its_gold on every row, and still refuses an id leak.",
+      "why_this_matters": "This is the failure mode the whole programme is built to catch: a guard that returns PASS without testing anything, plus an evidence record asserting a property that does not hold. Both survived because the assertion was never adversarially checked against the data it described.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_DEV_V2_FLOOR_CORRECTION.json"
+      ]
+    },
+    {
+      "id": "CL-041",
+      "topic": "CL-033's '70 of 230' appears in no receipt; the measured numbers are 91 and 87",
+      "the_defect": "CL-033 and the v2_repair docstring both say 70 of 230 predictions failed to parse. 70 appears in no receipt, and CL-033's own later sentence says 'affects 87 of 230', so the entry contradicted itself and the wrong number was baked into shipped code where it would be copied forward.",
+      "the_test": "Read RRP002_V2_CONTRACT_REPAIR.json and re-derive from the 230 stored predictions.",
+      "the_result": "91 predictions fail json.loads; 87 of those are changed by the repair regex, and the reason_transitions sum to exactly 87 (34 + 31 + 21 + 1). So: 91 parse failures, 87 textually repairable, 4 unparseable and unrepairable.",
+      "what_changes": "Only the stated count. Every conclusion in CL-033 stands: format validity rose 139 -> 205, schema 132 -> 198, and accuracy did not move at all (4 -> 4). The docstring is corrected in place.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_V2_CONTRACT_REPAIR.json"
+      ]
+    },
+    {
+      "id": "CL-042",
+      "topic": "unsupported_answer_on_unanswerable counted parse failures as confident answers",
+      "the_defect": "score_v2 sets predicted_status to None both when the model emitted valid JSON with no status key AND when the output did not parse at all. summarize_v2 booked both as 'unsupported answer on unanswerable', so a format failure was reported as a deliberate answer to an unanswerable world. I then read the resulting 99/99 as the model 'producing empty witnesses instead'.",
+      "the_test": "Split the branch on format_valid and re-measure the stored predictions.",
+      "the_result": "Of the 99 unanswerable rows: 53 are genuine unsupported answers (valid JSON, no status key) and 46 did not parse. Reported as two channels now, with unparseable_on_unanswerable added.",
+      "what_changes": "The claim 'it emitted a status key zero times across all 99 unanswerable rows' remains literally true and is the load-bearing part of the v1/v2 abstention inversion. But 'unsupported answer' overstated the model's confidence for 46 of 99 rows, and that characterization is withdrawn.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_DEV_V2_FLOOR_CORRECTION.json"
+      ]
+    },
+    {
+      "id": "CL-043",
+      "topic": "The test credited with catching my oracle-assisted baseline could not have caught it",
+      "the_defect": "test_instrument_v2.py's docstring called test_v2_shortcuts_are_answer_agnostic_except_the_quarantined_one 'the load-bearing test ... what caught a baseline of mine that was secretly reading the reference', and instrument.py repeated the claim. The test deleted only reference, reference_text and certificate -- while the leak it is credited with finding ran through answer_shape, which it left readable. A NEW leak through answer_shape, stratum or world would have shipped silently, and the only gate protecting the floor did not work.",
+      "the_test": "Replace deletion with PERTURBATION: substitute a different valid value for every reference-derived field (reference, reference_text, certificate, answer_shape, stratum, world._gold) and require the honest predictors to be byte-identical. Perturbation rather than deletion keeps shortcut_predictions_v2 callable, which is why the original took the weaker route.",
+      "the_result": "The strengthened test passes for every honest predictor and a companion test proves it is sensitive -- flipping answer_shape alone moves oracle_shape_empty_witness, exactly the signal the old version could not see. Both false self-descriptions are corrected in place.",
+      "why_this_matters": "A test that cannot fail is worse than no test, because it is cited as evidence. This one was cited twice, in a test docstring and in shipped module comments, for catching a leak class it was blind to.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/tests/test_instrument_v2.py"
+      ]
+    },
+    {
+      "id": "CL-044",
+      "topic": "RESULTS.md contradicted its own receipts in two places, and omitted the headline negative result entirely",
+      "the_defect": "Three errors in the one file a reader opens for results. (1) It reported 'Predictions match: False' while RESUME_VERIFICATION.json records final_predictions_match: true and per_row_predictions_match: true -- it was reporting the raw file-digest inequality, whose sole differing field is generation_wall_seconds, as a prediction mismatch, and then two lines later called the same run bit-identical. (2) It asserted 'DEV, preservation/abstention DEV and fresh confirmation banks: not yet built' one line after referring to 'the 384-world DEV bank'. (3) Neither RRP2-DEV-V1, RRP2-DEV-V2, the 0.2553/0.2625 v1 baselines nor the below-floor v2 result appeared anywhere in it.",
+      "the_test": "git log shows RESULTS.md was last edited three commits AFTER the work that contradicts it, so this was a stale statement re-committed, not a gap awaiting an update.",
+      "the_result": "All three corrected. RESULTS.md now carries an 'RRP-002: the held-out measurements' section with the three banks, their floors, the v1 replication table, the v2 below-floor result and the repair diagnostic.",
+      "why_this_matters": "The programme's whole value is that its self-reports can be trusted. A results document that reports only the favourable engineering number (31/32 microfit) while denying the existence of the banks that produced a negative result is the exact shape of selective reporting, whether or not it was intended.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/rrp001-runs/RESUME_VERIFICATION.json",
+        "research/reasoning_posttraining_v1/RESULTS.md"
       ]
     }
   ]
