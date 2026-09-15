@@ -17,7 +17,9 @@ It says nothing about held-out reasoning, preservation, or transfer.
 
 - `quality_improvement_established`: **false**
 - `preservation_or_generalization_claim`: **false**
-- Human data review: **NOT PERFORMED**, so no data-quality claim either
+- Human data review: **OPERATOR-ATTESTED, not per-world reviewed** (`OPERATOR_DATA_APPROVAL.json`). It covers the 85-world packet including all 32
+  microfit worlds; it does NOT cover the 384-world DEV bank, which is
+  machine-verified instead. See CL-029.
 - DEV, preservation/abstention DEV and fresh confirmation banks: **not yet built**
 
 ## Zero-update native qualification (`qualify-001`)
@@ -119,8 +121,8 @@ A/B/C ladder can support a claim, the following must exist, and none of it is bu
    8 families x 4 worlds.
 3. Shortcut baselines (constant-label, cue-copy, last-mentioned) and a positive-control
    exact solver, so a broken instrument cannot be read as a model result.
-4. Operator sign-off on `REVIEW_PACKET.md` before any DEV/retention comparison is offered
-   as a quality claim. This agent will not self-certify that review.
+4. ~~Operator sign-off~~ — the operator has attested the data (CL-029). Note the attestation
+   does not reach the 384-world DEV bank per-world; that bank rests on machine verification.
 5. A registered successor experiment with its own numeric envelope. This grant is scoped
    to `RRP-001-MICROFIT` and its single adaptive round is now spent.
 

@@ -9,11 +9,13 @@ package [AGENTS.md](../../experiments/reasoning_posttraining_v1/AGENTS.md).
 
 **The goal is active and not close to complete.** A qualified lane, a met microfit criterion, an
 audited verifier and a validated DEV bank are prerequisites, not the deliverable. **No reasoning,
-preservation or generalization claim has been measured, and none may be reported.**
+preservation or generalization claim has been measured, and none may be reported.** The operator
+has attested the data and authorized GPU fine-tuning, so the ladder is now open — but it still
+needs the instrument gaps closed and its margins predeclared first.
 
 Worktree: `C:/Users/clclc/BusinessProject/ChatBubble-rineya-reasoning-posttraining-v1`.
-Branch: `research/rineya-reasoning-posttraining-v1`. **Local only — never pushed.** Publishing is
-outward-facing and was not authorized; ask before pushing.
+Branch: `research/rineya-reasoning-posttraining-v1`. Published to `origin` with operator
+authorization. Never force-push; never rewrite history.
 
 ```powershell
 git status --short; git rev-parse HEAD
@@ -148,10 +150,14 @@ RL and cloud still pinned at zero.
   repo file between a candidate attempt and its resume. Note `budget.py` changed after RRP-001
   finished, so RRP-001's checkpoints will no longer validate against a current binding — expected,
   and harmless because RRP-001 is complete.
-- Human data review is **NOT PERFORMED**. `REVIEW_PACKET.md` covers only the 32 microfit worlds and
-  is hand-authored with every decision PENDING; the machine packet
-  (`prepared-004/REVIEW_PACKET.jsonl`, 85 worlds = 32 v1 + 53 v2) covers EXACT_PRIMITIVE 32,
-  ANSWER 32, IMPOSSIBLE 15, UNKNOWN 6 and no PROSE. **This agent will not self-certify it.**
+- **Data approval is an operator ATTESTATION, not a per-world review** (CL-029,
+  `OPERATOR_DATA_APPROVAL.json`). The operator holds the authority and approved in session, so the
+  admissibility blocker is lifted. But no reviewer worked through the worlds: every "Human
+  decision" in `REVIEW_PACKET.md` still reads PENDING. **Critically, the 85 packet ids and the 384
+  `RRP2-DEV-V1` ids are DISJOINT** — the packet covers all 32 microfit TRAIN worlds and none of
+  the DEV bank. So the bank every held-out number comes from is
+  `MACHINE_VERIFIED_NOT_HUMAN_REVIEWED`: byte-verified release, `validate_row` on all 384 rows,
+  384/384 positive control, zero prior exposure. Do not describe it as human-reviewed.
 - RL stays shut. The v2 verifier now passes adversarial audit, which is a prerequisite, but the
   readiness gate and on-policy pilot are not attempted and `on_policy_rl_rollout_tokens` is 0.
 - **`instrument.py` must stay torch-free at module level** — the foreground controller imports

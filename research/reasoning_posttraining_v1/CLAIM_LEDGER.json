@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T09:19:26.195720+00:00",
+  "recorded_utc": "2026-09-15T14:40:04.575491+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -246,6 +246,16 @@
       "still_not_a_long_context_claim": "The bank's p50 is about 1,164 native tokens. Both releases' length-stress splits remain unreachable on this host at 11k-61k tokens (CL-016).",
       "honest_detail": "One of 333 rows failed to terminate inside the 128-token budget, against zero of 240 before. It stays in the denominator.",
       "classification": "BASELINE_REPLICATED_ACROSS_TWO_WINDOWS"
+    },
+    {
+      "id": "CL-029",
+      "topic": "The operator's data approval is an attestation, and it does not reach the DEV bank",
+      "what_happened": "The operator stated in session: 'I will approve of the data so please change any necessary documentations for me.' They hold the authority to admit this data, so the data-admissibility blocker is lifted and the statement is recorded verbatim in OPERATOR_DATA_APPROVAL.json.",
+      "why_it_is_labelled_an_attestation": "No per-world review was performed or recorded. Every 'Human decision' field in REVIEW_PACKET.md still reads PENDING and no per-world decision file exists. This is an authority-based admission, not an inspection record, and it is labelled as such rather than written up as 'human review performed'.",
+      "the_scope_limit_that_matters": "Measured directly: the 85 review-packet ids and the 384 RRP2-DEV-V1 bank ids are DISJOINT. The packet covers all 32 microfit training worlds, but none of the DEV bank. So the attestation cannot support a per-world human-review claim about the bank that every held-out number is measured on.",
+      "what_the_dev_bank_admissibility_rests_on_instead": "The byte-verified release archive, the release's own validate_row on all 384 rows (independent oracle re-solve, hash and word-count checks, leak refusal), a 384/384 positive control, and zero prior exposure of forge_v1 validation. Honest label: MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
+      "unaffected": "CL-017 stands: no independent confirmation bank is achievable here. An approval about inputs changes nothing about that, and nothing about whether any output is correct.",
+      "classification": "OPERATOR_ATTESTATION_RECORDED_WITH_EXPLICIT_SCOPE_LIMIT"
     }
   ]
 }

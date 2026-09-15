@@ -1,5 +1,5 @@
 {
-  "recorded_utc": "2026-09-15T09:19:26.195720+00:00",
+  "recorded_utc": "2026-09-15T14:40:04.575491+00:00",
   "goal_status": "ACTIVE_NOT_COMPLETE",
   "branch": "research/rineya-reasoning-posttraining-v1",
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
@@ -65,12 +65,13 @@
   },
   "pending_budget_request": "SATISFIED by MODEL_EXECUTION_AUTHORIZATION.json + GRANT.json; BUDGET_REQUEST.json retained as the original unmodified request",
   "blockers": [
-    "No independent confirmation bank is achievable from this machine (CL-017)",
-    "Both length-stress splits exceed any qualifiable window on this host (CL-016); 4096 is the realistic next window",
-    "Still missing: RRP2-DEV-V2 (the stratified ANSWER/UNKNOWN/IMPOSSIBLE bank), RRP2-PRESERVE, RRP2-RESERVED, and the world-paired cluster-robust statistics layer",
-    "Human data review still NOT PERFORMED: nothing may be offered as a quality claim",
-    "RRP-001 adaptive round spent; the ladder needs a registered successor and a new envelope",
-    "RL lane shut: verifier readiness gate not attempted, though the v2 verifier itself now passes adversarial audit"
+    "No independent confirmation bank is achievable from this machine (CL-017) - structural, and unaffected by the data approval",
+    "Both length-stress splits exceed any qualifiable window on this host (CL-016)",
+    "Training at 4096 is NOT qualified; only inference is (CL-027)",
+    "Still missing: RRP2-DEV-V2, RRP2-PRESERVE, a slot-aware parser for B-3, and the cluster-robust paired statistics layer",
+    "Predeclared primary contrasts, family weights, cluster units and practical margins do not exist yet",
+    "RL lane shut: readiness gate and on-policy pilot not attempted",
+    "The 384-world DEV bank is machine-verified but was never in a human review packet (CL-029)"
   ],
   "next_action": "Three CPU-only instrument gaps still block interpretation: a slot-aware parser for B-3 (CL-026), RRP2-DEV-V2 on the v2 validation split scored with the audited rewards.score_response for the ANSWER/UNKNOWN/IMPOSSIBLE strata v1 cannot supply (CL-019), and RRP2-PRESERVE. Then the cluster-robust paired statistics and predeclared margins. Training at 4096 would need its own qualification; only inference is qualified there.",
   "last_goal_turn_classification": "progress: 4096 evaluation window qualified, held-out baseline replicated across two windows with every pattern stable. No training, no quality claim.",
@@ -103,5 +104,12 @@
     "processed_training_tokens_all_attempts": 0,
     "retries": 6,
     "total_owned_work_wall_seconds": 4869
+  },
+  "human_data_review_status": {
+    "state": "OPERATOR_ATTESTED_NOT_PER_WORLD_REVIEWED",
+    "record": "OPERATOR_DATA_APPROVAL.json",
+    "covers": "the 85-world review packet, including all 32 microfit training worlds",
+    "does_not_cover_per_world": "the 384-world RRP2-DEV-V1 bank (disjoint from the packet)",
+    "dev_bank_label": "MACHINE_VERIFIED_NOT_HUMAN_REVIEWED"
   }
 }
