@@ -57,5 +57,6 @@
     "retries": 0,
     "total_owned_work_wall_seconds": 0
   },
-  "operator_authority": "MODEL_EXECUTION_AUTHORIZATION.json (RRP-001-AUTH-001) for the lane, plus the operator's standing session instruction, recorded verbatim: 'if you need GPU for long running or short running fine tuning works go ahead and use them.' That authorizes the COMPUTE. It does not constitute review of these banks' contents, and no such review is claimed: every bank remains MACHINE_VERIFIED_NOT_HUMAN_REVIEWED."
+  "operator_authority": "MODEL_EXECUTION_AUTHORIZATION.json (RRP-001-AUTH-001) for the lane, plus the operator's standing session instruction, recorded verbatim: 'if you need GPU for long running or short running fine tuning works go ahead and use them.' That authorizes the COMPUTE. It does not constitute review of these banks' contents, and no such review is claimed: every bank remains MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
+  "correction_before_first_use": "A3 was first written with training_permission=False, which made it structurally invalid: validate_grant demands True on every grant because the field means 'engineering-budget approval present', not 'may train'. The launch was refused before start() and cost nothing. Corrected to True, matching both prior measurement-only grants, with the three actual training bars enumerated on the grant. Training is still barred by all three."
 }

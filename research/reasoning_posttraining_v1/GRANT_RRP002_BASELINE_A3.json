@@ -15,7 +15,7 @@
   "plan_sha256": "9208fc92fce8c6b5bb5647c83e45d3ae7bfd2ca2bff707bd58f1662fd667e069",
   "quality_claim_permitted": false,
   "release_permitted": false,
-  "training_permission": false,
+  "training_permission": true,
   "experiment": "RRP-002-BASELINE-A3",
   "supersedes": "RRP-002-BASELINE-A2 (declared scope did not cover the banks used)",
   "evaluation_banks": {
@@ -51,5 +51,12 @@
   },
   "limits_are": "A2's REMAINDER, not a fresh envelope. A2 + A3 together authorize exactly what A2 alone authorized.",
   "authorization_reference": "MODEL_EXECUTION_AUTHORIZATION.json (RRP-001-AUTH-001) for the lane, plus the operator's standing session instruction, recorded verbatim: 'if you need GPU for long running or short running fine tuning works go ahead and use them.' That authorizes the COMPUTE. It does not constitute review of these banks' contents, and no such review is claimed: every bank remains MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
-  "amendment_record": "BUDGET_AMENDMENT_A3.json"
+  "amendment_record": "BUDGET_AMENDMENT_A3.json",
+  "what_training_permission_actually_gates": "MISNOMER, corrected here rather than worked around. budget.validate_grant requires training_permission is True for ANY grant to be valid, so the field gates 'explicit session engineering-budget approval is present' -- i.e. consent to execute the model at all -- and NOT permission to train. I first set it False intending to be more restrictive, which made the grant structurally invalid and the run was refused before any spend. Both prior measurement-only grants (RRP-002-BASELINE and A2) set it True while pinning training to zero, so True is the correct value for a measurement lane.",
+  "where_the_real_training_bars_are": [
+    "registered phases are ('baseline',) only, and budget.py:146 refuses any phase outside the set, so the train and resume phases cannot start under this lane at all",
+    "processed_training_tokens_all_attempts is 0, so the journal refuses any charge against it",
+    "excludes contains 'training' and validate_grant requires the excludes set to match exactly"
+  ],
+  "training_remains_barred": true
 }
