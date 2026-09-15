@@ -260,3 +260,57 @@ def test_bank_rows_carry_no_gold_inside_the_model_visible_prompt():
         assert row["reference"] not in blob or row["reference"] == "75"  # 75 is in-prompt arithmetic only
         assert "reference_answer" not in blob
         assert row["stratum"] in ("ANSWER", *ins.SENTINELS)
+
+
+# ------------------------------------------------- evaluation-window qualification
+
+def test_window_qualification_rejects_windows_outside_its_remit():
+    """Entry validation, and it also proves every lazily-imported name resolves.
+
+    A NameError inside this function cost a real supervised launch once, because
+    instrument.py must stay torch-free at module level and parameter_digest lives in a
+    torch module. These calls reach past the imports before raising.
+    """
+    for bad in (2048, 1024, 16385, 0, -1, 4096.0, "4096", None):
+        with pytest.raises(ValueError, match="evaluation-window qualification covers"):
+            ins.qualify_evaluation_window(None, None, bad, lambda c: None, lambda: None)
+
+
+def test_window_qualification_resolves_its_torch_dependencies():
+    """Reach the tokenizer check, i.e. past `import torch` and past parameter_digest."""
+    import torch
+
+    tiny = torch.nn.Parameter(torch.zeros(2))
+
+    class NoParams:
+        @staticmethod
+        def named_parameters():
+            return iter([("w", tiny)])
+
+        @staticmethod
+        def parameters():
+            return iter([tiny])
+
+    class BadTokenizer:
+        eos_token_id = 151645
+
+        @staticmethod
+        def encode(text, add_special_tokens=False):
+            return []          # empty fixture tokens -> the documented refusal
+
+    with pytest.raises(ValueError, match="shape fixture token identity invalid"):
+        ins.qualify_evaluation_window(NoParams, BadTokenizer, 4096,
+                                      lambda c: None, lambda: None)
+
+
+def test_instrument_module_does_not_import_torch_at_module_level():
+    """The foreground controller imports this module; torch there costs the child RAM."""
+    import subprocess
+    import sys
+
+    code = ("import experiments.reasoning_posttraining_v1.instrument, sys; "
+            "print('torch' in sys.modules)")
+    out = subprocess.run([sys.executable, "-c", code], capture_output=True, text=True,
+                         cwd=str(__import__("pathlib").Path(ins.__file__).parents[2]))
+    assert out.returncode == 0, out.stderr
+    assert out.stdout.strip() == "False", out.stdout

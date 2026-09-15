@@ -43,6 +43,8 @@ PHASES = ("qualify", "train", "resume", "baseline")
 # A measurement-only phase is a different registered experiment, not a wider RRP-001.
 EXPERIMENT_FOR_PHASE = {"qualify": "RRP-001-MICROFIT", "train": "RRP-001-MICROFIT",
                         "resume": "RRP-001-MICROFIT", "baseline": "RRP-002-BASELINE"}
+# A grant may name an amended successor for the same phase; the phase-to-experiment map
+# is a default, and --experiment selects an amended lane explicitly.
 # Which MEASURED resources.PRELOAD_MINIMA profile each phase belongs to. This selects
 # among existing profiles; it never invents or loosens a threshold, and resources.py is
 # not edited. `baseline` maps to the `qualify` profile because both load the fp32 model
@@ -155,8 +157,9 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     if plan["experiment"] != "RRP-001-MICROFIT" or plan["objective"] != "assistant_response_plus_eos":
         raise ValueError("wrong or unregistered plan")
     grant = read_json(Path(args.grant))
+    experiment = getattr(args, "experiment", None) or EXPERIMENT_FOR_PHASE[args.command]
     validate_grant(grant, stable_hash(prepared / "DATA_CONTRACT.json"), digest(plan),
-                   EXPERIMENT_FOR_PHASE[args.command])
+                   experiment)
     probe, repeated = presentations(prepared, plan)
     return grant, plan, prepared, probe, repeated
 
@@ -195,7 +198,7 @@ def worker(args) -> int:
             if journal.breached:
                 raise RuntimeError("approved budget already breached; no further model work")
             binding = binding_for(prepared, plan, Path(args.source), grant,
-                                  EXPERIMENT_FOR_PHASE[args.command])
+                                  args.experiment or EXPERIMENT_FOR_PHASE[args.command])
 
             if args.command in ("train", "resume"):
                 # Two full checkpoints for a fresh attempt, one for a resumed attempt.
@@ -292,6 +295,8 @@ def main(argv=None) -> int:
         parser.add_argument("--" + name)
     parser.add_argument("--run-id")
     parser.add_argument("--timeout", type=int)
+    parser.add_argument("--experiment",
+                        help="an amended successor lane for this phase, e.g. RRP-002-BASELINE-A2")
     parser.add_argument("--max-sequence", type=int,
                         help="evaluation window; above the trained 2048 it is qualified in-run")
     parser.add_argument("--confirm-model-execution", action="store_true")
@@ -341,6 +346,8 @@ def main(argv=None) -> int:
                   "--timeout", str(args.timeout), "--confirm-model-execution"])
     if args.max_sequence is not None:
         child.extend(["--max-sequence", str(args.max_sequence)])
+    if args.experiment is not None:
+        child.extend(["--experiment", args.experiment])
     command = [sys.executable, "-m", "experiments.reasoning_posttraining_v1.controller",
                *child, "--_worker"]
 

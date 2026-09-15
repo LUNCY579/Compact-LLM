@@ -49,6 +49,21 @@ BASELINE_EXCLUDES = ("broad_SFT", "RL", "larger_teacher", "cloud", "release",
 budget.register(BASELINE_EXPERIMENT, ceiling=BASELINE_LIMITS, phases=BASELINE_PHASES,
                 excludes=BASELINE_EXCLUDES)
 
+# Amendment A2. The original envelope allowed 4 launches and 2 retries, sized for a clean
+# run. Three launches were spent and two of them died on THIS AGENT'S implementation
+# defects, not on anything the science required: a missing torch.no_grad in evaluate(),
+# and a NameError from a lazily-imported symbol that was not imported. Compute was barely
+# touched -- 260 of 3600 GPU-seconds and 241 of 1600 evaluation calls -- so only the
+# launch and retry counters are raised. Every other lane keeps its original value, and
+# training, model selection, RL and cloud stay pinned at zero. This is a SUCCESSOR with
+# its own journal rather than an edit to the exhausted one, so the original hash-chained
+# spend history stays immutable.
+BASELINE_A2_EXPERIMENT = "RRP-002-BASELINE-A2"
+BASELINE_A2_LIMITS = {**BASELINE_LIMITS, "model_worker_launches": 8, "retries": 6}
+
+budget.register(BASELINE_A2_EXPERIMENT, ceiling=BASELINE_A2_LIMITS,
+                phases=BASELINE_PHASES, excludes=BASELINE_EXCLUDES)
+
 # Distinct meanings, deliberately not collapsed into one "unanswerable" bucket.
 SENTINELS = {
     "UNKNOWN": "information required to answer is absent",
@@ -167,7 +182,13 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
     exceed this host's free VRAM. The kept suffix tests the property that matters: that
     position `window` is computed correctly given `window - 1` tokens of real context.
     """
+    # Imported lazily and TOGETHER: this module is imported by the foreground controller
+    # and must stay torch-free at module level, so every torch-dependent name has to be
+    # resolved here. parameter_digest lives in a torch module and was missed once, which
+    # cost a supervised launch to a NameError.
     import torch
+
+    from experiments.model_quality_gpu_v1.native import parameter_digest
 
     if type(window) is not int or not 2048 < window <= 16384:
         raise ValueError("evaluation-window qualification covers 2048 < window <= 16384")
