@@ -1,0 +1,302 @@
+"""DEV bank assembly, strata, positive control and model-free shortcut baselines.
+
+Nothing here loads a model, touches CUDA or spends budget. Its job is to make a model
+number interpretable: a bank is only usable once the independent exact solver scores
+100% on it, and a model result is only meaningful once reported beside the shortcut
+floor that any trivial strategy already achieves.
+
+Forge v1 encodes the answer as a plain string, and an unanswerable world carries a
+literal sentinel as its answer. Those sentinels mean different things and are kept apart.
+`BOTH` is a genuine logical verdict, not an abstention.
+"""
+from __future__ import annotations
+
+import collections
+import re
+from pathlib import Path
+
+from experiments.model_quality_gpu_v1.integrity import digest, read_json
+
+from .sources import import_forge_v1_validator
+
+# Distinct meanings, deliberately not collapsed into one "unanswerable" bucket.
+SENTINELS = {
+    "UNKNOWN": "information required to answer is absent",
+    "IMPOSSIBLE": "no valid ordering/assignment exists",
+    "UNREACHABLE": "no path exists between the endpoints",
+    "INCONSISTENT": "the supplied premises contradict each other",
+}
+# Answers that look like sentinels but are real verdicts.
+VERDICTS = ("BOTH", "SUPPORTED", "REFUTED")
+# Families whose gold is prose; the release scorer refuses to grade them.
+PROSE_FAMILIES = ("communication", "grounded_summary")
+
+
+def load_v1(bindings: Path):
+    """Import the v1 read-only text solver after re-checking its recorded hash."""
+    return import_forge_v1_validator(read_json(bindings)["forge_v1"])
+
+
+def stratum(reference: str) -> str:
+    """ANSWER unless the whole answer is one of the four unanswerable sentinels."""
+    text = reference.strip()
+    if text in SENTINELS:
+        return text
+    return "ANSWER"
+
+
+def canonical(text: str) -> str:
+    """The frozen primitive target contract: whitespace-normalized, nothing else."""
+    return " ".join(text.strip().split())
+
+
+def tolerant(text: str) -> str:
+    """Contract-tolerant form: also drop one trailing sentence mark and outer quotes.
+
+    Case is preserved on purpose. Identifiers like RoomDMKTM are case-bearing, so
+    lowercasing would manufacture credit rather than tolerate formatting.
+    """
+    value = canonical(text)
+    value = value.strip('"').strip("'").strip()
+    while value[-1:] in (".", "!", "?"):
+        value = value[:-1].rstrip()
+    return value
+
+
+def score(prediction: str, reference: str) -> dict:
+    """Strict and tolerant correctness as separately observable quantities."""
+    strict = canonical(prediction) == canonical(reference)
+    loose = tolerant(prediction) == tolerant(reference)
+    return {"strict": strict, "tolerant": loose,
+            # A tolerant-only hit is a presentation failure, not a reasoning failure.
+            "presentation_only": loose and not strict,
+            "stratum": stratum(reference),
+            "predicted_sentinel": canonical(prediction) in SENTINELS,
+            "reference_sentinel": canonical(reference) in SENTINELS}
+
+
+# ---------------------------------------------------------------- bank assembly
+
+def build_bank(root: Path, split: str, *, families: tuple[str, ...], per_family: int,
+               solver, seed: int = 17, exclude_ids: frozenset[str] = frozenset()) -> list[dict]:
+    """Select `per_family` worlds per family from one split, validating every row.
+
+    Selection is by a stable digest of (bank tag, seed, id), so it is reproducible and
+    independent of file order, and it never consults an answer or a model outcome.
+    """
+    rows = {r["id"]: r for r in solver.iter_jsonl(root / "data" / f"{split}.jsonl.gz")}
+    metas = {m["id"]: m for m in solver.iter_jsonl(root / "metadata" / f"{split}.jsonl.gz")}
+    if set(rows) != set(metas):
+        raise ValueError("data/metadata id sets differ")
+
+    chosen: list[dict] = []
+    for family in families:
+        pool = [i for i, m in metas.items()
+                if m["family"] == family and i not in exclude_ids]
+        if len(pool) < per_family:
+            raise ValueError(f"insufficient {family} worlds: {len(pool)}/{per_family}")
+        pool.sort(key=lambda i: digest(["RRP-002-bank", seed, i]))
+        for world_id in pool[:per_family]:
+            row, meta = rows[world_id], metas[world_id]
+            # The release's own row validator: it re-solves the prompt with the text
+            # oracle, re-checks every hash and word count, and refuses leaked metadata.
+            solver.validate_row(row, meta)
+            messages = row["messages"]
+            chosen.append({
+                "id": world_id,
+                "group_id": meta.get("group_id", world_id),
+                "family": family,
+                "split": split,
+                "source_release": "forge_v1",
+                "prompt": [messages[0], messages[1]],
+                "reference": messages[2]["content"],
+                "stratum": stratum(messages[2]["content"]),
+                "answer_category": meta["answer_category"],
+                "prompt_sha256": meta["prompt_sha256"],
+                "case_sha256": meta["case_sha256"],
+                "actual_user_words": meta["actual_user_words"],
+                "core_record_count": meta["core_record_count"],
+                "added_distractor_blocks": meta.get("added_distractor_blocks"),
+                "position_mode": meta.get("position_mode"),
+                "difficulty": meta.get("difficulty"),
+            })
+    return chosen
+
+
+def positive_control(bank: list[dict], solver) -> dict:
+    """The independent text solver must reproduce every gold. Anything less is a broken bank."""
+    wrong, by_family = [], collections.Counter()
+    for row in bank:
+        got = solver.solve_prompt(row["family"], row["prompt"][1]["content"])
+        if canonical(got) != canonical(row["reference"]):
+            wrong.append({"id": row["id"], "family": row["family"],
+                          "solver": got, "reference": row["reference"]})
+        else:
+            by_family[row["family"]] += 1
+    return {"record": "RRP002_POSITIVE_CONTROL_EXACT_SOLVER",
+            "solver": "forge_v1 scripts/verify.py solve_prompt (visible text only)",
+            "rows": len(bank), "solved": len(bank) - len(wrong), "failed": len(wrong),
+            "per_family_solved": dict(sorted(by_family.items())),
+            "status": "PASS" if not wrong else "FAIL",
+            "failures": wrong[:20],
+            "meaning": ("A bank the exact solver cannot solve is broken. A broken instrument "
+                        "is not a model failure."),
+            "model_calls": 0}
+
+
+# ---------------------------------------------------------------- shortcut baselines
+
+_IDENT = re.compile(r"\b[A-Z][A-Za-z]*[A-Z0-9]\w*\b")
+_INT = re.compile(r"-?\d+")
+
+
+def _sections(row: dict, solver) -> tuple[str, str]:
+    """(records-and-rules text, question text) exactly as the release splits it."""
+    return solver.parts(row["prompt"][1]["content"])
+
+
+def _cue_terms(question: str) -> list[str]:
+    """Identifiers in the question, EXCLUDING the sentinel words the instruction leaks.
+
+    Every v1 question ends with wording like "Return the value only or UNKNOWN.", so the
+    literal sentinel is always present as a capitalized token. Copying it is not a cue
+    strategy, it is exploiting the instruction text, and that is measured separately by
+    `copy_question_sentinel`.
+    """
+    return [t for t in _IDENT.findall(question)
+            if t not in SENTINELS and t not in VERDICTS]
+
+
+def _question_sentinel(question: str) -> str:
+    """The sentinel the question itself offers, if any. Makes the surface leak explicit."""
+    offered = [t for t in _IDENT.findall(question) if t in SENTINELS]
+    return offered[-1] if offered else ""
+
+
+def shortcut_predictions(bank: list[dict], solver, *, train_majority: str) -> dict[str, list[str]]:
+    """Model-free predictions. None of these may read a reference.
+
+    `train_majority` must be fitted on TRAIN only and passed in, so this function cannot
+    peek at the bank it is scoring.
+    """
+    out: dict[str, list[str]] = collections.defaultdict(list)
+    for row in bank:
+        body, question = _sections(row, solver)
+        cues = set(_cue_terms(question))
+        body_idents = [t for t in _IDENT.findall(body) if t not in cues]
+        body_ints = _INT.findall(body)
+
+        out["constant_unknown"].append("UNKNOWN")
+        out["constant_train_majority"].append(train_majority)
+        out["last_mentioned"].append(body_idents[-1] if body_idents else "")
+        out["first_mentioned"].append(body_idents[0] if body_idents else "")
+        out["last_number"].append(body_ints[-1] if body_ints else "")
+        # cue_copy: echo the question's own salient identifier back as the answer
+        terms = _cue_terms(question)
+        out["cue_copy"].append(terms[-1] if terms else "")
+        # The instruction text names the sentinel, so copying it is free. Measured
+        # separately, because it sets the real floor for any abstention claim.
+        out["copy_question_sentinel"].append(_question_sentinel(question))
+        # signed-ledger specific: opening balance plus only the final delta (RRP-001 B-1)
+        out["last_delta_only"].append(_last_delta_only(body, question))
+    return dict(out)
+
+
+def _last_delta_only(body: str, question: str) -> str:
+    account = re.search(r"account (\w+)", question)
+    if account is None:
+        return ""
+    name = account.group(1)
+    opening = re.search(rf"Opening: account {name} held (-?\d+) units", body)
+    deltas = [int(d) for a, d, s in
+              re.findall(r"Entry: receipt \w+; account (\w+); delta ([+-]\d+); state (\w+)\.", body)
+              if a == name and s == "POSTED"]
+    if opening is None or not deltas:
+        return "UNKNOWN"
+    return str(int(opening.group(1)) + deltas[-1])
+
+
+def sibling_collision(bank: list[dict], predictions: list[str]) -> dict:
+    """Does an error equal another world's gold IN THE SAME FAMILY? Tests RRP-001 B-1.
+
+    Returns the raw rate only. There is deliberately NO analytic chance level here: the
+    probability that a wrong answer coincidentally equals a sibling gold depends entirely
+    on the predictor's output distribution, and any closed-form estimate would be
+    arbitrary. The comparison baseline must be supplied empirically by running this on the
+    answer-agnostic shortcut predictors, which cannot be doing memorization interference
+    by construction. Compare a candidate model's rate against those.
+    """
+    golds = collections.defaultdict(list)
+    for row in bank:
+        golds[row["family"]].append(canonical(row["reference"]))
+    errors = collisions = sentinel_collisions = 0
+    examples = []
+    for row, pred in zip(bank, predictions, strict=True):
+        own = canonical(row["reference"])
+        got = canonical(pred)
+        if got == own:
+            continue
+        errors += 1
+        siblings = {g for g in golds[row["family"]] if g != own}
+        if got in siblings:
+            # A sentinel is a generic abstention shared by many worlds. Landing on it is
+            # not evidence of recalling a SPECIFIC sibling world, so it is counted apart.
+            if got in SENTINELS:
+                sentinel_collisions += 1
+            else:
+                collisions += 1
+                if len(examples) < 10:
+                    examples.append({"id": row["id"], "family": row["family"],
+                                     "predicted": got, "own_gold": own})
+    return {"errors": errors,
+            "specific_sibling_collisions": collisions,
+            "collision_rate": (collisions / errors) if errors else None,
+            "sentinel_collisions_excluded": sentinel_collisions,
+            "sentinel_collision_rate": (sentinel_collisions / errors) if errors else None,
+            "examples": examples,
+            "why_sentinels_are_excluded": ("A constant-UNKNOWN predictor otherwise scores a "
+                                           "0.707 collision rate on this bank purely because "
+                                           "UNKNOWN is also a sibling gold in most families. "
+                                           "That is abstention, not interference."),
+            "baseline_required": ("Compare against this same statistic computed on the "
+                                  "answer-agnostic shortcut predictors. A model rate at or "
+                                  "below the shortcut rate refutes the B-1 interference reading."),
+            "no_analytic_chance_level": ("Intentionally omitted: it would depend on the "
+                                         "predictor's output distribution and any formula "
+                                         "would be arbitrary.")}
+
+
+def summarize(bank: list[dict], predictions: list[str]) -> dict:
+    """Stratified, family-clustered summary. Denominators are always explicit."""
+    per_stratum = collections.defaultdict(lambda: {"n": 0, "strict": 0, "tolerant": 0})
+    per_family = collections.defaultdict(lambda: {"n": 0, "strict": 0})
+    presentation_only = false_abstain = unsupported_answer = 0
+    for row, pred in zip(bank, predictions, strict=True):
+        got = score(pred, row["reference"])
+        s = per_stratum[got["stratum"]]
+        s["n"] += 1
+        s["strict"] += got["strict"]
+        s["tolerant"] += got["tolerant"]
+        f = per_family[row["family"]]
+        f["n"] += 1
+        f["strict"] += got["strict"]
+        presentation_only += got["presentation_only"]
+        if got["reference_sentinel"] and not got["predicted_sentinel"]:
+            unsupported_answer += 1
+        if got["predicted_sentinel"] and not got["reference_sentinel"]:
+            false_abstain += 1
+    total = len(bank)
+    strict = sum(v["strict"] for v in per_stratum.values())
+    return {
+        "rows": total,
+        "strict_correct": strict,
+        "strict_accuracy": strict / total if total else None,
+        "tolerant_correct": sum(v["tolerant"] for v in per_stratum.values()),
+        "presentation_only_gain": presentation_only,
+        "false_abstention_on_answerable": false_abstain,
+        "unsupported_answer_on_unanswerable": unsupported_answer,
+        "per_stratum": {k: dict(v) for k, v in sorted(per_stratum.items())},
+        "per_family": {k: dict(v) for k, v in sorted(per_family.items())},
+        "cluster_unit": "family (paired variants share group_id)",
+        "quality_claim": False,
+    }

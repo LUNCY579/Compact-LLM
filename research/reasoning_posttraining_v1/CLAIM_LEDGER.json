@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T08:41:03.894530+00:00",
+  "recorded_utc": "2026-09-15T08:47:34.719721+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -188,6 +188,23 @@
       "honest_gap": "2 of 10 reasons were never exercised by this attack set: ['answer_requires_status', 'feasible_suboptimal']. Producing feasible_suboptimal needs a genuinely feasible but non-optimal plan, which requires solving the world; it is not claimed as tested.",
       "why_it_matters": "Semantic correctness, format validity, schema validity, feasibility and optimality are all separately observable, which is what the programme requires before any reward or accuracy number is trusted. The audit is also tested against deliberately broken stub verifiers (credulous, stingy, inconsistent, under-rewarding, crashing) so that a passing audit means something.",
       "classification": "INSTRUMENT_VALIDATED_AGENT_INVARIANTS_CORRECTED_TWICE"
+    },
+    {
+      "id": "CL-022",
+      "topic": "The v1 question text leaks the abstention sentinel, so the UNKNOWN stratum is trivially guessable",
+      "observed": "Every v1 question ends with instruction wording like 'Return the value only or UNKNOWN.', so the literal sentinel is always present as a capitalized token in the model-visible prompt. A baseline that simply copies the last capitalized token from the question therefore scores 56/56 on the UNKNOWN stratum of the 384-row DEV bank.",
+      "consequence": "The measured shortcut floor is 0.1458 strict accuracy (56/384), reached independently by constant_unknown, constant_train_majority (whose TRAIN-fitted majority answer IS 'UNKNOWN', 566/4000) and copy_question_sentinel. Any model accuracy at or below that is not evidence of reasoning, and any abstention improvement must be compared against copy_question_sentinel rather than chance.",
+      "fix_applied": "cue_copy now excludes sentinel and verdict tokens so it measures actual cue copying, and the leak is measured separately and explicitly by copy_question_sentinel.",
+      "classification": "SURFACE_LEAK_IN_THE_SOURCE_DATA_MEASURED_AND_ISOLATED"
+    },
+    {
+      "id": "CL-023",
+      "topic": "I published a meaningless chance level for the B-1 collision test and removed it",
+      "first_version": "sibling_collision reported chance_level_estimate as distinct sibling golds divided by distinct family golds, which returned 0.935 on the DEV bank. That is not the probability a wrong answer coincidentally equals a sibling gold; it is near 1 whenever answers are mostly unique, and comparing an observed 3 percent rate against it would have 'refuted' B-1 for the wrong reason.",
+      "correction": "The analytic estimate is deleted. The statistic now reports the raw rate only, counts sentinel collisions separately, and states that the comparison baseline must be supplied empirically by the answer-agnostic shortcut predictors, which cannot be performing memorization interference by construction.",
+      "measured_baselines": "specific-sibling collision rate on the 384-row bank: first_mentioned 0.0000, constant_unknown 0.0000, copy_question_sentinel 0.0000, cue_copy 0.0026, last_delta_only 0.0292, last_mentioned 0.0321, last_number 0.0550. A candidate model rate inside that range refutes B-1.",
+      "second_correction": "constant_unknown initially showed a 0.707 collision rate because UNKNOWN is itself a sibling gold in most families. Sentinel collisions are now excluded from the specific-collision count, since landing on a generic abstention is not evidence of recalling a particular sibling world.",
+      "classification": "AGENT_STATISTIC_WAS_MISLEADING_REMOVED_BEFORE_USE"
     }
   ]
 }
