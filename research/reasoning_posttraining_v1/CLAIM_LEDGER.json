@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T06:53:05.468434+00:00",
+  "recorded_utc": "2026-09-15T06:58:19.959297+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -31,7 +31,16 @@
       "observed": "budget.Journal hash-chains create-only events. Editing an event or removing a MID-CHAIN event is refused. Deleting the NEWEST event(s) leaves a valid prefix and silently returns that spend.",
       "why_unfixable_here": "Create-only files cannot carry a rewritable head pointer, and any additional marker file would be equally deletable.",
       "mitigation_that_does_hold": "read() refuses run evidence with no reservation, so a launch cannot be erased while its runs/<id>/ directory exists. That covers every worker attempt, which is where the real cost is.",
-      "classification": "DOCUMENTED_LIMITATION_TESTED_AS_SUCH"
+      "classification": "DOCUMENTED_LIMITATION_MEASURED_AND_NARROWED",
+      "measured_tamper_matrix_on_the_committed_copy": {
+        "method": "The committed evidence copy of the journal (346 events) was rebuilt in a temp dir and re-opened after each mutation.",
+        "chain_re_validates_as_committed": "YES - 346 events, all three launches settled, no unsettled reservation, no breach",
+        "inflated_charge_amount": "DETECTED (object digest mismatch)",
+        "zeroed_charge_then_re_sealed_so_its_own_digest_is_valid": "DETECTED (budget event chain differs - the previous-hash link catches it)",
+        "mid_chain_event_deleted": "DETECTED (incomplete or unexpected budget event inventory)",
+        "newest_event_deleted": "NOT DETECTED"
+      },
+      "refinement_the_effect_of_tail_deletion_depends_on_the_event_kind": "Deleting the trailing event is undetectable, but it is only an ATTACK when that event is a charge. Here the newest event was resume-001 settle, and deleting it raised apparent GPU spend from 1067 to 1758 seconds (the timeout-based reservation no longer collapses to the measured wall time) and left resume-001 as an unsettled active reservation, which blocks the next launch. So removing a trailing settle is self-penalizing. The residual risk is narrower than first stated: a trailing CHARGE event can be removed to return spend."
     },
     {
       "id": "CL-005",
