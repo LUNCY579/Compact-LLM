@@ -155,7 +155,7 @@ def worker(args) -> int:
     try:
         with lease(Path(args.resource_lock)):
             configure_runtime(Design(**validate_plan(read_json(args.plan))["design"]).order_seed)
-            resource = guard(before_load=True)
+            resource = guard(before_load=True, phase=args.command)
             plan_value, review = read_json(args.plan), read_json(args.review)
             binding = native_binding(plan_value, review, Path(args.source))
             tokenizer = load_tokenizer(Path(args.source))

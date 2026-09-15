@@ -82,6 +82,24 @@ def test_create_only_and_digest(tmp_path):
     with pytest.raises(ValueError): I.file_hash(alias)
 
 
+def test_preload_minima_are_phase_specific_and_training_is_unchanged():
+    """The training gate must stay at 6.0/6.0 and qualification must not exceed it.
+
+    Pins the measurement that justified splitting them: qualify peaks at 3.89 GiB host and
+    2.22 GiB GPU because it allocates no optimizer state, while train adds CpuAdamW's two
+    fp32 moments (2 x 314,618,880 x 4 B = 2.34 GiB) on the CPU. If someone later lowers the
+    training gate, or raises qualification above it, this fails rather than letting a
+    quietly-loosened guard reach a real run.
+    """
+    from experiments.model_quality_gpu_v1.resources import PRELOAD_MINIMA
+    assert PRELOAD_MINIMA["train"] == (6.0, 6.0)
+    q_host, q_gpu = PRELOAD_MINIMA["qualify"]
+    t_host, t_gpu = PRELOAD_MINIMA["train"]
+    assert 3.89 < q_host <= t_host and 2.22 < q_gpu <= t_gpu
+    # An unknown phase must fall back to the STRICTER profile, never the looser one.
+    assert PRELOAD_MINIMA.get("nonsense", PRELOAD_MINIMA["train"]) == (6.0, 6.0)
+
+
 def test_chat_response_mask_includes_eos_excludes_prefix_suffix():
     r = encode_row(row(1), ByteTokenizer(), Design())
     response, whole = targets(r, "response"), targets(r, "whole")

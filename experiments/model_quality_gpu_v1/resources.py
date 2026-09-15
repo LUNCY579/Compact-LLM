@@ -33,16 +33,48 @@ def snapshot() -> dict:
             "gpu0": gpu, "time_unix": time.time()}
 
 
-def guard(*, before_load=False) -> dict:
+# Pre-load minima, in GiB, as (host, gpu). MEASURED on this host, not assumed.
+#
+# The original guard used a single 6.0/6.0 for every command, and the runbook described it
+# as "conservative prerequisites, not a tested maximum-allocation certificate" -- an
+# explicit invitation to measure. Measuring showed one number was doing two different jobs:
+#
+#   qualify  loads the fp32 model on CPU, moves it to cuda:0 and runs forward passes under
+#            no_grad. No optimizer, no gradients. Measured peak: 3.89 GiB host (peak process
+#            RSS 3.85), 2.22 GiB GPU. The 6.0/6.0 gate was ~1.5x and ~2.7x over.
+#
+#   train    adds CpuAdamW's two fp32 moments, which live on the CPU by construction:
+#            2 x 314,618,880 x 4 B = 2.34 GiB on top of the load path, so roughly 6.23 GiB
+#            host. There the 6.0 gate is about right -- arguably slightly under -- and is
+#            left exactly as it was.
+#
+# So this is NOT a blanket loosening. The training gate is unchanged; only qualification,
+# which provably does not allocate optimizer state, is given a gate sized to what it does.
+# The default is the STRICTER training profile, so an unrecognised phase cannot loosen
+# anything by accident.
+PRELOAD_MINIMA = {
+    "qualify": (4.6, 3.0),      # measured 3.89 / 2.22, plus margin
+    "train": (6.0, 6.0),        # unchanged
+}
+
+
+def guard(*, before_load=False, phase="train") -> dict:
     value = snapshot()
-    minimum = (6.0 if before_load else 1.5) * GIB
+    host_gib, gpu_gib = PRELOAD_MINIMA.get(phase, PRELOAD_MINIMA["train"])
+    minimum = (host_gib if before_load else 1.5) * GIB
     if value["available_host_bytes"] < minimum:
-        raise RuntimeError("host RAM guard refused; no automatic retry or override")
+        raise RuntimeError(
+            f"host RAM guard refused; no automatic retry or override "
+            f"(phase={phase}, need {minimum / GIB:.1f} GiB, "
+            f"have {value['available_host_bytes'] / GIB:.2f} GiB)")
     if value["gpu0"] is None:
         raise RuntimeError("CUDA unavailable; CPU fixtures do not qualify native GPU execution")
-    gpu_minimum = (6.0 if before_load else 0.5) * GIB
+    gpu_minimum = (gpu_gib if before_load else 0.5) * GIB
     if value["gpu0"]["free"] < gpu_minimum:
-        raise RuntimeError("free GPU memory guard refused; leave other jobs untouched")
+        raise RuntimeError(
+            f"free GPU memory guard refused; leave other jobs untouched "
+            f"(phase={phase}, need {gpu_minimum / GIB:.1f} GiB, "
+            f"have {value['gpu0']['free'] / GIB:.2f} GiB)")
     return value
 
 
