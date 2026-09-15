@@ -235,7 +235,14 @@ def worker(args) -> int:
                 if window > design.max_sequence:
                     window_qualification = ins.qualify_evaluation_window(
                         model, tokenizer, window, journal.reserve, guard)
-                evaluable, rejected = ins.compile_bank(bank, tokenizer, max_sequence=window)
+                # A forge_v2 bank carries reference_text (strict JSON) and MUST be scored
+                # offline by the audited verifier: four of its families accept alternative
+                # optima of equal cost that text matching would wrongly reject (CL-021).
+                # The worker records raw predictions; the text-match field is a lower bound.
+                v2 = bool(bank) and "reference_text" in bank[0]
+                evaluable, rejected = ins.compile_bank(
+                    bank, tokenizer, max_sequence=window,
+                    reference_field="reference_text" if v2 else "reference")
                 import torch
 
                 before = parameter_digest(model)
@@ -251,6 +258,14 @@ def worker(args) -> int:
                     **value, "binding": binding, "optimizer_steps": 0,
                     "source_state_before": before, "source_state_after": after,
                     "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
+                    "bank_kind": "forge_v2" if v2 else "forge_v1",
+                    "scoring_note": (
+                        "canonical_training_target_match is a LOWER BOUND on a forge_v2 "
+                        "bank: it is a text comparison, and four v2 families accept "
+                        "alternative optima of equal cost. Score the raw predictions with "
+                        "forge_rl.rewards.score_response."
+                        if v2 else
+                        "text comparison against the v1 string contract is exact here"),
                     "bank_rows": len(bank), "evaluated_rows": len(evaluable),
                     "rejected_overlength_rows": len(rejected), "rejected": rejected,
                     "max_sequence": window,

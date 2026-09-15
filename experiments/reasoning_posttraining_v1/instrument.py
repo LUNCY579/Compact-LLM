@@ -12,6 +12,7 @@ literal sentinel as its answer. Those sentinels mean different things and are ke
 from __future__ import annotations
 
 import collections
+import json
 import re
 from pathlib import Path
 
@@ -168,6 +169,215 @@ def build_bank(root: Path, split: str, *, families: tuple[str, ...], per_family:
     return chosen
 
 
+# ---------------------------------------------------------------- Forge v2 lane
+#
+# v2 is where the stratified abstention analysis belongs: it carries a structured
+# reference.status with UNKNOWN and IMPOSSIBLE spanning several families, which v1
+# structurally cannot supply (CL-019). Its answers are strict JSON objects, and four of
+# its eight families are optimization problems where a DIFFERENT plan of equal cost is
+# genuinely correct -- so it must be scored with the release's audited
+# rewards.score_response and NEVER by text-matching reference_text (CL-021).
+V2_FAMILIES = ("budget_selection", "continuous_replan", "deadline_schedule", "evidence_chain",
+               "ledger_replay", "prerequisite_plan", "register_machine", "temporal_route")
+V2_STATUSES = ("ANSWER", "UNKNOWN", "IMPOSSIBLE")
+# An empty/degenerate witness per answer shape, for the model-free floor.
+V2_EMPTY_WITNESS = {
+    "path": {"cost": 0, "path": []},
+    "actions": {"actions": [], "cost": 0},
+    "order": {"finish": 0, "order": []},
+    "items": {"cost": 0, "items": [], "value": 0},
+    "value": {"value": 0},
+    "answer": {"answer": "S0"},
+    "status": {"status": "UNKNOWN"},
+}
+
+
+def v2_stratum(reference: dict) -> str:
+    """ANSWER unless the reference carries an explicit status sentinel."""
+    return reference.get("status", "ANSWER")
+
+
+def _v2_shape(reference: dict) -> str:
+    for key in ("path", "actions", "order", "items", "value", "answer", "status"):
+        if key in reference:
+            return key
+    raise ValueError(f"unrecognized v2 answer shape: {sorted(reference)}")
+
+
+def build_bank_v2(root: Path, split: str, *, per_bucket: int, seed: int = 17,
+                  exclude_ids: frozenset[str] = frozenset()) -> list[dict]:
+    """Select `per_bucket` worlds for every family x status bucket present in `split`.
+
+    Stratifying on family x status is deliberate: UNKNOWN appears in only two v2 families
+    and IMPOSSIBLE in four, so a flat sample would leave the abstention strata thin and
+    family-confounded exactly as v1's are.
+    """
+    import gzip
+
+    def rows(rel):
+        with gzip.open(root / rel, "rt", encoding="utf-8") as stream:
+            for line in stream:
+                if line.strip():
+                    yield json.loads(line)
+
+    policy = {r["id"]: r for r in rows(f"data/rl/{split}.jsonl.gz")}
+    meta = {m["id"]: m for m in rows(f"metadata/{split}.jsonl.gz")}
+    if set(policy) != set(meta):
+        raise ValueError("v2 data/metadata id sets differ")
+
+    buckets: dict[tuple[str, str], list[str]] = collections.defaultdict(list)
+    for world_id, m in meta.items():
+        if world_id in exclude_ids:
+            continue
+        buckets[(m["family"], v2_stratum(m["reference"]))].append(world_id)
+
+    chosen: list[dict] = []
+    for key in sorted(buckets):
+        pool = sorted(buckets[key], key=lambda i: digest(["RRP-002-bank-v2", seed, i]))
+        for world_id in pool[:per_bucket]:
+            p, m = policy[world_id], meta[world_id]
+            if [x["role"] for x in p["prompt"]] != ["system", "user"]:
+                raise ValueError("v2 policy prompt must be exactly system+user")
+            # The gold must not be reachable from anything the policy can see.
+            visible = json.dumps(p["prompt"])
+            for leak in (m["reference_text"], world_id):
+                if leak in visible:
+                    raise ValueError(f"gold or id leaked into the v2 prompt: {world_id}")
+            chosen.append({
+                "id": world_id, "group_id": m["group_id"], "family": m["family"],
+                "split": split, "source_release": "forge_v2",
+                "prompt": p["prompt"],
+                "stratum": v2_stratum(m["reference"]),
+                "answer_shape": _v2_shape(m["reference"]),
+                # verifier-only below this line; never placed in a model-visible prompt
+                "reference": m["reference"], "reference_text": m["reference_text"],
+                "world": m["world"], "certificate": m.get("certificate"),
+                "prompt_sha256": m["prompt_sha256"],
+                "case_sha256": m["layout"]["case_sha256"],
+                "layout": m["layout"]["layout"],
+                "distractor_records": m["layout"]["distractor_records"],
+                "input_words": m["layout"]["input_words"],
+                "generation_tier": m["generation"]["tier"],
+                "transfer": m["generation"]["transfer"],
+            })
+    return chosen
+
+
+def positive_control_v2(bank: list[dict], modules) -> dict:
+    """The shipped gold witness must verify on every row, via the audited verifier."""
+    rewards = modules["rewards"]
+    wrong, reasons = [], collections.Counter()
+    for row in bank:
+        got = rewards.score_response(row["world"], row["reference_text"],
+                                     certificate=row.get("certificate"))
+        reasons[got["reason"]] += 1
+        if not got["correct"]:
+            wrong.append({"id": row["id"], "family": row["family"],
+                          "reason": got["reason"], "reference_text": row["reference_text"]})
+    return {"record": "RRP002_V2_POSITIVE_CONTROL_GOLD_WITNESS",
+            "verifier": "forge_v2 forge_rl.rewards.score_response -> oracle.verify_solution",
+            "rows": len(bank), "verified": len(bank) - len(wrong), "failed": len(wrong),
+            "reasons": dict(sorted(reasons.items())),
+            "status": "PASS" if not wrong else "FAIL", "failures": wrong[:20],
+            "note": ("audit_answer returns a certificate rather than a plan for the "
+                     "optimization families, so it cannot act as a predictor; the gold-witness "
+                     "check is the available exact control."),
+            "model_calls": 0}
+
+
+def score_v2(prediction: str, row: dict, modules) -> dict:
+    """One prediction, scored by the audited verifier. Channels stay separate."""
+    got = modules["rewards"].score_response(row["world"], prediction,
+                                            certificate=row.get("certificate"))
+    predicted_status = None
+    if got["format_valid"]:
+        try:
+            predicted_status = json.loads(prediction.strip()).get("status")
+        except (ValueError, AttributeError):
+            predicted_status = None
+    return {"correct": got["correct"], "format_valid": got["format_valid"],
+            "schema_valid": got["schema_valid"], "feasible": got["feasible"],
+            "reason": got["reason"], "reward": got["reward"],
+            "stratum": row["stratum"], "predicted_status": predicted_status}
+
+
+# Keyed on answer_shape, which is DERIVED FROM THE REFERENCE. It is therefore
+# oracle-assisted, not answer-agnostic, and must never count toward the shortcut floor.
+# Kept as a diagnostic answering "what would a trivial witness score if the answer shape
+# were handed to you?" It was caught only because a test asserts the honest baselines are
+# invariant to stripping the reference.
+V2_ORACLE_ASSISTED = ("oracle_shape_empty_witness",)
+
+
+def shortcut_predictions_v2(bank: list[dict], *, train_majority: str) -> dict[str, list[str]]:
+    """v2 predictions. Every name outside V2_ORACLE_ASSISTED is strictly answer-agnostic,
+    reading only the model-visible prompt and a TRAIN-fitted constant."""
+    out: dict[str, list[str]] = collections.defaultdict(list)
+    for row in bank:
+        question = row["prompt"][1]["content"]
+        out["constant_unknown"].append(json.dumps({"status": "UNKNOWN"}))
+        out["constant_impossible"].append(json.dumps({"status": "IMPOSSIBLE"}))
+        out["constant_train_majority"].append(train_majority)
+        out["zero_value"].append(json.dumps({"value": 0}))
+        # ORACLE-ASSISTED, quarantined by V2_ORACLE_ASSISTED: the shape comes from the
+        # reference, so this is a diagnostic and not part of any floor.
+        out["oracle_shape_empty_witness"].append(
+            json.dumps(V2_EMPTY_WITNESS[row["answer_shape"]]))
+        # Prose: establishes that the format channel really does floor at zero.
+        out["prose_non_json"].append("The answer is zero.")
+        # Echo an integer out of the QUERY line without solving anything.
+        match = re.search(r"QUERY\s*(\{.*\})", question)
+        value = 0
+        if match:
+            numbers = _INT.findall(match.group(1))
+            value = int(numbers[-1]) if numbers else 0
+        out["copy_query_integer"].append(json.dumps({"value": value}))
+    return dict(out)
+
+
+def summarize_v2(bank: list[dict], predictions: list[str], modules) -> dict:
+    """Stratified v2 summary keeping format, schema, feasibility and semantics apart."""
+    per_stratum = collections.defaultdict(lambda: {"n": 0, "correct": 0})
+    per_family = collections.defaultdict(lambda: {"n": 0, "correct": 0})
+    per_shape = collections.defaultdict(lambda: {"n": 0, "correct": 0})
+    reasons = collections.Counter()
+    fmt = schema = 0
+    false_abstain = unsupported = wrong_sentinel = 0
+    for row, pred in zip(bank, predictions, strict=True):
+        got = score_v2(pred, row, modules)
+        reasons[got["reason"]] += 1
+        fmt += got["format_valid"]
+        schema += got["schema_valid"]
+        for table, key in ((per_stratum, row["stratum"]), (per_family, row["family"]),
+                           (per_shape, row["answer_shape"])):
+            table[key]["n"] += 1
+            table[key]["correct"] += got["correct"]
+        truth, guess = row["stratum"], got["predicted_status"]
+        if truth == "ANSWER" and guess in ("UNKNOWN", "IMPOSSIBLE"):
+            false_abstain += 1
+        elif truth != "ANSWER" and guess is None:
+            unsupported += 1
+        elif truth != "ANSWER" and guess is not None and guess != truth:
+            wrong_sentinel += 1
+    total = len(bank)
+    correct = sum(v["correct"] for v in per_stratum.values())
+    return {
+        "rows": total, "correct": correct,
+        "accuracy": correct / total if total else None,
+        "format_valid": fmt, "schema_valid": schema,
+        "false_abstention_on_answerable": false_abstain,
+        "unsupported_answer_on_unanswerable": unsupported,
+        "wrong_sentinel_on_unanswerable": wrong_sentinel,
+        "per_stratum": {k: dict(v) for k, v in sorted(per_stratum.items())},
+        "per_family": {k: dict(v) for k, v in sorted(per_family.items())},
+        "per_answer_shape": {k: dict(v) for k, v in sorted(per_shape.items())},
+        "verifier_reasons": dict(sorted(reasons.items())),
+        "cluster_unit": "family; paired variants share group_id",
+        "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+        "quality_claim": False,
+    }
+
+
 def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
                               keep: int = 8) -> dict:
     """Qualify an EVALUATION window wider than the trained 2048. Forward-only.
@@ -258,7 +468,8 @@ def qualify_evaluation_window(model, tokenizer, window: int, reserve, guard, *,
 
 
 def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
-                 completion_reserve: int = 128) -> tuple[list[dict], list[dict]]:
+                 completion_reserve: int = 128,
+                 reference_field: str = "reference") -> tuple[list[dict], list[dict]]:
     """Tokenize the bank for native evaluation. Overlength rows are REJECTED, not truncated.
 
     Returns (evaluable, rejected). The caller must report both denominators: at a 2048
@@ -269,7 +480,7 @@ def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
     evaluable, rejected = [], []
     for row in bank:
         try:
-            compiled = compile_row(row["prompt"], row["reference"], tokenizer,
+            compiled = compile_row(row["prompt"], row[reference_field], tokenizer,
                                    max_sequence=max_sequence,
                                    completion_reserve=completion_reserve)
         except ValueError as exc:
@@ -280,7 +491,7 @@ def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
         evaluable.append({
             "id": row["id"], "parent_id": row.get("group_id", row["id"]),
             "family": row["family"], "stratum": row["stratum"],
-            "reference": row["reference"], "prompt": row["prompt"],
+            "reference": row[reference_field], "prompt": row["prompt"],
             "ids": compiled["ids"], "prompt_ids": compiled["prompt_ids"],
             "labels": compiled["labels"], "source_split": "validation",
             "processed_tokens": compiled["processed_tokens"],
