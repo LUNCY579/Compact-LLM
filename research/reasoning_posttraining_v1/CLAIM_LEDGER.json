@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T09:03:35.283237+00:00",
+  "recorded_utc": "2026-09-15T09:19:26.195720+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -229,6 +229,23 @@
       "cause": "tolerant() normalizes whitespace, strips outer quotes and drops one trailing sentence mark. It cannot parse a slot contract, so it rescues nothing and the two mechanisms stay confounded.",
       "required": "B-3's falsifying test needs a slot-aware parser scoring per-slot, reported separately from strict accuracy. It is NOT built, so no claim is made about how much of the dialogue_memory failure is presentation versus reasoning.",
       "classification": "INSTRUMENT_GAP_NAMED_NO_CLAIM_MADE"
+    },
+    {
+      "id": "CL-027",
+      "topic": "A 4096 EVALUATION window is qualified; training at that window is not",
+      "measured": "Forward-only qualification at 4096 tokens: cached-versus-uncached agreement 5.293e-05 with the sequence streamed through the KV cache in 512-token chunks, finite logits at full length, causality inside the kept suffix, perturbation demonstrably moving the logits, source parameters byte-identical before and after, 0 optimizer steps and 0 backward passes. Peak VRAM 5.38 GiB against about 7.1 GiB free.",
+      "explicit_limit": "It qualifies INFERENCE only. No backward pass ran and no optimizer state was allocated, so training at 4096 needs its own qualification. The receipt carries a does_not_qualify field saying so.",
+      "design_constraint": "Only the last 8 positions' logits are materialized. A full logit tensor at 4096 is 4096 x 151936 x 4 bytes, about 2.5 GiB, and two of them plus the fp32 model exceed free VRAM. The kept suffix still tests that position N is computed correctly given N-1 tokens of real context. The shape fixture is separately named mechanical filler, never truncated task evidence.",
+      "classification": "EVALUATION_WINDOW_QUALIFIED_TRAINING_WINDOW_NOT"
+    },
+    {
+      "id": "CL-028",
+      "topic": "The 2048 length-bias caveat was real but small, and every baseline pattern replicated",
+      "measured": "Widening the evaluation window to 4096 lifted coverage from 240 to 333 of 384 rows (refusals 144 to 51). Strict accuracy moved 0.2625 (63/240) to 0.2553 (85/333); the shortcut floor stayed about 0.141; the positive control stayed 1.0000, now 333/333; false abstention on answerable worlds 27.7 to 28.3 percent; unsupported answers on unanswerable worlds 52.9 to 51.1 percent; sibling collision 0.2147 to 0.2056; UNKNOWN stratum 16/34 to 23/47.",
+      "what_it_means": "The caveat was worth stating and is now bounded: the shorter subset was not materially unrepresentative in aggregate, and the small downward move is the expected direction for longer inputs. B-2's two-directional abstention miscalibration replicates on a 39 percent larger sample, and dialogue_memory is now 0/43, so that failure is systematic rather than noise.",
+      "still_not_a_long_context_claim": "The bank's p50 is about 1,164 native tokens. Both releases' length-stress splits remain unreachable on this host at 11k-61k tokens (CL-016).",
+      "honest_detail": "One of 333 rows failed to terminate inside the 128-token budget, against zero of 240 before. It stays in the denominator.",
+      "classification": "BASELINE_REPLICATED_ACROSS_TWO_WINDOWS"
     }
   ]
 }
