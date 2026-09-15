@@ -1,0 +1,100 @@
+{
+  "schema": "plf.delivery/1",
+  "status": "IMPLEMENTED_LOCAL_MECHANICS_PASS_NATIVE_UNEXECUTED_REMOTE_UNPUBLISHED",
+  "core_tests": 90,
+  "host_adapter_fixture_tests": 15,
+  "failures": 0,
+  "skips": 0,
+  "scope": "New paired framework and independent host-adapter fixtures only; not inherited full suites or native Qwen/CED",
+  "qualify_receipt_sha256": "72f5dccc683a9cc3364c75835622b15b863b1566b47736ea5f08ee3561a52fe0",
+  "smoke_receipt_sha256": "974e8833f99ecb2796d5c9bdfbf2c0eb62ead927db8858b9a65d5dc5d7c3a833",
+  "core_source_binding": {
+    "environment": {
+      "device": "cpu",
+      "packages": {
+        "numpy": "2.3.5",
+        "psutil": "7.2.2",
+        "pytest": "9.0.2",
+        "safetensors": "0.7.0",
+        "torch": "2.10.0+cpu"
+      },
+      "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+      "python": "3.13.5",
+      "threads": 1
+    },
+    "source": {
+      "AGENTS.md": "22690e820a64365d859bf86f32c2e6e2293c31e1bb0c24e18813f15a6215eddb",
+      "README.md": "c839c41da5fda12c923e84693be544a7909ec5d202b18c29f68d2927760e965a",
+      "__init__.py": "84e8387aabf2d3904abdab68032bd600602b9c045bc4f10cf435c8573d290d8d",
+      "__main__.py": "b8a19f4db430b1872005b0c122a1d864eccab8b2eac9a4c28dbeae9131d953a6",
+      "bank.py": "d7e65b52fc45637cb42cf4325bcdf44ba992dff705db2b4d71d55c16e04c7d98",
+      "contracts.py": "ef6fd42ddafc50f50628266e8bc7061d76e1bd087b5aa0c35849a7e4455bbb59",
+      "data.py": "f04e927dab7e62088a294abc3f1e95b5f27fcb2d26fd75ca9da27904a39a32c9",
+      "engine.py": "ab968f7c9bc12a2d601c57bba6295155ef37fd1ae90b89705ee124a724883f18",
+      "fixtures.py": "ae466a24df31d97f76ee3f500ad7d8cf5be288dd73e3383aee68d18c807e6b75",
+      "model.py": "65842472eaf8b83881c512c924a4761de29d02f17a94ecd23410b7178199a485",
+      "protocol.json": "fade47f370c2a8086c035cf596e90b5819dddc127bdf9fe2facf20b320656cb4",
+      "report.py": "65da594262ce24b97a550d9f67ef27ef701ca9b8fbfa81e1fefa4705165eaf01",
+      "requirements-cpu.txt": "9c5c043e4a72d31758919e6181e55dfd6a13694d1422d15cdd74a8a687d1c973",
+      "runtime.py": "063a71448795a7465e2b64e1865b4734059d163cdb6d4f58aca560091e43800b",
+      "tests/__init__.py": "3e893eb85bc7e2ba1756b9a743abef37077b30ae8a4976fbcf0480fbee97c798",
+      "tests/expected_cases.json": "8af5cc94db93a60b91d37ebd481d685f8cc6094243689bcd00556aebb5068bd8",
+      "tests/test_core.py": "7b0f048cb98c579b029442ef8ee62f303f42a3e9a02086190741b5379c55eab2",
+      "tests/test_runtime.py": "adbcf3934c82cd4b08da78679cad6bdafe0e86fb17aa9d627bd9052a88d1d141"
+    }
+  },
+  "engineering_smoke": {
+    "hosts": "two artificial feature providers, not actual B28/CED",
+    "trained_cells": 8,
+    "optimizer_updates": 64,
+    "evaluation_cells": 20,
+    "checkpoint_tensor_and_trajectory_roundtrip": true,
+    "raw_analysis_verification": true
+  },
+  "native_preflight": {
+    "blockers": [
+      "Transformers is absent",
+      "official source asset missing: model.safetensors",
+      "official source asset missing: config.json",
+      "official source asset missing: tokenizer.json",
+      "official source asset missing: tokenizer_config.json",
+      "pinned inherited source unavailable: CalledProcessError"
+    ],
+    "native_weights_loaded": false,
+    "note": "metadata availability is not source verification or qualification",
+    "optimizer_steps": 0,
+    "parent": "a36de96b30eb03265db3a18e464a2e2a23ee67bf",
+    "parent_source": null,
+    "schema": "plf.host-preflight/1",
+    "status": "BLOCKED"
+  },
+  "native_backbone_optimizer_steps": 0,
+  "native_features_captured": 0,
+  "quality_improvement_established": false,
+  "remote": {
+    "branches_created": false,
+    "commits_pushed": false,
+    "existing_branches_modified_by_this_delivery": false,
+    "blocker": "Current GitHub schemas expose no write actions; plugin search returned installed GitHub; direct git ls-remote failed github.com DNS."
+  },
+  "proposed_branches": {
+    "RineyaArchitecture": {
+      "name": "research/looped-flow-paired-host-quality-v1",
+      "parent": "07b1f14d5ec9565e0d319bb2ef6d42466eafbbb9"
+    },
+    "ChatBubble": {
+      "name": "research/ced-looped-flow-paired-host-v1",
+      "parent": "a36de96b30eb03265db3a18e464a2e2a23ee67bf"
+    }
+  },
+  "checks_not_run": [
+    "native source loading",
+    "native CED conversion/extraction",
+    "native feature optimization screen",
+    "inherited full suites",
+    "CUDA",
+    "remote Actions",
+    "real remote publication"
+  ],
+  "test_notes": "Unit tests contain additional tiny optimizer exercises, separate from the 64-update formal smoke. Older development receipts are historical and stale for final source."
+}
