@@ -1,0 +1,61 @@
+{
+  "record": "BUDGET_AMENDMENT",
+  "amendment": "A3",
+  "recorded_utc": "2026-09-15T00:00:00Z",
+  "from_experiment": "RRP-002-BASELINE-A2",
+  "to_experiment": "RRP-002-BASELINE-A3",
+  "what_changed": "the declared evaluation scope ONLY",
+  "changed": {
+    "evaluation_bank": [
+      "RRP2-DEV-V1 only",
+      "the three registered DEV banks: RRP2-DEV-V1, RRP2-DEV-V2, RRP2-PRES-DEV"
+    ],
+    "ceiling": [
+      "A2's full ceiling",
+      "A2's REMAINDER, so no new compute is granted"
+    ]
+  },
+  "unchanged": "every zero stays zero: processed_training_tokens_all_attempts=0, adaptive_model_selection_rounds=0, on_policy_rl_rollout_tokens=0, cloud_or_teacher_spend=0. quality_claim_permitted and release_permitted stay false. The excludes list is copied verbatim and still bars training.",
+  "honest_cause": "MY OWN SCOPE DRIFT, found by checking the grant against the run ledger rather than by anything failing. GRANT_RRP002_BASELINE_A2.json declares evaluation_bank = RRP2_DEV_V1_BANK.jsonl and scopes itself to 'held-out measurement of the source checkpoint on RRP2-DEV-V1'. Run baseline-v2-4k-001 evaluated RRP2-DEV-V2 under experiment RRP-002-BASELINE-A2. The numeric envelope was enforced throughout and the kind of work was exactly what A2 authorized -- inference on an existing checkpoint, zero optimizer steps, zero model selection, source parameter digest equal before and after -- but the bank was not the declared one and no amendment recorded the widening. Recorded rather than reused.",
+  "why_not_an_edit": "budget.register refuses re-registration with different terms, and editing a live grant would break the journal's hash chain and rewrite spend history. A successor lane with its own journal preserves both.",
+  "compute_already_consumed_on_the_a2_lane": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 571,
+    "generated_tokens_all_candidates": 72064,
+    "model_worker_launches": 2,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 1457,
+    "new_disk_bytes": 8388608,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 1,
+    "total_owned_work_wall_seconds": 1458
+  },
+  "a3_ceiling_equals_a2_remainder": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 1029,
+    "generated_tokens_all_candidates": 59008,
+    "model_worker_launches": 6,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2143,
+    "new_disk_bytes": 260046848,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 5,
+    "total_owned_work_wall_seconds": 3942
+  },
+  "net_new_compute_authorized": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 0,
+    "generated_tokens_all_candidates": 0,
+    "model_worker_launches": 0,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 0,
+    "new_disk_bytes": 0,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 0,
+    "total_owned_work_wall_seconds": 0
+  },
+  "operator_authority": "MODEL_EXECUTION_AUTHORIZATION.json (RRP-001-AUTH-001) for the lane, plus the operator's standing session instruction, recorded verbatim: 'if you need GPU for long running or short running fine tuning works go ahead and use them.' That authorizes the COMPUTE. It does not constitute review of these banks' contents, and no such review is claimed: every bank remains MACHINE_VERIFIED_NOT_HUMAN_REVIEWED."
+}

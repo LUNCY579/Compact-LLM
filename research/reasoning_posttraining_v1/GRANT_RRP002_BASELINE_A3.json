@@ -1,0 +1,55 @@
+{
+  "approved_by": "operator:LUNCY579",
+  "data_contract_sha256": "66aa9a9d582c5f426958227a001ae640d34daf4a68c6d1cd115e38509d95c2b1",
+  "decision": "APPROVED",
+  "excludes": [
+    "broad_SFT",
+    "RL",
+    "larger_teacher",
+    "cloud",
+    "release",
+    "architectural_change",
+    "training"
+  ],
+  "human_data_review": "NOT_PERFORMED; this measures an existing checkpoint and trains nothing",
+  "plan_sha256": "9208fc92fce8c6b5bb5647c83e45d3ae7bfd2ca2bff707bd58f1662fd667e069",
+  "quality_claim_permitted": false,
+  "release_permitted": false,
+  "training_permission": false,
+  "experiment": "RRP-002-BASELINE-A3",
+  "supersedes": "RRP-002-BASELINE-A2 (declared scope did not cover the banks used)",
+  "evaluation_banks": {
+    "RRP2-DEV-V1": {
+      "path": "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_DEV_V1_BANK.jsonl",
+      "sha256": "26206606a2b9be1ac0b404fd8aa3dcf84d7878b7bf9e010942560dfaea60dfe9",
+      "rows": 384
+    },
+    "RRP2-DEV-V2": {
+      "path": "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_DEV_V2_BANK.jsonl",
+      "sha256": "41b1806d656f26cd398435bf9fb14298510333f4d51361ebdfb0f4687f2c06d1",
+      "rows": 336
+    },
+    "RRP2-PRES-DEV": {
+      "path": "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BANK.jsonl",
+      "sha256": "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975",
+      "rows": 768
+    }
+  },
+  "scope": "held-out measurement of the ungated Supa 1.7 SOURCE checkpoint on the three registered DEV banks -- RRP2-DEV-V1, RRP2-DEV-V2 and RRP2-PRES-DEV -- at the qualified 2048 window, or at a wider evaluation window qualified IN-RUN. Measurement only: no optimizer step, no checkpoint written, no model selected.",
+  "limits": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 1029,
+    "generated_tokens_all_candidates": 59008,
+    "model_worker_launches": 6,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2143,
+    "new_disk_bytes": 260046848,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 5,
+    "total_owned_work_wall_seconds": 3942
+  },
+  "limits_are": "A2's REMAINDER, not a fresh envelope. A2 + A3 together authorize exactly what A2 alone authorized.",
+  "authorization_reference": "MODEL_EXECUTION_AUTHORIZATION.json (RRP-001-AUTH-001) for the lane, plus the operator's standing session instruction, recorded verbatim: 'if you need GPU for long running or short running fine tuning works go ahead and use them.' That authorizes the COMPUTE. It does not constitute review of these banks' contents, and no such review is claimed: every bank remains MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
+  "amendment_record": "BUDGET_AMENDMENT_A3.json"
+}

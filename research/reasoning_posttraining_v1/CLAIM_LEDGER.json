@@ -427,6 +427,44 @@
         "research/reasoning_posttraining_v1/evidence/inspection-20260915/rrp001-runs/RESUME_VERIFICATION.json",
         "research/reasoning_posttraining_v1/RESULTS.md"
       ]
+    },
+    {
+      "id": "CL-045",
+      "topic": "I ran a measurement outside its grant's declared bank, and found it by checking rather than by anything failing",
+      "the_defect": "GRANT_RRP002_BASELINE_A2.json declares evaluation_bank = RRP2_DEV_V1_BANK.jsonl and scopes itself to 'held-out measurement of the source checkpoint on RRP2-DEV-V1'. Run baseline-v2-4k-001 evaluated RRP2-DEV-V2 under experiment RRP-002-BASELINE-A2. The declared bank was not the bank used, and no amendment recorded the widening.",
+      "what_was_NOT_violated": "The numeric envelope was enforced throughout by the hash-chained journal, and the KIND of work was exactly what A2 authorized: inference on an existing checkpoint, zero optimizer steps, zero model selection, source parameter digest equal before and after, training/RL/cloud pinned at zero. No compute was taken that the grant did not allow.",
+      "the_test": "Read the grant's `evaluation_bank` and `scope` fields against RUN_LEDGER.jsonl before requesting a third bank's measurement. Nothing failed; the journal does not enforce scope, only numbers.",
+      "the_result": "Amendment A3 widens the declared scope to the three registered DEV banks by sha256, and sets its ceiling to A2's REMAINDER rather than a fresh envelope. Verified in code: every A3 lane is <= the corresponding A2 lane, so A2 + A3 together authorize exactly what A2 alone authorized and the net new compute is zero.",
+      "why_this_matters": "Correcting a governance defect must not become a route to a bigger envelope, which is what re-granting the full ceiling would have been. It also shows what the budget journal does and does not protect: it enforces quantities, and it is blind to scope. A grant field nothing checks is a comment.",
+      "unresolved": "The v2 baseline measurement itself stands -- it was within the authorized quantities and kind -- but it was produced under a grant that did not name its bank, and that is now on the record beside it rather than tidied away.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/BUDGET_AMENDMENT_A3.json",
+        "research/reasoning_posttraining_v1/GRANT_RRP002_BASELINE_A3.json"
+      ]
+    },
+    {
+      "id": "CL-046",
+      "topic": "Zero-difference clusters buy no statistical power, so 589 clusters can have the resolution of 6",
+      "the_defect": "My first statistics layer computed the design's resolution from the NUMBER OF CLUSTERS. That overstates power, sometimes by orders of magnitude.",
+      "the_test": "Enumerate the exact sign-flip distribution while varying how many clusters actually moved. A cluster whose paired difference is exactly zero contributes nothing to the test statistic AND nothing to the permutation distribution, because flipping its sign changes neither.",
+      "the_result": "Measured: the smallest reachable two-sided p depends only on the number of MOVING clusters. k_moved = 3 -> 0.2500, 4 -> 0.1250, 5 -> 0.0625, 6 -> 0.0312, 8 -> 0.0078, 16 -> 0.00003. So alpha = 0.05 is unreachable with fewer than 6 moving clusters no matter how many exist or how large the effect, and 589 clusters of which 6 moved has exactly the resolution of k = 6. The layer now reports effective_clusters_nonzero and computes the floor from it.",
+      "second_measured_finding": "The test detects CONSISTENCY OF DIRECTION, not magnitude: 8 clusters all moving the same way gives p = 0.0078 whether the shift is 0.30 or 0.003. That is why a pre-declared practical margin is mandatory rather than optional -- it is the only thing separating a consistent-but-trivial effect from a reported improvement.",
+      "why_this_matters": "Without this, the preservation bank's 589 clusters would have looked like overwhelming power while a real result rested on a handful of moving units. The layer now REFUSES the significance claim when the design cannot reach alpha, returning the estimate and interval instead: reporting 'p = 0.125, not significant' would be lying by omission, because 'the design has no resolution' is a different statement from 'there is no effect'.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/statistics.py",
+        "research/reasoning_posttraining_v1/RRP002_ANALYSIS_PREREG.md"
+      ]
+    },
+    {
+      "id": "CL-047",
+      "topic": "The baseline worker would have scored the preservation bank with the Forge v2 JSON verifier",
+      "the_defect": "controller.py decided bank kind with `v2 = 'reference_text' in bank[0]`. The preservation bank carries reference_text too -- it is the gold prose or one of the two exact abstention sentences -- so all 768 rows would have been classified forge_v2 and handed to forge_rl.rewards.score_response, which would have marked every ordinary short answer a parse failure.",
+      "the_test": "Three-way detection on a field that actually discriminates: preservation rows carry `sub_bank`, which neither Forge bank has. Pinned by a test that asserts the real bank's first row has BOTH sub_bank and reference_text, i.e. that it is exactly the case the old check got wrong.",
+      "the_result": "Detection is now forge_v1 / forge_v2 / preservation, each with its own recorded scoring_note, and the worker still records raw predictions and makes no claim in all three cases.",
+      "why_this_matters": "The bank would have produced a spectacular and entirely fake negative result -- near-zero preservation accuracy caused by using the wrong scorer -- and it would have looked like a catastrophic regression rather than a bug. Caught before the run rather than after, but only because the new bank was checked against the old dispatcher.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/controller.py"
+      ]
     }
   ]
 }

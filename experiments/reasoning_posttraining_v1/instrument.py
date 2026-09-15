@@ -65,6 +65,34 @@ BASELINE_A2_LIMITS = {**BASELINE_LIMITS, "model_worker_launches": 8, "retries": 
 budget.register(BASELINE_A2_EXPERIMENT, ceiling=BASELINE_A2_LIMITS,
                 phases=BASELINE_PHASES, excludes=BASELINE_EXCLUDES)
 
+# Amendment A3 corrects a SCOPE defect, not a compute shortfall. A2 declares
+# evaluation_bank = RRP2_DEV_V1_BANK.jsonl and scopes itself to that bank, but run
+# baseline-v2-4k-001 evaluated RRP2-DEV-V2 under the A2 lane. The numeric envelope was
+# enforced throughout and the kind of work was exactly what A2 authorized, but the declared
+# bank was not the bank used and no amendment recorded the widening (CL-045).
+#
+# So A3 widens the declared scope to the three registered DEV banks and its ceiling is A2's
+# REMAINDER, read off the A2 journal. A2 + A3 together authorize exactly what A2 alone
+# authorized: the net new compute is zero on every lane. Correcting a governance defect must
+# not be a route to a bigger envelope.
+BASELINE_A3_EXPERIMENT = "RRP-002-BASELINE-A3"
+BASELINE_A3_LIMITS = {
+    "total_owned_work_wall_seconds": 3942,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2143,
+    "processed_training_tokens_all_attempts": 0,
+    "evaluation_and_qualification_model_calls": 1029,
+    "generated_tokens_all_candidates": 59008,
+    "on_policy_rl_rollout_tokens": 0,
+    "new_disk_bytes": 260046848,
+    "adaptive_model_selection_rounds": 0,
+    "model_worker_launches": 6,
+    "retries": 5,
+    "cloud_or_teacher_spend": 0,
+}
+
+budget.register(BASELINE_A3_EXPERIMENT, ceiling=BASELINE_A3_LIMITS,
+                phases=BASELINE_PHASES, excludes=BASELINE_EXCLUDES)
+
 # Distinct meanings, deliberately not collapsed into one "unanswerable" bucket.
 SENTINELS = {
     "UNKNOWN": "information required to answer is absent",

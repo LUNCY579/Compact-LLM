@@ -235,14 +235,32 @@ def worker(args) -> int:
                 if window > design.max_sequence:
                     window_qualification = ins.qualify_evaluation_window(
                         model, tokenizer, window, journal.reserve, guard)
-                # A forge_v2 bank carries reference_text (strict JSON) and MUST be scored
-                # offline by the audited verifier: four of its families accept alternative
-                # optima of equal cost that text matching would wrongly reject (CL-021).
-                # The worker records raw predictions; the text-match field is a lower bound.
-                v2 = bool(bank) and "reference_text" in bank[0]
+                # Three bank kinds, three different scoring contracts, and the worker must
+                # not guess. `reference_text` alone is NOT a discriminator: the preservation
+                # bank carries it too, so the old two-way check would have scored ordinary
+                # prose with the Forge v2 JSON verifier. Preservation rows are the ones
+                # carrying `sub_bank`.
+                #
+                #   forge_v1        reference is a plain string; text comparison is exact
+                #   forge_v2        reference_text is strict JSON; MUST be scored offline by
+                #                   the audited verifier, because four families accept
+                #                   alternative optima of equal cost (CL-021)
+                #   preservation    reference_text is ordinary prose or one of two exact
+                #                   abstention sentences; scored offline by preserve.summarize
+                #
+                # In all three cases the worker records raw predictions and makes no claim.
+                if not bank:
+                    raise ValueError("empty bank")
+                if "sub_bank" in bank[0]:
+                    kind = "preservation"
+                elif "reference_text" in bank[0]:
+                    kind = "forge_v2"
+                else:
+                    kind = "forge_v1"
+                v2 = kind == "forge_v2"
                 evaluable, rejected = ins.compile_bank(
                     bank, tokenizer, max_sequence=window,
-                    reference_field="reference_text" if v2 else "reference")
+                    reference_field="reference" if kind == "forge_v1" else "reference_text")
                 import torch
 
                 before = parameter_digest(model)
@@ -250,7 +268,8 @@ def worker(args) -> int:
                 # explicit wrapper so the intent is visible at the call site too.
                 with torch.no_grad():
                     value = evaluate(model, evaluable, tokenizer, eos, "baseline",
-                                     journal.reserve, guard, max_new=plan["max_new_tokens"])
+                                     journal.reserve, guard,
+                                     max_new=generation_allowance(args, plan))
                 after = parameter_digest(model)
                 if before != after:
                     raise RuntimeError("evaluation changed source parameters")
@@ -258,14 +277,20 @@ def worker(args) -> int:
                     **value, "binding": binding, "optimizer_steps": 0,
                     "source_state_before": before, "source_state_after": after,
                     "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
-                    "bank_kind": "forge_v2" if v2 else "forge_v1",
-                    "scoring_note": (
-                        "canonical_training_target_match is a LOWER BOUND on a forge_v2 "
-                        "bank: it is a text comparison, and four v2 families accept "
-                        "alternative optima of equal cost. Score the raw predictions with "
-                        "forge_rl.rewards.score_response."
-                        if v2 else
-                        "text comparison against the v1 string contract is exact here"),
+                    "bank_kind": kind,
+                    "scoring_note": {
+                        "forge_v2": ("canonical_training_target_match is a LOWER BOUND on a "
+                                     "forge_v2 bank: it is a text comparison, and four v2 "
+                                     "families accept alternative optima of equal cost. Score "
+                                     "the raw predictions with forge_rl.rewards.score_response."),
+                        "forge_v1": "text comparison against the v1 string contract is exact here",
+                        "preservation": ("canonical_training_target_match is a LOWER BOUND: the "
+                                         "preservation contract allows shipped aliases and a "
+                                         "declared tolerance, and it scores an answerable row "
+                                         "and an abstention row by different rules. Score the "
+                                         "raw predictions with preserve.summarize, which keeps "
+                                         "wrong_abstention_kind as its own channel."),
+                    }[kind],
                     "bank_rows": len(bank), "evaluated_rows": len(evaluable),
                     "rejected_overlength_rows": len(rejected), "rejected": rejected,
                     "max_sequence": window,
@@ -303,6 +328,25 @@ def worker(args) -> int:
         return 2
 
 
+def generation_allowance(args, plan) -> int:
+    """The per-row generation allowance: the plan's value, optionally LOWERED by the flag.
+
+    The plan is the authorized ceiling, so this can only ever reduce it. Raising it would spend
+    a lane the plan did not authorize, which is the whole reason the clamp is here rather than
+    trusting the caller.
+    """
+    ceiling = plan["max_new_tokens"]
+    wanted = getattr(args, "max_new_tokens", None)
+    if wanted is None:
+        return ceiling
+    if wanted < 1:
+        raise ValueError("generation allowance must be at least one token")
+    if wanted > ceiling:
+        raise ValueError(f"--max-new-tokens {wanted} exceeds the plan's authorized "
+                         f"{ceiling}; the plan is the ceiling and this flag only lowers it")
+    return wanted
+
+
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("environment", *PHASES))
@@ -314,6 +358,13 @@ def main(argv=None) -> int:
                         help="an amended successor lane for this phase, e.g. RRP-002-BASELINE-A2")
     parser.add_argument("--max-sequence", type=int,
                         help="evaluation window; above the trained 2048 it is qualified in-run")
+    parser.add_argument("--max-new-tokens", type=int,
+                        help="generation allowance per row. May only LOWER the plan's value, "
+                             "never raise it: the plan is the authorized ceiling. Useful when "
+                             "the bank's golds are short and the generated-token lane is the "
+                             "binding constraint -- the preservation bank's golds are <=14 "
+                             "tokens measured, so 128 per row would reserve 98,304 tokens to "
+                             "emit a few thousand.")
     parser.add_argument("--confirm-model-execution", action="store_true")
     # Must stay byte-identical to MQ-001's default: a different path would silently
     # stop excluding the other native lane that shares this one GPU.
@@ -363,6 +414,8 @@ def main(argv=None) -> int:
         child.extend(["--max-sequence", str(args.max_sequence)])
     if args.experiment is not None:
         child.extend(["--experiment", args.experiment])
+    if args.max_new_tokens is not None:
+        child.extend(["--max-new-tokens", str(args.max_new_tokens)])
     command = [sys.executable, "-m", "experiments.reasoning_posttraining_v1.controller",
                *child, "--_worker"]
 

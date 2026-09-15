@@ -5,7 +5,7 @@
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "record_base_head": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "live_head_authority": "git rev-parse HEAD, plus fresh git ls-remote; this record is not a live ref",
-  "phase": "RRP002_THREE_DEV_BANKS_BUILT_PRESERVATION_INSTRUMENT_READY_STATS_LAYER_NEXT",
+  "phase": "RRP002_INSTRUMENT_AND_STATISTICS_COMPLETE_PRESERVATION_BASELINE_NEXT",
   "data_contract_sha256": "66aa9a9d582c5f426958227a001ae640d34daf4a68c6d1cd115e38509d95c2b1",
   "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
   "runtime": "Python3.11.15 / torch2.10.0+cu126 / transformers4.57.1; native model qualification unexecuted",
@@ -13,7 +13,7 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 166,
+    "new_tests_passed": 197,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
@@ -30,7 +30,7 @@
     "engineering_microfit_train_probe": "31/32 (criterion >= 31)",
     "source_baseline_train_probe": "8/32",
     "resume_verification": "PASS (15/15 checks)",
-    "claim_ledger_entries": 44,
+    "claim_ledger_entries": 47,
     "bottleneck_candidates": "4 named with falsifying tests (BOTTLENECK_CANDIDATES.md)",
     "instrument_design": "RRP002_INSTRUMENT_PREREG.md (design only, nothing built or run)",
     "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model",
@@ -49,7 +49,9 @@
       "v3_answer_or_abstain": 189
     },
     "preregistration_amendments": "A1: six corrections (PRES-C1..C6) appended to RRP002_INSTRUMENT_PREREG.md without editing the original text",
-    "adversarial_self_review": "45 findings raised across four lenses, 39 refuted, 6 confirmed and all 6 fixed (CL-040..CL-044). A tool I drove, NOT an independent human review."
+    "adversarial_self_review": "45 findings raised across four lenses, 39 refuted, 6 confirmed and all 6 fixed (CL-040..CL-044). A tool I drove, NOT an independent human review.",
+    "statistics_layer": "IMPLEMENTED: exact cluster sign-flip permutation test (enumerated to 22 clusters), cluster bootstrap, non-inferiority, minimal-pair contrast, Holm over the predeclared family. Refuses the significance claim when the design cannot reach alpha.",
+    "analysis_preregistration": "RRP002_ANALYSIS_PREREG.md: 4 primary contrasts, cluster units, practical margins, family weights, model-selection read budget"
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -79,12 +81,11 @@
     "No independent confirmation bank is available TO RRP-002 (CL-017, bounded by CL-035): the Forge releases are unsealed, and the one genuinely sealed unconsumed surface on this machine -- residual_v23 fresh_sealed, 3,960 rows -- belongs to another programme's pre-registration and is registered ANY_READ",
     "Both length-stress splits exceed any qualifiable window on this host (CL-016)",
     "Training at 4096 is NOT qualified; only inference is (CL-027)",
-    "The cluster-robust paired statistics layer does not exist yet, and CL-038 now constrains it: sub-bank (b) of RRP2-PRES-DEV has 16 effective units for 192 rows, so row-level intervals there would be far too narrow",
-    "Predeclared primary contrasts, family weights, cluster units and practical margins do not exist yet",
     "A slot-aware parser for v1 dialogue_memory (B-3 on v1) is still unmeasured (CL-026)",
     "RL lane shut: readiness gate and on-policy pilot not attempted",
     "Every DEV bank is machine-verified and none was in a human review packet (CL-029)",
-    "A guard that returned PASS without testing anything shipped undetected until an adversarial review (CL-040). Every remaining asserted-absence property in the evidence records should be re-checked against the data it describes, not trusted."
+    "A guard that returned PASS without testing anything shipped undetected until an adversarial review (CL-040). Every remaining asserted-absence property in the evidence records should be re-checked against the data it describes, not trusted.",
+    "Scope drift found in my own conduct: the A2 grant named RRP2-DEV-V1 but a run under it evaluated RRP2-DEV-V2 (CL-045). The budget journal enforces quantities and is blind to scope. Amendment A3 fixes the declaration and grants zero new compute."
   ],
   "next_action": "The instrument is now complete enough to support an arm: three DEV banks exist (RRP2-DEV-V1 384 rows floor 0.1458, RRP2-DEV-V2 336 rows floor 0.4345, RRP2-PRES-DEV 768 rows floor 0.4375), each with its own positive control at 100% and its own shortcut floor. NEXT, and it is a prerequisite rather than a nicety: the cluster-robust world-paired statistics layer, which must cluster on the `cluster_id` carried on every RRP2-PRES-DEV row (CL-038) and use the 40 complete minimal pairs as the paired unit for abstention calibration (CL-039). Then predeclare primary contrasts, family weights, cluster units, practical margins and the allowed number of model-selection reads. Only then the first ladder arm, which per CL-033 must target the v2 response contract AND its reasoning together, measured against the corrected 0.4391 same-subset floor (CL-040) with RRP2-DEV-V1 as the cross-grammar check and RRP2-PRES-DEV as the preservation guard. Training at 4096 needs its own qualification; only inference is qualified there.",
   "last_goal_turn_classification": "progress: second DEV bank built and measured. Strong negative result on v2 - the source is below its own trivial floor, and the format repair shows why that is not a formatting story.",
@@ -151,5 +152,18 @@
       "bank_sha256": "0dcbec17a5842d94f6157db34d888efda3650b5b73a6aaf1b266cc643b89a975"
     },
     "never_compare_across_banks": "each bank has its own floor -- 0.1458, 0.4345 and 0.4375 -- so an accuracy is only meaningful against its own"
+  },
+  "approved_model_budget_remaining_rrp002_baseline_a3": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 1029,
+    "generated_tokens_all_candidates": 59008,
+    "model_worker_launches": 6,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2143,
+    "new_disk_bytes": 260046848,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 5,
+    "total_owned_work_wall_seconds": 3942
   }
 }

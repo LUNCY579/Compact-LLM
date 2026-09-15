@@ -424,3 +424,70 @@ def test_every_phase_maps_to_a_measured_resource_profile():
     # And the profiles themselves are untouched upstream values.
     assert PRELOAD_MINIMA["qualify"] == (4.6, 3.0)
     assert PRELOAD_MINIMA["train"] == (6.0, 6.0)
+
+
+# ---------------------------------------------------------------- bank kind detection
+
+def test_bank_kind_is_three_way_and_preservation_is_not_mistaken_for_forge_v2():
+    """`reference_text` alone is not a discriminator: the preservation bank carries it too.
+
+    The old two-way check would have scored ordinary prose with the Forge v2 JSON verifier.
+    This mirrors the controller's detection so a regression is caught without a GPU.
+    """
+    def kind_of(row):
+        if "sub_bank" in row:
+            return "preservation"
+        if "reference_text" in row:
+            return "forge_v2"
+        return "forge_v1"
+
+    v1 = {"id": "a", "reference": "ON", "prompt": []}
+    v2 = {"id": "b", "reference_text": '{"value":7}', "prompt": []}
+    pres = {"id": "c", "reference_text": "Atlas.", "sub_bank": "direct_reasoning",
+            "required_response_kind": None, "prompt": []}
+
+    assert kind_of(v1) == "forge_v1"
+    assert kind_of(v2) == "forge_v2"
+    assert kind_of(pres) == "preservation"
+    # The load-bearing assertion: preservation must NOT fall through to forge_v2.
+    assert "reference_text" in pres and kind_of(pres) != "forge_v2"
+
+
+def test_the_real_preservation_bank_is_detected_as_preservation():
+    import json
+    from pathlib import Path
+    bank_path = (Path(__file__).parents[3] / "research/reasoning_posttraining_v1/evidence"
+                 / "inspection-20260915/RRP2_PRES_DEV_BANK.jsonl")
+    if not bank_path.exists():
+        import pytest
+        pytest.skip("preservation bank not present in this checkout")
+    first = json.loads(bank_path.read_text(encoding="utf-8").splitlines()[0])
+    assert "sub_bank" in first
+    assert "reference_text" in first, "which is exactly why the old check misfired"
+
+
+# ---------------------------------------------------------------- generation allowance clamp
+
+class _Args:
+    def __init__(self, value=None):
+        self.max_new_tokens = value
+
+
+def test_generation_allowance_defaults_to_the_plan():
+    assert controller.generation_allowance(_Args(None), {"max_new_tokens": 128}) == 128
+
+
+def test_generation_allowance_may_lower_the_plan():
+    """768 preservation rows at 128 would reserve 98,304 generated tokens; golds are <=14."""
+    assert controller.generation_allowance(_Args(64), {"max_new_tokens": 128}) == 64
+
+
+def test_generation_allowance_refuses_to_raise_the_plans_ceiling():
+    with pytest.raises(ValueError, match="exceeds the plan's authorized"):
+        controller.generation_allowance(_Args(256), {"max_new_tokens": 128})
+
+
+def test_generation_allowance_refuses_a_nonsense_value():
+    for bad in (0, -1):
+        with pytest.raises(ValueError, match="at least one token"):
+            controller.generation_allowance(_Args(bad), {"max_new_tokens": 128})
