@@ -391,5 +391,19 @@ def test_model_commands_refuse_incomplete_invocations(argv, match, capsys):
 
 
 def test_phases_match_the_journal_and_exclude_unregistered_lanes():
-    assert controller.PHASES == ("qualify", "train", "resume")
+    assert controller.PHASES == ("qualify", "train", "resume", "baseline")
     assert controller.DISK_FLOOR == 14 * 2 ** 30
+    # Every phase maps to a registered experiment, and the measurement-only phase maps
+    # to its OWN experiment rather than widening the microfit envelope.
+    from experiments.reasoning_posttraining_v1 import budget, instrument  # noqa: F401
+    assert set(controller.EXPERIMENT_FOR_PHASE) == set(controller.PHASES)
+    assert controller.EXPERIMENT_FOR_PHASE["baseline"] == "RRP-002-BASELINE"
+    for phase, experiment in controller.EXPERIMENT_FOR_PHASE.items():
+        spec = budget.REGISTERED[experiment]
+        assert phase in spec["phases"], (phase, experiment)
+    # The baseline lane cannot train or select a model, by construction.
+    ceiling = budget.REGISTERED["RRP-002-BASELINE"]["ceiling"]
+    assert ceiling["processed_training_tokens_all_attempts"] == 0
+    assert ceiling["adaptive_model_selection_rounds"] == 0
+    assert ceiling["on_policy_rl_rollout_tokens"] == 0
+    assert ceiling["cloud_or_teacher_spend"] == 0

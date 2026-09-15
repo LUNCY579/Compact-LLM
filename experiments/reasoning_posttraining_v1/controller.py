@@ -24,7 +24,7 @@ import traceback
 from experiments.model_quality_gpu_v1.config import Design
 from experiments.model_quality_gpu_v1.data import group_updates
 from experiments.model_quality_gpu_v1.integrity import (
-    ROOT, code_identity, digest, file_hash, read_json, regular, write_new)
+    ROOT, code_identity, decode, digest, file_hash, read_json, regular, write_new)
 from experiments.model_quality_gpu_v1.resources import GIB, PRELOAD_MINIMA, guard, lease, snapshot
 from experiments.model_quality_gpu_v1.supervisor import bounded_child, claim_worker
 
@@ -35,9 +35,19 @@ from .sources import stable_hash
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
 BASE = "58bf64cf93ff918ede4b1079b8a5716ee0e1e312"
-PHASES = ("qualify", "train", "resume")
+PHASES = ("qualify", "train", "resume", "baseline")
+# A measurement-only phase is a different registered experiment, not a wider RRP-001.
+EXPERIMENT_FOR_PHASE = {"qualify": "RRP-001-MICROFIT", "train": "RRP-001-MICROFIT",
+                        "resume": "RRP-001-MICROFIT", "baseline": "RRP-002-BASELINE"}
+
+
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
 DISK_FLOOR = 14 * 2 ** 30
+
+
+def read_json_line(line: str):
+    """One bank row, parsed with the canonical strict decoder."""
+    return decode(line)
 
 
 def package_identity() -> dict:
@@ -106,11 +116,12 @@ def presentations(prepared: Path, plan: dict) -> tuple[list[dict], list[dict]]:
     return rows, repeated
 
 
-def binding_for(prepared: Path, plan: dict, source: Path, grant: dict) -> dict:
+def binding_for(prepared: Path, plan: dict, source: Path, grant: dict,
+                experiment: str = "RRP-001-MICROFIT") -> dict:
     """Identity every checkpoint and result is bound to; equality is required on resume."""
     from experiments.model_quality_gpu_v1.native import audit_assets, runtime
 
-    return {"experiment": "RRP-001-MICROFIT",
+    return {"experiment": experiment,
             "plan_sha256": digest(plan),
             "data_contract_sha256": stable_hash(prepared / "DATA_CONTRACT.json"),
             "grant_sha256": digest(grant),
@@ -132,7 +143,8 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     if plan["experiment"] != "RRP-001-MICROFIT" or plan["objective"] != "assistant_response_plus_eos":
         raise ValueError("wrong or unregistered plan")
     grant = read_json(Path(args.grant))
-    validate_grant(grant, stable_hash(prepared / "DATA_CONTRACT.json"), digest(plan))
+    validate_grant(grant, stable_hash(prepared / "DATA_CONTRACT.json"), digest(plan),
+                   EXPERIMENT_FOR_PHASE[args.command])
     probe, repeated = presentations(prepared, plan)
     return grant, plan, prepared, probe, repeated
 
@@ -169,7 +181,8 @@ def worker(args) -> int:
             journal = Journal(Path(args.journal), grant)
             if journal.breached:
                 raise RuntimeError("approved budget already breached; no further model work")
-            binding = binding_for(prepared, plan, Path(args.source), grant)
+            binding = binding_for(prepared, plan, Path(args.source), grant,
+                                  EXPERIMENT_FOR_PHASE[args.command])
 
             if args.command in ("train", "resume"):
                 # Two full checkpoints for a fresh attempt, one for a resumed attempt.
@@ -188,6 +201,38 @@ def worker(args) -> int:
             eos = eos_set(Path(args.source), tokenizer)
             model = load_model(Path(args.source), "cuda:0")
             guard()
+
+            if args.command == "baseline":
+                # A held-out measurement of an existing checkpoint: no optimizer, no
+                # checkpoint, no model selection. Source integrity is proved by digesting
+                # the parameters before and after and requiring equality.
+                from experiments.model_quality_gpu_v1.native import parameter_digest
+                from . import instrument as ins
+
+                bank_sha = stable_hash(Path(args.bank))
+                bank = [read_json_line(l) for l in
+                        Path(args.bank).read_text(encoding="utf-8").splitlines() if l.strip()]
+                evaluable, rejected = ins.compile_bank(bank, tokenizer,
+                                                       max_sequence=design.max_sequence)
+                before = parameter_digest(model)
+                value = evaluate(model, evaluable, tokenizer, eos, "baseline",
+                                 journal.reserve, guard, max_new=plan["max_new_tokens"])
+                after = parameter_digest(model)
+                if before != after:
+                    raise RuntimeError("evaluation changed source parameters")
+                write_new(directory / "baseline.json", {
+                    **value, "binding": binding, "optimizer_steps": 0,
+                    "source_state_before": before, "source_state_after": after,
+                    "bank": str(Path(args.bank)), "bank_sha256": bank_sha,
+                    "bank_rows": len(bank), "evaluated_rows": len(evaluable),
+                    "rejected_overlength_rows": len(rejected), "rejected": rejected,
+                    "max_sequence": design.max_sequence,
+                    "length_bias_warning": (
+                        "Overlength rows were REJECTED, never truncated, so the evaluated "
+                        "subset is systematically shorter than the bank. Report both "
+                        "denominators."),
+                    "quality_claim": False})
+                return 0
 
             if args.command == "qualify":
                 result = qualify(model, tokenizer, probe, journal.reserve, guard)
@@ -217,7 +262,7 @@ def worker(args) -> int:
 def main(argv=None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("command", choices=("environment", *PHASES))
-    for name in ("source", "prepared", "plan", "grant", "journal", "resume", "out"):
+    for name in ("source", "prepared", "plan", "grant", "journal", "resume", "out", "bank"):
         parser.add_argument("--" + name)
     parser.add_argument("--run-id")
     parser.add_argument("--timeout", type=int)
@@ -246,6 +291,8 @@ def main(argv=None) -> int:
         parser.error("model execution requires the explicit --confirm-model-execution flag")
     if args.command == "resume" and not args.resume:
         parser.error("resume verification requires an explicit --resume checkpoint")
+    if args.command == "baseline" and not args.bank:
+        parser.error("baseline measurement requires an explicit --bank file")
 
     # Validate the grant, plan and prepared bytes in the parent, before reserving anything.
     grant, plan, prepared, _, _ = inputs(args)
@@ -257,7 +304,8 @@ def main(argv=None) -> int:
     # The child always runs in ROOT. Resolve caller-relative paths now so a different
     # cwd cannot select another source, plan, grant, journal, output or lock.
     child = [args.command]
-    for name in ("source", "prepared", "plan", "grant", "journal", "resume", "resource_lock"):
+    for name in ("source", "prepared", "plan", "grant", "journal", "resume", "bank",
+                 "resource_lock"):
         value = getattr(args, name)
         if value is not None:
             child.extend(["--" + name.replace("_", "-"), str(Path(value).absolute())])

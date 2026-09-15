@@ -17,7 +17,37 @@ from pathlib import Path
 
 from experiments.model_quality_gpu_v1.integrity import digest, read_json
 
+from . import budget
+from .serialization import compile_row
 from .sources import import_forge_v1_validator
+
+# ---------------------------------------------------------------- RRP-002 baseline lane
+#
+# A held-out measurement of an EXISTING checkpoint. It performs no optimizer step, writes
+# no checkpoint, and selects no model, so processed_training_tokens and
+# adaptive_model_selection_rounds are pinned at zero and the journal will refuse any
+# charge against them. Registered as its own experiment rather than widening RRP-001's
+# envelope, whose adaptive round is already spent.
+BASELINE_EXPERIMENT = "RRP-002-BASELINE"
+BASELINE_LIMITS = {
+    "total_owned_work_wall_seconds": 5400,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 3600,
+    "processed_training_tokens_all_attempts": 0,
+    "evaluation_and_qualification_model_calls": 1600,
+    "generated_tokens_all_candidates": 131072,
+    "on_policy_rl_rollout_tokens": 0,
+    "new_disk_bytes": 268435456,
+    "adaptive_model_selection_rounds": 0,
+    "model_worker_launches": 4,
+    "retries": 2,
+    "cloud_or_teacher_spend": 0,
+}
+BASELINE_PHASES = ("baseline",)
+BASELINE_EXCLUDES = ("broad_SFT", "RL", "larger_teacher", "cloud", "release",
+                     "architectural_change", "training")
+
+budget.register(BASELINE_EXPERIMENT, ceiling=BASELINE_LIMITS, phases=BASELINE_PHASES,
+                excludes=BASELINE_EXCLUDES)
 
 # Distinct meanings, deliberately not collapsed into one "unanswerable" bucket.
 SENTINELS = {
@@ -121,6 +151,38 @@ def build_bank(root: Path, split: str, *, families: tuple[str, ...], per_family:
                 "difficulty": meta.get("difficulty"),
             })
     return chosen
+
+
+def compile_bank(bank: list[dict], tokenizer, *, max_sequence: int = 2048,
+                 completion_reserve: int = 128) -> tuple[list[dict], list[dict]]:
+    """Tokenize the bank for native evaluation. Overlength rows are REJECTED, not truncated.
+
+    Returns (evaluable, rejected). The caller must report both denominators: at a 2048
+    window only about 65% of Forge v1 validation fits, so the evaluable subset is
+    systematically shorter than the bank and cannot be described as the release
+    distribution.
+    """
+    evaluable, rejected = [], []
+    for row in bank:
+        try:
+            compiled = compile_row(row["prompt"], row["reference"], tokenizer,
+                                   max_sequence=max_sequence,
+                                   completion_reserve=completion_reserve)
+        except ValueError as exc:
+            rejected.append({"id": row["id"], "family": row["family"],
+                             "stratum": row["stratum"], "reason": str(exc),
+                             "actual_user_words": row.get("actual_user_words")})
+            continue
+        evaluable.append({
+            "id": row["id"], "parent_id": row.get("group_id", row["id"]),
+            "family": row["family"], "stratum": row["stratum"],
+            "reference": row["reference"], "prompt": row["prompt"],
+            "ids": compiled["ids"], "prompt_ids": compiled["prompt_ids"],
+            "labels": compiled["labels"], "source_split": "validation",
+            "processed_tokens": compiled["processed_tokens"],
+            "supervised_tokens": compiled["supervised_tokens"],
+        })
+    return evaluable, rejected
 
 
 def positive_control(bank: list[dict], solver) -> dict:

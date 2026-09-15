@@ -13,8 +13,31 @@ from experiments.model_quality_gpu_v1.integrity import digest, read_json, seal, 
 from .preflight import LIMITS
 
 
-def validate_grant(grant: dict, data_sha: str, plan_sha: str) -> None:
-    if (grant.get("experiment") != "RRP-001-MICROFIT" or grant.get("decision") != "APPROVED"
+PHASES = ("qualify", "train", "resume")
+# A successor experiment registers its own id, ceiling and phase set here rather than
+# widening RRP-001's. Defaults preserve the original microfit contract exactly.
+REGISTERED = {
+    "RRP-001-MICROFIT": {"ceiling": LIMITS, "phases": PHASES,
+                         "excludes": ("broad_SFT", "RL", "larger_teacher", "cloud", "release",
+                                      "architectural_change")},
+}
+
+
+def register(experiment: str, *, ceiling: dict, phases: tuple[str, ...],
+             excludes: tuple[str, ...]) -> None:
+    """Register a successor experiment. Re-registering with different terms is refused."""
+    entry = {"ceiling": dict(ceiling), "phases": tuple(phases), "excludes": tuple(excludes)}
+    if REGISTERED.setdefault(experiment, entry) != entry:
+        raise ValueError(f"{experiment} is already registered with different terms")
+
+
+def validate_grant(grant: dict, data_sha: str, plan_sha: str,
+                   experiment: str = "RRP-001-MICROFIT") -> None:
+    spec = REGISTERED.get(experiment)
+    if spec is None:
+        raise ValueError(f"{experiment} is not a registered experiment")
+    ceiling, excluded = spec["ceiling"], set(spec["excludes"])
+    if (grant.get("experiment") != experiment or grant.get("decision") != "APPROVED"
             or grant.get("training_permission") is not True
             or not isinstance(grant.get("approved_by"), str) or not grant["approved_by"].strip()
             or not isinstance(grant.get("authorization_reference"), str) or not grant["authorization_reference"].strip()):
@@ -22,11 +45,10 @@ def validate_grant(grant: dict, data_sha: str, plan_sha: str) -> None:
     if grant.get("data_contract_sha256") != data_sha or grant.get("plan_sha256") != plan_sha:
         raise ValueError("approval does not bind the exact prepared data and plan")
     limits = grant.get("limits")
-    if not isinstance(limits, dict) or set(limits) != set(LIMITS):
+    if not isinstance(limits, dict) or set(limits) != set(ceiling):
         raise ValueError("every numeric budget must be explicit")
-    if any(type(v) is not int or not 0 <= v <= LIMITS[k] for k, v in limits.items()):
+    if any(type(v) is not int or not 0 <= v <= ceiling[k] for k, v in limits.items()):
         raise ValueError("invalid or expanded execution budget")
-    excluded = {"broad_SFT", "RL", "larger_teacher", "cloud", "release", "architectural_change"}
     if set(grant.get("excludes", [])) != excluded:
         raise ValueError("engineering grant cannot expand into later research lanes")
 
@@ -44,6 +66,10 @@ class Journal:
         self.grant = read_json(self.directory / "grant.json")
         if self.grant != grant:
             raise ValueError("budget journal is bound to a different grant")
+        spec = REGISTERED.get(self.grant.get("experiment"))
+        if spec is None:
+            raise ValueError("journal grant names an unregistered experiment")
+        self.phase_set = spec["phases"]
         self.read()
 
     def read(self):
@@ -117,7 +143,7 @@ class Journal:
             raise ValueError("reused run ID; every attempt needs its own preserved evidence")
         if self.active:
             raise RuntimeError("unsettled prior worker; verify its actual process/terminal receipt before any new launch")
-        if phase not in ("qualify", "train", "resume") or type(timeout) is not int or timeout < 1:
+        if phase not in self.phase_set or type(timeout) is not int or timeout < 1:
             raise ValueError("invalid phase/timeout")
         charges = {"model_worker_launches": 1, "new_disk_bytes": 4 * 2**20,
                    "model_worker_wall_seconds_and_conservative_gpu_seconds": timeout + 20,
