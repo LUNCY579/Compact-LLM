@@ -273,7 +273,8 @@ def test_presentations_recompile_the_plan_inventory(tmp_path):
 
 
 @pytest.mark.parametrize("bad", ["order", "split", "mode", "truncated", "exposures", "worlds"])
-def test_presentations_refuse_any_drift_from_the_plan(tmp_path, bad):
+@pytest.mark.parametrize("retain", [True, False])
+def test_presentations_refuse_any_drift_from_the_plan(tmp_path, bad, retain):
     rows = rows_fixture()
     plan = plan_fixture(rows)
     if bad == "order":
@@ -289,7 +290,20 @@ def test_presentations_refuse_any_drift_from_the_plan(tmp_path, bad):
     if bad == "exposures":
         plan = {**plan, "exposures_per_world": 9}
     with pytest.raises(ValueError):
-        controller.presentations(write_prepared(tmp_path, rows), plan)
+        controller.presentations(write_prepared(tmp_path, rows), plan, retain=retain)
+
+
+def test_streamed_validation_releases_tokens_but_checks_targets_and_groups(tmp_path):
+    rows = rows_fixture()
+    plan = plan_fixture(rows)
+    prepared = write_prepared(tmp_path, rows)
+    assert controller.presentations(prepared, plan, retain=False) == ([], [])
+    with pytest.raises(ValueError, match="inventory differs"):
+        controller.presentations(prepared, {**plan, "supervised_tokens": 1}, retain=False)
+    with pytest.raises(ValueError, match="inventory differs"):
+        controller.presentations(prepared, {**plan, "processed_tokens": 1}, retain=False)
+    with pytest.raises(ValueError, match="inventory differs"):
+        controller.presentations(prepared, {**plan, "update_groups": [[0]]}, retain=False)
 
 
 def test_changed_prepared_bytes_refuse_before_any_model_work(tmp_path):

@@ -133,21 +133,30 @@ def design_for(plan: dict) -> Design:
     return d
 
 
-def presentations(prepared: Path, plan: dict) -> tuple[list[dict], list[dict]]:
+def presentations(prepared: Path, plan: dict, *, retain=True) -> tuple[list[dict], list[dict]]:
     """Return (unique fixed probe worlds, the exact repeated training presentations)."""
-    rows = list(read_rows(prepared / "microfit-train.jsonl"))
-    if ([r["id"] for r in rows] != plan["row_order_per_exposure"]
-            or len({r["parent_id"] for r in rows}) != plan["unique_worlds"]):
+    rows, shapes = [], []
+    supervised = 0
+    for row in read_rows(prepared / "microfit-train.jsonl"):
+        if row["source_split"] != "train" or row["mode"] != "direct" or row["truncated"]:
+            raise ValueError("microfit consumes untruncated direct TRAIN presentations only")
+        # The supervisor and inference-only worker need identity/accounting, not
+        # millions of Python integer objects for unused training token streams.
+        shapes.append({"id": row["id"], "parent_id": row["parent_id"],
+                       "ids": range(len(row["ids"]))})
+        supervised += sum(t != -100 for t in row["labels"][1:])
+        if retain:
+            rows.append(row)
+    if ([r["id"] for r in shapes] != plan["row_order_per_exposure"]
+            or len({r["parent_id"] for r in shapes}) != plan["unique_worlds"]):
         raise ValueError("prepared world/order differs from the frozen plan")
-    if any(r["source_split"] != "train" or r["mode"] != "direct" or r["truncated"] for r in rows):
-        raise ValueError("microfit consumes untruncated direct TRAIN presentations only")
-    repeated = [r for _ in range(plan["exposures_per_world"]) for r in rows]
-    if (len(repeated) != plan["presentations"]
-            or sum(len(r["ids"]) for r in repeated) != plan["processed_tokens"]
-            or sum(sum(t != -100 for t in r["labels"][1:]) for r in repeated) != plan["supervised_tokens"]
-            or group_updates(repeated, Design().update_tokens) != plan["update_groups"]):
+    repeated_shapes = shapes * plan["exposures_per_world"]
+    if (len(repeated_shapes) != plan["presentations"]
+            or sum(len(r["ids"]) for r in repeated_shapes) != plan["processed_tokens"]
+            or supervised * plan["exposures_per_world"] != plan["supervised_tokens"]
+            or group_updates(repeated_shapes, Design().update_tokens) != plan["update_groups"]):
         raise ValueError("recompiled exposure/update inventory differs from the frozen plan")
-    return rows, repeated
+    return (rows, rows * plan["exposures_per_world"]) if retain else ([], [])
 
 
 def binding_for(prepared: Path, plan: dict, source: Path, grant: dict,
@@ -166,7 +175,7 @@ def binding_for(prepared: Path, plan: dict, source: Path, grant: dict,
             "source": audit_assets(source)}
 
 
-def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
+def inputs(args, *, retain_presentations=True) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     """Validate the grant against the exact prepared bytes before anything expensive."""
     for path in ([getattr(args, "bank", None)] + (getattr(args, "heldout_bank", None) or [])):
         if path is not None and (reason := INVALIDATED_BANKS.get(stable_hash(Path(path)))):
@@ -184,9 +193,10 @@ def inputs(args) -> tuple[dict, dict, Path, list[dict], list[dict]]:
     experiment = getattr(args, "experiment", None) or EXPERIMENT_FOR_PHASE[args.command]
     validate_grant(grant, stable_hash(prepared / "DATA_CONTRACT.json"), digest(plan),
                    experiment)
-    probe, repeated = presentations(prepared, plan)
+    probe, repeated = presentations(prepared, plan, retain=retain_presentations)
     if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
-        _registers_corrected_arm.validate_execution_scope(args, plan, probe)
+        review_rows = probe if retain_presentations else read_rows(prepared / "microfit-train.jsonl")
+        _registers_corrected_arm.validate_execution_scope(args, plan, review_rows)
     if plan["experiment"] == _registers_preservation_repair.EXPERIMENT:
         _registers_preservation_repair.validate_scope(args, plan)
     return grant, plan, prepared, probe, repeated
@@ -217,7 +227,8 @@ def worker(args) -> int:
                 configure_runtime, load_model, load_tokenizer)
             from .native_runtime import evaluate, qualify
 
-            grant, plan, prepared, probe, repeated = inputs(args)
+            grant, plan, prepared, probe, repeated = inputs(
+                args, retain_presentations=args.command != "baseline")
             design = design_for(plan)
             configure_runtime(design.order_seed)
             before_load = guard(before_load=True,
@@ -571,7 +582,7 @@ def main(argv=None) -> int:
         parser.error("baseline measurement requires an explicit --bank file")
 
     # Validate the grant, plan and prepared bytes in the parent, before reserving anything.
-    grant, plan, prepared, _, _ = inputs(args)
+    grant, plan, prepared, _, _ = inputs(args, retain_presentations=False)
     design_for(plan)
     journal_dir = Path(args.journal).absolute()
     journal = Journal(journal_dir, grant, create=not journal_dir.exists())
@@ -624,7 +635,7 @@ def main(argv=None) -> int:
                    time.monotonic() - started)
     state = journal.read()
     write_new(out / "run_summary.json",
-              {"experiment": "RRP-001-MICROFIT", "phase": args.command, "run_id": args.run_id,
+              {"experiment": grant["experiment"], "phase": args.command, "run_id": args.run_id,
                "returncode": code, "supervisor": supervisor, "budget_after": state,
                "worker_failed": (out / "failure.json").exists(),
                "quality_claim": False, "release_permission": False})
