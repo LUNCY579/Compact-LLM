@@ -316,3 +316,86 @@ def test_a_design_with_many_clusters_but_few_movers_can_still_be_refused():
     assert out["permutation"]["resolution"]["can_reject_at_alpha"] is False
     assert out["permutation"]["significance_refused"] is True
     assert out["claim_supported"] is False
+
+
+# ------------------------------------------------------------------ independent verification
+#
+# The permutation p-values are checked against a CLOSED FORM rather than against themselves.
+# With equal cluster magnitudes the sign-flip test reduces exactly to the two-sided sign test,
+# whose tail probability is a sum of binomial coefficients, so there is a reference to compare
+# to that shares no code with the implementation.
+
+def test_equal_magnitudes_all_same_sign_gives_exactly_two_over_two_to_the_k():
+    class Fixed:
+        def __init__(self, d):
+            self._d = d
+
+        @property
+        def diff(self):
+            return self._d
+
+    for k in range(2, 15):
+        got = st.cluster_permutation_test([Fixed(0.25)] * k)["p_value"]
+        assert got == pytest.approx(2 / 2 ** k, abs=1e-12), k
+
+
+def test_exact_test_matches_the_analytic_two_sided_sign_test():
+    """Shares no code with the implementation: a sum of binomial coefficients."""
+    from math import comb
+
+    class Fixed:
+        def __init__(self, d):
+            self._d = d
+
+        @property
+        def diff(self):
+            return self._d
+
+    for k in (6, 8, 10):
+        for m in range(k + 1):
+            clusters = [Fixed(1.0)] * m + [Fixed(-1.0)] * (k - m)
+            got = st.cluster_permutation_test(clusters)["p_value"]
+            target = abs(2 * m - k)
+            want = sum(comb(k, j) for j in range(k + 1)
+                       if abs(2 * j - k) >= target) / 2 ** k
+            assert got == pytest.approx(want, abs=1e-12), (k, m)
+
+
+def test_one_sided_is_never_larger_than_two_sided_and_the_shift_is_monotone():
+    class Fixed:
+        def __init__(self, d):
+            self._d = d
+
+        @property
+        def diff(self):
+            return self._d
+
+    clusters = [Fixed(0.1)] * 8
+    two = st.cluster_permutation_test(clusters)["p_value"]
+    one = st.cluster_permutation_test(clusters, one_sided=True)["p_value"]
+    assert one <= two
+    ps = [st.cluster_permutation_test(clusters, one_sided=True, shift=s)["p_value"]
+          for s in (-0.2, -0.1, 0.0, 0.1)]
+    assert all(a <= b + 1e-12 for a, b in zip(ps, ps[1:])), ps
+
+
+def test_a_p_value_is_always_in_range_over_random_inputs():
+    import random
+
+    class Fixed:
+        def __init__(self, d):
+            self._d = d
+
+        @property
+        def diff(self):
+            return self._d
+
+    rng = random.Random(7)
+    for _ in range(60):
+        k = rng.randint(2, 12)
+        clusters = [Fixed(rng.uniform(-1, 1)) for _ in range(k)]
+        got = st.cluster_permutation_test(clusters)
+        assert 0 < got["p_value"] <= 1.0
+        effective = got["effective_clusters_nonzero"]
+        if effective:
+            assert got["p_value"] >= 2 / 2 ** effective - 1e-12

@@ -8,7 +8,7 @@ Authored by the agent. This is an **analysis plan**, not operator-approved scien
 authorized compute and attested the data (`OPERATOR_DATA_APPROVAL.json`), and has not reviewed
 these statistical choices. Nothing here may be reported as externally validated.
 
-Implemented in `experiments/reasoning_posttraining_v1/statistics.py`, gated by 25 tests in
+Implemented in `experiments/reasoning_posttraining_v1/statistics.py`, gated by 29 tests in
 `tests/test_statistics.py`. MQ-001 supplies no statistics layer at all — `evaluation.classify`
 grades only `exact` and `number`, and `analyze.summarize` skips unscoreable rows — so all of
 this is new and none of it is inherited.
@@ -172,3 +172,53 @@ Registered so that a negative or null result cannot be quietly dropped:
   reported with that caveat attached, not as a clean null.
 - **A single seed is a single seed.** MQ-001's three-seed replication was consistent in 3/3
   orders and still not significant; the same discipline applies here.
+
+---
+
+## Appendix A — what P2 actually demands, decomposed
+
+Registered because the threshold "0.4891 absolute accuracy" is misleading in both directions if
+quoted without this decomposition. Measured on the 230-row evaluated subset
+(ANSWER 131 / IMPOSSIBLE 66 / UNKNOWN 33):
+
+| predictor | correct | accuracy |
+| --- | --- | --- |
+| perfect abstention + **zero** reasoning | 99/230 | 0.4304 |
+| `copy_prompt_sentinel` — **the floor** | 101/230 | **0.4391** |
+| **P2 threshold** (floor + 0.05) | **113/230** | **0.4891** |
+
+The v2 prompt prints its own status literal, so perfect abstention is nearly free and the floor
+is very close to *"abstain perfectly, solve nothing"*. Therefore:
+
+> **P2 = learn the abstention contract AND genuinely solve ≥ 14 of the 131 answerable worlds
+> (10.7% of them).** The source currently solves **0** of 131.
+
+This cuts both ways and both must be reported:
+
+- It makes P2 **reachable**. It is not "go from 0.0174 to 0.4891 of general competence"; it is
+  "acquire a contract the prompt already states, and solve one answerable world in nine".
+- It bounds what passing P2 **means**. Passing licenses *"solves about 11% of the planning
+  worlds"* and nothing stronger. No report may present it as general planning competence.
+
+## Appendix B — a note on zero-difference clusters in the two tests
+
+CL-046 established that a zero-difference cluster buys no power in the **superiority** test,
+because flipping its sign changes neither the statistic nor the permutation distribution. The
+opposite is true in the **non-inferiority** test: after the null is shifted by the margin, a
+cluster that did not move is positive evidence that the loss does not exceed the margin, and it
+contributes normally. So `effective_clusters_nonzero` is the honest resolution measure for P1
+and P2, and the full cluster count is the honest one for P3. The implementation computes the
+effective count after the shift is applied, which gives exactly this behaviour; it is not an
+inconsistency.
+
+## Appendix C — the layer is verified against a closed form, not against itself
+
+With equal cluster magnitudes the sign-flip test reduces exactly to the two-sided sign test,
+whose tail is a sum of binomial coefficients. Checked, sharing no code with the implementation:
+
+- all-same-sign gives exactly `2 / 2^k`, verified for k = 2…14
+- every `(k, m)` split at k = 6, 8, 10 matches the analytic binomial tail count
+- one-sided p never exceeds two-sided, and p is monotone in the shift
+- over 60 random inputs, p is always in range and never below `2 / 2^k_effective`
+
+Four tests in `test_statistics.py` carry these.
