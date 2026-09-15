@@ -1,0 +1,12 @@
+C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\native_runtime.py:34: UserWarning: Converting a tensor with requires_grad=True to a scalar may lead to unexpected behavior.
+Consider using tensor.detach() first. (Triggered internally at C:\actions-runner\_work\pytorch\pytorch\pytorch\torch\csrc\autograd\generated\python_variable_methods.cpp:837.)
+  ce_sum += float(loss); ce_targets += n
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\controller.py", line 231, in worker
+    value = evaluate(model, evaluable, tokenizer, eos, "baseline",
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\native_runtime.py", line 39, in evaluate
+    guard()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\model_quality_gpu_v1\resources.py", line 77, in guard
+    raise RuntimeError(
+RuntimeError: free GPU memory guard refused; leave other jobs untouched (phase=train, need 0.5 GiB, have 0.00 GiB)

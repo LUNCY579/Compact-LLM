@@ -1,6 +1,6 @@
 {
   "record": "CLAIM_LEDGER",
-  "recorded_utc": "2026-09-15T08:47:34.719721+00:00",
+  "recorded_utc": "2026-09-15T09:03:35.283237+00:00",
   "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
   "claims": [
     {
@@ -205,6 +205,30 @@
       "measured_baselines": "specific-sibling collision rate on the 384-row bank: first_mentioned 0.0000, constant_unknown 0.0000, copy_question_sentinel 0.0000, cue_copy 0.0026, last_delta_only 0.0292, last_mentioned 0.0321, last_number 0.0550. A candidate model rate inside that range refutes B-1.",
       "second_correction": "constant_unknown initially showed a 0.707 collision rate because UNKNOWN is itself a sibling gold in most families. Sentinel collisions are now excluded from the specific-collision count, since landing on a generic abstention is not evidence of recalling a particular sibling world.",
       "classification": "AGENT_STATISTIC_WAS_MISLEADING_REMOVED_BEFORE_USE"
+    },
+    {
+      "id": "CL-024",
+      "topic": "First held-out measurement: the source clears the shortcut floor, and abstention is the visible weakness",
+      "measured": "Ungated Supa 1.7 on RRP2-DEV-V1, 240 of 384 rows (144 refused as overlength at the qualified 2048 window). Strict accuracy 0.2625 (63/240) against a same-subset shortcut floor of 0.1417 and a positive control of 1.0000. 240/240 terminated, 0 truncated, response CE 1.5882.",
+      "the_real_weakness": "Per stratum: ANSWER 47/206, UNKNOWN 16/34. A constant-UNKNOWN predictor scores 34/34 on the UNKNOWN stratum, beating the model outright there while scoring 0 on ANSWER. False abstention on answerable worlds is 57/206 (27.7 percent) and unsupported answers on unanswerable worlds 18/34 (52.9 percent).",
+      "status": "Held-out confirmation of bottleneck B-2 with explicit denominators. It is a BASELINE for future arms and is NOT a quality claim about any candidate. Human data review remains NOT PERFORMED.",
+      "classification": "FIRST_GENUINE_HELD_OUT_BASELINE_B2_CONFIRMED"
+    },
+    {
+      "id": "CL-025",
+      "topic": "The sibling-collision test cannot discriminate B-1 against prompt-copying baselines",
+      "observed": "The source model's specific-sibling collision rate is 0.2147 over 177 errors, versus 0.0000-0.0550 for the answer-agnostic shortcut predictors. Read naively that would look like strong support for B-1.",
+      "why_that_reading_is_wrong": "The source has never been trained on this bank, so its rate cannot be memorization interference. Inspecting the collisions shows closed answer vocabularies are the cause: deduction admits only four legal labels, so predicting SUPPORTED where the gold is UNKNOWN collides by necessity, and in program_trace the same wrong integer -2 collides with golds 2, 6 and 0. The shortcut baselines collide rarely only because they copy long prompt identifiers that are almost never golds, so they are not fluency-matched.",
+      "consequence": "The baselines recorded in CL-023 are the wrong null for B-1. The right one is fluency-matched and now exists: the SOURCE model's 0.2147 on this exact bank. B-1 is tested by whether a FITTED candidate exceeds it substantially. B-1 therefore remains UNTESTED, not supported.",
+      "classification": "STATISTIC_VALID_BUT_ITS_COMPARISON_BASELINE_WAS_WRONG_NULL_REPLACED"
+    },
+    {
+      "id": "CL-026",
+      "topic": "The tolerant scorer is too weak to test B-3, so the presentation/reasoning split is unmeasured",
+      "observed": "dialogue_memory scores 0/30 held out, and presentation_only_gain across the whole bank is 0. The contract wants 'venue=X; format=Y; day=Z' while the model emits prose like 'Please use BoatHouse for my venue.' with the wrong venue (gold Atrium), or 'audio for my format; Wednesday for my day' with one slot right, one wrong and one missing.",
+      "cause": "tolerant() normalizes whitespace, strips outer quotes and drops one trailing sentence mark. It cannot parse a slot contract, so it rescues nothing and the two mechanisms stay confounded.",
+      "required": "B-3's falsifying test needs a slot-aware parser scoring per-slot, reported separately from strict accuracy. It is NOT built, so no claim is made about how much of the dialogue_memory failure is presentation versus reasoning.",
+      "classification": "INSTRUMENT_GAP_NAMED_NO_CLAIM_MADE"
     }
   ]
 }

@@ -1,11 +1,11 @@
 {
-  "recorded_utc": "2026-09-15T08:47:34.719721+00:00",
+  "recorded_utc": "2026-09-15T09:03:35.283237+00:00",
   "goal_status": "ACTIVE_NOT_COMPLETE",
   "branch": "research/rineya-reasoning-posttraining-v1",
   "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "record_base_head": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
   "live_head_authority": "git rev-parse HEAD, plus fresh git ls-remote; this record is not a live ref",
-  "phase": "RRP002_INSTRUMENT_PARTLY_BUILT_VERIFIER_AUDITED_DEV_BANK_AND_FLOOR_MEASURED",
+  "phase": "RRP002_FIRST_HELD_OUT_BASELINE_MEASURED_LADDER_NOT_STARTED",
   "data_contract_sha256": "66aa9a9d582c5f426958227a001ae640d34daf4a68c6d1cd115e38509d95c2b1",
   "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
   "runtime": "Python3.11.15 / torch2.10.0+cu126 / transformers4.57.1; native model qualification unexecuted",
@@ -13,12 +13,12 @@
     "archive_files_byte_verified": 142,
     "v1_unique_train_gold_checks": 512,
     "v2_unique_train_gold_and_structured_trace_checks": 256,
-    "new_tests_passed": 114,
+    "new_tests_passed": 115,
     "new_tests_skipped": 0,
     "forge_v2_tests_passed": 222,
     "forge_v2_tests_skipped": 0,
     "pretrained_optimizer_steps": 208,
-    "pretrained_evaluation_calls": 130,
+    "pretrained_evaluation_calls": 371,
     "fixture_optimizer_steps_final_suite": 6,
     "new_tests_passed_at_inherited_head": 36,
     "mq_tests_passed": 113,
@@ -36,7 +36,8 @@
     "native_token_length_survey": "v1 10,000 + v2 20,000 + 384 probe views measured with the pinned tokenizer, no model",
     "verifier_adversarial_audit": "PASS - 280 worlds, 4390 attacks, 0 violations, 20 alternative optima accepted",
     "dev_bank": "RRP2-DEV-V1: 384 worlds, strata {'ANSWER': 328, 'UNKNOWN': 56}, positive control 384/384",
-    "shortcut_floor": "0.1458 strict accuracy, reached by ['constant_train_majority', 'constant_unknown', 'copy_question_sentinel']"
+    "shortcut_floor": "0.1458 strict accuracy, reached by ['constant_train_majority', 'constant_unknown', 'copy_question_sentinel']",
+    "held_out_baseline": "source 0.2625 (63/240) vs shortcut floor 0.1417, positive control 1.0000; ANSWER 47/206, UNKNOWN 16/34"
   },
   "active_owned_model_job": null,
   "active_owned_model_job_evidence": "No pretrained job launched; all recorded preprocessing supervisor handles terminal",
@@ -70,10 +71,23 @@
     "RRP-001 adaptive round spent; the ladder needs a registered successor and a new envelope",
     "RL lane shut: verifier readiness gate not attempted, though the v2 verifier itself now passes adversarial audit"
   ],
-  "next_action": "Build RRP2-DEV-V2 on the v2 validation split using the audited rewards.score_response (NOT text matching, because alternative optima are legitimate), then RRP2-PRESERVE, then the cluster-robust paired statistics. All CPU-only. Register the 4096-window qualification before any v2 arm.",
-  "last_goal_turn_classification": "progress: verifier passed adversarial audit, first DEV bank built and validated by the exact solver, shortcut floor and B-1 comparison baselines measured. No model executed.",
+  "next_action": "Three named instrument gaps now block interpretation, all CPU-only: (1) a slot-aware parser so B-3's presentation/reasoning split is measurable (CL-026); (2) RRP2-DEV-V2 on the v2 validation split scored with the audited rewards.score_response, for the ANSWER/UNKNOWN/IMPOSSIBLE strata v1 cannot supply; (3) RRP2-PRESERVE. Then the cluster-robust paired statistics, then predeclare margins, then a registered ladder envelope. Qualify the 4096 window before any v2 arm.",
+  "last_goal_turn_classification": "progress: first genuine held-out measurement. The source clears the shortcut floor by 12 points but loses to a constant-UNKNOWN predictor on the UNKNOWN stratum. No quality claim.",
   "prepared_binding": "inspection-20260915/prepared-004",
   "superseded_prepared_binding": "prepared-003 / ad3fc4c0... (training bytes identical; see CLAIM_LEDGER CL-001)",
   "plan_sha256": "9208fc92fce8c6b5bb5647c83e45d3ae7bfd2ca2bff707bd58f1662fd667e069",
-  "grant_sha256": "03eafb89324eb207da611f3cb3042c2960d44a03e51a8015b08954ea5180ee45"
+  "grant_sha256": "03eafb89324eb207da611f3cb3042c2960d44a03e51a8015b08954ea5180ee45",
+  "approved_model_budget_remaining_rrp002_baseline": {
+    "adaptive_model_selection_rounds": 0,
+    "cloud_or_teacher_spend": 0,
+    "evaluation_and_qualification_model_calls": 1359,
+    "generated_tokens_all_candidates": 100224,
+    "model_worker_launches": 2,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 3354,
+    "new_disk_bytes": 260046848,
+    "on_policy_rl_rollout_tokens": 0,
+    "processed_training_tokens_all_attempts": 0,
+    "retries": 1,
+    "total_owned_work_wall_seconds": 5154
+  }
 }
