@@ -1,0 +1,41 @@
+{
+  "recorded_utc": "2026-09-15T22:37:04.860400+00:00",
+  "execution_head": "2cd46c16195a65e57819c69e3a994eb4c5642934",
+  "status": "REFUSED_BEFORE_MODEL_WORKER_RESERVATION",
+  "refusal": "host RAM 3.58 GiB is below the 4.6 GiB qualify-profile preload guard for baseline",
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "goal": "ACTIVE_NOT_COMPLETE",
+  "budget": {
+    "used_or_reserved": {
+      "adaptive_model_selection_rounds": 0,
+      "cloud_or_teacher_spend": 0,
+      "evaluation_and_qualification_model_calls": 0,
+      "generated_tokens_all_candidates": 0,
+      "model_worker_launches": 0,
+      "model_worker_wall_seconds_and_conservative_gpu_seconds": 0,
+      "new_disk_bytes": 0,
+      "on_policy_rl_rollout_tokens": 0,
+      "processed_training_tokens_all_attempts": 0,
+      "retries": 0,
+      "total_owned_work_wall_seconds": 0
+    },
+    "active_reservations": [],
+    "budget_breached": false,
+    "remaining": {
+      "adaptive_model_selection_rounds": 0,
+      "cloud_or_teacher_spend": 0,
+      "evaluation_and_qualification_model_calls": 1000,
+      "generated_tokens_all_candidates": 65536,
+      "model_worker_launches": 2,
+      "model_worker_wall_seconds_and_conservative_gpu_seconds": 3600,
+      "new_disk_bytes": 268435456,
+      "on_policy_rl_rollout_tokens": 0,
+      "processed_training_tokens_all_attempts": 0,
+      "retries": 1,
+      "total_owned_work_wall_seconds": 4500
+    }
+  },
+  "active_owned_model_job": null,
+  "supersedes_ready_to_train_claim": "RRP-004 is blocked by the invalidated retention bank; corrected baseline is required before a newly bound training successor."
+}

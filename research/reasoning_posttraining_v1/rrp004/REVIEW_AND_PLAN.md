@@ -1,5 +1,10 @@
 # Dataset and retention review — 2026-09-15
 
+**Subsequent correction:** RRP-005 found missing procedural evidence and dropped assistant
+history in the inherited preservation bank. Its hash is now blocked from new execution.
+The RRP-004 training plan below was never run and must not be launched; see
+[`../rrp005/PLAN.md`](../rrp005/PLAN.md) for the corrected bank and required new source baseline.
+
 ## Decision
 
 The goal remains **ACTIVE, NOT ACHIEVED**. No new model-quality gain has been measured in
