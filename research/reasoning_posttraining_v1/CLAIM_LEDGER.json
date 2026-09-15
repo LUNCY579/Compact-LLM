@@ -1,0 +1,59 @@
+{
+  "record": "CLAIM_LEDGER",
+  "recorded_utc": "2026-09-15T06:26:18.685421+00:00",
+  "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
+  "claims": [
+    {
+      "id": "CL-001",
+      "topic": "Which prepared input is authoritative",
+      "source_reported": "CONTINUE.md and STATUS.json name prepared-003, data_contract_sha256 ad3fc4c0...",
+      "freshly_reproduced": "prepared-004 (23:46) and preflight-002 (23:48) postdate the STATUS record (23:43 local). microfit-train.jsonl, REVIEW_PACKET.jsonl, SOURCE_BINDINGS.json and TOKENIZER_SURVEY.json are BYTE-IDENTICAL between 003 and 004. Only DATA_CONTRACT.json differs (3512 vs 3945 B) because preparation_code additionally covers engine.py, overlap.py, preflight.py.",
+      "resolution": "Bound RRP-001 to prepared-004 + preflight-002. No training byte changes. MICROFIT_PLAN.json is byte-identical across preflight-001, preflight-002 and the repo copy, and digest(plan)=9208fc92... is unchanged.",
+      "classification": "RESOLVED_STALE_RECORD_NOT_DATA_DRIFT"
+    },
+    {
+      "id": "CL-002",
+      "topic": "preparation_code cannot be re-verified",
+      "observed": "DATA_CONTRACT.preparation_code is produced once by prepare.py via rglob('*.py') and is never read back by any module (single reference: prepare.py:198).",
+      "consequence": "It is a write-once provenance record of the code that produced the data, not a runtime gate. Adding controller.py/tests cannot invalidate it. Only contract['files'] (the data bytes) is enforced at run time, by controller.inputs().",
+      "classification": "CLARIFIED_NOT_A_DEFECT"
+    },
+    {
+      "id": "CL-003",
+      "topic": "Checkpoints are labelled MQ-001",
+      "observed": "MQ checkpoints.save_checkpoint hardcodes experiment='MQ-001' and validate_checkpoint requires that exact value, so RRP-001 checkpoint manifests carry the MQ-001 label.",
+      "consequence": "Cosmetic only: the RRP-001 lineage is carried by the separate binding dict (experiment='RRP-001-MICROFIT', plan/data/grant/code hashes), and binding equality is enforced on resume. MQ code was deliberately NOT edited, because its hash is bound into every MQ qualification.",
+      "classification": "KNOWN_COSMETIC_MISLABEL_LINEAGE_PRESERVED_ELSEWHERE"
+    },
+    {
+      "id": "CL-004",
+      "topic": "Budget journal tail truncation is undetectable",
+      "observed": "budget.Journal hash-chains create-only events. Editing an event or removing a MID-CHAIN event is refused. Deleting the NEWEST event(s) leaves a valid prefix and silently returns that spend.",
+      "why_unfixable_here": "Create-only files cannot carry a rewritable head pointer, and any additional marker file would be equally deletable.",
+      "mitigation_that_does_hold": "read() refuses run evidence with no reservation, so a launch cannot be erased while its runs/<id>/ directory exists. That covers every worker attempt, which is where the real cost is.",
+      "classification": "DOCUMENTED_LIMITATION_TESTED_AS_SUCH"
+    },
+    {
+      "id": "CL-005",
+      "topic": "Reused run_id bricked the journal",
+      "found_by": "new fixture gate test_reused_run_id_and_unsafe_run_id_are_refused",
+      "defect": "Journal.start() appended the duplicate 'start' event first and only read() caught it afterwards, leaving the chain permanently unreadable and stranding the remaining approved envelope.",
+      "fix": "start() now rejects a run_id already in self.started before appending; read() exposes started/settled. Regression-tested.",
+      "classification": "DEFECT_FOUND_AND_FIXED_THIS_SESSION"
+    },
+    {
+      "id": "CL-006",
+      "topic": "MQ native.runtime() crashes with an empty CUDA_VISIBLE_DEVICES",
+      "observed": "torch.cuda.is_available() is true while device_count() is 0, so get_device_properties(0) raises AssertionError('Invalid device id'). Reproduced via the controller 'environment' command under CUDA_VISIBLE_DEVICES=''.",
+      "consequence": "Pre-existing MQ robustness issue, not on the RRP critical path: real runs have the GPU visible, and CPU fixture tests do not call runtime(). NOT patched, because editing MQ code changes the MQ code identity hashed into its qualifications.",
+      "classification": "PREEXISTING_UPSTREAM_ISSUE_UNPATCHED_BY_CHOICE"
+    },
+    {
+      "id": "CL-007",
+      "topic": "Inherited README 'no native training' statements",
+      "observed": "The GOAL brief warns that the inherited README describes an earlier implementation boundary.",
+      "status": "RRP-001 native model execution had genuinely not occurred as of the inherited head: pretrained_optimizer_steps=0 and pretrained_evaluation_calls=0 in STATUS.json, and no run receipts exist on disk. The statement was accurate for this successor, not stale.",
+      "classification": "VERIFIED_ACCURATE_AS_INHERITED"
+    }
+  ]
+}

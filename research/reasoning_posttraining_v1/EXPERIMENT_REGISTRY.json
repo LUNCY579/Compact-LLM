@@ -1,0 +1,60 @@
+{
+  "goal": "GOAL.md",
+  "branch": "research/rineya-reasoning-posttraining-v1",
+  "source_parent": "59df72c2e24e6c4d3c7e4e86c1dd4ae143054400",
+  "implementation_commit": "58bf64cf93ff918ede4b1079b8a5716ee0e1e312",
+  "default_adaptive_round_limit": 3,
+  "adaptive_model_rounds_used": 0,
+  "experiments": [
+    {
+      "id": "RRP-SOURCE-001",
+      "status": "COMPLETED_BYTE_AND_TOKENIZER_INSPECTION",
+      "native_model_calls": 0
+    },
+    {
+      "id": "RRP-DATA-V2-FULL-001",
+      "status": "BLOCKED_LENGTH_ELIGIBILITY",
+      "evidence": "evidence/inspection-20260915/prepared-001/failure.json",
+      "native_model_calls": 0
+    },
+    {
+      "id": "RRP-DATA-V2-SCOPE-002",
+      "status": "BLOCKED_LENGTH_ELIGIBILITY",
+      "evidence": "evidence/inspection-20260915/prepared-002/failure.json",
+      "native_model_calls": 0
+    },
+    {
+      "id": "RRP-MICROFIT-001",
+      "status": "PREPARED_BUDGET_AND_NATIVE_CONTROLLER_PENDING",
+      "plan": "MICROFIT_PLAN.json",
+      "budget": "BUDGET_REQUEST.json",
+      "parent": "exact Supa 1.7, not Opallo",
+      "native_model_calls": 0
+    },
+    {
+      "id": "A-pre-v2-control",
+      "status": "UNRUN_REQUIRES_NEW_REVIEW_AND_BUDGET"
+    },
+    {
+      "id": "B-mixed-final-SFT",
+      "status": "UNRUN_REQUIRES_NEW_REVIEW_AND_BUDGET"
+    },
+    {
+      "id": "C-mixed-process-SFT",
+      "status": "UNRUN_REQUIRES_BOUNDED_VERIFIED_TRACES_AND_NATIVE_THINKING_QUALIFICATION"
+    },
+    {
+      "id": "D-on-policy-RL",
+      "status": "UNRUN_REQUIRES_SFT_AND_VERIFIER_ROLLOUT_READINESS"
+    },
+    {
+      "id": "confirmation",
+      "status": "NOT_ESTABLISHED_INDEPENDENT_RENDERING_AND_ADMINISTRATION_REQUIRED"
+    },
+    {
+      "id": "distinct-lineage-replication",
+      "status": "UNRUN_SEPARATE_BUDGET_REQUIRED"
+    }
+  ],
+  "historical_MQ_cells": "Central1e-5 only;3e-6/3e-5 objective cells remain unrun, not retired by this microfit"
+}

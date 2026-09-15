@@ -1,0 +1,15 @@
+None of PyTorch, TensorFlow >= 2.0, or Flax have been found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\prepare.py", line 208, in <module>
+    main()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\prepare.py", line 203, in main
+    result = prepare(**vars(args))
+             ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\prepare.py", line 148, in prepare
+    selected = select_microfit(summaries)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-rineya-reasoning-posttraining-v1\experiments\reasoning_posttraining_v1\prepare.py", line 54, in select_microfit
+    raise ValueError(f"insufficient eligible TRAIN worlds: {family}/{answer_class}: {len(eligible)}/{count}")
+ValueError: insufficient eligible TRAIN worlds: evidence_chain/ANSWER: 0/2
