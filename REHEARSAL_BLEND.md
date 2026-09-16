@@ -3,6 +3,21 @@
 **RRP-012. Three of four registered predictions falsified, including the one I said
 I held most strongly. `DATASET_REQUIREMENTS.md` §2.1 is corrected as a result.**
 
+> **Scope correction, added after `DATASET_SURVEY.md` §5.** The title overstates this
+> document's reach. M5 was a **two-component** blend — `reasoning_minus_abstention` +
+> `abstention` — covering **4,812 of 10,353 eligible rows (46.5%)**, not the pool. The
+> cause is structural: 4,000 rows of the preservation slice (3,402 eligible) carry no
+> `capability_group` field at all, so every group-based filter in `REHEARSAL_FILTERS` is
+> blind to them.
+>
+> **The finding below is unaffected** — halving the abstention component from 1,295 rows
+> to 648 took abstention from 13/64 to 0/64, which is about dose within a component and
+> does not depend on how many components there were. What narrows is the *scope of the
+> falsification*: this refutes **additivity across two components**, not "span". By this
+> document's own threshold mechanism a wider split should protect *less*, so the rule
+> remains unsupported — but it was not tested at span, and saying so is the difference
+> between a result and an extrapolation.
+
 RRP-011 found rehearsal protects what it resembles. From that I wrote a rule into
 the requirements document — *"a rehearsal mixture must span every capability you
 intend to keep"* — and then, per that document's own standard, tested it instead of

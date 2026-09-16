@@ -33,33 +33,44 @@ replicated. Read these in order:
    every rule for teaching a new skill without losing an old one, each with the
    measurement that produced it and the failure it prevents. §2.1 is **corrected** by
    document 7.
+9. **[DATASET_SURVEY.md](DATASET_SURVEY.md)** — what is actually on this host. Full-file
+   census of 148,000 rows. **Nothing here can rehearse long context** (longest row: 940
+   characters). The retention panel is a **literal subset** of the v3 reasoning corpus.
+   29,764 clean rehearsal rows are untouched. 53,000 preference pairs exist with no code
+   to use them. Corrects document 7's scope.
+10. **[PROCESS_DOSE_RELIABILITY.md](PROCESS_DOSE_RELIABILITY.md)** — **read this before
+    trusting the gate.** D0 passes the gate **3/3** while acquiring **0/3**; D1 acquires
+    **6/6** while passing **4/6**. The gate has no acquisition term, so training on less
+    passes it more reliably *because* it learns less.
 
-### Phase 1/2 result (2026-09-16, latest)
+### RRP-013 result (2026-09-16, latest)
 
-**D1 — 384 rows, a quarter of D3's data — is the best arm this programme has produced,
-and it is 2/3 on the gate.** See [D1_REPLICATION.md](D1_REPLICATION.md).
+**Nine runs: D1 (384 rows) at six seeds, D0 (192 rows) at three.**
 
-| seed | new /384 | panel | retained | gate | long ctx | vs Supa |
-|---|---:|---:|---:|:--:|---:|---|
-| 17 | 239 | 77 | 40 | PASS | 160 | −1, p=1.00 n.s. |
-| 23 | 217 | 71 | 38 | PASS | 159 | −2, p=0.85 n.s. |
-| 29 | 236 | 67 | **36** | **FAIL** | **148** | **−13, p=0.035 SIG** |
-| *Supa* | *14* | *47* | *47* | — | *161* | — |
+| arm | gate | exact 95% CI | all three floors cleared | retained | long ctx | `UNKNOWN` |
+|---|:--:|---|:--:|---:|---:|---:|
+| **D1** (384) | **4/6** | [0.223, 0.957] | **6/6** | 36–40 | 147–160 | 5–12 |
+| **D0** (192) | **3/3** | [0.292, 1.000] | **0/3** | 38–44 | 153–155 | 10–13 |
+| *Supa* | — | — | *0/3* | *47* | *161* | *13* |
 
-Two of three D1 seeds are **statistically indistinguishable from the untrained source
-on long context** — which no other arm has achieved — while gaining +203 to +225 on
-the new skill and +20 to +30 on the arithmetic panel. The third fails both the
-retention gate (36 < 37) and the long-context comparison.
+D0's deficit is one family in every seed: `ledger_replay` scores 0.2812–0.3203 against
+its 0.2422 `copy_before` floor, where D1 scores 0.4844–0.6328. It carries the strongest
+shortcut of the three families, and at 64 parents/family the model is no longer
+distinguishable from copying.
 
-Abstention is unrepaired in every D1 seed (5–8 vs Supa's 13). The only arm that
-repaired it (M4, 13/64) pays a **significant** long-context loss (137, p = 0.0003).
-Nothing measured gets both.
+**Neither rung is a clean win.** D1 learns all three skills and fails retention 2/6; D0
+passes every gate and never demonstrates the third skill. Six seeds still cannot pin a
+pass rate — the interval only narrowed from [0.094, 0.992] to [0.223, 0.957].
+
+Two of five registered predictions were falsified: D0 did **not** clear all three floors,
+and abstention is **not** uniformly broken (5–13 across arms, one seed at Supa's exact 13).
 
 ### The one-sentence state
 
 The new skill is real, large and replicates exactly; **panel** retention is
 manageable and rehearsal manages it; **long-context and abstention are damaged by
-every arm measured, and the registered gate is blind to both.**
+every arm measured, the registered gate is blind to both — and RRP-013 shows it is
+blind to acquisition too, which a lower dose silently exploits.**
 
 ### What must happen before anything here is promoted
 
@@ -89,12 +100,13 @@ protected neither. Halving the abstention component took it from 13/64 to 0 — 
 threshold, not a gradient. At a fixed budget you choose **one** capability to protect.
 Whether a *larger* rehearsal budget could protect two is untested.
 
-**Still open: long context.** No composition tested repairs it — every arm sits
-17–43 rows below Supa's 161. If the resemblance principle holds, the fix is
-long-context rehearsal, and **that dataset does not exist in this worktree**
-(`Rineya_LCR_SFT_v1` ships a 12-pack sample; the v3 bulk files average ~500
-characters against ~1,000-word contexts). Building or obtaining it is the highest-value
-remaining data work.
+**Still open: long context, and now settled as unaddressable here.** No composition
+tested repairs it — every arm sits 1–43 rows below Supa's 161. If the resemblance
+principle holds the fix is long-context rehearsal, and `DATASET_SURVEY.md` §2 closes
+that door with a full-file census: across all 148,000 rows of all seven corpora the
+**longest single row is 940 characters (~261 tokens)**, and none exceeds 4,000. There is
+nothing on this host to rehearse long context with. Commissioning the LCR corpus is not
+one lever among several — it is the only one.
 
 ### Operational traps that cost launches this session
 
@@ -112,7 +124,8 @@ remaining data work.
 `rineya-dataset-retention-records/forge-v2-prereg-001/` — floors and amendments,
 `ADJUDICATION_001.md` (four operator decisions + two amendments), `RRP008_DOSE_PREREG.md`,
 `RRP009_MIXTURE_PREREG.md`, `RRP010_BROAD_RETENTION_PREREG.md`,
-`RRP011_COMPOSITION_PREREG.md`, `RRP012_BLEND_PREREG.md` (+ amendment 1).
+`RRP011_COMPOSITION_PREREG.md`, `RRP012_BLEND_PREREG.md` (+ amendment 1),
+`RRP013_RELIABILITY_PREREG.md`.
 
 Work on `codex/dataset-retention-audit-v1`. No release or quality claim is open:
 every run records `MICROFIT_EXECUTED_NOT_QUALITY_CONFIRMATION` and
