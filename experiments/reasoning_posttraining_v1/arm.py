@@ -208,7 +208,7 @@ def probe_subset(compiled: list[dict], *, per_bucket: int) -> list[str]:
 
 
 def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 128,
-               probe_per_bucket: int = 8) -> dict:
+               probe_per_bucket: int = 8, train_window: int = TRAIN_WINDOW) -> dict:
     """The frozen plan, computed from the compiled bytes so it cannot drift from them."""
     design = Design()
     repeated = [r for _ in range(exposures) for r in compiled]
@@ -225,7 +225,7 @@ def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 12
         "processed_tokens": processed,
         "supervised_tokens": supervised,
         "update_groups": groups,
-        "max_sequence": TRAIN_WINDOW,
+        "max_sequence": train_window,
         "max_new_tokens": max_new_tokens,
         "precision": "fp32",
         "trainable": "blocks8-27",
@@ -254,7 +254,7 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
         "rows": len(compiled),
         "source_release": "forge_v2",
         "source_split": "train",
-        "train_window": TRAIN_WINDOW,
+        "train_window": train_window,
         "confirmation": "NOT_ESTABLISHED",
         "human_data_review": "NOT_PERFORMED",
         "disjointness_verified_against": sorted(report["disjointness"]["against"][i]["bank"]
@@ -287,7 +287,8 @@ def cap_per_bucket(compiled: list[dict], *, per_bucket: int) -> list[dict]:
 
 def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]], *,
           per_bucket: int, exposures: int,
-          candidate_multiple: int = 6) -> tuple[list[dict], dict, dict]:
+          candidate_multiple: int = 6,
+          train_window: int = TRAIN_WINDOW) -> tuple[list[dict], dict, dict]:
     """Select, compile, balance, prove disjoint, and plan. No model call, no budget."""
     # Every DEV id is excluded up front, so disjointness is enforced by construction as well
     # as verified afterwards. Belt and braces on purpose: the verification is what catches a
@@ -300,9 +301,10 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
                                                       exclude_ids=dev_ids)
     quarantine.refuse(chosen, registry, use="TRAIN")
 
-    fitting, rejected = compile_training(chosen, policy, meta, tokenizer)
+    fitting, rejected = compile_training(chosen, policy, meta, tokenizer,
+                                        max_sequence=train_window)
     if not fitting:
-        raise ValueError("no v2 train row fits the qualified 2048 training window")
+        raise ValueError(f"no v2 train row fits the {train_window} training window")
     compiled = cap_per_bucket(fitting, per_bucket=per_bucket)
     per_bucket_taken = dict(collections.Counter(
         f"{r['family']}|{r['stratum']}" for r in compiled))
@@ -311,7 +313,7 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
     if not audit["clean"]:
         raise ValueError(f"training set collides with a DEV bank: {audit['against']}")
 
-    plan = build_plan(compiled, exposures=exposures)
+    plan = build_plan(compiled, exposures=exposures, train_window=train_window)
     report = {
         "record": "RRP003_ARM_A1_BUILD",
         "schema": 1,
@@ -321,10 +323,14 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
         "salt": SALT, "seed": SEED,
         "train_window": TRAIN_WINDOW,
         "evaluation_window": EVAL_WINDOW,
-        "window_note": ("Training at 2048 is already qualified (RRP-001) and inference at 4096 "
-                        "is already qualified (CL-027). Training at 4096 is NOT qualified and "
-                        "is not attempted. The train/eval window mismatch is a real confound "
-                        "and is reported as a length-generalization split, not hidden."),
+        "window_note": (("Training at 2048 is already qualified (RRP-001) and inference at "
+                         "4096 is already qualified (CL-027). The train/eval window mismatch is "
+                         "a real confound and is reported as a length-generalization split, not "
+                         "hidden.") if train_window == TRAIN_WINDOW else
+                        (f"Training at {train_window} is NOT qualified by RRP-001. This build is "
+                         "only admissible inside a registered window-qualification experiment "
+                         "that measures peak memory at the maximum planned shape; it carries no "
+                         "training-quality authority.")),
         "candidates_offered": len(chosen),
         "candidates_that_fit": len(fitting),
         "compiled": len(compiled),
@@ -336,7 +342,8 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
         "per_bucket_offered": per_bucket_offered,
         "per_bucket_taken": per_bucket_taken,
         "buckets_short_of_the_request": short,
-        "buckets_short_note": ("a bucket short of the request has no more rows that fit 2048. "
+        "buckets_short_note": (f"a bucket short of the request has no more rows that fit "
+                               f"{train_window}. "
                                "evidence_chain is the extreme case -- 4 of 887 ANSWER and 9 of "
                                "1113 UNKNOWN fit -- so the arm barely sees it and NO per-family "
                                "claim about that family will be interpretable."),
@@ -373,6 +380,10 @@ def main(argv=None):
     parser.add_argument("--out-plan", type=Path, required=True)
     parser.add_argument("--per-bucket", type=int, required=True)
     parser.add_argument("--exposures", type=int, required=True)
+    parser.add_argument("--train-window", type=int, default=TRAIN_WINDOW,
+                        help="training sequence window; anything other than the qualified "
+                             "2048 is admissible only inside a registered window "
+                             "qualification")
     args = parser.parse_args(argv)
 
     from experiments.model_quality_gpu_v1.native import load_tokenizer
@@ -385,12 +396,14 @@ def main(argv=None):
                                   if l.strip()]
     tokenizer = load_tokenizer(args.source)
     compiled, plan, report = build(args.v2_root, tokenizer, registry, banks,
-                                   per_bucket=args.per_bucket, exposures=args.exposures)
+                                   per_bucket=args.per_bucket, exposures=args.exposures,
+                                   train_window=args.train_window)
     contract = write_prepared(args.out_prepared, compiled, report)
     write_new(args.out_plan, plan)
 
     print(f"offered {report['candidates_offered']} candidates, "
-          f"{report['candidates_that_fit']} fit 2048 (rate {report['fit_rate']}), "
+          f"{report['candidates_that_fit']} fit {report['train_window']} "
+          f"(rate {report['fit_rate']}), "
           f"kept {report['compiled']} after capping at {report['per_bucket_requested']}/bucket")
     if report["buckets_short_of_the_request"]:
         print(f"buckets SHORT of the request: {report['buckets_short_of_the_request']}")

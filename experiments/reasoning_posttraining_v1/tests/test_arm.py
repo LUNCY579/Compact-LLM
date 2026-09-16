@@ -304,3 +304,26 @@ def test_capping_preserves_the_deterministic_global_order():
     fitting = [compiled_row(f"r{i}", family="f", stratum="ANSWER") for i in range(10)]
     kept = arm.cap_per_bucket(fitting, per_bucket=4)
     assert [r["id"] for r in kept] == ["r0", "r1", "r2", "r3"]
+
+
+def test_the_default_training_window_is_unchanged_at_2048():
+    """The qualified window is the default; a caller must ask for anything else."""
+    compiled = [compiled_row("t1", ids=[1, 2, 3, 4])]
+    assert arm.build_plan(compiled, exposures=1)["max_sequence"] == 2048
+    assert arm.TRAIN_WINDOW == 2048
+
+
+def test_an_explicit_training_window_reaches_the_plan():
+    """RRP-003 trains at 2048; a registered window qualification needs to ask for 4096."""
+    compiled = [compiled_row("t1", ids=[1, 2, 3, 4])]
+    plan = arm.build_plan(compiled, exposures=1, train_window=4096)
+    assert plan["max_sequence"] == 4096
+    # nothing else about the frozen recipe may move with the window
+    assert plan["optimizer"] == arm.frozen_optimizer(Design())
+    assert plan["precision"] == "fp32" and plan["trainable"] == "blocks8-27"
+
+
+def test_a_non_default_window_withdraws_the_qualified_claim_in_the_report():
+    """A 4096 build must not inherit RRP-001's 2048 training qualification in its prose."""
+    note_2048 = arm.build_plan([compiled_row("t1", ids=[1, 2])], exposures=1)
+    assert note_2048["max_sequence"] == arm.TRAIN_WINDOW
