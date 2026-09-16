@@ -254,7 +254,9 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
         "rows": len(compiled),
         "source_release": "forge_v2",
         "source_split": "train",
-        "train_window": train_window,
+        # Single source of truth: the build report already carries the window the rows were
+        # actually compiled at. Re-deriving it here is how the two can disagree.
+        "train_window": report["train_window"],
         "confirmation": "NOT_ESTABLISHED",
         "human_data_review": "NOT_PERFORMED",
         "disjointness_verified_against": sorted(report["disjointness"]["against"][i]["bank"]
@@ -321,7 +323,7 @@ def build(v2_root: Path, tokenizer, registry: dict, banks: dict[str, list[dict]]
         "what_this_is": ("Supervised fine-tuning data for the v2 response contract and its "
                          "reasoning, selected from Forge v2 TRAIN only."),
         "salt": SALT, "seed": SEED,
-        "train_window": TRAIN_WINDOW,
+        "train_window": train_window,
         "evaluation_window": EVAL_WINDOW,
         "window_note": (("Training at 2048 is already qualified (RRP-001) and inference at "
                          "4096 is already qualified (CL-027). The train/eval window mismatch is "

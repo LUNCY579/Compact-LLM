@@ -327,3 +327,29 @@ def test_a_non_default_window_withdraws_the_qualified_claim_in_the_report():
     """A 4096 build must not inherit RRP-001's 2048 training qualification in its prose."""
     note_2048 = arm.build_plan([compiled_row("t1", ids=[1, 2])], exposures=1)
     assert note_2048["max_sequence"] == arm.TRAIN_WINDOW
+
+
+def test_write_prepared_records_the_window_the_rows_were_compiled_at(tmp_path):
+    """Regression: write_prepared referenced an out-of-scope name and raised NameError.
+
+    Nothing exercised it, so the whole suite passed with the function broken. The contract
+    must take the window from the build report rather than re-deriving it, so the two cannot
+    disagree.
+    """
+    compiled = [compiled_row("t1", ids=[1, 2, 3, 4])]
+    report = {"train_window": 4096, "disjointness": {"against": [{"bank": "dev-a"}]}}
+    contract = arm.write_prepared(tmp_path / "prepared", compiled, report)
+
+    assert contract["train_window"] == 4096
+    assert contract["rows"] == 1
+    assert contract["disjointness_verified_against"] == ["dev-a"]
+    assert (tmp_path / "prepared" / "microfit-train.jsonl").is_file()
+    assert (tmp_path / "prepared" / "DATA_CONTRACT.json").is_file()
+
+
+def test_write_prepared_is_create_only(tmp_path):
+    compiled = [compiled_row("t1", ids=[1, 2])]
+    report = {"train_window": 2048, "disjointness": {"against": []}}
+    arm.write_prepared(tmp_path / "prepared", compiled, report)
+    with pytest.raises(ValueError, match="create-only"):
+        arm.write_prepared(tmp_path / "prepared", compiled, report)
