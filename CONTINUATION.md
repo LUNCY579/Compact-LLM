@@ -34,6 +34,27 @@ replicated. Read these in order:
    measurement that produced it and the failure it prevents. §2.1 is **corrected** by
    document 7.
 
+### Phase 1/2 result (2026-09-16, latest)
+
+**D1 — 384 rows, a quarter of D3's data — is the best arm this programme has produced,
+and it is 2/3 on the gate.** See [D1_REPLICATION.md](D1_REPLICATION.md).
+
+| seed | new /384 | panel | retained | gate | long ctx | vs Supa |
+|---|---:|---:|---:|:--:|---:|---|
+| 17 | 239 | 77 | 40 | PASS | 160 | −1, p=1.00 n.s. |
+| 23 | 217 | 71 | 38 | PASS | 159 | −2, p=0.85 n.s. |
+| 29 | 236 | 67 | **36** | **FAIL** | **148** | **−13, p=0.035 SIG** |
+| *Supa* | *14* | *47* | *47* | — | *161* | — |
+
+Two of three D1 seeds are **statistically indistinguishable from the untrained source
+on long context** — which no other arm has achieved — while gaining +203 to +225 on
+the new skill and +20 to +30 on the arithmetic panel. The third fails both the
+retention gate (36 < 37) and the long-context comparison.
+
+Abstention is unrepaired in every D1 seed (5–8 vs Supa's 13). The only arm that
+repaired it (M4, 13/64) pays a **significant** long-context loss (137, p = 0.0003).
+Nothing measured gets both.
+
 ### The one-sentence state
 
 The new skill is real, large and replicates exactly; **panel** retention is
