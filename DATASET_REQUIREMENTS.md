@@ -81,10 +81,20 @@ a termination for the first time anywhere in the programme.
 
 ## 2. The rehearsal corpus — the part that decides what survives
 
-### 2.1 Rehearsal must span every capability you intend to keep
+### 2.1 Rehearsal protects one capability at a time — choose which
 
-**Rule.** Rehearsal protects the capability it *resembles*, and only that one.
-Enumerate the capabilities you are keeping; make sure each has representation.
+> **CORRECTED by RRP-012.** This section first read *"rehearsal must span every
+> capability you intend to keep."* That rule was derived from RRP-011 and then
+> tested in `REHEARSAL_BLEND.md`. **It is wrong at a fixed budget.** A 50/50 blend
+> of abstention and reasoning rehearsal protected *neither*: abstention fell from
+> M4's 13/64 to **0**, and long context to 136, below both components. The rule
+> below is what the evidence actually supports.
+
+**Rule.** Rehearsal protects the capability it *resembles*, and only that one —
+**and only if it holds a critical share of the rehearsal budget.** Presence is not
+enough. At a fixed budget you are choosing *which one* capability to protect, not
+distributing protection across several. Decide which loss you least can afford and
+spend the rehearsal on that.
 
 **Evidence** (`REHEARSAL_COMPOSITION.md`, identical transitions, identical token
 budget, only the rehearsal filter varies):
@@ -97,14 +107,25 @@ budget, only the rehearsal filter varies):
 | `communication` | **118** | 5 | 70 | 40 |
 | `reasoning` | **144** | 0 | 69 | **34** |
 | **abstention classes** | 137 | **13** | **77** | 39 |
+| half abstention + half reasoning | 136 | **0** | 68 | 36 |
 
 Abstention rehearsal returns abstention to **exactly the source's 13/64**. Reasoning
 rehearsal gives the best long context and *fails* panel retention. Communication
 rehearsal costs 26 long-context rows against reasoning rehearsal.
 
+**The threshold, which is the part that corrects the original rule.** M4 gave
+abstention 1,295 rehearsal rows and recovered abstention completely. The blend gave
+it **648 rows — half as much — and recovered nothing**. Halving the component did
+not halve the effect; it erased it. Protection is a threshold in budget share, not
+a gradient, so a fixed budget cannot be spread.
+
 **Why this matters more than "add some old data".** A mixture over everything (the
 `all` row) protects nothing in particular: middling on all three axes. Composition
-*is* the intervention.
+*is* the intervention — and so is concentration.
+
+**Untested:** whether a *larger* rehearsal budget (say 67% of processed tokens
+rather than 50%) could protect two capabilities at once. Every arm here held the
+budget fixed so composition was the only variable.
 
 ### 2.2 Rehearsal must exclude the classes your retention instrument scores
 
@@ -213,7 +234,7 @@ have overstated the arithmetic gain by half.
 1. Atomic, solver-verified targets — not whole tasks.
 2. ≥5% supervised-token density; verify against the qualified window with the real tokenizer.
 3. Size the dose by the retention budget; acquisition never saturates but retention degrades.
-4. Rehearse at ~50/50 by tokens, and make the mixture **span every capability you intend to keep** — it protects only what it resembles.
+4. Rehearse at ~50/50 by tokens on **one** capability — the one whose loss you least can afford. Rehearsal protects only what it resembles, and only above a critical share of the budget; splitting it across two protected neither.
 5. Exclude the retention benchmark's own classes from rehearsal.
 6. Build the eval battery **first**; the gate decides what survives, and what is not measured is not protected.
 7. Publish the strongest shortcut floor before measuring; three seeds before claiming.

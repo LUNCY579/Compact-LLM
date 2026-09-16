@@ -254,6 +254,16 @@ def main(argv=None):
     write_new(args.out_plan, plan)
 
     pa = report["rehearsal_pool_audit"]
+    print(f"rehearsal filter    : {report['rehearsal_filter']}")
+    # A blend's pool audit is keyed by component, not flat. Summing the components keeps
+    # this line meaningful instead of raising KeyError three lines into a successful build.
+    if "kept" not in pa:
+        for name, sub in pa.items():
+            print(f"  component {name:<30} {sub['kept']:>5} eligible")
+        pa = {"kept": sum(v["kept"] for v in pa.values()),
+              "dropped_panel_reply_class": max(v["dropped_panel_reply_class"] for v in pa.values()),
+              "dropped_multi_turn": max(v["dropped_multi_turn"] for v in pa.values()),
+              "distinct_classes_kept": sum(v["distinct_classes_kept"] for v in pa.values())}
     print(f"rehearsal pool      : {pa['kept']} kept "
           f"(dropped {pa['dropped_panel_reply_class']} panel-class, "
           f"{pa['dropped_multi_turn']} multi-turn) across {pa['distinct_classes_kept']} classes")

@@ -25,9 +25,14 @@ replicated. Read these in order:
    **exactly Supa's 13/64**; reasoning-class rehearsal gives the best long context and
    fails panel retention; communication-class rehearsal costs 26 long-context rows.
    Composition is the intervention, not volume.
-7. **[DATASET_REQUIREMENTS.md](DATASET_REQUIREMENTS.md)** — the analytical breakdown:
+7. **[REHEARSAL_BLEND.md](REHEARSAL_BLEND.md)** — and why "span everything" fails.
+   A 50/50 abstention+reasoning blend protected **neither**: abstention 13 → **0**,
+   long context below both components. Protection is a **threshold in budget share**,
+   not a gradient. Three of four predictions falsified.
+8. **[DATASET_REQUIREMENTS.md](DATASET_REQUIREMENTS.md)** — the analytical breakdown:
    every rule for teaching a new skill without losing an old one, each with the
-   measurement that produced it and the failure it prevents.
+   measurement that produced it and the failure it prevents. §2.1 is **corrected** by
+   document 7.
 
 ### The one-sentence state
 
@@ -57,6 +62,12 @@ rule is in `DATASET_REQUIREMENTS.md` §2.1: a rehearsal mixture must span every
 capability you intend to keep, because anything absent is unprotected and anything
 over-represented can do harm.
 
+**And the follow-up rule was wrong.** "Span every capability you keep" was tested in
+RRP-012 and falsified: at a fixed budget, splitting rehearsal across two capabilities
+protected neither. Halving the abstention component took it from 13/64 to 0 — a
+threshold, not a gradient. At a fixed budget you choose **one** capability to protect.
+Whether a *larger* rehearsal budget could protect two is untested.
+
 **Still open: long context.** No composition tested repairs it — every arm sits
 17–43 rows below Supa's 161. If the resemblance principle holds, the fix is
 long-context rehearsal, and **that dataset does not exist in this worktree**
@@ -79,7 +90,8 @@ remaining data work.
 
 `rineya-dataset-retention-records/forge-v2-prereg-001/` — floors and amendments,
 `ADJUDICATION_001.md` (four operator decisions + two amendments), `RRP008_DOSE_PREREG.md`,
-`RRP009_MIXTURE_PREREG.md`, `RRP010_BROAD_RETENTION_PREREG.md`.
+`RRP009_MIXTURE_PREREG.md`, `RRP010_BROAD_RETENTION_PREREG.md`,
+`RRP011_COMPOSITION_PREREG.md`, `RRP012_BLEND_PREREG.md` (+ amendment 1).
 
 Work on `codex/dataset-retention-audit-v1`. No release or quality claim is open:
 every run records `MICROFIT_EXECUTED_NOT_QUALITY_CONFIRMATION` and
