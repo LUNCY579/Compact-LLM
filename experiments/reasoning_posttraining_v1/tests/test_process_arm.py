@@ -134,3 +134,30 @@ def test_probe_subset_is_balanced_across_families_and_deterministic():
     assert len(first) == 12
     by = {fam: sum(1 for i in first if i.startswith(fam)) for fam in ALL_FAMILIES}
     assert by == {fam: 4 for fam in ALL_FAMILIES}
+
+
+def test_the_ceiling_actually_admits_a_train_launch():
+    """Regression: the ceiling pinned adaptive_model_selection_rounds to 0 and refused.
+
+    budget.start() charges exactly 1 of that counter on the first train launch of a
+    journal -- it counts "a training round happened", not "the agent chose a model". A
+    ceiling of 0 raises "insufficient approved budget" before anything runs, which is a
+    failure mode no other test could see because it lives in the arithmetic between the
+    ceiling and start()'s fixed charges.
+    """
+    ceiling = budget.REGISTERED[process_arm.EXPERIMENT]["ceiling"]
+    timeout = 2000
+    charges = {"model_worker_launches": 1, "new_disk_bytes": 4 * 2**20,
+               "model_worker_wall_seconds_and_conservative_gpu_seconds": timeout + 20,
+               "total_owned_work_wall_seconds": timeout + 140,
+               "adaptive_model_selection_rounds": 1}
+    too_small = {k: (v, ceiling[k]) for k, v in charges.items() if v > ceiling[k]}
+    assert not too_small, f"ceiling refuses its own launch: {too_small}"
+
+
+def test_the_ceiling_covers_both_checkpoints_the_engine_writes():
+    """engine.py saves at group 2 and at the final group, reserving sum(numel)*12 + 1 MiB."""
+    trainable_parameters = 314_618_880
+    per_checkpoint = trainable_parameters * 12 + 2**20
+    ceiling = budget.REGISTERED[process_arm.EXPERIMENT]["ceiling"]
+    assert ceiling["new_disk_bytes"] >= 2 * per_checkpoint + 4 * 2**20

@@ -80,7 +80,11 @@ LIMITS = {
     "generated_tokens_all_candidates": 30720,
     "on_policy_rl_rollout_tokens": 0,
     "new_disk_bytes": 8 * 2**30,
-    "adaptive_model_selection_rounds": 0,
+    # Another misleading counter name, like training_permission. budget.start() charges
+    # exactly 1 of these on the FIRST train launch of a journal -- it counts "a training
+    # round happened", not "the agent adaptively chose a model". Setting it to 0 to mean
+    # "no adaptive selection" refuses the launch outright, which is what it did here.
+    "adaptive_model_selection_rounds": 1,
     "model_worker_launches": 4,
     "retries": 1,
     "cloud_or_teacher_spend": 0,
