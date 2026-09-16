@@ -187,3 +187,27 @@ def test_compiled_rows_carry_every_field_the_native_evaluator_reads(tmp_path):
     assert row["source_split"] == "train" and row["mode"] == "direct"
     assert row["truncated"] is False
     assert row["labels"][0] == -100
+
+
+def test_seed_17_keeps_seed_1s_exact_salt():
+    """A replication that rebuilds a different corpus has silently stopped being one."""
+    assert process_arm.salt_for(17) == process_arm.SALT
+    assert process_arm.salt_for(23) == process_arm.SALT + "-s23"
+    assert process_arm.salt_for(23) != process_arm.salt_for(29)
+    with pytest.raises(ValueError):
+        process_arm.salt_for(-1)
+
+
+def test_a_different_selection_seed_draws_different_parents():
+    per_parent = {fam: {f"{fam}-{i}": {"id": f"{fam}-{i}-step0-valid",
+                                       "parent_id": f"{fam}-{i}", "family": fam}
+                        for i in range(200)}
+                  for fam in ALL_FAMILIES}
+    a = {r["parent_id"] for r in process_arm.select(
+        per_parent, per_family=64, salt=process_arm.salt_for(17))}
+    b = {r["parent_id"] for r in process_arm.select(
+        per_parent, per_family=64, salt=process_arm.salt_for(23))}
+    assert len(a) == len(b) == 192
+    assert a != b
+    # Overlap is expected and is reported with the result; total identity is not.
+    assert len(a & b) < len(a)

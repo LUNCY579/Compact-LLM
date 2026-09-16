@@ -90,7 +90,17 @@ LIMITS = {
     "cloud_or_teacher_spend": 0,
 }
 EXCLUDES = ("RL", "larger_teacher", "cloud", "release", "architectural_change")
+
+
 budget.register(EXPERIMENT, ceiling=LIMITS, phases=("train", "resume"), excludes=EXCLUDES)
+
+
+def salt_for(selection_seed: int) -> str:
+    """Seed 17 IS seed 1 and must keep its exact salt, or the replication rebuilds a
+    different corpus and silently stops being a replication. Other seeds derive from it."""
+    if type(selection_seed) is not int or selection_seed < 0:
+        raise ValueError("selection seed must be a non-negative int")
+    return SALT if selection_seed == SEED else f"{SALT}-s{selection_seed}"
 
 
 def rules_from_views(views_path: Path) -> dict[str, str]:
@@ -118,7 +128,8 @@ def held_out_parents(views_path: Path) -> frozenset[str]:
                      if l.strip())
 
 
-def verified_positives(binding: dict, exclude: frozenset[str]) -> tuple[dict, dict]:
+def verified_positives(binding: dict, exclude: frozenset[str], *,
+                       salt: str = SALT) -> tuple[dict, dict]:
     """Every label re-derived by the release's own oracle. Positives only, minus held-out."""
     root = Path(binding["root"])
     relative = "process/train_transitions.jsonl.gz"
@@ -143,20 +154,20 @@ def verified_positives(binding: dict, exclude: frozenset[str]) -> tuple[dict, di
         # One step per parent, chosen by a salted hash so the draw is deterministic and
         # independent of file order. Parent diversity beats extra steps from one world.
         best = per_parent[row["family"]].get(row["parent_id"])
-        if best is None or digest([SALT, "step", row["id"]]) < digest([SALT, "step", best["id"]]):
+        if best is None or digest([salt, "step", row["id"]]) < digest([salt, "step", best["id"]]):
             per_parent[row["family"]][row["parent_id"]] = row
     return per_parent, {"labels_checked": sum(counts.values()),
                         "labels_by_family": {f"{k[0]}|{k[1]}": v for k, v in sorted(counts.items())}}
 
 
-def select(per_parent: dict, *, per_family: int) -> list[dict]:
+def select(per_parent: dict, *, per_family: int, salt: str = SALT) -> list[dict]:
     chosen = []
     for family in sorted(per_parent):
         pool = sorted(per_parent[family].values(),
-                      key=lambda r: (digest([SALT, "parent", r["parent_id"]]), r["parent_id"]))
+                      key=lambda r: (digest([salt, "parent", r["parent_id"]]), r["parent_id"]))
         chosen.extend(pool[:per_family])
     # One global deterministic order, independent of family grouping.
-    return sorted(chosen, key=lambda r: (digest([SALT, "order", SEED, r["id"]]), r["id"]))
+    return sorted(chosen, key=lambda r: (digest([salt, "order", SEED, r["id"]]), r["id"]))
 
 
 def compile_training(chosen: list[dict], rules: dict[str, str], tokenizer, *,
@@ -249,11 +260,13 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
 
 
 def build(binding: dict, views: Path, tokenizer, *, per_family: int, exposures: int,
-          train_window: int = TRAIN_WINDOW) -> tuple[list[dict], dict, dict]:
+          train_window: int = TRAIN_WINDOW,
+          selection_seed: int = SEED) -> tuple[list[dict], dict, dict]:
+    salt = salt_for(selection_seed)
     rules = rules_from_views(views)
     excluded = held_out_parents(views)
-    per_parent, label_audit = verified_positives(binding, excluded)
-    chosen = select(per_parent, per_family=per_family)
+    per_parent, label_audit = verified_positives(binding, excluded, salt=salt)
+    chosen = select(per_parent, per_family=per_family, salt=salt)
     compiled, rejected = compile_training(chosen, rules, tokenizer, max_sequence=train_window)
     if not compiled:
         raise ValueError(f"no process row fits the {train_window} training window")
@@ -273,13 +286,14 @@ def build(binding: dict, views: Path, tokenizer, *, per_family: int, exposures: 
         "what_this_is": ("Supervised fine-tuning data for one-step state transitions, "
                          "selected from Forge v2 process positives on parents the scored "
                          "views never touched."),
-        "salt": SALT, "seed": SEED,
+        "salt": salt, "selection_seed": selection_seed, "seed": SEED,
         "train_window": train_window,
         "source_label_audit": label_audit,
         "held_out_parents": len(excluded),
         "available_parents_after_exclusion": {f: len(p) for f, p in sorted(per_parent.items())},
         "per_family_requested": per_family,
         "per_family_taken": dict(sorted(taken.items())),
+        "selected_parent_ids": sorted({r["parent_id"] for r in compiled}),
         "compiled": len(compiled),
         "rejected_overlength": len(rejected),
         "rejected": rejected[:32],
@@ -307,6 +321,8 @@ def main(argv=None):
     parser.add_argument("--out-plan", type=Path, required=True)
     parser.add_argument("--per-family", type=int, required=True)
     parser.add_argument("--exposures", type=int, default=1)
+    parser.add_argument("--selection-seed", type=int, default=SEED,
+                        help="varies WHICH parents are drawn; 17 reproduces seed 1 exactly")
     args = parser.parse_args(argv)
 
     from experiments.model_quality_gpu_v1.native import load_tokenizer
@@ -314,7 +330,8 @@ def main(argv=None):
     binding = json.loads(Path(args.binding).read_text(encoding="utf-8"))
     tokenizer = load_tokenizer(args.source)
     compiled, plan, report = build(binding, args.views, tokenizer,
-                                   per_family=args.per_family, exposures=args.exposures)
+                                   per_family=args.per_family, exposures=args.exposures,
+                                   selection_seed=args.selection_seed)
     write_prepared(args.out_prepared, compiled, report)
     write_new(args.out_plan, plan)
 
