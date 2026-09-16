@@ -1,5 +1,14 @@
 # Rehearsal makes retention reliable, and beats spending less
 
+> **NARROWED BY RRP-010.** Everything below is about the **150-row arithmetic
+> panel** and holds there. It does **not** generalise: on the Long-Context
+> Demonstration Suite both arms lose ground against Supa's 161/256, and the
+> rehearsal arm loses **more** (M1 139, D3 150). Abstention collapses in both
+> (Supa 13/64 `UNKNOWN` → D3 3 → M1 1). The recommendation in §"The
+> recommendation" is therefore scoped to panel retention only, and must not be
+> read as "learns without catastrophically forgetting". See
+> [BROAD_RETENTION.md](BROAD_RETENTION.md).
+
 **RRP-009, three seeds. The retention distributions do not overlap.**
 
 RRP-007 left a specific problem: training on one-step transitions gains the new
