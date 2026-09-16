@@ -161,3 +161,29 @@ def test_the_ceiling_covers_both_checkpoints_the_engine_writes():
     per_checkpoint = trainable_parameters * 12 + 2**20
     ceiling = budget.REGISTERED[process_arm.EXPERIMENT]["ceiling"]
     assert ceiling["new_disk_bytes"] >= 2 * per_checkpoint + 4 * 2**20
+
+
+def test_compiled_rows_carry_every_field_the_native_evaluator_reads(tmp_path):
+    """Regression: rows lacked `reference` and the launch died with KeyError at probe time.
+
+    native_runtime.evaluate reads ids/labels/prompt_ids/reference/id/parent_id/family off
+    each probe row. A missing key is not caught by any plan or contract check, so it costs a
+    full model load and a budget launch to discover.
+    """
+    from experiments.model_quality_gpu_v1.native import load_tokenizer
+    tokenizer = load_tokenizer(
+        __import__("pathlib").Path(__file__).resolve().parents[3] / "Supa")
+    rows = [{"id": "p0-step0-valid", "parent_id": "p0", "family": "ledger_replay",
+             "before": {"A": 1}, "event": {"kind": "add", "account": "A", "amount": 1},
+             "proposed_after": {"A": 2}}]
+    rules = {"ledger_replay": "Apply one event to the supplied account balances."}
+    compiled, rejected = process_arm.compile_training(rows, rules, tokenizer)
+
+    assert not rejected and len(compiled) == 1
+    row = compiled[0]
+    for field in ("ids", "labels", "prompt_ids", "reference", "id", "parent_id", "family"):
+        assert field in row, f"native_runtime.evaluate reads {field!r} and it is absent"
+    assert row["reference"] == row["reference_text"] == '{"A":2}'
+    assert row["source_split"] == "train" and row["mode"] == "direct"
+    assert row["truncated"] is False
+    assert row["labels"][0] == -100

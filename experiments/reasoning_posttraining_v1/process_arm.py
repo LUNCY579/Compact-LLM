@@ -173,8 +173,14 @@ def compile_training(chosen: list[dict], rules: dict[str, str], tokenizer, *,
         except ValueError as exc:
             rejected.append({"id": row["id"], "reason": str(exc)})
             continue
+        # `reference` is not decoration. native_runtime.evaluate reads it directly for the
+        # probe's correctness fields, so a row without it raises KeyError three minutes into
+        # a launch, after the model is loaded. reference_text is kept equal to it because
+        # campaign.validate_execution_scope requires that equality for arms it scopes.
         compiled.append({**unit, "id": row["id"], "parent_id": row["parent_id"],
-                         "family": row["family"], "source_split": "train"})
+                         "family": row["family"], "source_split": "train",
+                         "source_release": "forge_v2", "prompt": prompt,
+                         "reference": final, "reference_text": final})
     return compiled, rejected
 
 
