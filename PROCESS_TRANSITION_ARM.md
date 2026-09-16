@@ -1,5 +1,79 @@
 # Teaching one state transition moved every family, and the arithmetic panel with it
 
+> **REPLICATED, AND THE HEADLINE CHANGED. See §0.** Three seeds agree exactly on
+> the new skill and disagree on retention: one of the three **fails** the
+> retention gate. The seed-1 panel figure below (+24) is the top of a 13-row
+> spread, not the typical result.
+
+## 0. Three-seed replication — the part that supersedes everything below
+
+Three independent parent draws (selection seeds 17 / 23 / 29), dose and recipe
+held fixed, scored on the same frozen 384 views and the same 150-row panel.
+
+### New skill: replicates almost exactly
+
+| seed | `ledger_replay` | `prerequisite_plan` | `register_machine` | aggregate | all clear |
+|---|---:|---:|---:|---:|:--:|
+| 17 | 122/128 | 92/128 | 75/128 | **289/384** | yes |
+| 23 | 120/128 | 94/128 | 75/128 | **289/384** | yes |
+| 29 | 122/128 | 93/128 | 74/128 | **289/384** | yes |
+
+The aggregate is **289/384 in all three seeds** and no family moves by more than
+2. Every seed clears every family individually, which is what the pre-registered
+pooling rule requires. **The new skill is robust.**
+
+### Old skill: fragile, and one seed fails
+
+| seed | panel | lost | retained of 47 | panel ≥ 62 | retained ≥ 37 | **gate** |
+|---|---:|---:|---:|:--:|:--:|:--:|
+| 17 | 71 | 10 | 37 | yes | yes | **PASS** |
+| 23 | **58** | 12 | **35** | **no** | **no** | **FAIL** |
+| 29 | 65 | 10 | 37 | yes | yes | **PASS** |
+
+Seed 23 fails **both** arms of the gate. The pre-registered rule is explicit that
+"any seed that fails is reported as a failure, and a majority does not rescue
+it", so the honest statement is:
+
+> **At this dose the arm gains the new skill reliably and forgets unreliably.**
+
+The panel spread is **58 / 65 / 71** — 13 rows, mean 64.7. Seed 1's headline +24
+was the best of three; the mean gain is +17.7 and the worst is +11. Retention
+retained is 37 / 35 / 37, never more than the 37 minimum.
+
+Under the **strict** bare policy retention is uniformly poor and barely varies:
+26 / 26 / 27 retained of 41, losing 15 / 15 / 14 every time.
+
+### The registered prediction held
+
+`ADJUDICATION_001.md` Amendment 2, written before seed 2 ran: *"I expect the
+instrument result to replicate comfortably … and I expect retention to be the
+fragile part … If a seed fails, I expect it to fail on retention, not on the
+transitions."* That is exactly what happened. It is recorded because a prediction
+that survives is worth as much as one that does not.
+
+### Replication hygiene, including one caveat against myself
+
+Draws are **not** disjoint and were never claimed to be: pairwise parent overlap
+is 535 / 548 / 537 of 1,536 (~35%), because `prerequisite_plan` has only 1,027
+parents available after excluding the 384 scored ones. Union across seeds is 3,194
+distinct parents; 206 appear in all three. All three draws have **zero** collision
+with the scored views.
+
+**Seed 1 ran at a different `code_sha256` and checkout (`ff828122`) than seeds 2
+and 3 (`007a52f1`)**, because the `--selection-seed` change was committed between
+them. This is disclosed rather than glossed. Every training-path file —
+`engine.py`, `controller.py`, `serialization.py`, `prepare.py`, `budget.py`,
+`native_runtime.py`, and the MQ `engine/config/data/losses/checkpoints` — is
+**byte-identical** across the two commits; only the data builder and its test
+changed, and rebuilding seed 17 under the new code reproduces
+`microfit-train.jsonl` byte-for-byte (sha256 `6fa1bb0d…`). So the comparison is
+sound, but the recorded package digest differs and a reader should know that.
+
+---
+
+**Everything below is the seed-1 detail, written before replication. Its
+instrument numbers hold; its retention headline does not generalise.**
+
 **RRP-007-PROCESS-A1, seed 1, single-seed dose probe. Not a claim.**
 
 Supervised fine-tuning on 1,536 one-step state transitions — 512 per family, positives
