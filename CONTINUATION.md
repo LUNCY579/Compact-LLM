@@ -42,8 +42,14 @@ replicated. Read these in order:
     trusting the gate.** D0 passes the gate **3/3** while acquiring **0/3**; D1 acquires
     **6/6** while passing **4/6**. The gate has no acquisition term, so training on less
     passes it more reliably *because* it learns less.
+11. **[PROCESS_ASYMMETRIC_DOSE.md](PROCESS_ASYMMETRIC_DOSE.md)** — the best-behaved arm
+    measured. Dosing one family separately (`ledger_replay` 128, others 64) clears all
+    three floors **3/3** and is the **only** configuration where long context is n.s.
+    against Supa in **every** seed (156–158, spread 2). But it does not restore that
+    family's rate — identical parents score ~0.15 lower than in D1, so acquisition tracks
+    total volume too — and the gate failure moved from retention to the panel.
 
-### RRP-013 result (2026-09-16, latest)
+### RRP-013 / RRP-014 result (2026-09-16, latest)
 
 **Nine runs: D1 (384 rows) at six seeds, D0 (192 rows) at three.**
 
@@ -64,6 +70,26 @@ pass rate — the interval only narrowed from [0.094, 0.992] to [0.223, 0.957].
 
 Two of five registered predictions were falsified: D0 did **not** clear all three floors,
 and abstention is **not** uniformly broken (5–13 across arms, one seed at Supa's exact 13).
+
+**RRP-014 then split the dose by family** — `ledger_replay=128, prerequisite_plan=64,
+register_machine=64`, 256 rows, three seeds, on rows already drawn for D1 and D0 (verified
+per seed: A1's `ledger_replay` parents are exactly D1's, the other two exactly D0's).
+
+| | A1 (256) | D1 (384) | D0 (192) |
+|---|---|---|---|
+| all three floors cleared | **3/3** | **6/6** | **0/3** |
+| gate | 2/3 | 4/6 | 3/3 *(by not learning)* |
+| **long context n.s. vs Supa** | **3/3** | 4/6 | 2/3 |
+| long-context range | **156–158 (spread 2)** | 147–160 (spread 13) | 153–155 |
+
+A1 is better than D1 on **retention and abstention in all three matched seeds** and is the
+only arm whose long context is never significantly worse than the untrained source. Three
+of its six predictions were falsified — most importantly, `ledger_replay` scored
+0.4375–0.4766 on *identical parents* where D1 scored 0.4844–0.6328, so **per-family dosing
+is not per-family independent**: cutting the other families cost this one ~0.15.
+
+**No configuration passes the gate reliably** — D1 4/6, A1 2/3, D0 3/3 only by failing to
+learn. Every rung trades somewhere and the gate sees only part of the trade.
 
 ### The one-sentence state
 
