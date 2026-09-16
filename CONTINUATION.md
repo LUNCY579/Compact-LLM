@@ -101,10 +101,36 @@ blind to acquisition too, which a lower dose silently exploits.**
 ### What must happen before anything here is promoted
 
 The gate is `panel ≥ 62 AND references retained ≥ 37 of 47`
-(`ADJUDICATION_001.md` D3). It has no long-context term and no abstention term, and
-RRP-010 shows damage in exactly those two places. **A configuration chosen on a gate
-blind to two-thirds of the damage should not be shipped.** Extending the gate needs
-its own registration, written before the next arm runs.
+(`ADJUDICATION_001.md` D3). It has no long-context term, no abstention term and no
+acquisition term, and RRP-010/013/014 show damage in all three places.
+
+**That registration was written, and its result is that the gate cannot be extended
+with anything in this repository.** See
+`rineya-dataset-retention-records/forge-v2-prereg-001/GATE_V2_PREREG.md`. All three
+candidate terms are barred, by two independent mechanisms:
+
+| candidate term | status | the bar |
+|---|---|---|
+| long context | **BARRED** | `QUARANTINE.json`: 256 rows, `bars: [TRAIN, SELECTION, CONFIRMATION]`, reason `SPENT`. A gate *is* a selection use. |
+| abstention | **BARRED** | computed over the 64 unanswerable rows **inside that same bank**; no separate permission, and not independent of the long-context score. |
+| acquisition | **BARRED** | absent from `QUARANTINE.json`, but **26 of 26** `PROCESS_*.json` files declare `"never for selection"` and **384 of 384** views carry `view_role: CANDIDATE_NOT_ADMITTED_OR_TRAINED`. |
+
+A bar stated in the instrument binds as firmly as one in the registry. Promoting the
+acquisition probe to a gate term would retroactively contradict 26 recorded evidence
+files.
+
+**GATE v2 is therefore defined but inoperative**: GATE v1 conjoined with "every family
+clears its published binding floor", where that conjunct activates only once
+**SELECT-VIEWS-001** exists — a fresh 384-view partition declared selection-admissible
+*at birth*, with floors published before any model call. It is buildable: 4,771 parents
+sit unused beyond the current probe's 384. Every threshold in GATE v2 pre-exists
+(`62` and `37` from `DATASET_PROGRAMME_PREREG.md:140-141`; the acquisition conjunct
+introduces no new threshold, reusing the exact-binomial lower-bound rule already
+published in `PROCESS_PROBE_FLOORS.md`). **`62` was deliberately not lowered** despite
+RRP-014 seed 29 failing at 61.
+
+Until then arms are judged by GATE v1 with acquisition reported alongside, so the gap
+stays visible rather than silently tolerated.
 
 Do **not** switch the recommendation to D3 because D3 wins on long context.
 `QUARANTINE.json` bars that suite for `[TRAIN, SELECTION, CONFIRMATION]`; RRP-010
@@ -151,7 +177,8 @@ one lever among several — it is the only one.
 `ADJUDICATION_001.md` (four operator decisions + two amendments), `RRP008_DOSE_PREREG.md`,
 `RRP009_MIXTURE_PREREG.md`, `RRP010_BROAD_RETENTION_PREREG.md`,
 `RRP011_COMPOSITION_PREREG.md`, `RRP012_BLEND_PREREG.md` (+ amendment 1),
-`RRP013_RELIABILITY_PREREG.md`.
+`RRP013_RELIABILITY_PREREG.md`, `RRP014_ASYMMETRIC_DOSE_PREREG.md`,
+`GATE_V2_PREREG.md`.
 
 Work on `codex/dataset-retention-audit-v1`. No release or quality claim is open:
 every run records `MICROFIT_EXECUTED_NOT_QUALITY_CONFIRMATION` and
