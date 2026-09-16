@@ -48,20 +48,43 @@ SALT = "RRP-009-process-mix"
 # The three classes the 150-row arithmetic panel scores. Rehearsal must not contain them.
 PANEL_REPLY_CLASSES = frozenset({"percentage_reasoning", "ratio_proportion", "time_duration"})
 
+# RRP-011 arms. A filter changes WHICH rehearsal rows are eligible and nothing else: same
+# transition draw, same token budget, same recipe. Registered in
+# forge-v2-prereg-001/RRP011_COMPOSITION_PREREG.md before any arm was built.
+ABSTENTION_CLASSES = frozenset({
+    "insufficient_information", "clarification", "clarification_request",
+    "safety_boundary", "boundary_setting", "uncertainty", "knowledge_boundary"})
+REHEARSAL_FILTERS = {
+    "all": lambda m: True,
+    "communication": lambda m: m.get("capability_group") == "communication",
+    "reasoning": lambda m: m.get("capability_group") == "reasoning",
+    "integrated": lambda m: m.get("capability_group") == "integrated",
+    "abstention": lambda m: m.get("reply_class") in ABSTENTION_CLASSES,
+}
+
 LIMITS = dict(process_arm.LIMITS)
 EXCLUDES = process_arm.EXCLUDES
 budget.register(EXPERIMENT, ceiling=LIMITS, phases=("train", "resume"), excludes=EXCLUDES)
 
 
-def rehearsal_pool(path: Path) -> tuple[list[dict], dict]:
-    """Single-turn preservation rows, with every panel reply_class removed."""
-    kept, dropped_panel, dropped_multiturn = [], 0, 0
+def rehearsal_pool(path: Path, *, select: str = "all") -> tuple[list[dict], dict]:
+    """Single-turn preservation rows, panel classes removed, then the arm's filter.
+
+    The panel exclusion is unconditional and runs FIRST, so no filter can reintroduce a
+    class the panel scores. The filter then narrows whatever survives.
+    """
+    if select not in REHEARSAL_FILTERS:
+        raise ValueError(f"unregistered rehearsal filter {select!r}; "
+                         f"expected one of {sorted(REHEARSAL_FILTERS)}")
+    eligible = REHEARSAL_FILTERS[select]
+    kept, dropped_panel, dropped_multiturn, dropped_filter = [], 0, 0, 0
     classes = collections.Counter()
     for line in Path(path).read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         row = json.loads(line)
-        reply_class = (row.get("metadata") or {}).get("reply_class")
+        meta = row.get("metadata") or {}
+        reply_class = meta.get("reply_class")
         if reply_class in PANEL_REPLY_CLASSES:
             dropped_panel += 1
             continue
@@ -69,15 +92,22 @@ def rehearsal_pool(path: Path) -> tuple[list[dict], dict]:
         if roles != ["system", "user", "assistant"]:
             dropped_multiturn += 1
             continue
+        if not eligible(meta):
+            dropped_filter += 1
+            continue
         kept.append(row)
         classes[reply_class] += 1
     if dropped_panel == 0:
         raise ValueError("expected panel reply_classes in the preservation slice; found none, "
                          "so the exclusion is not doing anything and the source is wrong")
+    if not kept:
+        raise ValueError(f"rehearsal filter {select!r} selected no rows")
     audit = {"kept": len(kept), "dropped_panel_reply_class": dropped_panel,
-             "dropped_multi_turn": dropped_multiturn,
+             "dropped_multi_turn": dropped_multiturn, "dropped_by_filter": dropped_filter,
+             "filter": select,
              "panel_reply_classes_excluded": sorted(PANEL_REPLY_CLASSES),
-             "distinct_classes_kept": len(classes)}
+             "distinct_classes_kept": len(classes),
+             "classes_kept": dict(sorted(classes.items()))}
     return kept, audit
 
 
@@ -102,6 +132,13 @@ def compile_rehearsal(pool: list[dict], tokenizer, *, token_budget: int,
                          "source_release": "v3_preservation_slice",
                          "prompt": prompt, "reference": final, "reference_text": final})
         used += unit["processed_tokens"]
+    # A narrow filter may hold fewer tokens than the budget. Under-dosing silently would
+    # confound composition with dose -- the one thing RRP-011 must not do -- so refuse.
+    if used < token_budget:
+        raise ValueError(
+            f"rehearsal pool exhausted at {used} of {token_budget} processed tokens "
+            f"({len(compiled)} rows). Running this arm would vary dose as well as "
+            f"composition; widen the filter or lower the transition dose instead.")
     return compiled, {"rehearsal_rows": len(compiled), "rehearsal_processed_tokens": used,
                       "rehearsal_token_budget": token_budget, "rejected_overlength": rejected}
 
@@ -114,13 +151,14 @@ def interleave(transitions: list[dict], rehearsal: list[dict]) -> list[dict]:
 
 def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
           per_family: int, exposures: int = 1,
-          selection_seed: int = process_arm.SEED) -> tuple[list[dict], dict, dict]:
+          selection_seed: int = process_arm.SEED,
+          select: str = "all") -> tuple[list[dict], dict, dict]:
     transitions, _, transition_report = process_arm.build(
         binding, views, tokenizer, per_family=per_family, exposures=exposures,
         selection_seed=selection_seed, experiment=EXPERIMENT)
     transition_tokens = sum(len(r["ids"]) for r in transitions)
 
-    pool, pool_audit = rehearsal_pool(rehearsal_path)
+    pool, pool_audit = rehearsal_pool(rehearsal_path, select=select)
     rehearsal, rehearsal_audit = compile_rehearsal(pool, tokenizer,
                                                    token_budget=transition_tokens)
     rows = interleave(transitions, rehearsal)
@@ -146,6 +184,7 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
         "rehearsal_source_sha256": stable_hash(rehearsal_path),
         "rehearsal_pool_audit": pool_audit,
         "rehearsal_audit": rehearsal_audit,
+        "rehearsal_filter": select,
         "rehearsal_never_scored": True,
         "total_rows": len(rows),
         "processed_tokens": plan["processed_tokens"],
@@ -168,6 +207,9 @@ def main(argv=None):
     parser.add_argument("--per-family", type=int, required=True)
     parser.add_argument("--exposures", type=int, default=1)
     parser.add_argument("--selection-seed", type=int, default=process_arm.SEED)
+    parser.add_argument("--rehearsal-select", default="all",
+                        choices=sorted(REHEARSAL_FILTERS),
+                        help="RRP-011 arm: which rehearsal rows are eligible")
     args = parser.parse_args(argv)
 
     from experiments.model_quality_gpu_v1.native import load_tokenizer
@@ -176,7 +218,8 @@ def main(argv=None):
     tokenizer = load_tokenizer(args.source)
     rows, plan, report = build(binding, args.views, args.rehearsal, tokenizer,
                                per_family=args.per_family, exposures=args.exposures,
-                               selection_seed=args.selection_seed)
+                               selection_seed=args.selection_seed,
+                               select=args.rehearsal_select)
     process_arm.write_prepared(args.out_prepared, rows, report)
     write_new(args.out_plan, plan)
 

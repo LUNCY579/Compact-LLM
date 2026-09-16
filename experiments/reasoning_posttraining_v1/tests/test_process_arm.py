@@ -280,3 +280,48 @@ def test_the_mixture_lane_is_registered_and_separate():
     assert process_mix.EXPERIMENT in controller.REGISTERED_PLANS
     assert process_mix.EXPERIMENT in budget.REGISTERED
     assert process_mix.EXPERIMENT not in (process_arm.EXPERIMENT,)
+
+
+def _pres_row(rid, cls, group, roles=("system", "user", "assistant")):
+    return {"id": rid, "metadata": {"reply_class": cls, "capability_group": group},
+            "messages": [{"role": r, "content": f"{r} text"} for r in roles]}
+
+
+def test_rehearsal_filters_narrow_but_never_reintroduce_panel_classes(tmp_path):
+    """The panel exclusion runs FIRST and unconditionally; no filter can undo it."""
+    from experiments.reasoning_posttraining_v1 import process_mix
+    rows = [_pres_row("a", "conversation_closure", "communication"),
+            _pres_row("b", "counting_sets", "reasoning"),
+            _pres_row("c", "insufficient_information", "reasoning"),
+            # A panel class deliberately tagged into every group it could hide in.
+            _pres_row("d", "time_duration", "communication"),
+            _pres_row("e", "ratio_proportion", "reasoning")]
+    path = tmp_path / "pres.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+
+    for select, expected in (("all", {"a", "b", "c"}), ("communication", {"a"}),
+                             ("reasoning", {"b", "c"}), ("abstention", {"c"})):
+        pool, audit = process_mix.rehearsal_pool(path, select=select)
+        assert {r["id"] for r in pool} == expected, select
+        assert audit["filter"] == select
+        assert audit["dropped_panel_reply_class"] == 2
+
+
+def test_an_unregistered_rehearsal_filter_is_refused(tmp_path):
+    from experiments.reasoning_posttraining_v1 import process_mix
+    rows = [_pres_row("a", "conversation_closure", "communication"),
+            _pres_row("d", "time_duration", "communication")]
+    path = tmp_path / "pres.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+    with pytest.raises(ValueError, match="unregistered rehearsal filter"):
+        process_mix.rehearsal_pool(path, select="short_and_chatty")
+
+
+def test_a_filter_that_selects_nothing_is_refused(tmp_path):
+    from experiments.reasoning_posttraining_v1 import process_mix
+    rows = [_pres_row("a", "conversation_closure", "communication"),
+            _pres_row("d", "time_duration", "communication")]
+    path = tmp_path / "pres.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+    with pytest.raises(ValueError, match="selected no rows"):
+        process_mix.rehearsal_pool(path, select="abstention")
