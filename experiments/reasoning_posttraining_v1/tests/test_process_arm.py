@@ -325,3 +325,39 @@ def test_a_filter_that_selects_nothing_is_refused(tmp_path):
     path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
     with pytest.raises(ValueError, match="selected no rows"):
         process_mix.rehearsal_pool(path, select="abstention")
+
+
+def test_a_blend_splits_the_budget_evenly_and_rejects_overlap(tmp_path, monkeypatch):
+    """RRP-012: '+' means EVEN token split, not pool-proportional. A component that
+    overlapped another would train the same row twice and must be refused."""
+    from experiments.reasoning_posttraining_v1 import process_mix
+
+    seen = {}
+
+    def fake_pool(path, *, select="all"):
+        return [{"id": f"{select}-{i}"} for i in range(5)], {"kept": 5, "filter": select}
+
+    def fake_compile(pool, tokenizer, *, token_budget, max_sequence=2048):
+        seen[pool[0]["id"].split("-")[0]] = token_budget
+        rows = [{"id": f"rehearsal:{pool[0]['id']}", "parent_id": pool[0]["id"],
+                 "processed_tokens": token_budget, "ids": [1, 2], "labels": [-100, 2]}]
+        return rows, {"rehearsal_rows": 1, "rehearsal_processed_tokens": token_budget}
+
+    monkeypatch.setattr(process_mix, "rehearsal_pool", fake_pool)
+    monkeypatch.setattr(process_mix, "compile_rehearsal", fake_compile)
+    monkeypatch.setattr(process_mix.process_arm, "build",
+                        lambda *a, **k: ([{"id": "t0", "parent_id": "p0", "ids": list(range(101)),
+                                           "labels": [-100] * 101, "family": "f"}],
+                                         None, {"train_window": 2048, "held_out_parents": 384}))
+    monkeypatch.setattr(process_mix.process_arm, "build_plan",
+                        lambda rows, **k: {"processed_tokens": 0, "supervised_tokens": 0,
+                                           "update_groups": [], "probe_row_ids": []})
+    monkeypatch.setattr(process_mix.process_arm, "probe_subset", lambda rows, **k: [])
+
+    (tmp_path / "r").write_text("{}", encoding="utf-8")   # stable_hash needs a real file
+    _, _, report = process_mix.build({}, tmp_path / "v", tmp_path / "r", None,
+                                     per_family=1, select="abstention+reasoning")
+    # 101 transition tokens split evenly: 50 to the first, remainder 51 to the last.
+    assert seen == {"abstention": 50, "reasoning": 51}
+    assert sum(seen.values()) == 101
+    assert report["rehearsal_filter"] == "abstention+reasoning"

@@ -158,9 +158,31 @@ def build(binding: dict, views: Path, rehearsal_path: Path, tokenizer, *,
         selection_seed=selection_seed, experiment=EXPERIMENT)
     transition_tokens = sum(len(r["ids"]) for r in transitions)
 
-    pool, pool_audit = rehearsal_pool(rehearsal_path, select=select)
-    rehearsal, rehearsal_audit = compile_rehearsal(pool, tokenizer,
-                                                   token_budget=transition_tokens)
+    # A "+"-joined selector is an RRP-012 blend: the rehearsal budget is split EVENLY by
+    # processed tokens across the named filters, not by pool size. Equal weighting is what
+    # "span every capability you intend to keep" means operationally; letting the larger pool
+    # dominate would not test that rule as stated.
+    parts = select.split("+")
+    if len(parts) == 1:
+        pool, pool_audit = rehearsal_pool(rehearsal_path, select=select)
+        rehearsal, rehearsal_audit = compile_rehearsal(pool, tokenizer,
+                                                       token_budget=transition_tokens)
+    else:
+        share = transition_tokens // len(parts)
+        rehearsal, pool_audit, rehearsal_audit = [], {}, {"components": {}}
+        for i, part in enumerate(parts):
+            # The last component absorbs the integer-division remainder.
+            budget_i = transition_tokens - share * (len(parts) - 1) if i == len(parts) - 1 else share
+            sub_pool, sub_pool_audit = rehearsal_pool(rehearsal_path, select=part)
+            sub, sub_audit = compile_rehearsal(sub_pool, tokenizer, token_budget=budget_i)
+            rehearsal.extend(sub)
+            pool_audit[part] = sub_pool_audit
+            rehearsal_audit["components"][part] = sub_audit
+        rehearsal_audit["rehearsal_rows"] = len(rehearsal)
+        rehearsal_audit["rehearsal_processed_tokens"] = sum(r["processed_tokens"] for r in rehearsal)
+        rehearsal_audit["rehearsal_token_budget"] = transition_tokens
+        if len({r["id"] for r in rehearsal}) != len(rehearsal):
+            raise ValueError("blend components overlap; a row would be trained twice")
     rows = interleave(transitions, rehearsal)
 
     # The probe measures the NEW skill, so it is drawn from the transition half only.
@@ -208,8 +230,10 @@ def main(argv=None):
     parser.add_argument("--exposures", type=int, default=1)
     parser.add_argument("--selection-seed", type=int, default=process_arm.SEED)
     parser.add_argument("--rehearsal-select", default="all",
-                        choices=sorted(REHEARSAL_FILTERS),
-                        help="RRP-011 arm: which rehearsal rows are eligible")
+                        help="RRP-011 arm: which rehearsal rows are eligible. A '+'-joined "
+                             "value is an RRP-012 blend and splits the rehearsal budget "
+                             "EVENLY by processed tokens across the named filters, e.g. "
+                             "abstention+reasoning")
     args = parser.parse_args(argv)
 
     from experiments.model_quality_gpu_v1.native import load_tokenizer
