@@ -116,7 +116,8 @@ def test_the_plan_passes_the_controllers_own_design_validator():
 
 def test_write_prepared_records_the_held_out_count_and_is_create_only(tmp_path):
     compiled = [compiled_row("a")]
-    report = {"train_window": 2048, "held_out_parents": 384}
+    report = {"train_window": 2048, "held_out_parents": 384,
+              "experiment": process_arm.EXPERIMENT}
     contract = process_arm.write_prepared(tmp_path / "prep", compiled, report)
     assert contract["experiment"] == "RRP-007-PROCESS-A1"
     assert contract["held_out_parents_excluded"] == 384
@@ -211,3 +212,28 @@ def test_a_different_selection_seed_draws_different_parents():
     assert a != b
     # Overlap is expected and is reported with the result; total identity is not.
     assert len(a & b) < len(a)
+
+
+def test_the_dose_lane_is_registered_separately_from_arm_a1():
+    """A four-point ladder filed under 'arm A1' misattributes both. CL-045 is what that
+    looks like when it goes wrong."""
+    from experiments.reasoning_posttraining_v1 import controller, process_dose
+    assert process_dose.EXPERIMENT == "RRP-008-PROCESS-DOSE"
+    assert process_dose.EXPERIMENT != process_arm.EXPERIMENT
+    assert process_dose.EXPERIMENT in controller.REGISTERED_PLANS
+    assert process_dose.EXPERIMENT in budget.REGISTERED
+    ceiling = budget.REGISTERED[process_dose.EXPERIMENT]["ceiling"]
+    # D4 is 3,072 rows at ~141 tokens; the lane must admit its own largest rung.
+    assert ceiling["processed_training_tokens_all_attempts"] >= 434_000
+    assert ceiling["adaptive_model_selection_rounds"] == 1
+    assert ceiling["on_policy_rl_rollout_tokens"] == 0
+
+
+def test_a_build_can_be_attributed_to_the_dose_lane():
+    compiled = [compiled_row("a", ids=[1, 2, 3, 4])]
+    plan = process_arm.build_plan(compiled, exposures=1, probe_per_family=1,
+                                  experiment="RRP-008-PROCESS-DOSE")
+    assert plan["experiment"] == "RRP-008-PROCESS-DOSE"
+    # the recipe must not move with the attribution
+    assert plan["optimizer"] == frozen_optimizer(Design())
+    assert plan["max_sequence"] == 2048

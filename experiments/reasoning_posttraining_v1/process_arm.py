@@ -207,12 +207,13 @@ def probe_subset(compiled: list[dict], *, per_family: int = 8) -> list[str]:
 
 
 def build_plan(compiled: list[dict], *, exposures: int, max_new_tokens: int = 128,
-               probe_per_family: int = 8, train_window: int = TRAIN_WINDOW) -> dict:
+               probe_per_family: int = 8, train_window: int = TRAIN_WINDOW,
+               experiment: str = EXPERIMENT) -> dict:
     """Computed from the compiled bytes so it cannot drift from them."""
     design = Design()
     repeated = [r for _ in range(exposures) for r in compiled]
     return {
-        "experiment": EXPERIMENT,
+        "experiment": experiment,
         "objective": OBJECTIVE,
         "row_order_per_exposure": [r["id"] for r in compiled],
         "unique_worlds": len({r["parent_id"] for r in compiled}),
@@ -242,7 +243,7 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
     (directory / "microfit-train.jsonl").write_bytes(body.encode("utf-8"))
     write_new(directory / "ARM_BUILD.json", report)
     contract = {
-        "experiment": EXPERIMENT,
+        "experiment": report["experiment"],
         "files": {"microfit-train.jsonl": stable_hash(directory / "microfit-train.jsonl"),
                   "ARM_BUILD.json": stable_hash(directory / "ARM_BUILD.json")},
         "rows": len(compiled),
@@ -261,7 +262,8 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
 
 def build(binding: dict, views: Path, tokenizer, *, per_family: int, exposures: int,
           train_window: int = TRAIN_WINDOW,
-          selection_seed: int = SEED) -> tuple[list[dict], dict, dict]:
+          selection_seed: int = SEED,
+          experiment: str = EXPERIMENT) -> tuple[list[dict], dict, dict]:
     salt = salt_for(selection_seed)
     rules = rules_from_views(views)
     excluded = held_out_parents(views)
@@ -277,12 +279,13 @@ def build(binding: dict, views: Path, tokenizer, *, per_family: int, exposures: 
     if collision:
         raise ValueError(f"training set collides with the scored views: {collision[:5]}")
 
-    plan = build_plan(compiled, exposures=exposures, train_window=train_window)
+    plan = build_plan(compiled, exposures=exposures, train_window=train_window,
+                      experiment=experiment)
     taken = collections.Counter(r["family"] for r in compiled)
     report = {
         "record": "RRP007_PROCESS_A1_BUILD",
         "schema": 1,
-        "experiment": EXPERIMENT,
+        "experiment": experiment,
         "what_this_is": ("Supervised fine-tuning data for one-step state transitions, "
                          "selected from Forge v2 process positives on parents the scored "
                          "views never touched."),
@@ -323,6 +326,9 @@ def main(argv=None):
     parser.add_argument("--exposures", type=int, default=1)
     parser.add_argument("--selection-seed", type=int, default=SEED,
                         help="varies WHICH parents are drawn; 17 reproduces seed 1 exactly")
+    parser.add_argument("--experiment-id", default=EXPERIMENT,
+                        help="the registered experiment this build belongs to; a dose "
+                             "ladder is NOT arm A1 and must not be attributed to it")
     args = parser.parse_args(argv)
 
     from experiments.model_quality_gpu_v1.native import load_tokenizer
@@ -331,7 +337,8 @@ def main(argv=None):
     tokenizer = load_tokenizer(args.source)
     compiled, plan, report = build(binding, args.views, tokenizer,
                                    per_family=args.per_family, exposures=args.exposures,
-                                   selection_seed=args.selection_seed)
+                                   selection_seed=args.selection_seed,
+                                   experiment=args.experiment_id)
     write_prepared(args.out_prepared, compiled, report)
     write_new(args.out_plan, plan)
 

@@ -39,6 +39,7 @@ from . import instrument as _registers_rrp002_baseline  # noqa: F401
 from . import campaign as _registers_corrected_arm
 from . import repair_preservation as _registers_preservation_repair
 from . import process_arm as _registers_process_arm
+from . import process_dose as _registers_process_dose
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
@@ -66,7 +67,8 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT,
                     _registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT,
                     _registers_preservation_repair.DELTA_EXPERIMENT,
-                    _registers_process_arm.EXPERIMENT)
+                    _registers_process_arm.EXPERIMENT,
+                    _registers_process_dose.EXPERIMENT)
 PRESERVATION_PLANS = (_registers_preservation_repair.EXPERIMENT,
                       _registers_preservation_repair.AMENDED_EXPERIMENT,
                       _registers_preservation_repair.DELTA_EXPERIMENT)
