@@ -361,3 +361,24 @@ def test_a_blend_splits_the_budget_evenly_and_rejects_overlap(tmp_path, monkeypa
     assert seen == {"abstention": 50, "reasoning": 51}
     assert sum(seen.values()) == 101
     assert report["rehearsal_filter"] == "abstention+reasoning"
+
+
+def test_reasoning_minus_abstention_is_disjoint_from_abstention(tmp_path):
+    """RRP-012 amendment 1: insufficient_information is in BOTH, so a naive blend would
+    train 206 rows twice. The components must not intersect."""
+    from experiments.reasoning_posttraining_v1 import process_mix
+    rows = [_pres_row("a", "counting_sets", "reasoning"),
+            _pres_row("b", "insufficient_information", "reasoning"),   # in both
+            _pres_row("c", "safety_boundary", None),
+            _pres_row("d", "time_duration", "reasoning")]              # panel, always dropped
+    path = tmp_path / "pres.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+
+    abst, _ = process_mix.rehearsal_pool(path, select="abstention")
+    reas, _ = process_mix.rehearsal_pool(path, select="reasoning")
+    trimmed, _ = process_mix.rehearsal_pool(path, select="reasoning_minus_abstention")
+
+    assert {r["id"] for r in abst} == {"b", "c"}
+    assert {r["id"] for r in reas} == {"a", "b"}          # overlaps on b
+    assert {r["id"] for r in trimmed} == {"a"}            # disjoint
+    assert not ({r["id"] for r in abst} & {r["id"] for r in trimmed})

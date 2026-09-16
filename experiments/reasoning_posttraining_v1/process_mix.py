@@ -60,6 +60,12 @@ REHEARSAL_FILTERS = {
     "reasoning": lambda m: m.get("capability_group") == "reasoning",
     "integrated": lambda m: m.get("capability_group") == "integrated",
     "abstention": lambda m: m.get("reply_class") in ABSTENTION_CLASSES,
+    # RRP-012 amendment 1: insufficient_information (206 rows) is BOTH an abstention class
+    # and capability_group == reasoning, so a plain abstention+reasoning blend double-counts
+    # exactly the class the experiment cares most about. This component makes the two
+    # disjoint by construction.
+    "reasoning_minus_abstention": lambda m: (m.get("capability_group") == "reasoning"
+                                             and m.get("reply_class") not in ABSTENTION_CLASSES),
 }
 
 LIMITS = dict(process_arm.LIMITS)
