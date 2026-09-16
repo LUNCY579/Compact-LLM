@@ -237,3 +237,46 @@ def test_a_build_can_be_attributed_to_the_dose_lane():
     # the recipe must not move with the attribution
     assert plan["optimizer"] == frozen_optimizer(Design())
     assert plan["max_sequence"] == 2048
+
+
+def test_the_mixture_lane_excludes_the_panels_own_reply_classes(tmp_path):
+    """Training on the classes the panel scores, then reporting a panel gain, is tuning
+    against the retention instrument. QUARANTINE.json bars it and this is the guard."""
+    from experiments.reasoning_posttraining_v1 import process_mix
+    assert process_mix.PANEL_REPLY_CLASSES == {
+        "percentage_reasoning", "ratio_proportion", "time_duration"}
+
+    def row(rid, cls, roles=("system", "user", "assistant")):
+        return {"id": rid, "metadata": {"reply_class": cls},
+                "messages": [{"role": r, "content": f"{r} text"} for r in roles]}
+
+    rows = [row("a", "conversation_closure"), row("b", "percentage_reasoning"),
+            row("c", "apology_repair"), row("d", "time_duration"),
+            row("e", "clarification", roles=("system", "user", "assistant", "user", "assistant"))]
+    path = tmp_path / "pres.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+
+    pool, audit = process_mix.rehearsal_pool(path)
+    assert {r["id"] for r in pool} == {"a", "c"}
+    assert audit["dropped_panel_reply_class"] == 2
+    assert audit["dropped_multi_turn"] == 1
+
+
+def test_a_rehearsal_source_without_panel_classes_is_refused(tmp_path):
+    """If the exclusion drops nothing, the source is not the slice we think it is."""
+    from experiments.reasoning_posttraining_v1 import process_mix
+    path = tmp_path / "pres.jsonl"
+    path.write_text(json.dumps({"id": "a", "metadata": {"reply_class": "apology_repair"},
+                                "messages": [{"role": r, "content": "x"}
+                                             for r in ("system", "user", "assistant")]}) + "\n",
+                    encoding="utf-8")
+    with pytest.raises(ValueError, match="exclusion is not doing anything"):
+        process_mix.rehearsal_pool(path)
+
+
+def test_the_mixture_lane_is_registered_and_separate():
+    from experiments.reasoning_posttraining_v1 import controller, process_mix
+    assert process_mix.EXPERIMENT == "RRP-009-PROCESS-MIX"
+    assert process_mix.EXPERIMENT in controller.REGISTERED_PLANS
+    assert process_mix.EXPERIMENT in budget.REGISTERED
+    assert process_mix.EXPERIMENT not in (process_arm.EXPERIMENT,)

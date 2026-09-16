@@ -40,6 +40,7 @@ from . import campaign as _registers_corrected_arm
 from . import repair_preservation as _registers_preservation_repair
 from . import process_arm as _registers_process_arm
 from . import process_dose as _registers_process_dose
+from . import process_mix as _registers_process_mix
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
@@ -68,7 +69,8 @@ REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_a
                     _registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT,
                     _registers_preservation_repair.DELTA_EXPERIMENT,
                     _registers_process_arm.EXPERIMENT,
-                    _registers_process_dose.EXPERIMENT)
+                    _registers_process_dose.EXPERIMENT,
+                    _registers_process_mix.EXPERIMENT)
 PRESERVATION_PLANS = (_registers_preservation_repair.EXPERIMENT,
                       _registers_preservation_repair.AMENDED_EXPERIMENT,
                       _registers_preservation_repair.DELTA_EXPERIMENT)
