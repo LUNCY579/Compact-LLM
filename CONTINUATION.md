@@ -20,6 +20,14 @@ replicated. Read these in order:
 5. **[BROAD_RETENTION.md](BROAD_RETENTION.md)** — **read this before believing 4.**
    On long context both arms lose against Supa's 161/256 and the rehearsal arm loses
    *more* (139 vs 150). Abstention collapses in both (13 → 3 → 1 of 64).
+6. **[REHEARSAL_COMPOSITION.md](REHEARSAL_COMPOSITION.md)** — why. Rehearsal protects
+   **only what it resembles**. Abstention-class rehearsal restores abstention to
+   **exactly Supa's 13/64**; reasoning-class rehearsal gives the best long context and
+   fails panel retention; communication-class rehearsal costs 26 long-context rows.
+   Composition is the intervention, not volume.
+7. **[DATASET_REQUIREMENTS.md](DATASET_REQUIREMENTS.md)** — the analytical breakdown:
+   every rule for teaching a new skill without losing an old one, each with the
+   measurement that produced it and the failure it prevents.
 
 ### The one-sentence state
 
@@ -40,13 +48,21 @@ Do **not** switch the recommendation to D3 because D3 wins on long context.
 was registered report-only. Selecting on it after seeing it is the post-hoc gate the
 bar exists to prevent.
 
-### Untested hypothesis worth testing next
+### That hypothesis was tested, and confirmed
 
-The rehearsal pool is weighted toward short conversational classes. Training on
-short, confident replies is a plausible cause of both the abstention collapse and
-the long-context loss. If so, the fix is rehearsal that **resembles what you are
-protecting**, not less rehearsal. No arm varies rehearsal composition; this is a
-hypothesis, not a finding.
+RRP-011 varied rehearsal composition and nothing else. Composition swings long
+context by 26 rows (118–144) and abstention across its entire range (0–13) on
+identical transition data. **Rehearsal protects what it resembles.** The practical
+rule is in `DATASET_REQUIREMENTS.md` §2.1: a rehearsal mixture must span every
+capability you intend to keep, because anything absent is unprotected and anything
+over-represented can do harm.
+
+**Still open: long context.** No composition tested repairs it — every arm sits
+17–43 rows below Supa's 161. If the resemblance principle holds, the fix is
+long-context rehearsal, and **that dataset does not exist in this worktree**
+(`Rineya_LCR_SFT_v1` ships a 12-pack sample; the v3 bulk files average ~500
+characters against ~1,000-word contexts). Building or obtaining it is the highest-value
+remaining data work.
 
 ### Operational traps that cost launches this session
 
