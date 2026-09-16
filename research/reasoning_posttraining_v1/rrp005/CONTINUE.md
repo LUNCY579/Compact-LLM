@@ -1,5 +1,12 @@
 # Active goal continuation after RRP-005 preparation
 
+**Latest: A3 supersedes new A2 launches.** Read `A3_RUNBOOK.md`, `PLAN_A3.json` and
+`GRANT_A3.json`. A2 preserved 301 predictions but suffered another runtime RAM refusal.
+An identity audit verifies 545 reusable completed historical source measurements, with
+301/301 fresh output parity. A3 needs only the 308 changed/new inputs, uses the exact
+remaining compute allowance and bounded waiting at the unchanged resource gate. The
+canonical-vs-semantic abstention correction is also material; see the A3 runbook.
+
 **Update: use `A2_RUNBOOK.md` and `PLAN_A2.json` / `GRANT_A2.json`.** A real native run
 completed qualification and started 548 inputs, then stopped at the 1.5 GiB runtime RAM
 floor. Its predictions were not incrementally saved and are lost. The original lane is

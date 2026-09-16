@@ -51,6 +51,18 @@ AMENDED_LIMITS = {
 }
 budget.register(AMENDED_EXPERIMENT, ceiling=AMENDED_LIMITS, phases=("baseline",), excludes=EXCLUDES)
 
+DELTA_EXPERIMENT = "RRP-005-PRESERVATION-DELTA-A3"
+DELTA_LIMITS = {**AMENDED_LIMITS,
+    "total_owned_work_wall_seconds": 3490,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 2591,
+    "evaluation_and_qualification_model_calls": 1131,
+    "generated_tokens_all_candidates": 76608,
+    "new_disk_bytes": 255007150,
+    "model_worker_launches": 2, "retries": 1,
+}
+WAIT_POLICY = {"total_seconds": 240, "episode_seconds": 90, "poll_seconds": 2}
+budget.register(DELTA_EXPERIMENT, ceiling=DELTA_LIMITS, phases=("baseline",), excludes=EXCLUDES)
+
 
 def validate_scope(args, plan):
     if plan.get("experiment") == EXPERIMENT:
@@ -63,9 +75,11 @@ def validate_scope(args, plan):
             getattr(args, "max_sequence", None) != wanted.get("max_sequence") or
             getattr(args, "max_new_tokens", None) != wanted.get("max_new_tokens")):
         raise ValueError("baseline bank or inference protocol differs from frozen RRP-005 plan")
-    if plan.get("experiment") == AMENDED_EXPERIMENT:
+    if plan.get("experiment") in (AMENDED_EXPERIMENT, DELTA_EXPERIMENT):
         if wanted.get("prediction_storage") != "create_only_hash_chained_rows_v1" or wanted.get("cache_policy") != "release_unused_between_cases":
             raise ValueError("amended baseline requires durable rows and the frozen cache policy")
+    if plan.get("experiment") == DELTA_EXPERIMENT and wanted.get("resource_wait") != WAIT_POLICY:
+        raise ValueError("delta baseline requires the exact bounded resource-wait policy")
 
 
 def corrected_rows(old_bank, sources):

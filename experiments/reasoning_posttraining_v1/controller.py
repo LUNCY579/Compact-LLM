@@ -63,7 +63,12 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # second experiment can have its own frozen plan, and kept as an explicit allowlist so an
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
 REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1", _registers_corrected_arm.EXPERIMENT,
-                    _registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT)
+                    _registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT,
+                    _registers_preservation_repair.DELTA_EXPERIMENT)
+PRESERVATION_PLANS = (_registers_preservation_repair.EXPERIMENT,
+                      _registers_preservation_repair.AMENDED_EXPERIMENT,
+                      _registers_preservation_repair.DELTA_EXPERIMENT)
+STREAMED_PLANS = PRESERVATION_PLANS[1:]
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -197,7 +202,7 @@ def inputs(args, *, retain_presentations=True) -> tuple[dict, dict, Path, list[d
     if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
         review_rows = probe if retain_presentations else read_rows(prepared / "microfit-train.jsonl")
         _registers_corrected_arm.validate_execution_scope(args, plan, review_rows)
-    if plan["experiment"] in (_registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT):
+    if plan["experiment"] in PRESERVATION_PLANS:
         _registers_preservation_repair.validate_scope(args, plan)
     return grant, plan, prepared, probe, repeated
 
@@ -231,7 +236,12 @@ def worker(args) -> int:
                 args, retain_presentations=args.command != "baseline")
             design = design_for(plan)
             configure_runtime(design.order_seed)
-            before_load = guard(before_load=True,
+            resource_gate = guard
+            if plan["experiment"] == _registers_preservation_repair.DELTA_EXPERIMENT:
+                from .resource_wait import ResourceWait
+                resource_gate = ResourceWait(guard, directory / "resource-waits",
+                                             **plan["baseline_protocol"]["resource_wait"])
+            before_load = resource_gate(before_load=True,
                                 phase=RESOURCE_PROFILE.get(args.command, "train"))
             journal = Journal(Path(args.journal), grant)
             if journal.breached:
@@ -255,7 +265,7 @@ def worker(args) -> int:
             tokenizer = load_tokenizer(Path(args.source))
             eos = eos_set(Path(args.source), tokenizer)
             model = load_model(Path(args.source), "cuda:0")
-            guard()
+            resource_gate()
 
             if args.command == "baseline":
                 # A held-out measurement of an existing checkpoint: no optimizer, no
@@ -271,9 +281,9 @@ def worker(args) -> int:
                 # A window wider than the trained 2048 must be qualified IN THIS RUN
                 # before it is used. No silent widening, no RoPE stretching.
                 window_qualification = None
-                if plan["experiment"] in (_registers_preservation_repair.EXPERIMENT, _registers_preservation_repair.AMENDED_EXPERIMENT):
+                if plan["experiment"] in PRESERVATION_PLANS:
                     window_qualification = ins.qualify_inference_window(
-                        model, tokenizer, window, journal.reserve, guard)
+                        model, tokenizer, window, journal.reserve, resource_gate)
                 elif window > design.max_sequence:
                     window_qualification = ins.qualify_evaluation_window(
                         model, tokenizer, window, journal.reserve, guard)
@@ -308,13 +318,13 @@ def worker(args) -> int:
                 # evaluate() is itself no_grad-decorated; this mirrors engine.probe()'s
                 # explicit wrapper so the intent is visible at the call site too.
                 with torch.no_grad():
-                    if plan["experiment"] == _registers_preservation_repair.AMENDED_EXPERIMENT:
+                    if plan["experiment"] in STREAMED_PLANS:
                         from .evaluation_stream import context_for, evaluate_streamed
                         protocol = plan["baseline_protocol"]
                         context = context_for({**binding, "source_state_sha256": before}, bank_sha, evaluable,
                             max_sequence=window, max_new=generation_allowance(args, plan),
                             serialization=protocol["serialization"], cache_policy=protocol["cache_policy"])
-                        value = evaluate_streamed(model, evaluable, tokenizer, eos, "baseline", journal.reserve, guard,
+                        value = evaluate_streamed(model, evaluable, tokenizer, eos, "baseline", journal.reserve, resource_gate,
                             directory=directory / "prediction-stream", context=context, evaluator=evaluate,
                             resume=Path(args.resume_evaluation) if args.resume_evaluation else None)
                     else:
@@ -347,6 +357,7 @@ def worker(args) -> int:
                     "max_sequence": window,
                     "max_new_tokens": generation_allowance(args, plan),
                     "serialization": plan.get("baseline_protocol", {}).get("serialization", "single_turn"),
+                    "resource_wait": resource_gate.summary() if hasattr(resource_gate, "summary") else None,
                     "trained_window": design.max_sequence,
                     "evaluation_window_qualification": window_qualification,
                     "length_bias_warning": (
@@ -593,7 +604,7 @@ def main(argv=None) -> int:
         parser.error("resume verification requires an explicit --resume checkpoint")
     if args.command == "baseline" and not args.bank:
         parser.error("baseline measurement requires an explicit --bank file")
-    if args.resume_evaluation and (args.command != "baseline" or args.experiment != _registers_preservation_repair.AMENDED_EXPERIMENT):
+    if args.resume_evaluation and (args.command != "baseline" or args.experiment not in STREAMED_PLANS):
         parser.error("prediction continuation is restricted to the registered source-only A2 baseline")
 
     # Validate the grant, plan and prepared bytes in the parent, before reserving anything.
