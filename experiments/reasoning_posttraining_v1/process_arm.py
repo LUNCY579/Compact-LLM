@@ -160,12 +160,47 @@ def verified_positives(binding: dict, exclude: frozenset[str], *,
                         "labels_by_family": {f"{k[0]}|{k[1]}": v for k, v in sorted(counts.items())}}
 
 
-def select(per_parent: dict, *, per_family: int, salt: str = SALT) -> list[dict]:
+def resolve_per_family(per_family, families) -> dict[str, int]:
+    """An int applies to every family; a dict must name every family explicitly.
+
+    Refusing a partial dict matters: a missing key would silently contribute zero rows for
+    that family, which reads as "this family did not learn" rather than "this family was
+    never trained". Every arm here is scored per family against a per-family floor, so that
+    confusion would be expensive.
+    """
+    families = sorted(families)
+    if isinstance(per_family, int):
+        return {f: per_family for f in families}
+    missing = [f for f in families if f not in per_family]
+    extra = [f for f in per_family if f not in families]
+    if missing or extra:
+        raise ValueError(f"per-family dose must name exactly the families present; "
+                         f"missing {missing}, unexpected {extra}")
+    if any(int(v) <= 0 for v in per_family.values()):
+        raise ValueError(f"per-family dose must be positive for every family: {per_family}")
+    return {f: int(per_family[f]) for f in families}
+
+
+def parse_per_family(value: str):
+    """CLI form: "128" or "ledger_replay=128,prerequisite_plan=64,register_machine=64"."""
+    if "=" not in value:
+        return int(value)
+    out = {}
+    for part in value.split(","):
+        family, _, count = part.partition("=")
+        if not family.strip() or not count.strip():
+            raise argparse.ArgumentTypeError(f"malformed per-family dose {part!r}")
+        out[family.strip()] = int(count)
+    return out
+
+
+def select(per_parent: dict, *, per_family, salt: str = SALT) -> list[dict]:
+    resolved = resolve_per_family(per_family, per_parent)
     chosen = []
     for family in sorted(per_parent):
         pool = sorted(per_parent[family].values(),
                       key=lambda r: (digest([salt, "parent", r["parent_id"]]), r["parent_id"]))
-        chosen.extend(pool[:per_family])
+        chosen.extend(pool[:resolved[family]])
     # One global deterministic order, independent of family grouping.
     return sorted(chosen, key=lambda r: (digest([salt, "order", SEED, r["id"]]), r["id"]))
 
@@ -260,7 +295,7 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
     return contract
 
 
-def build(binding: dict, views: Path, tokenizer, *, per_family: int, exposures: int,
+def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
           train_window: int = TRAIN_WINDOW,
           selection_seed: int = SEED,
           experiment: str = EXPERIMENT) -> tuple[list[dict], dict, dict]:
@@ -322,7 +357,11 @@ def main(argv=None):
     parser.add_argument("--source", type=Path, required=True, help="the Supa tokenizer assets")
     parser.add_argument("--out-prepared", type=Path, required=True)
     parser.add_argument("--out-plan", type=Path, required=True)
-    parser.add_argument("--per-family", type=int, required=True)
+    parser.add_argument("--per-family", type=parse_per_family, required=True,
+                        help="Either an int applied to every family, or a per-family dose "
+                             "such as ledger_replay=128,prerequisite_plan=64,"
+                             "register_machine=64. Doses are nested: a family's pool order "
+                             "does not depend on the count, so 64 is the first 64 of 128.")
     parser.add_argument("--exposures", type=int, default=1)
     parser.add_argument("--selection-seed", type=int, default=SEED,
                         help="varies WHICH parents are drawn; 17 reproduces seed 1 exactly")

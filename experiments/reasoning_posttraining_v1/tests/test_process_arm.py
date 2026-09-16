@@ -382,3 +382,88 @@ def test_reasoning_minus_abstention_is_disjoint_from_abstention(tmp_path):
     assert {r["id"] for r in reas} == {"a", "b"}          # overlaps on b
     assert {r["id"] for r in trimmed} == {"a"}            # disjoint
     assert not ({r["id"] for r in abst} & {r["id"] for r in trimmed})
+
+
+# --- RRP-014: per-family dose -------------------------------------------------------
+# The asymmetric dose exists because RRP-013 found the dose acquisition needs and the dose
+# retention can afford differ BY FAMILY: at 64 parents/family ledger_replay fell below its
+# copy_before floor in 3 of 3 seeds while the other two families cleared comfortably.
+
+
+def _pool(families=("ledger_replay", "prerequisite_plan", "register_machine"), n=200):
+    return {fam: {f"{fam}-{i}": {"id": f"{fam}-{i}-step0-valid", "parent_id": f"{fam}-{i}",
+                                 "family": fam}
+                  for i in range(n)}
+            for fam in families}
+
+
+def test_an_int_dose_still_applies_to_every_family():
+    resolved = process_arm.resolve_per_family(64, _pool())
+    assert resolved == {"ledger_replay": 64, "prerequisite_plan": 64, "register_machine": 64}
+
+
+def test_a_per_family_dose_is_honoured_family_by_family():
+    dose = {"ledger_replay": 128, "prerequisite_plan": 64, "register_machine": 64}
+    chosen = process_arm.select(_pool(), per_family=dose)
+    taken = {}
+    for row in chosen:
+        taken[row["family"]] = taken.get(row["family"], 0) + 1
+    assert taken == dose
+    assert len(chosen) == 256
+
+
+def test_a_partial_per_family_dose_is_refused_rather_than_silently_zero():
+    # A missing key would contribute zero rows and read as "this family did not learn"
+    # rather than "this family was never trained". Every family is scored against its own
+    # floor, so that confusion would be expensive.
+    with pytest.raises(ValueError, match="missing"):
+        process_arm.resolve_per_family({"ledger_replay": 128}, _pool())
+
+
+def test_an_unknown_family_in_the_dose_is_refused():
+    with pytest.raises(ValueError, match="unexpected"):
+        process_arm.resolve_per_family(
+            {"ledger_replay": 1, "prerequisite_plan": 1, "register_machine": 1, "typo": 1},
+            _pool())
+
+
+def test_a_non_positive_per_family_dose_is_refused():
+    with pytest.raises(ValueError, match="positive"):
+        process_arm.resolve_per_family(
+            {"ledger_replay": 128, "prerequisite_plan": 0, "register_machine": 64}, _pool())
+
+
+def test_doses_are_nested_so_an_asymmetric_arm_reuses_rows_already_drawn():
+    """The property the RRP-014 design rests on.
+
+    `select` orders each family's pool by a digest that does not depend on the count, so a
+    smaller dose is a PREFIX of a larger one. That is what makes {128, 64, 64} an
+    interpolation between two measured arms rather than a fresh draw: a difference between
+    it and D1/D0 cannot be a sampling artifact.
+    """
+    pool = _pool()
+    salt = process_arm.salt_for(17)
+    small = {r["parent_id"] for r in process_arm.select(pool, per_family=64, salt=salt)}
+    large = {r["parent_id"] for r in process_arm.select(pool, per_family=128, salt=salt)}
+    assert small < large
+    asymmetric = {r["parent_id"] for r in process_arm.select(
+        pool, per_family={"ledger_replay": 128, "prerequisite_plan": 64,
+                          "register_machine": 64}, salt=salt)}
+    assert asymmetric <= large
+    ledger_small = {p for p in small if p.startswith("ledger_replay")}
+    ledger_asym = {p for p in asymmetric if p.startswith("ledger_replay")}
+    assert ledger_small < ledger_asym          # ledger_replay got D1's dose
+    assert {p for p in asymmetric if p.startswith("register_machine")} == \
+           {p for p in small if p.startswith("register_machine")}   # the others got D0's
+
+
+def test_the_cli_parses_both_dose_forms():
+    assert process_arm.parse_per_family("128") == 128
+    assert process_arm.parse_per_family("ledger_replay=128,register_machine=64") == {
+        "ledger_replay": 128, "register_machine": 64}
+
+
+def test_a_malformed_cli_dose_is_refused():
+    import argparse as _argparse
+    with pytest.raises(_argparse.ArgumentTypeError):
+        process_arm.parse_per_family("ledger_replay=")
