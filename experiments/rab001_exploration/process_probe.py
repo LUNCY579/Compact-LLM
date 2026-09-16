@@ -56,7 +56,8 @@ if str(REPO) not in sys.path:
 
 from experiments.architecture_benchmark_001 import run                            # noqa: E402
 from experiments.architecture_benchmark_001.gates import implementation_digest    # noqa: E402
-from experiments.architecture_benchmark_001.source import ROOT                    # noqa: E402
+from experiments.architecture_benchmark_001.source import ROOT, source_config     # noqa: E402
+from experiments.architecture_benchmark_001.transfer import import_qwen_state     # noqa: E402
 from experiments.rab001_exploration import hostbudget                             # noqa: E402
 
 _saved_argv, sys.argv = sys.argv, sys.argv[:1]
@@ -121,6 +122,47 @@ def clopper_pearson(k: int, n: int, alpha: float = 0.05) -> tuple[float, float]:
     return lower, upper
 
 
+def load_trained(source: Path, device: str, checkpoint: Path):
+    """Apply an MQ/RRP checkpoint over the frozen source, on the SAME path as the baseline.
+
+    The baseline was measured through run._load, which converts the HF state dict into a
+    DenseReference via import_qwen_state. Scoring a trained model through any other path
+    would make the pre/post comparison a comparison of two implementations. So the trained
+    tensors are overlaid onto the source HF state and the identical conversion is run.
+
+    Every entry is verified against the sealed manifest before it is applied: an unsealed
+    manifest, a status other than COMPLETE, an unknown parameter name, a shape mismatch or a
+    tensor whose bytes do not hash to the recorded sha256 all refuse the load.
+    """
+    from safetensors.torch import load_file
+    from experiments.model_quality_gpu_v1.integrity import unseal
+
+    body = unseal(json.loads((checkpoint / "manifest.json").read_text(encoding="utf-8")))
+    if body.get("status") != "COMPLETE":
+        raise SystemExit('checkpoint is not COMPLETE and must not be scored')
+    state = load_file(str(source / "model.safetensors"), device="cpu")
+    applied = 0
+    for entry in body["entries"]:
+        name, path = entry["name"], checkpoint / entry["file"]
+        if name not in state:
+            raise SystemExit('checkpoint names a parameter the source does not have: {}'.format(name))
+        if sha256_file(path) != entry["sha256"]:
+            raise SystemExit('checkpoint tensor bytes differ from the manifest: {}'.format(entry["file"]))
+        trained = load_file(str(path), device="cpu")["parameter"]
+        if list(trained.shape) != entry["shape"] or trained.shape != state[name].shape:
+            raise SystemExit('checkpoint shape differs from the source: {}'.format(name))
+        state[name] = trained.to(state[name].dtype)
+        applied += 1
+    raw = json.loads((source / "config.json").read_text(encoding="utf-8"))
+    model = import_qwen_state(state, source_config(raw)).to(device=device,
+                                                            dtype=torch.float32).eval()
+    tokenizer = run._load_tokenizer(source)
+    return model, tokenizer, {"path": str(checkpoint), "applied_tensors": applied,
+                              "experiment": body.get("experiment"),
+                              "progress": body.get("progress"),
+                              "manifest_sha256": sha256_file(checkpoint / "manifest.json")}
+
+
 def load_views() -> list[dict]:
     if not VIEWS.is_file():
         raise SystemExit('no frozen views: {}'.format(VIEWS))
@@ -171,6 +213,8 @@ def main(argv=None):
     parser.add_argument('--label', required=True)
     parser.add_argument('--device', default='cuda')
     parser.add_argument('--max-new-tokens', type=int, default=96)
+    parser.add_argument('--checkpoint', type=Path,
+                        help='an MQ/RRP checkpoint directory to apply over the frozen source')
     args = parser.parse_args(argv)
 
     rows = load_views()
@@ -191,7 +235,15 @@ def main(argv=None):
     print('TF32 forced off: {}'.format(numerics), flush=True)
     print('floors reproduce the pre-registration exactly: {}'.format(floors), flush=True)
 
-    model, tokenizer, _ = run._load(model_dir, args.device)
+    if args.checkpoint:
+        model, tokenizer, checkpoint_identity = load_trained(model_dir, args.device,
+                                                            args.checkpoint)
+        print('applied checkpoint {} ({} tensors, {} updates)'.format(
+            checkpoint_identity['experiment'], checkpoint_identity['applied_tensors'],
+            (checkpoint_identity['progress'] or {}).get('updates')), flush=True)
+    else:
+        model, tokenizer, _ = run._load(model_dir, args.device)
+        checkpoint_identity = None
     eos = run._eos_ids(model_dir, tokenizer)
     print('loaded {} on {} | {} views | views sha {}'.format(
         model_dir.name, args.device, len(rows), views_sha[:12]), flush=True)
@@ -288,6 +340,7 @@ def main(argv=None):
                          'release result.'),
         'label': args.label,
         'model_dir': str(model_dir),
+        'checkpoint': checkpoint_identity,
         'device': args.device,
         'views_sha256': views_sha,
         'views': total_n,
