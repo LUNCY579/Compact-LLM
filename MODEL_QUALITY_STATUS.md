@@ -1,5 +1,10 @@
 # Model-quality status and decision memo
 
+**2026-09-17 update:** [the current audit and completed clean pilot](docs/model-quality/audit-2026-09-17/RESULTS_AND_PROGRESS.md)
+adds six-seed context, corrected rehearsal/preference audits, a literal-abstention
+correction, preserved model identities, and new source-bound measurements. The
+2026-09-15 memo below remains an attributed historical synthesis.
+
 **Authoritative continuation for this successor, audited 2026-09-15 UTC.**
 
 **Decision: improve the measurement and training data first; retain dense tail adaptation as the ordinary control; evaluate a larger standalone model before expensive architectural recovery. No overall model-quality winner is established.**

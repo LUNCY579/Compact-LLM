@@ -1,5 +1,11 @@
 # Model-quality review, 2026-09-17 UTC
 
+Latest completed experiment and preservation inventory:
+[RESULTS_AND_PROGRESS.md](RESULTS_AND_PROGRESS.md). The clean control acquired
+234/384 transitions against Supa14/384, with arithmetic69/150, retained39/47,
+long context162/256 and literal abstention10/64. The rehearsal arm was worse on
+the experimental retention gate. These are one-draw exploratory results.
+
 No broad model-quality winner or absence of catastrophic forgetting is established.
 The current dataset branch already contains all model-quality and reasoning-branch
 commits. The useful immediate integration is stronger measurement and data hygiene,
