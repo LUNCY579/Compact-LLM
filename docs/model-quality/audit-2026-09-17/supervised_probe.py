@@ -177,8 +177,8 @@ def main():
     parser.add_argument("--_worker", action="store_true")
     parser.add_argument("arguments", nargs=argparse.REMAINDER)
     args = parser.parse_args()
-    if not 1 <= args.timeout <= 600:
-        raise ValueError("registered probe timeout must be between 1 and 600 seconds")
+    if not 1 <= args.timeout <= 900:
+        raise ValueError("registered probe timeout must be between 1 and 900 seconds")
     arguments = args.arguments
     if arguments[:1] == ["--"]:
         arguments = arguments[1:]
