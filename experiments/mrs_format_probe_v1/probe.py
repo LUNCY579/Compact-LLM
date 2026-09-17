@@ -20,8 +20,9 @@ import sys
 import time
 from pathlib import Path
 
+from experiments.multi_reasoning_scout_v1 import core as mrs1
 from experiments.multi_reasoning_scout_v1.core import (
-    RECORDS, digest, file_hash, load_frozen, model_assets, public_bank, read_json, write_new)
+    RECORDS, PublicItem, decode, digest, file_hash, model_assets, read_json, verify_files, write_new)
 from experiments.multi_reasoning_scout_v1 import budget
 from . import contracts
 
@@ -46,6 +47,30 @@ def source_identity():
     own = sorted(PACKAGE.glob("*.py"))
     return {"repository": "LUNCY579/ChatBubble", "branch": BRANCH, "sha": git("rev-parse", "HEAD"),
             "files": {str(p.relative_to(ROOT)).replace("\\", "/"): file_hash(p) for p in own}}
+
+
+def bind_mrs1():
+    """Bind the MRS-1 frozen bank by hash and lineage, not by branch.
+
+    MRS-1's own `load_frozen` additionally requires HEAD to be on the MRS-1 branch,
+    which is correct for MRS-1 and wrong for a separate successor experiment. This
+    reproduces every integrity property that matters here -- all frozen artifact
+    bytes unchanged, MRS-1 executable bytes unchanged, and the frozen source commit
+    an ancestor of this branch -- without pretending to be MRS-1.
+    """
+    import subprocess
+    freeze = read_json(RECORDS / "FREEZE.json")
+    verify_files(mrs1.ROOT, freeze["files"])
+    if mrs1.source_files() != freeze["source_files"]:
+        raise ValueError("stale frozen executable source")
+    frozen_sha = freeze["source"]["sha"]
+    if subprocess.run(["git", "-C", str(ROOT), "merge-base", "--is-ancestor", frozen_sha, "HEAD"]).returncode:
+        raise ValueError("frozen MRS-1 source is not an ancestor of this probe branch")
+    rows = [PublicItem(**decode(line)) for line
+            in (RECORDS / "bank/public.jsonl").read_text(encoding="utf-8").splitlines()]
+    if len({r.id for r in rows}) != len(rows) or len({r.scenario_id for r in rows}) != len(rows):
+        raise ValueError("duplicate item/world")
+    return freeze, rows
 
 
 def generate(backend, messages, prefill, cap):
@@ -103,7 +128,7 @@ def worker(args):
     claim_worker(out)
     meter = None
     try:
-        load_frozen()
+        freeze, bank = bind_mrs1()
         registry = read_json(RECORDS / "MODEL_MANIFEST.json")
         model = next(m for m in registry["selected"] if m["id"] == args.model)
         observed = budget.snapshot()
@@ -112,7 +137,7 @@ def worker(args):
                                                      "contracts": list(contracts.CONTRACTS),
                                                      "roles": list(contracts.ROLES)}})
         budget.check(observed, preload=True)
-        items = [i for i in public_bank() if i.split == "SMOKE"]
+        items = [i for i in bank if i.split == "SMOKE"]
         if not items or any(i.split != "SMOKE" for i in items):
             raise ValueError("probe population must be SMOKE only")
         with lease(Path(tempfile.gettempdir()) / "rineya-gpu-0.lock"):
@@ -121,6 +146,8 @@ def worker(args):
                       {"model": args.model, "out": str(out), "retry_allowed": False})
             binding = {"probe": "MRS-FP-1", "classification": CLASSIFICATION,
                        "mrs1_freeze_sha256": file_hash(RECORDS / "FREEZE.json"),
+                       "mrs1_frozen_source_sha": freeze["source"]["sha"],
+                       "mrs1_bank_public_sha256": freeze["files"]["research/multi_reasoning_scout_v1/bank/public.jsonl"],
                        "source": source_identity(), "model": model,
                        "model_identity": model_assets(model),
                        "contracts_sha256": digest({k: {kk: vv for kk, vv in v.items() if kk != "parse"}
