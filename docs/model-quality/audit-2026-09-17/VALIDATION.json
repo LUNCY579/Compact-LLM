@@ -1,0 +1,23 @@
+{
+  "status": "PASS_CPU_MECHANICS",
+  "rrp_tests": {
+    "seconds": 9.47,
+    "tokenizer_assets": "external Supa assets, locally hash-verified",
+    "skipped": 0,
+    "passed": 378,
+    "cuda_visible_devices": ""
+  },
+  "mq_regression": {
+    "seconds": 12.39,
+    "skipped": 1,
+    "skip": "Windows symlink privilege case",
+    "passed": 113
+  },
+  "probe_wrapper": {
+    "model_calls": 0,
+    "passed": 11
+  },
+  "independent_data_checks": 26,
+  "native_model_quality_claim": false,
+  "initial_clone_test_failure": "1 failed / 377 passed: tokenizer test incorrectly called CUDA runtime with CUDA hidden; test corrected to load hash-verified local tokenizer without GPU qualification; full rerun passed"
+}
