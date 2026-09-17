@@ -1,0 +1,119 @@
+{
+  "splits": {
+    "train": {
+      "rows": 4800,
+      "unique_ids": 4800,
+      "unique_groups": 4800,
+      "role_sequence_errors": 0,
+      "sft_projection_exact": true,
+      "world_rows": 4800,
+      "world_ids_match": true,
+      "marginals": {
+        "task_type": {
+          "causal_disambiguation": 800,
+          "alias_resolution": 960,
+          "rule_exception": 800,
+          "temporal_correlation": 560,
+          "count_with_exclusion": 640,
+          "multi_condition": 320,
+          "latest_verified": 320,
+          "object_state_tracking": 400
+        },
+        "variant": {
+          "unanswerable": 1440,
+          "counterfactual": 720,
+          "answerable": 2160,
+          "paraphrase": 480
+        },
+        "difficulty": {
+          "medium": 1920,
+          "hard": 2880
+        },
+        "needle_position": {
+          "middle": 960,
+          "distributed": 960,
+          "early": 1920,
+          "late": 960
+        },
+        "length_band": {
+          "long": 1600,
+          "medium": 1600,
+          "short": 1600
+        }
+      },
+      "unknown_count": 1440,
+      "unanswerability_reasons": {
+        "entity_absent": 360,
+        "attribute_absent": 360,
+        "retracted_or_superseded": 360,
+        "presupposition_contradicted": 360
+      },
+      "max_answer_words": 1
+    },
+    "dev": {
+      "rows": 600,
+      "unique_ids": 600,
+      "unique_groups": 600,
+      "role_sequence_errors": 0,
+      "sft_projection_exact": true,
+      "world_rows": 600,
+      "world_ids_match": true,
+      "marginals": {
+        "task_type": {
+          "count_with_exclusion": 80,
+          "alias_resolution": 120,
+          "temporal_correlation": 70,
+          "rule_exception": 100,
+          "multi_condition": 40,
+          "object_state_tracking": 50,
+          "causal_disambiguation": 100,
+          "latest_verified": 40
+        },
+        "variant": {
+          "answerable": 270,
+          "counterfactual": 90,
+          "unanswerable": 180,
+          "paraphrase": 60
+        },
+        "difficulty": {
+          "medium": 240,
+          "hard": 360
+        },
+        "needle_position": {
+          "early": 240,
+          "distributed": 120,
+          "late": 120,
+          "middle": 120
+        },
+        "length_band": {
+          "long": 200,
+          "short": 200,
+          "medium": 200
+        }
+      },
+      "unknown_count": 180,
+      "unanswerability_reasons": {
+        "entity_absent": 45,
+        "attribute_absent": 45,
+        "retracted_or_superseded": 45,
+        "presupposition_contradicted": 45
+      },
+      "max_answer_words": 1
+    }
+  },
+  "train_dev_overlap": {
+    "ids": 0,
+    "groups": 0,
+    "templates": 0,
+    "context_exact": 0,
+    "context_nfkc": 0,
+    "context_digit_blinded": 0,
+    "question_exact": 0,
+    "question_nfkc": 0,
+    "question_digit_blinded": 0,
+    "entity_names": 0,
+    "name_blind_sentence_forms": 392,
+    "typed_graph_count_signature": 0
+  },
+  "scope": "Train/dev only; typed graph-count signatures do not prove structural isomorphism exclusion. Shared local forms violate a blanket template-disjointness claim."
+}
