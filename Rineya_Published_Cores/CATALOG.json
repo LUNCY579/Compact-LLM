@@ -1,6 +1,6 @@
 {
   "vault": "Rineya_Published_Cores",
-  "updated_at_utc": "2026-08-28T04:19:57.957569Z",
+  "updated_at_utc": "2026-09-17T19:45:04.903285+00:00",
   "cores": [
     {
       "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
@@ -1503,6 +1503,232 @@
           "has_tokenizer": true,
           "torch_dtype": "float16"
         }
+      }
+    },
+    {
+      "core_id": "rineya.core.titan-experimental.v1.0.0-devfreeze.28L.supa17-rrp015-control-seed17",
+      "codename": "Titan-Experimental",
+      "directory": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+      "present": true,
+      "core": {
+        "schema_version": "1.1",
+        "core_id": "rineya.core.titan-experimental.v1.0.0-devfreeze.28L.supa17-rrp015-control-seed17",
+        "codename": "Titan-Experimental",
+        "directory_name": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+        "version": "1.0.0-devfreeze",
+        "kind": "dense_supervised_finetune_tail_blocks",
+        "status": "experimental_research_core_not_release_qualified",
+        "classification": "published_experimental_core_with_measured_regressions",
+        "public_claim": "Supa 1.7 fine-tuned on 384 solver-verified one-step state-transition examples, no rehearsal. Acquires a capability both frozen cores lack: 234/384 on SELECT-VIEWS-001 against Supa's 14/384, all three families clearing their published shortcut floors. Arithmetic 69/150 permissive and 62/150 strict against Supa's 47 and 41. Long context 162/256 against Supa's 161, paired p=1. Regressions: 8 of 47 source arithmetic answers lost, literal UNKNOWN 13 to 10. One training draw. Not release qualified.",
+        "provisional": true,
+        "operator_authorized_promotion": true,
+        "created_at_utc": "2026-09-17T19:45:04.903285+00:00",
+        "device": "cuda",
+        "sources_unmodified": true,
+        "source": {
+          "application_base": {
+            "path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+            "core_id": "rineya.core.supa.v1.7.0-devfreeze.28L.qwen3-nimbus-lcr-stage-a-step200-scale-0p8125",
+            "codename": "Supa",
+            "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+            "parameter_count": 596049920,
+            "note": "Exact dense Supa 1.7. Supa-A1.1 is a different gated source and was not used."
+          },
+          "source_binding_verified_against_checkpoint": true
+        },
+        "training": {
+          "experiment": "RRP-015",
+          "arm": "clean control C, selection-clean one-seed paired pilot",
+          "prereg": "docs/model-quality/audit-2026-09-17/RRP015_PREREG.md",
+          "prereg_frozen_before_outcomes": true,
+          "corpus": "384 solver-verified Forge RL v2 one-step state-transition examples across three families (ledger_replay, prerequisite_plan, register_machine)",
+          "rehearsal_rows": 0,
+          "rehearsal_note": "Deliberately none. The matched treatment arm added 648 rehearsal rows at double the token budget and lost 27 long-context rows (paired p = 2.53e-05); replay was measured as harmful on this battery, not beneficial.",
+          "trainable_scope": "blocks 8-27 (tail 20 of 28)",
+          "objective": "assistant_response_plus_eos",
+          "optimizer": "MQ CpuAdamW",
+          "peak_lr": 1e-05,
+          "schedule": "WSD20/60/20_to_0.1_peak",
+          "betas": [
+            0.9,
+            0.95
+          ],
+          "epsilon": 1e-08,
+          "weight_decay": 0.0,
+          "gradient_clip": 1.0,
+          "precision_training": "fp32",
+          "max_sequence": 2048,
+          "max_rendered_length_tokens": 162,
+          "exposures_per_world": 1,
+          "processed_tokens": 54172,
+          "updates": 28,
+          "selection_seed": 17,
+          "instrument_exclusions": "Excludes all 768 scored parents: the historical 384-row transition probe and the new SELECT-VIEWS-001 selection bank. Parent disjointness rechecked by the controller before the worker loaded a model.",
+          "native_qualification": "PASS on actual source",
+          "checkpoint": "rineya-dataset-retention-records/rrp015-20260917/control-journal/runs/train-001/microfit/checkpoint-00028",
+          "checkpoint_manifest_sha256": "3d5cef318a578c71e3d0fe10bdeb27657a31c21d4826f26a6a276e07cacd50cc",
+          "full_resumable_checkpoint_retained": true
+        },
+        "export": {
+          "precision_path": "FP32 trained tensors rounded to source BF16 then FP32 DenseReference for evaluation",
+          "stored_dtype": "bfloat16",
+          "evaluation_dtype": "float32",
+          "materialization_sha256": "6807d30fce510e5cf651c6baa3113b568b8c73182f3a8534d10560a5b16f41eb",
+          "optimizer_steps_at_export": 0,
+          "model_forward_calls_at_export": 0,
+          "native_bf16_serving_qualified": false,
+          "provenance_source": "rineya-dataset-retention-records/rrp015-20260917/control-preserved-hf",
+          "preserved_export_weight_sha256_verified_at_copy": true
+        },
+        "measured": {
+          "evidence_root": "docs/model-quality/audit-2026-09-17/rrp015-evidence",
+          "evaluation_dtype": "float32",
+          "independent_training_draws": 1,
+          "acquisition": {
+            "instrument": "SELECT-VIEWS-001",
+            "instrument_role": "first selection-admissible acquisition instrument; declared selection-admissible at birth",
+            "n": 384,
+            "titan_correct": 234,
+            "supa_correct": 14,
+            "opallo_correct": 8,
+            "families_clearing_binding_floor": "3/3",
+            "per_family_canonical_rate": {
+              "ledger_replay": 0.4219,
+              "prerequisite_plan": 0.7422,
+              "register_machine": 0.6641
+            },
+            "decision_rule": "exact two-sided binomial 95% lower bound on canonical_correct must exceed the family binding floor, the stronger of copy_before and constant_majority; floors published before any model call",
+            "baseline_note": "Both frozen cores score BELOW the strongest answer-agnostic shortcut floor on all three families; Supa's prerequisite_plan and register_machine rates are 0.0000.",
+            "bank_interchange_warning": "SELECT-VIEWS-001 and the historical 384-row probe are DIFFERENT instruments. Supa scores 14 on both coincidentally. Do not rank this core against D1/M4 by subtracting the two banks' headline numbers."
+          },
+          "arithmetic_panel": {
+            "instrument": "150-row arithmetic monitor panel, 3 of 39 v3 reply classes",
+            "permissive": {
+              "supa": 47,
+              "titan": 69,
+              "source_answers_lost": 8,
+              "source_answers_retained": 39,
+              "correct_outside_source_set": 30,
+              "monitor_status": "FAIL",
+              "failed_classes": [
+                "percentage_reasoning",
+                "ratio_proportion",
+                "time_duration"
+              ]
+            },
+            "strict": {
+              "supa": 41,
+              "titan": 62,
+              "source_answers_lost": 8,
+              "source_answers_retained": 33,
+              "correct_outside_source_set": 29,
+              "monitor_status": "FAIL",
+              "failed_classes": [
+                "percentage_reasoning",
+                "ratio_proportion",
+                "time_duration"
+              ]
+            },
+            "reading": "The gain survives strict scoring, so it is not a formatting artifact. But 69 is NOT 47 preserved plus 22 new: it is 39 preserved, 8 lost, 30 newly gained. The legacy per-class monitor fails under both policies."
+          },
+          "long_context": {
+            "instrument": "Rineya Long-Context Demonstration Suite, 256 rows",
+            "instrument_status": "SPENT; barred TRAIN/SELECTION/CONFIRMATION in QUARANTINE.json; used REPORT-ONLY",
+            "supa": 161,
+            "titan": 162,
+            "net": 1,
+            "source_correct_rows_lost": 11,
+            "rows_gained": 12,
+            "paired_exact_mcnemar_two_sided_p": 1.0,
+            "matched_conditions": {
+              "implementation_digest": "a329eb7bb0",
+              "transformers": "4.51.3",
+              "max_context": 4096,
+              "max_new_tokens": 24,
+              "rows_skipped_context_overflow": 0,
+              "tf32": false,
+              "float32_matmul_precision": "highest"
+            },
+            "reading": "The first arm in this programme whose long context is not below the untrained source. Nonsignificance is NOT equivalence and NOT proof of no forgetting: 11 source-correct rows were still lost."
+          },
+          "abstention": {
+            "instrument": "64 unanswerable rows inside the same 256-row suite; not statistically independent of the long-context score",
+            "supa_literal_unknown": 13,
+            "titan_literal_unknown": 10,
+            "titan_legacy_substring_unknown": 10,
+            "literal_and_substring_agree": true,
+            "titan_literal_false_abstention_on_answerable": 0,
+            "semantic_abstention_review": "NOT_PERFORMED",
+            "reading": "Abstention regresses. Titan's count is genuinely literal: the strict and legacy substring counters agree at 10, and there are no false abstentions on answerable rows."
+          },
+          "gates": {
+            "gate_v2": {
+              "verdict": "PASS",
+              "definition": "arithmetic >= 62 AND source answers retained >= 37 of 47 AND every acquisition family clears its published floor",
+              "caveat": "A weaker conjunction than the legacy monitor. It has no long-context term and no abstention term."
+            },
+            "legacy_per_class_retention_monitor": {
+              "verdict": "FAIL",
+              "scope": "both strict and permissive policies, all three panel classes"
+            },
+            "note": "Two gates disagree on this model. Both verdicts are reported. No threshold was changed to accommodate this outcome."
+          }
+        },
+        "checks": {
+          "model_type": "qwen3",
+          "architecture": "Qwen3ForCausalLM",
+          "num_hidden_layers": 28,
+          "hidden_size": 1024,
+          "vocab_size": 151936,
+          "tie_word_embeddings": true,
+          "weight_bytes": 1192135064,
+          "weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+          "tensor_count": 310,
+          "parameter_count_serialized": 596049920,
+          "dtype_counts": {
+            "BF16": 310
+          },
+          "no_peft_remnants": true,
+          "preserved_asset_sha256": {
+            "config.json": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+            "generation_config.json": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2",
+            "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+            "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+            "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+            "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+            "LICENSE": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+          },
+          "tokenizer_assets_byte_identical_to_supa_1_7_0": true
+        },
+        "limitations": [
+          "ONE training draw (selection seed 17). No replication. Nothing here establishes a reliable success rate.",
+          "Gate v2 PASS coexists with a legacy per-class retention monitor FAIL on all three panel classes under both scoring policies.",
+          "Long context net +1 hides 11 source-correct rows lost and 12 gained. p=1 is not equivalence.",
+          "The long-context and abstention instrument is SPENT and was used report-only. It cannot confirm or select.",
+          "Abstention regresses from 13 to 10 literal UNKNOWN.",
+          "Arithmetic improvement coexists with the loss of 8 of the source's 47 correct answers.",
+          "Stored BF16 but evaluated in FP32 DenseReference. Native BF16 serving is NOT qualified.",
+          "No independent confirmation instrument exists for long context or abstention.",
+          "Semantic abstention review NOT_PERFORMED. Human data review NOT_PERFORMED.",
+          "No broad model-quality superiority over Supa or Opallo is established."
+        ],
+        "claims": {
+          "quality_improvement_established": false,
+          "release_permitted": false,
+          "release_candidate": false,
+          "efficacy_claim": false,
+          "catastrophic_forgetting_absence_established": false,
+          "acquisition_of_new_capability_established": true,
+          "acquisition_scope": "one-step state-transition task, three families, on a selection-admissible instrument with published shortcut floors, one seed"
+        },
+        "distribution": {
+          "private_vault": "Luncy1978/rineya-published-cores",
+          "visibility": "private",
+          "public_release": false,
+          "note": "Private archival backup only. Private vault storage is not a release and carries no quality claim."
+        },
+        "provenance_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+        "provenance_branch": "codex/dataset-retention-audit-v1"
       }
     }
   ],

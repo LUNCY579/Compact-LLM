@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "record": "operator-authorized promotion of an experimental research candidate to a named private-vault core",
+  "promoted_at_utc": "2026-09-17T19:45:04.903285+00:00",
+  "codename_assigned_by_operator": "Titan-Experimental",
+  "directory_name": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+
+  "identity": {
+    "from_candidate_id": "Rineya-Supa-RRP015-Control-Seed17-Research",
+    "weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+    "weight_hash_verified_before_and_after_copy": true,
+    "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "bytes_unmodified_from_preserved_export": true,
+    "preserved_export_path": "rineya-dataset-retention-records/rrp015-20260917/control-preserved-hf"
+  },
+
+  "what_changed_relative_to_the_preserved_record": {
+    "prior_record": "evidence/SOURCE_PRESERVE_RESEARCH_CANDIDATE.json",
+    "prior_status": "PRESERVED_EXPERIMENTAL_CANDIDATE_NOT_RELEASE",
+    "prior_published_core_registry_changed": false,
+    "prior_release_permitted": false,
+    "now": {
+      "named_core_created": true,
+      "published_core_registry_changed": true,
+      "private_vault_backup": "Luncy1978/rineya-published-cores",
+      "release_permitted": false,
+      "public_release": false,
+      "quality_improvement_established": false
+    },
+    "note": "The operator authorized naming and private archival. That is a storage and identity decision. It does NOT change any measured outcome, does NOT constitute a release, and does NOT establish a quality improvement. release_permitted remains false and no evaluation threshold, model, recipe or memory guard was altered to accommodate this promotion."
+  },
+
+  "authorization": {
+    "granted_by": "repository operator, in session, explicitly",
+    "scope": [
+      "assign the codename Titan-Experimental",
+      "create a named core directory under Rineya_Published_Cores",
+      "back the binaries up to the existing PRIVATE Hugging Face family vault",
+      "record the measured results"
+    ],
+    "explicitly_not_granted": [
+      "public release",
+      "native BF16 serving qualification",
+      "any quality or efficacy claim",
+      "substitution for Supa 1.7 in any published system",
+      "promotion of the spent long-context suite to a selection or confirmation role"
+    ]
+  },
+
+  "integrity_at_promotion": {
+    "sources_unmodified": true,
+    "published_core_weights_altered": false,
+    "frozen_experiment_evidence_altered": false,
+    "evaluation_thresholds_altered": false,
+    "model_forward_calls_during_promotion": 0,
+    "training_runs_during_promotion": 0,
+    "tokenizer_assets_byte_identical_to_supa_1_7_0": true
+  },
+
+  "headline_measured_outcomes": {
+    "acquisition_select_views_001": { "titan": 234, "supa": 14, "opallo": 8, "n": 384, "families_cleared": "3/3" },
+    "arithmetic_permissive_150": { "titan": 69, "supa": 47, "source_lost": 8, "source_retained": 39 },
+    "arithmetic_strict_150": { "titan": 62, "supa": 41, "source_lost": 8, "source_retained": 33 },
+    "long_context_256": { "titan": 162, "supa": 161, "net": 1, "lost": 11, "gained": 12, "paired_p": 1.0, "report_only": true },
+    "literal_unknown_64": { "titan": 10, "supa": 13 },
+    "gate_v2": "PASS",
+    "legacy_per_class_retention_monitor": "FAIL",
+    "independent_training_draws": 1
+  },
+
+  "outstanding_before_any_release_could_be_considered": [
+    "at least two further independent training draws of this exact recipe, paired within draw",
+    "a fresh confirmation instrument for long context and abstention; the current suite is SPENT and report-only",
+    "reconciliation of the two disagreeing retention gates, registered before the next selection",
+    "native BF16 serving qualification",
+    "blind semantic abstention review",
+    "human data review of the training corpus"
+  ]
+}
