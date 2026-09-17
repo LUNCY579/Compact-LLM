@@ -75,6 +75,9 @@ PRESERVATION_PLANS = (_registers_preservation_repair.EXPERIMENT,
                       _registers_preservation_repair.AMENDED_EXPERIMENT,
                       _registers_preservation_repair.DELTA_EXPERIMENT)
 STREAMED_PLANS = PRESERVATION_PLANS[1:]
+PROCESS_PLANS = (_registers_process_arm.EXPERIMENT, _registers_process_dose.EXPERIMENT,
+                 _registers_process_mix.EXPERIMENT)
+TRAIN_QUALIFICATION_PLANS = (_registers_corrected_arm.EXPERIMENT, *PROCESS_PLANS)
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
@@ -210,6 +213,9 @@ def inputs(args, *, retain_presentations=True) -> tuple[dict, dict, Path, list[d
         _registers_corrected_arm.validate_execution_scope(args, plan, review_rows)
     if plan["experiment"] in PRESERVATION_PLANS:
         _registers_preservation_repair.validate_scope(args, plan)
+    if plan["experiment"] in PROCESS_PLANS and args.command in ("train", "resume"):
+        review_rows = probe if retain_presentations else read_rows(prepared / "microfit-train.jsonl")
+        _registers_process_arm.validate_execution_exclusions(plan, contract, review_rows)
     return grant, plan, prepared, probe, repeated
 
 
@@ -380,7 +386,7 @@ def worker(args) -> int:
                 write_new(directory / "qualification.json", {**result, "binding": binding})
                 return 0
 
-            if plan["experiment"] == _registers_corrected_arm.EXPERIMENT:
+            if plan["experiment"] in TRAIN_QUALIFICATION_PLANS:
                 # New checkout/data/source/runtime binding earns its own zero-update
                 # qualification before any optimizer allocation or checkpoint restore.
                 qualification = qualify(model, tokenizer, probe, journal.reserve, guard)

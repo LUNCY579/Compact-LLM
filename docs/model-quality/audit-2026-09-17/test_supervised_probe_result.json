@@ -1,0 +1,31 @@
+{
+  "schema_version": 1,
+  "recorded_utc": "2026-09-17T00:46:35.444496+00:00",
+  "status": "PASS_CPU_FIXTURES_ONLY",
+  "command": "python -m unittest discover -s docs/model-quality/audit-2026-09-17 -p test_supervised_probe.py -v",
+  "tests_run": 11,
+  "failures": 0,
+  "errors": 0,
+  "skips": 0,
+  "unittest_reported_seconds": 0.206,
+  "source_sha256": {
+    "supervised_probe.py": "db40e94c8893c8b6ad5fc663b9671ed0c99bad06e48b449e50d80473f33522f2",
+    "test_supervised_probe.py": "005e8210f5cae864abaf45dafe905d2b7999d118ca88cb867380ac66f84bc748"
+  },
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "native_qualification": false,
+  "quality_claim": false,
+  "fixture_scope": [
+    "synthetic resource lease and guard refusal",
+    "fake unchanged 150-row generation return",
+    "create-only output collision and existing result preservation",
+    "unexpected exception, SystemExit, missing output and source drift terminal truth",
+    "sibling import path and argv/sys.path restoration"
+  ],
+  "limitations": [
+    "Does not execute MQ watchdog subprocess in this test suite; reused supervisor is unchanged.",
+    "Does not load a model, invoke CUDA, or qualify native scoring.",
+    "A hard-killed worker cannot write its terminal; existing supervisor timeout receipt remains authoritative."
+  ]
+}

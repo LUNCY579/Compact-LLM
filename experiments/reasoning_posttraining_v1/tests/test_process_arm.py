@@ -171,9 +171,22 @@ def test_compiled_rows_carry_every_field_the_native_evaluator_reads(tmp_path):
     each probe row. A missing key is not caught by any plan or contract check, so it costs a
     full model load and a budget launch to discover.
     """
-    from experiments.model_quality_gpu_v1.native import load_tokenizer
-    tokenizer = load_tokenizer(
-        __import__("pathlib").Path(__file__).resolve().parents[3] / "Supa")
+    import os
+    from pathlib import Path
+    from transformers import AutoTokenizer
+    from experiments.model_quality_gpu_v1.native import audit_assets
+
+    # This is a serialization regression using the frozen tokenizer bytes, not a
+    # native runtime/GPU qualification. Isolated checkouts may keep those assets
+    # outside the repository; require an explicit location rather than skipping.
+    source = Path(os.environ.get("RINEYA_TEST_TOKENIZER_SOURCE",
+                                 str(Path(__file__).resolve().parents[3] / "Supa")))
+    if not (source / "tokenizer.json").is_file():
+        pytest.fail("Frozen tokenizer assets are missing; set RINEYA_TEST_TOKENIZER_SOURCE "
+                    "to the existing Supa tokenizer directory")
+    audit_assets(source, tokenizer_only=True)
+    tokenizer = AutoTokenizer.from_pretrained(str(source), local_files_only=True,
+                                               trust_remote_code=False, use_fast=True)
     rows = [{"id": "p0-step0-valid", "parent_id": "p0", "family": "ledger_replay",
              "before": {"A": 1}, "event": {"kind": "add", "account": "A", "amount": 1},
              "proposed_after": {"A": 2}}]
@@ -334,7 +347,7 @@ def test_a_blend_splits_the_budget_evenly_and_rejects_overlap(tmp_path, monkeypa
 
     seen = {}
 
-    def fake_pool(path, *, select="all"):
+    def fake_pool(path, *, select="all", historical_reproduction=False):
         return [{"id": f"{select}-{i}"} for i in range(5)], {"kept": 5, "filter": select}
 
     def fake_compile(pool, tokenizer, *, token_budget, max_sequence=2048):
@@ -549,6 +562,177 @@ def test_a_second_instrument_is_excluded_from_the_training_draw(tmp_path, monkey
         # No parents survive, so the build fails after the exclusion is computed -- which is
         # the part under test.
         process_arm.build({}, primary, None, per_family=1, exposures=1,
-                          also_exclude_views=[second])
+                          also_exclude_views=[second], historical_reproduction=True)
     expected = {f"P1-{f}" for f in process_arm.FAMILIES} | {f"P2-{f}" for f in process_arm.FAMILIES}
     assert seen["exclude"] == frozenset(expected)
+
+
+def _selection_fixture(tmp_path, monkeypatch):
+    rows = [dict(view(f"selection-{family}-{i}", family),
+                 view_role="ADMITTED_FOR_SELECTION")
+            for family in ALL_FAMILIES for i in range(128)]
+    path = tmp_path / "SELECT_VIEWS.jsonl"
+    path.write_text("".join(json.dumps(r, sort_keys=True) + "\n" for r in rows), encoding="utf-8")
+    # Synthetic bytes model the immutable registered artifact. Production has no
+    # argument that can override this identity.
+    monkeypatch.setattr(process_arm, "SELECT_VIEWS_SHA256", process_arm.stable_hash(path))
+    return path, rows
+
+
+def test_current_build_refuses_missing_selection_exclusion_before_oracle(tmp_path, monkeypatch):
+    primary = write_views(tmp_path, [view(f"probe-{f}", f) for f in ALL_FAMILIES])
+    def forbidden(*args, **kwargs):
+        pytest.fail("must reject missing selection exclusion before scanning training data")
+    monkeypatch.setattr(process_arm, "verified_positives", forbidden)
+    with pytest.raises(ValueError, match="frozen SELECT-VIEWS-001"):
+        process_arm.build({}, primary, None, per_family=1, exposures=1)
+
+
+def test_exclusion_matches_registered_bytes_not_name_or_claimed_role(tmp_path, monkeypatch):
+    selected, _ = _selection_fixture(tmp_path, monkeypatch)
+    selected.write_text(selected.read_text(encoding="utf-8").replace(
+        "selection-ledger_replay-0", "replacement-ledger_replay-0"), encoding="utf-8")
+    with pytest.raises(ValueError, match="frozen SELECT-VIEWS-001"):
+        process_arm.verified_exclusions([selected])
+
+
+@pytest.mark.parametrize("corruption", ["role", "duplicate_parent", "family", "split"])
+def test_selection_geometry_and_role_are_checked(tmp_path, monkeypatch, corruption):
+    selected, rows = _selection_fixture(tmp_path, monkeypatch)
+    if corruption == "role":
+        rows[0]["view_role"] = "CANDIDATE_NOT_ADMITTED_OR_TRAINED"
+    elif corruption == "duplicate_parent":
+        rows[0]["parent_id"] = rows[1]["parent_id"]
+    elif corruption == "family":
+        rows[0]["family"] = "unexpected"
+    else:
+        rows[0]["source_split"] = "test"
+    selected.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    monkeypatch.setattr(process_arm, "SELECT_VIEWS_SHA256", process_arm.stable_hash(selected))
+    with pytest.raises(ValueError, match="geometry or declared role"):
+        process_arm.verified_exclusions([selected])
+
+
+def test_current_build_excludes_and_binds_every_instrument(tmp_path, monkeypatch):
+    selected, selection_rows = _selection_fixture(tmp_path, monkeypatch)
+    primary_rows = [view(f"probe-{f}", f) for f in ALL_FAMILIES]
+    primary = write_views(tmp_path, primary_rows)
+    expected = {r["parent_id"] for r in selection_rows + primary_rows}
+
+    def verified(binding, exclude, **kwargs):
+        assert exclude == expected
+        return {f: {f"train-{f}": {"id": f"train-{f}", "parent_id": f"train-{f}", "family": f}}
+                for f in ALL_FAMILIES}, {"labels_checked": 0}
+
+    monkeypatch.setattr(process_arm, "verified_positives", verified)
+    monkeypatch.setattr(process_arm, "compile_training", lambda rows, *args, **kwargs: (
+        [compiled_row(r["id"], parent=r["parent_id"], family=r["family"]) for r in rows], []))
+    compiled, plan, report = process_arm.build({}, primary, None, per_family=1, exposures=1,
+                                              also_exclude_views=[selected])
+    audit = report["scored_instrument_exclusion_audit"]
+    assert audit == plan["scored_instrument_exclusion_audit"]
+    assert audit["current_gate_acquisition_exclusion_verified"] is True
+    assert audit["select_views_001_verified"] is True
+    assert report["held_out_parents"] == 387
+    assert not ({r["parent_id"] for r in compiled} & expected)
+    contract = process_arm.write_prepared(tmp_path / "prepared", compiled, report)
+    assert contract["scored_instrument_exclusion_audit"] == audit
+    assert contract["disjointness_verified_against"] == [str(primary.resolve()), str(selected.resolve())]
+
+
+def test_historical_reproduction_is_explicit_and_not_current_gate_eligible(tmp_path):
+    primary = write_views(tmp_path, [view("historical-parent", "ledger_replay")])
+    _, audit = process_arm.verified_exclusions([primary], historical_reproduction=True)
+    assert audit["historical_reproduction"] is True
+    assert audit["current_gate_acquisition_exclusion_verified"] is False
+    assert audit["select_views_001_verified"] is False
+
+
+def test_mixture_forwards_selection_exclusions_before_rehearsal(tmp_path, monkeypatch):
+    from experiments.reasoning_posttraining_v1 import process_mix
+    selected = tmp_path / "SELECT_VIEWS.jsonl"
+    class ReachedTransitionBuilder(Exception):
+        pass
+    def build(*args, **kwargs):
+        assert kwargs["also_exclude_views"] == [selected]
+        assert kwargs["historical_reproduction"] is False
+        raise ReachedTransitionBuilder
+    monkeypatch.setattr(process_mix.process_arm, "build", build)
+    with pytest.raises(ReachedTransitionBuilder):
+        process_mix.build({}, tmp_path / "probe", tmp_path / "rehearsal", None,
+                          per_family=1, also_exclude_views=[selected])
+
+
+def test_rehearsal_excludes_short_panel_stems_from_other_classes(tmp_path, monkeypatch):
+    from experiments.reasoning_posttraining_v1 import process_mix
+    panel = tmp_path / "panel.jsonl"
+    panel.write_text(json.dumps({"id": "panel", "messages": [
+        {"role": "user", "content": "Current note: What is 10% of 100?"}]}) + "\n", encoding="utf-8")
+    monkeypatch.setattr(process_mix, "PANEL_PATH", panel)
+    rows = [_pres_row("panel-class", "percentage_reasoning", "reasoning"),
+            _pres_row("disguised", "insufficient_information", "reasoning"),
+            _pres_row("clean", "clarification", "communication")]
+    rows[1]["messages"][1]["content"] = "Please answer: What is 20% of 50?"
+    source = tmp_path / "rehearsal.jsonl"
+    source.write_text("".join(json.dumps(r) + "\n" for r in rows), encoding="utf-8")
+    pool, audit = process_mix.rehearsal_pool(source)
+    assert [r["id"] for r in pool] == ["clean"]
+    assert audit["text_contact_audit"]["dropped_rows"] == 1
+    assert audit["text_contact_audit"]["dropped"][0]["id"] == "disguised"
+    assert audit["text_contact_audit"]["panel_sha256"] == process_arm.stable_hash(panel)
+    assert audit["classes_kept"] == {"clarification": 1}
+    historical, historical_audit = process_mix.rehearsal_pool(source, historical_reproduction=True)
+    assert [r["id"] for r in historical] == ["disguised", "clean"]
+    assert historical_audit["text_contact_audit"]["current_gate_eligible"] is False
+
+
+def test_selection_exclusion_cannot_silently_reduce_registered_dose():
+    pool = {f: {"one": {"id": f, "parent_id": f}} for f in ALL_FAMILIES}
+    with pytest.raises(ValueError, match="not enough eligible parents"):
+        process_arm.select(pool, per_family=2)
+
+
+@pytest.mark.parametrize("dose", [0, -1, True, 1.5, {f: 1.5 for f in ALL_FAMILIES}])
+def test_invalid_per_family_dose_is_refused(dose):
+    with pytest.raises(ValueError, match="per-family dose"):
+        process_arm.resolve_per_family(dose, ALL_FAMILIES)
+
+
+@pytest.mark.parametrize("retain", [True, False])
+@pytest.mark.parametrize("fault", [None, "legacy", "contract", "leaked_parent", "changed_instrument"])
+def test_controller_rechecks_current_gate_exclusions_before_launch(tmp_path, monkeypatch, retain, fault):
+    from types import SimpleNamespace
+    from experiments.reasoning_posttraining_v1 import controller
+    from experiments.model_quality_gpu_v1.integrity import digest, write_new
+
+    selected, selection_rows = _selection_fixture(tmp_path, monkeypatch)
+    excluded, audit = process_arm.verified_exclusions([selected])
+    rows = [compiled_row("new-parent")]
+    if fault == "leaked_parent":
+        rows[0]["parent_id"] = selection_rows[0]["parent_id"]
+    plan = process_arm.build_plan(rows, exposures=1)
+    report = {"experiment": process_arm.EXPERIMENT, "train_window": 2048,
+              "held_out_parents": len(excluded), "scored_instruments_excluded": [str(selected.resolve())]}
+    if fault != "legacy":
+        plan["scored_instrument_exclusion_audit"] = audit
+        report["scored_instrument_exclusion_audit"] = json.loads(json.dumps(audit))
+    if fault == "contract":
+        report["scored_instrument_exclusion_audit"]["historical_reproduction"] = True
+    prepared = tmp_path / "prepared"
+    process_arm.write_prepared(prepared, rows, report)
+    plan_path, grant_path = tmp_path / "PLAN.json", tmp_path / "GRANT.json"
+    write_new(plan_path, plan)
+    write_new(grant_path, {
+        "experiment": process_arm.EXPERIMENT, "decision": "APPROVED", "training_permission": True,
+        "approved_by": "CPU fixture", "authorization_reference": "CPU fixture only",
+        "data_contract_sha256": process_arm.stable_hash(prepared / "DATA_CONTRACT.json"),
+        "plan_sha256": digest(plan), "limits": process_arm.LIMITS, "excludes": list(process_arm.EXCLUDES)})
+    if fault == "changed_instrument":
+        selected.write_text(selected.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    args = SimpleNamespace(prepared=str(prepared), plan=str(plan_path), grant=str(grant_path),
+                           command="train", experiment=process_arm.EXPERIMENT)
+    if fault:
+        with pytest.raises(ValueError, match="selection exclusions|scored instrument parents|frozen SELECT-VIEWS-001"):
+            controller.inputs(args, retain_presentations=retain)
+    else:
+        controller.inputs(args, retain_presentations=retain)

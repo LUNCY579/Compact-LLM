@@ -121,6 +121,54 @@ def test_a_consistent_effect_across_clusters_is_detected():
     assert out["claim_supported"] is True
 
 
+def test_superiority_over_zero_does_not_establish_superiority_over_a_positive_margin():
+    """Exact counterexample: all effects >0, but seven of eight are < the margin.
+
+    Gains are seven 0.10s and one 0.30: mean 0.125 > margin 0.12.
+    Against zero all eight signs align, so p=2/256. Around the margin,
+    magnitudes are seven .02s and one .18. Every sign assignment has an
+    absolute sum >= .04 (the observed sum), so the correct two-sided p is 1.
+    These reference probabilities do not call the implementation's test.
+    """
+    rows = rows_for({f"c{i}": 10 for i in range(8)})
+    baseline = [int(int(r["id"].split(":")[1]) < 4) for r in rows]
+    arm = [int(int(r["id"].split(":")[1]) < (7 if r["cluster_id"] == "c7" else 5))
+           for r in rows]
+    zero = st.compare(rows, baseline, arm, cluster_key="cluster_id")
+    margin = st.compare(rows, baseline, arm, cluster_key="cluster_id", margin=.12)
+    assert zero["permutation"]["p_value"] == 2 / 256
+    assert zero["claim_supported"] is True
+    assert margin["estimates"]["cluster_weighted_difference"] == .125
+    assert margin["exceeds_practical_margin"] is True
+    assert margin["permutation"]["shift"] == .12
+    assert margin["permutation"]["p_value"] == 1
+    assert margin["claim_supported"] is False
+    assert "declared margin" in margin["why_not_supported"]
+
+
+def test_consistent_gain_above_margin_is_supported_but_boundary_and_smaller_gain_are_not():
+    rows = rows_for({f"c{i}": 10 for i in range(8)})
+    baseline = [0] * len(rows)
+    arm = [int(int(r["id"].split(":")[1]) < 2) for r in rows]
+    above = st.compare(rows, baseline, arm, cluster_key="cluster_id", margin=.1)
+    assert above["permutation"]["p_value"] == 2 / 256
+    assert above["claim_supported"] is True
+    boundary = st.compare(rows, baseline, arm, cluster_key="cluster_id", margin=.2)
+    assert boundary["permutation"]["p_value"] == 1
+    assert boundary["claim_supported"] is False
+    below = st.compare(rows, baseline, arm, cluster_key="cluster_id", margin=.3)
+    # A significant departure below the boundary must not become superiority.
+    assert below["permutation"]["p_value"] == 2 / 256
+    assert below["exceeds_practical_margin"] is False
+    assert below["claim_supported"] is False
+
+
+@pytest.mark.parametrize("margin", [True, -0.01, 1.01, float("nan"), float("inf"), "0.1"])
+def test_superiority_refuses_invalid_accuracy_margins(margin):
+    with pytest.raises(ValueError, match="finite accuracy difference"):
+        st.compare([], [], [], cluster_key="cluster_id", margin=margin)
+
+
 def test_both_weightings_are_reported_and_can_disagree():
     """Unbalanced clusters: the row-weighted and cluster-weighted answers differ in sign."""
     rows = rows_for({"big": 18, "s1": 1, "s2": 1, "s3": 1})

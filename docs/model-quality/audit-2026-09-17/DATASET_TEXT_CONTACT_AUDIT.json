@@ -1,0 +1,2034 @@
+{
+  "record": "DATASET_TEXT_CONTACT_AUDIT_20260917",
+  "created_at": "2026-09-17T00:40:26.291698+00:00",
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "bank_access": "Open arithmetic panel and TRAIN corpora only; no protected holdout read",
+  "panel": {
+    "path": "experiments\\architecture_benchmark_001\\data\\monitor_probe.jsonl",
+    "sha256": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+    "rows": 150
+  },
+  "sources": [
+    {
+      "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\\data\\sft\\rineya_v1_v2_preservation_slice_14000.jsonl",
+      "sha256": "5ee0c283b290cf89f6fcfbcf52bd2bcd03f6c63bb06793b9fa4b957d91973d50",
+      "initial_filters": {
+        "total": 14000,
+        "drop_multiturn": 2897,
+        "drop_panel_class": 750
+      },
+      "zero_8gram_pool_rows": 10353,
+      "final_clean_rows": 10319,
+      "post_8gram_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 10353,
+        "kept_rows": 10319,
+        "dropped_rows": 34,
+        "reason_counts": {
+          "digit_blinded_panel_stem": 34
+        },
+        "dropped": [
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00596",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00133",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00146",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00616",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00123",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00127",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00206",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00129",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00131",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00016",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00026",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00143",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00112",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00646",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00536",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00126",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00116",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00130",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00142",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00676",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00166",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00146",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00148",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00316",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00506",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00151",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00124",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00115",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00121",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00135",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00046",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00122",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00116",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          },
+          {
+            "id": "rineya_srb_v1_arithmetic_short_answer_00136",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "arithmetic_short_answer"
+          }
+        ],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "dropped_classes": {
+        "insufficient_information": 14,
+        "arithmetic_short_answer": 20
+      },
+      "abstention_rows_before_stem_guard": 1471,
+      "abstention_rows_after_stem_guard": 1457,
+      "abstention_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 1471,
+        "kept_rows": 1457,
+        "dropped_rows": 14,
+        "reason_counts": {
+          "digit_blinded_panel_stem": 14
+        },
+        "dropped": [
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00596",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00616",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00206",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00016",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00026",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00646",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00536",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00116",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00676",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00166",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00146",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00316",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00506",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_grnc_v2_insufficient_information_00046",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          }
+        ],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "representative_contacts": [
+        {
+          "id": "rineya_grnc_v2_insufficient_information_00596",
+          "class": "insufficient_information",
+          "user": "For a quick sanity check at the market: What is 25% of 72?",
+          "target": "18."
+        },
+        {
+          "id": "rineya_srb_v1_arithmetic_short_answer_00133",
+          "class": "arithmetic_short_answer",
+          "user": "What is 20% of 60?",
+          "target": "12."
+        },
+        {
+          "id": "rineya_srb_v1_arithmetic_short_answer_00146",
+          "class": "arithmetic_short_answer",
+          "user": "What is 50% of 100?",
+          "target": "50."
+        },
+        {
+          "id": "rineya_grnc_v2_insufficient_information_00616",
+          "class": "insufficient_information",
+          "user": "I need the result for Juniper: What is 75% of 41?",
+          "target": "30.75."
+        }
+      ]
+    },
+    {
+      "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\\data\\sft\\rineya_v3_integrated_reasoning_dialogue_train_30000.jsonl",
+      "sha256": "45b2e9cbd98eb6f67f09047a8b3053c1080f8c2aa80de704e25b4de3a970e5db",
+      "initial_filters": {
+        "total": 30000,
+        "drop_multiturn": 16088,
+        "drop_user_8gram": 5275
+      },
+      "zero_8gram_pool_rows": 8637,
+      "final_clean_rows": 8637,
+      "post_8gram_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 8637,
+        "kept_rows": 8637,
+        "dropped_rows": 0,
+        "reason_counts": {},
+        "dropped": [],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "dropped_classes": {},
+      "abstention_rows_before_stem_guard": 0,
+      "abstention_rows_after_stem_guard": 0,
+      "abstention_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 0,
+        "kept_rows": 0,
+        "dropped_rows": 0,
+        "reason_counts": {},
+        "dropped": [],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "representative_contacts": []
+    },
+    {
+      "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\\data\\sft\\rineya_v3_natural_communication_train_30000.jsonl",
+      "sha256": "6fb773d72a20ee68ac982ba931573e38ad3f82a9b7ef83dff2b575f2602803c6",
+      "initial_filters": {
+        "total": 30000,
+        "drop_multiturn": 15896,
+        "drop_user_8gram": 4972
+      },
+      "zero_8gram_pool_rows": 9132,
+      "final_clean_rows": 9132,
+      "post_8gram_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 9132,
+        "kept_rows": 9132,
+        "dropped_rows": 0,
+        "reason_counts": {},
+        "dropped": [],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "dropped_classes": {},
+      "abstention_rows_before_stem_guard": 1456,
+      "abstention_rows_after_stem_guard": 1456,
+      "abstention_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 1456,
+        "kept_rows": 1456,
+        "dropped_rows": 0,
+        "reason_counts": {},
+        "dropped": [],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "representative_contacts": []
+    },
+    {
+      "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0\\data\\sft\\rineya_v3_reasoning_train_50000.jsonl",
+      "sha256": "64a4784553bedf6581334cbe27c3aefa34cc7b80778bedb81ed767078459b644",
+      "initial_filters": {
+        "total": 50000,
+        "drop_panel_class": 7500,
+        "drop_multiturn": 23088,
+        "drop_user_8gram": 7417
+      },
+      "zero_8gram_pool_rows": 11995,
+      "final_clean_rows": 11937,
+      "post_8gram_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 11995,
+        "kept_rows": 11937,
+        "dropped_rows": 58,
+        "reason_counts": {
+          "digit_blinded_panel_stem": 58
+        },
+        "dropped": [
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01050",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00866",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00390",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01940",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00663",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00879",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01624",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00281",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00502",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00855",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01592",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00361",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01309",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01299",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00425",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00358",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01945",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00401",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01362",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00846",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00509",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01561",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00198",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00127",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00153",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00064",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00063",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00585",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00437",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01256",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01863",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01504",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__00925",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01075",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00162",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01644",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01265",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00234",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01070",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01701",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01157",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00683",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01179",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00629",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00732",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01662",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__00946",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01389",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01558",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00577",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00675",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00451",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00372",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00002",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00269",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00278",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00559",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01755",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          }
+        ],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "dropped_classes": {
+        "insufficient_information": 58
+      },
+      "abstention_rows_before_stem_guard": 686,
+      "abstention_rows_after_stem_guard": 628,
+      "abstention_contact_audit": {
+        "policy": "user_text_contact_v1_id_8gram_digit_blinded_stem",
+        "panel_rows": 150,
+        "input_rows": 686,
+        "kept_rows": 628,
+        "dropped_rows": 58,
+        "reason_counts": {
+          "digit_blinded_panel_stem": 58
+        },
+        "dropped": [
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01050",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00866",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00390",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01940",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00663",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00879",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01624",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00281",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00502",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00855",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01592",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00361",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01309",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01299",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00425",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00358",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01945",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00401",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01362",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00846",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00509",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01561",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00198",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00127",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00153",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00064",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00063",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00585",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00437",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01256",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01863",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01504",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__00925",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01075",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00162",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01644",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01265",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00234",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01070",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01701",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01157",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00683",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01179",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00629",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00732",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01662",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__00946",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s04__01389",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01558",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00577",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00675",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00451",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00372",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00002",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00269",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s00__00278",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00559",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          },
+          {
+            "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s05__01755",
+            "reasons": [
+              "digit_blinded_panel_stem"
+            ],
+            "matched_panel_stem_ids": [
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00311",
+              "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02349"
+            ],
+            "reply_class": "insufficient_information"
+          }
+        ],
+        "semantic_contamination_certificate": false,
+        "system_and_assistant_text_checked": false
+      },
+      "representative_contacts": [
+        {
+          "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s03__01050",
+          "class": "insufficient_information",
+          "user": "In the brisk worksheet, for Cinder Trail's parent meeting at the practice field, to finish the parent meeting, use this exact version: What is 75% of 38? Keep the answer usable for Esme.",
+          "target": "28.5."
+        },
+        {
+          "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s02__00866",
+          "class": "insufficient_information",
+          "user": "In the opal ledger, the team handling folding chairs at the equipment cage asks: What is 75% of 42? Keep the answer usable for Tessa.",
+          "target": "31.5."
+        },
+        {
+          "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s01__00390",
+          "class": "insufficient_information",
+          "user": "In the copper casebook, for Dunewatch Survey's sports practice at the bus depot, a last check from the bus depot: What is 25% of 44?",
+          "target": "11."
+        },
+        {
+          "id": "rineya_v3_sft__insufficient_information__reas_insufficient_information_s06__01940",
+          "class": "insufficient_information",
+          "user": "In the evening field note, for Larkspur Observatory's weekend rehearsal at the equipment cage, in the revised weekend rehearsal notes, Pavel wrote: What is 25% of 94? Keep the answer usable for Pavel.",
+          "target": "23.5."
+        }
+      ]
+    }
+  ]
+}

@@ -85,6 +85,9 @@ INSTRUMENTS = {
         'audit': RECORDS / 'process-transition-probe-001' / 'AUDIT.json',
         'view_role': 'CANDIDATE_NOT_ADMITTED_OR_TRAINED',
         'admits_selection': False,
+        'floors_doc': 'forge-v2-prereg-001/PROCESS_PROBE_FLOORS.md',
+        'limitation_0': ('TRAIN-only derivative views; CANDIDATE_NOT_ADMITTED_OR_TRAINED, '
+                         'never for selection'),
         'floors': {
             'ledger_replay': {'copy_before': 31, 'constant_majority': 1, 'n': 128},
             'register_machine': {'copy_before': 7, 'constant_majority': 1, 'n': 128},
@@ -96,6 +99,9 @@ INSTRUMENTS = {
         'audit': RECORDS / 'select-views-001' / 'FLOORS.json',
         'view_role': 'ADMITTED_FOR_SELECTION',
         'admits_selection': True,
+        'floors_doc': 'select-views-001/FLOORS.json',
+        'limitation_0': ('TRAIN-split derivative views; ADMITTED_FOR_SELECTION, '
+                         'never for confirmation'),
         'floors': {
             'ledger_replay': {'copy_before': 30, 'constant_majority': 1, 'n': 128},
             'register_machine': {'copy_before': 9, 'constant_majority': 1, 'n': 128},
@@ -393,19 +399,24 @@ def main(argv=None):
             'binding_floor_count': total_floor,
             'binding_floor_rate': round(total_floor / total_n, 4),
             'presentation_only_gain': total_canon - total_strict,
+            # Generated from the floors in force, not transcribed. A hardcoded triple is how
+            # SELECT-VIEWS-001's first artifact came to quote the OLD instrument's floors.
             'note': ('the aggregate is REPORTED, never the gate: the three families have '
-                     'different binding floors (ledger_replay 0.2422 copy_before, '
-                     'register_machine 0.0547 copy_before, prerequisite_plan 0.0703 '
-                     'constant_majority)'),
+                     'different binding floors ('
+                     + ', '.join('{} {:.4f} {}'.format(f, per_family[f]['binding_floor_rate'],
+                                                       per_family[f]['binding_floor_predictor'])
+                                 for f in sorted(per_family)) + ')'),
         },
         'per_family': per_family,
-        'decision_rule': ('pre-registered in forge-v2-prereg-001/PROCESS_PROBE_FLOORS.md: a core '
+        'decision_rule': ('pre-registered in ' + instrument['floors_doc'] + ': a core '
                           'clears a family only if the two-sided exact binomial 95% lower bound '
                           'on canonical_correct exceeds that family binding floor, where the '
-                          'binding floor is the STRONGER of copy_before and constant_majority'),
+                          'binding floor is the STRONGER of copy_before and constant_majority. '
+                          'The CP lower bound is the rule; no transcribed minimum count (the '
+                          '40/12/15 shorthand in RRP-008/009/013) is binding.'),
         'floors_published_before_any_model_call': floors,
         'limitations': [
-            'TRAIN-only derivative views; CANDIDATE_NOT_ADMITTED_OR_TRAINED, never for selection',
+            instrument['limitation_0'],
             'single-step competence does not establish multi-step search or planning',
             'prerequisite_plan positives cover applicable actions only',
             'exact-match scoring; strict vs canonical separates presentation from arithmetic',

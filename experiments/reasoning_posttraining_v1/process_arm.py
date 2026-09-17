@@ -94,6 +94,75 @@ EXCLUDES = ("RL", "larger_teacher", "cloud", "release", "architectural_change")
 
 budget.register(EXPERIMENT, ceiling=LIMITS, phases=("train", "resume"), excludes=EXCLUDES)
 
+# Immutable SELECT-VIEWS-001 identity, published in GATE_V2_PREREG Amendment 2
+# before source inference. A filename or self-reported role is not enough to
+# establish that the actual selection parents were excluded.
+SELECT_VIEWS_SHA256 = "7dd53f2a751b54c349c2ef571e8f9c5153737f4a1ed3df5eafe25f95980e78a3"
+
+
+def verified_exclusions(paths, *, historical_reproduction=False):
+    """Bind excluded parents to bytes; current builds must exclude SELECT-VIEWS-001.
+
+    Explicit historical reproduction keeps the old draws reproducible, but records
+    that those builds cannot be judged by the current acquisition gate. The CLI
+    intentionally offers no legacy bypass.
+    """
+    excluded, instruments, selection_verified = set(), [], False
+    for path in dict.fromkeys(Path(p).resolve() for p in paths):
+        sha = stable_hash(path)
+        rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines()
+                if line.strip()]
+        if not rows or any(not isinstance(r.get("parent_id"), str)
+                           or not r["parent_id"] for r in rows):
+            raise ValueError("scored instrument must contain nonempty parent identities")
+        parents = {r["parent_id"] for r in rows}
+        if stable_hash(path) != sha:
+            raise ValueError("scored instrument changed while reading")
+        if sha == SELECT_VIEWS_SHA256:
+            if (len(rows) != 384 or len(parents) != 384
+                    or collections.Counter(r.get("family") for r in rows)
+                    != {f: 128 for f in FAMILIES}
+                    or any(r.get("view_role") != "ADMITTED_FOR_SELECTION"
+                           or r.get("source_split") != "train" for r in rows)):
+                raise ValueError("SELECT-VIEWS-001 geometry or declared role differs")
+            selection_verified = True
+        excluded.update(parents)
+        instruments.append({"path": str(path), "sha256": sha,
+                            "rows": len(rows), "distinct_parents": len(parents),
+                            "is_select_views_001": sha == SELECT_VIEWS_SHA256})
+    if not selection_verified and not historical_reproduction:
+        raise ValueError("current-gate training requires exclusion of the frozen SELECT-VIEWS-001 "
+                         "instrument; pass --exclude-views <records>/select-views-001/SELECT_VIEWS.jsonl")
+    return frozenset(excluded), {
+        "instruments": instruments,
+        "select_views_001_verified": selection_verified,
+        "historical_reproduction": historical_reproduction,
+        "current_gate_acquisition_exclusion_verified": selection_verified and not historical_reproduction,
+    }
+
+
+def validate_execution_exclusions(plan, contract, rows):
+    """Recheck the actual training inventory, not a builder's eligibility flag.
+
+    Old prepared inventories remain valid historical evidence; they cannot launch
+    current-gate training until rebuilt with the current selection exclusions.
+    """
+    audit = plan.get("scored_instrument_exclusion_audit")
+    if (not isinstance(audit, dict)
+            or audit.get("current_gate_acquisition_exclusion_verified") is not True
+            or audit.get("historical_reproduction") is not False
+            or contract.get("scored_instrument_exclusion_audit") != audit):
+        raise ValueError("current process training requires matching plan/contract selection exclusions; "
+                         "legacy or historical inventories are not current-gate eligible")
+    paths = [entry["path"] for entry in audit.get("instruments", [])]
+    excluded, observed = verified_exclusions(paths)
+    if (observed != audit or contract.get("disjointness_verified_against") != paths
+            or contract.get("held_out_parents_excluded") != len(excluded)):
+        raise ValueError("selection exclusion identities differ from the prepared contract")
+    collision = sorted({r["parent_id"] for r in rows} & excluded)
+    if collision:
+        raise ValueError(f"training inventory contains scored instrument parents: {collision[:5]}")
+
 
 def salt_for(selection_seed: int) -> str:
     """Seed 17 IS seed 1 and must keep its exact salt, or the replication rebuilds a
@@ -178,14 +247,18 @@ def resolve_per_family(per_family, families) -> dict[str, int]:
     confusion would be expensive.
     """
     families = sorted(families)
-    if isinstance(per_family, int):
+    if type(per_family) is int:
+        if per_family <= 0:
+            raise ValueError("per-family dose must be positive for every family")
         return {f: per_family for f in families}
+    if not isinstance(per_family, dict):
+        raise ValueError("per-family dose must be a positive integer or a family mapping")
     missing = [f for f in families if f not in per_family]
     extra = [f for f in per_family if f not in families]
     if missing or extra:
         raise ValueError(f"per-family dose must name exactly the families present; "
                          f"missing {missing}, unexpected {extra}")
-    if any(int(v) <= 0 for v in per_family.values()):
+    if any(type(v) is not int or v <= 0 for v in per_family.values()):
         raise ValueError(f"per-family dose must be positive for every family: {per_family}")
     return {f: int(per_family[f]) for f in families}
 
@@ -205,6 +278,10 @@ def parse_per_family(value: str):
 
 def select(per_parent: dict, *, per_family, salt: str = SALT) -> list[dict]:
     resolved = resolve_per_family(per_family, per_parent)
+    short = {f: {"requested": n, "available": len(per_parent[f])}
+             for f, n in resolved.items() if len(per_parent[f]) < n}
+    if short:
+        raise ValueError(f"not enough eligible parents for the registered per-family dose: {short}")
     chosen = []
     for family in sorted(per_parent):
         pool = sorted(per_parent[family].values(),
@@ -298,8 +375,11 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
         "confirmation": "NOT_ESTABLISHED",
         "human_data_review": "NOT_PERFORMED",
         "held_out_parents_excluded": report["held_out_parents"],
-        "disjointness_verified_against": ["process-transition-probe-001/CANDIDATE_VIEWS.jsonl"],
+        "disjointness_verified_against": report.get("scored_instruments_excluded", [
+            "process-transition-probe-001/CANDIDATE_VIEWS.jsonl"]),
     }
+    if "scored_instrument_exclusion_audit" in report:
+        contract["scored_instrument_exclusion_audit"] = report["scored_instrument_exclusion_audit"]
     write_new(directory / "DATA_CONTRACT.json", contract)
     return contract
 
@@ -308,12 +388,14 @@ def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
           train_window: int = TRAIN_WINDOW,
           selection_seed: int = SEED,
           experiment: str = EXPERIMENT,
-          also_exclude_views=()) -> tuple[list[dict], dict, dict]:
+          also_exclude_views=(),
+          historical_reproduction: bool = False) -> tuple[list[dict], dict, dict]:
     salt = salt_for(selection_seed)
     rules = rules_from_views(views)
     # Every scored instrument's parents, not just this arm's rule source. `rules_from_views`
     # still reads ONLY `views`, so the trained task definition cannot drift.
-    excluded = held_out_parents([views, *also_exclude_views])
+    excluded, exclusion_audit = verified_exclusions(
+        [views, *also_exclude_views], historical_reproduction=historical_reproduction)
     per_parent, label_audit = verified_positives(binding, excluded, salt=salt)
     chosen = select(per_parent, per_family=per_family, salt=salt)
     compiled, rejected = compile_training(chosen, rules, tokenizer, max_sequence=train_window)
@@ -328,6 +410,7 @@ def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
 
     plan = build_plan(compiled, exposures=exposures, train_window=train_window,
                       experiment=experiment)
+    plan["scored_instrument_exclusion_audit"] = exclusion_audit
     taken = collections.Counter(r["family"] for r in compiled)
     report = {
         "record": "RRP007_PROCESS_A1_BUILD",
@@ -340,7 +423,8 @@ def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
         "train_window": train_window,
         "source_label_audit": label_audit,
         "held_out_parents": len(excluded),
-        "scored_instruments_excluded": [str(views), *[str(v) for v in also_exclude_views]],
+        "scored_instruments_excluded": [r["path"] for r in exclusion_audit["instruments"]],
+        "scored_instrument_exclusion_audit": exclusion_audit,
         "available_parents_after_exclusion": {f: len(p) for f, p in sorted(per_parent.items())},
         "per_family_requested": per_family,
         "per_family_taken": dict(sorted(taken.items())),
