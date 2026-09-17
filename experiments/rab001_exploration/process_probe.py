@@ -67,16 +67,43 @@ finally:
     sys.argv = _saved_argv
 
 RECORDS = REPO.parent / 'rineya-dataset-retention-records'
-VIEWS = RECORDS / 'process-transition-probe-001' / 'CANDIDATE_VIEWS.jsonl'
-VIEWS_AUDIT = RECORDS / 'process-transition-probe-001' / 'AUDIT.json'
 OUT = ROOT / 'evidence' / 'retention-design-v1'
 
-# Published in forge-v2-prereg-001/PROCESS_PROBE_FLOORS.md BEFORE any model call.
-PUBLISHED_FLOORS = {
-    'ledger_replay': {'copy_before': 31, 'constant_majority': 1, 'n': 128},
-    'register_machine': {'copy_before': 7, 'constant_majority': 1, 'n': 128},
-    'prerequisite_plan': {'copy_before': 0, 'constant_majority': 9, 'n': 128},
+# Two scored acquisition instruments now exist and they are NOT interchangeable. Each declares
+# the view_role it grants and its own floors, published before any model call. Pointing this
+# probe at a views file whose role it does not grant is refused, which is what stops an
+# instrument from being silently promoted to a use it was not built for.
+#
+#   process-transition-probe-001  declares "never for selection" in all 26 of its evidence
+#                                 files. Report-only. Floors in PROCESS_PROBE_FLOORS.md.
+#   select-views-001              declared ADMITTED_FOR_SELECTION at birth, per
+#                                 GATE_V2_PREREG.md. It is GATE v2's acquisition conjunct.
+#                                 Floors in select-views-001/FLOORS.json.
+INSTRUMENTS = {
+    'process-transition-probe-001': {
+        'views': RECORDS / 'process-transition-probe-001' / 'CANDIDATE_VIEWS.jsonl',
+        'audit': RECORDS / 'process-transition-probe-001' / 'AUDIT.json',
+        'view_role': 'CANDIDATE_NOT_ADMITTED_OR_TRAINED',
+        'admits_selection': False,
+        'floors': {
+            'ledger_replay': {'copy_before': 31, 'constant_majority': 1, 'n': 128},
+            'register_machine': {'copy_before': 7, 'constant_majority': 1, 'n': 128},
+            'prerequisite_plan': {'copy_before': 0, 'constant_majority': 9, 'n': 128},
+        },
+    },
+    'select-views-001': {
+        'views': RECORDS / 'select-views-001' / 'SELECT_VIEWS.jsonl',
+        'audit': RECORDS / 'select-views-001' / 'FLOORS.json',
+        'view_role': 'ADMITTED_FOR_SELECTION',
+        'admits_selection': True,
+        'floors': {
+            'ledger_replay': {'copy_before': 30, 'constant_majority': 1, 'n': 128},
+            'register_machine': {'copy_before': 9, 'constant_majority': 1, 'n': 128},
+            'prerequisite_plan': {'copy_before': 0, 'constant_majority': 10, 'n': 128},
+        },
+    },
 }
+DEFAULT_INSTRUMENT = 'process-transition-probe-001'
 
 
 def sha256_file(path: Path) -> str:
@@ -163,7 +190,8 @@ def load_trained(source: Path, device: str, checkpoint: Path):
                               "manifest_sha256": sha256_file(checkpoint / "manifest.json")}
 
 
-def load_views() -> list[dict]:
+def load_views(instrument: dict) -> list[dict]:
+    VIEWS, VIEWS_AUDIT = instrument['views'], instrument['audit']
     if not VIEWS.is_file():
         raise SystemExit('no frozen views: {}'.format(VIEWS))
     declared = json.loads(VIEWS_AUDIT.read_text(encoding='utf-8'))['views_sha256']
@@ -172,8 +200,9 @@ def load_views() -> list[dict]:
         raise SystemExit('views sha256 differs from its audit: {} != {}'.format(actual, declared))
     rows = [json.loads(l) for l in VIEWS.read_text(encoding='utf-8').splitlines() if l.strip()]
     for row in rows:
-        if row['view_role'] != 'CANDIDATE_NOT_ADMITTED_OR_TRAINED':
-            raise SystemExit('a view claims a role this probe does not grant')
+        if row['view_role'] != instrument['view_role']:
+            raise SystemExit('a view claims a role this instrument does not grant: {} != {}'
+                             .format(row['view_role'], instrument['view_role']))
         blob = json.dumps(row['prompt'])
         # Structural, not substring. A substring test is VACUOUS on prerequisite_plan, whose
         # reference is a small integer that coincides with digits of the event ("4" appears
@@ -189,7 +218,7 @@ def load_views() -> list[dict]:
     return rows
 
 
-def floors_from(rows: list[dict]) -> dict:
+def floors_from(rows: list[dict], published: dict) -> dict:
     """Recomputed every run; a drift from the published values stops the probe."""
     out = {}
     for family in sorted({r['family'] for r in rows}):
@@ -201,9 +230,9 @@ def floors_from(rows: list[dict]) -> dict:
         out[family] = {'copy_before': copy_before,
                        'constant_majority': counts.most_common(1)[0][1],
                        'n': len(fam)}
-    if out != PUBLISHED_FLOORS:
+    if out != published:
         raise SystemExit('floors drifted from the published pre-registration:\n'
-                         '  recomputed {}\n  published  {}'.format(out, PUBLISHED_FLOORS))
+                         '  recomputed {}\n  published  {}'.format(out, published))
     return out
 
 
@@ -215,11 +244,16 @@ def main(argv=None):
     parser.add_argument('--max-new-tokens', type=int, default=96)
     parser.add_argument('--checkpoint', type=Path,
                         help='an MQ/RRP checkpoint directory to apply over the frozen source')
+    parser.add_argument('--instrument', default=DEFAULT_INSTRUMENT, choices=sorted(INSTRUMENTS),
+                        help='which scored acquisition instrument to run. select-views-001 is '
+                             'the only one admissible for SELECTION (GATE_V2_PREREG.md); the '
+                             'default is report-only and declares "never for selection".')
     args = parser.parse_args(argv)
 
-    rows = load_views()
-    floors = floors_from(rows)
-    views_sha = sha256_file(VIEWS)
+    instrument = INSTRUMENTS[args.instrument]
+    rows = load_views(instrument)
+    floors = floors_from(rows, instrument['floors'])
+    views_sha = sha256_file(instrument['views'])
 
     model_dir = (REPO / args.model) if not Path(args.model).is_absolute() else Path(args.model)
     if not (model_dir / 'model.safetensors').is_file():
@@ -343,6 +377,9 @@ def main(argv=None):
         'checkpoint': checkpoint_identity,
         'device': args.device,
         'views_sha256': views_sha,
+        'instrument': args.instrument,
+        'instrument_admits_selection': instrument['admits_selection'],
+        'instrument_view_role': instrument['view_role'],
         'views': total_n,
         'distinct_parents': len({r['parent_id'] for r in rows}),
         'max_new_tokens': args.max_new_tokens,
