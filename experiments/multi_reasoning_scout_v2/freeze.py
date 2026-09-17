@@ -19,13 +19,24 @@ def verify_bank():
     access = core.read_json(core.MRS1_RECORDS / "ACCESS_MANIFEST.json")
     if {i.id for i in public} & set(access["quarantined_ids"]):
         raise ValueError("quarantined ID present")
-    # Gold must not be reachable from any model-visible prompt.
+    # Label blindness is structural, not lexical. The answer vocabulary (including the
+    # literal "UNKNOWN") legitimately appears in the system prompt, and the digits 0-3
+    # appear throughout problem text, so scanning for the gold string proves nothing.
+    # What must hold is that an independent role's prompt is EXACTLY the fixed system
+    # text, the fixed role text and the public problem -- leaving no channel a label
+    # could travel through.
+    leak_fields = ("answerable", "difficulty", "verification")
     for item in public:
-        for role in prompts.ROLES:
-            if role in prompts.INDEPENDENT:
-                blob = "".join(m["content"] for m in prompts.messages(item, role))
-                if gold[item.id]["answer"] not in ("0", "1", "2", "3") and gold[item.id]["answer"] in blob:
-                    raise ValueError("gold token reachable in prompt")
+        for role in prompts.INDEPENDENT:
+            messages = prompts.messages(item, role)
+            if [m["role"] for m in messages] != ["system", "user"]:
+                raise ValueError("unexpected prompt structure")
+            if messages[0]["content"] != prompts.SYSTEM:
+                raise ValueError("system prompt is not the frozen text")
+            if messages[1]["content"] != prompts.ROLES[role] + "\n\nPROBLEM\n" + item.problem:
+                raise ValueError("role prompt carries text beyond the role and the problem")
+            if any(f in messages[1]["content"] for f in leak_fields):
+                raise ValueError("gold metadata field name reachable in prompt")
     return {"status": "PASS", "cases": len(public), "bank_reused_from": "MRS-1",
             "bank_regenerated": False, "splits": dict(Counter(i.split for i in public)),
             "quarantined_id_overlap": 0, "protected_payload_reads": 0,
