@@ -1,0 +1,91 @@
+{
+  "schema": 1,
+  "record": "operator-authorized promotion of a pre-registered screen winner to a named private-vault core",
+  "promoted_at_utc": "2026-09-17T23:45:00+00:00",
+  "directory_name": "Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+
+  "why_this_is_not_post_hoc": {
+    "concern": "Promoting the winner of a screen can be a rule fitted to a result. This programme forbids that, and both INT-001 and SPARSE-001 registered that they promote nothing.",
+    "answer": "The decision rule was fixed in SPARSE001_PREREG.md before any arm was built, the k grid was fixed at {0.10, 0.25, 0.50} in the same document, and no threshold was adjusted after results were read. This core is the arm that rule selects.",
+    "rule_as_registered": "Among arms whose acquisition clears all three family floors on SELECT-VIEWS-001 by the published lower-bound rule, prefer the arm maximising references_retained subject to arithmetic_permissive >= 62. Ties broken by higher acquisition.",
+    "rule_applied": {
+      "k_0.10": "EXCLUDED - 2/3 floors (ledger_replay exact 95% lower bound short of 0.2344)",
+      "k_0.25": "eligible - retained 41, arithmetic 72 -> SELECTED",
+      "k_0.50": "eligible - retained 39, arithmetic 68"
+    },
+    "what_did_not_select_it": "Long context and literal abstention. Both live on a bank barred TRAIN/SELECTION/CONFIRMATION with reason SPENT, were registered report-only, and were not consulted in the choice. Its 164/256 is therefore reported, not claimed, and selecting on it would have been the post-hoc gate that bar exists to prevent.",
+    "cross_screen_caution": "INT-001's alpha=0.50 arm retains 42, one more than this core. Choosing across two separately registered screens was NOT pre-registered as a selection procedure. This core is promoted as SPARSE-001's registered winner, not as the winner of a post-hoc merge of both screens. The alpha=0.50 arm is recorded and reproducible (ced9d0a8...) should that comparison ever be registered properly."
+  },
+
+  "identity": {
+    "weight_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+    "weight_hash_verified_before_and_after_copy": true,
+    "stored_dtype": "float32",
+    "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "consolidated_trained_fp32_sha256": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+    "keep_fraction": 0.25,
+    "reproducible": true,
+    "reproducibility_evidence": "two independent deterministic builds produced byte-identical output",
+    "built_from_arm": "rineya-dataset-retention-records/sparse001-20260917/arm-s25d"
+  },
+
+  "construction_cost": {
+    "training_runs": 0,
+    "model_forward_calls_to_construct": 0,
+    "gpu_seconds_to_construct": 0,
+    "note": "The update was already paid for by RRP-015. This core changes only which part of it is kept."
+  },
+
+  "authorization": {
+    "granted_by": "repository operator, in session, explicitly: promote k=0.25 as a new core and push it",
+    "scope": [
+      "create a named core directory under Rineya_Published_Cores",
+      "register it in the vault catalog and model registry",
+      "back the binaries up to the existing PRIVATE Hugging Face family vault"
+    ],
+    "explicitly_not_granted": [
+      "public release",
+      "native BF16 serving qualification",
+      "any quality or efficacy claim",
+      "substitution for Supa 1.7 in any published system",
+      "promotion of the spent long-context suite to a selection or confirmation role"
+    ]
+  },
+
+  "integrity_at_promotion": {
+    "sources_unmodified": true,
+    "published_core_weights_altered": false,
+    "sibling_core_weights_altered": false,
+    "frozen_experiment_evidence_altered": false,
+    "evaluation_thresholds_altered": false,
+    "model_forward_calls_during_promotion": 0,
+    "training_runs_during_promotion": 0,
+    "one_sidecar_differs_from_source": "config.json, torch_dtype set to float32 to prevent torch_dtype='auto' silently casting this FP32 core to BF16 and discarding its update"
+  },
+
+  "headline_measured_outcomes": {
+    "acquisition_select_views_001": { "this_core": 232, "supa": 14, "opallo": 8, "n": 384, "families_cleared": "3/3" },
+    "arithmetic_permissive_150": { "this_core": 72, "supa": 47, "source_lost": 6, "source_retained": 41 },
+    "arithmetic_strict_150": { "this_core": 63, "supa": 41 },
+    "long_context_256": { "this_core": 164, "supa": 161, "lost": 7, "gained": 10, "paired_p": 0.6291, "report_only": true },
+    "literal_unknown_64": { "this_core": 12, "supa": 13 },
+    "gate_v2": "PASS",
+    "legacy_per_class_retention_monitor": "FAIL",
+    "independent_training_draws": 1
+  },
+
+  "claims": {
+    "quality_improvement_established": false,
+    "release_permitted": false,
+    "training_authorized": false
+  },
+
+  "outstanding_before_any_release_could_be_considered": [
+    "at least two further independent training draws of the RRP-015 control recipe, each pruned at k=0.25, paired within draw",
+    "a fresh selection-admissible confirmation instrument for long context and abstention; the current suite is SPENT and report-only",
+    "a registered resolution of the two disagreeing retention gates, which now have four screens of evidence that the legacy monitor is near-unpassable",
+    "native serving qualification for the FP32 format, or a measured decision to serve FP32",
+    "blind semantic abstention review",
+    "human data review of the RRP-015 training corpus"
+  ]
+}

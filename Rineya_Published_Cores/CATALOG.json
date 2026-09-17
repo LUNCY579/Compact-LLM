@@ -1,6 +1,6 @@
 {
   "vault": "Rineya_Published_Cores",
-  "updated_at_utc": "2026-09-17T19:45:04.903285+00:00",
+  "updated_at_utc": "2026-09-17T23:45:00+00:00",
   "cores": [
     {
       "core_id": "rineya.core.pulse.v1.6.0-devfreeze.28L.qwen3-late-rineya-alpha-shape",
@@ -1729,6 +1729,211 @@
         },
         "provenance_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
         "provenance_branch": "codex/dataset-retention-audit-v1"
+      }
+    },
+    {
+      "core_id": "rineya.core.titan-sparse-experimental.v1.0.0-devfreeze.28L.supa17-rrp015-control-seed17-magprune-k0p25",
+      "codename": "Titan-Sparse-Experimental",
+      "directory": "Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+      "present": true,
+      "core": {
+        "schema_version": "1.1",
+        "core_id": "rineya.core.titan-sparse-experimental.v1.0.0-devfreeze.28L.supa17-rrp015-control-seed17-magprune-k0p25",
+        "codename": "Titan-Sparse-Experimental",
+        "directory_name": "Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+        "version": "1.0.0-devfreeze",
+        "kind": "magnitude_pruned_finetune_delta",
+        "status": "experimental_research_core_not_release_qualified",
+        "classification": "published_experimental_core_selected_on_a_preregistered_rule",
+        "public_claim": "Supa 1.7 plus the largest 25% by magnitude of the RRP-015 control's update, per tensor, in FP32. Selected by the rule registered in SPARSE001_PREREG.md before any arm was built. Acquires 232/384 on SELECT-VIEWS-001 against Supa's 14/384 with all three families clearing their published floors, arithmetic 72/150 permissive and 63/150 strict against Supa's 47 and 41, 41 of 47 source answers retained, long context 164/256 against Supa's 161, literal UNKNOWN 12/64 against 13. One training draw. Not release qualified.",
+        "provisional": true,
+        "operator_authorized_promotion": true,
+        "created_at_utc": "2026-09-17T23:45:00+00:00",
+        "device": "cuda",
+        "sources_unmodified": true,
+        "source": {
+          "application_base": {
+            "path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+            "codename": "Supa",
+            "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+            "parameter_count": 596049920
+          },
+          "update_source": {
+            "experiment": "RRP-015 clean control, selection seed 17",
+            "sibling_core": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+            "checkpoint": "rineya-dataset-retention-records/rrp015-20260917/control-journal/runs/train-001/microfit/checkpoint-00028",
+            "checkpoint_manifest_sha256": "3d5cef318a578c71e3d0fe10bdeb27657a31c21d4826f26a6a276e07cacd50cc",
+            "consolidated_trained_fp32_sha256": "07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d",
+            "note": "No new training. This core reuses RRP-015's update; only the update's support is changed."
+          }
+        },
+        "construction": {
+          "experiment": "SPARSE-001",
+          "prereg": "evidence/SPARSE001_PREREG.md",
+          "prereg_frozen_before_any_arm_was_built": true,
+          "formula": "theta_supa + M_k (x) delta, where delta = theta_ctrl_fp32 - theta_supa over the 220 trained tensors",
+          "mask": "per-tensor top-k by |delta|, ties broken by ascending flat index via a stable descending argsort",
+          "keep_fraction_nominal": 0.25,
+          "keep_fraction_realised_elements": 0.25,
+          "delta_norm_fraction_retained": 0.8363817254406505,
+          "trainable_scope_inherited": "blocks 8-27 (tail 20 of 28), 220 tensors",
+          "model_calls_to_construct": 0,
+          "training_runs_to_construct": 0,
+          "reproducible_from": "source 962abc5b... + trained tensors 07156fb5... at k=0.25 via evidence/build_sparse.py",
+          "reproducibility_verified": "two independent builds produced byte-identical output (a28629c9...)"
+        },
+        "storage_format_deviation": {
+          "stored_dtype": "float32",
+          "family_convention": "every other core in this vault stores BF16",
+          "why": "This core's identity IS a magnitude-selected subset of a 0.056%-relative update. Measured: storing it BF16 would round 28.49% of the kept delta elements to ZERO and distort the retained delta norm to 1.0347 by quantization noise. The measured scores below belong to the FP32 bytes and would not transfer to a BF16 copy.",
+          "config_torch_dtype": "float32, deliberately set so that loading with torch_dtype='auto' cannot silently cast this core to BF16 and discard its update. This is the one sidecar that differs from Supa 1.7.0-devfreeze.",
+          "evidence_copy_note": "The SPARSE-001 arm directory keeps Supa's byte-identical config.json because the retention probe's hf_checkpoint.verify_hf_candidate requires all six sidecars to match the source. That arm and this core differ only in that file.",
+          "weight_bytes": 2384234992,
+          "size_note": "2x the BF16 cores, an accepted cost of the format"
+        },
+        "measured": {
+          "evidence_root": "rineya-dataset-retention-records/sparse001-20260917",
+          "raw_artifacts": "PROCESS_int001_s25d.json, RETENTION_PROBE_int001_s25d.json, LONGCTX_int001_s25d.json",
+          "evaluation_dtype": "float32",
+          "independent_training_draws": 1,
+          "measured_twice": "Yes. A first pass with a non-deterministic tie-break and a deterministic re-measurement agreed on EVERY endpoint, so the mask's tie-breaking degrees of freedom have zero measured effect. See SPARSE001_PREREG.md Erratum 1.",
+          "acquisition": {
+            "instrument": "SELECT-VIEWS-001, selection-admissible at birth",
+            "n": 384,
+            "correct": 232,
+            "supa": 14,
+            "opallo": 8,
+            "families_clearing_binding_floor": "3/3",
+            "per_family_canonical_rate": {
+              "ledger_replay": 0.4141,
+              "prerequisite_plan": 0.75,
+              "register_machine": 0.6484
+            },
+            "binding_floors_published_before_any_model_call": {
+              "ledger_replay": 0.2344,
+              "prerequisite_plan": 0.0781,
+              "register_machine": 0.0703
+            },
+            "decision_rule": "exact two-sided binomial 95% LOWER bound above the stronger of copy_before and constant_majority",
+            "baseline_note": "Both frozen cores score BELOW the strongest answer-agnostic shortcut floor on all three families."
+          },
+          "arithmetic_panel": {
+            "permissive": {
+              "supa": 47,
+              "this_core": 72,
+              "source_answers_lost": 6,
+              "retained": 41,
+              "correct_outside_source_set": 31,
+              "monitor_status": "FAIL"
+            },
+            "strict": {
+              "supa": 41,
+              "this_core": 63,
+              "monitor_status": "FAIL"
+            },
+            "reading": "72 is NOT 47 preserved plus 25 new: it is 41 preserved, 6 lost, 31 newly gained. The gain survives strict scoring. The legacy per-class monitor fails under both policies, as it does for every arm of every screen in this programme including ones losing only 4 of 47."
+          },
+          "long_context": {
+            "instrument": "Rineya Long-Context Demonstration Suite, 256 rows",
+            "instrument_status": "SPENT; barred TRAIN/SELECTION/CONFIRMATION; used REPORT-ONLY and did NOT select this core",
+            "supa": 161,
+            "this_core": 164,
+            "source_correct_rows_lost": 7,
+            "rows_gained": 10,
+            "paired_exact_mcnemar_two_sided_p": 0.6291,
+            "matched_conditions": {
+              "implementation_digest": "a329eb7bb0",
+              "transformers": "4.51.3",
+              "max_context": 4096,
+              "max_new_tokens": 24,
+              "rows_skipped_context_overflow": 0,
+              "tf32": false
+            },
+            "reading": "The highest long-context score of any model measured in this programme, above the frozen source's own 161. Nonsignificance is NOT equivalence: 7 source-correct rows were still lost, and the suite cannot confirm anything."
+          },
+          "abstention": {
+            "instrument": "the 64 unanswerable rows inside the same 256-row bank; not independent of the long-context score",
+            "supa_literal_unknown": 13,
+            "this_core_literal_unknown": 12,
+            "semantic_abstention_review": "NOT_PERFORMED"
+          },
+          "gates": {
+            "gate_v2": {
+              "verdict": "PASS",
+              "terms": "arithmetic >= 62 AND retained >= 37 of 47 AND every family clears its floor",
+              "caveat": "no long-context term, no abstention term"
+            },
+            "legacy_per_class_retention_monitor": {
+              "verdict": "FAIL",
+              "scope": "both policies, all three panel classes"
+            },
+            "note": "Two gates disagree, as they do for every candidate in this programme. Both verdicts are reported. No threshold was changed."
+          },
+          "comparison_to_sibling_core": {
+            "sibling": "Rineya-Titan-Experimental-1.0.0-devfreeze",
+            "acquisition": "232 vs 234 (equal within noise)",
+            "arithmetic_permissive": "72 vs 69",
+            "arithmetic_strict": "63 vs 62",
+            "source_answers_retained": "41 vs 39",
+            "long_context": "164 vs 162",
+            "literal_unknown": "12 vs 10",
+            "summary": "Better on four endpoints, equal within noise on acquisition. See the sibling's AMENDMENT_001.json, which records that its own long-context figure was substantially a BF16 quantization artifact."
+          }
+        },
+        "checks": {
+          "model_type": "qwen3",
+          "architecture": "Qwen3ForCausalLM",
+          "num_hidden_layers": 28,
+          "hidden_size": 1024,
+          "vocab_size": 151936,
+          "tie_word_embeddings": true,
+          "weight_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+          "weight_bytes": 2384234992,
+          "tensor_count": 310,
+          "parameter_count_serialized": 596049920,
+          "dtype_counts": {
+            "F32": 310
+          },
+          "no_peft_remnants": true,
+          "tensor_names_identical_to_supa": true
+        },
+        "limitations": [
+          "ONE training draw, and the update direction is RRP-015's single seed. Pruning cannot manufacture replication.",
+          "Gate v2 PASS coexists with a legacy per-class retention monitor FAIL on all three classes under both policies.",
+          "Long context and abstention are report-only on a SPENT suite and did not select this core. 164/256 is observed, never confirmed.",
+          "Long context net +3 hides 7 source-correct rows lost and 10 gained. p = 0.63 is not equivalence.",
+          "Abstention still regresses, 13 to 12.",
+          "Arithmetic improvement coexists with the loss of 6 of the source's 47 correct answers.",
+          "Stored and evaluated FP32. Native BF16 serving is NOT qualified and a BF16 copy would be a DIFFERENT, measurably worse model.",
+          "No independent confirmation instrument exists for long context or abstention.",
+          "Semantic abstention review NOT_PERFORMED. Human data review of the training corpus NOT_PERFORMED.",
+          "No broad model-quality superiority over Supa or Opallo is established."
+        ],
+        "claims": {
+          "quality_improvement_established": false,
+          "release_permitted": false,
+          "release_candidate": false,
+          "efficacy_claim": false,
+          "catastrophic_forgetting_absence_established": false,
+          "acquisition_of_new_capability_established": true,
+          "selected_on_a_preregistered_rule": true,
+          "selection_instruments": [
+            "SELECT-VIEWS-001",
+            "150-row arithmetic panel and the 47 source answers"
+          ],
+          "instruments_explicitly_not_used_for_selection": [
+            "Long-Context Demonstration Suite 256",
+            "literal UNKNOWN 64"
+          ]
+        },
+        "distribution": {
+          "private_vault": "Luncy1978/rineya-published-cores",
+          "visibility": "private",
+          "public_release": false,
+          "note": "Private archival backup only. Private vault storage is not a release and carries no quality claim."
+        },
+        "naming_note": "Codename assigned by the promoting session for clarity, not by the operator. RENAME.json is the vault's supported mechanism if a different roster name is preferred; weights and evidence would be unchanged.",
+        "provenance_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd"
       }
     }
   ],

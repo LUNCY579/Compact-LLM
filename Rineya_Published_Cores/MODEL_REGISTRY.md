@@ -39,7 +39,7 @@ block in `CATALOG.json`.
 
 ---
 
-## 1. Tier 1 — dense cores already in the vault (9) · **keep all**
+## 1. Tier 1 — dense cores already in the vault (10) · **keep all**
 
 Each is one `model.safetensors` plus `CORE.json`. Showcase figures are strict-exact
 over the frozen 64-row demo suite.
@@ -54,16 +54,26 @@ over the frozen 64-row demo suite.
 | 6 | **Halo Uncensored 1.5** | `Rineya-Halo-Uncensored-1.5.0-devfreeze` | 28L Qwen3 | 2,384,234,968 | `c5d4a17f…` | 31/64 | α=1.0 replace. Uncensored pair for Halo; **arm in System48** |
 | 7 | **Taria 1.7** → Supa | `Rineya-Supa-1.7.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `962abc5b…` | 40/64 | Nimbus + step200 @ **0.8125**, dense. Best single dense core |
 | 8 | **Lumina 1.7** → Baya | `Rineya-Baya-1.7.0-devfreeze` | 28L Qwen3 | 1,192,135,096 | `1737cd1e…` | 40/64 | Nimbus + step200 @ **1.25**, dense. High-scale abstention arm |
-| 9 | **RRP-015 control** → Titan-Experimental | `Rineya-Titan-Experimental-1.0.0-devfreeze` | 28L Qwen3 | 1,192,135,064 | `53720167…` | 42/64 † | Supa 1.7 + 384 transition rows, blocks 8–27, no rehearsal. **Experimental; not release-qualified.** First arm to acquire the transition skill (234/384 vs Supa 14) without losing long context (162/256 vs 161, paired p=1) |
+| 9 | **RRP-015 control** → Titan-Experimental | `Rineya-Titan-Experimental-1.0.0-devfreeze` | 28L Qwen3 | 1,192,135,064 | `53720167…` | 42/64 † | Supa 1.7 + 384 transition rows, blocks 8–27, no rehearsal. **Experimental; not release-qualified.** First arm to acquire the transition skill (234/384 vs Supa 14) without losing long context (162/256 vs 161, paired p=1). **See its `AMENDMENT_001.json`: that long-context figure is substantially a BF16 artifact** |
+| 10 | **SPARSE-001 k=0.25** → Titan-Sparse-Experimental | `Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze` | 28L Qwen3 | **2,384,234,992 (FP32)** | `a28629c9…` | 43/64 † | Supa 1.7 + the top **25% by magnitude** of row 9's update, per tensor. **No new training.** Winner of a rule registered before any arm was built. Beats row 9 on arithmetic (72 vs 69), retained (41 vs 39), long context (**164**, highest measured) and abstention (12 vs 10) at equal acquisition (232 vs 234). **FP32 ONLY — a BF16 copy zeroes 28.5% of its kept update and is a different model** |
 
 Held-out stability192 / all256 for the two 1.7 cores: **Taria 121/192, 161/256** ·
 **Lumina 112/192, 152/256**.
 
-> **† Titan-Experimental's demo figures are not protocol-comparable to rows 1–8.**
-> They come from the RAB-001 harness forward path under transformers 4.51.3
-> (showcase 42/64, stability 120/192, all256 162/256), not the standardized 2026-08-26
-> vault rerun under 5.14.1. Measured on the same path, Supa scores 41/64 and 161/256 —
-> so compare Titan against **that** 41/161, never against row 7's 40/64. This is the
+> **Storage exception, row 10.** Every other core here is BF16. Titan-Sparse is **FP32 and
+> must stay FP32**: its identity is a magnitude-selected subset of an update worth only
+> 0.056% of the weight norm, and rounding to BF16 zeroes **28.49%** of the kept delta
+> elements while inflating the retained norm to 1.0347 through quantization noise. Its
+> `config.json` declares `torch_dtype: float32` so `torch_dtype="auto"` cannot silently
+> discard the update — the one sidecar in that directory differing from Supa 1.7.0-devfreeze.
+> The `.gitignore:57` weight rule and vault backup policy are unchanged.
+
+> **† Titan-Experimental's and Titan-Sparse's demo figures are not protocol-comparable to rows 1–8.**
+> They come from the RAB-001 harness forward path under transformers 4.51.3 — Titan
+> showcase 42/64, stability 120/192, all256 162/256; Titan-Sparse showcase 43/64, stability
+> 121/192, all256 164/256 — not the standardized 2026-08-26 vault rerun under 5.14.1.
+> Measured on the same path, Supa scores 41/64 and 161/256 — so compare both against
+> **that** 41/161, never against row 7's 40/64. This is the
 > same cross-run protocol drift §7 records. Titan is an operator-named experimental
 > research core: one training draw, Gate v2 PASS but legacy per-class retention monitor
 > FAIL, abstention regressed 13→10, and 8 of Supa's 47 source arithmetic answers lost.
