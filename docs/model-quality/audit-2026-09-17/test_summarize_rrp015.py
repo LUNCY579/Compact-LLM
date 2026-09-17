@@ -120,7 +120,8 @@ def test_module_never_imports_model_runtime():
     assert result.returncode == 0, result.stderr
 
 
-@pytest.mark.parametrize("fault", [None, "source_runtime", "wrong_checkpoint", "failed_evaluation"])
+@pytest.mark.parametrize("fault", [None, "source_runtime", "wrong_checkpoint", "failed_evaluation",
+                                   "successful_retry", "wrong_evaluation_kind", "wrong_result_path"])
 def test_gate_needs_complete_compatible_source_checkpoint_and_supervision(tmp_path, monkeypatch, fault):
     evidence = tmp_path / "clone/experiments/architecture_benchmark_001/evidence/retention-design-v1"
     evidence.mkdir(parents=True)
@@ -151,14 +152,36 @@ def test_gate_needs_complete_compatible_source_checkpoint_and_supervision(tmp_pa
                      "RETENTION_PROBE_rrp015_control.json"):
         directory = records / f"eval-{filename}"
         directory.mkdir()
-        values = {"probe_binding": {"result": str(evidence / filename), "script_sha256": "script"},
+        kind = "retention" if filename.startswith("RETENTION") else "process"
+        result_path = str(evidence / filename)
+        if fault == "wrong_evaluation_kind":
+            kind = "long_context"
+        if fault == "wrong_result_path":
+            result_path = str(tmp_path / filename)
+        values = {"probe_binding": {"kind": kind, "result": result_path, "script_sha256": "script"},
                   "probe_terminal": {"complete": fault != "failed_evaluation", "script_unchanged": True,
-                                     "script_sha256_after": "script"},
+                                     "script_sha256_after": "script", "result": result_path},
                   "supervisor": {"returncode": 0, "wall_seconds": 1},
                   "retention_predictions": {"rows": 150}}
         for key, value in values.items():
             (directory / f"{key}.json").write_text(json.dumps(value))
-    gate = summary.collect(evidence, records)["models"]["control"]["gate_v2"]
+    if fault == "successful_retry":
+        failed = records / "eval-rrp015_supa-process"
+        failed.mkdir()
+        # The pre-model failure has a terminal/supervisor but no binding or output.
+        (failed / "probe_terminal.json").write_text(json.dumps({"complete": False, "failure": {
+            "type": "ModuleNotFoundError", "message": "No module named psutil", "phase": "resource_guard"}}))
+        (failed / "supervisor.json").write_text(json.dumps({"returncode": 1, "wall_seconds": 2}))
+        successful = records / "eval-PROCESS_rrp015_supa.json"
+        successful.rename(records / "eval-rrp015_supa-process-retry001")
+    collected = summary.collect(evidence, records)
+    gate = collected["models"]["control"]["gate_v2"]
     assert gate["observed_conjunction"] is True
-    assert gate["validated_exploratory_result"] is (True if fault is None else None)
+    assert gate["validated_exploratory_result"] is (True if fault in (None, "successful_retry") else None)
     assert gate["broad_preservation_or_confirmation"] is False
+    if fault == "successful_retry":
+        attempts = {a["attempt"]: a for a in collected["evaluation_attempts"]}
+        assert attempts["eval-rrp015_supa-process"]["complete_supervised"] is False
+        assert attempts["eval-rrp015_supa-process"]["terminal"]["failure"]["type"] == "ModuleNotFoundError"
+        assert attempts["eval-rrp015_supa-process-retry001"]["complete_supervised"] is True
+        assert collected["session_resources"]["observed_supervisor_wall_seconds"] == 5

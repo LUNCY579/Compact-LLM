@@ -364,10 +364,23 @@ def collect(evidence, records):
         values, metas = {}, {}
         for item in ("probe_binding", "probe_terminal", "supervisor", "retention_predictions"):
             values[item], metas[item] = artifact(directory / f"{item}.json")
+        probe_binding, terminal = values["probe_binding"] or {}, values["probe_terminal"] or {}
+        declared_result = probe_binding.get("result")
+        expected_prefix = {"process": "PROCESS", "retention": "RETENTION_PROBE",
+                           "long_context": "LONGCTX"}.get(probe_binding.get("kind"))
+        matches_result = False
+        if declared_result and expected_prefix:
+            result_path = Path(declared_result).resolve()
+            expected_names = {f"{expected_prefix}_rrp015_{label}.json" for label in LABELS}
+            matches_result = (result_path.name in expected_names
+                              and result_path.parent == evidence.resolve()
+                              and terminal.get("result") is not None
+                              and Path(terminal["result"]).resolve() == result_path)
         result["evaluation_attempts"].append({"attempt": directory.name, "artifacts": metas,
             "binding": values["probe_binding"], "terminal": values["probe_terminal"],
             "supervisor": values["supervisor"],
             "retained_prediction_rows": (values["retention_predictions"] or {}).get("rows"),
+            "kind_label_and_result_path_match": matches_result,
             "complete_supervised": bool(values["probe_terminal"] and values["supervisor"]
                 and values["probe_binding"]
                 and values["probe_terminal"].get("complete") is True
@@ -375,7 +388,7 @@ def collect(evidence, records):
                 and values["probe_terminal"].get("script_sha256_after") == values["probe_binding"].get("script_sha256")
                 and values["supervisor"].get("returncode") == 0)})
     verified_evaluations = {Path(a["binding"]["result"]).name: a for a in result["evaluation_attempts"]
-                            if a["complete_supervised"]}
+                            if a["complete_supervised"] and a["kind_label_and_result_path_match"]}
     for name in ("control", "rehearsal"):
         model = result["models"][name]
         expected_outputs = [f"PROCESS_rrp015_{name}.json", "PROCESS_rrp015_supa.json",

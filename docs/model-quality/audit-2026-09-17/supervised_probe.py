@@ -9,6 +9,7 @@ import argparse
 from contextlib import contextmanager
 import hashlib
 import json
+import os
 from pathlib import Path
 import re
 import sys
@@ -17,7 +18,7 @@ import time
 
 ROOT = Path.cwd().resolve()
 sys.path.insert(0, str(ROOT))
-from experiments.model_quality_gpu_v1.integrity import write_new
+from experiments.model_quality_gpu_v1.integrity import decode, digest, read_json, regular, write_new
 from experiments.model_quality_gpu_v1.supervisor import bounded_child, claim_worker
 
 SCRIPTS = {
@@ -29,6 +30,95 @@ SCRIPTS = {
 
 def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+
+
+def gpu_lease_path():
+    return Path(tempfile.gettempdir()) / "rineya-gpu-0.lock"
+
+
+def require_free_lease(lock):
+    """Refuse before dispatch; never infer that an existing lease is stale."""
+    if lock.exists() or lock.is_symlink():
+        raise FileExistsError(f"GPU lease already present; no worker dispatched: {lock}")
+
+
+def recover_own_timedout_lease(out, lock):
+    """Recover only this parent's proven-dead, timed-out, claimed worker lease.
+
+    This is terminal cleanup of the launch just supervised, not a general stale-lock
+    cleaner. The unchanged MQ lease intentionally cannot recover other jobs. Keep
+    exact bytes before removal, then recheck identity and process death immediately
+    before unlink. This remains a cooperative protocol, not an adversarial lock.
+    """
+    import psutil
+
+    supervisor = read_json(out / "supervisor.json")
+    if supervisor.get("status") != "TIMEOUT_OR_INTERRUPTED":
+        return {"status": "NOT_APPLICABLE", "removed": False}
+    if not lock.exists() and not lock.is_symlink():
+        return {"status": "NO_LEASE", "removed": False}
+    evidence = {"lock": str(lock), "removed": False, "quality_claim": False}
+
+    def refuse(reason):
+        write_new(out / "lease_recovery.json", {
+            **evidence, "status": "REFUSED", "reason": reason,
+        })
+        raise RuntimeError(f"timed-out lease recovery refused: {reason}")
+
+    cleanup = supervisor.get("cleanup")
+    if not isinstance(cleanup, dict) or cleanup.get("child_exited") is not True:
+        refuse("supervisor did not establish child termination")
+    try:
+        claim = read_json(out / "worker_claim.json")
+        launch = read_json(out / "launch.json")
+        raw = regular(lock).read_bytes()
+        value = decode(raw.decode("utf-8"))
+    except (OSError, ValueError, UnicodeError) as exc:
+        refuse(f"missing or invalid ownership evidence: {type(exc).__name__}: {exc}")
+    if not isinstance(value, dict) or not isinstance(claim, dict) or not isinstance(launch, dict):
+        refuse("ownership records must be objects")
+    pid = value.get("pid")
+    if (type(pid) is not int or pid <= 0 or claim.get("pid") != pid
+            or not isinstance(value.get("token"), str) or not value["token"]):
+        refuse("lease owner does not match the claimed worker")
+    if (claim.get("supervisor_pid") != os.getpid()
+            or launch.get("supervisor_pid") != os.getpid()
+            or launch.get("out") != str(out.absolute())
+            or claim.get("launch_sha256") != digest(launch)):
+        refuse("claim is not bound to this parent and this launch")
+    evidence.update({"owner_pid": pid, "lock_sha256": hashlib.sha256(raw).hexdigest(),
+                     "worker_claim_sha256": sha(out / "worker_claim.json"),
+                     "supervisor_sha256": sha(out / "supervisor.json")})
+    if psutil.pid_exists(pid):
+        refuse("lease owner PID still exists")
+    archive = out / "timedout_lease.raw.json"
+    with archive.open("xb") as handle:
+        handle.write(raw)
+        handle.flush()
+        os.fsync(handle.fileno())
+    evidence["archived_exact_bytes"] = str(archive)
+    write_new(out / "lease_recovery_intent.json", {
+        **evidence, "status": "MATCHING_DEAD_OWNER_ARCHIVED_BEFORE_REMOVAL",
+    })
+    try:
+        unchanged = regular(lock).read_bytes() == raw
+    except (OSError, ValueError):
+        unchanged = False
+    if not unchanged:
+        refuse("lease bytes/path changed after archival")
+    if psutil.pid_exists(pid):
+        refuse("lease owner PID appeared before removal")
+    # A second byte read immediately precedes removal; another worker's newly
+    # acquired lease must never be treated as the archived lease.
+    try:
+        if regular(lock).read_bytes() != raw:
+            refuse("lease bytes changed immediately before removal")
+        lock.unlink()
+    except OSError as exc:
+        refuse(f"lease removal failed: {type(exc).__name__}: {exc}")
+    result = {**evidence, "status": "RECOVERED_OWN_DEAD_TIMEDOUT_WORKER_LEASE", "removed": True}
+    write_new(out / "lease_recovery.json", result)
+    return result
 
 
 def result_path(kind, arguments):
@@ -113,7 +203,7 @@ def execute_worker(args, arguments, script, expected, out):
             raise FileExistsError(f"create-only legacy result already exists: {result}")
         from experiments.model_quality_gpu_v1.resources import guard, lease
         phase = "lease"
-        with lease(Path(tempfile.gettempdir()) / "rineya-gpu-0.lock"):
+        with lease(gpu_lease_path()):
             phase = "resource_guard"
             before = guard(before_load=True, phase="qualify")
             write_new(out / "probe_binding.json", {
@@ -188,11 +278,19 @@ def main():
     if not args._worker:
         if sha(script) != expected:
             raise ValueError("scorer differs from its requested source hash")
+        require_free_lease(gpu_lease_path())
         command = [sys.executable, str(Path(__file__).resolve()), "--kind", args.kind,
                    "--out", str(out), "--timeout", str(args.timeout),
                    "--expected-script-sha", expected, "--_worker", "--", *arguments]
         code = bounded_child(command, out, args.timeout)
-        print(json.dumps({"returncode": code, "attempt": str(out)}), flush=True)
+        try:
+            recovery = recover_own_timedout_lease(out, gpu_lease_path())
+        except Exception as exc:
+            recovery = {"status": "REFUSED", "removed": False,
+                        "error": f"{type(exc).__name__}: {exc}"}
+            code = code or 2
+        print(json.dumps({"returncode": code, "attempt": str(out),
+                          "lease_recovery": recovery}), flush=True)
         return code
 
     claim_worker(out)

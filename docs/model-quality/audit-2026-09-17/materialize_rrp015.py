@@ -55,6 +55,13 @@ def main():
         "evaluation_dtype": "float32",
         "precision_path": "FP32 trained tensors rounded to source BF16 then FP32 DenseReference",
         "native_bf16_serving_qualified": False,
+        "model_constructed_on_cpu_for_format_conversion": bool(args.research_format),
+        "model_forward_calls": 0,
+        "optimizer_steps": 0,
+        "legacy_receipt_correction": (
+            "Research-format export constructs a CPU DenseReference; the legacy receipt's "
+            "generic no-model-constructed sentence does not apply to this layout. No "
+            "model forward or optimizer call is made." if args.research_format else None),
         "quality_claim": False,
     })
     print(json.dumps({"output": str(args.out), "dtypes": dtypes,
