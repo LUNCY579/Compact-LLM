@@ -1,1 +1,69 @@
-{"attempts":[{"attempt":"native-supa-001","failure":{"efficacy":false,"error":"RESOURCE_GUARD: host_available_bytes: 2.099 GiB < 6.000 GiB","model_imported":false,"resources":null,"status":"BLOCKED_OR_FAILED","type":"RuntimeError"},"forward_calls":0,"limits":{"batch_size":1,"cloud_spend":0,"max_calls_per_model":1322,"max_disk_bytes_per_model":134217728,"max_generated_tokens_per_model":115232,"max_gpu_allocated_gib":6,"max_host_rss_gib":6,"max_models":2,"max_seconds_per_model":1800,"minimum_disk_gib":8,"model_loads_per_model":1,"preload_gpu_gib":6,"preload_host_gib":6,"retries":0,"running_gpu_free_gib":0.5,"running_host_gib":1.5,"training_steps":0},"model_generations":0,"model_id":"supa-1.7-frozen","model_loads":0,"observed":{"disk_free_bytes":14009790464,"gpu_allocated_bytes":0,"gpu_free_bytes":7127171072,"gpu_name":"NVIDIA GeForce RTX 4070 Laptop GPU","gpu_peak_bytes":0,"gpu_total_bytes":8585740288,"gpu_utilization_percent":16,"host_available_bytes":2254221312,"host_rss_bytes":25591808,"time_unix":1789617618.4927554},"raw_generation_files":[],"receipts":{"failure.json":{"path":"evidence/native-supa-001/failure.json","sha256":"4b06c42a4e963a2673d5903cd1ffcf8689d3fa48b8d63ade6629a0098249725f"},"launch.json":{"path":"evidence/native-supa-001/launch.json","sha256":"2947d4bff89acf52c028abe080cdedd8cf8eeb5c6dd40027c6e9259ecd7af2ff"},"preflight.json":{"path":"evidence/native-supa-001/preflight.json","sha256":"c65bc6d9da3c32879394503be9e6e4a45138a1687f083d22e3f7a1d769215c07"},"spawn.json":{"path":"evidence/native-supa-001/spawn.json","sha256":"bf0196cdc67289e0b955af93e039b35473d2d5a8244bd5b80caa8af5a1a4d58a"},"supervisor.json":{"path":"evidence/native-supa-001/supervisor.json","sha256":"7b748aa742547d124c0ce4449186deb535377ea370fd5859e6e393264292e472"},"worker.log":{"path":"evidence/native-supa-001/worker.log","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"worker_claim.json":{"path":"evidence/native-supa-001/worker_claim.json","sha256":"38d1c19459e08fddfa816897252d805b78134ef33c64b0277ccdc3cdd92f9898"}},"scored_cases":0,"status":"BLOCKED_ON_RESOURCE_LIMIT","supervisor":{"child_pid":116740,"cleanup":null,"quality_or_release_permission":false,"returncode":2,"status":"EXITED","wall_seconds":0.6090000000003783}},{"attempt":"native-d1-001","failure":{"efficacy":false,"error":"RESOURCE_GUARD: host_available_bytes: 2.265 GiB < 6.000 GiB","model_imported":false,"resources":null,"status":"BLOCKED_OR_FAILED","type":"RuntimeError"},"forward_calls":0,"limits":{"batch_size":1,"cloud_spend":0,"max_calls_per_model":1322,"max_disk_bytes_per_model":134217728,"max_generated_tokens_per_model":115232,"max_gpu_allocated_gib":6,"max_host_rss_gib":6,"max_models":2,"max_seconds_per_model":1800,"minimum_disk_gib":8,"model_loads_per_model":1,"preload_gpu_gib":6,"preload_host_gib":6,"retries":0,"running_gpu_free_gib":0.5,"running_host_gib":1.5,"training_steps":0},"model_generations":0,"model_id":"d1-seed17-bf16-export","model_loads":0,"observed":{"disk_free_bytes":14009724928,"gpu_allocated_bytes":0,"gpu_free_bytes":7208960000,"gpu_name":"NVIDIA GeForce RTX 4070 Laptop GPU","gpu_peak_bytes":0,"gpu_total_bytes":8585740288,"gpu_utilization_percent":28,"host_available_bytes":2432282624,"host_rss_bytes":25649152,"time_unix":1789617624.8222375},"raw_generation_files":[],"receipts":{"failure.json":{"path":"evidence/native-d1-001/failure.json","sha256":"e1005066cf7fdd16a274c942975893f0cc3a3e18178200f9faff125c724a91f2"},"launch.json":{"path":"evidence/native-d1-001/launch.json","sha256":"949cf63a049087a54ea4c0f2228571f9bf061da81769c6e1e93114d6b37bba59"},"preflight.json":{"path":"evidence/native-d1-001/preflight.json","sha256":"ca2a812d187c2da86c8ef63924afd00b8266234ee461a759a3fc634e203224a5"},"spawn.json":{"path":"evidence/native-d1-001/spawn.json","sha256":"80f9e67c96ead3cfc361dba43357e8989d55da739371b0b2eed5f818d6ce5743"},"supervisor.json":{"path":"evidence/native-d1-001/supervisor.json","sha256":"7669db6f3b608765b295d61956c7868becb2c945665b0419c2763ba03aca6331"},"worker.log":{"path":"evidence/native-d1-001/worker.log","sha256":"e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"},"worker_claim.json":{"path":"evidence/native-d1-001/worker_claim.json","sha256":"6af5e8f205b48407ccffa7ff574bf2e92f1ca09b50d70078aa83becda86009e5"}},"scored_cases":0,"status":"BLOCKED_ON_RESOURCE_LIMIT","supervisor":{"child_pid":120428,"cleanup":null,"quality_or_release_permission":false,"returncode":2,"status":"EXITED","wall_seconds":0.5159999999996217}}],"classification":"OPEN / DEVELOPMENT / SELECTION-EXPOSED FOREVER","confirmatory_claim":false,"created_utc":"2026-09-17T04:04:36.547730+00:00","evidence_class":"RESOURCE_REFUSAL_WITH_SOFTWARE_VALIDATION","experiment":"MRS-1","freeze_sha256":"278ce0962bd10864fba7d8ce2e7248579f18b22495d176c4f0f40db903a68837","guard_policy":"Unchanged registered resource floors and ceilings; no CPU/cloud fallback, weight conversion, external-process termination, or guard reduction.","measurement_note":"Supervisor wall time and preflight RSS/free-memory observations describe refused CPU setup only. Preflight zero GPU allocation is not a native model peak measurement. No native meter was created.","mechanism_scout_result":false,"native_efficacy":false,"native_execution_pass":false,"open_dev_result":false,"planned_estimate":{"A1_token_allowance":320,"A2_calls":5,"CAL":16,"SMOKE":8,"accounting":"R0 shared across A0/A2/A3; S1 diagnostic adds one call outside five-call A3; logical per-arm and unique actual totals both reported","cases_per_model":120,"compute_matched":false,"disk_output_ceiling_bytes":268435456,"limits":{"batch_size":1,"cloud_spend":0,"max_calls_per_model":1322,"max_disk_bytes_per_model":134217728,"max_generated_tokens_per_model":115232,"max_gpu_allocated_gib":6,"max_host_rss_gib":6,"max_models":2,"max_seconds_per_model":1800,"minimum_disk_gib":8,"model_loads_per_model":1,"preload_gpu_gib":6,"preload_host_gib":6,"retries":0,"running_gpu_free_gib":0.5,"running_host_gib":1.5,"training_steps":0},"maximum_worker_wall_seconds":3600,"model_loads":2,"models":2,"primary_A3_calls":5,"primary_A3_token_allowance":320,"rough_envelope":"Hard 30 minutes/model; actual speed unknown until smoke. No automatic retry or extension.","scored_CHECK_cases":96,"total_max_generation_tokens":230464,"unique_calls_per_item":11,"unique_generation_token_allowance_per_item":960},"release_claim":false,"schema_version":1,"software_pass":true,"source":{"branch":"codex/multi-reasoning-frozen-scout-v1-completion","files":{"experiments/model_quality_gpu_v1/integrity.py":"94909ce24304c340fa637d1f4aceb19c3dcf7e19136fb5016a828da39ff6b658","experiments/model_quality_gpu_v1/resources.py":"91e21105bdc988cbd1eb29c73e189a2ad15ce067ec4e548db4f0dfd477d1bad1","experiments/model_quality_gpu_v1/supervisor.py":"b8a086d37a2f5eb16a2dc1568aa19644739bfbba20d5ede027e455d95a6adc1b","experiments/multi_reasoning_scout_v1/__init__.py":"9c2327fdc91bdf35c9eee0f6d0563d2b0c3957c032ec5a6b43e932b99d7b1b8b","experiments/multi_reasoning_scout_v1/analysis.py":"f0b8fdd1196f128500f92b036d3d161d4f6a8cd47587ca79d3c95dfb5fe57f41","experiments/multi_reasoning_scout_v1/audit.py":"52273378adc604684ff444a4d6378d96e61923f09cf7460eee86ba16725b2bf7","experiments/multi_reasoning_scout_v1/bank.py":"c6a65e944f2f38f1f011caf857d4117fcc4116f27c0f4749ece0cd036943bbf8","experiments/multi_reasoning_scout_v1/budget.py":"86c42943ac51c0c938e683c42f78dfa3bf7904fa3131fd1ef90881ecc8b9376c","experiments/multi_reasoning_scout_v1/core.py":"31c52acc07635a73d6c4f0e4b11a27afca4335d16b56b9f2e37ae5009635a126","experiments/multi_reasoning_scout_v1/freeze.py":"2a1979dcbe8d2b6bd7e6924d2514e9991a73caafe2c32ce5cc2b9032bcfba827","experiments/multi_reasoning_scout_v1/native.py":"462627f05bb1ad1d00e8111db76b98708c1dd7c490d2f216106518fcc7ce0a10","experiments/multi_reasoning_scout_v1/parsing.py":"aa2fac783944bf53973573f12bff2c28de33bfefb047ca5f3a7257ea45282c08","experiments/multi_reasoning_scout_v1/prompts.py":"123b4ec40cc4bc6a9f6ea7cfd3ee11878bf203ac93b4f42a404d1cc07f46ce0d","experiments/multi_reasoning_scout_v1/runner.py":"7f8a52c8dd574361ab1e2a09c5cb7861a3ac8305c5e85fa78caab010bcf07f7b","experiments/multi_reasoning_scout_v1/tests/test_analysis_hardening.py":"217b60805284a0e926642879d76675b57748b8be124e3e59f6723fd3f3ad11b5","experiments/multi_reasoning_scout_v1/tests/test_provenance_guards.py":"d46cba1d6a759a6335d8162a6d731fccea47a21453a3cd18bed400fc6bd823d4","experiments/multi_reasoning_scout_v1/tests/test_runtime_guards.py":"eb747c7ba409de50b82a0d6f03daecaa39e23f3525ca0ed77f9fc760b6f55e84","experiments/multi_reasoning_scout_v1/tests/test_scout.py":"3be28c780c1e0eb2b39abef953a7cfc14f73a1b0d0b2778613066e9594999968"},"repository":"LUNCY579/ChatBubble","sha":"a4a250338e85442b3762e9c5f0a620ee803c9969"},"status":"PRELOAD_RESOURCE_REFUSAL","totals":{"cost_per_recovered_case":null,"forward_calls":0,"generation_calls":0,"model_generation_peak_gpu_bytes":null,"model_generation_wall_seconds":null,"model_loads":0,"output_tokens":0,"prompt_tokens":0,"supervised_attempts":2,"supervisor_wall_seconds":1.125,"training_steps":0}}
+{
+ "attempts": [
+  {
+   "attempt": "native-supa-001",
+   "error": "RESOURCE_GUARD: host_available_bytes: 2.099 GiB < 6.000 GiB",
+   "model_imported": false,
+   "model_loads": 0,
+   "raw_generation_files": 0,
+   "supervisor_wall_seconds": 0.6090000000003783,
+   "type": "RuntimeError"
+  },
+  {
+   "attempt": "native-d1-001",
+   "error": "RESOURCE_GUARD: host_available_bytes: 2.265 GiB < 6.000 GiB",
+   "model_imported": false,
+   "model_loads": 0,
+   "raw_generation_files": 0,
+   "supervisor_wall_seconds": 0.5159999999996217,
+   "type": "RuntimeError"
+  },
+  {
+   "attempt": "native-supa-002",
+   "error": "schema smoke failed; no prompt repair or CHECK evaluation",
+   "generation_calls": 90,
+   "model_imported": true,
+   "model_loads": 1,
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2594693120,
+   "raw_generation_files": 96,
+   "reserved_generated_tokens": 7712,
+   "supervisor_wall_seconds": 34.1869999999999,
+   "type": "RuntimeError",
+   "wall_seconds": 32.233999999999924
+  },
+  {
+   "attempt": "native-d1-002",
+   "error": "schema smoke failed; no prompt repair or CHECK evaluation",
+   "generation_calls": 90,
+   "model_imported": true,
+   "model_loads": 1,
+   "peak_gpu_allocated_bytes": 3114824192,
+   "peak_host_rss_bytes_sampled": 2630647808,
+   "raw_generation_files": 96,
+   "reserved_generated_tokens": 7712,
+   "supervisor_wall_seconds": 54.827999999999975,
+   "type": "RuntimeError",
+   "wall_seconds": 52.84400000000005
+  }
+ ],
+ "experiment": "MRS-1",
+ "limits_not_weakened": true,
+ "measurement_note": "Attempts 001 refused before importing torch and measure CPU setup only. Attempts 002 are real native measurements: one model load each, 90 generation calls each, 2.90 GiB peak GPU allocation on both. No scored case was produced, so cost per recovered case stays null rather than being given a finite value.",
+ "note": "Superseded update: the blocking event is the frozen SCHEMA_SMOKE gate, not the preload resource guard. The 001 refusal receipts are retained unchanged.",
+ "retries": 0,
+ "status": "SCHEMA_SMOKE_FAILURE_AFTER_NATIVE_LOAD",
+ "supersedes": "PRELOAD_RESOURCE_REFUSAL",
+ "totals": {
+  "cost_per_recovered_case": null,
+  "generation_calls": 180,
+  "model_loads": 2,
+  "peak_gpu_allocated_bytes_max": 3114824192,
+  "reserved_generated_tokens": 15424,
+  "scored_cases": 0,
+  "supervised_attempts": 4,
+  "supervisor_wall_seconds": 90.14,
+  "training_steps": 0,
+  "worker_wall_seconds": 85.078
+ }
+}
