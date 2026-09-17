@@ -111,6 +111,7 @@ def main():
         "mrs1": core.mrs1_binding(),
         "model_results_observed": False, "future_protocol_changes": "NEW EXPERIMENT REQUIRED",
     })
+    (core.RECORDS / "evidence").mkdir(parents=True, exist_ok=True)
     core.write_new(core.RECORDS / "evidence/FREEZE_RECEIPT.json", {
         **receipt, "freeze_sha256": core.file_hash(core.RECORDS / "FREEZE.json"),
         "model_calls": 0, "model_results_observed": False,
