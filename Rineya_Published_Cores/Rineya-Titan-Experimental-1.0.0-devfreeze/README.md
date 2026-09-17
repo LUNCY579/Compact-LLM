@@ -56,6 +56,16 @@ gained**. The gain survives strict scoring (41 → 62), so it is not a formattin
 but the legacy per-class monitor **fails on all three panel classes** under both scoring
 policies, because source answers were lost in each.
 
+> **AMENDMENT 1 — the long-context result is substantially a BF16 quantization artifact.**
+> The same training checkpoint materialized in FP32, without this core's export rounding,
+> scores **157/256** long context and **9/64** literal `UNKNOWN`, with acquisition unchanged
+> (235 vs 234). The export erases 60.61% of the update's elements and 24 of 220 trained
+> tensors, so it shrinks a 0.056%-relative update toward the source — behaving like reduced
+> interpolation. This core's 162 sits with FP32 interpolants (163–164), not with its own
+> full-precision parent (157). Nothing below is retracted: the numbers measure the bytes that
+> were published. But **do not read 162/256 as evidence that the recipe preserves long
+> context** — its full-precision output does not. See `AMENDMENT_001.json` and INT-001.
+
 **Long context net +1 hides real churn.** 11 source-correct rows were lost and 12 gained.
 `p = 1` means the difference was not detected; it is **not** equivalence and **not** proof
 of no forgetting. The comparison is properly matched — identical implementation digest

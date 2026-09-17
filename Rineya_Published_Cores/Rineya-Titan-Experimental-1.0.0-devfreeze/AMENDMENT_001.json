@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "amendment": 1,
+  "recorded_utc": "2026-09-17T22:35:00+00:00",
+  "subject": "The long-context result is substantially a BF16 quantization artifact",
+  "source_experiment": "INT-001, rineya-dataset-retention-records/int001-20260917/INT001_RESULTS.md",
+  "weights_changed": false,
+  "measurements_retracted": false,
+
+  "what_was_found": {
+    "summary": "This core's stored BF16 weights score 162/256 on long context and 10/64 literal UNKNOWN. The SAME training checkpoint materialized in FP32 without the BF16 export rounding scores 157/256 and 9/64. Acquisition is unchanged within noise: 235 vs 234 on SELECT-VIEWS-001.",
+    "unrounded_fp32_long_context": 157,
+    "unrounded_fp32_literal_unknown": 9,
+    "unrounded_fp32_acquisition": 235,
+    "this_core_long_context": 162,
+    "this_core_literal_unknown": 10,
+    "this_core_acquisition": 234,
+    "matched_conditions": "identical implementation digest a329eb7bb0, transformers 4.51.3, max_context 4096, TF32 off, 0 rows skipped"
+  },
+
+  "mechanism": {
+    "relative_update_norm": 0.000558,
+    "elements_with_no_delta_after_bf16": "60.61%",
+    "trained_tensors_with_update_erased_entirely": 24,
+    "trained_tensors_total": 220,
+    "already_recorded_in": "evidence/SOURCE_MATERIALIZATION.json, field tensors_identical_to_source = 24",
+    "explanation": "Rounding a 0.056%-relative update to BF16 shrinks it toward the source, so the export behaves like reducing the interpolation coefficient alpha. This core's long context (162) sits with the FP32 interpolants (163-164 at alpha 0.25-0.75), not with its own full-precision parent (157)."
+  },
+
+  "what_this_changes": {
+    "retracted": "nothing. The recorded numbers are measurements of the bytes in this directory, which are the bytes that were published.",
+    "corrected_interpretation": "CORE.json and README.md present long context 162/256 vs Supa's 161 (paired p=1) as the first arm not to lose long context. That measurement stands, but it should NOT be read as evidence that the training recipe preserves long context. The recipe's full-precision output does not. The preservation is substantially attributable to the lossy BF16 export.",
+    "still_true": "This core acquires a capability both frozen cores lack, with all three families clearing their published floors, and it does so without a measured long-context loss as stored."
+  },
+
+  "superseding_candidate": {
+    "note": "INT-001's alpha=0.50 FP32 interpolant beats this core on every preservation endpoint simultaneously: retained 42 vs 39 of 47, long context 164 vs 162, literal UNKNOWN 12 vs 10, at the cost of 15 acquisition points (219 vs 234). It was selected on SELECT-VIEWS-001 and the arithmetic/retention panel only; long context and abstention were report-only and were not used to choose it.",
+    "weight_sha256": "ced9d0a82f32440911158725c060c4f0009805622075f99e66012f1bd24eb454",
+    "reproducible_from": "source 962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b + trained tensors 07156fb5aa4a8c510c63e8af2118a08a8b6bf004549532d497c2e89e2deec24d at alpha 0.50",
+    "promoted": false,
+    "reason_not_promoted": "INT-001 registered that no arm is promoted on that screen. One seed, and the gate disagreement is unresolved."
+  },
+
+  "claims_unchanged": {
+    "quality_improvement_established": false,
+    "release_permitted": false,
+    "training_authorized": false,
+    "independent_training_draws": 1
+  }
+}
