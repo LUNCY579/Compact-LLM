@@ -129,8 +129,48 @@ introduces no new threshold, reusing the exact-binomial lower-bound rule already
 published in `PROCESS_PROBE_FLOORS.md`). **`62` was deliberately not lowered** despite
 RRP-014 seed 29 failing at 61.
 
-Until then arms are judged by GATE v1 with acquisition reported alongside, so the gap
-stays visible rather than silently tolerated.
+**SELECT-VIEWS-001 is now built** (`select-views-001/`, sha256 `7dd53f2a…`): 384 views,
+128/family, `view_role: ADMITTED_FOR_SELECTION`, zero parent overlap with the existing
+probe, floors published before any model call (0.2344 / 0.0781 / 0.0703). Scored on the
+untrained source it reproduces the old probe's baseline exactly — 14/384 overall, 0/3
+floors cleared — which is the evidence it measures the same capability. **GATE v2's third
+conjunct is operative for future arms.**
+
+`process_arm` gained a repeatable `--exclude-views`, and **every future arm must pass
+`--exclude-views <records>/select-views-001/SELECT_VIEWS.jsonl`**. Measured, not assumed:
+without it a D1-dose draw at seed 17 trains on **46 of the gate instrument's own parents**
+and is then judged by them.
+
+### What the adversarial review of GATE v2 found
+
+Three independent gate designs, each attacked by three lenses. **All eight returned
+verdicts refuted the design under review — seven FATAL, one SERIOUS.** Four findings hit
+the registration itself and are recorded as Amendment 6:
+
+1. **The panel term is an improvement requirement, not a preservation one.** The frozen
+   source scores `panel = 47` against a threshold of 62, and five *function-preserving*
+   controls score 47 with 47/47 retained — perfect retention — and all five **fail**.
+2. **`62` is the worst of a different deliverable's four seeds** (74, 62, 73, 68). Recorded,
+   deliberately **not changed**: lowering it now, knowing RRP-014 seed 29 failed at 61, is
+   the post-hoc move the registration refuses.
+3. **Bank-level quarantine cannot catch text-level leakage, and this repo has a measured
+   instance.** `splits_onpanel/train.jsonl` shares **47/150 verbatim panel stems** (102/150
+   digit-blinded) while passing all eight id and template-family disjointness checks,
+   because different template families generate identical stems. That leak never reached
+   anything — every completed arm used `splits_large` (0/150) — but **GATE v2 has no
+   text-level guard**, so any future arm not training on `splits_large` must publish a
+   digit-blinded stem-overlap count against the panel before it is gated.
+4. **The permissive bare policy is load-bearing and still marked `pending`.** Under strict,
+   `source_correct_total` is 41 and no arm has ever reached 37 retained.
+
+One review claim was **checked and rejected**: the "of 47" denominator is *not*
+candidate-dependent — permissive `source_correct_total` is 47 in 40 of 40 artifacts and the
+probe aborts before writing if the source fails to reproduce. The field that varies is
+`reference_size` (47–85), which the gate does not read.
+
+Until a fresh confirmation instrument exists, arms are judged by GATE v2 with long context
+and abstention reported alongside, so the remaining gaps stay visible rather than silently
+tolerated.
 
 Do **not** switch the recommendation to D3 because D3 wins on long context.
 `QUARANTINE.json` bars that suite for `[TRAIN, SELECTION, CONFIRMATION]`; RRP-010
