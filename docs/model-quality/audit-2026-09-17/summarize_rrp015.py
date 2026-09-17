@@ -220,7 +220,7 @@ def training_summary(records, arm):
             "attempts": attempts}
 
 
-def model_identity(value, root, records, name):
+def model_identity(value, root, records, name, *, retention_uses_hf=False):
     directory = Path(value.get("model_dir", ""))
     if not directory.is_absolute():
         directory = root / directory
@@ -273,6 +273,8 @@ def model_identity(value, root, records, name):
             identity["custody"] = "LIVE_BYTES" if weight.is_file() else "RECEIPT_ONLY_DERIVED_BYTES_ABSENT"
         expected_manifest = identity.get("checkpoint_manifest", {}).get("sha256")
         for kind, entry in receipts.items():
+            if kind == "research" and retention_uses_hf:
+                continue
             receipt = entry["receipt"] or {}
             custody = entry["custody"] or {}
             if (receipt.get("source_weight_sha256") != WEIGHTS["supa"]
@@ -318,7 +320,9 @@ def collect(evidence, records):
             process_values[name] = value
             model["process"] = safe_summary(lambda x: process_summary(x, views), value)
             try:
-                model["identity"] = model_identity(value, root, records, name)
+                prior_retention, _ = artifact(evidence / f"RETENTION_PROBE_rrp015_{name}.json")
+                uses_hf = bool(prior_retention and str(prior_retention.get("target", "")).startswith("hf:"))
+                model["identity"] = model_identity(value, root, records, name, retention_uses_hf=uses_hf)
             except (OSError, ValueError, KeyError) as exc:
                 model["identity"] = {"status": "UNVERIFIED", "issues": [str(exc)]}
         if name not in WEIGHTS:
@@ -330,13 +334,25 @@ def collect(evidence, records):
                 model[kind] = safe_summary(summarize, raw) if raw else None
                 if raw:
                     declared = raw.get("target") if kind == "retention" else raw.get("model_directory")
-                    target = Path(declared) if declared else None
+                    hf_retention = kind == "retention" and isinstance(declared, str) and declared.startswith("hf:")
+                    target = Path(declared[3:] if hf_retention else declared) if declared else None
                     if target and not target.is_absolute():
                         target = root / target
-                    expected = records / f"{name}-{'research' if kind == 'retention' else 'hf'}"
+                    expected = records / f"{name}-{'research' if kind == 'retention' and not hf_retention else 'hf'}"
                     if not target or target.resolve() != expected.resolve():
                         model[kind]["issues"].append("measurement target differs from the bound materialization")
                         model[kind]["status"] = "INCOMPATIBLE"
+                    if hf_retention:
+                        observed = raw.get("hf_candidate_identity") or {}
+                        bound = ((model.get("identity") or {}).get("materializations") or {}).get("hf") or {}
+                        receipt = bound.get("receipt") or {}
+                        if (observed.get("source_weight_sha256") != WEIGHTS["supa"]
+                                or observed.get("weight_sha256") != receipt.get("out_weight_sha256")
+                                or observed.get("materialization_sha256") != (bound.get("artifact") or {}).get("sha256")
+                                or observed.get("checkpoint_manifest_sha256") != receipt.get("checkpoint_manifest_sha256")
+                                or Path(observed.get("directory", "")).resolve() != expected.resolve()):
+                            model[kind]["issues"].append("HF retention identity is not the bound candidate export")
+                            model[kind]["status"] = "INCOMPATIBLE"
         result["models"][name] = model
     source = process_values.get("supa")
     for name in LABELS:

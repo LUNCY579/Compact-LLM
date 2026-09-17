@@ -137,8 +137,13 @@ def main() -> int:
     tokenizer = run._load_tokenizer(SOURCE)
     eos = run._eos_ids(SOURCE, tokenizer)
     built_from = None
+    hf_candidate_identity = None
     latent_info = None
-    if target == 'source':
+    if target.startswith('hf:'):
+        from experiments.rab001_exploration.hf_checkpoint import load_hf_candidate
+        model, hf_candidate_identity = load_hf_candidate(Path(target[3:]), SOURCE, device)
+        built_from = f'verified HF materialization {target[3:]}'
+    elif target == 'source':
         model = run._load(SOURCE, device)[0]
         built_from = 'frozen source (tautological control)'
     elif target.startswith('ced_last'):
@@ -239,6 +244,7 @@ def main() -> int:
     gc.collect()
 
     result = {'schema': 1, 'evidence_kind': 'exploratory_typed_retention_probe_only',
+              'hf_candidate_identity': hf_candidate_identity,
               'note': 'Produced by the package scorer but OUTSIDE the receipt system: no '
                       'receipt, no gate, no stage opened, no efficacy claim. Exists because '
                       'G1_RETENTION refuses an arm whose G1_QUALITY receipt failed, so the '

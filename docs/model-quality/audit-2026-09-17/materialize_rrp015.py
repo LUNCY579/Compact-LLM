@@ -28,7 +28,13 @@ def main():
         if file_hash(args.source / name) != expected:
             raise ValueError(f"checkpoint source binding differs: {name}")
     # Preserve the same floor even though no optimizer or CUDA model is allocated.
-    expected_bytes = 596049920 * (4 if args.research_format else 2) + 64 * 2**20
+    # Same tensor names, shapes and stored BF16 dtype as the bound source. Use the
+    # measured write inventory plus a 2MiB header/receipt allowance, not an arbitrary
+    # 64MiB estimate. The 14GiB floor itself is unchanged.
+    sidecar_bytes = sum((args.source / n).stat().st_size for n in assets if n != "model.safetensors")
+    expected_bytes = ((args.source / "model.safetensors").stat().st_size
+                      * (2 if args.research_format else 1)
+                      + (0 if args.research_format else sidecar_bytes) + 2 * 2**20)
     if shutil.disk_usage(args.out.parent).free - expected_bytes < 14 * 2**30:
         raise ValueError("export would cross the unchanged 14 GiB free-space floor")
     import psutil
@@ -37,6 +43,11 @@ def main():
     from experiments.rab001_exploration.materialize_checkpoint import materialize
     receipt = materialize(args.source, args.checkpoint, args.out,
                           research=args.research_format)
+    if receipt["source_weight_sha256"] != assets["model.safetensors"]:
+        raise ValueError("source changed during materialization")
+    written_bytes = sum(p.stat().st_size for p in args.out.iterdir() if p.is_file())
+    if written_bytes > expected_bytes or shutil.disk_usage(args.out.parent).free < 14 * 2**30:
+        raise ValueError("export exceeded its measured byte reservation or free-space floor")
     from safetensors import safe_open
     with safe_open(str(args.out / "model.safetensors"), framework="pt", device="cpu") as f:
         dtypes = sorted({str(f.get_slice(name).get_dtype()) for name in f.keys()})
@@ -45,6 +56,8 @@ def main():
         raise ValueError(f"unexpected export dtypes: {dtypes}")
     write_new(args.out / "CUSTODY.json", {
         "source_binding_verified_against_checkpoint": True,
+        "reserved_export_bytes": expected_bytes,
+        "written_bytes_before_custody_receipt": written_bytes,
         "source_weight_sha256": assets["model.safetensors"],
         "checkpoint": str(args.checkpoint.resolve()),
         "checkpoint_manifest_sha256": file_hash(manifest),

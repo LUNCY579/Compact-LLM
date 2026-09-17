@@ -106,7 +106,7 @@ def test_partial_source_blocks_compatible_acquisition_claim(tmp_path, monkeypatc
     partial["predictions"] = partial["predictions"][:100]
     for name, value in (("supa", partial), ("control", complete)):
         (evidence / f"PROCESS_rrp015_{name}.json").write_text(json.dumps(value))
-    monkeypatch.setattr(summary, "model_identity", lambda *a: {"status": "VERIFIED"})
+    monkeypatch.setattr(summary, "model_identity", lambda *a, **kw: {"status": "VERIFIED"})
     got = summary.collect(evidence, records)
     assert got["models"]["control"]["process"]["all_families_clear"] is True
     assert got["models"]["control"]["compatible_with_complete_source_process"] is False
@@ -121,7 +121,8 @@ def test_module_never_imports_model_runtime():
 
 
 @pytest.mark.parametrize("fault", [None, "source_runtime", "wrong_checkpoint", "failed_evaluation",
-                                   "successful_retry", "wrong_evaluation_kind", "wrong_result_path"])
+                                   "successful_retry", "wrong_evaluation_kind", "wrong_result_path",
+                                   "hf_export", "hf_wrong_identity", "hf_wrong_path"])
 def test_gate_needs_complete_compatible_source_checkpoint_and_supervision(tmp_path, monkeypatch, fault):
     evidence = tmp_path / "clone/experiments/architecture_benchmark_001/evidence/retention-design-v1"
     evidence.mkdir(parents=True)
@@ -138,12 +139,22 @@ def test_gate_needs_complete_compatible_source_checkpoint_and_supervision(tmp_pa
         (evidence / f"PROCESS_rrp015_{name}.json").write_text(json.dumps(value))
     panel = retention()
     panel["target"] = str(records / "control-research")
+    if fault and fault.startswith("hf_"):
+        panel["target"] = "hf:" + str(records / ("wrong-hf" if fault == "hf_wrong_path" else "control-hf"))
+        panel["hf_candidate_identity"] = {
+            "directory": str(records / "control-hf"),
+            "source_weight_sha256": summary.WEIGHTS["supa"],
+            "weight_sha256": "wrong" if fault == "hf_wrong_identity" else "candidate",
+            "materialization_sha256": "materialization", "checkpoint_manifest_sha256": "manifest"}
     for value in panel["by_bare_policy"].values():
         value["arm_correct_total"] += 20
         value["arm_correct_outside_source"] += 20
     (evidence / "RETENTION_PROBE_rrp015_control.json").write_text(json.dumps(panel))
-    monkeypatch.setattr(summary, "model_identity", lambda *a: {
+    monkeypatch.setattr(summary, "model_identity", lambda *a, **kw: {
         "status": "VERIFIED", "checkpoint_binding": {"source": "fixture"},
+        "materializations": {"hf": {"artifact": {"sha256": "materialization"},
+                                      "receipt": {"out_weight_sha256": "candidate",
+                                                  "checkpoint_manifest_sha256": "manifest"}}},
         "checkpoint_progress": {"updates": 2 if fault == "wrong_checkpoint" else 28}})
     monkeypatch.setattr(summary, "training_summary", lambda *a: {
         "status": "COMPLETE_VERIFIED", "attempts": [{"status": "COMPLETE_VERIFIED",
@@ -177,7 +188,7 @@ def test_gate_needs_complete_compatible_source_checkpoint_and_supervision(tmp_pa
     collected = summary.collect(evidence, records)
     gate = collected["models"]["control"]["gate_v2"]
     assert gate["observed_conjunction"] is True
-    assert gate["validated_exploratory_result"] is (True if fault in (None, "successful_retry") else None)
+    assert gate["validated_exploratory_result"] is (True if fault in (None, "successful_retry", "hf_export") else None)
     assert gate["broad_preservation_or_confirmation"] is False
     if fault == "successful_retry":
         attempts = {a["attempt"]: a for a in collected["evaluation_attempts"]}
