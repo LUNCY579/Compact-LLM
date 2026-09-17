@@ -467,3 +467,88 @@ def test_a_malformed_cli_dose_is_refused():
     import argparse as _argparse
     with pytest.raises(_argparse.ArgumentTypeError):
         process_arm.parse_per_family("ledger_replay=")
+
+
+# --- SELECT-VIEWS-001: a second scored instrument, admissible for selection ----------
+# GATE_V2_PREREG.md: the gate cannot be extended with any pre-existing instrument, because
+# the acquisition probe declares "never for selection" in all 26 of its evidence files. The
+# replacement must declare its admissibility at birth, and every arm must exclude it.
+
+def test_the_new_instrument_does_not_declare_itself_unusable_for_selection():
+    from experiments.reasoning_posttraining_v1 import select_views
+    assert "never for selection" not in select_views.VIEW_ROLE.lower()
+    assert select_views.VIEW_ROLE == "ADMITTED_FOR_SELECTION"
+    # A different salt, or it is the existing probe under a new name.
+    assert select_views.SALT != process_arm.SALT
+
+
+def test_rendered_views_serialize_exactly_as_trained_rows_do():
+    """A scored view whose serialization differs from the trained one measures serialization."""
+    from experiments.reasoning_posttraining_v1 import select_views
+    row = {"id": "P1-step0-valid", "parent_id": "P1", "family": "ledger_replay",
+           "before": {"B": 2, "A": 1}, "event": {"kind": "add", "amount": 3},
+           "proposed_after": {"B": 2, "A": 4}, "source_split": "train"}
+    rendered = select_views.render(row, {"ledger_replay": "RULE"})
+    assert rendered["prompt"][0] == {"role": "system", "content": "RULE"}
+    assert rendered["prompt"][1]["content"] == json.dumps(
+        {"before": row["before"], "event": row["event"]},
+        sort_keys=True, separators=(",", ":"))
+    assert rendered["reference"] == json.dumps(
+        row["proposed_after"], sort_keys=True, separators=(",", ":"))
+    assert rendered["view_role"] == "ADMITTED_FOR_SELECTION"
+    assert rendered["parent_id"] == "P1"
+
+
+def test_floors_take_the_stronger_predictor_per_family():
+    from experiments.reasoning_posttraining_v1 import select_views
+    rows = (
+        # copy_before wins here: 2 of 3 are unchanged states.
+        [{"family": "f_copy", "before": {"A": 1}, "proposed_after": {"A": 1}},
+         {"family": "f_copy", "before": {"A": 2}, "proposed_after": {"A": 2}},
+         {"family": "f_copy", "before": {"A": 3}, "proposed_after": {"A": 9}}]
+        # constant_majority wins here: nothing is unchanged, but one answer repeats.
+        + [{"family": "f_const", "before": {"A": 1}, "proposed_after": {"A": 7}},
+           {"family": "f_const", "before": {"A": 2}, "proposed_after": {"A": 7}},
+           {"family": "f_const", "before": {"A": 3}, "proposed_after": {"A": 8}}]
+    )
+    f = select_views.floors(rows)
+    assert f["f_copy"]["copy_before"] == 2
+    assert f["f_copy"]["binding_floor_predictor"] == "copy_before"
+    assert f["f_copy"]["binding_floor_count"] == 2
+    assert f["f_const"]["copy_before"] == 0
+    assert f["f_const"]["constant_majority"] == 2
+    assert f["f_const"]["binding_floor_predictor"] == "constant_majority"
+
+
+def test_held_out_parents_unions_several_instruments(tmp_path):
+    """An arm that excluded only the first instrument would train on the second."""
+    da, db = tmp_path / "a", tmp_path / "b"
+    da.mkdir(); db.mkdir()
+    a = write_views(da, [view("P1", "ledger_replay"), view("P2", "ledger_replay")])
+    b = write_views(db, [view("P3", "ledger_replay")])
+    assert process_arm.held_out_parents(a) == frozenset({"P1", "P2"})
+    assert process_arm.held_out_parents([a, b]) == frozenset({"P1", "P2", "P3"})
+    # A bare path must keep working -- every existing caller passes one.
+    assert process_arm.held_out_parents(str(a)) == frozenset({"P1", "P2"})
+
+
+def test_a_second_instrument_is_excluded_from_the_training_draw(tmp_path, monkeypatch):
+    dp, ds = tmp_path / "p", tmp_path / "s"
+    dp.mkdir(); ds.mkdir()
+    # All three families, or rules_from_views refuses before the exclusion is even computed.
+    primary = write_views(dp, [view(f"P1-{f}", f) for f in process_arm.FAMILIES])
+    second = write_views(ds, [view(f"P2-{f}", f) for f in process_arm.FAMILIES])
+    seen = {}
+
+    def fake_verified_positives(binding, exclude, *, salt=process_arm.SALT):
+        seen["exclude"] = exclude
+        return {"ledger_replay": {}}, {"labels_checked": 0, "labels_by_family": {}}
+
+    monkeypatch.setattr(process_arm, "verified_positives", fake_verified_positives)
+    with pytest.raises(ValueError):
+        # No parents survive, so the build fails after the exclusion is computed -- which is
+        # the part under test.
+        process_arm.build({}, primary, None, per_family=1, exposures=1,
+                          also_exclude_views=[second])
+    expected = {f"P1-{f}" for f in process_arm.FAMILIES} | {f"P2-{f}" for f in process_arm.FAMILIES}
+    assert seen["exclude"] == frozenset(expected)

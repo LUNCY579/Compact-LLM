@@ -122,10 +122,19 @@ def rules_from_views(views_path: Path) -> dict[str, str]:
     return rules
 
 
-def held_out_parents(views_path: Path) -> frozenset[str]:
-    return frozenset(json.loads(l)["parent_id"]
-                     for l in Path(views_path).read_text(encoding="utf-8").splitlines()
-                     if l.strip())
+def held_out_parents(views_path) -> frozenset[str]:
+    """Parents of one views file, or the UNION across several.
+
+    Several matters now: SELECT-VIEWS-001 is a second scored instrument, and an arm that
+    excluded only the first would train on the second and then be judged by it.
+    """
+    paths = [views_path] if isinstance(views_path, (str, Path)) else list(views_path)
+    out: set[str] = set()
+    for path in paths:
+        out.update(json.loads(l)["parent_id"]
+                   for l in Path(path).read_text(encoding="utf-8").splitlines()
+                   if l.strip())
+    return frozenset(out)
 
 
 def verified_positives(binding: dict, exclude: frozenset[str], *,
@@ -298,10 +307,13 @@ def write_prepared(directory: Path, compiled: list[dict], report: dict) -> dict:
 def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
           train_window: int = TRAIN_WINDOW,
           selection_seed: int = SEED,
-          experiment: str = EXPERIMENT) -> tuple[list[dict], dict, dict]:
+          experiment: str = EXPERIMENT,
+          also_exclude_views=()) -> tuple[list[dict], dict, dict]:
     salt = salt_for(selection_seed)
     rules = rules_from_views(views)
-    excluded = held_out_parents(views)
+    # Every scored instrument's parents, not just this arm's rule source. `rules_from_views`
+    # still reads ONLY `views`, so the trained task definition cannot drift.
+    excluded = held_out_parents([views, *also_exclude_views])
     per_parent, label_audit = verified_positives(binding, excluded, salt=salt)
     chosen = select(per_parent, per_family=per_family, salt=salt)
     compiled, rejected = compile_training(chosen, rules, tokenizer, max_sequence=train_window)
@@ -328,6 +340,7 @@ def build(binding: dict, views: Path, tokenizer, *, per_family, exposures: int,
         "train_window": train_window,
         "source_label_audit": label_audit,
         "held_out_parents": len(excluded),
+        "scored_instruments_excluded": [str(views), *[str(v) for v in also_exclude_views]],
         "available_parents_after_exclusion": {f: len(p) for f, p in sorted(per_parent.items())},
         "per_family_requested": per_family,
         "per_family_taken": dict(sorted(taken.items())),
@@ -354,6 +367,10 @@ def main(argv=None):
                         help="a1-prepared-003/SOURCE_BINDING.json")
     parser.add_argument("--views", type=Path, required=True,
                         help="process-transition-probe-001/CANDIDATE_VIEWS.jsonl")
+    parser.add_argument("--exclude-views", type=Path, action="append", default=[],
+                        help="Additional scored instruments whose parents must never be "
+                             "trained on. Repeatable. Required now that SELECT-VIEWS-001 "
+                             "exists, or an arm trains on the instrument that judges it.")
     parser.add_argument("--source", type=Path, required=True, help="the Supa tokenizer assets")
     parser.add_argument("--out-prepared", type=Path, required=True)
     parser.add_argument("--out-plan", type=Path, required=True)
@@ -376,6 +393,7 @@ def main(argv=None):
     tokenizer = load_tokenizer(args.source)
     compiled, plan, report = build(binding, args.views, tokenizer,
                                    per_family=args.per_family, exposures=args.exposures,
+                                   also_exclude_views=args.exclude_views,
                                    selection_seed=args.selection_seed,
                                    experiment=args.experiment_id)
     write_prepared(args.out_prepared, compiled, report)
