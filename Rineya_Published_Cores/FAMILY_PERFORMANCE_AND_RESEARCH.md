@@ -252,31 +252,41 @@ that makes the primary figure mean what it says.
 
 Two qualifications, both material:
 
-- **The confirmed abstention loss is uniform across task types. A separate, task-specific
-  degradation shows up on answerable rows.** Both statements are *post hoc* — not pre-registered,
-  not part of the confirmed verdict — and every rate below is conditioned on the rows the frozen
-  source got right, since a loss is only possible there.
+- **The confirmed abstention loss is uniform across task types.** Rates must be conditioned on
+  the rows the frozen source got right, since a loss is only possible there. Conditioned, the two
+  halves of the bank lose abstentions at indistinguishable rates: 1 of 3 against 14 of 37, Fisher
+  **p = 1.00**. An earlier revision reported a two-effect dissociation at p = 2.4e-07; that figure
+  was computed over all rows rather than baseline-correct rows, so it measured the source's
+  standing rather than this core's damage, and **it is withdrawn**.
 
-  On **answerable** rows the core loses ground specifically on questions requiring a **role to be
-  resolved to the person holding it**: it fails on **20.0%** of the rows its source gets right
-  (26 of 130) against **2.7%** elsewhere (4 of 147), Fisher p < 1e-4. All **26** of those losses
-  are the same error — the core answers the person where the role is wanted (14 cases), or binds
-  the alias to the wrong person (12 cases). That is a complete description of those failures and
-  is the substantive finding here. Its one measured gain is also narrow: of 18 gains on
-  non-binding rows, **17 are counting-with-exclusions alone**.
+- **On answerable rows the core is damaged, and where it is damaged is highly specific — but no
+  mechanism is established.** The damage is real and survives conditioning. Its location, to the
+  variant, is stable and reproduced independently by two analyses:
 
-  On **unanswerable** rows there is **no** such concentration. The two groups lose abstentions at
-  indistinguishable rates once conditioned — 1 of 3 against 14 of 37, Fisher **p = 1.00** —
-  because the binding task types abstain correctly on only **3 of 51** rows to begin with and so
-  had almost nothing to lose. An earlier revision of this section reported a two-effect
-  dissociation with an interaction at p = 2.4e-07; **that figure was computed over all rows
-  rather than over baseline-correct rows, so it measured the frozen source's standing rather than
-  this core's damage, and it is withdrawn.** The confirmed abstention damage should be read as
-  uniform.
+  | cell | interrogative | n | source | this core | rate given source-correct |
+  |---|---|---:|---:|---:|---:|
+  | `rule_exception`, base | "Which role…" | 25 | 25 | **25** | **0.000** |
+  | `rule_exception`, counterfactual | "Which role…" | 25 | 25 | 24 | 0.040 |
+  | `rule_exception`, paraphrase | "**Who** was exempt…" | 25 | 15 | **2** | **0.867** |
+  | `count_with_exclusions`, paraphrase | "After the withdrawal, how many…" | 25 | **3** | **16** | *+14 gains* |
+  | `alias_resolution`, all variants | "Who…" throughout | 78 | 65 | 53 | 0.125–0.278, uniform |
 
-  Four candidate mechanisms — recency-shortcut adoption, defeasible override, distractor capture,
-  output-type shift — have each been tested and refuted. **No mechanism is established.** An
-  earlier revision attributed the damage to defeasible override; that account is also withdrawn.
+  The core is **undamaged on the congruent phrasing of the identical task** (25/25) and collapses
+  when the interrogative types the answer wrongly — "Who" where the reference is a role. Its one
+  measured *gain* is the mirror image and also paraphrase-only: 14 of 17 gains arrive where the
+  frozen source itself collapses (3 of 25) on a reworded counting question. `alias_resolution`'s
+  12 losses are uniform across variants with a congruent interrogative throughout, and are
+  **not** accounted for.
+
+  **Three successive mechanism accounts have been proposed and withdrawn** — defeasible override,
+  output-type shift, and role/occupant conflation (the last untenable because the exempt role has
+  no person bound to it in the context at all). Two further accounts, recency-shortcut adoption
+  and distractor capture, were tested and refuted. **Nothing in this paragraph should be read as
+  a mechanism**; it is a map of where the effect is, pending an instrument that crosses
+  interrogative congruence as a designed factor rather than an accident of phrasing.
+
+  `temporal_correction` is 26/26 for both systems in all three variants and carries no
+  information about either.
 - **Serving path was unqualified.** Both runs used `transformers 5.14.1` through standard HF
   `generate`, not the DenseReference harness. They are matched to each other — identical stack,
   FP32, 4096 context, zero rows skipped — so the contrast is internally valid. **These numbers
