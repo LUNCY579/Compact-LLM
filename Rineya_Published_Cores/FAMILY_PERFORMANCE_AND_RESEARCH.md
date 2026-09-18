@@ -252,19 +252,31 @@ that makes the primary figure mean what it says.
 
 Two qualifications, both material:
 
-- **The damage is task-specific, and there appear to be two distinct effects rather than one.** A
-  *post hoc* decomposition — not pre-registered, not part of the confirmed verdict — finds the
-  confirmed abstention loss concentrated in **state-over-time** questions (a location being
-  tracked, a date being corrected): 14 of the 15 losses, p = 1.2e-04. These are also the task
-  types whose *answerable* accuracy is unchanged, so on them the core performs as well as its
-  source and fails to notice when the sentence determining the answer is absent. Separately, on
-  answerable rows only, the core loses ground on questions requiring a **role to be resolved to
-  the person holding it** (0 gains, 26 losses, p = 3.0e-08) while being net *positive* on the
-  other three task types (19 gains, 4 losses). Interaction Fisher **p = 2.4e-07**. Four candidate
-  mechanisms — recency-shortcut adoption, defeasible override, distractor capture, output-type
-  shift — have each been tested and refuted. **No mechanism is established**; these are
-  hypotheses for the successor instrument. An earlier revision of this section attributed the
-  damage to defeasible override; that account is withdrawn.
+- **The confirmed abstention loss is uniform across task types. A separate, task-specific
+  degradation shows up on answerable rows.** Both statements are *post hoc* — not pre-registered,
+  not part of the confirmed verdict — and every rate below is conditioned on the rows the frozen
+  source got right, since a loss is only possible there.
+
+  On **answerable** rows the core loses ground specifically on questions requiring a **role to be
+  resolved to the person holding it**: it fails on **20.0%** of the rows its source gets right
+  (26 of 130) against **2.7%** elsewhere (4 of 147), Fisher p < 1e-4. All **26** of those losses
+  are the same error — the core answers the person where the role is wanted (14 cases), or binds
+  the alias to the wrong person (12 cases). That is a complete description of those failures and
+  is the substantive finding here. Its one measured gain is also narrow: of 18 gains on
+  non-binding rows, **17 are counting-with-exclusions alone**.
+
+  On **unanswerable** rows there is **no** such concentration. The two groups lose abstentions at
+  indistinguishable rates once conditioned — 1 of 3 against 14 of 37, Fisher **p = 1.00** —
+  because the binding task types abstain correctly on only **3 of 51** rows to begin with and so
+  had almost nothing to lose. An earlier revision of this section reported a two-effect
+  dissociation with an interaction at p = 2.4e-07; **that figure was computed over all rows
+  rather than over baseline-correct rows, so it measured the frozen source's standing rather than
+  this core's damage, and it is withdrawn.** The confirmed abstention damage should be read as
+  uniform.
+
+  Four candidate mechanisms — recency-shortcut adoption, defeasible override, distractor capture,
+  output-type shift — have each been tested and refuted. **No mechanism is established.** An
+  earlier revision attributed the damage to defeasible override; that account is also withdrawn.
 - **Serving path was unqualified.** Both runs used `transformers 5.14.1` through standard HF
   `generate`, not the DenseReference harness. They are matched to each other — identical stack,
   FP32, 4096 context, zero rows skipped — so the contrast is internally valid. **These numbers
