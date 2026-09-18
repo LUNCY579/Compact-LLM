@@ -9,7 +9,7 @@
 | **OPEN DEV RESULT** | the N16 comparison against r=16, α=0.75, k=0.25 and the full delta |
 | **MECHANISM SCOUT** | the audit's magnitude-vs-direction analysis, now measured |
 | **BLOCKED** | every MR, REP, selector-utilisation and routing cell; G1 at BF16; G1 retention; all confirmation |
-| **CONFIRMATION** | none. Closed — no confirmation instrument exists on this host |
+| **CONFIRMATION** | none. Closed — `CONFIRMATION_INSTRUMENT_GAP.md` states no instrument here can confirm these endpoints; inherited from that document, not independently searched |
 | **RELEASE** | none. Closed — not authorised, not earned |
 
 `quality_improvement_established` false. `release_permitted` false. Nothing promoted.

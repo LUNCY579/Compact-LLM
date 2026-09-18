@@ -524,3 +524,36 @@ one-model-job-at-a-time rule against a host already 10 GiB over-committed, for w
 | 8 | per-block norms near-uniform | **OVERSTATED** — 1.13× absolute but **5.89× relative** |
 | 9 | rank-16 shows the skill is low-rank | **UNSUPPORTED AS MECHANISM** — a uniform shrink to the same norm scores the same |
 | 10 | Erratum 2 cause 3 (ill-conditioned r=4 subspace) | **FALSIFIED** — r=4 gaps are 2.6× **wider**; cause 3 eliminated |
+
+
+---
+
+# ERRATUM 1 — two claims in this document were wrong, and they share a cause
+
+**Appended 2026-09-18. The body above is left unedited; this is the correction.**
+
+**§3 "deep-any — the named mechanism does not exist" is WRONG.** It exists. The peer's report
+carries a `deep-any (format-free)` column with Supa at 35, Titan at 234 and Qwen3-4B at 81, so
+"35 → 234" is a like-for-like comparison inside one parser and **not** the condition splice §2
+called it. What I had actually established was that it is not implemented in
+`rineya-dataset-retention-records/` or in `experiments/rab001_exploration/`. That narrower
+statement still holds and is still worth acting on — the headline premise cannot be reproduced
+from committed code — but it is not what §2 and §3 say.
+
+**§2's "there is no 35" is wrong for the same reason.**
+
+**The cause, which recurred a third time.** Later in this session I wrote that no Supa per-item
+PROCESS artifact "exists on this host". The pilot clone holds **36** PROCESS artifacts I had not
+searched, including the one that answered my own question — the peer found it and used it to
+test my hypothesis (result: not supported, P(X≥3) = 0.1023).
+
+Twice the claim outran the search: I looked in one tree, found nothing, and wrote "does not
+exist" instead of "is not in X". **The fix is phrasing discipline — state the scope inside the
+sentence** — and it costs nothing.
+
+A third error in this session was a different class and is kept distinct rather than lumped in:
+I reported a +7/+10 long-context oracle headroom as available without applying
+`analysis/paired.py::noise_verdict`, which I wrote for exactly that purpose and had applied to
+the peer's margins but not my own. Three errors, two classes.
+
+Current corrected position on everything above: see `COMBINED_RECORD_20260918.md`.
