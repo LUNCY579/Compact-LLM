@@ -99,20 +99,62 @@ true per-item oracle is computable today. From
 Robust to arm selection: the four α arms alone reach 171, and adding the three k arms adds
 nothing to the union.
 
-**What this changes.** C1 is the measurement that "closed off" per-layer gating, that justified
-*"improve the small model cannot mean apply the delta more cleverly"*, and that — after my
-correction to C2's normalisation — is the **only remaining leg** C2 stands on. On its own data:
+**What this changes — CORRECTED 2026-09-18, after the peer reproduced both tests and caught an
+error in my framing.**
 
-- the headroom figure is wrong by **+7 rows** on long context;
-- a per-item selector over the *existing* arms reaches **171, ten rows above the base's 161**,
-  so "delta modulation cannot raise general capability above its base" **is not supported by
-  C1**;
-- "k=0.25 sits at the oracle corner" is false — it sits at the *best-arm* corner.
+The peer reproduced Test 1 (five for five) and Test 2 (171, +7) exactly, then ran the test I had
+not: **the acquisition oracle. Union 266 against the best single arm's 235 = +31.** I have since
+verified that independently from the `predictions` arrays in the PROCESS artifacts — +31 exactly,
+with greedy coverage matching digit for digit:
 
-**What it does not change.** An oracle is label-aware and diagnostic only; nothing here says a
-*deployable* router reaches 171, and the +7 may be unreachable without gold. But the difference
-between "there is no headroom" and "there are seven rows of headroom no static arm captures"
-is the difference between closing a research direction and leaving it open.
+| arms | acquisition | added |
+|---|---:|---|
+| 1 | 235 | α=1.00 |
+| **2** | **255 (+20)** | α=0.50 |
+| 3 | 263 | α=0.25 |
+| 5 | **266** | saturates |
+
+**My framing was wrong and the correction matters.** I reported "+10 over the base's 161" as
+available long-context headroom. **Both +7 and +10 sit inside REP-001's 13-row band**, so neither
+is established — and `analysis/paired.py::noise_verdict` exists precisely to prevent that
+sentence. I applied it to the peer's margins and not to my own finding. (This is the second
+instance of the same shape in this audit: §0 reported the absence of a *file* as the absence of a
+*measurement*. Both are standards applied outward but not inward.)
+
+**The corrected split, which is sharper than what I first wrote:**
+
+- **Acquisition — C1 is FALSIFIED and the frontier is not exhausted.** +31 against a claimed +3,
+  a factor of ten, and 4× the noise floor. Two arms give +20, nearly 3× the floor, so a two-way
+  selector — a much smaller object than a seven-way router — captures most of it.
+- **General capability — C1's conclusion SURVIVES, on noise grounds rather than on its
+  arithmetic.** The long-context oracle is +7 inside a 13-row band. The statement that holds is
+  *"no static modulation has been shown to raise general capability above the base"* — and it
+  holds because the evidence is underpowered, not because the headroom was measured to be zero.
+
+C1's registered falsifier was "an oracle headroom calculation showing more than a few rows
+available". It **fired on acquisition and did not fire on long context.** The peer has withdrawn
+C1 as stated and C2 in both legs (C2 stood only on C1 after the relative-norm correction), with
+the receipt and script committed rather than left in prose.
+
+**A process finding that generalises.** No oracle computation is persisted in any FRONTIER file —
+none contains the words oracle, router, headroom or union. Together with `deep-any` and the
+routing composite, that is **three load-bearing numbers that existed only in prose.** Not three
+coincidences: the programme's failure mode is publishing a conclusion without committing the
+computation that produced it.
+
+**Allocation does move the endpoint, from my own suggestion failing.** I proposed per-layer
+relative-magnitude flattening as "the one modulation with a mechanistic reason to work". The
+peer's `T16flat` scores **184 against T16's 235 — −51 rows at fixed total dose** (g₈ = 0.40 down,
+g₂₇ = 1.71 up), 7× the noise floor. My directional reasoning was wrong, and the experiment is
+more informative for it: allocation is now measured to move acquisition by 51 rows, which
+reopens "apply the delta more cleverly" on allocation grounds independently of the +31 ceiling.
+The untested inverse — *steepening* the natural profile — is the obvious next point, with the
+honest caveat that the trained profile may be near-stationary and both directions may lose.
+
+**And the composition penalty now partitions.** `TH16s` = 219 recovers +44 of the 60-row
+composition penalty (73%), leaving a **16-row residual outside the 7-row floor** — so most of the
+penalty is magnitude and a real minority is genuine skill conflict. That is a better answer than
+either extreme.
 
 ---
 
