@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "amendment": 1,
+  "recorded_utc": "2026-09-18T00:50:00+00:00",
+  "subject": "REP-001 replicates this core's basis in DIRECTION across three independent draws, but not in MAGNITUDE",
+  "source_experiment": "REP-001, rineya-dataset-retention-records/rep001-20260917/REP001_RESULTS.md",
+  "weights_changed": false,
+  "measurements_retracted": false,
+  "promotion_still_stands": true,
+
+  "why_this_was_registered_in_advance": "REP001_PREREG.md prediction 5 committed to recording the outcome in THIS file, whichever way it fell, precisely so a favourable result could not be reported only in its own results document while an unfavourable one was buried.",
+
+  "what_was_tested": {
+    "design": "Two genuinely new training draws (selection seeds 23 and 29) of the identical RRP-015 control recipe, trained from exact Supa, plus the seed-17 anchor. For each draw, BOTH the full FP32 update and its k=0.25 magnitude-pruned variant were measured, so every comparison is paired within draw and only the mask differs.",
+    "draw_independence": "384 distinct parents per draw; pairwise parent overlap 35, 35 and 41 of 384, consistent with independent sampling."
+  },
+
+  "result_direction_replicates": {
+    "prediction": "retained >= its own control AND long context >= its own control, in 2 of 2 new draws",
+    "outcome": "HELD, 2 of 2 new draws, and 3 of 3 including the anchor",
+    "paired_deltas_k25_minus_its_own_control": {
+      "seed_17": { "retained": 1, "long_context": 7, "literal_unknown": 3, "acquisition": -3, "arithmetic": 1 },
+      "seed_23": { "retained": 1, "long_context": 0, "literal_unknown": 0, "acquisition": -1, "arithmetic": -5 },
+      "seed_29": { "retained": 4, "long_context": 15, "literal_unknown": 8, "acquisition": 2, "arithmetic": 3 }
+    },
+    "reading": "Pruning never made either preservation endpoint worse in any draw."
+  },
+
+  "result_magnitude_does_not_replicate": {
+    "long_context_gain_range": "+0 to +15 rows",
+    "consequence": "This core's own headline gain of +2 over its BF16 sibling, and +7 over its FP32 control, must NOT be quoted as an expected effect. The defensible statement is 'never worse on either preservation endpoint, sometimes substantially better'.",
+    "drafting_weakness_recorded": "REP-001's predictions 2-4 were written as >=, so seed 23's exactly-zero long-context delta satisfies them. The letter held where the substance was null. A minimum effect size should have been registered."
+  },
+
+  "the_more_useful_finding": {
+    "claim": "Magnitude pruning behaves as a REPAIR that pays most where the damage is worst, not as a uniform gain.",
+    "evidence": "Ordering draws by control damage: control long context 157 / 152 / 144 gives pruning gains of +7 / +0 / +15.",
+    "worst_draw": "Seed 29's control is the only arm in this programme with statistically detected long-context damage: 144/256, paired exact McNemar p = 0.0115 against Supa's 161, with abstention collapsed to 4/64. Its k=0.25 variant scores 159/256 at p = 0.8450 and restores abstention to 12/64.",
+    "strict_dominance_in_that_draw": "At seed 29 pruning is better on EVERY endpoint: acquisition +2, arithmetic +3, strict +6, retained +4, long context +15, abstention +8. No trade at all.",
+    "why_it_matters": "The failure mode pruning protects against - a draw that quietly destroys long context and abstention - is exactly the one the registered gate cannot see."
+  },
+
+  "what_this_means_for_this_core_s_own_numbers": {
+    "acquisition": "Trustworthy. Control acquisition across three independent draws spans only 7 of 384 (228-235).",
+    "retention_and_long_context": "MUCH weaker than the single-draw record implies. Control long context spans 13 rows across draws (144-157) and strict arithmetic spans 13 (51-64). A single-draw retention figure is close to uninformative.",
+    "explicit_caveat": "This core's recorded retained 41/47, long context 164/256 and literal UNKNOWN 12/64 are ONE draw's values. They should be read as one sample from a distribution whose spread is larger than the differences being claimed, not as the core's properties.",
+    "applies_equally_to": "Rineya-Titan-Experimental-1.0.0-devfreeze, whose retention figures are also single-draw."
+  },
+
+  "replicates_an_older_finding": "RRP-013 concluded 'acquisition never varies; what varies is retention, not learning.' REP-001 reproduces that on the new selection-admissible bank with genuinely independent draws.",
+
+  "unchanged": {
+    "quality_improvement_established": false,
+    "release_permitted": false,
+    "training_authorized": false,
+    "independent_training_draws_of_this_exact_core": 1,
+    "draws_supporting_the_pruning_direction": 3,
+    "confirmation_instrument_exists": false,
+    "note": "Three draws cannot pin a rate, and every long-context and abstention number remains report-only on a SPENT suite."
+  }
+}

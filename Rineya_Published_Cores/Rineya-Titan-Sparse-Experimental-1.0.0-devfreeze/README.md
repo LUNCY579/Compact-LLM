@@ -35,6 +35,18 @@ would apply to it. `config.json` therefore declares `torch_dtype: float32` so th
 with `torch_dtype="auto"` cannot silently discard the update. This is the only sidecar that
 differs from Supa 1.7.0-devfreeze.
 
+> **AMENDMENT 1 — replicated in direction across three independent draws, not in magnitude.**
+> REP-001 trained two genuinely new draws (seeds 23, 29) and measured both the full update and
+> its k=0.25 variant within each. Pruning improved `retained` and long context in **3 of 3**
+> draws and never made either worse — but the long-context gain ranges **+0 to +15 rows**, so
+> the +2/+7 figures below must not be quoted as an expected effect. Pruning behaves as a
+> **repair that pays most where the damage is worst**: the worst draw's control showed the only
+> statistically detected long-context damage in this programme (144/256, p = 0.0115, abstention
+> 4/64) and its k=0.25 variant scored 159/256 at p = 0.8450 with abstention 12/64 — better on
+> *every* endpoint. Control long context spans 13 rows across draws (144–157) while acquisition
+> spans only 7, so **the retention numbers below are one draw and weaker than they look; the
+> acquisition numbers are trustworthy.** See `AMENDMENT_001.json` and `evidence/REP001_RESULTS.md`.
+
 ## Measured
 
 | Endpoint | Supa 1.7 | Titan-Experimental | **This core** |
