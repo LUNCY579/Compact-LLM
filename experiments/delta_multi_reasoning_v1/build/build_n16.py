@@ -118,6 +118,11 @@ def main(argv=None) -> int:
                     help="compute and report the scale factors without writing weights")
     ap.add_argument("--min-free-gib", type=float, default=4.0, dest="min_free_gib",
                     help="refuse to start below this much free physical memory")
+    # Default 16 because that is this host's torch default and therefore the count the
+    # MEASURED arm 502260c9... was actually built at. Defaulting to 1 would have been tidier
+    # and would have silently stopped the shipped default from reproducing the measured hash.
+    ap.add_argument("--threads", type=int, default=16,
+                    help="torch thread count, PINNED and recorded; see the note below")
     a = ap.parse_args(argv)
     if a.match_rank not in (4, 16, 64):
         raise SystemExit(f"match-rank {a.match_rank} outside the registered grid (4, 16, 64)")
@@ -132,6 +137,14 @@ def main(argv=None) -> int:
 
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
+
+    # Thread count is PINNED and recorded in the receipt. RANK-001 Erratum 2 measured that
+    # `torch.linalg.svd` on this build is deterministic at a fixed thread count and NOT across
+    # thread counts, which is why its r=4 arm did not rebuild to its recorded hash. This arm
+    # calls only `svdvals`, and singular values are unique where singular subspaces are not --
+    # but a last-bit change in a singular value still moves s_t and therefore the FP32 output,
+    # so the hash is only meaningful alongside the count that produced it.
+    torch.set_num_threads(a.threads)
 
     if sha256_file(SUPA / "model.safetensors") != SUPA_SHA:
         raise SystemExit("source weight hash mismatch")
@@ -244,6 +257,11 @@ def main(argv=None) -> int:
         "tf32": False,
         "host_free_gib_at_start": free_at_start,
         "host_free_gib_floor": a.min_free_gib,
+        "torch_num_threads_pinned": a.threads,
+        "hash_reproducibility_note": (
+            "out_weight_sha256 is reproducible only at torch_num_threads_pinned. RANK-001 "
+            "Erratum 2 measured thread-count-dependent SVD output on this build; this arm pins "
+            "the count rather than relying on a default."),
         "model_calls": 0, "optimizer_steps": 0, "training_runs": 0,
         "quality_claim": False, "release_permitted": False,
         "per_tensor_scales": scales,
