@@ -10,8 +10,10 @@ ROOT = Path(__file__).resolve().parent
 def verify_manifest(root: Path = ROOT) -> str:
     manifest = json.loads((root / 'manifest.json').read_text(encoding='utf-8'))
     files = manifest['sha256']
-    actual = {p.relative_to(root).as_posix() for p in root.rglob('*.py')}
-    actual |= {'README.md', 'registration.json'}
+    actual = {p.relative_to(root).as_posix() for p in root.rglob('*')
+              if p.is_file() and p.suffix in ('.py','.md','.json','.txt')
+              and not {'evidence','__pycache__','.pytest_cache'} & set(p.relative_to(root).parts)
+              and p.name != 'manifest.json'}
     if set(files) != actual:
         raise ValueError('missing or unexpected scoped source file')
     for rel, expected in files.items():
@@ -33,7 +35,7 @@ def verify_manifest(root: Path = ROOT) -> str:
 def report(root: Path = ROOT) -> dict:
     digest = verify_manifest(root)
     r = json.loads((root / 'registration.json').read_text(encoding='utf-8'))
-    blockers = ['native model adapter not implemented', 'asynchronous native trainer not implemented',
+    blockers = ['reference actor implemented but actual-source qualification absent', 'asynchronous native trainer not implemented',
                 'actual-checkpoint qualification not executed', 'native budget/optimizer approval absent',
                 'fresh corpus/evaluator and text-overlap qualification absent',
                 'effect margins and confirmation power plan not frozen']

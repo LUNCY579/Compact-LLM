@@ -149,3 +149,59 @@ class TokenBudget:
         self.spent += actual
         del self.pending[request]
         self.closed.add(request)
+
+
+def sampler_state(s: Sampler) -> dict:
+    """Serializable state; retry randomness is keyed, so there is no hidden RNG."""
+    from dataclasses import asdict
+    return {'schema':1,'config':{k:getattr(s,k) for k in
+            ('ngu','seed','group_size','continuation','max_age','max_rounds','max_pending')},
+            'pending':{k:asdict(v) for k,v in s.pending.items()},'seen':sorted(s.seen),
+            'closed':sorted(s.closed_episodes),'version':s.learner_version,
+            'generated_tokens':s.generated_tokens}
+
+
+def restore_sampler(value: dict) -> Sampler:
+    """Fail closed on impossible resumable all-failure episodes."""
+    if value.get('schema') != 1:
+        raise ValueError('sampler checkpoint schema')
+    s = Sampler(**value['config'])
+    version, generated = value['version'],value['generated_tokens']
+    if type(version) is not int or version < 0 or type(generated) is not int or generated < 0:
+        raise ValueError('invalid sampler counters')
+    if len(set(value['seen'])) != len(value['seen']) or len(set(value['closed'])) != len(value['closed']):
+        raise ValueError('duplicate checkpoint identities')
+    s.seen,s.closed_episodes = set(value['seen']),set(value['closed'])
+    if set(value['pending']) & s.closed_episodes or len(value['pending']) > s.max_pending:
+        raise ValueError('invalid pending inventory')
+    retained_ids=set()
+    for key, raw in value['pending'].items():
+        samples=[]
+        for item in raw['samples']:
+            item=dict(item); item['behavior_logps']=tuple(item['behavior_logps'])
+            sample=Completion(**item); sample.validate(version)
+            if sample.sample_id not in s.seen or sample.sample_id in retained_ids or sample.prompt_id != raw['prompt_id'] or sample.reward != 0:
+                raise ValueError('pending sample identity/reward mismatch')
+            retained_ids.add(sample.sample_id); samples.append(sample)
+        count,rounds=raw['count'],raw['rounds']
+        if not key or not raw['prompt_id'] or not s.ngu or type(rounds) is not int or not 1 <= rounds < s.max_rounds or count != rounds*s.group_size or len(samples)>count or raw['reward_sum'] != 0:
+            raise ValueError('unreachable pending episode')
+        s.pending[key]=Episode(raw['prompt_id'],count,0,rounds,samples)
+    s.learner_version,s.generated_tokens=version,generated
+    return s
+
+
+def budget_state(b: TokenBudget) -> dict:
+    return {'limit':b.limit,'spent':b.spent,'pending':dict(b.pending),'closed':sorted(b.closed)}
+
+
+def restore_budget(value: dict) -> TokenBudget:
+    b=TokenBudget(value['limit'])
+    if type(value['spent']) is not int or value['spent']<0 or len(set(value['closed'])) != len(value['closed']):
+        raise ValueError('invalid budget checkpoint')
+    b.spent=value['spent']; b.closed=set(value['closed'])
+    for key,cost in value['pending'].items():
+        b.reserve(key,cost)
+    if b.spent+sum(b.pending.values())>b.limit:
+        raise ValueError('budget checkpoint overdrawn')
+    return b

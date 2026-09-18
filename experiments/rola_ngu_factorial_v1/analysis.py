@@ -82,3 +82,29 @@ def summarize(records: list[Outcome], *, minimum_draws: int = 3) -> dict:
     return {'evidence_class': 'DESCRIPTIVE_PAIRED_DEVELOPMENT', 'by_draw': by_draw,
             'aggregate': aggregate, 'draws': len(draws), 'rows_per_cell': len(row_set),
             'p_values': None, 'confirmation_claim': False, 'release_permitted': False}
+
+
+def paired_retention(source: dict[str,bool], candidate: dict[str,bool]) -> dict:
+    """Loss rates condition on source-correct rows, never all subgroup rows."""
+    if not source or source.keys()!=candidate.keys() or any(type(v) is not bool for d in (source,candidate) for v in d.values()):
+        raise ValueError('complete, aligned boolean endpoint records required')
+    retained=sum(source[k] and candidate[k] for k in source)
+    lost=sum(source[k] and not candidate[k] for k in source)
+    gained=sum(not source[k] and candidate[k] for k in source)
+    denominator=sum(source.values())
+    return {'n':len(source),'source_correct':denominator,'candidate_correct':sum(candidate.values()),
+            'retained':retained,'lost':lost,'gained':gained,'net':gained-lost,
+            'loss_rate_given_source_correct':lost/denominator if denominator else None,
+            'no_observed_losses':lost==0,'no_forgetting_established':False}
+
+
+def abstention_endpoints(source: dict[str,bool], candidate: dict[str,bool], answerable: dict[str,bool]) -> dict:
+    """Inputs denote literal UNKNOWN, not semantic abstention review."""
+    if source.keys()!=candidate.keys() or source.keys()!=answerable.keys() or any(type(v) is not bool for d in (source,candidate,answerable) for v in d.values()):
+        raise ValueError('aligned sentinel and answerability records required')
+    unknown={k:source[k] for k in source if not answerable[k]}
+    result=paired_retention(unknown,{k:candidate[k] for k in unknown})
+    return {'unanswerable':result,'answerable_n':sum(answerable.values()),
+            'source_false_abstentions':sum(source[k] and answerable[k] for k in source),
+            'candidate_false_abstentions':sum(candidate[k] and answerable[k] for k in source),
+            'semantic_review':'NOT_PERFORMED','confirmation_claim':False}

@@ -429,7 +429,8 @@ def test_registration_separates_factors_and_keeps_native_closed():
     assert not r['rola_port']['token_sparsity']
     assert len(set(r['draw_seeds'])) == 3
     assert r['data']['confirmation_manifest_sha256'] is None
-    assert r['source']['complete_asset_runtime_and_tokenizer_pins'] is None
+    assert r['source']['complete_asset_runtime_and_tokenizer_pins']['assets'] == 'source_lock.json'
+    assert not r['source']['complete_asset_runtime_and_tokenizer_pins']['actual_source_qualified']
     assert r['shared_training_candidate']['async_native_trainer'] == 'NOT_IMPLEMENTED_IN_THIS_PACKAGE'
 
 

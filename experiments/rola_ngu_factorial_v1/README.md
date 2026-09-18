@@ -1,206 +1,189 @@
-# RNGF-001 — isolated RoLA-mechanism × Never Give Up experiment
+# RNGF-001 — causal RoLA mechanism × Never Give Up
 
-This package implements and tests the causal operator, event-driven sampling
-mechanics, shared policy objective, paired analysis, and a separately labeled
-post-training delta transform. It is **not a pretrained-model experiment result**
-and is **not a native training launcher**. From the repository root:
+Runnable CPU mechanics and logical-async training fixtures. **Not pretrained
+Rineya results, not an async throughput benchmark, not release qualification.**
+This integration extends the original mechanics package in this directory. Historical branches, weights,
+gates and spent instruments are not modified.
+
+## Run from the repository root
 
 ```bash
 python -m pytest -q experiments/rola_ngu_factorial_v1/tests
+python -m experiments.rola_ngu_factorial_v1.runner --arm D --draw 101 --tokens 512
+python -m experiments.rola_ngu_factorial_v1.smoke
 python -m experiments.rola_ngu_factorial_v1.preflight
+python -m experiments.rola_ngu_factorial_v1.qualification
 ```
 
-The preflight intentionally returns exit code 2 with the native blockers.
+The last two commands intentionally exit 2 while native prerequisites are absent.
+Install the approved CPU packages in `requirements-cpu.txt`; the tests do not need
+Transformers. `requirements-native.txt` declares the separate optional stack.
+The optional `qualification --native-random` constructs a tiny RANDOM stock Qwen3
+only; a missing runtime returns BLOCKED, never a skipped qualification counted PASS.
+`qualification --source /absolute/path/to/exact/Supa` only hashes source assets.
+No command downloads a checkpoint or invokes pretrained training.
 
-## Parent decision and provenance
+## Current evidence changes the premise
 
-On 2026-09-18 the requested branch already existed, pointing exactly to
-`codex/dataset-retention-audit-v1@fbec90a0d0653aeb745d5223137ae3cfdd9c48dd`.
-It had no factorial package. Extend that isolated pointer, without resetting it,
-merging the single-layer branch, or modifying any other branch. This parent
-retains the ordinary dense source/training infrastructure and the latest Codex
-measurement corrections. `main@a6ee824584a9e28881826ab92a11db48e124d90c` lacks
-those corrections; `single-layer-fine-tuning@954a0c2637e691b493c5ac3d488653a8c1adf675`
-is the evidence donor, not the implementation parent. CED, gated Supa-A1.1,
-Opallo and Titan are not model initializations for this primary experiment.
+**Tiny delta is not free learning or no forgetting.** Titan used 384 training rows
+and 28 optimizer updates. Titan-Sparse construction reuses that update with no new
+training, but its source-correct arithmetic retention is 41/47, not 47/47.
+REP-001 found paired long-context repairs of +7, +0 and +15 across draws17/23/29.
+This motivates testing pruning, not assuming universal benefit.
 
-Code ancestry does not imply adopting every inherited gate. The Codex tip
-records that all three reviewed GATE-v2 designs failed adversarial review;
-its panel>=62 term demands improvement, not merely preservation of source=47.
-Do not transfer that gate to RNGF-001 or silently alter its historical numbers.
-All new files are confined to this package. Existing code and evidence stay intact.
+More importantly, the updated Codex family record at `07e53b0...` records RCI-001
+negative confirmation: **40/128 vs 25/128** literal UNKNOWN, **0 gains/15 losses**,
+paired p=6.1e-05. Both models had zero false abstention on answerable rows.
+Runtime/floor caveats and the correction of conflicting mechanism explanations
+are preserved in `SOURCE_REVIEW.md`. RCI-001 is now spent. Historical Demo/UNKNOWN
+scores remain report-only. The older blanket statement "no confirmation exists"
+is obsolete; no *fresh eligible* confirmation instrument is bound to RNGF-001.
 
-Live evidence inspected:
-- `MODEL_QUALITY_STATUS.md` and `experiments/reasoning_posttraining_v1/{sources,native_runtime}.py`
-  at the parent: exact ungated source, source inventory, native qualification and
-  data limitations; these do not qualify this new implementation.
-- `Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze/{README.md,
-  evidence/REP001_RESULTS.md,evidence/build_sparse.py}` at `954a0c2637e691b493c5ac3d488653a8c1adf675`.
-- RoLA: https://arxiv.org/html/2609.06712v1 (6 September 2026), equations 2–4.
-- NGU: https://arxiv.org/html/2609.13443v1 (11 September 2026), section 4 and appendix E.
+## Primary factorial, unchanged from the agreed design
 
-## What REP-001 changes — and does not establish
-
-Each pair shares one FP32 training result; only the mask changes:
-
-| Training draw | Acquisition, full -> k25 | Source retained, full -> k25 | Long context, full -> k25 |
+| Cell | Representation | Sampler | Primary delta keep |
 |---|---|---|---|
-| 17 | 235 -> 232 /384 | 40 -> 41 /47 | 157 -> 164 /256 |
-| 23 | 229 -> 228 /384 | 38 -> 39 /47 | 152 -> 152 /256 |
-| 29 | 228 -> 230 /384 | 36 -> 40 /47 | 144 -> 159 /256 |
+| A | original dense attention | ordinary async GRPO mechanics | 1.0 |
+| B | original dense attention | bounded NGU mechanics | 1.0 |
+| C | dense + causal RoLA residual | ordinary async GRPO mechanics | 1.0 |
+| D | dense + causal RoLA residual | bounded NGU mechanics | 1.0 |
 
-Thus the two preservation endpoints were non-worse in three observed draws,
-not strictly improved in all three. Strict arithmetic decreased by one row at
-17 and 23; permissive arithmetic decreased by five at 23. This is not universal
-no-harm evidence. The worst draw had the largest repair, but the other two are
-not monotonically ordered by damage: damage-dependent repair is a hypothesis,
-not an established law from three points. Nonsignificant post-pruning differences
-from Supa are not equivalence. The long-context/UNKNOWN suites are spent and
-remain report-only. No original model evaluation was rerun for this package.
+Every native cell starts from the same exact ungated Supa1.7 in `source_lock.json`,
+not Titan, Titan-Sparse, CED, Supa-A1.1 or a biased abstention head. The code parent
+is `fbec90a0d0653aeb745d5223137ae3cfdd9c48dd`; updated sibling evidence is cited,
+not merged. A concurrent session published the original mechanics at `3a83618...` while this
+extension was being validated. This extension descends from that commit without
+resetting the branch. See `SOURCE_REVIEW.md` for both remote snapshots.
 
-Consequences: require independent parent draws, report every paired result and
-worst draw, preserve strict and permissive endpoints separately, freeze a
-positive minimum meaningful effect before superiority testing, and forbid
-best-draw selection. No expected +7 or guaranteed retention repair is assumed.
-Keep masks deterministic and FP32; quantization is a different intervention.
+Use three independent 384-parent TRAIN draws, seeds101/211/307, paired across
+A/B/C/D. These are proposed native draws, not already executed replications.
+Publish overlap; permutation of one dataset does not create independent draws.
+Initialization43, ordering41 and sampling47 have distinct roles. C/D share their
+initial added parameters. Keep an untrained source baseline. Native optimizer,
+corpus hashes, resource grant, meaningful effect sizes and margins remain unset.
 
-## Primary factorial
+The primary interaction is `(D-C)-(B-A)` on UNPRUNED checkpoints. Main effects
+are `((C-A)+(D-B))/2` and `((B-A)+(D-C))/2`. `analysis.py` refuses incomplete
+cells, changing row sets/denominators and selectively missing sparse derivatives.
+It reports by-draw/family effects and descriptive spread, not pooled row×seed
+p-values. `paired_retention` conditions losses on source-correct rows;
+`abstention_endpoints` separates literal UNKNOWN from false abstention. No
+nonsignificance-to-equivalence conversion or automatic promotion is implemented.
 
-| Cell | Representation | Sampler | Delta keep |
-|---|---|---|---|
-| A | unchanged dense attention | ordinary asynchronous GRPO | full |
-| B | unchanged dense attention | asynchronous NGU | full |
-| C | dense + causal RoLA-mechanism residual | ordinary asynchronous GRPO | full |
-| D | dense + causal RoLA-mechanism residual | asynchronous NGU | full |
+## RoLA adaptation and actor integration
 
-Each cell starts from exact ungated Supa 1.7, weight SHA256
-`962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b`.
-Use three independently selected 384-parent TRAIN draws, seeds 101/211/307,
-paired across all four cells. These are new draws, not REP-001 replications.
-Publish actual parent overlap; different order seeds are not new data draws.
-Initialization, ordering and sampling seeds are separate. C and D start from
-identical branch parameters. Preserve a frozen, no-training source baseline.
+Paper: https://arxiv.org/html/2609.06712v2, equations2–4. The original is a
+noncausal sparse/global video-DiT architecture. This language-model adaptation:
 
-The primary interaction is `(D-C)-(B-A)` on the **unpruned** checkpoints.
-Report the RoLA main effect `((C-A)+(D-B))/2` and NGU main effect
-`((B-A)+(D-C))/2`, by draw and family. The provided analyzer refuses missing
-cells, changing source denominators, mismatched evaluation rows and duplicates.
-Its mean/SD/range are descriptive, not confidence intervals or confirmation.
-Do not turn repeated evaluation rows across seeds into independent observations.
+```
+q_tilde[t] = R_native_truncated(t) SiLU(Pq q_normalized_pre_rope[t])
+k_tilde[t] = R_native_truncated(t) SiLU(Pk k_normalized_pre_rope[t])
+S[t] = S[t-1] + k_tilde[t] outer v[t]
+read[t] = RMSNormalize(q_tilde[t]^T S[t])
+out[t] = dense[t] + alpha * RMS(dense[t]) * read[t]
+```
 
-## Exact scope of the RoLA adaptation
+Only inclusive causal history is written. RoPE is AFTER the nonlinear projection;
+reuse complete native frequency pairs rather than recomputing a rank-based
+schedule. GQA expansion is explicit. Native rank16, sites8–27, and scalar alpha=0
+are registered engineering choices, not demonstrated optima. Alpha has a first
+step gradient; projection gradients become active after alpha moves. This differs
+from the paper's tokenwise sigmoid gate. No token-attention sparsity or speedup
+claim is made. Adding this branch while retaining dense attention adds work.
 
-The paper is a noncausal video-DiT sparse/global construction. Copying its full
-sequence summary into a language model would leak future tokens. This port uses
-an inclusive causal prefix sum, with padding-masked writes and reads and an
-explicit sequence-tagged cache. It applies per-head low-rank projection, SiLU,
-then RoPE, using complete pairs from the *native* schedule. It never reconstructs
-a new frequency schedule using the smaller rank. Normalized pre-RoPE Q/K and
-unrotated values are mandatory; GQA keys/values are expanded before projections.
+`actor.py` is a reference Qwen3-shaped traversal preserving Q/K normalization,
+residuals, MLPs, output projections and head dimensions (Q width need not equal
+hidden width). Generation and differentiated completion logprobs traverse the
+same active branch. It rejects remote-code/PEFT/dispatched/hooked/hybrid models,
+scaled RoPE and ambiguous dtypes. The first integration is one unpadded sequence;
+batching/padding is qualified at operator level only, not the full actor.
 
-For v1 the original dense branch stays unchanged: there is **no token-attention
-sparsity**, no routing, no frozen-attention replacement and no speedup claim.
-The added branch is normalized and scaled by the dense output RMS. A per-layer
-alpha starts at exact zero for source parity; this differs from the paper's
-tokenwise sigmoid gate with negative bias. Alpha gets an initial gradient;
-projection gradients appear after it activates. Rank=16 and tail sites8–27
-are registered engineering choices, not paper-derived optima. This is a test
-of a causal RoLA-inspired mechanism, not a faithful reproduction of the full
-video architecture or its efficiency result. A later sparse-attention study
-needs a sparse-only control and a new registration; it cannot be smuggled in here.
+Functional caches bind to actor, sequence, model version and tensor mutation
+versions. Cached generation is eval/no_grad-only; stale or cross-sequence reuse
+fails. Independent dense fixtures, active-path gradient tests, future-token
+perturbations and full/chunk/token decoding tests check more than zero-gate parity.
+These fixtures do not substitute for exact-source native qualification.
 
-No full-model adapter is implemented in this package. The native integration
-must preserve Qwen normalization, rotary layout, dense output projection, tied
-embeddings, tokenizer/template, positions, masks and original cache behavior.
-The prefix module is CPU/eager FP32/FP64 mechanics, not a fused deployment kernel.
-Cache state is functional (no in-place writes), bound to sequence/module/parameter
-versions. Do not reuse it after optimizer updates or between independent prompts.
+## NGU semantics, not just "try harder"
 
-## Exact scope of NGU and the shared loss
+Paper: https://arxiv.org/html/2609.13443v1, section4 and appendixE. Both sampler
+arms share the event-driven async interface and K=4. Ordinary GRPO drops a
+no-signal episode; NGU requeues all-failure episodes with probability.75, at most
+8 rounds and 32 pending episodes. Easy episodes are not permanently removed.
+All attempts count toward resource cost. No answer or verifier metadata enters
+the policy input, and no failed-attempt hints are appended.
 
-Both sampler arms use asynchronous events from frozen policy versions, K=4.
-Ordinary GRPO does not retry all-failure episodes. NGU continues an all-failure
-episode with p=.75, with eight rounds maximum and 32 pending episodes maximum.
-A completed easy episode is dropped, not permanently removed from future epochs.
-Generation groups carry original behavior logprobs and immutable sample IDs.
-Duplicate events, future versions and changed prompt identities fail closed.
+Keep whole-episode counts for the reward baseline, including stale failures.
+Only samples with learner-version lag<4 contribute loss. Positive advantage is
+`1-baseline`; fresh negatives are rescaled to sum to the opposite positive total.
+No fresh negatives means a logged no-signal event, not invented contrast.
+`objective.py` uses original behavior logprobs, centered advantages, sequence-mean
+clipped policy loss and reference KL, identically in both arms. All RNG/state,
+versions and actual generated token records remain available.
 
-On mixed outcomes, maintain the reward/count baseline from the whole episode,
-including stale failures. Use only samples with learner-version lag **<4** for
-the update. Retain positive advantage `1-baseline`; assign each retained negative
-`-n_positive*(1-baseline)/n_negative`, making the retained sum zero. A positive
-with no fresh negative is a logged no-signal event, not a fabricated gradient.
-The exclusive age convention is explicit; it is not a claim that a different
-inclusive convention in pseudocode has been empirically compared.
+The **CPU runner is a logical-async simulator**, not a concurrent production
+trainer: two immutable sampled groups can be in flight while the learner advances,
+so real off-policy probabilities and stale handling are exercised. Execution is
+serial; its wall time proves nothing about the paper's asynchronous benefit.
+A purely synchronous retry implementation must not be substituted and called NGU.
 
-`objective.py` applies the same centered, clipped sequence-mean objective and
-reference KL in both arms, using stored behavior logprobs. Native policy/version,
-optimizer, token-mask and reference-logprob parity still need qualification.
-There is no worker scheduler, model generator, durable training resume, or
-end-to-end asynchronous trainer here. A synchronous retry pilot must be labeled
-as an ablation, not NGU efficacy: the NGU paper reports this distinction matters.
-Binary solver-verified rewards only; no executing generated code or partial-credit
-coding rewards in this first screen.
+The fixture has 3 random layers, width 24, 4 query heads, 2 KV heads, head dimension 8, and RoLA sites 1/2
+rank4, one-token arithmetic targets and a separate toy AdamW recipe. Its learning
+curves are not Rineya capability evidence. `runner` accepts no pretrained inputs.
 
-## Keep sparsification separate
+## Resume and resource accounting
 
-After every unpruned checkpoint is frozen, produce its paired k=.25 variant:
-`theta_sparse = theta_source + mask * (theta_trained - theta_source)` in FP32.
-Use the same explicit 220-pretrained-tensor tail allowlist in all cells. Rank
-pruning, quantization, delta scaling and sparse optimizers are not included.
-New RoLA parameters have no counterpart in the original source: keep their
-final values unchanged, identify them in the receipt, and never silently prune
-them. This isolates **shared-backbone update pruning conditional on each arm**.
-Pruning newly added parameters would need a separately named experiment.
+`FixtureRunner.save/load` preserves whole actor/reference weights, optimizer,
+RNG, raw rollouts, in-flight groups, pending retries, counters and budgets, bound
+to config, trainable inventory and the source manifest. It uses weights-only
+loading and a file SHA256 sidecar, never unpickles arbitrary custom objects.
+Caches are deliberately not persisted. Resume is exact only on the pinned tested
+CPU environment; it is not a native-scale durable-worker guarantee.
 
-Twelve training runs therefore yield twelve unpruned/pruned comparisons, not
-24 independent training runs. Primary factorial statistics never mix the two.
-Apply the rule to every arm/draw, not only a selected winner. With all eight
-views per draw, sparse-conditional contrasts can be reported as secondary;
-pruning itself never counts as another training draw. The tensor helper performs
-no model calls, preserves inputs and records masks/norms/nonzero support. It is
-not a streaming 596M-checkpoint materializer or a compressed serving format.
-FP32 source+delta arithmetic follows the historical builder; no blanket claim
-of roundtrip identity for arbitrary extreme FP32 tensors is made.
+Reserve before dispatch, settle actual prompt-plus-generated tokens, charge
+unknown failures fully, stop on nonfinite math and retain failure records. Native
+compute comparisons must also report prefill/decode/loss tokens, updates, wall
+time, memory and FLOPs. A matched token cap alone is not matched compute. The toy
+one-token fixture exhausts its declared cap exactly; native residual budget rules
+remain to be registered. Save outputs outside the checkout; do not auto-clean a
+research worktree to bypass the clean-source gate.
 
-## Budget and evaluation contracts
+## Titan-style postprocessing stays a separate factor
 
-Match total actual prompt-plus-generated token exposure across arms, charging
-all retries, filtered groups, capped prompts, failures and stale samples. Reserve
-worst-case work before dispatch and settle unused reservations. Unknown failed
-usage is fully charged. Tokens are not FLOPs: separately report prefill/decode,
-loss tokens, updates, wall time, peak memory and estimated compute, including
-new RoLA work. Use the same async hardware/concurrency constraints in both arms.
-Do not give NGU unlimited attempts or treat equal updates as equal compute.
-No numeric training grant or optimizer recipe has been fabricated.
+After all 12 native unpruned checkpoints are frozen, create each paired variant:
+`theta_source + M_0.25(theta_trained - theta_source)` in FP32. Use the same 220
+pretrained tail-tensor allowlist. The mask keeps floor(numel*.25) largest absolute
+deltas per tensor with ascending-flat-index tie breaking. Do not replace pruning
+with scaling, rank truncation or BF16 rounding.
 
-Evaluate each endpoint separately: acquisition, easy/hard strata, strict and
-permissive accuracy, source retained/lost/newly gained, long context, literal
-UNKNOWN on missing evidence, false abstention on answerable rows, termination,
-truncation and length. Freeze task/parent/family partitions and solver rewards;
-audit exact text, digit-blinded stems and semantic/template overlap, not just IDs.
-Freeze fresh selection and confirmation instruments, positive effect thresholds,
-noninferiority margins, sample-size/power assumptions and family/draw-aware
-analysis before training. Historical exposed panels cannot authorize superiority.
-The new registration intentionally leaves those unresolved fields null and blocks
-execution rather than pretending they are approved.
+New RoLA parameters have no source counterpart: retain their final values
+unchanged and identify them in the receipt. This tests shared-backbone delta
+pruning CONDITIONAL on each arm, not sparsification of the added module.
+Twelve derivatives add zero training runs and do not become 24 independent draws.
+`cast_audit` measures paired-source rounding separately; tiny deltas can disappear
+under BF16. Sparse delta storage is not sparse dense-model execution.
 
-## Gates and first valid next step
+## Next gates
 
-M0: run the scoped tests and retain a source-bound no-skip receipt. This is
-mechanics only; no Actions dispatch, pretrained download or training is required.
-M1: implement a separate native integration on this branch; bind all seven source
-assets, actual runtime, complete trainable inventory and a qualified unmodified
-loader. Check exact-zero branch full-logit/greedy parity, causal perturbations,
-GQA/position/mask/cache correctness, active-branch gradients, full-state resume,
-real old-policy probabilities and bounded resource fit at planned shapes.
-M2: freeze the new manifests, audits, solver/evaluator, margins, optimizer and
-native budget grant. Qualify asynchronous replay/behavior-policy semantics and
-preflight receipts; none may be replaced by Boolean claims in a JSON file.
-M3: only after explicit authorization run the three-draw factorial. Then apply
-paired pruning without retraining. No sealed evaluation or release permission
-follows automatically from a mechanics or native-wiring pass.
+CPU fixtures first. Then install/verify the separately pinned native runtime;
+run `qualification --native-random`. Next, under a dedicated inference-only
+qualification contract, bind all seven actual source assets and check unmodified
+loader parity, zero/active actor paths, actual-source trainable inventory, cache,
+completion logprobs, tokenizer/EOS and resource fit. The exact-source run is not
+implemented as an authorized command yet. Production async worker integration,
+text/parent/template audits, fresh endpoint instruments, margins/power and an
+explicit native training budget must pass before the 12-run experiment opens.
 
-Outputs belong outside the checkout. Preserve failed attempts and refuse a dirty
-source; do not auto-clean or delete unrelated work to satisfy a gate. REP-001's
-seed29 dirty-checkout refusal is a reason to separate outputs, not to hide failures.
+A code/test PASS never authorizes sealed evaluation, efficiency, quality or release.
+
+## Published local verification
+
+`evidence/integration_20260918/VALIDATION.json` binds the executed checks to `manifest.json`;
+`evidence/integration_20260918/pytest.txt` is the full scoped test summary. `evidence/integration_20260918/smoke.json`
+records twelve random fixture runs and twelve deterministic paired transforms.
+Its hashes identify generated rollout/journal records reproducible by `smoke.py`;
+no toy accuracy is promoted as an estimate of native efficacy.
+
+The original `evidence/` receipts remain byte-identical historical records for the
+97-test package at `3a83618...`; its REMOTE_STATUS describes an earlier failed
+attempt. Current integration receipts live only in `integration_20260918/`.

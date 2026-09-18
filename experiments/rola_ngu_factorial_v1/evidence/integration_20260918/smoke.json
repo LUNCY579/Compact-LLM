@@ -1,0 +1,367 @@
+{
+  "efficacy_established": false,
+  "initial_backbone_sha256": "529d5a5271170178bdfd7cbed15f4b4d2c53e1a239bba1245821027b1a061c04",
+  "native_qualified": false,
+  "paired_pruned_derivatives": 12,
+  "pretrained_calls": 0,
+  "release_permitted": false,
+  "schema": 1,
+  "scope": "CPU_RANDOM_MECHANICS_ONLY",
+  "source_sha256": "e88e246b37c1b0febb4266919089eea7bb48c07da7e0aaa25b47fa9d8582afa2",
+  "total_accounted_prompt_plus_generated_tokens": 6144,
+  "total_fixture_optimizer_steps": 128,
+  "trained_fixture_cells": 12,
+  "full_stdout_sha256": "6ae0ff275a2eab090d2013687c03bae3f9e09dc34e04c13152dce65a472d6bd4",
+  "cells": [
+    {
+      "arm": "A",
+      "draw": 101,
+      "optimizer_steps": 8,
+      "tokens": 512,
+      "loss_tokens": 32,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 24,
+        "UPDATE": 8
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "79107d4e920a5fb36d3390091f8dda03a3d92a9545c769366f7f10117f2cb13e",
+      "rollout_journal_sha256": "f5e86eb6ceba6ff550126d7c0d6173a320e8739a17c94415232ec3fbb41ea925",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "62630d5a1318e0008795d5f12550ca58a7e74e68b389493bfcbb010341c4b741",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "B",
+      "draw": 101,
+      "optimizer_steps": 7,
+      "tokens": 512,
+      "loss_tokens": 52,
+      "max_lag": 1,
+      "pending_at_stop": 1,
+      "statuses": {
+        "CAPPED": 1,
+        "GIVE_UP": 6,
+        "RETRY": 18,
+        "UPDATE": 7
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "45b4d5fa13846d7cc64dac33100fcc97128f2c2abaf8ced18f9f41ac4101e5e7",
+      "rollout_journal_sha256": "91ce23eaec10db02a2847b08d4835bcbbbc620150c092dab56780297261ae7a7",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "89f5ff2472ebd689bf6c09205b95219e21dcc2606cc7c949fa953f2d4628d1a9",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "C",
+      "draw": 101,
+      "optimizer_steps": 8,
+      "tokens": 512,
+      "loss_tokens": 32,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 24,
+        "UPDATE": 8
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "ffef6bbbf0c4e1f2128cc22790a2023638c8b849525f33bac9d6e4c46a759048",
+      "rollout_journal_sha256": "a7ad76ba45a2fb932e7ca36d1a83bbd3c11fd5abb4c4f0dfcb9ceb6ff4779d92",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "6c8ae5f3dbc6d16b49f42586745f1d22ba4cba76fca7737c96c92dfa1f33f3b2",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "D",
+      "draw": 101,
+      "optimizer_steps": 7,
+      "tokens": 512,
+      "loss_tokens": 52,
+      "max_lag": 1,
+      "pending_at_stop": 1,
+      "statuses": {
+        "CAPPED": 1,
+        "GIVE_UP": 6,
+        "RETRY": 18,
+        "UPDATE": 7
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "7ed94e45429573ef23302f653fb81c07e648760aedbb20f3ab8454df8917c28d",
+      "rollout_journal_sha256": "15a504e6682182e0fa354550af2c96c5d84004e65936e3d772f2309a70fbacfd",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "a47ef9cd819aa1a73341d3b0e98b8a402e271d4a6635a238229724b6c311fbf3",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "A",
+      "draw": 211,
+      "optimizer_steps": 11,
+      "tokens": 512,
+      "loss_tokens": 44,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 21,
+        "UPDATE": 11
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "a04d7dd83c6e25ebddc00b58c5c82c800c1d9bf73b470d60c0af15014c77a96a",
+      "rollout_journal_sha256": "931cf223b788b2a2aec803dc977395a159ee6df2e37ac88c7da78f59f3203268",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "81bc8f3c576809ad70a3e49fd7d5c402628f369f00b9f029e74ec964b4313d2d",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "B",
+      "draw": 211,
+      "optimizer_steps": 13,
+      "tokens": 512,
+      "loss_tokens": 92,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 4,
+        "RETRY": 15,
+        "UPDATE": 13
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "1973b80ea56ad869f2645de0645a8af08f3b9bfb271db56a17759215283ab0ab",
+      "rollout_journal_sha256": "cdba304528a78b8adfb7e4116c2011fbca7b74d327b3a458b5dc750b672636fa",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "8a53bd8a6aa11ba6c4fff7bd7d1a166699cb25732c78f7ffb965e09802fc2cf4",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "C",
+      "draw": 211,
+      "optimizer_steps": 11,
+      "tokens": 512,
+      "loss_tokens": 44,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 21,
+        "UPDATE": 11
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "54ab4d2e83074545ec94cde266fb97b4b5d0e69eb67107419c95145fd4e36e9a",
+      "rollout_journal_sha256": "b7bb0e60310fe2277cfbefafa5633381d6b9bb67fdcd214bb3207abfb9b806ed",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "89765aebfcd82715d292bdbb1ea5a41d7919733e4156ad15f3ad9465fcbfb468",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "D",
+      "draw": 211,
+      "optimizer_steps": 13,
+      "tokens": 512,
+      "loss_tokens": 92,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 4,
+        "RETRY": 15,
+        "UPDATE": 13
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "4c2fec83bc755082b0a0aecb723a56a64f9a0289b6e64c648a6a6843d7b8a0f8",
+      "rollout_journal_sha256": "e0b2661f3ddf38a61b9b556cd0810980532110e655fb00dbf5606743cdc9bd03",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "06dd44b44fee80b581043f10972f90ef9f2fab5607c67ced72cc2fe3736e5008",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "A",
+      "draw": 307,
+      "optimizer_steps": 15,
+      "tokens": 512,
+      "loss_tokens": 60,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 17,
+        "UPDATE": 15
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "a5a4a65597e71ab065d1d3177c2caaacc519e8918213127bc93a334c8b792fce",
+      "rollout_journal_sha256": "c7b7b0bdb34f3f3664850245d485150204af56128b2483a96038a39ea995df04",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "38926abf63616fb2129b37c3e6abf6c54e909b10c1cbe703167e387a1e8f3d80",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "B",
+      "draw": 307,
+      "optimizer_steps": 10,
+      "tokens": 512,
+      "loss_tokens": 80,
+      "max_lag": 1,
+      "pending_at_stop": 1,
+      "statuses": {
+        "GIVE_UP": 3,
+        "RETRY": 19,
+        "UPDATE": 10
+      },
+      "initial_hash": "8757b91a3f0beac3e467e0243fc738596ba7b2c52ab4ebb31f2f978e905c2eb4",
+      "final_hash": "318ec736b979ff1529980433963a4ad5c039741e4d633b18e61f609b8ec5a059",
+      "rollout_journal_sha256": "4c6c4665a3606ade4b244431e532bddb56725ac65ae8c2b9138464727d7153f7",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "27b7acc2e1e72760135a4374d52bcb7701c8df63ba96c2492cbfb5e8257607eb",
+        "new_parameters": [],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "C",
+      "draw": 307,
+      "optimizer_steps": 15,
+      "tokens": 512,
+      "loss_tokens": 60,
+      "max_lag": 1,
+      "pending_at_stop": 0,
+      "statuses": {
+        "GIVE_UP": 17,
+        "UPDATE": 15
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "bd094c1f3d266c0613e83030017db0fed5d985b3d1b99f6b61d74b437ad01870",
+      "rollout_journal_sha256": "b7025d8809066be7986c2c724a0d4f79386ce315c92c80abc11c62436b2c154a",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "bea591f887f0a0adf0d2e787f703a0f4abe5c82356c6e2d51e82d71d5f9f2516",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    },
+    {
+      "arm": "D",
+      "draw": 307,
+      "optimizer_steps": 10,
+      "tokens": 512,
+      "loss_tokens": 80,
+      "max_lag": 1,
+      "pending_at_stop": 1,
+      "statuses": {
+        "GIVE_UP": 3,
+        "RETRY": 19,
+        "UPDATE": 10
+      },
+      "initial_hash": "0b42c397273d0886a781190ebdef86e48a794c705a48a10b76604e0e67613886",
+      "final_hash": "6ff5c41fbf41c034fa4751f0e3a9f9d7cc66f4131c2d70864db7be11a34cfeff",
+      "rollout_journal_sha256": "b24d29b5bc50e27736b3842279114bbba5e0d6f47f063010dd757bf7b1363671",
+      "sparse_pair": {
+        "backbone_tensors": 22,
+        "eligible_elements": 10496,
+        "extra_training_runs": 0,
+        "mask_receipt_sha256": "011507c04437056db3ee29f4df04f85d2d2292371ff99ac9d32a1a698d37ab37",
+        "new_parameters": [
+          "rola.1.alpha",
+          "rola.1.pk",
+          "rola.1.pq",
+          "rola.2.alpha",
+          "rola.2.pk",
+          "rola.2.pq"
+        ],
+        "new_parameters_unchanged": true,
+        "selected_slots": 2624
+      }
+    }
+  ]
+}

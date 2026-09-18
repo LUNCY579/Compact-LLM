@@ -52,3 +52,19 @@ def prune_delta(base: Mapping[str, Tensor], trained: Mapping[str, Tensor],
                  'dtype': 'float32', 'new_parameters': sorted(set(trained) - set(base)),
                  'new_parameters_pruned': False, 'tensors': details,
                  'model_calls': 0, 'training_updates': 0, 'efficiency_claim': False}
+
+
+def cast_audit(base: Tensor, candidate: Tensor, dtype=torch.bfloat16) -> dict:
+    """Audit both tensors under the SAME rounding; do not conflate source rounding."""
+    if dtype not in (torch.float16,torch.bfloat16) or base.shape!=candidate.shape or base.dtype!=torch.float32 or candidate.dtype!=torch.float32:
+        raise ValueError('aligned FP32 sources and explicit reduced-precision target required')
+    if base.device!=candidate.device or not bool(torch.isfinite(base).all() and torch.isfinite(candidate).all()):
+        raise ValueError('invalid cast source')
+    a,b=base.to(dtype).float(),candidate.to(dtype).float()
+    if not bool(torch.isfinite(a).all() and torch.isfinite(b).all()):
+        raise FloatingPointError('cast overflow')
+    original,copied=candidate-base,b-a
+    changed=original!=0
+    return {'original_changed':int(changed.sum()),'paired_delta_erased':int((changed&(copied==0)).sum()),
+            'baseline_elements_rounded':int((a!=base).sum()),
+            'delta_l2_error':float((copied-original).double().norm()),'serving_qualified':False}
