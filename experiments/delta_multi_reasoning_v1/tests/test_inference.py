@@ -72,14 +72,28 @@ def test_label_isolation() -> None:
     except AssertionError as e:
         check("clean prompt passes", False, str(e))
 
-    # Simulate a template regression that interpolates the reference.
+    # A template regression that INTERPOLATES the reference into the constructed prompt.
+    # Simulated by handing the checker a built prompt containing the reference while the
+    # item's own prompt does not -- which is exactly "construction introduced it".
     leaked = build([{"role": "user",
                      "content": f"solve this. the answer is {ITEM['reference']}"}])
     try:
         assert_label_isolated(leaked, ITEM)
-        check("leaked reference is caught", False, "no AssertionError raised")
+        check("reference introduced by construction is caught", False, "no AssertionError")
     except AssertionError as e:
-        check("leaked reference is caught", "label leak" in str(e))
+        check("reference introduced by construction is caught", "label leak" in str(e))
+
+    # A retrieval item legitimately contains its own answer in the evidence. That is the task,
+    # not a leak, and it must NOT fire -- the first version refused every such item.
+    needle_item = {"id": "lc1", "reference": "963692",
+                   "prompt": [{"role": "system", "content": "Answer using only the document."},
+                              {"role": "user",
+                               "content": "... the seal number is 963692 ... What is it?"}]}
+    try:
+        assert_label_isolated(build(needle_item["prompt"]), needle_item)
+        check("a needle item's own answer in its evidence is NOT a leak", True)
+    except AssertionError as e:
+        check("a needle item's own answer in its evidence is NOT a leak", False, str(e)[:120])
 
     # The family label is hidden suite metadata, not part of the user's request.
     fam = build([{"role": "user", "content": "this is a ledger_replay item, solve it"}])
@@ -112,13 +126,21 @@ def test_roles_cannot_see_each_other() -> None:
 
 def test_selector_sees_no_gold() -> None:
     print("the selector prompt carries candidates but never a reference")
-    cands = [{"id": "R0", "answer": '{"A":-15}'}, {"id": "R1", "answer": '{"A":-99}'}]
+    # One candidate is exactly right, so it is byte-identical to the reference. That must be
+    # allowed -- a selector has to see its candidates -- but only via `allow`.
+    cands = [{"id": "R0", "answer": ITEM["reference"]}, {"id": "R1", "answer": '{"A":-99}'}]
     msgs = selector_prompt(ITEM["prompt"], cands, include_checker_findings=False)
     try:
-        assert_label_isolated(msgs, ITEM)
-        check("selector prompt is label-isolated", True)
+        assert_label_isolated(msgs, ITEM, allow=[c["answer"] for c in cands])
+        check("a correct candidate is allowed in the selector prompt", True)
     except AssertionError as e:
-        check("selector prompt is label-isolated", False, str(e))
+        check("a correct candidate is allowed in the selector prompt", False, str(e)[:120])
+    try:
+        assert_label_isolated(msgs, ITEM)   # same prompt, candidates NOT declared
+        check("gold in a selector prompt is caught when not declared as a candidate",
+              False, "no AssertionError")
+    except AssertionError:
+        check("gold in a selector prompt is caught when not declared as a candidate", True)
     text = "\n".join(m["content"] for m in msgs)
     check("candidate ids are offered", "R0" in text and "R1" in text)
 

@@ -31,6 +31,7 @@ collapsed paths are frozen in advance instead of handled when they appear.
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Iterable
 
 # The registered abstention sentinel. Defined by the long-context suite and reused unchanged so
 # that abstention means the same thing in every condition.
@@ -186,18 +187,40 @@ FORBIDDEN_FIELDS = ("reference", "reference_text", "answer_key", "accepted_answe
                     "gold_verified_by", "difficulty", "variant", "needle_profile")
 
 
-def assert_label_isolated(built: list[dict], item: dict) -> None:
-    """Fail loudly if any forbidden field's value appears in a constructed prompt.
+def assert_label_isolated(built: list[dict], item: dict,
+                          allow: Iterable[str] = ()) -> None:
+    """Fail loudly if prompt CONSTRUCTION introduced a forbidden field's value.
 
-    Checked at call time rather than trusted, because the failure mode this guards against --
-    a reference leaking into a prompt through a template change -- produces a *better* score and
-    so cannot be caught by looking at results.
+    `allow` lists strings that are legitimately present because a MODEL produced them -- the
+    candidate answers on the selector path. A selector must see its candidates, and a candidate
+    that happens to be correct is byte-identical to the reference; refusing that would refuse
+    every selector call on an item any role got right. What the check still guarantees is the
+    property that matters: gold enters a prompt ONLY as something the model itself emitted,
+    never from the bank's label field.
 
-    `family` is on the forbidden list deliberately: the instruments' family labels are hidden
-    metadata, and a role that knew the family would be reading the evaluation suite's structure
-    rather than the user's request.
+    The invariant is about this module, not about the bank. A retrieval task legitimately
+    contains its own answer: a needle-in-haystack item's reference IS a sentence inside the
+    document, and that is the task rather than a leak. What must never happen is for a role
+    instruction, a paraphrase, the contract line or a selector payload to interpolate a
+    reference that was not already in the item's own prompt.
+
+    So the comparison is against the item's ORIGINAL prompt text, and only values the
+    construction ADDED are flagged. The first version compared against the whole constructed
+    prompt and refused every answerable long-context item -- correctly reporting that the seal
+    number was present, and wrongly calling that a leak.
+
+    Checked at call time rather than trusted, because this failure mode produces a *better*
+    score and so cannot be caught by looking at results.
+
+    `family` stays on the forbidden list deliberately: family labels are hidden suite metadata,
+    and a role that knew the family would be reading the evaluation suite's structure rather
+    than the user's request.
     """
-    text = "\n".join(m["content"] for m in built)
+    built_text = "\n".join(m["content"] for m in built)
+    original = item.get("prompt") or []
+    original_text = "\n".join(m.get("content", "") for m in original) if original else ""
+    allowed = [str(x) for x in allow if x is not None]
+
     for field in FORBIDDEN_FIELDS:
         if field not in item:
             continue
@@ -205,10 +228,18 @@ def assert_label_isolated(built: list[dict], item: dict) -> None:
         for v in (val if isinstance(val, (list, tuple)) else [val]):
             s = str(v)
             # Short values collide with ordinary prose; only non-trivial strings are decisive.
-            if len(s) >= 4 and s in text:
-                raise AssertionError(
-                    f"label leak: item field {field!r} value {s!r} appears in the constructed "
-                    f"prompt for item {item.get('id')!r}. Refusing to generate.")
+            if len(s) < 4:
+                continue
+            if s not in built_text:
+                continue
+            if s in original_text:
+                continue            # the item's own evidence -- a retrieval task's needle
+            if any(s in cand for cand in allowed):
+                continue            # a model-produced candidate the selector must be shown
+            raise AssertionError(
+                f"label leak: item field {field!r} value {s!r} was INTRODUCED by prompt "
+                f"construction for item {item.get('id')!r} -- it is not in the item's own "
+                f"prompt and not a model-produced candidate. Refusing to generate.")
 
 
 def role_roster() -> dict:
