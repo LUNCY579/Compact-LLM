@@ -205,6 +205,47 @@ label-aware — no feature-based input-only selector has been tried**, and the c
 point is this session's own MR result, where selector utilisation was 0.960 and there was
 nothing to select between.
 
+**The arm-count objection is answered, and the right null changes the reading twice.** The peer
+ran an item-permutation control (2,000 trials, marginals preserved); it reproduces here
+analytically and by simulation. Greedy saturation settles the objection directly: **arms six and
+seven add exactly zero items.**
+
+| reference | union | headroom | what it assumes |
+|---|---:|---:|---|
+| **nesting** (monotone ladder) | 235 | **+0** | more delta ⇒ strictly more capability |
+| **observed** | **266** | **+31** | — |
+| independence | 382.8 ± 1.1 | +148 | arms uncorrelated at these marginals |
+
+Independence is unreachable by construction for scalar variants of one δ, so "+31 of +148" reads
+thin against a ceiling nothing of this kind can hit. **Nesting is the null anyone actually held,
+and it is refuted comprehensively: 0 of 21 pairs are nested.** k=0.10 (197) wins **20** items
+that α=1.00 (235) loses; α=0.25 (**145**) wins **14**; the two arms that both score 235 differ by
+5 items *each way*. **Scaling one delta does not move items monotonically — it reorders them.**
+Both references belong in the ledger: independence bounds how redundant the arms are, nesting
+bounds how surprising the headroom is.
+
+**Where the headroom sits, and the limit of that finding.** The 31 items are not uniform across
+families: ledger_replay 19, prerequisite_plan 8, register_machine 4 — **χ² = 11.68, 2 df,
+p = 0.0029**, a 4.7× spread, concentrated on the family every screen calls binding. That refutes
+"pure borderline-ness". But **`family` is hidden suite metadata that `router.py` forbids a
+selector from using**, so this shows the headroom is *structured*, not that it is
+*input-visible*. Family plausibly correlates with request surface, but "a forbidden label
+predicts it" and "a permitted feature predicts it" are different claims and only the first is
+measured. The mechanism originally hypothesised — that these are items the base already handles
+and the delta damages — is **untestable here: no Supa per-item PROCESS artifact exists on this
+host.**
+
+**Consequence for any selector experiment.** If the headroom concentrates in one family, the
+realistic ceiling is nearer 19 items than 31, less again after surface-feature loss — thin
+against a 7-row floor. The experiment must be **powered for that** or its null will be read as
+"no signal" when it was "not enough items". Note also the circularity: fitting and evaluating on
+the same 384 is invalid, and SELECT-VIEWS-001 is the only selection-admissible acquisition
+instrument, so an in-domain split *spends* it. `scout/build_scout.py` can mint a disjoint
+transition bank at zero instrument cost as the fitting set, leaving the views as a clean
+held-out test — a cross-generator transfer test, harder than an in-domain split and honest about
+it. Whether to run it is the operator's call.
+
+
 
 ---
 
