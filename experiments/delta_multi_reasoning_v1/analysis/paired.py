@@ -124,6 +124,71 @@ def paired(baseline_label: str, candidate_label: str,
                   tuple(rep_ids), tuple(dam_ids))
 
 
+def fisher_exact_2x2(a: int, b: int, c: int, d: int) -> float:
+    """Two-sided Fisher on [[a, b], [c, d]], summing tables no more probable than observed."""
+    def p(x: int) -> float:
+        return (math.comb(a + b, x) * math.comb(c + d, a + c - x)
+                / math.comb(a + b + c + d, a + c))
+    obs = p(a)
+    lo, hi = max(0, a + c - (c + d)), min(a + b, a + c)
+    return min(1.0, sum(p(x) for x in range(lo, hi + 1) if p(x) <= obs * (1 + 1e-9)))
+
+
+def subgroup_dissociation(groups: Mapping[str, Paired]) -> dict:
+    """Is damage really concentrated in one subgroup, or is that subgroup just ahead?
+
+    **The denominator decides this, and the obvious denominator is wrong.** A damaged item must
+    be one the baseline got right, so a subgroup where the baseline is near the floor cannot
+    show damage however severe the damage is. Counting losses against every row in the subgroup
+    therefore reports the baseline's standing and calls it the candidate's effect.
+
+    RCI-001, both halves of the same read, `binding` vs `non_binding` task types:
+
+        answerable    losses/all rows  Fisher 9.5e-11   losses/baseline-correct  Fisher 3.3e-10
+        unanswerable  losses/all rows  Fisher 4.5e-03   losses/baseline-correct  Fisher **1.00**
+
+    The answerable dissociation is real and survives conditioning: 32.0% of what the baseline
+    got right in `binding` was lost, against 2.3% in `non_binding`. The unanswerable one is an
+    artifact -- the baseline abstained correctly on just 3 of 51 `binding` rows, so there was
+    nothing there to lose, and the two groups lose abstentions at the SAME rate (33% vs 38%).
+
+    Read against the wrong denominator that says "two dissociated effects in disjoint task
+    types". Read against the right one it says "one task-specific effect, plus a second effect
+    that is uniform" -- which is a different claim with a different repair.
+
+    This is the same discipline as never netting repair against damage, applied to the
+    denominator instead of the numerator.
+    """
+    out = {}
+    for name, p in groups.items():
+        base = p.baseline_correct
+        out[name] = {"n": p.n, "baseline_correct": base, "damage": p.damage,
+                     "repair": p.repair,
+                     "damage_rate_vs_all_rows": round(p.damage / p.n, 4) if p.n else None,
+                     "damage_rate_given_baseline_correct": (round(p.damage / base, 4)
+                                                            if base else None)}
+    res = {"groups": out}
+    if len(groups) == 2:
+        (na, x), (nb, y) = out.items()
+        res["pair"] = [na, nb]
+        res["fisher_vs_all_rows"] = fisher_exact_2x2(
+            x["damage"], x["n"] - x["damage"], y["damage"], y["n"] - y["damage"])
+        res["fisher_given_baseline_correct"] = (
+            fisher_exact_2x2(x["damage"], x["baseline_correct"] - x["damage"],
+                             y["damage"], y["baseline_correct"] - y["damage"])
+            if x["baseline_correct"] and y["baseline_correct"] else None)
+        cond = res["fisher_given_baseline_correct"]
+        res["admissible_p"] = cond
+        res["verdict"] = (
+            "UNTESTABLE_BASELINE_AT_FLOOR" if cond is None else
+            "DISSOCIATION" if cond <= 0.05 else
+            "ARTIFACT_OF_BASELINE" if res["fisher_vs_all_rows"] <= 0.05 else
+            "NO_DIFFERENCE")
+        res["note"] = ("Only `fisher_given_baseline_correct` is admissible. Where the two "
+                       "disagree, the unconditioned test is reporting the baseline.")
+    return res
+
+
 def mcnemar_exact(repair: int, damage: int) -> float:
     """Two-sided exact McNemar (binomial on the discordant pairs). 1.0 when none discordant."""
     n = repair + damage

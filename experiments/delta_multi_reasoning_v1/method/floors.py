@@ -46,6 +46,93 @@ DEFAULT_CEILING = 0.90
 
 
 # --------------------------------------------------------------------------------------- #
+# Build-time structural requirements
+# --------------------------------------------------------------------------------------- #
+
+def require_pack_structure(rows: Sequence[Mapping], pack_key: str = "scenario_id",
+                           variant_key: str = "variant", min_variants: int = 3) -> dict:
+    """MANDATORY, and not a matter of taste.
+
+    Score several variants of one scenario together and require all of them. RCI-001 had this
+    only because it was copied from the Demo suite before anyone had a reason to want it, and
+    it turned out load-bearing: the recency rule worth 0.3711 on the aggregate scored **0/128**
+    per pack, because any pack containing an unanswerable row is unwinnable by an extractor.
+    The instrument survived a defect nobody anticipated on the strength of a habit.
+
+    A habit is not a safeguard. Make it a gate.
+    """
+    packs: dict = {}
+    for r in rows:
+        packs.setdefault(r.get(pack_key), set()).add(r.get(variant_key))
+    sizes = [len(v) for v in packs.values()]
+    return {"packs": len(packs), "min_variants_per_pack": min(sizes) if sizes else 0,
+            "required": min_variants, "satisfied": bool(packs) and min(sizes) >= min_variants,
+            "why": "a pack containing an unanswerable row cannot be won by any extractor, so "
+                   "per-pack all-correct is shortcut-immune by construction",
+            "action_if_unsatisfied": "do not ship the instrument; add variants per scenario"}
+
+
+_ARTICLE = re.compile(r"^(the|a|an)\s+")
+
+
+def convention_sensitivity(rows: Sequence[Mapping], predictions: Mapping[str, str]) -> dict:
+    """How many rows turn on a scoring convention rather than on being right?
+
+    On RCI-001, 52 of 384 answerable rows hinged on a leading definite article and one on a
+    trailing period -- the model answers `acquisitions secretary` where the reference reads
+    `the acquisitions secretary`. Two sessions scoring the same bank under their own
+    conventions differed by ~50 rows and spent real effort reconciling numbers that were never
+    in disagreement about the model.
+
+    Report it at build time, and prefer a primary endpoint that is convention-FREE. A literal
+    sentinel admits no article and no punctuation ambiguity. That was a third reason RCI-001's
+    endpoint was the right one, and it was not among the reasons given when it was chosen.
+    """
+    def _n(s):
+        return " ".join(str(s).strip().lower().split())
+
+    def _canon(s):
+        return " ".join(str(s).strip().lower().replace(".", " ").split())
+
+    strict = canon = tolerant = 0
+    for r in rows:
+        raw, ref = predictions.get(r["id"], ""), r["reference"]
+        strict += _n(raw) == _n(ref)
+        canon += _canon(raw) == _canon(ref)
+        bare = _ARTICLE.sub("", _canon(raw))
+        tolerant += bool(bare) and bare == _ARTICLE.sub("", _canon(ref))
+    return {"n": len(rows), "strict": strict, "punctuation_insensitive": canon,
+            "article_tolerant": tolerant,
+            "rows_turning_on_punctuation": canon - strict,
+            "rows_turning_on_article": tolerant - canon,
+            "share_turning_on_convention": (round((tolerant - strict) / len(rows), 4)
+                                            if rows else 0.0),
+            "note": "prefer a convention-free primary endpoint; a literal sentinel is one"}
+
+
+def gate_strata(scores: Mapping[str, tuple], floors_by_stratum: Mapping[str, float],
+                ceiling: float = DEFAULT_CEILING) -> dict:
+    """Apply the gate PER STRATUM, not only to the aggregate.
+
+    RCI-001's aggregate cleared its floor and sat well below the ceiling, so the instrument
+    looked sound. Per task type it was not: `temporal_correction` answerable was 78/78 for both
+    systems *and* 78/78 for the recency rule -- simultaneously above the ceiling and at the
+    extraction floor, therefore carrying exactly zero information about either model. A fifth
+    of the bank was decoration, and nobody saw it until the read was spent.
+
+    `scores` maps stratum -> (correct, n) for the baseline system.
+    """
+    per = {name: gate(c, n, floors_by_stratum.get(name, 0.0), ceiling)
+           for name, (c, n) in scores.items()}
+    informative = [k for k, v in per.items() if v["verdict"] == "CLEARS"]
+    return {"per_stratum": per, "informative": sorted(informative),
+            "uninformative": sorted(set(per) - set(informative)),
+            "informative_share": (round(len(informative) / len(per), 4) if per else 0.0),
+            "why": "a stratum above its ceiling cannot show a regression and a stratum at its "
+                   "extraction floor was never being read; either way it is not measuring"}
+
+
+# --------------------------------------------------------------------------------------- #
 # Exact binomial machinery, matching the acquisition instrument's published rule
 # --------------------------------------------------------------------------------------- #
 

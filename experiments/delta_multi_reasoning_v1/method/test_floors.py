@@ -12,7 +12,13 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from floors import cp_lower, extraction, floors, gate, immunity, min_k_to_clear  # noqa: E402
+from floors import (  # noqa: E402
+    convention_sensitivity, cp_lower, extraction, floors, gate, gate_strata, immunity,
+    min_k_to_clear, require_pack_structure,
+)
+
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "analysis"))
+from paired import paired, subgroup_dissociation  # noqa: E402
 
 FAIL: list[str] = []
 
@@ -115,6 +121,82 @@ def test_always_abstain_floor():
     check("gate refuses it at any score", gate(16, 16, 1.0)["verdict"] == "ABOVE_CEILING")
 
 
+def test_pack_structure_is_required():
+    """The one safeguard RCI-001 had by habit rather than by design."""
+    print("per-pack structure is demanded, not hoped for")
+    good = [{"scenario_id": f"S{i}", "variant": v}
+            for i in range(20) for v in ("base", "para", "counter", "unans")]
+    bad = [{"scenario_id": f"S{i}", "variant": "base"} for i in range(80)]
+    check("a four-variant bank satisfies it", require_pack_structure(good)["satisfied"])
+    r = require_pack_structure(bad)
+    check("a flat bank does not", r["satisfied"] is False)
+    check("and it says what to do", "do not ship" in r["action_if_unsatisfied"])
+
+
+def test_convention_sensitivity_finds_the_article_rows():
+    """52 of RCI-001's 384 answerable rows turned on a leading definite article."""
+    print("rows that turn on a convention are counted, not argued about")
+    rows = [{"id": f"r{i}", "reference": "the standing inspector"} for i in range(10)]
+    rows += [{"id": f"q{i}", "reference": "Yolanda Pais"} for i in range(10)]
+    pred = {r["id"]: ("standing inspector" if r["id"].startswith("r") else "Yolanda Pais.")
+            for r in rows}
+    cs = convention_sensitivity(rows, pred)
+    check("article-only misses are found", cs["rows_turning_on_article"] == 10,
+          str(cs["rows_turning_on_article"]))
+    check("trailing periods are found separately", cs["rows_turning_on_punctuation"] == 10,
+          str(cs["rows_turning_on_punctuation"]))
+    check("strict scorer sees none of them right", cs["strict"] == 0, str(cs["strict"]))
+
+
+def test_per_stratum_gate_catches_the_decorative_stratum():
+    """`temporal_correction` answerable: 78/78 for both systems AND 78/78 for the recency
+    rule. A fifth of RCI-001 carried no information and the aggregate gate did not notice."""
+    print("a stratum that is above ceiling and at its extraction floor is refused")
+    g = gate_strata(
+        {"temporal_correction": (78, 78), "alias_resolution": (65, 78),
+         "count_with_exclusions": (30, 75)},
+        {"temporal_correction": 1.000, "alias_resolution": 0.141,
+         "count_with_exclusions": 0.000})
+    check("the saturated stratum is not informative",
+          "temporal_correction" in g["uninformative"], str(g["uninformative"]))
+    check("the readable ones are", g["informative"] ==
+          ["alias_resolution", "count_with_exclusions"], str(g["informative"]))
+    check("share is reported", abs(g["informative_share"] - 0.6667) < 0.001,
+          str(g["informative_share"]))
+
+
+def test_dissociation_needs_the_right_denominator():
+    """THE ONE THAT CHANGED A CONCLUSION. On RCI-001's unanswerable rows the binding group
+    looked spared; conditioned on what the baseline got right it is damaged at the same rate."""
+    print("a dissociation is tested against the baseline's correct set, not the row count")
+    # binding, unanswerable: n=51, baseline correct 3, 1 lost.
+    b_base = {f"b{i}": i < 3 for i in range(51)}
+    b_cand = {f"b{i}": i < 2 for i in range(51)}
+    # non-binding, unanswerable: n=77, baseline correct 37, 14 lost.
+    n_base = {f"n{i}": i < 37 for i in range(77)}
+    n_cand = {f"n{i}": i < 23 for i in range(77)}
+    d = subgroup_dissociation({"binding": paired("B", "D", b_base, b_cand),
+                               "non_binding": paired("B", "D", n_base, n_cand)})
+    check("the naive test calls it a dissociation", d["fisher_vs_all_rows"] < 0.05,
+          f"{d['fisher_vs_all_rows']:.2e}")
+    check("the conditioned test does not", d["fisher_given_baseline_correct"] > 0.5,
+          f"{d['fisher_given_baseline_correct']:.3f}")
+    check("verdict names it an artifact", d["verdict"] == "ARTIFACT_OF_BASELINE", d["verdict"])
+    check("loss rates are in fact near-identical",
+          abs(d["groups"]["binding"]["damage_rate_given_baseline_correct"]
+              - d["groups"]["non_binding"]["damage_rate_given_baseline_correct"]) < 0.05,
+          str(d["groups"]))
+    # The answerable half of the same read IS a real dissociation and must survive.
+    a_base = {f"a{i}": i < 97 for i in range(153)}
+    a_cand = {f"a{i}": 31 <= i < 97 for i in range(153)}
+    c_base = {f"c{i}": i < 128 for i in range(231)}
+    c_cand = {f"c{i}": 3 <= i < 128 for i in range(231)}
+    d2 = subgroup_dissociation({"binding": paired("B", "D", a_base, a_cand),
+                                "non_binding": paired("B", "D", c_base, c_cand)})
+    check("the real one survives conditioning", d2["verdict"] == "DISSOCIATION", d2["verdict"])
+    check("at p < 1e-8", d2["admissible_p"] < 1e-8, f"{d2['admissible_p']:.2e}")
+
+
 def test_binomial_matches_published_values():
     print("exact binomial reproduces the programme's published bounds")
     check("cp_lower(63,128) ~ 0.4028", abs(cp_lower(63, 128) - 0.4028) < 0.001,
@@ -126,7 +208,11 @@ def test_binomial_matches_published_values():
 def main() -> int:
     for fn in (test_rci001_recency_defect_is_caught, test_abstention_stratum_is_immune,
                test_ceiling_blocks_a_saturated_instrument, test_underpowered_is_not_failure,
-               test_always_abstain_floor, test_binomial_matches_published_values):
+               test_always_abstain_floor, test_pack_structure_is_required,
+               test_convention_sensitivity_finds_the_article_rows,
+               test_per_stratum_gate_catches_the_decorative_stratum,
+               test_dissociation_needs_the_right_denominator,
+               test_binomial_matches_published_values):
         fn()
     print()
     if FAIL:

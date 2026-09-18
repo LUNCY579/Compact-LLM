@@ -405,3 +405,37 @@ magnitude; across two deltas, near-orthogonality does not prevent interference. 
 held-out parents. Multi-reasoning repaired nothing on the frozen source in 128 items. And the
 two numbers the programme's strategic conclusions lean on hardest — the format-free 35 and the
 oracle headroom of +0 — are respectively **unreproducible** and **measurably wrong**.
+
+---
+
+## 9. Addendum, same day — the programme's first confirmed result, and what it decomposes into
+
+Written after sections 1-8. **`CONFIRMATION` is no longer closed.**
+
+RCI-001 was built, calibrated against a disjoint twin, sealed, registered
+(`confirm/RCI001_CONFIRM_PREREG.md`, committed before the seal was opened) and read once.
+
+> **CONFIRMED: the k=0.25 delta damages literal-`UNKNOWN` abstention.** B 40/128, D 25/128,
+> **0 gains and 15 losses**, exact McNemar p = 6.10e-05. Registered criterion met, registered
+> prediction band hit from the calibration twin. Zero false abstention on either side.
+
+Two things about it belong in the joint record because both cut against earlier sections here.
+
+**The published aggregate floor was too low and the defect was mine** — all four published
+predictors were distributional, and a recency rule reading the context scored 0.3711 against
+the published 0.2773, because my generator emits every correction *after* what it corrects. The
+peer found it; the seal was already spent. The primary endpoint is structurally immune (0/128)
+so the confirmation stands, but it stands on an endpoint choice, not on the process. Full
+erratum on `confirm/RCI001_CONFIRMATION_001.md`.
+
+**Decomposing the read found a second and larger effect, and killed four hypotheses.** Receipt:
+`confirm/decompose_rci.py` → `rci001-20260918/RCI_DECOMPOSITION.json`, write-up in Appendix A of
+the confirmation record. Briefly: the confirmed abstention loss is **uniform** (about a third of
+the source's correct abstentions, everywhere, Fisher 1.00 across groups), while a **separate and
+larger answerable regression** hits tasks requiring a role to be resolved to its occupant — 32.0%
+of the source's correct rows against 2.3% elsewhere, Fisher 3.3e-10. Four proposed mechanisms
+died, two per session. The last two died on the same mistake: reading a count where the rate over
+the baseline's correct rows was the admissible quantity.
+
+**This does not license anything.** `quality_improvement_established` stays false,
+`release_permitted` stays false, nothing is promoted. One confirmed claim, and it is a caution.

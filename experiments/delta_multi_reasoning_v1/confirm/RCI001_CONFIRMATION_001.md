@@ -141,6 +141,98 @@ reading any aggregate score from it and is a further reason the aggregate is the
 
 ---
 
+## APPENDIX A — post-hoc decomposition: EXPLORATORY, and it does not touch the verdict
+
+**Receipt: `confirm/decompose_rci.py` → `rci001-20260918/RCI_DECOMPOSITION.json`.** Every figure
+below comes out of that script. Nothing here is registered, the splits were chosen after seeing
+the read, and the verdict above stands exactly as written.
+
+This appendix exists because **four mechanism hypotheses were proposed off this one read and
+all four are dead.** Two were mine, two were the peer's. Writing the graveyard down is the point:
+
+| hypothesis | whose | how it died |
+|---|---|---|
+| the delta adopted the recency shortcut | peer | D is *worse* where the shortcut works, −19 on `rule_exception` |
+| **H-TMD**, type-matched distractor capture | **mine** | damage also hits *answerable* rows, which it predicts nothing about |
+| defeasible override | peer | `alias_resolution` is damaged with no override structure; `count_with_exclusions` *improves* |
+| **output-type shift**, entity spans down / numbers up | **mine** | D emits a person name on **78/78** `alias_resolution` rows and still loses 12 — the answer *form* is perfectly preserved |
+
+### Per task type, answerable rows
+
+| task type | n | B | D | gains | losses | p (exact McNemar) | Holm | recency rule |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `rule_exception` | 75 | 32 | **14** | 1 | **19** | 4.0e-05 | 2.0e-04 | 1.000 |
+| `alias_resolution` | 78 | 65 | **53** | 0 | **12** | 4.9e-04 | 2.0e-03 | 0.141 |
+| `count_with_exclusions` | 75 | 30 | **44** | **17** | 3 | 2.6e-03 | 7.7e-03 | 0.000 |
+| `object_state_tracking` | 78 | 20 | 21 | 1 | 0 | 1.00 | 1.00 | 0.333 |
+| `temporal_correction` | 78 | **78** | **78** | 0 | 0 | 1.00 | 1.00 | **1.000** |
+
+`temporal_correction`'s answerable half is 78/78 for both systems **and** 78/78 for the recency
+rule — above the ceiling and at the extraction floor at once. A fifth of the bank's answerable
+rows carried no information about either model and the aggregate gate did not notice. That is
+now `method/floors.py::gate_strata`.
+
+### Two effects, not one — and only the second is confirmed
+
+Grouping by whether answering requires resolving a role to the person holding it
+(**binding** = `rule_exception`, `alias_resolution`):
+
+| | n | B | D | gains | losses | p | **loss rate over B's correct rows** |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| binding, answerable | 153 | 97 | 67 | 1 | **31** | 1.5e-08 | **0.320** |
+| non-binding, answerable | 231 | 128 | **143** | **18** | 3 | 1.5e-03 | 0.023 |
+| binding, unanswerable | 51 | 3 | 2 | 0 | 1 | 1.00 | 0.333 |
+| non-binding, unanswerable | 77 | 37 | 23 | 0 | **14** | 1.2e-04 | 0.378 |
+
+**Effect 1 — a task-specific answerable regression, new and not previously separated.** The
+delta costs 32.0% of what the frozen source got right on binding tasks against 2.3% elsewhere;
+Fisher 3.3e-10. The most parsimonious reading is that **it conflates a role with its occupant**:
+on `rule_exception`, which wants a role, D emits a person name on 24/75 rows against B's 10, and
+14 of its 19 losses are role→name substitutions; on `alias_resolution`, which wants a name, D
+emits a name 78/78 times and simply binds the wrong one. Same error from two sides.
+
+**Effect 2 — the abstention loss, and it is UNIFORM.** This is the confirmed result and no
+mechanism proposed so far touches it. It is *not* concentrated: as a rate over the rows B got
+right it is 0.476 on `temporal_correction` against 0.200 on `object_state_tracking`
+(Fisher 0.159), and 0.333 binding against 0.378 non-binding (Fisher **1.00**). The delta loses
+roughly a third of the source's correct abstentions wherever they occur.
+
+### The denominator, which changed the conclusion
+
+Scored against *all rows*, binding and non-binding look dissociated on the unanswerable half
+too (Fisher 4.5e-03) — the two-effects-in-disjoint-task-types reading. Scored against **the
+rows B actually got right**, the only rows on which a loss is possible, that dissociation is
+**gone (Fisher 1.00)**. The binding group abstained correctly on just 3 of 51 rows; it had
+almost nothing to lose. The unconditioned test was reporting B's baseline and calling it D's
+damage.
+
+The concentration premise behind H-TMD fails the same way: "10 of the 15 losses are
+`temporal_correction`" is a count, and B abstains correctly there far more often than anywhere
+else. This is the netting mistake moved from the numerator to the denominator, and it is now
+`analysis/paired.py::subgroup_dissociation` with a fixture built from these exact cells.
+
+### Reconciliation with the peer session, stated rather than smoothed
+
+Their decomposition reproduces in shape. Three counts differ and the script is authoritative:
+binding answerable is **1 gain / 31 losses**, not 0/26; `rule_exception` loses **19** rows, of
+which 14 are role→name and **5 are the wrong role** — so the conflation account covers 14 of 19,
+not 14 of 14. Non-binding answerable is 18 gains / 3 losses, and **17 of those 18 gains are
+`count_with_exclusions` alone**, so "the improvement is general across the non-binding types"
+is not supported; the other two are at ceiling and at floor and could not have gained. Output-type
+is refuted regardless, on the `alias_resolution` form evidence, which does not need the gains.
+
+The scoring difference is settled: 52 answerable rows turn on a leading definite article and 1
+on a trailing period. B 225→277 and D 210→266 under article tolerance. The prereg bars the
+aggregate from the verdict, so this was never a disagreement about the model.
+
+### Caveats that attach to everything in this appendix
+
+Post-hoc, five task types at n≈75, splits chosen by looking, on a bank that is spent and cannot
+be re-read. Effect 1 is large and survives Holm and conditioning, but it is one training draw of
+one delta on one instrument. **RCI-002 must carry the two effects as separate pre-registered
+endpoints** — they were separable here only because they happened to land in different places,
+and the conditioning above shows that separation was partly luck.
+
 ## Status
 
 `reads_used` 1 of 1. **RCI-001 is spent.** Content hash `3f9434f7…` verified intact; the seal
