@@ -141,7 +141,45 @@ ARTICLE = re.compile(r"^(the|a|an)\s+")
 
 
 def _bare(s: str) -> str:
+    """Article-tolerant. On `rule_exception` this is the ONLY convention that measures what the
+    model knows: the frozen source scores 32/75 canonically and 65/75 article-tolerant, so 33 of
+    its answers drop the leading `the`. A canonical score there is largely an article score."""
     return ARTICLE.sub("", norm(s))
+
+
+def wh_word(r: Mapping) -> str:
+    """The question's leading interrogative -- which TYPE of entity the surface form demands."""
+    q = r["prompt"][1]["content"].split("QUESTION\n")[-1].strip().lower()
+    for w in ("which role", "who", "which", "where", "when", "how many", "what"):
+        if q.startswith(w) or f" {w} " in q[:40]:
+            return w
+    return "other"
+
+
+def by_variant(rows, pb, pd, vocabs) -> dict:
+    """Damage per (task type, variant). NOBODY LOOKED AT THIS AND IT REFRAMES EFFECT 1.
+
+    `rule_exception` asks `Which role could enter X...?` in its base and counterfactual variants
+    and `Who was exempt from...?` in its paraphrase. The damage is almost entirely in the
+    paraphrase, and so are the person-name emissions -- so what looked like role/occupant
+    conflation is, on this evidence, the candidate answering the wh-word instead of the context.
+    Scored article-tolerant, because on this task the canonical convention scores articles.
+    """
+    out = {}
+    for tt in sorted({r["task_type"] for r in rows}):
+        for v in sorted({r["variant"] for r in rows if r["answerable"]}):
+            sub = [r for r in rows if r["answerable"] and r["task_type"] == tt
+                   and r["variant"] == v]
+            if not sub:
+                continue
+            c = cell(sub, pb, pd, scorer=_bare)
+            c.pop("lost_ids", None)
+            c.pop("gained_ids", None)
+            c["wh_word"] = sorted({wh_word(r) for r in sub})
+            c["D_answer_form"] = answer_form(sub, pd, vocabs)
+            c["B_answer_form"] = answer_form(sub, pb, vocabs)
+            out[f"{tt}/{v}"] = c
+    return out
 
 
 def answer_form(rows, pred, vocabs) -> dict:
@@ -277,6 +315,7 @@ def main(argv=None) -> int:
             "per_type": ab, "homogeneity_over_usable_cells": hom,
             "note": "Rates, not counts. A task type B rarely abstains on correctly cannot show "
                     "abstention damage, so counts track B's baseline before they track D."},
+        "by_task_type_and_variant": by_variant(rows, pb, pd, vocabs),
         "convention_sensitivity_answerable": {"B": convention(ans, pb),
                                               "D": convention(ans, pd)},
         "caveat": "Both prediction sets come from the pinned serving path in each GENERATE.json. "
@@ -325,6 +364,15 @@ def main(argv=None) -> int:
               f"{'n/a' if r is None else f'{r:.3f}'}")
     if hom:
         print(f"  homogeneity over {hom['compared']}: Fisher {hom['fisher']:.3f}")
+
+    print("\nby task type and VARIANT, article-tolerant (the convention that measures knowledge)")
+    print(f"  {'cell':<38}{'n':>4}{'B':>5}{'D':>5}{'gain':>5}{'loss':>5}{'rate|B':>8}  wh-word")
+    for k, c in out["by_task_type_and_variant"].items():
+        if c["losses"] or c["gains"]:
+            rt = c["loss_rate_given_B_correct"]
+            rs = "n/a" if rt is None else f"{rt:.3f}"
+            print(f"  {k:<38}{c['n']:>4}{c['B']:>5}{c['D']:>5}{c['gains']:>5}{c['losses']:>5}"
+                  f"{rs:>8}  {','.join(c['wh_word'])}")
 
     print("\nanswer form (answerable rows, bare-normalised against reference vocabularies)")
     for tt in ("rule_exception", "alias_resolution"):

@@ -47,11 +47,33 @@ What survives is **two separate effects**, and only the second is the confirmed 
 | binding, unanswerable | 51 | 3 | 2 | 0 | 1 | 1.00 | 0.333 |
 | non-binding, unanswerable | 77 | 37 | 23 | 0 | **14** | 1.2e-04 | 0.378 |
 
-**Effect 1 — a task-specific answerable regression** on tasks needing a role resolved to its
-occupant (`rule_exception`, `alias_resolution`): 32.0% of B's correct rows lost against 2.3%
-elsewhere, Fisher 3.3e-10. It looks like **role/occupant conflation** — asked for a role D names
-the person (24/75 name emissions against B's 10; 14 of its 19 losses), asked to resolve an alias
-it names the wrong person. Never previously separated from Effect 2, and it is the larger effect.
+**Effect 1 — a task-specific answerable regression**, 32.0% of B's correct rows lost against
+2.3% elsewhere, Fisher 3.3e-10. Both sessions first read this as **role/occupant conflation**.
+**That is the fifth dead account.** Splitting by VARIANT — which nobody had done — localises the
+whole effect to one cell, and article-tolerant scoring removes the convention noise:
+
+| cell | interrogative | n | B | D | losses | rate given B-correct |
+|---|---|---:|---:|---:|---:|---:|
+| `rule_exception`/base | **which role** | 25 | 25 | **25** | **0** | 0.000 |
+| `rule_exception`/counterfactual | **which role** | 25 | 25 | 24 | 1 | 0.040 |
+| `rule_exception`/paraphrase | **who** | 25 | 15 | **2** | **13** | **0.867** |
+
+Person-name emissions: **0/25** base, **23/25** paraphrase. And the conflation account needs an
+occupant that does not exist — in the generator `exempt_role = roles[1]` while the only
+role→person binding is `roles[0] → alias_person`, and on 21 of 25 rows D emits *some other*
+person entirely. There is nothing to conflate.
+
+The same variant split runs through the positive finding: `count_with_exclusions` is base 13/13,
+counterfactual 14/15, **paraphrase B 3 → D 16** — 14 of the 17 gains — and both emit bare numbers
+throughout, so it is not output form either. B is brittle to *"After the withdrawal, how many…"*
+and double-subtracts; D is not.
+
+**One statement covers the largest damage and the largest gain**, in opposite directions: the
+delta made the answer more determined by the question's surface form and less overridable by the
+context. Helps when the form points at the right operation, destroys when it types the wrong
+entity. **Registered, not claimed** — it is the fifth account of this data and the four before it
+also looked elegant. `alias_resolution`'s 12 losses are uniform across variants with a congruent
+interrogative throughout, and nothing explains them.
 
 **Effect 2 — the abstention loss, and it is UNIFORM.** Not concentrated anywhere: 0.476 on
 `temporal_correction` against 0.200 on `object_state_tracking` (Fisher 0.159), 0.333 binding
@@ -76,35 +98,39 @@ count, and B abstains most often exactly there. Now enforced by
 Effect 1 is the larger finding and it rests on a post-hoc split of five task types. One build
 tests it properly and kills the last surviving alternative at the same time.
 
-**The cross.** Hold the reasoning structure fixed and vary what the answer *is*: ask
-`rule_exception` for the exempt role's **badge number**, ask `count_with_exclusions` for the
-**names** of the items counted. The two accounts invert:
+**BUILT — this is RCI-002's endpoint E2**, and the design changed once the variant split landed.
+The badge-number probe as originally specified was **confounded**: "Which badge number…" is a
+congruent interrogative, so wh-compliance and conflation both predict no damage there and the
+probe discriminates nothing. Crossing **wh-congruence** explicitly is the fix:
 
-| probe | role/occupant conflation predicts | output-type shift predicts |
-|---|---|---|
-| `rule_exception` → a number | damage **persists** — you must still resolve which role is exempt | damage **disappears** |
-| `count_with_exclusions` → names | **no damage** — no role to resolve | damage **appears** |
+| stratum | interrogative | answer | wh-compliance | binding | output-type |
+|---|---|---|---|---|---|
+| `carve_out_role_congruent` | "Which role…" | ROLE | none | damage | damage |
+| `carve_out_role_incongruent` | "Who…" | ROLE | **DAMAGE** | damage | damage |
+| `carve_out_badge_congruent` | "Which badge number…" | BADGE | none | damage | none |
+| `carve_out_badge_incongruent` | "Who…" | BADGE | **DAMAGE** | damage | none |
 
-Output-type is already refuted on the `alias_resolution` form evidence, so this is confirmation
-rather than a coin flip — which is the right time to register a prediction. **Registered: damage
-persists on the numeric `rule_exception` probe and does not appear on the named-count probe.**
+Three hypotheses, four cells, no two patterns alike. Identical carve-out reasoning throughout,
+and in the incongruent strata the exempt party is identified **only** by badge number, so the
+question is determinate and no person is determined — asserted per pack at build time.
 
-**And keep the abstention arm separate.** Effect 2 is uniform, so vary distractor density on
-unanswerable rows as its own endpoint: zero, low and high same-type tokens. Uniformity predicts
-flat; anything else is a live mechanism for the one confirmed claim.
+**Keep the abstention arm separate**, as E1: unanswerable rows at low and high distractor
+density. Uniformity predicts flat.
 
-Both need RCI-002 (see 5) or a spendable scout — **not** the spent RCI-001. Register the two
-effects as **two endpoints**; a single "damage" framing is what hid Effect 1 for a week.
+Prereg: `confirm/RCI002_CONFIRM_PREREG.md`. **The sealed read is not spent.**
 
 ### 2. If an account survives (1): test the repair it implies. *Training. ~2 h + a grant.*
 
 Which repair is worth building depends entirely on which account lives, and they point
-opposite ways. Role/occupant conflation implies training rows that force the role→occupant
-binding to be *re-derived* rather than recalled. Uniform abstention loss implies something
-about calibration and nothing about binding at all.
+opposite ways. Wh-compliance implies a training mixture that varies the interrogative against a
+fixed answer type — cheap, and it would *also* predict the abstention loss, since committing to
+an answer type from the question is exactly what stops you noticing the context determines
+nothing. Uniform abstention loss alone implies something about calibration and nothing about
+question form.
 
-**Do not design the repair before (1) returns.** Four hypotheses have already died here, two
-of them mine, and each would have justified a different and wasted training run.
+**Do not design the repair before (1) returns.** FIVE accounts have died here, and each would
+have justified a different and wasted training run. The two that survived longest died on a
+denominator; the fifth died on a `groupby` nobody had run.
 
 **Predeclare that this may fail**, and that the prior is poor: every attempt in this programme
 to repair abstention has failed or been corrected downward — M4's apparent repair was later
@@ -137,9 +163,10 @@ answer is worth more per GPU-minute than anything else on this list.
 Also outstanding and cheap: a **BF16** arm. 4-bit cost its own control 11 long-context rows, so
 BF16 should score above 180 and has never been run.
 
-### 5. RCI-002, with the two defects fixed. *No training. ~30 min.*
+### 5. ~~RCI-002~~ — **BUILT**. *`confirm/build_rci2.py` → `rci002-20260918/`.*
 
-RCI-001 is spent. Its generator is not, and the known defects are all cheap:
+Done, and it cost more than the "two one-line fixes" this entry predicted — the fixes below
+are what shipped, and four more were found by measuring rather than reasoning:
 
 - **randomise clause order** so corrections and exceptions are as often stated *before* as
   after the material they modify — this is what made `last_candidate_in_context` score 100% on
@@ -155,8 +182,17 @@ RCI-001 is spent. Its generator is not, and the known defects are all cheap:
   52 of 384 answerable rows turned on a leading article, and two sessions spent real effort
   reconciling numbers that never disagreed about the model.
 
-Fresh entity pools are the only real cost. **Build it before it is needed**, so the next
-confirmation is not blocked on instrument construction.
+Two pre-registered endpoints, 640 sealed rows, 8 strata, prereg at
+`confirm/RCI002_CONFIRM_PREREG.md`. **The sealed read is NOT spent** — that is a separate,
+irreversible decision on a frozen candidate, and it is the operator's call, not a build step.
+
+What the build actually taught, beyond the planned fixes: the gate blocked its own bank **five
+times**, each on a defect introduced while fixing the previous one. The decoy register added to
+close a positional leak opened a set-complement leak worth 1.000. Listing a random *subset* of
+each class then broke frequency ties. Only listing **every** member of every class, with one
+carve-out per role, makes position and frequency uninformative by construction. **None of that
+was foreseeable from the RCI-001 post-mortem** — it came from running the gate and the red team
+against each draft.
 
 ---
 
@@ -175,6 +211,9 @@ confirmation is not blocked on instrument construction.
 | `gate_strata()` | RCI-001's aggregate looked sound while a fifth of its answerable rows were above ceiling *and* at the extraction floor |
 | `convention_sensitivity()` | 52 of 384 rows turned on a definite article; prefer a convention-free endpoint, and a literal sentinel is one |
 | `subgroup_dissociation()` | **the denominator.** A subgroup where the baseline is near the floor cannot show damage; scoring losses against all rows reports the baseline and calls it the effect |
+| **`structural()`** — a third predictor class | RCI-002's first draft cleared every published floor at 0.20–0.29 and fell to one line of set arithmetic: a decoy sentence listed 3 of 4 roles and always omitted the exempt one. **1.000 on both carve-out strata, 120/120 on the sealed bank.** No positional or distributional rule can express "the member of list A missing from list B" |
+| **the build REFUSES, it does not report** | RCI-001 published its floors and shipped anyway. `build_rci2.py` exits non-zero above a floor bound, and it has now blocked its own bank five times |
+| **an adversarial pass BEFORE sealing** | six lenses, every proposal executed rather than argued. That is how the set-complement leak was found — while it was still fixable |
 
 Plus, already committed and used: `analysis/paired.py` (repair/damage never netted, noise floor
 enforced in code), `audit/feature_partition_ceiling.py` (upper-bounds every selector reading a

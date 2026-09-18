@@ -24,15 +24,26 @@ lives elsewhere gets deleted by the next person who finds it inconvenient.
     signal was reported FAILS when the honest answer was "this split cannot certify it".
         -> three-way verdict, and `min_k_to_clear` printed alongside.
 
-The two predictor classes answer different questions and you need both:
+    RCI-002 cleared BOTH published classes on every stratum -- 0.20 to 0.29 -- and a red-team
+    pass then found a decoy sentence that listed three of four roles, always omitting the
+    exempt one. Set difference over the two listings scored 1.000, and 120/120 on the sealed
+    bank. It was found before the seal was spent, which is the only reason this file has a
+    third class instead of a third erratum.
+        -> STRUCTURAL predictors, and an adversarial pass BEFORE sealing.
+
+The three predictor classes answer different questions and you need all of them:
 
     DISTRIBUTIONAL  what does the ANSWER DISTRIBUTION give away? (always abstain, guess the
                     modal answer, guess the modal answer for this stratum)
     EXTRACTION      what does the ITEM give away to something that reads it but does not
                     reason? (copy the last/first/most-frequent candidate, copy from the
                     question)
+    STRUCTURAL      what do two spans of the item give away RELATIVE TO EACH OTHER? (set
+                    complement between listings, arity of a list, candidate-set collapse,
+                    length tells for an omission)
 
-A bank can look hard distributionally and be trivial to an extractor. RCI-001 did.
+A bank can look hard distributionally and be trivial to an extractor. RCI-001 was. A bank can
+clear both and still fall to one line of set arithmetic. RCI-002's first draft did.
 """
 from __future__ import annotations
 
@@ -234,6 +245,85 @@ def extraction(rows: Sequence[Mapping]) -> dict[str, int]:
     return scores
 
 
+def structural(rows: Sequence[Mapping], abstain: str | None = None) -> dict[str, int]:
+    """THE CLASS A RED TEAM FOUND AND NEITHER PUBLISHED CLASS COULD SEE.
+
+    Distributional predictors read the answer distribution. Extraction predictors read positions
+    and frequencies. Neither can see *relational* structure between two spans of the context,
+    and that is where the worst defect in RCI-002's first draft lived.
+
+    The generator wrote a decoy sentence listing three of the four roles -- and the one it left
+    out was always the exempt one. Set difference over the two listings scored **1.000** on both
+    carve-out strata and **120/120 on the sealed bank**, solving the primary endpoint outright.
+    Every published floor read 0.20-0.29 on those same strata and saw nothing, because no
+    positional or distributional rule can express "the member of list A missing from list B".
+    The block had been added to CLOSE a positional leak; it opened a worse one.
+
+    These are deliberately generic -- they do not know this instrument's phrasing:
+
+      set_complement_singleton  two same-class listings, one nested in the other, differing by
+                                exactly one element -> answer that element
+      unique_candidate          exactly one answer-vocabulary member appears -> answer it
+      list_arity_minus_k        count the longest comma list, answer count - k (k = 0..3), the
+                                attack on any "how many after exclusions" task
+      abstain_if_short          omission shortens the context, so answer the sentinel whenever
+                                the row is shorter than its stratum median
+    """
+    vocab = _vocab(rows)
+    scores = {"set_complement_singleton": 0, "unique_candidate": 0, "abstain_if_short": 0}
+    for k in range(4):
+        scores[f"list_arity_minus_{k}"] = 0
+
+    med: dict = {}
+    for r in rows:
+        med.setdefault(r.get("stratum", "_all"), []).append(len(_ctx_of(r)))
+    med = {k: sorted(v)[len(v) // 2] for k, v in med.items()}
+
+    for r in rows:
+        ctx = str(r.get("context") or _ctx_of(r))
+        ref = str(r["reference"])
+        cands = vocab.get(r.get("stratum", "_all"), set())
+        if not ctx:
+            continue
+
+        # -- set complement over sentence-level candidate sets
+        # Split on FULL STOPS only. Semicolons are how this generator writes its listings, so
+        # splitting on them shattered the very sets this predictor has to compare, and the
+        # fixture for the leak scored 0 until that was fixed.
+        sents = [s for s in re.split(r"(?<=\.)\s+", ctx) if s]
+        sets = [frozenset(c for c in cands if c in s) for s in sents]
+        sets = [s for s in sets if len(s) >= 3]
+        found = None
+        for i, a in enumerate(sets):
+            for b in sets[i + 1:]:
+                big, small = (a, b) if len(a) > len(b) else (b, a)
+                if small < big and len(big - small) == 1:
+                    found = next(iter(big - small))
+                    break
+            if found:
+                break
+        if found is not None and found == ref:
+            scores["set_complement_singleton"] += 1
+
+        # -- candidate-set collapse
+        present = [c for c in cands if c in ctx]
+        if len(present) == 1 and present[0] == ref:
+            scores["unique_candidate"] += 1
+
+        # -- arity of the longest comma list
+        best = max((len(re.split(r",| and ", seg)) for seg in sents), default=0)
+        for k in range(4):
+            if str(best - k) == ref:
+                scores[f"list_arity_minus_{k}"] += 1
+
+        # -- length tell for omission
+        if abstain is not None and len(ctx) < med.get(r.get("stratum", "_all"), 0) \
+                and ref == abstain:
+            scores["abstain_if_short"] += 1
+
+    return scores
+
+
 def _ctx_of(r: Mapping) -> str:
     """Best-effort context text from a chat-style prompt."""
     p = r.get("prompt")
@@ -249,9 +339,10 @@ def floors(rows: Sequence[Mapping], abstain: str | None = None,
         raise ValueError("no rows")
     d = distributional(rows, abstain=abstain)
     e = extraction(rows)
+    st = structural(rows, abstain=abstain)
     if extra:
         e.update({k: fn(rows) for k, fn in extra.items()})
-    allp = {**d, **e}
+    allp = {**d, **e, **st}
     n = len(rows)
     binding = max(allp.values())
     pred = max(allp, key=allp.get)
@@ -259,14 +350,18 @@ def floors(rows: Sequence[Mapping], abstain: str | None = None,
         "n": n,
         "distributional": d,
         "extraction": e,
+        "structural": st,
         "binding_floor_count": binding,
         "binding_floor_rate": round(binding / n, 4),
         "binding_predictor": pred,
-        "binding_class": "extraction" if pred in e else "distributional",
+        "binding_class": ("extraction" if pred in e else
+                          "structural" if pred in st else "distributional"),
         "distinct_references": len(set(str(r["reference"]) for r in rows)),
-        "note": ("Both predictor classes are required. A bank can look hard distributionally "
-                 "and be trivial to an extractor -- RCI-001 published four distributional "
-                 "floors at 0.2773 and a recency rule scored 0.3711."),
+        "note": ("All THREE predictor classes are required. A bank can look hard "
+                 "distributionally and be trivial to an extractor -- RCI-001 published four "
+                 "distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it "
+                 "can clear both and still fall to a relational rule: RCI-002's first draft "
+                 "read 0.20-0.29 on every published floor while set-complement scored 1.000."),
     }
 
 
@@ -359,11 +454,17 @@ def immunity(rows: Sequence[Mapping], subset: Callable[[Mapping], bool],
     refs = [str(r["reference"]) for r in sub]
     dist["constant_majority"] = max(Counter(refs).values()) if refs else 0
 
+    # The structural class, scored on the subset with the same full-bank calibration. An
+    # abstention endpoint is only extraction-immune if NOTHING that reads the context can emit
+    # the sentinel -- and `abstain_if_short` can, which is exactly why it belongs here.
+    st = structural([r for r in rows if id(r) in ids], abstain=abstain)
+    ex.update({f"structural::{k}": v for k, v in st.items() if not k.startswith("abstain_")})
     ex_max = max(ex.values()) if ex else 0
     return {
         "n": len(sub),
         "extraction": ex, "extraction_max": ex_max,
         "extraction_immune": ex_max == 0,
+        "structural_abstainers": {k: v for k, v in st.items() if k.startswith("abstain_")},
         "distributional": dist, "distributional_max": max(dist.values()) if dist else 0,
         "distributional_immune": (max(dist.values()) if dist else 0) == 0,
         "required_control_if_not_distributionally_immune": (

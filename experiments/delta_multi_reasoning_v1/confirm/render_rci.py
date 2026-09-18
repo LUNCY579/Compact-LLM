@@ -33,6 +33,8 @@ def main(argv=None) -> int:
     ap.add_argument("--bank", type=Path, required=True)
     ap.add_argument("--tokenizer", required=True)
     ap.add_argument("--out", type=Path, required=True)
+    ap.add_argument("--instrument", default="RCI-001",
+                    help="recorded in RENDER.json; set it for successor banks")
     ap.add_argument("--i-am-spending-the-seal", action="store_true",
                     dest="spend_seal",
                     help="required to render RCI_SEALED; see RCI_BUILD.json read_budget")
@@ -42,13 +44,29 @@ def main(argv=None) -> int:
 
     rows = [json.loads(l) for l in a.bank.read_text(encoding="utf-8").splitlines() if l.strip()]
     parts = {r["partition"] for r in rows}
-    if "SEALED" in parts and not a.spend_seal:
-        raise SystemExit(
-            "REFUSING to render the SEALED bank.\n"
-            "This bank carries a read budget of ONE, to be used after a candidate is frozen and "
-            "never for selection. Rendering it here would spend it.\n"
-            "If this really is the registered confirmation read, pass "
-            "--i-am-spending-the-seal AND update reads_used in RCI_BUILD.json first.")
+    if "SEALED" in parts:
+        if not a.spend_seal:
+            raise SystemExit(
+                "REFUSING to render the SEALED bank.\n"
+                "This bank carries a read budget of ONE, to be used after a candidate is frozen "
+                "and never for selection. Rendering it here would spend it.\n"
+                "If this really is the registered confirmation read, claim the budget first:\n"
+                "  python confirm/seal_rci.py --root <dir> --claim-read '<reason>'\n"
+                "then re-run with --i-am-spending-the-seal.")
+        # The claim must ALREADY be recorded. Ordering is the whole point: RCI-001 incremented
+        # the counter after rendering, leaving a window in which the record said `unspent`
+        # while a read was in flight, and an audit that arrived in that window was too late.
+        seal_p = a.bank.parent / "RCI_SEAL.json"
+        if not seal_p.exists():
+            raise SystemExit(f"REFUSING: no seal record at {seal_p}; this bank is not sealed")
+        rb = json.loads(seal_p.read_text(encoding="utf-8"))["read_budget"]
+        if rb["reads_used"] < 1:
+            raise SystemExit(
+                "REFUSING: the read budget has NOT been claimed.\n"
+                f"  reads_used = {rb['reads_used']}\n"
+                "Claim it BEFORE rendering, so the record can never say `unspent` while a read "
+                "is in flight:\n"
+                "  python confirm/seal_rci.py --root <dir> --claim-read '<reason>'")
 
     import transformers
     from transformers import AutoTokenizer
@@ -75,7 +93,7 @@ def main(argv=None) -> int:
     body = "".join(json.dumps(x, sort_keys=True, separators=(",", ":")) + "\n" for x in out)
     (a.out / "prompts.jsonl").write_text(body, encoding="utf-8")
     meta = {
-        "schema": 1, "record": "RCI_RENDER", "instrument": "RCI-001",
+        "schema": 1, "record": "RCI_RENDER", "instrument": a.instrument,
         "partitions": sorted(parts), "rows": len(out),
         "tokenizer": str(a.tokenizer), "transformers": transformers.__version__,
         "enable_thinking": False, "add_generation_prompt": True,

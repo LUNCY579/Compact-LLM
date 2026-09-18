@@ -14,7 +14,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from floors import (  # noqa: E402
     convention_sensitivity, cp_lower, extraction, floors, gate, gate_strata, immunity,
-    min_k_to_clear, require_pack_structure,
+    min_k_to_clear, require_pack_structure, structural,
 )
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "analysis"))
@@ -197,6 +197,56 @@ def test_dissociation_needs_the_right_denominator():
     check("at p < 1e-8", d2["admissible_p"] < 1e-8, f"{d2['admissible_p']:.2e}")
 
 
+def test_structural_class_catches_the_complement_leak():
+    """THE ONE A RED TEAM FOUND. RCI-002's first draft listed three of four roles in a decoy
+    sentence and always omitted the exempt one; set difference scored 1.000 while every
+    published floor read 0.20-0.29 and saw nothing."""
+    print("set-complement between two listings is caught")
+    rows = []
+    roles = ["night steward", "records clerk", "duty warden", "survey lead"]
+    for i in range(24):
+        ex = roles[i % 4]
+        others = [r for r in roles if r != ex]
+        rows.append({"id": f"c{i}", "stratum": "carve", "reference": ex,
+                     "context": (f"Duty badges were issued as follows: the {roles[0]}; "
+                                 f"the {roles[1]}; the {roles[2]}; the {roles[3]}. "
+                                 f"One standing exception applied: the {ex} could enter. "
+                                 f"Duty rosters list the {', the '.join(others)} on site."),
+                     "question": "Which role was exempt?"})
+    st = structural(rows)
+    check("set_complement_singleton solves it outright",
+          st["set_complement_singleton"] == 24, str(st["set_complement_singleton"]))
+    f = floors(rows)
+    check("and the binding floor now comes from the STRUCTURAL class",
+          f["binding_class"] == "structural", f["binding_class"])
+    check("while extraction alone would have missed it",
+          max(f["extraction"].values()) < 24, str(f["extraction"]))
+    # Listing ALL four -- the fix -- removes it.
+    for r in rows:
+        r["context"] = r["context"].replace(
+            "Duty rosters list the " + ", the ".join(
+                [x for x in roles if x != r["reference"]]) + " on site.",
+            "Duty rosters list the " + ", the ".join(roles) + " on site.")
+    check("listing every member closes it",
+          structural(rows)["set_complement_singleton"] == 0,
+          str(structural(rows)["set_complement_singleton"]))
+
+
+def test_list_arity_attack():
+    """`inspected_list_arity`: when exactly one item is always withdrawn, the answer is the
+    listing's length minus one and the withdrawal clause is never read."""
+    print("list arity is caught when the exclusion count is constant")
+    rows = [{"id": f"n{i}", "stratum": "count", "reference": str(3 + i % 3),
+             "context": ("The items inspected were "
+                         + ", ".join(f"item{j}" for j in range(4 + i % 3))
+                         + ". Of those, item0 was withdrawn."),
+             "question": "How many count as inspected?"} for i in range(24)]
+    st = structural(rows)
+    check("list_arity_minus_1 reads it straight off",
+          st["list_arity_minus_1"] == 24, str(st["list_arity_minus_1"]))
+    check("and minus_0 does not", st["list_arity_minus_0"] == 0)
+
+
 def test_binomial_matches_published_values():
     print("exact binomial reproduces the programme's published bounds")
     check("cp_lower(63,128) ~ 0.4028", abs(cp_lower(63, 128) - 0.4028) < 0.001,
@@ -209,6 +259,8 @@ def main() -> int:
     for fn in (test_rci001_recency_defect_is_caught, test_abstention_stratum_is_immune,
                test_ceiling_blocks_a_saturated_instrument, test_underpowered_is_not_failure,
                test_always_abstain_floor, test_pack_structure_is_required,
+               test_structural_class_catches_the_complement_leak,
+               test_list_arity_attack,
                test_convention_sensitivity_finds_the_article_rows,
                test_per_stratum_gate_catches_the_decorative_stratum,
                test_dissociation_needs_the_right_denominator,

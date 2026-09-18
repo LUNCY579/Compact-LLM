@@ -39,12 +39,53 @@ def sha_file(p: Path) -> str:
 def main(argv=None) -> int:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--root", type=Path, required=True)
+    ap.add_argument("--instrument", default="RCI-001")
+    ap.add_argument("--claim-read", metavar="REASON", dest="claim_read",
+                    help="DRAW DOWN THE BUDGET NOW, before rendering. See --help notes.")
     ap.add_argument("--verify", action="store_true",
                     help="recompute the hash and report whether the seal is intact and unspent")
     a = ap.parse_args(argv)
 
     sealed = a.root / "RCI_SEALED.jsonl"
     seal_path = a.root / "RCI_SEAL.json"
+
+    if a.claim_read:
+        # THE FIX. RCI-001 incremented `reads_used` AFTER rendering, so between the render
+        # starting and the counter moving the record read "unspent" while a read was in flight.
+        # A peer audit arrived in exactly that window with the words "reads_used is still 0, so
+        # this is free right now and impossible to fix afterwards". It was not still 0. The
+        # floor correction it carried could no longer be applied.
+        #
+        # The budget is now claimed FIRST and the render refuses to run until it has been.
+        # Claiming is irreversible by design: if the read then fails for a technical reason,
+        # that is a spent instrument, and the honest record of that is more valuable than a
+        # counter that can go backwards.
+        if not seal_path.exists():
+            raise SystemExit("no seal record found; seal the bank before claiming a read")
+        seal = json.loads(seal_path.read_text(encoding="utf-8"))
+        got = sha_file(sealed)
+        if got != seal["sealed_sha256"]:
+            raise SystemExit(f"REFUSING: content changed since sealing\n"
+                             f"  recorded   {seal['sealed_sha256']}\n  recomputed {got}")
+        rb = seal["read_budget"]
+        if rb["reads_used"] >= rb["reads_authorised"]:
+            raise SystemExit(f"REFUSING: budget already spent "
+                             f"({rb['reads_used']}/{rb['reads_authorised']}). "
+                             f"This instrument is finished. Build a successor.")
+        rb["reads_used"] += 1
+        rb.setdefault("claims", []).append({
+            "reason": a.claim_read,
+            "sealed_sha256_at_claim": got,
+            "note": ("claimed BEFORE rendering; any audit arriving after this point is too "
+                     "late to change the instrument and must be published as an erratum"),
+        })
+        seal_path.write_text(json.dumps(seal, indent=2) + "\n", encoding="utf-8")
+        print(json.dumps({"claimed": True, "reason": a.claim_read,
+                          "reads_used": rb["reads_used"],
+                          "reads_authorised": rb["reads_authorised"],
+                          "next": "render with render_rci.py --i-am-spending-the-seal"},
+                         indent=2))
+        return 0
 
     if a.verify:
         if not seal_path.exists():
@@ -70,7 +111,8 @@ def main(argv=None) -> int:
     rows = [json.loads(l) for l in sealed.read_text(encoding="utf-8").splitlines() if l.strip()]
 
     seal = {
-        "schema": 1, "record": "RCI_001_SEAL", "instrument": "RCI-001",
+        "schema": 1, "record": f"{a.instrument.replace(chr(45), chr(95))}_SEAL",
+        "instrument": a.instrument,
         "sealed_file": sealed.name,
         "sealed_sha256": sha_file(sealed),
         "content_sha256_of_rows": build["banks"]["SEALED"]["sha256"],
@@ -84,8 +126,12 @@ def main(argv=None) -> int:
             "condition": ("after a candidate is frozen; never to choose among arms, thresholds, "
                           "prompts, seeds or checkpoints"),
             "spent_if": "used for selection in any form",
-            "how_to_draw_it_down": ("increment reads_used here, then render with "
-                                    "render_rci.py --i-am-spending-the-seal"),
+            "how_to_draw_it_down": ("seal_rci.py --claim-read '<reason>' FIRST, then "
+                                    "render_rci.py --i-am-spending-the-seal. The render "
+                                    "refuses until the claim is recorded; this closes the "
+                                    "window in which the record reads unspent while a read is "
+                                    "in flight, which is how RCI-001's floor correction "
+                                    "arrived too late to apply."),
         },
         "floors_published_before_any_model_call": True,
         "binding_floor_rate": build["floors"]["SEALED"]["binding_floor_rate"],
