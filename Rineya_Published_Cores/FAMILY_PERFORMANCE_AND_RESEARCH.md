@@ -195,6 +195,92 @@ requires `trust_remote_code=True`. The current class applies the bias at every
 decode step, while the selected gate was first-token-only; no mid-answer
 `UNKNOWN` occurred in the 256 evaluated rows.
 
+### Titan-Experimental 1.0 (experimental; not release-qualified)
+
+The first arm in this family to **acquire a new skill** rather than transfer an existing
+direction. Supa 1.7 plus 28 optimizer updates on 384 one-step state-transition rows (5,254
+supervised tokens), blocks 8-27, FP32 training, no rehearsal. Acquisition went from Supa's
+14/384 to 234/384.
+
+Unlike Supa/Baya this is a genuine training run, not a rescaled transferred adapter, so it is
+the first point in the family where "the model learned something new" is the right description.
+
+**Read its `AMENDMENT_001.json` before quoting its retention numbers.** The published artifact
+is a **BF16 export**, and because the update is ~1e-4 the scale of the weights it is added to, a
+BF16 round **zeroes 60.61% of the update's elements and erases 24 of 220 trained tensors
+outright**. The evaluated artifact is therefore an accidental interpolation somewhere below
+alpha = 1, and its apparent long-context advantage (162/256 against Supa's 161) is substantially
+a quantization artifact rather than a property of the update. Kept unmodified because it is the
+artifact the recorded numbers refer to.
+
+### Titan-Sparse-Experimental 1.0 (experimental; not release-qualified)
+
+**No new training.** Supa 1.7 plus the top **25% by absolute value** of Titan-Experimental's
+update, masked independently within each trained tensor (`k = 0.25`; see
+`TECHNIQUES_DELTA_CORES.md` section 3 for the exact rule and its deterministic tie-break).
+Winner of a selection rule registered before any arm was built.
+
+The finding it rests on: the update is heavy-tailed in magnitude, with **25% of its elements
+carrying 84% of its Frobenius norm**, and the small-magnitude tail carrying disproportionate
+*forgetting*. At matched nominal 0.50, pruning retained **+16 acquisition rows** over uniform
+scaling.
+
+**FP32 only** (2,384,234,992 bytes), and its `config.json` sets `torch_dtype: float32`
+deliberately: a BF16 copy zeroes 28.5% of its *kept* update and is closer to plain Supa than to
+this core. This is the one storage exception in the vault.
+
+#### Confirmed limitation — this core abstains less than the source it is built from
+
+**This is the first result in the programme to pass a pre-registered confirmation instrument,
+and it is a caution rather than a promotion.** Recorded 2026-09-18 on RCI-001, a 512-row
+instrument sealed before any model call with a single authorised read; the read was spent on
+this comparison and the instrument is now closed.
+
+On the 128 rows whose answer is not determined by their context, where the correct reply is the
+literal sentinel:
+
+| | correct `UNKNOWN` / 128 | rate |
+|---|---:|---:|
+| Supa 1.7 (frozen source) | **40** | 0.312 |
+| **Titan-Sparse-Experimental (`k = 0.25`)** | **25** | 0.195 |
+
+Exact two-sided McNemar on the paired rows: **0 gains, 15 losses, p = 6.1 × 10⁻⁵**. The
+asymmetry is total — there is **no row in 128** where this core abstains correctly and the
+frozen source does not. The delta did not trade abstentions for something; it only lost them.
+Both systems recorded **zero** false abstention on the 384 answerable rows, which is the control
+that makes the primary figure mean what it says.
+
+Two qualifications, both material:
+
+- **The damage is task-specific, and there appear to be two distinct effects rather than one.** A
+  *post hoc* decomposition — not pre-registered, not part of the confirmed verdict — finds the
+  confirmed abstention loss concentrated in **state-over-time** questions (a location being
+  tracked, a date being corrected): 14 of the 15 losses, p = 1.2e-04. These are also the task
+  types whose *answerable* accuracy is unchanged, so on them the core performs as well as its
+  source and fails to notice when the sentence determining the answer is absent. Separately, on
+  answerable rows only, the core loses ground on questions requiring a **role to be resolved to
+  the person holding it** (0 gains, 26 losses, p = 3.0e-08) while being net *positive* on the
+  other three task types (19 gains, 4 losses). Interaction Fisher **p = 2.4e-07**. Four candidate
+  mechanisms — recency-shortcut adoption, defeasible override, distractor capture, output-type
+  shift — have each been tested and refuted. **No mechanism is established**; these are
+  hypotheses for the successor instrument. An earlier revision of this section attributed the
+  damage to defeasible override; that account is withdrawn.
+- **Serving path was unqualified.** Both runs used `transformers 5.14.1` through standard HF
+  `generate`, not the DenseReference harness. They are matched to each other — identical stack,
+  FP32, 4096 context, zero rows skipped — so the contrast is internally valid. **These numbers
+  must not be placed beside any other table in this document**, all of which were taken on
+  `transformers 4.51.3`.
+
+The instrument's aggregate-accuracy floor was found defective after the read and corrected from
+0.2773 to 0.3711 (`last_candidate_in_context`); the abstention stratum used above is provably
+immune to that defect, with a mechanical floor of exactly 0. See
+`rineya-dataset-retention-records/rci001-20260918/audit-lc/` for the erratum, the independent
+re-scoring from raw model output, and the decomposition.
+
+This does not withdraw the acquisition result above. It records that the same core that gains
+transition accuracy loses abstention against its own source, confirmed, and that the two
+findings are both true of it.
+
 ## 4. Abstention findings and statistical interpretation
 
 ### 4.1 What signal worked
@@ -317,6 +403,10 @@ Safe claims:
 - The family has a confirmed structural KV-compression recipe on Halo.
 - Supa/Baya improvements arise from transferred early Stage-A LoRA geometry,
   not a completed long-context fine-tune.
+- A trained task update on Supa 1.7 **stores** at rank 16 in 27.7 MB (43x compression) with no
+  detectable behavioural loss (section 9.1).
+- Magnitude-pruning that update at `k = 0.25` retains more than uniformly scaling it, and the
+  effect's *direction* replicates across three independent draws (section 9.1).
 
 Claims not supported:
 
@@ -325,7 +415,17 @@ Claims not supported:
 - a completed or converged Stage-A model;
 - Significance Matrix scoring as the cause of the pooling gain;
 - general chat/RAG preservation for Supa, Baya, systems, or Supa-A1;
-- a clean sealed-test result for any published core.
+- a clean sealed-test result for any published core;
+- any general-capability gain from modulating a trained update on Supa 1.7, measured false with
+  zero oracle headroom across seven arms (section 9.2);
+- composability of two separately trained skills on this base, measured false and worse than
+  corpus mixing (section 9.2);
+- that rank-16 truncation identifies the directions a skill occupies, withdrawn as a magnitude
+  effect (section 9.1);
+- Titan-Experimental's long-context figure as a property of its update, substantially a BF16
+  export artifact (section 3, `AMENDMENT_001.json`);
+- any retention difference under about 13 long-context rows between arms in this family, which
+  is the measured single-draw spread.
 
 ## 8. Evidence-first roadmap for stronger and cheaper models
 
@@ -425,3 +525,73 @@ vault; the cited papers do not validate those local outcomes.
 - Local `rineya_halo_long_context_sft_v1/README.md`: partial SFT lab and training
   plan (pre-existing untracked worktree content, intentionally not staged by
   this publication).
+
+## 9. Delta-weight screens on Supa 1.7 (INT/SPARSE/REP/RANK/COMPOSE/DMRF, 2026-09-17 to 18)
+
+Seven pre-registered screens on the single Titan update, run to answer one question: **can the
+596M base be improved by applying a small trained update more cleverly?** The answer is largely
+no, and the negatives are more useful than the positives. Full records:
+`rineya-published-cores` -> `research-records/delta-weight-screens-20260918/`.
+
+### 9.1 What was established
+
+- **A skill is a small object.** The update is 314.62M parameters / 1.26 GB dense, but a
+  **rank-16 truncation reproduces its score at 7.26M parameters / 27.7 MB, 43x smaller**, with
+  no detectable loss on any endpoint. This is the durable result of the whole programme.
+- **Pruning beats scaling**, and it is a *repair*: across three independent training draws the
+  direction replicates 3/3 but the magnitude does not (+0 to +15). It pays most where the damage
+  is worst, so the size of the gain is not a constant of the method.
+- **Magnitude, not direction, is the operative variable.** A full-rank update merely *rescaled*
+  to rank-16's norm (`N16`) matches the rank-16 truncation on every endpoint, and so does
+  alpha = 0.75. So `r = 16` is approximately `N16` is approximately `alpha = 0.75`. Rank
+  truncation is an excellent compressor and a bad explanation.
+- **Abstention damage is to the word, not the decision.** Every arm ever measured here reduces
+  the count of literal `UNKNOWN` replies. On a purpose-built instrument that measures whether
+  the model *declines or asks* when it should, both promoted cores are statistically
+  indistinguishable from frozen Supa (paired exact McNemar p = 0.508 and 1.000). The two
+  operationalisations move in opposite directions.
+
+- **A skill's subspace is set by its data, not its seed.** Two independent training draws of the
+  same skill converge on substantially the same rank-16 subspace (mean principal-angle cosine
+  0.60, against 0.0885 for unrelated subspaces on this delta). This is REP-001's behavioural
+  replication result recovered from weight geometry alone.
+
+### 9.2 What was refuted, including two of our own published claims
+
+- **No modulation of this update exceeds the base on general capability.** Across seven arms the
+  best long context is 164/256 against Supa's own 161, and a *perfect per-input oracle* over all
+  seven arms would add **+0** long-context rows. There is no headroom to route into.
+- **Two skills do not compose.** A second, separately trained, budget-matched update added to
+  the first cost **60 acquisition rows**, and was **50 rows worse than simply mixing the two
+  corpora into one training run**. Calibrated against this base, the two updates' rank-16
+  subspaces sit only **11% of the way** from unrelated (mean cosine 0.0885, measured against
+  random subspaces) to same-skill (0.60, measured between two independent training draws of
+  the *same* skill). Low subspace overlap does not protect a skill.
+- **"The skill lives in 16 directions" is withdrawn** (see 9.1, third bullet). The compression
+  claim survives; the mechanistic reading does not.
+- **"Per-block update norm is near-uniform, so per-layer gating has nothing to exploit" is
+  withdrawn.** That used *absolute* norm (range 0.1795-0.2027, 1.13x). Relative to each block's
+  own weight norm the profile spans **5.894x**. The structural argument is gone; only the
+  zero-oracle-headroom argument survives.
+
+### 9.3 Two reproducibility traps that cost real time
+
+- **`torch.linalg.svd` is thread-count dependent** on this build. Rank-truncated arms reproduce
+  only at the thread count recorded in their receipt. Pin it.
+- **A `model.safetensors` sha256 is not an identifier of a model.** `safetensors` serialises
+  `__metadata__` from a hash map whose iteration order is randomised per process, so any writer
+  passing two or more metadata keys produces a **coin-flip file hash over a bitwise identical
+  model**. This produced two false "non-reproducible arm" alarms, and one wrong published
+  diagnosis that had to be retracted, before it was found; in both cases 0 of 310 tensors
+  actually differed. **Verify the data section or per-tensor hashes.**
+
+### 9.4 Where this leaves the 596M line
+
+A 4B base given the *identical* 384 rows scores 270/384 acquisition and 180/256 long context
+against the best 596M arm's 232 and 164, from 142 seconds of LoRA training. That is one draw on
+a 4-bit base and replication is outstanding. But no delta modulation on the 596M closes a gap
+that size, and 9.2's first bullet says none can.
+
+The one modulation with a live mechanistic rationale is **per-layer relative-magnitude
+allocation**, which follows from 9.1's third bullet and 9.2's fourth together, and which is
+under test. Everything else in this direction is closed by measurement.
