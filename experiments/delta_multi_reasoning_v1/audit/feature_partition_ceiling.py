@@ -21,9 +21,10 @@ partitions **matched on exact cell sizes**, not merely cell count.
 
 Size-matching is the tighter and the correct control. The per-cell max is convex in cell size,
 so leaving cell sizes free inflates the baseline and can hide a real effect. That difference is
-not hypothetical: against a count-matched null the 17-cell scheme's baseline came out ~247.6
-and every partition looked null; against this size-matched null it is ~244.0 and the `status`
-cell shows at +2.9 SD.
+not hypothetical. The vault's v1 baseline matched on NEITHER count nor size -- it split into
+`ceil(n / (n//k))` near-equal chunks, yielding 20 where k = 19 -- and under it every partition
+looked null. Under this size-matched null the 19-cell baseline is ~244.3 and the `status` cell
+shows at +2.9 SD. The conservative baseline is what hid it.
 
 WHAT THIS FOUND, on the seven alpha/k arms over SELECT-VIEWS-001
 ----------------------------------------------------------------
@@ -32,8 +33,8 @@ WHAT THIS FOUND, on the seven alpha/k arms over SELECT-VIEWS-001
     kind                                7     240       +5   241.4 +/- 1.7        -0.81
     status                              3     242       +7   237.8 +/- 1.5        +2.91
     kind x status                      11     245      +10   242.7 +/- 1.8        +1.25
-    kind x status x sign               17     247      +12   244.0 +/- 1.9        +1.54
-    family x kind x status x sign      17     247      +12   244.0 +/- 1.9        +1.56
+    kind x status x sign               19     247      +12   244.3 +/- 2.0        +1.35
+    family x kind x status x sign      19     247      +12   244.3 +/- 1.9        +1.38
 
 Two things worth keeping:
 
@@ -87,6 +88,21 @@ def load_arms():
     return arms, fam
 
 
+def _sign3(a):
+    """Three-way sign: neg / zero / pos.
+
+    Reconciles this script with the vault reference, which reports 19 cells where a boolean
+    `amount < 0` gives 17. Six items carry `amount == 0`, splitting (transfer, posted, +) 38
+    into 33+5 and (add, posted, +) 19 into 18+1. Three-way is also the better encoding on the
+    merits: amount == 0 makes an `add` or `transfer` a no-op, which is semantically closer to
+    `held` than to a positive amount. Both encodings give oracle 247, so nothing downstream
+    moves -- recorded because a vault reference script should not differ from its verification.
+    """
+    if a is None:
+        return None
+    return "neg" if a < 0 else ("zero" if a == 0 else "pos")
+
+
 def event_of(views, i):
     pr = views[i]["prompt"]
     msgs = pr if isinstance(pr, list) else ast.literal_eval(pr)
@@ -126,10 +142,10 @@ def main(argv=None) -> int:
         "status": lambda i: ev[i].get("status"),
         "kind x status": lambda i: (ev[i].get("kind"), ev[i].get("status")),
         "kind x status x sign": lambda i: (ev[i].get("kind"), ev[i].get("status"),
-                                           (ev[i].get("amount") or 0) < 0),
+                                           _sign3(ev[i].get("amount"))),
         "family x kind x status x sign": lambda i: (fam.get(i), ev[i].get("kind"),
                                                     ev[i].get("status"),
-                                                    (ev[i].get("amount") or 0) < 0),
+                                                    _sign3(ev[i].get("amount"))),
     }
 
     rng = random.Random(a.seed)
