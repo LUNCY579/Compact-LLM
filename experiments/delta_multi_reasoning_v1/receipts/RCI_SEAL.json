@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "record": "RCI_001_SEAL",
+  "instrument": "RCI-001",
+  "sealed_file": "RCI_SEALED.jsonl",
+  "sealed_sha256": "3f9434f7277a495118f45bb5e517c3fb3c625d489c041e55e38d149e4fe5458e",
+  "content_sha256_of_rows": "a74a534705b135ff75ee055716e04f900f65068c09527f09d748b224514058ff",
+  "rows": 512,
+  "packs": 128,
+  "unanswerable_rows": 128,
+  "admissible_uses": [
+    "CONFIRMATION"
+  ],
+  "inadmissible_uses": [
+    "TRAIN",
+    "SELECTION",
+    "DEV"
+  ],
+  "read_budget": {
+    "reads_authorised": 1,
+    "reads_used": 0,
+    "condition": "after a candidate is frozen; never to choose among arms, thresholds, prompts, seeds or checkpoints",
+    "spent_if": "used for selection in any form",
+    "how_to_draw_it_down": "increment reads_used here, then render with render_rci.py --i-am-spending-the-seal"
+  },
+  "floors_published_before_any_model_call": true,
+  "binding_floor_rate": 0.2773,
+  "binding_predictor": "per_task_type_majority",
+  "floor_rule": "a system clears only if the exact two-sided binomial 95% lower bound on its correct count exceeds the binding floor rate",
+  "calibration_inherited": {
+    "verdict": "USABLE",
+    "scored_bank": "CALIBRATION twin (disjoint entity partition, same generator)",
+    "systems": {
+      "rci_calib_B": {
+        "rate": 0.4922,
+        "ci_lower_95": 0.4028,
+        "correct_abstention": "10/32",
+        "false_abstention_on_answerable": 0
+      },
+      "rci_calib_D": {
+        "rate": 0.4375,
+        "ci_lower_95": 0.35,
+        "correct_abstention": "4/32",
+        "false_abstention_on_answerable": 0
+      }
+    },
+    "what_it_licenses": "the sealed bank is EXPECTED to discriminate, on the evidence of its twin. That is an inherited expectation, not a measurement of the sealed bank, and it is the strongest thing that can be said without spending the seal."
+  },
+  "calibration_bank_is_now_spent": {
+    "file": "RCI_CALIBRATION.jsonl",
+    "status": "SPENT for confirmation \u2014 it has been scored",
+    "remains_admissible_for": [
+      "DEV",
+      "SELECTION"
+    ]
+  },
+  "verification": "python confirm/seal_rci.py --root <this dir> --verify",
+  "what_this_seal_cannot_do": "It cannot prevent a read. It makes one detectable and attributable: the hash proves the content is what was calibrated, and reads_used is an integer a later reader must increment honestly. It fails by someone choosing to lie, not by accident.",
+  "why_this_instrument_exists": "CONFIRMATION_INSTRUMENT_GAP.md: every long-context and literal-UNKNOWN instrument in the repository is spent, reserved or locked to another programme, so seven screens terminate in 'measured, never confirmed'. This is the missing instrument."
+}
