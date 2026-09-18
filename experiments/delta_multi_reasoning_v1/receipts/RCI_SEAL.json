@@ -18,10 +18,15 @@
   ],
   "read_budget": {
     "reads_authorised": 1,
-    "reads_used": 0,
+    "reads_used": 1,
     "condition": "after a candidate is frozen; never to choose among arms, thresholds, prompts, seeds or checkpoints",
     "spent_if": "used for selection in any form",
-    "how_to_draw_it_down": "increment reads_used here, then render with render_rci.py --i-am-spending-the-seal"
+    "how_to_draw_it_down": "increment reads_used here, then render with render_rci.py --i-am-spending-the-seal",
+    "drawn_down_utc": "2026-09-18",
+    "authorised_by": "operator; recommendation accepted",
+    "prereg_commit": "0fa37e4",
+    "purpose": "confirmation read #1: abstention, B vs D, primary endpoint the 128 unanswerable rows of RCI_SEALED",
+    "drawdown_note": "The render ran before this field was incremented: the drawdown command failed on a path form and the render in the same invocation succeeded. Corrected within the minute and recorded here rather than silently backdated, because a read budget that is only accurate when nothing goes wrong is not a control. The prereg was committed (0fa37e4) before either step, so the ordering that matters -- registration before reading -- held."
   },
   "floors_published_before_any_model_call": true,
   "binding_floor_rate": 0.2773,
@@ -56,5 +61,46 @@
   },
   "verification": "python confirm/seal_rci.py --root <this dir> --verify",
   "what_this_seal_cannot_do": "It cannot prevent a read. It makes one detectable and attributable: the hash proves the content is what was calibrated, and reads_used is an integer a later reader must increment honestly. It fails by someone choosing to lie, not by accident.",
-  "why_this_instrument_exists": "CONFIRMATION_INSTRUMENT_GAP.md: every long-context and literal-UNKNOWN instrument in the repository is spent, reserved or locked to another programme, so seven screens terminate in 'measured, never confirmed'. This is the missing instrument."
+  "why_this_instrument_exists": "CONFIRMATION_INSTRUMENT_GAP.md: every long-context and literal-UNKNOWN instrument in the repository is spent, reserved or locked to another programme, so seven screens terminate in 'measured, never confirmed'. This is the missing instrument.",
+  "erratum_001_aggregate_floor": {
+    "published_floor_was": 0.2773,
+    "published_predictor_was": "per_task_type_majority",
+    "corrected_floor": 0.3711,
+    "corrected_predictor": "last_candidate_in_context",
+    "rule": "answer whichever member of the task type's label vocabulary occurs latest in the context; one uniform rule, no labels at inference",
+    "per_task_answerable": {
+      "temporal_correction": "78/78",
+      "rule_exception": "75/75",
+      "object_state_tracking": "26/78",
+      "alias_resolution": "11/78",
+      "count_with_exclusions": "0/75"
+    },
+    "cause": "construction defect in build_rci.py render(): the correction is emitted after the date it corrects and the exception after the rule, so recency is perfectly confounded with correctness on 153 of 384 answerable rows",
+    "scope": {
+      "unanswerable_stratum": "IMMUNE, recency floor 0/128",
+      "per_pack_all_four": "IMMUNE, recency floor 0/128",
+      "aggregate_accuracy": "DEFECTIVE, floor corrected to 0.3711"
+    },
+    "effect_on_confirmation_read_1": "NONE. The registered primary endpoint is the unanswerable stratum, which the defect cannot reach.",
+    "raised_by": "peer session (fine-tuning audit); verified independently here",
+    "timing": "the peer's audit assumed reads_used was still 0; it was not -- the read had already been drawn down and run. The correction landed after the seal was spent and could not be applied before it.",
+    "fix_belongs_to": "RCI-002: randomise clause order and add last_candidate_in_context to the published predictor set"
+  },
+  "confirmation_read_1": {
+    "verdict": "CONFIRMED",
+    "prereg_commit": "0fa37e4",
+    "primary_endpoint": "correct literal UNKNOWN on the 128 unanswerable rows",
+    "B_frozen_supa": "40/128",
+    "D_k025_core": "25/128",
+    "difference": -15,
+    "mcnemar_exact_two_sided_p": 6.10352e-05,
+    "asymmetry": "0 gains, 15 losses -- no item where D abstains correctly and B does not",
+    "registered_prediction": "B 30-50, D 10-28, D<B -- both inside band",
+    "confirms": "the k=0.25 delta damages literal-UNKNOWN abstention relative to the frozen source",
+    "does_not_confirm": [
+      "the Demo suite's 13->12 magnitude",
+      "any long-context claim",
+      "anything about r16/N16/alpha/k/4B/composition arms -- none were read"
+    ]
+  }
 }
