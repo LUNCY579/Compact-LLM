@@ -90,6 +90,32 @@ def free_gib() -> float:
     return m.ullAvailPhys / (1024 ** 3)
 
 
+def free_disk_gib(path: Path) -> float:
+    import shutil as _sh
+    return _sh.disk_usage(str(path)).free / (1024 ** 3)
+
+
+def require_disk(out: Path, need_gib: float = 3.0) -> float:
+    """Refuse to start without room for the output plus headroom.
+
+    This build writes a 2.38 GiB FP32 checkpoint. The volume reached 100% during this session
+    -- 11.1 GiB of it stale arm weights from batteries that had finished days earlier, because
+    reclaim discipline here is per-driver and a driver that dies never tidies up. A torn write
+    of a 2.38 GiB checkpoint would produce a file that exists, fails its hash, and costs a
+    rebuild to diagnose. Cheaper to refuse.
+    """
+    target = out.parent if out.parent.exists() else Path(str(out)[:3])
+    got = free_disk_gib(target)
+    if got < need_gib:
+        raise SystemExit(
+            f"REFUSING TO START N16 build: needs {need_gib:.1f} GiB free disk on "
+            f"{target}, has {got:.2f} GiB. This build writes a 2.38 GiB checkpoint and a "
+            f"partial write would fail its own hash check after the fact. Reclaim stale arm "
+            f"weights first -- their data-section digests are in their MATERIALIZATION.json, "
+            f"so they are rebuildable. Nothing has been written.")
+    return got
+
+
 def require_free(min_free_gib: float) -> float:
     """Refuse to start when the host cannot take a whole-model FP32 buffer.
 
@@ -130,6 +156,7 @@ def main(argv=None) -> int:
         raise SystemExit("refusing to overwrite an existing arm directory")
     # The dry run holds one tensor at a time, so it is exempt from the whole-model floor.
     free_at_start = free_gib() if a.dry_run else require_free(a.min_free_gib)
+    disk_at_start = free_disk_gib(Path(str(a.out)[:3])) if a.dry_run else require_disk(a.out)
 
     import torch
     from safetensors import safe_open
@@ -257,6 +284,7 @@ def main(argv=None) -> int:
         "tf32": False,
         "host_free_gib_at_start": free_at_start,
         "host_free_gib_floor": a.min_free_gib,
+        "free_disk_gib_at_start": disk_at_start,
         "torch_num_threads_pinned": a.threads,
         "hash_reproducibility_note": (
             "out_weight_sha256 is reproducible only at torch_num_threads_pinned. RANK-001 "

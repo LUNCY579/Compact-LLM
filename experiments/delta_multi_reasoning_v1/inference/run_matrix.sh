@@ -27,28 +27,32 @@ TOK="C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Su
 mkdir -p "$OUT"
 V="$OUT/variants"
 
-# Required FREE VRAM before a pass may start. A 596M model in FP32 is 2.38 GiB of weights, and
-# the load transiently needs roughly double that plus a KV cache and cuBLAS workspace. The
-# first CHECK attempt asked only "is used < 1500 MiB", passed that check once before a
-# concurrent battery claimed the GPU, and then OOMed BOTH systems at ~4950 MiB free. So the
-# guard now measures FREE memory, requires real headroom, and re-checks before every pass
-# rather than once per system.
+# Shared GPU lease and VRAM guard. SOURCED, not reimplemented: two sessions run model jobs on
+# this one card, and if each writes its own lease the field names drift and the lease stops
+# being decidable, which is the whole point of having one.
+#
+# The two mechanisms do different jobs and both are needed:
+#   the LEASE arbitrates INTENT   -- who gets the card next, so we queue instead of racing
+#   vram_wait arbitrates REALITY  -- whether the headroom is actually there when we load
+# Holding the lease does not mean the card is free: the other session's CUDA context can still
+# be resident after its job logically finishes. So acquire the lease, THEN wait on real VRAM.
+source "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/gpu_lease.sh"
+
+HOLDER="${HOLDER:-chatbubble-slft-4e}"
 GPU_FREE_REQUIRED_MIB=${GPU_FREE_REQUIRED_MIB:-6000}
-GPU_WAIT_TRIES=${GPU_WAIT_TRIES:-240}      # x15s = up to 60 minutes
+LEASE_MINUTES=${LEASE_MINUTES:-40}
+
+# Release the lease on ANY exit, including an abort or a kill, so a crash cannot leave the
+# other session waiting out the full staleness window.
+trap 'gpu_lease_release "$HOLDER"' EXIT INT TERM
 
 wait_gpu(){
-  local f
-  for _ in $(seq 1 "$GPU_WAIT_TRIES"); do
-    f=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits 2>/dev/null|head -1)
-    [ -z "$f" ] && return 0                 # no GPU introspection: let the job decide
-    [ "$f" -ge "$GPU_FREE_REQUIRED_MIB" ] && return 0
-    echo "  waiting for VRAM: ${f} MiB free, need ${GPU_FREE_REQUIRED_MIB}"
-    sleep 15
-  done
-  f=$(nvidia-smi --query-gpu=memory.free --format=csv,noheader,nounits 2>/dev/null|head -1)
-  echo "GPU_GUARD_TIMEOUT: ${f} MiB free after $((GPU_WAIT_TRIES*15))s, need ${GPU_FREE_REQUIRED_MIB}."
-  echo "Refusing to start rather than OOM mid-pass. Nothing was written."
-  return 1
+  gpu_lease_acquire "$HOLDER" "$LEASE_MINUTES" "DMRF-001 $LAB $SPLIT" || {
+    echo "LEASE_TIMEOUT: could not acquire the GPU lease."; return 1; }
+  vram_wait "$GPU_FREE_REQUIRED_MIB" 60 || {
+    echo "VRAM_TIMEOUT: lease held but ${GPU_FREE_REQUIRED_MIB} MiB never became free."
+    echo "Refusing to start rather than OOM mid-pass. Nothing was written."; return 1; }
+  return 0
 }
 
 # Variants are split-level, not system-level: render once, reuse for every system. Reusing the
@@ -72,9 +76,14 @@ gen(){ # gen <pass-name> <prompts-dir> <max-new-tokens>
   # A pass that produced no predictions has failed, whatever the pipeline's exit status was.
   # Checked here so a later pass cannot run against a missing dependency and so the system
   # aborts instead of scoring a hole.
+  local ok=0
   [ -s "$OUT/gen-$LAB-$name/predictions.jsonl" ] || {
-    echo "PASS $name PRODUCED NO PREDICTIONS"; rm -rf "$OUT/gen-$LAB-$name"; return 1; }
-  return 0
+    echo "PASS $name PRODUCED NO PREDICTIONS"; rm -rf "$OUT/gen-$LAB-$name"; ok=1; }
+  # Hand the card back between passes. The other session's arms take ~25 minutes and my
+  # passes take minutes, so holding the lease across a whole system would starve it for no
+  # reason. Re-acquired by the next pass's wait_gpu.
+  gpu_lease_release "$HOLDER"
+  return $ok
 }
 
 echo "=================================================================="
