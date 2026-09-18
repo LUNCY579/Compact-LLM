@@ -156,6 +156,56 @@ composition penalty (73%), leaving a **16-row residual outside the 7-row floor**
 penalty is magnitude and a real minority is genuine skill conflict. That is a better answer than
 either extreme.
 
+**The per-layer direction then closed on a measurement, which is the outcome worth having.**
+The peer parameterised my proposal as `g_b ∝ (target_rel/rel_b)^p` renormalised to
+`‖P₁₆(δ_T)‖`, so p=0 is T16 and p=1 is T16flat — and building at p=1.0 reproduces
+`arm-T16flat`'s data-section digest exactly, so the sweep provably passes through both
+previously measured points. Verified independently here, every figure identical:
+
+| p | allocation | rel. spread | acq /384 | repair | damage | net | paired p | Holm |
+|---:|---|---:|---:|---:|---:|---:|---:|---|
+| −1.0 | steepen hard | 26.35× | 239 | +15 | −11 | +4 | 0.5572 | no |
+| **−0.5** | steepen | 11.63× | **243** | +13 | **−5** | +8 | 0.09625 | no |
+| 0.0 | **trained** | 5.13× | 235 | — | — | — | — | — |
+| +1.0 | flatten | 1.00× | **184** | +9 | **−60** | **−51** | 2.24e-10 | **yes** |
+
+Holm over the three registered contrasts: flatten rejects at 0.0167; neither steepen point
+rejects. **My registered band (225–245) held; the peer's (228–242) failed by one row at 243, and
+they recorded it failed rather than rescuing it with the better test.**
+
+**The finding is an asymmetric, non-monotone optimum**: downside catastrophic and unambiguous,
+upside undemonstrated, and steepening *harder* is worse than steepening a little, so the curve
+turns over. 28 AdamW steps landed on an allocation that cannot be significantly improved by
+depth rescaling and degrades sharply if mass moves late. That is **"already exploited", not
+"nothing to exploit"** — and C2's conclusion was right for the wrong reason *twice*: wrong
+statistic (absolute vs relative norm), then wrong mechanism.
+
+Two details the nets hide, and both matter: **the steepen arm is +13/−5, so it fails the strict
+zero-damage criterion regardless of its net** — a fail, not a null; and **flatten is +9/−60**, so
+flattening repaired nine items and the −51 is net two-way movement, not uniform destruction.
+
+**A note on the instrument, because the switch was consequential.** The peer moved from
+REP-001's draw floor to paired McNemar and declared the switch before using it. That is the
+correct decomposition: McNemar asks *is this difference real on these items*, the draw floor asks
+*would it survive a different training draw*. These are algebraic variants of **one** δ_T on
+identical items, so there is no new draw and the draw floor answers a question the design does
+not pose. The one-draw caveat does not vanish — **it relocates** to a generalisation limit: every
+allocation finding is conditional on this single δ_T. The switch was also conservative for the
+result it affected (turning +8 into a non-result) while strengthening the flatten finding, which
+is what makes it a method choice rather than a rescue.
+
+**The convergent per-item finding, with the caveat neither of us stated first.** Two independent
+sweeps now say the static quantity is flat where the per-item quantity is large: magnitude arms
+**+31** over the best static arm, allocation arms **+15**. But **oracle headroom grows
+mechanically with arm count**, so +31 over seven arms and +15 over four are not directly
+comparable and some share of both is arm-count rather than structure. What bounds it is the
+greedy curve: 235 → 255 → 263 → 265 → 266, **saturating at three arms**. Concentrated headroom is
+the real thing; diffuse headroom would have been the artefact. **Everything here remains
+label-aware — no feature-based input-only selector has been tried**, and the cautionary data
+point is this session's own MR result, where selector utilisation was 0.960 and there was
+nothing to select between.
+
+
 ---
 
 ## 2. Verified from the report, against committed artifacts
