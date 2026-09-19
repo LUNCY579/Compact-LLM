@@ -154,6 +154,28 @@ def sweep(rows: Sequence[dict], pool: Sequence[str], split_field: str,
     }
 
 
+def can_manufacture(result: dict, min_swing: float = 0.02) -> list[dict]:
+    """The ONLY rules worth measuring a differential for: those that swing across the levels.
+
+    **Run this BEFORE measuring any cue differential.** Manufacturable interaction is
+    `differential x swing`, so a rule whose swing is zero cannot manufacture anything **at any
+    differential**, and measuring its differential is wasted work that invites a false conclusion.
+
+    MPOS-002 learned this the expensive way. A pattern in cue-exploitation differentials was
+    published as an observation and looked like clean support -- four arms splitting by mask
+    status. It was computed entirely on **candidate-identity** cues (earliest person, longest
+    name, alphabetical), whose measured band swing on that bank was **exactly 0.0000**: the
+    manipulation moved the answer's POSITION, not which candidate was which. The differentials
+    were real and completely irrelevant.
+
+    The filter that failed was *"is this a deterministic answer-agnostic rule?"* It never asked
+    *"can this rule distinguish the conditions at all?"* -- which is this function.
+    """
+    if not result.get("applicable"):
+        return []
+    return [r for r in result["rules"] if r["abs_swing"] >= min_swing]
+
+
 def worst_swing(result: dict, favouring: str | None = None) -> float:
     """Largest absolute band swing, optionally restricted to rules favouring one level."""
     if not result.get("applicable"):
