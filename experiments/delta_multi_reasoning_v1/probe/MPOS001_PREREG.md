@@ -778,3 +778,34 @@ control now agree. One bank, one draw, MECHANISM SCOUT — nothing promoted, no 
 
 **Not established:** the k at which the repair saturates. `s10` vs `Sparse` does not clear
 correction, so the ladder's monotone shape is suggestive here and measured only on the endpoint.
+
+## RESULT amendment 2 — the mask-status cue pattern is DROPPED
+
+The Addendum 3 result recorded, as an explicit observation rather than a finding, that cue
+exploitation split by mask status (masked −0.045 / −0.054, unmasked +0.060 / +0.154). The peer
+session was asked to break it rather than confirm it. It breaks three ways, all verified here:
+
+1. **It is one cue, not four.** `earliest_person` and `earliest_mean` select the **same candidate
+   on 288/288 rows** — identical by construction on this bank. And on `longest name` the ordering
+   **reverses**: masked s10 carries the largest positive differential of any arm. The split holds
+   on **1 of 4** distinct cues, which is what the peer's ten-cue ALIAS-001 sweep predicted — the
+   differential is a property of the arm-pair-**and-cue**, sign-varying.
+2. The damage-proxy alternative is **disfavoured but not excluded**: ρ = +0.600 at n = 4, where
+   only ρ = 1.0 approaches significance, and the ordering inverts within each group.
+3. **Decisive.** These are candidate-**identity** cues, and their measured band swing is
+   **exactly 0.0000** (`argmin_first`, `argmin_mean`, `argmax_first`, `argmax_mean`,
+   `argmax_namelen` all 0.0000). The manipulation moves the answer's *position*, not which
+   candidate is which. Since manufacturable = differential × swing, **the differential cannot
+   manufacture anything at any value.**
+
+> **The pattern was computed on cues that are structurally incapable of producing the effect they
+> were being used to rule out. It is dropped, not softened.**
+
+**This costs the result nothing**, because the pattern was never the load-bearing protection.
+That remains (a) the **sentence-index** cues — the only rules that actually swing across bands —
+whose differentials were measured and are zero or negative, and (b) the **raw error-count**
+argument: in `early` the source still beats every masked arm, so early-inflation is excluded with
+no cue machinery at all.
+
+**Nothing in the primary moves.** Position costs, both registered bands, the acquisition-matched
+paired test and the gap-closure figures are unchanged.
