@@ -809,3 +809,64 @@ no cue machinery at all.
 
 **Nothing in the primary moves.** Position costs, both registered bands, the acquisition-matched
 paired test and the gap-closure figures are unchanged.
+
+---
+
+# RESULT amendment 3 — ONE PHENOMENON: the mechanism repair is a restatement of the endpoint gain
+
+The peer session ran `s50` on this bank against an **exactly acquisition-matched** control
+(s50 235, native α=1.00 235) and registered its bands before launch. **The ≥0.31 "one phenomenon"
+band fired.** Every figure below was recomputed here independently from the predictions on disk.
+
+| arm | acquisition | masked? | position cost | interaction |
+|---|---:|---|---:|---:|
+| frozen Supa | 14 | — | 0.0625 | — |
+| s10 | 197 | MASKED | **0.1389** | +0.0764 |
+| LWF λ=0 | 198 | no | 0.3056 | +0.2431 |
+| Titan-Sparse | 232 | MASKED | 0.2222 | +0.1597 |
+| **s50** | **235** | **MASKED** | **0.3333** | +0.2708 |
+| native α=1.00 | 235 | no | 0.3472 | +0.2847 |
+
+**native − s50 = +0.0139, 2 discordant pairs of 144, p = 0.50.**
+
+## What this costs this programme's own claim
+
+Addendum 3 reported that "the endpoint advantage, the mechanism repair and the acquisition-matched
+control now agree", and framed that as three separate facts joining up. **It is one fact seen
+three ways.** Repair and alias advantage rise together (s10), fall together (Sparse), and vanish
+together (s50).
+
+> **Titan-Sparse's 44% closure is a RESTATEMENT of its endpoint advantage, not a second finding
+> corroborating it.** The mechanism measurement does not add independent evidence for masking.
+
+That consequence was written down in Addendum 3 before s50 existed, which is the only reason
+recording it now is housekeeping rather than retreat.
+
+## Their null is informative, and I verified WHY — the condition they did not state
+
+2 discordant pairs looks like an unpowered null. It is not, because the cost difference is
+carried entirely by discordant pairs, so bounding their rate bounds the effect. **But that
+construction is only valid under a condition that must be checked rather than assumed.**
+
+The per-pair statistic ranges over {−2 … +2}. A Clopper-Pearson bound on the *rate* of discordant
+pairs bounds |mean| **only if every discordant pair has |x| = 1**; if any pair carries |x| = 2 the
+true bound is twice as large. Checked on the actual distribution:
+
+    native − s50:  x=0 on 142 pairs, x=+1 on 2 pairs, max |x| = 1
+
+**So the condition holds and the bound is sound.** CP 95% upper on the rate = 0.0493 (their
+0.0431 differs by a one- versus two-sided convention; immaterial here), which excludes **every**
+effect the other masked arms show — 0.1111, 0.1250, 0.1944, 0.2083. This is *"a difference that
+size is ruled out"*, not *"we could not see one"*.
+
+**The condition should be stated as a premise wherever this bound is reused**, because it is not
+guaranteed by the design — a single magnitude-2 pair would double it.
+
+## What survives
+
+**At k = 0.10 the repair is real and large** — s50 − s10 = +0.1944 at p < 0.0001, bought with 38
+rows of acquisition. That remains a live operating point for a use that values late-answer binding
+over coverage. **It is not a free lunch and it is not a separate mechanism.**
+
+**Unchanged:** the causal finding itself — moving the answer late costs the delta ~5× what it
+costs the source, replicated on two independently trained deltas. That never depended on masking.
