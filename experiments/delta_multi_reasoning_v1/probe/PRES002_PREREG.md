@@ -343,3 +343,50 @@ Rebuilt with the bridge capitalised rather than prefixed, `who`/`which` selected
 articles restored before item names, and a **build-time assertion that refuses any context
 containing a doubled article**. Floors 0.167 / 0.167 / 0.175, zero article-bearing references,
 **zero doubled articles**. Awaiting the lease.
+
+---
+
+# PRES-005 — registered before it is scored: what the cue could have done, and what survives
+
+**Written while PRES-005's screen is generating and before any of its predictions are read.**
+
+The peer session raised a consequence of the `The the` cue that I had not drawn, and it is
+correct:
+
+> **If the cue marked the answer's own sentence in every row, it may have made the binding step
+> easier to LOCATE — and therefore made the damage easier to SEE.**
+
+The **sign is safe**: `person_binding` returned **0 repairs / 29 damages**, and a cue that
+inflates both arms equally cannot manufacture a 29–0 split. Byte-identical text yields
+byte-identical shortcuts. **But the magnitude may be cue-assisted**, and that lands on exactly
+the comparison I called clean.
+
+## What is registered as surviving, and what is not
+
+| quantity | status |
+|---|---|
+| **person vs object contrast** within PRES-004 | **SURVIVES** — both strata carried the identical cue, so it cancels between them |
+| direction of damage (0 repairs on person) | **SURVIVES** — a shared cue cannot produce a one-sided split |
+| **person damage −24.1 pp vs ALIAS-001's −19.7 pp** | **WITHDRAWN pending PRES-005** — I called this "the clean direction under the registered asymmetry"; it is not clean if the cue assisted the magnitude |
+| any absolute rate from PRES-004 | void, as already recorded |
+
+**So the claim "person damage exceeds ALIAS-001's despite an easier bank" is withdrawn now,
+before PRES-005 can be used to rescue it.** If PRES-005 reproduces a comparable magnitude the
+claim returns on clean evidence; if it does not, the cue explains the difference and the
+conclusion was mine to lose.
+
+**The headline is unaffected either way**, because it rests on the surviving contrast:
+
+> **The delta damages object-valued binding as well as person-valued. The regression is about
+> role→filler binding in general, and `alias_resolution` was one instance of it.**
+
+## Registered prediction for PRES-005
+
+Both strata damaged, purely or near-purely subtractive, with `person_binding` at a **lower**
+absolute source accuracy than PRES-004's inflated 0.833 — nearer ALIAS-001's 0.633, since the
+cue is gone and every other parameter matched ALIAS-001 `low` exactly (3 distractors, 9.0:1
+competing mentions, 153 context words).
+
+**If `person_binding`'s source accuracy stays near 0.833 with the cue removed, the cue was not
+the cause and the 20-point calibration miss is still unexplained** — which would be the most
+informative outcome and is the one I am not expecting.
