@@ -79,10 +79,27 @@ def main(argv=None) -> int:
     ap.add_argument("--verify-against", type=Path, default=None,
                     help="an existing predictions.jsonl; assert byte-equal predictions and "
                          "report rather than write a result")
+    ap.add_argument("--no-lease", action="store_true",
+                    help="skip the host-RAM lease. Only for a verify pass or a box known quiet.")
     a = ap.parse_args(argv)
 
     if a.out.exists():
         raise SystemExit(f"create-only output: {a.out} exists")
+
+    # Host RAM is the binding constraint on this box, not VRAM, and two sessions share it.
+    # The lease refuses on a LIVE owner and clears a STALE one with a backup -- a stale lease
+    # is otherwise indistinguishable from a held one and deadlocks both sessions against a
+    # corpse. It also refuses on low free RAM, because a free lease is not a quiet machine.
+    lease_token = None
+    if not a.no_lease:
+        sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "method"))
+        import lease as _lease  # noqa: PLC0415
+        got = _lease.acquire(label=f"generate_alias:{a.label}")
+        lease_token = got["token"]
+        if got["cleared_stale"]:
+            print(f"[lease] cleared a STALE lease: {got['cleared_stale']}", flush=True)
+        print(f"[lease] acquired, {got['free_gib_at_acquire']} GiB free", flush=True)
+
     rows = read_jsonl(a.prompts)
     if a.limit:
         rows = rows[:a.limit]
