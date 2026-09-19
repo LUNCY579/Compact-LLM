@@ -108,6 +108,10 @@ def main(argv=None) -> int:
 
     build = json.loads((a.root / "RCI_BUILD.json").read_text(encoding="utf-8"))
     calib = json.loads((a.root / "RCI_CALIBRATION_REPORT.json").read_text(encoding="utf-8"))
+    # RCI-001 put one floor at the top of `floors.SEALED`; RCI-002 nests per-endpoint and
+    # per-stratum reports under it. Accept both rather than forking the sealer.
+    fl = build["floors"]["SEALED"]
+    fl = fl if "binding_floor_rate" in fl else fl["aggregate"]
     rows = [json.loads(l) for l in sealed.read_text(encoding="utf-8").splitlines() if l.strip()]
 
     seal = {
@@ -134,16 +138,17 @@ def main(argv=None) -> int:
                                     "arrived too late to apply."),
         },
         "floors_published_before_any_model_call": True,
-        "binding_floor_rate": build["floors"]["SEALED"]["binding_floor_rate"],
-        "binding_predictor": build["floors"]["SEALED"]["binding_predictor"],
+        "binding_floor_rate": fl["binding_floor_rate"],
+        "binding_predictor": fl["binding_predictor"],
+        "endpoints": build.get("endpoints"),
         "floor_rule": build["floor_rule"],
         "calibration_inherited": {
             "verdict": calib["verdict"],
             "scored_bank": "CALIBRATION twin (disjoint entity partition, same generator)",
-            "systems": {s: {"rate": v["rate"], "ci_lower_95": v["ci_lower_95"],
-                            "correct_abstention": f"{v['correct_abstention']}/{v['unanswerable_n']}",
-                            "false_abstention_on_answerable": v["false_abstention_on_answerable"]}
-                        for s, v in calib["systems"].items()},
+            "systems": calib.get("systems"),
+            "endpoints": {k: {kk: v[kk] for kk in ("n", "B", "D", "direction") if kk in v}
+                          for k, v in calib.get("endpoints", {}).items()},
+            "registered_bands": calib.get("bands_to_register_for_the_sealed_read"),
             "what_it_licenses": ("the sealed bank is EXPECTED to discriminate, on the evidence "
                                  "of its twin. That is an inherited expectation, not a "
                                  "measurement of the sealed bank, and it is the strongest thing "

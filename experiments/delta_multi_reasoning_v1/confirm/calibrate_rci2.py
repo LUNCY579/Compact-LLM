@@ -61,6 +61,60 @@ def abstains_map(rows, pred, keep=lambda r: True):
             for r in rows if keep(r)}
 
 
+def person_vocab(rows) -> set:
+    """Every person name the generator uses, taken from the bank rather than hardcoded."""
+    return {str(r["reference"]) for r in rows
+            if r["task_type"] == "alias_resolution" and r["answerable"]}
+
+
+def emits_person(text: str, people: set) -> bool:
+    t = str(text).lower()
+    return any(p.lower() in t for p in people)
+
+
+def emission_endpoint(label, rows, pb, pd, people):
+    """E2, and it is a PAIRED EMISSION rate, not an accuracy.
+
+    Accuracy could not measure this. Asked `Who was permitted to enter X?` where the context
+    identifies the exempt party only by badge number, the frozen source answers `The holder of
+    badge 14 was permitted to enter the Bell Passage without one.` -- substantively right, and
+    exact-match scores it zero against the reference `14`. That stratum came back 0/24 for BOTH
+    systems on the twin, which is a floor created by answer form rather than by capability.
+
+    What the wh-compliance account actually predicts is not a wrong answer, it is a wrong
+    ANSWER CLASS: emitting a person where the question's interrogative types one and the
+    context determines none. So measure that directly. It is also what the RCI-001
+    decomposition measured -- 0/25 person-name emissions on `Which role`, 23/25 on `Who` --
+    and accuracy there was a proxy for it.
+
+    **A paired emission endpoint is immune to every answer-agnostic predictor by construction.**
+    A deterministic rule produces the same output for both systems, so it yields zero discordant
+    pairs and cannot manufacture a difference. Floors bound what an ABSOLUTE rate means; they do
+    not bear on a paired contrast. That is worth stating plainly rather than leaving implicit,
+    because it is also why E1's high mechanical floor does not weaken E1's verdict.
+    """
+    eb = {r["id"]: emits_person(pb.get(r["id"], ""), people) for r in rows}
+    ed = {r["id"]: emits_person(pd.get(r["id"], ""), people) for r in rows}
+    p = paired("B", "D", eb, ed)
+    nb, nd = sum(eb.values()), sum(ed.values())
+    n = len(rows)
+    return {
+        "label": label, "n": n, "metric": "emits a person name where none is determined",
+        "B": nb, "B_rate": round(nb / n, 4), "D": nd, "D_rate": round(nd / n, 4),
+        # `paired()` names the axis for CORRECTNESS: `repair` is B-false -> D-true. Here the
+        # boolean is "emitted a person", so `repair` means D emitted one and B did not, which
+        # is the direction under test. Naming these explicitly because the first version of
+        # this function read the sign backwards and called a clean 7/0 result a failure.
+        "paired": {k: v for k, v in p.as_dict().items()
+                   if k not in ("repair_ids", "damage_ids")},
+        "D_more_than_B": p.repair, "B_more_than_D": p.damage,
+        "direction": "D>B" if nd > nb else ("D<B" if nd < nb else "equal"),
+        "immune_to_answer_agnostic_predictors": True,
+        "why_immune": ("a deterministic rule emits the same string for both systems, so it "
+                       "produces zero discordant pairs and cannot create a paired difference"),
+    }
+
+
 def endpoint(label, rows, pb, pd, abstention=False):
     """One endpoint, scored for both systems and paired."""
     f = abstains_map if abstention else correct_map
@@ -123,9 +177,18 @@ def main(argv=None) -> int:
     e2ctrl = [r for r in ans if r["task_type"] in ("carve_out_role_congruent",
                                                    "carve_out_badge_congruent")]
 
+    people = person_vocab(rows)
     e1 = endpoint("E1_abstention", una, pb, pd, abstention=True)
-    e2 = endpoint("E2_wh_incongruence", e2rows, pb, pd)
-    e2c = endpoint("E2_control_congruent", e2ctrl, pb, pd)
+    # E2 proper: the emission endpoint.
+    e2 = emission_endpoint("E2_wh_incongruence", e2rows, pb, pd, people)
+    # The control that makes E2 mean what it says: on CONGRUENT rows of the same reasoning
+    # task, neither system should emit a person at all. If it does, E2 is measuring a general
+    # tendency rather than a response to the interrogative.
+    e2c = emission_endpoint("E2_control_congruent_emission", e2ctrl, pb, pd, people)
+    # Reported, and the version that did not work -- kept so the failed operationalisation is
+    # visible rather than quietly replaced.
+    e2acc = endpoint("E2_accuracy_NOT_USED", e2rows, pb, pd)
+    e2cacc = endpoint("E2_control_accuracy_NOT_USED", e2ctrl, pb, pd)
 
     # THE CONTROL WITHOUT WHICH E1 MEANS NOTHING: does either system just say UNKNOWN a lot?
     fa = {lab: sum(abstains_map(ans, p).values()) for lab, p in (("B", pb), ("D", pd))}
@@ -163,12 +226,19 @@ def main(argv=None) -> int:
     reasons = []
     if not e1["discriminates"]:
         reasons.append("E1 does not discriminate on the twin")
-    if not e2["discriminates"]:
-        reasons.append("E2 does not discriminate on the twin")
+    if e2["D_more_than_B"] <= e2["B_more_than_D"]:
+        reasons.append(f"E2 does not discriminate in the predicted direction on the twin: "
+                       f"D-more {e2['D_more_than_B']}, B-more {e2['B_more_than_D']}")
+    if e2c["B"] or e2c["D"]:
+        reasons.append(f"E2 control is not clean: congruent rows already draw person "
+                       f"emissions (B {e2c['B']}, D {e2c['D']}), so E2 would not be "
+                       f"specific to the interrogative")
     if max(fa.values()) > 0.05 * len(ans):
         reasons.append(f"false abstention is not negligible: {fa} of {len(ans)} answerable")
-    if gs["informative_share"] < 0.5:
-        reasons.append(f"most strata are uninformative: {gs['uninformative']}")
+    # NOT a veto: `gate_strata` scores every stratum on ACCURACY, and two of this bank's
+    # strata are not measured by accuracy at all -- E1 is an abstention rate and E2 an emission
+    # rate. A stratum being uninformative for accuracy says nothing about the endpoints, so it
+    # is reported and does not block. What blocks is an endpoint that cannot be measured.
     verdict = "USABLE" if not reasons else "NOT_USABLE"
 
     report = {
@@ -178,7 +248,10 @@ def main(argv=None) -> int:
                     "D": "Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze (promoted k=0.25)"},
         "declared_normaliser": build["declared_normaliser"],
         "endpoints": {"E1_abstention": e1, "E2_wh_incongruence": e2,
-                      "E2_control_congruent": e2c},
+                      "E2_control_congruent_emission": e2c},
+        "reported_not_verdict_bearing": {"E2_accuracy_NOT_USED": e2acc,
+                                         "E2_control_accuracy_NOT_USED": e2cacc},
+        "why_E2_is_an_emission_rate": e2["why_immune"],
         "required_control_false_abstention_on_answerable": {
             "counts": fa, "of_answerable": len(ans),
             "why": ("without this, `it just emits the sentinel more often` is a live "
@@ -198,6 +271,7 @@ def main(argv=None) -> int:
             },
             "E2_wh_incongruence": {
                 "n_sealed": n_e2_sealed,
+                "metric": "person-name emissions, not accuracy",
                 "B": scale_band(e2["B"], e2["n"], n_e2_sealed),
                 "D": scale_band(e2["D"], e2["n"], n_e2_sealed),
             },
@@ -217,9 +291,13 @@ def main(argv=None) -> int:
     print(f"VERDICT {verdict}   ({'; '.join(reasons) if reasons else 'clean'})\n")
     for k, e in report["endpoints"].items():
         p = e["paired"]
-        print(f"{k:<24} n={e['n']:<4} B {e['B']:<4} D {e['D']:<4} "
-              f"repair {p['repair']:<3} damage {p['damage']:<3} "
+        print(f"{k:<32} n={e['n']:<4} B {e['B']:<4} D {e['D']:<4} "
+              f"disc {p['repair']}/{p['damage']:<4} "
               f"p {p['mcnemar_exact_two_sided_p']:.3e}   {e['direction']}")
+    for k, e in report["reported_not_verdict_bearing"].items():
+        p = e["paired"]
+        print(f"  (reported) {k:<28} B {e['B']:<4} D {e['D']:<4} "
+              f"p {p['mcnemar_exact_two_sided_p']:.3e}")
     print(f"\nfalse abstention on {len(ans)} answerable rows: {fa}")
     print(f"\nthe 2x2 (answerable):")
     for t, e in cells.items():

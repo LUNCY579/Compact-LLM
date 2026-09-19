@@ -19,12 +19,55 @@ of being discovered in a post-hoc split of five task types.
 | | E1 — abstention | E2 — wh-incongruence |
 |---|---|---|
 | rows | all **160** unanswerable | **120** answerable rows of the two incongruent carve-out strata |
-| metric | correct literal `UNKNOWN` | exact match under the declared normaliser |
+| metric | correct literal `UNKNOWN` | **emits a person name**, where the context determines none |
 | status | **replication** of RCI-001's confirmed result on a fresh bank | **new**, and the first pre-registered test of the wh-compliance account |
-| convention risk | none — a literal sentinel admits no article or punctuation ambiguity | handled by a declared article-tolerant normaliser, published in `RCI_BUILD.json` |
+| convention risk | none — a literal sentinel admits no article or punctuation ambiguity | none — membership in a name vocabulary, not string equality with a reference |
+| registered band (from the twin) | B **42–133**, D **22–83** | B **20–80**, D **30–105** |
+| direction | **D < B** | **D > B** |
+
+### E2 is an emission rate, and accuracy could not measure it
+
+**This operationalisation was chosen on the calibration twin, after the accuracy version failed
+there. The sealed bank was not consulted and has never been read.** That is what a twin is for —
+it is openly spendable and exists to settle exactly this kind of question — but choosing an
+endpoint definition using data is worth stating plainly rather than presenting as foresight.
+
+Accuracy on the incongruent strata came back **0/24 for both systems** on `carve_out_badge_incongruent`.
+Not a capability floor: asked *"Who was permitted to enter X?"* where the context identifies the
+exempt party only by badge number, the frozen source answers *"The holder of badge 14 was
+permitted to enter the Bell Passage without one."* — substantively correct, and exact match
+scores it zero against the reference `14`. A floor created by answer form.
+
+What the wh-compliance account predicts is not a wrong answer but a wrong **answer class**:
+emitting a person where the interrogative types one and the context determines none. That is
+also what the RCI-001 decomposition actually measured — 0/25 person emissions on *"Which role"*,
+23/25 on *"Who"* — with accuracy standing in for it. So E2 measures it directly.
+
+Twin result, reported in full including the version that did not work:
+
+| | n | B | D | discordant | p |
+|---|---:|---:|---:|---:|---:|
+| **E2 emission, incongruent** | 48 | 20 | **27** | 7 D-more / **0** B-more | 0.016 |
+| **E2 control, congruent** | 48 | **0** | **0** | 0 / 0 | 1.00 |
+| E2 accuracy — *not used* | 48 | 14 | 12 | 0 / 2 | 0.50 |
+
+**The control is what makes E2 mean what it says.** On congruent rows of the *same* carve-out
+reasoning, neither system emits a person at all. So E2 is not measuring a general tendency to
+name people; it is specific to the interrogative, which is the factor under test.
+
+**A paired emission endpoint is immune to every answer-agnostic predictor by construction.** A
+deterministic rule emits the same string for both systems, producing zero discordant pairs, so
+it cannot manufacture a paired difference. Floors bound what an *absolute* rate means; they do
+not bear on a paired contrast. The same applies to E1, whose mechanical floor is high and whose
+verdict is unaffected by that.
+
+### Analysis
 
 Both are tested with **exact two-sided McNemar** on discordant pairs. **Holm-Bonferroni across
-the family of two.** Confirmation criterion per endpoint: **Holm-adjusted p ≤ 0.05 and D < B.**
+the family of two.** Confirmation criterion per endpoint: **Holm-adjusted p ≤ 0.05 and the
+registered direction** — **D < B** for E1 (the delta abstains less), **D > B** for E2 (the delta
+emits a person more often where none is determined). The directions differ because the metrics
+point opposite ways; a single "D < B" rule would have been wrong for E2 and is not used.
 
 Reporting rule fixed now: repair and damage are reported separately and never netted, and any
 subgroup claim is scored **over the rows B got right**, not over all rows
@@ -72,18 +115,22 @@ In the incongruent strata the exempt party is identified **only** by badge numbe
 role or name, so the question is determinate and **no person is determined**. Asserted per pack
 at build time, not assumed.
 
+Predicted **person-name emission** by cell:
+
 | hypothesis | role/cong | role/incong | badge/cong | badge/incong |
 |---|---|---|---|---|
-| **wh-compliance** | none | **DAMAGE** | none | **DAMAGE** |
-| **role↔occupant binding** | damage | damage | damage | damage |
-| **output-type shift** | damage | damage | none | none |
+| **wh-compliance** | none | **D > B** | none | **D > B** |
+| **role↔occupant binding** | D > B | D > B | D > B | D > B |
+| **output-type shift** | D > B | D > B | none | none |
 
-**Registered prediction:** damage concentrated in the two incongruent strata, with the
-congruent strata not significantly damaged. Tested as an interaction, conditioned on B-correct.
+**Registered prediction:** the excess is confined to the two incongruent strata, and the
+congruent strata show no person emissions from either system. On the twin the congruent cells
+read 0 and 0 — if the sealed bank reproduces that, the three hypotheses separate cleanly.
 
-**What disconfirms it.** Damage in the congruent strata too → the effect is not about the
-interrogative. Damage in neither → it did not replicate at all, and the RCI-001 observation was
-a property of that bank. **Both are reportable and neither is a failure of the instrument.**
+**What disconfirms it.** Person emissions on congruent rows too → the effect is not about the
+interrogative, and role-binding or output-type is the better account. No excess on incongruent
+rows → it did not replicate, and the RCI-001 observation was a property of that bank. **Both are
+reportable and neither is a failure of the instrument.**
 
 Note the badge/incongruent cell scored *no damage* on RCI-002's first calibration twin, when its
 question still read *"…Answer with the badge number."* Naming the answer type re-types it and
