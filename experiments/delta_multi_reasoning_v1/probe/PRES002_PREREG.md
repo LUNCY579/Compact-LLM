@@ -120,3 +120,72 @@ entirely different (natural-language *"the X is kept inside the Y"* against
 structural-but-remote. **If `container_nesting` behaves differently from the other two strata,
 this is the first thing to suspect**, and it is written down now so that reading is available
 rather than invented afterwards.
+
+---
+
+# ADDENDUM 2 — reallocation, a known-positive reference, and one suspect stratum
+
+**Written after Stage 1's generations finished and BEFORE any of their predictions were read.**
+All three items come from the peer session; two are their corrections to my design and the third
+changes what Stage 2 is testing.
+
+## 1. The finding that reframes this: the rotation may MOVE damage, not remove it
+
+The peer ran a third preservation endpoint — **long context, n = 256** — which had never been run
+on a rotated arm:
+
+| arm | long context /256 | vs λ=0 | alias (this programme) |
+|---|---:|---:|---:|
+| frozen Supa | 161 | — | 0.750 |
+| **λ = 0** | **162** | **+1** | 0.553 |
+| **λ = 0.25** | **145** | **−17** | **0.631** |
+
+**λ = 0 does not damage long context at all** (162 against 161), so it is a fourth endpoint of
+the wrong class *for the unrotated delta*. **But λ = 0.25 damages it by 17 rows.** The rotated
+arm recovers ~28 alias rows and loses ~17 long-context rows.
+
+**So "direction spares an unexercised skill" may be the wrong description, and "direction
+changes WHICH skills are damaged" may be the right one.** Totals are *not* claimed to be
+conserved — two instruments on different scales cannot be summed and no sum is computed — but
+the sign is wrong for a pure-sparing account, and "sparing" is the word my records currently use.
+
+**One caveat that makes this conservative rather than fragile:** λ=0.25's comparison here is
+against λ=0, which has a *larger* norm (0.8323 vs 0.7427), and INT-001's α ladder shows long
+context is roughly flat in magnitude (161/163/164/163/157). So the norm difference cannot explain
+a 17-row drop, and if anything runs the wrong way. The clean version still needs λ=0.25 against
+its **norm-matched collinear twin** on long context — the same construction used for alias — and
+that arm does not exist.
+
+### Registered prediction, and PRES-002 can test it
+
+> **If direction REALLOCATES damage, then on at least one qualifying PRES-002 stratum the
+> rotated arm should be WORSE than its collinear twin — a negative residual — not merely equal.**
+
+| account | PRES-002 residuals on qualifying strata |
+|---|---|
+| **SPARING** (records as currently written) | positive or ~0; never reliably negative |
+| **REALLOCATION** | **at least one stratum negative** and significant |
+| **ALIAS-SPECIFIC** | ~0 everywhere, neither positive nor negative |
+
+This is a sharper test than the one Addendum-free Stage 2 registered, it costs nothing extra, and
+**a negative residual is now a predicted outcome rather than an anomaly to explain away.**
+
+## 2. A known-positive reference scale, adopted from the peer
+
+Three unknown strata cannot tell me whether a null means "no effect" or "no sensitivity". So
+Stage 2 will **report the ALIAS-001 λ=0.25-vs-collinear-twin contrast beside whatever PRES-002
+yields** — `+7.2 pp, 32 gains / 6 losses, p = 2.43e-05`, numbers that already exist.
+
+Then "alias shows it and these strata do not" is a within-session contrast **against a
+known-positive measured on the same arms by the same pipeline**, rather than three nulls of
+unknown sensitivity. Alias cannot be folded *into* PRES-002 without breaking the no-person-names
+constraint that makes this bank interpretable, so it is reported beside rather than inside.
+
+## 3. `container_nesting` is registered as the SUSPECT stratum, not an equal third
+
+Addendum 1 called its structural overlap with the corpus "remote". The peer strengthened that and
+they are right: **the corpus JSON is depth-2** (`before` → keyed values) and the stratum is a
+**two-hop** traversal, so the analogy is closer than I wrote. It is registered here as the
+stratum to distrust **in advance**: if `container_nesting` behaves unlike the other two, the
+corpus-overlap reading is available rather than invented afterwards, and if it behaves like them
+that is mild evidence the overlap does not bite.
