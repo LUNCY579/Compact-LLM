@@ -51,20 +51,32 @@ band-dependent cue changes which rows are solvable at all.
 |---|---|---|---:|---:|---|---|
 | `k1d1` | 1 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.03 to +0.15** |
 | `k3d1` | 3 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.10 to +0.30** |
-| `k1d3` | 1 | 3 | 0.812 | **0.209** | not readable | +0.00 to +0.08 |
-| `k3d3` | 3 | 3 | 0.938 | **0.242** | not readable | +0.10 to +0.30 |
+| `k1d3` | 1 | 3 | 0.812 | **0.171** | not readable | +0.00 to +0.08 |
+| `k3d3` | 3 | 3 | 0.938 | **0.198** | not readable | +0.10 to +0.30 |
 
-**The bound on the cue-exploitation differential is registered at 0.258** — the Newcombe
-hybrid-score two-sided 95% upper limit on (LWF 109/151) − (Supa 54/85), the larger of the two
-lanes. **A confound bound must be pessimistic**, so it is an upper confidence limit on the true
-differential, **not** a minimum detectable effect. An earlier draft of this prereg quoted 0.165,
-which is the MDE — a different quantity, and the wrong one for this purpose.
+**The bound on the cue-exploitation differential is registered at 0.211** — the **Newcombe
+method 10 (hybrid-score)** two-sided 95% upper limit on (LWF 109/151) − (Supa 54/85), the larger
+of the two lanes. **A confound bound must be pessimistic**, so it is an upper confidence limit on
+the true differential, **not** a minimum detectable effect. An earlier draft quoted 0.165, which
+is the MDE — a different quantity and the wrong one here.
 
-For reference, the normal approximation gives 0.191 (two-sided 90%) and 0.211 (two-sided 95%);
-Newcombe is preferred at these denominators and is the one registered.
+*Two corrections to how this bound was first registered, both caught by the peer session and
+both mine:*
 
-At that bound `k1d3` manufactures **2.6x its entire predicted range** and `k3d3` manufactures
-**71% of its range**. Both are therefore marked **not readable**, not "secondary".
+* A draft registered **0.258 under the name "Newcombe hybrid-score"**. That figure is the **naive
+  Wilson-difference bound**, `u2 − l1` — interval arithmetic on the two separate Wilson
+  intervals, which is exactly the conservatism Newcombe's method exists to avoid. Method 10 is
+  `d + sqrt((u2−p2)² + (p1−l1)²) = 0.2112`. **A pessimistic bound is fine; a pessimistic bound
+  under a borrowed label is not, because the next person reproduces method 10 and gets a
+  different number.**
+* That draft also claimed the normal approximation "understates it at these denominators."
+  **Unsupported:** normal 0.2114 against hybrid-score 0.2112, agreeing to three decimals. The two
+  diverge at small n or proportions near 0 or 1; n = 85 and 151 at p ≈ 0.64 and 0.72 is where
+  they coincide.
+
+**The conclusion is unchanged on either figure** — at 0.211 `k1d3` manufactures 0.171 against a
+predicted ceiling of 0.08, and `k3d3` manufactures 0.198 against a predicted 0.10–0.30. Both are
+**not readable**, and the withdrawal stands on the tighter bound without needing the looser one.
 
 **Primary: `k1d1` and `k3d1`, two lanes, Bonferroni over 4 = 0.0125.** These are the cells where
 no band-dependent answer-agnostic rule exists, so nothing can be manufactured. They test the
