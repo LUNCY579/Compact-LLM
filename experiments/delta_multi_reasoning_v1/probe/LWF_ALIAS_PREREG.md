@@ -174,14 +174,20 @@ against `arm-lambda0`, which is what it must be by construction, so the reader i
 | arm | ‖δ‖ | fraction of λ=0 | cosine to λ=0 |
 |---|---:|---:|---:|
 | λ = 0 | 0.832289 | 1.000 | 1.000 |
-| λ = 0.25 | 0.742705 | 0.892 | *(computing)* |
+| λ = 0.25 | 0.742705 | 0.892 | **0.5243** |
 | λ = 0.5 | 0.680032 | 0.817 | **0.3486** |
 | own-α0.5 | 0.416144 | **0.500** | **1.000000** |
 
-**The anchored arms are not shorter versions of the unanchored one.** At λ = 0.5 the update sits
-about **70° away** from λ = 0's direction while retaining 81.7% of its norm. The anchor is
-therefore not a dose knob *at all* — not in the sense of the scalar control, which is exactly
-collinear. It rotates.
+**The anchored arms are not shorter versions of the unanchored one.** The anchor rotates the
+update progressively — cosine **1.000 → 0.524 → 0.349** as λ goes 0 → 0.25 → 0.5 — while the
+norm falls only to 89.2% and 81.7%. At λ = 0.5 the update sits about **70°** away from λ = 0's
+direction. The anchor is therefore not a dose knob *at all*, not in the sense of the scalar
+control, which is exactly collinear. It rotates far more than it shrinks.
+
+**And λ = 0.25 is more interesting than it looked.** It is already ~58° off λ = 0's direction
+while acquiring 197 against λ = 0's 198 — *essentially the same acquisition from a substantially
+different update*. Whatever else this run shows, that is a fact about the loss surface worth
+recording: many directions reach the same acquisition.
 
 ### What this does to the reading of the residual, registered now
 
