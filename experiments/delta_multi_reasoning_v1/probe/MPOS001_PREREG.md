@@ -200,3 +200,77 @@ sentence that is merely untrue. Defect 6 is the one that cost the most: it remov
 
 Whether to run this bank at all, and against which arms, is a resource decision. Nothing in this
 document requests GPU or a confirmation budget.
+
+---
+
+# Amendment 1 — the registered primary could not reach its own registered prediction
+
+**Written before any arm was generated and before any prediction existed.** A five-dimension
+adversarial review was run on the scorer and the run plan *before* spending GPU. It found the
+primary unfalsifiable in the main cell. Both defects were then confirmed by direct arithmetic,
+independently of the reviewer.
+
+**Honest status of that review:** **56 of its 62 agents died on a usage limit**, taking the
+entire verification phase and the statistics, pairing and operational dimensions with them. Two
+dimensions completed. **Nothing in it was adversarially verified** — the surviving findings carry
+empty verdict lists, so they survived vacuously. Only the two blockers below are established,
+and they are established because I checked the arithmetic myself, not because the review said so.
+
+## Blocker 1 — `k1d1` was unfalsifiable as specified
+
+At 48 pairs per cell an exact two-sided sign test can declare significance at 0.0125 only from a
+net of 8, so the smallest reachable |interaction| is **8/48 = 0.1667**, rising with the realised
+discordant count (net 12 at D=20, net 16 at D=30). The registered `k1d1` band was **+0.03 to
++0.15 — entirely below that**, and the lower 40% of `k3d1`'s band was also unreachable.
+
+**If the delta had behaved exactly as registered, the run would have returned "no significant
+interaction" and the record would have read as a refutation.**
+
+## Blocker 2 — the MDE was computed from alpha alone
+
+The scorer used a flat `discordant >= 8`. The required net grows with the realised denominator,
+so a null could have been stamped `powered=true` with an MDE too small by half. This is the
+flat-threshold-on-a-noisy-estimate defect **this programme has already made once**, in the
+band-gap guard of this very bank's builder.
+
+## What changed
+
+1. **Bank rebuilt at 48 packs/cell → 144 pairs per cell**, as `mpos002-20260919`. The 48-pair
+   bank is left intact; nothing was ever read from it.
+2. **Primary test is now a sign-flip permutation on the MEAN** of `d_delta - d_source`, which
+   uses magnitude as well as sign. The exact sign test is retained as a secondary.
+3. **Measured power at 144 pairs** (sign-flip permutation, alpha 0.0125, assuming a 0.30
+   discordance rate — an assumption, and it is the one this power claim rests on):
+
+   | n pairs | effect +0.09 (`k1d1` band midpoint) | effect +0.20 (`k3d1` band midpoint) |
+   |---:|---:|---:|
+   | 48 *(old bank)* | 0.05 | 0.49 |
+   | **144** | **0.26** | **0.99** |
+
+   > **`k3d1` is powered for its registered band. `k1d1` is NOT, and is registered here as an
+   > estimate-with-interval rather than a test.** A null in `k1d1` will be reported as "not
+   > powered to distinguish", never as evidence of absence.
+4. **Alpha is fixed at 0.0125 (Bonferroni over 4)**, resolving a contradiction in the original:
+   it registered 0.00625 in one place and 0.0125 in another, and an 8/8 result is significant
+   under one and not the other.
+5. **The cue secondary now reports the DIFFERENTIAL with its minimum detectable value**, plus a
+   Newcombe method 10 upper bound — not the three bare per-arm rates the first draft emitted,
+   which would have been a null with no MDE in the middle of a document about nulls needing MDEs.
+
+## A cue the build did not close, and its direction
+
+Enumerating answer-agnostic rules on the two clean cells found one that survives the terminal-slot
+pinning: **"emit the candidate named in the penultimate sentence"**, which scores **0.000 early /
+0.750 late in `k3d1`** and 0.000 / 0.208 in `k1d1`. Pinning the last slot closed
+`last_candidate_in_context` and pushed the cue one position inward.
+
+**Its direction is what matters, and it is favourable.** The cue helps the **LATE** band, so an
+arm exploiting it is *more* correct late, which *lowers* `d_arm`. If the delta exploits it more
+than the source, the statistic is pushed **negative** — **away from the registered positive
+direction**.
+
+> **Registered asymmetry: a POSITIVE result survives this cue and is conservatively estimated.
+> A NULL or NEGATIVE result is NOT interpretable, because it is indistinguishable from the cue.**
+
+This is registered now, before the numbers exist, precisely so it cannot be invoked afterwards to
+explain away an unwelcome result.
