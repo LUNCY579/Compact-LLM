@@ -1,0 +1,117 @@
+{
+  "label": "mpos_sparse",
+  "model": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+  "rows": 576,
+  "rows_skipped_context_overflow": 0,
+  "terminated_rows": 576,
+  "max_new_tokens": 24,
+  "max_context": 4096,
+  "dtype": "fp32",
+  "eos_ids": [
+    151643,
+    151645
+  ],
+  "decoding": "greedy",
+  "numerics": {
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "transformers": "5.14.1",
+  "torch": "2.12.1+cu126",
+  "torch_cuda_build": "12.6",
+  "interpreter": "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+  "generator_sha256": "5e9cc3201e75d30bb054bc657571c983190ad23568ecfc38755d38c807a91973",
+  "generator_unmodified": true,
+  "driver_sha256": "6576093f96bc966e2aa99984ded36cba2e704bd5872571c06efd1d75f8381d67",
+  "model_weight_sha256": "a28629c9d3454fbf2e884fd7ca442c1b406e7caf4b36d34b2c0614d0add31284",
+  "model_weight_mtime": 1789688620.10851,
+  "weight_identity_note": "arms are identified by path and the trainer retrains into the same path; a result is valid only for the weights hashed here",
+  "serving_path": "NEW, UNQUALIFIED: standard HF generate, not the DenseReference harness",
+  "wall_seconds": 256.1,
+  "generated_tokens": {
+    "min": 5,
+    "p50": 6,
+    "max": 8
+  },
+  "generated_token_stats": "RECOMPUTED from merged predictions, not averaged",
+  "prompts_file": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\mpos002-20260919\\render\\prompts_clean.jsonl",
+  "quality_claim": false,
+  "release_permitted": false,
+  "chunked_execution": {
+    "chunk_size": 64,
+    "chunks": 9,
+    "per_chunk": [
+      {
+        "chunk": 0,
+        "rows": 64,
+        "wall_seconds": 26.7,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 1,
+        "rows": 64,
+        "wall_seconds": 27.4,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 2,
+        "rows": 64,
+        "wall_seconds": 26.9,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 3,
+        "rows": 64,
+        "wall_seconds": 27.3,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 4,
+        "rows": 64,
+        "wall_seconds": 27.3,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 5,
+        "rows": 64,
+        "wall_seconds": 28.5,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 6,
+        "rows": 64,
+        "wall_seconds": 30.6,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 7,
+        "rows": 64,
+        "wall_seconds": 28.4,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      },
+      {
+        "chunk": 8,
+        "rows": 64,
+        "wall_seconds": 29.2,
+        "rows_skipped_context_overflow": 0,
+        "terminated_rows": 64
+      }
+    ],
+    "why": "stage2_generate.py leaks across rows on this host: 64 rows succeed and 128 fail at 7449 MiB free VRAM. Each chunk is a fresh process with identical model, prompts, decoding, dtype and limits; only process boundaries differ.",
+    "generator_unmodified": true,
+    "merge_checks": [
+      "no duplicate ids",
+      "merged id order equals the prompts file order",
+      "every chunk returned exactly as many predictions as prompts"
+    ]
+  }
+}

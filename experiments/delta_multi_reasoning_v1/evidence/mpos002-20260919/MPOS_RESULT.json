@@ -1,0 +1,171 @@
+{
+  "record": "MPOS_RESULT",
+  "class": "MECHANISM SCOUT -- one bank, one draw. Not a confirmation.",
+  "prereg": "probe/MPOS001_PREREG.md (+ amendment 1)",
+  "bank": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\mpos002-20260919",
+  "scored_cells": [
+    "k1d1",
+    "k3d1"
+  ],
+  "bonferroni": 0.0125,
+  "primary_test": "sign-flip permutation on mean(d_delta - d_source), magnitude-aware",
+  "primary": {
+    "k1d1": {
+      "native_a100": {
+        "n_pairs": 144,
+        "discordant": 31,
+        "pos": 21,
+        "neg": 10,
+        "tied": 113,
+        "magnitude_2_pairs": 0,
+        "source_position_cost": 0.0625,
+        "delta_position_cost": 0.1389,
+        "interaction_mean": 0.0764,
+        "interaction_ci95": [
+          0.0,
+          0.1528
+        ],
+        "perm_p": 0.06955,
+        "clears_bonferroni": false,
+        "sign_test_p_secondary": 0.07075554598122835,
+        "mde_at_realised_spread": 0.1291,
+        "mde_method": "normal approximation to the sign-flip null; exact perm p reported separately",
+        "registered_band": [
+          0.03,
+          0.15
+        ],
+        "estimate_vs_band": "inside",
+        "band_reachable": true,
+        "verdict": "not powered to distinguish -- only |mean| >= 0.129 was detectable here, and the registered band is 0.03-0.15"
+      },
+      "lwf_l0": {
+        "n_pairs": 144,
+        "discordant": 39,
+        "pos": 23,
+        "neg": 16,
+        "tied": 105,
+        "magnitude_2_pairs": 0,
+        "source_position_cost": 0.0625,
+        "delta_position_cost": 0.1111,
+        "interaction_mean": 0.0486,
+        "interaction_ci95": [
+          -0.0347,
+          0.1319
+        ],
+        "perm_p": 0.33365,
+        "clears_bonferroni": false,
+        "sign_test_p_secondary": 0.3367836351899314,
+        "mde_at_realised_spread": 0.1448,
+        "mde_method": "normal approximation to the sign-flip null; exact perm p reported separately",
+        "registered_band": [
+          0.03,
+          0.15
+        ],
+        "estimate_vs_band": "inside",
+        "band_reachable": true,
+        "verdict": "not powered to distinguish -- only |mean| >= 0.145 was detectable here, and the registered band is 0.03-0.15"
+      }
+    },
+    "k3d1": {
+      "native_a100": {
+        "n_pairs": 144,
+        "discordant": 53,
+        "pos": 47,
+        "neg": 6,
+        "tied": 91,
+        "magnitude_2_pairs": 0,
+        "source_position_cost": 0.0625,
+        "delta_position_cost": 0.3472,
+        "interaction_mean": 0.2847,
+        "interaction_ci95": [
+          0.2014,
+          0.375
+        ],
+        "perm_p": 0.0,
+        "clears_bonferroni": true,
+        "sign_test_p_secondary": 5.805322444984995e-09,
+        "mde_at_realised_spread": 0.1688,
+        "mde_method": "normal approximation to the sign-flip null; exact perm p reported separately",
+        "registered_band": [
+          0.1,
+          0.3
+        ],
+        "estimate_vs_band": "inside",
+        "band_reachable": true,
+        "verdict": "SUPPORTS the registered direction (p=0.0000)"
+      },
+      "lwf_l0": {
+        "n_pairs": 144,
+        "discordant": 49,
+        "pos": 42,
+        "neg": 7,
+        "tied": 95,
+        "magnitude_2_pairs": 0,
+        "source_position_cost": 0.0625,
+        "delta_position_cost": 0.3056,
+        "interaction_mean": 0.2431,
+        "interaction_ci95": [
+          0.1597,
+          0.3264
+        ],
+        "perm_p": 0.0,
+        "clears_bonferroni": true,
+        "sign_test_p_secondary": 3.6245783263666453e-07,
+        "mde_at_realised_spread": 0.1623,
+        "mde_method": "normal approximation to the sign-flip null; exact perm p reported separately",
+        "registered_band": [
+          0.1,
+          0.3
+        ],
+        "estimate_vs_band": "inside",
+        "band_reachable": true,
+        "verdict": "SUPPORTS the registered direction (p=0.0000)"
+      }
+    }
+  },
+  "secondary_cue_exploitation": {
+    "per_arm": {
+      "source": {
+        "errors": 42,
+        "scorable": 42,
+        "cue_match": 26,
+        "rate": 0.619
+      },
+      "native_a100": {
+        "errors": 138,
+        "scorable": 138,
+        "cue_match": 97,
+        "rate": 0.7029
+      },
+      "lwf_l0": {
+        "errors": 160,
+        "scorable": 160,
+        "cue_match": 123,
+        "rate": 0.7688
+      }
+    },
+    "differentials": {
+      "native_a100": {
+        "differential": 0.0839,
+        "fisher_p": 0.3453,
+        "newcombe_m10_upper95": 0.2502,
+        "min_detectable_differential": 0.1636,
+        "reading": "a POSITIVE differential means the delta exploits the positional cue MORE than the source, which is the residual the interaction cannot cancel"
+      },
+      "lwf_l0": {
+        "differential": 0.1498,
+        "fisher_p": 0.0746,
+        "newcombe_m10_upper95": 0.3116,
+        "min_detectable_differential": 0.156,
+        "reading": "a POSITIVE differential means the delta exploits the positional cue MORE than the source, which is the residual the interaction cannot cancel"
+      }
+    },
+    "alias001_bound": 0.211
+  },
+  "caveats": [
+    "the interaction cancels a cue available to BOTH arms; it does NOT cancel a cue whose exploitability differs between them -- that residual is the secondary above",
+    "a positional cue (candidate named in the PENULTIMATE sentence) swings across bands in both scored cells and favours LATE, so it biases the statistic AGAINST the registered positive direction: a positive result survives it, a null does not",
+    "absolute per-band rates are not reported -- they are the quantity the cue contaminates",
+    "one bank, one draw, two cells, two lanes -- nothing here promotes anything"
+  ]
+}

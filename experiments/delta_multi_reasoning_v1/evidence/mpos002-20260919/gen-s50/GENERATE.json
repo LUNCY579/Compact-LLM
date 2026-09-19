@@ -1,0 +1,36 @@
+{
+  "label": "mpos_s50",
+  "model": "C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/sparse001-20260917/arm-rebuild-s50",
+  "rows": 576,
+  "rows_skipped_context_overflow": 0,
+  "max_new_tokens": 24,
+  "max_context": 4096,
+  "dtype": "fp32",
+  "offload": false,
+  "placement": {},
+  "four_bit": false,
+  "adapter": null,
+  "eos_ids": [
+    151643,
+    151645
+  ],
+  "decoding": "greedy",
+  "numerics": {
+    "cuda_matmul_allow_tf32": false,
+    "cudnn_allow_tf32": false,
+    "float32_matmul_precision": "highest"
+  },
+  "load_seconds": 3.0,
+  "wall_seconds": 157.5,
+  "generated_tokens": {
+    "min": 5,
+    "p50": 6,
+    "max": 8
+  },
+  "terminated_rows": 576,
+  "transformers": "5.14.1",
+  "prompts_file": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\mpos002-20260919\\render\\prompts_clean.jsonl",
+  "quality_claim": false,
+  "release_permitted": false,
+  "serving_path": "NEW, UNQUALIFIED: standard HF generate, not the DenseReference harness"
+}

@@ -1,0 +1,413 @@
+{
+  "record": "MPOS_BUILD",
+  "class": "BUILD -- reads no predictions, registers no criterion",
+  "n_rows": 1152,
+  "cells": [
+    {
+      "cell": "k1d1",
+      "k": 1,
+      "d": 1
+    },
+    {
+      "cell": "k1d3",
+      "k": 1,
+      "d": 3
+    },
+    {
+      "cell": "k3d1",
+      "k": 3,
+      "d": 1
+    },
+    {
+      "cell": "k3d3",
+      "k": 3,
+      "d": 3
+    }
+  ],
+  "bands": [
+    "early",
+    "late"
+  ],
+  "packs_per_cell": 48,
+  "seed": 20260919,
+  "band_separation": {
+    "k1d1": {
+      "early_max": 0.3963,
+      "late_min": 0.6982,
+      "disjoint": true,
+      "early_mean": 0.2808,
+      "late_mean": 0.8156
+    },
+    "k1d3": {
+      "early_max": 0.4147,
+      "late_min": 0.6874,
+      "disjoint": true,
+      "early_mean": 0.292,
+      "late_mean": 0.8056
+    },
+    "k3d1": {
+      "early_max": 0.3294,
+      "late_min": 0.7631,
+      "disjoint": true,
+      "early_mean": 0.2797,
+      "late_mean": 0.8238
+    },
+    "k3d3": {
+      "early_max": 0.3659,
+      "late_min": 0.7643,
+      "disjoint": true,
+      "early_mean": 0.2932,
+      "late_mean": 0.8128
+    }
+  },
+  "band_gaps": {
+    "k1d1": 0.5348,
+    "k1d3": 0.5136,
+    "k3d1": 0.5441,
+    "k3d3": 0.5196
+  },
+  "min_band_gap": 0.45,
+  "max_band_gap_spread": 0.1,
+  "matched_pairs": 576,
+  "positional_rules_NOT_closable": {
+    "k1d1": {
+      "argmin_mean_position": {
+        "early": 0.0,
+        "late": 0.0
+      },
+      "argmax_mean_position": {
+        "early": 0.0,
+        "late": 0.0
+      }
+    },
+    "k1d3": {
+      "argmin_mean_position": {
+        "early": 0.8403,
+        "late": 0.0
+      },
+      "argmax_mean_position": {
+        "early": 0.0,
+        "late": 0.8889
+      }
+    },
+    "k3d1": {
+      "argmin_mean_position": {
+        "early": 0.0,
+        "late": 0.0
+      },
+      "argmax_mean_position": {
+        "early": 0.0,
+        "late": 0.0
+      }
+    },
+    "k3d3": {
+      "argmin_mean_position": {
+        "early": 0.9583,
+        "late": 0.0
+      },
+      "argmax_mean_position": {
+        "early": 0.0,
+        "late": 0.9861
+      }
+    }
+  },
+  "floors_per_band": {
+    "k1d1": {
+      "early": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 20,
+        "copy_entity_from_question": 0
+      },
+      "late": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 20,
+        "copy_entity_from_question": 0
+      }
+    },
+    "k1d3": {
+      "early": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 0,
+        "copy_entity_from_question": 0
+      },
+      "late": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 0,
+        "copy_entity_from_question": 0
+      }
+    },
+    "k3d1": {
+      "early": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 144,
+        "copy_entity_from_question": 0
+      },
+      "late": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 144,
+        "copy_entity_from_question": 0
+      }
+    },
+    "k3d3": {
+      "early": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 29,
+        "copy_entity_from_question": 0
+      },
+      "late": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 29,
+        "copy_entity_from_question": 0
+      }
+    }
+  },
+  "band_floor_alpha": 0.003125,
+  "band_floor_hard_gap": 0.25,
+  "floors_per_cell": {
+    "k1d1": {
+      "n": 288,
+      "distributional": {
+        "constant_majority": 46,
+        "per_stratum_majority": 46
+      },
+      "extraction": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 40,
+        "copy_entity_from_question": 0
+      },
+      "structural": {
+        "set_complement_singleton": 0,
+        "unique_candidate": 0,
+        "abstain_if_short": 0,
+        "abstain_if_question_tokens_absent": 0,
+        "list_arity_minus_0": 0,
+        "list_arity_minus_1": 0,
+        "list_arity_minus_2": 0,
+        "list_arity_minus_3": 0
+      },
+      "binding_floor_count": 46,
+      "binding_floor_rate": 0.1597,
+      "binding_predictor": "constant_majority",
+      "binding_class": "distributional",
+      "distinct_references": 8,
+      "note": "All THREE predictor classes are required. A bank can look hard distributionally and be trivial to an extractor -- RCI-001 published four distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it can clear both and still fall to a relational rule: RCI-002's first draft read 0.20-0.29 on every published floor while set-complement scored 1.000."
+    },
+    "k1d3": {
+      "n": 288,
+      "distributional": {
+        "constant_majority": 50,
+        "per_stratum_majority": 50
+      },
+      "extraction": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 0,
+        "copy_entity_from_question": 0
+      },
+      "structural": {
+        "set_complement_singleton": 0,
+        "unique_candidate": 0,
+        "abstain_if_short": 0,
+        "abstain_if_question_tokens_absent": 0,
+        "list_arity_minus_0": 0,
+        "list_arity_minus_1": 0,
+        "list_arity_minus_2": 0,
+        "list_arity_minus_3": 0
+      },
+      "binding_floor_count": 50,
+      "binding_floor_rate": 0.1736,
+      "binding_predictor": "constant_majority",
+      "binding_class": "distributional",
+      "distinct_references": 8,
+      "note": "All THREE predictor classes are required. A bank can look hard distributionally and be trivial to an extractor -- RCI-001 published four distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it can clear both and still fall to a relational rule: RCI-002's first draft read 0.20-0.29 on every published floor while set-complement scored 1.000."
+    },
+    "k3d1": {
+      "n": 288,
+      "distributional": {
+        "constant_majority": 48,
+        "per_stratum_majority": 48
+      },
+      "extraction": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 288,
+        "copy_entity_from_question": 0
+      },
+      "structural": {
+        "set_complement_singleton": 0,
+        "unique_candidate": 0,
+        "abstain_if_short": 0,
+        "abstain_if_question_tokens_absent": 0,
+        "list_arity_minus_0": 0,
+        "list_arity_minus_1": 0,
+        "list_arity_minus_2": 0,
+        "list_arity_minus_3": 0
+      },
+      "binding_floor_count": 288,
+      "binding_floor_rate": 1.0,
+      "binding_predictor": "most_frequent_candidate_in_context",
+      "binding_class": "extraction",
+      "distinct_references": 8,
+      "note": "All THREE predictor classes are required. A bank can look hard distributionally and be trivial to an extractor -- RCI-001 published four distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it can clear both and still fall to a relational rule: RCI-002's first draft read 0.20-0.29 on every published floor while set-complement scored 1.000."
+    },
+    "k3d3": {
+      "n": 288,
+      "distributional": {
+        "constant_majority": 54,
+        "per_stratum_majority": 54
+      },
+      "extraction": {
+        "last_candidate_in_context": 0,
+        "first_candidate_in_context": 0,
+        "most_frequent_candidate_in_context": 58,
+        "copy_entity_from_question": 0
+      },
+      "structural": {
+        "set_complement_singleton": 0,
+        "unique_candidate": 0,
+        "abstain_if_short": 0,
+        "abstain_if_question_tokens_absent": 0,
+        "list_arity_minus_0": 0,
+        "list_arity_minus_1": 0,
+        "list_arity_minus_2": 0,
+        "list_arity_minus_3": 0
+      },
+      "binding_floor_count": 58,
+      "binding_floor_rate": 0.2014,
+      "binding_predictor": "most_frequent_candidate_in_context",
+      "binding_class": "extraction",
+      "distinct_references": 8,
+      "note": "All THREE predictor classes are required. A bank can look hard distributionally and be trivial to an extractor -- RCI-001 published four distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it can clear both and still fall to a relational rule: RCI-002's first draft read 0.20-0.29 on every published floor while set-complement scored 1.000."
+    }
+  },
+  "floors_overall": {
+    "n": 1152,
+    "distributional": {
+      "constant_majority": 172,
+      "per_stratum_majority": 172
+    },
+    "extraction": {
+      "last_candidate_in_context": 0,
+      "first_candidate_in_context": 0,
+      "most_frequent_candidate_in_context": 386,
+      "copy_entity_from_question": 0
+    },
+    "structural": {
+      "set_complement_singleton": 0,
+      "unique_candidate": 0,
+      "abstain_if_short": 0,
+      "abstain_if_question_tokens_absent": 0,
+      "list_arity_minus_0": 0,
+      "list_arity_minus_1": 0,
+      "list_arity_minus_2": 0,
+      "list_arity_minus_3": 0
+    },
+    "binding_floor_count": 386,
+    "binding_floor_rate": 0.3351,
+    "binding_predictor": "most_frequent_candidate_in_context",
+    "binding_class": "extraction",
+    "distinct_references": 8,
+    "note": "All THREE predictor classes are required. A bank can look hard distributionally and be trivial to an extractor -- RCI-001 published four distributional floors at 0.2773 and a recency rule scored 0.3711 -- and it can clear both and still fall to a relational rule: RCI-002's first draft read 0.20-0.29 on every published floor while set-complement scored 1.000."
+  },
+  "prose_scan": {
+    "rows_scanned": 1152,
+    "rows_with_defects": 0,
+    "share": 0.0,
+    "by_kind": {},
+    "examples": {},
+    "clean": true,
+    "note": "mechanical defects only -- this cannot see a mislabelled condition, a question that asks for the wrong thing, or an answer right for the wrong reason. render_sample() puts rows in the manifest so a reviewer can read them."
+  },
+  "answer_sentence_locator": {
+    "applicable": true,
+    "rows_scored": 576,
+    "chance_floor": 0.0625,
+    "margin": 0.1,
+    "hit_rate_by_feature": {},
+    "leaks": {},
+    "clean": true,
+    "note": "a feature beating 1/n_sentences by the margin LOCATES the answer's sentence; this is stratum-internal, so it also catches a cue applied uniformly across all strata, which a cross-stratum outlier test structurally cannot see"
+  },
+  "surface_outliers": {
+    "applicable": true,
+    "n_strata": 4,
+    "z_threshold": 3.0,
+    "per_stratum_means": {
+      "k1d1": {
+        "lower_sentence_start_share": 0.0,
+        "determiner_share": 0.1293,
+        "mean_token_len": 5.4566,
+        "punct_density": 0.0234,
+        "capitalised_token_share": 0.1883
+      },
+      "k1d3": {
+        "lower_sentence_start_share": 0.0,
+        "determiner_share": 0.1309,
+        "mean_token_len": 5.7506,
+        "punct_density": 0.0241,
+        "capitalised_token_share": 0.2533
+      },
+      "k3d1": {
+        "lower_sentence_start_share": 0.0,
+        "determiner_share": 0.1286,
+        "mean_token_len": 5.5499,
+        "punct_density": 0.0235,
+        "capitalised_token_share": 0.2082
+      },
+      "k3d3": {
+        "lower_sentence_start_share": 0.0,
+        "determiner_share": 0.1318,
+        "mean_token_len": 5.8622,
+        "punct_density": 0.0241,
+        "capitalised_token_share": 0.2772
+      }
+    },
+    "outliers": [],
+    "clean": true
+  },
+  "rendered_sample": {
+    "k1d1": [
+      {
+        "id": "MP-K1D1-0000-E-BAS",
+        "question": "Who personally carried Renshaw Inkwell to Cellar Nine?",
+        "reference": "Leocadio Thistlewood",
+        "context": "This is a consolidated account of the audit at Haverlock Wharf, covering six consecutive days, transcribed in the order the entries were found. Annika Oyelowo countersigned the Saturday duty sheet. It was the provisioning steward who carried Renshaw Inkwell to Cellar Nine, unaccompanied. A loose leaf dated Monday lists tolls paid at the river crossing. Stock counted on Friday matched the previous week to within one crate. The provisioning steward that week was Leocadio Thistlewood, as recorded in the duty book for the period. The ledger for Thursday was transcribed twice and both copies agree. A margin note on Saturday records that the weather delayed the morning round. Weather for the period was unremarkable and is noted only where it affected access. Page numbering restarts partway through and the original sequence is not recoverable. The account was compiled from duty books and carries no editorial comment. An addendum dated Tuesday corrects an arithmetic slip in the running total. Perpetua Vanterpool signed the attendance book on Thursday. The duty roster for Thursday survives only as a fragment. A tally scratched on Monday appears in the margin without explanation. Mirembe Sandoval countersigned the Friday duty sheet."
+      }
+    ],
+    "k1d3": [
+      {
+        "id": "MP-K1D3-0000-E-BAS",
+        "question": "Who personally carried Harrow Tally-Board to Ordnance Bay?",
+        "reference": "Mirembe Sandoval",
+        "context": "This is a consolidated account of the audit at Bellwether House, covering six consecutive days, transcribed in the order the entries were found. Caspian Delacroix-Hale signed the attendance book on Tuesday. Rurik Maharaj was recorded as present for the Friday stocktake. The provisioning steward that week was Mirembe Sandoval, as recorded in the duty book for the period. Receipts filed on Saturday were numbered in sequence without omission. Leocadio Thistlewood signed the attendance book on Friday. Leocadio Thistlewood countersigned the Tuesday duty sheet. A tally scratched on Wednesday appears in the margin without explanation. Rurik Maharaj signed the attendance book on Monday. Caspian Delacroix-Hale countersigned the Monday duty sheet. It was the provisioning steward who carried Harrow Tally-Board to Ordnance Bay, unaccompanied. The inventory column for Thursday was left blank and later ruled through. Caspian Delacroix-Hale signed the attendance book on Saturday. Rurik Maharaj countersigned the Tuesday duty sheet. The account was compiled from duty books and carries no editorial comment. Leocadio Thistlewood was recorded as present for the Saturday stocktake."
+      }
+    ],
+    "k3d1": [
+      {
+        "id": "MP-K3D1-0000-E-BAS",
+        "question": "Who personally carried Renshaw Inkwell to Fennimore Court?",
+        "reference": "Rurik Maharaj",
+        "context": "This is a consolidated account of the audit at Haverlock Wharf, covering six consecutive days, transcribed in the order the entries were found. Mirembe Sandoval countersigned the Tuesday duty sheet. It was the provisioning steward who carried Renshaw Inkwell to Fennimore Court, unaccompanied. The provisioning steward that week was Rurik Maharaj, as recorded in the duty book for the period. Rurik Maharaj countersigned the Wednesday duty sheet. Rurik Maharaj signed the attendance book on Friday. The account was compiled from duty books and carries no editorial comment. The ledger for Monday was transcribed twice and both copies agree. Weather for the period was unremarkable and is noted only where it affected access. Stock counted on Saturday matched the previous week to within one crate. Candle stubs issued on Tuesday were charged against the general account. Leocadio Thistlewood signed the attendance book on Thursday. A tally scratched on Monday appears in the margin without explanation. The copyist notes that the page for Tuesday was rebound out of order. A loose leaf dated Tuesday lists tolls paid at the river crossing. Sunniva Okoro was recorded as present for the Tuesday stocktake."
+      }
+    ],
+    "k3d3": [
+      {
+        "id": "MP-K3D3-0000-E-BAS",
+        "question": "Who personally carried Harrow Tally-Board to Study Alcove Six?",
+        "reference": "Mirembe Sandoval",
+        "context": "This is a consolidated account of the audit at the Tolbooth Yard, covering six consecutive days, transcribed in the order the entries were found. Sunniva Okoro signed the attendance book on Monday. The provisioning steward that week was Mirembe Sandoval, as recorded in the duty book for the period. Mirembe Sandoval was recorded as present for the Tuesday stocktake. Mirembe Sandoval signed the attendance book on Wednesday. Rurik Maharaj signed the attendance book on Tuesday. An addendum dated Wednesday corrects an arithmetic slip in the running total. It was the provisioning steward who carried Harrow Tally-Board to Study Alcove Six, unaccompanied. The duty roster for Tuesday survives only as a fragment. Leocadio Thistlewood countersigned the Friday duty sheet. Leocadio Thistlewood was recorded as present for the Tuesday stocktake. Sunniva Okoro countersigned the Friday duty sheet. Sunniva Okoro signed the attendance book on Tuesday. Rurik Maharaj was recorded as present for the Wednesday stocktake. Rurik Maharaj was recorded as present for the Monday stocktake. Leocadio Thistlewood was recorded as present for the Saturday stocktake."
+      }
+    ]
+  },
+  "why": "position is MANIPULATED here, not shuffled; and answer count is crossed with distractor count so mention count separates from salience ratio",
+  "readable": "absolute rates in the frequency-neutral cells k1d1 and k3d3; paired contrasts in every cell"
+}

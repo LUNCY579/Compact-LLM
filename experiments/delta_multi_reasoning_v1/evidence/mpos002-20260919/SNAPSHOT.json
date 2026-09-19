@@ -1,0 +1,46 @@
+{
+  "record": "EVIDENCE_SNAPSHOT",
+  "why": "the records directory is NOT a git repository, so it has no local undo. A paired session destroyed a published record today by re-running a tabulator that wrote an empty result over it, recoverable only because it had been pushed to a remote. These predictions cost GPU and existed in exactly one place until this commit.",
+  "rebuildable_not_snapshotted": {
+    "mpos002-20260919/MPOS_PROBE.jsonl": {
+      "sha256": "9d6a556526cd6ab8afc67775700288077526026809b97d8d37a0250a0ba4faba",
+      "bytes": 4035047,
+      "rebuild": "probe/build_mpos.py --packs-per-cell 48",
+      "seed": 20260919,
+      "note": "deterministic builder in this repo; rebuild and verify against sha256"
+    },
+    "mrat002-20260919/MRAT_PROBE.jsonl": {
+      "sha256": "4522baf4d8f30a27630a30f591b781c7ee5f2886ee7793bc59e645213a91e8ab",
+      "bytes": 2788116,
+      "rebuild": "probe/build_mrat.py --packs 48",
+      "seed": 20260919,
+      "note": "deterministic builder in this repo; rebuild and verify against sha256"
+    }
+  },
+  "gpu_cost_snapshotted": {
+    "gen-B": {
+      "sha256": "32b5718e0a86ba82a1e17c392f89c408b06891e0b40a2a2c8ed83040e6b463e4",
+      "rows": 576
+    },
+    "gen-a100": {
+      "sha256": "4060bf81c84fd0bed9a1cd8b72c53530c208fb911e5a99fa4fad7117edb6b362",
+      "rows": 576
+    },
+    "gen-lwf_l0": {
+      "sha256": "30f98734aa372087980f00e5929d21fd8a2927ce110706f2874a748216b04307",
+      "rows": 576
+    },
+    "gen-s10": {
+      "sha256": "20f10734477ba88c26237493706b862132b07bb4787801a603c8797befaea701",
+      "rows": 576
+    },
+    "gen-s50": {
+      "sha256": "6935a63ed6602bfff0631cdf39717a798402a058ce9f15c50028051a28664b06",
+      "rows": 576
+    },
+    "gen-sparse": {
+      "sha256": "f6d9ff157f23181f823b4bbc33487dc37066632eec7c43c0ffdb48a206ec85ff",
+      "rows": 576
+    }
+  }
+}
