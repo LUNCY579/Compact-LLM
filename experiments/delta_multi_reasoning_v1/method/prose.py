@@ -172,7 +172,8 @@ def stratum_surface_outliers(rows: Sequence[dict], field: str = "context",
 
 
 def answer_sentence_locator(rows: Sequence[dict], field: str = "context",
-                            ref_field: str = "reference", margin: float = 0.10) -> dict:
+                            ref_field: str = "reference", margin: float = 0.10,
+                            candidates: Sequence[str] | None = None) -> dict:
     """Does any SURFACE feature identify the answer-bearing sentence above chance?
 
     **This is the check both of this bank's defects actually needed, and neither of the other
@@ -239,9 +240,34 @@ def answer_sentence_locator(rows: Sequence[dict], field: str = "context",
     floor = _st.mean(floors)
     rates = {k: v / n for k, v in picks.items()}
     leaks = {k: round(v, 4) for k, v in rates.items() if v > floor + margin}
+
+    # CANDIDATE-SENTENCE floor, added 2026-09-19. `floor` is 1/n_sentences, which assumes every
+    # sentence is an equally likely pick. A rule that selects a SENTENCE can only land on the
+    # answer via a sentence that contains a candidate at all -- so where only 4 of 16 sentences
+    # name anyone, the real chance level is 1/4, not 1/16.
+    #
+    # Measured instance: on a bank with 4.00 candidate-bearing sentences per row and identical
+    # sentence templates, `longest_sentence` scored 0.2569 against a 1/16 = 0.0625 floor and was
+    # reported as a leak. It is chance -- it selects whichever candidate has the LONGEST NAME
+    # (0.2986 of rows), which is 1-in-4, not a cue.
+    #
+    # Reported ALONGSIDE the original, never replacing it, so receipts written before this date
+    # remain exactly reproducible.
+    cand_floors = []
+    for r in rows:
+        ss = sentences(str(r.get(field, "")))
+        if len(ss) < 2:
+            continue
+        ncand = sum(1 for s in ss if any(str(c) and str(c) in s for c in candidates))             if candidates else 0
+        cand_floors.append(1.0 / ncand if ncand else 1.0 / max(1, len(ss)))
+    cfloor = _st.mean(cand_floors) if cand_floors else floor
+    cleaks = {k: round(v, 4) for k, v in rates.items() if v > cfloor + margin}
     return {
         "applicable": True, "rows_scored": n,
         "chance_floor": round(floor, 4), "margin": margin,
+        "chance_floor_candidate_sentences": round(cfloor, 4),
+        "leaks_vs_candidate_floor": cleaks,
+        "clean_vs_candidate_floor": not cleaks,
         "hit_rate_by_feature": {k: round(v, 4) for k, v in sorted(
             rates.items(), key=lambda kv: -kv[1])},
         "leaks": leaks, "clean": not leaks,
