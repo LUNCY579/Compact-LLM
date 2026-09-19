@@ -319,6 +319,10 @@ per-condition n is small.
 
 ## Stated as a positive, which is how the peer session put it and they were right
 
+> **SUPERSEDED by Amendments 12 and 14.** This hedged across a range when the number named a
+> **point**: the knee is **α = 0.75** on this lane, and **α = 0.50** on the LWF lane. The
+> operating point is **lane-dependent and never a rule.**
+
 This is **an independent argument for the α ≈ 0.5–0.75 operating point**, reached from the
 damage side where INT-001 reached it from the acquisition side. The two arguments are
 independent: INT-001 selected α = 0.50 on `retained`/`arithmetic`, and this arrives at the same
@@ -514,7 +518,12 @@ magnitude" — a substantially smaller claim, and the one the evidence would the
 
 ---
 
-# AMENDMENT 6 — three mechanisms, one effect: direction is a real axis of the frontier
+# AMENDMENT 6 — three mechanisms, one effect ~~direction is a real axis of the frontier~~
+
+> **HEADING CLAIM WITHDRAWN.** *"A real axis of the frontier"* was narrowed to ONE SKILL by
+> Amendment 7 and is dead as a practical lever: a plain scalar dominates every rotated arm on
+> acquisition, alias AND long context at once. **The three-mechanism sparing at matched norm
+> below is real and stands.** What does not stand is the framing in the heading.
 
 **DIRCTL-002 and ROTATION-002, both registered before their arms existed.** Receipts
 `lwf001-20260918/DIRCTL2_RESULT.json` and `ROTATION2_RESULT.json`. MECHANISM SCOUTS.
@@ -943,6 +952,11 @@ Damage is scored over **the rows the source got right**, per the denominator rul
 
 `person_binding` and `object_binding` start at **102 and 101** correct of 120 — a one-row
 difference — so the contrast needs no adjustment:
+
+> **WITHDRAWN by Amendment 13.** `object_binding` carried a typographic cue on 120/120 rows —
+> distractor lines lowercase, answer-bearing lines capital — present in **exactly one arm of
+> this contrast.** A shared-cue immunity argument does not protect a comparison where only one
+> arm carries the cue. The ratio below cannot be quoted.
 
 **31/102 = 0.304 against 17/101 = 0.168. Ratio 1.81×, Fisher exact p = 0.0312.**
 
