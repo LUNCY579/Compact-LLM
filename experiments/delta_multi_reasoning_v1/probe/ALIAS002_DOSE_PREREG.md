@@ -70,3 +70,23 @@ necessary for the capacity account and is not sufficient for it.**
 
 Nothing here licenses promotion, release, or `quality_improvement_established`. One training
 draw of one delta.
+
+---
+
+# OUTCOME — recorded here so the bands and the result are not in different files
+
+**Registered prediction: Spearman(α, alias accuracy) negative and monotone. FIRED.**
+
+| α | 0.00 | 0.25 | 0.50 | 0.75 | 1.00 |
+|---|---:|---:|---:|---:|---:|
+| pooled alias | 0.750 | 0.725 | 0.672 | 0.633 | 0.603 |
+
+**ρ = −1.0000, exact permutation p = 0.0167** (the n=5 floor), monotone on every rung and
+ρ = −1.000 separately in all three salience conditions. **No dose × salience interaction**
+(drops 0.092 / 0.150 / 0.200, Fisher p = 0.137). Receipt: `alias001-20260918/ALIAS_DOSE_RESULT.json`.
+
+**The registered caveat held and is repeated because it is the load-bearing one:** *monotone
+decline is NECESSARY for the capacity account and NOT SUFFICIENT for it.* What separated them
+was the SHAPE comparison in `analysis/coupling_ladder.py` — marginal cost per acquisition row
+spanning **160×** — not the correlation. Downstream: `ALIAS_RESOLUTION_INVESTIGATION.md`
+Amendments 2, 3 and 12.

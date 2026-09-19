@@ -1,5 +1,8 @@
 # PRES-007 × α — does interpolation repair the BINDING deficit, and does it repair all types alike?
 
+> **STATUS: PENDING.** Arms are generating as of this line. **No outcome is recorded here because none exists yet** — not because it lives elsewhere. This banner is the
+> difference between *unrun* and *absent*, and it will be replaced by the outcome.
+
 **Registered before any arm is generated on this bank.** MECHANISM SCOUT — no seal, no read
 budget. Openly spendable; nothing here promotes anything.
 

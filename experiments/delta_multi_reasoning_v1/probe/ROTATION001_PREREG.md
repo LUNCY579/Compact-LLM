@@ -134,3 +134,20 @@ smaller and a near-zero correction would be unsurprising rather than reassuring.
   the three and is why the interpolation error is reported whatever happens.
 
 One delta, one bank, one draw. MECHANISM SCOUT; nothing here promotes anything.
+
+---
+
+# OUTCOME — recorded here; full write-up in `probe/ROTATION001_RESULT.md`
+
+**Registered prediction: cos(δ_full, δ_k025) > 0.90. MISSED — measured 0.836382.** The
+registered disconfirmer (< 0.7) did not fire either, so neither branch resolved cleanly.
+
+**What it returned instead:** `cos` equals the norm ratio **to six decimals**, because
+`<δ_full, δ_k025> = ‖δ_k025‖²` with a difference of exactly **0.000e+00**. A coordinate mask is
+a **projection**, so for any mask `cos ≡ norm ratio` and **rotation and dose are the same
+parameter** — which is why the three-arm ordering the prereg asked for is **not reported**.
+
+**ROTATION-002 (Addendum 1): ONE_LEVER_FAILS_ON_PRESERVATION.** Mask 0.6500 against a
+norm-matched scalar's 0.6222 — **+2.8 pp, 11 gains / 1 loss, p = 0.0063.** The α-ladder
+interpolation it relied on was accurate to **0.1 pp**, so the most consequential registered
+disconfirmer did not fire. Downstream: `ALIAS_RESOLUTION_INVESTIGATION.md` Amendment 6.
