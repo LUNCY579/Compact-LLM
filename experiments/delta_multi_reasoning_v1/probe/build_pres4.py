@@ -89,7 +89,7 @@ MAX_CONVENTION_SHARE = 0.10
 K_ANSWER, K_DISTRACTOR = 1, 3
 BRIDGE = {"person_binding": "the provisioning steward",
           "object_binding": "the item bearing the customs stamp",
-          "place_binding": "the store used for that week's transfers"}
+          "place_binding": "the store used for the quarter-end transfers"}
 ACTIVITY = {
     "person_binding": ["{x} signed the attendance book on {d}.",
                        "{x} was recorded as present for the {d} stocktake.",
@@ -131,8 +131,12 @@ def build(stratum: str, packs: int, seed: int) -> list[dict]:
             other_place = r.choice([x for x in PLACES if x != answer])
 
             # THE BINDING, stated exactly once, bridge VERBATIM in both sentences
+            # Article on the answer where the answer type takes one. People and proper-noun
+            # places do not; items do. Reading the rendered text is how the PRES-004 cue was
+            # found, and "was glass spirit-level" is the residue of the same fix.
             who = "who" if stratum == "person_binding" else "which"
-            binding = (f"{bridge.capitalize()} that week was {answer}, {who} is not named "
+            art = "the " if stratum == "object_binding" else ""
+            binding = (f"{bridge.capitalize()} that week was {art}{answer}, {who} is not named "
                        f"again in this account.")
             if stratum == "place_binding":
                 action = f"It was {bridge} that received the {other_item} on {r.choice(DAYS)}."
