@@ -168,8 +168,17 @@ def build(cell, k, d, packs, seed):
             # repeated names matches. Without that, `argmin_spread` picked the answer 100% of
             # the time in k3d3 and 0% in k1d1 -- a second rule family tracking the count axis,
             # caught by the build gate after the sentence-index family was closed.
+            # SPAN-MATCHED templates. Parallel SHAPE was not enough: the text BETWEEN
+            # repeated names differed, so the answer's first-to-last span differed from the
+            # distractors' -- and the bias REVERSED with k (answer longer at k=2, shorter at
+            # k=3), making `argmin_spread` prefer the answer 0.396 of the time in k3d3 against
+            # a 0.250 chance level. Here the connecting text is character-matched segment by
+            # segment: "the provisioning steward" / "present at the stocktake" are both 24
+            # chars, "duty"/"gate" both 4, "entry"/"sheet" both 5 -- so the span between a
+            # candidate's first and last mention is identical for the answer and every
+            # distractor, and spread carries no answer preference at any k.
             binding = {
-                1: f"{answer} was {bridge} that week, according to the duty book.",
+                1: f"{answer} was {bridge} that week, according to the book.",
                 2: f"{answer} was {bridge} that week, and {answer} signed the duty book.",
                 3: (f"{answer} was {bridge} that week, {answer} signed the duty book, and "
                     f"{answer} countersigned the entry."),
@@ -186,11 +195,11 @@ def build(cell, k, d, packs, seed):
             for x in distractors:
                 day = r.choice(DAYS)
                 distractor_lines.append({
-                    1: f"{x} was present at the {day} stocktake, according to the day book.",
-                    2: (f"{x} was present at the {day} stocktake, and {x} signed the "
-                        f"attendance book."),
-                    3: (f"{x} was present at the {day} stocktake, {x} signed the attendance "
-                        f"book, and {x} countersigned the page."),
+                    1: f"{x} was present at the stocktake that week, according to the book.",
+                    2: (f"{x} was present at the stocktake that week, and {x} signed the "
+                        f"gate book."),
+                    3: (f"{x} was present at the stocktake that week, {x} signed the gate "
+                        f"book, and {x} countersigned the sheet."),
                 }[d])
             rp.shuffle(distractor_lines)
             other_lines = [action]

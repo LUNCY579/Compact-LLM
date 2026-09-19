@@ -870,3 +870,74 @@ over coverage. **It is not a free lunch and it is not a separate mechanism.**
 
 **Unchanged:** the causal finding itself — moving the answer late costs the delta ~5× what it
 costs the source, replicated on two independently trained deltas. That never depended on masking.
+
+---
+
+# MRAT count axis — the peer's question found a real defect. Answer: NO, not initially.
+
+They asked whether the count axis is clean of the **same** contamination as the ratio axis or
+only of a different one. **It was not clean, and the defect was mine: I exempted a class of rule
+by a criterion that was too coarse.**
+
+## The defect
+
+`build_mrat` exempted **count-derived** features (`count`, `spread`, `nsent`) from the rule gate
+on the grounds that the manipulation *is* mention count, so they track it tautologically. That
+conflated two different things:
+
+* **"this feature varies with k"** — unavoidable, and a fair exemption;
+* **"this feature PREFERS THE ANSWER at some k"** — **not** tautological. It depends on template
+  symmetry, and it is a build defect.
+
+Measured on MRAT-001, against a 0.250 chance level of the answer holding the extreme span:
+
+| cell | answer span | distractor span | P(answer smallest) | P(largest) |
+|---|---:|---:|---:|---:|
+| `k2d2` | 61.9 | 59.7 | **0.069** | **0.340** |
+| `k3d3` | 101.8 | 105.1 | **0.389** | 0.167 |
+
+**The bias REVERSES between k=2 and k=3** — answer span longer at k=2, shorter at k=3 — so
+`argmin_spread` swung 0.000 / 0.083 / 0.396 across the count axis. A k-dependent,
+answer-preferring cue on the axis declared clean.
+
+"Parallel shape" was not enough: the *text between* repeated names differed, so the first-to-last
+span differed.
+
+## The fix, and what it did and did not close
+
+MRAT-002 makes the connecting text **character-matched segment by segment** — `the provisioning
+steward` / `present at the stocktake` both 24 chars, `duty`/`gate` both 4, `entry`/`sheet` both 5.
+
+| cell | P(answer smallest) | P(largest) |
+|---|---:|---:|
+| `k2d2` | 0.167 | 0.299 |
+| `k3d3` | 0.167 | 0.299 |
+
+**Identical across k.** A residual off-chance bias remains (0.167 / 0.299 against 0.250) but it no
+longer *varies* with the manipulation, and a constant bias cancels in a cross-cell contrast.
+
+Worst non-frequency rule swing, by contrast:
+
+| contrast | worst swing | rules > 0.05 |
+|---|---:|---:|
+| `k1d1` vs `k3d3` | **0.299** (`argmax_spread`) | 2 |
+| `k1d1` vs `k2d2` | **0.299** | 2 |
+| **`k2d2` vs `k3d3`** | **0.007** | **0** |
+
+**`k1d1` is structurally degenerate**: with one mention every candidate has span 0, so any
+spread rule is a pure tie and picks the pinned head distractor at 0.000. That cannot be fixed by
+template matching — it is what "spread" means at k=1.
+
+> **So the usable count contrast is `k2d2` vs `k3d3` (count 2 vs 3), worst swing 0.007. Any
+> contrast involving `k1d1` carries a declared 0.299 spread cue.** Weaker manipulation than 1-vs-3,
+> and clean — which is the trade this programme has repeatedly found is worth taking.
+
+## Also declared: the fixed anchor is a perfect rule
+
+`in_sentence_8` scores **1.000 in every cell** — the answer is always the 8th sentence, because
+position is anchored by design. It is **constant across cells**, so it cannot manufacture a count
+effect and the cross-cell contrast is unaffected. But **absolute rates on this bank are not
+readable**, and that is the mirror image of MPOS: manipulating position made position rules
+informative; holding it fixed makes a fixed-position rule perfect.
+
+**Neither bank has been run. MRAT-002 supersedes MRAT-001, which was never scored.**
