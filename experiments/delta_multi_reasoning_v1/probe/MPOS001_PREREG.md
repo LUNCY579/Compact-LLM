@@ -705,3 +705,76 @@ lane count. Every cross-arm statement is governed by that bound, including the S
 already reported — **those were made at 0.00833 and the tighter bound is the one that now
 applies.** Re-checked: native−Sparse at p = 0.0001 still clears; LWF−Sparse at p = 0.0227 still
 does not.
+
+---
+
+# RESULT (Addendum 3) — masking repairs the mechanism AT MATCHED ACQUISITION; both bands HIT
+
+Arm verified before generation (`d7b15d2e79c21183…`, 310/310 F32). Family **0.05/8 = 0.00625**.
+
+## Position cost on `k3d1`, ordered by acquisition
+
+| arm | acquisition /384 | early err | late err | position cost | masked? |
+|---|---:|---:|---:|---:|---|
+| frozen Supa | 14 | 6 | 15 | **0.0625** | — |
+| **s10** | **197** | 9 | 29 | **0.1389** | **MASKED** |
+| **LWF λ=0** | **198** | 18 | 62 | **0.3056** | **unmasked** |
+| Titan-Sparse | 232 | 12 | 44 | 0.2222 | MASKED |
+| native α=1.00 | 235 | 13 | 63 | 0.3472 | unmasked |
+
+> **At acquisition matched to one row — s10 at 197 against LWF λ=0 at 198 — the masked arm's
+> position cost is 0.1389 and the unmasked arm's is 0.3056.**
+
+**The acquisition confound is ruled out.** The peer session's Band B was the decisive test and it
+came out on the side that keeps the mechanism claim: the repair is **not** an artifact of having
+learned less. Ordering the table by acquisition makes it plain — the two masked arms sit **below**
+both unmasked arms while spanning acquisition 197 to 232.
+
+| paired contrast (source cancels) | mean | discordant | perm p | clears 0.00625? |
+|---|---:|---:|---:|---|
+| **LWF − s10** *(acquisition-matched)* | **+0.1667** | 38 | **0.0001** | **YES** |
+| native − s10 | +0.2083 | 38 | **<0.0001** | **YES** |
+| Sparse − s10 | +0.0833 | 18 | 0.0078 | **no** |
+
+**Both registered bands HIT**, both committed at `2957513c` before the arm ran:
+
+* Band A (ladder): predicted cost **0.10–0.20**, observed **0.1389**.
+* Band B (mechanism): predicted `mean(d_lwf − d_s10)` **+0.08 to +0.22**, observed **+0.1667**.
+
+**"s10 repairs more than Titan-Sparse" is NOT supported at the corrected bound** (p = 0.0078
+against 0.00625). It is directionally consistent with the peer's monotone ladder, and that is all
+it is. Reported separately rather than pooled with the two contrasts that do clear.
+
+## Gap closure toward the frozen source
+
+| comparison | closure |
+|---|---:|
+| Titan-Sparse vs native | 44% |
+| **s10 vs native** | **73%** |
+| **s10 vs its acquisition-matched control (LWF)** | **69%** |
+
+## The confound check, by the method that survived
+
+Cue exploitation among each arm's own errors, `k3d1`:
+
+| arm | rate | vs source | masked? |
+|---|---:|---:|---|
+| frozen Supa | 0.5714 | — | — |
+| s10 | 0.5263 | **−0.0451** | MASKED |
+| Titan-Sparse | 0.5179 | **−0.0536** | MASKED |
+| native α=1.00 | 0.6316 | +0.0602 | unmasked |
+| LWF λ=0 | 0.7250 | +0.1536 | unmasked |
+
+**Both masked arms have NEGATIVE cue differentials; both unmasked arms are positive.** A negative
+differential cannot manufacture a positive interaction, so neither mask result is cue-driven. And
+in `early` the source is still better than s10 — 6 errors against 9 — so an early-favouring cue
+cannot be producing the late-band collapse.
+
+## What this establishes
+
+**Magnitude masking repairs the causal position mechanism, and the repair is not explained by
+acquisition level.** The endpoint advantage, the mechanism repair, and the acquisition-matched
+control now agree. One bank, one draw, MECHANISM SCOUT — nothing promoted, no budget spent.
+
+**Not established:** the k at which the repair saturates. `s10` vs `Sparse` does not clear
+correction, so the ladder's monotone shape is suggestive here and measured only on the endpoint.
