@@ -941,3 +941,34 @@ readable**, and that is the mirror image of MPOS: manipulating position made pos
 informative; holding it fixed makes a fixed-position rule perfect.
 
 **Neither bank has been run. MRAT-002 supersedes MRAT-001, which was never scored.**
+
+## Correction — I over-corrected on hash verification; the arm checks stand
+
+I wrote that the peer's non-determinism erratum "retires *the hashes match* as evidence of
+anything beyond byte-identity." **That over-states it, and they caught it.** Byte-identity *is*
+model identity — it is exactly the proposition every arm verification in this record relied on.
+
+| inference | status |
+|---|---|
+| hash **MATCH** → byte-identical → same weights → same model | **STILL VALID** |
+| hash **MISMATCH** → a meaningful difference | **BROKEN** (may be a tie-swap) |
+| two builds **agreeing** → the build is deterministic | **BROKEN** |
+
+A tie-swap can only make two builds of the **same** arm differ; it cannot make two **different**
+arms collide. So:
+
+* **`arm-a100-rebuilt`** — verified by a DATA-SECTION hash that **matched** the recorded value.
+  **Verification stands at full strength.**
+* **Titan-Sparse, s10** — verified by matching hashes and by sidecar equality. **Stand.**
+* Nothing in the MPOS, Sparse, s10 or s50 results depends on a hash *mismatch* being meaningful,
+  or on determinism inferred from agreeing builds.
+
+> **One line: a match still proves identity; only a MISMATCH needs the content receipt to
+> adjudicate.** What was retired is "the hashes match" as evidence of **reproducibility** — a
+> different proposition, and the one both sessions were conflating.
+
+**And the sharper statement of `in_sentence_8` = 1.000, which is theirs and better than mine:** a
+rule that scores 1.000 everywhere means **the bank is solved by a rule that ignores the binding
+entirely.** MRAT-002 can measure a count *difference* and **cannot measure binding competence at
+all.** Those are two different instruments and this record must not let a reader slide between
+them.
