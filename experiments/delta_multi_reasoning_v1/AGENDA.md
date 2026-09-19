@@ -130,6 +130,31 @@ density. Uniformity predicts flat.
 
 Prereg: `confirm/RCI002_CONFIRM_PREREG.md`. **The sealed read is not spent.**
 
+### 1b. Settle `alias_resolution`. *No training. ~1 hour. The cheapest open question.*
+
+The one stratum nothing explains, now much better characterised and no better explained —
+`ALIAS_RESOLUTION_INVESTIGATION.md`. Pooled across both sealed banks it is **0 repairs / 17
+damages, p = 1.53e-05**: purely subtractive, replicated on disjoint entity pools. Context that
+stops it being over-read: the delta *repairs* 30 answerable rows across those banks, so zero
+repairs is a signature and not the background.
+
+**My salience-over-binding account is refuted** — every row the delta lost it named a salient
+mover, and so does the frozen source on 13 of its own 13 errors, with identical error profiles
+(Fisher p = 1.000 both banks). The delta changed the *rate* of an error the source already
+makes, not its kind. And nothing measurable distinguishes the lost rows.
+
+Two builds separate the three live readings, neither needing training:
+
+- **invert the salience ordering** — name the aliased person three times and the movers once.
+  Uniform weakening predicts the B–D gap persists; a salience account predicts it collapses.
+  This is the one that would have caught me before I wrote the account down.
+- **a dose ladder on this stratum alone** — monotone decline with magnitude, error profile
+  staying mover-dominated, is what uniform weakening looks like. The α and k lines already exist.
+
+And one corpus check that needs no model at all: **does RRP-015's training data contain any
+role→person binding?** If it is purely state-transition JSON, "no capacity left for a skill the
+training never exercised" becomes the leading account and is checkable against the corpus.
+
 ### 2. If an account survives (1): test the repair it implies. *Training. ~2 h + a grant.*
 
 Which repair is worth building depends entirely on which account lives, and they point
