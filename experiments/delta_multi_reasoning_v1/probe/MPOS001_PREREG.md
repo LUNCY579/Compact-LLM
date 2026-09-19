@@ -304,3 +304,71 @@ The synthetic run realised a discordance of 0.54-0.65, at which the MDE is **0.2
 
 This is recorded before the real arms exist so the registered figure cannot later be quoted as
 though the run had been powered when it was not.
+
+## Amendment 1b — the registered directional asymmetry is WITHDRAWN; the cue space is symmetric
+
+**Written while generation was running and BEFORE any prediction was read.** Timestamped by the
+commit; the arms were mid-flight and no `predictions.jsonl` existed for any of them.
+
+Amendment 1 registered that the one surviving cue (*"emit the candidate in the penultimate
+sentence"*, 0.000 early / 0.750 late) favours LATE, and concluded:
+
+> *"A POSITIVE result survives this cue and is conservatively estimated. A NULL or NEGATIVE
+> result is NOT interpretable."*
+
+**That asymmetry does not hold.** It rested on a hand-picked list of 13 rules. A systematic sweep
+— argmin/argmax over 12 scalar per-candidate features, plus a per-sentence-index rule for each of
+16 sentence positions, 40 rules per cell — finds **equally strong rules in BOTH directions**:
+
+| cell | strongest EARLY-favouring | strongest LATE-favouring |
+|---|---|---|
+| `k3d1` | `in_sentence_5` **0.771 / 0.000** | `in_sentence_11` 0.000 / 0.771 |
+| `k1d1` | `in_sentence_3` 0.271 / 0.000 | `in_sentence_11` 0.000 / 0.285 |
+
+All at p < 1e-10. **The rule space is symmetric in direction**, so there is no basis for claiming
+the residual pushes against my registered positive. **The asymmetry is withdrawn.**
+
+## And the "clean cells" are not cue-free either
+
+The cells were called clean because `argmin`/`argmax` of **mean mention position** has a band
+swing of exactly 0.000 there. That was true and it is not sufficient: **sentence-index rules
+swing up to 0.771.** At the registered differential bound of 0.211 the manufacturable interaction
+is:
+
+| cell | max band swing | manufacturable | registered band |
+|---|---:|---:|---|
+| `k1d1` | 0.285 | 0.060 | +0.03 to +0.15 |
+| `k3d1` | 0.771 | **0.163** | +0.10 to +0.30 |
+
+**So `k3d1`'s worst case reaches into its own registered band.** This is the same conclusion the
+d=3 cells were excluded for, arrived at through a rule class I had not swept.
+
+**Why this was inevitable and is not a fixable defect.** A sentence-index rule *is* the
+manipulation restated: the answer sits in slots 1-5 in `early` and 10-13 in `late` **by
+construction**, so "emit the candidate in sentence 5" must separate the bands. Any experiment
+that moves the answer creates such rules. This is the point already recorded in the withdrawal of
+the d=3 cells — *you cannot manipulate position and leave position uninformative* — and it
+applies to every cell, not only the ones with three mentions.
+
+## What this does and does not change
+
+**Does not change:** the interaction still cancels any cue **both arms exploit equally**. That is
+the design's actual protection and it is untouched.
+
+**Does change:** the residual — differential exploitation — is now known to be **bidirectional
+and potentially large**, and the 0.163 worst case in `k3d1` is an extrapolation of a bound
+measured on a *different and much weaker* cue (earliest-person, on ALIAS-001). Compounding them
+is pessimistic but not unreasonable.
+
+**Registered consequence, before the numbers exist:** a significant positive interaction in
+`k3d1` **cannot be reported as establishing the causal claim on its own.** It must be reported
+beside the measured cue differential from the secondary, and if that differential is itself
+significant and positive, the result is **"not separable from differential cue exploitation"** —
+the same verdict the d=3 cells received. `k1d1`'s worst case (0.060) sits below the middle of its
+band, so it is the **less contaminated** cell despite being the less powered one.
+
+**The secondary is now the load-bearing measurement, not a footnote.** It is already implemented
+and measures the earliest-person differential with its own MDE. That is the right shape but the
+wrong cue; the strongest band-dependent rule should be measured too. I am **not** changing the
+scorer mid-flight — the addition will be a separate, separately-committed analysis run after the
+primary, so that nothing in the registered path moves after predictions exist.
