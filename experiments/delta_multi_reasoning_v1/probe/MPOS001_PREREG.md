@@ -47,12 +47,24 @@ band-dependent cue changes which rows are solvable at all.
 
 **The d=3 cells cannot carry the primary. Measured, not argued** (see the limitation section).
 
-| cell | k | d | cue swing | manufacturable | **role** | predicted `d_delta - d_source` |
+| cell | k | d | cue swing | **manufacturable** | **role** | predicted `d_delta - d_source` |
 |---|---|---|---:|---:|---|---|
 | `k1d1` | 1 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.03 to +0.15** |
 | `k3d1` | 3 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.10 to +0.30** |
-| `k1d3` | 1 | 3 | 0.812 | 0.134 | secondary | +0.00 to +0.08 |
-| `k3d3` | 3 | 3 | 0.938 | **0.155** | secondary | +0.10 to +0.30 |
+| `k1d3` | 1 | 3 | 0.812 | **0.209** | not readable | +0.00 to +0.08 |
+| `k3d3` | 3 | 3 | 0.938 | **0.242** | not readable | +0.10 to +0.30 |
+
+**The bound on the cue-exploitation differential is registered at 0.258** — the Newcombe
+hybrid-score two-sided 95% upper limit on (LWF 109/151) − (Supa 54/85), the larger of the two
+lanes. **A confound bound must be pessimistic**, so it is an upper confidence limit on the true
+differential, **not** a minimum detectable effect. An earlier draft of this prereg quoted 0.165,
+which is the MDE — a different quantity, and the wrong one for this purpose.
+
+For reference, the normal approximation gives 0.191 (two-sided 90%) and 0.211 (two-sided 95%);
+Newcombe is preferred at these denominators and is the one registered.
+
+At that bound `k1d3` manufactures **2.6x its entire predicted range** and `k3d3` manufactures
+**71% of its range**. Both are therefore marked **not readable**, not "secondary".
 
 **Primary: `k1d1` and `k3d1`, two lanes, Bonferroni over 4 = 0.0125.** These are the cells where
 no band-dependent answer-agnostic rule exists, so nothing can be manufactured. They test the
