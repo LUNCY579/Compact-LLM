@@ -10,7 +10,7 @@ import math
 import time
 from .data import PublicCase
 from .analysis import final_answer
-from .integrity import canonical, digest, loads, require
+from .integrity import ContractError, canonical, digest, loads, require
 
 ROLES = (
     "Solve directly. Use only the problem's stated facts.",
@@ -64,7 +64,17 @@ def run_case(case: PublicCase, arm: str, backend, budget: Budget, emit, *, nativ
     require(type(case) is PublicCase, "no gold-bearing row objects in inference")
     require(arm in ("O", "T", "REP", "MR"), "unknown inference arm")
     require(callable(emit), "durable raw-output sink required")
-    require(native is False, "SCP native backend/supervisor integration is not qualified in this release")
+    require(type(native) is bool, "native mode must be explicit Boolean")
+    if native:
+        # Only the isolated SCP-NQ-001 fixed, unscored, live-worker qualification.
+        # This is NOT a portable training/evaluation permit or arbitrary callback.
+        from sys import modules
+        adapter = modules.get("experiments.sequential_complementary_native_v1.native")
+        require(adapter is not None, "native adapter must be initialized by a claimed supervisor child")
+        try:
+            adapter.require_native_backend(backend, case, arm, budget, emit)
+        except ValueError as exc:
+            raise ContractError(str(exc)) from exc
     records = []
     def generate(messages, cap, role):
         # Qualification/asset verification and hard timeout live in the supervisor.
@@ -128,7 +138,7 @@ def run_case(case: PublicCase, arm: str, backend, budget: Budget, emit, *, nativ
               "output_tokens": sum(r["output_tokens"] for r in records),
               "generation_wall_seconds": sum(r["wall_seconds"] for r in records),
               "protocol_sha256": protocol_identity(), "public_sha256": case.identity(),
-              "classification": "NATIVE_OPEN_DEV" if native else "SOFTWARE_FIXTURE_ONLY",
+              "classification": "NATIVE_QUALIFICATION_ONLY" if native else "SOFTWARE_FIXTURE_ONLY",
               "quality_claim": False}
     emit({"event": "CASE_RESULT", **result})
     return result
