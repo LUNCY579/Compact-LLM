@@ -189,3 +189,57 @@ they are right: **the corpus JSON is depth-2** (`before` → keyed values) and t
 stratum to distrust **in advance**: if `container_nesting` behaves unlike the other two, the
 corpus-overlap reading is available rather than invented afterwards, and if it behaves like them
 that is mild evidence the overlap does not bite.
+
+---
+
+# RESULT — PRES-002 FAILED CALIBRATION. Registered outcome 3: a build failure, not a finding.
+
+**Stage 1, scored against `probe/PRES002_PREREG.md`'s registered rule.** Receipt
+`pres002-20260919/PRES2_STAGE1.json`.
+
+| stratum | n | floor | **Supa** | λ=0 | repair | damage | gate |
+|---|---:|---:|---:|---:|---:|---:|---|
+| `object_coreference` | 132 | 0.333 | **38** (0.288) | 63 | 25 | 0 | **BELOW_FLOOR** |
+| `temporal_predecessor` | 115 | 0.209 | **0** | 0 | 0 | 0 | **BELOW_FLOOR** |
+| `container_nesting` | 132 | 0.273 | **0** | 4 | 4 | 0 | **BELOW_FLOOR** |
+| pooled | 379 | — | 38 | 67 | **29** | **0** | — |
+
+**The frozen source is below floor on all three strata and scores literally zero on two.** The
+prereg registered this exact outcome in advance:
+
+> *"Supa is at/below floor everywhere → the bank is too hard for the source → the instrument is
+> withdrawn and rebuilt easier, not reinterpreted."*
+
+**It is withdrawn.** Note what the pooled row would have permitted: **29 repairs, 0 damages,
+p = 3.7e-09** — a clean, significant, entirely meaningless "the delta improves this bank"
+headline, on a bank the source cannot do. That is precisely the shape the registered rule
+existed to refuse, and it refused it.
+
+## Why it failed, diagnosed from the predictions rather than guessed
+
+Not an answer-form artifact — the failures return the **wrong entity**, not the right one in the
+wrong shape, so this is not RCI-002's 0/24 problem:
+
+| stratum | what Supa actually answers |
+|---|---|
+| `container_nesting` | **the container** — *"The banded chest"*, *"The iron strongbox"*. It performs hop 1 and stops. |
+| `object_coreference` | **the description** — *"wax-sealed item"*, echoed unresolved. |
+| `temporal_predecessor` | **a weekday** — *"Monday"*, *"Tuesday"*. Four hops is out of reach at this scale. |
+
+**The comparison that locates the error is ALIAS-001, where Supa scores 0.750 on the same
+two-hop shape.** The structures are identical; the bridge is not:
+
+  * alias bridges **verbatim** — *"It was the provisions marshal who carried X"* → *"The
+    provisions marshal that week was <name>"*. The same four words appear in both sentences.
+  * mine bridges by **paraphrase** — *"The wax-sealed item was moved"* → *"only the X bears a
+    wax seal"*. The model must equate *wax-sealed* with *bears a wax seal* before it can begin.
+
+**I optimised for the floors and forgot the gate.** The floors ask whether the *bank* is
+gameable; the gate asks whether the *source* can do the task. Three strata cleared 0.21–0.33 on
+the first and failed the second, and the two questions are independent in exactly the way
+RCI-002's unreadable-from-either-direction endpoint was.
+
+**One thing the failure does establish**, and it is the only claim taken from it: these three
+tasks are **wrong-class endpoints** — λ=0 *improves* them 29/0. Consistent with everything else
+here, this delta damages some skills and improves or ignores others, and eligibility has to be
+measured before anything else is.
