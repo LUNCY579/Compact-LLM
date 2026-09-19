@@ -113,3 +113,84 @@ the frozen source does exactly the same thing. That control existed because the 
 accounts died without one. **The measurement that killed this hypothesis took four lines**: count
 what *both* systems reach for, not just the candidate. Every previous dead account in this
 programme would have been killed the same way and none of them was.
+
+---
+
+# AMENDMENT 1 — the probe was built, and salience is refuted in the opposite direction
+
+**Same day. ALIAS-001, a MECHANISM SCOUT — no seal, openly spendable.** Build
+`probe/build_alias_probe.py`, scoring `probe/score_alias_probe.py`, receipt
+`alias001-20260918/ALIAS_PROBE_RESULT.json`. Third entity partition, disjoint from both spent
+banks. 40 packs x 3 variants x 3 conditions = 360 rows, both systems, 720 generations.
+
+Salience was made a **designed factor** — the same task, the same congruent interrogative, the
+same binding sentence, varying only how often each person is named in neutral activity lines:
+
+| condition | alias named | each distractor | n | B | D | repair | damage | damage given B-correct | p |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| `low` | 1 | 3 | 120 | 76 | 68 | **0** | 8 | 0.105 | 7.8e-03 |
+| `equal` | 2 | 2 | 120 | 88 | 77 | 1 | 12 | 0.136 | 3.4e-03 |
+| `high` | 3 | 1 | 120 | 106 | 89 | **0** | **17** | 0.160 | 1.5e-05 |
+
+**Registered predictions were: salience → the gap shrinks monotonically; uniform weakening → the
+gap is roughly constant. Neither happened in the direction salience needed.** The damage rate
+*rose* across the conditions — 0.105, 0.136, 0.160 — and the raw gap rose with it, 8 → 11 → 17.
+Fisher on `low` vs `high`, conditioned on the rows B got right: **p = 0.383**, so the rise is not
+significant and the result is consistent with constant damage. Verdict by the registered rule:
+**UNIFORM_WEAKENING**.
+
+**The manipulation worked, which is what makes this a refutation rather than a null.** Both
+systems improve substantially as the answer becomes more salient — B 76 → 106, D 68 → 89. So
+salience matters a great deal for the task. It simply does not differentially rescue the delta:
+making the correct answer the *loudest* person in the room left the delta losing **17** rows,
+more than in any other condition.
+
+`high`'s absolute rates are not readable — the answer is the most frequent person there by
+construction and `most_frequent_candidate_in_context` scores 1.000. The gate flagged it
+(`BELOW_FLOOR` for B at 106/120) exactly as the build manifest said it would. The paired contrast
+is readable in every condition, because a deterministic rule emits the same string for both
+systems and cannot create a discordant pair.
+
+## Pooled across three independent banks
+
+| bank | repairs | damages |
+|---|---:|---:|
+| RCI-001 sealed | 0 | 12 |
+| RCI-002 sealed | 0 | 5 |
+| ALIAS-001 probe | 1 | 37 |
+| **total** | **1** | **54** |
+
+**p = 3.11e-15.** Three entity partitions, three generators, two sealed instruments and one open
+probe. The regression is as solid as anything in this programme.
+
+## What now stands, and what killed what
+
+**Salience is dead as an account.** Not merely unsupported — tested with the factor varied, and
+the effect went the wrong way. That is two of my own accounts refuted on this cell, the first by
+a baseline control I put in, the second by a probe I built to catch myself.
+
+**The capacity account is now the leading one, and it has independent support.** The peer session
+audited RRP-015's training corpus: the 384-row control file contains **zero role phrases and zero
+person names** — the only alphabetic content in 1.33 MB is instruction vocabulary over JSON state
+transitions. Their detector fires on 512 of 512 RCI-001 rows, so the null is informative rather
+than a detector failure. I verified the core of it independently: `microfit-train.jsonl` for the
+control returns 0 candidate person names and 0 role phrases.
+
+So alias resolution is a skill the fine-tuning **never exercised**, and the delta uniformly
+weakens it regardless of how easy the retrieval is made.
+
+**Their caveat is the right one and I am adopting it verbatim:** absence in the data does not
+establish causation. The delta could weaken binding for reasons unrelated to what it was trained
+on. **Leading account, not established account.**
+
+## What would establish it
+
+A dose ladder on this probe — the α and k lines already exist, and this bank is re-runnable at
+zero build cost. Uniform weakening predicts monotone decline in D with delta magnitude, at a
+constant damage-rate ratio across all three salience conditions. That is now the cheapest
+remaining test, and unlike everything above it would move the account from leading to measured.
+
+The peer's LWF-001 preservation anchor tests the converse and my prediction is registered there
+pre-run: an anchor toward the frozen base should help most on skills absent from the training
+mixture. Alias binding is now a measured, thrice-replicated instance of exactly one.
+

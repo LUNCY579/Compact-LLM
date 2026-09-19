@@ -61,7 +61,7 @@ a deterministic cue-reader answers identically for both systems. What changes is
 explicit unanswerability marker"**, and whether it damages abstention in the absence of one is
 now an open question that this instrument cannot answer either.
 
-### E2 is an emission rate### E2 is an emission rate, and accuracy could not measure it
+### E2 is an emission rate, and accuracy could not measure it
 
 **This operationalisation was chosen on the calibration twin, after the accuracy version failed
 there. The sealed bank was not consulted and has never been read.** That is what a twin is for —
@@ -99,7 +99,6 @@ verdict is unaffected by that.
 
 ### Analysis
 
-Both are tested with **exact two-sided McNemar** on discordant pairs. **Holm-Bonferroni across
 **Confirmation criterion: exact two-sided McNemar on discordant pairs, p ≤ 0.05 and the
 registered direction D > B.** One endpoint, so **no multiplicity correction is applied** —
 Holm over a family of one is the identity, and applying it would be a gesture. E1 is reported
@@ -287,3 +286,20 @@ pre-registered finding rather than the fifth post-hoc story about one read.
 says nothing about r=16, N16, the α line, the k line, the 4B arms or any composition arm. It
 remains **one training draw of one delta**, and REP-001 measured single-draw spreads of 7 and 13
 rows on other endpoints. A second draw is the thing no instrument can substitute for.
+
+---
+
+## Editorial note, added after the read
+
+Two text artifacts from my own editing survived into the committed prereg and are corrected
+here: a duplicated `### E2 is an emission rate` heading, and a dangling half-sentence
+(*"Both are tested with exact two-sided McNemar on discordant pairs. Holm-Bonferroni across"*)
+left over from the two-endpoint draft when E2 became the sole endpoint.
+
+**Both were formatting damage, not content.** The registered criterion, direction, endpoint
+definition, bands and analysis plan are unchanged, and the superseded fragment asserted a
+multiplicity correction that the corrected text already says is not applied. Recorded rather
+than silently repaired because this is a registered document and the diff is public: `16393f9`
+carries the damaged text, and anyone checking the read against its registration should know why
+those two lines differ.
+

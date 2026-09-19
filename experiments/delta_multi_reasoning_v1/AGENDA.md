@@ -130,7 +130,7 @@ density. Uniformity predicts flat.
 
 Prereg: `confirm/RCI002_CONFIRM_PREREG.md`. **The sealed read is not spent.**
 
-### 1b. Settle `alias_resolution`. *No training. ~1 hour. The cheapest open question.*
+### 1b. ~~Settle `alias_resolution`~~ — **PROBE BUILT AND RUN. Salience refuted.**
 
 The one stratum nothing explains, now much better characterised and no better explained —
 `ALIAS_RESOLUTION_INVESTIGATION.md`. Pooled across both sealed banks it is **0 repairs / 17
@@ -143,17 +143,24 @@ mover, and so does the frozen source on 13 of its own 13 errors, with identical 
 (Fisher p = 1.000 both banks). The delta changed the *rate* of an error the source already
 makes, not its kind. And nothing measurable distinguishes the lost rows.
 
-Two builds separate the three live readings, neither needing training:
+**ALIAS-001** (`probe/build_alias_probe.py`, a mechanism scout — no seal) crossed salience as a
+designed factor. Damage is present in all three conditions and does **not** shrink when the
+answer is made the loudest person in the context — it rises, 8 → 11 → 17, at rates 0.105 → 0.136
+→ 0.160, with Fisher `low` vs `high` conditioned at **p = 0.383**. Verdict **UNIFORM_WEAKENING**.
+The manipulation worked — both systems gain a lot from salience, B 76 → 106 and D 68 → 89 — so
+this is a refutation, not a null.
 
-- **invert the salience ordering** — name the aliased person three times and the movers once.
-  Uniform weakening predicts the B–D gap persists; a salience account predicts it collapses.
-  This is the one that would have caught me before I wrote the account down.
-- **a dose ladder on this stratum alone** — monotone decline with magnitude, error profile
-  staying mover-dominated, is what uniform weakening looks like. The α and k lines already exist.
+**Pooled across three independent banks: 1 repair / 54 damages, p = 3.1e-15.**
 
-And one corpus check that needs no model at all: **does RRP-015's training data contain any
-role→person binding?** If it is purely state-transition JSON, "no capacity left for a skill the
-training never exercised" becomes the leading account and is checkable against the corpus.
+The peer's corpus audit supplies the other leg: RRP-015's 384-row control file contains **zero
+role phrases and zero person names**, verified independently here. Alias resolution is a skill
+the fine-tuning never exercised. **Capacity is now the leading account** — and, adopting the
+peer's caveat verbatim, absence in the data does not establish causation.
+
+**What remains, and it is now the cheapest decisive test in the programme:** a dose ladder on
+this probe. The bank is re-runnable at zero build cost and the α and k lines already exist.
+Uniform weakening predicts monotone decline in D with magnitude at a constant damage-rate ratio
+across all three salience conditions. That would move capacity from leading to measured.
 
 ### 2. If an account survives (1): test the repair it implies. *Training. ~2 h + a grant.*
 
