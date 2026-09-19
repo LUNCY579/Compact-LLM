@@ -95,17 +95,27 @@ def main(argv=None) -> int:
     with safe_open(str(bfile), framework="pt", device="cpu") as bf, \
          safe_open(str(pfile), framework="pt", device="cpu") as pf:
         for k in keys:
-            b = bf.get_tensor(k)
+            # The published source is stored BF16; both existing builders upcast it with
+            # .to(torch.float32).contiguous() and this one matches them exactly. BF16 -> FP32
+            # is lossless (BF16 is a truncated FP32), so this adds no error -- but it is the
+            # difference between producing an arm on the existing ladder and producing a
+            # differently-typed one that only looks comparable.
+            b = bf.get_tensor(k).to(torch.float32).contiguous()
             if k not in pkeys:
-                out[k] = b.clone()            # untouched by construction
+                out[k] = b                    # untouched by construction
                 continue
             p = pf.get_tensor(k)
-            if b.dtype != torch.float32 or p.dtype != torch.float32:
-                raise SystemExit(f"{k} is not fp32 ({b.dtype}/{p.dtype}); refusing to build")
+            if p.dtype != torch.float32:
+                raise SystemExit(f"parent tensor {k} is {p.dtype}, not fp32; refusing to build "
+                                 f"-- a BF16 parent silently interpolates toward the source")
+            if list(p.shape) != list(b.shape):
+                raise SystemExit(f"shape mismatch on {k}: {list(b.shape)} vs {list(p.shape)}")
             if a.alpha == 1.0:
-                v = p.clone()                 # copied, never computed
+                v = p.contiguous()            # copied, never computed
             else:
-                v = b + a.alpha * (p - b)
+                v = (b + a.alpha * (p - b)).contiguous()
+                if not bool(torch.isfinite(v).all()):
+                    raise SystemExit(f"non-finite interpolant: {k}")
             d = v - b
             s = float(torch.sum(d * d, dtype=torch.float64))
             if s > 0:
@@ -121,10 +131,14 @@ def main(argv=None) -> int:
     a.out.mkdir(parents=True)
     save_file(out, str(a.out / "model.safetensors"), metadata={"format": "pt"})
     src_dir = a.base if a.base.is_dir() else a.base.parent
+    # Sidecars must stay BYTE-IDENTICAL to the source: the programme's hf_checkpoint verifier
+    # hashes all six and refuses any difference.
     for s in SIDECARS:
         f = src_dir / s
         if f.exists():
             shutil.copy2(f, a.out / s)
+            if sha256_file(a.out / s) != sha256_file(f):
+                raise SystemExit(f"sidecar copy differs from source: {s}")
 
     receipt = {
         "record": "SCALED_ARM_BUILD",
@@ -138,6 +152,8 @@ def main(argv=None) -> int:
         "parent_weight_sha256": sha256_file(pfile),
         "out_weight_sha256": sha256_file(a.out / "model.safetensors"),
         "dtype": "float32", "never_routed_through_bf16": True,
+        "base_upcast_from": "bf16 -> fp32, lossless, matching int001 build_arm.py and "
+                            "lwf001 scale_own_delta.py",
         "endpoints_copied_not_computed": True,
         "parent_partial": a.parent_partial,
         "tensors_total": len(keys), "tensors_changed": changed,
