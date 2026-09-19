@@ -100,3 +100,72 @@ def render_sample(rows: Sequence[dict], n: int = 3, field: str = "context",
                  "reference": r.get("reference"), field: str(r.get(field, ""))}
                 for r in v[:n]]
             for k, v in by.items()}
+
+
+def stratum_surface_outliers(rows: Sequence[dict], field: str = "context",
+                             stratum_field: str = "stratum", z: float = 3.0) -> dict:
+    """Is any stratum a SURFACE-STATISTICAL outlier against the others?
+
+    The lowercase-sentence-start defect was one instance of a general class: **a stratum whose
+    prose differs from its siblings in a way no one thought to check.** `prose_defects` catches
+    the instance because it was found; this catches the class.
+
+    The generalisation matters because the leak is a **TYPE** difference, and type differences
+    leak through whatever representation the type is expressed in:
+
+      * linguistic: common noun vs proper noun -> sentence-initial case separates the strata,
+        and capitalisation became a perfect distractor/answer predicate in one stratum;
+      * structural: `"amount": -4` vs `"amount": "between -6 and -2"` -> a JSON type check
+        separates matched members with no false positives.
+
+    Same failure, different substrate. Nobody predicts which surface statistic will carry it, so
+    the check should not require a prediction: compute a handful per stratum and refuse on any
+    outlier.
+
+    **Only meaningful with 3+ strata** -- with two, "outlier" is undefined and this returns
+    `applicable: False` rather than a misleading pass.
+    """
+    import statistics as _st
+
+    def feats(txt: str) -> dict:
+        sents = [x.strip() for x in re.split(r"(?<=[.!?])\s+", txt) if x.strip()]
+        toks = txt.split()
+        return {
+            "lower_sentence_start_share": (
+                sum(1 for x in sents if x[:1].islower()) / len(sents)) if sents else 0.0,
+            "determiner_share": (
+                sum(1 for t in toks if t.lower().strip(".,;:") in ("the", "a", "an"))
+                / len(toks)) if toks else 0.0,
+            "mean_token_len": (sum(len(t) for t in toks) / len(toks)) if toks else 0.0,
+            "punct_density": (sum(txt.count(c) for c in ",;:") / len(toks)) if toks else 0.0,
+            "capitalised_token_share": (
+                sum(1 for t in toks[1:] if t[:1].isupper()) / len(toks)) if toks else 0.0,
+        }
+
+    by: dict[str, list[dict]] = {}
+    for r in rows:
+        by.setdefault(str(r.get(stratum_field, "_all")), []).append(feats(str(r.get(field, ""))))
+    if len(by) < 3:
+        return {"applicable": False, "n_strata": len(by),
+                "why": "outlier detection needs 3+ strata; with 2 there is no 'others'"}
+
+    means = {k: {f: _st.mean(x[f] for x in v) for f in v[0]} for k, v in by.items()}
+    flags = []
+    for f in next(iter(means.values())):
+        for k in means:
+            others = [means[o][f] for o in means if o != k]
+            mu = _st.mean(others)
+            sd = _st.pstdev(others) if len(others) > 1 else 0.0
+            if sd == 0.0:
+                if abs(means[k][f] - mu) > 1e-9:
+                    flags.append({"stratum": k, "feature": f, "value": round(means[k][f], 4),
+                                  "others_mean": round(mu, 4), "z": None,
+                                  "why": "others identical, this one differs"})
+            elif abs(means[k][f] - mu) / sd > z:
+                flags.append({"stratum": k, "feature": f, "value": round(means[k][f], 4),
+                              "others_mean": round(mu, 4),
+                              "z": round((means[k][f] - mu) / sd, 2)})
+    return {"applicable": True, "n_strata": len(by), "z_threshold": z,
+            "per_stratum_means": {k: {f: round(v, 4) for f, v in m.items()}
+                                  for k, m in means.items()},
+            "outliers": flags, "clean": not flags}

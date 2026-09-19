@@ -75,8 +75,13 @@ _ART = re.compile(r"^(the|a|an)\s+", re.I)
 PEOPLE = ["Aurelio Banning", "Sunniva Okoro", "Caspian Delacroix-Hale", "Mirembe Sandoval",
           "Leocadio Thistlewood", "Annika Oyelowo", "Perpetua Vanterpool", "Rurik Maharaj"]
 #: Article-free by construction -- no leading "the" is grammatical on any of these.
-ITEMS = ["brass astrolabe", "walnut tally-board", "slate counting-frame", "copper alembic",
-         "linen sail-hook", "iron sounding-line", "glass spirit-level", "horn inkwell"]
+#: PROPER-NOUN shaped, article-free, two tokens -- deliberately matched in surface form to
+#: PEOPLE and PLACES. Common-noun item names made `object_binding` a surface outlier on
+#: capitalisation and determiner share, and capitalisation then separated distractor lines from
+#: answer-bearing ones perfectly in that stratum alone. A person-vs-object contrast is only
+#: about PERSON-ness if it is not also about PROPER-NOUN-ness.
+ITEMS = ["Kessler Astrolabe", "Harrow Tally-Board", "Bantry Counting-Frame", "Marlow Alembic",
+         "Quillon Sail-Hook", "Draycott Sounding-Line", "Everly Spirit-Level", "Renshaw Inkwell"]
 PLACES = ["Cellar Nine", "Pennant Quay", "Study Alcove Six", "Marchmont Stair",
           "Kestrel Landing", "Ordnance Bay", "Fennimore Court", "Saltgrass Reach"]
 SITES = ["Haverlock Wharf", "the Tolbooth Yard", "Bellwether House"]
@@ -100,9 +105,9 @@ ACTIVITY = {
     # capitalisation separate distractor lines from answer-bearing ones PERFECTLY -- a cue
     # present in exactly one arm of the person-vs-object contrast. Person names and the
     # proper-noun places are capitalised already, so only this stratum was affected.
-    "object_binding": ["The {x} was entered in the tally book on {d}.",
-                       "The {x} appears in the {d} condition report.",
-                       "The {x} was re-weighed during the {d} audit."],
+    "object_binding": ["{x} was entered in the tally book on {d}.",
+                       "{x} appears in the {d} condition report.",
+                       "{x} was re-weighed during the {d} audit."],
     "place_binding": ["{x} was swept and aired on {d}.",
                       "{x} appears in the {d} access log.",
                       "{x} was inspected for damp on {d}."],
@@ -141,23 +146,23 @@ def build(stratum: str, packs: int, seed: int) -> list[dict]:
             # places do not; items do. Reading the rendered text is how the PRES-004 cue was
             # found, and "was glass spirit-level" is the residue of the same fix.
             who = "who" if stratum == "person_binding" else "which"
-            art = "the " if stratum == "object_binding" else ""
+            art = ""   # every answer type is now proper-noun shaped and takes no article
             binding = (f"{bridge.capitalize()} that week was {art}{answer}, {who} is not named "
                        f"again in this account.")
             if stratum == "place_binding":
-                action = f"It was {bridge} that received the {other_item} on {r.choice(DAYS)}."
-                q = (f"Which store received the {other_item}?" if variant != "paraphrase"
-                     else f"Name the store that took in the {other_item}.")
+                action = f"It was {bridge} that received {other_item} on {r.choice(DAYS)}."
+                q = (f"Which store received {other_item}?" if variant != "paraphrase"
+                     else f"Name the store that took in {other_item}.")
             elif stratum == "object_binding":
                 action = f"It was {bridge} that was carried to {other_place}, unaccompanied."
                 q = (f"Which item was carried to {other_place}?" if variant != "paraphrase"
                      else f"Name the item taken to {other_place}.")
             else:
-                action = (f"It was {bridge} who carried the {other_item} to {other_place}, "
+                action = (f"It was {bridge} who carried {other_item} to {other_place}, "
                           f"unaccompanied.")
-                q = (f"Who personally carried the {other_item} to {other_place}?"
+                q = (f"Who personally carried {other_item} to {other_place}?"
                      if variant != "paraphrase"
-                     else f"By name, who took the {other_item} to {other_place} alone?")
+                     else f"By name, who took {other_item} to {other_place} alone?")
 
             lines = [binding, action]
             for d in distractors:                      # each distractor named K_DISTRACTOR times
