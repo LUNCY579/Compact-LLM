@@ -372,3 +372,71 @@ and measures the earliest-person differential with its own MDE. That is the righ
 wrong cue; the strongest band-dependent rule should be measured too. I am **not** changing the
 scorer mid-flight — the addition will be a separate, separately-committed analysis run after the
 primary, so that nothing in the registered path moves after predictions exist.
+
+---
+
+# RESULT — the position effect is CAUSAL in `k3d1`, on both deltas
+
+**Class: MECHANISM SCOUT.** One bank, one draw. Receipts `MPOS_RESULT.json` and
+`CUE_DIFFERENTIAL.json`. Scorer and registered path untouched since before the first arm ran.
+
+## Primary
+
+| cell | lane | pairs | disc | mean | 95% CI | MDE | p | verdict |
+|---|---|---:|---:|---:|---|---:|---:|---|
+| `k3d1` | native α=1 | 144 | 53 | **+0.285** | [+0.201, +0.375] | 0.169 | <0.0001 | **SUPPORTS** |
+| `k3d1` | LWF λ=0 | 144 | 49 | **+0.243** | [+0.160, +0.326] | 0.162 | <0.0001 | **SUPPORTS** |
+| `k1d1` | native α=1 | 144 | 31 | +0.076 | [+0.000, +0.153] | 0.129 | 0.070 | not powered |
+| `k1d1` | LWF λ=0 | 144 | 39 | +0.049 | [−0.035, +0.132] | 0.145 | 0.334 | not powered |
+
+> **Moving the answer from the first third of the context to the last third costs the DELTA
+> about five times what it costs the SOURCE** — source 0.0625, native 0.3472, LWF 0.3056 — and
+> the difference replicates across two independently trained deltas at p < 0.0001.
+
+`k1d1` is **not powered**, exactly as Amendment 1 registered in advance. Its realised MDE
+(0.129 / 0.145) exceeds its observed mean, so it is reported as an estimate with an interval and
+**not** as evidence of absence.
+
+## The confound, measured rather than extrapolated — and it contributes nothing
+
+Amendment 1b registered that a positive in `k3d1` **could not stand alone**: it had to be read
+beside the cue differential, because a differentially-exploited band-dependent cue could
+manufacture it. The extrapolated worst case was **0.167**.
+
+**That extrapolation was wrong in a specific way: it paired a differential measured on ONE cue
+with a band swing belonging to ANOTHER.** Measured properly, each cue's own differential against
+its own swing:
+
+| `k3d1` cue | band swing | differential (native) | differential (LWF) | manufacturable |
+|---|---:|---:|---:|---:|
+| earliest person / earliest mean | **0.000** | +0.060 / +0.154 | | **0.000** |
+| `in_sentence_5` | 0.771 | **+0.000** | −0.048 | 0.000 / −0.037 |
+| `in_sentence_11` | 0.771 | **+0.000** | −0.167 | 0.000 / −0.128 |
+| `in_sentence_3` | 0.792 | −0.067 | −0.067 | −0.053 |
+| `in_sentence_13` | 0.792 | **+0.000** | +0.000 | 0.000 |
+| **sum of positive manufacturable** | | | | **0.000 / 0.000** |
+
+**The cues that swing across bands show zero or negative differential exploitation; the cues with
+a positive differential do not swing across bands.** The product — which is what manufacturable
+means — is **zero on both lanes**, against an observed +0.285 and +0.243.
+
+So the registered disqualifier does not fire, and it does not fire **because it was measured**.
+Had the extrapolated 0.167 stood, it would have consumed 59% of the native effect and 69% of the
+LWF effect and left the result unreadable.
+
+## What is and is not established
+
+**Established, within this bank:** the position effect is **causal, not merely observational**.
+Amendments 18–20 found it by correlating damage with where the answer happened to land under a
+shuffle. Here the answer was **assigned** a band, every scenario appears in both bands built from
+identical material, and the interaction is large, replicated and not attributable to any measured
+cue.
+
+**Not established.** `k1d1` — underpowered by design and reported as such. **Why `k3d1` shows it
+and `k1d1` does not is NOT answerable here**: the two cells differ in mention count *and* salience
+ratio simultaneously, which is the ALIAS-001 confound this bank failed to break, and `k1d1` is
+underpowered regardless, so the contrast could be power rather than substance. The count-vs-ratio
+decomposition **stays withdrawn**.
+
+**Unchanged:** one bank, one draw, two cells, two lanes. Nothing here promotes anything, and no
+confirmation budget was requested or spent.
