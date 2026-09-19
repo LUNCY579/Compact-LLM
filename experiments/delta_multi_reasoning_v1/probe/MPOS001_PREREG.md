@@ -440,3 +440,70 @@ decomposition **stays withdrawn**.
 
 **Unchanged:** one bank, one draw, two cells, two lanes. Nothing here promotes anything, and no
 confirmation budget was requested or spent.
+
+## RESULT amendment 1 — the confound table is WITHDRAWN as a measurement; a stronger argument replaces it
+
+The result section above reports *"sum of positive manufacturable = 0.000"* on both lanes. **That
+figure is not a measurement of absence, it is an absence of data**, and it is withdrawn.
+
+**The denominators, checked after the peer session challenged them.** A cue differential is
+scored over rows where the arm errs AND the cue does not already name the reference. In `k3d1`
+the frozen source errs only 21 times in total, and after the `cue != reference` filter:
+
+| cue | source scorable | native | LWF |
+|---|---:|---:|---:|
+| earliest person / mean / latest mean | 21 | 76 | 80 |
+| `in_sentence_5` | **3** | 6 | 7 |
+| `in_sentence_11` | **2** | 2 | 3 |
+| `in_sentence_3` | **3** | 5 | 5 |
+| `in_sentence_13` | **1** | 2 | 3 |
+
+**Every sentence-index differential — the ones that carried the argument — rests on one to three
+source rows.** Those cells should read *"differential unmeasurable at these denominators"*, never
+`+0.000`.
+
+**And it is not fixable by adding rows**, for two compounding structural reasons: the
+`cue != reference` filter deletes precisely the rows where the cue is *correct*, which is most of
+the band in which the cue is accurate; and the source errs rarely here because it is good at the
+task. The estimator is thinnest exactly where the cue matters most.
+
+**A second bias, which the peer named and I had not:** an arm that follows a cue *successfully*
+is not in the error set at all, so heavy exploitation in a band where the cue is accurate appears
+as **fewer errors**, not as a higher match rate. The "among errors" estimator is least sensitive
+where it most needs to be sensitive.
+
+## What replaces it — raw error counts, no cue, no filter, no differential
+
+`k3d1`, 144 rows per band:
+
+| arm | early errors | late errors | late − early | delta/source ratio, early → late |
+|---|---:|---:|---:|---|
+| frozen Supa | **6** | 15 | +0.0625 | — |
+| native α=1.00 | **13** | 63 | +0.3472 | **2.2× → 4.2×** |
+| LWF λ=0 | 18 | 62 | +0.3056 | **3.0× → 4.1×** |
+
+(0.3472 − 0.0625 = **+0.2847**, reproducing the primary exactly.)
+
+> **In the EARLY band the source is BETTER than the delta — 6 errors against 13 and 18.** An
+> early-favouring cue inflating the delta's early performance would push the delta *toward* the
+> source there. It does not: the delta is 2.2–3.0× worse in `early`, and the gap **widens** to
+> 4.1–4.2× in `late`. **An early-favouring cue cannot produce a late-band collapse.**
+
+This uses only raw error counts. No cue identification, no scorable filter, no differential, no
+thin denominator — so it is immune to everything that invalidates the table above.
+
+**The caveat, stated so it is not over-read:** this rules out the **early-inflation** mechanism
+specifically. A cue that made LATE rows harder for the delta than for the source would still
+manufacture the interaction and is **not** ruled out. It is a stranger mechanism to posit, and
+the late-favouring cues here (`in_sentence_11`, `in_sentence_13`) are shared by both arms by
+construction — but "stranger" is not "excluded", and no measurement here excludes it.
+
+**One observation from `k1d1` that cuts against a simple reading:** there the delta/source error
+ratio **narrows** (native 3.5× early → 2.7× late; LWF 5.3× → 3.2×) even though the absolute
+interaction is positive (+0.076, unpowered). Ratio and absolute difference disagree in that cell.
+The registered statistic is the absolute one and it stands, but the disagreement is recorded
+rather than smoothed over.
+
+**Net effect on the headline:** the causal finding in `k3d1` is **unchanged and now rests on a
+better argument than the one it was published with**. What is withdrawn is the claim that the
+confound was measured to be zero.
