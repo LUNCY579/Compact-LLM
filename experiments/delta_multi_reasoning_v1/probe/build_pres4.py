@@ -131,22 +131,23 @@ def build(stratum: str, packs: int, seed: int) -> list[dict]:
             other_place = r.choice([x for x in PLACES if x != answer])
 
             # THE BINDING, stated exactly once, bridge VERBATIM in both sentences
-            binding = (f"The {bridge} that week was {answer}, which is not named again in this "
-                       f"account.")
+            who = "who" if stratum == "person_binding" else "which"
+            binding = (f"{bridge.capitalize()} that week was {answer}, {who} is not named "
+                       f"again in this account.")
             if stratum == "place_binding":
-                action = f"It was {bridge} that received {other_item} on {r.choice(DAYS)}."
-                q = (f"Which store received {other_item}?" if variant != "paraphrase"
-                     else f"Name the store that took in {other_item}.")
+                action = f"It was {bridge} that received the {other_item} on {r.choice(DAYS)}."
+                q = (f"Which store received the {other_item}?" if variant != "paraphrase"
+                     else f"Name the store that took in the {other_item}.")
             elif stratum == "object_binding":
                 action = f"It was {bridge} that was carried to {other_place}, unaccompanied."
                 q = (f"Which item was carried to {other_place}?" if variant != "paraphrase"
                      else f"Name the item taken to {other_place}.")
             else:
-                action = (f"It was {bridge} who carried {other_item} to {other_place}, "
+                action = (f"It was {bridge} who carried the {other_item} to {other_place}, "
                           f"unaccompanied.")
-                q = (f"Who personally carried {other_item} to {other_place}?"
+                q = (f"Who personally carried the {other_item} to {other_place}?"
                      if variant != "paraphrase"
-                     else f"By name, who took {other_item} to {other_place} alone?")
+                     else f"By name, who took the {other_item} to {other_place} alone?")
 
             lines = [binding, action]
             for d in distractors:                      # each distractor named K_DISTRACTOR times
@@ -163,7 +164,15 @@ def build(stratum: str, packs: int, seed: int) -> list[dict]:
                     f"covering six consecutive days, transcribed in the order the entries "
                     f"were found.")
             ctx = " ".join([head] + body)
-            if ctx.count(bridge) != 2:
+            if "The the " in ctx or " the the " in ctx:
+                raise SystemExit(f"{sid}/{variant}: DOUBLE ARTICLE in context -- PRES-004 "
+                                 f"printed 'The the' on 360/360 rows, on the binding sentence, "
+                                 f"which is a cue marker on the answer")
+            # case-insensitive: the binding sentence capitalises the bridge because it starts
+            # the sentence. PRES-004 avoided that by prepending "The ", which produced
+            # "The the provisioning steward" on 360/360 rows -- a unique bigram marking the
+            # answer's own sentence. The cue was worth ~20 points of inflated source accuracy.
+            if ctx.lower().count(bridge.lower()) != 2:
                 raise SystemExit(f"{sid}/{variant}: bridge must appear exactly twice verbatim")
             if SENTINEL.lower() in (ctx + q).lower():
                 raise SystemExit(f"{sid}/{variant}: sentinel leaked")

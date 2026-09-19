@@ -96,6 +96,11 @@ def main(argv=None) -> int:
         import lease as _lease  # noqa: PLC0415
         got = _lease.acquire(label=f"generate_alias:{a.label}")
         lease_token = got["token"]
+        # atexit rather than a line before `return 0`: a run that raises must still release,
+        # or it leaves exactly the stale lease this module exists to prevent. An earlier
+        # version released only on the success path and left one behind on its first use.
+        import atexit  # noqa: PLC0415
+        atexit.register(lambda t=lease_token: print(f"[lease] released: {_lease.release(t)}"))
         if got["cleared_stale"]:
             print(f"[lease] cleared a STALE lease: {got['cleared_stale']}", flush=True)
         print(f"[lease] acquired, {got['free_gib_at_acquire']} GiB free", flush=True)

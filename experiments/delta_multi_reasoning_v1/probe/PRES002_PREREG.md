@@ -281,3 +281,65 @@ the answer's type, which is the contrast the whole build exists for.
 so a *smaller* damage effect here than on ALIAS-001 is ambiguous between "persons are special"
 and "this bank is easier", while a *comparable or larger* effect is not. Only the second
 direction is clean, and that asymmetry is registered now rather than discovered later.
+
+---
+
+# PRES-004 RESULT — the question is answered, and the bank carried a cue I printed myself
+
+## The result (eligibility screen: Supa vs λ=0, 360 rows)
+
+| stratum | Supa | λ=0 | repairs | damages | p | disposition |
+|---|---:|---:|---:|---:|---:|---|
+| **person_binding** | 0.833 | 0.592 | **0** | **29** | **3.7e-09** | QUALIFIES |
+| **object_binding** | 0.858 | 0.717 | **1** | **18** | **7.6e-05** | QUALIFIES |
+| place_binding | 0.967 | 0.867 | 0 | 12 | 4.9e-04 | dropped (ceiling) |
+
+> **The delta damages object-valued binding too. The regression is not about PERSONS — it is
+> about role→filler binding in general, and `alias_resolution` is one instance of it.**
+
+`person_binding` is **purely subtractive, 0 repairs / 29 damages** — the same signature
+`alias_resolution` carries across three banks. Person damage (−24.1 pp) **exceeds** ALIAS-001's
+own (−19.7 pp) despite an easier bank, which is the clean direction under the registered
+asymmetry. Object damage (−14.1 pp) is smaller and therefore **ambiguous** between "objects are
+less affected" and "this bank is easier" — as registered, and not resolved here.
+
+## The defect, found by reading one rendered context
+
+```
+mine:       "The the provisioning steward that week was Annika Oyelowo,
+             which is not named again in this account"
+ALIAS-001:  "The provisions marshal that week was Kwabena Lindholm,
+             who is not named again in this account"
+```
+
+`BRIDGE` already contained *"the"* and the template prepended *"The {bridge}"*. **Result:
+`The the` on 360 of 360 rows, landing on the binding sentence — the one sentence containing the
+answer.** A unique token bigram marking the target sentence in every item. Plus *"which"* for a
+person on all 120 person rows and a missing article before item names.
+
+**That is a cue marker, the same failure class as RCI-001's lacuna note**, and it explains the
+calibration miss: 0.833 against the 0.633 target.
+
+**What survives:** the **paired contrast**. Supa and λ=0 read byte-identical text, so a cue
+cannot manufacture a discordant pair — the immunity argument this programme has used throughout.
+The eligibility result above stands.
+
+**What does not:** the **absolute level**. 0.833 is inflated and no absolute reading from
+PRES-004 is usable.
+
+## The meta-lesson, which is the one that generalises
+
+**Floors ran. The gate ran. `convention_sensitivity()` ran. Mention counts were asserted. Bridge
+occurrences were asserted.** Five automated checks, none of which can see `The the` — and the
+defect was visible in the first rendered context I printed, which I printed only after the
+result was in hand.
+
+> **Read one rendered item before spending any GPU. No check that operates on structure can see
+> a defect in prose.**
+
+## PRES-005
+
+Rebuilt with the bridge capitalised rather than prefixed, `who`/`which` selected by answer type,
+articles restored before item names, and a **build-time assertion that refuses any context
+containing a doubled article**. Floors 0.167 / 0.167 / 0.175, zero article-bearing references,
+**zero doubled articles**. Awaiting the lease.
