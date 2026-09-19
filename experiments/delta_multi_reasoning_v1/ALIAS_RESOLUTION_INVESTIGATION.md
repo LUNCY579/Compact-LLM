@@ -1235,3 +1235,55 @@ the third bank would settle.
 for both arms, with object's denominator at **4**. Amendment 1 registered that only a ~40 pp gap
 was detectable at a denominator of 17; at 4 nothing is. **Reported as "not powered to
 distinguish", never as uniform.**
+
+---
+
+# AMENDMENT 16 — "purely additive" is approximately right and exactly wrong
+
+**Verified independently here from the committed generations, zero model calls.** The peer
+session gave additivity a structural form — **additive recovery ⟺ nested correct sets** — and
+tested it on both rays. It reproduces exactly on my side:
+
+| ray | step | nested? |
+|---|---|---|
+| LWF | λ=0 ⊂ α=0.75 | YES |
+| LWF | α=0.75 ⊂ α=0.50 | YES |
+| LWF | α=0.50 ⊂ Supa | **NO — 1 row** |
+| NATIVE | α=1.00 ⊂ α=0.75 | **NO — 1 row** |
+| NATIVE | α=0.75 ⊂ α=0.50 | **NO — 1 row** |
+| NATIVE | α=0.50 ⊂ α=0.25 | YES |
+| NATIVE | α=0.25 ⊂ Supa | YES |
+
+> **Nesting holds to within 1 row of 360 — about 0.3% — not exactly.**
+
+**The cross-check that makes it trustworthy:** the native α=1.00→0.75 violation is **exactly 1
+row**, which is `COUPLING_LADDER.json`'s committed **"1 repair / 12 damages"** for that rung —
+reached by set inclusion here and by an exact paired test there. **Two derivations, same row.**
+
+## Consequence 1 — my framing was inflated, and I accept the deflation
+
+**Nested correct sets is the row-level form of the monotone dose response already recorded.**
+ALIAS-002 gave **ρ = −1.000, p = 0.0167** in aggregate; nesting is what that looks like per row.
+
+So Amendment 15's "repair is purely additive on a second task family" **replicates monotonicity
+on a second family** — genuine and worth having — but it is **one fact measured twice, not a
+separate property of the ray.** Amendment 15 presented it as the former; that is corrected here.
+
+## Consequence 2 — PRES-007 could not have seen the violation, and that is a spec change
+
+| denominator | expected violations at the measured ~1/360 rate |
+|---:|---:|
+| 4 | 0.01 |
+| 33 | **0.09** |
+| 360 | 1.00 |
+
+**At n = 33 you expect 0.09 violations, so observing zero is exactly what a 0.3% rate looks
+like.** PRES-007 could not distinguish exact additivity from 99.7% additivity, and the 360-row
+alias bank can and does.
+
+> **A confirmation registering "purely additive" as its criterion would be registering something
+> measurably false.** It must register **"nested to within k rows", with k declared in advance.**
+
+That is a concrete correction to the confirmation spec rather than a caveat on a result — and it
+is the second time today that a claim survived only because its denominator was too small to
+refute it.
