@@ -507,3 +507,75 @@ rather than smoothed over.
 **Net effect on the headline:** the causal finding in `k3d1` is **unchanged and now rests on a
 better argument than the one it was published with**. What is withdrawn is the claim that the
 confound was measured to be zero.
+
+---
+
+# Addendum 2 — does the k=0.25 magnitude mask REPAIR the position mechanism?
+
+**Written before the Titan-Sparse arm was generated and before any of its predictions existed.**
+Proposed by the peer session; the bank, scorer and analysis path are unchanged.
+
+MPOS-002 established that moving the answer late costs the **delta** ~5× what it costs the
+**source**. Separately, `Rineya-Titan-Sparse-Experimental` — the k=0.25 magnitude-pruned core —
+scores better than the other promoted core on alias. **Nobody has asked whether the artifact that
+scores better actually repairs the mechanism this bank isolates.**
+
+## Arm identity, verified before the run
+
+| property | value |
+|---|---|
+| whole-file sha256 | `a28629c9d3454fbf…` |
+| DATA SECTION sha256 | `8fb85df27baea919…` |
+| dtype | **310/310 F32** — FP32, as the core declares; **not** a BF16 copy |
+| bytes | 2,384,234,992 — identical to the α=1.00 arm |
+| `generation_config.json` | **byte-identical to Supa** and to all three scored arms |
+| `config.json` | differs from the others in `torch_dtype` only (float32 vs bfloat16) |
+
+`torch_dtype` is metadata: `stage2_generate.py` takes `--dtype` as a **required** argument and
+passes `dtype=torch.float32` to `from_pretrained`, which overrides it. All three completed arms
+recorded `dtype=fp32` under generator sha `5e9cc3201e75d30b`, and Sparse will run identically.
+**This check exists because the core's own record states a BF16 copy "zeroes 28.5% of its kept
+update and is a different model"** — scoring the wrong dtype would silently score a different
+artifact.
+
+## Registered prediction
+
+Position cost = `P(wrong | late) − P(wrong | early)`, measured on `k3d1`:
+
+| arm | position cost |
+|---|---:|
+| frozen Supa | 0.0625 |
+| native α=1.00 | 0.3472 |
+| LWF λ=0 | 0.3056 |
+| **Titan-Sparse** | **predicted 0.10 – 0.25** |
+
+**Registered primary: the interaction `mean(d_sparse − d_source)` on matched pairs in `k3d1`,
+predicted +0.05 to +0.20** — positive, but **smaller than native's +0.2847**.
+
+Registered readings, fixed in advance:
+
+* **≤ 0.10** — the mask **substantially repairs** the mechanism; the endpoint gain and the
+  mechanism coincide.
+* **0.10 – 0.25** — partial repair, my registered expectation.
+* **≥ 0.30** — the mask does **not** touch this mechanism. That is the **more informative**
+  outcome: it would mean Sparse's alias advantage comes from something other than the causal
+  effect this bank isolates, splitting the endpoint from the mechanism.
+
+A **negative** interaction would mean the mask makes position sensitivity worse than the source's,
+which nothing predicts.
+
+## Multiplicity, declared now rather than chosen later
+
+This adds **2 tests** (two cells, one new arm). Reported both ways: Bonferroni over 2 = 0.025 for
+this addendum read alone, and **Bonferroni over 6 = 0.00833** for the full family of three arms ×
+two cells. **The 6-test bound governs any statement comparing Sparse to the other arms**, because
+that comparison uses all six. Choosing the smaller family after seeing the number is the move
+this programme has already caught twice today.
+
+## What does not change
+
+`k1d1` remains **underpowered** and is reported as an estimate with an interval, not a test. The
+cue caveats from Amendment 1b and the RESULT amendment apply unchanged: the confound table is
+withdrawn as a measurement, and the load-bearing argument is the **raw error-count** one — in the
+`early` band the source is better than the delta, so an early-favouring cue cannot produce a
+late-band collapse. That argument will be recomputed for Sparse and reported beside the primary.
