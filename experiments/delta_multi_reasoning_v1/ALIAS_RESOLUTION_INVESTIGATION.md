@@ -1287,3 +1287,60 @@ alias bank can and does.
 That is a concrete correction to the confirmation spec rather than a caveat on a result — and it
 is the second time today that a claim survived only because its denominator was too small to
 refute it.
+
+---
+
+# AMENDMENT 17 — the "−1 acquisition row" is a net over 27 discordant rows at p = 1.000
+
+**Verified independently from INT-001's committed per-row predictions.** The peer session ran
+the nesting test on the acquisition axis; it behaves nothing like alias.
+
+| axis | direction | violations, native ray | rate |
+|---|---|---:|---|
+| **alias** (falls with α) | higher-α ⊂ lower-α | **2** of 360-row sets | **~0.6%** |
+| **acquisition** (rises with α) | lower-α ⊂ higher-α | **9 + 10 + 13 = 32** of 384-row sets | **~5–6% per rung** |
+
+**Alias correct-sets are nested. Acquisition correct-sets are not**, by roughly an order of
+magnitude, swapping in both directions at every rung.
+
+## The headline rung, decomposed
+
+| endpoint | net | gains / losses | **discordant** | p |
+|---|---:|---:|---:|---:|
+| alias | +11 for α=0.75 | **12 / 1** | 13 | **0.0034** |
+| **acquisition** | **+1 for α=1.00** | **13 / 14** | **27** | **1.000** |
+
+> **"α = 0.75 costs one acquisition row" is arithmetically true and substantively misleading.**
+> The two arms disagree on **27 of 384 rows at p = 1.000**. They are not nearly the same model
+> on acquisition; they are differently-capable models whose totals happen to coincide.
+
+**This is the `13/13` pooling error one level up** — there a net hid +8/−5 across row classes,
+here a net hides 13/14 across rows. **A net is a pooled figure over rows**, and the rule already
+stated applies to it: *untrustworthy until decomposed, and only decomposition tells you which
+kind you have.*
+
+## What it strengthens, which is the part worth keeping
+
+> **α=0.75's acquisition cost is not measurably different from zero (p = 1.000), not "one row."
+> And the asymmetry runs the favourable way: the preservation gain is structured and reliable
+> (12/1, nested), the acquisition cost is unstructured churn (13/14, not nested). The α choice
+> buys a dependable gain against an undependable cost.**
+
+**That asymmetry was not guaranteed and no aggregate distinguishes it.** Churn in preservation
+with nesting in acquisition — a reliable cost for an unreliable gain — would have produced
+*identical totals*. It had to be measured.
+
+**Caveat it imposes:** a net of −1 over 27 discordant rows carries far more sampling variance
+than a 384-row count implies. **No per-row or subgroup acquisition claim about α=0.75 is
+supported**, and the point estimate should not be quoted without the churn beside it.
+
+## A process note on how this was verified
+
+**My first computation used the wrong subset direction** — I tested higher-α ⊆ lower-α on an
+endpoint that *rises* with α, which measures the expected difference rather than a violation,
+and got 14 / 25 / 83. The peer's 9 / 10 / 13 failing to reproduce is what exposed it; recomputed
+in the correct direction it matches exactly.
+
+**That is the independent-measurement safeguard running in the other direction.** It caught
+their `gen-a075` glob because their number disagreed with mine; it caught my direction error
+because mine disagreed with theirs. **Neither of us reviewed the other's code in either case.**
