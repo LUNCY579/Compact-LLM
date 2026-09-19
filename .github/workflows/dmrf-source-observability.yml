@@ -1,0 +1,25 @@
+name: DMRF source observability
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'experiments/delta_multi_reasoning_v1/**'
+      - '.github/workflows/dmrf-source-observability.yml'
+permissions:
+  contents: read
+jobs:
+  obs001:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: CPU-only claim and coverage fixtures
+        run: python3 -m unittest discover -s experiments/delta_multi_reasoning_v1/tests -p test_observability.py -v
+      - name: Check declared claim states and inspected source blobs
+        run: >-
+          python3 experiments/delta_multi_reasoning_v1/audit/observability.py
+          --registry experiments/delta_multi_reasoning_v1/audit/observability_claims.json
+          --bindings experiments/delta_multi_reasoning_v1/audit/observability_findings.json
+          --repo-root .

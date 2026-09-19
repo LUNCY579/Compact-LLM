@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "purpose": "Record this review's independent-observation limit, NOT a retraction of the branch's remote backup correction.",
+  "entries": [
+    {
+      "claim": {
+        "id": "OBS001-independent-vault-roundtrip",
+        "source": {
+          "kind": "remote_git",
+          "locator": null,
+          "revision": null
+        },
+        "predicate": "byte_identical",
+        "subjects": [
+          "MPOS_PROBE.jsonl",
+          "gen-s50/predictions.jsonl",
+          "gen-a100/predictions.jsonl"
+        ],
+        "measurement": {
+          "scope": "the three files named in the correction",
+          "verification": "independent restored-byte comparison in this audit"
+        }
+      },
+      "observation": {
+        "source": {
+          "kind": "remote_git",
+          "locator": "LUNCY579/ChatBubble/experiments/delta_multi_reasoning_v1/probe/MPOS001_PREREG.md",
+          "revision": "2e5db22d0964fff3ca7a709bfe16fcffa9d1a1b5"
+        },
+        "method": "remote_git_inventory",
+        "state": "NOT_RUN",
+        "basis": "REPORTED",
+        "measurement": {
+          "scope": "the three files named in the correction",
+          "verification": "independent restored-byte comparison in this audit"
+        },
+        "results": {}
+      },
+      "declared_status": "UNOBSERVABLE",
+      "explanation": "The pinned correction reports successful peer verification. This audit read that correction, not the vault. Exact vault identity and ref were not obtained; no absence or failed-backup conclusion is licensed."
+    }
+  ]
+}

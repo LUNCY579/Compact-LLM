@@ -1,0 +1,90 @@
+{
+  "schema_version": 1,
+  "audit_id": "OBS-001",
+  "repository": "LUNCY579/ChatBubble",
+  "base_commit": "2e5db22d0964fff3ca7a709bfe16fcffa9d1a1b5",
+  "base_tree": "77f2af672380a219b9bcd59e3e5fdd863e52660e",
+  "scope": "targeted source inspection, not an exhaustive branch or experiment revalidation",
+  "source_bindings": {
+    "experiments/delta_multi_reasoning_v1/DMRF001_AUDIT.md": "6c3429c80de42991fe65533895353cbeaf8d2e77",
+    "experiments/delta_multi_reasoning_v1/REPRODUCIBILITY_NOTE.md": "8989a5deb2c913fa7d68c82b289a370e81c16f07",
+    "experiments/delta_multi_reasoning_v1/method/prose.py": "b48612945656cc119796f6b54c48f3b5a9a1cded",
+    "experiments/delta_multi_reasoning_v1/method/rule_sweep.py": "e77a7fb718cbd24999b35920c978e9e10b8b366a",
+    "experiments/delta_multi_reasoning_v1/method/floors.py": "58b6f02984dcde4f8b29f44b2691878991dd7972",
+    "experiments/delta_multi_reasoning_v1/probe/score_mpos.py": "ee19e32b1c177976fb42c4c843be5304829ae5df",
+    "experiments/delta_multi_reasoning_v1/probe/MPOS001_PREREG.md": "89cd823852178739ac2c7c94f0bd7c1cb23e238c"
+  },
+  "findings": [
+    {
+      "id": "OBS-01",
+      "classification": "HISTORICAL_CORRECTION_PRESERVED",
+      "path": "probe/MPOS001_PREREG.md",
+      "anchor": "Correction -- backup did not verify",
+      "finding": "A local disk inventory cannot observe a remote private vault. The correction reports 22 listed files and three byte-identical round trips, not a fresh verification by this audit.",
+      "disposition": "Require exact remote repository, immutable ref, paths, access state and method capability. Three checked objects do not establish 22-object integrity."
+    },
+    {
+      "id": "OBS-02",
+      "classification": "SCOPE_QUALIFICATION_REQUIRED",
+      "path": "DMRF001_AUDIT.md",
+      "anchor": "sections 2, 3 and 4",
+      "finding": "There is no 35, no deep-any anywhere, and nobody trained on the selection bank are broader than a scoped literal search or two declared file inventories alone can establish. This is not evidence that the corrected scores or parser inspection are wrong.",
+      "disposition": "Keep parser inspection and measured overlaps scoped. Global code absence needs a complete declared source universe; execution claims need run-bound provenance, not merely declarations."
+    },
+    {
+      "id": "OBS-03",
+      "classification": "CONFIRMED_LEGACY_API_GAP",
+      "path": "method/prose.py",
+      "anchor": "scan",
+      "finding": "Empty banks, absent context fields and empty strings can return clean=True because missing text is coerced to an empty string.",
+      "disposition": "Require nonempty rendered text and unique row IDs before treating a mechanical scan as informative."
+    },
+    {
+      "id": "OBS-04",
+      "classification": "CONFIRMED_LEGACY_API_GAP",
+      "path": "method/prose.py",
+      "anchor": "answer_sentence_locator",
+      "finding": "The hit-rate loop skips absent/ambiguous reference sentences while the candidate-floor loop uses a broader population. Missing candidates fall back to a non-candidate floor.",
+      "disposition": "Bind one common scorable population; expose skipped IDs; refuse whole-bank claims on partial coverage and candidate-floor claims without a declared candidate universe."
+    },
+    {
+      "id": "OBS-05",
+      "classification": "CONFIRMED_LEGACY_API_GAP",
+      "path": "method/rule_sweep.py",
+      "anchor": "sweep, can_manufacture, worst_swing",
+      "finding": "Inapplicable sweeps become [] or 0.0 in helper returns. A nonempty two-level input with an empty pool can still yield applicable=True and zero rule scores.",
+      "disposition": "Separate unobservable from observed-zero and observed sensitivity. Check actual rows/pool, prior input digest, level counts and prospectively declared rule coverage."
+    },
+    {
+      "id": "OBS-06",
+      "classification": "CONFIRMED_LEGACY_INTERPRETATION_GAP",
+      "path": "probe/score_mpos.py",
+      "anchor": "secondary_cue_exploitation and caveats",
+      "finding": "The secondary still uses earliest_person and emits a residual-position-cue interpretation; the record subsequently withdraws the candidate-identity cue rationale. A single directional-cue caveat is not an exhaustive directional sweep.",
+      "disposition": "Treat this legacy secondary as descriptive only until a source-bound, nonzero-swing rule qualification exists. Do not rescore or modify primary results."
+    },
+    {
+      "id": "OBS-07",
+      "classification": "CONFIRMED_LEGACY_INPUT_GAP",
+      "path": "probe/score_mpos.py",
+      "anchor": "load_preds and pair construction",
+      "finding": "Dictionary construction can overwrite duplicate IDs or pair-band rows. A missing prediction field becomes an empty string while the ID still counts as present.",
+      "disposition": "Reject duplicates and missing prediction fields; preserve genuinely emitted empty strings; require both bands in the same cell and complete registered cell coverage."
+    },
+    {
+      "id": "OBS-08",
+      "classification": "PROPERTY_SCOPE_QUALIFICATION_REQUIRED",
+      "path": "REPRODUCIBILITY_NOTE.md",
+      "anchor": "hash mismatch triage snippet",
+      "finding": "File bytes, tensor identity, numerical meaning and determinism are different properties. The illustrative tensor loop inspects keys in A, so extra keys only in B are outside its view.",
+      "disposition": "Retain existing hash corrections. Inventory alone cannot establish byte integrity; file mismatch alone cannot establish tensor or behavioural change; tensor comparison requires both key sets, shape, dtype and payload scope."
+    }
+  ],
+  "boundaries": {
+    "pretrained_execution": false,
+    "training": false,
+    "experiment_rescoring": false,
+    "vault_access_performed": false,
+    "historical_outcome_edits": false
+  }
+}
