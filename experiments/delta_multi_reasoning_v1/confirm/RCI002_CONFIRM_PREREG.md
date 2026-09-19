@@ -132,6 +132,33 @@ interrogative, and role-binding or output-type is the better account. No excess 
 rows → it did not replicate, and the RCI-001 observation was a property of that bank. **Both are
 reportable and neither is a failure of the instrument.**
 
+### Cross-bank check, added before the claim — receipt `CROSS_BANK_EMISSION.json`
+
+RCI-002's twin did not reproduce RCI-001's **accuracy** effect (B 14 → D 12, p = 0.50, against
+15 → 2) while it did reproduce an **emission** effect. I had said the sealed read could not
+separate "accuracy was always a proxy" from "four carve-outs made the task harder". The peer
+session pointed out it can be separated *now*, with no read at all: RCI-001's predictions are on
+disk, and re-scoring recorded output under a different metric spends nothing.
+
+| bank | cell | n | B | D | D-more | B-more | p |
+|---|---|---:|---:|---:|---:|---:|---:|
+| RCI-001 | `rule_exception`/paraphrase — **"Who"** | 25 | 10 | **23** | 13 | **0** | 2.4e-04 |
+| RCI-001 | `rule_exception`/base — "Which role" | 25 | 0 | 0 | 0 | 0 | 1.00 |
+| RCI-001 | `rule_exception`/counterfactual — "Which role" | 25 | 0 | 1 | 1 | 0 | 1.00 |
+| RCI-002 twin | `carve_out_role_incongruent` — **matched cell** | 24 | 5 | **9** | 4 | **0** | 0.125 |
+| RCI-002 twin | both incongruent strata pooled — **E2** | 48 | 20 | **27** | 7 | **0** | 0.016 |
+| RCI-002 twin | both congruent strata | 48 | 0 | 0 | 0 | 0 | 1.00 |
+
+**Both explanations are partly right, which neither of my two stories allowed.** The direction
+replicates with **zero reversals on both banks** and the congruent controls read zero on both —
+so accuracy was standing in for emission. But D's emission rate falls from **0.92 to 0.375**
+between banks, so the four-carve-out design really did shrink the effect. Calling this a clean
+replication would be as wrong as calling the accuracy result a failure to replicate.
+
+**Consequence for this prereg:** the registered E2 direction stands, and the registered band
+(D 30–105 of 120) already reflects the twin's reduced rate rather than RCI-001's. Power at
+n = 120 with the twin's 7/0 discordance scales to roughly 17/0.
+
 Note the badge/incongruent cell scored *no damage* on RCI-002's first calibration twin, when its
 question still read *"…Answer with the badge number."* Naming the answer type re-types it and
 destroys the incongruence. That wording is gone; the cell is now a bare "Who". This is recorded

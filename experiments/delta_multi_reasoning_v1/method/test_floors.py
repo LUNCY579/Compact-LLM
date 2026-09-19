@@ -165,6 +165,22 @@ def test_per_stratum_gate_catches_the_decorative_stratum():
           str(g["informative_share"]))
 
 
+def test_power_compression_is_distinct_from_solvability():
+    """RCI-001's `temporal_correction`: 78/78 for BOTH arms and 78/78 for the recency rule.
+    The floor did not fake a difference -- it erased the ability to see one."""
+    print("a floor both arms reach is flagged as power compression, not as a fake difference")
+    g = gate_strata({"temporal": (78, 78), "alias": (65, 78)},
+                    {"temporal": 1.0, "alias": 0.141},
+                    candidate_scores={"temporal": (78, 78), "alias": (53, 78)})
+    check("the saturated stratum is flagged", "temporal" in g["power_compression"],
+          str(g["power_compression"]))
+    check("the readable one is not", "alias" not in g["power_compression"])
+    check("and the reason names discordant pairs",
+          "discordant" in g["power_compression"]["temporal"]["consequence"])
+    check("no candidate scores -> no compression claim",
+          gate_strata({"temporal": (78, 78)}, {"temporal": 1.0})["power_compression"] == {})
+
+
 def test_dissociation_needs_the_right_denominator():
     """THE ONE THAT CHANGED A CONCLUSION. On RCI-001's unanswerable rows the binding group
     looked spared; conditioned on what the baseline got right it is damaged at the same rate."""
@@ -263,6 +279,7 @@ def main() -> int:
                test_list_arity_attack,
                test_convention_sensitivity_finds_the_article_rows,
                test_per_stratum_gate_catches_the_decorative_stratum,
+               test_power_compression_is_distinct_from_solvability,
                test_dissociation_needs_the_right_denominator,
                test_binomial_matches_published_values):
         fn()

@@ -122,7 +122,8 @@ def convention_sensitivity(rows: Sequence[Mapping], predictions: Mapping[str, st
 
 
 def gate_strata(scores: Mapping[str, tuple], floors_by_stratum: Mapping[str, float],
-                ceiling: float = DEFAULT_CEILING) -> dict:
+                ceiling: float = DEFAULT_CEILING,
+                candidate_scores: Mapping[str, tuple] | None = None) -> dict:
     """Apply the gate PER STRATUM, not only to the aggregate.
 
     RCI-001's aggregate cleared its floor and sat well below the ceiling, so the instrument
@@ -131,16 +132,53 @@ def gate_strata(scores: Mapping[str, tuple], floors_by_stratum: Mapping[str, flo
     extraction floor, therefore carrying exactly zero information about either model. A fifth
     of the bank was decoration, and nobody saw it until the read was spent.
 
-    `scores` maps stratum -> (correct, n) for the baseline system.
+    A HIGH FLOOR THREATENS AN INSTRUMENT BY TWO DIFFERENT ROUTES, and they need separating
+    (the distinction is the peer session's, adopted here):
+
+      SOLVABILITY   a rule with no task competence reaches the score, so an ABSOLUTE claim --
+                    "this system can do X" -- is not supported. This is what a floor is
+                    normally understood to bound.
+      COMPRESSION   BOTH systems adopt the shortcut, cluster at the same score, and the
+                    discordant pairs vanish. Nothing is faked; the ability to SEE a difference
+                    is destroyed. This is `temporal_correction` in RCI-001 -- 78/78 both arms,
+                    zero discordant pairs, p = 1.00.
+
+    A paired contrast is immune to the first and not the second. A deterministic rule emits the
+    same string for both systems, so it can never manufacture a difference -- but it can erase
+    one by pushing both arms to the same place. Pass `candidate_scores` to detect that.
+
+    `scores` maps stratum -> (correct, n) for the baseline system; `candidate_scores` the same
+    for the candidate, when a paired design is being checked.
     """
     per = {name: gate(c, n, floors_by_stratum.get(name, 0.0), ceiling)
            for name, (c, n) in scores.items()}
     informative = [k for k, v in per.items() if v["verdict"] == "CLEARS"]
+
+    compression = {}
+    if candidate_scores:
+        for name, (c, n) in scores.items():
+            if name not in candidate_scores:
+                continue
+            c2, n2 = candidate_scores[name]
+            fl = floors_by_stratum.get(name, 0.0)
+            both_high = n and n2 and min(c / n, c2 / n2) >= ceiling
+            both_at_floor = n and n2 and fl > 0 and max(c / n, c2 / n2) <= fl + 1e-9
+            if both_high or both_at_floor:
+                compression[name] = {
+                    "baseline": f"{c}/{n}", "candidate": f"{c2}/{n2}", "floor": fl,
+                    "mode": "both above ceiling" if both_high else "both at the floor",
+                    "consequence": "discordant pairs collapse; the stratum cannot show a "
+                                   "paired difference even if one exists"}
+
     return {"per_stratum": per, "informative": sorted(informative),
             "uninformative": sorted(set(per) - set(informative)),
             "informative_share": (round(len(informative) / len(per), 4) if per else 0.0),
+            "power_compression": compression,
             "why": "a stratum above its ceiling cannot show a regression and a stratum at its "
-                   "extraction floor was never being read; either way it is not measuring"}
+                   "extraction floor was never being read; either way it is not measuring",
+            "why_compression_is_separate": (
+                "a floor that both systems reach does not fake a difference -- a deterministic "
+                "rule gives both the same answer -- it removes the ability to see one")}
 
 
 # --------------------------------------------------------------------------------------- #
