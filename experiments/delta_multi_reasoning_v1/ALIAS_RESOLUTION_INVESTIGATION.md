@@ -914,3 +914,66 @@ not on the long-context stratification. What this amendment removes is the *expl
 what rotation costs elsewhere — which is now open again.
 
 **Status: discovery complete, replication run, replication FAILED. Nothing promoted.**
+
+---
+
+# AMENDMENT 11 — the regression is about BINDING, not about persons
+
+**PRES-005, a clean bank: no cue, zero doubled articles, every candidate mention count asserted,
+all three floor classes cleared at 0.167–0.175.** Screen = frozen Supa against λ=0 on 360 rows.
+Build `probe/build_pres4.py` → `pres005-20260919/`. MECHANISM SCOUT.
+
+## The result
+
+| stratum | Supa | λ=0 | **baseline-correct** | **damaged** | **rate** | **repairs** | p |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| `person_binding` | 0.850 | 0.592 | 102 | **31** | **0.304** | **0** | 9.3e-10 |
+| `object_binding` | 0.842 | 0.700 | 101 | **17** | **0.168** | **0** | 1.5e-05 |
+| `place_binding` | 0.925 | 0.842 | 111 | 10 | 0.090 | **0** | 1.9e-03 |
+
+Damage is scored over **the rows the source got right**, per the denominator rule.
+
+> **The delta damages role→filler binding whatever the filler is — persons, objects and places
+> — and does so PURELY SUBTRACTIVELY in every stratum: 0 repairs, 58 damages, three for three.**
+>
+> **`alias_resolution` was one instance of a general binding regression, not a fact about
+> persons.**
+
+## The person-vs-object contrast, at a matched baseline
+
+`person_binding` and `object_binding` start at **102 and 101** correct of 120 — a one-row
+difference — so the contrast needs no adjustment:
+
+**31/102 = 0.304 against 17/101 = 0.168. Ratio 1.81×, Fisher exact p = 0.0312.**
+
+**Persons are damaged about twice as heavily as objects**, at equal source competence, in one
+bank, one construction, one run.
+
+## It replicates across two independent builds
+
+| stratum | PRES-004 (carried the `The the` cue) | PRES-005 (clean) |
+|---|---|---|
+| `person_binding` | 0 repairs / 29 damages, −24.1 pp | **0 / 31, −25.8 pp** |
+| `object_binding` | 1 repair / 18 damages, −14.1 pp | **0 / 17, −14.2 pp** |
+
+**Near-identical.** Which also settles the cue question empirically: a shared surface cue moved
+the *absolute* level and left the *paired* contrast untouched, exactly as the immunity argument
+predicts. `object_binding`'s single repair in PRES-004 becomes zero here, so the subtractive
+signature is now unbroken across all three strata.
+
+## What this does and does not license
+
+**Does.** `alias_resolution`'s five-bank, purely-subtractive regression is **one face of a
+general binding deficit**. Any account of it — capacity, coverage, or anything else — now has to
+explain damage to object- and place-valued bindings too, at rates ordered person > object >
+place.
+
+**Does not.** It does not explain *why* persons are worse. The 1.81× is measured and
+unexplained, and `place_binding` sits above ceiling (Supa 0.925) so its rate is floored by
+headroom rather than comparable.
+
+**And it says nothing about ALIAS-001's absolute level**, because PRES-005 is 20 points easier
+than ALIAS-001 for reasons three tested hypotheses failed to explain. Every number above is
+within-bank, which is why the difficulty gap does not touch it.
+
+One draw, one delta, one lane. `quality_improvement_established` false.
