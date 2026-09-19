@@ -1344,3 +1344,68 @@ in the correct direction it matches exactly.
 **That is the independent-measurement safeguard running in the other direction.** It caught
 their `gen-a075` glob because their number disagreed with mine; it caught my direction error
 because mine disagreed with theirs. **Neither of us reviewed the other's code in either case.**
+
+---
+
+# AMENDMENT 18 — the first non-featureless "which rows?" answer, REPLICATED on a second delta
+
+**Verified, controlled and replicated here from committed generations. Zero model calls.**
+
+The peer session registered a threshold test, predicted featureless, and the band fired — then
+decomposed it and found the effect was **not** in what they registered. Reproduced exactly on my
+side, and extended two ways they asked for.
+
+## The finding
+
+**Among rows the frozen source answers correctly, the delta is more likely to damage those whose
+answer appears LATER in the context.** Damage is scored on the source-correct denominator, so
+this is about what the delta *changes*, not about absolute difficulty.
+
+| delta | condition | src-correct | damaged | `answer_first_pos` | **`binding_sent_pos`** |
+|---|---|---:|---:|---|---|
+| NATIVE α=1.00 | low | 76 | 11 | +0.062 (0.60) | +0.058 (0.62) |
+| NATIVE α=1.00 | equal | 88 | 19 | +0.219 (0.041) | +0.126 (0.25) |
+| **NATIVE α=1.00** | **high** | 106 | 25 | **+0.429 (<0.0001)** | **+0.277 (0.0031)** |
+| LWF λ=0 | low | 76 | 26 | +0.096 (0.41) | +0.095 (0.41) |
+| **LWF λ=0** | **equal** | 88 | 23 | **+0.359 (0.0008)** | +0.118 (0.28) |
+| **LWF λ=0** | **high** | 106 | 23 | **+0.436 (<0.0001)** | +0.241 (0.012) |
+
+**REPLICATES on an independently trained delta.** Two training runs, different lanes, same bank,
+same pattern — so this is a property of the **delta family**, not of one run.
+
+## Their caveat tested, and it is partly right
+
+They flagged that `answer_first_pos` is **not the same quantity across conditions**: in `high`
+the answer is mentioned three times and it measures the first of three; in `low` it is the only
+mention. So I computed a **mention-invariant** feature — the position of the **binding sentence**,
+which is the identical construction in all three conditions.
+
+**The effect attenuates but does not vanish**: 0.429 → 0.277 on the native delta, 0.436 → 0.241
+on LWF, both still significant in `high`. **So part of the raw effect is the artifact they
+named, and part is not.**
+
+**Under Bonferroni across the 12 tests (0.05/12 = 0.0042)**: native `high` survives on **both**
+features; LWF `high` survives on `answer_first_pos` (<0.0001) but **not** on the mention-invariant
+one (0.012); LWF `equal` survives on `answer_first_pos` (0.0008). **The strongest claim that
+clears correction on both deltas is the raw-position one in `high`.**
+
+## What is established and what is not
+
+**Established.** Three previous "which rows?" questions in this programme came back featureless —
+per-item headroom, the alias rows the delta loses, the long-context region (only difficulty
+proxies survived). **This one does not, and it replicates.** It is the first item-visible handle
+on the binding regression.
+
+**Not established.** *Why it is confined to `high` salience once the mention-invariant feature is
+used.* `high` is where the answer is **most** mentioned and the source scores **best** (106/120),
+so "position matters most where the answer is loudest" is counterintuitive and unexplained. The
+peer's mention-spread check would bear on it and neither of us has run it.
+
+**Also not established — their registered question.** Nothing predicts *which α* recovers a
+damaged row (ρ = +0.332 / −0.332 / −0.151, inconsistent signs). **But per requirement 14 that
+null is reported with its power: n = 11/19/25, and at n = 25 Spearman needs |ρ| ≈ 0.40 for
+p < 0.05. It is "not powered to distinguish", not "no effect."**
+
+So **the threshold structure is real and highly ordered** — 0.3–0.6% nesting violations — **and
+its structure is not in the item.** What *is* in the item is **damage susceptibility**, which is
+a different question from the one the threshold framing asked.
