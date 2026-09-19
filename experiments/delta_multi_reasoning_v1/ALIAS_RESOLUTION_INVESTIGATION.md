@@ -597,3 +597,99 @@ One bank, one delta per lane, one draw per arm. `ord23` is **not acquisition-mat
 against λ=0.25's 197) — tolerable only because damage was already established indifferent to
 acquisition, and stated rather than waved past. The `ord23` twin is an extrapolation, not an
 interpolant. `quality_improvement_established` false, `release_permitted` false.
+
+---
+
+# AMENDMENT 7 — the claim narrows to ONE skill, and my justification for ord23 is replaced
+
+**Amendment 6 called direction "a real axis of the frontier." That is too broad and is narrowed
+here.** The peer session ran the second preservation instrument I said was the biggest structural
+weakness in the joint evidence, and it came back without sparing. Their numbers are taken at face
+value — their eval receipts do not carry the summary fields, so I could not reconstruct them, and
+that is stated rather than implied. Everything they have reported this session that I *could*
+check has been exact.
+
+| arm | angle | alias residual (this bank) | references retained /47 | arithmetic /150 |
+|---|---:|---:|---:|---:|
+| λ = 0 | 0° | — | 36 | 63 |
+| λ = 0.25 | 58.4° | **+7.2 pp** | **36** | **64** |
+| ord23 | 53.6° | **+4.4 pp** | **34** | **59** |
+
+**Neither rotated arm spares anything on either endpoint.** The narrowing is accepted.
+
+## But one of their two endpoints cannot speak to this, and I verified why independently
+
+The peer argued arithmetic is decisive on power: n = 150, so a +7.2 pp effect would be 10.8 rows,
+and only +1 was observed. **That argument does not hold, because arithmetic is not a preservation
+endpoint in this programme.** From INT-001's own frontier:
+
+| α | 0.00 (Supa) | 0.25 | 0.50 | 0.75 | 1.00 |
+|---|---:|---:|---:|---:|---:|
+| arithmetic /150 | **47** | 59 | 67 | 68 | **71** |
+
+**Arithmetic RISES with dose.** It is a partially *acquired* skill, not a damaged one — and the
+LWF lane agrees, with λ=0 at 63 against the source's 47, **+16 above the source**. Nothing is
+being forgotten there, so there is nothing for direction to spare, and a null on it is close to
+uninformative regardless of its n. Power is not the binding consideration; **endpoint class is.**
+
+## The endpoint that *is* the right class is genuinely uninformative, not negative
+
+`references_retained` is a real preservation endpoint — Supa scores 47, λ=0 scores 36, so it is
+**damaged by 11 rows**. λ=0.25 shows 36: no sparing. But scale the alias effect proportionally
+before reading that as a negative:
+
+  * on alias, λ=0 loses 71 of Supa's 270 correct rows, and λ=0.25 recovers **28** of them — a
+    **39%** recovery of the damage;
+  * the same fractional recovery on references would be **0.39 × 11 ≈ 4 rows**;
+  * an exact McNemar on 4 discordant pairs bottoms out at **p = 0.125**. It could not have
+    reached significance even if it were entirely real.
+
+**So the properly-classed second endpoint is underpowered by a factor of roughly three, and its
+null is weak evidence rather than a refutation.** Observing 0 where ~4 were expected is mildly
+suggestive of no transfer and nothing stronger.
+
+## Where that leaves the claim
+
+> **Direction sparing is demonstrated on exactly one skill — `alias_resolution` — across three
+> independent mechanisms. It has not been shown on any second skill, and the one endpoint of the
+> right class is too small to have shown it.**
+
+That is weaker than Amendment 6 and it is what the evidence supports. **The blocking item is now
+explicit and is nobody's side-quest: a properly powered preservation instrument on a second
+skill the training corpus does not exercise.** Until that exists, "direction beats dose" is a
+one-skill result.
+
+## My justification for `ord23` is replaced with a better one
+
+I registered that `ord23`'s acquisition mismatch (170 vs 197) was tolerable "because damage is
+indifferent to acquisition." The peer is right that this **imports an on-ray finding (the α
+ladder, collinear) into an off-ray comparison** — precisely the class of move DIRCTL exists to
+remove. I flagged it as load-bearing and it was the weak point.
+
+**The data defends the verdict better than my argument did, and the replacement is theirs:**
+
+| arm | acquisition cost | alias spared |
+|---|---:|---:|
+| `ord23` | **−28 rows** | **+4.4 pp** |
+| λ = 0.25 | **−1 row** | **+7.2 pp** |
+
+If losing acquisition *caused* sparing, the arm that lost 28 rows would spare **more** than the
+one that lost 1. It spares **less**. The confound is **anti-correlated** with the effect, so
+"arms that acquire less also spare more" predicts the opposite ordering to the one observed.
+**The GEOMETRY verdict stands on that, not on acquisition-indifference.**
+
+## Two corrections to the record from the same exchange
+
+**The mask's price is measured, not interpolated.** The peer built and scored the missing arm:
+the scalar at α = 0.836382 reaches **237 acquisition** against the mask's **232**, paired
+**p = 0.38**. So the mask buys **+2.8 pp of alias for 5 acquisition rows**, and the acquisition
+difference is **not significant**. Amendment 6 estimated ~2 rows from an interpolation; the
+measured figure is 5. (The scalar's 237 sits *above* the full delta's 235 — the α curve's own
+non-monotonicity again.)
+
+**On BF16, worth more than the infrastructure note I gave it.** Every delta in this programme is
+`FP32_trained − BF16_source`, so part of what is called "the delta" is the source's own
+quantisation residual. That does not invalidate anything — BF16 is what ships, so measuring
+against it is correct — but it means **‖δ‖ carries a rounding floor that is identical across all
+arms and therefore cancels in every paired comparison made here.** Nobody should later read a
+small ‖δ‖ as a small update.
