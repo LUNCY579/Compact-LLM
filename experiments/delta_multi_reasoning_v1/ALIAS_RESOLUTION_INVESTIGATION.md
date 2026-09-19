@@ -775,3 +775,70 @@ that distinguishes two rotations by anything other than their angle.
 
 **Two instruments, one draw each, a SPENT suite, and a rate comparison across banks that differ
 in difficulty.** Nothing here is confirmatory.
+
+---
+
+# AMENDMENT 9 — two denominators, both legitimate, and the one the conservation ratio mixed
+
+Re-scored from the committed raw generations after the peer session reported that two of three
+alias figures "reproduce under neither denominator". **They reproduce exactly. They are a
+different contrast.**
+
+| arm | acc /360 | **vs λ=0** | **vs its collinear twin** | twin | twin acc | norm ratio |
+|---|---:|---:|---:|---|---:|---:|
+| Supa | 0.7500 | — | — | — | — | — |
+| λ=0 | 0.5528 | — | — | — | — | 1.000 |
+| λ=0.25 | 0.6306 | +7.8 | **+7.2** | sc_m025 | 0.5583 | 0.892 |
+| λ=0.5 | 0.6806 | +12.8 | **+9.4** | sc_m05 | 0.5861 | 0.817 |
+| ord23 | 0.5861 | +3.3 | **+4.4** | d2twin | 0.5417 | 1.020 |
+
+  * **vs λ=0** — the arm's *total* effect: direction **and** its norm change together.
+  * **vs collinear twin** — the *direction* effect with **magnitude held fixed**. This is the
+    quantity DIRCTL-001 and DIRCTL-002 were built to isolate, and it is uniformly what this
+    programme's `+7.2 / +9.4 / +4.4` figures are.
+
+The gap between the columns is the norm effect, and it carries the right sign throughout:
+**+0.6, +3.3, −1.1**, negative exactly where the norm ratio crosses 1.0 (`ord23` is the only arm
+*larger* than λ=0). That is the collinear ladder restated, so it is an internal consistency
+check rather than new evidence — but it establishes that both columns are computed correctly.
+
+## What was actually wrong, and it was not the figures
+
+**The conservation ratio mixed contrasts.** It took the alias term as a **twin residual**
+(+9.4 pp) and the long-context term as a **λ=0 difference** (−17/256). Dividing one by the other
+compares two different things. The peer's conclusion — that the band is void on its arithmetic —
+**stands**; the attribution does not, and the difference matters because "the +9.4 was
+unreproducible" would retroactively discredit DIRCTL's entire construction, which reproduces to
+the decimal.
+
+## The consequence: the queued control is the missing half of the ratio
+
+A well-posed conservation test needs both terms on one denominator:
+
+| denominator | alias term | long-context term | ratio |
+|---|---:|---:|---|
+| **vs λ=0** | +12.8 pp | −6.6 pp | **1.93** — computable today, and not 1.0 |
+| **vs collinear twin** | +9.4 pp | **does not exist** | — |
+
+**No norm-matched twin has ever been scored on long context.** That is exactly the `sc_m025` run
+already queued behind the lease. It is therefore not a side control: it is the only route to a
+conservation ratio with a consistent denominator, and it must be read **per endpoint class**,
+because the λ=0 version above is contaminated by the IMPROVED-stratum give-back established in
+Amendment 8.
+
+## Corrections taken from the same exchange
+
+**λ=0.5's λ=0-referenced alias gain is +12.8 pp, not the +9.4 quoted in the joint document** —
++9.4 is its twin residual, and the conservation input needed the λ=0 figure. The anchor's
+dose-response on preservation is therefore steeper than either session had, and **λ=0.5's
+process acquisition cost becomes the highest-value unmeasured number here**: if it lands near
+λ=0.25's one row while buying +12.8 pp, that is the best acquisition-versus-preservation trade
+this programme has produced.
+
+**`--timeout 2700` was withdrawn by the peer and was never implemented here.** The probe's 900 s
+cap is part of its sha-pinned contract, so raising it would break the binding equality every arm
+was scored under. Only the *lesson* was kept — a timeout sized against uncontended throughput
+converts "slow" into "no result" — and the remedy is a quiet box, which is what the lease is for.
+
+**One coincidence flagged before anyone reads it as a result:** `sc_m05` and `ord23` both score
+**0.5861**. Different arms, different constructions, identical to four decimals at n = 360.
