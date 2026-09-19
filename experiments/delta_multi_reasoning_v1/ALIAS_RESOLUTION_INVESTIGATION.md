@@ -1516,3 +1516,85 @@ cell test would be required instead.
 So the `low` null survives, and the thing Amendment 18 said was unexplained is still unexplained:
 **position sensitivity is strongest where the answer is most mentioned and the source scores
 best.** What is now ruled out is that `low`'s silence is an artifact of how damage is scored.
+
+---
+
+# Amendment 20 — mean mention position is the feature; my redundancy reading is withdrawn
+
+**Class: MECHANISM SCOUT, and a LOOK — not registered in advance.** Receipt
+`MENTION_FEATURES.json`, script `analysis/mention_features.py`. Two sessions ran these partials
+independently and agree to three decimals where they overlap.
+
+Amendment 19 reported that in `high`, mean mention position beats first (+0.472 vs +0.429) and
+that **spread** carries a negative coefficient (−0.237, p = 0.014), which I read as *"closer to a
+redundancy account than a distance one"* and flagged as the reading I would put weight on.
+
+**Both marginals were unsafe.** With exactly three mentions, `first`, `mean`, `last` and `spread`
+are algebraically dependent on the same three numbers, and in `high` spread and mean correlate at
+−0.345. Any one marginal can be borrowed wholesale from another.
+
+## Rank partial correlations, four lane × condition cells
+
+Each feature controlling for mean position; mean controlling for spread. Bonferroni 0.05/4 =
+0.0125.
+
+| lane | cond | spread~mean | **mean** \| spread | first \| mean | last \| mean | spread \| mean |
+|---|---|---:|---:|---:|---:|---:|
+| native α=1 | `equal` | **+0.022** | +0.230 (0.030) | +0.051 (0.64) | −0.099 (0.36) | −0.082 (0.45) |
+| native α=1 | `high` | −0.345 | **+0.428 (0.0001)** | +0.103 (0.30) | +0.041 (0.68) | −0.090 (0.36) |
+| LWF λ=0 | `equal` | **+0.022** | **+0.286 (0.0073)** | +0.245 (0.020) | **−0.324 (0.0019)** | −0.222 (0.041) |
+| LWF λ=0 | `high` | −0.345 | **+0.338 (0.0003)** | +0.210 (0.031) | −0.051 (0.60) | −0.174 (0.076) |
+
+**Mean position survives everything: positive in 4/4 cells, clearing correction in 3/4.** No
+single-mention feature retains anything that clears — `first` is +0.05 to +0.25 with a best p of
+0.020, `last` is inconsistent in sign.
+
+> **The MEAN position of the answer's mentions predicts damage. No individual mention adds
+> anything beyond it.**
+
+That kills the *distance-to-first-retrievable-mention* account: if the mechanism were the leading
+edge, `first` should survive controlling for mean and it does not, on either delta.
+
+## My redundancy reading: withdrawn — but it is not refuted, and the difference matters
+
+`spread | mean` is −0.082 / −0.090 / −0.222 / −0.174. **No cell clears correction.** The reading
+I said I would weight has no evidence and I withdraw it.
+
+**But per requirement 14 this null must be reported with its power, and it is a weak null.** The
+sign is negative in **4/4** cells (a sign test gives p = 0.125 — no support, but no contradiction
+either), and at n = 88–106 with the corrected bound 0.0125, roughly **|ρ| ≥ 0.26–0.28** was
+detectable. The observed partials are 0.08–0.22. **So this rules out a large independent
+dispersion effect and cannot rule out a small one.** "Withdrawn for lack of evidence", not
+"refuted".
+
+## Why `equal` is the load-bearing cell, and why a `high`-only argument cannot make this point
+
+The natural place to partial is `high`, where spread has the most range. **That is exactly where
+spread and mean are entangled (−0.345)**, so the partial there asks about a nearly-collinear
+pair, and it does most of the work — −0.237 collapses to −0.090 because a large shared component
+is removed.
+
+**In `equal` the two are orthogonal (+0.022).** Nothing is subtracted: the partial is
+indistinguishable from the marginal (−0.074 → −0.082 native; −0.207 → −0.222 LWF). So `equal` is
+the *clean* test of dispersion despite having fewer mentions — and it comes back **split between
+the two deltas**, one near zero and one at −0.222 that still misses correction.
+
+That is a better reason to withdraw redundancy than the `high` partial gives. The `high` partial
+shows spread *can* be explained away; `equal` shows that where it cannot be explained away, it
+does not replicate.
+
+## One cell that does not fit, flagged rather than explained
+
+`last | mean` in LWF `equal` is **−0.324, p = 0.0019**, which clears correction with a sign the
+other three cells do not share (−0.099, +0.041, −0.051). One cell in four, inconsistent in sign,
+in the lane and condition with no counterpart. **I am recording it as unreplicated and not
+building on it.** It is the kind of cell that becomes a story if quoted alone.
+
+## What this changes about the open question
+
+Amendment 19 left *"position sensitivity is strongest where the answer is most mentioned and the
+source scores best"* unexplained, and named the spread coefficient as the first thing bearing on
+it. **That thing is now withdrawn, so the question is more open than it was, not less.** The
+surviving description — mean position governs, dispersion adds nothing detectable — is consistent
+with an integration account in which all mentions contribute and their average position matters,
+but nothing registered that in advance and no test here distinguishes it from alternatives.
