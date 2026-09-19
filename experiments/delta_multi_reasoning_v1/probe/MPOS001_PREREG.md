@@ -579,3 +579,63 @@ cue caveats from Amendment 1b and the RESULT amendment apply unchanged: the conf
 withdrawn as a measurement, and the load-bearing argument is the **raw error-count** one — in the
 `early` band the source is better than the delta, so an early-favouring cue cannot produce a
 late-band collapse. That argument will be recomputed for Sparse and reported beside the primary.
+
+---
+
+# RESULT (Addendum 2) — the mask PARTIALLY repairs the mechanism; registered band HIT
+
+Receipt `MPOS_RESULT_WITH_SPARSE.json`. Arm verified before generation (`a28629c9d3454fbf…`,
+310/310 F32, `generation_config` byte-identical to the other three). Family **0.05/6 = 0.00833**,
+derived in the scorer from the lane count rather than hard-coded.
+
+## Position cost on `k3d1`
+
+| arm | early errors | late errors | position cost | vs source |
+|---|---:|---:|---:|---:|
+| frozen Supa | 6 | 15 | **0.0625** | — |
+| native α=1.00 | 13 | 63 | **0.3472** | +0.2847 |
+| LWF λ=0 | 18 | 62 | 0.3056 | +0.2431 |
+| **Titan-Sparse (k=0.25)** | 12 | 44 | **0.2222** | **+0.1597** |
+
+> **Titan-Sparse closes 44% of the gap between the full delta and the frozen source.**
+
+**Registered band was +0.05 to +0.20. Observed +0.1597 — inside it**, and the registered reading
+for that range was *"partial repair"*. The prediction hit, and it was committed at `0254572f`
+before the arm was generated.
+
+| paired contrast (source cancels) | mean | discordant | perm p | clears 0.00833? |
+|---|---:|---:|---:|---|
+| native − Sparse | +0.1250 | 20 | **0.0001** | **YES** |
+| LWF − Sparse | +0.0833 | 24 | 0.0227 | **no** |
+
+**So "Sparse repairs more than the native delta" is supported at the corrected bound; "Sparse
+repairs more than the LWF delta" is not.** Stated that way rather than pooled.
+
+## The confound, checked the way the RESULT amendment requires
+
+The cue table stays withdrawn as a measurement. The load-bearing check is the raw error-count
+argument, recomputed for Sparse:
+
+* **In `early`, the source is still better than Sparse — 6 errors against 12.** An
+  early-favouring cue inflating Sparse's early performance would push it *toward* the source
+  there; it does not.
+* Sparse's earliest-person cue rate is **0.6000 against the source's 0.6190 — a NEGATIVE
+  differential (−0.019)**. A negative differential cannot manufacture a positive interaction.
+
+## What this establishes, and the caveat that must travel with it
+
+**Establishes:** the artifact that scores better on the alias *endpoint* also measurably repairs
+the *causal mechanism* this bank isolates. Those were separate facts until now, and the peer
+session's framing was right that the split was the thing worth testing.
+
+**Does not establish a ceiling.** The peer's mask ladder, measured after this was registered,
+finds **k=0.25 is the weakest point on it** — deviations from the scalar curve run +21.7 / +9.8 /
++1.2 at k = 0.10 / 0.25 / 0.50. Titan-Sparse is the **middle** of that ladder. So **44% is a
+lower bound on what masking can do for this mechanism, not an estimate of it**, and `s10` is the
+arm that would discriminate. The registered band was not widened to accommodate this; it is
+attached as an interpretation note.
+
+**`k1d1` remains underpowered on all three lanes** (MDEs 0.129 / 0.145 / 0.106 against observed
+0.076 / 0.049 / 0.063) and is reported as estimates with intervals, never as nulls.
+
+One bank, one draw. MECHANISM SCOUT. Nothing promoted, no confirmation budget spent.
