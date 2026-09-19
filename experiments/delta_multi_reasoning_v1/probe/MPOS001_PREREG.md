@@ -43,18 +43,47 @@ string for both arms, so it contributes equally to `d_source` and `d_delta` and 
 difference**. The absolute band comparison has no such protection: it is between rows, and a
 band-dependent cue changes which rows are solvable at all.
 
-## Registered predictions
+## Registered predictions — PRIMARY restricted to the two CLEAN cells
 
-| cell | k | d | ALIAS-001 analogue | predicted `d_delta - d_source` |
-|---|---|---|---|---|
-| `k1d3` | 1 | 3 | `low` | **0.00 to +0.08** — `low` was the observational null |
-| `k3d1` | 3 | 1 | `high` | **+0.10 to +0.30** — `high` carried rho = +0.43 |
-| `k1d1` | 1 | 1 | none | **+0.03 to +0.15** |
-| `k3d3` | 3 | 3 | none | **+0.10 to +0.30** |
+**The d=3 cells cannot carry the primary. Measured, not argued** (see the limitation section).
 
-**`k3d3` is the discriminating cell.** If the effect tracks **mention count**, `k3d1` and `k3d3`
-both show it. If it tracks **salience ratio**, `k3d1` shows it and `k3d3` does not. The
-prediction above backs **count** over **ratio**, and I will be judged on it.
+| cell | k | d | cue swing | manufacturable | **role** | predicted `d_delta - d_source` |
+|---|---|---|---:|---:|---|---|
+| `k1d1` | 1 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.03 to +0.15** |
+| `k3d1` | 3 | 1 | **0.000** | **0.000** | **PRIMARY** | **+0.10 to +0.30** |
+| `k1d3` | 1 | 3 | 0.812 | 0.134 | secondary | +0.00 to +0.08 |
+| `k3d3` | 3 | 3 | 0.938 | **0.155** | secondary | +0.10 to +0.30 |
+
+**Primary: `k1d1` and `k3d1`, two lanes, Bonferroni over 4 = 0.0125.** These are the cells where
+no band-dependent answer-agnostic rule exists, so nothing can be manufactured. They test the
+question this bank was built for: **is the position effect causal, or only observational?**
+
+The d=3 cells are reported **beside their manufacturable bound**, never alone. A result inside
+its bound is reported as *"not separable from cue exploitation"*, not as a finding.
+
+## The count-vs-ratio decomposition is NOT deliverable on this design
+
+Registered as a failure of the design, before any run, because the earlier draft claimed it.
+
+The lattice is: `k1d1` (count 1, ratio 1:1), `k1d3` (1, 1:3), `k3d1` (3, 3:1), `k3d3` (3, 1:1).
+**Every contrast that isolates one factor requires `k3d3`**:
+
+* count, holding ratio at 1:1 → `k1d1` vs **`k3d3`**
+* ratio, holding count at 3 → `k3d1` vs **`k3d3`**
+
+And `k3d3` is the most contaminated cell in the bank (manufacturable 0.155 against a predicted
+0.10–0.30). The two clean cells, `k1d1` and `k3d1`, differ in **both** count and ratio at once —
+which is **exactly the ALIAS-001 confound this bank was built to break.**
+
+> **So MPOS-001 can establish whether the position effect is CAUSAL. It cannot separate mention
+> count from salience ratio. That part of the original motivation is withdrawn before any GPU is
+> spent on it.**
+
+**What the decomposition would actually need:** a bank that varies k and d at **fixed** answer
+position. With position held constant there is no band, no band-dependent rule, and no cue to
+exploit — the whole confound disappears because it is created by manipulating position. The two
+questions need two banks, and trying to answer both in one is what produced the contaminated
+cells. Not built, not requested.
 
 ## Effect size the manipulation actually delivers — asserted at build time
 
@@ -126,8 +155,22 @@ Recorded because the bank passed several checks in states that were wrong:
    direction: cue-solvable rows cannot be damaged, so the band with more of them shows a lower
    damage rate for free.
 
+7. **All three arms exploit the positional cue at ~2x chance when they err**, measured on
+   ALIAS-001 by the peer session and reproduced here on the bank's declared 12-name pool:
+   Supa 54/85 = 0.635, native 93/132 = 0.705, LWF 109/151 = 0.722, against a 0.333 chance
+   baseline with exactly 4 candidates per row. **The differentials are +0.069 (p = 0.30) and
+   +0.087 (p = 0.19) — in the direction that would inflate a positive interaction, and not
+   significant.** Per requirement 14 only a differential of **>= ~0.165** was detectable at these
+   denominators, so anything below that is **not excluded**. That bound is what the
+   manufacturable column above is computed from.
+
+   *Methodological note on that measurement:* rows where the cue **is** the reference are
+   excluded from the denominator, because an error cannot match the cue there. Including them
+   depresses every rate and by a different amount per arm, since the arms have different error
+   sets.
+
 **Defect 4 is the one to carry forward: it was semantic, and no mechanical check can see a
-sentence that is merely untrue.**
+sentence that is merely untrue. Defect 6 is the one that cost the most: it removed a claim.**
 
 ## Not registered here
 
