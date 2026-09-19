@@ -215,6 +215,11 @@ def main(argv=None) -> int:
         "interpreter": a.python,
         "generator_sha256": sha256_file(a.generator),
         "generator_unmodified": True,
+        # The DRIVER's own hash. generator_sha256 identifies stage2_generate.py, which this
+        # never edits -- but the driver slices the prompts and merges the outputs, and until
+        # now nothing recorded WHICH driver did that. Same omission class as the weight hash:
+        # the manifest named the code's job without identifying the code.
+        "driver_sha256": sha256_file(Path(__file__).resolve()),
         # identifies the WEIGHTS, not the path; see the note above main()'s weight block
         "model_weight_sha256": weight_sha,
         "model_weight_mtime": weight_mtime,
