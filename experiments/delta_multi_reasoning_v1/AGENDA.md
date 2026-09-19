@@ -8,11 +8,22 @@ clock on this host; "no training" means zero optimizer steps.**
 
 ## Part 1 — what is established, by confidence
 
-### Confirmed (one instrument, registered before the read, never used to select)
+### Confirmed (two instruments, each registered before its read, neither used to select)
 
-**The k=0.25 delta damages literal-`UNKNOWN` abstention.** 40/128 → 25/128 on RCI-001's sealed
-bank, exact McNemar p = 6.10 × 10⁻⁵, **zero gains and fifteen losses**. Registered criterion
-met. This is the programme's only confirmed claim and it is a caution, not a capability.
+**1. The delta answers the interrogative rather than the context.** RCI-002, 120 incongruent
+rows: B emits a person on 85, D on **99**, **14 discordant / 0 reversals**, p = 1.22 × 10⁻⁴.
+The control decides it — on **congruent** rows of the same reasoning, each system emits a person
+**once in 120**. Interaction p = 8.2 × 10⁻⁵. This is the programme's first confirmed *mechanism*
+rather than a caution, and it is the fifth account of the RCI-001 damage, registered in advance
+rather than told afterwards.
+
+**2. The delta damages literal-`UNKNOWN` abstention.** 40/128 → 25/128 on RCI-001's sealed bank,
+p = 6.10 × 10⁻⁵, **zero gains and fifteen losses**. Still confirmed — but **reframed by RCI-002**:
+the frozen source abstains 0.547 when a salient note names the missing fact and **0.141** when
+the same fact is missing and the sentence is phrased like its answerable twin. So this is better
+stated as *"the delta is worse at responding to an explicit unanswerability marker"*. Whether it
+damages abstention without one is open; RCI-002's E1 was underpowered by construction once the
+marker was matched away (B 23/160, D 20/160, p = 0.25) and was **demoted before the read**.
 
 ### Measured, one training draw, report-only
 
@@ -163,7 +174,7 @@ answer is worth more per GPU-minute than anything else on this list.
 Also outstanding and cheap: a **BF16** arm. 4-bit cost its own control 11 long-context rows, so
 BF16 should score above 180 and has never been run.
 
-### 5. ~~RCI-002~~ — **BUILT**. *`confirm/build_rci2.py` → `rci002-20260918/`.*
+### 5. ~~RCI-002~~ — **BUILT, READ, SPENT**. *`confirm/build_rci2.py` → `rci002-20260918/`.*
 
 Done, and it cost more than the "two one-line fixes" this entry predicted — the fixes below
 are what shipped, and four more were found by measuring rather than reasoning:
@@ -182,9 +193,8 @@ are what shipped, and four more were found by measuring rather than reasoning:
   52 of 384 answerable rows turned on a leading article, and two sessions spent real effort
   reconciling numbers that never disagreed about the model.
 
-Two pre-registered endpoints, 640 sealed rows, 8 strata, prereg at
-`confirm/RCI002_CONFIRM_PREREG.md`. **The sealed read is NOT spent** — that is a separate,
-irreversible decision on a frozen candidate, and it is the operator's call, not a build step.
+640 sealed rows, 8 strata, one surviving confirmation endpoint. Read spent 2026-09-18 on
+operator authorisation; result in `confirm/RCI002_CONFIRMATION_001.md`. **CONFIRMED.**
 
 What the build actually taught, beyond the planned fixes: the gate blocked its own bank **five
 times**, each on a defect introduced while fixing the previous one. The decoy register added to
