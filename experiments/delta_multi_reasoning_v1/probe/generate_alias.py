@@ -100,6 +100,21 @@ def main(argv=None) -> int:
             print(f"[lease] cleared a STALE lease: {got['cleared_stale']}", flush=True)
         print(f"[lease] acquired, {got['free_gib_at_acquire']} GiB free", flush=True)
 
+    # WEIGHT IDENTITY. Arms are identified by PATH, and the trainer retrains into the same
+    # path -- a peer session found two complete probe series over one directory whose raw
+    # generations differed on 122-171 of 384 rows, because the weights had been rewritten
+    # between them. Neither the implementation digest nor the device/numerics block detects a
+    # weight swap. Recording the hash makes "is this result about the weights I think?" a
+    # one-line check instead of an hour of mtime archaeology.
+    model_dir = Path(a.model)
+    wfile = model_dir if model_dir.is_file() else model_dir / "model.safetensors"
+    weight_sha = sha256_file(wfile) if wfile.exists() else None
+    weight_mtime = wfile.stat().st_mtime if wfile.exists() else None
+    if weight_sha is None:
+        print(f"[weights] WARNING: no weight file at {wfile} -- hash not recorded", flush=True)
+    else:
+        print(f"[weights] sha256 {weight_sha[:16]}...", flush=True)
+
     rows = read_jsonl(a.prompts)
     if a.limit:
         rows = rows[:a.limit]
@@ -195,6 +210,11 @@ def main(argv=None) -> int:
         "interpreter": a.python,
         "generator_sha256": sha256_file(a.generator),
         "generator_unmodified": True,
+        # identifies the WEIGHTS, not the path; see the note above main()'s weight block
+        "model_weight_sha256": weight_sha,
+        "model_weight_mtime": weight_mtime,
+        "weight_identity_note": ("arms are identified by path and the trainer retrains into the "
+                                 "same path; a result is valid only for the weights hashed here"),
         "serving_path": last["serving_path"],
         "wall_seconds": round(time.time() - started, 1),
         "generated_tokens": ({"min": gen[0], "p50": gen[len(gen) // 2], "max": gen[-1]}

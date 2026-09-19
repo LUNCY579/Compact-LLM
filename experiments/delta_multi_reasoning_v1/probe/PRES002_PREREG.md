@@ -243,3 +243,41 @@ RCI-002's unreadable-from-either-direction endpoint was.
 tasks are **wrong-class endpoints** — λ=0 *improves* them 29/0. Consistent with everything else
 here, this delta damages some skills and improves or ignores others, and eligibility has to be
 measured before anything else is.
+
+---
+
+# PRES-004 CALIBRATION — article fix worked; one stratum dropped; target missed
+
+**One arm (Supa), scored before spending any others** — the lesson from two dead banks.
+
+| stratum | n | floor | **Supa** | gate | disposition |
+|---|---:|---:|---:|---|---|
+| `person_binding` | 120 | 0.167 | **0.833** | CLEARS | **usable** |
+| `object_binding` | 120 | 0.167 | **0.858** | CLEARS | **usable** |
+| `place_binding` | 120 | 0.175 | **0.967** | **ABOVE_CEILING** | **DROPPED** |
+
+**The convention fix is complete: 0 of 360 rows turn on an article**, against PRES-003's 241/360.
+Article-free proper nouns plus article-tolerant scoring plus a build-time refusal did the job.
+
+**`place_binding` is dropped by the registered two-sided rule** — a stratum whose source sits at
+ceiling cannot show damage. Dropped, not reinterpreted.
+
+## The calibration stratum fired, and it says the bank is easier than intended
+
+`person_binding` rebuilds ALIAS-001's task under ALIAS-001's `low` salience profile, where the
+frozen source scores **0.633**. It scored **0.833** — a **20-point miss**. The construction is
+not reproducing its reference, and I do not have a diagnosis: line counts, salience profile,
+prompt lengths and activity templates all match within tolerance.
+
+**That is exactly what the stratum was carried for, and it reports rather than being hidden.**
+
+**Proceeding anyway, with the reason stated.** `gate()` returns CLEARS, not ABOVE_CEILING: 20 of
+120 rows are already wrong, and a relative loss the size of ALIAS-001's (−19.7 pp from 0.750,
+~26% of its correct rows) would cost ~26 rows here — comfortably detectable. **The bank has
+less headroom than designed but enough to run**, and the two usable strata still differ only in
+the answer's type, which is the contrast the whole build exists for.
+
+**The caveat that must travel with any result from it:** PRES-004 is **easier than ALIAS-001**,
+so a *smaller* damage effect here than on ALIAS-001 is ambiguous between "persons are special"
+and "this bank is easier", while a *comparable or larger* effect is not. Only the second
+direction is clean, and that asymmetry is registered now rather than discovered later.
