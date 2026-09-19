@@ -132,6 +132,50 @@ interrogative, and role-binding or output-type is the better account. No excess 
 rows → it did not replicate, and the RCI-001 observation was a property of that bank. **Both are
 reportable and neither is a failure of the instrument.**
 
+### Red-team result, added before the claim — E1's true mechanical floor is **1.000**
+
+Receipt: `confirm/redteam_rci2.py` → `REDTEAM_VERIFIED.json`. The twenty-four proposals my
+workflow could not verify are implemented and executed. Two of them solve E1 outright:
+
+| attack | target | n | rate | published floor | |
+|---|---|---:|---:|---:|---|
+| **`trigger_absence_abstainer`** | **E1** | 64 | **1.000** | 0.000 | abstain when the task's characteristic phrase is absent |
+| **`lacuna_reader`** | **E1** | 64 | **1.000** | 0.000 | read the lacuna note, abstain if it names this task's block |
+| `block_census_abstainer` | E1 | 64 | **0.000** | 0.000 | count blocks — the length tell, and it fails |
+| `sole_alias_anchor` | `alias_resolution` | 32 | **0.750** | 0.292 | unique filler of a template |
+| `exam_template_day` | `temporal_correction` | 32 | **0.750** | 0.542 | day inside a fixed template |
+| everything else | | | ≤ 0.281 | | does not beat its floor |
+
+**E1's abstention task is mechanically solvable at 1.000 by a regex.** The build claimed E1 was
+extraction-immune; that claim was true and too narrow — no extractor can *emit the sentinel*,
+but a rule that checks whether the determining phrase is present can. That is a floor the
+published set did not contain, found by the same class of attack that broke RCI-001, and this
+time **before** the seal rather than after.
+
+`block_census_abstainer` scoring **0.000** is the lacuna design working: answerable rows drop a
+block too, so block counts carry nothing. The tell that survives is semantic, not structural.
+
+**What this changes, and what it does not.**
+
+- **It does not touch E1's verdict.** E1 is registered as a **paired** endpoint. A deterministic
+  rule emits the same string for both systems, yields zero discordant pairs, and cannot
+  manufacture a difference. Nor can it compress power here: B and D sit at 0.55 and 0.33 on the
+  twin, nowhere near the rule's 1.000, so discordant pairs do not collapse.
+- **It forbids any absolute claim from E1.** "B abstains correctly on N of 160" is not evidence
+  that B is doing something hard — it is evidence that B does part of what a regex does
+  completely. **No sentence anywhere may read E1 as a competence measurement.** Registered here
+  so it cannot be quietly forgotten when the result is written up.
+- **`alias_resolution` and `temporal_correction` have true floors of 0.75**, not the 0.29 and
+  0.54 published. Neither is an endpoint; both are controls, and their absolute readings are
+  correspondingly weak.
+
+**The fix for RCI-003, specified now rather than discovered later:** make the unanswerable
+variant *present but insufficient* rather than absent. Keep the determining sentence's template
+and destroy only its content — "the standing exception applied to one role, but the entry naming
+it is illegible". Phrase present, answer absent, and `trigger_absence_abstainer` drops to chance.
+Not done here: it requires a rebuild and a fresh calibration, and E1's paired verdict does not
+need it.
+
 ### Cross-bank check, added before the claim — receipt `CROSS_BANK_EMISSION.json`
 
 RCI-002's twin did not reproduce RCI-001's **accuracy** effect (B 14 → D 12, p = 0.50, against
