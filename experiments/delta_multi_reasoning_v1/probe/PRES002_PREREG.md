@@ -390,3 +390,57 @@ competing mentions, 153 context words).
 **If `person_binding`'s source accuracy stays near 0.833 with the cue removed, the cue was not
 the cause and the 20-point calibration miss is still unexplained** — which would be the most
 informative outcome and is the one I am not expecting.
+
+---
+
+# PRES-005 CALIBRATION — my registered prediction FAILED, and the gap is now a finding
+
+**The disconfirmer I registered as "the one I am not expecting" is the one that fired.**
+
+| stratum | PRES-004 (with cue) | **PRES-005 (cue removed)** | change |
+|---|---:|---:|---:|
+| `person_binding` | 0.833 | **0.850** | **+1.7 pp** |
+| `object_binding` | 0.858 | 0.842 | −1.7 pp |
+| `place_binding` | 0.967 | 0.925 | −4.2 pp (still ABOVE_CEILING, dropped) |
+
+Registered: *"person_binding's source accuracy DROPS from 0.833 toward ALIAS-001's 0.633."* It
+**rose**. **The `The the` cue was not the cause of the 20-point calibration miss.**
+
+## Three hypotheses tested, three refuted
+
+| hypothesis | test | verdict |
+|---|---|---|
+| **salience parameters** (peer's) | 3 distractors, 9.0:1 competing mentions, 153 ctx words — **matched to ALIAS-001 `low` exactly** | **REFUTED** |
+| **the `The the` cue** (mine) | removed it; source accuracy went **up** 1.7 pp | **REFUTED** |
+| **name tokenisation** | median **6.0** tokens/name in both pools, ranges 5-9 and 5-8 | **REFUTED** |
+
+Remaining uncontrolled differences are small: 3 activity templates against ALIAS-001's 5, 4
+filler lines against 5, an 8-name pool against 12.
+
+## What this costs, and what it buys
+
+**Costs:** the person-vs-ALIAS-001 magnitude comparison **stays withdrawn** — now for a better
+reason than the one I withdrew it for. It is not a suspected cue; it is that **two banks built
+to the same written specification differ by 20 points for reasons none of the obvious parameters
+explain.**
+
+**Buys — and this is the part that generalises beyond this programme:**
+
+> **Matched construction parameters do not imply matched difficulty.** Salience ratio, distractor
+> count, context length, bridge form, answer-token length and cue-freedom were all matched or
+> tested, and the two banks still differ by 20 points. **A "known-positive reference scale"
+> imported from another bank is not a scale.**
+
+That bears directly on the peer session's suggestion — which I adopted — to report ALIAS-001's
+contrast *beside* PRES results as a sensitivity reference. **On this evidence it cannot serve as
+one.** The within-run `person_binding` stratum can, and that is exactly why it was carried.
+
+**The headline is untouched**, because it never depended on the cross-bank comparison:
+
+> **The delta damages object-valued binding as well as person-valued.** `person_binding` and
+> `object_binding` sit within one bank, under one construction, in one run — and that contrast
+> is immune to whatever makes this bank easier than ALIAS-001.
+
+**Incidental:** 11 of 360 rows now turn on an article (0 in PRES-004), because restoring *"was
+the glass spirit-level"* lets the source answer with the article. Article-tolerant scoring
+absorbs it and it is 3%, under the registered 10% bound — recorded rather than left to be found.
