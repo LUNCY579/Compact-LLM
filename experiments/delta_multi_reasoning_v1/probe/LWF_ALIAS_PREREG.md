@@ -116,3 +116,46 @@ repair never netted; every subgroup rate scored over the rows the *baseline* got
 3. **One training draw per arm, one seed.** Three λ points is not a dose curve.
 4. **A mechanism scout is not a confirmation.** Whatever this returns, it cannot promote an
    intervention, and the confirmation instruments remain spent.
+
+---
+
+# ADDENDUM 1 — this also tests the coupling LOOK, and λ = 0.25 is the discriminating cell
+
+**Added before any prediction file was read; the four generations were still running.** It
+registers a reading of the *already-registered* residual, and adds no new endpoint.
+
+`analysis/coupling_ladder.py` found, as a LOOK, that damage tracks **magnitude** rather than
+marginal acquisition — cost per acquisition row spans 160× across the α ladder. That LOOK needs
+a TEST on independent arms. These arms are it, for free, because the lane varies acquisition at
+roughly fixed recipe:
+
+| arm | acquisition /384 | anchored |
+|---|---:|:--:|
+| λ = 0 | 198 | no |
+| λ = 0.25 | **197** | yes |
+| λ = 0.5 | **125** | yes |
+
+**λ = 0.25 acquires essentially exactly what λ = 0 acquires (197 vs 198) while carrying an
+active anchor. λ = 0.5 acquires 73 rows fewer.** That dissociation is what makes the three
+accounts separable, and it is worth writing down that **ANCHOR PROTECTS and STRONG CAPACITY make
+the same prediction at λ = 0.5** — both expect a positive residual there, for different reasons.
+Reporting a positive λ=0.5 residual as support for whichever account is preferred would be
+exactly the post-hoc move this programme keeps having to undo.
+
+| account | residual at λ = 0.25 | residual at λ = 0.5 |
+|---|---|---|
+| **ANCHOR PROTECTS** — the anchor preserves unexercised skills | **positive** | positive |
+| **STRONG CAPACITY** — damage is the price of acquisition | **≈ 0** (it acquired the same, so it spent the same) | positive (it acquired 73 rows fewer) |
+| **MAGNITUDE ONLY** — damage is the price of moving the weights | ≈ 0 | **≈ 0** |
+
+**So λ = 0.25 is the cell that separates the anchor from capacity, and λ = 0.5 is the cell that
+separates capacity from magnitude.** Neither alone decides anything.
+
+The existing `verdict_rule` in `probe/score_lwf_alias.py` is unchanged and still governs the
+recorded verdict; this addendum only fixes in advance which account a given residual pattern
+supports, so that it cannot be chosen afterwards.
+
+**A power caveat stated now.** These are single arms at n = 360 with a ±2.5 pp registered band,
+so a residual near zero is "not detectably different from the magnitude prediction" and is not
+positive evidence of exact zero. With three λ points and one seed, nothing here can settle
+capacity; it can only fail to support it, or support it.
