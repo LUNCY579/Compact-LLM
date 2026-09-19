@@ -248,6 +248,39 @@ def test_structural_class_catches_the_complement_leak():
           str(structural(rows)["set_complement_singleton"]))
 
 
+def test_question_token_complement_detects_answerability():
+    """THE ONE THAT NEARLY SHIPPED. RCI-002's first sealed draft built unanswerable rows by
+    DELETING the block that determines the answer -- which also deletes the entities the
+    question names. Counting question tokens absent from the context scored 40/64 correct
+    abstentions at ZERO false abstentions, beating the frozen baseline's 35. Found by a peer
+    audit inside the pre-seal window."""
+    print("answerability detectable from question/context set difference is caught")
+    leaky, fixed = [], []
+    for i in range(20):
+        q = f"Who was permitted to enter Room{i} without a countersigned docket?"
+        # DELETED: the question's own vocabulary goes with the answer.
+        leaky.append({"id": f"u{i}", "stratum": "carve", "reference": "UNKNOWN", "question": q,
+                      "context": f"Duty rosters list the warden. Room{i} was swept."})
+        # PRESENT BUT INSUFFICIENT: framing stays, only the naming line goes.
+        fixed.append({"id": f"u{i}", "stratum": "carve", "reference": "UNKNOWN", "question": q,
+                      "context": (f"Access to Room{i} required a countersigned docket from "
+                                  f"every member of staff. One standing exception was "
+                                  f"permitted to enter Room{i} without one, but the line "
+                                  f"naming it is torn away.")})
+    for rows in (leaky, fixed):
+        for i in range(20):
+            q = f"Who was permitted to enter Room{i} without a countersigned docket?"
+            rows.append({"id": f"a{i}", "stratum": "carve", "reference": "warden", "question": q,
+                         "context": (f"Access to Room{i} required a countersigned docket from "
+                                     f"every member of staff. One standing exception applied "
+                                     f"there: the warden was permitted to enter Room{i} "
+                                     f"without one.")})
+    lk = structural(leaky, abstain="UNKNOWN")["abstain_if_question_tokens_absent"]
+    fx = structural(fixed, abstain="UNKNOWN")["abstain_if_question_tokens_absent"]
+    check("deleting the block makes answerability detectable", lk == 20, str(lk))
+    check("present-but-insufficient closes it", fx == 0, str(fx))
+
+
 def test_list_arity_attack():
     """`inspected_list_arity`: when exactly one item is always withdrawn, the answer is the
     listing's length minus one and the withdrawal clause is never read."""
@@ -276,6 +309,7 @@ def main() -> int:
                test_ceiling_blocks_a_saturated_instrument, test_underpowered_is_not_failure,
                test_always_abstain_floor, test_pack_structure_is_required,
                test_structural_class_catches_the_complement_leak,
+               test_question_token_complement_detects_answerability,
                test_list_arity_attack,
                test_convention_sensitivity_finds_the_article_rows,
                test_per_stratum_gate_catches_the_decorative_stratum,

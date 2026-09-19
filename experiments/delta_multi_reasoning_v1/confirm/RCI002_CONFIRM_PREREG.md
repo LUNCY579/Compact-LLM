@@ -3,29 +3,65 @@
 **Written and committed BEFORE `reads_used` is claimed, before the sealed bank is rendered, and
 before any sealed row is scored. RCI-002 carries a read budget of ONE, like its predecessor.**
 
-RCI-001 is spent. Its generator is not, and this is its successor with the defects fixed and
-**two** endpoints instead of one. Build: `confirm/build_rci2.py` → `rci002-20260918/`.
+RCI-001 is spent. Its generator is not, and this is its successor with the defects fixed. It
+was designed with two endpoints; **one survived calibration**, and why the other did not is
+recorded below rather than quietly dropped. Build: `confirm/build_rci2.py` → `rci002-20260918/`.
 
 ---
 
-## Why there are two endpoints
+## Why there is one confirmation endpoint, and not two
 
 RCI-001 registered one endpoint and confirmed it. Decomposing that read afterwards turned up a
 **second and larger effect nobody had separated**, and then five successive mechanism accounts
 for it died — three of them because a single "damage" framing had merged two different things.
 The whole point of this instrument is that the second effect gets registered in advance instead
-of being discovered in a post-hoc split of five task types.
+of being discovered in a post-hoc split of five task types. It was also designed to replicate
+the first. Calibration says it cannot, for a reason worth more than the replication would have
+been.
 
-| | E1 — abstention | E2 — wh-incongruence |
+**E2 is the sole confirmation endpoint. E1 is demoted to a reported secondary, and the reason
+is the most important thing this build found.**
+
+| | E2 — wh-incongruence **(CONFIRMATION)** | E1 — abstention **(reported only)** |
 |---|---|---|
-| rows | all **160** unanswerable | **120** answerable rows of the two incongruent carve-out strata |
-| metric | correct literal `UNKNOWN` | **emits a person name**, where the context determines none |
-| status | **replication** of RCI-001's confirmed result on a fresh bank | **new**, and the first pre-registered test of the wh-compliance account |
-| convention risk | none — a literal sentinel admits no article or punctuation ambiguity | none — membership in a name vocabulary, not string equality with a reference |
-| registered band (from the twin) | B **42–133**, D **22–83** | B **20–80**, D **30–105** |
-| direction | **D < B** | **D > B** |
+| rows | **120** answerable rows of the two incongruent carve-out strata | all **160** unanswerable |
+| metric | **emits a person name**, where the context determines none | correct literal `UNKNOWN` |
+| registered direction | **D > B** | — |
+| twin | B 16, D 30, **14 discordant / 0 reversals**, p = 1.2e-04 | B 9, D 8, 1 discordant, p = 1.00 |
+| registered band | B 20–80, D 30–105 | — |
 
-### E2 is an emission rate, and accuracy could not measure it
+### Why E1 was demoted: abstention here is cue-detection, not calibration
+
+Four constructions of the *same* unanswerable task, each removing one more surface cue, scored
+by the frozen source on its calibration twin:
+
+| construction | B correct abstention | what it removed |
+|---|---:|---|
+| 1. block silently deleted | 11/72 = 0.153 | — |
+| 2. + an explicit lacuna note naming the missing fact | **35/64 = 0.547** | — |
+| 3. present-but-insufficient, loosely worded | 15/64 = 0.234 | the question-token complement |
+| 4. present-but-insufficient, **lexically matched to its twin** | **9/64 = 0.141** | the remaining phrase tell |
+
+**The frozen source's abstention rate is four times higher when an explicit note names the
+missing fact than when the same fact is missing and the sentence is phrased like its answerable
+twin.** Construction 2 is roughly what RCI-001 did. So what RCI-001 measured as abstention was
+substantially *sensitivity to a salient lacuna marker*, and once the marker is matched away both
+systems sit near 14% and differ by one row.
+
+That is an instrument being fixed, and the fix removed the endpoint's power along with its
+defect. At B 9/64 the sealed bank would give roughly B 22 / D 20 of 160 with 4–6 discordant
+pairs — `gate()` returns `INCONCLUSIVE_UNDERPOWERED`, and registering a criterion it cannot meet
+would be theatre. E1 is therefore **reported, never verdict-bearing**, and the ladder above is
+published as a finding in its own right.
+
+**This does not retract RCI-001's confirmed result.** B 40/128 vs D 25/128, 0 gains / 15 losses,
+p = 6.1e-05 is what it is on that bank, and the paired contrast is unaffected by a shared cue —
+a deterministic cue-reader answers identically for both systems. What changes is the *reading*:
+"the delta damages abstention" is better stated as **"the delta is worse at responding to an
+explicit unanswerability marker"**, and whether it damages abstention in the absence of one is
+now an open question that this instrument cannot answer either.
+
+### E2 is an emission rate### E2 is an emission rate, and accuracy could not measure it
 
 **This operationalisation was chosen on the calibration twin, after the accuracy version failed
 there. The sealed bank was not consulted and has never been read.** That is what a twin is for —
@@ -64,10 +100,10 @@ verdict is unaffected by that.
 ### Analysis
 
 Both are tested with **exact two-sided McNemar** on discordant pairs. **Holm-Bonferroni across
-the family of two.** Confirmation criterion per endpoint: **Holm-adjusted p ≤ 0.05 and the
-registered direction** — **D < B** for E1 (the delta abstains less), **D > B** for E2 (the delta
-emits a person more often where none is determined). The directions differ because the metrics
-point opposite ways; a single "D < B" rule would have been wrong for E2 and is not used.
+**Confirmation criterion: exact two-sided McNemar on discordant pairs, p ≤ 0.05 and the
+registered direction D > B.** One endpoint, so **no multiplicity correction is applied** —
+Holm over a family of one is the identity, and applying it would be a gesture. E1 is reported
+alongside and cannot change the verdict.
 
 Reporting rule fixed now: repair and damage are reported separately and never netted, and any
 subgroup claim is scored **over the rows B got right**, not over all rows

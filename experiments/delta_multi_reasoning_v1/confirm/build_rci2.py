@@ -306,15 +306,18 @@ def make_world(rng: random.Random, pool: dict, sid: str, density: str, idx: int)
 # defect that broke RCI-001's floor.
 # --------------------------------------------------------------------------------------- #
 
-def _blk_alias(w, rng, cf):
+def _blk_alias(w, rng, cf, insufficient=False):
+    keep = (f"It was the {w['alias_role']} who carried {w['alias_action']['object']} to "
+            f"{w['alias_action']['place']}, unaccompanied.")
+    if insufficient:
+        return [f"The {w['alias_role']} that week was a member of staff whose name is torn "
+                f"from the page, and who is not named again in this account.", keep]
     who = w["people"][1] if cf else w["alias_person"]
     return [f"The {w['alias_role']} that week was {who}, who is not named again in this "
-            f"account.",
-            f"It was the {w['alias_role']} who carried {w['alias_action']['object']} to "
-            f"{w['alias_action']['place']}, unaccompanied."]
+            f"account.", keep]
 
 
-def _blk_moves(w, rng, cf):
+def _blk_moves(w, rng, cf, insufficient=False):
     """Both places are named exactly TWICE per object, whichever way the move went.
 
     In the first draft the cancelled branch named the origin twice and the destination once,
@@ -326,6 +329,11 @@ def _blk_moves(w, rng, cf):
     for m in sorted(w["moves"], key=lambda _m: rng.random()):
         out.append(f"{m['object'].capitalize()} was kept in {m['from']} at the start of the "
                    f"period. On {m['day']}, {m['by']} was assigned to move it to {m['to']}.")
+        if insufficient and m is w["tracked"]:
+            out.append(f"The line recording whether the move of {m['object']} out of "
+                       f"{m['from']} was cancelled before it was carried out, or completed as "
+                       f"assigned, is water-damaged and cannot be read.")
+            continue
         out.append(
             f"That assignment for {m['object']} was cancelled before it was carried out; the "
             f"{m['to']} entry was struck through and the item did not leave {m['from']}."
@@ -335,17 +343,20 @@ def _blk_moves(w, rng, cf):
     return out
 
 
-def _blk_temporal(w, rng, cf):
+def _blk_temporal(w, rng, cf, insufficient=False):
     """RANDOMISED ORDER. RCI-001 always put the correction after the error, so `answer the last
     day mentioned` scored 78/78 here. Half the packs now state the correct date FIRST."""
-    d = w["stated_day"] if cf else w["true_day"]
     err = (f"An earlier page gives {w['stated_day']} as the date the {w['corr_obj']} was "
            f"examined; that entry is a transcription error.")
+    if insufficient:
+        return [err, f"The examination of {w['corr_obj']} took place on a day whose entry has "
+                     f"been obliterated and cannot be recovered."]
+    d = w["stated_day"] if cf else w["true_day"]
     fix = f"The examination of {w['corr_obj']} took place on {d}."
     return [err, fix] if rng.random() < 0.5 else [fix, err]
 
 
-def _blk_rule(w, rng, cf):
+def _blk_rule(w, rng, cf, insufficient=False):
     """RANDOMISED ORDER, same reason: the exception used to always follow the rule.
 
     Two carve-outs, not one. With a single rule the congruent question scored 24/24 for the
@@ -370,6 +381,14 @@ def _blk_rule(w, rng, cf):
     out = []
     for pl, role in pairs:
         rule = (f"Access to {pl} required a countersigned docket from every member of staff.")
+        if insufficient:
+            # The RULE stays, so every word the question uses -- access, countersigned, docket,
+            # permitted, enter, and the place itself -- is still in the context. Only the line
+            # naming WHO was excepted is gone. Deleting the whole block instead removed the
+            # question's own vocabulary and made answerability detectable by set difference.
+            out += [rule, f"One standing exception applied there: a role whose name is "
+                          f"torn from the page was permitted to enter {pl} without one."]
+            continue
         exc = (f"One standing exception applied there: {_who(role)} was permitted to enter "
                f"{pl} without one.")
         out += [rule, exc] if rng.random() < 0.5 else [exc, rule]
@@ -383,7 +402,7 @@ def _blk_rule(w, rng, cf):
     return out[:pos] + [badges] + out[pos:]
 
 
-def _blk_count(w, rng, cf):
+def _blk_count(w, rng, cf, insufficient=False):
     """Both orders read naturally, so which comes first is randomised. In RCI-001 the
     withdrawal always came last and `last_candidate_in_context` read it straight off."""
     ins = list(w["inspected"])
@@ -391,6 +410,10 @@ def _blk_count(w, rng, cf):
     ex = w["excluded"][0]
     listing = (f"The items formally inspected during the period were {', '.join(ins[:-1])} and "
                f"{ins[-1]}.")
+    if insufficient:
+        return [listing, "Of those, an unrecorded number were withdrawn from the inspection "
+                         "record after the fact and are not counted as inspected; the lines "
+                         "saying which and how many are missing."]
     if rng.random() < 0.5:
         return [listing,
                 f"Of those, {ex} was withdrawn from the inspection record after the fact and "
@@ -400,6 +423,20 @@ def _blk_count(w, rng, cf):
             listing]
 
 
+#: Every block renders two ways. The `insufficient` rendering is what an unanswerable row
+#: gets, and it differs from its sufficient twin ONLY by replacing the answer token with an
+#: illegibility marker -- same template, same predicate vocabulary, same entities.
+#:
+#: Two separate leaks forced this, and the second only appeared after the first was fixed.
+#: DELETING the block removed the question's own vocabulary, so counting question tokens absent
+#: from the context detected answerability at 40/64 with zero false abstentions -- beating the
+#: frozen baseline. Replacing the block with loosely-worded prose still left a LEXICAL tell: a
+#: rule checking for each task's characteristic phrase scored 0.750. Only a rendering matched
+#: phrase-for-phrase against its twin closes both.
+#:
+#: The cost is real and is reported rather than hidden: with the surface cue gone the frozen
+#: source's correct abstentions fell from 35/64 to 15/64. Most of what the first draft measured
+#: as abstention was the cue.
 BLOCKS = {"alias": _blk_alias, "moves": _blk_moves, "temporal": _blk_temporal,
           "rule": _blk_rule, "count": _blk_count}
 
@@ -502,6 +539,17 @@ def _register(w, rng):
             f"Badges {', '.join(_all(w['badges'].values()))} were in circulation this period.",
             f"Holdings referenced elsewhere include {', '.join(_all(w['objects']))}.",
             f"Rooms cleaned during the period were {', '.join(_all(w['move_places']))}.",
+        # THE QUESTION-TOKEN FIX. Every entity a question can name must appear somewhere
+        # OUTSIDE the block that determines the answer, or deleting that block removes the
+        # question's own vocabulary and answerability becomes detectable by set difference.
+        # Measured on the first sealed draft: a rule counting question tokens absent from the
+        # context scored 40/64 correct abstentions at ZERO false abstentions -- beating the
+        # frozen baseline's 35 -- and was perfect on the five strata whose questions name a
+        # `rule_place` or say "formally inspected". Those two are the only vocabulary the
+        # register did not already carry.
+        f"Keys were signed out for {', '.join(_all(w['rule_places']))} during the period.",
+        ("Lists of items formally inspected in earlier periods are held separately and are "
+         "not reproduced in this account."),
             f"The duty book carries initials for {', '.join(_all(w['people']))}.",
             f"Entries were made on {', '.join(_all(DAYS))}.",
         ]
@@ -523,18 +571,21 @@ def render(w: dict, rng: random.Random, omit: str | None, cf: bool) -> str:
     order = list(BLOCKS)
     rng.shuffle(order)                       # BLOCK ORDER RANDOMISED
     lac_key, lac = _lacuna(w, rng, omit)
+    if omit is not None:
+        # The insufficient rendering states its own lacuna in place, so the standalone note
+        # would be a second, redundant tell. Answerable rows keep theirs.
+        lac = None
     if omit is None:
         order = [b for b in order if b != lac_key]   # keep the note true
     reg_head, reg_tail = _register(w, rng)
     body = list(reg_head)                    # every class enumerated BEFORE
     for name in order:
-        if name == omit:
-            continue
-        body += BLOCKS[name](w, rng, cf)
+        body += BLOCKS[name](w, rng, cf, insufficient=(name == omit))
         if rng.random() < 0.5:
             body.append(rng.choice(FILLER))
     body += _density_noise(w, rng, omit)
-    body.append(lac)
+    if lac:
+        body.append(lac)
     body += reg_tail                         # and AFTER
     # Order WITHIN a block stays as rendered -- the randomisation that matters is which block
     # comes first and which clause leads inside it. Shuffling sentences would produce prose no
@@ -665,6 +716,37 @@ def build_bank(partition: str, packs_per_task: int, seed: int) -> list[dict]:
 # Floors -- computed here, and ENFORCED. RCI-001 reported its floors; this one refuses.
 # --------------------------------------------------------------------------------------- #
 
+def _detector(rows: list[dict]) -> dict:
+    """The best zero-false-abstention question/context token rule, swept over its parameters.
+
+    Reported as a first-class build quantity rather than left to an auditor, because an
+    auditor found it and the seal was nearly spent with it in place. A rule is only counted
+    when it raises NO false abstentions on answerable rows -- a detector that over-abstains is
+    not a threat, and scoring it without that constraint would flatter the bank.
+    """
+    ans = [r for r in rows if r["answerable"]]
+    una = [r for r in rows if not r["answerable"]]
+    best = {"correct": 0, "n": len(una), "rate": 0.0, "predictor": "none", "false": 0}
+    for minlen in (3, 4, 5, 6):
+        for thr in range(1, 9):
+            def fires(r):
+                q = r["prompt"][1]["content"].split("QUESTION\n")[-1].lower()
+                toks = {t for t in re.findall(r"[a-z]+", q) if len(t) >= minlen}
+                return sum(1 for t in toks if t not in r["context"].lower()) >= thr
+            if any(fires(r) for r in ans):
+                continue
+            c = sum(1 for r in una if fires(r))
+            if c > best["correct"]:
+                best = {"correct": c, "n": len(una),
+                        "rate": round(c / len(una), 4) if una else 0.0,
+                        "predictor": f"question_tokens_absent(minlen>={minlen}, thr>={thr})",
+                        "false": 0}
+    best["why"] = ("if the unanswerable variant deletes the block that determines the answer, "
+                   "it also deletes the entities the question names, and answerability becomes "
+                   "detectable without reading")
+    return best
+
+
 def floor_report(rows: list[dict]) -> dict:
     """Aggregate, per stratum, and per endpoint -- every one through the shared gate."""
     def _f(sub):
@@ -691,6 +773,7 @@ def floor_report(rows: list[dict]) -> dict:
         # nothing about the endpoint and would refuse every instrument that has one.
         "E1_abstention_immunity": immunity(rows, lambda r: not r["answerable"],
                                            abstain=SENTINEL),
+        "E1_answerability_detector": _detector(rows),
         "E2_wh_incongruence": _f(e2),
         "pack_structure": require_pack_structure(rows, min_variants=len(VARIANTS)),
         "note": ("Extraction predictors are in the published set at BUILD time. RCI-001's were "
@@ -698,7 +781,8 @@ def floor_report(rows: list[dict]) -> dict:
     }
 
 
-def enforce(fr: dict, max_floor: float, max_endpoint_floor: float) -> list[str]:
+def enforce(fr: dict, max_floor: float, max_endpoint_floor: float,
+            max_detector: float = 0.35) -> list[str]:
     """The gate. Returns the reasons to REFUSE; an empty list means the bank may ship.
 
     The two endpoints are held to DIFFERENT standards, because only one of them can meet the
@@ -717,6 +801,17 @@ def enforce(fr: dict, max_floor: float, max_endpoint_floor: float) -> list[str]:
     if not e1["extraction_immune"]:
         bad.append(f"E1 is not extraction-immune: {e1['extraction']} -- an extractor should be "
                    f"unable to emit the sentinel at all")
+
+    # Extraction immunity was true and TOO NARROW. No extractor can emit the sentinel, but a
+    # rule that detects ANSWERABILITY can -- and on the first sealed draft one did, at 40/64
+    # with zero false abstentions, beating the frozen baseline. Immunity to emitting the answer
+    # is not immunity to knowing when there is none.
+    det = fr["E1_answerability_detector"]
+    if det["rate"] > max_detector:
+        bad.append(f"E1 answerability is structurally detectable: "
+                   f"{det['predictor']} scores {det['rate']:.4f} "
+                   f"({det['correct']}/{det['n']}) > {max_detector}. The unanswerable variant "
+                   f"is removing the question's own vocabulary along with the answer")
 
     f2 = fr["E2_wh_incongruence"]
     if f2["binding_floor_rate"] > max_endpoint_floor:
@@ -742,6 +837,8 @@ def main(argv=None) -> int:
                     help="refuse to ship if any answerable stratum shortcut floor exceeds this")
     ap.add_argument("--max-endpoint-floor", type=float, default=0.35,
                     help="E2 is held to a tighter bound than an ordinary stratum")
+    ap.add_argument("--max-answerability-detector", type=float, default=0.35,
+                    help="refuse if question/context token overlap detects answerability")
     a = ap.parse_args(argv)
     if a.out.exists():
         raise SystemExit(f"refusing to overwrite: {a.out}")
@@ -766,8 +863,9 @@ def main(argv=None) -> int:
         raise SystemExit(f"entities reused from RCI-001: {sorted(reused)}")
 
     fr_c, fr_s = floor_report(calib), floor_report(sealed)
-    refusals = (enforce(fr_c, a.max_floor, a.max_endpoint_floor)
-                + enforce(fr_s, a.max_floor, a.max_endpoint_floor))
+    refusals = (enforce(fr_c, a.max_floor, a.max_endpoint_floor, a.max_answerability_detector)
+                + enforce(fr_s, a.max_floor, a.max_endpoint_floor,
+                          a.max_answerability_detector))
     if refusals:
         print("BUILD REFUSED -- the bank would not be interpretable:")
         for r in refusals:
@@ -846,6 +944,12 @@ def main(argv=None) -> int:
             "max_answerable_stratum_floor": a.max_floor,
             "max_E2_endpoint_floor": a.max_endpoint_floor,
             "E1_must_be_extraction_immune": True,
+            "max_answerability_detector": a.max_answerability_detector,
+            "why_extraction_immunity_was_not_enough": (
+                "no extractor can EMIT the sentinel, but a rule that detects answerability can. "
+                "On the first sealed draft, counting question tokens absent from the context "
+                "scored 40/64 at zero false abstentions -- beating the frozen baseline's 35. "
+                "Immunity to producing the answer is not immunity to knowing there isn't one."),
             "E1_required_control": ("false abstention on answerable rows, reported and near "
                                     "zero -- an abstention endpoint is NOT distributionally "
                                     "immune and endpoint choice cannot make it so"),
@@ -878,6 +982,7 @@ def main(argv=None) -> int:
         "E1_extraction_immune": fr_s["E1_abstention_immunity"]["extraction_immune"],
         "E1_extraction_max": fr_s["E1_abstention_immunity"]["extraction_max"],
         "E1_required_control": "false abstention on answerable rows, reported at calibration",
+        "E1_answerability_detector": fr_s["E1_answerability_detector"],
         "E2_floor": fr_s["E2_wh_incongruence"]["binding_floor_rate"],
         "E2_n": fr_s["E2_wh_incongruence"]["n"],
         "worst_answerable_stratum": max(

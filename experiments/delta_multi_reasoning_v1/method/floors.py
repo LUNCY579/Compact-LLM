@@ -306,9 +306,15 @@ def structural(rows: Sequence[Mapping], abstain: str | None = None) -> dict[str,
                                 attack on any "how many after exclusions" task
       abstain_if_short          omission shortens the context, so answer the sentinel whenever
                                 the row is shorter than its stratum median
+      abstain_if_question_tokens_absent
+                                the same set difference pointed at the QUESTION -- if the
+                                unanswerable variant deletes a block, the question references
+                                entities that are gone. This one beat a real frozen model on a
+                                real bank, and is why the class earns its place
     """
     vocab = _vocab(rows)
-    scores = {"set_complement_singleton": 0, "unique_candidate": 0, "abstain_if_short": 0}
+    scores = {"set_complement_singleton": 0, "unique_candidate": 0, "abstain_if_short": 0,
+              "abstain_if_question_tokens_absent": 0}
     for k in range(4):
         scores[f"list_arity_minus_{k}"] = 0
 
@@ -359,7 +365,35 @@ def structural(rows: Sequence[Mapping], abstain: str | None = None) -> dict[str,
                 and ref == abstain:
             scores["abstain_if_short"] += 1
 
+        # -- QUESTION/CONTEXT SET COMPLEMENT, and it is the one that mattered.
+        #
+        # Same set-difference shape as `set_complement_singleton`, pointed at the QUESTION
+        # instead of at a listing. If the unanswerable variant is built by DELETING the block
+        # that determines the answer, the question necessarily references entities that are no
+        # longer in the context, so counting question tokens absent from the context detects
+        # answerability without reading anything.
+        #
+        # Measured on RCI-002's first sealed draft: 40 of 64 correct abstentions at ZERO false
+        # abstentions -- beating the frozen baseline's 35 and nearly doubling the candidate's
+        # 21 -- and perfect, 8/8, on five of eight strata. Found by the peer session inside the
+        # pre-seal window, which is the entire reason that window exists.
+        if abstain is not None:
+            q = str(r.get("question") or _qof(r)).lower()
+            toks = {t for t in re.findall(r"[a-z]+", q) if len(t) >= 4}
+            if sum(1 for t in toks if t not in ctx.lower()) >= 4 and ref == abstain:
+                scores["abstain_if_question_tokens_absent"] += 1
+
     return scores
+
+
+def _qof(r: Mapping) -> str:
+    """The question text, however the bank happens to store it."""
+    if r.get("question"):
+        return str(r["question"])
+    pr = r.get("prompt")
+    if isinstance(pr, list) and pr:
+        return str(pr[-1].get("content", "")).rsplit("QUESTION", 1)[-1]
+    return ""
 
 
 def _ctx_of(r: Mapping) -> str:
