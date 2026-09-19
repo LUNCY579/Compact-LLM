@@ -19,7 +19,9 @@ materialised whole. `safe_open` reads one tensor at a time:
 
 Accumulation is in float64 over float32 tensors, because a global Frobenius norm over 220
 tensors of a 596M model sums ~6e8 squared terms and float32 accumulation loses digits that the
-ratios here depend on.
+ratios here depend on. The products themselves stay float32: `torch.sum(..., dtype=torch.float64)`
+accumulates in float64 without materialising a float64 copy, which keeps the transient peak at
+about 2.2 GiB rather than 4.4 GiB on the embedding tensor.
 
 ## The self-check that validates the whole script
 
@@ -73,9 +75,12 @@ def main(argv=None) -> int:
             if missing:
                 raise SystemExit(f"arm {name} missing {len(missing)} tensors, e.g. {missing[:3]}")
             for k in keys:
-                d = (af.get_tensor(k).to(torch.float64)
-                     - bf.get_tensor(k).to(torch.float64))
-                s = float(torch.sum(d * d))
+                d = af.get_tensor(k) - bf.get_tensor(k)
+                # sum(..., dtype=float64) accumulates in float64 WITHOUT materialising a
+                # float64 copy of the tensor. The largest tensor here is ~544 MiB in fp32 and
+                # a GPU job runs concurrently on a 15.2 GiB host, so the naive `.to(float64)`
+                # would cost ~4.4 GiB of transient peak for no extra accuracy in the product.
+                s = float(torch.sum(d * d, dtype=torch.float64))
                 tot += s
                 if s > 0:
                     per[k] = math.sqrt(s)
@@ -98,10 +103,10 @@ def main(argv=None) -> int:
         dot = 0.0
         with open_st(a.base) as bf, open_st(arms[x]) as xf, open_st(arms[y]) as yf:
             for k in keys:
-                b = bf.get_tensor(k).to(torch.float64)
-                dx = xf.get_tensor(k).to(torch.float64) - b
-                dy = yf.get_tensor(k).to(torch.float64) - b
-                dot += float(torch.sum(dx * dy))
+                b = bf.get_tensor(k)
+                dx = xf.get_tensor(k) - b
+                dy = yf.get_tensor(k) - b
+                dot += float(torch.sum(dx * dy, dtype=torch.float64))
                 del b, dx, dy
         c = dot / (norms[x]["fro"] * norms[y]["fro"])
         cos[spec] = {"inner": dot, "cosine": c,

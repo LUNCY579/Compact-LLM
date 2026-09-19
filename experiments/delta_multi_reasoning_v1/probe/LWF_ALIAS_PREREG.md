@@ -159,3 +159,51 @@ supports, so that it cannot be chosen afterwards.
 so a residual near zero is "not detectably different from the magnitude prediction" and is not
 positive evidence of exact zero. With three λ points and one seed, nothing here can settle
 capacity; it can only fail to support it, or support it.
+
+---
+
+# ADDENDUM 2 — the anchor ROTATES the update, it does not only shrink it
+
+**Added before any prediction file was read.** The norm reader finished while the fourth arm was
+still generating; these are facts about the *weights*, not about any prediction.
+
+`analysis/delta_norms.py` → `lwf001-20260918/DELTA_NORMS.json`. The reader validated itself
+exactly as designed: `ctrl-own-alpha0.5` reports **cosine 1.000000 and norm ratio 0.500000**
+against `arm-lambda0`, which is what it must be by construction, so the reader is trustworthy.
+
+| arm | ‖δ‖ | fraction of λ=0 | cosine to λ=0 |
+|---|---:|---:|---:|
+| λ = 0 | 0.832289 | 1.000 | 1.000 |
+| λ = 0.25 | 0.742705 | 0.892 | *(computing)* |
+| λ = 0.5 | 0.680032 | 0.817 | **0.3486** |
+| own-α0.5 | 0.416144 | **0.500** | **1.000000** |
+
+**The anchored arms are not shorter versions of the unanchored one.** At λ = 0.5 the update sits
+about **70° away** from λ = 0's direction while retaining 81.7% of its norm. The anchor is
+therefore not a dose knob *at all* — not in the sense of the scalar control, which is exactly
+collinear. It rotates.
+
+### What this does to the reading of the residual, registered now
+
+The calibration ray is λ=0's direction. The anchored arms are **off that ray**, so placing them
+on it by ‖δ‖ assumes damage depends on magnitude and not direction — which is part of what is
+under test. That is a real circularity and it bounds both outcomes:
+
+- **A residual near zero is now a STRONGER result than the original prereg implied.** A
+  substantially differently-directed update landing on the same-direction magnitude curve would
+  say magnitude governs damage *independently of direction*, which is more than "the anchor is
+  a norm knob."
+- **A positive residual is now WEAKER than the original prereg implied.** It would be consistent
+  with the anchor protecting the skill *and* with that particular direction simply damaging
+  alias less. **These arms cannot separate those two**, and I am recording that in advance
+  rather than choosing between them afterwards.
+
+Separating them needs an arm this experiment does not have: a **direction control** — a delta
+rotated ~70° from λ=0 by something other than an anchor, at matched norm. Noted as the
+follow-up if the residual comes back positive; not run here.
+
+### What is unaffected
+
+The **`own-α0.5` vs `λ=0.5` head-to-head** is untouched by any of this. Both are real arms, both
+are scored on the same 360 rows, and the comparison is a direct paired contrast that needs no
+calibration at all. It remains the cleanest and most actionable number this run produces.
