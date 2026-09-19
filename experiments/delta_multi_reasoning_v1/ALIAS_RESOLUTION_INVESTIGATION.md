@@ -343,3 +343,111 @@ region from a preservation endpoint with 360 rows rather than 47. **The deployed
    "damage is the price of acquisition." A **coverage** form, in which the training corpus
    determines *which* skills are exposed while magnitude determines *how much* they lose, is
    untouched and remains the leading synthesis.
+
+---
+
+# AMENDMENT 4 — direction matters at fixed magnitude, and that qualifies Amendment 3
+
+**LWF-ALIAS, a joint experiment with the peer session.** Their arms, our instrument; neither
+side could run it alone, and Gate v2 has no binding endpoint. Prereg `probe/LWF_ALIAS_PREREG.md`
+plus two addenda, all committed **before any prediction file was read**. Scoring
+`probe/score_lwf_alias.py`, receipt `lwf001-20260918/LWF_ALIAS_RESULT.json`. MECHANISM SCOUT.
+
+The harness was reconstructed for this run (`probe/generate_alias.py`) and **validated by
+reproducing the frozen source's existing 64-row chunk byte-for-byte, 64/64**, so all five arms
+are scored under demonstrably matched conditions on the identical 360 rendered prompts.
+
+## The arms, and the fact that reframed the design before scoring
+
+| arm | λ | ‖δ‖ | cos to λ=0 | alias /360 | repairs | damages | p vs Supa | acquisition /384 |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| Supa | — | 0 | — | **0.750** | 0 | 0 | — | 14 |
+| own-α0.5 | — | 0.4161 | **1.000000** | 0.658 | 1 | 34 | <1e-4 | **208** |
+| λ = 0 | 0.00 | 0.8323 | 1.000 | **0.553** | 1 | 72 | <1e-4 | 198 |
+| λ = 0.25 | 0.25 | 0.7427 | 0.5243 | 0.631 | 1 | 44 | <1e-4 | **197** |
+| λ = 0.5 | 0.50 | 0.6800 | 0.3486 | **0.681** | 7 | 32 | 1e-4 | 125 |
+
+**The anchor rotates the update rather than shrinking it** — cosine 1.000 → 0.524 → 0.349 while
+the norm falls only to 89% and 82%. The scalar control is exactly collinear (cosine 1.000000,
+ratio 0.500000), which is also the reader's self-check, and it passed exactly. The peer session
+independently reproduced both cosines to six decimals.
+
+## The result
+
+Residuals against the **within-lane** magnitude ray (Supa → own-α0.5 → λ=0, exactly collinear):
+
+| arm | observed | predicted from ‖δ‖ | residual | vs λ=0 | p |
+|---|---:|---:|---:|---:|---:|
+| λ = 0.25 | 0.631 | 0.576 | **+5.5 pp** | 34 gains / 6 losses | <1e-4 |
+| λ = 0.5 | 0.681 | 0.591 | **+8.9 pp** | 55 gains / 9 losses | <1e-4 |
+
+**Registered verdict: ANCHOR_PROTECTS.** Both residuals positive, increasing in λ, far outside
+the registered ±2.5 pp band, and the larger significant against its norm-nearest ladder arm.
+
+**The discriminating cell behaved as only one account predicted.** Addendum 1 registered that
+ANCHOR PROTECTS and STRONG CAPACITY both expect a positive residual at λ = 0.5, so λ = 0.25 is
+what separates them: it acquires **197 against λ = 0's 198**, so capacity predicts **no**
+residual there. It returned **+5.5 pp at p < 1e-4**. **Strong capacity is disconfirmed on its
+own discriminating cell** — a registered test on a different lane, independent of Amendment 3's
+LOOK, and agreeing with it.
+
+### λ = 0.25 stated plainly
+
+Against λ = 0 it costs **one acquisition row**, carries **89% of the norm**, and gains
+**+7.8 pp of alias binding**, of which **+5.5 pp is not explained by magnitude**. Same skill
+acquired, different direction, materially less collateral damage. **This is the first result in
+this programme that moves the frontier by choosing DIRECTION rather than DOSE.**
+
+## How this qualifies Amendment 3
+
+Amendment 3 concluded that damage tracks magnitude rather than acquisition. That was measured
+**along a single ray** — the α ladder scales one fixed δ. This amendment measures **across
+directions** and finds magnitude is **not** sufficient there: at ‖δ‖ = 0.68 the anchored arm
+reaches 0.681 where the collinear ray predicts 0.591.
+
+**Both hold, and together they are sharper than either:**
+
+> Along a fixed direction, damage scales with magnitude and is indifferent to how much was
+> acquired. Across directions at fixed magnitude, damage varies substantially. **So damage is a
+> function of direction and magnitude, and not of acquisition.**
+
+The practical reading: you cannot buy back an unexercised skill by acquiring less, but you may
+be able to buy it back by moving somewhere else at the same distance.
+
+## The two things that cut against over-reading it
+
+**1. The anchor is still dominated, and this is the actionable line.** own-α0.5 vs λ=0.5 on
+alias: **0.658 vs 0.681, 16 gains / 24 losses, p = 0.268 — not significant.** A plain scalar at
+half the norm reaches statistically the same alias accuracy while keeping **208 acquisition rows
+against 125**. The registered disconfirmer ("own-α ≥ λ=0.5 on alias") did not strictly fire,
+since own-α is 2.3 pp behind — but a tie at p = 0.27 is not the anchor's last axis holding, it
+is the anchor failing to buy what a scalar gives away free. **LWF-001's falsification stands,
+and this does not rehabilitate it.**
+
+**2. The direction confound, registered in Addendum 2 before scoring and held to here.** The
+anchored arms are **off** the calibration ray. A positive residual is consistent both with *the
+anchor protecting the skill* and with *that direction simply damaging alias less*, and **these
+arms cannot separate those two.** No claim is made that the anchor mechanism is responsible.
+
+The conclusion survives either reading, and it is the one worth keeping: **at fixed magnitude,
+direction determines how much of an unexercised skill is lost.** Whether an anchor loss is a
+good way to *find* such a direction is a separate and much weaker question than whether such
+directions exist. They exist.
+
+## What would settle the remaining question
+
+A **direction control**: a delta rotated ~58° from λ = 0 by something other than an anchor, at
+matched norm, acquiring ~197. If it also shows a positive alias residual, the effect is
+direction and the anchor is incidental. If only anchored directions show it, the anchor
+mechanism is real. One training run, in the peer's lane.
+
+**One avenue the peer has already closed, with numbers.** The obvious cheap proxy — that
+equally-acquiring T directions might differ in *alignment to a second skill* — does not hold:
+all four T directions sit at |cos| ≤ 0.0015 to δ_H, including two that are 58° apart from each
+other. Alignment is evidently not the axis that governs interference, since interference was
+severe at that alignment. The direct test (two composition builds) remains open; the cheap proxy
+does not survive.
+
+**Scope.** One training draw per arm, one seed, three λ points. Absolute rates in the `high`
+salience condition remain unreadable by construction; the paired contrasts are readable in every
+condition. `quality_improvement_established` false, `release_permitted` false.
