@@ -17,6 +17,7 @@ from experiments.model_quality_gpu_v1.integrity import (
     canonical, digest, file_hash, read_json, seal, unseal, write_new,
 )
 from . import contracts as c
+from .boundary import require_native_review
 
 
 def journal_for(binding, grant, *, create=False):
@@ -81,6 +82,7 @@ def student_receipt(journal, run_id, binding, runtime=None):
 
 
 def launch(args):
+    require_native_review()  # Before imports, claims, leases, journals or model work.
     from experiments.model_quality_gpu_v1.resources import lease
     from experiments.model_quality_gpu_v1.supervisor import bounded_child
     binding, grant = inputs(args.binding, args.grant)
@@ -120,6 +122,7 @@ def launch(args):
 
 
 def worker(args):
+    require_native_review()  # Before imports, claims, leases, journals or model work.
     # This MUST precede the runtime import, model construction, or worker output.
     from experiments.model_quality_gpu_v1.supervisor import claim_worker
     out = c.external(args.out)

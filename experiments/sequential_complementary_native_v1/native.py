@@ -18,6 +18,7 @@ from experiments.model_quality_gpu_v1 import native as mq_native
 from experiments.model_quality_gpu_v1.integrity import canonical, digest, read_json
 from experiments.reasoning_posttraining_v1.serialization import compile_row
 from . import contracts as c
+from .boundary import generation_eos_ids, require_native_review, terminal_token
 
 _LIVE = object()
 FIXTURE = {"id": "SCP-NQ-MR-SYNTHETIC-001", "world_id": "SCP-NQ-MECHANICS-WORLD-001",
@@ -77,6 +78,7 @@ def frozen(model):
 
 
 def _load_subject(binding, guard):
+    require_native_review()  # No asset/model/worker access while review remains closed.
     from safetensors import safe_open
     assets = binding["assets"]
     source, incumbent, trained = (Path(assets[k]) for k in ("source_path", "subject_path", "trained_path"))
@@ -87,6 +89,11 @@ def _load_subject(binding, guard):
     # The inherited loader really loads Supa here. The distinct subject is applied
     # below, audited tensor-for-tensor, and NEVER labeled as that Supa source.
     model = mq_native.load_model(source, "cpu")
+    declared_eos = generation_eos_ids(read_json(source / "generation_config.json").get("eos_token_id"),
+                                      vocab_size=151936, tokenizer_eos=tokenizer.eos_token_id)
+    loaded_eos = generation_eos_ids(model.generation_config.eos_token_id,
+                                    vocab_size=151936, tokenizer_eos=tokenizer.eos_token_id)
+    c.require(loaded_eos == declared_eos, "loaded generation EOS set differs from bound sidecar")
     model.requires_grad_(False)
     actual = dict(model.named_parameters())
     c.require({n: list(p.shape) for n, p in actual.items()} == c.shapes(), "loaded unique 310-tensor inventory differs")
@@ -134,7 +141,7 @@ def _load_subject(binding, guard):
         "trained_partial_sha256": c.TRAINED_SHA, "source_state": base_identity,
         "subject_state": state_identity(model), "full_tensors_verified": 310,
         "trained_tensors_reconstructed": 220, "source_sidecar_and_explicit_fp32_loader": True,
-        "storage_tying": True, "optimizer_steps": 0}
+        "generation_eos_ids": list(declared_eos), "storage_tying": True, "optimizer_steps": 0}
 
 
 class GenerationBackend:
@@ -163,6 +170,7 @@ class GenerationBackend:
         self._budget = None
 
     def authorize(self, case, arm, budget, emit):
+        require_native_review()
         c.require(self._key is _LIVE and not self.closed and self.run_dir is not None, "native backend is not live/qualified")
         claim = read_json(Path(self.run_dir) / "worker_claim.json")
         c.require(claim["pid"] == os.getpid() and not (Path(self.run_dir) / "supervisor.json").exists(), "owned worker is no longer live")
@@ -197,6 +205,8 @@ class GenerationBackend:
 
     @torch.inference_mode()
     def forward(self, ids, *, past=None, cache=False, keep=1):
+        if self._key is _LIVE:
+            require_native_review()
         c.require(not self.closed, "closed backend")
         frozen(self.model)
         self.guard()
@@ -212,6 +222,7 @@ class GenerationBackend:
 
     @torch.inference_mode()
     def generate(self, messages, cap):
+        require_native_review()
         c.require(self._key is _LIVE and not self.closed and self._pending == cap and self._budget is not None,
                   "native generation requires a charged live request")
         c.require(self._budget.calls == self._completed + 1, "generation bypassed the frozen request budget")
@@ -225,6 +236,8 @@ class GenerationBackend:
                             {"index": i, **record} for i, record in enumerate(self._generated)]).decode()}]
         c.require(messages == expected, "generation prompt differs from the fixed qualification policy")
         tokens = self.check_context(messages, cap)
+        eos_ids = generation_eos_ids(self.model.generation_config.eos_token_id,
+                                     vocab_size=151936, tokenizer_eos=self.tokenizer.eos_token_id)
         device = next(self.model.parameters()).device
         current = torch.tensor([tokens], dtype=torch.long, device=device)
         emitted, past, terminated = [], None, False  # NEVER shared between roles
@@ -237,13 +250,13 @@ class GenerationBackend:
                 token = int(value.logits[0, -1].argmax())
                 emitted.append(token)
                 self.generated_tokens += 1
-                if token == self.tokenizer.eos_token_id:
+                if terminal_token(token, eos_ids):
                     terminated = True
                     break
                 current = torch.tensor([[token]], dtype=torch.long, device=device)
             text = self.tokenizer.decode(emitted[:-1] if terminated else emitted, skip_special_tokens=False)
             self.emit({"event": "NATIVE_TOKEN_RECORD", "messages_sha256": digest(messages),
-                       "generated_ids_including_terminal": emitted, "terminated": terminated,
+                       "generated_ids_including_terminal": emitted, "terminated": terminated, "generation_eos_ids": list(eos_ids),
                        "input_tokens": len(tokens), "output_tokens": len(emitted),
                        "wall_seconds": time.monotonic() - started})
             self._generated.append({"text": text, "terminated": terminated})
@@ -257,11 +270,13 @@ class GenerationBackend:
 
 
 def require_native_backend(backend, case, arm, budget, emit):
+    require_native_review()  # No asset/model/worker access while review remains closed.
     c.require(type(backend) is GenerationBackend, "SCP native backend/supervisor integration requires the exact live adapter")
     backend.authorize(case, arm, budget, emit)
 
 
 def open_backend(binding, reserve, guard, emit, run_dir):
+    require_native_review()  # No asset/model/worker access while review remains closed.
     # claim_worker() has already consumed and validated the one-use MQ context.
     claim = read_json(Path(run_dir) / "worker_claim.json")
     c.require(claim["pid"] == os.getpid() and not (Path(run_dir) / "supervisor.json").exists(), "MQ child claim missing/stale")
