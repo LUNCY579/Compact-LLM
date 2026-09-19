@@ -95,9 +95,14 @@ ACTIVITY = {
     "person_binding": ["{x} signed the attendance book on {d}.",
                        "{x} was recorded as present for the {d} stocktake.",
                        "{x} countersigned the {d} duty sheet."],
-    "object_binding": ["{x} was entered in the tally book on {d}.",
-                       "{x} appears in the {d} condition report.",
-                       "{x} was re-weighed during the {d} audit."],
+    # Article-prefixed so the line does NOT start with a lowercase common noun. PRES-005
+    # shipped "brass astrolabe appears in..." on 120/120 object rows, which made
+    # capitalisation separate distractor lines from answer-bearing ones PERFECTLY -- a cue
+    # present in exactly one arm of the person-vs-object contrast. Person names and the
+    # proper-noun places are capitalised already, so only this stratum was affected.
+    "object_binding": ["The {x} was entered in the tally book on {d}.",
+                       "The {x} appears in the {d} condition report.",
+                       "The {x} was re-weighed during the {d} audit."],
     "place_binding": ["{x} was swept and aired on {d}.",
                       "{x} appears in the {d} access log.",
                       "{x} was inspected for damp on {d}."],
