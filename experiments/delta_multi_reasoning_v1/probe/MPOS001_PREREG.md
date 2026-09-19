@@ -274,3 +274,33 @@ direction**.
 
 This is registered now, before the numbers exist, precisely so it cannot be invoked afterwards to
 explain away an unwelcome result.
+
+## Amendment 1a — scorer smoke-tested on synthetic predictions, and a correction to the power claim
+
+Run before any real arm existed, on synthetic predictions with a **planted** interaction
+(native +0.20, LWF +0.15, source 0.00). Two things came out of it.
+
+**1. The scorer hung, and would have hung on the real data.** `mde_by_simulation` was
+O(100 effect sizes x 300 reps x 600 permutations) per cell and did not finish a 144-pair cell in
+120 s. Replaced with the analytic equivalent: under the sign-flip null the mean has
+sd = sqrt(sum(x^2))/n exactly, so **MDE = (z_{alpha/2} + z_{power}) * sqrt(sum(x_i^2)) / n**.
+Labelled in the receipt as a normal approximation and reported **alongside** the exact
+permutation p, never instead of it.
+
+**2. The scorer recovers a planted effect and correctly refuses an underpowered cell** — the
+synthetic run returned +0.16 to +0.30 against planted +0.15/+0.20, flagged
+`k1d1/native` as *"not powered to distinguish"* because its realised MDE (0.238) exceeded the
+observed mean, and produced a differential with its own minimum detectable value.
+
+**3. A correction to this prereg's own power table.** Amendment 1 registered power **0.99** for a
++0.20 effect at 144 pairs. That figure is **conditional on an assumed 0.30 discordance rate**.
+The synthetic run realised a discordance of 0.54-0.65, at which the MDE is **0.24-0.26** — so at
++0.20 the power would be **below 80%, not 0.99**.
+
+> **Higher discordance means more variance, not more signal.** The registered 0.99 is an
+> assumption, not a property of the design, and the realised MDE reported per cell **supersedes
+> it**. If the real run comes back with high discordance and a null, that null is bounded by the
+> realised MDE printed beside it — not by the number registered here.
+
+This is recorded before the real arms exist so the registered figure cannot later be quoted as
+though the run had been powered when it was not.

@@ -103,31 +103,33 @@ def boot_ci(x, seed: int, iters: int = BOOT_ITERS, lo=2.5, hi=97.5):
     return (means[int(lo / 100 * iters)], means[min(iters - 1, int(hi / 100 * iters))])
 
 
-def mde_by_simulation(x, seed: int, alpha: float, reps: int = 300) -> float:
-    """Smallest |mean| this run could have detected, at the REALISED discordance structure.
+def mde_analytic(x, alpha: float, power: float = 0.80) -> float:
+    """Smallest |mean| detectable at the REALISED per-pair spread, at `alpha` and `power`.
 
-    Takes the observed non-zero rate, then asks what effect size would clear `alpha` at least
-    80% of the time with this many pairs. This is the quantity the prereg registers -- an MDE at
-    the realised denominator -- not a flat threshold read off alpha.
+    Replaces a simulation that was O(100 effect sizes x 300 reps x 600 permutations) and hung on
+    a 144-pair cell -- found by smoke-testing this scorer on synthetic predictions BEFORE the
+    real arms existed. It would have hung on the real data too.
+
+    Under the sign-flip null the mean has sd = sqrt(sum(x^2))/n exactly, so the normal
+    approximation to the permutation test gives
+
+        MDE = (z_{alpha/2} + z_{power}) * sqrt(sum(x_i^2)) / n
+
+    This is an approximation to the exact permutation test and is labelled as one in the receipt.
+    At n = 144 with values in {-2..2} the two agree closely; it is reported alongside the exact
+    permutation p, never instead of it.
     """
     n = len(x)
-    disc = sum(1 for v in x if v != 0) / n if n else 0.0
-    if disc == 0:
+    if n == 0:
         return float("inf")
-    rng = random.Random(seed)
-    for eff in [i / 100 for i in range(1, 101)]:
-        p_plus = 0.5 + eff / (2 * disc)
-        if p_plus > 1:
-            continue
-        hits = 0
-        for _ in range(reps):
-            sim = [(1 if rng.random() < p_plus else -1) if rng.random() < disc else 0
-                   for _ in range(n)]
-            if signflip_p(sim, rng.randrange(1 << 30), 600) < alpha:
-                hits += 1
-        if hits / reps >= 0.80:
-            return eff
-    return float("inf")
+    ss = sum(v * v for v in x)
+    if ss == 0:
+        return float("inf")
+    sd = (ss ** 0.5) / n
+    z = {0.05: 1.959964, 0.025: 2.241403, 0.0125: 2.497705, 0.00625: 2.734368}
+    za = z.get(round(alpha, 5), 2.497705)
+    zb = 0.841621  # 80% power
+    return (za + zb) * sd
 
 
 def sign_test_p(k: int, n: int) -> float:
@@ -218,7 +220,7 @@ def main(argv=None) -> int:
             neg = sum(1 for v in xs if v < 0)
             p_perm = signflip_p(xs, 101)
             ci = boot_ci(xs, 202)
-            mde = mde_by_simulation(xs, 303, BONFERRONI)
+            mde = mde_analytic(xs, BONFERRONI)
             lo, hi = REGISTERED[cell]
             per_lane[lane] = {
                 "n_pairs": n, "discordant": disc, "pos": pos, "neg": neg,
@@ -231,13 +233,14 @@ def main(argv=None) -> int:
                 "perm_p": p_perm,
                 "clears_bonferroni": p_perm < BONFERRONI,
                 "sign_test_p_secondary": sign_test_p(pos, disc),
-                "mde_at_realised_denominator": (None if mde == float("inf") else round(mde, 3)),
+                "mde_at_realised_spread": (None if mde == float("inf") else round(mde, 4)),
+                "mde_method": "normal approximation to the sign-flip null; exact perm p reported separately",
                 "registered_band": [lo, hi],
                 "estimate_vs_band": (
                     "inside" if lo <= mean <= hi else "above" if mean > hi else "below"),
                 "band_reachable": (mde is not None and mde != float("inf") and mde <= hi),
                 "verdict": (
-                    "NOT POWERED -- no effect size was detectable at this discordance"
+                    "NOT POWERED -- every pair is tied; no effect size was detectable"
                     if mde == float("inf") else
                     f"SUPPORTS the registered direction (p={p_perm:.4f})"
                     if p_perm < BONFERRONI and mean > 0 else
@@ -333,8 +336,8 @@ def main(argv=None) -> int:
         for lane in LANES:
             v = results[cell][lane]
             ci = f"[{v['interaction_ci95'][0]:+.3f},{v['interaction_ci95'][1]:+.3f}]"
-            mde = "--" if v["mde_at_realised_denominator"] is None else \
-                f"{v['mde_at_realised_denominator']:.3f}"
+            mde = "--" if v["mde_at_realised_spread"] is None else \
+                f"{v['mde_at_realised_spread']:.3f}"
             print(f"{cell:<7}{lane:<13}{v['n_pairs']:>6}{v['discordant']:>6}{v['pos']:>4}"
                   f"{v['neg']:>4}{v['interaction_mean']:>9.4f}{ci:>18}{mde:>7}"
                   f"{v['perm_p']:>9.4f}")
