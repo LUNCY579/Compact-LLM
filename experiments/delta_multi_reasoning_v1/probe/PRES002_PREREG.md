@@ -71,3 +71,52 @@ am not going to commit it myself one document later.
 Settle the mechanism. Three mechanisms already produce the alias effect and none of them is
 explained. This asks only whether the effect is one skill's or a class's.
 `quality_improvement_established` false, `release_permitted` false.
+
+---
+
+# ADDENDUM 1 — corpus audit: what RRP-015 actually trains, decoded
+
+**Run before Stage 1 was scored, to answer my own contamination question rather than assume it.**
+`rrp015-20260917/control-prepared/microfit-train.jsonl`, 384 rows, **decoded from `ids` with the
+source tokenizer** — a first pass over the raw JSON was measuring field names and was discarded.
+
+## All three families are arithmetic
+
+| family | n | system prompt, in brief |
+|---|---:|---|
+| `ledger_replay` | 128 | apply one event to account balances — **add, scale, transfer** |
+| `register_machine` | 128 | apply one instruction to registers, **integers modulo 97** — swap, add, mix, conditional |
+| `prerequisite_plan` | 128 | an **8-bit flag mask**; delete bits first, then add bits |
+
+**Arithmetic is not a preserved skill for this delta. It is the trained skill.** That settles the
+endpoint-class question in Amendment 7 with direct corpus evidence rather than an inference from
+the dose curve: the arithmetic panel rising Supa 47 → 71 across α is **acquisition**, and using
+it as a preservation endpoint could only ever have produced an uninformative null. It also
+corroborates the peer session's finding that `prerequisite_plan`'s collapse "destroyed bitwise
+arithmetic, not precondition reasoning" — the family *is* bit manipulation.
+
+## Contamination check for this bank's three strata
+
+| probe | count in the decoded corpus |
+|---|---:|
+| weekday names (Monday … Sunday) | **0** |
+| temporal-order phrases (*immediately before*, *the day before*, *preceding*, *prior to*) | **0** |
+| containment words (*inside*, *kept in*, *contained*, *within*) | **0** |
+| person-name-shaped capitalised pairs | **0** |
+
+`before` occurs 384 times and `then` 128 times, and **neither is temporal language**: `"before"`
+is the JSON key naming the prior state (`{"before":{"A":-10,…}}`), and `then` is the single
+phrase *"Apply delete bits first, then add bits"* in `prerequisite_plan`'s instruction.
+
+**Verdict: `object_coreference` and `temporal_predecessor` are clean.** The lexical `before` is a
+state label in a JSON object, not ordering over events, and the corpus never asks which of
+several things came first.
+
+**One caveat recorded rather than dismissed: `container_nesting` has a weak *structural*
+analogue.** The corpus is nested JSON throughout — a state is an object containing keyed values —
+and "locate a container, then report its contents" is a nesting traversal. The surface form is
+entirely different (natural-language *"the X is kept inside the Y"* against
+`{"before":{"A":-10}}`), and no containment vocabulary appears at all, so I judge the overlap
+structural-but-remote. **If `container_nesting` behaves differently from the other two strata,
+this is the first thing to suspect**, and it is written down now so that reading is available
+rather than invented afterwards.
