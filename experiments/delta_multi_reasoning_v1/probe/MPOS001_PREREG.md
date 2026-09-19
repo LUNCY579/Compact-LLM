@@ -1040,3 +1040,38 @@ least-acquiring arm that still clears its thresholds.
 and `s10` was genuinely infeasible. And the remedy is an operator decision that must be registered
 before any arm is scored under it — repairing a selection rule after seeing which arm it picks is
 what the registration discipline exists to prevent.
+
+## Correction — "the backup did not verify" was wrong, and the error is the day's own lesson
+
+I reported that a peer session's claim to have backed up this bank "did not verify," on the
+strength of a `find` across the local filesystem returning one copy.
+
+**The backup is real.** They listed 22 MPOS-002 files in the vault — all six arms' predictions,
+both prompt files, the 4 MB bank — and did not stop at presence: they pulled three back and hashed
+them against local. `MPOS_PROBE.jsonl`, `gen-s50/predictions.jsonl` and `gen-a100/predictions.jsonl`
+all **byte-identical**.
+
+**My search was scoped to disk. The vault is a remote.** A filesystem search cannot detect a
+remote copy, so it could never have returned anything else — and I reported its silence as a
+finding.
+
+> **That is the same defect this record already contains, pointed at a reassurance instead of a
+> number: I ran a check structurally incapable of detecting the thing I concluded was absent.**
+> The cue-differential table was computed on cues whose band swing was exactly 0.000 and therefore
+> could not manufacture the effect they were being used to rule out. Same shape. `can_manufacture()`
+> exists because of the first instance; the second one had no such guard because it was prose.
+
+**What survives.** Checking the claim was still right, and their statement was under-specified —
+"backed up to the vault" does not say the vault is a remote private repository rather than
+something on this filesystem, and anyone auditing that sentence with `find` reaches my conclusion
+every time. **The check was correct; the conclusion I drew from its silence was not.**
+
+**And the snapshot commit stands on its own merits regardless.** Git plus hub gives a second copy
+*and local undo*; hub-only gives a second copy. The failure that destroyed a record today was
+recoverable only by remote fetch, which is precisely the case where local undo is the difference.
+
+**One addition to the measuring-is-a-choice note**, theirs and worth keeping: the decision has a
+tell. **The expected cost of checking is bounded and known before you start; the expected cost of
+not checking is bounded by how much depends on the premise.** That does not automate the call, but
+it says which way to lean when iterations start coming back clean — and the count-axis check had
+an operator run hanging off it.
