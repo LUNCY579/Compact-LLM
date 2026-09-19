@@ -51,6 +51,11 @@ def main(argv=None) -> int:
     ap.add_argument("--base", type=Path, required=True)
     ap.add_argument("--arm", action="append", required=True, metavar="NAME=PATH")
     ap.add_argument("--pair", action="append", default=[], metavar="A:B")
+    ap.add_argument("--allow-partial", action="append", default=[], metavar="NAME",
+                    help="this arm stores ONLY its changed tensors; absent keys are treated as "
+                         "identical to the base (delta = 0). Valid only where the receipt says "
+                         "so -- INT-001 records source_tensors_untouched_count = 90 for "
+                         "trained_fp32.safetensors. Never assume it.")
     ap.add_argument("--out", type=Path, required=True)
     a = ap.parse_args(argv)
 
@@ -72,9 +77,13 @@ def main(argv=None) -> int:
         with open_st(a.base) as bf, open_st(path) as af:
             ak = set(af.keys())
             missing = [k for k in keys if k not in ak]
-            if missing:
-                raise SystemExit(f"arm {name} missing {len(missing)} tensors, e.g. {missing[:3]}")
+            if missing and name not in a.allow_partial:
+                raise SystemExit(f"arm {name} missing {len(missing)} tensors, e.g. {missing[:3]}"
+                                 f" -- pass --allow-partial {name} ONLY if a receipt says those "
+                                 f"tensors are untouched")
             for k in keys:
+                if k not in ak:
+                    continue          # untouched by construction: delta is exactly zero
                 d = af.get_tensor(k) - bf.get_tensor(k)
                 # sum(..., dtype=float64) accumulates in float64 WITHOUT materialising a
                 # float64 copy of the tensor. The largest tensor here is ~544 MiB in fp32 and
@@ -102,7 +111,10 @@ def main(argv=None) -> int:
             raise SystemExit(f"pair {spec} names an arm that was not supplied")
         dot = 0.0
         with open_st(a.base) as bf, open_st(arms[x]) as xf, open_st(arms[y]) as yf:
+            xk, yk = set(xf.keys()), set(yf.keys())
             for k in keys:
+                if k not in xk or k not in yk:
+                    continue          # one side is untouched there, so the product is zero
                 b = bf.get_tensor(k)
                 dx = xf.get_tensor(k) - b
                 dy = yf.get_tensor(k) - b
@@ -133,6 +145,10 @@ def main(argv=None) -> int:
         "base": str(a.base),
         "arms": {k: str(v) for k, v in arms.items()},
         "accumulation_dtype": "float64",
+        "partial_arms": a.allow_partial,
+        "partial_arm_semantics": ("absent tensors are treated as identical to the base, i.e. "
+                                  "delta exactly zero, which contributes nothing to a norm or "
+                                  "an inner product"),
         "norms": {k: {kk: vv for kk, vv in v.items() if kk != "largest_tensors"}
                   for k, v in norms.items()},
         "largest_changed_tensors": {k: v["largest_tensors"] for k, v in norms.items()},
