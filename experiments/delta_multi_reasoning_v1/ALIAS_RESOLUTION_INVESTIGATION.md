@@ -511,3 +511,89 @@ cost, it may hold for benefit, and my headline assumes it does not.
 its own norm-matched collinear twin. If `ord23` shows no residual, Amendment 4's claim narrows
 in the record from "direction beats dose" to "an anchor loss buys preservation beyond its
 magnitude" — a substantially smaller claim, and the one the evidence would then support.
+
+---
+
+# AMENDMENT 6 — three mechanisms, one effect: direction is a real axis of the frontier
+
+**DIRCTL-002 and ROTATION-002, both registered before their arms existed.** Receipts
+`lwf001-20260918/DIRCTL2_RESULT.json` and `ROTATION2_RESULT.json`. MECHANISM SCOUTS.
+
+Amendment 5 left one gap: both off-ray arms came from the **same anchor loss**, so the supported
+claim was "this anchor spares alias", not "direction spares alias". Two arms close it.
+
+## DIRCTL-002 — a non-anchor rotation spares alias too
+
+`arm-lambda0-ord23` is the peer session's control, and its `TRAIN.json` was verified here rather
+than taken on report: **`lambda = 0.0`** (no anchor), `seed = 17`, `update_groups = 28`,
+`source_weight_sha256 = 962abc5b…` — identical to λ=0 in every field except **`order_seed = 23`**.
+The only difference is the order the rows were grouped in.
+
+Measured here: ‖δ‖ = **0.849139**, cos to λ=0 = **0.593855** (53.6° off the ray at 1.02× norm).
+Its collinear twin was built at `a = 1.020245875` — an **extrapolation** 2% past λ=0, flagged as
+such — and landed at ‖δ‖ = 0.849139, err **2.10e-08**.
+
+| | accuracy | residual | gains / losses | p |
+|---|---:|---:|---:|---:|
+| `ord23` | **0.5861** | **+4.4 pp** | 21 / 5 | **2.49e-03** |
+| collinear twin (same norm) | 0.5417 | — | — | — |
+
+**Registered verdict: GEOMETRY.** A rotation produced by nothing but row order spares alias
+binding beyond what its magnitude explains.
+
+## ROTATION-002 — and so does a magnitude mask, in the other lane
+
+`k = 0.25` and a scalar at `α = 0.836382` have **identical norm** (target 0.694055, achieved
+0.694055, err 7.06e-09) and sit **33.2° apart** — ROTATION-001 showed a mask is a projection, so
+its cosine to the ray is exactly its norm ratio.
+
+| | accuracy | difference | gains / losses | p |
+|---|---:|---:|---:|---:|
+| `k = 0.25` mask | **0.6500** | **+2.8 pp** | 11 / 1 | **0.0063** |
+| `α = 0.836382` scalar | 0.6222 | — | — | — |
+
+**The α-ladder interpolation was accurate**: it assumed 0.6228 and the measured value is 0.6222,
+off by **0.1 pp**. So ROTATION-001's +2.7 pp figure was reliable, and no other residual in this
+programme computed against that ladder needs re-deriving. That was the disconfirmer flagged as
+most consequential, and it did not fire.
+
+## Together
+
+| arm | lane | mechanism | angle | norm ratio | **residual** | p |
+|---|---|---|---:|---:|---:|---:|
+| `k = 0.25` | RRP-015 | magnitude mask, post-hoc | 33.2° | 0.836 | **+2.8 pp** | 0.0063 |
+| `ord23` | LWF | row order, training-time | 53.6° | 1.020 | **+4.4 pp** | 2.5e-03 |
+| λ = 0.25 | LWF | anchor loss, training-time | 58.4° | 0.892 | **+7.2 pp** | 2.4e-05 |
+| λ = 0.5 | LWF | anchor loss, training-time | 69.6° | 0.817 | **+9.4 pp** | 4.1e-06 |
+
+**Three independent mechanisms, two lanes, four arms, every residual positive and significant.**
+One is a post-hoc edit of a finished delta, one is a training-time reordering, one is a
+training-time loss term. Nothing they share explains this except that each moves the update off
+the collinear ray at fixed distance.
+
+> **At fixed magnitude, direction determines how much of an unexercised skill is lost.**
+
+**No angle→residual ordering is claimed**, and the numbers above are deliberately not read as a
+trend. ROTATION-001 showed a mask's angle carries no information its norm does not, and the peer
+session measured that rotation *cost* is mechanism-dependent — `ord23`'s 53.6° costs **28
+acquisition rows** where the anchor's 58.4° costs **one**. Angle is not the operative variable;
+that it correlates here across mechanisms is not evidence that it is.
+
+## What this does to the programme's standing conclusion
+
+`delta-compression-is-magnitude` holds that mask, rank truncation and scalar scaling are **one
+lever acting through magnitude**. ROTATION-002 says that is **true for acquisition and false for
+preservation**, and the reason it was not caught is power: the preservation endpoint it was
+established on is n = 47, where 2.8 pp is one row. This bank is n = 360, where it is ten.
+
+**The practical form, stated as a trade rather than as dominance.** At matched norm the mask
+gives **+2.8 pp of alias binding** for about **2 acquisition rows** (232 against an interpolated
+~234 for the scalar — and that acquisition figure is interpolated from INT-001's ladder, not
+measured here). Favourable, not free, and worth measuring directly before anyone acts on it.
+
+## Scope
+
+One bank, one delta per lane, one draw per arm. `ord23` is **not acquisition-matched** (170
+against λ=0.25's 197) — tolerable only because damage was already established indifferent to
+acquisition, and stated rather than waved past. The `ord23` twin is an extrapolation, not an
+interpolant. `quality_improvement_established` false, `release_permitted` false.
