@@ -67,13 +67,20 @@ from pathlib import Path
 
 CLEAN_CELLS = ("k1d1", "k3d1")
 BANDS = ("early", "late")
-LANES = {"native_a100": "gen-a100", "lwf_l0": "gen-lwf_l0"}
+LANES = {"native_a100": "gen-a100", "lwf_l0": "gen-lwf_l0",
+         "titan_sparse": "gen-sparse"}
 SOURCE = "gen-B"
-BONFERRONI = 0.05 / 4
+#: derived, not hard-coded: adding an arm must widen the family automatically. Addendum 2
+#: registers 0.05/6 as governing any statement that compares Sparse to the other arms, and
+#: choosing the smaller family after seeing a number is the move this programme has already
+#: caught twice.
+BONFERRONI = 0.05 / (len(LANES) * 2)
 PERM_ITERS = 20000
 BOOT_ITERS = 10000
 #: registered bands, for reporting the estimate AGAINST the prediction rather than only testing
 REGISTERED = {"k1d1": (0.03, 0.15), "k3d1": (0.10, 0.30)}
+#: Addendum 2: Sparse is predicted POSITIVE but SMALLER than native's +0.2847.
+REGISTERED_SPARSE = {"k1d1": (0.00, 0.12), "k3d1": (0.05, 0.20)}
 
 
 def norm(v) -> str:
@@ -221,7 +228,8 @@ def main(argv=None) -> int:
             p_perm = signflip_p(xs, 101)
             ci = boot_ci(xs, 202)
             mde = mde_analytic(xs, BONFERRONI)
-            lo, hi = REGISTERED[cell]
+            lo, hi = (REGISTERED_SPARSE if lane == "titan_sparse"
+                      else REGISTERED)[cell]
             per_lane[lane] = {
                 "n_pairs": n, "discordant": disc, "pos": pos, "neg": neg,
                 "tied": n - disc,
