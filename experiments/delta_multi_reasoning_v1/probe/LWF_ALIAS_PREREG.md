@@ -213,3 +213,68 @@ follow-up if the residual comes back positive; not run here.
 The **`own-α0.5` vs `λ=0.5` head-to-head** is untouched by any of this. Both are real arms, both
 are scored on the same 360 rows, and the comparison is a direct paired contrast that needs no
 calibration at all. It remains the cleanest and most actionable number this run produces.
+
+---
+
+# ADDENDUM 3 — DIRCTL-002, the direction control, registered before `ord23` is scored
+
+**Written before `arm-lambda0-ord23` has been run on the alias bank.** DIRCTL-001 came back
+**DIRECTION_SURVIVES** with residuals of **+7.2 pp** and **+9.4 pp** against exactly norm-matched,
+exactly collinear twins (Holm p = 2.4e-05 and 4.1e-06). Amendment 4's headline stands and got
+larger, because the interpolation it used had been optimistic by 1.8 pp.
+
+**But it is still one mechanism.** Both off-ray arms in that test were produced by the *same*
+anchor loss, so "at fixed magnitude, direction determines how much of an unexercised skill is
+lost" is, on my evidence, "at fixed magnitude, *this anchor* spares alias binding." Addendum 2
+registered exactly that gap and named the missing arm:
+
+> "a delta rotated ~58° from λ = 0 by something **other than an anchor**, at matched norm"
+
+**That arm now exists and it is not mine.** The peer session built `arm-lambda0-ord23` by
+rotating λ = 0 through **row order alone** — same 384 rows, same pure-CE objective, no anchor,
+only the grouping order differs. Reported at **cos 0.5939 (53.6°)** and **‖δ‖ ≈ 0.8491**.
+
+## Why this is the decisive cell, and why the peer's own result raises the stakes
+
+The peer measured what that rotation costs on **acquisition**: `ord23` scores **170** against
+λ=0's 198, a loss of **28 rows**, where the anchored λ=0.25 at a *larger* angle (58.4°) loses
+**one**. So **rotation cost is mechanism-dependent, not angle-dependent** — measured, not argued.
+
+If rotation cost is mechanism-dependent on acquisition, the obvious question is whether rotation
+*benefit* is mechanism-dependent on preservation. That is exactly what my headline assumes it is
+not.
+
+| account | `ord23` residual vs its norm-matched collinear twin |
+|---|---|
+| **GEOMETRY** — direction per se spares an unexercised skill | **positive**, broadly comparable to the anchored arms at similar angle |
+| **ANCHOR-SPECIFIC** — only this training-time intervention spares it | **≈ 0**, inside the ±2.5 pp band |
+| **REVERSED** | negative — a rotation that *costs* alias, which no account predicts |
+
+**If ANCHOR-SPECIFIC, I narrow Amendment 4 in the record**: not "direction beats dose" but "an
+anchor loss buys alias preservation that its magnitude reduction does not explain," which is a
+substantially smaller claim and the one the evidence would then support.
+
+## Design
+
+`ord23` sits at ‖δ‖ ≈ 0.8491, **above** λ=0's 0.8323, so its collinear twin is a mild
+extrapolation along the same ray at `a ≈ 1.0202`. The exact scalar is recomputed from a fresh
+measurement of `ord23`'s norm rather than taken from the peer's report, and the built twin's norm
+is verified before scoring. Same 360 prompts, same validated harness, both arms deleted after.
+
+**Primary: exact two-sided McNemar, `ord23` vs its collinear twin, 360 paired rows.** One
+comparison; Holm over a family of one is the identity and none is applied.
+
+## Caveats registered now
+
+1. **`ord23` is not acquisition-matched.** It acquires 170 where λ=0.25 acquires 197. So a
+   difference in alias residual could reflect *how much skill was installed* rather than
+   direction — except that DIRCTL-001 and the α-ladder coupling analysis both found damage is
+   **indifferent to acquisition**, which is why this confound is tolerable here and would not be
+   in a different experiment. Stated rather than waved past.
+2. **The twin is an extrapolation past λ=0**, not an interpolation. DIRCTL-001 measured the ray
+   as APPROXIMATELY_LINEAR (deviations +0.7 / −0.3 / −1.6 pp), so a 2% extension is mild, but it
+   is extrapolation and is labelled as such.
+3. **Three mechanisms, three lanes, small n.** Whatever this returns, no angle→residual ordering
+   will be reported — the peer's `ord23` acquisition result already argues against one, and
+   ROTATION-001 showed a mask's angle carries no information its norm does not.
+4. MECHANISM SCOUT. `quality_improvement_established` false, `release_permitted` false.

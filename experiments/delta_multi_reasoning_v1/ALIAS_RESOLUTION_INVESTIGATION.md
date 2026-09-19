@@ -451,3 +451,63 @@ does not survive.
 **Scope.** One training draw per arm, one seed, three λ points. Absolute rates in the `high`
 salience condition remain unreadable by construction; the paired contrasts are readable in every
 condition. `quality_improvement_established` false, `release_permitted` false.
+
+---
+
+# AMENDMENT 5 — DIRCTL-001: the residual survives, and got larger
+
+**Prereg `probe/DIRCTL001_PREREG.md`, committed before either arm was built.** Receipt
+`lwf001-20260918/DIRCTL_RESULT.json`. MECHANISM SCOUT.
+
+Amendment 4's residual was measured against a **piecewise-linear interpolation** across a wide
+unmeasured gap. DIRCTL-001 replaced the interpolated value at each anchored arm's norm with a
+**real arm at exactly that norm on exactly that direction** — built by the peer's own
+`scale_own_delta.py`, verified at **cos = 1.000000** to λ=0 and norms **0.742705 / 0.680032**,
+matching the anchored arms to all printed digits.
+
+| pair | anchored | collinear twin | **residual** | anchored gains / losses | p (Holm, family of 2) |
+|---|---:|---:|---:|---:|---:|
+| λ = 0.25 vs sc-m025 | 0.631 | **0.558** | **+7.2 pp** | 32 / 6 | **2.43e-05** |
+| λ = 0.5 vs sc-m05 | 0.681 | **0.586** | **+9.4 pp** | 43 / 9 | **4.08e-06** |
+
+**Registered verdict: DIRECTION_SURVIVES.** No interpolation appears anywhere in those numbers.
+
+**The interpolation had been optimistic, so Amendment 4 understated the effect.** It assumed
+0.576 at ‖δ‖ = 0.7427 where the measured value is 0.558 (−1.8 pp), and 0.591 at 0.6800 where the
+measured value is 0.586 (−0.5 pp). The residuals move **+5.5 → +7.2 pp** and **+9.0 → +9.4 pp**.
+
+## Two free results from the same arms
+
+**Curvature: APPROXIMATELY_LINEAR.** Deviations from the endpoint chord are +0.7 / −0.3 / −1.6 pp
+across the five collinear points. This is the first direct read of the magnitude curve's shape in
+this lane and it puts a small error bar on any residual computed here.
+
+**ALIAS-002's dose response REPLICATES on an independently trained delta's ray.** Five collinear
+points at ‖δ‖ = 0.000 / 0.416 / 0.680 / 0.743 / 0.832 give accuracies 0.750 / 0.658 / 0.586 /
+0.558 / 0.553 — **ρ = −1.0000, exact permutation p = 0.0167**, the floor at n = 5. The monotone
+magnitude→damage relation is not a property of the RRP-015 delta; it holds on the LWF lane too.
+
+## What this does NOT establish, and the peer session has made that sharper
+
+**Both off-ray arms here were produced by the same anchor loss.** So the supported claim is
+narrower than "direction beats dose": it is that *this* anchor buys alias preservation its
+magnitude reduction does not explain.
+
+The peer session has since built the control Addendum 2 named — `arm-lambda0-ord23`, rotated
+from λ=0 by **row order alone**, no anchor, same rows, same objective — and measured what that
+rotation costs on **acquisition**:
+
+| arm | rotation | ‖δ‖ ratio | acquisition |
+|---|---:|---:|---:|
+| λ = 0 | 0° | 1.000 | 198 |
+| **ord23** (row order) | **53.6°** | 1.02 | **170** |
+| λ = 0.25 (anchor) | **58.4°** | 0.89 | **197** |
+
+**A larger rotation costs one acquisition row; a smaller one costs twenty-eight.** So rotation
+cost is **mechanism-dependent, not angle-dependent** — measured, not argued. If that holds for
+cost, it may hold for benefit, and my headline assumes it does not.
+
+**DIRCTL-002 is registered** (`probe/LWF_ALIAS_PREREG.md` Addendum 3) and runs `ord23` against
+its own norm-matched collinear twin. If `ord23` shows no residual, Amendment 4's claim narrows
+in the record from "direction beats dose" to "an anchor loss buys preservation beyond its
+magnitude" — a substantially smaller claim, and the one the evidence would then support.
