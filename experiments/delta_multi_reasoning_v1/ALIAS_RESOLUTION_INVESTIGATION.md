@@ -1040,3 +1040,59 @@ operating point among the arms built here"*, not *"keep three quarters."* The LW
 has a single α = 0.5 point — which this now shows is **past the knee** — so it has never been
 measured where it matters. **LWF α = 0.75 is the cheap discriminating follow-up**, and unlike
 everything else today it does not already exist.
+
+---
+
+# AMENDMENT 13 — the 1.81× person-vs-object ratio is WITHDRAWN: a typographic cue in one stratum
+
+**Found by `method/prose.py`, written minutes earlier at the peer session's suggestion, on its
+first run against an existing bank.** It caught the `The the` defect it was built for **and then
+found a second one, in the bank Amendment 11's headline rests on.**
+
+## The defect
+
+In `object_binding` — **120 of 120 rows, and in no other stratum** — the distractor activity
+lines begin **lowercase** while the binding and action sentences begin with a **capital**:
+
+```
+CAPITAL    This is a consolidated account of the audit at the Tolbooth Yard...
+lowercase  brass astrolabe appears in the Tuesday condition report
+CAPITAL    The item bearing the customs stamp that week was the glass spirit-level...   <- BINDING
+lowercase  iron sounding-line was entered in the tally book on Wednesday
+CAPITAL    It was the item bearing the customs stamp that was carried to Ordnance Bay   <- ACTION
+lowercase  horn inkwell appears in the Wednesday condition report
+```
+
+**Capitalisation separates "distractor line" from "answer-bearing line" perfectly.** Item names
+are common nouns; person names and the proper-noun places are not, so `person_binding` and
+`place_binding` carry no equivalent.
+
+## What it costs
+
+| claim | status |
+|---|---|
+| **"the delta damages object-valued binding too"** | **SURVIVES.** Supa and λ=0 read byte-identical text, so a cue cannot manufacture a paired difference. 0 repairs / 17 damages, p = 1.5e-05 |
+| **"persons are damaged 1.81× more than objects"** | **WITHDRAWN.** The strata differ in a typographic cue as well as in answer type |
+
+**The counter-argument, stated because it is real and still insufficient:** if the cue simply
+made `object_binding` easier, its *baseline* should be higher. It is not — Supa scores **0.842**
+on object against **0.850** on person. So the cue did not help the source.
+
+**But that does not clear it**, and the pattern is if anything suspicious: λ=0 scores **0.700**
+on object against **0.592** on person. A crutch that a competent reader ignores can still be
+load-bearing for a degraded one — which is exactly the shape needed to depress object damage
+without lifting the baseline. **The confound is live and I cannot rule it out from this bank.**
+
+## What this says about the check
+
+`prose.py` was written at the peer's insistence that a rendered-row read belongs in the build as
+a blocking step. **On its first run it caught the defect it was designed for and one nobody had
+looked for, in a bank already used for a published contrast.** Five structural checks — three
+floor classes, the gate, convention sensitivity, mention-count assertions, bridge-occurrence
+assertions — missed both.
+
+> **A check that reads the text as text is not redundant with checks that read its structure.**
+
+**The fix is trivial** — capitalise the entity at sentence start — and the builder now **refuses**
+on any mechanical prose defect, so this cannot recur silently. **PRES-006 is required before the
+person-vs-object ratio can be quoted at all.**

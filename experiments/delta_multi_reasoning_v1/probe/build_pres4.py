@@ -63,6 +63,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "method"))
 from floors import floors as gate_floors  # noqa: E402
+from prose import render_sample, scan as prose_scan  # noqa: E402
 
 SENTINEL = "UNKNOWN"
 SYSTEM = ("You are answering a closed-context reading test. Use only the supplied context. "
@@ -221,6 +222,18 @@ def main(argv=None) -> int:
                          f"({share:.3f} > {MAX_CONVENTION_SHARE}) -- PRES-003 lost 241/360 rows "
                          f"to exactly this")
 
+    # PROSE. The one defect class that survived floors, gate, convention sensitivity,
+    # mention-count assertions and a bridge-occurrence assertion -- `The the` on 360/360 rows,
+    # on the binding sentence. Five structural checks, none of which read the text as text.
+    pd = prose_scan(rows)
+    if not pd["clean"]:
+        print(f"  prose defects in {pd['rows_with_defects']}/{pd['rows_scanned']} rows: "
+              f"{pd['by_kind']}")
+        for k, ex in pd["examples"].items():
+            print(f"    {k}: {ex}")
+        raise SystemExit("REFUSING to write: mechanical prose defects -- PRES-004 shipped "
+                         "'The the' on 360/360 rows and five structural checks missed it")
+
     fl = {s: gate_floors([r for r in rows if r["stratum"] == s]) for s in STRATA}
     overall = gate_floors(rows)
     bad = {s: v["binding_floor_rate"] for s, v in fl.items()
@@ -256,6 +269,10 @@ def main(argv=None) -> int:
         "seed": a.seed, "max_floor_bound": MAX_FLOOR,
         "max_convention_share": MAX_CONVENTION_SHARE,
         "floors_per_stratum": fl, "floors_overall": overall,
+        "prose_scan": pd,
+        # Rendered rows go IN the manifest. The failure mode was never "nobody could read it",
+        # it was "nobody did" -- so reading costs a reviewer nothing and skipping it is visible.
+        "rendered_sample": render_sample(rows, n=2),
         "quality_claim": False, "release_permitted": False,
     }, indent=2) + "\n", encoding="utf-8")
 
