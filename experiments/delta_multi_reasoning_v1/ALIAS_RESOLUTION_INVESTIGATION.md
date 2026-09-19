@@ -1409,3 +1409,110 @@ p < 0.05. It is "not powered to distinguish", not "no effect."**
 So **the threshold structure is real and highly ordered** — 0.3–0.6% nesting violations — **and
 its structure is not in the item.** What *is* in the item is **damage susceptibility**, which is
 a different question from the one the threshold framing asked.
+
+---
+
+# Amendment 19 — the `low` position null is real, not selection
+
+**Class: MECHANISM SCOUT.** One bank, one draw. Receipt `POSITION_SELECTION.json`, script
+`analysis/position_selection.py`.
+
+The peer session proposed that Amendment 18's `low` null is an artifact of **the damage rule
+itself**. Their evidence is real and I reproduce it exactly: the source's own accuracy falls with
+answer position — ρ = **−0.295** in `low` (p = 0.0011), **−0.227** in `equal` (0.0138),
+**−0.149** in `high` (0.1023, ns) — the mirror image of the delta's damage gradient. So scoring
+damage over source-correct rows removes late-answer rows from the denominator **exactly where the
+source already fails on them**. Their conclusion: the `low` null is not evidence the delta is
+position-insensitive there; it is evidence **the measurement cannot see it there**. They named
+this a third route to an uninformative null — **selection** — alongside wrong endpoint class and
+thin denominator.
+
+It is a sharp hypothesis and it is wrong on this bank. Four checks.
+
+## A. Drop the damage rule entirely
+
+If conditioning is what hides the effect, then **not conditioning** should reveal it. Correlate
+position with each arm's raw accuracy over all 120 rows — no denominator, so selection cannot act.
+
+| cond | source ρ | delta ρ (native α=1) | **delta's excess** |
+|---|---:|---:|---:|
+| `low` | −0.295 | −0.268 | **+0.027** |
+| `equal` | −0.227 | −0.309 | −0.083 |
+| `high` | −0.149 | −0.448 | **−0.299** |
+
+**In `low` the delta adds nothing.** Its unconditional position sensitivity is the source's,
+inherited and if anything slightly weaker. In `high` it adds a large one of its own. The selection
+account predicts the opposite in `low`, and the test that would show it does not condition on
+anything.
+
+## C. The test that would have settled it, and why it cannot run
+
+The clean answer to a selection worry is to include the excluded rows through the other cell:
+compare damage-cell positions against **repair**-cell positions, so source-wrong rows enter via
+repairs. **The repair cell is empty** — 0/1/1 per condition on native, 0/0/1 on LWF; only 2 rows
+in the whole bank are delta-correct and source-wrong.
+
+That is not a failure, it is the relevant fact: **delta-correct is nested inside source-correct**,
+so conditioning on source-correct **discards no information about the delta.** On source-wrong
+rows the delta is almost never right either — those rows are dead for both arms, not withheld from
+one. This is the same purely-subtractive structure PRES-005 found across all three binding strata.
+
+## D. The late cells in `low` were never emptied
+
+Position quartiles, source-correct denominator and native damage count:
+
+| cond | [0,.25) | [.25,.50) | [.50,.75) | [.75,1.0] |
+|---|---|---|---|---|
+| `low` | 18 ok / **2** dmg | 24 / 3 | 16 / 4 | **18 ok / 2 dmg** |
+| `equal` | 27 / 3 | 38 / 7 | 17 / 7 | 6 / 2 |
+| `high` | 39 / 2 | 49 / 11 | 17 / 12 | **1 / 0** |
+
+`low`'s last quartile holds **18 source-correct rows — tied for the most-populated bin in that
+condition** — and **2 damaged, identical to the earliest bin.** The rows that would have shown the
+effect were present and undamaged. The source rate does decline across `low`'s bins
+(0.900 → 0.667 → 0.533 → 0.529), so selection is genuinely acting; it is just nowhere near strong
+enough to empty the cells.
+
+## E. And `low` had the power to see a `high`-sized effect
+
+Equal denominators make this unusually clean. `low` Q1 vs Q4 is 2/18 vs 2/18, Fisher p = 1.0000.
+The minimum detectable count in Q4 against 2/18 is **9/18 (0.500)**. Had `low` carried the
+`high`-sized gradient (0.706), that would be 13/18, **p = 4.9e−04**. So this null is reported
+under requirement 14 with its power, and it passes: **`low` could have detected the effect it is
+being asked about, several times over.**
+
+## F. A correction to Amendment 18 — its cross-condition ordering was uncontrolled
+
+Table D exposes a problem with my own previous claim, not the peer's. **The conditions do not span
+the same position range**: `high` has **1** source-correct row past 0.75, `low` has **18**.
+Amendment 18 ordered the conditions by ρ without matching support, so the ordering could have been
+a support difference. Recomputed on common support (position < 0.75):
+
+| lane | cond | full ρ (p) | **matched ρ (p)** |
+|---|---|---|---|
+| native α=1 | `low` | +0.062 (0.61) | +0.146 (0.27) |
+| | `equal` | +0.219 (0.042) | +0.215 (0.052) |
+| | `high` | +0.429 (<0.0001) | **+0.445 (<0.0001)** |
+| LWF λ=0 | `low` | +0.096 (0.41) | +0.011 (0.94) |
+| | `equal` | +0.359 (0.0006) | **+0.393 (0.0003)** |
+| | `high` | +0.436 (<0.0001) | **+0.452 (<0.0001)** |
+
+**The ordering survives** — it strengthens slightly on matched support, on both deltas. Amendment
+18's cross-condition claim stands, but it stood **uncontrolled until now**, and `equal` on native
+crosses 0.05 (0.042 → 0.052) under the control, so it should be read as the marginal cell it is.
+
+## What this changes
+
+**The peer's selection route to an uninformative null is a real and general hazard and belongs in
+the record.** Whenever a damage rule conditions on a baseline that is itself sensitive to the
+feature under test, the denominator is selected on that feature. It should be checked by default.
+
+**On this bank it is checkable and it did not bite**, for a specific structural reason:
+**the delta is purely subtractive, so the conditioned and unconditioned analyses ask the same
+question.** The check that settles it — A — is exactly the one nesting makes valid. Where a delta
+*does* repair, A would confound the delta's own sensitivity with the source's and the discordant
+cell test would be required instead.
+
+So the `low` null survives, and the thing Amendment 18 said was unexplained is still unexplained:
+**position sensitivity is strongest where the answer is most mentioned and the source scores
+best.** What is now ruled out is that `low`'s silence is an artifact of how damage is scored.
