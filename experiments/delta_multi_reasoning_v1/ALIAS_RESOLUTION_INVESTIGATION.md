@@ -693,3 +693,85 @@ quantisation residual. That does not invalidate anything — BF16 is what ships,
 against it is correct — but it means **‖δ‖ carries a rounding floor that is identical across all
 arms and therefore cancels in every paired comparison made here.** Nobody should later read a
 small ‖δ‖ as a small update.
+
+---
+
+# AMENDMENT 8 — the reallocation framing is withdrawn, and my own stratum is verified clean
+
+**REPORT-ONLY** (the 256-row suite is SPENT). Zero model calls. Script
+`analysis/lc_endpoint_class.py`, receipt `LC_ENDPOINT_CLASS.json`.
+
+Amendment 7's Addendum 2 registered **reallocation** — that rotation moves damage rather than
+removing it — on the peer session's finding that λ=0.25 loses 17 long-context rows. **The peer
+has since retracted that headline themselves, and their argument reproduces exactly here.**
+
+## The stratification, recomputed independently
+
+Each stratum classified by `Δ = λ=0 − Supa`, using **only the source and the unrotated delta** —
+no rotated-arm data, so it stratifies rather than selects on outcome. Answerable rows only.
+
+| stratum | n | Supa | λ=0 | Δ | class | λ=0.25 losses | ord23 losses |
+|---|---:|---:|---:|---:|---|---:|---:|
+| causal_disambiguation | 24 | 23 | 24 | +1 | PRESERVED | 4 | 0 |
+| latest_verified_record | 24 | 24 | 23 | −1 | PRESERVED | 1 | 0 |
+| multi_condition_identity | 24 | 18 | 18 | 0 | PRESERVED | 1 | 0 |
+| object_state_tracking | 24 | 24 | 24 | 0 | PRESERVED | 0 | 0 |
+| temporal_correction | 24 | 24 | 24 | 0 | PRESERVED | 1 | 2 |
+| **count_with_exclusions** | 24 | 16 | 22 | **+6** | **IMPROVED** | **7** | **7** |
+| **rule_exception** | 24 | 15 | 18 | **+3** | **IMPROVED** | 3 | 1 |
+| alias_resolution | 24 | 4 | 1 | −3 | **BELOW_GATE** | 1 | 1 |
+
+| arm | IMPROVED | PRESERVED | **rate ratio** |
+|---|---:|---:|---:|
+| λ = 0.25 | 10/40 = 0.250 | 7/113 = 0.062 | **4.0×** |
+| ord23 | 8/40 = 0.200 | 2/113 = 0.018 | **11.3×** |
+
+**Rotation damage sits 4–11× more heavily on strata the delta IMPROVED.** By the endpoint-class
+rule both sessions now apply, damage on an improved stratum is **the delta's own gain being
+given back** — an acquisition cost, not forgetting. The shared region found in
+`LC_LOSS_REGION_FINDING.md` is `count_with_exclusions`, which is **entirely** in that class.
+
+**So "rotation relocates forgetting" is withdrawn.** It was counting acquisition give-back as
+preservation loss.
+
+## My own stratum, checked rather than assumed
+
+The obvious next worry is whether the alias result is the same artifact. It is not:
+
+> **ALIAS-001: Supa 0.750 → λ=0 0.553, Δ = −0.197. DAMAGED.**
+
+That is a genuine preservation endpoint — the delta costs it — so sparing it is sparing real
+forgetting, not returning an unearned gain. **Verified, not assumed**, because this is exactly
+the check the peer's retraction implies and it would have been convenient to skip.
+
+## What the corrected arithmetic actually says — and it is NOT "gains exceed losses"
+
+Restricting the long-context loss to PRESERVED strata changes the conservation sum, and my first
+reading of that was wrong. **Row counts across instruments are not summable** — alias is n = 360,
+long context n = 256, the process bank n = 384 — so the comparison must be in rates:
+
+| arm | alias (preservation) | LC PRESERVED (preservation) | ratio |
+|---|---:|---:|---:|
+| λ = 0.25 | **+7.8 pp** | **−6.2 pp** | 0.79 |
+| ord23 | **+3.3 pp** | **−1.8 pp** | 0.54 |
+
+Both arms are net positive on preservation, **but the margin is far smaller than row counts
+implied, and the two arms do not agree on a ratio.** So the conserved-ratio reading registered
+over all 256 rows was using the wrong denominator — and on the right denominator the ratio is
+neither 1.0 nor stable across arms. **Conservation is not rescued by the correction; it is
+differently wrong.**
+
+## The account that survives, stated no more strongly than it should be
+
+> **Rotation appears to trade ACQUISITION for PRESERVATION** — it gives back the delta's own
+> gains (the IMPROVED strata, and for `ord23` 28 process rows) and buys preservation on a
+> genuinely damaged skill.
+
+And the two mechanisms differ sharply in how good that trade is: λ=0.25 gives up **1** process
+acquisition row, `ord23` gives up **28**, for alias gains of +7.8 and +3.3 pp. **The anchor is a
+much better trade than a row reshuffle** — which is what one would expect from an intervention
+designed to preserve versus an arbitrary reordering, and is the first thing in this programme
+that distinguishes two rotations by anything other than their angle.
+
+**Two instruments, one draw each, a SPENT suite, and a rate comparison across banks that differ
+in difficulty.** Nothing here is confirmatory.
