@@ -977,3 +977,66 @@ than ALIAS-001 for reasons three tested hypotheses failed to explain. Every numb
 within-bank, which is why the difficulty gap does not touch it.
 
 One draw, one delta, one lane. `quality_improvement_established` false.
+
+---
+
+# AMENDMENT 12 — the knee is at α = 0.75, and my own receipt said so
+
+**The native ladder's long-context column existed all along**, in
+`int001-20260917/evidence/`. Verified here: `a025` **163**, `a050` **164**, `a075` **163**,
+`a100` **157**, against Supa's **161** — all at implementation digest `a329eb7bb06f` on `cuda`,
+identical to every arm either session scored today, so all five are directly comparable.
+
+## The completed native frontier
+
+| α | acq /384 | alias /360 | refs /47 | arith /150 | long ctx /256 |
+|---|---:|---:|---:|---:|---:|
+| 0.00 | 14 | **270** | **47** | 47 | 161 |
+| 0.25 | 145 | 261 | 43 | 59 | 163 |
+| 0.50 | 219 | 242 | 42 | 67 | **164** |
+| **0.75** | **234** | **228** | 39 | 68 | **163** |
+| 1.00 | **235** | 217 | 40 | **71** | 157 |
+
+The alias column reproduces ALIAS-002's dose ladder exactly (270/261/242/228/217).
+
+## Read downward, the exchange rate collapses after one step
+
+| step | acq given up | alias recovered | rate |
+|---|---:|---:|---:|
+| **1.00 → 0.75** | **1** | **11** | **10.98 : 1** |
+| 0.75 → 0.50 | 15 | 14 | 0.93 : 1 |
+| 0.50 → 0.25 | 74 | 19 | 0.26 : 1 |
+| 0.25 → 0.00 | 131 | 9 | 0.07 : 1 |
+
+> **α = 0.75 gives up ONE acquisition row and recovers ELEVEN alias rows and SIX long-context
+> rows. The full delta is dominated on both preservation axes at essentially no acquisition
+> cost.**
+
+Alias term paired from the raw generations: **12 gains / 1 loss, exact McNemar p = 0.0034.**
+
+## The part I have to own: this is in my own committed receipt
+
+`COUPLING_LADDER.json`, written hours earlier, records the 0.75 → 1.00 rung as
+**+1 acquisition row for 1 repair / 12 damages at p = 0.0034**, and a **160× spread** in
+marginal cost across the ladder. Read in the operating-point direction that *is* the knee.
+
+**What I wrote at the time was "an independent argument for the α 0.5–0.75 operating point."**
+I hedged across a range when the number identified a point, and then anchored on 0.50 because
+INT-001 had selected it — on a rule that never saw long context. **The 160× was the signal and
+I described it correctly without converting it into the recommendation it implied.**
+
+The peer session searched one directory and declared a number missing, three separate times
+today. I computed the decisive number and under-read it. Different failure, same cost, and mine
+was the one already committed to this repository.
+
+## What it licenses, and what it does not
+
+**Does.** On the RRP-015 lane, α = 0.75 dominates the deployed artifact (α = 1) on alias and
+long context for about one acquisition row. That is the most deployment-relevant number this
+programme has produced.
+
+**Does not.** One lane. The arm-versus-rule distinction stands: this is *"the best measured
+operating point among the arms built here"*, not *"keep three quarters."* The LWF lane's ladder
+has a single α = 0.5 point — which this now shows is **past the knee** — so it has never been
+measured where it matters. **LWF α = 0.75 is the cheap discriminating follow-up**, and unlike
+everything else today it does not already exist.
