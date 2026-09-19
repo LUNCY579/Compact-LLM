@@ -84,6 +84,12 @@ BODY_N = 15
 #: refused this bank on a p = 0.107 difference. Fisher still catches the real thing by thirty
 #: orders of magnitude: the first build's `first_candidate` cue was 34/48 vs 0/48, p = 9.9e-13.
 BAND_FLOOR_ALPHA = 0.05 / 16          # 4 extraction rules x 4 cells
+#: The manipulation must deliver a comparable effect size in EVERY cell. Disjointness of the two
+#: bands is NOT enough: bands can be disjoint while the gap in mean position is three times
+#: larger in one cell than another, and a null in the weak cell would then be uninterpretable --
+#: "count does not matter" and "the manipulation was weaker here" predict the same result.
+MIN_BAND_GAP = 0.45                   # smallest acceptable late-minus-early gap in mean position
+MAX_BAND_GAP_SPREAD = 0.10            # max minus min of that gap across cells
 BAND_FLOOR_HARD_GAP = 0.25            # refuse a large gap even when underpowered
 
 #: Neutral lines naming NO candidate. `build_pres4.FILLER` has only four, and `k1d1` needs ten.
@@ -176,9 +182,16 @@ def build(cell: str, k: int, d: int, band: str, packs: int, seed: int) -> list[d
     bridge, acts = BRIDGE[STRATUM], ACTIVITY[STRATUM]
     rows = []
     for i in range(packs):
-        sid = f"MP-{cell.upper()}-{band[:1].upper()}{i:04d}"
+        # The scenario id deliberately OMITS the band: the same scenario is built once and
+        # rendered in BOTH bands from identical material, so `early` and `late` differ ONLY in
+        # arrangement. That makes every scenario a MATCHED PAIR and lets the primary test be an
+        # arm x band interaction, in which a position-reading cue available to both arms cancels.
+        sid = f"MP-{cell.upper()}-{i:04d}"
         for variant in VARIANTS:
-            r = random.Random(h(seed, cell, band, sid, variant))
+            # content RNG: band-independent, so both bands draw the same names, items, days and
+            # templates. placement RNG: band-dependent, and the only thing the band touches.
+            r = random.Random(h(seed, cell, sid, variant))
+            rp = random.Random(h(seed, cell, band, sid, variant))
             cands = r.sample(PEOPLE, N_DISTRACTORS + 1)
             answer, distractors = cands[0], cands[1:]
             other_item = r.choice(ITEMS)
@@ -208,7 +221,7 @@ def build(cell: str, k: int, d: int, band: str, packs: int, seed: int) -> list[d
             for x in distractors:
                 distractor_lines += [r.choice(acts).format(x=x, d=r.choice(DAYS))
                                      for _ in range(d)]
-            r.shuffle(distractor_lines)     # vary WHICH distractor pins each end
+            rp.shuffle(distractor_lines)    # vary WHICH distractor pins each end
             other_lines = [action]
             pad = BODY_N - len(answer_lines) - len(distractor_lines) - len(other_lines)
             if pad < 0:
@@ -216,7 +229,7 @@ def build(cell: str, k: int, d: int, band: str, packs: int, seed: int) -> list[d
             other_lines += [ln.format(d=r.choice(DAYS))
                             for ln in r.sample(NEUTRAL + FILLER, pad)]
 
-            body = place(r, answer_lines, distractor_lines, other_lines, band)
+            body = place(rp, answer_lines, distractor_lines, other_lines, band)
             head = (f"This is a consolidated account of the audit at {r.choice(SITES)}, "
                     f"covering six consecutive days, transcribed in the order the entries "
                     f"were found.")
@@ -243,7 +256,8 @@ def build(cell: str, k: int, d: int, band: str, packs: int, seed: int) -> list[d
                 raise SystemExit(f"{sid}/{variant}: {len(occ)} occurrences, expected {k}")
 
             rows.append({
-                "id": f"{sid}-{variant[:3].upper()}", "scenario_id": sid,
+                "id": f"{sid}-{band[:1].upper()}-{variant[:3].upper()}",
+                "scenario_id": sid, "pair_id": f"{sid}-{variant[:3].upper()}",
                 "stratum": STRATUM, "cell": cell, "band": band, "variant": variant,
                 "partition": "PROBE", "task_type": STRATUM, "answerable": True,
                 "answer_mentions": k, "distractor_mentions": d,
@@ -287,6 +301,69 @@ def main(argv=None) -> int:
             raise SystemExit(f"{cell}: early and late mean-position ranges OVERLAP "
                              f"({lo_hi[0]:.4f} >= {lo_hi[1]:.4f}) -- the manipulation is not "
                              f"clean and a position contrast here would be confounded")
+
+    # --- the bands must be MATCHED PAIRS: identical material, different arrangement ---
+    pairs = {}
+    for r in rows:
+        pairs.setdefault(r["pair_id"], {})[r["band"]] = r
+    bad_pairs = [k for k, v in pairs.items() if set(v) != set(BANDS)]
+    if bad_pairs:
+        raise SystemExit(f"{len(bad_pairs)} scenario(s) missing a band: {bad_pairs[:3]}")
+    for k, v in pairs.items():
+        import re as _re
+        sents = {b: sorted(x.strip() for x in _re.split(r"(?<=[.!?])\s+", v[b]["context"])
+                           if x.strip()) for b in BANDS}
+        if sents["early"] != sents["late"]:
+            raise SystemExit(f"{k}: the two bands do not contain the SAME sentences -- they must "
+                             f"differ only in arrangement, or the contrast is not matched")
+        if v["early"]["reference"] != v["late"]["reference"]:
+            raise SystemExit(f"{k}: paired rows have different answers")
+
+    # --- the manipulation must deliver a comparable effect size in every cell ---
+    gaps = {c: round(sep[c]["late_mean"] - sep[c]["early_mean"], 4) for c, _, _ in CELLS}
+    if min(gaps.values()) < MIN_BAND_GAP:
+        raise SystemExit(f"band gap in mean position too small: {gaps} (min {MIN_BAND_GAP}). "
+                         f"A weak manipulation makes a null in that cell uninterpretable.")
+    if max(gaps.values()) - min(gaps.values()) > MAX_BAND_GAP_SPREAD:
+        raise SystemExit(f"band gap differs too much across cells: {gaps} "
+                         f"(spread > {MAX_BAND_GAP_SPREAD}) -- cells are not comparably "
+                         f"manipulated")
+
+    # --- positional rules that read the BULK, not an extreme. NOT closable, so REPORTED. ---
+    # Pinning the first and last body slots closes `first_candidate` and `last_candidate`
+    # because each reads a single extreme. A rule that takes the argmin of each candidate's MEAN
+    # mention position is untouched by that, and it is the rule that mirrors the operative
+    # predictor. It cannot be closed by construction: "the answer is early" IS the manipulation,
+    # so any rule reading position tracks it by definition. It is reported here, and the prereg
+    # states the consequence -- the ABSOLUTE early-vs-late comparison is not readable, and the
+    # primary test is the arm x band INTERACTION on matched pairs, where a cue available to both
+    # arms cancels.
+    vocab = sorted({r["reference"] for r in rows})
+
+    def cand_means(ctx):
+        out = {}
+        for c in vocab:
+            o, j = [], ctx.find(c)
+            while j >= 0:
+                o.append(j / len(ctx))
+                j = ctx.find(c, j + 1)
+            if o:
+                out[c] = sum(o) / len(o)
+        return out
+
+    positional = {}
+    for c, _, _ in CELLS:
+        per = {}
+        for name, pick in (("argmin_mean_position", min), ("argmax_mean_position", max)):
+            rates = {}
+            for b in BANDS:
+                sub = [r for r in rows if r["cell"] == c and r["band"] == b]
+                hit = sum(1 for r in sub
+                          if (m := cand_means(r["context"]))
+                          and pick(m, key=m.get) == r["reference"])
+                rates[b] = round(hit / len(sub), 4)
+            per[name] = rates
+        positional[c] = per
 
     # --- prose: the defect class that survived every structural check on PRES-004 ---
     pd = prose_scan(rows)
@@ -342,7 +419,9 @@ def main(argv=None) -> int:
         "record": "MPOS_BUILD", "class": "BUILD -- reads no predictions, registers no criterion",
         "n_rows": len(rows), "cells": [{"cell": c, "k": k, "d": d} for c, k, d in CELLS],
         "bands": list(BANDS), "packs_per_cell": a.packs_per_cell, "seed": a.seed,
-        "band_separation": sep, "floors_per_band": band_floors,
+        "band_separation": sep, "band_gaps": gaps, "min_band_gap": MIN_BAND_GAP,
+        "max_band_gap_spread": MAX_BAND_GAP_SPREAD, "matched_pairs": len(pairs),
+        "positional_rules_NOT_closable": positional, "floors_per_band": band_floors,
         "band_floor_alpha": BAND_FLOOR_ALPHA, "band_floor_hard_gap": BAND_FLOOR_HARD_GAP, "floors_per_cell": fl, "floors_overall": overall,
         "prose_scan": pd, "answer_sentence_locator": loc, "surface_outliers": surf,
         "rendered_sample": render_sample(rows, n=1, seed_field="cell"),
