@@ -194,3 +194,74 @@ The peer's LWF-001 preservation anchor tests the converse and my prediction is r
 pre-run: an anchor toward the frozen base should help most on skills absent from the training
 mixture. Alias binding is now a measured, thrice-replicated instance of exactly one.
 
+---
+
+# AMENDMENT 2 — the dose ladder: a perfect monotone response, and what it does not buy
+
+**ALIAS-002.** Predictions registered in `probe/ALIAS002_DOSE_PREREG.md` and committed
+(`6ef39c6`) **before the first arm was materialised**. Scoring script written while the arms were
+still generating. Receipt `alias001-20260918/ALIAS_DOSE_RESULT.json`.
+
+Five doses of `theta(alpha) = theta_supa + alpha * (theta_trained - theta_supa)`, FP32, built by
+INT-001's own hash-bound `build_arm.py` on its registered grid. Each arm materialised, scored on
+the **same 360 rendered prompts**, and deleted. Same tokenizer bytes across arms, so the render
+is reused rather than recomputed.
+
+| alpha | pooled acc | `low` | `equal` | `high` |
+|---:|---:|---|---|---|
+| 0.00 | **0.750** | 0.633 | 0.733 | 0.883 |
+| 0.25 | 0.725 | 0.600 (4 dmg) | 0.717 (2) | 0.858 (3) |
+| 0.50 | 0.672 | 0.575 (7) | 0.667 (8) | 0.775 (13) |
+| 0.75 | 0.633 | 0.550 (10) | 0.633 (13) | 0.717 (20) |
+| 1.00 | **0.603** | 0.542 (11) | 0.583 (19) | 0.683 (25) |
+
+**Spearman(alpha, pooled accuracy) = −1.0000, exact permutation p = 0.0167** — which is the
+*floor* attainable at n = 5, where the null admits only 120 orderings. Monotone non-increasing
+across every rung. **And rho = −1.000 separately in all three salience conditions**, each at the
+same exact p. Damage rates conditioned on the alpha=0 correct set rise monotonically too:
+0.05 → 0.09 → 0.13 → 0.14 in `low`, 0.02 → 0.09 → 0.15 → 0.22 in `equal`, 0.03 → 0.12 → 0.19 →
+0.24 in `high`.
+
+**No dose × salience interaction**, as capacity predicted. Drops from alpha=0 to alpha=1 are
+0.092 / 0.150 / 0.200 — spread 0.108, inside the registered "roughly parallel" bound of 0.15 —
+and the interaction test, damage at the top dose in `low` against `high` conditioned on the
+alpha=0 correct set, gives **Fisher p = 0.137**. Three near-parallel declines.
+
+Every registered disconfirmer failed to appear: not non-monotone, not flat, no significant
+interaction.
+
+## A cross-parameterisation check that fell out for free
+
+The promoted **k = 0.25 core scores 234/360 = 0.650 on this bank, landing between alpha = 0.50
+and alpha = 0.75.** Masking the smallest three quarters of the update's elements preserves most
+of its norm, where scaling every element to a quarter does not — so the two "0.25"s are very
+different doses, and the masked one behaves like alpha ≈ 0.6 here. That is an independent
+confirmation, on a task neither was designed around, of the programme's finding that mask, rank
+and scalar are **one lever acting through magnitude**.
+
+## What this establishes, held to what I registered
+
+**"The delta uniformly weakens an unexercised binding skill in proportion to its magnitude" is
+now MEASURED rather than described.** A perfect monotone dose response, replicated across three
+salience conditions, with no interaction.
+
+**It does not establish capacity as the cause, and I registered that in advance.** Magnitude is
+already known to be the single operative lever in this programme; *any* mechanism scaling with
+magnitude predicts exactly this curve. Monotone decline is **necessary for the capacity account
+and not sufficient for it**. The corpus null — zero role phrases and zero person names in the
+384-row training file — remains the only positive evidence for capacity, and absence in the data
+does not establish causation.
+
+What would settle it is a **contrast**: a second skill that the training data *does* exercise,
+measured on the same ladder. Capacity predicts the exercised skill declines more slowly, or not
+at all, at the same doses. That is the discriminating test and it is the natural next build,
+since the ladder arms are now a known quantity and the acquisition instrument already measures
+an exercised skill.
+
+## The other thing worth taking from this
+
+This is the fourth mechanism question asked of this one cell. The first three were answered by
+looking at data already in hand, and two of them produced accounts that died. This one was
+answered by **varying the thing** and registering the prediction first — and it is the only one
+of the four that produced a number I would put in front of someone.
+
