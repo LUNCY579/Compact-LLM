@@ -231,3 +231,60 @@ stratum that is neither cue-carrying (PRES-005) nor ceilinged (PRES-007). Supa a
 2 rows of headroom; the bank has to be harder on objects while staying surface-matched to
 persons. That is a build problem, and Amendment 1 already said it: *"only more `object_binding`
 rows fix it, not more arms."* It was right, and the realised denominator of 4 makes it sharper.
+
+---
+
+# AMENDMENT 3 — conclusion 2 was arithmetic; its replacement is UNDER-POWERED
+
+Amendment 2 §3 reported *"the lower α repairs more — 0.606 against 0.364, monotone down the
+ray"* as a finding. **It is a definitional identity, and it is struck.** Damage is defined as
+Supa-right-and-λ=0-wrong, so repair at α=0 is 33/33 = 1.000 *by construction*; any monotone path
+from λ=0 back to Supa must show repair rising. Monotonicity would hold of a useless lever too.
+
+The peer session proposed the right replacement — the **shape**, not the direction. Both interior
+points sit above a linear `repair = 1 − α` reference, which would make repair concave in α and
+would be the operationally meaningful claim: at half the delta you would get back more than half
+the binding damage, so an interior operating point would strictly dominate.
+
+**Measured against its own denominator, that claim is not detectable here:**
+
+| arm | nominal α | observed | linear `1−α` | excess | two-sided binomial p |
+|---|---:|---:|---:|---:|---:|
+| `ownA05` | 0.50 | 20/33 = 0.606 | 0.500 | **+3.5 rows** | 0.2962 |
+| `ctrl-own-alpha0.75` | 0.75 | 12/33 = 0.364 | 0.250 | **+3.8 rows** | 0.1573 |
+
+The smallest detectable excess at n = 33 is **+6.5 rows** against linear-0.50 and **+5.8** against
+linear-0.25. Observed excesses are roughly half of detectable. Both points fall on the same side,
+but the joint sign probability under the linear null is 0.25 with two points — the floor of that
+test, and not evidence.
+
+> **Registered here, in the same form Amendment 1 used for uniformity: a null on concavity
+> reports as "not powered to distinguish", and a positive-looking pair reports the same way.**
+> This is the `references_retained` shape for the third time in this programme.
+
+**And the reference curve is itself a choice.** Nothing derives `repair = 1 − α` as the null;
+INT-001 shows every endpoint along this ray is steeply non-linear in α (acquisition
+14 → 145 → 219 → 234 → 235). Measuring concavity against an underived reference is a tolerance
+wearing a null's name — see [[nulls-carry-detectable-effect]].
+
+## What survives without a reference curve
+
+On **this lane**, α = 0.50 beats α = 0.75 on every axis measured:
+
+| axis | α=0.50 | α=0.75 | source |
+|---|---:|---:|---|
+| alias | 237 | 220 | 17 losses, **0 gains**, p = 1.5e-05 |
+| binding repair (person) | **20/33** | 12/33 | this bank |
+| acquisition | 215 | 208 | +7, p = 0.281 — *not worse*, not better |
+
+Read directly off measurements, with no interpolation and no assumed shape. It does **not**
+locate the knee; it says α = 0.75 is not it on this lane. And it is a **third endpoint on the
+SAME lane**, corroborating the known LWF optimum rather than independent of it — INT-001 already
+established the knee is lane-dependent (native 0.75, LWF 0.50) and recorded *"never a rule"*.
+
+## The part of Amendment 2 §3 that stands unchanged
+
+**Zero losses, both arms, all three strata.** The registered disconfirmer — *"any stratum showing
+repairs AND losses vs λ=0"* — did not fire anywhere. Additivity now holds on two independently
+built banks across two task types. That needs no reference curve, no assumed shape and no
+denominator argument: it is a count of zero in six opportunities.
