@@ -169,3 +169,83 @@ def stratum_surface_outliers(rows: Sequence[dict], field: str = "context",
             "per_stratum_means": {k: {f: round(v, 4) for f, v in m.items()}
                                   for k, m in means.items()},
             "outliers": flags, "clean": not flags}
+
+
+def answer_sentence_locator(rows: Sequence[dict], field: str = "context",
+                            ref_field: str = "reference", margin: float = 0.10) -> dict:
+    """Does any SURFACE feature identify the answer-bearing sentence above chance?
+
+    **This is the check both of this bank's defects actually needed, and neither of the other
+    two performs it.**
+
+      * `The the` was a unique bigram **on the binding sentence** -- the one containing the
+        answer.
+      * lowercase-vs-capital separated distractor lines from **answer-bearing** lines.
+
+    `prose_defects` caught the first because a doubled word is mechanically wrong.
+    `stratum_surface_outliers` caught the second **only incidentally**, because that cue
+    happened to be confined to one stratum. **A cue applied uniformly across every stratum would
+    pass both with a perfect score and still hand the model the answer.**
+
+    So test it directly and stratum-internally: split each context into sentences, find the one
+    containing the reference, and ask whether a one-line rule picks it above the 1/n_sentences
+    floor. This never compares strata, so it is immune to the objection that strata legitimately
+    differ in surface form.
+
+    It is `structural()`'s logic moved from **answer selection** to **sentence selection** --
+    the same predicate class that found a JSON type tell at 16/64 with zero false positives in
+    the peer session's bank.
+    """
+    import statistics as _st
+
+    def sentences(t):
+        return [x.strip() for x in re.split(r"(?<=[.!?])\s+", t) if x.strip()]
+
+    picks: dict[str, int] = {}
+    floors, n = [], 0
+    for r in rows:
+        ss = sentences(str(r.get(field, "")))
+        ref = str(r.get(ref_field, ""))
+        if len(ss) < 2 or not ref:
+            continue
+        tgt = [i for i, x in enumerate(ss) if ref in x]
+        if len(tgt) != 1:          # ambiguous or absent: cannot score this row
+            continue
+        t = tgt[0]
+        n += 1
+        floors.append(1.0 / len(ss))
+        cand = {
+            "first_sentence": 0,
+            "last_sentence": len(ss) - 1,
+            "longest_sentence": max(range(len(ss)), key=lambda i: len(ss[i])),
+            "shortest_sentence": min(range(len(ss)), key=lambda i: len(ss[i])),
+            "most_capitals": max(range(len(ss)),
+                                 key=lambda i: sum(1 for c in ss[i] if c.isupper())),
+            "most_determiners": max(range(len(ss)), key=lambda i: sum(
+                1 for w in ss[i].split() if w.lower().strip(".,;:") in ("the", "a", "an"))),
+            "has_doubled_word": next((i for i, x in enumerate(ss)
+                                      if _DOUBLED_WORD.search(x)), None),
+            "lowercase_start": next((i for i, x in enumerate(ss) if x[:1].islower()), None),
+            "has_digit": next((i for i, x in enumerate(ss) if any(c.isdigit() for c in x)), None),
+            "most_commas": max(range(len(ss)), key=lambda i: ss[i].count(",")),
+        }
+        for k, v in cand.items():
+            if v is not None and v == t:
+                picks[k] = picks.get(k, 0) + 1
+
+    if n == 0:
+        return {"applicable": False, "why": "no row had exactly one sentence containing its "
+                                            "reference"}
+    floor = _st.mean(floors)
+    rates = {k: v / n for k, v in picks.items()}
+    leaks = {k: round(v, 4) for k, v in rates.items() if v > floor + margin}
+    return {
+        "applicable": True, "rows_scored": n,
+        "chance_floor": round(floor, 4), "margin": margin,
+        "hit_rate_by_feature": {k: round(v, 4) for k, v in sorted(
+            rates.items(), key=lambda kv: -kv[1])},
+        "leaks": leaks, "clean": not leaks,
+        "note": ("a feature beating 1/n_sentences by the margin LOCATES the answer's sentence; "
+                 "this is stratum-internal, so it also catches a cue applied uniformly across "
+                 "all strata, which a cross-stratum outlier test structurally cannot see"),
+    }
