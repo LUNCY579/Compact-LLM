@@ -1,3 +1,25 @@
+# Current SCP boundary review routing
+
+**Native execution is code-locked. Training and confirmation remain closed.**
+Read [DEDUPLICATION_REVIEW.md](DEDUPLICATION_REVIEW.md) for the proposed single
+implementation lineage and [BOUNDARY_REVIEW.md](BOUNDARY_REVIEW.md) for the current
+execution boundary before using any historical instructions below.
+
+The recommended continuation is `research/sequential-complementary-native-boundary-v1`
+at `9551d7ba50784a5acd19e8512faaba6d0efc6aca`. The divergent
+`research/scp-native-qualification-boundary-v1@7486a1490517e9bd0ed8e29631a601d713ec20e8`
+is a retained, non-contained reference, not a redundant branch approved for deletion.
+This documentation-only review does not merge implementations or grant authority.
+
+The `propose`, `qualify`, and `_worker` CLI commands described below are historical
+and refuse on the current boundary. No native launch command is available. Neither
+source-branch guard is changed; `draft` also refuses on the documentation-review
+branch rather than silently rebinding the pending request to new source.
+
+---
+
+The original integration-review README is preserved verbatim below.
+
 # SCP-NQ-001 — Native integration review snapshot
 
 **Published for code review, not native-qualified.** This package is the isolated
