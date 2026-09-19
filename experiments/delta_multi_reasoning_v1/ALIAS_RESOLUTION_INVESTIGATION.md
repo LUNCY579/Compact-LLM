@@ -1096,3 +1096,64 @@ assertions — missed both.
 **The fix is trivial** — capitalise the entity at sentence start — and the builder now **refuses**
 on any mechanical prose defect, so this cannot recur silently. **PRES-006 is required before the
 person-vs-object ratio can be quoted at all.**
+
+---
+
+# AMENDMENT 14 — the knee is LANE-DEPENDENT: α=0.50 beats α=0.75 on the LWF lane
+
+**Last open cell in the frontier.** Arm: the peer session's `ctrl-own-alpha0.75` — their build,
+their bytes, not rebuilt. Prereg `probe/LWF_A075_ALIAS_PREREG.md`, registered before the arm was
+scored. Driver verified output-neutral at **360/360 byte-identical** first.
+
+## Result: 220/360
+
+| contrast | base | α=0.75 | **gains** | **losses** | net | p |
+|---|---:|---:|---:|---:|---:|---:|
+| **vs λ=0** | 199 | 220 | **21** | **0** | **+21** | <0.0001 |
+| **vs `ownA05` (α=0.50)** | 237 | 220 | **0** | **17** | **−17** | <0.0001 |
+| vs Supa | 270 | 220 | 1 | 51 | −50 | <0.0001 |
+
+Split by salience, and **no condition hides a reversal** — unlike the 13/13 the peer decomposed:
+
+| vs | `low` | `equal` | `high` |
+|---|---|---|---|
+| λ=0 | +11 / −0 | +4 / −0 | +6 / −0 |
+| `ownA05` | +0 / −5 | +0 / −5 | +0 / −7 |
+
+**Every contrast is one-directional.** Recovery against λ=0 is *purely additive* — the mirror of
+the purely subtractive damage signature this cell has shown on five banks.
+
+## The registered point prediction hit, and that matters beyond this cell
+
+**Predicted 216.5, band 210–222. Observed 220** — a 3.5-row miss on 360, about 1%.
+
+That was interpolated from the collinear ray **before the arm existed**, and the prereg named the
+outcome that would cost me: *"outside ±6, still monotone → the ray is measured but not linear
+enough to interpolate, and every residual computed against it inherits that error."* **It did not
+fire.** So `analysis/coupling_ladder.py` and the conservation arithmetic, which both lean on ray
+interpolation, do **not** need a tolerance — and a measured ray can substitute for building an
+arm, at least across this span.
+
+## The finding: the knee does not transfer as a rule
+
+The peer measured acquisition on this arm at **215** against `ownA05`'s **208** — **+7 at
+p = 0.281, not significant.** Alias is therefore the discriminating axis, and it is decisive:
+
+> **On the LWF lane, α = 0.50 beats α = 0.75 — 17 alias rows, 0 gains, p < 0.0001 — while the
+> acquisition difference is not significant. The better operating point is α = 0.50.**
+
+| lane | best measured α | why |
+|---|---|---|
+| **NATIVE (RRP-015)** | **0.75** | −1 acquisition row for +11 alias, +6 long context, +1 abstention |
+| **LWF** | **0.50** | α=0.75 loses 17 alias rows for a non-significant +7 acquisition |
+
+**This is exactly the outcome `LWF_A075_ALIAS_PREREG.md` registered as confirming the
+arm-versus-rule distinction:** *"if α=0.75 lands below 237, the LWF knee is at or below 0.50 and
+native's 0.75 does not transfer as a rule."* It landed at 220.
+
+**So "keep three quarters" is not a rule. The optimum is lane-dependent**, and the two lanes
+disagree about *where* it sits as well as about which axis pays. What survives is narrower and
+holds on both: **there exists an α below 1 that dominates the full delta, and it must be located
+per lane rather than inherited.**
+
+Nothing here promotes anything. One draw per arm, two lanes, mechanism scouts throughout.
