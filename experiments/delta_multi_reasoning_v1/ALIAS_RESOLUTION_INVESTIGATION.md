@@ -1171,3 +1171,67 @@ holds on both: **there exists an α below 1 that dominates the full delta, and i
 per lane rather than inherited.**
 
 Nothing here promotes anything. One draw per arm, two lanes, mechanism scouts throughout.
+
+---
+
+# AMENDMENT 15 — repair is purely ADDITIVE and α=0.50 repairs most; uniformity is UNTESTABLE
+
+**PRES-007 × α.** Prereg `probe/PRES007_ALPHA_PREREG.md` + Amendment 1 (three pre-data
+corrections from the peer session). Four arms on one collinear ray, all pre-existing.
+
+## What stands
+
+| arm | stratum | **gains** | **losses** | p | (a) repaired/damaged | (b) repaired/base-correct |
+|---|---|---:|---:|---:|---:|---:|
+| α=0.50 | person | **20** | **0** | <0.0001 | **0.606** | 0.196 |
+| α=0.75 | person | **12** | **0** | 0.0005 | **0.364** | 0.118 |
+| α=0.50 | object | 2 | **0** | 0.500 | — | — |
+| α=0.75 | object | 1 | **0** | 1.000 | — | — |
+
+**1. Repair is purely ADDITIVE. Zero losses in all four cells.** The registered disconfirmer —
+*"any stratum showing repairs AND losses vs λ=0 means the additivity is task-specific"* — **did
+not fire.** Interpolation on this ray recovers damaged rows and breaks none, on a second task
+family, matching the alias bank's 21 gains / 0 losses.
+
+**2. α = 0.50 repairs nearly twice what α = 0.75 does** — 20 of 33 damaged rows against 12,
+both against λ=0 on the same ray. **A second endpoint independently locating the LWF lane's
+optimum at α = 0.50**, agreeing with the alias bank's 17-row margin. The registered disconfirmer
+"α=0.75 beating α=0.50" did not fire either.
+
+## What does not stand: the uniformity test is UNTESTABLE here, and the reason is my own fix
+
+**`object_binding` is ABOVE CEILING in PRES-007 — Supa 118/120 = 0.983.** Dropped by the
+two-sided band rule.
+
+**Making the objects proper nouns — the fix for the capitalisation cue — changed the task:**
+
+| bank | objects are | Supa | λ=0 | damaged | gate |
+|---|---|---:|---:|---:|---|
+| PRES-005 | common nouns | 101 | 84 | **17** (p = 1.5e-05) | CLEARS |
+| PRES-007 | **proper nouns** | **118** | 114 | **4** (p = 0.125) | **ABOVE_CEILING** |
+
+**I fixed a surface confound and destroyed the contrast the bank existed to measure.** This is
+`matched-construction-is-not-matched-difficulty` again, self-inflicted and predictable in
+hindsight: a proper noun is more distinctive than a common noun, so binding to it is easier.
+
+**Neither bank answers the person-vs-object question.** PRES-005 could measure it and carried a
+cue in one arm; PRES-007 has no cue and cannot measure it. **A third bank is needed: proper-noun
+objects at a difficulty that clears the floor without ceilinging** — more distractors or longer
+contexts, not a different answer type.
+
+## What survives about object damage, stated precisely
+
+**PRES-005's "object-valued binding is damaged" stands.** It was a *paired* contrast on
+byte-identical text — 0 repairs / 17 damages, p = 1.5e-05 — and a shared cue cannot manufacture
+a paired difference. **What the cue broke was the cross-stratum RATIO**, which is what
+Amendment 13 withdrew and which remains withdrawn.
+
+PRES-007's near-zero object damage is **not** evidence against it: the stratum is ceilinged, so
+it could not have shown damage whatever the truth. The two results are consistent, and the open
+question — *are proper-noun objects genuinely less damaged, or merely easier?* — is exactly what
+the third bank would settle.
+
+**Power, as registered:** person/object comparison of repair fractions gives Fisher **p = 1.000**
+for both arms, with object's denominator at **4**. Amendment 1 registered that only a ~40 pp gap
+was detectable at a denominator of 17; at 4 nothing is. **Reported as "not powered to
+distinguish", never as uniform.**
