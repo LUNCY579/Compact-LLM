@@ -842,3 +842,75 @@ converts "slow" into "no result" — and the remedy is a quiet box, which is wha
 
 **One coincidence flagged before anyone reads it as a result:** `sc_m05` and `ord23` both score
 **0.5861**. Different arms, different constructions, identical to four decimals at n = 360.
+
+---
+
+# AMENDMENT 10 — the replication arm landed, and it takes back most of Amendment 8
+
+**λ=0.5 scored 146/256 on long context.** Computed independently here from the peer session's
+evidence file (`analysis/lc_endpoint_class.py`, receipt `LC_ENDPOINT_CLASS_REPL.json`).
+REPORT-ONLY — the suite is SPENT.
+
+## Two registered tests, both resolved, both negative
+
+**Conservation: FALSIFIED.** 146 falls in the registered **145–161** band — *loss no worse than
+λ=0.25's, so damage saturates; conservation falsified, reallocation survives but is not
+one-for-one*. It also misses the corrected ~129 band derived from the reproducible +12.8 pp
+input. **Conservation dies on the registered arithmetic and on the corrected arithmetic both**,
+which is as clean as a falsification gets. The peer predicted their own point prediction would
+fail; it did.
+
+**P3 — the endpoint-class concentration: FAILS REPLICATION.**
+
+| arm | IMPROVED | PRESERVED | **rate ratio** | Fisher p | stage |
+|---|---:|---:|---:|---:|---|
+| λ = 0.25 | 10/40 = 0.250 | 7/113 = 0.062 | **4.04** | 0.0026 | discovery |
+| ord23 | 8/40 = 0.200 | 2/113 = 0.018 | **11.30** | 0.0004 | discovery |
+| **λ = 0.5** | **6/40 = 0.150** | **12/113 = 0.106** | **1.41** | **0.5679** | **REPLICATION** |
+
+Registered threshold **≥ 2.0**. Observed **1.41 at p = 0.57**. Only the direction survives.
+`count_with_exclusions` is damaged as registered but by 3 rows against the discovery arms' 7 and
+7, so the shared-region signal weakens with it.
+
+## What that does to Amendment 8, which is this document's own
+
+Amendment 8 withdrew "reallocation" **on the strength of the 4.04× and 11.30×**. Those do not
+replicate, and **λ=0.5 damages PRESERVED strata harder than either discovery arm** — 10.6%
+against 6.2% and 1.8%.
+
+  * The withdrawal of **reallocation** stands. It was never supported, and the replication arm
+    does not revive it.
+  * The **replacement** — "rotation trades acquisition for preservation" — is **weakened**. The
+    acquisition-give-back reading is **arm-dependent, not a property of rotation**. Some rotated
+    arms give back acquisition; at least one does genuine preservation damage.
+
+**So neither account generalises, and Amendment 8 was over-stated in the direction of its own
+conclusion one step after I congratulated the peer for withdrawing theirs.** Recorded plainly
+rather than softened: two discovery arms agreed, the replication arm did not, and the honest
+position is that the concentration is not established.
+
+## One pattern flagged and deliberately NOT banked
+
+Alias gain against PRESERVED long-context loss, both on the λ=0 denominator — the only
+denominator that survives Amendment 9's correction:
+
+| arm | alias | LC-preserved | loss/gain |
+|---|---:|---:|---:|
+| λ=0.25 (anchor) | +7.8 | −6.2 | **0.79** |
+| λ=0.5 (anchor) | +12.8 | −10.6 | **0.83** |
+| ord23 (reshuffle) | +3.3 | −1.8 | 0.54 |
+
+**The two anchored arms agree at ≈0.8; the reshuffle does not.** This is three points across two
+mechanisms — and it is exactly the "two points fitting a ratio" shape the peer registered
+*against themselves* earlier today, which is why it is recorded as an observation with the
+caveat attached and **not** proposed as a conserved quantity. Any test of it must be registered
+before a fourth arm exists, not after.
+
+## What still stands
+
+The **direction result itself is untouched by this**: it rests on paired contrasts against
+norm-matched collinear twins on the alias bank (Amendment 9's table, reproducing to the decimal),
+not on the long-context stratification. What this amendment removes is the *explanation* of
+what rotation costs elsewhere — which is now open again.
+
+**Status: discovery complete, replication run, replication FAILED. Nothing promoted.**
