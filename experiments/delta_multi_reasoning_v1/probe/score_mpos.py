@@ -68,7 +68,7 @@ from pathlib import Path
 CLEAN_CELLS = ("k1d1", "k3d1")
 BANDS = ("early", "late")
 LANES = {"native_a100": "gen-a100", "lwf_l0": "gen-lwf_l0",
-         "titan_sparse": "gen-sparse"}
+         "titan_sparse": "gen-sparse", "mask_s10": "gen-s10"}
 SOURCE = "gen-B"
 #: derived, not hard-coded: adding an arm must widen the family automatically. Addendum 2
 #: registers 0.05/6 as governing any statement that compares Sparse to the other arms, and
@@ -81,6 +81,8 @@ BOOT_ITERS = 10000
 REGISTERED = {"k1d1": (0.03, 0.15), "k3d1": (0.10, 0.30)}
 #: Addendum 2: Sparse is predicted POSITIVE but SMALLER than native's +0.2847.
 REGISTERED_SPARSE = {"k1d1": (0.00, 0.12), "k3d1": (0.05, 0.20)}
+#: Addendum 3: s10 is the aggressive mask. Predicted to repair MORE than Sparse.
+REGISTERED_S10 = {"k1d1": (0.00, 0.10), "k3d1": (0.02, 0.16)}
 
 
 def norm(v) -> str:
@@ -228,8 +230,8 @@ def main(argv=None) -> int:
             p_perm = signflip_p(xs, 101)
             ci = boot_ci(xs, 202)
             mde = mde_analytic(xs, BONFERRONI)
-            lo, hi = (REGISTERED_SPARSE if lane == "titan_sparse"
-                      else REGISTERED)[cell]
+            lo, hi = ({"titan_sparse": REGISTERED_SPARSE,
+                       "mask_s10": REGISTERED_S10}.get(lane, REGISTERED))[cell]
             per_lane[lane] = {
                 "n_pairs": n, "discordant": disc, "pos": pos, "neg": neg,
                 "tied": n - disc,

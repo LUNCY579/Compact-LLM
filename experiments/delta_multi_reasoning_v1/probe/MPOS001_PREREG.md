@@ -639,3 +639,69 @@ attached as an interpretation note.
 0.076 / 0.049 / 0.063) and is reported as estimates with intervals, never as nulls.
 
 One bank, one draw. MECHANISM SCOUT. Nothing promoted, no confirmation budget spent.
+
+---
+
+# Addendum 3 — s10, and the ACQUISITION confound the peer session identified
+
+**Written before the s10 arm was generated.** The peer session raised a confound that would have
+made an s10 result ambiguous, and the control for it is an arm I have already scored.
+
+## The confound
+
+Position cost correlates with **how much was acquired**, across every arm measured:
+
+| arm | acquisition /384 | position cost | masked? |
+|---|---:|---:|---|
+| frozen Supa | 14 | 0.0625 | no delta |
+| **s10** | **197** | **to run** | **masked** |
+| **LWF λ=0** | **198** | **0.3056** | **unmasked** |
+| Titan-Sparse | 232 | 0.2222 | masked |
+| native α=1.00 | 235 | 0.3472 | unmasked |
+
+The source acquires 14 and has almost no position cost. So **an s10 result below 0.2222 is
+ambiguous** between *masking repairs the mechanism* and *an arm that learned less has less to be
+position-sensitive about*.
+
+**LWF λ=0 is the control: 198 against s10's 197, matched to one row, and unmasked.**
+
+**Verified, because the whole control rests on it.** The LWF records carry **two** figures — an
+unmatched lane reaching 183 and a matched lane at 198. The arm I actually scored
+(`arm-lambda0`, weight sha `6836dae3…`) records `update_groups: 28` and `matched_to` the design,
+which is the **matched** lane. So 198 is the right number for the arm in hand, and the 183 belongs
+to a 26-group lane I did not use.
+
+## Two registered bands, for two different questions
+
+**Band A — the LADDER question.** s10 against Titan-Sparse's 0.2222. Predicted s10 position cost
+**0.10 – 0.20**, i.e. repairing at least as much as Sparse, since the peer's ladder shows the mask
+advantage grows as k falls.
+
+**Band B — the MECHANISM question, and the decisive one.** s10 against **LWF λ=0's 0.3056 at
+matched acquisition**. Registered primary: the paired interaction `mean(d_lwf − d_s10)` on matched
+pairs in `k3d1`, **predicted positive, +0.08 to +0.22**.
+
+* s10 cost **≪ 0.3056** → **masking repairs the mechanism at matched acquisition.** The repair is
+  not an artifact of having learned less.
+* s10 cost **≈ 0.3056** → the repair **tracks acquisition level**, and Titan-Sparse's 44% closure
+  is partly or wholly an acquisition artifact. That would also qualify today's headline: Sparse
+  acquires 232 against native's 235, so it is *nearly* acquisition-matched — but "nearly" at 3
+  rows is not matched at 1.
+
+**Registered interaction band for s10 vs source in `k3d1`: +0.02 to +0.16.**
+
+## Arm identity, verified before the run
+
+`sparse001-20260917/arm-rebuild-s10`: whole-file `d7b15d2e79c21183…`, DATA SECTION
+`bf2e132ee3d25be3…`, **310/310 F32**, 2,384,234,992 bytes — identical size to every other arm.
+`generation_config.json` byte-identical to all four scored arms. `config.json` matches Supa's
+(`660db3b7…`), so its `torch_dtype` metadata is the same as the native and LWF arms; `--dtype
+fp32` governs regardless.
+
+## Multiplicity
+
+Four lanes × two cells = **8 tests, Bonferroni 0.05/8 = 0.00625**, derived in the scorer from the
+lane count. Every cross-arm statement is governed by that bound, including the Sparse comparisons
+already reported — **those were made at 0.00833 and the tighter bound is the one that now
+applies.** Re-checked: native−Sparse at p = 0.0001 still clears; LWF−Sparse at p = 0.0227 still
+does not.
