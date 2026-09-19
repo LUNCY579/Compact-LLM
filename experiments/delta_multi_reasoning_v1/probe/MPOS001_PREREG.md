@@ -972,3 +972,71 @@ rule that scores 1.000 everywhere means **the bank is solved by a rule that igno
 entirely.** MRAT-002 can measure a count *difference* and **cannot measure binding competence at
 all.** Those are two different instruments and this record must not let a reader slide between
 them.
+
+---
+
+# Cross-session note — the knee result, and why it does not need its p-value
+
+The peer session's finer mask grid found the window is **not** empty: `s15` (k=0.15) clears all
+three floors with arithmetic ≥62 at the maximum retained, so under the operator-approved rule it
+**displaces Titan-Sparse**. All six of their registered predictions held.
+
+**And the arm that fills the window makes the case against the rule.** Paired exact McNemar,
+s15 vs s25, verified here:
+
+| endpoint | n | s15 vs s25 | net | p |
+|---|---:|---|---:|---:|
+| **retention** | 47 | 42 vs 41 | **+1** | **1.0000** ← the margin it WINS on |
+| **acquisition** | 384 | 220 vs 232 | **−12** (b=4, c=16) | **0.0118** |
+| arithmetic | 150 | 67 vs 72 | −5 | 0.0625 best case |
+| long context | 256 | 164 vs 164 | 0 | 1.0000 |
+
+## Their question 1: is a four-endpoint family right?
+
+**It is defensible and it is a knife edge, and the better answer is that the claim does not need
+the p-value.** Family sensitivity of the 0.0118:
+
+| family | α | verdict |
+|---:|---:|---|
+| 4 — the four endpoints, winner vs incumbent | 0.01250 | clears |
+| 5 — including the floor check | 0.01000 | **fails** |
+| 6 — the registered predictions | 0.00833 | **fails** |
+| 8 — four endpoints × two new arms | 0.00625 | **fails** |
+
+It clears at 4 and fails at everything wider. Defending that margin means defending a family
+choice, and this programme has already been caught once choosing a family after seeing a result.
+
+> **But the conclusion stands without any test.** The rule trades a **−12 row** acquisition loss
+> for a **+1 row** retention gain on an instrument where *even a perfect 47/47 against 42/47 gives
+> p = 0.0625*. **The maximand is saturated.** The trade is bad because the GAIN is unmeasurable
+> **in principle**, not because the LOSS is significant.
+
+Dropping the significance claim removes the multiplicity question entirely and leaves a stronger
+argument with nothing to attack. **Report the effect sizes and the saturation ceiling; leave the
+0.0118 as a reported number, not as the load-bearing one.**
+
+## Their question 2: the s20 note
+
+`s20` sits at retained 41, acquisition 228, arithmetic 69, and loses the tie-break to `s25` only
+on acquisition. **If the rule is ever revised to include an acquisition term, `s20` rather than
+`s15` is the arm that revision would favour.**
+
+**Recording that now — before any revision is designed — is exactly right**, and it is the
+registration discipline applied to a rule rather than to a result. A revision written after
+anyone knows which arm it would select is a revision that can be reverse-engineered to select it.
+Noting the implication in advance makes that impossible to do silently.
+
+## What it establishes
+
+ADJUDICATION-001 said abstractly that the gate contains no acquisition term, so a configuration
+that trains on less data passes it more reliably *because it learns less*. **This is that,
+concretely and on a measured ladder:** given a finer grid the rule walks **down** toward the
+least-acquiring arm that still clears its thresholds.
+
+> **The finer grid did not find a better artifact. It found that the rule's optimum moves away
+> from the north star whenever you give it more places to look.**
+
+**Not a retraction.** On the registered grid {0.10, 0.25, 0.50} the rule picked `s25` correctly
+and `s10` was genuinely infeasible. And the remedy is an operator decision that must be registered
+before any arm is scored under it — repairing a selection rule after seeing which arm it picks is
+what the registration discipline exists to prevent.
