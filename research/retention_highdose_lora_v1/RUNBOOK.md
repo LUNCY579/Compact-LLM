@@ -1,4 +1,4 @@
-# High-dose LoRA: ready for guarded execution
+# High-dose LoRA: blocked on host RAM
 
 DOSEINT-001 completed with FAILED_PREDICTION. Its trained checkpoint, four scalar
 arms, two-bank measurements and exact paired analysis remain authoritative. This
@@ -13,8 +13,10 @@ The code branch is `research/retention-dose-parameterization-v1` in
 the pilot, source assets, pinned venvs, shared GPU lease or resource guards.
 
 Current state: input/code/source gates and CPU mechanics tests passed. No native
-LoRA model has run. The first900s prelaunch wait ended WAIT_EXPIRED_NO_WORKER;
-no journal exists and the grant is unspent. A supervised runtime-only observation
+LoRA model has run. Both the initial900s prelaunch wait and wait-002 ended
+WAIT_EXPIRED_NO_WORKER. Wait-002 explicitly records controller_launched=false
+and worker_launched=false; no journal or dispatch reservation exists and the
+grant is unspent. The goal is blocked pending a host-memory change. A supervised runtime-only observation
 confirmed the actual native train guard refuses roughly5.55GiB available against
 its6GiB requirement after imports. It loaded no source model or tensors.
 
@@ -23,7 +25,7 @@ Once the required host RAM is available, a fresh bounded wait can use:
 ```powershell
 & 'C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe' `
  'C:/Users/clclc/BusinessProject/ChatBubble-dose-param/research/retention_highdose_lora_v1/launch.py' `
- --wait-id wait-002
+ --wait-id wait-003
 ```
 
 Every wait ID is create-only. Inspect existing handles/receipts first. The helper
@@ -35,6 +37,9 @@ native owned-work reserve before readiness and again immediately before dispatch
 It distinguishes starting the controller from proof of a model-worker launch.
 Each subsequent export, compression and probe has its own deadline admission;
 the complete battery is not guaranteed to fit, and partial outputs are preserved.
+The existing session deadline is2026-09-20T09:39:05UTC. If it can no longer admit
+the native reserve, preserve this envelope and register a fresh bounded session
+prospectively before launching; do not silently extend its deadline.
 An expired observation
 is not a stopped worker; this first wait is authoritatively terminal and explicitly
 records that no worker was launched. New waits retain the existing session deadline
