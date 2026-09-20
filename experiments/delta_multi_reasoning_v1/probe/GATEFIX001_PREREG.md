@@ -317,3 +317,82 @@ where the author could actually act, which is the right instinct**, and moving i
 territorial rather than useful.
 
 **What is mine is this amendment: the rule was registered and never wired in.**
+
+---
+
+# AMENDMENT 3 — "outcome-neutral" is WITHDRAWN. The defence is ordering, not neutrality.
+
+Amendment 2 endorsed SCOREFIX-001 as *"outcome-neutral — 38 is UNCERTIFIABLE either way, so it
+promotes nothing."* **That sentence is withdrawn.** Its author retracted the premise at
+`ec4b6602` before Amendment 2 was written, and they are right: it contains a true clause and a
+false inference.
+
+**True:** 38 is UNCERTIFIABLE against both thresholds. Reproduced here —
+
+    T=37 : certifiable FAIL k<=30 | UNCERTIFIABLE 31-42 (12 values) | PASS k>=43
+    T=40 : certifiable FAIL k<=34 | UNCERTIFIABLE 35-44 (10 values) | PASS k>=45
+    boundary: k=34 hi=39.66 < 40 ; k=35 hi=40.45 > 40
+
+**False:** that this makes the change outcome-neutral. **The comparison that matters is the OLD
+verdict against the NEW one, not UNCERTIFIABLE@37 against UNCERTIFIABLE@40.** `report.py`
+printed `FAILED_PREDICTION` at k = 38; the three-valued rule reports `UNCERTIFIABLE`.
+**The reported outcome changes at the observed value, in the softening direction.** Neutrality at
+k = 38 is precisely what is not true.
+
+## Full crosswalk — old two-valued (`k >= 40` PASS, as `report.py` applies it) vs new three-valued at T = 37
+
+| k | old | new | effect |
+|---|---|---|---|
+| 0–30 | FAILED | CERTIFIED_FAIL | agree |
+| **31–39** | FAILED | UNCERTIFIABLE | **softens a recorded failure** — *38 observed* |
+| **40–42** | PASS | UNCERTIFIABLE | **withdraws a pass** |
+| 43–47 | PASS | CERTIFIED_PASS | agree |
+
+*(The two limbs use different thresholds — `report.py` applies DOSELORA's primary target of 40,
+GATE v2's conjunct is 37 — so this crosswalk mixes a threshold change with a verdict-structure
+change. Both are stated so neither is hidden.)*
+
+> **No k moves into CERTIFIED_PASS that was not already ≥ 40. So the defensible claim is
+> "CANNOT PROMOTE", not "outcome-neutral".** The change softens failures and withdraws passes; it
+> creates none.
+
+## The defence is ORDERING, and it is stronger than the one it replaces
+
+    GATEFIX-001            ffc8079d   2026-09-20T14:11:46Z
+    amendment 1            0bce03e3   2026-09-20T14:20:28Z
+    DOSELORA renewal                  2026-09-20T16:51:53Z
+    permission transferred            2026-09-20T16:57:10Z
+    RESULTS.json (k = 38)             2026-09-20T17:49:46Z
+
+**The rule predates the data by 3h38m.** That, and only that, is what separates this from
+repairing a rule after seeing which arm it excludes. **Resting the defence on neutrality was
+weaker AND false; resting it on ordering is stronger AND true.**
+
+This matters more for this document than for SCOREFIX-001, because **this is the rule.**
+
+## Refinement to Amendment 2's self-criticism, and it is a real correction
+
+Amendment 2 treated the banner sentence — *"committed before the DOSELORA-001 launch"* — as the
+defect. It is not. **Registering before the run was correct and is what makes the result
+recoverable at all.**
+
+> **The defect is that nothing in the loop checks whether a registered rule is REACHABLE from the
+> scoring path. That is a missing check, not a wrong claim.** A prereg cannot assert its own
+> implementation; something has to test it.
+
+## The missing check now exists, and it fails in FOUR places
+
+`probe/test_registered_rule_is_reachable.py`. It finds every module that *applies* the conjunct
+(thresholds it, rather than merely printing it) and asserts the three-valued vocabulary is
+present. Current state:
+
+    FAILED  retention_dose_parameterization_v1/report_battery.py
+    FAILED  retention_highdose_lora_resume_v1/report.py
+    FAILED  retention_highdose_lora_v1/report.py
+    FAILED  retention_highdose_lora_v2/report.py
+
+**Four, not the three this document had named** — `report_battery.py` was not on anyone's list.
+
+**The test is expected to fail until the rule is wired in, and the suite is correctly red while
+it does.** A reachability test that passes on the day it is written tests nothing. It must not be
+skipped or xfailed to green the suite: fix the scoring path, or withdraw the registration.
