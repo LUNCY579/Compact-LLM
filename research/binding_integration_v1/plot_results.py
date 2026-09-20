@@ -51,7 +51,7 @@ def main():
         ax.grid(axis='y', color='#e3e8eb', zorder=0)
     axes[0].set_ylabel('Answers correct (count labels above bars)')
     fig.suptitle('Preserving native updates while adding binding data', x=.07, y=.962, ha='left', fontsize=17, fontweight='bold')
-    fig.text(.07, .907, '596M parameters Â· same starting model and LoRA settings Â· 2,697 native + 768 binding views; original 193 native updates', color='#44515f')
+    fig.text(.07, .907, '596M parameters; same starting model and LoRA settings; 2,697 native + 768 binding views; original 193 native updates', color='#44515f')
     verdict = report['predictions']['primary_engineering_conjunction']
     efficacy = report['predictions']['binding_efficacy']
     fig.text(.07, .861, f'Registered joint criterion: {verdict}   |   Binding efficacy: {efficacy}', fontsize=10)
@@ -61,10 +61,10 @@ def main():
              fontsize=10, color='#8b3d34')
     fig.legend(*axes[0].get_legend_handles_labels(), loc='lower center', bbox_to_anchor=(.53, .22), ncol=3, frameon=False)
     contrasts = report['acquisition_contrasts_integrated_minus']['lora']
-    text = 'Acquisition contrasts (mixture âˆ’ original): ' + ' Â· '.join(
+    text = 'Acquisition contrasts (integration minus original): ' + ' | '.join(
         f"{bank} (net={v['net']:+d}, nd={v['nd']}, exact p={v['exact_p']:.4g})" for bank, v in contrasts.items())
     fig.text(.07, .185, text, fontsize=9)
-    fig.text(.07, .14, 'Acquisition banks are separate; cross-draw claims require |net| â‰¥20. Retention and arithmetic here use the permissive scorer.', fontsize=9)
+    fig.text(.07, .14, 'Acquisition banks are separate; cross-draw claims require |net| >=20. Retention and arithmetic here use the permissive scorer.', fontsize=9)
     fig.text(.07, .101, 'Binding counts are descriptive. Inference uses 32 worlds, all three category views correct, with Holm(2) for UNKNOWN.', fontsize=9)
     fig.text(.07, .06, 'Exploratory results; binding coefficient exposure also changes. The opened controlled diagnostic remains report-only in RESULTS.md.', fontsize=9)
     assert sha(source) == source_sha
