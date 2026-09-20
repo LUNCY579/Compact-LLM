@@ -107,41 +107,79 @@ def main():
     logroot=root/'battery-launch'
     logroot.mkdir(exist_ok=False)
     write(logroot/'PLAN.json',{'actions':actions,'native_run':str(native),'max_probe_seconds':14400,
-                            'max_new_disk_bytes':21*2**30,'retries_in_this_runner':0})
+                            'max_new_disk_bytes':21*2**30,'retries_in_this_runner':0,
+                            'fixed_probe_rows':4696,'fixed_probe_generation_tokens':432192,
+                            'arm_build_reservation_bytes':3*2**30})
     start=time.monotonic()
     total_probe_seconds=0.0
+    probe_rows_reserved=0
+    probe_generation_reserved=0
+    envelope=read(root/'SESSION_ENVELOPE.json')
+    assert envelope['deadline_unix']==envelope['session_start_unix']+18000
     env=dict(os.environ,OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',TOKENIZERS_PARALLELISM='false')
     completed=[]
     for label,cmd in actions:
-        assert size(root)<=21*2**30, 'registered new-disk ceiling exhausted'
-        assert shutil.disk_usage(root).free>=14*2**30, 'native free-disk floor reached'
+        assert size(root)<=envelope['new_records_disk_bytes'], 'registered new-disk ceiling exhausted'
+        assert shutil.disk_usage(root).free>=envelope['free_disk_floor_bytes'], 'native free-disk floor reached'
         assert time.monotonic()-start < 14400, 'battery wall envelope exhausted'
+        assert time.time()+900 <= envelope['deadline_unix'], 'persisted session deadline cannot fit another leg'
+        if label.startswith('build-'):
+            assert size(root)+3*2**30<=envelope['new_records_disk_bytes'], 'next arm exceeds registered disk ceiling'
+            assert shutil.disk_usage(root).free>=17*2**30, 'next arm reservation violates 14 GiB disk floor'
         if label.startswith('probe-'):
             assert total_probe_seconds+900 <=14400, 'probe worker reservation exhausted'
+            kind=cmd[cmd.index('--kind')+1]
+            rows,max_new={'process':(384,128),'retention':(150,24),'long_context':(256,24)}[kind]
+            assert probe_rows_reserved+rows <=envelope['probe_rows_reserved_all_attempts']
+            assert probe_generation_reserved+rows*max_new <=envelope['probe_generation_tokens_reserved_all_attempts']
+            probe_rows_reserved+=rows
+            probe_generation_reserved+=rows*max_new
         print('START '+label,flush=True)
         began=time.monotonic()
         with (logroot/(label+'.log')).open('xb') as log:
             child=subprocess.run(cmd,cwd=PILOT,env=env,stdout=log,stderr=subprocess.STDOUT)
         elapsed=time.monotonic()-began
         leg={'label':label,'returncode':child.returncode,'wall_seconds':elapsed}
+        if label.startswith('probe-'):
+            out=Path(cmd[cmd.index('--out')+1])
+            supervisor=out/'worker/supervisor.json'
+            charged=900.0
+            accounting='FULL_RESERVATION_NO_VALID_TERMINAL'
+            if supervisor.is_file():
+                receipt=read(supervisor)
+                wall=receipt.get('wall_seconds')
+                if isinstance(wall,(float,int)) and wall>=0 and receipt.get('returncode') is not None:
+                    charged=float(wall)
+                    accounting='OBSERVED_SUPERVISOR_WALL_INCLUDING_FAILURE'
+            total_probe_seconds+=charged
+            leg.update(probe_seconds_charged=charged,probe_time_accounting=accounting,
+                       probe_rows_reserved=rows,probe_generation_tokens_reserved=rows*max_new)
         write(logroot/(label+'.json'),leg)
         if child.returncode:
-            write(logroot/'TERMINAL.json',{'status':'FAILED','failed_leg':label,'completed_legs':completed})
+            write(logroot/'TERMINAL.json',{'status':'FAILED','failed_leg':leg,'completed_legs':completed,
+                'probe_worker_seconds':total_probe_seconds,'probe_rows_reserved':probe_rows_reserved,
+                'probe_generation_tokens_reserved':probe_generation_reserved,
+                'session_elapsed_seconds':time.time()-envelope['session_start_unix']})
             return child.returncode
         if label.startswith('probe-'):
             out=Path(cmd[cmd.index('--out')+1])
             binding=read(out/'PROBE_WEIGHT_BINDING.json')
             assert binding['complete'] is True and binding['returncode']==0
-            total_probe_seconds+=read(out/'worker/supervisor.json')['wall_seconds']
         else:
             out=Path(cmd[cmd.index('--out')+1])
             assert read(out/'ARM.json')['stored_dtype']=='float32'
         completed.append(leg)
         print('VERIFIED '+label,flush=True)
     report=subprocess.run([str(PYTHON),str(HERE/'report_battery.py'),'--root',str(root)],cwd=PILOT,env=env)
+    assert time.time()<=envelope['deadline_unix'], 'session wall envelope exceeded'
+    assert size(root)<=envelope['new_records_disk_bytes'], 'terminal records exceed disk ceiling'
+    assert shutil.disk_usage(root).free>=envelope['free_disk_floor_bytes'], 'terminal free disk below guard'
     write(logroot/'TERMINAL.json',{'status':'COMPLETE' if report.returncode==0 else 'REPORT_FAILED',
                                   'completed_legs':completed,'report_returncode':report.returncode,
                                   'probe_worker_seconds':total_probe_seconds,'wall_seconds':time.monotonic()-start,
+                                  'probe_rows_reserved':probe_rows_reserved,
+                                  'probe_generation_tokens_reserved':probe_generation_reserved,
+                                  'session_elapsed_seconds':time.time()-envelope['session_start_unix'],
                                   'new_disk_bytes':size(root)})
     return report.returncode
 
