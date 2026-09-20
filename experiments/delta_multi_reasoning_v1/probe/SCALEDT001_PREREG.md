@@ -169,3 +169,75 @@ This one rejects it.
 This is the third gate-power defect in two days, after `references_retained`'s uncertifiable band
 and PRES-007's unattainable MDE. **All three were thresholds set without asking what the
 instrument could resolve.**
+
+---
+
+# RESULT — P1 HELD. H's skill is free at matched T-magnitude.
+
+> The STATUS banner above is superseded by this section rather than edited.
+
+**Arm built and gated.** `scaledt001-20260920/arm-scaled-t`, sha256
+`9b0d2898b679757260d0c8e8d5006f27cec283278b103a6ce75ddcd628c1f117`. Build gate passed: worst
+relative error **1.294e-06** against the amended 2e-06, all 220 tensors, 80/80 one-dimensional
+exact at 0.00e+00. `s_t` read from TH16s's receipt, never recomputed.
+
+**Scored** on `select-views-001`, `views_sha256 7dd53f2a…`, digest `a329eb7bb06f`:
+**223/384, 3/3 family floors clear.**
+
+## The registered contrast
+
+| contrast | scores | gains | losses | net | nd | exact McNemar |
+|---|---:|---:|---:|---:|---:|---:|
+| **SCALED_T vs TH16s** *(primary)* | 223 vs 219 | 10 | 6 | **+4** | 16 | **0.4545** |
+| SCALED_T vs T16 | 223 vs 235 | 9 | 21 | −12 | 30 | 0.0428 |
+
+| # | registered | observed | |
+|---|---|---|---|
+| **P1** | \|net\| ≤ 7 and p > 0.05 | **+4, p = 0.4545** | **HELD** |
+| P2 | net ≥ +10 at p ≤ 0.05 | did not fire | — |
+| P3 | SCALED_T in 212–226 | **223** | **HELD** |
+
+**This is a POWERED null, not an underpowered one.** At the observed discordance of 16 the
+smallest net reaching p ≤ 0.05 is **10**, and an all-one-way split would have given
+p = 3.05e-05. The registered UNCERTIFIABLE clause (nd < 6) does not apply. **A 10-row cost from
+H would have been detected; a 4-row difference was not.**
+
+## The decomposition, which is the point
+
+    T16       = P16(delta_T)              235
+    SCALED_T  = s_t * P16(delta_T)        223     -12 vs T16   p = 0.0428   <- T's own attenuation
+    TH16s     = s_t * (P16T + P16H)       219     -16 vs T16
+    SCALED_T vs TH16s                             + 4          p = 0.4545   <- H's contribution
+
+> **Of TH16s's 16-row cost against T16, 12 rows are T's own shrinkage and the remaining 4 are
+> not distinguishable from zero. Adding δ_H's directions on top of an identical T component
+> costs no measurable acquisition.**
+
+**The interpolation that motivated this arm was accurate.** The ray predicted T alone at median
+`s_t` would score **221.9**; it scored **223** — 1.1 rows out, against a band of 195–226 that I
+correctly refused to treat as settling anything. The prediction was right and was still worth
+replacing with a built arm, because the band was too wide to license the conclusion.
+
+## What this does and does not establish
+
+**Does:** the entire 60-row raw composition cost is magnitude. Composition buys a second skill
+for the shrinkage you would pay anyway. This is the same-skill-style control
+`matched-norm-attenuates-components` demanded and that no composition experiment had built.
+
+**Does not:**
+
+- **"Free" means "costs less than 10 rows", not "costs zero".** The MDE at nd = 16 is 10. The
+  true cost of H is bounded, not measured at 0.
+- **Acquisition only.** Nothing here touches long context, abstention, retention or the boundary
+  instrument. In particular SCALED_T does **not** carry H's skill — that is what makes it the
+  control, and it means this arm says nothing about what H buys, only about what H costs.
+- One draw of one delta pair, one lane, one bank.
+
+## The sibling this makes obvious
+
+The same construction with the roles swapped — `s_h * P16(delta_H)`, matched to H's component
+inside TH16s — would test the other direction on `HSKILL-VIEWS-002`: **does T's presence cost H
+anything at matched H-magnitude?** COMPOSE-001 found the interference asymmetric (T lost 60 rows
+while H's skill improved), and this arm has now shown T's side of that was attenuation.
+**Nobody has run the control on H's side**, and it is the same cost: pure weight arithmetic over
+deltas already on disk.
