@@ -59,10 +59,12 @@ resolution the endpoint does not have — the same defect GATEFIX-001 identifies
 
 ## 3. The deeper finding: the primary target is below its own certifiable minimum
 
-| threshold | smallest k whose CI lower bound clears it |
-|---|---:|
-| 37 (GATE v2) | **43** |
-| 40 (DOSELORA primary) | **45** |
+| threshold | certifiable FAIL | UNCERTIFIABLE | certifiable PASS |
+|---|---|---|---|
+| 37 (GATE v2) | k ≤ 30 | 31–42 (12 values) | k ≥ **43** |
+| 40 (DOSELORA primary) | k ≤ 34 | **35–44 (10 values)** | k ≥ **45** |
+
+(Both rows independently reproduced by the `Rineya Delta multi-reasoning experiment` session.)
 
 DOSELORA's registered retention band is 37–45 and its primary target is `retained >= 40`.
 **Only k = 45 — the single topmost value of the registered band — can certify against 40.**
