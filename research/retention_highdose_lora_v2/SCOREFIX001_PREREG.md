@@ -148,12 +148,23 @@ A reachability test written by the GATEFIX-001 author
 *apply* the conjunct rather than merely print it. All four are in
 `ChatBubble-dose-param/research/`. Checked before editing anything:
 
-| module | status | may it be wired? |
+| module | sha256 | status |
 |---|---|---|
-| `retention_highdose_lora_resume_v1/report.py` | `sha256 de752b9a…`, **bound** in the resume root's `PRELAUNCH_BINDING.json` *and* recorded as `RESULTS.json`'s `reporter_sha256` | **NO — sealed evidence** |
-| `retention_highdose_lora_v1/report.py` | preserved never-run root; unbound, but byte-intactness is the point of that root | no, by preservation |
-| `retention_highdose_lora_v2/report.py` | unbound, lane is DO-NOT-RUN | possible, but inert |
-| `retention_dose_parameterization_v1/report_battery.py` | unbound, **live scoring path**, on nobody's list until the test found it | **the only one where wiring changes anything** |
+| `retention_dose_parameterization_v1/report_battery.py` | `ae4802a7…` | **SEALED** — `doseint001-20260919/RESULTS.json:reporter_sha256` |
+| `retention_highdose_lora_resume_v1/report.py` | `de752b9a…` | **SEALED** — resume `PRELAUNCH_BINDING.json:code_files_sha256[report.py]` *and* `RESULTS.json:reporter_sha256` |
+| `retention_highdose_lora_v1/report.py` | `243707b8…` | LIVE (in no receipt); preserved never-run root |
+| `retention_highdose_lora_v2/report.py` | `45fc4c86…` | LIVE (in no receipt); lane is DO-NOT-RUN |
+
+> **CORRECTION.** An earlier version of this table called `report_battery.py` *"unbound, the
+> only one where wiring changes anything."* **That was wrong and is withdrawn.** It is the
+> reporter of record for DOSEINT-001 — the parent experiment whose checkpoint-00193 the entire
+> DOSELORA norm control is built from. Wiring it would have broken that result's custody chain.
+>
+> The error was method, not arithmetic: I checked one root's `PRELAUNCH_BINDING.json`, saw the
+> module absent, and generalised "not in *that* receipt" to "in no receipt." **The silence of
+> an out-of-scope check is not evidence.** Classification must sweep *every* receipt in the
+> records tree — 53 distinct receipt-pinned hashes exist — which is what the artifact-computed
+> exclusion in `test_registered_rule_is_reachable.py` (dmrf `21c7602c`) now does.
 
 > **A scoring module that is sealed evidence of a completed run cannot be fixed and must not be.
 > Editing `resume/report.py` would make the recorded `reporter_sha256` unreproducible from the
@@ -171,10 +182,17 @@ that a published result was produced under a rule that has since been replaced. 
 distinct status — `SEALED_UNDER_SUPERSEDED_RULE` — reported apart from genuinely-inert
 modules, so the red count stays actionable.
 
-**Consequence:** the three-valued rule is currently reachable from exactly **one** live scoring
-path, `report_battery.py`, and that module belongs to the dose-parameterization lane rather
-than to DOSELORA. Wiring it is therefore a change to another experiment's scoring path and is
-**not** taken unilaterally here.
+**Consequence, after the correction above: there is currently NO live, unsealed, consequential
+scoring path to wire the rule into.** Both sealed modules are reporters of record and must not
+be touched; both unsealed modules are a preserved never-run root and a DO-NOT-RUN lane, where
+wiring is symbolic.
+
+So **the registered rule presently governs nothing, and cannot be made to govern anything
+without either destroying evidence or building a new scoring path.** The next live path that
+scores this endpoint will be the first the rule actually governs, and wiring it there is a
+build gate for that path — not a retrofit to an existing one. That is the honest state; it is
+recorded rather than resolved, because every available way to resolve it today is worse than
+leaving it visible.
 
 ## 5. Independent verification requested
 
