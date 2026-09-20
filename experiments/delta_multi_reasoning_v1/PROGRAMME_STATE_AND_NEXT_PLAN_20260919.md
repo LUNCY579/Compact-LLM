@@ -478,3 +478,122 @@ this stayed unimplemented after `BINDING_CONFIRMATION_PROPOSAL` first recommende
 
 This is the same lesson as §4.5 — **a check has to reach the thing it is checking** — applied to
 corrections instead of to evidence.
+
+---
+
+# 8. UPDATE 2026-09-20 — DOSEINT-001 lands, and it falsifies the hopeful reading of §1.3
+
+A third session ran the dose × interpolation cell. **Its design is better than the one proposed
+in P8 and supersedes it.**
+
+**Design:** 2,697 rows **disjoint from BOTH acquisition banks** (not just one, as D4 was), one
+training draw, four FP32 arms at α = 1.00 / 0.75 / 0.50 / 0.25, all scored on bank `45674251`
+under digest `a329eb7bb06f`.
+
+| arm | acq /384 | retained /47 | panel /150 | long ctx | **literal UNKNOWN /64** |
+|---|---:|---:|---:|---:|---:|
+| Supa (source) | 14 | 47 | — | 161 | **13** |
+| **D1** (384 rows, gate PASS) | 239 | **40** | **77** | 160 | 8 |
+| a100 | **292** | 30 | 53 | 149 | **0** |
+| a075 | **293** | 31 | 58 | 151 | 2 |
+| a050 | 279 | 37 | 59 | 150 | 3 |
+| a025 | 186 | **40** | 61 | 159 | 12 |
+
+**7 of 8 registered bands HELD. The PRIMARY FAILED** — no interpolant reaches acq ≥ 284 **and**
+retained ≥ 40 **and** arith ≥ 62.
+
+## What this kills
+
+> **High dose plus interpolation does NOT break the acquisition/retention trade.** The α ladder
+> at 2,697 rows reproduces the same monotone trade as at 384: acquisition 292 → 293 → 279 → 186
+> against retention 30 → 31 → 37 → 40. **Interpolation moves along the curve; it does not escape
+> it.**
+
+That was the load-bearing hope behind P8's framing, and it is wrong.
+
+## What survives
+
+**a050 against D1: +40 acquisition** — cross-draw, clearing the ≥ 20 cross-draw floor (§8.1) —
+**for −3 retention**, inside the 6-row MDE. A measurable gain against an unmeasurable cost, on
+those two axes.
+
+**But a050 fails the gate anyway, and not on retention:** the **arithmetic panel** is D1's 77
+against every interpolant's 53–61. All four fail the gate's ≥ 62 arm; α = 0.25 misses by one.
+**High dose costs the panel ~16–24 rows and interpolation does not buy it back.**
+
+## The sharpest number in the programme: high dose ABOLISHES abstention
+
+Literal `UNKNOWN`, re-derived here from raw predictions rather than the `says_unknown_on_unanswerable`
+field (which memory flags as a substring match and therefore an upper bound — **for these arms
+the literal count equals the field exactly**, so the caveat does not bite):
+
+| dose | α = 0.25 | 0.50 | 0.75 | 1.00 |
+|---|---:|---:|---:|---:|
+| 384 rows (INT-001) | 13 | 12 | 10 | 9 |
+| **2,697 rows (DOSEINT-001)** | 12 | **3** | **2** | **0** |
+
+> **At α = 1.00 on high dose the model says `UNKNOWN` zero times out of 64.** The 384-row ladder
+> only ever went 13 → 9. **High dose does not damage abstention; it abolishes it** — and there is
+> a **dose × α interaction**: at 384 rows the full α sweep costs 4 abstentions, at 2,697 rows it
+> costs all 12.
+
+This is the confirmed wh-compliance mechanism taken to its limit: **nothing in 2,697 JSON-output
+rows ever rewards declining to answer.**
+
+**Caveat that must travel with it:** these rows sit inside the SPENT long-context suite, are
+REPORT-ONLY, and **cannot select anything**. But 13 → 0 is not a marginal call, and it makes the
+abstention-rows intervention the best-evidenced next step rather than a nice-to-have.
+
+## 8.1 The acquisition band is not resolvable, and D4 cannot be bridged
+
+**Cross-draw floor** — three independent training runs of the *identical* control recipe,
+verified independently here:
+
+    rrp015_control 234 vs rep_s23 229   b=36 c=31  p=0.6254   MDE 17
+    rrp015_control 234 vs rep_s29 228   b=39 c=33  p=0.5560   MDE 18
+    rep_s23 229    vs rep_s29 228       b=43 c=42  p=1.0000   MDE 21
+
+> **Re-running the same recipe moves acquisition by up to 6 views. Any CROSS-DRAW difference
+> below ~20 rows is not a measured difference.** The distinction that keeps this from
+> over-correcting: **every α/k/r/λ arm is a deterministic transform of ONE training run**, so
+> those contrasts are WITHIN-draw and valid at their own discordance.
+
+**And the two banks are not an accident.** D4's 3,072 training parents overlap select-views on
+**275 of 384** (`ledger_replay` 76, `register_machine` 71, **`prerequisite_plan` 128/128**)
+against **0** on the dose bank. **A D4 score on select-views would be contaminated on 72% of the
+bank.** BRIDGE-001 is demoted to a scout observation: the banks are equal difficulty (11 points,
+I² = 0, pooled −2.70 rows) but **a bridge does not fix contamination** — an offset corrects for
+bank difficulty, not for having trained on the eval parents.
+
+## 8.2 P8 is superseded; the live lane is BLOCKED on an expired envelope
+
+DOSELORA-001 (`research/retention-dose-parameterization-v1`) implements P8 properly, with two
+things the P8 sketch lacked:
+
+1. **Dual-bank-disjoint training rows**, removing the contamination gate and the transport step
+   together.
+2. **β = ‖δ_LoRA‖ / ‖δ_native‖ frozen before inference**, admissible interval [0, 2],
+   `BLOCKED_ON_NORM_COMPARABILITY` outside it, no clamping and no search — the 2.56×
+   invasiveness confound answered as a **gate** rather than a caveat, with one training run
+   yielding both the LoRA merge and its exact norm-matched scalar.
+
+**It is blocked, and the blocker is procedural rather than technical.** Host RAM has since freed
+(7.75 GiB) and the GPU sits at 543 MiB, but its registered session deadline
+**2026-09-20T09:39:05Z expired 4.0 hours ago**, and its own runbook says: *"preserve this
+envelope and register a fresh bounded session prospectively before launching; do not silently
+extend its deadline."*
+
+> **OPERATOR DECISION 6: authorise a fresh bounded session for DOSELORA-001, or let the envelope
+> stand.** Relaunching under the expired one is exactly the silent extension the runbook forbids.
+> No session should take this decision on the operator's behalf.
+
+## 8.3 One infrastructure fix worth more than any single experiment
+
+`RETENTION_PROBE_*.json` records a contemporaneous `weight_sha256` via `hf_candidate_identity`.
+**`PROCESS_*.json` records none.** That asymmetry is exactly why LORA596's merge-integrity gate
+was checkable and why every BRIDGE-001 point is **identity-unbound** — `model_dir` plus a null
+checkpoint is a directory path, not bytes, in a programme that documents an arm-directory
+OVERWRITE trap.
+
+**It is a one-field fix in the process probe**, and it would retroactively make every future
+acquisition number the difference between a receipt and a path.
