@@ -1,17 +1,21 @@
 """Plot only complete comparable mixture results; offline, create-only artifacts."""
-import hashlib
+import argparse
 import json
 from pathlib import Path
 from paths import OUT, sha, read, write
 
 
 def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument('--name', default='MIXTURE_COMPARISON')
+    args = parser.parse_args()
+    assert args.name and Path(args.name).name == args.name and args.name not in ('.', '..')
     source = OUT / 'RESULTS.json'
     source_sha = sha(source)
     report = read(source)
     assert report['status'] == 'COMPLETE_COMPARABLE'
     assert report['experiment'] == 'BINDING-MIXTURE-001'
-    outputs = [OUT / ('MIXTURE_COMPARISON' + suffix) for suffix in ('.png', '.svg', '_FIGURE.json')]
+    outputs = [OUT / (args.name + suffix) for suffix in ('.png', '.svg', '_FIGURE.json')]
     assert not any(path.exists() for path in outputs)
     import matplotlib
     matplotlib.use('Agg')
@@ -51,12 +55,16 @@ def main():
     verdict = report['predictions']['primary_engineering_conjunction']
     efficacy = report['predictions']['binding_efficacy']
     fig.text(.07, .861, f'Registered joint criterion: {verdict}   |   Binding efficacy: {efficacy}', fontsize=10)
+    retained = report['endpoints']['mixed']['retention']['policies']['permissive']['references_retained']
+    false_unknown = report['binding']['endpoints']['mixed']['totals']['false_unknown_on_positive']
+    fig.text(.07, .813, f'Target checks: permissive retained {retained}/47 (minimum 40); false UNKNOWN {false_unknown}/192 (maximum 10).',
+             fontsize=10, color='#8b3d34')
     fig.legend(*axes[0].get_legend_handles_labels(), loc='lower center', bbox_to_anchor=(.53, .22), ncol=2, frameon=False)
     contrasts = report['acquisition_contrasts_mixed_minus_control']
     text = 'Acquisition contrasts (mixture − original): ' + ' · '.join(
         f"{bank} (net={v['net']:+d}, nd={v['nd']}, exact p={v['exact_p']:.4g})" for bank, v in contrasts.items())
     fig.text(.07, .185, text, fontsize=9)
-    fig.text(.07, .14, 'Each acquisition bank is separate; cross-draw claims also require |net| ≥20. Retention uses the fixed 47-source cohort.', fontsize=9)
+    fig.text(.07, .14, 'Acquisition banks are separate; cross-draw claims require |net| ≥20. Retention and arithmetic here use the permissive scorer.', fontsize=9)
     fig.text(.07, .101, 'Binding counts are descriptive. Inference uses 32 worlds, all three category views correct, with Holm(2) for UNKNOWN.', fontsize=9)
     fig.text(.07, .06, 'Exploratory measurements; extra training data and compute change together. Strict scoring and full paired tests are in RESULTS.md.', fontsize=9)
     assert sha(source) == source_sha
