@@ -205,3 +205,75 @@ have 4.00 GiB)`**. Available has been measured between **4.16 and 4.62 GiB** wit
 arms would land at select-views 223, ~197 and ~235 — **inside the already-licensed [8, 238]
 span**, so they would tighten the pooled estimate but would **not** extend the range, and would
 not change any conclusion above.
+
+---
+
+# AMENDMENT 1 — a third session audited this bridge, and both of its findings land
+
+Found 2026-09-20 in `doseint001-20260919/bridge_audit/`. Both verified independently here before
+being accepted.
+
+## 1. The banks are not an accident: D4 CANNOT be scored on select-views at all
+
+Exact parent-ID comparison, reproduced by me cell for cell:
+
+| | parents | overlap with D4's 3,072 training parents |
+|---|---:|---:|
+| dose bank (`45674251`) | 384 | **0** |
+| select-views (`7dd53f2a`) | 384 | **275** |
+
+By family, of 128 select-views parents each: `ledger_replay` **76**, `register_machine` **71**,
+and `prerequisite_plan` **128 of 128**.
+
+> **A D4 score on select-views would be contaminated on 72% of the bank, and on 100% of one
+> family. The dose ladder lives on the dose bank because it HAD to.**
+
+This is the answer to a question this prereg asked and got wrong. §"Why this is needed" says the
+split *"nobody noticed until today"*, implying oversight. It was not oversight — it was the only
+held-out bank available to that corpus.
+
+**And it retires the wrong reason for the right refusal.** The `extrapolation_guard` refused D4's
+304 because 304 lay outside the licensed range. That reason **evaporates the moment anyone adds a
+bridge arm above 304**. The contamination reason does not evaporate. A guard that fires for a
+reason that can be engineered away is not protecting anything — it was correct here by luck.
+
+**`extrapolation_guard` is therefore NOT sufficient for D4.** Contamination is a separate gate and
+this module does not implement it.
+
+## 2. My bridge legs are not identity-bound, and the criticism is correct
+
+> *"No contemporaneous probe `weight_sha256` or external before/after arm-binding receipt found;
+> `model_dir` plus null checkpoint is not identity evidence."*
+
+Right. `bank_bridge.py` keys pairs on `(model_dir, checkpoint.manifest_sha256)`, and for arms
+with no checkpoint that reduces to **a directory path**. A path is not bytes. This programme
+already records an **arm-directory OVERWRITE trap** (`native-lane-operational-traps`), so a
+directory scored on bank A in September and on bank B in October is not demonstrably the same
+model — and `PROCESS_*.json` records no contemporaneous weight hash to settle it.
+
+**What I can and cannot bound:**
+
+- The five legs I ran on 2026-09-19 22:20–22:39 sit within one hour of each other and nothing
+  wrote to those arm directories in between — weak, circumstantial, and **not a receipt**.
+- The historical legs (Supa, Opallo, `build-s17s29`) I cannot bound at all.
+
+**Status of every bridge point: identity-unbound.** The calibration is reported and is probably
+right; it is **not** custody-grade, and no promotion may rest on it.
+
+**Fix for any future probe: record `weight_sha256` at scoring time, in the artifact.** The
+retention probe already does this via `hf_candidate_identity`; the process probe does not.
+
+## 3. What survives, stated narrowly
+
+The empirical calibration stands as a **MECHANISM SCOUT** observation: across **11 points spanning
+select-views 8 → 300**, Cochran's Q = 6.106 on df 10, **I² = 0.000**, pooled offset
+**−2.70 rows**. The two banks measure the same thing at the same difficulty.
+
+That is worth having. It is **not** a licence to transport a score, and DOSELORA-001's prereg is
+right to say *"no old unbound receipt or transported bank offset is used."* **Scoring an arm on
+both banks natively dominates transporting an offset**, and every arm in DOSEINT-001 does exactly
+that — which is why its `a025/a050/a075/a100` legs became four of the eleven points here.
+
+**The correct design, which another session reached independently and earlier:** train on rows
+**disjoint from BOTH acquisition banks** (DOSEINT-001's `exact2697`), then score on both. That
+removes the contamination gate and the transport step together.
