@@ -265,9 +265,32 @@ Registered bands: **P3' (acq ≥ 235) FAILED** at 223; **P4 (source lost ≤ 4) 
 **POST-HOC, and not part of the registration — the comparison that actually decides it.** Not
 against the control, but against the scalar ladder at **matched acquisition**:
 
-> **LoRA minus a050: acquisition +4 (floor 7), retained −1 (floor 6), long context −10 (floor 13).
-> Every difference is inside its noise floor.** At this dose LoRA r=16 is indistinguishable from
-> α = 0.50 — and α = 0.50 is a plain scalar needing **no training run at all**.
+**CORRECTED — my first pass applied the wrong floor here.** I wrote *"every difference is inside
+its noise floor"*, quoting long context −10 against a floor of 13. The paired structure says
+otherwise, and both sessions computed it independently and agree on every cell:
+
+| contrast | n | a050 | LoRA | gains | losses | exact McNemar |
+|---|---:|---:|---:|---:|---:|---:|
+| acquisition | 384 | 219 | 223 | 37 | 33 | **p = 0.7202** |
+| long context | 256 | **164** | 154 | **3** | **13** | **p = 0.0213** |
+
+> **A floor derived from BETWEEN-DRAW WHOLE-BANK spread does not govern a WITHIN-PAIR
+> discordance.** A −10 carried by 16 discordant rows splitting 3/13 is not the same object as a
+> −10 carried by 60 rows splitting 25/35. The 13-row floor was computed for the second case and
+> I applied it to the first. Same class of error as the damage-denominator rule — a statistic
+> borrowed across a change of structure.
+
+**The p is nominal and is NOT load-bearing**: it fails a 3-endpoint Bonferroni (0.0167), and a
+verdict that turns on family choice is the weakest part of any finding.
+
+**The conclusion does not need the test, and is firmer without it:**
+
+> **α = 0.50 is not beaten by LoRA r=16 on any endpoint, is nominally better on long context, and
+> requires NO TRAINING RUN** — it is a scalar multiply of a delta that already exists.
+
+Acquisition +4 (p = 0.72) and retained −1 are genuine nulls; long context runs the scalar's way.
+At this dose the parameterization buys nothing and plausibly costs something. That argument rests
+on effect sizes and on the comparator being free, not on a knife-edge p.
 
 **What this closes and what it does not.** It closes *"a rank-constrained update forgets less at
 matched behaviour"* — at matched acquisition it does not. It does **not** close rank at other
