@@ -397,9 +397,18 @@ the number did not.**
 > already quote the number.
 
 `BINDING_CONFIRMATION_PROPOSAL_20260919.md` identified this and it has never been implemented.
-The cheapest implementation: when a number is withdrawn, **grep the repos and the memory index
-for the number itself**, and annotate every occurrence in place. `0.168`, `41`, `232` are all
-greppable; *"the person-vs-object ratio"* is not.
+**Implementation is two steps, and the naive version fails.** *"Grep for the number"* is the right
+shape, but `41` matches inside `0.4141`, `141`, timestamps and several thousand JSON floats — the
+signal-to-noise is bad enough that the practice gets abandoned after one attempt. Instead:
+
+1. **FIND with a word-boundary, prose-first grep**: `grep -rnw '41' --include=*.md`. The claim
+   lives in prose. Data files hold measurements that are **still true** and must NOT be annotated
+   — a withdrawn interpretation does not retract the number it was computed from.
+2. **BANNER the withdrawal in the document where the sentence lives.** The grep finds them once;
+   the banner is what the next reader actually hits.
+
+The searchable handle is the number; the durable artifact is the banner. Confusing the two is why
+this stayed unimplemented after `BINDING_CONFIRMATION_PROPOSAL` first recommended it.
 
 This is the same lesson as §4.5 — **a check has to reach the thing it is checking** — applied to
 corrections instead of to evidence.
