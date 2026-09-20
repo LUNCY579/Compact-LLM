@@ -1,5 +1,34 @@
 # DOSELORA-002: fresh bounded session for the high-dose LoRA run
 
+> # DO NOT RUN THIS LANE. THE TRAJECTORY IS SPENT.
+>
+> **Superseded 2026-09-20T19:0xZ.** While this lane was being staged, another session
+> executed the same experiment by a different route: an isolated clone
+> `highdose-lora001-resume-20260920`, prepared 16:51Z, results 17:49Z, status
+> `COMPLETE_COMPARABLE`. It transferred the one-launch permission out of
+> `highdose-lora001-20260920` with a create-only
+> `NATIVE_DISPATCH_RESERVATION.json` (`status: TRANSFERRED_WITHOUT_LAUNCH`,
+> `allowed_training_trajectories_across_both_roots: 1`).
+>
+> **That single allowed trajectory has been spent.** Running `prepare.py` here and launching
+> would be a SECOND training run against a one-run grant, and a second unregistered arm.
+> Do not do it.
+>
+> This directory is preserved deliberately — the executing session's own renewal prereg says
+> *"Preserve that checkout and the unfinished retention_highdose_lora_v2 directory."* Keep it
+> as the record of the route not taken. `register_session.py` and the byte-level reasoning in
+> `SESSION_REREGISTRATION.md` remain valid for any FUTURE experiment that needs to
+> re-register a sealed root; nothing below should be executed for DOSELORA.
+>
+> Results of the run that did happen: acquisition 291 (dose) / 296 (select) of 384,
+> `references_retained` 38/47, arithmetic panel 74/150, long context 154/256, beta 1.611,
+> relative norm discrepancy 3.3e-08. Primary engineering conjunction FAILED_PREDICTION,
+> solely on `references_retained 38 < 40`. Versus its exact norm control: dose net +13
+> (p = 0.092), select net +19 (p = 0.016, Holm 0.033) — **both below the registered
+> cross-training `|net| >= 20` floor, select by one view.** See `SCOREFIX001_PREREG.md`:
+> 38/47 is UNCERTIFIABLE under the registered GATEFIX-001 rule, which `report.py` never
+> implemented.
+
 This is `research/retention_highdose_lora_v1/` copied, with `prepare.py`'s output root
 repointed at `highdose-lora002-20260920`. Read `PREREG.md`, `AMENDMENT_STORAGE.md` and
 `SESSION_REREGISTRATION.md` before any model work. The experiment, bands, predictions,
