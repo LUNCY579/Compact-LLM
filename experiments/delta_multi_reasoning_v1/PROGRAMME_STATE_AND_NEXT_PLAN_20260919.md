@@ -665,3 +665,59 @@ Applied here: the canary is `literal UNKNOWN == unanswerable_correct`, which pas
 DOSEINT arms. **It cannot run on the frozen source** — that artifact omits
 `unanswerable_correct` entirely, so its 13 rests on the literal count alone with nothing to check
 it against. Worth knowing before that 13 is used as an anchor.
+
+## 8.5 CORRECTION to §8.4 — the anchor IS guarded, and two of our checks were never independent
+
+### The anchor is guarded. My "unguarded" claim was drawn at the wrong level.
+
+§8.4 says the frozen source's 13 *"rests on the literal count alone with nothing to check it
+against"*, because `LONGCTX_supa.json` omits `unanswerable_correct`. **The summary field is
+absent; the evidence is not.** The artifact carries both `per_row_correct` and `predictions`,
+which give two genuinely different routes, verified here against the bank's 64 unanswerable ids:
+
+| route | reads | result |
+|---|---|---:|
+| **A** | the scorer's `per_row_correct` — its **grading decision** | **13** |
+| **B** | raw prediction string `== "UNKNOWN"` — the **generated text** | **13** |
+| C | same, case-insensitive | 13 |
+
+**A and B are independent**: they diverge exactly when the scorer accepts a variant the literal
+match misses (`Unknown`, `unknown`, a trailing period, *"I don't know"*). They agree at 13, so
+the anchor the whole −12 decomposition is measured from is checked, by two routes that could
+have disagreed.
+
+> **A missing summary field says nothing about whether the evidence is missing. Look below the
+> aggregate before declaring something unguarded.**
+
+This is the **fourth** time today a conclusion was drawn at a level that could not see the
+thing it was about — a `find` scoped to disk when the vault was remote; `--evidence` roots that
+excluded the worktree holding the only informative bridge point; a truncated key list that
+concluded a bank had no `answerable` field; and now an absent aggregate read as absent evidence.
+**Three of the four were mine.** The common shape is not carelessness about *facts*, it is
+failing to ask **what level the question lives at** before answering it.
+
+### Two of our checks were the same measurement, and this needs saying plainly
+
+A later reader will see §8 report literal `UNKNOWN` and §8.4 report `unanswerable_correct`, from
+two sessions, two scripts, two write-ups — and count it as confirmed twice.
+
+> **It is one measurement.** On an unanswerable row the only scoring answer is `UNKNOWN`, so
+> `unanswerable_correct` and the literal-`UNKNOWN` count are the **same column by construction**.
+> They *cannot* disagree. This is the one place in today's cross-checking where agreement carries
+> no information — everything else the two sessions duplicated was genuinely independent.
+
+The A-versus-B routes above **are** independent, for precisely the contrast that makes them
+worth running: grading against raw text. That is what an anchor check should look like, and it
+is why our agreement on 13 is worth less than it appears while the A/B agreement is worth
+something.
+
+### Lead with this, not with the dose table
+
+The sharpest statement of *"never quote a pooled long-context net"* is not the ladder. It is
+that **two arms score exactly 161 and are injured differently**:
+
+    supa        161 = 13 unanswerable + 148 answerable
+    ownA075_lc  161 =  8 unanswerable + 153 answerable
+
+Identical face value. Five rows of abstention traded for five rows of comprehension, invisible
+in the total. A rule stated is a rule ignored; a demonstration at identical face value is not.
