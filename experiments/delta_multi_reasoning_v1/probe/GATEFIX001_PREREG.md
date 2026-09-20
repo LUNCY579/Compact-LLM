@@ -152,3 +152,81 @@ would not have done that.
 - **It does not repair the panel conjunct**, which stays at 62 and is renamed only.
 - The three-valued verdict is a **reporting** change. The underlying counts are unchanged and
   every historical artifact remains readable as recorded.
+
+---
+
+# AMENDMENT 1 — "repair" is the wrong word, and the constructive number
+
+The paired session attacked this registration as asked. **The rule survived; the framing did
+not.** Both changes below are theirs, accepted.
+
+## 1. The arm-independence claim is now demonstrated rather than asserted
+
+§1 argues the bands follow from `n = 47` and `T = 37` alone. The paired session derived them
+**without loading any arm** and got the same boundaries:
+
+    k = 30   CI [0.4852, 0.7733]   excludes T -> FAIL
+    k = 31   CI [0.5069, 0.7914]   contains T -> UNCERTIFIABLE
+    k = 42   CI [0.7690, 0.9645]   contains T -> UNCERTIFIABLE
+    k = 43   CI [0.7962, 0.9763]   excludes T -> PASS
+
+> **That reproduction IS the arm-independence claim.** A band fitted to D2 could not have been
+> recomputed by someone who never loaded D2. Re-verified here under exact Clopper–Pearson beta
+> quantiles rather than the original bisection: band **31–42**, unchanged.
+
+## 2. Do not call it a repair. It is a disclosure.
+
+The objection, in full because it is right:
+
+> The gate now abstains on **76%** of arms and has never certified a floor-clearing one. That is
+> not a fixed gate — it is an honest disclosure that **the retention conjunct never worked.**
+> The operator still has to choose an arm, and the three-valued rule gives them nothing for the
+> 76%.
+
+**Three sentences that belong beside this registration, so nobody reads "repaired" as "usable":**
+
+1. **The gate now ABSTAINS rather than works.** Silent is better than wrong; it is not the same
+   as working.
+2. **The certifiable-pass band IS the do-nothing band.** PASS needs retained ≥ 43/47 — **losing
+   at most 4 source answers.** Every arm that has ever cleared the family floors loses 5 or more.
+   **The certifiable-pass region and the learns-anything region do not intersect**, which is the
+   cause of §4's nine-arm finding rather than a restatement of it.
+3. **The instrument is roughly 3× too small to adjudicate the arms we actually build.**
+
+## 3. The constructive number — how big it would have to be
+
+Holding each arm's observed **rate** fixed and asking what `n` certifies it. Computed
+independently by both sessions, agreeing on every row:
+
+| arm | observed | rate | **n needed** | verdict there |
+|---|---:|---:|---:|---|
+| a025 | 43/47 | 0.9149 | **47** | PASS — already certifiable |
+| Titan-Sparse | 41/47 | 0.8723 | **88** | PASS |
+| **D1** | 40/47 | 0.8511 | **151** | PASS |
+| **D2** | 35/47 | 0.7447 | **378** | FAIL |
+| DOSEINT a050 | 37/47 | 0.7872 | **never** | rate **equals** the threshold exactly |
+
+> **D1 becomes certifiable at 151 rows. D2 needs 378 to be certifiably rejected. The current
+> instrument is 47.** So it is ~3× too small to certify what we build and ~8× too small to
+> reject what we want to reject — and an arm sitting exactly on the threshold is **never**
+> certifiable at any n.
+
+## 4. The caveat that must travel with that number
+
+**More rows of the same kind buy depth, not a second dimension.** Retention losses are
+**nested** — observed nesting 0.3876 against a size-preserving random null of 0.2383,
+permutation p = 0.0005 — so `references_retained` is a **depth gauge on roughly one latent
+difficulty dimension.** Arms lose the same rows in the same order, to different depths.
+
+> **151 rows drawn the same way would fix the certification arithmetic and would still be
+> measuring one thing.** *"Make it 3× bigger"* must not be mistaken for *"make it good"*.
+
+A larger instrument answers *"is this arm's retention distinguishable from the line?"* It does
+**not** answer *"is this arm's retention different in kind?"* — nothing here measures that, and
+a second dimension would have to be designed rather than sampled.
+
+## 5. What this amendment does not change
+
+The rule in §3 is unchanged: three-valued, `UNCERTIFIABLE` is not a pass, no threshold moves.
+The objection was to the word, not the mechanism, and the word is corrected here rather than the
+rule.
