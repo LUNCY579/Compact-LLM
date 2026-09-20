@@ -20,7 +20,7 @@ class SessionTests(unittest.TestCase):
             lock = Path(tmp) / "lease.lock"
             executable = Path(tmp) / "python.exe"
             executable.touch()
-            spec = {"lease_path": str(lock), "runtime": {key: {"python_executable": str(executable)}
+            spec = {"lease_path": str(lock), "attempt_root": str(Path(tmp)/"attempts"), "runtime": {key: {"python_executable": str(executable)}
                                                        for key in ("student_base", "donor")}}
             with patch.object(n, "validate_source"):
                 for role, memory in (("student_base", 6.99), ("donor_base", 11.99), ("donor_skilled", 11.99)):
@@ -31,6 +31,14 @@ class SessionTests(unittest.TestCase):
                 with self.assertRaises(r.Blocked):
                     n.prelaunch(spec, "student_base", {"available": True, "free_phys_gib": 20})
                 self.assertTrue(lock.exists())
+
+    def test_terminal_session_cannot_dispatch_another_role(self):
+        with tempfile.TemporaryDirectory() as tmp:
+            r.write_once(Path(tmp)/"SESSION_CLOSED.json", {"status": "TERMINAL"})
+            with patch.object(n, "validate_source", side_effect=AssertionError("terminal session was reopened")):
+                with self.assertRaisesRegex(r.Blocked, "session is terminal"):
+                    n.prelaunch({"attempt_root": str(Path(tmp)/"attempts")}, "donor_base",
+                                {"available": True, "free_phys_gib": 20})
 
     def test_missing_authority_and_widened_calls_refused(self):
         with self.assertRaises(r.Blocked):

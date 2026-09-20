@@ -56,6 +56,8 @@ def validate_source(spec):
 
 def prelaunch(spec, role, memory):
     r.require(role in ROLES, "unknown capture role")
+    r.require(not (Path(spec["attempt_root"]).parent / "SESSION_CLOSED.json").exists(),
+              "session is terminal; a fresh prospective registration is required")
     validate_source(spec)
     r.require(memory.get("available") is True, "host resource measurement unavailable")
     r.require(memory.get("free_phys_gib", 0) >= HOST_GIB[role],
@@ -112,11 +114,18 @@ def run(spec_path, spec_sha256, role, attempt):
                                               "status": status, "automatic_retry": False})
         raise
     finally:
+        known_count = worker.get("native_model_forwards") if worker else (0 if status == "FAILED_BEFORE_DISPATCH" else None)
         r.write_once(attempt / "SESSION_TERMINAL.json", {"status": status, "completed": status == "COMPLETE",
-            "role": role, "child_returncode": code, "native_forward_count": worker.get("native_model_forwards") if worker else None,
+            "role": role, "child_returncode": code, "native_forward_count": known_count,
             "forward_count_note": "Consult durable role reservation/journal when child absent or failed; never infer zero.",
             "optimizer_steps": 0, "scientific_improvement_claim": False,
             "recorded_utc": dt.datetime.now(dt.timezone.utc).isoformat()})
+        closed = registered_root.parent / "SESSION_CLOSED.json"
+        if status != "COMPLETE" and not closed.exists():
+            r.write_once(closed, {"status": "TERMINAL_AFTER_REFUSAL_OR_FAILED_CHILD", "role": role,
+                "spec_sha256": spec_sha256, "automatic_retry": False,
+                "native_forward_count": known_count,
+                "next_requirement": "Genuine external resource recovery when resource-blocked, then fresh prospective registration."})
     return 0
 
 
