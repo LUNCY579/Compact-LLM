@@ -231,16 +231,117 @@ def band(value, bounds):
             "status": "PASS" if bounds[0] <= value <= bounds[1] else "FAILED_PREDICTION"}
 
 
+def load_attempt_map(root):
+    """Only the first registered inference retry can replace a failed leg."""
+    path = Path(root) / "ATTEMPT_MAP.json"
+    if not path.exists():
+        return {}
+    require(not path.is_symlink(), "attempt map must be a regular local file")
+    record = read(path)
+    require(record.get("schema") == 1 and isinstance(record.get("replacements"), dict),
+            "invalid attempt map schema")
+    allowed = {f"{arm}-{leg}" for arm in ARMS for leg in LEGS}
+    for key, relative in record["replacements"].items():
+        require(key in allowed and isinstance(relative, str), "attempt map names an unregistered leg")
+        require(Path(relative).parts == ("eval", f"{key}-retry1"),
+                "replacement must name the matching eval/<same-leg>-retry1 directory")
+    return record["replacements"]
+
+
+def normalized_probe_command(precheck):
+    command = precheck.get("command")
+    require(isinstance(command, list) and all(isinstance(value, str) for value in command),
+            "retry precheck lacks the exact probe command")
+    command = list(command)
+    for option in ("--out", "--label"):
+        indices = [i for i, value in enumerate(command) if value == option]
+        require(len(indices) <= 1 and all(i + 1 < len(command) for i in indices),
+                "retry precheck contains malformed output/label arguments")
+        for index in indices:
+            command[index + 1] = f"<{option[2:].upper()}>"
+    if precheck["kind"] == "retention":
+        require(command.count("--") == 1, "retention retry command lacks its argument boundary")
+        index = command.index("--") + 1
+        require(index < len(command), "retention retry command lacks its label")
+        command[index] = "<LABEL>"
+    return command
+
+
+def resolve_attempt(root, key, replacements):
+    """Refuse to replace success or use a retry with changed model/settings."""
+    root = Path(root).resolve()
+    original = root / "eval" / key
+    if key not in replacements:
+        return original
+    relative = replacements[key]
+    require(isinstance(relative, str) and Path(relative).parts == ("eval", f"{key}-retry1"),
+            "retry replacement path differs from its fixed leg")
+    retry = root / relative
+    require(not (root / "eval").is_symlink() and not original.is_symlink() and not retry.is_symlink()
+            and retry.resolve().parent == (root / "eval").resolve(), "retry path escapes the experiment eval directory")
+    require(not any((original / name).exists() or (original / name).is_symlink()
+                    for name in ("result.json", "PROBE_WEIGHT_BINDING.json")),
+            "cannot replace an original leg with a result or successful binding")
+    failure = read(original / "FAILURE.json")
+    supervisor = read(original / "worker/supervisor.json")
+    terminal = read(original / "worker/probe_terminal.json")
+    require(failure.get("status") == "FAILED" and failure.get("complete") is False
+            and type(failure.get("returncode")) is int and failure["returncode"] != 0,
+            "original leg has no explicit failed runner receipt")
+    require(supervisor.get("status") == "EXITED" and type(supervisor.get("returncode")) is int
+            and supervisor["returncode"] != 0, "original worker was not observed to exit unsuccessfully")
+    require(terminal.get("status") == "FAILED" and terminal.get("complete") is False
+            and type(terminal.get("system_exit_code")) is int
+            and terminal["system_exit_code"] == supervisor["returncode"]
+            and isinstance(terminal.get("failure"), dict), "original worker terminal is not a matching failure")
+    require(isinstance(terminal.get("result"), str) and not Path(terminal["result"]).exists(),
+            "original failed worker has a surviving raw result; replacement is not admissible")
+    old, new = read(original / "PRECHECK.json"), read(retry / "PRECHECK.json")
+    binding = read(retry / "PROBE_WEIGHT_BINDING.json")
+    require(binding.get("status") == "COMPLETE" and binding.get("complete") is True
+            and type(binding.get("returncode")) is int and binding["returncode"] == 0,
+            "replacement lacks successful execution custody")
+    expected_kind = LEGS[key.split("-", 1)[1]]
+    require(old.get("status") == new.get("status") == "PRECHECK_PASSED"
+            and old.get("kind") == new.get("kind") == binding.get("kind") == expected_kind,
+            "retry changes the probe kind")
+    require(Path(old["arm_dir"]).resolve() == Path(new["arm_dir"]).resolve() == Path(binding["arm_dir"]).resolve(),
+            "retry changes the arm directory")
+    require(old["arm_before"]["weight_sha256"] == new["arm_before"]["weight_sha256"] == binding["weight_sha256"],
+            "retry changes the model weight identity")
+    for field in ("views_sha256", "implementation_digest", "build_gate_sha256"):
+        require(old[field] == new[field] == binding[field], f"retry changes {field}")
+    require(Path(old["views_path"]).resolve() == Path(new["views_path"]).resolve() == Path(binding["views_path"]).resolve(),
+            "retry changes the views file")
+    for stem in ("script", "wrapper", "supervisor_code"):
+        path = Path(binding[f"{stem}_path"]).resolve()
+        for precheck in (old, new):
+            matches = [value for name, value in precheck["code_sha256"].items() if Path(name).resolve() == path]
+            require(matches == [binding[f"{stem}_sha256"]], f"retry changes the bound {stem} code")
+    require(old["additional_input_sha256"] == new["additional_input_sha256"]
+            == binding["additional_input_sha256_before"] == binding["additional_input_sha256_after"],
+            "retry changes an additional instrument input")
+    require(normalized_probe_command(old) == normalized_probe_command(new)
+            and old.get("cwd") == new.get("cwd"), "retry changes settings beyond the attempt output and label")
+    if "training" in old["arm_before"]:
+        require(old["arm_before"]["training"] == new["arm_before"].get("training")
+                == binding.get("training_snapshot_before") == binding.get("training_snapshot_after"),
+                "retry changes the bound training trajectory")
+    return retry
+
+
 def build_report(root):
     root = Path(root).resolve()
     try:
         require("torch" not in sys.modules, "run the offline reporter in a fresh stdlib-only process")
-        loaded, custody, acquisition = {}, {}, {}
+        loaded, custody, acquisition, directories = {}, {}, {}, {}
+        replacements = load_attempt_map(root)
         # No correctness values are consumed until every leg and inter-arm gate passes.
         for arm in ARMS:
             loaded[arm], custody[arm] = {}, {}
             for leg, kind in LEGS.items():
-                directory = root / "eval" / f"{arm}-{leg}"
+                directory = resolve_attempt(root, f"{arm}-{leg}", replacements)
+                directories[f"{arm}-{leg}"] = directory
                 raw_path, binding_path = directory / "result.json", directory / "PROBE_WEIGHT_BINDING.json"
                 raw, binding, ids = paired.validate_probe_binding(raw_path, binding_path, kind)
                 loaded[arm][leg] = (raw, binding, ids)
@@ -299,7 +400,7 @@ def build_report(root):
                             f"{arm}/{leg}: bank label does not identify the registered instrument")
         for bank in ("dose", "select"):
             for arm in CANDIDATES:
-                left, right = root / "eval" / f"a100-{bank}", root / "eval" / f"{arm}-{bank}"
+                left, right = directories[f"a100-{bank}"], directories[f"{arm}-{bank}"]
                 contrast = paired.compare_acquisition(left / "result.json", right / "result.json",
                            reference_binding=left / "PROBE_WEIGHT_BINDING.json",
                            candidate_binding=right / "PROBE_WEIGHT_BINDING.json", relationship="same_training_draw")
@@ -354,6 +455,11 @@ def build_report(root):
                 "implementation_digest": current_implementation,
                 "registration_sha256": sha(root / "PREREG.md"), "amendment_01_sha256": sha(root / "AMENDMENT_01.md"),
                 "reporter_sha256": sha(Path(__file__)), "custody": custody,
+                "attempt_map": {"replacements": replacements,
+                    "sha256": sha(root / "ATTEMPT_MAP.json") if (root / "ATTEMPT_MAP.json").exists() else None,
+                    "failed_attempt_receipts": {key: {name: sha(root / "eval" / key / name)
+                        for name in ("FAILURE.json", "PRECHECK.json", "worker/supervisor.json", "worker/probe_terminal.json")}
+                        for key in replacements}},
                 "endpoints": endpoints, "paired_contrasts": contrasts, "predictions": predictions,
                 "primary_prediction": "PASS" if any(predictions[a]["primary_conjunction"] == "PASS" for a in CANDIDATES) else "FAILED_PREDICTION",
                 "acquisition_monotone": {bank: "PASS" if value else "FAILED_PREDICTION" for bank, value in monotone_acquisition.items()},
