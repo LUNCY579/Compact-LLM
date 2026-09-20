@@ -721,3 +721,78 @@ that **two arms score exactly 161 and are injured differently**:
 
 Identical face value. Five rows of abstention traded for five rows of comprehension, invisible
 in the total. A rule stated is a rule ignored; a demonstration at identical face value is not.
+
+## 8.6 The arithmetic panel measures TRANSFER, not retention — and D2's exclusion is uncertifiable
+
+Verified independently from `arm_correct_total`, `source_correct_total`, `lost_total` and
+`arm_correct_outside_source`. The identity `kept + NEW == panel` holds for **all seven arms**:
+
+| arm | rows | panel | **kept /47** | lost | **NEW** | vs source |
+|---|---:|---:|---:|---:|---:|---:|
+| frozen source | — | **47** | 47 | 0 | 0 | 0 |
+| **D1** | 384 | **77** | **40** | 7 | **37** | **+30** |
+| D2 | 768 | 68 | 35 | 12 | 33 | +21 |
+| D4 | 3,072 | 59 | 30 | 17 | 29 | +12 |
+| DOSEINT α=0.25 | 2,697 | 61 | **40** | 7 | 21 | +14 |
+| DOSEINT α=0.50 | 2,697 | 59 | 37 | 10 | 22 | +12 |
+| DOSEINT α=0.75 | 2,697 | 58 | 31 | 16 | 27 | +11 |
+| DOSEINT α=1.00 | 2,697 | 53 | 30 | 17 | 23 | +6 |
+
+> **Every arm beats the frozen source's 47. Training on JSON transition rows makes the model
+> BETTER at arithmetic — and more rows makes it less better.** So the gate's `panel >= 62` is
+> not *"do not forget arithmetic"*; source is 47. It means **"keep at least half of D1's
+> transfer gain."**
+
+**Interpolation restores the kept component and cannot restore the gain.** At α = 0.25 the
+high-dose arm recovers **kept = 40, exactly D1's figure** — while NEW is **21 against D1's 37**.
+Both components scale with the delta, so scaling it down removes the damage and the transfer
+together. **D1 is strictly better than every DOSEINT arm here: kept 40 AND NEW 37 at once.**
+
+That is why DOSEINT's primary failed: `acq >= 284` needs high dose, `panel >= 62` needs low
+dose, and **α does not decouple them.** §8's "α moves along the curve" now has a mechanism.
+
+### D2 is excluded by an endpoint that cannot adjudicate it
+
+D2 clears the arithmetic arm (68) and all three family floors. It fails the gate **solely** on
+`retained 35 < 37` — two rows. Paired over the 47 source-correct rows, from the per-class
+`lost_ids`:
+
+    D1 keeps & D2 loses :  5
+    D2 keeps & D1 loses :  0
+    discordant          :  5    net +5
+    exact McNemar p     :  0.0625
+    smallest detectable |net| at 5 discordant pairs : UNATTAINABLE
+
+> **The deficit is perfectly one-directional — 5 losses, 0 reversals, the strongest pattern
+> available — and at 5 discordant pairs the endpoint CANNOT reach p ≤ 0.05 however the rows
+> fall.** 2 × 0.5⁵ = 0.0625.
+
+**This is a sharper objection than "it is noise."** The difference does not look like noise; it
+looks consistent. The problem is that **the instrument is structurally incapable of certifying
+it in either direction at this discordance**, and the gate converts that uncertifiable 5-row
+deficit into a hard exclusion — while D2's **+37 acquisition** on the dose bank clears the ~20
+cross-draw floor and *is* measurable.
+
+**A measurable gain is being refused by an unmeasurable cost.** That is
+`selection-rule-selects-against-acquisition` on the dose axis at **three times the stakes** —
++37 against the knee's +12.
+
+**And it was on the record from the start.** `PROCESS_DOSE_FRONTIER.md` already wrote that D2
+sits *inside* D3's seed spread on both panel and retention, is "not a dose effect", and that its
+gate failure "is seed noise landing on the wrong side of a hard threshold." Nobody acted on it.
+The seed argument and the paired argument are different — one says a re-run might flip it, the
+other says this run cannot be adjudicated — and **both point the same way.**
+
+### What is NOT proposed here
+
+**No promotion of D2, and no rule repair.** Repairing a selection rule after seeing which arm it
+excludes is precisely the move the registration discipline exists to prevent, and this document
+has enforced that against itself twice today. The defect is reported; **the remedy is the
+operator's and must be registered before any arm is scored under it.**
+
+### Scope
+
+The panel decomposition is **within-instrument**. Acquisition figures are on the dose bank
+`45674251…` and are **not** comparable to select-views numbers. One seed per rung.
+`per_class.reference_n` **varies between arms** — it is a union denominator, so do not decompose
+per-class off it; the four aggregate fields above are the safe route.
