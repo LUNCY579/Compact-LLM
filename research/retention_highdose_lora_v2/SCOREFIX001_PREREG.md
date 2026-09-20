@@ -91,10 +91,53 @@ certify, or declares up front that it is reporting a decomposition rather than a
    PASS.
 3. The existing `RESULTS.json` is **not** rewritten. It is annotated by reference to this
    document. Re-scoring a completed arm is out of scope.
-4. This reconciliation is **outcome-neutral by construction**: it is computable from n = 47
-   and the threshold alone and would read identically had no arm ever been trained. It cannot
-   promote DOSELORA — 38 is UNCERTIFIABLE, and the primary conjunction remains un-passed
-   either way.
+4. **Scope.** GATEFIX-001's threshold is **37** (the GATE v2 conjunct). `report.py:307`'s
+   `>= 40` is DOSELORA's own primary target — a *different* rule on the same endpoint, which
+   GATEFIX-001 does not govern and which **this document does not redefine**. The
+   three-valued verdict is emitted against 37. The separate observation that 40 also falls
+   inside the k=38 interval is reported descriptively, as a statement about the primary
+   target's resolvability; it is **not** a re-scoring of the primary conjunction.
+
+## 4a. Which direction this could have gone — the disclosure that matters
+
+An earlier draft of this document called the reconciliation *"outcome-neutral by
+construction."* **That was wrong and is withdrawn.** It is not outcome-neutral in general,
+and it is not even outcome-neutral at k = 38: it changes the reported retention verdict from
+`FAILED_PREDICTION` to `UNCERTIFIABLE`, which is a change in the softening direction. Stating
+otherwise would have understated exactly what a later reader should be checking.
+
+Full crosswalk, `report.py` two-valued at 40 versus GATEFIX-001 three-valued at 37:
+
+| k | two-valued (≥40) | three-valued (T=37) | effect of the change |
+|---:|---|---|---|
+| ≤ 30 | FAILED | CERTIFIED_FAIL | agree |
+| **31–39** | FAILED | UNCERTIFIABLE | **softens a recorded failure** (k=38 observed) |
+| **40–42** | PASS | UNCERTIFIABLE | **withdraws a pass** |
+| 43–47 | PASS | CERTIFIED_PASS | agree |
+
+So the change cuts **both** ways: it would have withdrawn a pass at 40, 41 or 42, and it
+softens a failure at 31–39. It can never manufacture a pass — no k moves into
+CERTIFIED_PASS that was not already ≥ 40 — but "cannot promote" is a weaker and more honest
+claim than "outcome-neutral", and it is the only one this document is entitled to.
+
+**The justification is therefore ordering, not neutrality.** GATEFIX-001 was registered at
+commit `ffc8079d` **before** the run that produced k = 38; only the *code* lagged the rule.
+That single fact is what separates this from repairing a rule after seeing which arm it
+excludes. *"Registered after the arms were scored"* and *"registered after seeing which arms
+it would exclude"* read identically to a later reader, and only the first is true here — so
+the commit ordering must be checked, not taken on trust. Verified:
+
+| event | time (UTC) |
+|---|---|
+| GATEFIX-001 registered, `ffc8079d` | **2026-09-20T14:11:46Z** |
+| GATEFIX-001 amendment 1, `0bce03e3` | 2026-09-20T14:20:28Z |
+| renewal `PREREG.md` written (resume root) | 2026-09-20T16:51:53Z |
+| one-launch permission transferred | 2026-09-20T16:57:10Z |
+| `RESULTS.json` created — k = 38 first exists | **2026-09-20T17:49:46Z** |
+
+The rule predates the registration of the run by 2 h 40 min and the data by 3 h 38 min.
+Reproduce with `git -C ChatBubble-dmrf log -1 --format=%cI ffc8079d` against `RESULTS.json`'s
+`created_utc`.
 
 ## 5. Independent verification requested
 
