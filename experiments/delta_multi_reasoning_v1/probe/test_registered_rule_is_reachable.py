@@ -24,12 +24,23 @@ The paired session caught this before anyone acted on it. There is a third case:
 ## Why this does not reopen the xfail loophole
 
 The exclusion is **computed from the artifacts**, not asserted by whoever finds the test
-inconvenient. A module is sealed if and only if its sha256 appears in a committed receipt:
+inconvenient. A module is sealed iff its sha256 appears under **any** `*_sha256` key, at any
+depth, in any `PRELAUNCH_BINDING.json` or `RESULTS.json`. You cannot exempt a module by editing
+this test; you would have to forge a receipt.
 
-  * a `code_files_sha256` entry of any `PRELAUNCH_BINDING.json`, or
-  * a `reporter_sha256` of any `RESULTS.json`.
+**The harvest is STRUCTURAL, and version 2 got that wrong too.** It enumerated exactly two field
+names — `code_files_sha256` and `reporter_sha256` — and treated every other hash field as
+absent. The tree also carries `external_code_files_sha256` (pinning code in *another* worktree)
+and `pilot_code_sha256`, both of which are code bindings. **Enumerating field names is the same
+scope error the sealed-evidence doctrine exists to prevent, one level down**: absence from the
+two fields I happened to list was being read as absence from every receipt. Harvesting by shape
+raised the sealed set from 50 hashes to **152** and surfaced a **fifth** module neither session
+had seen — `binding_mixture_v1/report.py`, sealed by a third session's `RESULTS.json`.
 
-You cannot exempt a module by editing this test; you would have to forge a receipt.
+**Both sets grow over time.** New receipts appear as other sessions complete runs, so a module
+classified LIVE today can be SEALED tomorrow. The classification is a function of the record at
+the moment it is computed, not a fixed property — which is why it is recomputed on every run
+rather than cached to disk.
 
 **And the exclusion makes the test STRONGER, not weaker.** A module that is both sealed and
 superseded is a finding in its own right — it says *a result on the record was produced under a
@@ -80,20 +91,26 @@ def _sealed_hashes() -> dict[str, str]:
     sealed: dict[str, str] = {}
     if not RECORDS.is_dir():
         return sealed
+    hexish = re.compile(r"^[0-9a-f]{64}$")
+
+    def harvest(obj, src: str, key: str = "") -> None:
+        """Any *_sha256 field, at any depth. Enumerating field NAMES is how this leaks."""
+        if isinstance(obj, dict):
+            for k, v in obj.items():
+                harvest(v, src, k)
+        elif isinstance(obj, list):
+            for v in obj:
+                harvest(v, src, key)
+        elif isinstance(obj, str) and key.lower().endswith("sha256") and hexish.match(obj):
+            sealed.setdefault(obj, f"{src}:{key}")
+
     for name in ("PRELAUNCH_BINDING.json", "RESULTS.json"):
         for f in RECORDS.rglob(name):
             try:
                 d = json.loads(f.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, OSError):
                 continue
-            if not isinstance(d, dict):
-                continue
-            for h in (d.get("code_files_sha256") or {}).values():
-                if isinstance(h, str):
-                    sealed.setdefault(h, f"{f.parent.name}/PRELAUNCH_BINDING.json")
-            r = d.get("reporter_sha256")
-            if isinstance(r, str):
-                sealed.setdefault(r, f"{f.parent.name}/RESULTS.json:reporter_sha256")
+            harvest(d, f"{f.parent.name}/{f.name}")
     return sealed
 
 
