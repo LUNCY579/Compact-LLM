@@ -73,6 +73,7 @@ def main():
                 raise RuntimeError('BLOCKED_ON_NORM_COMPARABILITY')
             if read(arm/'ARM.json')['arm_weight_sha256']!=sha(arm/'model.safetensors'):
                 raise ValueError('Materialized model bytes differ')
+            guard(600)
             compress_verified(arm,cpu)
             print('VERIFIED build-'+name,flush=True)
         # Both new arms must exist and be norm-qualified before any endpoint runs.

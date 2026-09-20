@@ -27,7 +27,15 @@ Once the required host RAM is available, a fresh bounded wait can use:
 ```
 
 Every wait ID is create-only. Inspect existing handles/receipts first. The helper
-refuses any new dispatch if a native journal already exists. An expired observation
+refuses any new dispatch if a native journal or NATIVE_DISPATCH_RESERVATION.json
+already exists. The create-only reservation is shared by all wait IDs and is
+preserved after a launch error; never delete it to retry automatically. Inspect
+its owner and authoritative native receipts. The launcher checks the full2700s
+native owned-work reserve before readiness and again immediately before dispatch.
+It distinguishes starting the controller from proof of a model-worker launch.
+Each subsequent export, compression and probe has its own deadline admission;
+the complete battery is not guaranteed to fit, and partial outputs are preserved.
+An expired observation
 is not a stopped worker; this first wait is authoritatively terminal and explicitly
 records that no worker was launched. New waits retain the existing session deadline
 and still require7GiB before dispatch; the child independently enforces6GiB after
