@@ -597,3 +597,71 @@ OVERWRITE trap.
 
 **It is a one-field fix in the process probe**, and it would retroactively make every future
 acquisition number the difference between a receipt and a path.
+
+## 8.4 CORRECTION — on the dose axis, long context and abstention are ONE endpoint
+
+§8 reports long context and literal `UNKNOWN` as two report-only endpoints. **On the DOSEINT
+ladder that double-counts the same 13 rows.** Splitting the 256 rows by answerability —
+`answerable = all256_hits − unanswerable_correct`, both fields in the artifact:
+
+| arm | UNKNOWN (= unans /64) | **answerable /192** | total |
+|---|---:|---:|---:|
+| frozen source | 13 | **148** | 161 |
+| 2,697 α = 0.25 | 12 | **147** | 159 |
+| 2,697 α = 0.50 | 3 | **147** | 150 |
+| 2,697 α = 0.75 | 2 | **149** | 151 |
+| 2,697 α = 1.00 | **0** | **149** | 149 |
+
+> **Answerable comprehension is FLAT at 147–149 across the whole high-dose ladder, and α = 1.00
+> is the best of the four — above the frozen source's 148. The entire 161 → 149 drop IS the
+> collapse of the ability to decline.** Exactly: 161 = 13 + 148, 149 = 0 + 149, net −12 = −13
+> abstentions +1 answerable.
+
+On an unanswerable row the only way to score is to emit `UNKNOWN`, so *"unanswerable correct"*
+and the literal-`UNKNOWN` count are the same column — which is why the tight-upper-bound check in
+§8 and this decomposition agree **by construction** rather than by corroboration.
+
+**What it emits instead is not a format artifact.** On the 64 unanswerable rows the frozen source
+gives 13× `UNKNOWN`, 8× `5`, 2× `Mosaic`; α = 1.00 gives 8× `5`, 3× `Wednesday`, 3× a full
+sentence, 2× `Tuesday`. **Natural-language fillers, a different weekday each time.** It is not
+learning a specific wrong answer, it is learning to *always supply one* — wh-compliance at its
+limit, and the dose × α interaction in §8 is that mechanism's dose-response curve.
+
+### The general version is FALSE, and the check that shows it
+
+Across all **62** arms carrying both fields: answerable spans **113–154 (span 41)**, unanswerable
+spans **0–14 (span 14)**. Both components move in general. **The clean decomposition is a property
+of the DOSEINT ladder — whose answerable span is 2 — not of the instrument.**
+
+The concrete demonstration: **two arms both score exactly 161 and split it differently.**
+
+    supa         161 = 13 unanswerable + 148 answerable
+    ownA075_lc   161 =  8 unanswerable + 153 answerable
+
+*"Never quote a pooled long-context net"* is already a standing rule; this is what it looks like
+when a pooled total hides its own structure at identical face value.
+
+### Revised injury summary for high dose
+
+> **+acquisition, −arithmetic panel, −abstention, comprehension NEUTRAL.**
+
+The arithmetic-panel reframe in §8 stands untouched and is now the **only separate injury**.
+
+### Practice: carry a canary through every extractor
+
+Three extractor bugs in one day across two sessions — a truncated key list that concluded a bank
+had no `answerable` field; a parent parsed from an `id` string instead of the declared
+`parent_id`; and a literal-`UNKNOWN` count that compared record dicts to a string and returned
+**0 for every arm**. **All three ran cleanly. None was caught by reading the code.** Each was
+caught only because its output collided with a number already held — *"1 distinct parent for a
+384-row bank"*, *"0 for an arm on record at 13"*, *"0/0"*.
+
+> **Where no such number happens to be held, the bug ships silently.** The only defence that does
+> not depend on luck: **compute one quantity whose answer you already know, in the same pass,
+> every time.** If the extractor returns 13 for the frozen source it is parsing; if it returns 0
+> it is not.
+
+Applied here: the canary is `literal UNKNOWN == unanswerable_correct`, which passes on all four
+DOSEINT arms. **It cannot run on the frozen source** — that artifact omits
+`unanswerable_correct` entirely, so its 13 rests on the literal count alone with nothing to check
+it against. Worth knowing before that 13 is used as an anchor.
