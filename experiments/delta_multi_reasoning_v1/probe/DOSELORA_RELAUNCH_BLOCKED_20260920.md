@@ -67,3 +67,80 @@ I did not run `launch.py` with a fresh wait id. It would have refused with
 `SESSION_CANNOT_FIT_NATIVE_OWNED_WORK` and **consumed a create-only wait id** to demonstrate
 something already computable from the envelope. Wait ids are a finite, create-only resource and
 spending one to produce a foregone refusal is waste, not evidence.
+
+---
+
+# AMENDMENT 1 — 2026-09-20T18:5xZ. Three of this note's rows are now wrong.
+
+The DOSELORA-001 owning session corrected two of them and found a blocker this note missed.
+All three verified here before acceptance.
+
+## 1. NEW BLOCKER, and it outranks everything else in this note: the pinned pilot is DIRTY
+
+    C:/Users/clclc/BusinessProject/ChatBubble-retention-pilot-20260917   HEAD 5b4c22d
+     M  experiments/rab001_exploration/process_probe.py                     (+52 lines, 14:08:55Z)
+     ?? .../evidence/retention-design-v1/PROCESS_probefix_verify.json       (133611 B, 14:17:46Z)
+
+`controller.py:123-124`:
+
+    if git("status", "--porcelain", "--untracked-files=all"):
+        raise ValueError("native execution requires a clean checkout")
+
+`--untracked-files=all` is in the invocation, so **the untracked JSON refuses the lane exactly as
+hard as the modified `.py`.** The owning session verified it the better way — imported
+DOSELORA's `train.py` against the live pilot and called `execution_identity()`, which raised.
+
+> **This blocks EVERY native lane on the host, route-independently — in-place relaunch, a fresh
+> experiment root, and the PREPARATION step, because `prepare.py` calls `execution_identity()`
+> too.** It is `rrp-clean-checkout-trap` firing exactly as the memory describes.
+
+**This note's line *"the pilot is clean at 5b4c22d"* was true when written at 14:14Z and was
+false within minutes.** The files landed at 14:08Z and 14:17Z — the first one *before* this note
+was written. **The note asserted a clean checkout it had verified at the branch level and never
+re-checked at the working-tree level**, which is the level-mismatch defect again.
+
+**Ownership: neither file is mine.** My six bridge artifacts are **committed** (`git ls-files …
+| grep -c bridge001` → 6, at HEAD `5b4c22d`). Both dirty files belong to the
+`Fine-tuning model audit and improvement` session — the diff adds `weight_sha256`,
+`receipt_matches` and its own *"RECORDS, DOES NOT ENFORCE"* comment. That fix was reported as
+committed at `7f188d5`; **that commit went to a different worktree and left this one modified.**
+
+## 2. A TRAP this note did not know about — do NOT run prepare.py while the pilot is dirty
+
+`prepare.py` reaches `execution_identity()` at **L77**. Before it: `prepared.mkdir(exist_ok=False)`
+at **L48**, `copy_new()` at **L50**, `write()` at **L55, 62, 74**, `copy_new(PREREG)` at **L63**.
+
+> Running it dirty creates the root, copies the rows, writes DATA_CONTRACT / PLAN / PREREG /
+> GRANT, **then raises** — and `mkdir(exist_ok=False)` plus the `'x'` writes refuse every retry.
+> **The root name is burned permanently.**
+
+## 3. The route-2 byte-identity risk was OVERSTATED here
+
+§"three legitimate routes" warns that `prepare.py` must reproduce `exact2697` byte-identically or
+the new root is a different experiment. **It does not regenerate those rows — it `copy_new()`s
+them** from `doseint001-20260919/prepared-dual899/` with a hash assert before the copy (L44-45)
+and a sha compare after (L30-34). `microfit-train.jsonl` and `ARM_BUILD.json` are already
+byte-identical across parent and `lora001` and match the parent DATA_CONTRACT.
+
+The caveat had the right *shape* — a rebuild is not a byte-identical arm — but it was applied to
+a path that **copies** rather than regenerates. `DATA_CONTRACT.json` is the only file in
+`prepared/` that is written rather than copied, which narrows the residual risk to one artifact.
+
+## 4. The disk row is stale; the binding blocker moved to host RAM
+
+| gate | at 14:14Z | now | required | |
+|---|---:|---:|---:|---|
+| host RAM | 6.24 GiB | **3.862 GiB** | 7.00 | **SHORT 3.14 — now binding** |
+| free disk | 16.18 GiB | **20.576 GiB** | 17.00 | **OK** — nothing was deleted or compressed |
+| gpu lease | HELD | **free** | free | OK |
+
+RAM is consumed by desktop applications, not a model worker. **So of the four blockers this note
+recorded, two cleared on their own, one (disk) resolved without intervention, and two new ones
+appeared that neither this session nor the owning session can clear alone** — the dirty pilot
+needs its owner, and the RAM needs the operator.
+
+## What this amendment does not change
+
+The seal analysis in §"Every route destroys another session's create-only artifacts" stands
+unchanged, and the owning session has taken route 2 with a new root
+(`highdose-lora002-20260920`), superseding no create-only artifact of `lora001`.
