@@ -107,13 +107,13 @@ def main():
     logroot=root/'battery-launch'
     logroot.mkdir(exist_ok=False)
     write(logroot/'PLAN.json',{'actions':actions,'native_run':str(native),'max_probe_seconds':14400,
-                            'max_new_disk_bytes':17*2**30,'retries_in_this_runner':0})
+                            'max_new_disk_bytes':21*2**30,'retries_in_this_runner':0})
     start=time.monotonic()
     total_probe_seconds=0.0
     env=dict(os.environ,OMP_NUM_THREADS='1',MKL_NUM_THREADS='1',TOKENIZERS_PARALLELISM='false')
     completed=[]
     for label,cmd in actions:
-        assert size(root)<=17*2**30, 'registered new-disk ceiling exhausted'
+        assert size(root)<=21*2**30, 'registered new-disk ceiling exhausted'
         assert shutil.disk_usage(root).free>=14*2**30, 'native free-disk floor reached'
         assert time.monotonic()-start < 14400, 'battery wall envelope exhausted'
         if label.startswith('probe-'):

@@ -1,6 +1,6 @@
 # DOSEINT-001 execution and custody
 
-Start with the records repository's PREREG.md and AMENDMENT_01.md/02.md. The exact
+Start with the records repository's PREREG.md and AMENDMENT_01.md/02.md/03.md. The exact
 historical D4 launch was refused before dispatch. The current design uses 2,697
 parents disjoint from both acquisition banks, not the historical 3,072-row draw.
 
@@ -14,11 +14,13 @@ Records root:
 `C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/doseint001-20260919`.
 Keep the records repository `.gitattributes` rule `* -text`.
 
-The one approved training run uses `journal-dual899-preloadretry`. The earlier
-`journal-dual899` is a preserved 5.95/6.0 GiB RAM refusal, with zero model calls
-and optimizer steps. Do not issue another train command while a launch runs or
-consume another grant. `wait_train.py --execute` is create-only and was already
-dispatched; it is not a resume command.
+The active fresh recovery uses `journal-dual899-recovery`. The earlier
+`journal-dual899` is a preserved 5.95/6.0 GiB RAM refusal; the subsequent
+`journal-dual899-preloadretry` stopped at update191 because its grant omitted
+2,203 qualification tokens. No final checkpoint or scientific endpoint existed.
+The corrected fresh grant covers those tokens and preserves both failures.
+Do not issue another train command while a launch runs or consume another grant.
+Both launch scripts are create-only and are not resume commands.
 
 After the training supervisor has returned and its result, budget, qualification,
 data/source/code binding and final checkpoint are verified, run:
@@ -26,7 +28,7 @@ data/source/code binding and final checkpoint are verified, run:
 ```powershell
 & 'C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe' `
  'C:/Users/clclc/BusinessProject/ChatBubble-dose-param/research/retention_dose_parameterization_v1/run_battery.py' `
- --native-run 'C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/doseint001-20260919/journal-dual899-preloadretry/runs/train-001' `
+ --native-run 'C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/doseint001-20260919/journal-dual899-recovery/runs/train-001' `
  --execute
 ```
 
