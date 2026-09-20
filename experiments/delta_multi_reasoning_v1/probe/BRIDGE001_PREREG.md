@@ -120,3 +120,88 @@ deliverable — the calibration is the secondary product.
 
 **Does not enable:** reading D4's 304 as a select-views number. Nothing here licenses that, and
 prediction 3's range limit is the reason.
+
+---
+
+# RESULT — the banks are calibrated and indistinguishable over [8, 238]
+
+> The STATUS banner above is superseded by this section rather than edited.
+
+## Bridge points
+
+| select-views | dose | offset | 95% CI (rows) | model |
+|---:|---:|---:|---:|---|
+| 8 | 11 | +3 | [−5.4, +11.4] | Rineya-Opallo-1.0.0-devfreeze |
+| 14 | 14 | 0 | [−10.2, +10.2] | Supa (frozen source) |
+| 70 | 60 | **−10** | [−30.4, +10.4] | `arm-lora-r16-merged` (LoRA arm 1) |
+| 238 | 224 | **−14** | [−40.6, +12.6] | `tt001-20260918/build-s17s29` |
+
+**Heterogeneity: Q = 2.479, df = 3, I² = 0.000 → pooling PERMITTED.**
+
+> **Pooled offset (dose − select-views): −0.06 rows, SE 3.07, 95% CI [−6.1, +6.0].**
+> The two banks are indistinguishable in difficulty across a 230-row span.
+
+## Registered predictions, scored
+
+| # | prediction | outcome |
+|---|---|---|
+| 1 | \|offset\| ≤ 15 rows at every point | **HELD** — max is 14 |
+| 2 | no trend of offset with arm strength | **HELD** — I² = 0.000, Q = 2.479 against df 3 |
+| 3 | rebuilds reproduce originals within 7 rows | **PENDING** — blocked on the host-RAM guard, see below |
+
+## The registered prohibition fires, and it is honoured
+
+`licensed_range` is **[8, 238]**. The guard REFUSES 239, 276 and 304 — so **D2 and D4 cannot be
+read against the select-views table**, and D1 at 239 sits *one row* above the boundary.
+
+The offset is flat (I² = 0) over 230 rows, which makes it tempting to extrapolate 66 rows further.
+**That temptation is exactly what the prohibition was registered against**, before the numbers
+existed. It is honoured. Extending the licence needs a bridge arm above 238, and the highest
+select-views arms available are `tt001_TT16s` 247 and `mag001_sm05` 243 — which would reach 247,
+still short of 276.
+
+## This does not change the deliverable
+
+**The bridge's purpose was never the offset.** It is that the dose bank is a usable scoring
+instrument via `process_probe.py --instrument process-transition-probe-001`, whose `load_views`
+verifies `45674251e38e574229f4ea98d04c30fe623ec6ac58ad308ad491661c84afab7e` and refuses on
+mismatch.
+
+> **A low-invasiveness arm trained at D2/D4 dose can now be scored NATIVELY on the dose bank and
+> compared directly to D2's 276 and D4's 304 — no cross-bank step, no offset, no extrapolation.**
+
+The calibration is the secondary product, and its value is the reassurance that the two tables
+are not measuring different things.
+
+## Two defects found in building it, both my own
+
+**1. `model_dir` is not the model.** `process_probe.py` supports `--checkpoint` overlays, so the
+single base directory `.../Supa` hosts **13 distinct arms** differing only by the checkpoint
+applied on top. The first version of `analysis/bank_bridge.py` matched on `model_dir` alone,
+silently paired `rrp015_control` (select-views 234) with `supa_rrp007_a1` (dose 289), and
+produced a **+55** bridge point that drove the entire heterogeneity verdict to
+`pooling_permitted: False`. Pairs are now keyed on `(model_dir, checkpoint.manifest_sha256)`.
+
+**2. My `--evidence` roots could not reach the only informative point.** The first corrected run
+returned a licensed range of [8, 70] because `PROCESS_tt001_TT16s_1729.json` and its select-views
+twin live in `ChatBubble-compose-lane-20260918`, which was not among the three roots passed. The
+fix was to pass the project root. **Third instance today of a check whose scope could not reach
+its claim** — and the first two were in prose, so a narrow default in a tool is the same defect
+with a different surface.
+
+**3. And the runner masked its own failures.** The first five-run script printed
+`ALL BRIDGE RUNS FINISHED` while every run had exited 2. This is the identical shape criticised
+in a paired session's battery forty minutes earlier — *knowing the failure mode by name bought
+nothing*. The rerun tracks a `FAILED` counter and exits non-zero.
+
+## BLOCKED — four arms, host RAM
+
+`bridge001_lora2_dose`, `bridge001_s10_dose/_sv`, `bridge001_s50_dose/_sv` are unrun. The guard
+refused: **`host RAM guard refused; no automatic retry or override (phase=qualify, need 4.6 GiB,
+have 4.00 GiB)`**. Available has been measured between **4.16 and 4.62 GiB** with `chrome.exe` at
+2.11 GiB and `claude.exe` at 1.60 GiB.
+
+**The guard is not weakened.** The runner waits for 5.2 GiB of headroom *above* it. These four
+arms would land at select-views 223, ~197 and ~235 — **inside the already-licensed [8, 238]
+span**, so they would tighten the pooled estimate but would **not** extend the range, and would
+not change any conclusion above.
