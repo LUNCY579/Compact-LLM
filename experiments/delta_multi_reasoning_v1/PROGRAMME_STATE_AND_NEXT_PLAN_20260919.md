@@ -240,6 +240,49 @@ programme.** It is not the trivial small-update result, because **α=0.25's delt
 *smaller* than LoRA's 0.3242, and it loses 4.** A 1.56× larger delta forgot less. Hold this as
 *suggestive only* — under-convergence explains it equally well, and arm 2 is what separates them.
 
+**Arm 2 result (2026-09-19), scored independently by a scorer committed before any arm-2
+endpoint was read.** All three comparability gates pass, including `weight_sha256 eaa40115…`
+matching the merge receipt, so the probe read arm 2's merged weights.
+
+| arm | acq /384 | retained /47 | floors | long ctx |
+|---|---:|---:|:--:|---:|
+| a050 (α = 0.50) | 219 | **42** | 3/3 | 164 |
+| a075 (α = 0.75) | 234 | 39 | 3/3 | 163 |
+| a100 (control, α = 1.00) | 235 | 40 | 3/3 | 157 |
+| **LoRA r=16 lr1e-4** (α-equiv **1.794**) | **223** | **41** | 3/3 | 154 |
+
+Registered bands: **P3' (acq ≥ 235) FAILED** at 223; **P4 (source lost ≤ 4) FAILED** at 6.
+
+**Two things this settles.**
+
+1. **Arm 1's 47/47 was convergence, not rank.** The disconfirmer was: under-convergence predicts
+   47/47 *together with* low acquisition; a rank effect predicts 47/47 *surviving as acquisition
+   rises*. Acquisition rose 70 → 223 and retention fell 47 → 41.
+2. **The cell that would have contradicted damage-tracks-magnitude did not fire.** Retained 41 at
+   1.79× the control's magnitude against the control's 40 — one row against a 6-row MDE. Both
+   sessions had recorded that prior in writing beforehand.
+
+**POST-HOC, and not part of the registration — the comparison that actually decides it.** Not
+against the control, but against the scalar ladder at **matched acquisition**:
+
+> **LoRA minus a050: acquisition +4 (floor 7), retained −1 (floor 6), long context −10 (floor 13).
+> Every difference is inside its noise floor.** At this dose LoRA r=16 is indistinguishable from
+> α = 0.50 — and α = 0.50 is a plain scalar needing **no training run at all**.
+
+**What this closes and what it does not.** It closes *"a rank-constrained update forgets less at
+matched behaviour"* — at matched acquisition it does not. It does **not** close rank at other
+ranks or learning rates (one rank, two lrs, and the two arms bracket the control rather than
+matching it). And critically it does **not** touch P8: this tests rank at 384 rows, where the
+dose ladder says the model is **data-limited**. If anything it sharpens P8 — **at D1 both
+parameterizations land in the same place, so D1 cannot discriminate them.**
+
+**Registration lesson for the next arm.** P3' was the right *bar* — the matched-norm comparator
+was unexecutable at α-equivalent 1.794, and extrapolating past the ladder's last measured point
+is the cue-differential error again. But P3' is a **threshold**: it says the arm failed to beat
+the ladder's maximum without saying *where on the ladder it landed*. The adjacent ladder row is
+the informative object and it was computable in advance from numbers that already existed.
+**Register the matched-acquisition comparison, not only the threshold.**
+
 ### P8. Dose × parameterization — the cell nobody has visited
 The two axes have been explored **separately and never together**:
 - dose at 52.8%-of-model FP32 → acquisition 304, retention collapses
