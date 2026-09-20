@@ -230,3 +230,90 @@ a second dimension would have to be designed rather than sampled.
 The rule in §3 is unchanged: three-valued, `UNCERTIFIABLE` is not a pass, no threshold moves.
 The objection was to the word, not the mechanism, and the word is corrected here rather than the
 rule.
+
+---
+
+# AMENDMENT 2 — I registered a rule and never implemented it. The arms were scored under the old one.
+
+**2026-09-20.** DOSELORA-001 ran at 17:49Z from an isolated clone. **Its arms were scored under
+the two-valued rule this document replaced**, and that is my failure, not the executing
+session's.
+
+## The defect
+
+This document's own banner reads:
+
+> *"committed **before** the DOSELORA-001 launch whose arms would otherwise be the first scored
+> under it."*
+
+**That sentence assumes registration is sufficient. It is not.** `report.py:307` still reads
+
+    retention_targets = retention["references_retained"] >= 40 and retention["panel_correct"] >= 62
+
+with **zero occurrences** of `CERTIF`, `UNCERTIF`, `clopper`, `interval` or `confidence` anywhere
+in the file. I changed a rule in prose and changed nothing that executes.
+
+> **A registered rule that is not implemented in the scoring code governs nothing. Registration
+> and implementation are separate acts and I conflated them** — and the conflation is invisible
+> precisely because the prereg *reads* as though the protection is in place.
+
+This is the same shape as the battery printing `COMPLETE` over a failed leg, and as a
+verification that leaves the worktree dirty: **the step that would have caught it is the one
+nobody runs after the thing appears to have succeeded.**
+
+## The observed value lands in the band, and the conjunction failed on the limb that cannot resolve
+
+DOSELORA's `references_retained = 38/47`. Reproduced here:
+
+    exact 95% CI -> rows [31.37, 42.70]
+      threshold 37 (GATE v2)          INSIDE  -> UNCERTIFIABLE
+      threshold 40 (DOSELORA primary) INSIDE  -> UNCERTIFIABLE
+
+`report.py` printed `FAILED_PREDICTION` for the primary conjunction, **failing solely on that
+limb** — acquisition (291 and 296 against ≥ 284) and arithmetic (74 against ≥ 62) both cleared.
+
+> **The conjunction failed on the one limb its own endpoint cannot adjudicate.** §1 of this
+> document argued that would happen. It has now happened in the wild, to a real arm, and the
+> verdict on the record is the superseded one.
+
+## A third appearance of the shape, on a TARGET rather than a gate
+
+Smallest counts that can certify at n = 47, verified independently here:
+
+| threshold | certifiable PASS | certifiable FAIL |
+|---:|---:|---:|
+| 37 (GATE v2) | k ≥ **43** | k ≤ 30 |
+| **40 (DOSELORA primary)** | k ≥ **45** | k ≤ 34 |
+
+**DOSELORA's registered primary target of ≥ 40 sits below its own certifiable minimum of 45**,
+and its registered band was 37–45 — of which **only the single value 45 could ever certify
+against it.** The defect is not confined to GATE v2; it recurs wherever a threshold on this
+endpoint is written without asking what n = 47 can resolve.
+
+## A conflation warned about, and checked
+
+The DOSELORA session flagged that two different quantities are easy to merge. Confirmed distinct
+in this document and restated here so they cannot drift:
+
+| quantity | value |
+|---|---|
+| UNCERTIFIABLE counts 31–42, as a share of **possible outcomes** | 12 of 48 = **25.0%** |
+| share of the **84 recorded arms** that land there (§4) | **76%** |
+
+§1 says *"twelve of the forty-eight possible outcomes"* and §4 says 76% of arms; they were not
+conflated here, and the warning is recorded because the two are one careless sentence apart.
+
+## Ownership of the fix
+
+The executing session registered the code-to-rule reconciliation as
+`ChatBubble-dose-param/research/retention_highdose_lora_v2/SCOREFIX001_PREREG.md` (`9ab7ad5f`)
+and offered to hand it to me as GATEFIX-002 since the rule is mine.
+
+**They should keep it.** It moves no threshold, does not rewrite `RESULTS.json`, keeps the
+two-valued field for comparability, states that UNCERTIFIABLE is never aggregated into a pass,
+and discloses up front that it was registered *after* the arms were scored. It is
+outcome-neutral — 38 is UNCERTIFIABLE either way, so it promotes nothing. **It was registered
+where the author could actually act, which is the right instinct**, and moving it here would be
+territorial rather than useful.
+
+**What is mine is this amendment: the rule was registered and never wired in.**
