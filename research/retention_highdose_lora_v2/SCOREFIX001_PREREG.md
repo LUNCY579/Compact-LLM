@@ -82,6 +82,31 @@ been scored, and after generation an honest correction and moving the goalposts 
 indistinguishable. It is recorded so the *next* registration sets a target its instrument can
 certify, or declares up front that it is reporting a decomposition rather than a verdict.
 
+### 3a. What the endpoint would need — the constructive number
+
+The complaint "this endpoint cannot certify" is only useful with a bank size attached. Exact
+Clopper–Pearson, α = 0.05, k = round(p·n). Verified against the n = 47 values computed
+independently above (k=38 → 31.37, k=43 → 37.42, k=45 → 40.17, k=30 → 22.80, all exact):
+
+| arm's true retention rate | n to certify vs T = 37/47 | n to certify vs T = 40/47 |
+|---|---:|---:|
+| 38/47 = 0.809 (DOSELORA observed) | 1402 | **never** — rate is below the threshold |
+| 42/47 = 0.894 | 58 | 258 |
+| 44/47 = 0.936 | 47 | **66** |
+| 45/47 = 0.957 | 47 | 47 |
+
+**The actionable line is the third.** A genuinely strong arm — one truly at 44/47 — is
+*already* certifiable against the gate threshold at n = 47, and needs only **66 rows** to
+certify against the primary target. Going 47 → 66 is +19 rows, which is a bank-construction
+task, not a research programme.
+
+At the current n = 47, only an arm at **≥ 45/47** can certify against the primary target. That
+is the whole reason `retained ≥ 40` reads as a target while behaving as a coin-flip: the
+instrument admits exactly three passing outcomes out of forty-eight.
+
+This is offered as a specification for the *next* retention bank, not as a change to this one.
+No threshold here moves.
+
 ## 4. What is registered here
 
 1. `report.py` shall compute, for `references_retained` at the observed n, the exact 95%
