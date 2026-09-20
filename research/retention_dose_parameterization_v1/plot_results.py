@@ -7,12 +7,15 @@ from pathlib import Path
 def main():
     ap=argparse.ArgumentParser(description=__doc__)
     ap.add_argument('--root',type=Path,required=True)
+    ap.add_argument('--name',default='FRONTIER')
     a=ap.parse_args()
+    if not a.name or Path(a.name).name!=a.name or a.name in ('.','..'):
+        raise ValueError('figure name must be one filename component')
     source=a.root/'RESULTS.json'
     report=json.loads(source.read_text(encoding='utf-8'))
     if report.get('status')!='COMPLETE_COMPARABLE':
         raise ValueError('plotting requires completed comparability gates')
-    destinations=[a.root/'FRONTIER.png',a.root/'FRONTIER.svg',a.root/'FIGURE.json']
+    destinations=[a.root/(a.name+'.png'),a.root/(a.name+'.svg'),a.root/(a.name+'_FIGURE.json')]
     if any(p.exists() for p in destinations):
         raise FileExistsError('figure outputs are create-only')
     import matplotlib
@@ -31,6 +34,7 @@ def main():
     for ax,bank,title in zip(axes,('dose','select'),('Dose bank · 384 held-out parents','SELECT bank · 384 held-out parents')):
         ax.set_title(title,loc='left',fontweight='bold',pad=14)
         ax.set_xlim(xlo,xhi);ax.set_ylim(ylo,49)
+        ax.set_yticks([tick for tick in (0,5,10,15,20,25,30,35,40,45,47) if tick>=ylo])
         ax.grid(axis='y',color='#e8ecf0',linewidth=.8)
         ax.set_axisbelow(True)
         if bank=='dose':
@@ -44,7 +48,8 @@ def main():
             ax.scatter(x,y,s=72,color=colors[arm],edgecolors='white',linewidth=.9,zorder=3)
             grouped.setdefault((x,y),[]).append(f"{endpoints[arm]['alpha']:.2f}")
         for (x,y),alphas in grouped.items():
-            ax.annotate('α='+', '.join(alphas),(x,y),xytext=(0,10),textcoords='offset points',ha='center',fontsize=9)
+            offset=-17 if alphas==['1.00'] else 10
+            ax.annotate('α='+', '.join(alphas),(x,y),xytext=(0,offset),textcoords='offset points',ha='center',fontsize=9)
         ax.set_xlabel('Acquisition answers correct / 384',labelpad=9)
     axes[0].set_ylabel('Frozen source answers retained / 47',labelpad=9)
     fig.suptitle('High dose + interpolation: one trained checkpoint, four scalar arms',x=.065,ha='left',fontsize=15,fontweight='bold')
