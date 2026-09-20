@@ -141,6 +141,41 @@ The rule predates the registration of the run by 2 h 40 min and the data by 3 h 
 Reproduce with `git -C ChatBubble-dmrf log -1 --format=%cI ffc8079d` against `RESULTS.json`'s
 `created_utc`.
 
+## 4b. Implementation scope — two of the four modules must stay red
+
+A reachability test written by the GATEFIX-001 author
+(`ChatBubble-dmrf/.../probe/test_registered_rule_is_reachable.py`) finds **four** modules that
+*apply* the conjunct rather than merely print it. All four are in
+`ChatBubble-dose-param/research/`. Checked before editing anything:
+
+| module | status | may it be wired? |
+|---|---|---|
+| `retention_highdose_lora_resume_v1/report.py` | `sha256 de752b9a…`, **bound** in the resume root's `PRELAUNCH_BINDING.json` *and* recorded as `RESULTS.json`'s `reporter_sha256` | **NO — sealed evidence** |
+| `retention_highdose_lora_v1/report.py` | preserved never-run root; unbound, but byte-intactness is the point of that root | no, by preservation |
+| `retention_highdose_lora_v2/report.py` | unbound, lane is DO-NOT-RUN | possible, but inert |
+| `retention_dose_parameterization_v1/report_battery.py` | unbound, **live scoring path**, on nobody's list until the test found it | **the only one where wiring changes anything** |
+
+> **A scoring module that is sealed evidence of a completed run cannot be fixed and must not be.
+> Editing `resume/report.py` would make the recorded `reporter_sha256` unreproducible from the
+> working tree and leave the only DOSELORA arm on record unverifiable. Fixing it is strictly
+> worse than leaving the test red.**
+
+That is a third case the test's doctrine (*"fix the scoring path, or withdraw the
+registration"*) does not admit, and it must be excluded by **provenance, not convenience** —
+exclude a module if and only if its hash is recorded in a completed run's receipt or pinned in
+a `PRELAUNCH_BINDING.json`. That criterion is checkable from the artifacts and cannot be
+invoked by whoever finds the test inconvenient, so it does not reopen the xfail loophole.
+
+A module that is *both* sealed *and* superseded is a finding, not a backlog item: it records
+that a published result was produced under a rule that has since been replaced. It deserves a
+distinct status — `SEALED_UNDER_SUPERSEDED_RULE` — reported apart from genuinely-inert
+modules, so the red count stays actionable.
+
+**Consequence:** the three-valued rule is currently reachable from exactly **one** live scoring
+path, `report_battery.py`, and that module belongs to the dose-parameterization lane rather
+than to DOSELORA. Wiring it is therefore a change to another experiment's scoring path and is
+**not** taken unilaterally here.
+
 ## 5. Independent verification requested
 
 Two implementations agreeing on a full row has caught real errors in this programme today.
