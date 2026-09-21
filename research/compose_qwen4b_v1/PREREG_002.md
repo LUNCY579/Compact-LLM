@@ -107,6 +107,53 @@ per-family sensitivity across the seven boundary classes.
 | P3 fires, P1 does not | δ_H works alone but its skill **does not survive** the matched-sum composite — which would make COMPOSE4B-001's "free" a statement about an ineffective component |
 | **P3 does not fire** | **δ_H is not demonstrably functional on this base and COMPOSE4B-001's null is UNINTERPRETABLE.** This is the outcome that retracts, and it is registered as such before the data |
 
+## 5a. AMENDMENT 1 — the band is made CEILING-AWARE before any arm is scored
+
+Registered with `scored/` empty. A peer raised that **the upper half of my P1 band may be
+arithmetically unreachable**, which is the unsatisfiable-gate family this programme has hit five
+times tonight. They are right, and the fix is to register the *rule* rather than patch the
+*number* after seeing data.
+
+**The arithmetic.** On 112 boundary rows, with `scaled_t` abstaining on `k_s` of them:
+
+```
+gains          <= 112 - k_s        you cannot gain a row that is already correct
+max net        =  112 - k_s
+```
+
+So if `scaled_t` starts high, a large net is impossible **whatever the model does**. The 596M
+anchor had room — `T16flat` sits at 68/112 — but the 4B base already beats every 596M core on
+abstention, so `scaled_t` may start near the ceiling here and +16, let alone +30, may not exist.
+
+**What is registered, as a formula fixed before the data rather than a number chosen after it:**
+
+> **P1 fires iff `net >= MDE(nd)` and `p <= 0.05`**, with MDE computed from the observed
+> discordance as already registered. The point prediction remains **+16** (the 596M analogue);
+> the *reportable* band is **[MDE(nd), min(30, 112 − k_s)]**.
+>
+> **If `112 − k_s < MDE(nd)`, P1 CANNOT FIRE and the contrast is reported
+> `UNINFORMATIVE_BY_CEILING`** — a property of the instrument's headroom against this arm, not
+> evidence about composition. **`k_s` and the implied ceiling are reported alongside every
+> boundary contrast, whatever the outcome.**
+
+This keeps the criterion satisfiable by construction: it can fail (net below MDE), it can pass
+(net at or above MDE with headroom), and the case where neither is possible is named in advance
+instead of being discovered afterwards.
+
+**Why the anchor survives at all, and only on this endpoint.** δ_H sits at `s_t` = 0.587, well
+above its own 0.25 operating point. That would normally distort the anchor — except H-ALPHA-001
+measured **boundary as SATURATED across α 0.20–0.675** (84, 86, 85, 86), so the gate's boundary
+contribution is roughly magnitude-invariant in exactly that range. **This reasoning does not
+extend to long context**, where INDEP-002 found real damage between 0.25 and 0.50. Boundary is
+the forgiving endpoint, and that is the only reason a same-magnitude anchor is usable here.
+
+**Main effect vs interaction — stated so a later reader cannot conflate them.** P1 asks *does
+δ_H contribute at all* (a MAIN EFFECT, with-H vs without-H at matched T). INDEP-004's 20/4 vs
+19/4, interaction ≤ 3 rows, asks *does δ_H's contribution depend on δ_T's magnitude* (an
+INTERACTION). **A +16 main effect and a ≤3-row interaction are consistent with each other and
+neither substitutes for the other.** A small interaction is not evidence against a large main
+effect.
+
 ## 6. Build gates, all before any endpoint is read
 
 1. Instrument sha256 = `ba1f2982…`; rule sha256 = `416cfb6a…`; 224 rows. **Verified.**

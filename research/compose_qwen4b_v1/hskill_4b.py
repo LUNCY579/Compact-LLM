@@ -187,6 +187,10 @@ def score(label, rows, preds):
         "specificity_competence_correct_on_answerable": {"k": spec_c_k, "n": na,
                                                          "rate": spec_c_k / max(na, 1)},
         "J_decision": sens + spec_d - 1,
+        # Registered ceiling reporting (Amendment 1): a contrast against this arm on the
+        # boundary half cannot gain more than this many rows, whatever the model does.
+        "boundary_headroom_rows": nb - sens_k,
+        "answerable_headroom_rows": na - spec_c_k,
         "per_row": per_row,
         "quality_claim": False, "release_permitted": False,
     }
