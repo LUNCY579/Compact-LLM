@@ -85,6 +85,14 @@ def _sha(p: Path) -> str:
     return hashlib.sha256(p.read_bytes()).hexdigest()
 
 
+# The CODE-BINDING fields, named explicitly. A wildcard over every `*_sha256` key sweeps in
+# per-tensor weights, optimizer moments and journal events -- 12,894 hashes on this tree -- and a
+# sealed set that large means nothing. Enumerated so the doctrine is auditable; extend it
+# deliberately, and `test_the_harvester_actually_harvests` fails if an entry stops working.
+CODE_BINDING_FIELDS = ("code_files_sha256", "external_code_files_sha256",
+                       "pilot_code_sha256", "reporter_sha256")
+
+
 @lru_cache(maxsize=1)
 def _sealed_hashes() -> dict[str, str]:
     """Every code hash a committed receipt pins. Computed from artifacts, not from a list."""
@@ -93,16 +101,30 @@ def _sealed_hashes() -> dict[str, str]:
         return sealed
     hexish = re.compile(r"^[0-9a-f]{64}$")
 
-    def harvest(obj, src: str, key: str = "") -> None:
-        """Any *_sha256 field, at any depth. Enumerating field NAMES is how this leaks."""
+    def take(v, src: str, field: str) -> None:
+        """A binding field is either a scalar hash or a MAP of name -> hash. Handle both."""
+        if isinstance(v, str):
+            if hexish.match(v):
+                sealed.setdefault(v, f"{src}:{field}")
+        elif isinstance(v, dict):
+            for name, h in v.items():
+                if isinstance(h, str) and hexish.match(h):
+                    sealed.setdefault(h, f"{src}:{field}[{name}]")
+        elif isinstance(v, list):
+            for h in v:
+                if isinstance(h, str) and hexish.match(h):
+                    sealed.setdefault(h, f"{src}:{field}")
+
+    def walk(obj, src: str) -> None:
         if isinstance(obj, dict):
             for k, v in obj.items():
-                harvest(v, src, k)
+                if k in CODE_BINDING_FIELDS:
+                    take(v, src, k)
+                else:
+                    walk(v, src)
         elif isinstance(obj, list):
             for v in obj:
-                harvest(v, src, key)
-        elif isinstance(obj, str) and key.lower().endswith("sha256") and hexish.match(obj):
-            sealed.setdefault(obj, f"{src}:{key}")
+                walk(v, src)
 
     for name in ("PRELAUNCH_BINDING.json", "RESULTS.json"):
         for f in RECORDS.rglob(name):
@@ -110,7 +132,7 @@ def _sealed_hashes() -> dict[str, str]:
                 d = json.loads(f.read_text(encoding="utf-8"))
             except (json.JSONDecodeError, OSError):
                 continue
-            harvest(d, f"{f.parent.name}/{f.name}")
+            walk(d, f"{f.parent.name}/{f.name}")
     return sealed
 
 
@@ -139,6 +161,38 @@ def _modules() -> tuple[tuple[Path, str, str], ...]:
             else:
                 out.append((p, "LIVE", ""))
     return tuple(out)
+
+
+def test_the_harvester_actually_harvests():
+    """The check that would have caught the bug this file shipped with.
+
+    v3 walked for keys ENDING in `sha256`, so `code_files_sha256: {"train.py": "<hash>"}` was
+    skipped -- the leaf key is a filename. Every sealed detection was coming through SCALAR
+    fields like `reporter_sha256`, and a module sealed ONLY by a PRELAUNCH_BINDING would have
+    been reported LIVE and sent for editing. The map form is the main code-binding form.
+
+    This asserts the map form lands, using receipt entries whose answer is known in advance --
+    the canary rule applied to the harvester rather than to an extractor.
+    """
+    sealed = _sealed_hashes()
+    checked = 0
+    for f in RECORDS.rglob("PRELAUNCH_BINDING.json"):
+        try:
+            d = json.loads(f.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            continue
+        cfs = (d or {}).get("code_files_sha256")
+        if not isinstance(cfs, dict):
+            continue
+        for name, h in cfs.items():
+            assert h in sealed, (
+                f"code_files_sha256[{name}] = {h[:16]}... from {f.parent.name} is NOT in the "
+                f"sealed set. The harvester is skipping the MAP form of a code-binding field, "
+                f"which means a module sealed only by a PRELAUNCH_BINDING would be classified "
+                f"LIVE and this suite would tell someone to edit sealed evidence.")
+            checked += 1
+    assert checked, ("no PRELAUNCH_BINDING carried a code_files_sha256 map, so this canary "
+                     "verified nothing -- a check whose scope cannot reach its claim")
 
 
 def test_the_test_can_find_its_subject():

@@ -396,3 +396,42 @@ present. Current state:
 **The test is expected to fail until the rule is wired in, and the suite is correctly red while
 it does.** A reachability test that passes on the day it is written tests nothing. It must not be
 skipped or xfailed to green the suite: fix the scoring path, or withdraw the registration.
+
+---
+
+# AMENDMENT 4 — an over-claim of mine, refuted by an arm already on the record
+
+In correspondence I extended §4's finding to: *"the endpoint has never once certified an arm
+that also learned anything."* **That is false**, and the counterexample is in
+`alias001-20260918/COUPLING_LADDER.json`, verified here:
+
+| α | acquisition | frac of available gain | **retained** | arithmetic |
+|---:|---:|---:|---:|---:|
+| 0.00 *(frozen source)* | 14 | 0.000 | **47** | 47 |
+| **0.25** | **145** | **0.593** | **43** | **59** |
+| 0.50 | 219 | 0.928 | 42 | 67 |
+| 0.75 | 234 | 0.996 | 39 | 68 |
+| 1.00 | 235 | 1.000 | 40 | 71 |
+
+**α = 0.25 reaches exactly 43 — CERTIFIED_PASS against T = 37 — with acquisition 145 and 59.3%
+of the available acquisition gain.** So an arm on the record has certified while learning
+substantially. My sentence was wrong.
+
+**What survives, and it is narrower:** α=0.25's arithmetic is **59 < 62**, so it has never been a
+**simultaneously passing** arm. And §4's own wording — *"no arm that clears the family FLOORS has
+certifiably passed"* — stands, because α=0.25 fails one of the three family floors. **The §4
+claim was correct; the sentence I generalised it into was not.**
+
+**The sharper observation is the paired session's, not mine:** 43 is **exactly the minimum
+certifiable value** at n = 47 against T = 37. One row lower and the endpoint abstains. α=0.25
+sits on the boundary of certifiability by a single row.
+
+> **A claim that is true of "arms clearing the family floors" is not true of "arms that learned
+> anything". Widening the subject of a finding is a way of falsifying it that does not feel like
+> asserting anything new.**
+
+Fourth occurrence in two days of the same shape: a statement whose *scope* outran the check
+behind it. The others were a `find` over the wrong filesystem, `--evidence` roots that excluded
+the deciding worktree, and a harvester that enumerated two field names — see
+`probe/test_registered_rule_is_reachable.py`, where the fourth is documented with the canary that
+now catches it.
