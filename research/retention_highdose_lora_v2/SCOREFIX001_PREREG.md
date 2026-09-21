@@ -133,12 +133,16 @@ that *no* arm has ever both certified and learned is therefore **too strong**; t
 is that this arm sits at `arithmetic 59 < 62`, so it has never been a *simultaneously* passing
 arm. It also lands on exactly the minimum certifiable value — one row lower and it abstains.
 
-**The ladder is itself a positive result and is worth stating separately.** The
-acquisition/retention trade is sharply non-linear: α 0 → 0.25 buys **+131 acquisition for 4
-retention rows**; α 0.25 → 0.50 buys only **+74 more for 1 more row**, while alias damage more
-than triples (0.170 → 0.528). The first quarter of the delta is by far the most efficient
-purchase, which is the same knee INT-001 found and is consistent with magnitude being the
-master variable.
+**The ladder itself is NOT a new result and must not be presented as one.** The same
+non-linearity is already on the record from INT-001, read downward in *alias* terms:
+1.00 → 0.75 gives up 1 acquisition row to recover 11 alias (10.98 : 1); 0.75 → 0.50 is
+0.93 : 1; 0.50 → 0.25 is 0.26 : 1. Reading it upward in *retention* terms — α 0 → 0.25 buys
++131 acquisition for 4 retention rows, α 0.25 → 0.50 only +74 more for 1 more row while alias
+damage triples — is the same knee on a different preservation axis, not a discovery.
+
+**What is new here is only the certifiability overlay:** α = 0.25's retained 43 is *exactly*
+the minimum certifiable value at n = 47 against T = 37. That single fact is what refutes the
+stronger claim; the ladder underneath it was already written down.
 
 ## 4. What is registered here
 
