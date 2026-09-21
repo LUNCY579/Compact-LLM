@@ -1,8 +1,9 @@
 # COMPOSE4B-001 — P1 HELD. A second skill is free at matched magnitude on a base with headroom.
 
-> **PROVISIONAL.** One integrity check is outstanding and is named in §5. The result is reported
-> with it open rather than held back, because the check is cheap and the direction of its risk
-> is stated.
+> **CONFIRMED 2026-09-21.** The integrity check named in §5 has run and **passed**: 48 TH_s rows
+> regenerated on a quiet card are **byte-identical** to the stored run, 0 divergences, with a
+> positive control confirming a mutation would have been detected. Contention moved timing, not
+> outputs. `DETERMINISM_CHECK.json`.
 
 **2026-09-21 · 3 arms × 384 rows · one training run · registered in `PREREG.md` with seven
 amendments, every one committed with `scored/` verifiably empty.**
