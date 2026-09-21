@@ -68,3 +68,51 @@ in *form* — same namespace, same id grammar, plausible cardinalities — and i
 Checked for **δ_T (s23)** and **δ_H** against `select-views-001`. `s29`, `rrp015` and the
 HSKILL-VIEWS-002 instrument (`ba1f2982…`, δ_H's actual scoring bank, a different hash entirely)
 are **not** checked here.
+
+---
+
+# Amendment 1 — the namespace sentence is TRUE FOR δ_T AND FALSE FOR δ_H
+
+**Raised by the paired session, and correct.** The document above says:
+
+> *"both sides reduce to one namespace, `RRFR2-<hex24>`"*
+
+**That describes δ_T's 384 training rows only.** δ_H's 648 rows carry **no `RRFR2` stem at all** —
+they are `rehearsal:rineya_srb_v1_safety_boundary_00356` and siblings, from
+`v3_preservation_slice`. Stem extraction returns **384 stems from the views and ZERO from δ_H's
+train file.**
+
+> **So the `views ∩ H_train = 0` line in the table above is VACUOUS — the exact defect this
+> document was written to warn about, committed in the same document, one table below the
+> warning.**
+
+The T result stands unchanged: T and the views share the `RRFR2-<hex24>` namespace, a collision
+was possible, and none occurred. **Only the H row was unearned.**
+
+**The H case now has a real check**, run by the paired session with the positive control this
+document asked for:
+
+| check | result |
+|---|---|
+| *positive control:* inject a view's text into the H set → detected | **True** — a match IS detectable |
+| exact normalized-text overlap | **0** |
+| H prompts sharing a 20-gram with any view | **0 of 648** |
+
+**Independently, on the HSKILL banks, this session ran the same check and it was live there:**
+`HSKILL-CONFIRM-002` and δ_H's training set share **four id prefixes**
+(`rineya_srb_v1_{safety_boundary, clarification, knowledge_boundary, uncertainty}`) from the same
+corpus — so a collision was possible — and the overlap is 0 by id **and** by normalized user text,
+with `CONFIRM ∩ CONFIRM = 224` as the positive control.
+
+## What this costs the general lesson, and what it does not
+
+The finding is unchanged: **train and eval are disjoint, and `selection_sha256` on a training
+preparation records the pool the draw was audited against, not what was trained on.**
+
+What changes is the confidence it was established with. **A namespace assertion written as prose
+is not a namespace assertion.** I asserted the shared namespace for the pair I had inspected and
+then extended the sentence over a second pair I had not — which is how the vacuous check survived
+being written up in the document that defines it.
+
+> **The positive control has to be CODE THAT RUNS PER PAIR, not a sentence about the pair you
+> looked at.** Assert it inside the check, for each comparison, and let it refuse.
