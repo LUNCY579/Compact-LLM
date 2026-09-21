@@ -371,6 +371,53 @@ This is the same defect class as an unsatisfiable build gate: a criterion writte
 checked whether achievable data could ever meet it. The difference is that this one was caught
 *before* the data rather than after, which is the only time the fix is free.
 
+## 4f. AMENDMENT 6 — INDEP-001 answers the allocation question on the 596M, before my data lands
+
+Registered with `scored/` empty. This is the most consequential amendment and it narrows what
+COMPOSE4B-001 is allowed to conclude.
+
+**INDEP-001 built the arm this experiment does not have:** independent per-skill coefficients,
+`θ_src + 1.00·P₁₆(δ_T) + 0.25·P₁₆(δ_H)`. Verified from its own evidence file rather than taken
+on report — `indep001-20260921/evidence/PROCESS_indep001_t100h025.json`, canonical **235/384**,
+`views_sha256 7dd53f2a751b54c3…`, instrument `select-views-001`, i.e. **the same bank this
+experiment scores on**. T16 alone scores **235** (SCALED-T-001's own table, `SCALED_T vs T16 =
+223 vs 235`).
+
+> **235 = 235. Adding the entire gate skill at its own operating point cost ZERO acquisition
+> rows, for +3.4 % total magnitude — against the +45.2 % that the matched-sum construction adds
+> before paying for it by stripping 31.1 % off everything.**
+>
+> **On the 596M, the composition penalty was an ALLOCATION ERROR, not interference.**
+
+COMPOSE4B-001 runs the **matched-sum** construction — the allocation INDEP-001 just showed is
+the wrong one. Registered consequences, both directions, before the number:
+
+- **If P1 holds:** the claim is *stronger* than INDEP-001's, not weaker. INDEP-001 fixed the
+  allocation and found zero cost; COMPOSE4B-001 would be finding zero cost **without** fixing
+  it, with δ_T paying 41.3 % and δ_H at 2.35× its operating point, on a base with headroom.
+- **If P2 fires:** it is attributable to **allocation**, and **I may not claim interference.**
+  INDEP-001 has already demonstrated the fix on the other base. The honest statement becomes
+  *"the matched-sum allocation costs acquisition on a 4B base"* — a statement about the
+  construction, not about composition.
+
+**A P2 here would therefore be a weaker and more local finding than a P1**, which is the
+opposite of the usual asymmetry and is registered now so it cannot be spun the other way later.
+
+### Operational note, recorded because it nearly produced a false diagnosis
+
+Arm 1 ran 32 minutes against an 11.5-minute estimate from the smoke's 1.8 s/row. The available
+inference from inside my own process was *"the rank-32 adapter is pathological."* It was not:
+another session's job shared the card for ~27 minutes (23:46:23–00:14), confirmed from both
+sides — my worker sat at 0 % CPU with zero I/O while the card was at 100 %, and GPU fell
+7886 → 3623 MiB with my CPU returning to 100 % the moment they stopped. 32 − 27 ≈ 5 minutes of
+real progress, which lands exactly on the smoke's rate.
+
+**The supervision hole was mine:** `stage2_generate` prints per-row progress, and my runner
+calls it with `capture_output=True`, which buffers until exit. I was blind to progress on a
+12-minute arm and could not have distinguished 90 %-done from hung by any means available to me.
+The instrument existed; I simply never routed it anywhere. Fixed in the next version; not
+patched into the running process.
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
