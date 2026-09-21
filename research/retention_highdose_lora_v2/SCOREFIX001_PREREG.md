@@ -90,10 +90,26 @@ independently above (k=38 → 31.37, k=43 → 37.42, k=45 → 40.17, k=30 → 22
 
 | arm's true retention rate | n to certify vs T = 37/47 | n to certify vs T = 40/47 |
 |---|---:|---:|
-| 38/47 = 0.809 (DOSELORA observed) | 1402 | **never** — rate is below the threshold |
-| 42/47 = 0.894 | 58 | 258 |
-| 44/47 = 0.936 | 47 | **66** |
-| 45/47 = 0.957 | 47 | 47 |
+| 38/47 = 0.809 (DOSELORA observed) | 1402 † | **never** — rate is below the threshold |
+| 42/47 = 0.894 | 58 ‡ | 258 ‡ |
+| 44/47 = 0.936 | 47 ‡ | **66** ‡ |
+| 45/47 = 0.957 | 47 ‡ | 47 ‡ |
+
+**‡ Cross-confirmed by two independent numerical methods.** The published figures come from
+incomplete-beta (Lentz continued-fraction) inversion. An earlier, slower implementation using
+direct exact-binomial CDF summation — written first, and run without reference to the beta
+implementation's output — independently produced **58 / 258, 47 / 66, 47 / 47**, agreeing on
+every digit of all three rows. It then aborted with `OverflowError: int too large to convert to
+float` while attempting the 38/47 row, where `math.comb` overflows at n ≈ 1402.
+
+**† The 1402 figure is therefore single-method and should be treated as such** until someone
+re-derives it with exact arithmetic (`fractions.Fraction`, or log-space summation). It is also
+the least load-bearing number in the table — no programme decision depends on whether an
+0.809-rate arm needs 1400 rows or 1600.
+
+The **"never"** cell needs no numerical confirmation at all: 38/47 = 0.809 is *below* the
+threshold rate 40/47 = 0.851, so the interval's lower bound cannot exceed the threshold at any
+n. That is a logical fact about the point estimate, not a computation.
 
 **The actionable line is the third.** A genuinely strong arm — one truly at 44/47 — is
 *already* certifiable against the gate threshold at n = 47, and needs only **66 rows** to
