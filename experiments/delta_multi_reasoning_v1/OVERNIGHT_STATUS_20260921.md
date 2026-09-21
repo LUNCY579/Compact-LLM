@@ -76,14 +76,60 @@ a decision count when it is **exact-match competence**: *"did not match the refe
 > remove, committed inside a document that warns about it two sections earlier. **An inference
 > marked with a tilde is still an inference**, and the quantity was computable in nine lines.
 
-## 4. Running now, costing nothing
+## 4. The rehearsal COMPLETED — 4/4 arms, every gate, every score exact
 
 A **rehearsal** is parked behind the other session's GPU lease: rebuild all four HPLAT arms and
 re-score them **on the SELECTION bank**, which is already spent and free to re-read. It proves the
 build gates fire and the numbers reproduce **before** the sealed read is ever authorised. It never
 passes `--spend-confirmation-instrument`, and the sealed bank's path does not appear in it.
 
-Launched via WMI so it survives this session ending — ancestry is
+| arm | gate | recorded | reproduced |
+|---|---|---|---|
+| `supa` | — *(frozen source, no rebuild)* | 71 / 111 / 40 | **exact** |
+| `a025` | whole-file ✓, canary `{1: 0.0, 2: 0.0}`, 220/310 | 86 / 112 / 43 | **exact** |
+| `a0675` | whole-file ✓, canary to every digit | 86 / 111 / 41 | **exact** |
+| `H16` | **DATA-SECTION ✓** | 88 / 93 / 36 | **exact** |
+
+### The data-section gate earned itself on the first rebuild
+
+`H16`'s rebuild produced whole-file `d6f653a9…` — **the scored receipt's value, not the arm
+directory's `b9a5e37f…`.**
+
+> **Had the registration gated `H16` on its whole-file hash — as v1 and v2 both did — this
+> rebuild would have FAILED its build gate, and the void list makes that a do-not-score. The read
+> would have been killed by a false alarm on a bitwise-correct arm.**
+
+That gate came from an auditor reasoning about safetensors metadata ordering. **The ~50% coin flip
+came up tails on the very first rebuild** and confirmed the argument by measurement.
+
+Two smaller confirmations landed the same way:
+
+- **`a025` rebuilt byte-identically under a DIFFERENT builder revision.** The audit had argued
+  this from first principles (0.25 is a power of two, so float32 and float64 products agree
+  exactly). Now measured — the mixed-builder provenance is real but immaterial.
+- **`a0675`'s canary reproduced to the last digit on both tensor families** —
+  `{1: 3.59625868812201e-16, 2: 2.009176934463362e-14}`. Stronger than a hash match: the
+  floating-point SVD path is bit-deterministic across sessions, days and a builder change.
+
+**The read's build gates are no longer hypotheses.** The only untested element left is the sealed
+bank's own 224 rows, which a rehearsal cannot cover by construction.
+
+### Two defects in my own rehearsal, worth more than the passes
+
+1. **It reported "three for three" while silently skipping `H16`** — the arm that is the
+   comparator in *both* primary limbs and the only one carrying the data-section gate. The arm
+   list held only `a025` and `a0675`; `H16` was defined and never executed. *A pass whose scope
+   nobody states is the vacuous-check defect wearing different clothes.*
+2. **The fix for that had the OPPOSITE bug.** Its precondition demanded both the H checkpoint and
+   the cache; `build_compose.py:103` reads the checkpoint only when the cache is *absent*, and the
+   cache is present at 1.26 GiB. The guard was **stricter** than the thing it guarded and falsely
+   refused — one step from reporting *"H16 is not rebuildable"* against my own sealed registration.
+
+> **A guard looser than its target passes bad work; a guard stricter than its target blocks good
+> work. Both look exactly like the guard working.** Seventh instance tonight, first in the
+> too-strict direction.
+
+Launched via WMI so it survived the session — ancestry
 `wininit → services → svchost → WmiPrvSE → cmd → python`, **no `claude.exe` in it.**
 
 ## 5. The result that changes the science
