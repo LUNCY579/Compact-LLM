@@ -107,6 +107,39 @@ instrument admits exactly three passing outcomes out of forty-eight.
 This is offered as a specification for the *next* retention bank, not as a change to this one.
 No threshold here moves.
 
+> **CAVEAT, and it is load-bearing: more rows buy certification arithmetic, not a second
+> dimension.** `references_retained` losses are **nested** (0.3876 against a 0.2383
+> size-preserving null, p = 0.0005), so the endpoint behaves as a depth gauge on roughly one
+> latent dimension. A table saying "n = 66 makes the target certifiable" is true and will be
+> misread as "n = 66 makes the endpoint good." It does not. Rows of the same construction
+> sharpen the same measurement; they do not add an axis. Widening the *construction* is a
+> separate and unsolved problem — see the third relational class still missing from the floors.
+
+### 3b. What the record actually contains at k ≥ 43
+
+Swept every `references_retained` observation in the records tree — 41 observations, range
+20–47. Only three sit at 42 or above, all in `alias001-20260918/COUPLING_LADDER.json`:
+
+| α | references_retained | acquisition | frac acquisition gained | arithmetic (permissive) |
+|---:|---:|---:|---:|---:|
+| 0.00 | **47** | 14 | 0.000 | 47 |
+| 0.25 | **43** | 145 | 0.593 | 59 |
+| 0.50 | 42 | 219 | 0.928 | 67 |
+
+The 47 is the **frozen source** — certifiable, and it learned nothing (acquisition 14, zero
+fraction gained). But **α = 0.25 reaches exactly 43 with acquisition 145**, i.e. one arm in the
+record *is* certifiable against T = 37 while having acquired substantially. The stronger claim
+that *no* arm has ever both certified and learned is therefore **too strong**; the accurate one
+is that this arm sits at `arithmetic 59 < 62`, so it has never been a *simultaneously* passing
+arm. It also lands on exactly the minimum certifiable value — one row lower and it abstains.
+
+**The ladder is itself a positive result and is worth stating separately.** The
+acquisition/retention trade is sharply non-linear: α 0 → 0.25 buys **+131 acquisition for 4
+retention rows**; α 0.25 → 0.50 buys only **+74 more for 1 more row**, while alias damage more
+than triples (0.170 → 0.528). The first quarter of the delta is by far the most efficient
+purchase, which is the same knee INT-001 found and is consistent with magnitude being the
+master variable.
+
 ## 4. What is registered here
 
 1. `report.py` shall compute, for `references_retained` at the observed n, the exact 95%
