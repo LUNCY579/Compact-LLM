@@ -34,18 +34,60 @@ ARMS = [
 ]
 
 
-def publish_worker_pids(root_pid):
-    """Record the pids that actually hold the card so a staleness rule cannot misjudge.
+def gpu_pids():
+    """pids currently holding GPU memory. Unreadable card => empty is NOT 'free'."""
+    out = subprocess.check_output(
+        ["nvidia-smi", "--query-compute-apps=pid", "--format=csv,noheader"],
+        text=True, timeout=30)
+    return {int(x.strip()) for x in out.split() if x.strip().isdigit()}
 
-    The lock's own pid is a shim three levels above the CUDA process. A peer's
-    "holder pid dead => free" rule read that shim and would have reclaimed a live lease.
+
+def my_tree():
+    import psutil
+    root = os.getpid()
+    try:
+        return {root} | {c.pid for c in psutil.Process(root).children(recursive=True)}
+    except Exception:
+        return {root}
+
+
+def foreign_job_on_card(rss_floor_gib=0.5):
+    """A CUDA process outside my tree that is big enough to be a real job.
+
+    BOOKKEEPING HAS A RACE; THE CARD DOES NOT. Between two arms the previous worker is
+    dead and the successor is not yet registered, so any pid-list in the lock is readable
+    as stale for that whole window -- a peer acquired on exactly that window. Measuring
+    the contended resource directly has no such gap. Desktop apps appear here with [N/A]
+    memory and are excluded by the RSS floor.
+    """
+    import psutil
+    mine = my_tree()
+    for pid in gpu_pids() - mine:
+        try:
+            p = psutil.Process(pid)
+            if "python" in p.name().lower() and p.memory_info().rss >= rss_floor_gib * 2**30:
+                return pid
+        except Exception:
+            continue
+    return None
+
+
+def publish_worker_pids(root_pid):
+    """Append the live worker; NEVER clear the previous one until its successor is on the card.
+
+    Clearing at an arm boundary is what made the lease readable as stale between arms.
     """
     try:
         import psutil
         pids = [root_pid] + [c.pid for c in psutil.Process(root_pid).children(recursive=True)]
         d = json.loads(LOCK.read_text(encoding="utf-8"))
-        d["worker_pids"] = pids
+        prev = [p for p in d.get("worker_pids", []) if psutil.pid_exists(p)]
+        d["worker_pids"] = sorted(set(pids) | set(prev))
         d["worker_pids_updated"] = time.time()
+        d["lease_expiry_unix"] = time.time() + 3600   # a reader may reclaim only after this
+        d["between_arms_note"] = ("worker_pids is APPEND-ONLY within a battery and may name a "
+                                  "just-exited worker; the lease is LIVE until lease_expiry_unix "
+                                  "regardless. Prefer measuring the card over reading this list.")
         tmp = LOCK.with_suffix(".lock.tmp")
         tmp.write_text(json.dumps(d, indent=2) + "\n", encoding="utf-8")
         os.replace(tmp, LOCK)
@@ -127,6 +169,14 @@ def main():
     require()
     if LOCK.exists() or LOCK.is_symlink():
         raise SystemExit("REFUSED: shared GPU lease is held by another process")
+    # Measure the CARD, not just the bookkeeping: a lock can be absent or readable as
+    # stale while a real job holds the GPU. An unreadable card counts as busy.
+    try:
+        foreign = foreign_job_on_card()
+    except Exception as exc:
+        raise SystemExit(f"REFUSED: cannot read the card ({exc}); treating as busy")
+    if foreign:
+        raise SystemExit(f"REFUSED: foreign CUDA job pid {foreign} is on the card")
     token = uuid.uuid4().hex
     with LOCK.open("x", encoding="utf-8", newline="\n") as f:
         json.dump({
@@ -142,6 +192,20 @@ def main():
                            "allocation yet; treat the lease as LIVE"),
             "job": "COMPOSE4B-001 battery",
         }, f)
+    # Re-check AFTER writing: another lane may have been mid-acquire when we looked.
+    # If one appeared, hand the lease straight back rather than contend.
+    time.sleep(3)
+    try:
+        late = foreign_job_on_card()
+    except Exception:
+        late = "unreadable"
+    if late:
+        try:
+            if json.loads(LOCK.read_text(encoding="utf-8")).get("token") == token:
+                LOCK.unlink()
+        except Exception:
+            pass
+        raise SystemExit(f"REFUSED after acquire: foreign job {late} appeared; lease handed back")
     try:
         print("=== SMOKE (8 rows each) ===", flush=True)
         for label, adapter in ARMS:
