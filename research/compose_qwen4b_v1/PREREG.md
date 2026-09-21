@@ -217,6 +217,46 @@ plain dense Frobenius norm (`matrix_norm(..., ord="fro")` over the materialised 
 **not** a top-16 singular-value sum. That matters because the concatenated `TH_s` adapter is
 rank 32, so any rank-16 norm shortcut would be wrong for it. No such shortcut is used.
 
+## 4c. AMENDMENT 3 — H is PRESENT AND FUNCTIONAL at s_t, not scaled into irrelevance
+
+Registered before any score exists. Forecloses the two cheapest dismissals of either outcome.
+
+H-ALPHA-001 (`halpha001-20260921/HALPHA001_RESULT.md`, 4 arms, 896 rows, zero training)
+measured δ_H's own magnitude curve on the 596M, on the HSKILL-VIEWS-002 abstention instrument:
+
+| α | sensitivity /112 | specificity /112 | `J_decision` |
+|---:|---:|---:|---:|
+| 0.00 *(frozen source)* | 71 | 111 | 0.6250 |
+| **0.25** | 86 | **112** | **0.7679** ← H's operating point |
+| 0.50 | 85 | 112 | 0.7589 |
+| 0.675 | 86 | 111 | 0.7589 |
+| 0.85 | 85 | 104 | 0.6875 |
+| 1.00 *(as trained)* | 88 | **93** | 0.6161 |
+
+**My `s_t` median is 0.5869 — inside the flat, benign band (0.25–0.675)**, above H's optimum
+and well below where specificity collapses (0.85 → 104, 1.00 → 93). Paired damage from 0.25 to
+0.675 is undetectable (0 gains / 1 loss, p = 1.0).
+
+> **Therefore, if P1 holds (the null replicates), it may NOT be dismissed as "s_t shrank H into
+> irrelevance."** At 0.587 δ_H is at essentially full effectiveness on its own skill — J 0.7589
+> at 0.675 against 0.7679 at its 0.25 optimum. H is present and functional in `TH_s`, not
+> annihilated. A null therefore means *a functional second skill costs nothing*, which is the
+> claim of interest.
+>
+> **And if P2 fires, "H is over-strength and simply damaging" is a WEAKER explanation than it
+> looks**, because on the 596M analogue 0.587 sits in the benign band — H only becomes
+> destructive above 0.85.
+
+**Both readings carry the same caveat, stated now rather than after the number:** that curve is
+596M, and its instrument is *abstention* (HSKILL-VIEWS-002), not *acquisition*
+(`select-views-001`). It governs how strong H is at **H's own skill**; it does **not** govern how
+much H's directions perturb **T's** acquisition, and no 4B equivalent of it exists. Transferring
+it is an assumption, and it is labelled as one here rather than relied on silently.
+
+With Amendment 2(ii), three alternative causes are now explicitly on the record for a P2 result —
+headroom, harsher attenuation (`s_t` 0.587 vs 0.675), and H's absolute strength — and **this
+design separates none of them.**
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
