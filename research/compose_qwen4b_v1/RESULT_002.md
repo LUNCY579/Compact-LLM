@@ -73,6 +73,33 @@ magnitudes, opposite verdicts:
 > works when attenuated — which is [[delta-magnitude-saturates-early]] reproduced on a second
 > base and a second instrument.**
 
+### 4a. The cross-base replication — and the half of it that does NOT replicate
+
+Both sides re-derived from the artifacts (596M from `halpha001-20260921/HALPHA001_RESULT.md`,
+4B from this experiment's `scored/`):
+
+| | base attempts | δ_H@1.0 attempts | **cost** | base boundary | δ_H@1.0 boundary | **benefit** |
+|---|---:|---:|---:|---:|---:|---:|
+| 596M | 111 | 93 | **−18** | 71 | 88 | **+17** |
+| 4B | 111 | 89 | **−22** | 77 | 79 | **+2** |
+
+> **The over-dose COST replicates tightly — −18 vs −22, four rows apart, across two bases, two
+> instruments and two training regimes. The BENEFIT at full strength does not replicate at all:
+> +17 on the 596M against +2 here.**
+
+That asymmetry **is** the P3 failure, and it is the more informative reading. "Over-dosed, not
+weak" survives as a property of the delta; "δ_H lifts boundary over any base" does not, because
+the 4B base already abstains 77/112 where Supa abstains 71/112 with far less competence.
+
+**A correction to the framing a peer proposed.** They paired *596M α=0.25 (112 attempts)*
+against *4B base (111)*, giving −19 vs −22. Those are different baselines — one is the delta's
+own operating point, the other is an untouched base. The like-for-like comparison is
+**base → full strength on each side**, which is −18 vs −22. The claim survives the correction
+and is slightly weaker than stated: four rows apart, not three.
+
+At each delta's operating point both bases preserve attempts completely — 112/112 on the 596M at
+α=0.25 and 112/112 here at s_t = 0.5869 — while gaining boundary (+16 and +19 respectively).
+
 ## 5. The composite beats the shipped single skill on the gate axis
 
 Descriptive, not registered:
