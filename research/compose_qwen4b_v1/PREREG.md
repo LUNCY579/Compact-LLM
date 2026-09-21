@@ -94,6 +94,67 @@ Identical to QWENFT001's δ_T run in every knob that is not the data:
 
 Any deviation forced by the harness is recorded as an amendment **before** the run, not after.
 
+## 4a. AMENDMENT 1 — what δ_H actually teaches, and three declared divergences
+
+Registered **before any arm exists**. Facts traced to `compose001-20260918/H/H-PLAN.json` and
+`H-PREPARATION.json` and verified here, not taken on report.
+
+**δ_H is an ABSTENTION / BOUNDARY skill, not a second generator.** Family composition:
+clarification 124, safety_boundary 118, clarification_request 93, insufficient_information 85,
+boundary_setting 82, uncertainty 82, knowledge_boundary 64. It teaches *when to decline, when to
+ask for clarification, and when the context does not determine an answer.*
+
+**This sharpens the hypothesis rather than merely describing it.** This programme has already
+found that *magnitude is an acquisition-only variable, so **gates compose and generators do
+not***. δ_H is a **gate** and δ_T is a **generator**, so SCALED-T-001's null is the *predicted*
+case, not a surprise. COMPOSE4B-001 therefore tests something specific: **does the
+gate-composes-freely result survive when the base has headroom**, or was it the 596M's ceiling
+doing the work? P2 firing would damage the general claim considerably more than it would damage
+this pairing.
+
+It also means **`H` alone should score LOW on `select-views-001`** — that bank measures T's
+transition contract, which H was never trained to do. A low `H` score is expected and is *not*
+evidence of a failed training run. The registered 0–200 band stands, and a score near the
+bottom of it is unremarkable.
+
+### Declared divergences from δ_H's original 596M run
+
+| knob | δ_H original (596M) | here (4B) | why |
+|---|---|---|---|
+| peak LR | **1e-05** | **1e-04** | original was FP32 full-tensor MQ; this is LoRA r=16, which needs the higher rate. **Matches δ_T's 4B regime**, which is the axis that must be held constant for the composition contrast to mean anything |
+| parameterization | FP32 tail blocks | LoRA r=16 | tail-20 of Qwen3-4B is 2.02B params / 30.08 GiB in FP32 against 15.22 GiB host RAM — arithmetically impossible, as QWENFT001 recorded |
+| base precision | FP32 | 4-bit NF4 | BF16 is 7.49 GiB against ~7.5 GiB free GPU |
+
+**Matching δ_T's regime is the deliberate choice.** The contrast is `TH_s` vs `SCALED_T`, both
+built from the same two deltas; if δ_H were trained under a different optimizer regime than δ_T,
+any interference measured could be charged to the regime instead of to the composition.
+
+**Dose is matched on TOKENS, not rows.** δ_H is 648 rows / 54,217 processed tokens against δ_T's
+384 rows / 54,172 — `transition_token_budget_matched: 54172` in the preparation receipt. The
+648-vs-384 asymmetry is the *matching axis*, not a defect. H's rows are short
+(`max_rendered_tokens: 101`).
+
+**Naming trap, recorded so nobody greps past it:** δ_H's row ids carry a `rehearsal:` prefix.
+These are **not** replay of earlier training — they are a distinct corpus for a distinct skill.
+The collision matters because this programme measured rehearsal *harmful*, and the prefix will
+mislead anyone matching on it.
+
+### Disjointness must be checked with a positive control
+
+δ_H's `selection_sha256` is `7dd53f2a751b54c3…`, **byte-identical to
+`select-views-001/SELECT_VIEWS.jsonl`** — this experiment's acquisition bank. That is benign:
+`selection_sha256` records the pool a draw was *audited against*, not what was trained on, and
+the dmrf session verified 384 views vs 384 train rows with 0 overlap on id, stem, parent_id and
+source_id.
+
+**But their first version of that check was VACUOUS and nearly shipped.** View ids carry an
+`RRP-select:` prefix and train ids do not, so the two sides *could not have matched* even if
+every row were identical — and it returned 0, which is also what a passing check returns.
+
+> **Registered requirement: before any contrast is reported, the train/eval disjointness check
+> must (a) assert both sides share an id namespace, and (b) pass a self-intersection positive
+> control proving a match was detectable. A 0 is informative only after a match was possible.**
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
