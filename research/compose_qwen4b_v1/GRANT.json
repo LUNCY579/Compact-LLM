@@ -1,0 +1,39 @@
+{
+  "experiment": "COMPOSE4B-001",
+  "decision": "APPROVED",
+  "training_permission": true,
+  "approved_by": "operator instruction: 'run the composition experiment on the 4B base'",
+  "registration_sha256": "f4801aa96b8189aec4e7afc30655d9c0ee91ae9dd80c20ce80c6822f65a1a43a",
+  "trainer_sha256": "c578e9bf24c4476d897ae0027a48292d948a0fb0660739c025961d0187abe90c",
+  "parent_trainer": "qwenft001-20260918/train_qwen_lora.py",
+  "parent_trainer_sha256": "f8050c68ef9d20084fc3a89b6fac6505bf7ef805dbd296e84f8f6880cc0a77fb",
+  "trainer_delta": "experiment label and data description only; 2 substitutions, verified by diff",
+  "delta_T_adapter": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\qwenft001-20260918\\run\\adapter\\adapter_model.safetensors",
+  "delta_T_adapter_sha256": "e7ab0919192dd10845c5f0769ce942028737750367c736e8bff4664fa020164a",
+  "H_train_sha256": "cb3df33343056ca51e26616d27ea18b84306f411a4491be7439de8338cdb71a8",
+  "H_plan_sha256": "f07e3956520eeed740cda7a4d134dcfc307cec316025369d612ec21dafeafa1e",
+  "human_data_review": "NOT_PERFORMED",
+  "limits": {
+    "model_worker_launches": 1,
+    "retries": 0,
+    "optimizer_updates": 28,
+    "processed_tokens": 54217,
+    "supervised_tokens": 6274,
+    "presentations": 648,
+    "generated_tokens_in_trainer": 0,
+    "cloud_or_teacher_spend": 0,
+    "adaptive_model_selection_rounds": 1,
+    "learning_rate_search": false
+  },
+  "excludes": [
+    "RL",
+    "larger_teacher",
+    "cloud",
+    "release",
+    "architectural_change"
+  ],
+  "free_disk_floor_bytes": 15032385536,
+  "quality_claim_permitted": false,
+  "release_permitted": false,
+  "what_training_permission_means": "One fixed LoRA trajectory for delta_H on Qwen3-4B, matching delta_T regime; no search, no retry, no release."
+}
