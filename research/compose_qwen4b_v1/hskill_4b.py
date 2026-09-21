@@ -235,6 +235,21 @@ def main():
     import shutil as _sh
     if _sh.disk_usage(RECORDS).free < FLOOR:
         raise SystemExit("REFUSED: below the 14 GiB floor")
+    # HOST RAM is the resource actually contended on this machine, not the card. The GPU sat
+    # idle at ~678 MiB for twenty minutes while two lanes were refused by their host-memory
+    # gates. A lease protocol that does not govern the contended resource is the
+    # wrong-resource failure again, so this gate is explicit rather than implied.
+    #
+    # 5.0 GiB is the programme's AUTHORITATIVE figure (hostbudget.require(5.0)). It is used
+    # here unchanged and deliberately NOT tightened: a peer spent twenty minutes blocked by
+    # their own 5.5 pre-check refusing work the real gate would have accepted. A too-strict
+    # guard presents as caution, emits no error, and is indistinguishable from the resource
+    # genuinely being unavailable.
+    import psutil as _ps
+    free_ram = _ps.virtual_memory().available
+    if free_ram < 5.0 * 2**30:
+        raise SystemExit(f"REFUSED: host RAM {free_ram/2**30:.2f} GiB below the 5.0 GiB gate "
+                         "(this machine cannot hold two probes; interleave rather than contend)")
     token = uuid.uuid4().hex
     with LOCK.open("x", encoding="utf-8", newline="\n") as f:
         json.dump({"pid": os.getpid(), "token": token, "created": time.time(),
