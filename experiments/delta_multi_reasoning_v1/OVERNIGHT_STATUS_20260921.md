@@ -78,10 +78,10 @@ a decision count when it is **exact-match competence**: *"did not match the refe
 
 ## 4. The rehearsal COMPLETED — 4/4 arms, every gate, every score exact
 
-A **rehearsal** is parked behind the other session's GPU lease: rebuild all four HPLAT arms and
-re-score them **on the SELECTION bank**, which is already spent and free to re-read. It proves the
-build gates fire and the numbers reproduce **before** the sealed read is ever authorised. It never
-passes `--spend-confirmation-instrument`, and the sealed bank's path does not appear in it.
+The rehearsal rebuilt all four HPLAT arms and re-scored them **on the SELECTION bank** — already
+spent for selection and free to re-read — to prove the build gates fire and the numbers reproduce
+**before** the sealed read is ever authorised. It never passed `--spend-confirmation-instrument`,
+and the sealed bank's path does not appear in it.
 
 | arm | gate | recorded | reproduced |
 |---|---|---|---|
