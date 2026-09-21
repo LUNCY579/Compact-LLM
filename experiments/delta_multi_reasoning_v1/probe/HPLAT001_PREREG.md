@@ -8,12 +8,15 @@
 
 **Class: CONFIRMATION (registration only).** `quality_claim: false`, `release_permitted: false`.
 
-> **This is v3.** v1 was stress-tested by ten independent auditors and had **10 blocking + 26
+> **This is v4.** v1 was stress-tested by ten independent auditors and had **10 blocking + 26
 > serious** defects, including a primary endpoint on the wrong half of the instrument. v2 fixed
 > those and was itself audited by eight more, which returned **FIX_FIRST on all four areas** —
 > v2 had introduced **two new unsatisfiable gates** and **one measured claim that was wrong by
 > sign.** Neither version was ever sealed or read. §11 records every change, because a
-> registration that hides its own revision history is not a registration.
+> registration that hides its own revision history is not a registration. **v3 was audited by
+> eight more and returned FIX_FIRST again** — on P4's power being unequal across the two arms, and
+> on an unregistered `strict` statistic that reverses the headline at p = 1.3e-07. Both are fixed
+> here. **Three audit rounds, 44 → 13 → 2 material findings; this is the seal point.**
 
 ---
 
@@ -206,10 +209,23 @@ All adjudication is over the **ORDERED PAIR** `(b = plateau gains, c = plateau l
 **Both tables are exhaustive by construction** (`nd < 6`; else `p ≤ 0.05` with `b > c` or `c > b`;
 else `p > 0.05`). `b = c` cannot occur with `p ≤ 0.05`.
 
-**The selection bank predicts LIMB B = POWERED NULL:** `a025` vs `H16` boundary is
-**9 gains / 11 losses, nd = 20, p = 0.8238, min-attainable p = 1.9e-06.** *v1 would have stamped
-this "UNCERTIFIABLE" — inverting the programme's own rule on the best-powered comparison in the
-design. That single error is why v1 was rewritten.*
+**The selection bank predicts LIMB B = POWERED NULL — for `a025`:** 9 gains / 11 losses,
+**nd = 20**, p = 0.8238, min-attainable p = 1.9e-06. *v1 would have stamped this "UNCERTIFIABLE" —
+inverting the programme's own rule on the best-powered comparison in the design. That single error
+is why v1 was rewritten.*
+
+> **The same prediction does NOT hold with the same power at the other arm, and this is registered
+> before the read.** Computed from the same artifacts by the same code: **`a0675` vs `H16` on the
+> boundary half is 3 gains / 5 losses, nd = 8, p = 0.7266, min-attainable p = 7.8e-03.**
+>
+> **P4 is therefore registered with UNEQUAL EXPECTED POWER across the two plateau arms.** `a025`
+> sits in the well-powered regime; **`a0675` sits three discordant pairs above the `nd < 6`
+> floor.** A LIMB B **UNCERTIFIABLE** for `a0675` is a **registered-likely outcome of this design,
+> not a failure of it**, and may not be reported afterwards as a surprise, as a null, or as
+> agreement with `a025`.
+
+*(LIMB A is well powered at both arms: `a025` 19 gains / 0 losses, p = 3.8e-06; `a0675` 18/0,
+p = 7.6e-06.)*
 
 **Non-inferiority is NOT inferred from failure to reject — and NO tolerance claim is registered,
 because none is attainable.**
@@ -232,8 +248,10 @@ v2 registered a **5/112** non-inferiority margin. I then computed the attainable
 **So TOLERANCE is deleted as a verdict rather than re-tuned.** A 10-row margin would be
 attainable but meaningless — it is most of the 15-row gain over the source.
 
-> **Registered honestly: at n = 112 with `nd ≈ 20, this instrument cannot certify equivalence
-> tighter than roughly 8–10 rows.** A LIMB B POWERED NULL establishes that **no difference is
+> **Registered honestly: at n = 112 and `nd ≈ 20` — which is `a025`'s expected regime ONLY — this
+> instrument cannot certify equivalence tighter than roughly 8–10 rows. At `a0675`'s expected
+> `nd ≈ 8` the attainable bound is 6.22 rows, and no equivalence statement is available there at
+> all.** A LIMB B POWERED NULL establishes that **no difference is
 > detectable at this instrument's resolution** — nothing more. **No tolerance or non-inferiority
 > claim may be made after the read.**
 
@@ -436,6 +454,23 @@ instrument is spent, and it is recorded as such.)*
   (`a0675` 0.4993, `H16` 0.4859, `supa` 0.4283, all false). *"The first cores ever to clear the
   binding floor"* is a headline this read is likely to hand the author, on an endpoint nobody
   registered. *(An auditor reported a025 as the sole clearing arm; `a050` clears too.)*
+- **`halves.*.strict` and both `strict_rate` fields are NOT registered endpoints and carry NO
+  verdict — and this bar is SYMMETRIC.** `hskill_probe_v2.py` writes them unconditionally and
+  **prints the answerable `strict` count to the console**, so the number is unavoidable at read
+  time. They are **exact-match** counts against the stored reference string — neither of §4's two
+  registered axes.
+
+  **Registered explicitly because this one points AGAINST the registered claim.** On
+  `HSKILL-VIEWS-002` the answerable-half `strict` counts are **`a025` 7, `a0675` 41, `H16` 36**,
+  and paired `a025` vs `H16` is **b = 2, c = 31, nd = 33, p = 1.3e-07 — in `H16`'s favour**, the
+  opposite ordering to the primary. **The mechanism is formatting, not quality:** `H16` and
+  `a0675` have `strict = credited` (36/36, 41/41), while `a025` is credited on **43** rows and
+  exact-matches only **7** — it answers correctly in prose the reference does not match
+  character-for-character.
+
+  **Neither direction may be used to support or to attack any registered claim.** This is barred
+  **before** the seal precisely so that the unfavourable direction cannot later be scoped away —
+  a bar written after seeing a result is a suppression, and a bar written before it is a scope.
 - If the read is not authorised, **nothing decays.** The bank stays sealed; this registration
   stays valid indefinitely.
 
@@ -486,6 +521,13 @@ The material ones:
 **Verified by enumeration, not by reading:** both limb tables map all **6,441** `(b, c)` cells
 with `b + c ≤ 112` to exactly one verdict, `b = c` can never reach `p ≤ 0.05`, and all **16**
 cells of the joint table resolve uniquely.
+
+### What the v3 audit found, and v4 fixes
+
+| # | defect in v3 | fix |
+|---|---|---|
+| 21 | **P4 was registered "for both plateau arms" but the bank predicts `nd = 20` for `a025` and `nd = 8` for `a0675`** — three pairs above the UNCERTIFIABLE floor | §4: unequal expected power registered; an `a0675` UNCERTIFIABLE is a registered-likely outcome |
+| 22 | **`halves.*.strict` was unregistered, unbarred, printed to the console, and REVERSES the headline** — `a025` 7 vs `H16` 36, paired p = 1.3e-07 in `H16`'s favour | §9: symmetric bar, with the formatting mechanism stated |
 
 **The single most consequential v1 defect is #3.** v1 would have taken the comparison the selection bank
 already reports correctly as a powered null, and stamped it UNCERTIFIABLE — on a one-shot
