@@ -796,3 +796,54 @@ The panel decomposition is **within-instrument**. Acquisition figures are on the
 `45674251…` and are **not** comparable to select-views numbers. One seed per rung.
 `per_class.reference_n` **varies between arms** — it is a union denominator, so do not decompose
 per-class off it; the four aggregate fields above are the safe route.
+
+---
+
+# 8.7 CORRECTION — the panel cannot order its own arms, and §8's erosion claim rests on one seed
+
+PANEL-001 measured the arithmetic panel's own noise floor by running **three draws of the
+identical recipe** — 384 rows, 28 updates, seeds 17 / 23 / 29. Totals verified here from the
+retention artifacts:
+
+| arm | panel /150 |
+|---|---:|
+| `panel001_d1_s17` (= `rrp008_D1`, the recorded D1) | **77** |
+| `panel001_d1_s23` | 71 |
+| `panel001_d1_s29` | **67** |
+| `rrp008_D2` | **68** |
+
+> **The same recipe spans 77 → 67, and D1 seed 29 scores BELOW D2.** "D1 beats D2 on the panel"
+> depends on which draw you compare. The 77 / 68 / 59 column **cannot order its own top two
+> rungs.**
+
+The paired session reports the seed difference is *statistically significant* — `s17 → s29`
+4 gain / 14 loss, p = 0.0309. **I verified the totals, not the paired tests**: the 150-row panel
+correctness vector is not reconstructible from the retention artifacts' `lost_ids`, which cover
+only the 47 source-correct rows. Recorded as theirs, single-implementation.
+
+## What this does to §8
+
+§8 states: *"High dose costs the panel ~16–24 rows and interpolation does not buy it back"* and
+uses **D1 = 77** as the reference throughout. **That 77 is seed 17 — the most favourable of the
+three draws.** Against seed 29's 67, DOSEINT's best interpolant (61) is only **−6**.
+
+The paired session's decomposition, which I have not re-derived: the dose→panel erosion against
+α = 0.25 is significant on **one seed of three** (p = 0.0015 / 0.0872 / 0.3075), and **within the
+DOSEINT ladder no pair is significant at all** (all p ≥ 0.18) — 61 / 59 / 58 / 53 is one noise
+band. What survives is that the *endpoints* differ: D1 → α = 1.00 is significant on all three
+seeds.
+
+> **So §8's "the arithmetic panel is the binding constraint" stands as a statement about the
+> endpoints and NOT as a ranking of the interpolants.** The panel separates a low-dose arm from a
+> full-dose one; it does not separate the interpolants from each other, and it does not reliably
+> separate D1 from D2.
+
+## And §8.6's D2 finding is strengthened, not weakened
+
+§8.6 argued D2 was excluded on `retained 35 < 37`, a difference its endpoint cannot certify.
+**The panel now turns out to be seed-unstable at the same scale**: D2's panel 68 sits inside the
+D1 recipe's own 67–77 range. So **two of the gate's three conjuncts cannot separate D1 from D2**,
+and the one that excluded D2 is the one with the uncertifiable band.
+
+This is `acquisition-band-not-resolvable` reappearing on the panel axis: **an instrument that is
+go/no-go at the endpoints is being read as a ranking in the middle.**
