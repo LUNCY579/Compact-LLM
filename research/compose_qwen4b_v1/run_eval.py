@@ -50,8 +50,23 @@ def require():
     return {"free_disk_gib": round(free / 2**30, 3), "gpu_used_mib": gpu_used_mib()}
 
 
+EXPECTED_ROWS = 384
+
+
+def complete(out):
+    """A generation is complete only if its predictions file has every row."""
+    f = out / "predictions.jsonl"
+    if not f.is_file():
+        return False
+    n = sum(1 for l in f.open(encoding="utf-8") if l.strip())
+    return n >= EXPECTED_ROWS
+
+
 def generate(label, adapter, rows=None):
     out = OUT / f"gen-{label}" if rows is None else OUT / f"smoke-{label}"
+    if rows is None and complete(out):
+        print(f"  [{label}] already complete ({EXPECTED_ROWS} rows) - skipping", flush=True)
+        return out
     if out.exists():
         shutil.rmtree(out)
     cmd = [str(PY), str(Q / "stage2_generate.py"), "--model", MODEL, "--label", label,
@@ -88,6 +103,9 @@ def main():
         for label, adapter in ARMS:
             if not (adapter / "adapter_model.safetensors").is_file():
                 raise SystemExit(f"missing adapter for {label}: {adapter}")
+            if complete(OUT / f"gen-{label}"):
+                print(f"  [{label}] full output present - smoke not needed", flush=True)
+                continue
             generate(label, adapter, rows=8)
         if a.smoke_only:
             print("smoke only; stopping before the full battery")
@@ -102,6 +120,9 @@ def main():
             cmd = [str(PY), str(Q / "stage3_score.py"), "--kind", "process",
                    "--render", str(Q / "render-process"), "--gen", str(OUT / f"gen-{label}"),
                    "--out", str(OUT / "scored" / f"{label}.json")]
+            if not complete(OUT / f"gen-{label}"):
+                print(f"  scored {label}: SKIPPED, generation incomplete")
+                continue
             rc = subprocess.run(cmd, capture_output=True, text=True)
             print(f"  scored {label}: rc={rc.returncode} {(rc.stdout or '').strip()[-300:]}")
             if rc.returncode:
