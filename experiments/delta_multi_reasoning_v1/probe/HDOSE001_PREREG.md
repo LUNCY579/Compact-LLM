@@ -98,3 +98,60 @@ The construction and `out_weight_sha256` are recorded so each is rebuildable in 
 re-score the dose ladder. It is being adopted deliberately here, with its cost stated: **anything
 wanting to re-score these arms later pays a rebuild.** Given the deltas survive and the build is
 80 seconds, that is the right trade at 13.56 GiB free — but it is a trade, not a free action.
+
+---
+
+# WITHDRAWN — duplicate of H-ALPHA-001, which is finer and already finished
+
+**Not run.** The paired session registered and completed the same experiment as
+`halpha001-20260921/H-ALPHA-001` on a finer grid (α = 0.05 / 0.10 / 0.15 / 0.25 / 0.50 / 0.675 /
+0.85) while this was being written. **No arm of HDOSE-001 was ever written to disk.**
+
+Their result, which supersedes this design entirely:
+
+| α | sens /112 | spec /112 | `J_decision` |
+|---:|---:|---:|---:|
+| 0.00 *(source)* | 71 | 111 | 0.6250 |
+| **0.25** | **86** | **112** | **0.7679** |
+| 0.50 | 85 | 112 | 0.7589 |
+| 0.675 *(= `SCALED_H`)* | 86 | 111 | 0.7589 |
+| 0.85 | 85 | 104 | 0.6875 |
+| 1.00 *(`H16`, as trained)* | 88 | **93** | 0.6161 |
+
+> **Quarter magnitude is the optimum. The trained delta's full strength buys 2 boundary rows and
+> costs 19 answerable ones. The gate skill is roughly 4× over-driven as trained.**
+
+**My registered P2 would have been wrong** — I gave even odds to 0.675 being near-optimal, and
+0.25 beats it. My grid `{0.50, 0.25}` would have found the direction but not the shape: their
+0.05/0.10/0.15 rungs are what establish there is no further gain below 0.25.
+
+**Also, both predictions registered here were about J, and the real finding is not in J.**
+Sensitivity is nearly flat across the whole range (86 / 85 / 86 / 85 / 88) — **the entire shape
+of the J curve is specificity** (111 → 112 → 112 → 111 → 104 → 93). A sweep registered on the
+composite index would have measured the right curve for the wrong reason, which is the same
+defect as `T16` and `H16` sharing `J = 0.6161` while differing at p = 0.0043.
+
+## The canary earned its keep, and this is the part worth keeping
+
+The build **refused**, correctly, and for a reason that is not a tolerance artifact:
+
+    CANARY: worst norm_T 1.294e-06   worst norm_combined 1.497e-01   (tol 2e-06)
+    REFUSED: 140 tensors exceed tolerance. Nothing written.
+
+`norm_T` passed at 1.29e-06 while `norm_combined` failed at **15% relative** on every 2D tensor.
+The cause is mine and is a genuine construction error:
+
+> **`P₁₆(δ_T) + P₁₆(δ_H)` is generally rank-32, not rank-16.** I computed its norm as
+> `sqrt(sum of its top-16 squared singular values)` — copying the statistic that is correct for
+> `P₁₆(δ_T)`, where it equals the Frobenius norm *because that matrix is rank-16 by
+> construction*. Applied to the sum it silently discards the other 16 directions, ~15% of the
+> norm. `norm_combined` is a plain Frobenius norm.
+
+**This is the sixth extractor-class bug this week and the FIRST caught by a gate rather than by
+collision with a number someone already held.** The other five were caught because an output
+happened to contradict something known. This one would have produced a plausible arm and a
+plausible J, and the only thing standing between that and the record was a check that had no
+reason to exist except that the paired session's build had used it.
+
+**A statistic that is correct for one object is not correct for a sum of two such objects**, and
+the mistake is invisible because both expressions are "the norm of a rank-16-ish thing".
