@@ -81,6 +81,53 @@ def foreign_on_card():
     return None
 
 
+def reclaimable(lock):
+    """Is this lock a PROVEN orphan? All FOUR conjuncts must hold.
+
+    Tonight produced four distinct lease failures and this rule is the union of their
+    lessons:
+      1. holder pid dead        -- but a DETACHED worker outlives its supervisor by design,
+                                   so this alone is not enough (mis-steal #1: a 6 MB shim).
+      2. worker_pids empty      -- but it is also empty BETWEEN arms and before the first
+                                   CUDA allocation (mis-steal #2).
+      3. orphan stamp passed    -- created + 600, so a loading job can never trip it.
+      4. NO LIVE PROCESS CARRIES THE LOCK'S OWN LABEL.  <-- the one I was missing.
+         A dead holder does not mean a dead OWNER: a restarted lane can be alive and
+         polling its own dead predecessor's lock. Reclaiming then starves a live lane.
+
+    READ THE LABEL. It is the only authority in the file. Ownership must never be inferred
+    from whoever you happen to be talking to -- that error nearly had a third party's lease
+    deleted on a second party's say-so.
+    """
+    import psutil
+    if not lock.exists():
+        return None
+    try:
+        d = json.loads(lock.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    lane = str(d.get("label", "")).split(":")[0]
+    holder_dead = not psutil.pid_exists(d.get("pid", 0))
+    no_workers = not d.get("worker_pids")
+    stamp = d.get("orphan_after_unix", d.get("created", 0) + 600)
+    stamp_passed = time.time() > stamp
+    live_lane = []
+    if lane:
+        for p in psutil.process_iter(["pid", "cmdline"]):
+            try:
+                if lane in " ".join(p.info["cmdline"] or []):
+                    live_lane.append(p.info["pid"])
+            except Exception:
+                continue
+    ok = holder_dead and no_workers and stamp_passed and not live_lane
+    if not ok:
+        return None
+    return {"reclaimed_lock": d, "lane": lane, "holder_dead": holder_dead,
+            "worker_pids_empty": no_workers, "orphan_stamp_passed": stamp_passed,
+            "live_processes_with_label": live_lane, "reclaimed_unix": time.time(),
+            "by": "COMPOSE4B-002"}
+
+
 def render_all():
     """Render 224 prompts, asserting the two tokenizers agree byte-for-byte."""
     from transformers import AutoTokenizer
@@ -172,8 +219,15 @@ def main():
     if a.render_only:
         return 0
 
-    if LOCK.exists() or foreign_on_card():
-        raise SystemExit("REFUSED: lease held or foreign CUDA job on the card")
+    stale = reclaimable(LOCK)
+    if LOCK.exists() and not stale:
+        raise SystemExit("REFUSED: lease held")
+    if foreign_on_card():
+        raise SystemExit("REFUSED: foreign CUDA job on the card")
+    if stale:
+        (OUT / "RECLAIMED_LOCK.json").write_text(json.dumps(stale, indent=2) + "\n", encoding="utf-8")
+        print("RECLAIMED an orphaned lock; evidence in RECLAIMED_LOCK.json", flush=True)
+        LOCK.unlink()
     import shutil as _sh
     if _sh.disk_usage(RECORDS).free < FLOOR:
         raise SystemExit("REFUSED: below the 14 GiB floor")
@@ -181,7 +235,11 @@ def main():
     with LOCK.open("x", encoding="utf-8", newline="\n") as f:
         json.dump({"pid": os.getpid(), "token": token, "created": time.time(),
                    "worker_pids": [], "job": "COMPOSE4B-002 HSKILL battery",
-                   "staleness_rule": "measure the card, not this list"}, f)
+                   "label": "compose4b002:hskill:battery",
+                   "orphan_after_unix": time.time() + 600,
+                   "staleness_rule": ("reclaimable ONLY if holder pid dead AND worker_pids empty "
+                                      "AND orphan_after_unix passed AND no live process carries "
+                                      "this label. Read the label; it is the only authority here.")}, f)
     try:
         (OUT / "scored").mkdir(exist_ok=True)
         for label, adapter in ARMS:
