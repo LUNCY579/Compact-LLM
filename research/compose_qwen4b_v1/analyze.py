@@ -71,6 +71,11 @@ def contrast(name, a, b):
         "gains": gains, "losses": losses, "net": gains - losses, "nd": nd,
         "exact_two_sided_p": p, "alpha": ALPHA,
         "mde_at_observed_nd": m,
+        # best achievable p at this discordance: if min_p > alpha the contrast CANNOT
+        # reach significance however the pairs fall, and a null from it is unattainable
+        # rather than informative. This is the power statement, MDE is its net analogue.
+        "min_attainable_p_at_observed_nd": exact_mcnemar(nd, 0) if nd else 1.0,
+        "significance_attainable": (exact_mcnemar(nd, 0) if nd else 1.0) <= ALPHA,
         "significant": p <= ALPHA,
         "relationship": "within_draw (transforms of the same two deltas)",
         "cross_training_floor_applies": False,
@@ -93,6 +98,11 @@ def main():
 
     if primary["nd"] == 0:
         verdict, reading = "UNINFORMATIVE", "zero discordant pairs; the instrument saw no difference to test"
+    elif not primary["significance_attainable"]:
+        verdict, reading = "UNINFORMATIVE", (
+            f"significance is UNATTAINABLE at nd={primary['nd']}: even an all-one-way split gives "
+            f"p={primary['min_attainable_p_at_observed_nd']:.4g} > {ALPHA}. A null here is a property "
+            "of the discordance, not evidence of equivalence")
     elif primary["mde_at_observed_nd"] is None:
         verdict, reading = "UNINFORMATIVE", f"no |net| reaches p<={ALPHA} at nd={primary['nd']}; underpowered by construction"
     elif primary["significant"] and primary["net"] < 0:

@@ -257,6 +257,80 @@ With Amendment 2(ii), three alternative causes are now explicitly on the record 
 headroom, harsher attenuation (`s_t` 0.587 vs 0.675), and H's absolute strength — and **this
 design separates none of them.**
 
+## 4d. AMENDMENT 4 — the allocation critique, and a correction to my own Amendment 3
+
+Registered with `scored/` empty. Absorbs INDEP-001 and two peer audits.
+
+### (i) Correction: which band 0.587 is in depends on the criterion
+
+Amendment 3 called `s_t` = 0.5869 "inside the flat, benign band (0.25–0.675)." That is true
+under one criterion and false under another, and saying only the favourable one was
+over-claiming. H-ALPHA-001 Amendment 1's finer grid gives **two** bands:
+
+| criterion | band | is 0.587 in it? |
+|---|---|---|
+| statistically indistinguishable from the max | α ∈ [0.10, 0.675] | **yes** |
+| perfect specificity 112/112 | α ∈ [0.05, 0.50] | **NO — above it** |
+
+Specificity is 112 at α ≤ 0.50 and 111 at 0.675, so **0.587 sits just past the point where
+δ_H's specificity stops being perfect.** Amendment 3's conclusion survives — H is *functional*,
+not scaled into irrelevance — but "benign" was the wrong word and is withdrawn.
+
+### (ii) INDEP-001: the matched-SUM construction has a known allocation inefficiency
+
+INDEP-001 measured `‖P₁₆(δ_T)‖ = 0.674` and `‖P₁₆(δ_H)‖ = 0.710` on the 596M — **δ_H is the
+larger delta** — and argues the composition penalty is an *allocation error*, not interference:
+a single scale on the **sum** forces δ_T down to pay for δ_H at several times the strength δ_H
+needs.
+
+That critique applies to **this** construction, which is the matched-SUM one. Quantified here:
+
+| | value |
+|---|---:|
+| `s_t` (median) | 0.5869 |
+| δ_T pays | **41.3 %** of its trained strength |
+| δ_H sits at | 0.5869 of its trained strength |
+| δ_H's operating point (H-ALPHA argmax) | ~0.25 |
+| δ_H over-strength factor | **2.35×** |
+
+> **This does NOT invalidate the contrast.** `TH_s` and `SCALED_T` both hold δ_T at exactly
+> 0.5869; the only difference between them is whether δ_H's directions are present. The
+> contrast therefore still isolates *H's presence at matched T-magnitude*, which is what it was
+> registered to measure.
+>
+> **What it changes is scope.** COMPOSE4B-001 tests the **matched-SUM** construction, which
+> INDEP-001 gives independent reason to think is a suboptimal allocation. So:
+> - **a P1 null becomes a STRONGER claim** — H's presence costs nothing *even at 2.35× its own
+>   operating point*;
+> - **a P2 result is confounded with over-allocation** and may not be read as "composition
+>   interferes." Independent per-skill coefficients (INDEP-001's arm) are the design that
+>   separates them, and that arm is **not built here**.
+
+This is the fourth unseparated cause, alongside the three in Amendment 2(ii). The design
+separates none of them, and the writeup will say so rather than selecting one.
+
+### (iii) Two audits passed, recorded because their failure modes are live in this programme
+
+**Verdict-table exhaustiveness.** A peer found their own guard table had a hole that their only
+real datapoint fell into — a *net* threshold that would have stamped a well-powered null
+(9/11, nd 20, p 0.8238) as a failure. Mine was enumerated over **every** (b, c) with b + c ≤ 60:
+branch counts P1 648 / P2 611 / P3 611 / UNINFORMATIVE 21, **zero holes**, and the defensive
+`else` is provably unreachable. The verdict keys on the **ordered pair** through `p` and `nd`,
+never on `net` alone — `net` is used only for direction after significance is established.
+
+**Power is now reported directly, not only as an MDE.** Added
+`min_attainable_p_at_observed_nd` = the p of an all-one-way split at the observed discordance.
+If it exceeds α the contrast **cannot** reach significance however the pairs fall, and that is
+now a first-class `UNINFORMATIVE` verdict rather than a null. Significance is unattainable
+below **nd = 6** (nd 5 → min p 0.0625).
+
+**Template-disjointness**, on a peer's warning that row- and parent-disjointness can both hold
+while template-disjointness fails. Digit-blinded stems (every digit run → `#`, so digit
+resamples of one template collide): 166 distinct view stems, 647 distinct H stems,
+**overlap 0**, positive control detects an injected stem. Families are disjoint by construction
+— views are `ledger_replay / prerequisite_plan / register_machine`, H is
+`rehearsal_{safety_boundary, clarification, …}`.
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
