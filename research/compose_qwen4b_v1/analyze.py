@@ -43,6 +43,61 @@ def mde_at(nd):
     return None
 
 
+def _betacf(a, bb, x):
+    MAXIT, EPS, FPMIN = 300, 3e-16, 1e-300
+    qab, qap, qam = a + bb, a + 1.0, a - 1.0
+    c = 1.0
+    d = 1.0 - qab * x / qap
+    if abs(d) < FPMIN: d = FPMIN
+    d = 1.0 / d; h = d
+    for m in range(1, MAXIT + 1):
+        m2 = 2 * m
+        aa = m * (bb - m) * x / ((qam + m2) * (a + m2)); d = 1.0 + aa * d
+        if abs(d) < FPMIN: d = FPMIN
+        c = 1.0 + aa / c
+        if abs(c) < FPMIN: c = FPMIN
+        d = 1.0 / d; h *= d * c
+        aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2)); d = 1.0 + aa * d
+        if abs(d) < FPMIN: d = FPMIN
+        c = 1.0 + aa / c
+        if abs(c) < FPMIN: c = FPMIN
+        d = 1.0 / d; de = d * c; h *= de
+        if abs(de - 1.0) < EPS: break
+    return h
+
+
+def _betai(a, bb, x):
+    import math
+    if x <= 0: return 0.0
+    if x >= 1: return 1.0
+    bt = math.exp(math.lgamma(a + bb) - math.lgamma(a) - math.lgamma(bb)
+                  + a * math.log(x) + bb * math.log1p(-x))
+    return bt * _betacf(a, bb, x) / a if x < (a + 1.0) / (a + bb + 2.0) else 1.0 - bt * _betacf(bb, a, 1.0 - x) / bb
+
+
+def cp_upper(k, n, alpha=0.05):
+    """One-sided 95% Clopper-Pearson upper bound on pi given k of n."""
+    if n == 0: return 1.0
+    if k >= n: return 1.0
+    lo, hi = 0.0, 1.0
+    for _ in range(200):
+        m = (lo + hi) / 2
+        if 1.0 - _betai(k + 1, n - k, m) > alpha: lo = m
+        else: hi = m
+    return (lo + hi) / 2
+
+
+def equivalence_bound_rows(losses, nd):
+    """Exact one-sided 95% upper bound on the LOSS-SIDE excess (c-b), in rows.
+
+    A powered null says a difference of >= MDE would have been detected. It does NOT
+    say the difference is small. This is the separate, much weaker thing the data can
+    actually bound, and at n=384 even a perfect tie at nd=20 only reaches ~7.9 rows.
+    """
+    if nd == 0: return 0.0
+    return nd * (2 * cp_upper(losses, nd) - 1)
+
+
 def load(label):
     p = SCORED / f"{label}.json"
     if not p.is_file():
@@ -77,6 +132,10 @@ def contrast(name, a, b):
         "min_attainable_p_at_observed_nd": exact_mcnemar(nd, 0) if nd else 1.0,
         "significance_attainable": (exact_mcnemar(nd, 0) if nd else 1.0) <= ALPHA,
         "significant": p <= ALPHA,
+        "equivalence_upper_bound_rows": equivalence_bound_rows(losses, nd),
+        "equivalence_note": ("one-sided 95% CP upper bound on the loss-side excess. A powered null "
+                             "bounds DETECTION, not EQUIVALENCE; these need different sample sizes "
+                             "on the same rows."),
         "relationship": "within_draw (transforms of the same two deltas)",
         "cross_training_floor_applies": False,
     }
@@ -113,10 +172,13 @@ def main():
     elif primary["significant"] and primary["net"] > 0:
         verdict, reading = "P3", "H's presence HELPS at matched magnitude; unregistered direction, claimed as nothing"
     elif abs(primary["net"]) <= primary["mde_at_observed_nd"]:
-        verdict, reading = "P1", ("the null REPLICATES on a base with headroom, under HARSHER attenuation "
-                                  "(s_t 0.587 vs the 596M's 0.675). Per amendment 3, delta_H is functional "
-                                  "at this scale, not scaled into irrelevance, so a functional second skill "
-                                  "costs nothing")
+        verdict, reading = "P1", (
+            "POWERED NULL, not an equivalence certification. No cost detected, and a cost of "
+            f">= MDE rows would have been detected. The null REPLICATES on a base with headroom "
+            "under HARSHER attenuation (s_t 0.587 vs the 596M's 0.675), with delta_H functional "
+            "at 2.35x its own operating point (amendments 3, 4). It does NOT establish that the "
+            "cost is zero or small: see equivalence_upper_bound_rows for what the data actually "
+            "bound, which at this n is loose")
     else:
         verdict, reading = "UNINFORMATIVE", "not significant and |net| exceeds the MDE; cannot be called a null"
 

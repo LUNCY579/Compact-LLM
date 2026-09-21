@@ -331,6 +331,46 @@ resamples of one template collide): 166 distinct view stems, 647 distinct H stem
 — views are `ledger_replay / prerequisite_plan / register_machine`, H is
 `rehearsal_{safety_boundary, clarification, …}`.
 
+## 4e. AMENDMENT 5 — P1 delivers a POWERED NULL, not an equivalence certification
+
+Registered with `scored/` empty. This withdraws a second phrase of mine.
+
+Amendment 3 and the P1 branch both said a null would mean *"a functional second skill **costs
+nothing**."* **That is an equivalence claim, and this design cannot support it.** Withdrawn.
+
+**Detection and equivalence are different questions with different sample-size requirements on
+the very same rows.** `min_attainable_p` answers *could a difference have been detected*.
+It says nothing about *can the difference be bounded below a margin*. Computed exactly for this
+bank — one-sided 95% Clopper–Pearson upper bound on the loss-side excess `(c − b)`, in rows of
+384:
+
+| `nd` | perfect tie (b = c) | one row better than tie |
+|---:|---:|---:|
+| 10 | 5.55 | 3.93 |
+| 16 | 7.08 | 5.33 |
+| 20 | **7.92** | 6.12 |
+| 30 | 9.67 | 7.80 |
+| 51 | 11.54 | 9.61 |
+| 57 | 12.22 | 10.29 |
+
+> **Even a PERFECT TIE cannot certify equivalence tighter than about 8–12 rows at any plausible
+> discordance.** Registering a tolerance margin below that would be registering an unsatisfiable
+> gate — a verdict that no achievable data can deliver.
+
+**So no tolerance/non-inferiority limb is registered here, and none will be added later.** P1
+delivers a **powered null**: *no cost detected, and a cost of ≥ MDE rows would have been
+detected.* The analysis now emits `equivalence_upper_bound_rows` alongside it so a reader sees
+what the data actually bound, which at this n is loose.
+
+**Cross-checked against an independent implementation.** The dmrf session computed the same
+quantity for their n = 112 instrument; at nd = 20 we agree to the hundredth on all three cases
+they published — perfect tie **7.92**, one worse **9.65**, one better **6.12**. Two
+implementations, three full values, no disagreement.
+
+This is the same defect class as an unsatisfiable build gate: a criterion written before anyone
+checked whether achievable data could ever meet it. The difference is that this one was caught
+*before* the data rather than after, which is the only time the fix is free.
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
