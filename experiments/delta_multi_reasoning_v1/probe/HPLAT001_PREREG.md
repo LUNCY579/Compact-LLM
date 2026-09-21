@@ -8,10 +8,12 @@
 
 **Class: CONFIRMATION (registration only).** `quality_claim: false`, `release_permitted: false`.
 
-> **This is v2. v1 was drafted, adversarially stress-tested by ten independent auditors, and
-> found to have 10 blocking and 26 serious defects — including a primary endpoint placed on the
-> wrong half of the instrument. It was never sealed and never read.** §11 records what changed
-> and why, because a registration that hides its own revision history is not a registration.
+> **This is v3.** v1 was stress-tested by ten independent auditors and had **10 blocking + 26
+> serious** defects, including a primary endpoint on the wrong half of the instrument. v2 fixed
+> those and was itself audited by eight more, which returned **FIX_FIRST on all four areas** —
+> v2 had introduced **two new unsatisfiable gates** and **one measured claim that was wrong by
+> sign.** Neither version was ever sealed or read. §11 records every change, because a
+> registration that hides its own revision history is not a registration.
 
 ---
 
@@ -46,6 +48,19 @@ selected over** (`HSKILL-VIEWS-002`, `ba1f2982…`, marked `barred: [TRAIN, CONF
 >    `specificity_decision_attempts`, and **"attempts" is the verb.** `H16`'s paired competence
 >    deficit is 10 gains / 3 losses, nd = 13, p = 0.0923 — **not significant.**
 > 3. **NOT generalisation to new question types.** See §3.
+>
+> **WHICH band sentence this implements, registered because the source has two.**
+> `HALPHA001_RESULT.md` Amendment 1 says both that every α in **[0.10, 0.50]** holds specificity
+> at a perfect 112/112, *and* that the optimum "cannot distinguish from any of its neighbours
+> between 0.10 and 0.675". **HPLAT-001 implements the SECOND sentence.** `a025` and `a0675` are
+> the endpoints of the **indistinguishability interval 0.25-0.675**; `a0675` scores 111/112 on
+> the selection bank and lies **OUTSIDE** [0.10, 0.50], and **neither 0.10 nor 0.50 is an arm
+> here.**
+>
+> **Registered consequences, both directions.** A LIMB A PASS at both arms licenses exactly
+> *"the advantage spans at least α = 0.25 to α = 0.675"* and does **NOT** license the
+> [0.10, 0.50] sentence. A **POINT, NOT BAND** outcome refutes only the 0.25-0.675 span and
+> **may NOT be reported as refuting [0.10, 0.50]**, whose endpoints this design never tests.
 
 ## 2. Instrument
 
@@ -56,6 +71,7 @@ selected over** (`HSKILL-VIEWS-002`, `ba1f2982…`, marked `barred: [TRAIN, CONF
 | rows | 224 = 112 boundary + 112 answerable, 224 distinct parents |
 | role | `HELD_FOR_CONFIRMATION` · `admissible_uses: [CONFIRMATION]` |
 | rule module | `boundary_rule.py` · `416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0` **— verified on disk** |
+| probe | `hskill_probe_v2.py` · `4ff6e4d410a5737eb5cd5802d3239c678ad618cf68501b71222d0245fb381211` **— verified on disk** |
 
 Row-level disjointness, with a namespace assertion and a positive control:
 
@@ -121,11 +137,33 @@ axis, so these are computed by me and are **not** published values):
 | `always_abstain` | 1.000 | 0.000 | **0.000** |
 | `constant_majority` | 1.000 | 0.000 | **0.000** |
 | `never_abstain` | 0.000 | 1.000 | **0.000** |
-| `copy_user` | 0.580 | ~1.000 | **~0.580** |
+| `copy_user` | 0.580 *(65/112)* | **0.063** *(7/112)* | **−0.357** |
 
-> **`J_decision` is floor-proof where specificity is not.** But note `copy_user` ≈ **0.580** —
-> **the J floor is not 0**, and `H16` at 0.6161 sits only ~0.036 above it. Registered now
-> because it bounds what any J number here means.
+*Method: `copy_user` per `refloor_v2.py`'s own definition (the first `user` turn of `prompt`);
+abstention per `boundary_rule.py` `416cfb6a…`, applied to `first_line`. Computed on
+`HSKILL_CONFIRM_V2.jsonl`, **aggregate counts only, no row text read.* ***Positive control:** the
+same code reproduces the published `floors.strategy_halves.copy_user.boundary = 65` exactly. The
+unsealed sibling gives 0.580 / 0.071 (8/112) / **−0.348**.*
+
+> **`J_decision` is floor-proof where specificity is not, and the floor is exactly 0.** All four
+> trivial strategies score `J_decision` ≤ 0 — confirming `HSKILL_AMENDMENT_001.md`'s *"Floor is
+> exactly 0, and needs no estimation"* by computation rather than by construction.
+
+**`copy_user` is strictly NEGATIVE on this axis**, because **105 of CONFIRM's 112 answerable user
+turns end in `?`** and `ABSTAIN_PATTERNS[0]` is `r"\?"` — so echoing the user scores as an
+*abstention* on the answerable half. Echoing is a **worse-than-chance** attempt strategy, not a
+near-perfect one.
+
+> **v2 of this document registered `copy_user` at `spec_dec ~1.000`, `J ≈ +0.580`, and built a
+> load-bearing sentence on it — that the J floor "is not 0" and `H16` sits "only 0.036 above it".
+> That was wrong by sign.** It came from reading the floors file's `copy_user: {answerable: 0}`
+> as a decision count when it is an **exact-match competence** count: *"did not match the
+> reference"* is not *"did not attempt"*. **That is precisely the discrimination/competence
+> conflation `HSKILL_AMENDMENT_001.md` was written to remove, committed inside a document that
+> warns about it two sections earlier.** The tilde marked it as approximate; it was not
+> approximate, it was inverted. **An inference marked with a tilde is still an inference, and a
+> sealed registration is the wrong place to put one when the quantity is computable in nine
+> lines.**
 
 **`J_decision` is also the instrument's own registered primary** (`HSKILL_V2_COMMISSIONING.md`,
 `HSKILL_AMENDMENT_001.md`, and `primary_endpoint: "J_decision"` in every scored artifact).
@@ -135,7 +173,11 @@ axis, so these are computed by me and are **not** published values):
 
 `J_decision` is a difference of rates on two disjoint row sets and cannot be McNemar'd directly.
 So the primary is **explicitly a conjunction of two paired limbs**, each with an exhaustive
-verdict table, and `J_decision` is reported as the registered summary with exact CIs.
+verdict table, and `J_decision` is reported as the registered summary using **the instrument's
+own bound**, `J_decision_conservative_lower = sens_lb + spec_d_lb − 1`, computed by
+`hskill_probe_v2.py` from **two-sided exact Clopper–Pearson intervals on each rate separately**.
+**That is the commissioned criterion, NOT an exact CI for `J`: it is a conservative lower bound
+with unstated coverage and no upper limb, and no exact CI for `J` is registered here.**
 
 Comparisons, fixed: **`a025` vs `H16`** and **`a0675` vs `H16`**, on both halves.
 All adjudication is over the **ORDERED PAIR** `(b = plateau gains, c = plateau losses)`,
@@ -169,22 +211,47 @@ else `p > 0.05`). `b = c` cannot occur with `p ≤ 0.05`.
 this "UNCERTIFIABLE" — inverting the programme's own rule on the best-powered comparison in the
 design. That single error is why v1 was rewritten.*
 
-**Non-inferiority is NOT inferred from failure to reject.** For LIMB B to read **TOLERANCE**, the
-exact one-sided 95% upper bound on the paired loss-side difference `(c − b)/112` must fall below
-the registered margin **5/112**. A POWERED NULL that does not clear this bound is reported as a
-powered null and **no tolerance claim is made.**
+**Non-inferiority is NOT inferred from failure to reject — and NO tolerance claim is registered,
+because none is attainable.**
+
+v2 registered a **5/112** non-inferiority margin. I then computed the attainable bound
+(condition on `nd`; exact one-sided 95% Clopper–Pearson upper limit `p_up` on `c/nd`;
+`UB = nd·(2·p_up − 1)/112`):
+
+| `(b, c)` | `nd` | upper bound on the loss-side difference |
+|---|---:|---:|
+| **9, 11** *(the expected data)* | 20 | **9.65 rows** |
+| 10, 10 *(a perfect tie)* | 20 | **7.92 rows** |
+| 11, 9 *(plateau ahead)* | 20 | **6.12 rows** |
+
+> **Nothing realistic clears 5 rows.** In the powered regime the clause was a **superiority
+> requirement wearing a non-inferiority label** — satisfiable only if the plateau arm *gained*
+> abstention, which §4 elsewhere registers as a surprise that strengthens nothing.
+> **It was the second unsatisfiable gate v2 introduced while fixing v1's fourth.**
+
+**So TOLERANCE is deleted as a verdict rather than re-tuned.** A 10-row margin would be
+attainable but meaningless — it is most of the 15-row gain over the source.
+
+> **Registered honestly: at n = 112 with `nd ≈ 20, this instrument cannot certify equivalence
+> tighter than roughly 8–10 rows.** A LIMB B POWERED NULL establishes that **no difference is
+> detectable at this instrument's resolution** — nothing more. **No tolerance or non-inferiority
+> claim may be made after the read.**
+
+*(Independently reproduced: the paired session's implementation agrees to the hundredth on all
+three rows above — 9.65 / 7.92 / 6.12 — from separate code.)*
 
 ### Joint verdict — every combination pre-specified
 
 | LIMB A | LIMB B | verdict |
 |---|---|---|
-| PASS | POWERED NULL *(w/ tolerance)* | **CONFIRMED — dominance** |
-| PASS | POWERED NULL *(w/o tolerance)* | **CONFIRMED — advantage, tolerance unestablished** |
+| PASS | POWERED NULL | **CONFIRMED — advantage; no tolerance claim is made** |
 | PASS | UNCERTIFIABLE | **PARTIAL** — advantage confirmed, abstention cost unresolved |
 | PASS | DOWNGRADE | **CONFIRMED AS A TRADE**, not a dominance |
-| PASS | gain | **CONFIRMED — dominance, both halves** |
-| POWERED NULL | any | **NOT CONFIRMED** — the collapse did not replicate |
-| UNCERTIFIABLE | any | **UNCERTIFIABLE** — no verdict, instrument spent, recorded as such |
+| PASS | gain | **CONFIRMED — advantage, and dominant on both halves as measured.** The LIMB B gain is an **unpredicted surprise** falsifying **P4** in the favourable direction; per LIMB B it strengthens nothing registered, because §1's abstention conjunct is a non-inferiority claim and exceeding it does not strengthen it. **The headline word is "advantage"; "dominant on both halves" may be reported only with this sentence attached.** |
+| POWERED NULL | DOWNGRADE | **NOT CONFIRMED, WITH A MEASURED COST** — no detectable attempt advantage, *and* a certified abstention loss on the **independent** half. Report `b, c, nd, p` for both limbs. |
+| POWERED NULL | any other | **NOT CONFIRMED** — the collapse did not replicate |
+| UNCERTIFIABLE | DOWNGRADE | **UNCERTIFIABLE ON LIMB A, WITH A MEASURED COST ON LIMB B** — no verdict on the attempt advantage; the abstention loss is certified and reported on its own terms. Instrument spent. |
+| UNCERTIFIABLE | any other | **UNCERTIFIABLE** — no verdict, instrument spent, recorded as such |
 | REVERSED | any | **FALSIFIED** |
 
 **Both arms must reach the same LIMB A verdict for a band claim.** If `a025` and `a0675` split on
@@ -262,16 +329,43 @@ wrong**. Both are registered; neither is quietly dropped.
 contains δ_T** — it was a gate that could not fail on anything this experiment builds. Replaced
 with a δ_H-appropriate gate:
 
-- `‖P₁₆(δ_H,t)‖` per 2-D tensor must match `mag001`'s recorded `norm_H`, relative **2e-6**.
-- Arm update magnitude must equal `α · ‖P₁₆(δ_H)‖` to relative 2e-6, **as a plain dense Frobenius
-  norm.** *(A rank-16 truncation's Frobenius norm equals its top-16 singular-value RSS; a SUM of
-  two such is rank-32 and it does not. That mistake refused 140/140 tensors once already.)*
+- **INPUT hashes**, which is what actually pins δ_H: `source_weight_sha256`
+  `962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b` and
+  `trained_H_fp32_sha256` `a1103060591a91ee7d9ceb2ad7450621be352b087cd19188f2c383a0dbbc7b90`,
+  with `tensor_scope_from` = `mag001-20260918/arm-TH16s/ARM.json`.
+- **The builder's OWN per-tensor scale canary**, at its shipped `RELTOL = 1e-12`
+  (`build_halpha.py:31`): `tensors_scaled = 220`, `tensors_total = 310`, and
+  `canary_max_by_ndim` present with **both** `"1"` and `"2"` populated and both ≤ 1e-12
+  *(recorded reference, `MATERIALIZATION_a0675.json`: `{"1": 3.596e-16, "2": 2.009e-14}`)*.
+  **A receipt whose `canary_max_by_ndim["1"]` is `null` or absent is a build-gate FAILURE, not a
+  pass** — `build_halpha.py:120` uses `default=None`, Erratum 1's defect lived in the 1-D family,
+  and an aggregate maximum hid it.
+- Any magnitude check uses a **plain dense Frobenius norm.** *(A rank-16 truncation's Frobenius
+  norm equals its top-16 singular-value RSS; a SUM of two such is rank-32 and it does not. That
+  mistake refused 140/140 tensors once already.)*
+
+> **v2 registered here that `‖P₁₆(δ_H,t)‖` must match "mag001's recorded `norm_H`". There is no
+> `norm_H` — anywhere in the records tree.** `per_tensor_scales` carries exactly
+> `{tensor, s, fallback, norm_T, norm_combined}`, and `‖P₁₆(δ_H,t)‖` is not recoverable from
+> those without the cross term, which is also unrecorded. `NORM_AUDIT.json` says it plainly:
+> *"H's per-tensor norms are absent from this receipt."* **v2 removed a gate that could not fire
+> and replaced it with one that could not run** — the fifth unsatisfiable gate in a record that
+> already counts four. **When a gate needs a reference, use what the builder recorded; do not
+> invent a statistic for it to match.**
 
 **Generation configuration is GATED, not assumed:** greedy `argmax`, `max_new_tokens 48`,
 `max_context` as recorded, `tf32` off, and **`rows_scored` must equal 224 with
 `rows_skipped_context_overflow` = 0.** A shrunken denominator voids the read.
 **An empty or zero-token generation counts as an ATTEMPT under `not abstains(...)`; the count of
 such rows is reported per arm.**
+
+- **The probe is gated too, because §8's other checks are self-reported BY it.** `rows_scored`,
+  `rows_skipped_context_overflow`, `instrument_sha256`, `rule_module_sha256` and the generation
+  configuration are all fields `hskill_probe_v2.py` writes about itself — a drifted probe would
+  pass every one. Registered: `sha256(hskill_probe_v2.py)` = `4ff6e4d4…`, and **all four arms
+  must carry an identical `implementation_digest`, `transformers` and `torch` string.** All 21
+  existing scored artifacts read `a329eb7bb06f` / `4.51.3` / `2.10.0+cu126`, so this gate can
+  fail and never has.
 
 ## 7. Registered predictions
 
@@ -304,6 +398,9 @@ judgement after seeing a result, so none of it can be invoked selectively.**
 3. `rows_scored` ≠ 224, or `rows_skipped_context_overflow` ≠ 0, on any arm.
 4. Generation config not as gated in §6.
 5. The anchor direction reverses at p ≤ 0.05 on either half (§4).
+6. `sha256(hskill_probe_v2.py)` ≠ `4ff6e4d4…`, or any arm whose `implementation_digest`,
+   `transformers` or `torch` string differs from the first arm's. *(Checkable the moment each
+   artifact is written, before any comparison is computed.)*
 
 **Closure clause: this list is CLOSED. No further void condition may be added after sealing, and
 a result that is disappointing for any reason not listed above is a RESULT, not a void.**
@@ -322,6 +419,23 @@ instrument is spent, and it is recorded as such.)*
   only). **`supa` vs the plateau arms is NOT a registered contrast and may not be reported as a
   headline** — it is the largest and most flattering difference available, and it is exactly the
   fallback a motivated reader would reach for.
+- **Three quantities the probe emits are NOT registered endpoints and carry NO verdict:**
+  `discrimination_PRIMARY.J_competence`, `discrimination_PRIMARY.clears_J_competence`, and the
+  entire `joint` block (`joint.rate`, `joint.cp_lower_95`, **`joint.clears_floor`**).
+  `hskill_probe_v2.py` writes them unconditionally for every arm, and
+  `HSKILL_CONFIRM_V2_FLOORS.json` still calls the joint-credit rule the instrument's
+  `decision_rule` — but `HSKILL_AMENDMENT_001.md` superseded it as primary, and HPLAT-001
+  registers only §4's two limbs and `J_decision` as their summary.
+  **They are reported verbatim as artifact contents and may NOT appear in any headline,
+  abstract, summary table or verdict sentence, and no arm may be described as "clearing" or
+  "failing" this instrument on them.**
+
+  Registered explicitly because the sentence is already sitting there: on `HSKILL-VIEWS-002`,
+  **`a025` reads `joint 129/224, cp_lower_95 0.5083, clears_floor true` and `a050` reads
+  `128/224, 0.5038, true` — the only two arms of the twenty-one ever scored that clear it**
+  (`a0675` 0.4993, `H16` 0.4859, `supa` 0.4283, all false). *"The first cores ever to clear the
+  binding floor"* is a headline this read is likely to hand the author, on an endpoint nobody
+  registered. *(An auditor reported a025 as the sole clearing arm; `a050` clears too.)*
 - If the read is not authorised, **nothing decays.** The bank stays sealed; this registration
   stays valid indefinitely.
 
@@ -354,7 +468,26 @@ The material ones:
 | 11 | P5 un-adjudicable; P2/P3 decorative; anchor had no consequence; §7 was an open list | §7, §8 |
 | 12 | Generation config unregistered and ungated | §6 |
 
-**The single most consequential one is #3.** v1 would have taken the comparison the selection bank
+*(Rows 1-12 above are v1 defects fixed in v2.)*
+
+### What the v2 audit found, and v3 fixes
+
+| # | defect in v2 | fix |
+|---|---|---|
+| 13 | **`copy_user`'s floor was wrong BY SIGN** — registered at `J ≈ +0.580`, measured **−0.357** — and it carried v2's only novel quantitative claim ("the J floor is not 0") | §4: measured table with a positive control; the floor **is** exactly 0 |
+| 14 | **The replacement δ_H norm gate was UNSATISFIABLE** — `norm_H` exists nowhere in the records tree | §6: input hashes + the builder's own scale canary at its shipped 1e-12 |
+| 15 | **The 5/112 non-inferiority margin was UNREACHABLE** — the bound at the expected data is 9.65 rows, and 7.92 even at a perfect tie | §4: TOLERANCE deleted as a verdict; the attainable resolution (~8-10 rows) stated instead |
+| 16 | `a0675` lies outside the `[0.10, 0.50]` band the source registered, and v2 said only "band" | §1: names which of the source's two band sentences this implements, both directions |
+| 17 | `joint.clears_floor`, `J_competence` and `clears_J_competence` were unregistered and unbarred — and **two arms already clear the floor** | §9: explicit reporting bar |
+| 18 | The **probe** was neither hashed nor gated, yet §8's other checks are fields it writes about itself | §2, §6, §8 item 6 |
+| 19 | `J_decision` "with exact CIs" — the instrument emits a conservative one-sided lower bound, no upper limb | §4: named precisely |
+| 20 | (POWERED NULL × DOWNGRADE) filed a measured harm under "no effect"; and one LIMB B outcome had two conflicting headlines | §4: rows split; headline word fixed |
+
+**Verified by enumeration, not by reading:** both limb tables map all **6,441** `(b, c)` cells
+with `b + c ≤ 112` to exactly one verdict, `b = c` can never reach `p ≤ 0.05`, and all **16**
+cells of the joint table resolve uniquely.
+
+**The single most consequential v1 defect is #3.** v1 would have taken the comparison the selection bank
 already reports correctly as a powered null, and stamped it UNCERTIFIABLE — on a one-shot
 instrument, with the registration window shut. The defect was not in the arithmetic; it was in
 adjudicating a **paired** result against a **net** threshold.
