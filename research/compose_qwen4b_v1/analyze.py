@@ -173,8 +173,11 @@ def main():
         verdict, reading = "P3", "H's presence HELPS at matched magnitude; unregistered direction, claimed as nothing"
     elif abs(primary["net"]) <= primary["mde_at_observed_nd"]:
         verdict, reading = "P1", (
-            "POWERED NULL, not an equivalence certification. No cost detected, and a cost of "
-            f">= MDE rows would have been detected. The null REPLICATES on a base with headroom "
+            "NULL AT THE REALIZED DISCORDANCE, not an equivalence certification and NOT a "
+            "statement about design power. MDE is conditional on the OBSERVED nd; a cost of that "
+            "size arriving with more discordance would NOT have been detected. The only supported "
+            f"sentence is: had these nd pairs split against it by >= MDE, that would have been "
+            "significant. The null REPLICATES on a base with headroom "
             "under HARSHER attenuation (s_t 0.587 vs the 596M's 0.675), with delta_H functional "
             "at 2.35x its own operating point (amendments 3, 4). It does NOT establish that the "
             "cost is zero or small: see equivalence_upper_bound_rows for what the data actually "
