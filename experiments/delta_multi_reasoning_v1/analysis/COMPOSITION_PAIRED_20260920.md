@@ -126,3 +126,73 @@ It also explains why `J_decision` is identical (0.7500) at TH16 and TH16s while 
 That is the single cheapest decisive experiment available on the composable-skills question, and
 **it is a same-skill control of exactly the kind `matched-norm-attenuates-components` says is
 required and was never built.**
+
+---
+
+# SYNTHESIS — both attenuation controls are in, and composition explains nothing that a scalar does not
+
+SCALED-T-001 (mine) and SCALED-H-001 (the paired session's) are the same experiment applied to
+the two components of `TH16s`. Together they close the account.
+
+## The two controls
+
+    TH16s = s_t * ( P16(delta_T) + P16(delta_H) )      s_t median 0.675
+    SCALED_T = s_t * P16(delta_T)      <- T's component, H absent
+    SCALED_H = s_t * P16(delta_H)      <- H's component, T absent
+
+| component at `s_t` ≈ 0.675 | endpoint | result |
+|---|---|---|
+| **δ_T** (generator) | acquisition /384 | **−12**, p = 0.0428 — attenuation **costs** |
+| **δ_H** (gate) | boundary sensitivity /112 | 88 → 86, **−2** — no measurable change |
+| **δ_H** (gate) | answerable specificity /112 | **93 → 111, +18** — attenuation **helps** |
+
+> **The same 0.675 attenuation costs the generator and helps the gate.** Each skill has its own
+> magnitude operating point; a single shared rescale lands near H's and below T's.
+
+## What each of us had to withdraw
+
+| claim | withdrawn by | replaced with |
+|---|---|---|
+| *"the −16 is skill interference"* (mine) | SCALED-T | T's own attenuation; H costs ≤10 rows, powered null |
+| *"δ_T supplies the constraint that makes δ_H usable"* (theirs) | SCALED-H | **δ_H was over-driven; scaling it down alone recovers 18 of the 19 rows** |
+| *"composition produced a J neither component has"* (theirs) | SCALED-H | **`SCALED_H` reaches J 0.7589 — the highest on record — containing no δ_T at all** |
+
+**Each of us refuted our own headline by building the control the other's result implied.**
+Neither could have got there alone: the confound on T was invisible from H's instrument and vice
+versa.
+
+## The consequence for the composable-skills question
+
+`SCALED_H → TH16s` is **4 and 1 discordant pairs** on the two halves. At that discordance the
+smallest attainable p values are **0.125 and 1.0** — the instrument cannot certify a difference
+in either direction. **This is a BOUND, not a null:** δ_T adds at most ~3 rows per half, and
+whether it adds anything is unresolvable. *(Contrast SCALED-T's nd = 16, where a 10-row effect
+would have been detected — that one is a powered null and this one is not.)*
+
+> **So at matched magnitude, composition buys nothing measurable that a per-skill scalar does not
+> already buy — and on the gate instrument a single scaled delta BEATS the composition.**
+
+The "composable skills gap" on this pair reduces to a **magnitude-calibration** problem, not an
+interference problem. Two skills coexist; what the shared rescale costs is that one scalar serves
+both, and the two skills want different scalars.
+
+**And `0.675` was never chosen for H — it is whatever `s_t` happened to be.** It is already the
+best arm on that instrument and **the curve between 0 and 1 is entirely unmeasured.** There is no
+reason to believe it is the optimum.
+
+## What I verified, and what I did not
+
+**Verified from the artifacts** (`scaledh001-20260920/`, instrument `ba1f2982`, weight
+`21cd17a8`): J_decision 0.7589, sensitivity 86/112, specificity 111/112, answerable-credited
+**41** — the highest of any arm including the frozen source's 40. The J ranking
+`SCALED_H 0.7589 > TH16s 0.7500 > H16 0.6161`. The aggregate specificity move 93 → 111 = +18,
+consistent with their paired 18/0. And the min-attainable p values at nd = 4 and nd = 1.
+
+**NOT verified: the paired splits.** `per_row` carries only `row_type`, `family`, `strict` and
+`credited` — no abstention flag — and the instrument judges abstention through a
+`rule_module_sha256` I do not have. **My proxy (prediction begins "UNKNOWN") returned 0
+abstentions for arms recorded at 88 and 86** — impossible on its face, which is the canary firing
+again. The 18/0 and 3/5 splits are recorded as theirs, single-implementation.
+
+*(Fifth wrong extractor this week, and again caught only by collision with a number already held
+rather than by reading the code.)*
