@@ -34,6 +34,25 @@ ARMS = [
 ]
 
 
+def publish_worker_pids(root_pid):
+    """Record the pids that actually hold the card so a staleness rule cannot misjudge.
+
+    The lock's own pid is a shim three levels above the CUDA process. A peer's
+    "holder pid dead => free" rule read that shim and would have reclaimed a live lease.
+    """
+    try:
+        import psutil
+        pids = [root_pid] + [c.pid for c in psutil.Process(root_pid).children(recursive=True)]
+        d = json.loads(LOCK.read_text(encoding="utf-8"))
+        d["worker_pids"] = pids
+        d["worker_pids_updated"] = time.time()
+        tmp = LOCK.with_suffix(".lock.tmp")
+        tmp.write_text(json.dumps(d, indent=2) + "\n", encoding="utf-8")
+        os.replace(tmp, LOCK)
+    except Exception as exc:
+        print(f"  (could not publish worker pids: {exc})", flush=True)
+
+
 def gpu_used_mib():
     try:
         return int(subprocess.check_output(
@@ -76,7 +95,20 @@ def generate(label, adapter, rows=None):
     if rows:
         cmd += ["--rows", str(rows)]
     t0 = time.time()
-    rc = subprocess.run(cmd, capture_output=True, text=True)
+    # Stream instead of buffering: stage2_generate prints per-row progress, and
+    # capture_output=True hid it until exit, leaving a 12-minute arm unsupervisable.
+    # "90% done" and "hung" were indistinguishable from inside this process.
+    proc = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    publish_worker_pids(proc.pid)
+    captured = []
+    for line in proc.stdout:
+        captured.append(line)
+        s = line.rstrip()
+        if s.startswith("  ") and "/" in s[:14] and "it/s" not in s:
+            print(f"    {s.strip()}", flush=True)
+    proc.wait()
+    rc = type("R", (), {"returncode": proc.returncode,
+                        "stdout": "".join(captured), "stderr": ""})()
     tail = "\n".join(l for l in (rc.stdout or "").splitlines()
                      if not any(x in l for x in ("Loading weights", "it/s]", "triton")))[-1500:]
     print(f"  [{label}{' smoke' if rows else ''}] rc={rc.returncode} {time.time()-t0:.0f}s")
@@ -97,7 +129,19 @@ def main():
         raise SystemExit("REFUSED: shared GPU lease is held by another process")
     token = uuid.uuid4().hex
     with LOCK.open("x", encoding="utf-8", newline="\n") as f:
-        json.dump({"pid": os.getpid(), "token": token, "created": time.time()}, f)
+        json.dump({
+            "pid": os.getpid(), "token": token, "created": time.time(),
+            "supervisor_pid": os.getpid(), "worker_pids": [],
+            # A detached worker outlives its supervisor BY DESIGN (that is what
+            # CREATE_BREAKAWAY_FROM_JOB is for), so the supervisor pid is NOT a liveness
+            # signal and a "holder pid dead => stale" rule would steal a LIVE lease.
+            "staleness_rule": ("STALE only if EVERY worker_pid is absent from BOTH "
+                               "`nvidia-smi --query-compute-apps=pid` AND the process table. "
+                               "supervisor_pid is a shim and is NOT a liveness signal."),
+            "grace_note": ("empty worker_pids means the worker has not reached its first CUDA "
+                           "allocation yet; treat the lease as LIVE"),
+            "job": "COMPOSE4B-001 battery",
+        }, f)
     try:
         print("=== SMOKE (8 rows each) ===", flush=True)
         for label, adapter in ARMS:
