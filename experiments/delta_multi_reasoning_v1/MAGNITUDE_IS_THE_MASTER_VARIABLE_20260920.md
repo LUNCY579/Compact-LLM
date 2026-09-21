@@ -185,3 +185,77 @@ move is not another sweep.
   (`P₁₆(δ_T) + P₁₆(δ_H)` is rank-32; its norm is Frobenius, not top-16).
 - **Six extractor-class bugs this week.** Five were caught by collision with an already-known
   number; only one by a gate. Build the gate.
+
+---
+
+# Amendment 1 — INDEP-001 closes the composition question, and it is a MAGNITUDE account end to end
+
+**2026-09-21.** The paired session built the arm this document's §3 said was missing: **each skill
+with its OWN coefficient**, rather than one scale applied to the sum.
+
+    INDEP-001 = theta_src + 1.00 * P16(delta_T) + 0.25 * P16(delta_H)
+
+| arm | allocation | acquisition /384 | vs `T16` |
+|---|---|---:|---:|
+| `T16` | δ_T alone at 1.0 | 235 | — |
+| `TH16` | raw sum, both at 1.0 | 175 | **−60** |
+| `TH16s` | ONE scale on the SUM | 219 | −16 |
+| `SCALED_T` | δ_T alone at 0.675 | 223 | −12 *(p = 0.0428)* |
+| **`INDEP-001`** | **δ_T at 1.0, δ_H at 0.25** | **235** | **0** |
+
+> **Adding an entire second skill costs ZERO acquisition rows when it carries its own
+> coefficient.** `INDEP-001` lands exactly on `T16`. Its registered band was ≥ 228.
+
+**The mechanism, measured:** `‖P₁₆(δ_T)‖ = 0.674`, `‖P₁₆(δ_H)‖ = 0.710`. Adding δ_H at **1.00**
+raises total magnitude **+45.2%**; at **0.25** it raises it **+3.4%**. The shared-scale rule paid
+for that 45% by **stripping 31.1% off everything, δ_T included** — funding a gate skill carried at
+**four times** its useful strength by shrinking the generator by a third.
+
+> **"Composition is expensive" was never about interference. It was about an allocation rule
+> nobody had questioned.** SCALED-T showed 12 of the −16 was δ_T's own shrinkage; INDEP-001 shows
+> the shrinkage was **never necessary**.
+
+## §3 of this document is superseded on one row
+
+| reading | was | **now** |
+|---|---|---|
+| **more deltas** (stack more skills) | SAFE, NOT PROFITABLE | **SAFE AND FREE — at independent per-skill coefficients.** The cost was the shared scale, not the second skill |
+
+`more data → YES` and `more magnitude → NO` are unchanged. **The unifying statement strengthens:
+magnitude is the master variable, and ALLOCATION across skills is part of magnitude.**
+
+## §4 needs a correction: I was quoting the wrong overlap number
+
+INDEP-001's build gate originally required the composed update's norm to equal the **quadrature**
+of the two scaled norms — which *asserts* `⟨δ_T, δ_H⟩ = 0`, a premise COMPOSE-001 had already
+measured false. The 4.68e-04 it flagged was not an error; **it was the cross term.** Replaced with
+a triangle-inequality check and the cross term reported:
+
+| quantity | value |
+|---|---:|
+| `⟨P₁₆δ_T, P₁₆δ_H⟩` | **+1.306e-03** |
+| **flattened-delta cosine** | **+0.00273** |
+| rank-16 **subspace** overlap | 0.151 |
+
+> **These are different objects and I was quoting the second as if it were the first.**
+> As *vectors* the two deltas are essentially **orthogonal (0.0027)**. The 0.151 is a *subspace*
+> overlap. §4 above reports "0.151 against an unrelated baseline of 0.0885" as the operative
+> number for interference; **it is not even the right quantity.**
+
+**This makes §4's conclusion STRONGER, not weaker.** The two deltas are as close to orthogonal as
+makes no practical difference, **and composition still cost 60 rows unrescaled.** So:
+
+> **Orthogonality was already available and it bought nothing.** The variable that governed the
+> outcome was allocation. Engineering more orthogonality cannot help a pair that is already at
+> cosine 0.0027 — which is the strongest form the §4 refutation can take.
+
+## Consequence for the recommendation
+
+§5's item 2 (push the dose axis) is unchanged and still needs a grant. But **item 3 —
+"do NOT build the orthogonality experiment" — is now settled rather than merely unsupported**, and
+a new item outranks item 4:
+
+> **Re-run every composition on record with independent per-skill coefficients.** It is pure
+> weight arithmetic over deltas already on disk, and on the one pair tested it converted a 60-row
+> loss into a 0-row loss. Every composed arm in this programme was built under the allocation rule
+> that INDEP-001 has now falsified.
