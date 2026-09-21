@@ -259,3 +259,72 @@ a new item outranks item 4:
 > weight arithmetic over deltas already on disk, and on the one pair tested it converted a 60-row
 > loss into a 0-row loss. Every composed arm in this programme was built under the allocation rule
 > that INDEP-001 has now falsified.
+
+---
+
+# Amendment 2 — I UNDERSTATED Amendment 1. The second skill is free on every endpoint measured.
+
+Amendment 1 was written from a partial report and said *"costs zero acquisition rows."* The
+completed INDEP-001 result (`BATTERY_COMPLETE`, 2 arms × 4 endpoints, all five predictions
+resolved) is stronger on two counts.
+
+**First, this is the first composition arm in the programme whose DAMAGE endpoints were actually
+measured at all.** COMPOSE-001 and MAG-001 were both refused at `exit=2` on the host-RAM guard, so
+every composition claim on record until tonight rested on acquisition and `J_decision` alone.
+
+**Second, the control is `T16` rebuilt and re-measured under tonight's probe hashes**, not quoted
+from history — and it independently reproduced four figures never used to define its canary
+(panel 68, retained 39, long context 159, literal `UNKNOWN` 10).
+
+| endpoint | composed | control `T16` | paired | exact p |
+|---|---:|---:|---:|---:|
+| acquisition /384 | **235** | 235 | — | — |
+| family floors | 3/3 | 3/3 | — | — |
+| arithmetic panel /150 | 73 | 68 | 8 / 3 | 0.2266 *(not claimed; 10-row floor)* |
+| `references_retained` /47 | 39 | 39 | — | — |
+| **long context /256** | **164** | 159 | 6 / 1 | 0.1250 |
+| literal `UNKNOWN` /64 | 11 | 10 | — | — |
+| **boundary /112** | **85** | 69 | **20 / 4** | **0.0015** *(powered to 1.2e-07)* |
+| answerable /112 | 112 | 112 | **0 / 0** | 1.0 |
+
+> **A whole second skill for +3.4% total magnitude, at no measurable cost on any of four
+> endpoints — and the gate skill arrives at FULL strength: +16 boundary rows at p = 0.0015.**
+
+## The long-context number is the one that settles it
+
+| arm | allocation | magnitude | acquisition | **long context** |
+|---|---|---:|---:|---:|
+| `TH16` | raw sum, both at 1.0 | +45.2% | 175 | **127** |
+| `TH16s` | ONE scale on the SUM | +0.0% | 219 | *never measured* |
+| **`INDEP-001`** | **each skill its own scale** | **+3.4%** | **235** | **164** |
+
+**`TH16`'s long context of 127 sits THIRTY-TWO ROWS BELOW THE FROZEN SOURCE.** That was the single
+worst composition result in the programme, and it was read for days as evidence that two skills
+cannot coexist.
+
+> **It was never skill conflict. It was a gate skill carried at four times its useful strength,
+> funded by a shared rescale that stripped a third off the generator. Fix the allocation and the
+> damage does not shrink — it disappears, and long context goes ABOVE the single-delta control.**
+
+## §3's answer changes from "neutral" to "yes"
+
+| reading | §3 said | Amendment 1 said | **now** |
+|---|---|---|---|
+| **more deltas** | SAFE, NOT PROFITABLE | safe and free on acquisition | **YES — free on all four measured endpoints, and the added skill delivers its FULL effect** |
+
+`more data → YES` and `more magnitude → NO` stand. The corrected three-way answer is:
+
+> **More data: yes. More magnitude: no. More SKILLS: yes — provided each carries its own
+> coefficient.** The thing that was never free was the *shared scale*, and no one had tested
+> composition without it.
+
+## What this does NOT license
+
+- **One pair, one point.** `(1.00, 0.25)` is a single sample of a two-dimensional surface;
+  neither coefficient was swept *in composition*.
+- **Panel +5 and long context +5 are NOT claimed** — p = 0.2266 and 0.1250, and the panel's
+  measured noise floor is 10 rows. What is claimed is the **absence** of damage, and the boundary
+  gain.
+- **δ_H's 0.25 was chosen from H-ALPHA-001's sweep on a bank it was selected on**, which is the
+  same selection-on-the-test-set problem HPLAT-001 exists to address. The composition result does
+  not inherit a confirmation it never had.
