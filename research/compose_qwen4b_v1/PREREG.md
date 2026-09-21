@@ -155,6 +155,68 @@ every row were identical — and it returned 0, which is also what a passing che
 > must (a) assert both sides share an id namespace, and (b) pass a self-intersection positive
 > control proving a match was detectable. A 0 is informative only after a match was possible.**
 
+## 4b. AMENDMENT 2 — registered while the battery is running and NO score exists
+
+Both items below are registered **before any arm has been scored** — `scored/` is empty and the
+384-row battery is mid-flight. That timing is the whole point of item 2.
+
+### (i) The build-gate tolerance change, registered rather than merely recorded
+
+The first build gate used `TOL = 1e-9` and **refused** at a worst relative error of 6.131e-08.
+It was then changed to `2e-06` and passed with ~33× margin.
+
+**Why this is not widening-after-failure.** The general test: *widening is illegitimate when the
+new tolerance is chosen to admit the observed number; legitimate when the old tolerance was
+wrong for reasons visible **without** the observation.*
+
+- `1e-9` is **below float32 machine epsilon (1.19e-7)**. The adapters are stored in float32, so
+  a 1e-9 agreement between a float64 reconstruction and float32-stored weights is unachievable
+  **in principle**, whatever the arithmetic does. That was true before the gate ever ran.
+- `2e-06` is not a number invented to fit: it is **SCALED-T-001's own amended numerical
+  tolerance** for this exact class of check — the parent construction's calibrated value.
+- The 33× margin is therefore a *consequence*, not a target.
+
+A provenance string inside `PER_TENSOR_SCALES.json` is a **record**, not a **registration**, and
+the two cases above are indistinguishable from outside once a result exists. Hence this
+amendment. No arm had been written when the gate refused — the gate precedes the write loop — so
+the retry was clean and nothing was overwritten.
+
+### (ii) PRE-REGISTERED INTERPRETATION CONSTRAINT: the 4B is the HARSHER test
+
+Registered now because it forecloses a reading that would otherwise be available *after* the
+number lands, and which I would be tempted by.
+
+| | 596M (SCALED-T-001) | 4B (here) |
+|---|---:|---:|
+| `s_t` min | 0.5175 | **0.4587** |
+| `s_t` median | **0.6750** | **0.5869** |
+| `s_t` max | 0.7496 | 0.7176 |
+| tensors / modules | 220 | 252 |
+| fallbacks | 0 | 0 |
+
+**δ_H is relatively larger against δ_T on the 4B, so T is attenuated *harder* inside `TH_s`
+here — to 0.587 of its strength rather than 0.675.**
+
+> **Therefore: if P1 holds and the null replicates, it may NOT be explained away as "the 596M
+> null was just mild attenuation." The 4B attenuates T more, not less. A replication here is a
+> STRONGER result than the original, not a weaker one.**
+>
+> **And symmetrically: if P2 fires and interference appears, it may NOT be attributed solely to
+> headroom.** Harsher attenuation is an alternative sufficient cause, and this design cannot
+> separate the two. A P2 result therefore licenses *"interference appears under harsher
+> attenuation on a base with headroom"* and **not** *"headroom causes interference."*
+> Separating them needs a third arm at the 596M's `s_t`, which is not built and is not
+> registered here.
+
+This constraint binds both directions, which is what makes it a constraint rather than a hedge.
+
+### (iii) Norm-check scope, noted
+
+The build gate verifies the **sum** is represented exactly and checks every magnitude with a
+plain dense Frobenius norm (`matrix_norm(..., ord="fro")` over the materialised `B@A` product),
+**not** a top-16 singular-value sum. That matters because the concatenated `TH_s` adapter is
+rank 32, so any rank-16 norm shortcut would be wrong for it. No such shortcut is used.
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
