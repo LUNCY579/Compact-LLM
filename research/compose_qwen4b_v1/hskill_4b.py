@@ -106,20 +106,37 @@ def reclaimable(lock):
         d = json.loads(lock.read_text(encoding="utf-8"))
     except Exception:
         return None
-    lane = str(d.get("label", "")).split(":")[0]
+    # Match EVERY colon-separated token of the label, not just the first.
+    #
+    # A lock observed tonight read `indep003:indep005_s17_h020:acquisition` -- a runner copied
+    # for a new experiment carried the OLD hardcoded lane prefix. The job was INDEP-005; the
+    # label said indep003. Measured: token 'indep003' matched NO live process, while token
+    # 'indep005_s17_h020' matched two, one of them holding 1.35 GiB on the card. Keying on the
+    # prefix alone would have declared a LIVE lease reclaimable the moment its supervisor died.
+    #
+    # A MISLABELLED lock is worse than an unlabelled one: it is confidently wrong, and nothing
+    # checks that a lease's label matches the experiment that took it. Copying a runner is
+    # exactly how the divergence appears.
+    label = str(d.get("label", ""))
+    tokens = [t for t in label.split(":") if t]
     holder_dead = not psutil.pid_exists(d.get("pid", 0))
     no_workers = not d.get("worker_pids")
     stamp = d.get("orphan_after_unix", d.get("created", 0) + 600)
     stamp_passed = time.time() > stamp
     live_lane = []
-    if lane:
-        for p in psutil.process_iter(["pid", "cmdline"]):
-            try:
-                if lane in " ".join(p.info["cmdline"] or []):
-                    live_lane.append(p.info["pid"])
-            except Exception:
-                continue
-    ok = holder_dead and no_workers and stamp_passed and not live_lane
+    for p in psutil.process_iter(["pid", "cmdline"]):
+        try:
+            cl = " ".join(p.info["cmdline"] or [])
+            if p.info["pid"] == os.getpid():
+                continue                      # never match our own scan
+            if any(t in cl for t in tokens):
+                live_lane.append(p.info["pid"])
+        except Exception:
+            continue
+    # Belt and braces: an unlabelled lock cannot be cleared by a label check at all, and a
+    # card with ANY resident job is never an orphan whatever the bookkeeping says.
+    ok = (holder_dead and no_workers and stamp_passed and not live_lane
+          and bool(tokens) and gpu_pids() == set())
     if not ok:
         return None
     return {"reclaimed_lock": d, "lane": lane, "holder_dead": holder_dead,
