@@ -418,6 +418,46 @@ calls it with `capture_output=True`, which buffers until exit. I was blind to pr
 The instrument existed; I simply never routed it anywhere. Fixed in the next version; not
 patched into the running process.
 
+## 4g. AMENDMENT 7 — the 4B deltas are measurably LESS orthogonal than the 596M's
+
+Registered before **any arm is scored**. `scored/` is empty; arm 1's raw generations exist but
+no endpoint has been computed, no contrast run, and no generation inspected. The quantities
+below are **build geometry**, not endpoints — they are properties of the two adapters and would
+be identical had no probe ever run.
+
+A peer recorded that on the 596M `δ_T` and `δ_H` were already near-orthogonal at
+**cosine 0.0027**, which makes the shared-scale penalty an allocation effect rather than a
+directional clash. That invited an obvious assumption — that the 4B pair is orthogonal too.
+**Measured here rather than assumed, and it is not:**
+
+| | 596M (peer) | 4B (measured here) |
+|---|---:|---:|
+| `cosine(δ_T, δ_H)` | **0.0027** | **+0.0923** |
+| angle | ~89.8° | **84.70°** |
+| per-module cosine, median | — | +0.0696 (min −0.2396, max +0.4080, n=252) |
+| `‖δ_H‖ / ‖δ_T‖` | 1.053 | **1.3163** |
+| global `s_t` | 0.675 | **0.5797** |
+
+Two differences, both pushing the same way:
+
+1. **The 4B pair is ~34× less orthogonal** (0.0923 vs 0.0027). Still near-orthogonal in absolute
+   terms, but not the clean separation the 596M enjoyed, and the per-module spread reaches
+   +0.41.
+2. **δ_H is relatively much larger on the 4B** — 1.32× δ_T against 1.05× on the 596M. This is
+   *why* `s_t` is lower here: a bigger H forces a harder rescale of the sum, which is the
+   mechanical origin of the harsher attenuation registered in Amendment 2(ii).
+
+> **Registered consequence, both directions.** The 4B is a harsher test on a *third* axis now —
+> less orthogonality, a relatively larger second delta, and harsher attenuation, all at once.
+> **A P1 null is correspondingly stronger**: no cost even with 34× the directional overlap and
+> a second skill 1.32× the size of the first. **A P2 gains a fifth candidate cause** — reduced
+> orthogonality — alongside headroom, attenuation, H's absolute strength, and allocation.
+> **This design separates none of the five**, and the writeup will say so.
+
+The honest summary of what COMPOSE4B-001 can deliver is narrowing with each of these
+amendments, and that is the correct direction for it to move *before* the data rather than
+after.
+
 ## 5. Registered predictions
 
 Primary contrast is **`TH_s` vs `SCALED_T`** on acquisition, `select-views-001`, paired exact
