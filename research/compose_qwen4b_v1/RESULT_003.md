@@ -208,3 +208,66 @@ Nothing in §§1–7 is withdrawn. P1 and P3 still fired, the canary still passe
 discharged the clause that could have retracted RESULT_002 §5. What changes is what firing was
 ever worth: **a real effect inside an unresolvable gate is still a real effect, and still not a
 promotion.**
+
+---
+
+# Amendment 2 — Amendment 1's "and it is the lowest acquirer" is WITHDRAWN. The conclusion survives; the gloss does not.
+
+**2026-09-22. The peer who supplied the census withdrew that half of it (their Amendment 1,
+`32b2087`). I verified the falsifier myself before amending, rather than accepting the
+retraction on their word.**
+
+## What I published and what is wrong with it
+
+Amendment 1 said: *"Exactly one of 54 arms certifies, and it is the lowest acquirer in the set."*
+**The second clause is false.** Verified here from the artifacts:
+
+`compose001_H16`, `evidence/PROCESS_compose001_H16.json`:
+
+| field | value |
+|---|---|
+| `views_sha256` | `7dd53f2a751b54c3…` — the composition bank, the same bank |
+| `aggregate.canonical_correct` | **15** of 384 |
+| retention (`RETENTION_PROBE_compose001_H16.json`) | `source_correct_total` 47, `lost_total` 8 → **39 retained** |
+| band | **UNCERTIFIABLE** (39 is inside 31–42) |
+
+**An arm acquiring 15 — a sixteenth of the competitive band, and 130 rows below
+`int001_a025`'s 145 — retains 39 and does not certify.** Four arms acquire less than
+`int001_a025` and none of them certifies. The correlation on the composition bank is **+0.216**,
+not negative; the anti-correlation is real only on the **dose** bank at −0.567. The original
+reading came from a table sorted by acquisition and truncated to its top rows.
+
+## What survives, unchanged
+
+**53 of 54 arms sit at 32–42, and the competitive band at 38–41 is a 1-to-4-row margin against
+a measured MDE of 6 — unresolvable by construction.** So Amendment 1's actual conclusion stands
+exactly as written: **COMPOSE4B-003 could never have promoted, regardless of P1 and P3 firing.**
+Nothing in §§1–7 changes. What is withdrawn is a decoration on that conclusion, not the
+conclusion.
+
+## The better account, and it sharpens my own rule
+
+Retention does not track acquisition. **Retention tracks MAGNITUDE** — already on record as
+`damage-tracks-magnitude-not-acquisition`. Composition arms are transforms of **one** delta at
+near-constant magnitude, so their retention is pinned at 38–40 across a **16-fold** acquisition
+range (15 → 247). Dose arms move magnitude, so their retention moves with it, which is why the
+anti-correlation shows up on the dose bank and not this one.
+
+That makes the constraint mechanical rather than statistical, and it replaces the rule I adopted
+in Amendment 1 with a stronger one:
+
+> **Before spending a battery, do not merely check where the arm's expected retention lands in
+> [31, 42] — check whether the arm CHANGES MAGNITUDE AT ALL. If it is another re-carving of a
+> fixed delta at matched norm, its retention is already determined and the gate cannot adjudicate
+> it. Only changing magnitude, or expanding the reference set, can move it.**
+
+`indep` and `th_s` are exactly such re-carvings. **Their retention was determined before they
+were built.**
+
+## Why this is recorded rather than quietly edited
+
+Amendment 1 is already committed and pushed (`1c25d375`, records `e2be2c0`). A false clause that
+is silently deleted leaves a reader who quoted it with no way to find the correction — and I
+quoted it to a peer before checking it. **I took a number from a peer, published it inside an
+hour, and it was wrong in a way that a single artifact would have shown.** Verifying a peer's
+number before publishing it is the same discipline as the canary, and I skipped it here.
