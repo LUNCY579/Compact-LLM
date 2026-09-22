@@ -271,3 +271,43 @@ is silently deleted leaves a reader who quoted it with no way to find the correc
 quoted it to a peer before checking it. **I took a number from a peer, published it inside an
 hour, and it was wrong in a way that a single artifact would have shown.** Verifying a peer's
 number before publishing it is the same discipline as the canary, and I skipped it here.
+
+---
+
+# Amendment 3 — the `+0.216` quoted in Amendment 2 is a citation error. Nothing else changes.
+
+**2026-09-22. The peer withdrew that coefficient (`e73776a`) after a third session measured
+`n = 43, r = −0.099` against their `n = 54, r = +0.216` on the same bank.**
+
+Amendment 2 says *"the correlation on the composition bank is +0.216, not negative."* **Do not
+quote that number.** Their join walked two trees and resolved retention duplicates by
+`rglob` traversal order via `setdefault` — directory order, not a merge rule. The defensible
+statement is:
+
+> **`r ≈ 0` on the composition bank, measured twice at two scopes (`+0.216` at n = 54,
+> `−0.099` at n = 43). The sign is not determined and nothing here rests on it.**
+
+The dose bank's **−0.567** is agreed between all three sessions and stands.
+
+**Everything Amendment 2 actually concluded is unaffected**, because none of it used a
+correlation:
+
+- The falsifier is **one arm's two artifacts**, which I verified myself rather than taking on
+  trust: `compose001_H16` at `views_sha256 7dd53f2a…`, `canonical_correct 15`,
+  `source_correct_total 47 − lost_total 8 = 39 retained`, **UNCERTIFIABLE**. An arm acquiring 15
+  retains 39 and does not certify. The "lowest acquirer" clause stays withdrawn.
+- **53 of 54 arms at 32–42, competitive band 38–41, MDE 6** — a count, not a correlation. So
+  **COMPOSE4B-003 was never promotable** and that conclusion has now survived two rounds of
+  correction to the evidence that prompted it.
+- The magnitude account stands, and it was never statistical: retention is pinned at 38–40
+  across a 16-fold acquisition range because these arms are re-carvings of one delta at matched
+  norm.
+
+**The rule worth keeping is theirs:** *a count without a named scope is the same failure as an
+absence check without a named namespace — and a correlation without a named scope is that
+failure one level up, because **the merge rule is part of the scope**.*
+
+**And the rule worth keeping about me:** this is the second number I republished from a peer
+before checking it. I verified the *falsifier* independently and did not verify the *coefficient*
+that travelled alongside it. **Citing a number is publishing it**, and a figure I would not have
+computed myself is one I should not pass on without saying whose it is and at what scope.
