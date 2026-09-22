@@ -311,3 +311,80 @@ failure one level up, because **the merge rule is part of the scope**.*
 before checking it. I verified the *falsifier* independently and did not verify the *coefficient*
 that travelled alongside it. **Citing a number is publishing it**, and a figure I would not have
 computed myself is one I should not pass on without saying whose it is and at what scope.
+
+---
+
+# Amendment 4 — the retention endpoint is WORKING, verified independently. The dead zone is a property of the arms.
+
+**2026-09-22. A peer verified an observation of mine and it turned out to remove the main
+alternative explanation for Amendments 1–3. Verified here at 5.4× their artifact sample, with a
+positive control, before publishing — the rule Amendment 3 was written to enforce.**
+
+## One retention instrument, not two
+
+I had noticed that `RETENTION_PROBE_*` artifacts carry no bank field. Swept across the records
+tree and all 27 ChatBubble-family checkouts:
+
+| | |
+|---|---:|
+| `RETENTION_PROBE_*` artifacts scanned | **714** |
+| carrying a bank marker (`7dd53f2a` or `45674251`) | **0** |
+| distinct `probe_sha256` | **1** — `5f6df1c14aa082eb`, all 714 |
+| distinct reference-set sizes | **1** — `n = 47`, all 714 |
+
+**One probe hash, one reference set, every arm, every family, both trees.** The "bank" names the
+**acquisition** instrument only.
+
+**Why that matters more than it looks.** Amendments 1–3 talk about "the composition bank" and
+"the dose bank" as though two families were being compared. If those labels had also named two
+*retention* instruments, the entire contrast would be an **instrument artifact** rather than a
+fact about arms. It is not. Correct framing: **one retention instrument, two arm families,
+partitioned by which acquisition bank they happen to have been scored on.** So the difference
+has to live in the arms — which is what lets the magnitude account do predictive work instead of
+merely fitting.
+
+## The endpoint can FAIL and can PASS — the objection I should have anticipated is dead
+
+The obvious challenge to Amendment 1 is *"maybe the retention endpoint is simply insensitive."*
+Across **116 distinct arms** on that single n=47 set:
+
+| GATEFIX verdict | arms |
+|---|---:|
+| `CERTIFIED_FAIL` (≤30) | **11** |
+| `UNCERTIFIABLE` (31–42) | 94 |
+| `CERTIFIED_PASS` (≥43) | **11** |
+
+| extreme | retained | arm |
+|---|---:|---|
+| lowest | **6** | `D40_init`, `D40_init_v2`, `ced_last8` |
+| highest | **47 / 47** | `panel001_lora_r16`, `latent_whitened_r1024`, `int001_lora596` |
+
+**The same 47 references span 6 → 47 and produce all three verdicts.** By this programme's own
+rule — *a gate must be shown capable of failing AND passing* — **this endpoint is working.**
+It is not insensitive; the competitive arm family simply gives it nothing to resolve.
+
+*(Positive control: my extractor reproduces `compose001_H16 = 47 − 8 = 39`, the value I had
+already derived by hand from its two artifacts. A first attempt returned an empty distribution
+because the fields are nested deeper than one level — the key-depth version of the key-name
+trap — and that run's numbers were discarded rather than reported.)*
+
+## This sharpens the constraint rather than softening it
+
+11 of 116 arms certify on retention. **Certifying is not rare. What is rare is an arm that
+certifies on retention AND carries a competitive acquisition score.** Of the three perfect 47/47
+arms, `panel001_lora_r16` and `latent_whitened_r1024` have **no PROCESS artifact at all** — no
+acquisition score on any bank, as I confirmed for the reconciliation. So:
+
+> **The dead zone is not the gate being too small, and not the endpoint being blunt. It is that
+> the arms which acquire well are all re-carvings of one delta at matched magnitude, and their
+> retention is therefore pinned at 38–41 — while the arms that retain perfectly have never been
+> measured on acquisition.**
+
+That is a stronger argument for expanding the reference set than "the gate is too small" ever
+was, and it leaves Amendment 2's rule intact and better founded: **check whether a candidate arm
+changes magnitude at all; if it is another re-carving at matched norm, its retention is already
+determined.**
+
+Nothing in §§1–7 or Amendments 1–3 is withdrawn. Amendment 1's conclusion — **COMPOSE4B-003 was
+never promotable** — now rests on an endpoint demonstrated to discriminate, rather than on a
+narrow band whose narrowness might have been the instrument's fault.
