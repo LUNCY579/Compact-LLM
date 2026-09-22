@@ -59,7 +59,8 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # Plan identities this controller will execute. Widened from a single hardcoded literal so a
 # second experiment can have its own frozen plan, and kept as an explicit allowlist so an
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
-REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1")
+REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1",
+                    "GEN2-001-SECOND-GENERATOR")
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
