@@ -36,6 +36,7 @@ from .sources import stable_hash
 # before the foreground validates a grant, which happens before any phase dispatch.
 # This module is torch-free, so importing it does not initialize the native runtime.
 from . import instrument as _registers_rrp002_baseline  # noqa: F401
+from . import gen2_second_generator as _registers_gen2  # noqa: F401  GEN2-001
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
