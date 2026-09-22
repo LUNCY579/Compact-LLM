@@ -388,3 +388,57 @@ determined.**
 Nothing in §§1–7 or Amendments 1–3 is withdrawn. Amendment 1's conclusion — **COMPOSE4B-003 was
 never promotable** — now rests on an endpoint demonstrated to discriminate, rather than on a
 narrow band whose narrowness might have been the instrument's fault.
+
+---
+
+# Amendment 5 — Amendment 4's "cheapest open move" is a SPENT experiment. Withdrawn.
+
+**2026-09-22. A peer stopped me before I proposed it to the operator; I verified their closure
+from the artifacts rather than accepting it.**
+
+Amendment 4 ended by suggesting that `panel001_lora_r16` — retaining **47/47** with no `PROCESS`
+artifact — was "the cheapest open move," a magnitude-changing candidate worth one battery.
+**It is not open, and it is not magnitude-changing. It is LORA-596 arm 1, and the experiment is
+closed.**
+
+The label mapping is confirmed by **exact collision on both the retained and the lost counts**,
+not by name:
+
+| retention artifact | retained | lost | LORA-596 record | acquisition /384 |
+|---|---:|---:|---|---:|
+| `panel001_lora_r16` | **47** | **0** | arm 1, `lr 1e-5` | **70** |
+| `panel001_lora_r16_lr1e4` | **41** | **6** | arm 2, `lr 1e-4` | **223** |
+
+Verified here from `LORA596_ARM2_RESULT.md`: `| lora596 (r=16, lr 1e-5) | 70 | 1/3 | 68 | 47 | 0 |`.
+
+**And it was already diagnosed by a disconfirmer registered before arm 2 ran**, quoting that
+record directly: *"Under-convergence predicted 47/47 together with low acquisition; a rank effect
+predicted 47/47 surviving as acquisition rises. Acquisition rose 70 → 223 and retention fell
+47 → 41. Arm 1's zero-loss retention was convergence, not rank."* Arm 1's `‖δ‖` is **0.3242**
+against the control's **0.8298**.
+
+## Why I got it exactly backwards, which is the reusable part
+
+My own rule — *check whether the arm changes magnitude* — **predicts this arm's 47/47 perfectly,
+and I did not run my own rule on my own proposal.** Retention tracks magnitude; arm 1 sits at
+39 % of the control's norm; so 47/47 is the expected reading of an under-trained model, not a
+discovery. I applied the rule to *reject* re-carvings and never turned it on the candidate I was
+recommending.
+
+> **A perfect retention score with no acquisition score is not an opportunity — it is the
+> cheapest and least informative way to retain, and the first hypothesis should be
+> under-convergence.** `latent_whitened_r1024`, the other 47/47 arm without a `PROCESS`
+> artifact, is a prime suspect for the same thing and should get this check before anyone
+> proposes it.
+
+**Three sessions independently converged on this arm tonight and the answer was on disk** — in a
+record that also notes `α = 0.50` beats LoRA r=16 on every endpoint **with no training run at
+all**. That is `appending-to-a-document-is-not-reading-it` operating at the level of the
+programme rather than a single document: the failure is not missing a file, it is proposing
+before reading.
+
+**Nothing else in Amendment 4 is affected.** The single-instrument verification (714 artifacts,
+one `probe_sha256`, one n=47 set), the 116-arm verdict census (11 FAIL / 94 UNCERTIFIABLE /
+11 PASS), and the conclusion that the dead zone is a property of the arms all stand. The binding
+fix remains **expanding the reference set** — roughly 4×, n ≈ 190 for a 3-row margin, subject to
+a real power calculation.
