@@ -38,7 +38,7 @@ def spawn(flags):
     log.write(f"\n===== detached launch {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())} flags={flags:#x} =====\n")
     log.flush()
     return subprocess.Popen(
-        [str(PY), str(HERE / "hskill_4b_003.py")],
+        [str(PY), "-u", str(HERE / "hskill_4b_003.py")],
         cwd=str(HERE), stdout=log, stderr=subprocess.STDOUT,
         stdin=subprocess.DEVNULL, creationflags=flags, close_fds=True)
 
@@ -55,11 +55,30 @@ def main():
         if child.poll() is not None:
             print(f"child exited immediately rc={child.returncode}", flush=True)
             continue
+        # The venv Scripts/python.exe is a TRAMPOLINE: Popen's pid is a launcher stub and
+        # the real interpreter is a GRANDCHILD. Recording child.pid alone makes
+        # "is my worker alive?" answer about a process that exited seconds after launch --
+        # which is exactly the wrong answer I gave myself once already. Record both.
+        real = []
+        try:
+            import psutil
+            for _ in range(20):
+                real = [c.pid for c in psutil.Process(child.pid).children(recursive=True)]
+                if real:
+                    break
+                time.sleep(0.5)
+        except Exception:
+            pass
         (OUT / "WORKER_PID.json").write_text(json.dumps({
-            "pid": child.pid, "creationflags": hex(flags),
+            "pid": child.pid,
+            "trampoline_pid": child.pid,
+            "real_worker_pids": real,
+            "pid_note": ("Scripts/python.exe is a trampoline; child.pid is the stub and the real "
+                         "interpreter is a grandchild. Liveness must be judged on "
+                         "real_worker_pids, or better, on the lock's own pid field."), "creationflags": hex(flags),
             "breakaway_from_job": bool(flags & CREATE_BREAKAWAY_FROM_JOB),
             "launched_unix": time.time(),
-            "argv": [str(PY), str(HERE / "hskill_4b_003.py")],
+            "argv": [str(PY), "-u", str(HERE / "hskill_4b_003.py")],
             "log": str(OUT / "eval.log"),
             "why": "attempt 1 died rc=1073807364 (DBG_TERMINATE_PROCESS) on session teardown",
         }, indent=2) + "\n", encoding="utf-8")
