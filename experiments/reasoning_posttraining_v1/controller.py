@@ -41,6 +41,7 @@ from . import repair_preservation as _registers_preservation_repair
 from . import process_arm as _registers_process_arm
 from . import process_dose as _registers_process_dose
 from . import process_mix as _registers_process_mix
+from . import gen2_second_generator as _registers_gen2  # GEN2-001
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
