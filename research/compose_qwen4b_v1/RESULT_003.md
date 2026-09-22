@@ -154,3 +154,57 @@ Statistics: exact paired McNemar, MDE at observed discordance, Clopper–Pearson
 bounds, Holm–Bonferroni at m = 3 fixed regardless of outcome. The registered unsatisfiability
 guard (nd ≤ 6 cannot clear Holm's strictest step of 0.0167) did not bind — the smallest
 registered nd was 19.
+
+---
+
+# Amendment 1 — this result could never have promoted, and that is a fact about the GATE
+
+**2026-09-22, added the same night, prompted by a peer's certifiability census
+(`retention-certifiability-20260922/`, their commit `dcf6821`) and not by anything in my own
+data.**
+
+§6 says "nothing is promoted" and gives instrument-level reasons. There is a stronger and more
+structural reason that I did not know when I wrote it, and it belongs here rather than in a
+footnote.
+
+The peer joined every arm carrying **both** an acquisition score on bank `7dd53f2a` **and** an
+n=47 `references_retained` figure — 54 arms — against GATEFIX-001's bands
+(**≤30 FAIL, 31–42 UNCERTIFIABLE, ≥43 CERTIFIED_PASS**):
+
+| arm | acquisition | retained | band |
+|---|---:|---:|---|
+| `tt001_TT16s` | 247 | 38 | UNCERTIFIABLE |
+| `indep005_same_a025` | 245 | 38 | UNCERTIFIABLE |
+| `mag001_sm05` | 243 | 39 | UNCERTIFIABLE |
+| `indep001_t100h000` | 235 | 39 | UNCERTIFIABLE |
+| …49 more | 235–247 | 31–42 | UNCERTIFIABLE |
+| `int001_a025` | **145** | **43** | **CERTIFIED_PASS** |
+
+> **Exactly one of 54 arms certifies, and it is the lowest acquirer in the set.** Every
+> competitive arm sits at 38–41 — a 1-to-4-row margin — against a measured **MDE of 6**.
+
+**What that means for this experiment.** `indep` and `th_s` are arms in exactly that competitive
+class. Their retention figures are not measured here — `references_retained` is **structurally
+unrunnable** against a 4B adapter, as §6 already states — but there is no acquisition level at
+which an arm of this kind escapes [31, 42]. **P1 firing at +28 and P3 firing at +13 were never
+going to produce a promotable arm**, whatever the numbers had been.
+
+**The diagnosis is not "the gate is too small to certify anything."** `int001_a025` proves n=47
+*can* pass. The competitive arms are clustered inside the gate's dead zone. So the binding
+constraint on every promotion in this programme is **the size of the retention reference set**,
+roughly 4× the references (n ≈ 190 for a 3-row margin, subject to a real power calculation) —
+and that is a measurement-instrument problem, not a composition problem.
+
+**Why this is recorded as an amendment rather than folded into §6.** §6's claims were true and
+remain true; this adds a constraint I did not know about, discovered by someone else, that makes
+the "no promotion" verdict *structural* rather than merely cautious. It also sets a rule I am
+adopting going forward:
+
+> **Before spending a battery on an arm chosen to clear the retention gate, check where its
+> expected retention lands relative to [31, 42]. If it lands inside, the run cannot adjudicate
+> whatever it measures, and the GPU time buys a number that no band can read.**
+
+Nothing in §§1–7 is withdrawn. P1 and P3 still fired, the canary still passed, and P3 still
+discharged the clause that could have retracted RESULT_002 §5. What changes is what firing was
+ever worth: **a real effect inside an unresolvable gate is still a real effect, and still not a
+promotion.**
