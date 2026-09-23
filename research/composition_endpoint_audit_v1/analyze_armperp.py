@@ -91,7 +91,14 @@ def main():
     print(f"  a0554 limb: discordance {a['disc']:2d} -> {'RESOLVED' if resolved(a) else 'UNRESOLVED (P2)'}")
     print(f"  h025  limb: discordance {h['disc']:2d} -> {'RESOLVED' if resolved(h) else 'UNRESOLVED (P2)'}")
     if sig(a) and nsig(h):
-        print("  GEOMETRY. MUST be reported as confounded with rank (median 23 vs comparators 16).")
+        # ERRATUM 2026-09-23: the rank figure quoted here was min 21 / median 23 / max 27, which
+        # was a 21-of-140 sample that sorted-key order confined to layers 10-12 ONLY. Measured on
+        # the excluded layers: L8-9 gives min 20 median 22.5 max 27, L26-27 gives min 16 median
+        # 24.0 max 26. Over all three groups (49 tensors, 7 layers): MIN 16, MEDIAN 24, MAX 27.
+        # The reported min was too high and the true min equals the comparators' rank exactly.
+        print("  GEOMETRY. MUST be reported as confounded with rank "
+              "(median 24 vs comparators 16, over 49 tensors spanning L8-12 and L26-27; "
+              "the earlier median-23 figure sampled L10-12 only).")
     elif nsig(a) and sig(h):
         print("  CONTENT. Rank confound does not apply -- it explains a gain, not its absence.")
     elif sig(a) and sig(h):

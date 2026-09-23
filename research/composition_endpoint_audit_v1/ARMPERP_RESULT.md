@@ -160,3 +160,70 @@ norm `0.697471338175574` vs h025's `0.697471338175503`. All four arms share bank
 `max_new_tokens 96`, digest `a329eb7bb06f`, asserted rather than assumed. Long-context ran from
 the qualification checkout because the suite is absent from this worktree — disclosed before any
 result existed.
+
+---
+
+# Erratum 1 — gate 7's rank figure was a THREE-LAYER sample reported as the arm's range
+
+**Raised by the adversarial panel, verified here, and the verifier's own UNCHECKED step has now
+been run.** The panel's coverage was poor and is reported in §Panel below; this is the one
+objection that was actually adversarially verified, and it holds.
+
+## What was wrong
+
+`build_armperp.py` capped the rank sample at `len(rank_report) < 21`. The builder walks
+`sorted(S.keys())` and the applied set's sorted order visits layers **10, 11, … 27, then 8, 9**.
+So the first 21 two-dimensional tensors are **exactly all seven projections of layers 10, 11 and
+12** — 3 of 20 layers, contiguous. `MATERIALIZATION_perp.json` honestly records
+`n_tensors: 21`, and the build log says *"over 21 sampled 2D tensors"* — **but no artifact
+anywhere discloses the LAYER scope**, and a reader seeing 21-of-140 would reasonably assume a
+stride or spread sample rather than one contiguous block.
+
+**It was not a neutral exclusion.** `measure_projection_rank.py` (`886b3680`) had already
+established that top-16 energy rises monotonically with depth on this delta, **58.7 % at L8 to
+88.4 % at L27** — and top-16 concentration is precisely what governs how well-determined each
+P16 subspace is, hence `d_perp`'s rank.
+
+## Measured on the excluded layers — same cost as gate 7 itself
+
+```
+GATE 7 SAMPLE  L10-12    n=21   min 21   median 23.0   max 27
+EXCLUDED LOW   L8-9      n=14   min 20   median 22.5   max 27
+EXCLUDED HIGH  L26-27    n=14   min 16   median 24.0   max 26
+ALL THREE                n=49   min 16   median 24.0   max 27
+```
+
+> **THE REPORTED MINIMUM WAS TOO HIGH. The true minimum is 16 — exactly the comparators' rank —
+> and it comes from the DEEP, high-concentration layers, the opposite end from where the
+> objection predicted trouble.** The median moves 23 → 24.
+
+**Corrected statement:** `d_perp`'s effective rank at 99 % energy is **min 16, median 24, max
+27** over 49 tensors spanning L8–12 and L26–27, against comparators at 16 and an algebraic bound
+of 32. The earlier `min 21 / median 23 / max 27` is a **sample over layers 10–12** and must be
+labelled as such wherever it appears.
+
+## Where the stale figure appears, and why it still does not touch the verdict
+
+Corrected here and in `analyze_armperp.py:94`. **It also appears uncaveated in the peer's
+`armperp001-20260923/INDEPENDENT_SCORING.md:74`** — their independent record inherited my
+figure, which is a reminder that independent *scoring* does not make an inherited *input*
+independent. Flagged to them.
+
+**Gate 7 remains inert for this result**, as the prereg fixed in advance: the rank confound
+bears on a **GEOMETRY** verdict, because rank would explain a **gain**. No gain occurred, and
+the reported outcome is the fifth state, not GEOMETRY. The erratum corrects a reported
+measurement, not a conclusion.
+
+# Panel — COVERAGE FIRST, because 32 of 41 agents died
+
+```
+agents launched       41
+attack lenses done     5/5    -> 36 objections raised
+VERIFIERS COMPLETED    4/36   (11%)
+VERIFIERS DIED        32/36   (session usage limit)
+```
+
+> **"1 of 36 survived" would be FALSE.** One survived adversarial check; **32 were never
+> tested** — neither refuted nor confirmed. Below a quorum of returned verifiers this panel
+> yields **INSUFFICIENT COVERAGE, not a verdict.** The 32 unverified objections remain open and
+> their titles are preserved in the workflow journal.
