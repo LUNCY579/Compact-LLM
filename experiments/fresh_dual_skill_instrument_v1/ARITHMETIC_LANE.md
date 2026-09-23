@@ -66,3 +66,15 @@ Until this lane exists, **no joint-composition claim is available from this inst
 transition lane alone can show whether a composed arm preserves *Titan-Sparse's* skill; it cannot
 show whether Opallo's skill survived alongside it. Both halves are required before
 "acquires a new skill with barely any loss" can be tested rather than argued.
+
+---
+
+## Superseded before building — read `O_SKILL_DEFINABILITY.md` first (2026-09-23)
+
+The premise that arithmetic is "Opallo's donated skill" does not hold. Opallo trained on 41
+conversational rows and **zero** arithmetic-class rows, so its panel score is transfer.
+Titan-Sparse scores 72/150 on the same panel against Opallo's 74, and the rows each donor gains
+overlap far above chance (21 of 31, p = 7.8e-7). So does a delta trained only on abstention rows.
+The Opallo-specific residue is about 5 rows, inside the seed floor. A bank built to this plan
+would have an "Opallo high" gate that Titan-Sparse also passes. **Do not build it as specified.**
+The one O-endpoint still definable is described in `O_SKILL_DEFINABILITY.md` §Consequences 4.

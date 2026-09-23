@@ -1,0 +1,61 @@
+{
+ "permissive": {
+  "gained": 33,
+  "score_keys": [
+   "correct",
+   "kind",
+   "parsed",
+   "raw",
+   "reason",
+   "target",
+   "terminated"
+  ],
+  "supa_fail_reasons_on_gained": {
+   "'% tip on a $40 bill is $4' is not a declared money unit": 1,
+   "did not terminate": 1,
+   "duration is not number/unit pairs: '9:15 am - 8:30 am = 45 minutes'": 1,
+   "no leading number in 'a 15% tip on a $60 bill is $9'": 1,
+   "no leading number in 'it runs from 2:20 pm to 3:10 pm'": 1,
+   "no leading number in 'the percent increase is 10%'": 1,
+   "not a clock time: '11:30 am + 50 minutes = 12:20'": 1,
+   "not a clock time: '1:50 pm to 2:20'": 1,
+   "not a clock time: '4:50 pm + 45 minutes = 5:35'": 1,
+   "not a clock time: '9:15 am + 55 minutes = 9:70'": 1,
+   "not a clock time: 'it ends at 10:15'": 1,
+   "unit '% of 120 units = 60 units' does not match 'unit'": 1,
+   "value mismatch": 21
+  },
+  "supa_reason_on_its_correct_rows": {
+   "null": 47
+  }
+ },
+ "strict": {
+  "gained": 27,
+  "score_keys": [
+   "correct",
+   "kind",
+   "parsed",
+   "raw",
+   "reason",
+   "target",
+   "terminated"
+  ],
+  "supa_fail_reasons_on_gained": {
+   "'% tip on a $40 bill is $4' is not a declared money unit": 1,
+   "did not terminate": 1,
+   "duration is not number/unit pairs: '9:15 am - 8:30 am = 45 minutes'": 1,
+   "no leading number in 'a 15% tip on a $60 bill is $9'": 1,
+   "no leading number in 'it runs from 2:20 pm to 3:10 pm'": 1,
+   "no leading number in 'the percent increase is 10%'": 1,
+   "not a clock time: '11:30 am + 50 minutes = 12:20'": 1,
+   "not a clock time: '1:50 pm to 2:20'": 1,
+   "not a clock time: '4:50 pm + 45 minutes = 5:35'": 1,
+   "not a clock time: '9:15 am + 55 minutes = 9:70'": 1,
+   "not a clock time: 'it ends at 10:15'": 1,
+   "value mismatch": 16
+  },
+  "supa_reason_on_its_correct_rows": {
+   "null": 41
+  }
+ }
+}

@@ -115,3 +115,39 @@ The registered primary endpoint is strict exact match, and under it ADD-100 scor
 number stands and is not retroactively changed. The period-tolerant column is a **secondary,
 post-hoc decomposition of the errors**, reported because it identifies *what* the strict endpoint
 is measuring. Both are true; only together are they honest.
+
+
+---
+
+# Erratum 1 (2026-09-23) — the period convention was attributed to the wrong evidence
+
+Line 46 above says *"Opallo's own training answers all end in a period — `64.`, `40.`, `$4.`,
+`10:25 AM.`"*. **Those four strings are not Opallo's training answers.** They are gold answers of
+the 150-row arithmetic panel (`architecture_benchmark_001/data/monitor_probe.jsonl`, sha
+`5f6df1c1…`; they occur there 2, 1, 3 and 3 times). Opallo never trained on that panel or on its
+classes.
+
+What Opallo actually trained on, re-derived from the raw files:
+
+- Checkpoint `915af77f` (the `OPALLO` arm's source) consumed **41 rows**
+  (`train_row_ids_consumed` in `evidence/retention-design-v1/ARM_DOSE_B28last20_lr1e-05_b5200_seed17_wsd0.2-0.2_b20.95.json`)
+  from `outputs/splits_large/train.jsonl` (sha `cd57e650…`), spanning **24 conversational reply
+  classes** (`natural_follow_up` 5, `counting_sets` 2, `schedule_ordering` 2, …).
+- That 10,000-row pool contains **zero** rows of `percentage_reasoning`, `ratio_proportion` or
+  `time_duration`. Opallo's 73/150 (BF16) / 74/150 (FP32) on the panel is **transfer**, not
+  in-domain skill.
+- Final character of the 41 training answers: **`.` 34, `?` 6, `!` 1.** Median length 5 words,
+  maximum 11. Four are bare numerics followed by a period: `52.`, `22.`, `14.`, `1.25 liters.`
+
+**Which direction of the inference this breaks.** The *evidence* was wrong; the *mechanism* is not
+weakened. "The composed model inherits a terse, period-terminated answer habit from the Opallo
+delta" is supported more directly by Opallo's real training rows (83% end in `.`, including bare
+numbers written `52.`) than by the panel golds that were quoted. The attention localisation in
+`MODULE-DISJOINT-001` is unaffected.
+
+**What is weakened:** the sentence *"Period-tolerance is the registered convention of Opallo's
+domain."* `_strip_one_period` is a property of the arithmetic **panel's scorer**, not of any domain
+Opallo was trained in. The two-scorer hazard in `CROSS_LANE_HAZARD_scorer_pair.md` stands as a
+statement about the **instruments**. It should not be read as "each donor matches its own scorer".
+
+No number in this file changes.

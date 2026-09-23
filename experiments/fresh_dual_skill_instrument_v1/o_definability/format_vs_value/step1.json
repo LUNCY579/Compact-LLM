@@ -1,0 +1,301 @@
+{
+ "identity_ok": true,
+ "checks": {
+  "supa_row_targets_equal_permissive_overlay": true,
+  "supa_recorded_source_correct_flags_equal": true,
+  "supa_permissive_ids_identical": true,
+  "bf16_permissive_ids_identical": true,
+  "supa_strict_ids_identical": true,
+  "bf16_strict_ids_identical": true,
+  "supa_source_correct_ids_identical": true,
+  "fp32_per_row_equals_permissive": true,
+  "fp32_permissive_total": [
+   74,
+   74,
+   true
+  ],
+  "fp32_permissive_lost_ids_identical": true,
+  "fp32_permissive_per_class_arm_correct": true,
+  "fp32_permissive_gained_total": true,
+  "fp32_strict_total": [
+   59,
+   59,
+   true
+  ],
+  "fp32_strict_lost_ids_identical": true,
+  "fp32_strict_per_class_arm_correct": true,
+  "fp32_strict_gained_total": true,
+  "cast_parity_differing_ids": true,
+  "cast_parity_lost_vs_fp32": true,
+  "cast_parity_gained_vs_fp32": true
+ },
+ "hashes": {
+  "retention.py": "c52b6a48cb811e3c272793a66765e82152fe170e8307eea153c3b1b6c5c58322",
+  "audit": "4857cf868202763e76bc610f6e787aebee20b9d18bfa7451f42c603ed871e6d7",
+  "probe": "5f6df1c14aa082eb2f61024a2652809077dbc91a6d7a4e19933d55f7890ae266",
+  "supa": "ec3fca1e8b1eb418a6b848dadfea06235cf7c4317ddf6930061c84147afa9a8f",
+  "panel": "f3913133259ba55fb2b31628715ca8247b679ee976cb67abfb70fd7db8837f6f",
+  "fp32": "65e7977600d3e74526a2514c12b135fb47e8f3e63d086c947dcdc314e1caa619"
+ },
+ "counts": {
+  "supa|permissive": 47,
+  "supa|strict": 41,
+  "opallo_bf16|permissive": 73,
+  "opallo_bf16|strict": 59,
+  "opallo_fp32|permissive": 74,
+  "opallo_fp32|strict": 59
+ },
+ "opallo_bf16|permissive": {
+  "gained": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944",
+   "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
+   "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
+   "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+  ],
+  "lost": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "gained": 8,
+    "lost": 1,
+    "supa": 21,
+    "opallo": 28
+   },
+   "ratio_proportion": {
+    "gained": 7,
+    "lost": 2,
+    "supa": 16,
+    "opallo": 21
+   },
+   "time_duration": {
+    "gained": 17,
+    "lost": 3,
+    "supa": 10,
+    "opallo": 24
+   }
+  }
+ },
+ "opallo_bf16|strict": {
+  "gained": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+   "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
+   "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
+   "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+  ],
+  "lost": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "gained": 7,
+    "lost": 2,
+    "supa": 21,
+    "opallo": 26
+   },
+   "ratio_proportion": {
+    "gained": 3,
+    "lost": 4,
+    "supa": 10,
+    "opallo": 9
+   },
+   "time_duration": {
+    "gained": 17,
+    "lost": 3,
+    "supa": 10,
+    "opallo": 24
+   }
+  }
+ },
+ "opallo_fp32|permissive": {
+  "gained": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s06__02025",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00933",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s04__01368",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s06__01863",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s09__02944",
+   "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
+   "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
+   "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+  ],
+  "lost": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s08__02552",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "gained": 9,
+    "lost": 1,
+    "supa": 21,
+    "opallo": 29
+   },
+   "ratio_proportion": {
+    "gained": 7,
+    "lost": 2,
+    "supa": 16,
+    "opallo": 21
+   },
+   "time_duration": {
+    "gained": 17,
+    "lost": 3,
+    "supa": 10,
+    "opallo": 24
+   }
+  }
+ },
+ "opallo_fp32|strict": {
+  "gained": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00223",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00280",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00526",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s03__01139",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s04__01208",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s07__02298",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s08__02515",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s09__02825",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00812",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__00969",
+   "rineya_v3_sft__time_duration__reas_time_duration_s01__00538",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00626",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00681",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00828",
+   "rineya_v3_sft__time_duration__reas_time_duration_s02__00849",
+   "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01339",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01539",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01594",
+   "rineya_v3_sft__time_duration__reas_time_duration_s05__01696",
+   "rineya_v3_sft__time_duration__reas_time_duration_s06__01801",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02213",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02229",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02628",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02842",
+   "rineya_v3_sft__time_duration__reas_time_duration_s09__02961"
+  ],
+  "lost": [
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s00__00270",
+   "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s02__00777",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s00__00233",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s03__01007",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s05__01698",
+   "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s07__02281",
+   "rineya_v3_sft__time_duration__reas_time_duration_s04__01408",
+   "rineya_v3_sft__time_duration__reas_time_duration_s07__02345",
+   "rineya_v3_sft__time_duration__reas_time_duration_s08__02681"
+  ],
+  "by_class": {
+   "percentage_reasoning": {
+    "gained": 8,
+    "lost": 2,
+    "supa": 21,
+    "opallo": 27
+   },
+   "ratio_proportion": {
+    "gained": 2,
+    "lost": 4,
+    "supa": 10,
+    "opallo": 8
+   },
+   "time_duration": {
+    "gained": 17,
+    "lost": 3,
+    "supa": 10,
+    "opallo": 24
+   }
+  }
+ }
+}
