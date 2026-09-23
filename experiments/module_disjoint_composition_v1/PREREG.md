@@ -105,3 +105,60 @@ Scored on `FRESH-DUAL-SKILL-001` `T_BANK_V2` (sha256 `fc094136…`), transition 
   reported as-is; the bank is fixed and will not be regenerated for this experiment.
 - No authorization is granted or implied. SOUP-MINI-001's `protocol.json` is untouched. GPU work
   takes the shared lease.
+
+---
+
+# Amendment 1 — a missing control, added BEFORE any arm in this experiment was scored
+
+No arm of this experiment has been run through the model. `SPARSE_ATTN` and `MODULE_DISJOINT`
+are built and bitwise-verified but unscored, and this amendment is written before that.
+
+## The confound
+
+`SPARSE_ATTN` has ‖Δ‖ = 0.4401 against full `SPARSE` at 0.6941 — a ratio of **0.634**. The
+recorded dose result is that acquisition benefit **saturates between roughly 0.25 and 0.675 of
+trained strength** while cost keeps accruing. 0.634 sits inside that plateau.
+
+So if `SPARSE_ATTN` scores near `SPARSE`, P1 as registered cannot distinguish:
+
+- **module account** — attention carries the transition skill disproportionately (DPLOC 2.00×), or
+- **dose account** — *any* 63.4%-norm version of dSparse scores near 102, and the module
+  restriction is irrelevant.
+
+The registered P1 thresholds (≥62 confirms, <50 kills) were derived against a
+*norm-proportional* baseline of ~41. That baseline is wrong: it assumes score scales with norm,
+which the dose plateau says it does not. **P1 as written would have credited the module account
+for an effect the dose account predicts equally well.** This is the candidate-set problem — a
+discriminating test against the wrong rival.
+
+## The control
+
+`SCALAR_MATCHED` = Supa + α·dSparse over **all 220 tensors**, with α chosen so the total norm
+equals `SPARSE_ATTN`'s exactly:
+
+```
+α = ‖dSparse|ATTN‖ / ‖dSparse‖ = 0.4400615543769171 / 0.6940550846962167 = 0.634044…
+```
+
+Same magnitude, same donor, same bank, differing **only** in whether the delta is restricted to
+attention coordinates or spread across all modules at reduced amplitude.
+
+## P1, restated
+
+The comparison is no longer against a norm-proportional guess but against a built arm:
+
+- **P1′ (module account)**: `SPARSE_ATTN` − `SCALAR_MATCHED` ≥ **+10 rows** with McNemar
+  p < 0.05. Attention coordinates beat matched-magnitude spread.
+- **P1′ null (dose account)**: |`SPARSE_ATTN` − `SCALAR_MATCHED`| ≤ 6 rows. The module
+  restriction buys nothing beyond its magnitude, and the mechanism is a dose effect wearing a
+  module label.
+- **P1′ reversed**: `SCALAR_MATCHED` − `SPARSE_ATTN` ≥ +10 rows. Spreading beats concentrating
+  at matched norm, which would contradict DPLOC's density result on this bank.
+
+`SCALAR_MATCHED` also anchors the plateau claim itself: if it scores near `SPARSE`'s 102 despite
+carrying 63.4% of the norm, that independently reproduces the dose-plateau result on a fresh
+bank, which is worth having regardless of how P1′ lands.
+
+P2 and P3 are unchanged. The Amendment-1 stopping rule of the instrument experiment does not
+apply here; this is a control being added before measurement, not a bank being regenerated
+after it.

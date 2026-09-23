@@ -20,9 +20,12 @@ ASSETS = ("tokenizer.json", "tokenizer_config.json", "vocab.json", "merges.txt",
           "generation_config.json")
 ATTN_MARKERS = ("self_attn.", "input_layernorm", "post_attention_layernorm")
 
+SCALAR_ALPHA = 0.4400615543769171 / 0.6940550846962167  # norm-match SPARSE_ATTN exactly
+
 ARMS = {
     # name: (sparse_module_class or None, opallo_module_class or None)
     "SPARSE_ATTN": ("ATTN", None),
+    "SCALAR_MATCHED": ("ALL_SCALED", None),
     "MODULE_DISJOINT": ("ATTN", "MLP"),
     # controls available if needed; not in the registered set
     "SPARSE_MLP": ("MLP", None),
@@ -79,7 +82,8 @@ def build(arm: str, out_dir: Path) -> dict:
             per_row = math.prod(shape[1:]) if len(shape) > 1 else 1
             step = max(1, 4_000_000 // per_row)
             cls = module_class(k)
-            use_s = s_cls is not None and cls == s_cls and k in omap
+            scaled = s_cls == "ALL_SCALED"
+            use_s = s_cls is not None and k in omap and (scaled or cls == s_cls)
             use_o = o_cls is not None and cls == o_cls and k in omap
             if use_s:
                 stats["tensors_touched_sparse"] += 1
@@ -91,6 +95,8 @@ def build(arm: str, out_dir: Path) -> dict:
                 out = w.copy()
                 if use_s:
                     d = sp.rows(k, lo, hi).astype(np.float32) - w
+                    if scaled:
+                        d = d * np.float32(SCALAR_ALPHA)
                     out += d
                     stats["sq_from_sparse"] += float((d.astype(np.float64) ** 2).sum())
                 if use_o:
@@ -157,8 +163,11 @@ def verify(arm: str, out_dir: Path) -> None:
         w = base.rows(k, 0, rows).astype(np.float32)
         exp = w.copy()
         cls = module_class(k)
-        if s_cls and cls == s_cls and k in omap:
-            exp = exp + (sp.rows(k, 0, rows).astype(np.float32) - w)
+        if s_cls and k in omap and (s_cls == "ALL_SCALED" or cls == s_cls):
+            d = sp.rows(k, 0, rows).astype(np.float32) - w
+            if s_cls == "ALL_SCALED":
+                d = d * np.float32(SCALAR_ALPHA)
+            exp = exp + d
         if o_cls and cls == o_cls and k in omap:
             exp = exp + (ot.rows(omap[k], 0, rows).astype(np.float32) - w)
         g = got.rows(k, 0, rows)
