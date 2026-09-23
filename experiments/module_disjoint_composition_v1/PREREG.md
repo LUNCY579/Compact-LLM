@@ -162,3 +162,72 @@ bank, which is worth having regardless of how P1′ lands.
 P2 and P3 are unchanged. The Amendment-1 stopping rule of the instrument experiment does not
 apply here; this is a control being added before measurement, not a bank being regenerated
 after it.
+
+---
+
+# Amendment 2 — a better question, registered before any arm here is scored
+
+Still true that no arm of this experiment has been run through a model. `SPARSE_ATTN`,
+`MODULE_DISJOINT` and `SCALAR_MATCHED` are built and bitwise-verified, unscored.
+
+## What changed upstream
+
+`FRESH-DUAL-SKILL-001` returned. Two things reshape this experiment:
+
+1. **The attenuation motivation is weaker than when I registered P1–P3.** Independent full
+   coefficients already cost only **+5 rows (p = 0.33, ns)** of the donated skill, against
+   **+33 (p = 3.6e-08)** for the 0.5/0.5 average. `ADD-100` already solves attenuation. So
+   "module-disjoint avoids the attenuation tax" is no longer a gap worth much — `ADD-100` has
+   no meaningful tax to avoid.
+2. **A new defect appeared that module-disjointness plausibly *does* address.** The composed
+   model imports Opallo's **trailing-period answer convention**: 178/192 rows at β=1.0, 63 at
+   β=0.75, 0 at β≤0.5. Titan's contract is strict, so a strict scorer reads this as a 96-row
+   collapse. This is a real regression in contract compliance even though it is not capability
+   loss.
+
+## The question this experiment can now answer, that nothing else can
+
+**Where does the output convention live — attention or MLP?**
+
+`MODULE_DISJOINT` takes Opallo's contribution **only from MLP** and Titan-Sparse's **only from
+attention**. So it is a clean ablation of the convention's locus:
+
+- If the trailing-period convention is carried by **Opallo's MLP** delta → `MODULE_DISJOINT`
+  emits trailing periods.
+- If it is carried by **Opallo's attention** delta → `MODULE_DISJOINT` emits none, because
+  Opallo's attention is excluded entirely.
+
+This is not answerable from any arm scored so far: every existing arm takes Opallo whole.
+
+## Registered predictions, before scoring
+
+Primary endpoint is **trailing-period emission count out of 192**, alongside strict and
+period-tolerant scores. `ADD-O75` (63 periods) and `ADD-100` (178) are the comparators;
+`SPARSE` (0) and `AVG` (0) are the clean references.
+
+**P4 — locus of the convention.**
+- **MLP-carried**: `MODULE_DISJOINT` emits **≥ 40** trailing periods.
+- **Attention-carried**: `MODULE_DISJOINT` emits **≤ 10**.
+- Between 10 and 40 is **distributed**, and the arm cannot localise it.
+
+**P5 — built-in attribution control.** `SPARSE_ATTN` contains **no Opallo at all** and must emit
+**0** trailing periods. If it emits any, the convention is not coming from Opallo and P4 is
+uninterpretable. This control can fail and is the reason to trust P4 if it does not.
+
+**P1′ (unchanged from Amendment 1)** — `SPARSE_ATTN` vs `SCALAR_MATCHED` at matched norm
+(0.4401, matched to 1.5e-08) decides module-account vs dose-account for the transition skill:
++10 rows with p < 0.05 confirms the module account, |diff| ≤ 6 says the module restriction is a
+dose effect wearing a module label.
+
+**P2/P3 restated against period-tolerant scores**, since strict scores on any arm containing
+Opallo now measure convention transfer rather than skill:
+- P2: |`MODULE_DISJOINT` − `SPARSE_ATTN`| ≤ 6 rows, period-tolerant.
+- P3: `MODULE_DISJOINT` vs `ADD-100` (97 period-tolerant) decides whether coordinate disjointness
+  buys anything over same-coordinate full-strength composition.
+
+## Stated plainly
+
+P1–P3 were registered against a motivation that has since weakened. I am not deleting them —
+they are answered as written — but the honest headline of this experiment is now **P4**, and P4
+was formulated after seeing the upstream result. It is registered before this experiment's
+measurement, not before all measurement, and that distinction belongs in any write-up.
