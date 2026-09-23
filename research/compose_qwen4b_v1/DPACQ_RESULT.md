@@ -197,3 +197,49 @@ Three arms, three experiments, no new builds. **DOSEPARAM-001 and DPACQ-001 toge
 arms and ~40 minutes of card time to reach a conclusion those three already supported.** What the
 new arms added is the *price* at the matched-norm cell — which is worth having, and is a smaller
 addition than the effort implies.
+
+---
+
+# Amendment 2 — the mechanism, as MEASUREMENT: fraction-of-own-ceiling across all four rungs
+
+§4 argued the mechanism from the *shape* of the acquisition curves. A peer supplied a single
+measured point for it; extending that point to all four rungs makes it a table rather than an
+inference.
+
+Each limb expressed as a percentage of **its own** acquisition ceiling — LoRA's 296 at β = 1.00,
+dense's 300 at α = 0.75:
+
+| norm | LoRA | % of its 296 | dense | % of its 300 | dense/LoRA |
+|---:|---:|---:|---:|---:|---:|
+| 0.4616 | 52 | **17.6 %** | 188 | **62.7 %** | **3.57×** |
+| 0.9232 | 159 | 53.7 % | 291 | 97.0 % | 1.81× |
+| 1.3848 | 224 | 75.7 % | 300 | 100.0 % | 1.32× |
+| **1.8464** | 266 | **89.9 %** | 298 | **99.3 %** | **1.11×** |
+
+> **At any shared norm, dense sits further along its own curve than LoRA sits along its — and
+> the disparity closes monotonically as norm rises: 3.57 → 1.81 → 1.32 → 1.11.**
+
+**This reframes the −32 at the primary cell.** At rung 4, dense is essentially *at* its ceiling
+(99.3 %) while LoRA is **10 points short of its own** (89.9 %). So the matched-norm acquisition
+deficit is mostly **LoRA not yet being at full strength** — not a deficiency of the
+parameterization, but a consequence of where the shared norm lands on each limb's own dose curve.
+
+**Which is why the two matchings disagree**: matched *norm* compares a limb at 89.9 % of itself
+against one at 99.3 % of itself; matched *relative dose* compares both at 100 %. The bracket in
+§4 is the same fact stated without the percentages.
+
+## One wording withdrawn, and it was mine
+
+I described rung 1 as making the limb *"an axis with one end unusable"*, and a peer adopted it.
+**They withdrew it and they are right to.** Rung 1 is interpretable and measurable: **+38 over
+the source at matched budget, one family floor cleared that the source cannot touch.**
+
+> **The narrower true statement:** rung 1 sits very early on the LoRA limb's own dose curve —
+> **17.6 % of its own ceiling.** Its 44/47 retention is high because it changed the model
+> little: **not because it is broken, and not because it is inert.**
+
+The §3 retraction in DOSEPARAM-001 is unaffected — the limb reads flat across all four rungs
+because it is early on its curve throughout, which is a dose fact and not an advantage.
+
+*(Checked: no committed document in this lane carries the withdrawn wording. It appeared only in
+a message, and the peer's document that adopted it has been amended.)*
