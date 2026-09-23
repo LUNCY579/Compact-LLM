@@ -1,0 +1,296 @@
+{
+  "schema": 1,
+  "experiment": "SOUP-MINI-001",
+  "record": "PHASE_A_MATERIALIZATION_AND_INDEPENDENT_VERIFICATION",
+  "tested_date": "2026-09-22",
+  "status": "FIVE_PRIMARY_ARMS_MATERIALIZED_AND_BITWISE_VERIFIED_NOT_EVALUATED",
+  "environment_at_build_time": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "safetensors": "0.8.0",
+    "numpy": "2.4.6",
+    "pytest": "9.1.1",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "cuda_available_but_unused": true,
+    "note": "These differ from requirements-mechanics.txt (python 3.13.5 / torch 2.10.0+cpu / safetensors 0.7.0 / numpy 2.3.5 / pytest 9.0.2). The drift is recorded, not waived. It is immaterial to the produced bytes here because an independent no-torch numpy reimplementation reproduced every output element bitwise."
+  },
+  "test_suite": {
+    "command": "python -m pytest -q",
+    "passed": 124,
+    "failed": 0,
+    "composition": "66 inherited soup mechanics + 58 screening tests, rerun in this environment"
+  },
+  "source_endpoints_read_only": {
+    "verification": "sha256 computed before builds; soup.py rehashed every source after each build; sha256 recomputed independently after all builds",
+    "all_unchanged": true,
+    "roots": {
+      "supa": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+      "titan": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Experimental-1.0.0-devfreeze",
+      "titan_sparse": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze",
+      "opallo": "C:/Users/clclc/BusinessProject/ChatBubble-ced-native-loader-qualification/Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze"
+    },
+    "sha256_matches_pins": {
+      "supa": true,
+      "titan": true,
+      "titan_sparse": true,
+      "opallo": true
+    },
+    "opallo_location_note": "Opallo does NOT exist in the main Chat-Bubble checkout. The only copy of its weights on this machine sits in the ChatBubble-ced-native-loader-qualification worktree. Its SHA-256 equals the pinned e726d6be..., so it is the exact registered artifact regardless of which directory holds it. It was opened read-only; nothing in that worktree was created, modified or deleted."
+  },
+  "preflight": {
+    "command": "python soup.py preflight --manifest manifest.local.json",
+    "exit_code": 0,
+    "status": "CHECKPOINT_COMPATIBILITY_ONLY",
+    "manifest_sha256": "763f1c05b7a41534ea29c6f5ac41e0c1779b4b8026fe486f78407ccc13f148f6",
+    "tensors": 310,
+    "parameters": 596049920,
+    "config_note": "Titan-Sparse ships a different config.json byte hash (25ace026...) than the other three (660db3b7...). canonical_config() ignores torch_dtype/dtype/_name_or_path/transformers_version and the canonical bodies are identical, so this is the expected FP32-vs-BF16 dtype field, not a mismatch."
+  },
+  "arms": {
+    "sparse_opallo_50": {
+      "left": "titan_sparse",
+      "right": "opallo",
+      "alpha_right": 0.5,
+      "output_dir": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1/experiments/titan_model_soup_mini_v1/local-runs/arms/sparse_opallo_50",
+      "weight_sha256": "df5bf6c8c1c35c7b3d79c7b828f5586f50bbca33f969d4780cc187856c17de49",
+      "weight_bytes": 2384235000,
+      "stored_dtype": "float32",
+      "arithmetic": "left + alpha*(right-left)",
+      "changed_elements_vs_left": 206624315,
+      "delta_l2_vs_left": 0.7823340257373104,
+      "bf16_diagnostic_only": {
+        "changed_elements_erased_vs_left": 35366201,
+        "changed_elements": 206624315,
+        "absolute_rounding_error_l2": 0.5365900778910938
+      },
+      "independent_verification": {
+        "reader": "own safetensors parser + own BF16 decode + numpy (no torch)",
+        "elements_checked": 596049920,
+        "bitwise_mismatches_vs_formula": 0,
+        "nonfinite_in_output": 0,
+        "header_layout_problems": [],
+        "l2_out_minus_left": 0.7823340257373406,
+        "l2_right_minus_left": 1.564668050600428,
+        "midpoint_ratio": 0.5000000002793733,
+        "elements_where_a_plus_half_delta_differs_from_exact_mean": 39238
+      },
+      "status": "MATERIALIZED_NOT_EVALUATED"
+    },
+    "supa_opallo_50": {
+      "left": "supa",
+      "right": "opallo",
+      "alpha_right": 0.5,
+      "output_dir": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1/experiments/titan_model_soup_mini_v1/local-runs/arms/supa_opallo_50",
+      "weight_sha256": "f0670c2f553fadcb38e498052c9cc914dc6b596b628c85c36e63c4f777bbcc53",
+      "weight_bytes": 2384235000,
+      "stored_dtype": "float32",
+      "arithmetic": "left + alpha*(right-left)",
+      "changed_elements_vs_left": 170582038,
+      "delta_l2_vs_left": 0.7019127638627677,
+      "bf16_diagnostic_only": {
+        "changed_elements_erased_vs_left": 47154661,
+        "changed_elements": 170582038,
+        "absolute_rounding_error_l2": 0.5393265969612312
+      },
+      "independent_verification": {
+        "reader": "own safetensors parser + own BF16 decode + numpy (no torch)",
+        "elements_checked": 596049920,
+        "bitwise_mismatches_vs_formula": 0,
+        "nonfinite_in_output": 0,
+        "header_layout_problems": [],
+        "l2_out_minus_left": 0.7019127638627677,
+        "l2_right_minus_left": 1.403825527725536,
+        "midpoint_ratio": 0.4999999999999998,
+        "elements_where_a_plus_half_delta_differs_from_exact_mean": 2
+      },
+      "status": "MATERIALIZED_NOT_EVALUATED"
+    },
+    "supa_sparse_50": {
+      "left": "supa",
+      "right": "titan_sparse",
+      "alpha_right": 0.5,
+      "output_dir": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1/experiments/titan_model_soup_mini_v1/local-runs/arms/supa_sparse_50",
+      "weight_sha256": "aef35a8df84060c7b321ccc2512abf950e1937bf4f36d0fb0d76aa2103d685d9",
+      "weight_bytes": 2384235000,
+      "stored_dtype": "float32",
+      "arithmetic": "left + alpha*(right-left)",
+      "changed_elements_vs_left": 78654720,
+      "delta_l2_vs_left": 0.34702754417073084,
+      "bf16_diagnostic_only": {
+        "changed_elements_erased_vs_left": 44091843,
+        "changed_elements": 78654720,
+        "absolute_rounding_error_l2": 0.2697537492283082
+      },
+      "independent_verification": {
+        "reader": "own safetensors parser + own BF16 decode + numpy (no torch)",
+        "elements_checked": 596049920,
+        "bitwise_mismatches_vs_formula": 0,
+        "nonfinite_in_output": 0,
+        "header_layout_problems": [],
+        "l2_out_minus_left": 0.3470275441707312,
+        "l2_right_minus_left": 0.6940550846962167,
+        "midpoint_ratio": 0.5000000026260493,
+        "elements_where_a_plus_half_delta_differs_from_exact_mean": 1
+      },
+      "status": "MATERIALIZED_NOT_EVALUATED"
+    },
+    "supa_titan_50": {
+      "left": "supa",
+      "right": "titan",
+      "alpha_right": 0.5,
+      "output_dir": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1/experiments/titan_model_soup_mini_v1/local-runs/arms/supa_titan_50",
+      "weight_sha256": "844ceb0c1d2d8649c43ca5fdf58640bd2389cf73d9e2bdb1ad8de85c8813e4bb",
+      "weight_bytes": 2384235000,
+      "stored_dtype": "float32",
+      "arithmetic": "left + alpha*(right-left)",
+      "changed_elements_vs_left": 123933332,
+      "delta_l2_vs_left": 0.4017349894839327,
+      "bf16_diagnostic_only": {
+        "changed_elements_erased_vs_left": 37695106,
+        "changed_elements": 123933332,
+        "absolute_rounding_error_l2": 0.3312904999524665
+      },
+      "independent_verification": {
+        "reader": "own safetensors parser + own BF16 decode + numpy (no torch)",
+        "elements_checked": 596049920,
+        "bitwise_mismatches_vs_formula": 0,
+        "nonfinite_in_output": 0,
+        "header_layout_problems": [],
+        "l2_out_minus_left": 0.4017349894839326,
+        "l2_right_minus_left": 0.8034699789678647,
+        "midpoint_ratio": 0.5000000000000003,
+        "elements_where_a_plus_half_delta_differs_from_exact_mean": 1
+      },
+      "status": "MATERIALIZED_NOT_EVALUATED"
+    },
+    "titan_opallo_50": {
+      "left": "titan",
+      "right": "opallo",
+      "alpha_right": 0.5,
+      "output_dir": "C:/Users/clclc/BusinessProject/ChatBubble-titan-model-soup-mini-v1/experiments/titan_model_soup_mini_v1/local-runs/arms/titan_opallo_50",
+      "weight_sha256": "2d7e85e0832870bcb8aa9165a3fe790ce71c1b8a3b0506be844fae9369dd73bf",
+      "weight_bytes": 2384235000,
+      "stored_dtype": "float32",
+      "arithmetic": "left + alpha*(right-left)",
+      "changed_elements_vs_left": 180395926,
+      "delta_l2_vs_left": 0.8078804173197451,
+      "bf16_diagnostic_only": {
+        "changed_elements_erased_vs_left": 45995165,
+        "changed_elements": 180395926,
+        "absolute_rounding_error_l2": 0.5500616418669517
+      },
+      "independent_verification": {
+        "reader": "own safetensors parser + own BF16 decode + numpy (no torch)",
+        "elements_checked": 596049920,
+        "bitwise_mismatches_vs_formula": 0,
+        "nonfinite_in_output": 0,
+        "header_layout_problems": [],
+        "l2_out_minus_left": 0.8078804173197447,
+        "l2_right_minus_left": 1.6157608346394852,
+        "midpoint_ratio": 0.5000000000000013,
+        "elements_where_a_plus_half_delta_differs_from_exact_mean": 3
+      },
+      "status": "MATERIALIZED_NOT_EVALUATED"
+    }
+  },
+  "geometry_diagnostics": {
+    "norms": {
+      "dT_stored_titan": 0.8034699789678647,
+      "dSparse": 0.6940550846962167,
+      "dOpallo": 1.403825527725536,
+      "dSparse_over_dT": 0.8638220504365303,
+      "dSparse_minus_dT": 0.5439300096699181
+    },
+    "cosines": {
+      "cos(dT,dO)": 0.002485542699299219,
+      "cos(dSp,dO)": 0.0021822455000621395,
+      "cos(dT,dSp)": 0.7454613089097032
+    },
+    "support": {
+      "n_params": 596049920,
+      "nnz_dT": 123933332,
+      "nnz_dSparse": 78654720,
+      "nnz_dOpallo": 170582038,
+      "frac_nnz_dT": 0.2079244168005257,
+      "frac_nnz_dSparse": 0.1319599539582188,
+      "frac_nnz_dOpallo": 0.286187502550122,
+      "dSparse_support_inside_dT_support": 56243142,
+      "dSparse_support_outside_dT_support": 22411578,
+      "dSparse_elements_bitidentical_to_dT": 449705972,
+      "overlap_dT_dO": 96537552,
+      "sign_agreement_dT_dO": 0.5020381188037584,
+      "overlap_dSparse_dO": 42612284,
+      "sign_agreement_dSparse_dO": 0.5029201673395399
+    },
+    "soup_identity_check": {
+      "arm": "sparse_opallo_50",
+      "identity": "output == supa + 0.5*dSparse + 0.5*dOpallo",
+      "elements_violating_1e-6": 23
+    },
+    "derived_soup_displacements_from_supa": {
+      "sparse_opallo_50": 0.7836917501804139,
+      "titan_opallo_50": 0.8096136677511866,
+      "supa_sparse_50": 0.34702754234810834,
+      "supa_opallo_50": 0.701912763862768,
+      "supa_titan_50": 0.4017349894839323
+    },
+    "caveat": "Geometry only. Per EVIDENCE.md item 5 these are diagnostics, not evidence of functional independence, lossless composition, retention, or any quality claim."
+  },
+  "geometry_cross_checks_against_recorded_census": {
+    "titan_sparse_support_fraction_measured": 0.25,
+    "titan_sparse_footprint_tensors": 220,
+    "titan_sparse_footprint_params": 314618880,
+    "titan_sparse_footprint_blocks": "8-27 (last 20 of 28)",
+    "recorded_CORE_json": "top-25%-magnitude support of the RRP-015 delta, 220 trained tensors in blocks 8-27",
+    "stored_titan_bf16_erasure_measured_pct": 60.6084,
+    "recorded_AMENDMENT_001_pct": 60.61,
+    "whole_trained_tensors_erased_measured": 24,
+    "recorded_AMENDMENT_001": "24/220",
+    "interpretation": "Three independent collisions with numbers recorded before this session. They validate the independent reader and the delta arithmetic. They are provenance checks, not capability evidence."
+  },
+  "norm_convention_flag": "Measured ||dTheta|| for the stored Titan delta is 0.8035 here, whereas the retention regression retained ~ 35.50 - 6.28*ln(||dTheta||) was fitted with a dense trained norm recorded as 1.8464. The two conventions are not reconciled, so that regression MUST NOT be evaluated at the norms in this record to predict retention for any arm. Reconciling the conventions is a separate task.",
+  "native_boundary": {
+    "pretrained_model_loads": 0,
+    "native_model_forwards": 0,
+    "native_tokenizer_loads": 0,
+    "native_model_evaluations": 0,
+    "training_runs": 0,
+    "optimizer_steps": 0,
+    "scored_rows_collected": 0,
+    "CAL_run": false,
+    "CHECK_run": false,
+    "native_authorized": false,
+    "training_authorized": false,
+    "quality_improvement_established": false,
+    "release_permitted": false,
+    "gate_positive_control": {
+      "command": "python screen.py CAL --freeze screen-freeze.example.json --runs <empty dir> --output <path>",
+      "expected_exit_code": 2,
+      "observed_exit_code": 2,
+      "status": "REFUSED",
+      "reason": "unbound SHA-256",
+      "output_created": false
+    },
+    "unmet_gates_blocking_evaluation": [
+      "no fresh admissible CAL/CHECK bank exists: existing banks are parent-contaminated against these donors and the confirmation instruments are SPENT",
+      "no separately qualified native dense-reference collector bound (code, runtime, decoding, tokenizer receipts)",
+      "no frozen runtime and deterministic decoding identity",
+      "no whole-ancestry contamination audit across all fine-tuned ancestors",
+      "no SOUP-MINI-001-specific resource lease and native-read grant",
+      "screen-freeze.local.json not populated or externally frozen; candidate lock before CHECK not established"
+    ],
+    "note": "None of these were relaxed, amended, or self-granted. protocol.json and every other experiment's records are unmodified."
+  },
+  "files_written": {
+    "inside_experiment_dir_only": true,
+    "tracked_new_files": [
+      "RESULTS_PHASE_A.md",
+      "PHASE_A_BUILD_VALIDATION.json"
+    ],
+    "gitignored_outputs": [
+      "manifest.local.json",
+      "local-runs/ (5 arms ~11.1 GiB, verification scripts, GEOMETRY.json, INDEPENDENT_VERIFY.json)"
+    ],
+    "files_modified_outside_this_directory": 0
+  }
+}
