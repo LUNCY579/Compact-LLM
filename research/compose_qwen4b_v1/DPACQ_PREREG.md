@@ -105,3 +105,60 @@ LoRA delta to 62 % costs on its own terms.
 own authoritative gate — **used unchanged, not tightened.** Zero training, zero building,
 no budget grant. Outputs are one JSON per arm in this worktree's own evidence directory; the
 peer's create-only tree is not written to.
+
+---
+
+# Amendment 1 — P1 registered an EQUIVALENCE where the data can only support a BOUND
+
+**Filed while the battery is running and BEFORE any score exists** — verified: zero
+`PROCESS_doseparam*` artifacts on disk at the moment of writing. Raised by the peer whose result
+this measurement tests, against their own interest.
+
+## What was wrong
+
+§3 said `|net| < 20` *"licenses 'the +12 retention at matched norm is free.'"* **It does not.**
+`|net| < 20` is the **absence of a detectable cross-draw difference**, and a real acquisition
+cost of up to 19 views — about 5 points of 384 — sits entirely inside it while reading as
+"free". That is a null being promoted to an equivalence, which this programme has a standing
+rule against.
+
+## The corrected registration
+
+> **P1 (PRIMARY), as it now stands.** `acq(rung4)` vs `acq(dense a100) = 298`, both at norm
+> 1.8464.
+>
+> - **`|net| < 20` licenses exactly this and nothing more:** *"the acquisition cost of the
+>   matched-norm retention advantage is **below 20 views** on this instrument."* Reported as a
+>   **bound**, never as "free", never as equivalence.
+> - **`net ≤ −20` RETRACTS**: the +12 retention was bought, and DOSEPARAM-001's headline needs
+>   qualification. Unchanged.
+> - `net ≥ +20` is an unpredicted LoRA advantage: reported, claimed as nothing.
+
+**The honest version is still decisive, which is why there is no cost to stating it.** The bound
+is < 20 of 384 ≈ 5 points; the effect it bounds is +12 of 47 ≈ 25 points. A five-point
+acquisition cost against a twenty-five-point retention gain remains a strong result **without
+overclaiming the null**.
+
+## The floor asymmetry, stated explicitly so both documents hold one standard
+
+| comparison | kind | floor |
+|---|---|---|
+| rung ↔ rung, rung ↔ LoRA β=1.00 | transforms of ONE delta | **none**; paired |
+| rung ↔ dense | **CROSS-DRAW** — one LoRA draw against one dense draw | **\|net\| ≥ 20** |
+
+**This cuts back at the result being tested.** DOSEPARAM-001's +12 is a valid paired comparison
+of two arms on the same 47 rows — and it is **also cross-draw**, so it is not licence for "LoRA
+beats dense" as a general claim. Its §4 says *one delta, one base, rank 16, one seed*; it does
+not say **cross-draw**, and it should. The peer has offered to amend theirs to match rather than
+let the two documents hold different standards for the same comparison.
+
+## What a bad rung 1 does and does NOT retract — registered now so it lands correctly
+
+If rung 1 returns near 188 (dense `a025`'s value), that is the feared outcome. **It does not
+touch the primary.** Rung 4 is the registered cell, dense there is 298, and a rung-4 result near
+296 is bounded-free *at the cell that matters* regardless of rung 1.
+
+> **What a bad rung 1 would retract is the "flat LoRA retention limb" reading of DOSEPARAM §3** —
+> already scoped by its Amendment 1 to below norm 1.85 — because flat retention bought with
+> collapsing acquisition is not an advantage. **Written down in advance so a bad rung 1 retracts
+> the right sentence and not the primary.**
