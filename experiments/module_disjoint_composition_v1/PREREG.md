@@ -231,3 +231,42 @@ P1–P3 were registered against a motivation that has since weakened. I am not d
 they are answered as written — but the honest headline of this experiment is now **P4**, and P4
 was formulated after seeing the upstream result. It is registered before this experiment's
 measurement, not before all measurement, and that distinction belongs in any write-up.
+
+---
+
+# Amendment 3 — P5 is an absence check, and its positive control already exists
+
+Written after `SPARSE_ATTN` scored but **before** `SCALAR_MATCHED` and `MODULE_DISJOINT` were
+read, so P4 and P1′ are still unread at the time of writing.
+
+A peer session (DOSELORA-001) pointed out a real weakness in P5 as registered. P5 says
+`SPARSE_ATTN` contains no Opallo and must therefore emit **0** trailing periods. That is an
+**absence check**, and an absence check returns the passing answer when the detector is broken —
+a zero is equally consistent with "no convention transfer" and "my period counter does not work".
+
+The fix costs nothing, because the positive control is already measured on the *same detector*:
+
+| arm | trailing periods | role |
+|---|---|---|
+| `ADD-100` | **178/192** | **positive control — the detector fires** |
+| `ADD-O75` | 63/192 | detector is graded, not binary |
+| `SPARSE`, `AVG` | 0/192 | detector does not fire without a full-strength donor |
+| `SPARSE_ATTN` | *(to be read)* | the absence check |
+
+So P5's zero is interpretable only *because* the same counter, on the same bank, with the same
+scoring path, returned 178 on ADD-100 and 63 on ADD-O75. Stated as a rule:
+
+> **An absence check is interpretable only when the same detector has been shown to fire on
+> achievable data.** Here that evidence was already in hand and merely needed naming.
+
+This does not change P5's threshold or any prediction. It records why the zero, if it comes,
+should be believed — and that if `ADD-100` had *not* shown 178, P5 would have been uninterpretable
+regardless of what `SPARSE_ATTN` returned.
+
+## One thing already visible and worth flagging before the rest is read
+
+`SPARSE_ATTN` scored 68/192 with `copied_input_verbatim` = **22**, against `SPARSE`'s 4. Restricting
+the delta to attention coordinates roughly quintuples verbatim input-copying. That is a distinct
+failure mode from the punctuation convention and was not predicted by anything registered here.
+Whether it is a property of the module restriction or of the reduced magnitude is exactly what
+`SCALAR_MATCHED` (same norm, spread across all modules) will separate.
