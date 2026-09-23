@@ -123,3 +123,77 @@ skip-on-exists, so this battery could not have reported success having computed 
 Arms are DOSEPARAM-001's, independently rebuild-verified earlier: rung 4's data-section sha256
 matches its recorded value **bit-for-bit**. One lease held for the whole battery,
 `hostbudget.require(3.0)` — the probe's own gate, unchanged. ~19 minutes of card time.
+
+---
+
+# Amendment 1 — §3's "chain check" is a TELESCOPING IDENTITY. It cannot fail, and I published it as a consistency check.
+
+**Raised by the peer whose result this experiment retracted.** Verified here rather than accepted.
+
+## What I wrote, and why it is worthless as a check
+
+```
+rung4 -> beta1.00   -30            (a - b)
+beta1.00 -> a100     -2            (b - c)
+                    ----
+                     -32           vs direct rung4 -> a100 = -32    "CONSISTENT"
+```
+
+`(a − b) + (b − c) = a − c`. **The intermediate cancels. This is arithmetic, not measurement,
+and it returns agreement for any three numbers whatever they are.** Demonstrated on random
+triples rather than argued: it held on 5 of 5, as it must on all of them.
+
+> **It is the class this record has been cataloguing all night: a check whose passing answer is
+> the only answer it can return.** I described it as a two-route agreement and it is one route
+> written twice. **Withdrawn as a check.**
+
+## What the decomposition DOES buy, and this part stands
+
+It **attributes** the gap, which is a real and useful statement:
+
+| step | contribution | axis |
+|---|---:|---|
+| within-limb scaling, `rung4 ↔ β=1.00` | **30 of 32** | floorless, paired, transforms of one delta |
+| cross-draw, `β=1.00 ↔ a100` | **2 of 32** | floored, already measured |
+
+**Nearly the whole deficit lives in the within-limb scaling step**, on the axis where the
+comparison is paired and floorless. That is why the result is readable at all despite resting on
+a borrowed floor: the floored step contributes 2.
+
+**And promoting P3 was still right** — for the reason registered at the time, that the sharp
+number comes off the floorless axis and the floored step is spent once on a number already on
+disk. **Not** because it produced an independent second route, because it did not.
+
+## The peer's verification, recorded
+
+Nine arms, **three routes each** — `aggregate.canonical_correct`, a direct count over the per-row
+predictions where `canonical` is True, and an independent sum over `per_family` — all agreeing,
+384 predictions each. **P1's retraction stands on their extraction as well as mine.**
+
+## The hypothesis that fits, which neither of us registered
+
+At matched **norm** the two limbs sit at different points on **their own** acquisition curves:
+dense has saturated by 0.92 and is losing retention steadily; LoRA is still climbing at 1.85 and
+has barely lost any. **The retention advantage and the acquisition deficit are the same fact seen
+twice.**
+
+> All three registered rivals — H_NORM, H_BEND, H_PARAM — were about the **retention axis
+> alone**. The variable that explains the result was on the endpoint that had not been measured.
+> **A discriminating test among the wrong candidate set is still a discriminating test of the
+> wrong question.**
+
+## And the design criticism that follows, which is theirs and is correct
+
+The **matched-acquisition** comparison predates this entire design and already supported the
+conclusion:
+
+```
+three LoRA arms   296 / 297 / 299   spread 3, inside the 20-view floor
+dense a100        298
+retention          38 /  38 /  37   against 30
+```
+
+Three arms, three experiments, no new builds. **DOSEPARAM-001 and DPACQ-001 together cost four
+arms and ~40 minutes of card time to reach a conclusion those three already supported.** What the
+new arms added is the *price* at the matched-norm cell — which is worth having, and is a smaller
+addition than the effort implies.
