@@ -217,6 +217,16 @@ def main():
             print(f"  weights deleted, free disk "
                   f"{shutil.disk_usage(str(OUT)).free/2**30:.2f} GiB", flush=True)
         print(f"\nRESULTS {results}")
+        # COMPLETENESS IS A COUNT, NOT AN ABSENCE OF EXCEPTIONS. The per-arm RAM gate uses
+        # `continue`, so a battery that skipped arms 2-4 on low RAM would otherwise fall
+        # through to an unconditional `return 0` and be reported COMPLETE by the wrapper.
+        # Four arms are registered; four must score, and the missing ones are named.
+        missing = [a[0] for a in ARMS if a[0] not in results]
+        print(f"BATTERY {'COMPLETE' if not missing else 'INCOMPLETE'} "
+              f"{len(results)}/{len(ARMS)} scored"
+              + (f", MISSING {missing}" if missing else ""), flush=True)
+        if missing:
+            return 2
     finally:
         if LOCK.exists():
             try:
