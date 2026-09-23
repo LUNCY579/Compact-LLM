@@ -99,22 +99,24 @@ def main():
     print(f"lease taken (covers BUILDS as well as scoring). RAM {free_gib():.2f} GiB", flush=True)
 
     try:
-        # ---- one SVD pass: cache P16 pieces as fp32 to avoid re-running it per arm ----
+        # ---- MEASURE-ONLY pass. Deliberately does NOT cache P16.
+        # Caching pT and pH as fp32 is 2.5 GB, and the output dict is another 2.4 GB -- ~4.9 GB
+        # against the ~3.7 GB free on this box while a peer waits for the same RAM. Recomputing
+        # the SVD inside each arm costs ~140 s per arm and holds peak at one output dict.
+        # Choosing the slower constant-memory route over the faster one that would starve a
+        # peer is the whole lesson of this session.
         t0 = time.time()
-        pT, pH, hfam, keys = {}, {}, {}, []
+        hfam, ssT, byf = {}, 0.0, {}
         with safe_open(str(SRC), framework="pt") as S, safe_open(str(T17), framework="pt") as A, \
              safe_open(str(TH), framework="pt") as H:
             tk = sorted(set(A.keys()) & set(H.keys()))
             for k in tk:
                 s = S.get_tensor(k).double()
-                pT[k] = p16(A.get_tensor(k).double() - s).to(torch.float32)
-                pH[k] = p16(H.get_tensor(k).double() - s).to(torch.float32)
-                hfam[k] = fam(k)
-                keys.append(k)
-        nT = sum(float((v.double() ** 2).sum()) for v in pT.values()) ** 0.5
-        byf = {}
-        for k, v in pH.items():
-            byf[hfam[k]] = byf.get(hfam[k], 0.0) + float((v.double() ** 2).sum())
+                ssT += float((p16(A.get_tensor(k).double() - s) ** 2).sum())
+                f = fam(k)
+                hfam[k] = f
+                byf[f] = byf.get(f, 0.0) + float((p16(H.get_tensor(k).double() - s) ** 2).sum())
+        nT = ssT ** 0.5
         nH = sum(byf.values()) ** 0.5
         n_attn, n_mlp = byf["attn"] ** 0.5, byf["mlp"] ** 0.5
         print(f"P16 pass {time.time()-t0:.0f}s  ||P16 dT|| {nT:.15f}  ||P16 dH|| {nH:.15f}", flush=True)
@@ -144,12 +146,15 @@ def main():
             adir = OUT / label
             adir.mkdir(parents=True, exist_ok=True)
             out, ss2, zeroed, ablated_keys = {}, 0.0, {"attn": 0, "mlp": 0, "norm": 0}, []
-            with safe_open(str(SRC), framework="pt") as S:
+            with safe_open(str(SRC), framework="pt") as S, safe_open(str(T17), framework="pt") as A, \
+                 safe_open(str(TH), framework="pt") as H:
                 for k in sorted(S.keys()):
                     base = S.get_tensor(k)
-                    if k not in pT:
+                    if k not in hfam:
                         out[k] = base.to(torch.float32); continue
-                    second = coef * pH[k].double()
+                    sd = base.double()
+                    pTk = p16(A.get_tensor(k).double() - sd)      # recomputed, not cached
+                    second = coef * p16(H.get_tensor(k).double() - sd)
                     if kind == "ablate" and hfam[k] != keep:
                         second = torch.zeros_like(second)
                         zeroed[hfam[k]] = zeroed.get(hfam[k], 0) + 1
@@ -159,7 +164,7 @@ def main():
                         assert bool((second == 0).all()), f"GATE 5b: {k} ablated but not bitwise 0"
                         ablated_keys.append(k)
                     ss2 += float((second ** 2).sum())
-                    out[k] = (base.double() + pT[k].double() + second).to(torch.float32)
+                    out[k] = (sd + pTk + second).to(torch.float32)
             n2 = ss2 ** 0.5
             ok_norm = abs(n2 - target) < 1e-9
             print(f"\n{label}: ||2nd|| {n2:.12f} vs target {target:.12f} "
