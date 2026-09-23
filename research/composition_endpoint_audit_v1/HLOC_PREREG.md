@@ -122,3 +122,71 @@ Four arms, CPU tensor arithmetic, **built and scored and deleted one at a time**
 probe leg each (boundary), ~80 s. The lease is taken for **builds as well as scoring**: a
 streaming fp64 build over 220 tensors is not lighter than a forward pass on this box, which
 this session established the hard way. `hostbudget` gate used unchanged and not tightened.
+
+---
+
+# Amendment 1 — H_DOSE conflates two patterns that read OPPOSITELY. Split, before any score.
+
+**Filed with ZERO HLOC artifacts on disk — verified at this line: `hloc001-20260923` contains
+no files, and the battery is still queued behind a peer's lease.** Prompted by that peer's P6
+first arm, which landed while my run was queued.
+
+## What was wrong
+
+§3 registered **H_DOSE** as *"neither ablation beats its scalar control"* → *"location does not
+matter at fixed norm."* That single cell covers two data patterns whose readings are opposite:
+
+| pattern | correct reading |
+|---|---|
+| both ablations **indistinguishable** from their scalars | location does not matter — the registered reading |
+| one or both ablations **significantly BELOW** their scalars | **restriction itself is harmful**, independent of which family — and location manifestly DOES matter |
+
+**This is the ARMPERP-001 defect repeating**: an outcome cell whose stated reading does not hold
+across all the data it would absorb. There I found it after the run; here it is caught before,
+and only because a peer's result arrived first.
+
+## The split
+
+| outcome | requires | reading |
+|---|---|---|
+| **H_DOSE** | **both** ablations RESOLVED and **not** significantly different from their scalar controls | Location does not matter at fixed norm. The ablation axis is closed for this endpoint. |
+| **H_RESTRICTION** | at least one ablation significantly **BELOW** its scalar control, and **neither above** | **Restriction to a single module family is harmful whichever family it is.** The carrier question is malformed for this endpoint: the manipulation damages something the matched scalar does not. |
+
+H_ATTN, H_MLP, H_BOTH and INDETERMINATE are unchanged. P2 continues to bind: a limb with
+discordance < 6 is UNRESOLVED and cannot satisfy any "not significantly different" clause, so
+**H_DOSE now requires two RESOLVED nulls, not two absences of detection.**
+
+## Why H_RESTRICTION is now the live outcome, and my prediction has moved TWICE
+
+The sibling lane, on its own contract and bank, at 192 rows:
+
+```
+SPARSE_ATTN     attention only, 40.2% of energy    68
+SPARSE_MLP      MLP only,       ~60% of energy     67      <- 50% MORE energy, ONE row apart
+SCALAR_MATCHED  all modules, matched to SPARSE_ATTN 88
+SPARSE          full delta                        102
+```
+
+> **Both restrictions land ~20 below the matched scalar, and EQUAL TO EACH OTHER despite one
+> carrying 50 % more energy.** So the cost of restriction is not a function of how much norm
+> survives it, and it is not attributable to either family.
+
+**My stated expectation, and its history, recorded so it is visible I am not retrofitting:**
+
+1. At registration I predicted **H_ATTN**, explicitly against my own allocation-invariance
+   result (which implies H_DOSE), and said one of my two beliefs would lose.
+2. On the peer's contract-obedience data (a matched-norm scalar installs the contract as
+   completely as attention-only, 99.5 % either way) I **lowered confidence in H_ATTN**.
+3. On their P6 first arm I now expect **H_RESTRICTION**.
+
+All three movements are on *their* data, none on mine, and all three precede any HLOC score.
+**H_ATTN is now my least likely outcome and it was my registered prediction** — which is worth
+more than quietly updating it, because if H_ATTN fires anyway that is a genuine surprise.
+
+## One additional registered comparison, descriptive
+
+`hattn` vs `hmlp` directly. Their norms differ (0.119558 vs 0.131123, MLP ~10 % larger), so it
+is not norm-matched and **no prediction is registered**. But if the sibling lane's one-row
+equality replicates here across a ~10 % norm gap, that is the same "restriction cost is not a
+function of surviving norm" signature on a second skill and a second instrument. Reported as
+descriptive whatever it shows.
