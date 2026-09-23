@@ -153,3 +153,42 @@ If the diagnosis is right, `ledger_replay` should stay near 41–44% and the oth
 should rise toward their recorded rates (65%, 75%). If instead `ledger_replay` also moves a lot,
 the marginal-matching story is wrong and the difficulty gap is coming from something I have not
 identified — in which case G2 passing would not be trustworthy even if it happens.
+
+---
+
+# Amendment 2 — GPU lease, and the provenance of the v1 numbers
+
+A peer session (DOSELORA-001/ARMPERP-001) flagged that card 0 is shared by three sessions
+tonight under an exclusive-lease convention at
+`C:/Users/clclc/AppData/Local/Temp/rineya-gpu-0.lock`, and that my runs were not taking it.
+
+They were right. I did search for a GPU lock before the first model job, but searched
+`BusinessProject/**/*.lock` and found only `uv` venv files. The lease lives in `AppData/Local/Temp`.
+A correct check pointed one directory off target returns the passing answer, and I believed it.
+
+`gpu_lease.py` now implements the convention: exclusive `open(LOCK,"x")`, the record shape the
+existing `.stale-*.bak` artifacts use, token-checked release, four-condition stale reclaim, and
+the peers' process-table check so the protection is symmetric rather than one-way. Verified with
+a negative control: while held, a second acquire is refused.
+
+## What this means for the numbers already recorded
+
+`CALIBRATION.json` (the v1 gate run: BASE 2/192, SPARSE 63/192, OPALLO 1/192) and the first v2
+BASE run were collected **without the lease, on a contended card**. One of those runs took a CUDA
+OOM on its second arm while another process held ~3.1 GiB, so contention was real, not
+hypothetical.
+
+Greedy decoding is deterministic given fixed weights and inputs, and this lab has previously
+measured probe determinism as exact (0/256 divergent). But memory pressure can change GEMM
+algorithm selection, and I cannot rule that out after the fact. So:
+
+- The v2 gate run is **re-collected under the lease** rather than reusing the earlier pass.
+- The v1 numbers keep their status — G2 FAILED, bank rejected — but are marked
+  **collected-without-lease** and are not used for anything beyond that rejection.
+- The v1 → v2 repair does **not** depend on those numbers being exact. The repair targets came
+  from the recorded bank's input marginals (`add` bit counts, `value` range, applicability rate),
+  which are measured from files and involve no model output at all. If the v1 scores were
+  perturbed, the diagnosis still stands on the input-distribution evidence.
+
+The registered gates and the Amendment 1 stopping rule are unchanged: G1 ≤ 38, G2 ≥ 77, G3 ≥ 58,
+and no attempt 3.

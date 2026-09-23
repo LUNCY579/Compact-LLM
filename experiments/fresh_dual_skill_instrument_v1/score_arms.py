@@ -68,6 +68,7 @@ def main() -> int:
 
     import torch, transformers
     from transformers import AutoModelForCausalLM, AutoTokenizer
+    from gpu_lease import lease, LOCK
     if not torch.cuda.is_available():
         raise SystemExit("CUDA required")
 
@@ -105,6 +106,23 @@ def main() -> int:
         "quality_claim": False, "release_permitted": False,
     }
 
+    result["gpu_lease"] = {
+        "path": str(LOCK),
+        "held_for_the_whole_scoring_window": True,
+        "note": ("Card 0 is shared by three sessions. The lease is taken before the first model "
+                 "load and released after the last arm, so the window is contiguous and peers "
+                 "can queue on it."),
+    }
+
+    with lease(label=f"fds1:{a.bank.stem}", job=f"score {len(names)} arm(s) x {len(rows)} rows"):
+        _score_all(names, a, rows, result, torch, AutoModelForCausalLM, AutoTokenizer, gc)
+
+    a.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
+    print(f"wrote {a.output}")
+    return 0
+
+
+def _score_all(names, a, rows, result, torch, AutoModelForCausalLM, AutoTokenizer, gc):
     for name in names:
         arm_dir = a.arms_root / name
         started = time.time()
@@ -140,10 +158,6 @@ def main() -> int:
         print(json.dumps({k: rec[k] for k in ("arm", "correct", "n", "copied_input_verbatim", "by_family", "seconds")}), flush=True)
         del model, tok
         gc.collect(); torch.cuda.empty_cache()
-
-    a.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
-    print(f"wrote {a.output}")
-    return 0
 
 
 if __name__ == "__main__":
