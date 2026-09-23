@@ -192,3 +192,66 @@ algorithm selection, and I cannot rule that out after the fact. So:
 
 The registered gates and the Amendment 1 stopping rule are unchanged: G1 ≤ 38, G2 ≥ 77, G3 ≥ 58,
 and no attempt 3.
+
+---
+
+# Amendment 3 — v2 gate outcome, and a correction to Amendment 1
+
+## Outcome: all three gates PASS. The instrument is admissible, as attempt 2 of 2.
+
+Collected under the GPU lease (label `fds1:T_BANK_V2`), bank sha256 `fc094136…`.
+
+| gate | requirement | observed | |
+|---|---|---|---|
+| G1 base floor | Supa ≤ 38/192 | 0/192 | PASS |
+| G2 donor ceiling | Titan-Sparse ≥ 77/192 | **102/192 (53.1%)** | **PASS** |
+| G3 separation | ≥ 58 rows | 102 | PASS |
+
+Per family, Titan-Sparse:
+
+| family | recorded | v1 (rejected) | **v2** |
+|---|---|---|---|
+| `ledger_replay` | 41% | 44% | **50%** |
+| `prerequisite_plan` | 75% | 17% | **58%** |
+| `register_machine` | 65% | 38% | **52%** |
+| total | 60.4% | 32.8% | **53.1%** |
+
+## Correction to Amendment 1
+
+Amendment 1 said *"`ledger_replay` was already matched and its generator is unchanged in
+substance."* **That was inaccurate.** `generate_v2.gen_ledger` also draws `amount` and the
+balances from the recorded empirical marginals (`rng.choice(m["ledger"]["amounts"])`,
+`rng.choice(m["ledger"]["balances"])`), replacing v1's own ranges (amount −60…60, balances
+−120…120) with the recorded ones (amount −9…12, balances −865…1018). All three generators
+changed, not two.
+
+This matters because Amendment 1 registered `ledger_replay` staying near 41–44% as the check on
+the marginal-matching story, and it moved to 50%. Read correctly:
+
+- The prediction's **substance** is confirmed: the two badly off-distribution families rose most
+  (`prerequisite_plan` +41pp, `register_machine` +14pp), which is what the diagnosis predicted.
+- The **control I claimed to have** did not exist. `ledger_replay`'s +6pp move is consistent with
+  its parameters having changed too, so it cannot serve as the untouched reference I described.
+
+I am not re-running to construct a cleaner control — Amendment 1's stopping rule binds, and
+rebuilding the bank again after seeing scores is exactly what it forbids. The honest statement is
+that v2's admissibility rests on the gates, which were fixed in advance and passed, and **not**
+on a within-bank control that I mis-described.
+
+## Residual difficulty gap, stated rather than closed
+
+v2 sits at 53.1% against the recorded 60.4%. The fresh bank is still somewhat harder than the
+recorded one, most of the remaining gap being `prerequisite_plan` (58% vs 75%). That is a
+difference in absolute difficulty, not a defect: the gates ask whether the donor's skill is
+measurable here, and it is. But **cross-bank score comparisons are not licensed** — an arm's
+score on this bank may not be compared against any recorded number from
+`process-transition-probe-001`. Only within-bank arm-vs-arm comparisons are.
+
+## Now proceeding to the registered arm comparison
+
+Scoring the remaining seven arms (OPALLO, AVG, ADD-100, ADD-S75, ADD-O75, ADD-75,
+CONFLICT-LOCAL) on this bank, under the lease, with `analyse.py` as written before this outcome
+was read. The registered decomposition stands:
+
+- attenuation cost = SPARSE − AVG
+- interference cost = SPARSE − ADD-100
