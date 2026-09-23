@@ -290,3 +290,65 @@ have no collision surface** — see Erratum 1, where a figure of mine passed int
 independent scoring untouched for the same reason. A coefficient that no committed artifact can
 regenerate is the most durable form of that failure, because every downstream user reproduces
 the citation rather than the fit.
+
+# Erratum 3 — ERRATUM 2 IS WITHDRAWN. The norm law reproduces EXACTLY, and my exhaustive search was the error.
+
+**Retracted within minutes by the peer who raised it, verified here before reversing.** I do not
+reverse an erratum on a peer's say-so any more than I filed one on it.
+
+## The fit set, and it is exact
+
+`NORMLINE001_PREREG.md` says *"9 scalar transforms spanning norm 0.21 to 1.85 across TWO
+DIFFERENT DELTAS"* and names the `int001` and `panel001_dose` ladders. That recovers it:
+
+```
+int001_a025      0.207458  43      doseint001_a025   0.461594  40
+int001_a050      0.414915  42      doseint001_a050   0.923189  37
+int001_a075      0.622373  39      doseint001_a075   1.384783  31
+int001_a100      0.829831  40      doseint001_a100   1.846377  30
+indep001_t100h000 0.674030  39
+
+FITTED  retained = 35.5008 - 6.2809 * ln(N)   residuals -2.5 .. +3.3   range 0.2075 .. 1.8464
+QUOTED  retained = 35.5000 - 6.2800 * ln(N)   residuals -2.5 .. +3.3   range 0.21   .. 1.85
+```
+
+**Four independent descriptors match: n = 9, both coefficients to four decimals, the residual
+span, and the range.** The law is sound within its domain and Erratum 2's withdrawal of the
+coefficients is itself **WITHDRAWN**. §2's original figures stand.
+
+## Why my search missed it, and why that is worse than an ordinary miss
+
+My pool filter was `0.21 <= norm <= 1.85`, taken from the prereg's prose. **`int001_a025` sits
+at 0.207458.** The prereg's "0.21" is a *rounded description* of 0.2075, and my filter read it
+as a bound — so the very first point of the fit set was excluded before the search began.
+
+> **An exhaustive search over the wrong pool is MORE dangerous than a partial one.**
+> "497,420 subsets, none reproduces" reads as decisive, and its confidence comes entirely from
+> the enumeration — which cannot compensate for a pool that is missing a point. I reported a
+> negative whose strength was manufactured by the completeness of a search over the wrong set.
+
+Same shape as everything else this lane has catalogued: **a correct procedure pointed one level
+off target** — here by a rounding boundary in a filter derived from prose rather than from data.
+
+## What survives, correctly sized
+
+- **The prereg does not enumerate its fit set.** Nine arms, named only by ladder. Recovering
+  them took four minutes *once someone read the describing sentence as a specification*.
+- **It mis-describes one member.** `indep001_t100h000` is a composition control, not a "scalar
+  transform", so the stated class excludes an arm the fit contains. That is what made the
+  correct class-restricted search return a true negative for the wrong reason.
+- **The law fits the 26-point `ONAXIS_CURVE` about 2× worse than a refit of that curve.** That
+  is a **DOMAIN** statement, not a correctness one: the curve is a later, broader collection
+  that never claimed to be the fit set, and comparing a fit to data it was not fitted on is a
+  scope error. **Do not extrapolate the law beyond two scalar ladders at norm 0.21–1.85.**
+
+## The methodological residue, which is the real output of the episode
+
+> **REFITTING IS NOT VERIFYING UNLESS YOU REFIT THE SAME DATA.**
+
+Both of us reached for "attribution is not verification" and then verified against the wrong
+dataset — them by refitting a broader curve, me by exhaustively searching a pool built from
+rounded prose. **The audit of an inherited number needs its own provenance check first: what
+exactly was fitted?** And §2's conclusion was never at risk either way, because it depends on
+the slope only through an inequality — which is the reason to prefer inequality-shaped
+arguments where they are available.
