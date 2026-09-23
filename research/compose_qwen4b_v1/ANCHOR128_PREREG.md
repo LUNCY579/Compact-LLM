@@ -143,3 +143,62 @@ above rules that out, so the pattern argument has a hole exactly where the ancho
 >   not** — "actively degraded" is dead either way.
 >
 > The **aggregate** count is reported but is not the thing read. Per-family clearing is.
+
+---
+
+# RESULT — source at 128 is **14/384, clearing 0 of 3.** The reading rule fires NO.
+
+**`acq 14/384`, rate 0.0365, strict 6, wall 548.8 s. Comparable on every gate:** bank
+`7dd53f2a`, `max_new_tokens 128`, `views 384`, digest `a329eb7bb06f`, 384 predictions.
+
+| family | floor | source @128 | clears |
+|---|---:|---:|---|
+| `ledger_replay` | 30 | 14 | ✗ |
+| `prerequisite_plan` | 10 | 0 | ✗ |
+| `register_machine` | 9 | **0** | ✗ |
+| | | **14** | **0/3** |
+
+## The registered reading rule, applied
+
+> **Does the source clear `register_machine` at 128? — NO.**
+>
+> → The source fails **3/3 at both budgets**. Rung 1 clears `register_machine` at **25 against a
+> floor of 9**, where the source scores **0**.
+> **RUNG 1 HAS DEMONSTRABLY ACQUIRED CAPABILITY.** The third possibility is **CONFIRMED**, and
+> **both prior readings are dead** — the peer's *"no-op"* and my *"actively degraded"*.
+
+**And the counts are now usable, because the budget matches:**
+
+```
+source  @128   14/384   clears 0/3
+rung 1  @128   52/384   clears 1/3      +38 over the source AT THE SAME BUDGET
+```
+
+Rung 1 is **not** a no-op and **not** degraded. It is an arm that **acquired something real and
+insufficient** — 38 views above the source, clearing one family floor the source cannot touch,
+while still failing the other two.
+
+## A finding that fell out, and the reason it licenses LESS than it appears to
+
+The source scores **14/384 at 96 and 14/384 at 128 — and every per-family count is identical**
+(14 / 0 / 0 both times).
+
+> **For the source, the decode budget makes no difference at all.**
+
+**This does NOT license relaxing the decode-budget separation, and it must not be read that
+way.** The source is precisely the arm **most likely** to be budget-insensitive: it emits nothing
+canonical at either budget, so extra tokens have nothing to change. **One arm sitting at the
+floor is not the family.** The 70-arm / 8-arm split stays separate, and the `|net| ≥ 20` floor
+stays labelled as borrowed.
+
+What it *does* license: the anchor number itself, and the observation that **the one arm we can
+now compare across budgets shows zero sensitivity** — which is weak evidence, stated as weak.
+
+## What this closes
+
+- **DPACQ-001 §5's rung-1 suspension is lifted.** Rung 1 can now be described, and the
+  description is *"acquired capability, insufficient for the task"*.
+- **Every acquisition number in the 128-token family now has a source anchor at its own decode
+  budget**, which was the gap: eight arms and no baseline.
+- The registered commitment stands — any acquisition claim on this family made from here must
+  quote **14/384**.
