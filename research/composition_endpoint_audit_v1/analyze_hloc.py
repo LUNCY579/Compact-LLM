@@ -4,9 +4,18 @@ WRITTEN BEFORE THE BATTERY FINISHED, deliberately. The ARMPERP scorer was writte
 numbers existed and its verdict logic negated straight past its own P2 guard; writing the
 decision procedure while the outcome is still unknown removes that degree of freedom.
 
-P2 IS A PRECONDITION, NOT A FOOTNOTE. A comparison with discordance < 6 cannot reach p<0.05, so
-it is UNRESOLVED and CANNOT satisfy any "not significantly different" clause. Encoded as
-`resolved()`, and every clause below is built from `sig()`/`nsig()` which both require it.
+P2 IS A PRECONDITION, NOT A FOOTNOTE. A comparison too small to reach significance is
+UNRESOLVED and CANNOT satisfy any negative clause.
+
+TWO CORRECTIONS after the first scoring, both found by a peer scoring cold, neither changing
+the verdict (INDETERMINATE either way, and more firmly):
+  (a) P2 registered nd < 6, which is the threshold for an UNADJUSTED exact test. This design
+      applies Holm across m=2, so the smallest resolvable discordance is nd >= 7. DERIVED
+      below from m and alpha rather than hardcoded.
+  (b) `not above(x)` is TRUE for an UNRESOLVED limb, so 4 of 16 limb-state pairs printed a
+      substantive verdict with a limb that could not be read. Fixed by HOISTING a
+      both-resolved guard ABOVE every branch -- patching individual clauses is what failed
+      in ARMPERP, and this is the third occurrence of that shape.
 
 AMENDMENT 1 split the old single H_DOSE cell, which absorbed two patterns that read oppositely:
   both ablations indistinguishable from their scalars -> location does not matter  (H_DOSE)
@@ -43,6 +52,11 @@ def mcnemar(A, B):
     return sum(A[k] for k in ks), sum(B[k] for k in ks), b, c, n, p, (min(1.0, 2 / 2 ** n) if n else 1.0)
 
 
+def MIN_ND_FOR(m, alpha=0.05):
+    """Smallest discordance whose MINIMUM attainable two-sided p survives Holm over m tests."""
+    return next(n for n in range(1, 60) if (2 / 2 ** n) * m < alpha)
+
+
 def main():
     R = {}
     print("CANARIES -- recorded comparator counts must reproduce from per_row:")
@@ -74,20 +88,42 @@ def main():
           f"{'nd':>3s} {'p':>10s} {'Holm':>10s}  {'limb':>12s}")
     for a, b in REGISTERED:
         r = res[(a, b)]
-        limb = "UNRESOLVED" if r["nd"] < 6 else ("SIG" if r["holm"] < 0.05 else "resolved null")
+        limb = ("UNRESOLVED" if r["nd"] < MIN_ND_FOR(len(REGISTERED))
+                else ("SIG" if r["holm"] < 0.05 else "resolved null"))
         print(f"  {a + ' vs ' + b:22s} {r['A']:4d} {r['B']:7d} {r['A']-r['B']:+5d} {r['b']:3d} "
               f"{r['c']:3d} {r['nd']:3d} {r['p']:10.3e} {r['holm']:10.3e}  {limb:>12s}")
 
-    resolved = lambda k: res[k]["nd"] >= 6
-    above = lambda k: resolved(k) and res[k]["holm"] < 0.05 and res[k]["A"] > res[k]["B"]
-    below = lambda k: resolved(k) and res[k]["holm"] < 0.05 and res[k]["A"] < res[k]["B"]
-    nsig = lambda k: resolved(k) and res[k]["holm"] >= 0.05
+    # --- P2 THRESHOLD, DERIVED FROM THE CORRECTION ACTUALLY APPLIED, not assumed ---------
+    # P2 registered nd < 6 as UNRESOLVED. That is the threshold for an UNADJUSTED exact test.
+    # This design applies Holm across m comparisons, so the smallest-p limb must clear
+    # alpha/m. Derive it instead of hardcoding 6:
+    m, ALPHA = len(REGISTERED), 0.05
+    MIN_ND = MIN_ND_FOR(m, ALPHA)
+    resolved = lambda k: res[k]["nd"] >= MIN_ND
+
+    # --- STRUCTURAL GUARD: no substantive verdict while ANY limb is unresolved ------------
+    # `not above(x)` is TRUE for an unresolved limb, so an unresolved limb SATISFIES A
+    # NEGATIVE CLAUSE and four of sixteen limb-state pairs printed a substantive verdict.
+    # Identical in form to ARMPERP's `not sig(a)`; THIRD occurrence of this shape. Patching
+    # each branch is what failed twice, so the guard is hoisted above all of them.
+    both_resolved = all(resolved(k) for k in REGISTERED)
+
+    above = lambda k: resolved(k) and res[k]["holm"] < ALPHA and res[k]["A"] > res[k]["B"]
+    below = lambda k: resolved(k) and res[k]["holm"] < ALPHA and res[k]["A"] < res[k]["B"]
+    nsig = lambda k: resolved(k) and res[k]["holm"] >= ALPHA
     ka, km = REGISTERED[0], REGISTERED[1]
 
-    print("\nREGISTERED OUTCOME (P2 applied as a precondition on each limb):")
+    print(f"\nREGISTERED OUTCOME (P2 as a precondition; threshold DERIVED for Holm m={m}):")
+    print(f"  smallest resolvable discordance under Holm x{m}: nd >= {MIN_ND}"
+          f"   (nd={MIN_ND-1} gives min attainable p {2/2**(MIN_ND-1):.5f} -> {m*2/2**(MIN_ND-1):.5f})")
     for k in REGISTERED:
         print(f"  {k[0]:8s} limb: nd {res[k]['nd']:2d} -> {'RESOLVED' if resolved(k) else 'UNRESOLVED (P2)'}")
-    if above(ka) and not above(km):
+    if not both_resolved:
+        print("  => INDETERMINATE -- at least one limb is UNRESOLVED, so NO substantive outcome\n"
+              "     is readable. Guard hoisted above the branches: an unresolved limb must not\n"
+              "     be able to satisfy a negative clause.")
+        v = None
+    elif above(ka) and not above(km):
         v = ("H_ATTN -- the gain is ATTENTION-carried. Contract-in-attention on a second skill.")
     elif above(km) and not above(ka):
         v = ("H_MLP -- MLP-carried. Contradicts the sibling lane's localisation.")
@@ -104,7 +140,8 @@ def main():
         v = ("INDETERMINATE -- a limb needed for every registered outcome is UNRESOLVED. "
              "Claim nothing;\n  report min_attainable_p. Registered so an underpowered result "
              "cannot be read as H_DOSE.")
-    print(f"  => {v}")
+    if v is not None:
+        print(f"  => {v}")
 
     print("\nDESCRIPTIVE, no prediction registered (norms differ ~10%):")
     A, B, x, y, n, p, mp = mcnemar(R["hattn"], R["hmlp"])

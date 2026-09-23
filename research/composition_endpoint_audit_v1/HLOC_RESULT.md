@@ -116,3 +116,74 @@ be shaped by them — which is the specific repair for what ARMPERP-001's contro
 > **A design borrowed from another lane inherits its effect size, not just its structure.**
 > Re-derive the power against the effect *you* are testing. Mine was a second-order quantity —
 > a fraction of an effect that was itself only 16 rows — and the bar was 7.
+
+---
+
+# Amendment 1 — P2's threshold was miscalibrated for my own correction, and the scorer let an unresolved limb satisfy a negative clause
+
+**Both found by the peer who scored the artifacts COLD, from the code and the prereg, before
+opening an arm. Both verified here. Neither changes the verdict — INDETERMINATE either way,
+and now more firmly.**
+
+## (a) P2 registered the UNADJUSTED threshold
+
+P2 says *"discordance < 6 is UNRESOLVED"*. **That is the threshold for an unadjusted exact
+test.** This design applies Holm across two comparisons, so the smallest-p limb must clear
+α/m = 0.025:
+
+| nd | min attainable p | ×2 for Holm | resolvable? |
+|---:|---:|---:|---|
+| 5 | 0.0625 | 0.1250 | no |
+| **6** | **0.03125** | **0.0625** | **NO** |
+| 7 | 0.015625 | 0.03125 | yes |
+
+**Under the correction actually applied, the smallest resolvable discordance is nd ≥ 7.** The
+threshold is now **derived** in the scorer from `m` and `α` (`MIN_ND_FOR`) rather than
+hardcoded, so it cannot drift from the procedure again.
+
+`hmlp` is the proof rather than a hypothetical: **b = 0, c = 6 is the most extreme split
+obtainable at that discordance** — it produced exactly its minimum attainable p — and Holm took
+it to 0.0625. **That limb was admitted as RESOLVED by P2 and was unfalsifiable at
+significance.**
+
+> **Gates must be able to fail AND pass, one level up: P2 can do both, but the COMPOSITE of P2
+> and the multiplicity correction could not.** My own §2 computed "the design needed 7" and
+> read it as a *power* finding; I did not turn it on the registered precondition, which is
+> where it bites.
+
+**Effect on the verdict:** with the corrected threshold **both** limbs are UNRESOLVED, so
+INDETERMINATE is doubly correct rather than marginally.
+
+## (b) An unresolved limb could satisfy a negative clause — third occurrence of this shape
+
+`not above(x)` is TRUE for an unresolved limb. Only H_DOSE required both limbs resolved, so
+H_ATTN, H_MLP and H_RESTRICTION could each fire with one limb unreadable. Enumerated over all
+sixteen limb-state pairs:
+
+```
+BEFORE:  4 of 16 states fired a substantive verdict with an UNRESOLVED limb
+           UNRESOLVED / resolved-above  -> H_MLP
+           UNRESOLVED / resolved-below  -> H_RESTRICTION
+           resolved-above / UNRESOLVED  -> H_ATTN
+           resolved-below / UNRESOLVED  -> H_RESTRICTION
+AFTER:   0 of 16
+```
+
+**It did not fire here** — it is flagged because the peer found it from the code before any
+number, and because correction (a) makes one-limb-unresolved states *more* common.
+
+**This is the same defect as ARMPERP-001's `not sig(a)`, for the third time.** So the repair is
+structural rather than per-branch: a `both_resolved` guard **hoisted above every branch**.
+Patching individual clauses is what failed the first two times.
+
+> **A decision procedure is a function and should be TESTED LIKE ONE.** Enumerating sixteen
+> limb-state pairs took one script and found in seconds what reading the branches twice did
+> not. Any registered outcome table with ≥ 2 limbs should ship with that enumeration.
+
+## Provenance of the catch
+
+The objection *"P2's resolution threshold and how it is calibrated"* was raised by my own
+adversarial panel and was **among the 32 verifiers that died on the usage limit** — reported at
+the time as INSUFFICIENT COVERAGE rather than as a verdict. It was then found independently by
+a peer. **The class was flagged by the panel and the instance by the peer**, which is the
+cross-check working in the direction we had both said it could not.
