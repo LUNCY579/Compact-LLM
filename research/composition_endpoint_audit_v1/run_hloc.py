@@ -143,7 +143,7 @@ def main():
             t1 = time.time()
             adir = OUT / label
             adir.mkdir(parents=True, exist_ok=True)
-            out, ss2, zeroed = {}, 0.0, {"attn": 0, "mlp": 0, "norm": 0}
+            out, ss2, zeroed, ablated_keys = {}, 0.0, {"attn": 0, "mlp": 0, "norm": 0}, []
             with safe_open(str(SRC), framework="pt") as S:
                 for k in sorted(S.keys()):
                     base = S.get_tensor(k)
@@ -153,6 +153,11 @@ def main():
                     if kind == "ablate" and hfam[k] != keep:
                         second = torch.zeros_like(second)
                         zeroed[hfam[k]] = zeroed.get(hfam[k], 0) + 1
+                        # GATE 5b, the peer's note: assert the ablated contribution is BITWISE
+                        # zero, not approximately. A scalar-times-zero bug yields -0.0 in places
+                        # and float equality on the untouched set is the cheapest way to see it.
+                        assert bool((second == 0).all()), f"GATE 5b: {k} ablated but not bitwise 0"
+                        ablated_keys.append(k)
                     ss2 += float((second ** 2).sum())
                     out[k] = (base.double() + pT[k].double() + second).to(torch.float32)
             n2 = ss2 ** 0.5

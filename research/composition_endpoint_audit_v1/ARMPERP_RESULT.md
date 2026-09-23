@@ -114,10 +114,15 @@ registered.
 
 ## 5. Gate 7 is inert here, as registered in advance
 
-`d_perp` effective rank is **median 23** against comparators' 16 (bound 32). The prereg fixed
-in advance that the rank confound bears on a **GEOMETRY** verdict only — rank explains a **gain**,
-not its absence. There is no gain. The asymmetry was written before the score, which is what
-makes this clean rather than convenient.
+`d_perp` effective rank is **min 16, median 24, max 27** over 49 tensors spanning L8–12 and
+L26–27, against comparators' 16 and an algebraic bound of 32. **See Erratum 1** — the figure
+originally reported here (`min 21 / median 23 / max 27`) was a 21-tensor sample that sorted-key
+order confined to **layers 10–12 only**, and its minimum was too high.
+
+The prereg fixed in advance that the rank confound bears on a **GEOMETRY** verdict only — rank
+explains a **gain**, not its absence. There is no gain. The asymmetry was written before the
+score, which is what makes this clean rather than convenient, and it is why the erratum corrects
+a reported measurement without touching the conclusion.
 
 ## 6. Surface-convention audit — prompted by another lane, and it passes WITH CONTROLS
 
