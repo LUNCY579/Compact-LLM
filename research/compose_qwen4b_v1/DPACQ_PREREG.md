@@ -162,3 +162,71 @@ touch the primary.** Rung 4 is the registered cell, dense there is 298, and a ru
 > already scoped by its Amendment 1 to below norm 1.85 — because flat retention bought with
 > collapsing acquisition is not an advantage. **Written down in advance so a bad rung 1 retracts
 > the right sentence and not the primary.**
+
+---
+
+# Amendment 2 — the 20-view floor is BORROWED across a decode-budget boundary, and P3 is promoted
+
+**Filed before any score exists** (verified: zero `PROCESS_doseparam*` artifacts at write time).
+Raised by the peer. Their substantive point is right; their count is not, and the correction
+makes the boundary sharper rather than softer.
+
+## Bank `7dd53f2a` holds TWO decode budgets, and `views_sha256` cannot tell them apart
+
+Measured across the records tree and every ChatBubble checkout:
+
+| `max_new_tokens` | distinct arms on bank `7dd53f2a` |
+|---:|---:|
+| **96** | **70** — every indep, mag, compose, bridge, crq, tt arm |
+| **128** | **8** |
+
+The peer said six; it is **eight**. The two they missed are `bindingintegration001_select` and
+`bindingmixture001_select`, which sit at norms 2.958 and 3.495. Their conclusion is unaffected —
+**`a100` remains the only matched-norm dense comparator at 1.8464** — but the 128-token family is
+larger than stated, and the two extra members are exactly the high-norm arms that appear in the
+on-axis curve.
+
+> **`views_sha256` identifies the BANK. It does NOT identify the DECODE BUDGET.** Two artifacts
+> on the same bank at different `max_new_tokens` are not comparable and nothing in the hash says
+> so. This is a standing property of the bank, not a detail of this launch.
+
+`run_dpacq.py` already asserts `max_new_tokens == 128` alongside `bank == 7dd53f2a` and
+`views == 384` on every artifact after writing, so this battery is protected. **The general rule
+is the part that generalises:** a bank hash is not a comparability certificate.
+
+## The 20-view floor is BORROWED, and is now labelled as such
+
+The `|net| ≥ 20` cross-draw floor and the ±7 single-draw spread were **both established on the
+96-token family.** This experiment lives in the 128-token family. Applying one to the other is a
+sensitivity scale carried across a change in conditions — the same defect as borrowing a floor
+across a change of structure, which this record has already been bitten by.
+
+**There is no empirical draw-spread estimate available at 128**: eight arms, no repeated seeds,
+nothing to estimate from. The nearest candidates (`int001` rep `s23`/`s29` at 229 and 228, spread
+1) are **at 96 tokens**, so quoting them here would commit the very error being flagged.
+
+> **Registered: keep `|net| ≥ 20`, and label it BORROWED FROM THE 96-TOKEN FAMILY.** It remains
+> the best number available, and **the honest description of a number is not the same as the
+> number.** Tightening it is refused — a margin below the instrument's resolution can never be
+> met, which is this programme's recorded unsatisfiable-gate error.
+
+## P3 is PROMOTED from descriptive to load-bearing
+
+The floored cross-draw step can be **spent once, on a number already measured**, instead of
+being spent on the new one:
+
+```
+P3   rung4  vs  LoRA beta=1.00        transforms of ONE delta   FLOORLESS, paired
+     LoRA beta=1.00 296  vs  dense a100 298   net -2   <- cross-draw step ALREADY PAID
+```
+
+If rung 4 lands on `LoRA β=1.00` in the floorless paired comparison, then rung 4 reaches
+`dense a100` through **a single cross-draw step that is already measured at −2**. That gives a
+tight answer on the axis where tightness is legitimate.
+
+> **P3 now carries the inference; P1 is the conservative bound.** Registered this way round
+> rather than the other, because the floorless axis is the one that can support a sharp claim
+> and the floored one cannot.
+
+P1 is unchanged in content and remains the registered primary for the **retracting** outcome:
+`net ≤ −20` still retracts DOSEPARAM-001's headline.
