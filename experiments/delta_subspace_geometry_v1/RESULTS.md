@@ -106,6 +106,34 @@ that subspace they remain very nearly orthogonal. The direction of inference tha
 alarming one: I argued the near-zero global cosine might be an artifact that realistic
 anisotropy would expose, and it is not. A 4× amplification off a 0.003 base is still negligible.
 
+### Correction: the aggregate above still averaged one level too much
+
+A reviewer pointed out that `cos_eff(V)` aggregates over the k directions of V and can therefore
+cancel *inside* V — the same failure I was accusing the global cosine of. That is correct. The
+fix is to measure direction by direction, `c_i = cos(dS·v_i, dO·v_i)` for each singular direction
+separately, and to compare the spread against a null (`PER_DIRECTION.json`, 4,480 directions):
+
+| statistic | median \|c\| | p90 | p99 | max | frac > 0.10 |
+|---|---|---|---|---|---|
+| per-direction, inside dOpallo's top-32 | 0.0241 | 0.0722 | 0.1438 | **0.266** | 4.4% |
+| per-direction, Haar-random directions | 0.0215 | 0.0633 | 0.1118 | 0.187 | 1.9% |
+| subspace aggregate (reported above) | 0.0126 | 0.0345 | 0.0533 | 0.062 | — |
+
+The criticism lands: per-direction alignment is about **2× the subspace aggregate**, so the
+aggregate was hiding within-V structure. But against the null it largely dissolves. The Haar
+median of 0.0215 is just the finite-dimension baseline — 1/√2048 ≈ 0.022 — so most of the spread
+is what *any* directions would give. The real/null ratio is 1.12 at the median and 1.14 at p90.
+
+What is real is a **tail excess**: 4.4% of directions exceed |cos| = 0.10 against 1.9% in the
+null (2.3×), and the maximum reaches 0.266 against a null maximum of 0.187. So a small minority
+of directions do carry genuine skill-specific alignment.
+
+Net effect on the conclusion: the refutation stands, but weaker and better bounded than the
+sentence above claims on its own. Bulk alignment is null-like; a thin tail is not. Nothing here
+approaches a magnitude that would make composition costly, and the recommendation against
+building the projection mechanism is unchanged — if anything it is firmer, since the directions
+that would be projected out are ~2% of the subspace.
+
 What survives from the collision finding is narrower but still real: **the two deltas are not
 disjoint machinery** — they occupy overlapping rank-~18 subspaces at the same depth, concentrated
 in the residual-stream write matrices. What does *not* survive is any claim that this implies
