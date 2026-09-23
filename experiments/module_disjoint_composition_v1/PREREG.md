@@ -270,3 +270,56 @@ the delta to attention coordinates roughly quintuples verbatim input-copying. Th
 failure mode from the punctuation convention and was not predicted by anything registered here.
 Whether it is a property of the module restriction or of the reduced magnitude is exactly what
 `SCALAR_MATCHED` (same norm, spread across all modules) will separate.
+
+---
+
+# Amendment 4 — the missing half of the module decomposition (registered; NOT yet built)
+
+`SPARSE_MLP` is declared in `compose_modules.py:ARMS` but was never built. Building it completes
+the decomposition and answers a question a peer lane (HLOC-001) is spending card time on.
+
+## What the existing arms already say about contract vs content
+
+Contract-obedience = correct + well-formed-wrong + copied-input, i.e. the model emitted something
+matching the output contract's *shape* whatever its value:
+
+| arm | delta present | contract-obedient |
+|---|---|---|
+| `BASE` | none | **56/192 (29%)** |
+| `SPARSE` | full | 192/192 (100%) |
+| `SPARSE_ATTN` | attention only, 40.2% of energy | **191/192 (99.5%)** |
+| `SCALAR_MATCHED` | all modules, same norm | 191/192 (99.5%) |
+| `MODULE_DISJOINT` | + Opallo's full MLP | 191/192 (99.5%) |
+
+Two things follow. **The contract is learned** — the base obeys it 29% of the time and every
+armed variant ~99.5%. And **40.2% of the delta's energy, restricted to attention, installs it
+completely** — no better than a matched-norm scalar, but no worse either.
+
+That is *consistent* with "attention carries the contract" and does not test it, because no arm
+here withholds attention. The decisive arm is the one that has not been built.
+
+## Registered prediction — P6
+
+`SPARSE_MLP` = Supa + dSparse|MLP (59.8% of energy, ‖Δ‖ = 0.5366), with its own norm-matched
+scalar control `SCALAR_MATCHED_MLP` = Supa + α·dSparse over all modules,
+α = 0.5366/0.6941 = 0.7731, because an ablation without a matched-norm scalar cannot distinguish
+"this module carries the skill" from "this ablation removed less norm" — the lesson P1′ taught
+at a cost of nearly the opposite conclusion.
+
+- **Contract is attention-carried** → `SPARSE_MLP` contract-obedience **≤ 70%**, materially below
+  `SPARSE_ATTN`'s 99.5% despite carrying *more* energy. This would replicate P4's localisation on
+  a second, independent contract (output *shape* rather than punctuation).
+- **Contract is not module-specific** → `SPARSE_MLP` ≥ 95%, i.e. either module installs it.
+- Between 70% and 95% is partial and the arm does not localise it.
+
+Secondary, on the skill rather than the contract: `SPARSE_MLP` vs `SCALAR_MATCHED_MLP` at matched
+norm repeats P1′ on the other module class. If **both** module-restricted arms lose to their
+matched-norm scalars, the transition skill is **distributed** and module identity buys nothing in
+either direction — which is a cleaner statement than P1′ alone can make.
+
+## Not built yet, and why
+
+RAM was 3.68 GiB when this was written and a peer lane holds the card for HLOC-001. Per the rule
+both lanes adopted tonight, **the lease covers arm construction, not just scoring** — a streaming
+build over 220 tensors is not meaningfully lighter than a forward pass on this box. This
+amendment is registered now and the arms will be built and scored after that lane releases.
