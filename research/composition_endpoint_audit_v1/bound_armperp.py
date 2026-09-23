@@ -13,12 +13,28 @@ smallness, with a stated width.
     LICENSED      "arm-perp does not have delta_H's boundary effect"
     NOT LICENSED  "arm-perp has no boundary effect"    -- the bound is 7.6 rows wide, not zero
 
-AND THE BETWEEN-DRAW FLOOR DOES NOT THREATEN A BOUND. The floor exists because cross-draw
-comparisons can show SPURIOUS DIFFERENCES; it cannot manufacture a spurious SIMILARITY.
-Cross-draw variation inflates an observed difference rather than shrinking one, so a small
-observed difference from a cross-draw comparison is CONSERVATIVE. (The author got an adjacent
-asymmetry argument wrong earlier in this lane -- that one invoked a cell that was not a null.
-This one is about the direction of a bias on a bound, which is a different claim.)
+WHERE THE BETWEEN-DRAW ISSUE ACTUALLY LIVES -- and it is NOT a noise-asymmetry argument.
+
+An earlier version of this header argued that cross-draw noise "inflates an observed difference
+and does not shrink one", so a small observed difference is conservative. THAT IS FALSE and it
+is withdrawn. Writing D = delta + eps with E[eps] = 0, eps can take the opposite sign to delta
+and MASK it, so a small |D| can understate |delta| badly on a single draw. Jensen gives
+E|D| >= |E[D]| = |delta|, which is a statement about the AVERAGE OVER DRAWS, not a bound on the
+one draw in hand. (Second asymmetry argument this lane has got wrong; a peer caught both.)
+
+The bound does not need it. The CP limit is computed on the DISCORDANCE BETWEEN TWO SPECIFIC
+ARMS, row by row, over shared rows. It is a within-pair statement about two objects on disk and
+draw variability is not inside it. The draw issue lives one level up, in GENERALISATION:
+
+    LICENSED      THIS arm-perp does not have delta_H's boundary effect. A property of the
+                  built arm; no draw argument required.
+    NOT LICENSED  Orthogonalised same-skill content IN GENERAL does not have delta_H's
+                  boundary effect. That quantifies over draws of s23 -- a different s23 gives
+                  a different d_perp and a different arm. The between-draw floor bites HERE,
+                  and no bound on one realisation settles it.
+
+The registered question was whether THIS construction manufactures the gain, so the scoped
+claim is the one the experiment asked for.
 
 THIS IS POST-HOC. No equivalence test was registered in ARMPERP_PREREG.md. These are additional
 descriptive statistics on the registered data, not a reinterpretation of the registered test.
@@ -40,7 +56,13 @@ def rows(p):
 
 
 def cp_upper(k, n, alpha=0.05):
-    """Exact Clopper-Pearson upper limit: smallest p with P(X<=k | n,p) <= alpha."""
+    """Exact Clopper-Pearson upper limit: smallest p with P(X<=k | n,p) <= alpha.
+
+    CONVENTION MATTERS AND MUST BE STATED. alpha=0.05 is the ONE-SIDED 95% upper limit;
+    alpha=0.025 is the upper limit of the TWO-SIDED 95% interval. A reader recomputing with
+    the other convention gets a different number and cannot tell which of you is wrong.
+    Both are reported below; the conclusion is identical under either.
+    """
     lo, hi = 0.0, 1.0
     for _ in range(200):
         mid = (lo + hi) / 2
@@ -57,27 +79,30 @@ def main():
     print("BOUNDARY, n=112. Exact CP 95% upper bound on the DISCORDANCE RATE, and the worst-case")
     print("net it permits (every discordant pair falling one way).\n")
     print(f"  {'contrast':18s} {'A':>4s} {'B':>4s} {'b':>3s} {'c':>3s} {'nd':>3s} "
-          f"{'CP95 rate':>10s} {'|net| <=':>9s}")
+          f"{'1-sided':>9s} {'|net|<=':>8s}  {'2-sided':>9s} {'|net|<=':>8s}")
     out = {}
     for a, b in (("perp", "control"), ("perp", "a0554"), ("a0554", "control"), ("h025", "control")):
         ks = sorted(set(R[a]) & set(R[b]))
         x = sum(1 for k in ks if R[a][k] and not R[b][k])
         y = sum(1 for k in ks if R[b][k] and not R[a][k])
-        u = cp_upper(x + y, len(ks))
-        out[(a, b)] = u * len(ks)
+        u1, u2 = cp_upper(x + y, len(ks), 0.05), cp_upper(x + y, len(ks), 0.025)
+        out[(a, b)] = (u1 * len(ks), u2 * len(ks))
         print(f"  {a+' vs '+b:18s} {sum(R[a][k] for k in ks):4d} {sum(R[b][k] for k in ks):4d} "
-              f"{x:3d} {y:3d} {x+y:3d} {u:10.4f} {u*len(ks):8.1f}r")
+              f"{x:3d} {y:3d} {x+y:3d} {u1:9.4f} {u1*len(ks):7.2f}r  {u2:9.4f} {u2*len(ks):7.2f}r")
 
-    w = out[("perp", "control")]
+    w1, w2 = out[("perp", "control")]
     print(f"\nTHE ONE THAT CARRIES THE CONCLUSION:")
-    print(f"  arm-perp's TRUE boundary effect vs the control is within +/- {w:.1f} rows at 95%.")
+    print(f"  arm-perp's boundary effect vs the control is within +/- {w1:.2f} rows (one-sided 95%)")
+    print(f"                                              or +/- {w2:.2f} rows (two-sided 95%).")
     print(f"  delta_H's CERTIFIED effect is +{DELTA_H_CERTIFIED}.")
-    verdict = w < DELTA_H_CERTIFIED
-    print(f"  {w:.1f} < {DELTA_H_CERTIFIED} -> THE BOUND EXCLUDES delta_H's EFFECT."
-          if verdict else f"  {w:.1f} >= {DELTA_H_CERTIFIED} -> bound does NOT exclude it; claim nothing.")
+    verdict = max(w1, w2) < DELTA_H_CERTIFIED
+    print(f"  Both below {DELTA_H_CERTIFIED} -> THE BOUND EXCLUDES delta_H's EFFECT under EITHER convention."
+          if verdict else "  bound does NOT exclude it under both conventions; claim nothing.")
     assert verdict, "bound fails to exclude the certified effect -- the conclusion does not hold"
-    print("\n  LICENSED:     arm-perp does not have delta_H's boundary effect.")
-    print("  NOT LICENSED: arm-perp has no boundary effect.")
+    print("\n  LICENSED:     THIS arm-perp does not have delta_H's boundary effect.")
+    print("  NOT LICENSED: arm-perp has no boundary effect (the bound is ~8 rows wide, not 0),")
+    print("                nor anything about orthogonalised same-skill content IN GENERAL,")
+    print("                which would quantify over draws of s23.")
 
 
 if __name__ == "__main__":
