@@ -3,9 +3,11 @@
 **Status: implementation and tiny-fixture mechanics tested; native weights and model behavior NOT tested.**
 
 This is a self-contained, inference-only research preparation slice. It adds no optimizer,
-model loader, native collector, CI workflow, dataset, scoring-policy replacement, release,
-or experiment grant. It cannot spend GEN2-001, INT-001, or another experiment's permits.
-Existing research branches and their records are not modified.
+dataset, scoring-policy replacement, release, or experiment grant. Its native collector is
+fail-closed: it loads no model unless a later SOUP-MINI-001 authorization receipt and protocol
+amendment bind the runtime, decoder, tokenizer, checkpoint, suite and review identities. It
+cannot spend GEN2-001, INT-001, or another experiment's permits. Existing research branches
+and their records are not modified.
 
 ## Decision
 
@@ -107,12 +109,29 @@ OS page cache are not bounded by the numerical chunk size. Keep competing jobs p
 through their own owner-approved controls; do not kill sessions, reclaim leases, lower guards,
 or spend a different experiment's grant.
 
-## Evaluation handoff (not a native collector)
+## Evaluation handoff
 
-Use the existing separately qualified dense reference collector after binding its exact code,
-model/checkpoint, tokenizer, runtime, decoding and test-bank receipts. No native model runner
-is implemented or launched by this package. `score.py` consumes externally scored per-row
-results; it does not independently validate that external scoring was computed correctly.
+`collect_native.py` is the prepared native handoff. It emits raw predictions for one arm and
+one split at a time; it does not score correctness, select candidates, or grant execution.
+It requires a later authorization receipt with `native_authorized: true`, while the registered
+`protocol.json` currently remains false, so the command below is expected to refuse today.
+The collector binds exact checkpoint, tokenizer, suite, runtime, decoder, qualification and
+ancestry hashes; it enforces FP32, greedy, batch-one, 4,096-total-token and 64-new-token
+limits, and refuses to overwrite an existing output.
+
+```powershell
+python collect_native.py --arm sparse_opallo_50 --split CAL `
+  --model C:/Research/SoupRuns/sparse_opallo_50 `
+  --suite C:/Research/SoupRuns/CAL.jsonl `
+  --authorization C:/Research/SoupRuns/SOUP-MINI-001-AUTH.json `
+  --protocol protocol.json `
+  --output C:/Research/SoupRuns/raw/sparse_opallo_50.CAL.json
+```
+
+Use the existing separately qualified dense reference collector only after binding its exact
+code, model/checkpoint, tokenizer, runtime, decoding and test-bank receipts. `score.py`
+consumes externally scored per-row results; it does not independently validate that external
+scoring was computed correctly.
 
 ```powershell
 python score.py audit-splits --cal CAL.jsonl --check CHECK.jsonl --train donor1_parents.jsonl donor2_parents.jsonl
