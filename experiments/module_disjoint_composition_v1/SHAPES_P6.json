@@ -1,0 +1,419 @@
+{
+  "bank_n": 192,
+  "arms": {
+    "BASE": {
+      "correct": 0,
+      "shapes": {
+        "wrong_type": 58,
+        "wellformed_wrong_value": 54,
+        "wrong_keys": 47,
+        "malformed_json_attempt": 31,
+        "copied_input_state": 2
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 54,
+          "malformed_json_attempt": 8,
+          "copied_input_state": 2
+        },
+        "prerequisite_plan": {
+          "wrong_type": 58,
+          "malformed_json_attempt": 6
+        },
+        "register_machine": {
+          "wrong_keys": 47,
+          "malformed_json_attempt": 17
+        }
+      },
+      "examples": {
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":10,\"C\":35,\"D\":26}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-41,\"B\":-9,\"C\":17,\"D\":40}",
+            "generation": "{\"A\":-41, \"B\":-9, \"C\":12, \"D\":40}"
+          }
+        ],
+        "malformed_json_attempt": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\": 12, \"B\": -8, \"C\": 33 - 12, \"D\": 2}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-13,\"B\":160,\"C\":34,\"D\":-1}",
+            "generation": "{\"A\":-13,\"B\":161,\"C\":34,\"D\":-1,\"B\":161-1=160,\"C\":34-1=33}"
+          }
+        ],
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-13,\"B\":-2,\"C\":20,\"D\":4}",
+            "generation": "{\"A\":-13,\"B\":4,\"C\":20,\"D\":-2}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-4,\"B\":-58,\"C\":17,\"D\":400}",
+            "generation": "{\"A\":-4,\"B\":-58,\"C\":17,\"D\":40}"
+          }
+        ],
+        "wrong_type": [
+          {
+            "family": "prerequisite_plan",
+            "gold": "131",
+            "generation": "{\"after\":129}"
+          },
+          {
+            "family": "prerequisite_plan",
+            "gold": "174",
+            "generation": "{\"after\": 46}"
+          }
+        ],
+        "wrong_keys": [
+          {
+            "family": "register_machine",
+            "gold": "{\"X\":44,\"Y\":0,\"Z\":91}",
+            "generation": "{\"before\":{\"X\":44,\"Y\":91,\"Z\":0},\"after\":{\"X\":44,\"Y\":91,\"Z\":0}}"
+          },
+          {
+            "family": "register_machine",
+            "gold": "{\"X\":56,\"Y\":42,\"Z\":86}",
+            "generation": "{\"before\": {\"X\": 56, \"Y\": 65, \"Z\": 86}, \"after\": {\"X\": 56, \"Y\": 65, \"Z\": 86}}"
+          }
+        ]
+      }
+    },
+    "SPARSE": {
+      "correct": 102,
+      "shapes": {
+        "correct": 102,
+        "wellformed_wrong_value": 86,
+        "copied_input_state": 4
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 32,
+          "correct": 32
+        },
+        "prerequisite_plan": {
+          "correct": 37,
+          "wellformed_wrong_value": 27
+        },
+        "register_machine": {
+          "correct": 33,
+          "wellformed_wrong_value": 27,
+          "copied_input_state": 4
+        }
+      },
+      "examples": {
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-10,\"C\":35,\"D\":-14}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":25,\"D\":2}"
+          }
+        ],
+        "copied_input_state": [
+          {
+            "family": "register_machine",
+            "gold": "{\"X\":69,\"Y\":35,\"Z\":55}",
+            "generation": "{\"X\":69,\"Y\":24,\"Z\":55}"
+          },
+          {
+            "family": "register_machine",
+            "gold": "{\"X\":40,\"Y\":7,\"Z\":84}",
+            "generation": "{\"X\":40,\"Y\":7,\"Z\":10}"
+          }
+        ]
+      }
+    },
+    "SPARSE_ATTN": {
+      "correct": 68,
+      "shapes": {
+        "wellformed_wrong_value": 102,
+        "correct": 68,
+        "copied_input_state": 21,
+        "malformed_json_attempt": 1
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 40,
+          "correct": 15,
+          "copied_input_state": 8,
+          "malformed_json_attempt": 1
+        },
+        "prerequisite_plan": {
+          "wellformed_wrong_value": 38,
+          "correct": 26
+        },
+        "register_machine": {
+          "correct": 27,
+          "wellformed_wrong_value": 24,
+          "copied_input_state": 13
+        }
+      },
+      "examples": {
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-19,\"C\":35,\"D\":-5}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":29,\"B\":-1,\"C\":39,\"D\":-74}",
+            "generation": "{\"A\":29,\"B\":11,\"C\":27,\"D\":-74}"
+          }
+        ],
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":21,\"D\":2}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-41,\"B\":-9,\"C\":17,\"D\":40}",
+            "generation": "{\"A\":-41,\"B\":-9,\"C\":14,\"D\":40}"
+          }
+        ],
+        "malformed_json_attempt": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-13,\"B\":10,\"C\":26,\"D\":5}",
+            "generation": "{\"A\":-13,\"B\":10,\"C\":32-6=26,\"D\":-1}"
+          }
+        ]
+      }
+    },
+    "SCALAR_MATCHED": {
+      "correct": 88,
+      "shapes": {
+        "wellformed_wrong_value": 91,
+        "correct": 88,
+        "copied_input_state": 12,
+        "malformed_json_attempt": 1
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 36,
+          "correct": 24,
+          "copied_input_state": 3,
+          "malformed_json_attempt": 1
+        },
+        "prerequisite_plan": {
+          "wellformed_wrong_value": 32,
+          "correct": 32
+        },
+        "register_machine": {
+          "correct": 32,
+          "wellformed_wrong_value": 23,
+          "copied_input_state": 9
+        }
+      },
+      "examples": {
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-10,\"C\":35,\"D\":-16}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":21,\"D\":2}"
+          }
+        ],
+        "malformed_json_attempt": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-13,\"B\":10,\"C\":26,\"D\":5}",
+            "generation": "{\"A\":-13,\"B\":10,\"C\":32-6=26,\"D\":-1}"
+          }
+        ],
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":22,\"B\":-46,\"C\":186,\"D\":28}",
+            "generation": "{\"A\":22,\"B\":23,\"C\":186,\"D\":28}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-26,\"B\":1018,\"C\":-18,\"D\":40}",
+            "generation": "{\"A\":-26,\"B\":1018,\"C\":-16,\"D\":40}"
+          }
+        ]
+      }
+    },
+    "MODULE_DISJOINT": {
+      "correct": 73,
+      "shapes": {
+        "wellformed_wrong_value": 103,
+        "correct": 73,
+        "copied_input_state": 15,
+        "malformed_json_attempt": 1
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 41,
+          "correct": 15,
+          "copied_input_state": 7,
+          "malformed_json_attempt": 1
+        },
+        "prerequisite_plan": {
+          "wellformed_wrong_value": 37,
+          "correct": 27
+        },
+        "register_machine": {
+          "correct": 31,
+          "wellformed_wrong_value": 25,
+          "copied_input_state": 8
+        }
+      },
+      "examples": {
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-10,\"C\":35,\"D\":-14}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":21,\"D\":2}"
+          }
+        ],
+        "malformed_json_attempt": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-13,\"B\":10,\"C\":26,\"D\":5}",
+            "generation": "{\"A\":-13,\"B\":10,\"C\":32-6=26,\"D\":-1+6=-5}"
+          }
+        ],
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":29,\"B\":-1,\"C\":39,\"D\":-74}",
+            "generation": "{\"A\":29,\"B\":11,\"C\":27,\"D\":-74}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":88,\"B\":-29,\"C\":-4,\"D\":-7}",
+            "generation": "{\"A\":88,\"B\":-29,\"C\":4,\"D\":-7}"
+          }
+        ]
+      }
+    },
+    "SPARSE_MLP": {
+      "correct": 67,
+      "shapes": {
+        "wellformed_wrong_value": 104,
+        "correct": 67,
+        "copied_input_state": 21
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 42,
+          "correct": 16,
+          "copied_input_state": 6
+        },
+        "prerequisite_plan": {
+          "wellformed_wrong_value": 37,
+          "correct": 26,
+          "copied_input_state": 1
+        },
+        "register_machine": {
+          "correct": 25,
+          "wellformed_wrong_value": 25,
+          "copied_input_state": 14
+        }
+      },
+      "examples": {
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-19,\"C\":35,\"D\":-5}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":29,\"B\":-1,\"C\":39,\"D\":-74}",
+            "generation": "{\"A\":29,\"B\":11,\"C\":27,\"D\":-74}"
+          }
+        ],
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":21,\"D\":2}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-41,\"B\":-9,\"C\":17,\"D\":40}",
+            "generation": "{\"A\":-41,\"B\":-9,\"C\":14,\"D\":40}"
+          }
+        ]
+      }
+    },
+    "SCALAR_MATCHED_MLP": {
+      "correct": 94,
+      "shapes": {
+        "correct": 94,
+        "wellformed_wrong_value": 91,
+        "copied_input_state": 7
+      },
+      "by_family": {
+        "ledger_replay": {
+          "wellformed_wrong_value": 37,
+          "correct": 25,
+          "copied_input_state": 2
+        },
+        "prerequisite_plan": {
+          "correct": 35,
+          "wellformed_wrong_value": 29
+        },
+        "register_machine": {
+          "correct": 34,
+          "wellformed_wrong_value": 25,
+          "copied_input_state": 5
+        }
+      },
+      "examples": {
+        "wellformed_wrong_value": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":0,\"B\":-28,\"C\":35,\"D\":4}",
+            "generation": "{\"A\":0,\"B\":-10,\"C\":35,\"D\":-14}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":-12,\"B\":-8,\"C\":45,\"D\":2}",
+            "generation": "{\"A\":12,\"B\":-8,\"C\":21,\"D\":2}"
+          }
+        ],
+        "copied_input_state": [
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":22,\"B\":-46,\"C\":186,\"D\":28}",
+            "generation": "{\"A\":22,\"B\":23,\"C\":186,\"D\":28}"
+          },
+          {
+            "family": "ledger_replay",
+            "gold": "{\"A\":4,\"B\":15,\"C\":-264,\"D\":18}",
+            "generation": "{\"A\":4,\"B\":15,\"C\":-22,\"D\":18}"
+          }
+        ]
+      }
+    }
+  }
+}

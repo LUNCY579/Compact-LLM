@@ -59,6 +59,8 @@ def main() -> int:
     ap.add_argument("--arms", nargs="*", default=None, help="subset of arm directory names")
     ap.add_argument("--output", type=Path, required=True)
     ap.add_argument("--max-new-tokens", type=int, default=48)
+    ap.add_argument("--no-lease", action="store_true",
+                    help="caller already holds the GPU lease for this window")
     a = ap.parse_args()
 
     print("startup checks", flush=True)
@@ -114,8 +116,13 @@ def main() -> int:
                  "can queue on it."),
     }
 
-    with lease(label=f"fds1:{a.bank.stem}", job=f"score {len(names)} arm(s) x {len(rows)} rows"):
+    if a.no_lease:
+        print("  [gpu-lease] --no-lease: caller holds the lease for this window", flush=True)
+        result["gpu_lease"]["held_by_caller"] = True
         _score_all(names, a, rows, result, torch, AutoModelForCausalLM, AutoTokenizer, gc)
+    else:
+        with lease(label=f"fds1:{a.bank.stem}", job=f"score {len(names)} arm(s) x {len(rows)} rows"):
+            _score_all(names, a, rows, result, torch, AutoModelForCausalLM, AutoTokenizer, gc)
 
     a.output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     print(f"wrote {a.output}")

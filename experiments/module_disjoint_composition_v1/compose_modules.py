@@ -20,12 +20,20 @@ ASSETS = ("tokenizer.json", "tokenizer_config.json", "vocab.json", "merges.txt",
           "generation_config.json")
 ATTN_MARKERS = ("self_attn.", "input_layernorm", "post_attention_layernorm")
 
-SCALAR_ALPHA = 0.4400615543769171 / 0.6940550846962167  # norm-match SPARSE_ATTN exactly
+# Per-arm scalar coefficients, each norm-matching its own module-restricted partner exactly.
+# Measured, not inferred: ||dSparse||=0.6940550846962167, |ATTN=0.4400615543769171,
+# |MLP=0.5367106193770012.
+SCALAR_ALPHAS = {
+    "SCALAR_MATCHED":     0.4400615543769171 / 0.6940550846962167,  # matches SPARSE_ATTN
+    "SCALAR_MATCHED_MLP": 0.5367106193770012 / 0.6940550846962167,  # matches SPARSE_MLP
+}
+SCALAR_ALPHA = SCALAR_ALPHAS["SCALAR_MATCHED"]  # back-compat for already-built arms
 
 ARMS = {
     # name: (sparse_module_class or None, opallo_module_class or None)
     "SPARSE_ATTN": ("ATTN", None),
     "SCALAR_MATCHED": ("ALL_SCALED", None),
+    "SCALAR_MATCHED_MLP": ("ALL_SCALED", None),
     "MODULE_DISJOINT": ("ATTN", "MLP"),
     # controls available if needed; not in the registered set
     "SPARSE_MLP": ("MLP", None),
@@ -47,6 +55,7 @@ def sha256(path: Path) -> str:
 
 def build(arm: str, out_dir: Path) -> dict:
     s_cls, o_cls = ARMS[arm]
+    alpha = SCALAR_ALPHAS.get(arm, SCALAR_ALPHA)
     out_dir = out_dir.resolve()
     if out_dir.exists():
         raise SystemExit(f"refusing to overwrite {out_dir}")
@@ -96,7 +105,7 @@ def build(arm: str, out_dir: Path) -> dict:
                 if use_s:
                     d = sp.rows(k, lo, hi).astype(np.float32) - w
                     if scaled:
-                        d = d * np.float32(SCALAR_ALPHA)
+                        d = d * np.float32(alpha)
                     out += d
                     stats["sq_from_sparse"] += float((d.astype(np.float64) ** 2).sum())
                 if use_o:
@@ -127,6 +136,7 @@ def build(arm: str, out_dir: Path) -> dict:
     receipt = {
         "experiment": "MODULE-DISJOINT-001", "arm": arm,
         "sparse_module_class": s_cls, "opallo_module_class": o_cls,
+        "scalar_alpha": alpha if s_cls == "ALL_SCALED" else None,
         "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
         "delta_sources": {
             "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
@@ -151,6 +161,7 @@ def build(arm: str, out_dir: Path) -> dict:
 def verify(arm: str, out_dir: Path) -> None:
     """Re-derive a sample of tensors independently and require bitwise equality."""
     s_cls, o_cls = ARMS[arm]
+    alpha = SCALAR_ALPHAS.get(arm, SCALAR_ALPHA)
     base = ST(Path(ROOTS["supa"]) / "model.safetensors")
     sp = ST(Path(ROOTS["titan_sparse"]) / "model.safetensors")
     ot = ST(OPALLO_TRAINED)
@@ -166,7 +177,7 @@ def verify(arm: str, out_dir: Path) -> None:
         if s_cls and k in omap and (s_cls == "ALL_SCALED" or cls == s_cls):
             d = sp.rows(k, 0, rows).astype(np.float32) - w
             if s_cls == "ALL_SCALED":
-                d = d * np.float32(SCALAR_ALPHA)
+                d = d * np.float32(alpha)
             exp = exp + d
         if o_cls and cls == o_cls and k in omap:
             exp = exp + (ot.rows(omap[k], 0, rows).astype(np.float32) - w)

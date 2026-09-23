@@ -103,6 +103,13 @@ is bad — attention is a weak carrier of *this* skill — so the arm starts fro
 and never recovers. **A mechanism can be sound and dominated at the same time**, and only the
 matched-norm control distinguished that from "the mechanism failed".
 
+> **SUPERSEDED BY P6 — read the P6 section below.** "Attention is a weak carrier of this skill"
+> is the wrong reading. `SPARSE_MLP` carries 50% more energy than `SPARSE_ATTN` and scores one
+> row *lower* (67 vs 68), and it loses to *its* matched-norm scalar by 27 rows (p = 1.1e-07)
+> against attention's 20 (p = 3.6e-05). Both classes behave identically. The operative variable
+> is **restriction**, not attention. The conclusion that the arm is dominated is unchanged; the
+> reason given here for it is not.
+
 Had `SCALAR_MATCHED` not been built, `SPARSE_ATTN` at 68 against a norm-proportional expectation
 of ~41 would have read as confirmation of the module account. Amendment 1 added that control
 after noticing the norm ratio sat inside the dose plateau; it changed the conclusion.
@@ -125,3 +132,92 @@ DOSELORA-001.)
 - P4 localises the convention to attention **for this donor pair**. Whether output conventions
   are attention-carried in general is one observation, not a law.
 - P1′ and P3 are period-tolerant comparisons; the registered primary remains strict exact match.
+
+---
+
+# P6 — the other half, and it weakens my own P4 generalisation
+
+Registered in Amendment 4 with thresholds before building. Built and scored inside a single
+lease covering construction as well as inference.
+
+| arm | ‖Δ‖ | energy | period-tolerant | contract-obedient | copied input |
+|---|---|---|---|---|---|
+| `BASE` | 0 | 0% | 0 | **56/192 (29%)** | 2 |
+| `SPARSE_ATTN` | 0.4401 | 40.2% | 68 | 191/192 | 21 |
+| `SCALAR_MATCHED` | 0.4401 | — | **88** | 191/192 | 12 |
+| `SPARSE_MLP` | 0.5367 | 59.8% | 67 | **192/192 (100%)** | 21 |
+| `SCALAR_MATCHED_MLP` | 0.5367 | — | **94** | 192/192 | 7 |
+| `MODULE_DISJOINT` | — | — | 73 | 191/192 | 15 |
+| `SPARSE` | 0.6941 | 100% | 102 | 192/192 | 4 |
+
+## P6 answer: output SHAPE is not module-specific. P4 does not generalise.
+
+`SPARSE_MLP` withholds attention entirely and scores **192/192 contract-obedience**. Registered
+thresholds were ≤70% for attention-carried, ≥95% for not-module-specific. It came in at 100%.
+
+**So "attention carries the contract" is false as stated, in my own lane.** I registered that
+this outcome would weaken my P4 generalisation and it does.
+
+What survives is narrower and more interesting, because "contract" turns out to be two things
+that behave **oppositely under the same manipulation**:
+
+| contract property | carrier | evidence |
+|---|---|---|
+| **output shape** (well-formed JSON object / bare integer) | **neither — module-insensitive** | either class at 40–60% energy installs it at ~100%; base is 29% |
+| **punctuation convention** (trailing period) | **attention** | MLP-only donor at 60.8% energy emits **0/192** periods vs 178 for the whole donor |
+
+P4 stands as measured; only the generalisation from it dies. A donor's *surface convention* is
+attention-carried; a donor's *output shape compliance* is carried by any module class and is
+cheap. Both would have been called "the contract".
+
+## The skill is DISTRIBUTED — both module restrictions lose to matched-norm scalars
+
+| contrast (period-tolerant) | | net | p |
+|---|---|---|---|
+| `SPARSE_ATTN` → `SCALAR_MATCHED` | 68 → 88 | **+20** | 3.6e-05 |
+| `SPARSE_MLP` → `SCALAR_MATCHED_MLP` | 67 → 94 | **+27** | 1.1e-07 |
+
+Both module-restricted arms lose heavily to a plain scalar at their *own* norm, in the same
+direction, both significant. This is the secondary outcome registered in Amendment 4:
+
+> **The transition skill is distributed. Module identity buys nothing in either direction, and
+> restriction itself costs far more than the norm it removes.**
+
+`SPARSE_MLP` carries **50% more energy** than `SPARSE_ATTN` (0.5367 vs 0.4401) and scores one
+row lower (67 vs 68). Restriction to either class collapses to the same place regardless of how
+much norm is kept.
+
+## The P1′ confound is retired
+
+P1′ could not separate *"attention delivers less function per unit norm"* from *"attention-only
+is a broken construction that degrades into copying"*. The MLP arm settles it:
+
+```
+copied input:  SPARSE 4  |  SCALAR_MATCHED_MLP 7  |  SCALAR_MATCHED 12  |  SPARSE_MLP 21  |  SPARSE_ATTN 21
+```
+
+Both restricted arms sit at 21; both scalars sit well below. **Restriction per se drives the
+model toward echoing its input — not attention-restriction specifically.** So the +20 on P1′ was
+never an attention-vs-MLP density statement; it was restriction-vs-spreading, and P1′'s
+apparent support for "attention is a poor carrier" was the wrong reading of the right number.
+
+Corrected joint statement: **module function-density, as measured by matched-norm ablation on
+this skill, is zero in both directions.** DPLOC-001's 2.00× attention advantage does not
+transfer here, and neither does its mirror image.
+
+## Dose, incidentally, again
+
+| norm fraction | period-tolerant | % of `SPARSE` |
+|---|---|---|
+| 0.634 | 88 | 86.3% |
+| 0.773 | 94 | 92.2% |
+| 1.000 | 102 | 100% |
+
+Sublinear and saturating on a third point. Still unregistered, still an observation.
+
+## Standing limits
+
+- Transition only; the arithmetic lane does not exist, so no joint-composition claim.
+- P4's localisation is one donor pair and one convention. P6 shows the *category* it belongs to
+  is narrower than "the contract".
+- All contrasts period-tolerant; the registered primary remains strict exact match.
