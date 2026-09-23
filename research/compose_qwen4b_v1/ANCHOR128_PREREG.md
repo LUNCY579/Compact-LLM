@@ -82,3 +82,64 @@ reading a number as confirming something. The single registered commitment is th
 - **Not a correction factor.** It does not license rescaling any 128 number by a 96/128 ratio;
   the two families stay separate.
 - **Not a DPACQ result.** DPACQ-001 has four rungs and this is not one of them.
+
+---
+
+# Amendment 1 — a READING RULE, registered before the leg runs; and BOTH prior readings are already dead
+
+**Filed before the anchor exists.** Raised by the peer. A reading rule is **not** a prediction —
+§4 registers none and still registers none. Its purpose is to stop a number being interpreted
+after the fact in whichever direction suits, which is the failure a no-prediction registration
+leaves open.
+
+## The floors are a BANK property, not a decode-budget one — verified
+
+The two artifacts carry **byte-identical** floors and identical
+`floors_published_before_any_model_call`:
+
+| family | floor | predictor | identical across 96 / 128? |
+|---|---:|---|---|
+| `ledger_replay` | 30 | `copy_before` | **yes** |
+| `prerequisite_plan` | 10 | `constant_majority` | **yes** |
+| `register_machine` | 9 | `copy_before` | **yes** |
+
+**So the BAR is fixed and floor-CLEARING is comparable across decode budgets even though the
+COUNTS are not.** That is a genuine cross-budget comparison available without the anchor.
+
+## What it shows, and it kills both readings including mine
+
+| family | floor | SOURCE (96) | clears | rung 1 (128) | clears |
+|---|---:|---:|---|---:|---|
+| `ledger_replay` | 30 | 14 | ✗ | 22 | ✗ |
+| `prerequisite_plan` | 10 | 0 | ✗ | 5 | ✗ |
+| `register_machine` | 9 | **0** | ✗ | **25** | **✓** |
+| | | 14 | **0/3** | 52 | **1/3** |
+
+**The source clears NOTHING. Rung 1 clears `register_machine` at 25 against a floor of 9, where
+the source scores zero.**
+
+> **"Worse than emitting the input unchanged" is the wrong description and I withdraw it.** On
+> `register_machine` rung 1 is far above a `copy_before` predictor that the source cannot beat
+> at all. **Rung 1 has acquired something real and insufficient** — the third possibility this
+> file registered as refuting both readings. Neither "no-op" nor "actively degraded" survives.
+
+**NOT established, and not claimed:** that 52 > 14 *as a quantity*. That is cross-budget and is
+the borrowed-scale error. **The clearing PATTERN is comparable because the bar is fixed; the
+COUNTS are not.**
+
+## Why the anchor is still required
+
+**If more decode budget helps, the source at 128 might clear floors it misses at 96.** Nothing
+above rules that out, so the pattern argument has a hole exactly where the anchor goes.
+
+## THE READING RULE, fixed now
+
+> **Read the anchor against one question: DOES THE SOURCE CLEAR `register_machine` AT 128?**
+>
+> - **NO** → the source fails 3/3 at both budgets, rung 1 clears a floor the source cannot, and
+>   **rung 1 has demonstrably acquired capability.** Third possibility confirmed.
+> - **YES** → the `register_machine` clearing is a **decode-budget effect**, not an acquisition
+>   effect, and rung 1 may be source-like after all. **The no-op reading revives; mine does
+>   not** — "actively degraded" is dead either way.
+>
+> The **aggregate** count is reported but is not the thing read. Per-family clearing is.
