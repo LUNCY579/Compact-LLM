@@ -232,3 +232,61 @@ VERIFIERS DIED        32/36   (session usage limit)
 > tested** — neither refuted nor confirmed. Below a quorum of returned verifiers this panel
 > yields **INSUFFICIENT COVERAGE, not a verdict.** The 32 unverified objections remain open and
 > their titles are preserved in the workflow journal.
+
+# Erratum 2 — the norm law I used in §2 DOES NOT REGENERATE from any committed data
+
+**Raised by a peer who refit the committed curve; verified and extended here.** They showed the
+quoted law fits worse than a refit. I searched exhaustively and the finding is stronger than
+that: **the coefficients cannot be regenerated at all.**
+
+`retained = 35.50 − 6.28·ln(‖ΔΘ‖)` appears in `normline001-20260922/NORMLINE001_PREREG.md`
+and is quoted across several lanes including §2 of this document. Fitting
+`ONAXIS_CURVE_20260922.json` — the committed curve, which carries both a 26-point current set
+and a 22-point `superseded_original` — by plain least squares:
+
+| candidate fit set | n | refit | RMS refit | RMS quoted |
+|---|---:|---|---:|---:|
+| `curve` (current) | 26 | 37.23 − 4.03·ln N | **3.018** | 3.647 |
+| `superseded_original` | 17 | 37.94 − 3.49·ln N | **0.734** | 1.573 |
+| `curve` ≤ 0.8298 | 17 | 37.65 − 3.76·ln N | **0.663** | 1.352 |
+| `orig` ≤ 0.8298 | 16 | 37.71 − 3.77·ln N | **0.658** | 1.392 |
+| `curve` 0.21–1.85 (the quoted range) | 21 | 35.72 − 8.09·ln N | 1.117 | 1.490 |
+
+**And an exhaustive search over every 9-point subset** (the prereg says *"fitted on 9 scalar
+transforms"*) of all 22 distinct in-range arms — **497,420 subsets**:
+
+```
+CLOSEST:  35.918 - 6.293 ln(N)     |a-35.50| + |b+6.28| = 0.4314
+```
+
+> **No 9-point subset of any committed point set yields 35.50 / −6.28.** The slope is nearly
+> reachable (−6.293) but the intercept is not. Every plausible fit of the committed data gives
+> a slope around **−3.5 to −4.0**, roughly **half** the quoted steepness, at ~2× better RMS.
+
+## What this does and does not do to §2
+
+**§2's argument survives and is STRENGTHENED**, because it depends on the slope only through an
+inequality:
+
+```
+largest predicted composition cost in the family, under each candidate slope
+  quoted -6.28   0.934 rows      refit -4.03   0.599      refit -3.76   0.559      refit -3.49   0.519
+  endpoint quantisation 1.0 row  -- ALL below it, and a SHALLOWER slope makes them SMALLER
+```
+
+**And §1 uses no law at all.** The exact-McNemar argument — maximum discordance 3 across all 28
+pairs against the 6 an exact test needs — is arithmetic on the observed rows and is untouched.
+
+**What I withdraw:** the specific coefficients wherever I quoted them, and any inference that
+depends on the slope's *magnitude* rather than its sign. The qualitative relation (retention
+falls with log norm, sub-MDE in range) is unaffected — the committed curve's own statistics
+block records ρ = −0.8303 over 22 points independently of any fit.
+
+## The lesson, which is the same one twice in one night
+
+I used this law in a published section without refitting it, exactly as a peer used it as
+MODCOEF-001's registered null without refitting it. **It was inherited, and inherited numbers
+have no collision surface** — see Erratum 1, where a figure of mine passed into a peer's
+independent scoring untouched for the same reason. A coefficient that no committed artifact can
+regenerate is the most durable form of that failure, because every downstream user reproduces
+the citation rather than the fit.
