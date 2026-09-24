@@ -99,8 +99,10 @@ def test_fit_recovers_identity_for_an_identity_block():
     (r,) = rec
     assert r["compensated"] and r["p"] == 1 and r["e"] == 2
     assert r["fit_residual_rel_identity"] < 1e-10                   # identity is exact here
-    assert r["fit_residual_rel_fitted"] < 1e-4
-    assert torch.allclose(folds[1], torch.eye(32), atol=0.05)
+    assert r["fit_residual_rel_fitted"] < 1e-8
+    # Amendment 4: the ridge shrinks toward I, so an identity-optimal fit is I to solver precision
+    # (the first, shrink-toward-0 rule gave I - lambda (X^T X)^-1: "close to I" at atol 0.05)
+    assert torch.allclose(folds[1], torch.eye(32), atol=1e-6)
 
 
 def test_fit_never_worse_than_identity_on_its_own_objective_and_run0_uncompensated():
@@ -112,3 +114,54 @@ def test_fit_never_worse_than_identity_on_its_own_objective_and_run0_uncompensat
     assert r["fit_residual_rel_fitted"] <= r["fit_residual_rel_identity"] + 1e-9
     assert torch.equal(m.model.layers[1].mlp.down_proj.weight, tiny(seed=3).model.layers[1].mlp.down_proj.weight), \
         "fitting must leave the model's weights untouched"
+
+
+def test_ridge_shrinks_toward_identity_not_zero():
+    """Amendment 4. With an overwhelming penalty the fit must collapse to T = I (plain pruning, the
+    free null) -- the textbook ||T||^2 penalty would collapse it to T = 0, i.e. DELETE block p's MLP."""
+    m = tiny(seed=5)
+    folds, rec = lc.fit_compensation(m, [0, 1, 3], items(), pad_id=0, device="cpu", ridge_rel=1e12)
+    assert torch.allclose(folds[1], torch.eye(32), atol=1e-4)
+    sp = rec[0]["spectrum"]
+    assert sp["eig_min"] <= sp["eig_median"] <= sp["eig_max"] and sp["participation_ratio"] >= 1.0
+    assert abs(sp["lambda_over_median"] - 1e12) / 1e12 < 1e-9
+
+
+def test_scaled_identity_fold_is_bitwise_exact():
+    """Review (c): an IDENTITY fold can only detect state corruption. T = 2I is a power-of-two
+    scale, exact in floating point, so block p's output must equal y_p + 2 m_p BITWISE -- a check
+    that the fold lands on the right block's MLP contribution with the right scale."""
+    m = tiny()
+    ids = torch.tensor([items(1)[0]["ids"]])
+    cap = {}
+    blk = m.model.layers[2]
+    h1 = blk.post_attention_layernorm.register_forward_pre_hook(lambda mod, i: cap.__setitem__("y", i[0]))
+    h2 = blk.mlp.register_forward_hook(lambda mod, i, o: cap.__setitem__("m", o))
+    h3 = blk.register_forward_hook(lambda mod, i, o: cap.__setitem__("out", o[0] if isinstance(o, tuple) else o))
+    with torch.no_grad():
+        m.model(input_ids=ids, use_cache=False)
+        want = cap["y"] + 2 * cap["m"]
+        with lc.folded(m, {2: 2 * torch.eye(32)}):
+            m.model(input_ids=ids, use_cache=False)
+    for h in (h1, h2, h3):
+        h.remove()
+    assert torch.equal(cap["out"], want)
+
+
+def test_fold_refuses_non_fp32_weights():
+    m = tiny().to(torch.bfloat16)
+    with pytest.raises(RuntimeError):
+        with lc.folded(m, {1: torch.eye(32)}):
+            pass
+
+
+def test_torch_free_verdict_objective_equals_the_study_objective():
+    """lc_verdict.cat_mean_kl must be the §4 objective exactly as the layer study computes it."""
+    import random
+    import layer_ablation as la
+    import lc_verdict as lv
+    import run_layer_study as rls
+    rng = random.Random(3)
+    rows = [{"id": f"r{i}", "category": f"c{i % 4}", "n": rng.randint(5, 400), "kl": rng.random() * 3,
+             "top1": 0.5, "top5": 0.9, "nll": None, "nll_teacher": None} for i in range(40)]
+    assert abs(lv.cat_mean_kl(rows) - rls.category_mean_kl(la.summarise(rows))) < 1e-12

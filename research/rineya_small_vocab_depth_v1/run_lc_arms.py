@@ -38,39 +38,20 @@ import gpu_lease  # noqa: E402
 import hostbudget  # noqa: E402
 import layer_ablation as la  # noqa: E402
 import layer_select as ls  # noqa: E402
+import lc_verdict as lv  # noqa: E402
 import linear_compensation as lc  # noqa: E402
 import param_accounting as pa  # noqa: E402
 import run_layer_study as rls  # noqa: E402
 import virtual_student as vs  # noqa: E402
 
-SUPPORT_BAR = 0.20
-MIN_ROWS_PER_CATEGORY = 5
-BOOTSTRAP_RESAMPLES, BOOTSTRAP_SEED = 2000, 17
+# the verdict lives in lc_verdict.py (pure Python, so its power was simulated before any fit)
+verdict = lv.verdict
 
 
-def cat_mean_kl(per_item: list[dict]) -> float:
-    return rls.category_mean_kl(la.summarise(per_item))
-
-
-def verdict(plain: list[dict], comp: list[dict], ids: list[str]) -> dict:
-    P, C = {r["id"]: r for r in plain}, {r["id"]: r for r in comp}
-    by_cat = {}
-    for i in ids:
-        by_cat.setdefault(P[i]["category"], []).append(i)
-
-    def r_of(sample):
-        return 1 - cat_mean_kl([C[i] for i in sample]) / cat_mean_kl([P[i] for i in sample])
-    r = r_of(ids)
-    rng = random.Random(BOOTSTRAP_SEED)
-    boots = sorted(r_of([rng.choice(v) for v in by_cat.values() for _ in v]) for _ in range(BOOTSTRAP_RESAMPLES))
-    lo, hi = boots[int(0.025 * len(boots))], boots[int(0.975 * len(boots)) - 1]
-    v = ("UNDERPOWERED" if min(len(x) for x in by_cat.values()) < MIN_ROWS_PER_CATEGORY else
-         "SUPPORTED" if r >= SUPPORT_BAR and lo > 0 else "REAL_BUT_SMALL" if lo > 0 else
-         "HARMFUL" if hi < 0 else "INCONCLUSIVE")
-    return {"rows": len(ids), "obj_plain": cat_mean_kl([P[i] for i in ids]), "obj_lc": cat_mean_kl([C[i] for i in ids]),
-            "relative_reduction_r": r, "bootstrap_95": [lo, hi], "support_bar": SUPPORT_BAR,
-            "rows_per_category": {c: len(x) for c, x in sorted(by_cat.items())},
-            "resamples": BOOTSTRAP_RESAMPLES, "seed": BOOTSTRAP_SEED, "verdict": v}
+def spearman(xs, ys):
+    import report_layer_study as rep
+    v = rep.spearman(xs, ys)
+    return None if v != v else v
 
 
 def main(argv=None) -> int:
@@ -133,6 +114,8 @@ def main(argv=None) -> int:
         im_end, eot = tok.token_to_id("<|im_end|>"), tok.token_to_id("<|endoftext|>")
         eos = [im_end, eot]
         model = la.load_model(a.teacher, dev)
+        if next(model.parameters()).dtype != torch.float32:        # asserted, not a default argument
+            raise SystemExit("H-LC requires an fp32 model: a small T - I can round away in bf16")
         if token:
             gpu_lease.set_workers(token, [os.getpid()])
         L = model.config.num_hidden_layers
@@ -198,9 +181,23 @@ def main(argv=None) -> int:
             with lc.folded(model, folds):
                 comp = score(kept, student_H(kept))
             hostbudget.guard(guard_gib, f"LC {name} scored")
+            # review (a): is the L2 fit a proxy for KL? per run, the fit-residual drop against the
+            # SELECT2 objective change when THAT fold is added to the ones before it (descriptive)
+            s2 = lambda H: rls.category_mean_kl(la.summarise(
+                [x for x in la.compare(model.lm_head, H_hold, H, items_hold, chunk=chunk)["per_item"]
+                 if sub[x["id"]] == "select2"]))
+            order = list(folds)
+            objs = [rls.category_mean_kl(plain["kl"]["select2"])]
+            for k in range(1, len(order)):
+                with lc.folded(model, {p: folds[p] for p in order[:k]}):
+                    objs.append(s2(student_H(kept)))
+            objs.append(rls.category_mean_kl(comp["kl"]["select2"]))
+            fitted = [f for f in fits if f.get("compensated")]
+            proxy = [{"p": f["p"], "fit_residual_drop": f["fit_residual_rel_identity"] - f["fit_residual_rel_fitted"],
+                      "select2_delta_obj": objs[k + 1] - objs[k]} for k, f in enumerate(fitted)]
             s5 = next(v for v in S5["depths"][str(a.select_depth)].values() if v["kept"] == kept)
             result["arms"][name] = {
-                "kept": kept, "runs": lc.runs(kept, L), "fits": fits,
+                "kept": kept, "runs": lc.runs(kept, L), "fits": fits, "proxy_per_run": proxy,
                 "identity_control": "bitwise equal to plain",
                 "plain": plain, "lc": comp,
                 "reproducibility_vs_S5": {"S5_report_objective": s5["report_objective"],
@@ -211,6 +208,12 @@ def main(argv=None) -> int:
             print(f"[LC] {name}: REPORT obj plain {rls.category_mean_kl(plain['kl']['report']):.4f} -> "
                   f"LC {rls.category_mean_kl(comp['kl']['report']):.4f}; fits "
                   f"{[round(f.get('fit_residual_rel_fitted', float('nan')), 4) for f in fits]}", flush=True)
+        pooled = [x for arm_ in result["arms"].values() for x in arm_["proxy_per_run"]]
+        result["proxy_L2_vs_KL"] = {"runs": len(pooled),
+                                    "spearman_fit_drop_vs_select2_delta": spearman([x["fit_residual_drop"] for x in pooled],
+                                                                                   [x["select2_delta_obj"] for x in pooled])
+                                    if len(pooled) >= 3 else None,
+                                    "reading": "negative = a bigger L2 fit gain goes with a bigger KL reduction (a good proxy)"}
         report_ids = sorted(i for i, p in sub.items() if p == "report")
         arm = result["arms"]["selected"]
         result["H_LC"] = verdict(arm["plain"]["kl"]["per_item"], arm["lc"]["kl"]["per_item"], report_ids)

@@ -18,7 +18,16 @@ upstream. A run starting at block 0 has no predecessor and stays uncompensated (
 
 Registered choices (fixed before any fit): fit set = calibration SELECT only (never SELECT2 or
 REPORT); every real position except position 0 (the first token carries the attention-sink massive
-activations, which would dominate an L2 fit); ridge lambda = 1e-3 * tr(X^T X) / d.
+activations, which would dominate an L2 fit).
+
+RIDGE (Amendment 4, before any fit): min ||R - X T||^2 + lambda ||T - I||^2, i.e. shrink toward T = I
+(plain pruning, the free null) -- NOT the textbook ||T||^2, which shrinks toward T = 0 and would
+pull the fit toward DELETING block p's MLP output. lambda = 1e-3 x the MEDIAN eigenvalue of X^T X:
+the first rule (1e-3 x the MEAN, i.e. tr/d) was coupled to the heavy tail of the activation
+spectrum (a few massive dimensions inflate the mean), which can make the penalty a strong prior
+over most of the space rather than numerical stabilisation (review COLD_REVIEW_HLC.md). Every fit
+records the spectrum, lambda/median, lambda/max and the participation ratio, so the size of the
+prior is visible rather than assumed.
 """
 from __future__ import annotations
 
@@ -28,7 +37,7 @@ import torch
 
 from layer_ablation import batches_by_length, keep_layers, pad_batch
 
-RIDGE_REL = 1e-3
+RIDGE_REL = 1e-3          # x the MEDIAN eigenvalue of X^T X (Amendment 4)
 
 
 def runs(kept: list[int], n_layers: int) -> list[dict]:
@@ -54,6 +63,11 @@ def folded(model, folds: dict[int, torch.Tensor]):
     blocks = model.model.layers
     if len(blocks) != model.config.num_hidden_layers:
         raise RuntimeError("folded() entered inside keep_layers: block indices would be renumbered")
+    for p in folds:
+        if blocks[p].mlp.down_proj.weight.dtype != torch.float32:
+            # a small T - I survives fp32 but can round away ENTIRELY in bf16 (8 mantissa bits), which
+            # would make H-LC measure exactly as plain for a reason unconnected to the hypothesis
+            raise RuntimeError("folding requires fp32 weights")
     saved = {}
     try:
         with torch.no_grad():
@@ -114,15 +128,22 @@ def fit_compensation(model, kept: list[int], items: list[dict], pad_id: int, dev
             RtR += float((R * R).sum())
             n += int(sel.sum())
         h_t.remove()
-        lam = ridge_rel * float(torch.trace(XtX)) / d
+        ev = torch.linalg.eigvalsh(XtX)                     # ascending
+        med = float(ev[d // 2])
+        lam = ridge_rel * med
         eye = torch.eye(d, dtype=torch.float64, device=device)
-        T = torch.linalg.solve(XtX + lam * eye, XtR)
+        T = torch.linalg.solve(XtX + lam * eye, XtR + lam * eye)       # shrink toward I, not 0
+        spectrum = {"eig_min": float(ev[0]), "eig_p10": float(ev[d // 10]), "eig_median": med,
+                    "eig_mean": float(ev.mean()), "eig_max": float(ev[-1]),
+                    "lambda_over_median": lam / med if med > 0 else None,
+                    "lambda_over_max": lam / float(ev[-1]),
+                    "participation_ratio": float(torch.trace(XtX)) ** 2 / float((XtX * XtX).sum())}
 
         def resid(M):              # ||R - X M||^2 from the accumulated moments
             return RtR - 2 * float(torch.trace(M.T @ XtR)) + float(torch.trace(M.T @ XtX @ M))
         r_id, r_fit = resid(eye), resid(T)
         folds[p] = T.float()
-        records.append({**r, "compensated": True, "positions": n, "ridge_lambda": lam,
+        records.append({**r, "compensated": True, "positions": n, "ridge_lambda": lam, "spectrum": spectrum,
                         "fit_residual_rel_identity": r_id / RtR, "fit_residual_rel_fitted": r_fit / RtR,
                         "T_minus_I_fro_rel": float(torch.linalg.norm(T - eye) / torch.linalg.norm(eye))})
     return folds, records

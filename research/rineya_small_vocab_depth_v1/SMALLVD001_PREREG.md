@@ -1,6 +1,6 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED, WITH AMENDMENTS 1-3 (all filed before any layer was scored; end of document).
+> **STATUS: REGISTERED, WITH AMENDMENTS 1-4 (all filed before any layer was scored; end of document).
 > NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
@@ -591,3 +591,119 @@ it.
 ### A3.5 Unchanged
 
 Everything in Amendments 1–2, the verdict rules of H-LC, and every threshold of §3–§6.
+
+---
+
+## Amendment 4 — 2026-09-24: H-LC corrections, filed before any fit
+
+**Source:** `smallvd001-20260924/COLD_REVIEW_HLC.md` (records `481b87b`). **Status:** unchanged;
+nothing scored, nothing fitted.
+
+### A4.1 The ridge shrank toward ZERO: now toward I, scaled by the median eigenvalue
+
+The review flagged that λ = 1e-3·tr(XᵀX)/d is 1e-3 × the *mean* eigenvalue, so a heavy-tailed
+activation spectrum makes it a strong prior. The review read that prior as "T ≈ I". **The code was
+worse than that.** The textbook penalty λ‖T‖² shrinks toward **T = 0**, which would pull the fit
+toward *deleting* block p's MLP output, not toward plain pruning.
+
+The positive-control test did not catch it. It passed with `atol=0.05`, which tolerated
+I − λ(XᵀX)⁻¹.
+
+**Now** (`linear_compensation.py`):
+
+- the fit is min ‖R − XT‖² + λ‖T − I‖², so it shrinks toward T = I, plain pruning, the free null;
+- λ = 1e-3 × the **median** eigenvalue of XᵀX;
+- every fit records the spectrum (min / p10 / median / mean / max), λ/median, λ/max and the
+  participation ratio tr(XᵀX)² / ‖XᵀX‖²_F.
+
+**New tests:**
+
+- an identity-optimal fit recovers I at `atol=1e-6`;
+- with λ → 10¹² × median, the fit collapses to **I** (the old rule collapsed to 0).
+
+With the penalty toward I, the fit is also never worse than identity on its own residual. That
+holds exactly, where before it held only approximately.
+
+### A4.2 Is L2 a proxy for KL? Measured, not argued
+
+For every compensated run, `run_lc_arms.py` records:
+
+- the fit-residual drop;
+- the SELECT2 objective change when that run's fold is added to the earlier ones.
+
+It also records the Spearman correlation across all runs of both arms (negative = a good proxy).
+This is descriptive, and SELECT2 only.
+
+### A4.3 What LC@angular licenses (the disposal rule the review asked for)
+
+**Nothing about the student.** Its REPORT figures are descriptive.
+
+- If LC@angular's reduction clearly exceeds LC@selected's, that is recorded as a **mechanism
+  finding about applicability**: the method works on contiguous runs, and the registered set is
+  not one. It may motivate a new, separately registered experiment.
+- It never stands in for H-LC's verdict.
+- The A2.7 follow-up naming, including the SELECT2 choice between the arms, applies **only if
+  H-LC is SUPPORTED**.
+
+### A4.4 The identity control's claim is narrowed
+
+The identity fold does take the live path: clone, matmul, copy and restore all run. But at T = I
+the transform is exact, so bitwise equality detects **state corruption only**. Tᵀ vs T, sign and
+convention errors are invisible to it.
+
+The algebra is covered by two other tests:
+
+- the fold-equals-direct test with a random T;
+- a new **bitwise T = 2I** test. A power-of-two scale is exact in floating point, so block p's
+  output must equal y_p + 2·m_p bitwise.
+
+### A4.5 fp32 is asserted, not defaulted
+
+In bf16 (8 mantissa bits) a small T − I can round away entirely, and H-LC would then measure
+exactly as plain for a reason unconnected to the hypothesis.
+
+- `folded()` refuses non-fp32 weights (tested).
+- `run_lc_arms.py` refuses a non-fp32 model.
+
+### A4.6 Power, simulated before any fit, with the committed verdict
+
+**Setup** (`design/hlc_power_sim.py` → `design/HLC_POWER_SIM.json`):
+
+- the real REPORT category sizes: 6 chat categories of 13–18 rows, 4 text categories of 7–10;
+- positions per row: chat U[10, 65], text U[100, 511];
+- per-row plain KL lognormal with log-sd s_kl ∈ {0.5, 1.0, 1.5};
+- per-row LC/plain ratio lognormal with mean 1 − r and log-sd s_ratio ∈ {0.1, 0.3, 0.6, 1.0};
+- 40 simulations per cell, 2000 resamples each.
+
+**Results:**
+
+- **At true r = 0.30, P(SUPPORTED) ≥ 0.88** whenever s_ratio ≤ 0.6, at every s_kl. At
+  s_ratio = 1.0 it is 0.75–0.80.
+- **At true r = 0.40, P(SUPPORTED) ≥ 0.78** in every cell.
+- The minimum r with P(lower bound > 0) ≥ 0.8 is about 0.10 when the per-row benefit is
+  consistent, 0.2–0.3 at s_ratio 0.6, and 0.3–0.4+ at s_ratio 1.0.
+- At r = 0.20, the bar itself, P(SUPPORTED) is 0.35–0.70, as expected at a threshold.
+
+**Consequences:**
+
+- **The 0.20 bar is kept: SUPPORTED is reachable.** The review's "effective n ≈ 6" does not bind,
+  because the bootstrap resamples rows within fixed categories. That also means the interval is
+  conditional on these ten categories; generalisation to others is not claimed.
+- **One regime the review did not raise:** at s_ratio = 1.0, a true r = 0.10 still reaches
+  SUPPORTED 25–28 % of the time. The effect is real (lower bound > 0), but the "≥ 0.20" size is
+  noise. So a SUPPORTED verdict now also carries `size_precise` = (lower bound ≥ 0.10), plus the
+  interval width. The simulation grid is the key for reading the realised width.
+- **UNDERPOWERED** is a guard for subsampled dry runs; the real REPORT never reaches it.
+- **The SUPPORTED/HARMFUL asymmetry is deliberate.** Plain pruning is the free null, so any
+  reliable harm disqualifies the method, while a gain must clear a usefulness bar to justify a new
+  mechanism in the student.
+
+**Provenance:** `HLC_POWER_SIM.json` was produced by the scratch copy of the simulator. The
+committed copy differs only in its `sys.path` line, its output filename and its docstring; same
+seed, same grid. The verdict moved to `lc_verdict.py` (pure Python) with its logic unchanged, and
+its objective is tested equal to the study's.
+
+### A4.7 Unchanged
+
+The fit set, the position-0 exclusion, both arms, the 0.20 bar, the bootstrap, and the fact that
+nothing here touches A2/A3, §5 or §10.
