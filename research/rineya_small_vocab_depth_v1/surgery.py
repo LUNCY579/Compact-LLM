@@ -245,10 +245,11 @@ def unique_params_torch(module: torch.nn.Module) -> int:
     return n
 
 
-def reload_checks(out_dir: Path) -> dict:
-    """Load through transformers exactly as a downstream user would, and check the tie survived."""
+def reload_checks(out_dir: Path, dtype=torch.bfloat16) -> dict:
+    """Load through transformers exactly as a downstream user would, and check the tie survived.
+    bf16 by default: the tie and the parameter counts do not depend on dtype, and host RAM does."""
     from transformers import AutoTokenizer, Qwen3ForCausalLM
-    model = Qwen3ForCausalLM.from_pretrained(str(out_dir), torch_dtype=torch.float32,
+    model = Qwen3ForCausalLM.from_pretrained(str(out_dir), torch_dtype=dtype,
                                              attn_implementation="eager", local_files_only=True)
     tok = AutoTokenizer.from_pretrained(str(out_dir), local_files_only=True, trust_remote_code=False)
     cfg = model.config
