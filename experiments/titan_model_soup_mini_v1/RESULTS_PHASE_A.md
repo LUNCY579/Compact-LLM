@@ -77,6 +77,12 @@ Across all five arms, **2,980,249,600 element comparisons, 0 bitwise mismatches*
 values, 0 header-layout problems (offsets contiguous, ascending in written order, payload exactly
 filling the file, 8-byte aligned). The independently computed `‖out − left‖ / ‖right − left‖` is
 **exactly 0.500000** for all five: these are true midpoints.
+*(Corrected 2026-09-24, from a peer session's independent check: "true midpoints" over-claims.
+The bitwise match above is against the IMPLEMENTED form `a + (b-a)*0.5`, which rounds twice. It is
+not the correctly rounded midpoint `0.5*a + 0.5*b`: they differ on 39,238 elements of
+`sparse_opallo_50` (and 1-3 on the other arms), max absolute error 1.9e-6, up to 8192 FP32 ulps
+where the two weights nearly cancel. This record's own `PHASE_A_BUILD_VALIDATION.json` already
+logged the 39,238; the sentence did not. Functionally negligible. The norm ratio 0.500000 stands.)*
 
 A float64 restatement of the primary arm's identity
 (`output == supa + 0.5·dSparse + 0.5·dOpallo`) flagged 23 of 596,049,920 elements above a 1e-6
