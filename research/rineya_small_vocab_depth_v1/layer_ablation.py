@@ -89,13 +89,22 @@ def final_hidden(model, ids, mask):
     return out.last_hidden_state
 
 
-def batches_by_length(items: list[dict], max_tokens: int):
-    """Length-sorted batches under a token budget (padding waste stays small)."""
-    order = sorted(range(len(items)), key=lambda i: len(items[i]["ids"]))
+# Eager attention materialises B x heads x T x T fp32 scores per layer. B*T^2 <= 1.6e7 keeps that
+# under ~1 GB on the 8 GB card next to 2.4 GB of fp32 weights (16 long-context rows at 2.7K tokens
+# would need ~7.5 GB at prefill).
+QUAD_BUDGET = 16_000_000
+
+
+def batches_by_length(items: list[dict], max_tokens: int, max_rows: int = 64,
+                      quad_budget: int = QUAD_BUDGET, key: str = "ids"):
+    """Length-sorted batches under a linear token budget AND a quadratic attention budget."""
+    order = sorted(range(len(items)), key=lambda i: len(items[i][key]))
     batch, longest = [], 0
     for i in order:
-        n = len(items[i]["ids"])
-        if batch and max(longest, n) * (len(batch) + 1) > max_tokens:
+        n = len(items[i][key])
+        m = max(longest, n)
+        if batch and (m * (len(batch) + 1) > max_tokens or (len(batch) + 1) * m * m > quad_budget
+                      or len(batch) >= max_rows):
             yield batch
             batch, longest = [], 0
         batch.append(i)

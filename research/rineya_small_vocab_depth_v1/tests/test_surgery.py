@@ -63,10 +63,20 @@ def test_architecture_and_exact_parameter_count(arm):
         "the alias sum should exceed the unique count by exactly one embedding matrix"
 
 
-def _load(path):
+# bf16 by default: host RAM, not correctness, is the constraint (15.2 GB, shared). Bitwise hidden-
+# state equality holds in ANY dtype as long as both sides use the same one; logits are then formed
+# in fp32 from those identical hidden states, so the 1e-5 tolerance keeps its meaning.
+DTYPE = getattr(torch, os.environ.get("SMALLVD_TEST_DTYPE", "bfloat16"))
+
+
+def _load(path, dtype=None):
     from transformers import Qwen3ForCausalLM
-    return Qwen3ForCausalLM.from_pretrained(str(path), torch_dtype=torch.float32,
+    return Qwen3ForCausalLM.from_pretrained(str(path), torch_dtype=dtype or DTYPE,
                                             attn_implementation="eager", local_files_only=True).eval()
+
+
+def _logits(model, h):
+    return h.float() @ model.lm_head.weight.float().T
 
 
 @pytest.mark.parametrize("arm", ARMS, ids=lambda p: p.name)
@@ -94,15 +104,14 @@ def test_forward_equivalence_with_teacher_bypass(arm):
     with torch.no_grad(), keep_layers(teacher, kept):
         for oi, _ in inputs:
             out = teacher.model(input_ids=torch.tensor([oi]), use_cache=False).last_hidden_state
-            logits = teacher.lm_head(out)
-            ref.append((out.clone(), logits.clone()))
+            ref.append((out.clone(), _logits(teacher, out).clone()))
     del teacher
     student = _load(arm)
     with torch.no_grad():
         for (oi, ni), (h_ref, l_ref) in zip(inputs, ref):
             h = student.model(input_ids=torch.tensor([ni]), use_cache=False).last_hidden_state
             assert torch.equal(h, h_ref), "final hidden states are not bitwise identical"
-            l = student.lm_head(h)
+            l = _logits(student, h)
             if id_map is not None:
                 cols = torch.tensor(sorted(id_map, key=lambda o: id_map[o]))
                 l_ref = l_ref.index_select(-1, cols)
@@ -161,3 +170,31 @@ def test_negative_control_wrong_layer_map_is_caught(tmp_path):
     (fake / "SURGERY.json").write_text(json.dumps(m), encoding="utf-8")
     with pytest.raises(AssertionError):
         surgery.verify_built(fake, TEACHER)
+
+
+@pytest.mark.parametrize("arm", [a for a in ARMS if (a / "token_id_map.json").exists()], ids=lambda p: p.name)
+def test_virtual_student_equals_built_student_on_arbitrary_text(arm):
+    """The layer study measures VIRTUAL students (teacher + bypass + candidate tokenisation mapped
+    back to old ids + logits restricted to retained ids). On ANY text -- including text whose
+    tokenisation changed -- that must equal the built checkpoint: hidden states bitwise, logits on
+    the retained ids to fp32 GEMM tolerance. This is what licenses measuring without building."""
+    import virtual_student as vs
+    m = manifest(arm)
+    kept = m["kept_layers_old_index"]
+    voc = vs.Vocab(arm, TEACHER / "tokenizer.json")
+    texts = ["中文测试 and naïve café, Dvořák; x ≤ y ⇒ ∑ᵢ aᵢ", "photosynthesis antidisestablishmentarianism"]
+    teacher = _load(TEACHER)
+    ref = []
+    with torch.no_grad(), keep_layers(teacher, kept):
+        for s in texts:
+            old_ids = voc.encode_old_ids(s)
+            h = teacher.model(input_ids=torch.tensor([old_ids]), use_cache=False).last_hidden_state
+            ref.append((h.clone(), _logits(teacher, h)[..., voc.retained].clone()))
+    del teacher
+    student = _load(arm)
+    with torch.no_grad():
+        for s, (h_ref, l_ref) in zip(texts, ref):
+            new_ids = voc.tok.encode(s, add_special_tokens=False).ids
+            h = student.model(input_ids=torch.tensor([new_ids]), use_cache=False).last_hidden_state
+            assert torch.equal(h, h_ref)
+            assert (_logits(student, h) - l_ref).abs().max().item() <= 1e-5
