@@ -157,9 +157,13 @@ def collect_positions(model, items: list[dict], pad_id: int, device, max_tokens:
 
 
 @torch.no_grad()
-def compare(model_head, H_teacher: list, H_student: list, items: list[dict], chunk: int = 2048,
+def compare(model_head, H_teacher: list, H_student: list, items: list[dict], chunk: int = 512,
             vocab_slice: torch.Tensor | None = None) -> dict:
     """Per-item KL, top-1/top-5 agreement and reference NLL, from cached final hidden states.
+
+    MEMORY: each chunk materialises ~5 tensors of chunk x 151,936 fp32. At the first default of
+    2,048 that was ~1.24 GB per tensor and it drove a CPU dry run's HOST to 0.00 GiB free -- a spike
+    I first attributed to another lane. 512 on GPU (~1.5 GB transient VRAM), 128 on CPU.
 
     `vocab_slice` restricts BOTH distributions to a set of teacher ids (used only when comparing
     across a vocabulary change; depth-only comparisons use the full row set)."""

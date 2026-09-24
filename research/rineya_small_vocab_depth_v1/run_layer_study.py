@@ -129,6 +129,7 @@ def main(argv=None) -> int:
         import transformers
         rt = la.configure_runtime(17)
         dev = a.device
+        chunk = 128 if dev == "cpu" else 512      # logits chunk: host RAM on CPU, VRAM on GPU
         rows = [json.loads(l) for l in a.panels.read_text(encoding="utf-8").splitlines() if l.strip()]
         if a.max_rows_per_category:
             keep, seen = [], {}
@@ -170,7 +171,7 @@ def main(argv=None) -> int:
         def tf_metrics(kept, items, H_ref):
             with la.keep_layers(model, kept):
                 H = la.collect_positions(model, items, eot, dev)
-            res = la.compare(model.lm_head, H_ref, H, items)
+            res = la.compare(model.lm_head, H_ref, H, items, chunk=chunk)
             del H
             return res
 
@@ -248,7 +249,7 @@ def main(argv=None) -> int:
                     key = f"{voc.name}/{n}L"
                     out[key] = {"vocab": voc.name, "vocab_rows": rows_v, "n_layers": n, "kept": kept,
                                 "unique_params": params,
-                                "answer_bpb": strip(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev)),
+                                "answer_bpb": strip(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev, chunk=min(chunk, 256))),
                                 "holdout_generation": gen_metrics(kept, voc)}
                     print(f"[S6] {key}: {params:,} params, bpb {out[key]['answer_bpb']['all']['bpb']:.4f}", flush=True)
                     hostbudget.guard(guard_gib, "layer study S6")

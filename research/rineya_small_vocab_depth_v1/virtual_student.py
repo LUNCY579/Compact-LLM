@@ -60,7 +60,7 @@ class RestrictLogits:
 
 @torch.no_grad()
 def answer_bpb(model, vocab: Vocab, rows: list[dict], kept: list[int], im_end_old: int, device,
-               max_tokens: int = 8192, chunk: int = 1024) -> dict:
+               max_tokens: int = 8192, chunk: int = 256) -> dict:
     """Bits per byte of each reference answer under the virtual student (teacher forcing)."""
     items = []
     for r in rows:

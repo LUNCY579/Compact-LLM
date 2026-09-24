@@ -34,7 +34,8 @@ step() {       # name, wait-GiB, max-tries, command...
     printf '%s\n' "$out" | tail -40 > "$S/$name.try$k.log"
     if [ "$rc" -eq 0 ]; then echo "$(date -u +%FT%TZ) OK $name" >> "$LOG"; return 0; fi
     if printf '%s' "$out" | grep -q -e "REFUSING TO START" -e "standing down"; then
-      echo "$(date -u +%FT%TZ) RAM-REFUSAL $name (try $k), will wait and retry" >> "$LOG"; continue
+      echo "$(date -u +%FT%TZ) RAM-REFUSAL $name (try $k), backing off 5 min then waiting" >> "$LOG"
+      sleep 300; continue
     fi
     echo "$(date -u +%FT%TZ) FAIL $name rc=$rc (not a RAM refusal) -- chain stopped" >> "$LOG"; return 1
   done
