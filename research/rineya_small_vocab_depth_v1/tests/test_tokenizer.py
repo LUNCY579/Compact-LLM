@@ -110,6 +110,29 @@ def invariance_violations(tok, id_map, texts) -> tuple[int, int]:
     return checked, bad
 
 
+def word_invariance_on(tok, id_map, texts) -> tuple[int, int, int]:
+    """(distinct words, qualifying words, violations) at PRE-TOKENIZER granularity (Amendment 1)."""
+    import tokenizer_validation as tv
+    old = teacher_tokenizer()
+    words = sorted({w for s in texts for w in tv.pretokenized_words(old, s) if w})
+    qual = bad = 0
+    for w in words:
+        oi = old.encode(w, add_special_tokens=False).ids
+        if oi and all(i in id_map for i in oi):
+            qual += 1
+            bad += tok.encode(w, add_special_tokens=False).ids != [id_map[i] for i in oi]
+    return len(words), qual, bad
+
+
+def word_coverage_floor(rows: int, full: int = 151936) -> float:
+    """Amendment 1, registered before any real candidate existed: linear from 0.75 at 32,768 rows to
+    0.95 at the full vocabulary. Set from the CORPUS-FREE construction measured by THIS function on
+    these fixtures (qualifying fraction of 309 distinct words: 0.835 / 0.880 / 0.913 / 0.974 at
+    32K / 49K / 65K / 98K, 0 violations), so each target keeps a margin of 0.085-0.114, and a
+    candidate that checks only a handful of easy words fails."""
+    return 0.75 + 0.20 * (rows - 32768) / (full - 32768)
+
+
 def candidate_dirs(fresh):
     extra = [Path(p) for p in os.environ.get("SMALLVD_TOKENIZER_DIRS", "").split(os.pathsep) if p]
     return [fresh] + extra
@@ -172,16 +195,27 @@ def test_retained_only_text_encodes_identically(fresh_candidate):
     derivation is an ancestor of a retained token, all of them survive, and BPE chooses the
     lowest-rank applicable merge from a subset that contains the teacher's choice."""
     old = teacher_tokenizer()
+    texts = list(FIXTURES.values()) + chat_render_samples()
     for d in candidate_dirs(fresh_candidate):
-        tok, id_map, _ = load_candidate(d)
-        n_checked = 0
-        for s in list(FIXTURES.values()) + chat_render_samples():
+        tok, id_map, cfg = load_candidate(d)
+        n_lines = n_checked = 0
+        for s in texts:
             for piece in s.split("\n"):
                 oi = old.encode(piece, add_special_tokens=False).ids
-                if oi and all(i in id_map for i in oi):
+                if not oi:
+                    continue
+                n_lines += 1
+                if all(i in id_map for i in oi):
                     assert tok.encode(piece, add_special_tokens=False).ids == [id_map[i] for i in oi]
                     n_checked += 1
-        assert n_checked >= 10, "the invariance test checked too few pieces to mean anything"
+        # Amendment 1: the count floor was a floor on COUNT, not coverage. Check every pre-tokenized
+        # word, record the qualifying FRACTION, and hold it to a floor that scales with the target.
+        n_words, qual, bad = word_invariance_on(tok, id_map, texts)
+        floor = word_coverage_floor(cfg["vocab_size"])
+        print(f"COVERAGE {d.name}: rows {cfg['vocab_size']} lines {n_checked}/{n_lines} = {n_checked / n_lines:.3f}; "
+              f"words {qual}/{n_words} = {qual / n_words:.3f} (floor {floor:.3f}); violations {bad}")
+        assert bad == 0, f"{d.name}: {bad} retained-only words re-segmented"
+        assert qual / n_words >= floor, f"{d.name}: word coverage {qual / n_words:.3f} < floor {floor:.3f}"
 
 
 def test_chat_template_tokens_all_retained(fresh_candidate):

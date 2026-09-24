@@ -1,7 +1,7 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED. NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY
-> SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
+> **STATUS: REGISTERED, WITH AMENDMENT 1 (filed before any layer was scored; end of document).
+> NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
 > **Class:** STRUCTURAL QUALIFICATION + MECHANISM SCOUT. `quality_claim: false`,
@@ -69,7 +69,8 @@ scout; `MODEL_QUALITY_STATUS.md:40-42`: *"No candidate dominates all measured di
 ## 2. Exact parameter accounting (measured, not estimated)
 
 `param_accounting.py`: three counts agree on the teacher (header 596,049,920 = analytic =
-torch-by-storage), and the safetensors layout predictor reproduces the teacher's header
+torch-by-storage) *[Amendment 1, A1.8: only header = analytic was measured at registration; the
+torch count on A0 is now measured before any arm is built]*, and the safetensors layout predictor reproduces the teacher's header
 **byte-for-byte** before any predicted size is printed. P = 1024·V + 15,730,944·L + 1024.
 
 **The iso-parameter frontier near the brief's candidate** — each row trades one block
@@ -168,10 +169,12 @@ agreement, per-row tail (P95, max), and greedy generation (flip rate vs the teac
 reference accuracy by the row's scorer, abstention rate, length, cap-hit rate), all by category.
 
 **Registered selection rule for the A2/A3 layer set at 18 blocks:** the candidate set with the
-lowest HOLDOUT objective. The SELECT objective chooses nothing.
+lowest HOLDOUT objective. The SELECT objective chooses nothing. *[Amendment 1, A1.1: the lowest
+**SELECT2** objective; every reported figure comes from REPORT.]*
 
 **Protected-skill flag:** any category whose HOLDOUT generation flip rate is ≥ 0.90 at the
-selected set is reported as CATASTROPHIC for that skill, whatever the average says.
+selected set is reported as CATASTROPHIC for that skill, whatever the average says. *[Amendment 1:
+on REPORT; a §10 HOLD condition for A1 (V-SAFE), a design obligation for A2/A3 (A1.3).]*
 
 **Author's expectations:** blocks 0–2 are catastrophic individually (four prior instruments
 agree); greedy beats `evenly_spaced` on HOLDOUT at 18 blocks; the 18-block surgery-only student is
@@ -187,7 +190,8 @@ bytes) and generation metrics.
 
 **Registered rule.** V2/18 remains the recommended first student unless another frontier
 configuration has HOLDOUT answer bpb at least **1 % lower** and no additional CATASTROPHIC
-category. In that case that configuration is reported as the evidence-backed safer nearby
+category. *[Amendment 1, A1.1: decided on SELECT2 bpb and SELECT2 CATASTROPHIC; reported on
+REPORT.]* In that case that configuration is reported as the evidence-backed safer nearby
 alternative. **This is a surgery-only comparison.** It measures immediate structural damage, not
 recoverability, and the recommendation says so.
 
@@ -213,6 +217,9 @@ recoverability, and the recommendation says so.
   training floor.
 
 ## 7. G4: surgery-only damage, measured separately for A1, A2 and A3
+
+*[Amendment 1, A1.2: the pass condition is the brief's, stated there; "G4 (calibration panels)" is
+what this run can deliver, and full G4 stays PENDING until an instrument shim is qualified.]*
 
 On the HOLDOUT panels, through virtual students (bitwise-equivalent per G3): A1 and A3 by answer
 bpb and generation; A2 additionally by KL. Additivity (brief Q4) is read as
@@ -241,8 +248,173 @@ lowered to force a launch.
 
 ## 10. GO / HOLD for recovery (brief deliverable 17), registered in advance
 
-**GO for recovery/distillation requires ALL of:** G0–G4 PASS; G5 (dataset, tokenization and
+**GO for recovery/distillation requires ALL of:** G0–G4 PASS *[Amendment 1: full G4, A1.2]*;
+**V-SAFE — A1 has no CATASTROPHIC category on REPORT** *[Amendment 1, A1.3]*; every
+REPORT-CATASTROPHIC category of the recommended student named as a protected-skill category with its
+own recovery endpoint in the S1/S2 plan *[A1.3]*; if the operator names a compression subject other
+than Supa 1.7.0, §4 re-run on it *[A1.5]*; G5 (dataset, tokenization and
 training smoke on the student geometry) PASS; a qualified training lane for the student geometry;
 a registered plan with a matched ordinary-training control (S1) and verified-teacher-target arm
 (S2); the operator's teacher decision (§1); and an operator grant whose `excludes` no longer
 contains `architectural_change`. **Anything less is HOLD, with the missing items named.**
+
+---
+
+## Amendment 1 — 2026-09-24, filed BEFORE any layer was scored, any vocabulary candidate built, or G0b run
+
+**Registration status at filing:** no layer configuration has been scored on the real teacher, no
+vocabulary candidate exists, G0b has not run, no student has been built. Everything run so far on a
+model is the tiny random 9.9M-parameter plumbing model in scratch. This is an addition to an unscored
+design, not an amendment to a result. Sources: the Rineya Delta independent cold review
+(`smallvd001-20260924/INDEPENDENT_COLD_REVIEW.md`, records commit `399723a`) and three defects that
+the tiny-model dry run of the amended code caught (A1.8).
+
+### A1.1 HOLDOUT is split into SELECT2 and REPORT (review Q2)
+
+§4 chose the A2/A3 set as the lowest-HOLDOUT candidate among five strategies (+ `lineage_donor`),
+and §5 decided the frontier on HOLDOUT too. HOLDOUT was therefore a selection instrument, and the
+winner's HOLDOUT figure a best-of-N estimate. **Fix:** `layer_select.holdout_subsplit`, a
+deterministic split of the HOLDOUT rows that depends on ids and reference labels only. Within each
+stratum (category × "reference is UNKNOWN"), rows are ordered by `sha256(salt + id)` with salt
+`smallvd001-amendment1-report-v1`, then alternate SELECT2, REPORT, SELECT2, ...
+
+- On the committed panel file: HOLDOUT 257 → **SELECT2 133 / REPORT 124** (chat 96 / 90). Per chat
+  category in REPORT: abstention_unknown 14 (8 UNKNOWN + 6 determinate), concise_reasoning 16,
+  conversation 18, grounded_extraction 13, instruction_writing 14, long_context 15. Split sha256
+  (canonical sorted `id → part` JSON) `b156cb15…4914`.
+- The answer-type stratum was added after a first, category-only version put 11 UNKNOWN and only 3
+  determinate abstention rows in REPORT, too few to see over-abstention. Both versions were
+  computed from the panel file alone, before any model output existed.
+- **What chooses what.**
+
+  | decision | instrument |
+  |---|---|
+  | greedy search (unchanged) | SELECT |
+  | the A2/A3 set at 18 blocks (§4) | lowest **SELECT2** objective |
+  | each frontier depth's layer set (S6) | lowest SELECT2 objective |
+  | the §5 frontier decision | SELECT2 answer bpb and SELECT2 CATASTROPHIC categories |
+  | every figure reported for a selected configuration, G4 and V-SAFE | **REPORT**, which chooses nothing |
+
+  The single-block table (S3) uses all HOLDOUT rows, because it selects nothing.
+- **Guards.** Every stage file records the split sha256 it was computed under. A resume under a
+  different split refuses, and so does the report generator. The guard's positive control: the
+  report refused a dry-run study computed under the category-only split.
+- **Cost, stated.** REPORT has 13–18 chat rows per category, so per-category rates carry wide
+  intervals. A CATASTROPHIC flag (flip ≥ 0.90) on 14 rows means ≥ 13 flips.
+
+### A1.2 G4 is the brief's gate, stated here rather than only in the evaluation plan (review Q4)
+
+The brief defines it: *"Gate G4 — Calibration. PASS only if compression damage is measured
+separately for vocabulary-only, layer-only and combined arms."* §7 described how damage is measured
+but never quoted this pass condition, and `PREDISTILLATION_EVAL_PLAN.md` §8 held the only
+definition. **G4 (calibration panels) PASSES iff** A1 = V2/28, A2 = V0/selected-18 and
+A3 = V2/selected-18 are each measured on REPORT with:
+
+- finite answer bpb, overall and in every category;
+- generation metrics in every chat category;
+- for A2 also the REPORT KL objective;
+- per-row records stored.
+
+The S6 layer sets of A2/A3 must equal the registered selection. G4 cannot pass before G3, because
+G3's bitwise virtual-vs-built equivalence is what licenses measuring through virtual students.
+
+**The plan's instrument clause was vacuous.** *"… AND on every instrument whose shim replay of A0 is
+exact"* is satisfied by zero instruments, and no shim exists yet. So this run can deliver
+**G4 (calibration panels)** only. **Full G4 stays PENDING** until at least one instrument shim is
+qualified; it is never PASS merely because no instrument qualified. `report_layer_study.py` prints
+exactly these two statuses.
+
+### A1.3 The CATASTROPHIC flag in §10: wired where it can both pass and fail
+
+The review proposed making CATASTROPHIC a HOLD condition in §10. **Adopted for A1; not for A2/A3,**
+for this reason.
+
+- **A1 (vocabulary only) has a sharp prediction.**
+  - By the invariance theorem, a row whose prompt and teacher continuation use only retained ids
+    is reproduced by the virtual A1 greedy decode: identical input ids, and restricting the logits
+    cannot move an argmax that is already retained. The only slack is fp32 batching numerics.
+  - A CATASTROPHIC category for A1 means the pruning removed tokens the teacher actually emits
+    there. **New §10 condition V-SAFE:** A1 has no CATASTROPHIC category on REPORT, otherwise
+    HOLD.
+  - It can fail: the dry run on a random tiny model fired it (HOLD). It can pass: an
+    English-centric 65,536-row candidate is predicted to flip only rows where the teacher emits a
+    pruned token.
+- **A2/A3 (depth) do not.**
+  - Flip rate is a normalised full-string mismatch over a 64-token continuation. In the two
+    open-ended categories (conversation, instruction_writing; no scorer), one divergent token flips
+    the row.
+  - **Registered prediction, so it can be wrong:** A2 and A3 have REPORT flip ≥ 0.90 on
+    conversation AND instruction_writing.
+  - A HOLD condition predicted to fire whatever the recoverability is a gate that cannot pass on
+    achievable data. §8 already forbids reading surgery-only damage as recoverability.
+  - For A2/A3 the flag is therefore a **design obligation** instead: every REPORT-CATASTROPHIC
+    category of the recommended student must be a named protected-skill category, with its own
+    recovery endpoint, in the S1/S2 plan that §10 requires.
+
+### A1.4 Invariance-test coverage (review Q1)
+
+The line-level test floored a COUNT (≥ 10 pieces), not coverage. Changes:
+
+- **(a) A word-level check.** BPE never merges across a pre-tokenizer chunk, so the theorem holds
+  per chunk.
+  - `tokenizer_validation.word_invariance` checks every distinct pre-tokenized HELD-OUT word whose
+    teacher encoding is all-retained, and records the qualifying fraction (distinct and
+    occurrence-weighted) in `VOCAB_CANDIDATES.json`.
+  - **New REJECT 5:** any violation.
+- **(b) A fixture test that records and floors the fraction.**
+  - `test_retained_only_text_encodes_identically` records the line and word fractions (printed
+    into the G1 log via `-rP`).
+  - It asserts word coverage ≥ `0.75 + 0.20·(rows − 32768)/(151936 − 32768)`.
+  - The floor was set from the corpus-free construction, measured by the test's own function
+    before any real candidate existed: 309 distinct words, qualifying 0.835 / 0.880 / 0.913 /
+    0.974 at 32K / 49K / 65K / 98K, 0 violations. Margins are 0.085–0.114.
+- **(c) The negative control now fails at word level too.** With reversed merges on the fixtures
+  alone: all 285 distinct words qualify under the identity map, and **187** re-segment.
+
+### A1.5 The layer set is Supa-specific (review Q4b)
+
+The A2/A3 set is chosen on Supa 1.7.0's KL against Supa's own greedy continuations, so it is a
+property of those weights.
+
+- **Commitment:** if the operator's teacher decision (§1) names a model other than Supa 1.7.0 as
+  the model to be COMPRESSED, §4 is re-run with that model as `--teacher` before Phase 11. Panels,
+  splits, rules and code stay the same. This run's set is not transferred.
+- If Supa stays the compression subject and only the distillation-target source changes, the set
+  stands, with a caveat: the targets would then come from a different model than the continuations
+  the set was chosen on.
+
+### A1.6 The 80-character sentence gate (review Q3)
+
+It catches shared framing, not shared arithmetic: 0 % of probe rows are under 80 characters, but
+the operands sit in short sentences (e.g. "It is reduced by 20%." at 21 characters). It is not
+load-bearing here, because class exclusion removes the probe's entire source classes. It must not
+be reused, unexamined, on a corpus where it would be.
+
+### A1.7 Unchanged
+
+The greedy search and its SELECT objective, the depth grid, the frontier table, the 1 % margin,
+the 0.90 flip threshold, the REJECT/FLAG thresholds of §3, and every build gate of §6.
+
+### A1.8 Three defects the tiny-model dry run caught before any real build
+
+1. **G3 would have failed on every real arm.** `surgery.unique_params_torch` walked
+   `module.buffers()` as well as parameters, so it counted the rotary `inv_freq` (head_dim / 2
+   floats, recomputed from config and never saved) as weights.
+   - Effect: +8 on the tiny model (A1: by-storage 4,416,520 vs torch and analytic 4,416,512);
+     +64 on the real one.
+   - Fixed: parameters only, with buffers reported separately.
+2. **§2's "three counts agree on the teacher (header = analytic = torch-by-storage)" was not
+   measured.** The torch count had never been run on the teacher; no record of it exists, and the
+   function as written would have returned 596,049,984.
+   - The claim registered was HEADER = ANALYTIC.
+   - `run_surgery_arms.py` now measures A0 on the arms' own code path before building anything,
+     and refuses unless header = analytic = torch = by-storage. On the dry run all four are
+     9,946,112.
+3. **The wrong-layer-map negative control hardcoded 28 blocks.** On the 6-block dry teacher it
+   picked the full-depth arm and "dropped" a block that does not exist, so it passed for the wrong
+   reason. It now uses the teacher's own depth, and the fresh dry chain runs it on A2 and A3 only.
+   It would have been correct on the real 28-block teacher; it was vacuous on the only model it
+   had run on.
+
+**Also:** every queue launch now uses fresh dry-run directories. A dry run resumed from an earlier
+launch verifies nothing about the current code.

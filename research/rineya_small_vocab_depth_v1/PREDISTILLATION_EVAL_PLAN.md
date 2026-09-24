@@ -87,6 +87,11 @@ teacher's and follows from depth alone; vocabulary pruning does not change it.
 ## 8. Gate G4 (registered in SMALLVD001_PREREG.md §7)
 
 PASS when surgery-only damage is **measured and recorded separately** for A1, A2 and A3 on the
-HOLDOUT panels, AND on every instrument whose shim replay of A0 is exact. G4 is a gate about
+HOLDOUT panels, AND on every instrument whose shim replay of A0 is exact.
+
+*[SMALLVD-001 Amendment 1, A1.2: the panels are the REPORT half of HOLDOUT. The instrument clause is
+satisfied VACUOUSLY by zero instruments, so it is read as: "G4 (calibration panels)" can PASS now;
+full G4 is PENDING until at least one instrument shim is qualified, and never PASS merely because
+none qualified.]* G4 is a gate about
 *measurement*, not about the size of the damage: a heavily damaged 18-block student PASSES G4 if its
 damage is recorded.

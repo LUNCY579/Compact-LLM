@@ -66,6 +66,17 @@ def main(argv=None) -> int:
     try:
         if token:
             gpu_lease.set_workers(token, [os.getpid()])
+        # A0: the prereg's "three counts agree on the teacher" claim was registered on HEADER = ANALYTIC
+        # alone; the TORCH count had never been run on the teacher. Measure it here, on the same code
+        # path the arms use, and refuse to build anything if it disagrees.
+        a0 = surgery.reload_checks(a.teacher)
+        header_n = pa.account_header(pa.read_header(a.teacher / "model.safetensors")[0], cfg0)["unique_physical_parameters"]
+        a0["header_unique_parameters"], a0["analytic_unique_parameters"] = header_n, n0
+        if not (a0["unique_params_torch"] == a0["unique_params_by_storage"] == header_n == n0):
+            raise SystemExit(f"A0 parameter counts disagree: {a0}")
+        with open(a.records_out / f"A0_THREE_COUNTS_{int(time.time())}.json", "x", encoding="utf-8", newline="\n") as f:
+            json.dump({"schema": 1, "record": "SMALLVD_A0_THREE_COUNTS", "teacher": str(a.teacher), **a0}, f, indent=1)
+        print(f"A0: header = analytic = torch = by-storage = {n0:,}", flush=True)
         for name in a.arms.split(","):
             tok_dir, kept = arms[name]
             out = a.build_root / name

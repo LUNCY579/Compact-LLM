@@ -18,7 +18,7 @@ sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import vocab_prune as vp  # noqa: E402
 from test_tokenizer import (FIXTURES, TEACHER, invariance_violations,  # noqa: E402
-                            special_id_violations, teacher_tokenizer)
+                            special_id_violations, teacher_tokenizer, word_invariance_on)
 
 tokenizers = pytest.importorskip("tokenizers")
 
@@ -129,3 +129,5 @@ def test_a_non_invariant_tokenizer_is_caught():
     identity = {i: i for i in range(151669)}
     checked, bad = invariance_violations(tok, identity, list(FIXTURES.values()))
     assert checked >= 10 and bad > 0, (checked, bad)
+    n_words, qual, wbad = word_invariance_on(tok, identity, list(FIXTURES.values()))
+    assert qual == n_words and wbad > 0, (n_words, qual, wbad)     # the word-level check fails too

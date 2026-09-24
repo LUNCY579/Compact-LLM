@@ -154,7 +154,10 @@ def test_generation_references_no_deleted_ids(arm):
 def test_negative_control_wrong_layer_map_is_caught(tmp_path):
     """verify_built must FAIL on an arm whose manifest claims a different layer set than the
     weights contain. Hard link, not copy: no extra disk."""
-    arm = next((a for a in ARMS if len(manifest(a)["kept_layers_old_index"]) < 28), None)
+    # the teacher's OWN depth, not a literal 28: on the 6-block dry-run teacher the literal picked the
+    # full-depth A1 and "dropped" a block that does not exist, so the control passed for the wrong reason
+    n_teacher = json.loads((TEACHER / "config.json").read_text(encoding="utf-8"))["num_hidden_layers"]
+    arm = next((a for a in ARMS if len(manifest(a)["kept_layers_old_index"]) < n_teacher), None)
     if arm is None:
         pytest.skip("needs a depth-pruned arm")
     fake = tmp_path / "fake"
@@ -165,7 +168,7 @@ def test_negative_control_wrong_layer_map_is_caught(tmp_path):
             shutil.copyfile(p, fake / p.name)
     m = manifest(arm)
     kept = m["kept_layers_old_index"]
-    dropped = next(l for l in range(28) if l not in kept)
+    dropped = next(l for l in range(n_teacher) if l not in kept)
     m["kept_layers_old_index"] = sorted(kept[1:] + [dropped])
     (fake / "SURGERY.json").write_text(json.dumps(m), encoding="utf-8")
     with pytest.raises(AssertionError):

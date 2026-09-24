@@ -233,11 +233,14 @@ def verify_built(out_dir: Path, teacher_dir: Path) -> dict:
 
 def unique_params_torch(module: torch.nn.Module) -> int:
     """Unique physical parameters of a LIVE module: dedupe by storage pointer + view geometry.
-    `sum(p.numel() for p in state_dict().values())` counts a tied head twice."""
+    `sum(p.numel() for p in state_dict().values())` counts a tied head twice.
+
+    PARAMETERS ONLY. The first version also walked `module.buffers()`, which counts the rotary
+    `inv_freq` (head_dim / 2 floats, recomputed from config and never saved) as if it were a
+    weight: +8 on the tiny dry-run model, +64 on the real one. The tiny dry run caught it as a
+    G3 failure before any real arm was built. Buffers are reported separately by reload_checks."""
     seen, n = set(), 0
-    for t in list(module.parameters()) + list(module.buffers()):
-        if not t.is_floating_point():
-            continue
+    for t in module.parameters():
         key = (t.untyped_storage().data_ptr(), t.storage_offset(), tuple(t.shape), tuple(t.stride()))
         if key not in seen:
             seen.add(key)
@@ -258,6 +261,7 @@ def reload_checks(out_dir: Path, dtype=torch.bfloat16) -> dict:
         "tie_by_storage": emb.untyped_storage().data_ptr() == head.untyped_storage().data_ptr(),
         "unique_params_torch": sum(p.numel() for p in model.parameters()),  # parameters() dedupes ties
         "unique_params_by_storage": unique_params_torch(model),
+        "float_buffer_elements_not_parameters": sum(b.numel() for b in model.buffers() if b.is_floating_point()),
         "naive_state_dict_sum": sum(v.numel() for v in model.state_dict().values()),
         "embedding_rows": emb.shape[0], "n_layers": len(model.model.layers),
         "tokenizer_len": len(tok), "config_vocab_size": cfg.vocab_size,

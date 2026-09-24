@@ -127,6 +127,7 @@ def main(argv=None) -> int:
         new = tokenizers.Tokenizer.from_file(str(d / "tokenizer.json"))
         cmp_ = tv.compare_on_rows(old, new, held)
         frag = tv.word_fragmentation(old, new, held)
+        winv = tv.word_invariance(old, new, id_map, held)          # Amendment 1, REJECT 5
         probes = tv.probe_fragmentation(old, new)
         special = tv.special_behaviour(old, new, id_map)
         contract_ok = all(vocab[t] in id_map for t in prot["sets"]["contract"])
@@ -141,6 +142,8 @@ def main(argv=None) -> int:
             reject.append("chat-template token pruned")
         if not contract_ok:
             reject.append("output-contract token pruned")
+        if winv["violations"]:
+            reject.append(f"invariance violations on HELD-OUT words: {winv['violations']}")
         flags = []
         if cmp_["all"]["token_ratio"] > FLAG_OVERALL:
             flags.append(f"overall token ratio {cmp_['all']['token_ratio']:.4f} > {FLAG_OVERALL}")
@@ -159,13 +162,16 @@ def main(argv=None) -> int:
             "heldout": {k: v for k, v in cmp_.items() if k != "worst_p99"},
             "worst_p99_examples": [{**w, "text_head": next(r["text"][:300] for r in held if r["id"] == w["id"])}
                                    for w in cmp_["worst_p99"][:20]],
-            "word_fragmentation": frag, "probe_fragmentation": probes, "special_behaviour": special,
+            "word_fragmentation": frag, "word_invariance": winv,
+            "probe_fragmentation": probes, "special_behaviour": special,
             "contract_retained": contract_ok, "chat_template_retained": tmpl_ok,
             "REJECT": reject, "FLAG": flags, "verdict": "REJECT" if reject else ("FLAG" if flags else "PASS"),
             "file_sha256": hashes,
         }
         print(f"{name} {rows}: ratio {cmp_['all']['token_ratio']:.4f} p99 {cmp_['all']['ratio_p99']:.3f} "
-              f"roundtrip {cmp_['all']['roundtrip_exact_rate']:.4f} verdict {results[name]['verdict']} {flags}", flush=True)
+              f"roundtrip {cmp_['all']['roundtrip_exact_rate']:.4f} invariance {winv['violations']} violations over "
+              f"{winv['qualifying_distinct']} words ({winv['qualifying_fraction_distinct']:.3f} of distinct) "
+              f"verdict {results[name]['verdict']} {flags}", flush=True)
         hostbudget.guard(0.6, "vocab candidates")
 
     # per-token profile

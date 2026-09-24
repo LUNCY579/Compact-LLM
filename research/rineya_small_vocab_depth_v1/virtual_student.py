@@ -95,6 +95,12 @@ def answer_bpb(model, vocab: Vocab, rows: list[dict], kept: list[int], im_end_ol
                     nll += -torch.log_softmax(logits, -1).gather(1, g[:, None]).sum().item()
                 out[i] = {"id": it["row"]["id"], "category": it["row"]["category"],
                           "nats": nll, "tokens": it["n"], "bytes": it["bytes"]}
+    return bpb_summary(out)
+
+
+def bpb_summary(out: list[dict]) -> dict:
+    """Aggregate per-row answer nats into bits per byte, overall and by category. Module-level so a
+    subset of rows (the REPORT split) is summarised by exactly the same code as the whole."""
     def agg(xs):
         nats, byts, toks = sum(x["nats"] for x in xs), sum(x["bytes"] for x in xs), sum(x["tokens"] for x in xs)
         return {"rows": len(xs), "bpb": nats / math.log(2) / byts, "tokens": toks, "bytes": byts,

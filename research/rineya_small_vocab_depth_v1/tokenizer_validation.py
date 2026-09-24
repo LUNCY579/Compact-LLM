@@ -80,6 +80,43 @@ def compare_on_rows(old, new, rows: list[dict]) -> dict:
             "roundtrip_failures": fails, "worst_p99": worst}
 
 
+def pretokenized_words(tok, text: str) -> list[str]:
+    """The pre-tokenizer's chunks of `text` after the normaliser, as substrings. BPE merges never
+    cross a chunk boundary, so the invariance theorem holds chunk by chunk -- a far finer (and far
+    better covered) check than whole lines, whose single pruned token disqualifies the line."""
+    norm = tok.normalizer.normalize_str(text) if tok.normalizer is not None else text
+    words = [norm[a:b] for _, (a, b) in tok.pre_tokenizer.pre_tokenize_str(norm)]
+    if "".join(words) != norm:
+        raise ValueError("pre-tokenizer offsets do not tile the normalised text")
+    return words
+
+
+def word_invariance(old, new, id_map: dict, rows: list[dict], examples: int = 20) -> dict:
+    """Amendment 1 (REJECT 5): every distinct pre-tokenized word whose TEACHER encoding uses only
+    retained ids must encode, under the candidate, to exactly those ids mapped. The qualifying
+    FRACTION is recorded (distinct and occurrence-weighted), so coverage is visible, not assumed."""
+    freq = defaultdict(int)
+    for r in rows:
+        for w in pretokenized_words(old, r["text"]):
+            if w:
+                freq[w] += 1
+    words = list(freq)
+    oe, ne = encode_ids(old, words), encode_ids(new, words)
+    qual = qual_occ = 0
+    bad = []
+    for w, a, b in zip(words, oe, ne):
+        if a and all(i in id_map for i in a):
+            qual += 1
+            qual_occ += freq[w]
+            if b != [id_map[i] for i in a]:
+                bad.append({"word": w, "count": freq[w], "teacher_ids": a, "candidate_ids": b})
+    total = sum(freq.values())
+    bad.sort(key=lambda x: -x["count"])
+    return {"distinct_words": len(words), "word_occurrences": total, "qualifying_distinct": qual,
+            "qualifying_fraction_distinct": qual / len(words), "qualifying_fraction_occurrences": qual_occ / total,
+            "violations": len(bad), "violation_examples": bad[:examples]}
+
+
 def word_fragmentation(old, new, rows: list[dict], top: int = 60) -> dict:
     """Words that were ONE teacher token and became >= 4 new tokens, by frequency."""
     freq = defaultdict(int)

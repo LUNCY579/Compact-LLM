@@ -14,6 +14,11 @@ Registered in SMALLVD001_PREREG.md. Stages, each writing its own JSON into --out
                           frontier configurations, scored on HOLDOUT by answer bits-per-byte and
                           generation (tokenizer-independent)
 
+AMENDMENT 1 (registered before any layer was scored): every HOLDOUT measurement is also summarised
+separately on SELECT2 and REPORT (`layer_select.holdout_subsplit`), and the per-row records are
+KEPT, so a subset or a bootstrap can be recomputed from the stage files. SELECT2 chooses among
+strategies (the frontier's layer set at each depth); REPORT chooses nothing.
+
 RESUMABILITY IS A FLAG, NOT A DEFAULT. Without --resume an existing stage file is an error. With it,
 an existing stage is loaded and the manifest records `mode: resumed` for that stage, so a skipped
 stage can never be mistaken for a verified one.
@@ -53,19 +58,23 @@ def sha256_file(p: Path) -> str:
 
 
 class Stages:
-    def __init__(self, out: Path, resume: bool):
-        self.out, self.resume, self.modes = out, resume, {}
+    def __init__(self, out: Path, resume: bool, split_sha: str):
+        self.out, self.resume, self.modes, self.split_sha = out, resume, {}, split_sha
 
     def run(self, name: str, fn):
         p = self.out / f"{name}.json"
         if p.exists():
             if not self.resume:
                 raise SystemExit(f"{p} exists; pass --resume to reuse it (recorded as resumed)")
+            prev = json.loads(p.read_text(encoding="utf-8"))
+            if prev.get("_holdout_subsplit_sha256") != self.split_sha:
+                raise SystemExit(f"{p} was computed under a different HOLDOUT subsplit; refusing to resume it")
             self.modes[name] = "resumed"
-            return json.loads(p.read_text(encoding="utf-8"))
+            return prev
         t0 = time.time()
         res = fn()
         res["_stage_seconds"] = round(time.time() - t0, 1)
+        res["_holdout_subsplit_sha256"] = self.split_sha     # the split each stage was computed under
         la.dump(p, res)
         self.modes[name] = "computed"
         return res
@@ -141,6 +150,11 @@ def main(argv=None) -> int:
             rows = keep
         sel = [r for r in rows if r["split"] == "select"]
         hold = [r for r in rows if r["split"] == "holdout"]
+        sub = ls.holdout_subsplit(hold)       # Amendment 1: id -> select2 | report
+        sub_record = {"salt": ls.SUBSPLIT_SALT,
+                      "sha256": hashlib.sha256(json.dumps(sorted(sub.items())).encode("utf-8")).hexdigest(),
+                      "counts": {f"{c}/{part}": sum(1 for r in hold if r["category"] == c and sub[r["id"]] == part)
+                                 for c in sorted({r["category"] for r in hold}) for part in ("select2", "report")}}
         tok = tokenizers.Tokenizer.from_file(str(a.teacher / "tokenizer.json"))
         im_end, eot = tok.token_to_id("<|im_end|>"), tok.token_to_id("<|endoftext|>")
         eos = [im_end, eot]
@@ -149,7 +163,7 @@ def main(argv=None) -> int:
             gpu_lease.set_workers(token, [os.getpid()])
         L = model.config.num_hidden_layers
         full = list(range(L))
-        st = Stages(a.out, a.resume)
+        st = Stages(a.out, a.resume, sub_record["sha256"])
         V0 = vs.Vocab(None, a.teacher / "tokenizer.json")
         chat_sel = [r for r in sel if r["kind"] == "chat"]
         chat_hold = [r for r in hold if r["kind"] == "chat"]
@@ -177,11 +191,28 @@ def main(argv=None) -> int:
 
         def gen_metrics(kept, vocab=V0):
             g = vs.generate_rows(model, vocab, chat_hold, kept, eos, eot, dev, a.gen_tokens)
-            return la.generation_metrics([x["text"] for x in g], [T[r["id"]]["text"] for r in chat_hold],
-                                         chat_hold, [x["new_tokens"] for x in g], a.gen_tokens)
+            texts, ntok = [x["text"] for x in g], [x["new_tokens"] for x in g]
+            ref = [T[r["id"]]["text"] for r in chat_hold]
+            m = la.generation_metrics(texts, ref, chat_hold, ntok, a.gen_tokens)
+            for part in ("select2", "report"):
+                ix = [i for i, r in enumerate(chat_hold) if sub[r["id"]] == part]
+                m[part] = la.generation_metrics([texts[i] for i in ix], [ref[i] for i in ix],
+                                                [chat_hold[i] for i in ix], [ntok[i] for i in ix], a.gen_tokens)
+            m["per_row"] = [{"id": r["id"], "text": texts[i], "new_tokens": ntok[i], "terminated": g[i]["terminated"]}
+                            for i, r in enumerate(chat_hold)]
+            return m
 
         def strip(res):
             return {k: v for k, v in res.items() if k != "per_item"}
+
+        def split3(res, summ):
+            """All-HOLDOUT summary, SELECT2 and REPORT summaries by the SAME aggregation code, and
+            the per-row records (Amendment 1)."""
+            pi = res["per_item"]
+            out = {"holdout": strip(res), "holdout_per_item": pi}
+            for part in ("select2", "report"):
+                out[part] = strip(summ([x for x in pi if sub[x["id"]] == part]))
+            return out
 
         if "S2" in want:
             st.run("S2_diagnostics", lambda: la.residual_diagnostics(model, items_sel, eot, dev))
@@ -191,7 +222,7 @@ def main(argv=None) -> int:
             for l in full:
                 kept = [k for k in full if k != l]
                 s, h = tf_metrics(kept, items_sel, H_sel), tf_metrics(kept, items_hold, H_hold)
-                out[str(l)] = {"select": strip(s), "holdout": strip(h), "holdout_generation": gen_metrics(kept),
+                out[str(l)] = {"select": strip(s), **split3(h, la.summarise), "holdout_generation": gen_metrics(kept),
                                "select_objective": category_mean_kl(s)}
                 print(f"[single] L{l}: select obj {out[str(l)]['select_objective']:.4f}", flush=True)
                 hostbudget.guard(guard_gib, "layer study S3")
@@ -224,13 +255,15 @@ def main(argv=None) -> int:
                 for name, kept in strat.items():
                     key = tuple(kept)
                     if key not in done:
-                        h = tf_metrics(kept, items_hold, H_hold)
-                        done[key] = {"kept": kept, "holdout": strip(h),
-                                     "holdout_objective": category_mean_kl(h),
+                        h = split3(tf_metrics(kept, items_hold, H_hold), la.summarise)
+                        done[key] = {"kept": kept, **h,
+                                     "holdout_objective": category_mean_kl(h["holdout"]),
+                                     "select2_objective": category_mean_kl(h["select2"]),
+                                     "report_objective": category_mean_kl(h["report"]),
                                      "holdout_generation": gen_metrics(kept)}
                         hostbudget.guard(guard_gib, "layer study S5")
                     out[str(n)][name] = done[key]
-                    print(f"[S5] {n}L {name}: holdout obj {done[key]['holdout_objective']:.4f}", flush=True)
+                    print(f"[S5] {n}L {name}: select2 obj {done[key]['select2_objective']:.4f}", flush=True)
             return {"depths": out}
         S5 = st.run("S5_depth_strategies", strategies) if "S5" in want else None
 
@@ -238,7 +271,8 @@ def main(argv=None) -> int:
             vocabs = [V0] + [vs.Vocab(d, a.teacher / "tokenizer.json") for d in a.vocab_dirs]
             cfg = json.loads((a.teacher / "config.json").read_text(encoding="utf-8"))
             ref_hold = [r for r in chat_hold if r.get("reference")]
-            best = {int(n): min(v.values(), key=lambda x: x["holdout_objective"])["kept"]
+            # Amendment 1: the frontier's layer set at each depth is chosen on SELECT2, never REPORT
+            best = {int(n): min(v.values(), key=lambda x: x["select2_objective"])["kept"]
                     for n, v in S5["depths"].items()}
             out = {}
             for voc in vocabs:
@@ -249,9 +283,11 @@ def main(argv=None) -> int:
                     key = f"{voc.name}/{n}L"
                     out[key] = {"vocab": voc.name, "vocab_rows": rows_v, "n_layers": n, "kept": kept,
                                 "unique_params": params,
-                                "answer_bpb": strip(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev, chunk=min(chunk, 256))),
+                                "answer_bpb": split3(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev,
+                                                                   chunk=min(chunk, 256)), vs.bpb_summary),
                                 "holdout_generation": gen_metrics(kept, voc)}
-                    print(f"[S6] {key}: {params:,} params, bpb {out[key]['answer_bpb']['all']['bpb']:.4f}", flush=True)
+                    print(f"[S6] {key}: {params:,} params, select2 bpb "
+                          f"{out[key]['answer_bpb']['select2']['all']['bpb']:.4f}", flush=True)
                     hostbudget.guard(guard_gib, "layer study S6")
             return {"configs": out}
         if "S6" in want:
@@ -264,6 +300,7 @@ def main(argv=None) -> int:
                     "vocab_map_sha256": {str(d): sha256_file(d / "token_id_map.json") for d in a.vocab_dirs},
                     "stage_modes": st.modes, "runtime_flags": rt, "dry_run": a.dry_run,
                     "depths": depths, "max_rows_per_category": a.max_rows_per_category,
+                    "holdout_subsplit": sub_record,
                     "runtime": {"python": sys.version.split()[0], "torch": torch.__version__,
                                 "transformers": transformers.__version__, "tokenizers": tokenizers.__version__,
                                 "device": torch.cuda.get_device_name(0) if dev == "cuda" else "cpu"},

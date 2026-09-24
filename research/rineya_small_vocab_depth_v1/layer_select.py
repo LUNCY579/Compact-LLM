@@ -10,12 +10,49 @@
   angular_consecutive  Gromov-style: remove the n CONSECUTIVE blocks whose endpoints are closest
                        in angular distance, keeping the final block
 
-The search objective is fixed in advance (SMALLVD001_PREREG.md section 5) and computed on the
+The search objective is fixed in advance (SMALLVD001_PREREG.md section 4) and computed on the
 calibration SELECT split only. Every strategy's layer set is then scored on the HOLD-OUT split, so
 the greedy search -- which optimises the objective on SELECT -- cannot win by overfitting it.
 Retained blocks always keep their original order.
+
+AMENDMENT 1 (before any layer was scored): choosing AMONG the strategies on HOLDOUT makes HOLDOUT a
+selection instrument too, and the winner's HOLDOUT figure a best-of-N estimate. `holdout_subsplit`
+cuts HOLDOUT into SELECT2 (chooses among strategies and frontier configurations) and REPORT (chooses
+nothing; every reported figure for a selected configuration comes from it).
 """
 from __future__ import annotations
+
+import hashlib
+
+SUBSPLIT_SALT = "smallvd001-amendment1-report-v1"
+
+
+def stratum(r: dict) -> tuple:
+    """Category x answer type. The answer type separates the abstention contract's UNKNOWN rows from
+    its determinate ones: stratifying by category alone put 11 UNKNOWN and only 3 determinate
+    abstention rows in REPORT, too few to see over-abstention. Uses the REFERENCE label only."""
+    ref = r.get("reference")
+    return (r["category"], None if ref is None else ref.strip().upper() == "UNKNOWN")
+
+
+def holdout_subsplit(rows: list[dict], salt: str = SUBSPLIT_SALT) -> dict[str, str]:
+    """id -> 'select2' | 'report' for every HOLDOUT row, stratified by `stratum`: within a stratum,
+    rows are ordered by sha256(salt + id) and alternate select2, report, select2, ... Depends on the
+    ids and reference labels alone (no model output, no score), so it is fixed before any model is
+    run and reproducible from the committed panel file."""
+    by_cat: dict[tuple, list[str]] = {}
+    for r in rows:
+        if r["split"] != "holdout":
+            raise ValueError(f"{r['id']} is not a HOLDOUT row")
+        by_cat.setdefault(stratum(r), []).append(r["id"])
+    out = {}
+    for ids in by_cat.values():
+        ids = sorted(ids, key=lambda i: hashlib.sha256((salt + i).encode("utf-8")).hexdigest())
+        for k, i in enumerate(ids):
+            out[i] = "select2" if k % 2 == 0 else "report"
+    if len(out) != len(rows):
+        raise ValueError("duplicate HOLDOUT ids")
+    return out
 
 
 def evenly_spaced(n_teacher: int, n_keep: int) -> list[int]:
