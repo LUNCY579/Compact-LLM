@@ -79,8 +79,10 @@ RTX 4070 Laptop 8 GB, one runtime (.venv-rab001-cu126), batch 1, fp32 and bf16: 
 parameters (measured), checkpoint bytes (measured), weight memory, peak VRAM, prefill throughput
 at 512/2048/4096 prompt tokens, decode tokens/s, time to first token, end-to-end latency on a fixed
 64-token generation, and KV-cache bytes per token
-(`2 · n_layers · n_kv_heads · head_dim · bytes`: 28 blocks → 114,688 B/token in fp32; 18 blocks →
-73,728 B/token). The KV reduction is 18/28 of the teacher's and follows from depth alone.
+(`2 · n_layers · n_kv_heads · head_dim · bytes`: 28 blocks → 114,688 B/token in **bf16** (229,376 in
+fp32); 18 blocks → 73,728 B/token in bf16 (147,456 in fp32) — corrected from a first draft that
+labelled the bf16 figure fp32; `arch_manifests.py` computes both). The KV reduction is 18/28 of the
+teacher's and follows from depth alone; vocabulary pruning does not change it.
 
 ## 8. Gate G4 (registered in SMALLVD001_PREREG.md §7)
 
