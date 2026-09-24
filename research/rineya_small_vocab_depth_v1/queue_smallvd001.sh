@@ -11,9 +11,15 @@ T=C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-
 R=C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/smallvd001-20260924
 S="${SMALLVD_SCRATCH:?set SMALLVD_SCRATCH}"
 export PYTHONIOENCODING=utf-8
+export PYTHONUNBUFFERED=1      # a killed or hung step must leave its progress in the live log
 LOG="$S/queue.log"
+LAUNCH="$(date -u +%Y%m%dT%H%M%SZ)"
+SL="$S/logs_$LAUNCH"          # per-launch step logs: a relaunch never overwrites a previous launch's evidence
+mkdir -p "$SL"
 
-free_ge() { python -B -c "import sys; sys.path.insert(0, r'$HB'); import hostbudget; sys.exit(0 if hostbudget.free_gib() >= $1 else 1)"; }
+# the probe runs on the PINNED interpreter: a bare `python` resolves through whatever PATH the
+# launcher had, and a WMI-launched queue does not inherit the tool shell's PATH
+free_ge() { $PY -B -c "import sys; sys.path.insert(0, r'$HB'); import hostbudget; sys.exit(0 if hostbudget.free_gib() >= $1 else 1)"; }
 
 wait_ram() {   # $1 GiB, $2 max minutes
   local i=0
@@ -29,11 +35,11 @@ step() {       # name, wait-GiB, max-tries, command...
   while [ "$k" -lt "$tries" ]; do
     k=$((k + 1))
     wait_ram "$need" 720 || return 1
-    echo "$(date -u +%FT%TZ) START $name (try $k)" >> "$LOG"
-    out=$("$@" 2>&1); rc=$?
-    printf '%s\n' "$out" | tail -40 > "$S/$name.try$k.log"
+    echo "$(date -u +%FT%TZ) START $name (try $k) -> $SL/$name.try$k.log" >> "$LOG"
+    # STREAMED to a live log, not captured into a variable: a 4-6 h step must be supervisable
+    "$@" > "$SL/$name.try$k.log" 2>&1; rc=$?
     if [ "$rc" -eq 0 ]; then echo "$(date -u +%FT%TZ) OK $name" >> "$LOG"; return 0; fi
-    if printf '%s' "$out" | grep -q -e "REFUSING TO START" -e "standing down"; then
+    if grep -q -e "REFUSING TO START" -e "standing down" "$SL/$name.try$k.log"; then
       echo "$(date -u +%FT%TZ) RAM-REFUSAL $name (try $k), backing off 5 min then waiting" >> "$LOG"
       sleep 300; continue
     fi
@@ -46,11 +52,11 @@ cd "$HERE" || exit 1
 # SELF-TEST: the RAM probe must return a real number before anything waits on it. The first launch
 # of this queue passed a POSIX path to Windows python, the import failed, and every wait would have
 # "waited for RAM" forever -- a vacuous check that looks exactly like patience.
-probe=$(python -B -c "import sys; sys.path.insert(0, r'$HB'); import hostbudget; print(round(hostbudget.free_gib(), 2))")   || { echo "$(date -u +%FT%TZ) SELF-TEST FAILED: RAM probe does not run" >> "$LOG"; exit 1; }
+probe=$($PY -B -c "import sys; sys.path.insert(0, r'$HB'); import hostbudget; print(round(hostbudget.free_gib(), 2))")   || { echo "$(date -u +%FT%TZ) SELF-TEST FAILED: RAM probe does not run" >> "$LOG"; exit 1; }
 echo "$(date -u +%FT%TZ) SELF-TEST OK: free ${probe} GiB" >> "$LOG"
 # FRESH dry dirs on every launch: a dry run resumed from an earlier launch verifies nothing about the
 # CURRENT code (--resume below only lets a RAM-refused retry continue THIS launch's own dirs).
-DRY="$S/dry_$(date -u +%Y%m%dT%H%M%SZ)"
+DRY="$S/dry_$LAUNCH"
 step dryrun 1.2 8 $PY -B run_layer_study.py --teacher "$S/tiny_teacher" --panels "$R/calibration/LAYER_PANELS.jsonl"   --vocab-dirs "$S/dry_vocab_V2" --out "$DRY/study" --resume --min-layers 2 --depths 4,3,2 --device cpu   --max-rows-per-category 3 --gen-tokens 8 --dry-run || exit 1
 # Amendment 1: the dry run also exercises the REPORT generator (SELECT2/REPORT split, G4 block)
 step dry_report 0.5 4 $PY -B report_layer_study.py --study "$DRY/study" --panels "$R/calibration/LAYER_PANELS.jsonl"   --select-depth 3 --a-vocab dry_vocab_V2 --out-md "$DRY/report.md" --out-json "$DRY/report.json" || exit 1
