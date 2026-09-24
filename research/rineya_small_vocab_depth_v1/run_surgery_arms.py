@@ -40,6 +40,8 @@ def main(argv=None) -> int:
     ap.add_argument("--records-out", required=True, type=Path)
     ap.add_argument("--arms", default="A1,A2,A3")
     ap.add_argument("--expect-depth", type=int, default=18)
+    ap.add_argument("--resume", action="store_true",
+                    help="skip arms whose ARM_GATES.json already records PASS; the summary NAMES them resumed")
     ap.add_argument("--dry-run", action="store_true",
                     help="plumbing check on a TINY random teacher (< 50M params, asserted): no lease")
     a = ap.parse_args(argv)
@@ -69,7 +71,16 @@ def main(argv=None) -> int:
             out = a.build_root / name
             rec = a.records_out / name
             if rec.exists():
-                raise SystemExit(f"{rec} exists (create-only)")
+                prev = rec / "ARM_GATES.json"
+                if a.resume and prev.exists() and json.loads(prev.read_text(encoding="utf-8"))["G1_G2_G3"] == "PASS":
+                    g = json.loads(prev.read_text(encoding="utf-8"))
+                    summary[name] = {k: g[k] for k in ("G1_G2_G3", "unique_parameters", "out_file_bytes",
+                                                       "out_DATA_SECTION_sha256", "pytest_tail")}
+                    summary[name]["mode"] = "resumed"
+                    continue
+                raise SystemExit(f"{rec} exists and is not a recorded PASS (create-only)")
+            if out.exists():                 # scratch build dir from an interrupted try: ours, transient
+                shutil.rmtree(out)
             hostbudget.require(need, f"SMALLVD-001 build {name}")
             t0 = time.time()
             man = surgery.build_student(a.teacher, out, kept_layers=kept, tok_dir=tok_dir, arm=name,
@@ -103,6 +114,7 @@ def main(argv=None) -> int:
             (out / "model.safetensors").unlink()
             summary[name] = {k: result[k] for k in ("G1_G2_G3", "unique_parameters", "out_file_bytes",
                                                     "out_DATA_SECTION_sha256", "pytest_tail")}
+            summary[name]["mode"] = "computed"
             print(f"{name}: {result['G1_G2_G3']} params {checks['unique_parameters']:,} bytes "
                   f"{man['out_file_bytes']:,} | {result['pytest_tail']}", flush=True)
             if p.returncode != 0:
