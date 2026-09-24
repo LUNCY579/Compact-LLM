@@ -14,6 +14,11 @@
 > in this draft and in the builder's code, whose sha256 the job records in `VOCAB_CANDIDATES.json`.
 > No layer configuration had been scored and no student built. The same slip MODCOEF-001's seal
 > disclosed; recorded so the order of events is checkable rather than assumed.
+> **Correction, same day:** that launch was REFUSED AT STARTUP by its own host-RAM gate (0.97 GiB
+> free against 1.2 required; commit 9.6 GiB over physical from a peer lane's CPU jobs) before it read
+> a single corpus row. No vocabulary result existed at registration. The job runs after this
+> commit, so the ordering slip had no consequence -- recorded anyway, because the disclosure above
+> was written before the refusal was seen.
 >
 > **Records namespace:** `rineya-dataset-retention-records/smallvd001-20260924/`, claimed with a
 > create-only `mkdir` before this document was written (the DEPTHPROF-001 §6 rule).
