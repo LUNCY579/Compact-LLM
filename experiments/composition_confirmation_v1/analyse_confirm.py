@@ -26,7 +26,7 @@ import numpy as np
 
 HERE = Path(__file__).resolve().parent
 BANK = HERE / "T_BANK_V3X.json"
-BANK_SHA = "__FILLED_AFTER_GENERATION__"
+BANK_SHA = "173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c"
 V3_PREFIX = "CF1-"                      # T_BANK_V3's own rows; the extension uses CF1X-
 SEED = 20260924
 BOOT = 10_000
