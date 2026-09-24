@@ -58,6 +58,12 @@ matched-norm random controls at p < 1e-6 on its own bank, for acquisition. What 
 *generalisation* "attention is function-dense". Same base, same donor family, different skill and
 contract, opposite ordering — so **module function-density is skill-specific.**
 
+> **WITHDRAWN — Erratum 1 (2026-09-24).** "Different skill and contract" is false. DPLOC-001
+> scored acquisition with `process_probe.py --instrument select-views-001` (DPLOC001_PREREG.md
+> §4; run_dploc.py:65): the same three strict-JSON transition families as T_BANK_V2. The skill was
+> held **constant**. What differs is the **control**: DPLOC used a *random per-element mask*
+> removing the same squared norm; this experiment used a *uniform scalar*. See Erratum 1 below.
+
 ### The +20 is not cleanly a density statement
 
 `copied_input_verbatim` rises monotonically with attention-restriction: `SPARSE` 4 →
@@ -129,6 +135,11 @@ DOSELORA-001.)
 
 - Transition only. Whether `dOpallo|MLP` carries Opallo's *arithmetic* is unmeasured — the
   arithmetic lane does not exist. **No joint-composition claim.**
+  *(Corrected 2026-09-24: Opallo trained on zero arithmetic-class rows — see
+  `../fresh_dual_skill_instrument_v1/RESULTS.md` Erratum 1 — so there is no Opallo arithmetic skill
+  for `dOpallo|MLP` to carry. The accurate limit is that this bank measures only whether Titan's
+  transition skill survives; any transfer from Opallo must be read on an endpoint where Opallo has a
+  specific, measurable effect.)*
 - P4 localises the convention to attention **for this donor pair**. Whether output conventions
   are attention-carried in general is one observation, not a law.
 - P1′ and P3 are period-tolerant comparisons; the registered primary remains strict exact match.
@@ -205,6 +216,10 @@ Corrected joint statement: **module function-density, as measured by matched-nor
 this skill, is zero in both directions.** DPLOC-001's 2.00× attention advantage does not
 transfer here, and neither does its mirror image.
 
+> **WITHDRAWN — Erratum 1 (2026-09-24).** This experiment never measured module function-density
+> in DPLOC's sense, so it cannot say density is zero, nor that DPLOC's result "does not transfer".
+> What it measured is restriction versus *uniform shrinkage* at matched norm. See Erratum 1.
+
 ## Dose, incidentally, again
 
 | norm fraction | period-tolerant | % of `SPARSE` |
@@ -221,3 +236,68 @@ Sublinear and saturating on a third point. Still unregistered, still an observat
 - P4's localisation is one donor pair and one convention. P6 shows the *category* it belongs to
   is narrower than "the contract".
 - All contrasts period-tolerant; the registered primary remains strict exact match.
+
+
+---
+
+# Erratum 1 (2026-09-24) — the DPLOC comparison changed the wrong variable
+
+Found by adversarial review; the reviewer's verifier died on a session limit, so the key fact was
+re-derived by hand from `dploc001-20260923/DPLOC001_PREREG.md` §3–§4 and `run_dploc.py:65`.
+
+## What was claimed
+
+That P1′ (attention-only loses to a matched-norm scalar by +20) and DPLOC-001 (attention carries
+acquisition at 2.00× random function density) disagree because they measure **different skills**,
+so "module function-density is skill-specific."
+
+## What is true
+
+**Same skill.** DPLOC's acquisition endpoint is `select-views-001`: 384 rows, 128 each of
+`ledger_replay`, `prerequisite_plan`, `register_machine`, strict JSON, 0/384 references ending in
+`.`. T_BANK_V2 is the same three families under the same contract. The variable I blamed was the
+one held fixed.
+
+**Different control — and that is decisive.** The two designs match norm against different
+references:
+
+| | removes | compares module-restriction against |
+|---|---|---|
+| DPLOC-001 | the module's delta | a **random per-element mask** removing the same squared norm |
+| this experiment | the other module's delta | a **uniform scalar** α applied to every element |
+
+These answer different questions. Given the recorded dose plateau — benefit saturates well below
+trained strength — a uniform scalar at 63–77% of norm stays near full function (here 88 and 94 of
+102). **Any structured removal is expected to lose to uniform shrinkage** on a saturating curve,
+whichever module it keeps. So P1′ and P6 are predicted by the plateau alone and carry no
+information about *which* module carries function. DPLOC's random-mask control is the one that
+isolates location.
+
+**The two results are not in conflict.** "Attention beats random-element removal at matched norm"
+(DPLOC) and "attention-only loses to uniform shrinkage at matched norm" (here) can both be true.
+Other differences also remain uncontrolled — delta (DPLOC's ablation target vs dSparse), decode
+budget (128 vs 48), bank (select-views-001 vs fresh T_BANK_V2) — and I had collapsed a
+four-variable gap into one variable, choosing the wrong one.
+
+## What survives, and what does not
+
+**Survives (measurements unchanged; content-clean rows in parentheses):**
+- `SPARSE_ATTN` 68 (62) vs `SCALAR_MATCHED` 88 (81) at ‖Δ‖ 0.4401
+- `SPARSE_MLP` 67 (61) vs `SCALAR_MATCHED_MLP` 94 (85) at ‖Δ‖ 0.5367
+- `SPARSE_MLP` ≈ `SPARSE_ATTN` despite 50% more energy
+- restricted arms echo the input at 21–22 against 7–12 for scalars
+
+**Practical reading that does follow:** *if a delta's norm must be reduced, shrink it uniformly
+rather than ablating a module class* — on this skill and delta, uniform shrinkage keeps 19–24 more
+rows at matched norm.
+
+**Withdrawn:** "module function-density is skill-specific"; "density is zero in both directions";
+"DPLOC's 2.00× does not transfer here"; and every downstream use of them, including the
+allocation-invariance conjunction "the optimal allocation differs by skill" in the memory file.
+
+**The test that would actually speak to location** is DPLOC's design on a fresh bank: a random
+per-element mask matched to the squared norm `SPARSE_ATTN` removes, scored against `SPARSE_ATTN`.
+If attention-restriction beats it, DPLOC's location effect replicates on an independent
+instrument. Not run here.
+
+Direction: an over-claimed mechanism is withdrawn; no measured number is retracted.

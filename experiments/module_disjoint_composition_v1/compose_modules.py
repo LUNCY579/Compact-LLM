@@ -137,7 +137,10 @@ def build(arm: str, out_dir: Path) -> dict:
         "experiment": "MODULE-DISJOINT-001", "arm": arm,
         "sparse_module_class": s_cls, "opallo_module_class": o_cls,
         "scalar_alpha": alpha if s_cls == "ALL_SCALED" else None,
-        "construction": "Supa + dSparse|<s_cls> + dOpallo|<o_cls>, coefficient 1.0 each, FP32",
+        "construction": (
+            f"Supa + {alpha:.16g}*dSparse (all 220 trained tensors), FP32" if s_cls == "ALL_SCALED" else
+            " + ".join(["Supa"] + ([f"1.0*dSparse|{s_cls}"] if s_cls else []) + ([f"1.0*dOpallo|{o_cls}"] if o_cls else []))
+            + ", FP32"),
         "delta_sources": {
             "sparse": "published Rineya-Titan-Sparse FP32 minus published Supa",
             "opallo": "B28last20 trainable.safetensors (unrounded FP32) minus published Supa, "

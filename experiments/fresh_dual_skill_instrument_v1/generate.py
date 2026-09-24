@@ -48,37 +48,121 @@ def payload_key(user_json: str) -> str:
     return dumps(json.loads(user_json))
 
 
+def _objects_in(text: str) -> list[dict]:
+    """Every balanced JSON object containing "before" and "event", anywhere inside a string."""
+    out, i = [], text.find('"before"')
+    while i != -1:
+        j = text.rfind("{", 0, i)
+        if j != -1:
+            depth = 0
+            for k in range(j, len(text)):
+                if text[k] == "{":
+                    depth += 1
+                elif text[k] == "}":
+                    depth -= 1
+                    if depth == 0:
+                        try:
+                            o = json.loads(text[j:k + 1])
+                            if isinstance(o, dict) and "before" in o and "event" in o:
+                                out.append(o)
+                        except json.JSONDecodeError:
+                            pass
+                        break
+        i = text.find('"before"', i + 8)
+    return out
+
+
 def harvest_exclusions() -> set[str]:
-    """Every transition payload that appears anywhere in the records tree."""
+    """Every transition payload anywhere in the records tree, in any serialization.
+
+    CORRECTED 2026-09-24. The original kept only string values that STARTED with '{"before"', so it
+    missed payloads stored as parsed dicts, embedded inside rendered chat prompts, or in *.json
+    (non-lines) files. Measured: it missed 1 payload in *.jsonl and 30 in *.json out of 6,462.
+    (T_BANK_V2's contamination count was 11 either way.) Returned keys are the normalized
+    {"before","event"} object; callers that need answer-level disjointness must ALSO key on
+    operative fields — see `content_keys()`.
+    """
     seen: set[str] = set()
-    files = [p for p in RECORDS.rglob("*.jsonl")]
-    for path in files:
+    for path in list(RECORDS.rglob("*.jsonl")) + list(RECORDS.rglob("*.json")):
         try:
+            if path.stat().st_size > 60_000_000:
+                continue
             raw = path.read_text(encoding="utf-8", errors="ignore")
         except OSError:
             continue
-        if 'before\\":' not in raw and '"before":' not in raw:
+        if "before" not in raw:
             continue
-        for line in raw.splitlines():
-            if not line.strip():
-                continue
+        docs = []
+        if path.suffix == ".jsonl":
+            for line in raw.splitlines():
+                if line.strip():
+                    try:
+                        docs.append(json.loads(line))
+                    except json.JSONDecodeError:
+                        pass
+        else:
             try:
-                obj = json.loads(line)
+                docs.append(json.loads(raw))
             except json.JSONDecodeError:
-                continue
-            stack = [obj]
+                pass
+        for doc in docs:
+            stack = [doc]
             while stack:
                 cur = stack.pop()
                 if isinstance(cur, dict):
+                    if "before" in cur and "event" in cur:
+                        seen.add(dumps({"before": cur["before"], "event": cur["event"]}))
                     stack.extend(cur.values())
                 elif isinstance(cur, list):
                     stack.extend(cur)
-                elif isinstance(cur, str) and cur.startswith('{"before"'):
-                    try:
-                        seen.add(payload_key(cur))
-                    except json.JSONDecodeError:
-                        pass
+                elif isinstance(cur, str) and '"before"' in cur:
+                    for o in _objects_in(cur):
+                        seen.add(dumps({"before": o["before"], "event": o["event"]}))
     return seen
+
+
+def family_of(u: dict) -> str:
+    if isinstance(u["before"], int):
+        return "prerequisite_plan"
+    return "ledger_replay" if "A" in u["before"] else "register_machine"
+
+
+def operative_key(fam: str, u: dict) -> str:
+    """The answer-determining fields only. Two payloads with equal operative keys ask the same
+    question; `tick`, `cost` and `name` do not affect the answer and are excluded."""
+    b, e = u["before"], u["event"]
+    if fam == "ledger_replay":
+        posted = e.get("status") == "posted"
+        k = {"before": b, "posted": posted}
+        if posted:
+            k.update(kind=e["kind"], account=e["account"], amount=e["amount"])
+            if e["kind"] == "transfer":
+                k["other"] = e["other"]
+        return dumps(k)
+    if fam == "prerequisite_plan":
+        return dumps({"before": b, **{x: e[x] for x in ("add", "delete", "pre_on", "pre_off")}})
+    k = {"before": b, "kind": e["kind"], "register": e["register"]}
+    if e["kind"] in ("swap", "mix", "conditional"):
+        k["other"] = e["other"]
+    if e["kind"] in ("add", "mix", "conditional"):
+        k["value"] = e["value"]
+    if e["kind"] == "conditional":
+        k["threshold"] = e["threshold"]
+    return dumps(k)
+
+
+def content_keys(payloads: set[str]) -> tuple[set, set]:
+    """(operative keys, (before-state, answer) pairs) for a set of historical payloads."""
+    op, io = set(), set()
+    for s in payloads:
+        u = json.loads(s)
+        fam = family_of(u)
+        try:
+            op.add((fam, operative_key(fam, u)))
+            io.add((fam, dumps(u["before"]), ORACLES[fam](u)))
+        except Exception:
+            continue
+    return op, io
 
 
 def gen_ledger(rng):

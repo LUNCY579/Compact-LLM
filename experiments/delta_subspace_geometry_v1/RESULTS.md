@@ -208,7 +208,8 @@ published artifacts.
 Titan-Sparse is confirmed to be an exact mask of the unrounded Titan delta: 99.87% of its
 non-zeros are bitwise-equal to `dTitan_unrounded`, and cos(dSparse, dTitan) = 0.836382 equals
 ‖dSparse‖/‖dTitan‖ exactly — the algebraic signature of a projection. The top-25% of elements
-carries 83.6% of the energy.
+carries 83.6% of the *norm* — which is **70.0% of the energy** (0.836² = 0.6995). *(Corrected
+2026-09-24: this sentence originally said "83.6% of the energy", conflating norm with its square.)*
 
 ## Reproduction
 

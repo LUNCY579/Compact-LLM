@@ -14,22 +14,18 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parent / "fresh_dual_skill_instrument_v1"))
 from gpu_lease import lease  # noqa: E402
 
-ALPHA_MLP = 0.5365930  # placeholder; recomputed exactly below before use
-
-
 def main():
     import compose_modules as cm
-    # exact norm of dSparse|MLP, measured not assumed
-    import numpy as np
-    from subspace import ST, ROOTS  # noqa
     with lease(label="fds1:P6", job="build 2 arms + score 2 arms x 192 rows"):
         for arm, out in (("SPARSE_MLP", HERE / "arms/SPARSE_MLP"),
                          ("SCALAR_MATCHED_MLP", HERE / "arms/SCALAR_MATCHED_MLP")):
             if out.exists():
-                print(f"  {arm} already built, skipping BUILD (flag, not a verify)", flush=True)
-                continue
-            r = cm.build(arm, out)
-            print(f"  built {arm}: norm={r['norm_from_sparse']:.10f} sha={r['weight_sha256'][:16]}", flush=True)
+                # A skip-if-done guard must not also skip verification: resuming would then
+                # certify whatever is on disk. Skip the BUILD only, and say so in the output.
+                print(f"  MODE=resume {arm}: build skipped, re-verifying existing bytes", flush=True)
+            else:
+                r = cm.build(arm, out)
+                print(f"  MODE=build {arm}: norm={r['norm_from_sparse']:.10f} sha={r['weight_sha256'][:16]}", flush=True)
             cm.verify(arm, out)
         cmd = [sys.executable, str(HERE.parent / "fresh_dual_skill_instrument_v1" / "score_arms.py"),
                "--bank", str(HERE.parent / "fresh_dual_skill_instrument_v1" / "T_BANK_V2.json"),

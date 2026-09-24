@@ -127,6 +127,9 @@ inputs alone**:
 - `prerequisite_plan`: recorded `add` is exactly one bit in 128/128 rows, `delete` is 0 or 1 bit,
   and all 128 rows are applicable. v1 used multi-bit masks and made 20% inapplicable — a case the
   recorded bank never contains.
+  *(Corrected 2026-09-24: "20%" was the generator's TARGET (`rng.random() < 0.8`). Realized, v1
+  had **1/64 (1.6%)** inapplicable rows, so this leg of the diagnosis is nearly void. The
+  multi-bit-mask leg stands on its own.)*
 - `register_machine`: recorded `value` spans −8…11 (median 1). v1 sampled 0…96.
 
 v2 resamples event parameters from the recorded **empirical input marginals**. No model output

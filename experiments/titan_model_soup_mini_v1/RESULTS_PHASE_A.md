@@ -98,7 +98,10 @@ Deltas against exact Supa: ‖dT_stored‖ = 0.8035, ‖dSparse‖ = 0.6941, ‖
 | dSparse, dOpallo | **0.00218** | 42,612,284 | 50.29% |
 | dT_stored, dSparse | 0.74546 | 56,243,142 | — |
 
-The two donor deltas are near-orthogonal in weight space with sign agreement at chance. As a
+The two donor deltas are near-orthogonal in weight space with sign agreement near 50%. *(Corrected
+2026-09-24: this said "at chance", and line 90 says "chance-level". 50.29% over 42.6M overlapping
+elements is ~38σ from 50%: highly significant, tiny in magnitude. Only the magnitude claim is
+load-bearing.)* As a
 consequence the primary soup's displacement is essentially Pythagorean: measured 0.783692 versus
 0.783013 for the exact-orthogonality prediction.
 

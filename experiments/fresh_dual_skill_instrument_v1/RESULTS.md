@@ -7,11 +7,25 @@ collected under the shared GPU lease. Instrument admitted as **attempt 2 of 2** 
 
 ## Headline
 
-Composing two donors at **independent full strength costs 5 rows of the donated skill
-(p = 0.33, not significant)**. Averaging them at 0.5/0.5 costs **33 rows (p = 3.6e-08)**.
+> **CORRECTED 2026-09-24 (Erratum 3).** The paragraph that stood here led with a post-hoc result.
+> Read in registration order:
 
-The dominant cost of composition here is **attenuation, not interference** — and the registered
-0.5/0.5 soup pays it by construction.
+**On the registered primary endpoint (strict exact match), the registered prediction FAILED by
+its own pre-stated falsifier.** PREREG.md registered "attenuation cost > interference cost" and
+wrote: *"If instead ADD-100 collapses while AVG holds, the near-orthogonality reading is wrong."*
+ADD-100 fell to 6/192 while AVG held at 69; interference 96 rows (p = 7.0e-26) against
+attenuation 33 (p = 3.6e-08).
+
+**A post-hoc decomposition of the errors then shows what the strict endpoint was measuring.**
+88 of the 99 rows ADD-100 loses relative to SPARSE are the correct answer plus one trailing
+period. Under a period-tolerant rule — chosen after seeing the generations — interference is
+5 rows (p = 0.33, ns) against attenuation 33, and on the 181 content-clean rows 4 (p = 0.45)
+against 29 (p = 4.2e-07).
+
+So: the registered test failed; an unregistered analysis explains the failure as a format
+transfer rather than a capability loss. The tolerant result is a well-supported *explanation*,
+not a *confirmation* — confirming it needs a fresh unexposed bank with the tolerant rule
+registered in advance.
 
 ## The scores, and the artifact that nearly buried them
 
@@ -30,7 +44,7 @@ The dominant cost of composition here is **attenuation, not interference** — a
 Read strictly, ADD-100 collapses from 102 to 6 and the obvious conclusion is that full-strength
 composition annihilates the skill. That conclusion is **wrong**.
 
-**91 of ADD-100's 96 lost rows are the correct answer with a single trailing period.**
+**88 of the 99 rows ADD-100 loses relative to SPARSE are the correct answer with a single trailing period.** *(Corrected in Erratum 3: this line originally read "91 of ADD-100's 96 lost rows", which divided ADD-100's total gold+"." count (91) by the NET loss (96).)*
 
 ```
 gold {"A":27,"B":22,"C":-7,"D":33}     gen {"A":27,"B":22,"C":-7,"D":33}.
@@ -151,3 +165,85 @@ Opallo was trained in. The two-scorer hazard in `CROSS_LANE_HAZARD_scorer_pair.m
 statement about the **instruments**. It should not be read as "each donor matches its own scorer".
 
 No number in this file changes.
+
+---
+
+# Erratum 2 (2026-09-24) — T_BANK_V2 is ID-disjoint, not content-disjoint
+
+The Provenance section says payloads are *"disjoint from 6,610 historical payloads across every
+records-tree jsonl."* **That is true only at the level of the full payload string.** The exclusion
+keyed on the entire normalized payload, including fields the answer does not depend on (`tick` in
+ledger/register rows; `cost` and `name` in prerequisite rows). A generated row that matches a
+historical row on every answer-determining field and differs only in `cost` passed as "fresh".
+
+Re-keyed on operative fields only (`CONTENT_CONTAMINATED_ROWS.json`):
+
+| bank | full-payload collisions | operative-content collisions | same (before-state, answer) |
+|---|---|---|---|
+| T_BANK (v1, rejected) | 0 | 0 | 5 |
+| **T_BANK_V2** | **0** | **4** | **11** |
+
+All in `prerequisite_plan`. **The v2 repair caused it.** Resampling from the recorded input
+marginals (single-bit `add`, 0–1-bit `delete`, 1–5-bit states) shrank that family's state space
+enough that generated rows landed on recorded ones. Matching the distribution bought difficulty
+parity at the price of literal overlap — a trade-off neither PREREG amendment anticipated.
+
+**The contamination is real in effect, not only in label.** On the 11 dirty rows SPARSE scores
+9/11 (82%) against 93/181 (51%) on clean rows, while BASE scores 0/11 — so the rows are not
+intrinsically easy. That is a memorization signature.
+
+## Every conclusion survives on the 181 content-clean rows
+
+| contrast (period-tolerant) | all 192 | clean 181 |
+|---|---|---|
+| attenuation SPARSE → AVG | −33, p = 3.6e-08 | **−29, p = 4.2e-07** |
+| interference SPARSE → ADD-100 | −5, p = 0.33 | **−4, p = 0.45**, ns |
+| P1′ SPARSE_ATTN → SCALAR_MATCHED | +20, p = 3.6e-05 | **+19, p = 6.6e-05** |
+| P6 SPARSE_MLP → SCALAR_MATCHED_MLP | +27, p = 1.1e-07 | **+24, p = 8.0e-07** |
+| P2 SPARSE_ATTN → MODULE_DISJOINT | +5, p = 0.33 | **+6, p = 0.21**, ns |
+| P3 ADD-100 → MODULE_DISJOINT | −24, p = 1.8e-04 | **−21, p = 7.5e-04** |
+
+Gates on the clean subset, thresholds scaled to n = 181: G1 base 0 ≤ 36.2, G2 donor 93 ≥ 72.4,
+G3 separation 93 ≥ 54.3. All pass.
+
+Every registered verdict keeps its direction and its significance class; magnitudes shrink by
+10–15% because trained arms lose the rows they had memorized, and every arm containing dSparse
+loses them roughly equally. **Absolute levels** on this bank were inflated by ~5% for trained arms;
+**within-bank contrasts** were not materially affected.
+
+## What changes
+
+- The bank must be described as **content-overlapping on 11/192 rows (5.7%)**, not "disjoint".
+- It is **exposed**: nine plus five arms have been scored on it, and it informed Amendments 1–4 of
+  MODULE-DISJOINT-001. It is a development bank, not a confirmation instrument, independent of the
+  overlap. (`titan_opallo_composition_audit_v2/COEFFICIENT_PLAN.json` classifies it as not reusable
+  for confirmation; this erratum supplies the specific mechanism.)
+- **Rule for the next generator:** key exclusion on answer-determining fields, and check the
+  (input-state, answer) pair as well — see memory `id-disjoint-is-not-content-disjoint`. And when a
+  repair narrows a sampling distribution, re-run the collision check: v1 had zero operative overlaps
+  and v2 had four.
+
+
+---
+
+# Erratum 3 (2026-09-24) — headline order, the 91/96 arithmetic, and residual Opallo-skill wording
+
+Found by an adversarial review (reviewer returned; its verifier died on a session limit, so each
+item below was re-derived by hand before being written).
+
+1. **Headline order.** The original headline presented the period-tolerant decomposition as the
+   result and left the registered primary to a closing section. It now leads with the registered
+   outcome — which failed by its own falsifier — and labels the tolerant analysis as the post-hoc
+   explanation it is. The numbers were always correct; the *order* implied a confirmation.
+2. **"91 of 96" divided a total by a net.** ADD-100 emits exactly `gold+"."` on 91 rows overall.
+   SPARSE→ADD-100 strict is lost 99 / gained 3 / net −96. Of the 99 lost rows, **88** are
+   `gold+"."`. Corrected in place above. Same conclusion, right arithmetic.
+3. **Residual wording that treats arithmetic as Opallo's skill.** After Erratum 1 established that
+   Opallo trained on zero arithmetic-class rows, "acquisition side is unmeasured … does not show
+   Opallo's skill arrived" (qualification 3 above) presupposes a donated arithmetic skill that
+   never existed. The accurate statement: this bank measures only whether Titan's transition skill
+   survives composition. Whether composition *transfers* anything from Opallo depends on an
+   endpoint where Opallo has a measurable, specific effect — see `O_SKILL_DEFINABILITY.md`
+   consequence 4 and FA-001's O-side, not an arithmetic bank.
+
+Direction of these corrections: all three narrow over-claims. None retracts a measured number.

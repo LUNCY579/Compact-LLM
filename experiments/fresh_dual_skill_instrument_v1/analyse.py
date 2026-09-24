@@ -9,8 +9,12 @@ Reports, for the registered decomposition:
 each as a paired McNemar exact test over the 192 rows, with discordant counts shown, because a
 net difference of k rows can hide very different discordance structure.
 
-Also reports, for every arm, the count of rows where the generation equals the input state
-(the shortcut channel) so a score cannot be read without its floor.
+CORRECTED 2026-09-24: an earlier version of this docstring said it also reports the count of
+rows where the generation equals the input state. It never did, and it has no period-tolerant
+path. Both — plus the content-clean re-analysis and the gold+"." decomposition — are produced by
+`reproduce_results.py`, which also has a `--check` mode asserting every documented number.
+This file is kept unchanged in behaviour because it is the estimator registered before the v2
+gate outcome was read.
 """
 from __future__ import annotations
 
