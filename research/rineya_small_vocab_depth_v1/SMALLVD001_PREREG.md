@@ -1,6 +1,6 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED, WITH AMENDMENT 1 (filed before any layer was scored; end of document).
+> **STATUS: REGISTERED, WITH AMENDMENTS 1-2 (both filed before any layer was scored; end of document).
 > NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
@@ -418,3 +418,104 @@ the 0.90 flip threshold, the REJECT/FLAG thresholds of §3, and every build gate
 
 **Also:** every queue launch now uses fresh dry-run directories. A dry run resumed from an earlier
 launch verifies nothing about the current code.
+
+---
+
+## Amendment 2 — 2026-09-24: an exploratory arm, H-LC (training-free linear compensation of the dropped blocks)
+
+**Filed before any layer was scored**, so before the registered 18-block set is known. The same
+status as Amendment 1: nothing scored, no candidate built, G0b not run.
+
+### A2.1 Why
+
+§4 already predicts that the 18-block surgery-only student is heavily damaged, and A1.3 predicts
+REPORT flip ≥ 0.90 on the open-ended categories. Plain pruning replaces a dropped run by the
+identity. A cheaper recovery starts from a smaller surgery-only loss, and could move which depth is
+feasible. The question: **can a closed-form, gradient-free correction that preserves the geometry
+recover part of that loss?** No record in the programme has tried it: 0 hits for
+compensation/ReplaceMe/fold across the records tree and the repo, with a positive control that hit.
+
+### A2.2 Mechanism (`linear_compensation.py`)
+
+For each maximal run [s..e] of dropped blocks whose predecessor p = s − 1 is kept:
+
+- **Fit.** A d × d matrix T minimising ‖(y_p + m_p T) − h_e(teacher)‖² + λ‖T‖², where m_p is block
+  p's MLP output and y_p is the residual it is added to.
+- **Fold.** Into p's `down_proj`: W_down ← Tᵀ W_down. That is an exact identity (row-vector
+  convention), so the geometry, the parameter count and the file layout are unchanged, and T = I is
+  plain pruning.
+- **Order.** Runs are fitted first to last, each on student activations with earlier folds
+  applied, against the teacher's residual.
+- A run starting at block 0 has no predecessor and stays uncompensated (recorded).
+
+**Registered, fixed before any fit:**
+
+| choice | value |
+|---|---|
+| fit set | calibration **SELECT** only (never SELECT2 or REPORT) |
+| positions | every real position except position 0 (attention-sink massive activations would dominate an L2 fit) |
+| λ | 1e-3 · tr(XᵀX) / d |
+| tuning | none |
+
+### A2.3 Arms, all on layer sets fixed by the registered pipeline (no new selection)
+
+- **LC@selected:** the registered 18-block set (A2's).
+- **LC@angular:** the 18-block `angular_consecutive` set, a single contiguous run, the shape the
+  method was designed for.
+
+Each is scored on SELECT2 and REPORT: KL objective, greedy generation, and answer bpb under V0
+(A2-LC) and under V2 (A3-LC). The PLAIN student of the same set is recomputed in the same process
+as the paired comparator.
+
+### A2.4 Controls (the run refuses if either fails)
+
+- An **identity fold** must reproduce the plain student's hidden states **bitwise** (dry run: yes,
+  both arms).
+- The plain student's REPORT objective is cross-checked against S5's, as a reproducibility canary
+  (dry run: exactly equal, 0.006688232547289644 both).
+
+Unit tests (`tests/test_linear_compensation.py`, 6 pass):
+
+- identity fold bitwise inert, and the fold restored exactly on exit;
+- fold equals the direct computation y_p + m_p T;
+- refuses inside `keep_layers`, where indices are renumbered;
+- **positive control:** a dropped block made exactly the identity must fit to T ≈ I with residual
+  < 1e-4;
+- the fit is never worse than identity on its own objective.
+
+### A2.5 Verdict (written into `run_lc_arms.py` before any fit)
+
+The contrast is LC@selected vs plain@selected on REPORT:
+
+- r = 1 − obj(LC)/obj(plain), obj = the §4 category-mean answer KL;
+- 95 % interval by a category-stratified paired bootstrap over REPORT rows (2000 resamples, seed 17).
+
+| verdict | condition |
+|---|---|
+| **SUPPORTED** | r ≥ 0.20 and lower bound > 0 |
+| **REAL_BUT_SMALL** | 0 < r < 0.20 and lower bound > 0 |
+| **HARMFUL** | upper bound < 0 |
+| **INCONCLUSIVE** | otherwise |
+| **UNDERPOWERED** | any category has fewer than 5 REPORT rows |
+
+The UNDERPOWERED rule was added after the tiny dry run, where one row per category gave a
+zero-width interval. The real REPORT has 7–18 rows per category.
+
+Everything else is descriptive: flips, accuracy, bpb, and LC@angular.
+
+### A2.6 Author's expectation, stated so it can be wrong
+
+- r in **[0.05, 0.40]** at 18 blocks.
+- Gains should be larger on the contiguous `angular` set than on a scattered greedy set.
+- It could be **HARMFUL**. The fit minimises L2 on the residual stream, not KL on the logits, and a
+  few massive dimensions can dominate L2 even with position 0 removed.
+
+### A2.7 What it licenses
+
+**Nothing about A2/A3, §5 or §10:** the registered arms and decisions are unchanged. If SUPPORTED,
+the recommended first student (deliverable 16) names the LC variant as the candidate *starting
+point* for recovery, and needs its own registration. The choice between LC@selected and LC@angular
+is made on **SELECT2**, and its REPORT figure is the one reported.
+
+**Cost:** about 30 min of GPU after the surgery arms, in the same queue under the same lease and
+RAM gates.
