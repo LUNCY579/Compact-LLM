@@ -1,4 +1,7 @@
-"""CONVENTION-LOC-001 step 1 — build ADD-O{beta} = SPARSE + beta*(ADD-100 - SPARSE), FP32, streaming.
+"""CONVENTION-LOC-001 step 1 — build ADD-O{beta} = SPARSE + beta*(ADD-100 - SPARSE), FP32, streaming,
+and the module-restricted arms H1 (dOpallo on MLP tensors only) and H1c (dOpallo on attention +
+layer-norm tensors only), proposed by the Titan-Opallo audit session
+(titan_opallo_exact_endpoint_v3/proposal_offline/FOLLOWUP_PROPOSAL.md, section 2).
 
 ADD-100 - SPARSE is dOpallo up to one FP32 rounding of the stored sums, so these arms are Supa +
 dSparse + beta*dOpallo to within ~1 ulp of each weight. POSITIVE CONTROL: the same recipe at
@@ -7,7 +10,9 @@ titan_opallo_skill_vector_v1/compose.py); the maximum absolute difference must b
 nothing is built.
 
 Sources (read-only): titan_opallo_skill_vector_v1/arms/{SPARSE, ADD-100, ADD-O75}.
-Output: convention_localization_v1/arms/ADD-O{50,60,90}. Create-only.
+Output: convention_localization_v1/arms/{ADD-O50, ADD-O60, ADD-O90, H1, H1c}. Create-only.
+A partition check requires dOpallo to be zero outside MLP and attention/layer-norm tensors, so H1 and
+H1c split it exactly.
 """
 from __future__ import annotations
 
@@ -24,6 +29,44 @@ SRC = EXP / "titan_opallo_skill_vector_v1" / "arms"
 ASSETS = ("tokenizer.json", "tokenizer_config.json", "vocab.json", "merges.txt", "generation_config.json", "config.json")
 CHUNK = 4_000_000
 CONTROL_TOL = 1e-6
+
+
+def module_of(key: str) -> str:
+    """MLP / ATTN_LN / OTHER for a Qwen-namespace tensor name."""
+    if ".mlp." in key:
+        return "MLP"
+    if ".self_attn." in key or "layernorm" in key:
+        return "ATTN_LN"
+    return "OTHER"
+
+
+def coef_fn(spec: str):
+    if spec.startswith("beta:"):
+        b = float(spec.split(":", 1)[1]); return lambda k: b
+    if spec == "H1":
+        return lambda k: 1.0 if module_of(k) == "MLP" else 0.0
+    if spec == "H1c":
+        return lambda k: 1.0 if module_of(k) == "ATTN_LN" else 0.0
+    raise ValueError(spec)
+
+
+def partition_check() -> dict:
+    """Every tensor where ADD-100 differs from SPARSE must be MLP or ATTN_LN, never OTHER, so H1 and
+    H1c partition dOpallo exactly. Returns the squared norm of the delta by module class."""
+    sp, ad = ST(SRC / "SPARSE" / "model.safetensors"), ST(SRC / "ADD-100" / "model.safetensors")
+    sq = {"MLP": 0.0, "ATTN_LN": 0.0, "OTHER": 0.0}
+    for k in sp.keys():
+        shape = sp.info(k)[1]
+        per_row = math.prod(shape[1:]) if len(shape) > 1 else 1
+        step = max(1, CHUNK // per_row)
+        for lo in range(0, shape[0], step):                  # streamed: never a whole tensor in float64
+            hi = min(lo + step, shape[0])
+            d = (ad.rows(k, lo, hi) - sp.rows(k, lo, hi)).astype(np.float64)
+            sq[module_of(k)] += float((d ** 2).sum())
+    sp.close(); ad.close()
+    if sq["OTHER"] != 0.0:
+        raise SystemExit(f"PARTITION CHECK FAILED: dOpallo has squared norm {sq['OTHER']} outside MLP/ATTN_LN")
+    return sq
 
 
 def chunks(a, b, key, beta):
@@ -56,7 +99,8 @@ def sha256(p: Path) -> str:
     return h.hexdigest()
 
 
-def build(beta: float, out: Path) -> dict:
+def build(spec: str, out: Path) -> dict:
+    cf = coef_fn(spec)
     if out.exists():
         raise SystemExit(f"refusing to overwrite {out}")
     sp, ad = ST(SRC / "SPARSE" / "model.safetensors"), ST(SRC / "ADD-100" / "model.safetensors")
@@ -72,7 +116,7 @@ def build(beta: float, out: Path) -> dict:
     with open(tmp, "xb") as f:
         f.write(struct.pack("<Q", len(enc))); f.write(enc)
         for k in keys:
-            for _, _, w in chunks(sp, ad, k, beta):
+            for _, _, w in chunks(sp, ad, k, cf(k)):
                 if not np.isfinite(w).all():
                     raise RuntimeError(f"nonfinite in {k}")
                 f.write(w.astype("<f4", copy=False).tobytes(order="C"))
@@ -83,18 +127,19 @@ def build(beta: float, out: Path) -> dict:
     for a in ASSETS:
         shutil.copyfile(SRC / "SPARSE" / a, out / a)
     tmp.rename(out / "model.safetensors")
-    rec = {"experiment": "CONVENTION-LOC-001 step 1", "arm": out.name, "beta": beta,
-           "construction": "SPARSE + beta*(ADD-100 - SPARSE), FP32, streaming",
+    rec = {"experiment": "CONVENTION-LOC-001 step 1", "arm": out.name, "spec": spec,
+           "construction": "SPARSE + c(tensor)*(ADD-100 - SPARSE), FP32, streaming; c from spec",
            "weight_sha256": sha256(out / "model.safetensors"), "quality_claim": False}
     (out / "BUILD.json").write_bytes((json.dumps(rec, indent=2) + "\n").encode())
     return rec
 
 
-def verify(beta: float, out: Path) -> None:
+def verify(spec: str, out: Path) -> None:
+    cf = coef_fn(spec)
     sp, ad, got = ST(SRC / "SPARSE" / "model.safetensors"), ST(SRC / "ADD-100" / "model.safetensors"), ST(out / "model.safetensors")
     bad = 0
     for k in sp.keys():
-        for lo, hi, w in chunks(sp, ad, k, beta):
+        for lo, hi, w in chunks(sp, ad, k, cf(k)):
             bad += int((got.rows(k, lo, hi).view(np.uint32) != w.view(np.uint32)).sum())
             break
     for s in (sp, ad, got):
@@ -106,7 +151,7 @@ def verify(beta: float, out: Path) -> None:
 
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
-    ap.add_argument("--betas", type=float, nargs="+", default=[0.5, 0.6, 0.9])
+    ap.add_argument("--arms", nargs="+", default=["beta:0.5", "beta:0.6", "beta:0.9", "H1", "H1c"])
     ap.add_argument("--control-only", action="store_true")
     a = ap.parse_args()
     worst = positive_control()
@@ -115,7 +160,11 @@ if __name__ == "__main__":
         raise SystemExit("POSITIVE CONTROL FAILED: the recipe does not reproduce ADD-O75")
     if a.control_only:
         raise SystemExit(0)
-    for b in a.betas:
-        out = HERE / "arms" / f"ADD-O{round(b * 100):02d}"
-        print(json.dumps(build(b, out)), flush=True)
-        verify(b, out)
+    sq = partition_check()
+    print(f"partition check: dOpallo squared norm MLP {sq['MLP']:.4f}, ATTN_LN {sq['ATTN_LN']:.4f}, OTHER 0 "
+          f"(MLP share of energy {sq['MLP'] / (sq['MLP'] + sq['ATTN_LN']):.3f})", flush=True)
+    for spec in a.arms:
+        name = f"ADD-O{round(float(spec[5:]) * 100):02d}" if spec.startswith("beta:") else spec
+        out = HERE / "arms" / name
+        print(json.dumps(build(spec, out)), flush=True)
+        verify(spec, out)
