@@ -94,3 +94,23 @@ independence, retention, quality improvement, or release fitness. ADD-100 is the
 primary hypothesis artifact, but it remains an exploratory candidate only.
 
 Existing banks and old experiment authorization were not reused or modified.
+
+## Follow-up function-space experiment
+
+The previously unexecuted `FUNCTIONAL-ADDITIVITY-001` follow-up is now complete
+in `../functional_additivity_v1/`. Its preregistered primary content result is
+**ADDITIVE**: κ `-0.06395`, bootstrap 95% CI `[-0.07395, -0.05453]`. The closing
+channel is strongly sub-additive, while the unclipped probability-scale result
+is unresolved. Full details, gates, hashes, and interpretation are in
+`../functional_additivity_v1/RESULTS.md`.
+
+The later full-scale nine-arm S-matrix and 60,669-row held-out reply-content
+NLL battery are summarized in `full_scale/FULL_SCALE_REPORT.md`. The held-out
+O-side ratio is `P_O=.9723` for ADD-100 versus `.1618` for Sparse alone.
+
+**Correction (2026-09-23, same day, before this paragraph was ever committed).** The FA-001
+primary label (ADDITIVE) stands, but it is clip-dependent (unclipped κ ≈ −0.104). Its
+registered decision-position secondary is SUB-ADDITIVE, and "closing strongly sub-additive" is an
+unregistered label. See `../functional_additivity_v1/RESULTS.md` Erratum 1. **P_O = .9723 is not
+preservation of an identified Opallo skill.** It is the retained fraction of an unidentified
+held-out reply-NLL shift; see `full_scale/FULL_SCALE_REPORT.md` Erratum 1.

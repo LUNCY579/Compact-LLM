@@ -143,3 +143,26 @@ imported read-only by file path under a private module name, and its sha `c52b6a
 refutation (22 of 24 verdicts not refuted) targets an interpretive clause in BINDING-DIAGNOSTIC-001's
 **own** record, *"deltas shift the annotation convention, not the value"*, and no conclusion above
 relies on that clause.
+
+---
+
+## Erratum 1 (2026-09-23)
+
+1. **Wording.** Consequence 4, control 3, reads "matched gold minus within-class mismatched gold
+   is above 0". It should read **"the gain on matched gold minus the gain on within-class
+   mismatched gold is above 0"**, i.e. margin(arm) − margin(BASE). The shorter wording allowed the
+   per-arm margin test that `titan_opallo_skill_vector_v1/full_scale/FULL_SCALE_REPORT.md` ran
+   (every arm, including untrained BASE, passes that test).
+2. **The control as specified cannot decide the question.** The full-scale run scored it on
+   6,741 rows. The gain difference for OPALLO is −0.1669 (row CI [−0.190, −0.143]; class-cluster
+   [−0.387, +0.062]). But mismatched replies start with 2.0 nats/token more headroom, and on
+   proportional scales the sign reverses (27.6% vs 20.0%). A valid version needs mismatches
+   matched on BASE NLL and length, several per row, with the scale fixed in advance.
+3. **Status of the four controls:**
+   - (1) denominator gate: **NOT RUN**
+   - (2) specificity: **PASS** under the "about 0.25" tolerance (SPARSE P_O .1618 row-mean, .1098
+     token-weighted)
+   - (3) content not prior: **NOT IDENTIFIED**
+   - (4) dose: monotone on NLL, inverted on log-odds
+   **This note's conclusion is unchanged:** no Opallo-specific held-out content skill is
+   established on any instrument.
