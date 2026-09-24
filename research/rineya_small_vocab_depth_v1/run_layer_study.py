@@ -104,29 +104,48 @@ def main(argv=None) -> int:
     ap.add_argument("--gen-tokens", type=int, default=64)
     ap.add_argument("--resume", action="store_true")
     ap.add_argument("--stages", default="S1,S2,S3,S4,S5,S6")
+    ap.add_argument("--depths", default=",".join(map(str, DEPTHS)))
+    ap.add_argument("--device", default="cuda")
+    ap.add_argument("--max-rows-per-category", type=int, default=0)
+    ap.add_argument("--dry-run", action="store_true",
+                    help="pipeline check on a TINY random model (< 50M params, asserted): CPU, no lease")
     a = ap.parse_args(argv)
+    depths = tuple(int(x) for x in a.depths.split(","))
     a.out.mkdir(parents=True, exist_ok=a.resume)
     want = set(a.stages.split(","))
-    hostbudget.require(3.6, "SMALLVD-001 layer study")
-    token = gpu_lease.acquire(timeout_s=7200, label="smallvd001:layer-study")
+    if a.dry_run:
+        cfg0 = json.loads((a.teacher / "config.json").read_text(encoding="utf-8"))
+        n0 = pa.analytic(cfg0, cfg0["vocab_size"], cfg0["num_hidden_layers"])["unique_physical_parameters"]
+        if n0 >= 50_000_000 or a.device != "cpu":
+            raise SystemExit(f"--dry-run is only for tiny CPU models (got {n0:,} params on {a.device})")
+        hostbudget.require(0.8, "SMALLVD-001 layer study DRY RUN")
+        token, guard_gib = None, 0.4
+    else:
+        hostbudget.require(3.6, "SMALLVD-001 layer study")
+        token, guard_gib = gpu_lease.acquire(timeout_s=7200, label="smallvd001:layer-study"), 1.5
     try:
         import torch
         import tokenizers
         import transformers
-        from transformers import Qwen3ForCausalLM
         rt = la.configure_runtime(17)
-        dev = "cuda"
+        dev = a.device
         rows = [json.loads(l) for l in a.panels.read_text(encoding="utf-8").splitlines() if l.strip()]
+        if a.max_rows_per_category:
+            keep, seen = [], {}
+            for r in rows:
+                k = (r["category"], r["split"])
+                if seen.get(k, 0) < a.max_rows_per_category:
+                    keep.append(r)
+                    seen[k] = seen.get(k, 0) + 1
+            rows = keep
         sel = [r for r in rows if r["split"] == "select"]
         hold = [r for r in rows if r["split"] == "holdout"]
         tok = tokenizers.Tokenizer.from_file(str(a.teacher / "tokenizer.json"))
         im_end, eot = tok.token_to_id("<|im_end|>"), tok.token_to_id("<|endoftext|>")
         eos = [im_end, eot]
-        model = Qwen3ForCausalLM.from_pretrained(str(a.teacher), torch_dtype=torch.float32,
-                                                 attn_implementation="eager", device_map=dev,
-                                                 local_files_only=True).eval()
-        assert model.lm_head.weight.data_ptr() == model.model.embed_tokens.weight.data_ptr()
-        gpu_lease.set_workers(token, [os.getpid()])
+        model = la.load_model(a.teacher, dev)
+        if token:
+            gpu_lease.set_workers(token, [os.getpid()])
         L = model.config.num_hidden_layers
         full = list(range(L))
         st = Stages(a.out, a.resume)
@@ -139,7 +158,7 @@ def main(argv=None) -> int:
             for part in (chat_sel, chat_hold):
                 gens = vs.generate_rows(model, V0, part, full, eos, eot, dev, a.gen_tokens)
                 out.update({g["id"]: g for g in gens})
-                hostbudget.guard(1.5, "layer study S1")
+                hostbudget.guard(guard_gib, "layer study S1")
             return {"rows": out}
         T = st.run("S1_teacher_outputs", teacher_outputs)["rows"]
 
@@ -174,7 +193,7 @@ def main(argv=None) -> int:
                 out[str(l)] = {"select": strip(s), "holdout": strip(h), "holdout_generation": gen_metrics(kept),
                                "select_objective": category_mean_kl(s)}
                 print(f"[single] L{l}: select obj {out[str(l)]['select_objective']:.4f}", flush=True)
-                hostbudget.guard(1.5, "layer study S3")
+                hostbudget.guard(guard_gib, "layer study S3")
             return {"layers": out}
         S3 = st.run("S3_single_ablation", single) if "S3" in want else None
 
@@ -185,7 +204,7 @@ def main(argv=None) -> int:
                 key = tuple(kept)
                 if key not in cache:
                     cache[key] = category_mean_kl(tf_metrics(kept, items_sel, H_sel)) if len(kept) < L else 0.0
-                    hostbudget.guard(1.5, "layer study S4")
+                    hostbudget.guard(guard_gib, "layer study S4")
                 return cache[key]
             return {"trajectory": ls.greedy_backward(evaluate, L, a.min_layers), "evaluations": len(cache)}
         S4 = st.run("S4_greedy_backward", greedy) if "S4" in want else None
@@ -195,8 +214,9 @@ def main(argv=None) -> int:
             single_scores = {int(k): v["select_objective"] for k, v in S3["layers"].items()}
             bi = {b["layer"]: b["block_influence"] for b in diag["per_block"]}
             angular = {int(k): v for k, v in diag["angular_distance"].items()}
-            sets = ls.strategy_sets(L, DEPTHS, single_scores, bi, angular, S4["trajectory"])
-            sets[19]["lineage_donor"] = [k for k in full if k not in LINEAGE_DONOR_DROPPED]
+            sets = ls.strategy_sets(L, depths, single_scores, bi, angular, S4["trajectory"])
+            if L == 28 and 19 in sets:
+                sets[19]["lineage_donor"] = [k for k in full if k not in LINEAGE_DONOR_DROPPED]
             done, out = {}, {}
             for n, strat in sets.items():
                 out[str(n)] = {}
@@ -207,7 +227,7 @@ def main(argv=None) -> int:
                         done[key] = {"kept": kept, "holdout": strip(h),
                                      "holdout_objective": category_mean_kl(h),
                                      "holdout_generation": gen_metrics(kept)}
-                        hostbudget.guard(1.5, "layer study S5")
+                        hostbudget.guard(guard_gib, "layer study S5")
                     out[str(n)][name] = done[key]
                     print(f"[S5] {n}L {name}: holdout obj {done[key]['holdout_objective']:.4f}", flush=True)
             return {"depths": out}
@@ -231,7 +251,7 @@ def main(argv=None) -> int:
                                 "answer_bpb": strip(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev)),
                                 "holdout_generation": gen_metrics(kept, voc)}
                     print(f"[S6] {key}: {params:,} params, bpb {out[key]['answer_bpb']['all']['bpb']:.4f}", flush=True)
-                    hostbudget.guard(1.5, "layer study S6")
+                    hostbudget.guard(guard_gib, "layer study S6")
             return {"configs": out}
         if "S6" in want:
             st.run("S6_vocab_frontier", vocab_frontier)
@@ -241,16 +261,18 @@ def main(argv=None) -> int:
                     "panels": str(a.panels), "panels_sha256": sha256_file(a.panels),
                     "vocab_dirs": [str(d) for d in a.vocab_dirs],
                     "vocab_map_sha256": {str(d): sha256_file(d / "token_id_map.json") for d in a.vocab_dirs},
-                    "stage_modes": st.modes, "runtime_flags": rt,
+                    "stage_modes": st.modes, "runtime_flags": rt, "dry_run": a.dry_run,
+                    "depths": depths, "max_rows_per_category": a.max_rows_per_category,
                     "runtime": {"python": sys.version.split()[0], "torch": torch.__version__,
                                 "transformers": transformers.__version__, "tokenizers": tokenizers.__version__,
-                                "device": torch.cuda.get_device_name(0)},
+                                "device": torch.cuda.get_device_name(0) if dev == "cuda" else "cpu"},
                     "code_sha256": {p.name: sha256_file(p) for p in sorted(HERE.glob("*.py"))},
                     "quality_claim": False, "release_permitted": False}
         la.dump(a.out / f"MANIFEST_{int(time.time())}.json", manifest)
         return 0
     finally:
-        gpu_lease.release(token)
+        if token:
+            gpu_lease.release(token)
 
 
 if __name__ == "__main__":

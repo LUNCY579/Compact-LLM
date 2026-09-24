@@ -53,7 +53,7 @@ def main(argv=None) -> int:
     try:
         import torch
         import transformers
-        from transformers import AutoTokenizer, Qwen3ForCausalLM
+        from transformers import AutoTokenizer
         torch.backends.cuda.matmul.allow_tf32 = False
         torch.backends.cudnn.allow_tf32 = False
         torch.set_float32_matmul_precision("highest")
@@ -61,12 +61,10 @@ def main(argv=None) -> int:
         ref = {r["id"]: r for r in map(json.loads, REFERENCE.read_text(encoding="utf-8").splitlines())}
         tok = AutoTokenizer.from_pretrained(str(a.teacher), local_files_only=True)
         t0 = time.time()
-        # device_map="cuda" streams tensors straight to the card, so the host never holds an fp32
-        # copy of the model (host RAM, not VRAM, is the binding resource on this machine).
-        model = Qwen3ForCausalLM.from_pretrained(str(a.teacher), torch_dtype=torch.float32,
-                                                 attn_implementation="eager", device_map="cuda",
-                                                 local_files_only=True).eval()
-        assert model.lm_head.weight.data_ptr() == model.model.embed_tokens.weight.data_ptr()
+        # built on the card and streamed tensor by tensor: the host never holds an fp32 copy
+        # (host RAM, not VRAM, is the binding resource on this machine)
+        import layer_ablation as la
+        model = la.load_model(a.teacher, "cuda")
         gpu_lease.set_workers(token, [os.getpid()])
         load_s = time.time() - t0
         eos = sorted({tok.eos_token_id, tok.convert_tokens_to_ids("<|im_end|>"),

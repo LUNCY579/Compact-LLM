@@ -72,6 +72,35 @@ def keep_layers(model, kept: list[int]):
             layer.self_attn.layer_idx = i
 
 
+def load_model(model_dir, device, dtype=torch.float32, attn="eager"):
+    """Build the model ON `device` and stream the safetensors tensors into it, so the host never
+    holds a full fp32 copy. (`from_pretrained(device_map=...)` needs `accelerate`, which the pinned
+    venv does not have -- found by the tiny-model dry run, before any real launch.)"""
+    from pathlib import Path
+    from safetensors import safe_open
+    from transformers import AutoConfig, Qwen3ForCausalLM
+    cfg = AutoConfig.from_pretrained(str(model_dir), local_files_only=True)
+    with torch.device(device):
+        model = Qwen3ForCausalLM._from_config(cfg, attn_implementation=attn, torch_dtype=dtype)
+    params = dict(model.named_parameters())
+    seen = set()
+    with safe_open(str(Path(model_dir) / "model.safetensors"), framework="pt", device="cpu") as f:
+        for k in f.keys():
+            if k not in params:
+                raise KeyError(f"unexpected tensor {k}")
+            with torch.no_grad():
+                params[k].copy_(f.get_tensor(k).to(device=device, dtype=dtype))
+            seen.add(k)
+    missing = set(params) - seen
+    if cfg.tie_word_embeddings:
+        model.tie_weights()
+        missing.discard("lm_head.weight")
+    if missing:
+        raise KeyError(f"tensors missing from checkpoint: {sorted(missing)[:5]}")
+    assert (not cfg.tie_word_embeddings) or         model.lm_head.weight.data_ptr() == model.model.embed_tokens.weight.data_ptr()
+    return model.eval()
+
+
 def pad_batch(seqs: list[list[int]], pad_id: int, device) -> tuple[torch.Tensor, torch.Tensor]:
     """RIGHT padding for teacher forcing: real positions keep their absolute position ids."""
     T = max(len(s) for s in seqs)
@@ -230,10 +259,9 @@ def normalise_answer(s: str) -> str:
 
 
 def score_row(output: str, row: dict) -> bool | None:
-    ref = row.get("reference")
-    if ref is None:
+    ref, kind = row.get("reference"), row.get("scorer")
+    if ref is None or kind is None:        # open-ended rows: flip rate and KL only, never "accuracy"
         return None
-    kind = row.get("scorer", "exact")
     o, r = normalise_answer(output), normalise_answer(ref)
     if kind == "exact":
         return o == r
