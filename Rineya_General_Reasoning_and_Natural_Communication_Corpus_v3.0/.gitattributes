@@ -1,0 +1,18 @@
+# This corpus is HASH-VERIFIABLE EVIDENCE: receipts across rineya-dataset-retention-records
+# record the sha256 of files stored here, and results are reproduced by re-hashing them.
+# Any line-ending conversion would change the bytes and silently invalidate every recorded
+# hash. Example: clockfix001-20260923/prepared/C1_GATE.json pins corpus_sha256
+# 6c16d84a718ca5c84bf5531ffe670cd95f2b30db508574a38abc3b6273144529 for
+# data/sft/by_class/time_duration.jsonl.
+#
+# Endings here are MIXED (measured 2026-09-23: 65 LF / 2 CRLF). Nothing above this directory
+# sets the text attribute, so protection rested only on a user-level core.autocrlf=false that
+# overrides the Windows system default of true. On any checkout lacking that override, 65 of
+# the 67 files change bytes (time_duration.jsonl becomes 992dcae7...) -- measured, not assumed.
+#
+# `* -text` disables all conversion for every file regardless of the cloner's settings. It
+# already preserves the two CRLF manifests exactly as-is, so they need no rule of their own.
+# Do NOT add an `eol=` rule for them: under `* -text` it is inert (eol is ignored when text is
+# unset), and if it is ever written WITHOUT the `-text` it marks the file as text and rewrites
+# the index blob to LF -- the exact byte change this file exists to prevent.
+* -text
