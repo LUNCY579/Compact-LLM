@@ -12,6 +12,9 @@ Applies the rules exactly as registered in SMALLVD001_PREREG.md (with Amendment 
       only) and A3 (combined), here on the REPORT panels; additivity Δ(A3) vs Δ(A1)+Δ(A2) on answer
       bpb with a paired per-row bootstrap interval, descriptive only.
   §10 V-SAFE: A1 has no CATASTROPHIC category on REPORT (a HOLD condition; A2/A3 are not gated on it).
+  §10 D-COLLAPSE (Amendment 3): the recommended student keeps a POSITIVE share of the teacher's
+      advantage over knowing nothing, in every chat category, on REPORT answer bpb (HOLD otherwise);
+      categories below half, plus its REPORT-CATASTROPHIC ones, form `recovery_protected_categories`.
 
 Also reports the diagnostics (update norm, cosine, CKA, block influence) next to the causal
 single-ablation damage, with rank correlations, so the reader can see how far "looks redundant"
@@ -35,6 +38,7 @@ CATASTROPHIC_FLIP = 0.90
 FRONTIER_MARGIN = 0.01
 FRONTIER = {("V1_98304", 16), ("V2_65536", 18), ("V3_49152", 19), ("V4_32768", 20), ("V0", 12)}
 BOOTSTRAP_RESAMPLES, BOOTSTRAP_SEED = 2000, 17
+COLLAPSE_RETAINED, SEVERE_RETAINED = 0.0, 0.5          # Amendment 3
 
 
 def load(d: Path, name: str):
@@ -106,6 +110,31 @@ def additivity(per_arm: dict, ids: list[str]) -> dict:
     return {"rows": len(ids), "bpb": b, "delta_vs_A0": d, "interaction_A3_minus_A1_minus_A2": inter,
             "interaction_bootstrap_95": [lo, hi], "resamples": BOOTSTRAP_RESAMPLES, "seed": BOOTSTRAP_SEED,
             "reading": "descriptive only (§7); interaction > 0 means the combined damage exceeds the sum"}
+
+
+def retained_fraction(entry: dict, a0: dict, sub: dict) -> dict:
+    """Amendment 3. Per chat category on REPORT: the share of the teacher's advantage over KNOWING
+    NOTHING that the student keeps, in answer bits per byte -- (u - s) / (u - t), with u = uniform
+    over the student's OWN vocabulary under its OWN tokenisation (tokens * log2 V / bytes), s the
+    student's bpb and t the teacher's (A0) bpb on the same rows and bytes. 1 = teacher level,
+    0 = no better than uniform, < 0 = worse. Answer bpb does not saturate the way a 64-token
+    full-string flip does, and it exists in every chat category (open-ended rows carry reference
+    answers; only their SCORER is absent)."""
+    V = entry["vocab_rows"]
+    t_rows = {r["id"]: r for r in a0["answer_bpb"]["holdout_per_item"]}
+    by = {}
+    for r in entry["answer_bpb"]["holdout_per_item"]:
+        if sub.get(r["id"]) == "report":
+            by.setdefault(r["category"], []).append(r)
+    out = {}
+    for c, rows in sorted(by.items()):
+        byts = sum(r["bytes"] for r in rows)
+        s_ = sum(r["nats"] for r in rows) / math.log(2) / byts
+        t_ = sum(t_rows[r["id"]]["nats"] for r in rows) / math.log(2) / byts
+        u_ = sum(r["tokens"] for r in rows) * math.log2(V) / byts
+        out[c] = {"rows": len(rows), "student_bpb": s_, "teacher_bpb": t_, "uniform_bpb": u_,
+                  "retained": (u_ - s_) / (u_ - t_) if u_ > t_ else None}
+    return out
 
 
 def main(argv=None) -> int:
@@ -240,11 +269,25 @@ def main(argv=None) -> int:
                        for k, v in present.items()}
             add_ids = sorted(set.intersection(*[{r["id"] for r in x} for x in per_arm.values()]))
             measured = all(l["finite"] for l in limbs.values()) and finite(sel["report_objective"]) and bool(add_ids)
+            # Amendment 3: D-COLLAPSE and the protected-category list, for the RECOMMENDED student
+            rec_key = (pick["vocab"], pick["n_layers"]) if pick else arms["A3"]
+            rec = cfgs[rec_key]
+            ret = retained_fraction(rec, present["A0"], sub)
+            undefined = sorted(c for c, x in ret.items() if x["retained"] is None)
+            collapsed = sorted(c for c, x in ret.items() if x["retained"] is not None and x["retained"] <= COLLAPSE_RETAINED)
+            protected = sorted(set(catastrophic(rec["holdout_generation"]["report"])) |
+                               {c for c, x in ret.items() if x["retained"] is None or x["retained"] < SEVERE_RETAINED})
             g4 = {"arms": {k: f"{vn}/{n}L" for k, (vn, n) in arms.items()}, "limbs": limbs,
                   "additivity_report": additivity(per_arm, add_ids) if add_ids else None,
                   "G4_calibration_panels": "PASS" if measured else "FAIL",
                   "G4_full": "PENDING: no instrument shim is qualified yet, and G3 comes from the surgery arms",
-                  "V_SAFE_A1_no_catastrophic": "PASS" if not limbs["A1"]["catastrophic_categories"] else "HOLD"}
+                  "V_SAFE_A1_no_catastrophic": "PASS" if not limbs["A1"]["catastrophic_categories"] else "HOLD",
+                  "recommended_student": f"{rec_key[0]}/{rec_key[1]}L",
+                  "retained_fraction_report": ret,
+                  "retained_fraction_report_A2": retained_fraction(present["A2"], present["A0"], sub),
+                  "D_COLLAPSE": "HOLD" if (collapsed or undefined) else "PASS",
+                  "D_COLLAPSE_categories": collapsed, "retained_undefined_categories": undefined,
+                  "recovery_protected_categories": protected}
         else:
             g4 = {"G4_calibration_panels": "FAIL", "missing": missing}
 
@@ -320,6 +363,14 @@ def main(argv=None) -> int:
                           f"[{ad['interaction_bootstrap_95'][0]:+.4f}, {ad['interaction_bootstrap_95'][1]:+.4f}])\n")
         md.append(f"**G4 (calibration panels):** {g4['G4_calibration_panels']} · **V-SAFE (A1 not catastrophic):** "
                   f"{g4.get('V_SAFE_A1_no_catastrophic', '—')} · full G4: {g4.get('G4_full', g4.get('missing'))}\n")
+        if "retained_fraction_report" in g4:
+            md += [f"## D-COLLAPSE (Amendment 3) — recommended student {g4['recommended_student']}, REPORT answer bpb\n",
+                   "| category | student bpb | teacher bpb | uniform bpb | retained share |", "|---|---:|---:|---:|---:|"]
+            for c, x in g4["retained_fraction_report"].items():
+                rs = "undefined" if x["retained"] is None else f"{x['retained']:.3f}"
+                md.append(f"| {c} | {x['student_bpb']:.4f} | {x['teacher_bpb']:.4f} | {x['uniform_bpb']:.4f} | {rs} |")
+            md.append(f"\n**D-COLLAPSE:** {g4['D_COLLAPSE']} · **recovery_protected_categories:** "
+                      f"{', '.join(g4['recovery_protected_categories']) or 'none'}\n")
     with open(a.out_md, "x", encoding="utf-8", newline="\n") as f:
         f.write("\n".join(md) + "\n")
     print("\n".join(md[-14:]))

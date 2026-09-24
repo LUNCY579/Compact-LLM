@@ -1,6 +1,6 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED, WITH AMENDMENTS 1-2 (both filed before any layer was scored; end of document).
+> **STATUS: REGISTERED, WITH AMENDMENTS 1-3 (all filed before any layer was scored; end of document).
 > NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
@@ -249,9 +249,10 @@ lowered to force a launch.
 ## 10. GO / HOLD for recovery (brief deliverable 17), registered in advance
 
 **GO for recovery/distillation requires ALL of:** G0–G4 PASS *[Amendment 1: full G4, A1.2]*;
-**V-SAFE — A1 has no CATASTROPHIC category on REPORT** *[Amendment 1, A1.3]*; every
-REPORT-CATASTROPHIC category of the recommended student named as a protected-skill category with its
-own recovery endpoint in the S1/S2 plan *[A1.3]*; if the operator names a compression subject other
+**V-SAFE — A1 has no CATASTROPHIC category on REPORT** *[Amendment 1, A1.3]*; **D-COLLAPSE — the
+recommended student beats knowing nothing in every chat category on REPORT answer bpb** *[Amendment 3]*;
+the S1/S2 plan's protected-skill categories a SUPERSET of `LAYER_REPORT.json → G4.recovery_protected_categories`
+*[A1.3, fixed by A3.2]*; if the operator names a compression subject other
 than Supa 1.7.0, §4 re-run on it *[A1.5]*; G5 (dataset, tokenization and
 training smoke on the student geometry) PASS; a qualified training lane for the student geometry;
 a registered plan with a matched ordinary-training control (S1) and verified-teacher-target arm
@@ -519,3 +520,74 @@ is made on **SELECT2**, and its REPORT figure is the one reported.
 
 **Cost:** about 30 min of GPU after the surgery arms, in the same queue under the same lease and
 RAM gates.
+
+---
+
+## Amendment 3 — 2026-09-24: a non-saturating gate for the depth arms (D-COLLAPSE), and the protected list fixed now
+
+**Filed before any layer was scored.** Source: the reviewer's supplement,
+`smallvd001-20260924/COLD_REVIEW_SUPPLEMENT.md` (records `e09687a`). It found A1.3's decline sound,
+but identified two defects in it.
+
+1. **The prediction was registered without the gate it would vindicate, and the branches were
+   asymmetric.** If flip ≥ 0.90 comes in, nothing was gated. If it comes in below 0.90, adding a
+   gate afterwards is indistinguishable from moving the goalposts.
+2. **"A design obligation on the S1/S2 plan" relocated the defect** into a document that does not
+   exist yet.
+
+### A3.1 The gate: D-COLLAPSE, on answer bpb rather than flip or KL
+
+**Correction to the supplement's premise.** Answer bpb *is* available where flip saturates. The
+open-ended categories carry reference answers; only their scorer is absent. On the committed panel,
+conversation has 64 / 64 rows with a non-empty reference and instruction_writing 64 / 64, and S6
+already scores answer bpb on them. KL would not do: it is defined only within one vocabulary, so it
+cannot score A3.
+
+**Definition** (`report_layer_study.retained_fraction`). Per chat category, on REPORT, the
+recommended student keeps this share of the teacher's advantage over knowing nothing:
+
+    retained = (u − s) / (u − t)
+
+- s = the student's answer bpb;
+- t = the teacher's (A0) answer bpb on the same rows and bytes;
+- u = uniform over the student's own vocabulary under its own tokenisation (tokens · log₂V / bytes).
+
+It is 1 at teacher level and 0 at no better than uniform. No new measurement is needed, and the
+scale is anchored by each student's own vocabulary.
+
+**New §10 HOLD condition, D-COLLAPSE:** the recommended student (A3, or the §5 alternative) has
+retained > 0 in **every** chat category on REPORT. It is also HOLD if any category's share is
+undefined (u ≤ t).
+
+- **It can fail.** A collapsed student can exceed the uniform bpb, because answer NLL is unbounded.
+  The tiny random-weight dry run fired it, since there even the "teacher" is worse than uniform.
+- **It can pass.** It only asks that the student beat knowing nothing, the minimal premise of
+  deriving a student from a teacher at all.
+- **What it does not claim.** It does NOT claim recoverability (§8). It detects collapse: a state
+  in which derivation from the teacher carries no measurable information advantage on a skill.
+
+### A3.2 The protected list is computed now, by a registered rule, not in a future plan
+
+`LAYER_REPORT.json → G4.recovery_protected_categories` = the recommended student's
+REPORT-CATASTROPHIC categories ∪ the categories with retained < **0.5** (or undefined).
+
+**New §10 condition:** the S1/S2 plan's protected-skill categories must be a **superset** of this
+list. The content is fixed by this run; the future plan is checked against it, and cannot redefine
+it.
+
+### A3.3 Both branches of A1.3's prediction are now pre-committed
+
+- A1.3's flip prediction stays **descriptive**. Neither outcome adds or removes a gate.
+- The depth arms are gated by D-COLLAPSE, registered here, in either branch.
+- Nothing is retrofitted after the layer study.
+
+### A3.4 Author's expectation, so it can be wrong
+
+- D-COLLAPSE **PASSES**.
+- The recommended student's retained share lies in **[0.2, 0.8]** in most categories.
+- At least one category is below 0.5, i.e. `recovery_protected_categories` is non-empty beyond the
+  CATASTROPHIC ones.
+
+### A3.5 Unchanged
+
+Everything in Amendments 1–2, the verdict rules of H-LC, and every threshold of §3–§6.
