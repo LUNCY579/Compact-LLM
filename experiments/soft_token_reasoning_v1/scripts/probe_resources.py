@@ -5,6 +5,7 @@ import argparse
 import json
 import platform
 import sys
+import time
 from pathlib import Path
 
 import torch
@@ -22,22 +23,29 @@ def probe(vocabulary: int, width: int, batch: int, sequence: int, seed: int) -> 
     if device.type == "cuda":
         torch.cuda.manual_seed_all(seed)
         torch.cuda.reset_peak_memory_stats(device)
-    embedding = torch.randn(vocabulary, width, device=device, dtype=torch.float32, requires_grad=True)
-    logits = torch.randn(batch, sequence, vocabulary, device=device, dtype=torch.float32, requires_grad=True)
-    generator = torch.Generator(device=device).manual_seed(seed)
-    means = []
-    states = []
-    for position in range(sequence):
-        mean, state, _ = noisy_soft_embedding(
-            torch.softmax(logits[:, position, :], dim=-1),
-            embedding,
-            0.33,
-            generator=generator,
-        )
-        means.append(mean)
-        states.append(state)
-    loss = torch.stack(states).square().mean()
-    loss.backward()
+    start = time.perf_counter()
+    microsteps = 5
+    loss = None
+    embedding = None
+    logits = None
+    for microstep in range(microsteps):
+        embedding = torch.randn(vocabulary, width, device=device, dtype=torch.float32, requires_grad=True)
+        logits = torch.randn(batch, sequence, vocabulary, device=device, dtype=torch.float32, requires_grad=True)
+        generator = torch.Generator(device=device).manual_seed(seed + microstep)
+        states = []
+        for position in range(sequence):
+            _, state, _ = noisy_soft_embedding(
+                torch.softmax(logits[:, position, :], dim=-1),
+                embedding,
+                0.33,
+                generator=generator,
+            )
+            states.append(state)
+        loss = torch.stack(states).square().mean()
+        loss.backward()
+    if device.type == "cuda":
+        torch.cuda.synchronize(device)
+    elapsed = time.perf_counter() - start
     result = {
         "status": "MEASURED" if device.type == "cuda" else "BLOCKED_NO_CUDA",
         "device": str(device),
@@ -48,6 +56,9 @@ def probe(vocabulary: int, width: int, batch: int, sequence: int, seed: int) -> 
         "sequence": sequence,
         "seed": seed,
         "loss": float(loss.detach().cpu()),
+        "microsteps": microsteps,
+        "elapsed_seconds": elapsed,
+        "microsteps_per_second": microsteps / elapsed if elapsed > 0 else None,
         "finite": bool(torch.isfinite(loss.detach()).item()),
         "embedding_numel": embedding.numel(),
         "logits_numel": logits.numel(),

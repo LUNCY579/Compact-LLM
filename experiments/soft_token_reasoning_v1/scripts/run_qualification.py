@@ -32,6 +32,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--resource-probe", type=Path, required=True)
+    parser.add_argument("--tests-passed", type=int, default=None)
     args = parser.parse_args(argv)
     if args.out.exists():
         raise FileExistsError(args.out)
@@ -49,7 +50,7 @@ def main(argv: list[str] | None = None) -> int:
         "seed": 20260925,
         "dtype": "float64 for deterministic qualification tensors",
         "runtime": {"python": sys.version.split()[0], "platform": platform.platform()},
-        "tests": {"command": "python -m pytest -q experiments/soft_token_reasoning_v1/tests", "sealed_tests": False},
+        "tests": {"command": "python -m pytest -q experiments/soft_token_reasoning_v1/tests", "passed": args.tests_passed, "sealed_tests": False},
         "resource_probe": json.loads(args.resource_probe.read_text(encoding="utf-8")),
         "training_status": "not_run",
         "sealed_access": False,

@@ -10,6 +10,7 @@ from .soft_tokens import (
     soft_probabilities,
     embedding_rms,
 )
+from .sequence import completion_labels
 
 __all__ = [
     "SoftTokenConfig",
@@ -20,4 +21,5 @@ __all__ = [
     "rloo_advantages",
     "soft_embedding",
     "soft_probabilities",
+    "completion_labels",
 ]

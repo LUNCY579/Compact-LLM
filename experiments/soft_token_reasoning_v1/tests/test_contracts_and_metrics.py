@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 
 import pytest
+import torch
 
 from experiments.soft_token_reasoning_v1.evaluation.metrics import (
     correct_solution_diversity,
@@ -10,7 +11,8 @@ from experiments.soft_token_reasoning_v1.evaluation.metrics import (
     pass_at_k,
     retention,
 )
-from experiments.soft_token_reasoning_v1.implementation.binding import bind_dataset_manifest
+from experiments.soft_token_reasoning_v1.implementation.binding import assert_split_disjoint, bind_dataset_manifest
+from experiments.soft_token_reasoning_v1.implementation.sequence import completion_labels
 from experiments.soft_token_reasoning_v1.implementation.contracts import validate_arm_pair
 
 
@@ -55,6 +57,27 @@ def test_dataset_manifest_binds_exact_split_ids(tmp_path):
     assert binding["dataset_id"] == "toy"
     assert binding["splits"]["train"]["sha256"] == "a" * 64
     assert binding["sealed_access"] is False
+
+
+def test_held_out_ids_cannot_leak_into_training():
+    assert_split_disjoint(["train-1", "train-2"], ["dev-1"])
+    with pytest.raises(ValueError):
+        assert_split_disjoint(["train-1", "dev-1"], ["dev-1"])
+
+
+def test_attention_masks_and_eos_are_unchanged_by_labeling():
+    # PAD == EOS is intentional. The bool mask, not token-ID inequality, finds real tokens.
+    ids = torch.tensor([[0, 0, 8, 9, 3, 0], [7, 8, 4, 5, 0, 0]], dtype=torch.long)
+    mask = torch.tensor([[False, False, True, True, True, True], [True, True, True, True, False, False]])
+    labels = completion_labels(ids, mask, [2, 2], [2, 2], (0,), ["eos", "length"], 2)
+    assert labels.tolist() == [[-100, -100, -100, -100, 3, 0], [-100, -100, 4, 5, -100, -100]]
+
+
+def test_length_stop_does_not_fabricate_eos():
+    ids = torch.tensor([[8, 9, 3, 4]])
+    mask = torch.ones_like(ids, dtype=torch.bool)
+    labels = completion_labels(ids, mask, [2], [2], (0,), ["length"], 2)
+    assert labels.tolist() == [[-100, -100, 3, 4]]
 
 
 def test_pass_k_diversity_and_paired_counts_are_frozen():

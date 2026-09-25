@@ -65,3 +65,13 @@ def verify_split_file(path: Path, expected: dict[str, Any]) -> dict[str, Any]:
     if observed["sha256"] != expected["sha256"] or observed["bytes"] != expected.get("bytes"):
         raise ValueError(f"split binding mismatch for {path}")
     return {"path": path.as_posix(), **observed, "rows": expected["rows"]}
+
+
+def assert_split_disjoint(train_ids: list[str], held_out_ids: list[str]) -> None:
+    """Reject any example ID overlap between training and held-out data."""
+
+    if not train_ids or not held_out_ids:
+        raise ValueError("split ID inventories must be non-empty")
+    overlap = set(train_ids).intersection(held_out_ids)
+    if overlap:
+        raise ValueError(f"held-out IDs leaked into training: {sorted(overlap)[:3]}")
