@@ -134,12 +134,17 @@ CALIBRATION = ((0.2, 0.004, 0.025), (0.45, 0.002, 0.002), (0.8, 0.0005, 0.0005),
 ALPHA_HARM = 0.01
 # Harm POWER at r = -0.20 by band (minimum over s_kl, as applied; HLC_CALIBRATION.json
 # harm_power_r_minus020_min_by_band). A non-HARMFUL verdict where this is low means harm was
-# UNDETECTABLE, not absent: benefit is certifiable to 0.8, harm is meaningfully detectable only to 0.45.
+# UNDETECTABLE, not absent. Benefit is certifiable to 0.8; harm is RELIABLY detectable only in band 0.2,
+# about even odds in band 0.45, and essentially blind from band 0.8 up.
 HARM_POWER_R020_BY_BAND = {0.2: 0.9533333333333334, 0.45: 0.48333333333333334, 0.8: 0.023333333333333334, 1.2: 0.0}
 # A5.8 SHAPE GUARD: the calibration family draws per-row log(LC/plain) NORMAL and INDEPENDENT of log
 # plain KL. A realised REPORT set departing GROSSLY from that is OUT_OF_FAMILY: the certification was
 # never tested there. Thresholds from design/hlc_shape_guard_sim.py (30,000 in-family sets at 124
 # rows): together they fire on 0.59 % of IN-family sets, so they flag gross departures only.
+# DELIBERATELY UNEQUAL STRINGENCY: |skew| 0.75 sits at ~p99.85 and |corr| 0.30 at >= p99.9 of the
+# in-family distribution, but kurtosis 1.5 sits at ~p99.5 -- about 5x more likely to fire, and most of
+# the 0.59 %. Heavy tails are exactly what breaks a percentile bootstrap on a ratio, so this limb is
+# kept MORE sensitive on purpose. Do not "harmonise" it to 2.0: that removes the most useful limb.
 SHAPE_GUARD = {"abs_skew": 0.75, "excess_kurtosis": 1.5, "abs_corr_logkl_logratio": 0.3}
 CALIBRATED_FOR = {"seed": 17, "resamples": 2000,
                   "rows_per_category": {"abstention_unknown": 14, "concise_reasoning": 16, "conversation": 18,

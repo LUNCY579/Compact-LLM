@@ -1016,3 +1016,25 @@ in total):
   are descriptive, not gates, and the statement is unchanged: benefit is certifiable to 0.8, harm is
   meaningfully detectable only to 0.45, with a non-HARMFUL verdict meaning *undetectable* above that.
 - **The calibration table is unchanged** (verified by diffing the regenerated bands).
+
+### A5.9 Wording, closing the calibration (`HLC_CALIBRATION_CLOSE.md`, records `77fdb8b`)
+
+1. **Harm detectability, matched to the labels.** Harm is RELIABLY detectable (power ≥ 0.8) only in
+   band 0.2. It is about even odds in band 0.45 (0.48), and essentially blind from band 0.8 up
+   (0.02, then 0). This supersedes "meaningfully detectable only to 0.45".
+2. **Band 0.8 is ONE band with three coinciding fragilities:**
+   - the benefit level sits at the 1/2000 resolution floor, where it certifies only when at most one
+     bootstrap draw is at or below 0;
+   - harm power is 0.023;
+   - adoption under harm is a demonstrated non-zero rate (1/300).
+   A certification in band 0.8 is valid by the design, and is its least robust.
+3. **The shape guard's unequal stringency is deliberate.** Kurtosis at ~p99.5, against ~p99.85
+   (skew) and ≥ p99.9 (corr): heavy tails are what break a percentile bootstrap on a ratio. It is
+   recorded in `lc_verdict.SHAPE_GUARD`'s comment, so it is not "harmonised" away later.
+4. **A retrospective reading worth keeping.** The earlier "0/150 in all 24 cells" was evidence of
+   RARE, not of zero: the band-0.8 corner's rate is non-zero, and that result was one draw from
+   saying so. A zero at small n bounds a rate; it does not establish one.
+
+**The calibration is closed** unless the fit's own shape statistics say otherwise, and those act
+automatically (OUT_OF_FAMILY). **If the realised |corr(log kl, log ratio)| is materially non-zero
+but under 0.3, it is to be read as the mechanism number, not as a nuisance.**
