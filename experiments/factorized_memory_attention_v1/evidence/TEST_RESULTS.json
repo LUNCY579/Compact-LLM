@@ -1,0 +1,28 @@
+{
+  "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
+  "result": "PASS",
+  "passed": 22,
+  "skipped": 1,
+  "failed": 0,
+  "skipped_scope": "native Qwen3 integration tests skipped because Transformers is absent in the agent CPU runtime",
+  "synthetic_coverage": [
+    "g=0 exact value-path identity",
+    "g=1 structural W_V bypass",
+    "token lookup IDs",
+    "config-derived shapes",
+    "exact parameter count and rank scaling",
+    "head-wise RMSNorm",
+    "causal prefix behavior",
+    "cache continuation parity",
+    "serialization/reload",
+    "source mutation guard",
+    "frozen-backbone calibration contract",
+    "teacher residual",
+    "dense-vs-factorized toy equivalence",
+    "dtype/device transfer",
+    "finite values",
+    "micro-generation",
+    "parameter-matched M2 budget"
+  ],
+  "evidence_boundary": "Mechanical/synthetic qualification only. Native checkpoint and RTX 4070 qualification remain blocked on this agent host."
+}
