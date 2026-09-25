@@ -109,3 +109,30 @@ def test_unit_of_on_the_panel_id_shapes():
 def test_power_is_high_at_the_planned_sizes_even_for_a_weak_effect():
     assert hv.power_sign_test(180, 0.65) > 0.9          # bpb rows, a far weaker effect than observed
     assert hv.power_sign_test(300, 0.62) > 0.9          # KL rows
+
+
+def test_r2_even_unit_median_is_biased_under_a_skewed_null_and_majority_sign_is_not():
+    """R2's reason, on the statistic itself (the first skewed-null test never called collapse()).
+    150 two-row units, rows i.i.d. LogNormal(0, 1.5) - 1 (median 0): the unit MEDIAN of an even unit is
+    the MEAN of its rows, positive ~63.5% of the time, so the unit-median test false-confirms far
+    above alpha. The ROW-level test and the MAJORITY-SIGN units must hold alpha under the same null."""
+    rng = random.Random(21)
+    alpha, sims = hv.ALPHA_EACH, 1500
+    rej_row = rej_med = rej_maj = 0
+    unit = {f"{u}:{j}": str(u) for u in range(150) for j in range(2)}
+    for _ in range(sims):
+        d = {i: rng.lognormvariate(0, 1.5) - 1.0 for i in unit}
+        rej_row += hv.sign_test(list(d.values()))["p_greater"] < alpha
+        rej_med += hv.sign_test(list(hv.collapse(d, unit).values()))["p_greater"] < alpha
+        rej_maj += hv.sign_test(list(hv.majority_sign_collapse(d, unit).values()))["p_greater"] < alpha
+    tol = 3 * math.sqrt(alpha * (1 - alpha) / sims)
+    assert rej_row / sims <= alpha + tol and rej_maj / sims <= alpha + tol, (rej_row / sims, rej_maj / sims)
+    assert rej_med / sims > 0.5, rej_med / sims          # grossly anticonservative, not marginal
+
+
+def test_majority_sign_collapse_and_direction_only_verdict():
+    d = {"a": 0.5, "b": -0.1, "c": 0.2, "x": -1.0, "y": 2.0, "z": 0.0}
+    u = {"a": "U", "b": "U", "c": "U", "x": "V", "y": "V", "z": "W"}
+    assert hv.majority_sign_collapse(d, u) == {"U": 1, "V": 0, "W": 0}
+    v = hv.verdict([1] * 60, [1] * 60, with_size=False)
+    assert v["verdict"] == "CONFIRMED" and v["size_large"] is None and v["kl"]["median_lower_bound"] is None

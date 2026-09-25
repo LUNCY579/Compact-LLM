@@ -10,6 +10,11 @@ ridge toward I at 1e-3 x median eigenvalue, position 0 excluded). Refusal contro
 must reproduce the plain student bitwise, and the 18-block fits must reproduce SMALLVD-001's recorded
 fit residuals (the same method, not a variant). The fresh panel's teacher continuations are generated
 here (greedy, same settings as S1). Output created only at the end (create-only).
+
+R2 (cold review): the REGISTERED verdict is ROW-level (pool-conditional H0, hlcc_verdict docstring); the
+all-axis majority-sign unit test is the registered sensitivity analysis; the 267cec9b unit rule is
+descriptive. PRIMARY is measured first. Any failure after the panel is read writes a create-only
+attempts/ATTEMPT_*.json record (reason, traceback, every per-row value measured so far) before exiting.
 """
 from __future__ import annotations
 
@@ -54,6 +59,8 @@ def main(argv=None) -> int:
     ap.add_argument("--secondary-kept", required=True, type=parse_kept)
     ap.add_argument("--smallvd-lc", required=True, type=Path,
                     help="SMALLVD-001 LC_ARMS.json: the secondary set's fits must reproduce its recorded residuals")
+    ap.add_argument("--allaxis-map", required=True, type=Path,
+                    help="HLCC_ALLAXIS_UNIT_MAP.json (pinned): units of the registered sensitivity analysis")
     ap.add_argument("--out", required=True, type=Path)
     ap.add_argument("--gen-tokens", type=int, default=64)
     ap.add_argument("--device", default="cuda")
@@ -72,6 +79,7 @@ def main(argv=None) -> int:
     else:
         hostbudget.require(3.6, "HLCC-001")
         token, guard_gib, chunk = gpu_lease.acquire(timeout_s=7200, label="hlcc001"), 1.5, 256
+    panel_read, partial = False, {}
     try:
         import tokenizers
         import torch
@@ -95,6 +103,15 @@ def main(argv=None) -> int:
         if any(r["split"] != "confirm" for r in confirm):
             raise SystemExit("the confirm file holds rows whose split is not 'confirm'")
         unit_by_id = {r["id"]: hv.unit_of(r) for r in confirm}
+        amap = json.loads(a.allaxis_map.read_text(encoding="utf-8"))
+        if amap["panel_sha256"] != rls.sha256_file(a.confirm):
+            raise SystemExit("the all-axis unit map was built for a different panel")
+        comp_kl, comp_bpb = amap["maps"]["kl_anchor"], amap["maps"]["bpb_anchor"]
+        chat_c = [r for r in confirm if r["kind"] == "chat"]
+        ref_c = [r for r in chat_c if r.get("reference")]
+        missing = [r["id"] for r in confirm if r["id"] not in comp_kl] + [r["id"] for r in ref_c if r["id"] not in comp_bpb]
+        if missing:
+            raise SystemExit(f"{len(missing)} panel rows have no all-axis unit, e.g. {missing[:3]}")
         canary_ref = json.loads(a.smallvd_lc.read_text(encoding="utf-8"))["arms"]["selected"]
         if a.secondary_kept != canary_ref["kept"]:          # never skipped: a skipped canary passes vacuously
             raise SystemExit(f"--secondary-kept {a.secondary_kept} is not SMALLVD-001's LC@selected set {canary_ref['kept']}")
@@ -141,16 +158,24 @@ def main(argv=None) -> int:
                 canary = {"smallvd001": ref, "now": got, "max_abs_diff": diff, "tolerance": CANARY_TOL,
                           "status": "reproduced"}
             prepared[role] = (folds, fits)
-        print("[HLCC] refusal controls passed (identity x2, fit canary); the confirmation panel is read now", flush=True)
+        # answer_bpb asserts every reference target is in the candidate vocabulary: check it on TEXT here,
+        # before any panel forward pass, instead of refusing after the read (cold review F4)
+        for nm, voc in (("primary", Vp), ("secondary", Vs)):
+            if voc.retained is None:
+                continue
+            keep = set(voc.retained.tolist())
+            bad = [r["id"] for r in ref_c if not set(voc.encode_old_ids(r["reference"]) + [im_end]) <= keep]
+            if bad:
+                raise SystemExit(f"{nm} vocabulary: {len(bad)} reference answers leave the candidate vocabulary, e.g. {bad[:3]}")
+        panel_read = True
+        print("[HLCC] refusal controls passed (identity x2, fit canary, vocabulary); the confirmation panel is read now", flush=True)
 
         # fresh teacher continuations (same settings as SMALLVD-001 S1)
-        chat_c = [r for r in confirm if r["kind"] == "chat"]
         t0 = time.time()
         Tc = {g["id"]: g for g in vs.generate_rows(model, V0, chat_c, full, eos, eot, dev, a.gen_tokens)}
         hostbudget.guard(guard_gib, "HLCC teacher outputs")
         items_c = rls.build_items(confirm, tok, Tc, im_end)
         H_c = la.collect_positions(model, items_c, eot, dev)
-        ref_c = [r for r in chat_c if r.get("reference")]
 
         def student_H(kept):
             with la.keep_layers(model, kept):
@@ -168,13 +193,17 @@ def main(argv=None) -> int:
                   "teacher_weight_sha256": rls.sha256_file(a.teacher / "model.safetensors"),
                   "confirm_panel_sha256": rls.sha256_file(a.confirm), "panels_sha256": rls.sha256_file(a.panels),
                   "teacher_outputs_seconds": round(time.time() - t0, 1), "fit_canary": canary,
-                  "identity_control_rows": "SELECT (before the panel was read)", "sets": {}}
-        for role, kept, pvocab in sets:
+                  "identity_control_rows": "SELECT (before the panel was read)",
+                  "allaxis_map_sha256": rls.sha256_file(a.allaxis_map), "sets": {}}
+        # PRIMARY first: a failure during the replication then never exposes the registered limb early
+        for role, kept, pvocab in [s for s in sets if s[0] == "primary"] + [s for s in sets if s[0] != "primary"]:
             folds, fits = prepared[role]
             plain = measure(kept)
+            partial[role] = {"plain": {"kl": plain["kl"], "bpb": plain["bpb"]}}
             hostbudget.guard(guard_gib, f"HLCC {role} plain")
             with lc.folded(model, folds):
                 comp = measure(kept)
+            partial[role]["lc"] = {"kl": comp["kl"], "bpb": comp["bpb"]}
             hostbudget.guard(guard_gib, f"HLCC {role} compensated")
             P, C = {x["id"]: x for x in plain["kl"]}, {x["id"]: x for x in comp["kl"]}
             bad = [i for i in P if not (P[i]["kl"] > 0 and C[i]["kl"] > 0)]
@@ -183,9 +212,10 @@ def main(argv=None) -> int:
             d_kl = [math.log(P[i]["kl"] / C[i]["kl"]) for i in P]
             Pb, Cb = ({x["id"]: x for x in m["bpb"][pvocab]} for m in (plain, comp))
             d_bpb = [math.log(Pb[i]["nats"] / Cb[i]["nats"]) for i in Pb]
-            # the registered test runs on INDEPENDENT UNITS (hlcc_verdict.unit_of), each its rows' median
-            uk = hv.collapse({i: math.log(P[i]["kl"] / C[i]["kl"]) for i in P}, unit_by_id)
-            ub = hv.collapse({i: math.log(Pb[i]["nats"] / Cb[i]["nats"]) for i in Pb}, unit_by_id)
+            dk_by = {i: math.log(P[i]["kl"] / C[i]["kl"]) for i in P}
+            db_by = {i: math.log(Pb[i]["nats"] / Cb[i]["nats"]) for i in Pb}
+            sk, sb = hv.majority_sign_collapse(dk_by, comp_kl), hv.majority_sign_collapse(db_by, comp_bpb)
+            uk, ub = hv.collapse(dk_by, unit_by_id), hv.collapse(db_by, unit_by_id)
             cats = {}
             for i in P:
                 c = cats.setdefault(P[i]["category"], [0, 0])
@@ -194,9 +224,11 @@ def main(argv=None) -> int:
             lk = [math.log(max(P[i]["kl"], 1e-12)) for i in P]
             result["sets"][role] = {
                 "kept": kept, "runs": lc.runs(kept, L), "fits": fits, "identity_control": "bitwise equal to plain",
-                "VERDICT": hv.verdict(list(uk.values()), list(ub.values())),
-                "units": {"kl": len(uk), "bpb": len(ub)},
-                "row_level_sensitivity": hv.verdict(d_kl, d_bpb),     # anticonservative under clustering
+                "VERDICT": hv.verdict(d_kl, d_bpb),                  # R2: row-level, pool-conditional H0
+                "sensitivity_allaxis_majority_sign": {**hv.verdict(list(sk.values()), list(sb.values()), with_size=False),
+                                                      "units": {"kl": len(sk), "bpb": len(sb)}},
+                "descriptive_unit_rule_267cec9b": {**hv.verdict(list(uk.values()), list(ub.values())),
+                                                   "units": {"kl": len(uk), "bpb": len(ub)}},
                 "descriptive": {
                     "category_mean_kl": {"plain": lv.cat_mean_kl(plain["kl"]), "lc": lv.cat_mean_kl(comp["kl"])},
                     "kl_better_by_category": {c: f"{v[0]}/{v[1]}" for c, v in sorted(cats.items())},
@@ -210,7 +242,8 @@ def main(argv=None) -> int:
                     "shape_of_log_lc_over_plain": lv.shape_stats([-x for x in d_kl], lk)},
                 "per_row": {"d_kl": {i: math.log(P[i]["kl"] / C[i]["kl"]) for i in P},
                             "d_bpb": {i: math.log(Pb[i]["nats"] / Cb[i]["nats"]) for i in Pb}},
-                "per_unit": {"d_kl": uk, "d_bpb": ub}}
+                "per_unit_267cec9b": {"d_kl": uk, "d_bpb": ub},
+                "per_allaxis_unit_sign": {"kl": sk, "bpb": sb}}
             print(f"[HLCC] {role}: {result['sets'][role]['VERDICT']['verdict']} | KL better "
                   f"{result['sets'][role]['VERDICT']['kl']['positive']}/{result['sets'][role]['VERDICT']['kl']['n']} | bpb better "
                   f"{result['sets'][role]['VERDICT']['bpb']['positive']}/{result['sets'][role]['VERDICT']['bpb']['n']}", flush=True)
@@ -223,6 +256,25 @@ def main(argv=None) -> int:
         la.dump(a.out / "HLCC_RESULT.json", result)
         print(f"[HLCC] REGISTERED VERDICT (primary): {result['REGISTERED_VERDICT']}", flush=True)
         return 0
+    except BaseException as e:
+        if panel_read:        # the read is spent: record the attempt before exiting (cold review F4)
+            import traceback
+            infra = (isinstance(e, (hostbudget.LowMemoryAbort, KeyboardInterrupt)) or "CUDA" in str(e)
+                     or type(e).__name__ == "OutOfMemoryError")
+            rec = {"schema": 1, "record": "HLCC_ATTEMPT", "experiment": "HLCC-001",
+                   "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "pid": os.getpid(),
+                   "exception_type": type(e).__name__, "message": str(e), "traceback": traceback.format_exc(),
+                   "classification_hint": "infrastructure (rerun permitted, HLCC001_PREREG.md 9)" if infra
+                   else "deterministic or unknown (no verdict; read spent; HLCC001_PREREG.md 9)",
+                   "partial_per_row": partial,
+                   "code_sha256": {q.name: rls.sha256_file(q) for q in sorted(HERE.glob("*.py"))}}
+            d = a.out.parent / "attempts"
+            d.mkdir(parents=True, exist_ok=True)
+            fn = d / f"ATTEMPT_{time.strftime('%Y%m%dT%H%M%SZ', time.gmtime())}_{os.getpid()}.json"
+            with open(fn, "x", encoding="utf-8", newline="\n") as f:
+                json.dump(rec, f, indent=1, ensure_ascii=False, default=str)
+            print(f"[HLCC] attempt record written: {fn}", flush=True)
+        raise
     finally:
         if token:
             gpu_lease.release(token)
