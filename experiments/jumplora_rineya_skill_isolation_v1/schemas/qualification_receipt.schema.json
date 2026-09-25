@@ -17,8 +17,32 @@
     "model_loaded": {"type": "boolean"},
     "source_weight_files_read": {"type": "boolean"},
     "checks": {"type": "array", "items": {"type": "object", "required": ["name", "status"], "properties": {"name": {"type": "string"}, "status": {"enum": ["PASS", "FAIL"]}}}},
-    "resource_peak_measured": {"$ref": "resource.schema.json"},
-    "provenance": {"$ref": "run_manifest.schema.json#/definitions/provenance"}
+    "resource_peak_measured": {
+      "type": "object",
+      "properties": {
+        "cuda_peak_memory_allocated_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "cuda_peak_memory_reserved_bytes": {"type": ["integer", "null"], "minimum": 0},
+        "host_ram_low_water_mark_bytes": {"type": ["integer", "null"], "minimum": 0}
+      },
+      "additionalProperties": true
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["repository_url", "base_commit", "branch", "code_commit_at_qualification", "model_checkpoint", "tokenizer", "datasets", "precision", "seeds", "runtime"],
+      "properties": {
+        "repository_url": {"type": "string"},
+        "base_commit": {"type": ["string", "null"]},
+        "branch": {"type": ["string", "null"]},
+        "code_commit_at_qualification": {"type": ["string", "null"]},
+        "model_checkpoint": {"type": "object"},
+        "tokenizer": {"type": "object"},
+        "datasets": {"type": "object"},
+        "precision": {"type": "string"},
+        "seeds": {"type": "array", "items": {"type": "integer"}},
+        "runtime": {"type": "object"}
+      },
+      "additionalProperties": true
+    }
   },
   "additionalProperties": true
 }
