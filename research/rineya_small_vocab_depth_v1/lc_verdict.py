@@ -7,6 +7,7 @@ over categories. tests/test_linear_compensation.py asserts the two agree.
 """
 from __future__ import annotations
 
+import math
 import random
 
 SUPPORT_BAR = 0.20
@@ -22,6 +23,24 @@ def cat_mean_kl(rows: list[dict]) -> float:
         a[0] += r["kl"] * r["n"]
         a[1] += r["n"]
     return sum(s / n for s, n in by.values()) / len(by)
+
+
+def diagnostics(plain_rows: list[dict], comp_rows: list[dict]) -> dict:
+    """Observable after the fit: the spread of per-row log(LC/plain) KL, the spread of log plain KL,
+    and the minimum per-category effective n (sum w)^2 / sum w^2 of the plain weights w = kl * n.
+    Calibration (Amendment 5) found the null rate driven by the log-ratio spread even at FIXED
+    effective n, so both are recorded and the spreads gate the verdict."""
+    lr = [math.log(max(c["kl"], 1e-12) / max(p["kl"], 1e-12)) for p, c in zip(plain_rows, comp_rows)]
+    lk = [math.log(max(p["kl"], 1e-12)) for p in plain_rows]
+
+    def sd(x):
+        m = sum(x) / len(x)
+        return math.sqrt(sum((v - m) ** 2 for v in x) / (len(x) - 1))
+    w = {}
+    for r in plain_rows:
+        w.setdefault(r["category"], []).append(r["kl"] * r["n"])
+    return {"s_ratio_hat": sd(lr), "s_kl_hat": sd(lk),
+            "min_eff_n": min(sum(x) ** 2 / sum(y * y for y in x) for x in w.values())}
 
 
 def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: float = SUPPORT_BAR,
@@ -61,4 +80,8 @@ def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: fl
             "rows_per_category": {c: len(x) for c, x in sorted(by_cat.items())},
             "resamples": resamples, "seed": seed, "verdict": v,
             "size_precise": (lo >= PRECISE_LOWER) if v == "SUPPORTED" else None,
-            "ci_width": hi - lo}
+            "ci_width": hi - lo,
+            # Amendment 5: one-sided bootstrap tail fractions, for a CALIBRATED level alpha*
+            "boot_frac_le_0": sum(b <= 0 for b in boots) / len(boots),
+            "boot_frac_le_precise": sum(b <= PRECISE_LOWER for b in boots) / len(boots),
+            **diagnostics([P[i] for i in ids], [C[i] for i in ids])}
