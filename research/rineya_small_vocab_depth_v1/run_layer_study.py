@@ -80,6 +80,37 @@ class Stages:
         return res
 
 
+class Partial:
+    """Per-UNIT checkpoints for a long stage (a layer, a greedy evaluation, a strategy set, a frontier
+    config), kept in SCRATCH -- never in the records tree. A crash or a GPU reset (Windows TDR: the
+    driver reset the card at 03:44:50Z and killed S3 after 8 of 28 layers) then costs one unit, not
+    the stage. Units are reused ONLY under the same key (HOLDOUT split, panels, generation length and
+    the sha256 of every result-bearing code file), so nothing computed under other code or data is
+    ever reused. The stage result records how many units it reused (mode named, not implied).
+    Assumes per-unit determinism across processes, as G0b measured (384/384 text-identical)."""
+
+    def __init__(self, root, name: str, key: str):
+        self.path = None if root is None else Path(root) / f"{name}.partial.json"
+        self.key, self.units, self.reused = key, {}, 0
+        if self.path is not None and self.path.exists():
+            d = json.loads(self.path.read_text(encoding="utf-8"))
+            if d.get("key") == key:
+                self.units = d["units"]
+                self.reused = len(self.units)
+
+    def get(self, k: str):
+        return self.units.get(k)
+
+    def put(self, k: str, v) -> None:
+        self.units[k] = v
+        if self.path is not None:
+            self.path.parent.mkdir(parents=True, exist_ok=True)
+            tmp = self.path.with_suffix(".tmp")
+            with open(tmp, "w", encoding="utf-8", newline="\n") as f:
+                json.dump({"key": self.key, "units": self.units}, f, allow_nan=False)
+            os.replace(tmp, self.path)
+
+
 def build_items(rows, tok, teacher_out: dict, im_end: int):
     """Teacher-forced items. For chat rows the continuation is the TEACHER's own greedy output
     (what a distilled student should reproduce) plus <|im_end|>; for text rows every position."""
@@ -112,6 +143,8 @@ def main(argv=None) -> int:
     ap.add_argument("--min-layers", type=int, default=12)
     ap.add_argument("--gen-tokens", type=int, default=64)
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--partial-dir", type=Path, default=None,
+                    help="SCRATCH dir for per-unit checkpoints of S3-S6 (never the records tree)")
     ap.add_argument("--stages", default="S1,S2,S3,S4,S5,S6")
     ap.add_argument("--depths", default=",".join(map(str, DEPTHS)))
     ap.add_argument("--device", default="cuda")
@@ -164,6 +197,12 @@ def main(argv=None) -> int:
         L = model.config.num_hidden_layers
         full = list(range(L))
         st = Stages(a.out, a.resume, sub_record["sha256"])
+        partial_key = hashlib.sha256(json.dumps(
+            {"split": sub_record["sha256"], "panels": sha256_file(a.panels), "gen_tokens": a.gen_tokens,
+             "teacher": str(a.teacher), "max_rows_per_category": a.max_rows_per_category,
+             "code": {n: sha256_file(HERE / n) for n in ("run_layer_study.py", "layer_ablation.py",
+                                                           "virtual_student.py", "layer_select.py")}},
+            sort_keys=True).encode("utf-8")).hexdigest()
         V0 = vs.Vocab(None, a.teacher / "tokenizer.json")
         chat_sel = [r for r in sel if r["kind"] == "chat"]
         chat_hold = [r for r in hold if r["kind"] == "chat"]
@@ -218,27 +257,37 @@ def main(argv=None) -> int:
             st.run("S2_diagnostics", lambda: la.residual_diagnostics(model, items_sel, eot, dev))
 
         def single():
-            out = {}
+            out, pu = {}, Partial(a.partial_dir, "S3_single_ablation", partial_key)
             for l in full:
+                if pu.get(str(l)) is not None:
+                    out[str(l)] = pu.get(str(l))
+                    continue
                 kept = [k for k in full if k != l]
                 s, h = tf_metrics(kept, items_sel, H_sel), tf_metrics(kept, items_hold, H_hold)
                 out[str(l)] = {"select": strip(s), **split3(h, la.summarise), "holdout_generation": gen_metrics(kept),
                                "select_objective": category_mean_kl(s)}
+                pu.put(str(l), out[str(l)])
                 print(f"[single] L{l}: select obj {out[str(l)]['select_objective']:.4f}", flush=True)
                 hostbudget.guard(guard_gib, "layer study S3")
-            return {"layers": out}
+            return {"layers": out, "_partial_units_reused": pu.reused}
         S3 = st.run("S3_single_ablation", single) if "S3" in want else None
 
         def greedy():
-            cache = {}
+            cache, pu = {}, Partial(a.partial_dir, "S4_greedy_backward", partial_key)
 
             def evaluate(kept):
                 key = tuple(kept)
                 if key not in cache:
-                    cache[key] = category_mean_kl(tf_metrics(kept, items_sel, H_sel)) if len(kept) < L else 0.0
-                    hostbudget.guard(guard_gib, "layer study S4")
+                    k = ",".join(map(str, kept))
+                    if pu.get(k) is not None:
+                        cache[key] = pu.get(k)
+                    else:
+                        cache[key] = category_mean_kl(tf_metrics(kept, items_sel, H_sel)) if len(kept) < L else 0.0
+                        pu.put(k, cache[key])
+                        hostbudget.guard(guard_gib, "layer study S4")
                 return cache[key]
-            return {"trajectory": ls.greedy_backward(evaluate, L, a.min_layers), "evaluations": len(cache)}
+            return {"trajectory": ls.greedy_backward(evaluate, L, a.min_layers), "evaluations": len(cache),
+                    "_partial_units_reused": pu.reused}
         S4 = st.run("S4_greedy_backward", greedy) if "S4" in want else None
 
         def strategies():
@@ -250,10 +299,14 @@ def main(argv=None) -> int:
             if L == 28 and 19 in sets:
                 sets[19]["lineage_donor"] = [k for k in full if k not in LINEAGE_DONOR_DROPPED]
             done, out = {}, {}
+            pu = Partial(a.partial_dir, "S5_depth_strategies", partial_key)
             for n, strat in sets.items():
                 out[str(n)] = {}
                 for name, kept in strat.items():
                     key = tuple(kept)
+                    pk = ",".join(map(str, kept))
+                    if key not in done and pu.get(pk) is not None:
+                        done[key] = pu.get(pk)
                     if key not in done:
                         h = split3(tf_metrics(kept, items_hold, H_hold), la.summarise)
                         done[key] = {"kept": kept, **h,
@@ -261,10 +314,11 @@ def main(argv=None) -> int:
                                      "select2_objective": category_mean_kl(h["select2"]),
                                      "report_objective": category_mean_kl(h["report"]),
                                      "holdout_generation": gen_metrics(kept)}
+                        pu.put(pk, done[key])
                         hostbudget.guard(guard_gib, "layer study S5")
                     out[str(n)][name] = done[key]
                     print(f"[S5] {n}L {name}: select2 obj {done[key]['select2_objective']:.4f}", flush=True)
-            return {"depths": out}
+            return {"depths": out, "_partial_units_reused": pu.reused}
         S5 = st.run("S5_depth_strategies", strategies) if "S5" in want else None
 
         def vocab_frontier():
@@ -274,22 +328,26 @@ def main(argv=None) -> int:
             # Amendment 1: the frontier's layer set at each depth is chosen on SELECT2, never REPORT
             best = {int(n): min(v.values(), key=lambda x: x["select2_objective"])["kept"]
                     for n, v in S5["depths"].items()}
-            out = {}
+            out, pu = {}, Partial(a.partial_dir, "S6_vocab_frontier", partial_key)
             for voc in vocabs:
                 rows_v = cfg["vocab_size"] if voc.retained is None else int(voc.retained.numel())
                 for n in sorted({L} | set(best)):
                     kept = full if n == L else best[n]
                     params = pa.analytic(cfg, rows_v, n)["unique_physical_parameters"]
                     key = f"{voc.name}/{n}L"
+                    if pu.get(key) is not None:
+                        out[key] = pu.get(key)
+                        continue
                     out[key] = {"vocab": voc.name, "vocab_rows": rows_v, "n_layers": n, "kept": kept,
                                 "unique_params": params,
                                 "answer_bpb": split3(vs.answer_bpb(model, voc, ref_hold, kept, im_end, dev,
                                                                    chunk=min(chunk, 256)), vs.bpb_summary),
                                 "holdout_generation": gen_metrics(kept, voc)}
+                    pu.put(key, out[key])
                     print(f"[S6] {key}: {params:,} params, select2 bpb "
                           f"{out[key]['answer_bpb']['select2']['all']['bpb']:.4f}", flush=True)
                     hostbudget.guard(guard_gib, "layer study S6")
-            return {"configs": out}
+            return {"configs": out, "_partial_units_reused": pu.reused}
         if "S6" in want:
             st.run("S6_vocab_frontier", vocab_frontier)
 
