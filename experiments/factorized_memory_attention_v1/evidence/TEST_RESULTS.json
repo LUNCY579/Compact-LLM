@@ -1,18 +1,19 @@
 {
-  "qualified_head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
-  "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests/test_fma_qualification.py",
+  "qualified_head_sha": "PENDING_QUALIFICATION_RECEIPT_COMMIT",
+  "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
   "environment": {
-    "python": "3.13.5",
-    "torch": "2.10.0+cpu",
-    "pytest": "9.0.2",
-    "transformers": null,
-    "cuda_available": false
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "pytest": "9.1.1",
+    "transformers": "5.14.1",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU"
   },
-  "result": "PASS_SYNTHETIC_WITH_EXACT_HOST_BLOCKED",
-  "passed": 18,
+  "result": "PASS_SYNTHETIC_NATIVE_TINY_WITH_CHECKPOINT_BLOCKED",
+  "passed": 19,
   "skipped": 1,
   "failed": 0,
-  "skipped_scope": "Native Qwen3 checkpoint and RTX 4070 exact-host qualification were unavailable in the CPU-only agent runtime.",
+  "skipped_scope": "The external Supa checkpoint is not resident in the checkout; tiny native Qwen3 parity and g=1 v_proj bypass passed.",
   "covered": [
     "g=0 exact standard-value short circuit in the mechanical harness",
     "g=1 structural W_V bypass",
@@ -31,7 +32,8 @@
     "dense-vs-factorized toy equivalence plus dense-allocation guard",
     "dtype/device transfer and finite values",
     "micro-generation",
-    "full-MA analytical resource cost and parameter-matched M2"
+    "full-MA analytical resource cost and parameter-matched M2",
+    "tiny native Qwen3 g=0 parity and g=1 v_proj bypass"
   ],
-  "evidence_boundary": "Mechanical/synthetic tests only. Exact native checkpoint qualification remains BLOCKED."
+  "evidence_boundary": "Mechanical/synthetic tests plus tiny native Qwen3 wiring only. Supa checkpoint efficacy/calibration remains unrun."
 }

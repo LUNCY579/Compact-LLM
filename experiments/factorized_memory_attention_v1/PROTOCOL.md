@@ -89,10 +89,10 @@ M2 is mandatory because the primary paper explicitly notes that its reported qua
 16. Dtype/device transfer is supported.
 17. Qualification outputs are finite.
 18. Deterministic micro-generation smoke executes at g=0 and g=1.
-19. Parameter/storage resource probe is produced; RTX 4070 VRAM execution is BLOCKED on a CPU-only agent.
+19. Parameter/storage resource probe is produced; the available RTX 4070 probe exercised only the compact factorized bank and did not instantiate the dense table.
 20. No sealed/confirmation data are read by qualification or calibration tooling.
 
-Synthetic/mechanical tests are necessary but not sufficient. Exact native Qwen3 checkpoint execution and RTX 4070 resource measurement must be recorded before FMA-QUAL-001 can be called fully qualified.
+Synthetic/mechanical tests and a tiny native Qwen3 wiring check are necessary but not sufficient. Exact Supa checkpoint execution remains blocked because the external model weights are not resident; no language-quality or calibration result exists.
 
 ## Future efficacy gate
 
@@ -105,6 +105,6 @@ Any improvement must also be compared with M2. These thresholds are frozen here 
 
 ## Resource and claim policy
 
-The practical target is an RTX 4070 8 GB host. Full layer-specific N x d_v memory tables are costed analytically and are not materialized. Host-RAM or VRAM guards must not be weakened; a resource failure is BLOCKED.
+The practical target is an RTX 4070 8 GB host. Full layer-specific N x d_v memory tables are costed analytically and are not materialized. Host-RAM or VRAM guards must not be weakened; a resource failure is BLOCKED. The recorded probe used an NVIDIA GeForce RTX 4070 Laptop GPU with 8,585,216,000 total bytes and a compact factorized peak of 20,125,184 bytes.
 
 A successful mechanical qualification does not mean Memory Attention improves Rineya. Architecture efficacy requires later preregistered M0/M1/M2 measurements with hard-memory g=1, retention/capability evaluation, and the noninferiority gate above.

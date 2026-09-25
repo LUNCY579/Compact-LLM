@@ -2,7 +2,7 @@
   "experiment_id": "FMA-QUAL-001",
   "branch": "research/factorized-memory-attention-v1",
   "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
-  "qualified_head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
+  "qualified_head_sha": "PENDING_QUALIFICATION_COMMIT",
   "paper": {
     "title": "Memory Attention",
     "arxiv": "2609.28399",
@@ -74,62 +74,64 @@
   },
   "seed": 20260925,
   "runtime": {
-    "python": "3.13.5",
-    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
-    "torch": "2.10.0+cpu",
-    "pytest": "9.0.2",
-    "transformers": null
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cu124",
+    "pytest": "9.1.1",
+    "transformers": "5.14.1"
   },
   "resources": {
-    "agent_host_ram_total_bytes": 6236913664,
-    "agent_host_ram_available_bytes_at_probe": 3667619840,
-    "cuda_available": false,
-    "rtx_4070_probe": "BLOCKED",
-    "blocker": "Agent runtime is CPU-only; native checkpoint and RTX 4070 8GB exact-host execution were not available. No host-RAM or VRAM guard was weakened."
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "cuda_total_bytes": 8585216000,
+    "factorized_probe_peak_bytes": 20125184,
+    "factorized_probe_parameter_bytes_bf16": 11566080,
+    "full_dense_table_instantiated": false,
+    "checkpoint_blocker": "Supa model.safetensors is external/gitignored and was not resident; no checkpoint efficacy run was attempted."
   },
   "tests": {
     "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests/test_fma_qualification.py",
     "local_qualification_mirror": {
-      "passed": 18,
+      "passed": 19,
       "skipped": 1,
       "failed": 0,
       "elapsed_seconds_approx": 1.01,
-      "skip_reason": "Native Qwen3 checkpoint/RTX 4070 exact-host qualification unavailable on CPU-only agent."
+      "skip_reason": "External Supa checkpoint is not resident; tiny native Qwen3 wiring test passed."
     },
     "remote_commit_diff_whitespace_scan": "PASS",
     "remote_code_commit_files_changed": 8
   },
   "requirements": {
-    "01_g0_equivalence": "SYNTHETIC_PASS; native pretrained exact-host comparison BLOCKED",
+    "01_g0_equivalence": "SYNTHETIC_PASS; tiny native Qwen3 parity PASS; Supa checkpoint comparison BLOCKED",
     "02_g1_WV_bypass": "PASS",
     "03_token_ids": "PASS",
     "04_config_derived_shapes": "PASS",
     "05_exact_parameter_count": "PASS",
     "06_rank_scaling": "PASS",
     "07_normalization": "PASS",
-    "08_attention_masks": "STATIC_AND_TOY_PASS; native exact-host execution BLOCKED",
+    "08_attention_masks": "STATIC_AND_TOY_PASS; tiny native Qwen3 wiring PASS",
     "09_causal_no_future_leakage": "PASS",
-    "10_cache_semantics": "TOY_PASS; native exact-host cache run BLOCKED",
+    "10_cache_semantics": "TOY_PASS; native checkpoint cache run BLOCKED",
     "11_serialization_reload": "PASS",
     "12_baseline_not_mutated": "PASS",
     "13_frozen_backbone_contract": "PASS",
     "14_teacher_residual": "PASS",
     "15_dense_toy_equivalence": "PASS",
-    "16_dtype_device": "PASS_CPU",
+    "16_dtype_device": "PASS_CPU_AND_CUDA_PROBE",
     "17_no_nan_inf": "PASS",
     "18_micro_generation": "PASS_SYNTHETIC",
-    "19_resource_probe": "PASS_ANALYTICAL_AND_CPU; RTX_4070_BLOCKED",
+    "19_resource_probe": "PASS_ANALYTICAL_AND_RTX_4070_FACTORIAL_PROBE",
     "20_no_sealed_access": "PASS"
   },
   "qualification_result": {
     "mechanical_synthetic": "PASS",
-    "native_exact_host": "BLOCKED",
-    "overall": "BLOCKED_EXACT_HOST",
+    "native_exact_host": "BLOCKED_CHECKPOINT_ABSENT",
+    "overall": "MECHANICAL_PASS_CHECKPOINT_EFFICACY_BLOCKED",
     "architecture_efficacy": "NOT_EVALUATED"
   },
   "sealed_data_access": false,
   "training_performed": false,
   "evidence_classification": "mechanical/synthetic qualification evidence only; no architecture improvement claim",
-  "head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
+  "head_sha": "PENDING_QUALIFICATION_COMMIT",
   "receipt_parent_head_sha": "6df8b61ac0c8ddfdaaa633d3469bf143769e21af"
 }
