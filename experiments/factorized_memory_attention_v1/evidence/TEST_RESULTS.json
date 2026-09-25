@@ -1,10 +1,10 @@
 {
   "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
   "result": "PASS",
-  "passed": 22,
-  "skipped": 1,
+  "passed": 20,
+  "skipped": 0,
   "failed": 0,
-  "skipped_scope": "native Qwen3 integration tests skipped because Transformers is absent in the agent CPU runtime",
+  "skipped_scope": "none; native Qwen3 tiny integration ran with Transformers 5.14.1; external Supa checkpoint qualification was not run because weights are not resident",
   "synthetic_coverage": [
     "g=0 exact value-path identity",
     "g=1 structural W_V bypass",
@@ -24,5 +24,5 @@
     "micro-generation",
     "parameter-matched M2 budget"
   ],
-  "evidence_boundary": "Mechanical/synthetic qualification only. Native checkpoint and RTX 4070 qualification remain blocked on this agent host."
+  "evidence_boundary": "Mechanical/synthetic qualification only. Native Qwen3 was exercised on a tiny synthetic config; no Supa checkpoint efficacy or calibration result exists."
 }

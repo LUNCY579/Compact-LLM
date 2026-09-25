@@ -1,0 +1,105 @@
+{
+  "qualification_id": "FMA-QUAL-001",
+  "status": "MECHANICAL_PASS_NATIVE_BLOCKED",
+  "evidence_classification": "mechanical_qualification_only",
+  "repository": "LUNCY579/ChatBubble",
+  "branch": "research/factorized-memory-attention-v1",
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "head_sha": "PENDING_QUALIFICATION_COMMIT",
+  "paper": {
+    "title": "Memory Attention",
+    "arxiv": "2609.28399v1",
+    "url": "https://arxiv.org/abs/2609.28399"
+  },
+  "model": {
+    "identity": "Rineya-Supa-1.7.0-devfreeze",
+    "config_path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/config.json",
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer_path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/tokenizer.json",
+    "tokenizer_sha256_recorded": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config_path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/tokenizer_config.json",
+    "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "checkpoint": {
+      "path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/model.safetensors",
+      "sha256_recorded": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+      "present_in_git_checkout": false,
+      "reason": "large model weights are external/gitignored; native loading was not attempted"
+    },
+    "architecture": "Qwen3ForCausalLM",
+    "vocab_size": 151936,
+    "hidden_size": 1024,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "value_width": 1024,
+    "dtype": "bfloat16",
+    "tie_word_embeddings": true
+  },
+  "architecture": {
+    "modified_layers": "0..27 (28 layers)",
+    "rank": 32,
+    "gate_initial": 0.0,
+    "decisive_gate": 1.0,
+    "memory_formula": "HeadRMSNorm(U[token_ids] @ P_l)",
+    "value_formula": "(1-g_l) * XW_V,l + g_l * (K_l + M_l(token_ids))",
+    "key_for_memory_formula": "pre-RoPE native Qwen3 k_norm(k_proj(hidden_states))",
+    "mask_policy": "native causal attention mask unchanged"
+  },
+  "parameters": {
+    "shared_U": 4861952,
+    "per_layer_P": 917504,
+    "normalization": 3584,
+    "gate_parameters": 0,
+    "added_parameters": 5783040,
+    "transition_total_parameters": 601832960,
+    "hard_replacement_total_parameters": 572472832,
+    "standard_value_parameters_bypassed_at_g1": 29360128,
+    "literal_full_ma_parameters_calculated_only": 4356312576,
+    "literal_full_ma_bf16_bytes_calculated_only": 8712625152,
+    "matched_control": {
+      "kind": "uniform residual low-rank value adapter",
+      "rank": 101,
+      "added_parameters": 5791744,
+      "delta_parameters": 8704,
+      "delta_fraction": 0.0015050907481186366
+    }
+  },
+  "calibration": {
+    "performed": false,
+    "backbone_frozen_contract_available": true,
+    "teacher_target": "XW_V,l - K_l",
+    "data_ids": [],
+    "sealed_data_access": false
+  },
+  "tests": {
+    "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
+    "passed": 20,
+    "skipped": 0,
+    "failed": 0,
+    "native_qwen3_note": "tiny synthetic Qwen3 integration passed; external Supa checkpoint was not loaded because weights are not resident"
+  },
+  "runtime": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1",
+    "pytest": "9.1.1",
+    "cuda_available": true,
+    "cuda_device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "host_policy": "RTX 4070 8GB; no full dense table instantiation"
+  },
+  "resources": {
+    "resource_probe": "PASS",
+    "total_vram_bytes": 8585216000,
+    "factorized_probe_peak_bytes": 20125184,
+    "factorized_parameter_bytes_bf16": 11566080,
+    "full_table_guard": "enabled; literal full table not instantiated",
+    "sealed_data_access": false
+  },
+  "future_gate": {
+    "perplexity_degradation_max_fraction": 0.02,
+    "downstream_aggregate_degradation_max_percentage_points": 1.0,
+    "requires_M2_comparison": true,
+    "registered_before_efficacy": true
+  }
+}
