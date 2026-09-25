@@ -1,0 +1,77 @@
+{
+  "experiment": "gflowrl_reasoning_v1",
+  "repository": "LUNCY579/ChatBubble",
+  "remote": "https://github.com/LUNCY579/ChatBubble.git",
+  "reconnaissance": {
+    "origin_main_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+    "origin_main_verified_by": "git fetch --all --prune --tags; git rev-parse origin/main",
+    "current_branch_created_from_origin_main": true,
+    "soft_token_imported": false
+  },
+  "named_branch_inspection": {
+    "research/rola-ngu-factorial-v1": {"status": "missing_remote_ref"},
+    "research/maxrl-composable-skills-data-v2": {"status": "missing_remote_ref"},
+    "research/maxrl-comp002-pretraining-qualification-v1": {
+      "status": "inspected",
+      "sha": "21532b765269b19e6aabf8d596e7409be51b37ea",
+      "tip": "qual(maxrl-comp002): add source-bound Q0 handoff; keep native and training blocked"
+    },
+    "research/delta-multi-reasoning-factorial-v1": {
+      "status": "inspected",
+      "sha": "b8e40d377c9cd461cd30c215a2c713515904197b",
+      "tip": "docs(dmrf): amendment 2 -- I understated amendment 1; the second skill is free on EVERY endpoint"
+    },
+    "research/dmrf-pairwise-disjointness-v1": {
+      "status": "inspected",
+      "sha": "11f42f6bc11b8f9e235cb5951ca96a263259434a",
+      "tip": "audit(dmrf): enforce per-pair disjointness with live cross-schema collision controls"
+    }
+  },
+  "historical_lineage": {
+    "canonical_harness": "experiments/reasoning_posttraining_v1",
+    "rrp_003_anchor": {
+      "sha": "d417e100ac10d225145f9701914854d10c55b43f",
+      "subject": "feat(rrp-003): arm A1 -- the first lane in this programme authorized to train",
+      "verified_files": [
+        "experiments/reasoning_posttraining_v1/arm.py",
+        "experiments/reasoning_posttraining_v1/controller.py",
+        "experiments/reasoning_posttraining_v1/engine.py",
+        "experiments/reasoning_posttraining_v1/instrument.py",
+        "experiments/reasoning_posttraining_v1/tests/test_arm.py",
+        "experiments/reasoning_posttraining_v1/tests/test_controller.py",
+        "experiments/reasoning_posttraining_v1/tests/test_microfit_engine.py"
+      ]
+    },
+    "rrp_latest_inspected": {
+      "sha": "c2b09f74",
+      "subject": "research(rrp-006): the 4096 training window is refused by the contract, not by memory"
+    },
+    "retention_audit_anchor": {
+      "sha": "07e53b0e7d8ed1dd3243493b3a25b97b3988f4fd",
+      "subject": "docs(published-cores): withdraw the conflation account; report location, not mechanism",
+      "scope_note": "verified as a published-core retention/audit lineage commit, not treated as an RRP objective implementation"
+    },
+    "historical_terms_searched": [
+      "RRP-003",
+      "RRP-004",
+      "RRP-005",
+      "Forge-v2",
+      "GRPO",
+      "PPO",
+      "RL",
+      "rollout",
+      "logprob",
+      "reference model",
+      "preservation bank",
+      "retention audit"
+    ],
+    "safety_interpretation": "historical launch scripts and receipts were inspected for lineage only; no historical training or sealed-set access was replayed"
+  },
+  "paper": {
+    "arxiv": "2607.13394v1",
+    "title": "GFlowRL: Scaling Distribution-Matching RL to Large Language Models",
+    "paper_sha_binding": "paper identity is arXiv identifier; no paper source was copied into the repository",
+    "equations_bound": [2, 3, 4, 5, 6, 7, 8],
+    "paper_claim_limit": "implementation fidelity is not efficacy evidence"
+  }
+}

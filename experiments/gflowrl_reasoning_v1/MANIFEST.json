@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "experiment": "gflowrl_reasoning_v1",
+  "branch": "research/gflowrl-reasoning-v1",
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "payload_head_sha": "TO_BE_BOUND_AFTER_PAYLOAD_COMMIT",
+  "objective_config": "configs/initial_qualification.json",
+  "objective_config_sha256": "TO_BE_COMPUTED_AFTER_PAYLOAD_COMMIT",
+  "model": {
+    "name": "Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "checkpoint": "Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "checkpoint_status": "external/local-vault checkpoint not loaded",
+    "model_config": "Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze/config.json",
+    "model_config_sha256": "TO_BE_COMPUTED_AFTER_PAYLOAD_COMMIT"
+  },
+  "tokenizer": {
+    "path": "Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "tokenizer_status": "external/local-vault tokenizer not loaded",
+    "tokenizer_config": "Rineya_Published_Cores/Rineya-Supa-A1.1-1.1.0-devfreeze/tokenizer_config.json",
+    "tokenizer_config_sha256": "TO_BE_COMPUTED_AFTER_PAYLOAD_COMMIT"
+  },
+  "data": {
+    "optimization_splits": ["train", "dev"],
+    "confirmation_split": "confirmation",
+    "confirmation_access": "denied",
+    "dataset_status": "not selected or loaded before qualification",
+    "historical_726_row_dataset": "not assumed or used"
+  },
+  "arms": ["R0", "R1"],
+  "seed": 20260925,
+  "precision": "float64 qualification toy path; production precision unqualified",
+  "runtime": "see QUALIFICATION_RECEIPT.json runtime",
+  "package_versions": "see QUALIFICATION_RECEIPT.json runtime",
+  "resources": {
+    "target": "RTX 4070 8GB",
+    "exact_host_gate": "NOT_ESTABLISHED",
+    "objective_only_probe": true,
+    "model_training": false
+  },
+  "sealed_access": {
+    "denied": true,
+    "selection_or_tuning_used_confirmation": false
+  },
+  "self_binding_note": "payload_head_sha identifies the commit containing the implementation payload; the final branch head is reported by git verification because a commit cannot contain its own SHA without a self-referential hash."
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://luncy579.github.io/ChatBubble/gflowrl_reasoning_v1/result.schema.json",
+  "title": "GFlowRL Rineya per-example result",
+  "type": "object",
+  "required": ["experiment", "arm", "base_sha", "model", "tokenizer", "split", "seed", "rows", "metrics"],
+  "properties": {
+    "experiment": {"const": "gflowrl_reasoning_v1"},
+    "arm": {"enum": ["R0", "R1"]},
+    "base_sha": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
+    "model": {"type": "object"},
+    "tokenizer": {"type": "object"},
+    "split": {"enum": ["train", "dev", "confirmation"]},
+    "seed": {"type": "integer"},
+    "rows": {"type": "array"},
+    "metrics": {
+      "type": "object",
+      "required": ["pass_at_k", "exact_reward_distribution", "correct_solution_diversity", "reasoning_length"],
+      "properties": {
+        "pass_at_k": {"type": "object"},
+        "exact_reward_distribution": {"type": "object"},
+        "correct_solution_diversity": {"type": "object"},
+        "reasoning_length": {"type": "object"},
+        "base_retention": {"type": "object"},
+        "paired_repairs_damages": {"type": "object"},
+        "kl_policy_drift": {"type": "number"},
+        "gradient_norm": {"type": "number"},
+        "instability_events": {"type": "integer"},
+        "resources": {"type": "object"}
+      }
+    }
+  }
+}
