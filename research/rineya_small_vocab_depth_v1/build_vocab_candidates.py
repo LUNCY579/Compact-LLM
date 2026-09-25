@@ -88,6 +88,13 @@ def main(argv=None) -> int:
 
     fit = tu.load_corpus(a.corpus, "fit")
     held = tu.load_corpus(a.corpus, "heldout")
+    # Amendment 6 BUILD GATE: the untransformed artifact must pass every REJECT rule it is judged by.
+    # Registered rule 1 was never run on the identity tokenizer, and it rejected the teacher itself.
+    ident = tv.compare_on_rows(old, old, held)
+    if ident["roundtrip_failures"]:
+        raise SystemExit(f"IDENTITY tokenizer fails REJECT rule 1'': {ident['roundtrip_failures'][:5]}")
+    if tv.special_behaviour(old, old, {i: i for i in range(len(vocab) + len(tj['added_tokens']))})["violations"]:
+        raise SystemExit("IDENTITY tokenizer fails the special-token REJECT rule")
     counts = tu.count_tokens(old, fit)
     util_id = tu.mixture_utility(counts)
     util = {inv[i]: u for i, u in util_id.items() if i in inv}

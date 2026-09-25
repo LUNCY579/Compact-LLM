@@ -1,6 +1,6 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED, WITH AMENDMENTS 1-4 (before any result) AND 6 (after the vocabulary result, disclosed); end of document.
+> **STATUS: REGISTERED, WITH AMENDMENTS 1-5 (before any fit or layer score) AND 6 (after the vocabulary result, disclosed); end of document.
 > NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
@@ -731,38 +731,69 @@ The teacher's own tokenizer fails rule 1 on that same row (`vocab/VOCAB_RULE1_TE
 tokenizer. What it measures on this row is a normaliser property of the text, not pruning.
 
 The likely cause is canonical-ordering differences for these marks between the Rust normaliser in
-tokenizers 0.21.4 and Python's `unicodedata` 14.0.0. That is **not established**, and nothing here
-depends on it.
+tokenizers 0.21.4 and Python's `unicodedata` 14.0.0. That was **not established** when first written; A6.3 now
+establishes a narrower cause, and nothing here depends on it.
 
 The rule was never run on the identity candidate before registration. The fixture test did compare
 against both the teacher and NFC, but the fixtures contain no such marks. It is the same gap as
 every other gate in this programme that was never shown able to pass.
 
-### A6.3 The corrected rule 1′ is stricter in the relevant sense, not looser
+### A6.3 The cause is established: rule 1 tested canonical ORDER, and fidelity is canonical EQUIVALENCE
 
-**Rule 1′:** a candidate's `decode(encode(s))` must equal the **teacher's** `decode(encode(s))`,
-byte for byte, on every HELD-OUT row.
+On the row, the teacher's round-trip returns U+07F3 (combining class 230) followed by U+07FD
+(combining class 220). NFC orders these ascending, so NFC places U+07FD first.
 
-- **Result:** 0 differing rows for V1, V2, V3 and V4, out of 9,838.
-- **So:** pruning introduced no round-trip loss at all. All four candidates PASS rule 1′. With no
-  other REJECT and no FLAG, all four are **PASS**, and V2 stays the registered A1/A3 vocabulary.
-- **The NFC comparison stays reported:** each candidate fails it on exactly the one row the teacher
-  fails.
+The two strings have the same length (805) and the same character multiset, and they are
+canonically **equivalent**: NFC(a) == NFC(b). Nothing is lost in the round-trip. Rule 1 demanded
+canonical order, a property of the decoder's output normalisation form, which pruning cannot
+affect and which no tokenizer in this stack satisfies. Established independently by the reviewer
+(`VOCAB_RULE1_COLD_CHECK.md`, records `1fc8300`) and recomputed here.
 
-### A6.4 Why this is not moving the goalposts
+### A6.4 The repair adopted: rule 1″, canonical equivalence, with rule 1′ reported beside it
 
-1. The correction is forced by the **teacher's** behaviour, a positive control independent of how
-   any candidate performed.
-2. Rule 1′ is equality with the teacher, the strongest round-trip property a pruned tokenizer can
-   have. It is not a tolerance, and not a looser threshold.
-3. Both verdicts are recorded side by side: **REJECT under rule 1 as registered, PASS under 1′.** A
-   reader can apply either.
+**Rule 1″ (adopted):** `NFC(decode(encode(s))) == NFC(s)` on every HELD-OUT row.
 
-Asked of the independent reviewer before any use of V2 is reported: is this correction admissible,
-or should the vocabulary arms be reported as REJECT-by-registration with 1′ as a sensitivity
-analysis?
+- It is absolute, not relative to the artifact under test.
+- Its form is fixed by the Unicode standard, not by these data.
+- Its **positive control passes**: 0 failures for the teacher. So unlike rule 1, it can both fail
+  and pass.
+- **Result: 0 failures for V1, V2, V3, V4 and the teacher, out of 9,838**
+  (`vocab/VOCAB_RULE1_CORRECTIONS.json`).
 
-### A6.5 Measured, alongside (all registered expectations met)
+**Rule 1′ (reported beside it):** candidate round-trip == teacher round-trip, byte for byte. It
+also gives 0 differing rows for all four. But 1′ is a *no-regression* criterion. It cannot
+separate "pruning preserved correctness" from "pruning preserved a shared defect", and it *does*
+admit candidates rule 1 rejects, so it is looser in the sense that matters. The earlier phrasing,
+"not a looser tolerance", is **withdrawn**. The defence is not that the corrected rule is equally
+strict. The defence is that rule 1 measured the wrong thing, which the combining-class result shows
+on the teacher alone.
+
+**Two differently-motivated repairs agreeing, 0 and 0, is the evidence.** A correction tuned to
+these four candidates would not have produced that agreement.
+
+### A6.5 Admissibility, and the record
+
+The reviewer found the amendment admissible on four checkable grounds:
+1. the defect is demonstrable on the teacher alone, with no candidate involved;
+2. its direction does not depend on which candidates passed;
+3. both verdicts are recorded side by side, with `VOCAB_CANDIDATES.json` untouched;
+4. two independent repairs agree.
+
+**The registered verdict stays REJECT on the record. The REJECT belongs to the instrument, not the
+artifact.** Under rule 1″ all four candidates PASS (with no other REJECT and no FLAG), and V2
+remains the A1/A3 vocabulary.
+
+**New BUILD gate, implemented in `build_vocab_candidates.py`:** the identity (unpruned) tokenizer
+must pass every REJECT rule before any candidate is judged by it. The general principle: every rule
+of the form "the transformed artifact satisfies P" needs "the untransformed artifact satisfies P"
+at build time.
+
+**Regression check:** the builder with rule 1″ and the gate, re-run into scratch, reproduces all
+four candidates **byte-identically**: `file_sha256` is equal for every file. The rebuilt verdicts
+are PASS.
+
+### A6.6 Measured, alongside (all registered expectations met)
+
 
 | candidate | HELD-OUT token ratio | P99 per-row ratio | author's expectation |
 |---|---:|---:|---|
@@ -775,3 +806,94 @@ analysis?
   qualifying distinct words (qualifying fraction 0.994 / 0.955 / 0.891 / 0.729).
 - **G1:** 16/16 on the real candidates. Fixture word coverage is 0.987 / 0.955 / 0.919 / 0.893
   against floors of 0.860 / 0.805 / 0.777 / 0.750.
+
+---
+
+## Amendment 5 — 2026-09-25: the H-LC verdict is CALIBRATED (filed before any fit; numbered 5, placed after 6)
+
+**Status: no fit has run.** The queue is at G0b, and H-LC is its last step. Sources:
+`HLC_NULL_CALIBRATION.md` (`bb85685`), `HLC_NULL_ADDENDUM.md` (`d7eacb4`), and my own grids.
+
+### A5.1 The defect
+
+Amendment 4's power grid had no r = 0 cell. Under the mean-ratio null (the correct null for r:
+per-row LC/plain ratio with mean 1), the raw rule "lower 2.5 % bound > 0" was **anticonservative in
+every cell**:
+
+- reviewer: 0.038–0.152;
+- this calibration, uncalibrated column: 0.0225–0.168.
+
+**Three procedures were measured, and none is calibrated** (reviewer's 12-cell grids at the worst
+corner):
+
+| procedure | false-benefit rate | target |
+|---|---:|---:|
+| percentile bootstrap | 0.152 | 0.025 |
+| basic bootstrap | 0.210 | 0.025 |
+| sign-flip | 0.160 | 0.025 |
+
+A permutation test is exact for exchangeability, not for a mean-ratio null.
+
+### A5.2 The driver is the per-row log-ratio spread, not effective n
+
+- **Sign-flip grid:** calibrated at effective n 1.8 when the spread is 0.1–0.3, and 0.085 false
+  benefit when it is 0.6–1.0.
+- **Reviewer's bootstrap grid:** monotone in the spread in 3 of 3 rows; monotone in s_kl (which is
+  what moves effective n) in only 1 of 4 columns.
+- **So:** `min_eff_n` is recorded as an **information diagnostic only**. A guard that refused a
+  calibrated verdict for low effective n would be a too-strict gate; the reviewer withdrew that
+  suggestion.
+
+### A5.3 The calibrated verdict (`lc_verdict.calibrated`; table from `design/HLC_CALIBRATION.json`)
+
+- The observed spread `s_ratio_hat` (sd of per-row log LC/plain KL, measurable after the fit)
+  selects a band.
+- **Benefit** is certified when the bootstrap mass at or below 0 is under the band's level,
+  calibrated at the band's UPPER edge. The benefit null rate rises monotonically with the spread in
+  every measured row, so the upper edge is the conservative point.
+- **The size claim** attaches to SUPPORTED only, and is calibrated at its r = 0.10 boundary.
+- **Harm's** null rate FALLS with the spread, so "upper edge" would be anticonservative for it
+  (measured: 0.031 as applied with per-band levels). Harm therefore uses **one uniform level, the
+  minimum over bands: 0.01**.
+- **Calibration target:** 0.02, so that the registered 0.025 holds within Monte-Carlo error.
+
+| observed spread band | α benefit | α size | α harm |
+|---|---:|---:|---:|
+| ≤ 0.2 | 0.003 | 0.004 | 0.01 |
+| ≤ 0.45 | 0.001 | 0.002 | 0.01 |
+| ≤ 0.8 | 0.0005 | 0.001 | 0.01 |
+| > 0.8 | — **UNCALIBRATED** | — | — |
+
+**As applied**, with the band chosen from the noisy observed spread, headlined by the **worst**
+generative cell:
+
+| quantity | worst-cell rate |
+|---|---:|
+| false benefit | 0.01375 |
+| false size claim | 0.0133 |
+| false harm | 0.01875 |
+| false benefit under the harmful alternative (N2) | 0 |
+
+**Power** at r = 0.30 is 0.86–1.00 for spreads up to 0.45. It is 0.34–0.41 at spread 0.8, where
+44–48 % of draws fall UNCALIBRATED.
+
+The raw draws are 16,200 committed verdict outputs: `design/band_*.jsonl.gz`. They cover 4 bands ×
+3 s_kl, with per cell 800 null, 300 boundary, 150 power and 100 N2 draws.
+
+**Canary test:** `test_code_rule_reproduces_the_calibration_analysis` re-derives the three
+worst-cell rates from those draws through `lc_verdict.calibrated` itself and requires equality with
+the recorded numbers. Its first run caught the analysis counting size claims on REAL_BUT_SMALL
+draws, which the code never makes. The analysis was aligned to the code.
+
+### A5.4 Binding constraints, registered, not footnoted
+
+- **The table is valid only for** BOOTSTRAP_SEED = 17, BOOTSTRAP_RESAMPLES = 2000, and the REPORT
+  category sizes it was simulated at. Any other combination returns **UNCALIBRATED** (tested).
+- **The seed is load-bearing.** Every calibration draw used the same resample-index pattern that
+  deployment will, so the bootstrap's Monte-Carlo component is perfectly correlated across draws
+  and is *not* averaged away by 800 draws.
+
+### A5.5 Pre-declared, before any number exists
+
+**If the realised spread is above 0.8, H-LC ends UNCALIBRATED.** It then reports r and its interval
+and certifies nothing. That is the honest outcome of this design, not a failure of the run.

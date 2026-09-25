@@ -33,21 +33,28 @@ def main():
            "amendment": 6, "heldout_rows": len(held),
            "python_unicodedata_version": unicodedata.unidata_version, "tokenizers_version": tokenizers.__version__,
            "teacher_fails_registered_rule1": [r["id"] for r, t, n in zip(held, tdec, nfc) if t != n],
+           "teacher_fails_rule1_double_prime": [r["id"] for r, t, n in zip(held, tdec, nfc)
+                                                if unicodedata.normalize("NFC", t) != n],
            "candidates": {}}
     for d in sorted(p for p in vdir.iterdir() if p.is_dir() and p.name[:1] == "V"):
         new = tokenizers.Tokenizer.from_file(str(d / "tokenizer.json"))
         ndec = [new.decode(e.ids, skip_special_tokens=False) for e in new.encode_batch(texts, add_special_tokens=False)]
         res["candidates"][d.name] = {
             "rule1_prime_rows_differing_from_teacher": [r["id"] for r, a, b in zip(held, ndec, tdec) if a != b],
+            "rule1_double_prime_canonical_equivalence_failures":
+                [r["id"] for r, a, n in zip(held, ndec, nfc) if unicodedata.normalize("NFC", a) != n],
             "registered_rule1_failures": [r["id"] for r, a, n in zip(held, ndec, nfc) if a != n],
             "tokenizer_sha256": hashlib.sha256((d / "tokenizer.json").read_bytes()).hexdigest()}
         c = res["candidates"][d.name]
         c["rule1_prime"] = "PASS" if not c["rule1_prime_rows_differing_from_teacher"] else "FAIL"
-    out = vdir / "VOCAB_RULE1_TEACHER_EQUIVALENCE.json"
+        c["rule1_double_prime"] = "PASS" if not c["rule1_double_prime_canonical_equivalence_failures"] else "FAIL"
+    out = vdir / (sys.argv[4] if len(sys.argv) > 4 else "VOCAB_RULE1_TEACHER_EQUIVALENCE.json")
     with open(out, "x", encoding="utf-8", newline="\n") as f:
         json.dump(res, f, indent=1, ensure_ascii=False)
     print(json.dumps({"teacher_fails_rule1": res["teacher_fails_registered_rule1"],
-                      **{k: (v["rule1_prime"], len(v["registered_rule1_failures"])) for k, v in res["candidates"].items()}}))
+                      "teacher_fails_rule1pp": res["teacher_fails_rule1_double_prime"],
+                      **{k: (v["rule1_prime"], v["rule1_double_prime"], len(v["registered_rule1_failures"]))
+                         for k, v in res["candidates"].items()}}))
 
 
 if __name__ == "__main__":

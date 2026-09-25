@@ -165,3 +165,63 @@ def test_torch_free_verdict_objective_equals_the_study_objective():
     rows = [{"id": f"r{i}", "category": f"c{i % 4}", "n": rng.randint(5, 400), "kl": rng.random() * 3,
              "top1": 0.5, "top5": 0.9, "nll": None, "nll_teacher": None} for i in range(40)]
     assert abs(lv.cat_mean_kl(rows) - rls.category_mean_kl(la.summarise(rows))) < 1e-12
+
+
+
+def _raw(**kw):
+    import lc_verdict as lv
+    v = {"verdict": "INCONCLUSIVE", "size_precise": None, "seed": 17, "resamples": 2000,
+         "rows_per_category": dict(lv.CALIBRATED_FOR["rows_per_category"]), "support_bar": 0.20,
+         "relative_reduction_r": 0.3, "boot_frac_le_0": 0.5, "boot_frac_le_precise": 0.5, "s_ratio_hat": 0.1}
+    v.update(kw)
+    return v
+
+
+def test_calibrated_verdict_branches():
+    """Amendment 5: every branch of the registered verdict, including the binding constraint."""
+    import lc_verdict as lv
+    c = lv.calibrated
+    assert c(_raw(verdict="UNDERPOWERED"))["verdict"] == "UNDERPOWERED"
+    assert c(_raw(seed=18, boot_frac_le_0=0.0))["verdict"] == "UNCALIBRATED"          # binding: seed
+    assert c(_raw(resamples=1000, boot_frac_le_0=0.0))["verdict"] == "UNCALIBRATED"   # binding: resamples
+    rows = dict(lv.CALIBRATED_FOR["rows_per_category"]); rows["text_python"] = 6
+    assert c(_raw(rows_per_category=rows, boot_frac_le_0=0.0))["verdict"] == "UNCALIBRATED"
+    assert c(_raw(s_ratio_hat=1.0, boot_frac_le_0=0.0))["verdict"] == "UNCALIBRATED"  # above 0.8
+    assert c(_raw(s_ratio_hat=2.0, boot_frac_le_0=0.0))["verdict"] == "UNCALIBRATED"  # beyond the table
+    v = c(_raw(boot_frac_le_0=0.002, boot_frac_le_precise=0.001))
+    assert v["verdict"] == "SUPPORTED" and v["size_precise"] is True and v["calibration_band"] == 0.2
+    assert c(_raw(boot_frac_le_0=0.002, boot_frac_le_precise=0.2))["size_precise"] is False
+    assert c(_raw(boot_frac_le_0=0.004))["verdict"] == "INCONCLUSIVE"          # 0.004 >= alpha 0.003
+    assert c(_raw(s_ratio_hat=0.3, boot_frac_le_0=0.002))["verdict"] == "INCONCLUSIVE"   # band 0.45: alpha 0.001
+    assert c(_raw(relative_reduction_r=0.1, boot_frac_le_0=0.001))["verdict"] == "REAL_BUT_SMALL"
+    assert c(_raw(relative_reduction_r=-0.5, boot_frac_le_0=0.995))["verdict"] == "HARMFUL"   # mass above 0 = 0.005
+    assert c(_raw(relative_reduction_r=-0.5, boot_frac_le_0=0.985))["verdict"] == "INCONCLUSIVE"
+
+
+def test_code_rule_reproduces_the_calibration_analysis():
+    """CANARY: re-derive the as-applied worst-cell rates from the 16,200 committed raw draws through
+    lc_verdict.calibrated itself; they must equal the numbers design/HLC_CALIBRATION.json recorded.
+    A mismatch means the code does not implement the rule that was calibrated."""
+    import gzip
+    import json
+    from collections import defaultdict
+    import lc_verdict as lv
+    d = HERE / "design"
+    rec = json.loads((d / "HLC_CALIBRATION.json").read_text(encoding="utf-8"))
+    g = defaultdict(list)
+    for f in sorted(d.glob("band_*.jsonl.gz")):
+        for line in gzip.open(f, "rt", encoding="utf-8"):
+            x = json.loads(line)
+            v = lv.calibrated(_raw(verdict=x["verdict"], relative_reduction_r=x["relative_reduction_r"],
+                                   boot_frac_le_0=x["boot_frac_le_0"], boot_frac_le_precise=x["boot_frac_le_precise"],
+                                   s_ratio_hat=x["s_ratio_hat"]))
+            g[(x["band_s_ratio"], x["s_kl"], x["kind"])].append(v)
+    assert sum(len(v) for v in g.values()) == 16200
+    rate = lambda xs, f: sum(1 for x in xs if f(x)) / len(xs)
+    fb = max(rate(v, lambda y: y["verdict"] in ("SUPPORTED", "REAL_BUT_SMALL")) for k, v in g.items() if k[2] == "null")
+    fh = max(rate(v, lambda y: y["verdict"] == "HARMFUL") for k, v in g.items() if k[2] == "null")
+    fs = max(rate(v, lambda y: bool(y["size_precise"])) for k, v in g.items() if k[2] == "boundary")
+    assert fb == rec["max_null_false_benefit_as_applied"]
+    assert fh == rec["max_null_false_harm_as_applied"]
+    assert fs == rec["max_boundary_false_size_as_applied"]
+    assert fb <= 0.02 and fh <= 0.02 and fs <= 0.02

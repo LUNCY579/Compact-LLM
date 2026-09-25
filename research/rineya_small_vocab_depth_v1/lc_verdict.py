@@ -85,3 +85,60 @@ def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: fl
             "boot_frac_le_0": sum(b <= 0 for b in boots) / len(boots),
             "boot_frac_le_precise": sum(b <= PRECISE_LOWER for b in boots) / len(boots),
             **diagnostics([P[i] for i in ids], [C[i] for i in ids])}
+
+
+# ---------------------------------------------------------------------------------------------------
+# Amendment 5: the REGISTERED verdict is calibrated (design/HLC_CALIBRATION.json, from
+# design/hlc_calibration_sim.py + design/hlc_calibration_analysis.py, target 0.02 so that the 0.025
+# target holds within Monte-Carlo error). The raw rule above (lower 2.5 % bound > 0) was measured
+# anticonservative under the mean-ratio null (up to 0.168 false benefit), driven by the per-row
+# log-ratio spread -- NOT by effective n. Each band of the OBSERVED spread s_ratio_hat carries a
+# one-sided benefit level calibrated at the band's UPPER edge (the benefit null rate rises with the
+# spread, monotone in every measured row), and a size level calibrated at the r = 0.10 boundary. The
+# harm null rate FALLS with the spread, so harm uses ONE uniform level, the minimum over bands.
+# As applied (band chosen from the noisy observed spread) the worst generative cell gave: false
+# benefit 0.01375, false size claim 0.0167, false harm 0.01875, false benefit under the harmful
+# alternative 0.
+# BINDING: the table is valid only for BOOTSTRAP_SEED = 17, BOOTSTRAP_RESAMPLES = 2000 and the REPORT
+# category sizes it was simulated at; any other combination returns UNCALIBRATED.
+# (upper edge of s_ratio_hat, alpha_benefit, alpha_size); above 0.8 no benefit level is achievable
+CALIBRATION = ((0.2, 0.003, 0.004), (0.45, 0.001, 0.002), (0.8, 0.0005, 0.001), (1.2, None, None))
+ALPHA_HARM = 0.01
+CALIBRATED_FOR = {"seed": 17, "resamples": 2000,
+                  "rows_per_category": {"abstention_unknown": 14, "concise_reasoning": 16, "conversation": 18,
+                                        "grounded_extraction": 13, "instruction_writing": 14, "long_context": 15,
+                                        "text_english_prose": 9, "text_javascript": 8, "text_markdown": 10,
+                                        "text_python": 7}}
+
+
+def calibrated(v: dict) -> dict:
+    """The REGISTERED H-LC verdict from a raw `verdict()` result.
+      UNDERPOWERED   raw guard (subsampled dry runs only)
+      UNCALIBRATED   seed / resamples / category sizes differ from the calibration, or the observed
+                     spread is above 0.8: r and its interval are reported, nothing is certified
+      SUPPORTED      boot_frac_le_0 < alpha_benefit(band) and r >= 0.20
+      REAL_BUT_SMALL boot_frac_le_0 < alpha_benefit(band) and r < 0.20
+      HARMFUL        bootstrap mass above 0 < ALPHA_HARM
+      INCONCLUSIVE   otherwise
+    min_eff_n is an INFORMATION diagnostic only: calibration was measured to follow the spread, not
+    effective n, so refusing a calibrated verdict for low effective n would be a too-strict gate."""
+    out = {**v, "verdict_uncalibrated": v["verdict"], "size_precise_uncalibrated": v["size_precise"],
+           "calibration_band": None, "alpha_benefit": None, "alpha_size": None, "alpha_harm": None,
+           "size_precise": None}
+    if v["verdict"] == "UNDERPOWERED":
+        return out
+    binding = (v["seed"] == CALIBRATED_FOR["seed"] and v["resamples"] == CALIBRATED_FOR["resamples"]
+               and v["rows_per_category"] == CALIBRATED_FOR["rows_per_category"])
+    band = next((b for b in CALIBRATION if v["s_ratio_hat"] <= b[0]), None)
+    if not binding or band is None or band[1] is None:
+        return {**out, "verdict": "UNCALIBRATED", "calibration_band": None if band is None else band[0],
+                "uncalibrated_reason": ("seed/resamples/category sizes differ from the calibration" if not binding
+                                        else "observed spread above the calibrated range")}
+    _, a_b, a_s = band
+    benefit = v["boot_frac_le_0"] < a_b
+    harm = (1 - v["boot_frac_le_0"]) < ALPHA_HARM
+    vc = ("SUPPORTED" if benefit and v["relative_reduction_r"] >= v["support_bar"] else
+          "REAL_BUT_SMALL" if benefit else "HARMFUL" if harm else "INCONCLUSIVE")
+    return {**out, "verdict": vc, "calibration_band": band[0], "alpha_benefit": a_b, "alpha_size": a_s,
+            "alpha_harm": ALPHA_HARM,
+            "size_precise": (v["boot_frac_le_precise"] < a_s) if vc == "SUPPORTED" else None}

@@ -216,7 +216,8 @@ def main(argv=None) -> int:
                                     "reading": "negative = a bigger L2 fit gain goes with a bigger KL reduction (a good proxy)"}
         report_ids = sorted(i for i, p in sub.items() if p == "report")
         arm = result["arms"]["selected"]
-        result["H_LC"] = verdict(arm["plain"]["kl"]["per_item"], arm["lc"]["kl"]["per_item"], report_ids)
+        # Amendment 5: the registered verdict is the CALIBRATED one; the raw fields stay in the record
+        result["H_LC"] = lv.calibrated(verdict(arm["plain"]["kl"]["per_item"], arm["lc"]["kl"]["per_item"], report_ids))
         result["follow_up_choice_by_SELECT2"] = min(result["arms"], key=lambda k: result["arms"][k]["select2_objective"]["lc"])
         result["runtime"] = {"flags": rt, "python": sys.version.split()[0], "torch": torch.__version__,
                              "device": torch.cuda.get_device_name(0) if dev == "cuda" else "cpu",

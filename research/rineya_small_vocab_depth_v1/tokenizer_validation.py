@@ -51,14 +51,25 @@ def roundtrip_ok(tok, text: str, ids: list[int]) -> bool:
 
 
 def compare_on_rows(old, new, rows: list[dict]) -> dict:
+    """Amendment 6: REJECT rule 1 is now rule 1'' -- round-trip CANONICAL EQUIVALENCE,
+    NFC(decode(encode(s))) == NFC(s). The registered rule 1 (decode(encode(s)) == NFC(s), canonical
+    ORDER) rejected the unpruned teacher on a row whose marks come back canonically equivalent but
+    in non-canonical order (U+07F3 ccc 230 before U+07FD ccc 220). Rule 1 and the teacher-relative
+    rule 1' are still computed and reported."""
     texts = [r["text"] for r in rows]
     oi, ni = encode_ids(old, texts), encode_ids(new, texts)
     per = []
     fails = []
+    order_fails, teacher_diffs = [], []
     for r, a, b in zip(rows, oi, ni):
-        ok = roundtrip_ok(new, r["text"], b)
+        dec = new.decode(b, skip_special_tokens=False)
+        ok = unicodedata.normalize("NFC", dec) == unicodedata.normalize("NFC", r["text"])     # rule 1''
         if not ok:
             fails.append(r["id"])
+        if not roundtrip_ok(new, r["text"], b):                                                 # rule 1
+            order_fails.append(r["id"])
+        if dec != old.decode(a, skip_special_tokens=False):                                     # rule 1'
+            teacher_diffs.append(r["id"])
         per.append({"id": r["id"], "category": r["category"], "old": len(a), "new": len(b),
                     "ratio": len(b) / max(1, len(a)), "roundtrip": ok})
 
@@ -77,7 +88,8 @@ def compare_on_rows(old, new, rows: list[dict]) -> dict:
         cats[x["category"]].append(x)
     worst = sorted(per, key=lambda x: -x["ratio"])[:max(5, len(per) // 100)]
     return {"all": agg(per), "by_category": {c: agg(v) for c, v in sorted(cats.items())},
-            "roundtrip_failures": fails, "worst_p99": worst}
+            "roundtrip_failures": fails, "rule1_canonical_order_failures": order_fails,
+            "rule1_prime_teacher_differences": teacher_diffs, "worst_p99": worst}
 
 
 def pretokenized_words(tok, text: str) -> list[str]:
