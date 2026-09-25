@@ -42,7 +42,8 @@
     "added_params": 5791744,
     "delta_vs_M1_params": 8704,
     "delta_fraction_vs_M1": 0.0015050907481186366,
-    "interpretation": "0.151% parameter-budget mismatch; close enough for the preregistered added-capacity control"
+    "interpretation": "0.151% parameter-budget mismatch; preregistered added-capacity control"
   },
-  "normalization_note": "The paper specifies RMSNorm independently within each KV head but does not state p_norm explicitly. This compact Rineya implementation uses one learned d_h=128 scale vector per modified layer, broadcast across KV heads, while computing a separate RMS denominator per token and KV head."
+  "normalization_note": "Paper specifies RMSNorm independently within each token/KV head. The authors' reference implementation instantiates RMSNorm(head_dim), so Rineya uses one learned d_h=128 scale vector per layer, broadcast across KV heads, with a separate RMS denominator per token and KV head.",
+  "key_ordering_note": "MA values use the raw key projection before QK normalization and before RoPE; Qwen3 scoring applies k_norm and RoPE after the raw key contributes to V."
 }

@@ -1,9 +1,9 @@
 """Optional native Qwen3 retrofit for exact-host qualification.
 
-This module is intentionally import-safe when Transformers is absent.  It follows
-native Qwen3 Q/K normalization and RoPE, but changes only value construction.
-Input token IDs are supplied by lightweight model forward hooks because native
-attention receives hidden states, not IDs.
+Memory Attention values use the raw Qwen3 key projection before QK
+normalization and before RoPE, matching arXiv:2609.28399 and the authors'
+reference implementation. Input token IDs are supplied by lightweight model
+forward hooks because native attention receives hidden states rather than IDs.
 """
 from __future__ import annotations
 
@@ -16,21 +16,25 @@ from torch import Tensor
 
 from .memory import FactorizedMemoryBank
 
-try:  # exact-host path only
-    from transformers.models.qwen3.modeling_qwen3 import Qwen3Attention, apply_rotary_pos_emb, repeat_kv
+try:
+    from transformers.models.qwen3.modeling_qwen3 import (
+        Qwen3Attention,
+        apply_rotary_pos_emb,
+        repeat_kv,
+    )
     TRANSFORMERS_AVAILABLE = True
-except Exception:  # pragma: no cover - ordinary CPU CI environment
-    Qwen3Attention = object  # type: ignore[misc,assignment]
-    apply_rotary_pos_emb = None  # type: ignore[assignment]
-    repeat_kv = None  # type: ignore[assignment]
+except Exception:
+    Qwen3Attention = object
+    apply_rotary_pos_emb = None
+    repeat_kv = None
     TRANSFORMERS_AVAILABLE = False
 
 
-class Qwen3FMAAttention(Qwen3Attention):  # type: ignore[misc]
+class Qwen3FMAAttention(Qwen3Attention):
     """Drop-in Qwen3 attention whose V path can be switched to factorized MA."""
 
     def __init__(self, config, layer_idx: int, bank: FactorizedMemoryBank) -> None:
-        if not TRANSFORMERS_AVAILABLE:  # pragma: no cover
+        if not TRANSFORMERS_AVAILABLE:
             raise RuntimeError("Transformers with Qwen3 support is required")
         super().__init__(config, layer_idx)
         object.__setattr__(self, "_fma_bank_ref", weakref.ref(bank))
@@ -44,7 +48,6 @@ class Qwen3FMAAttention(Qwen3Attention):  # type: ignore[misc]
         return bank
 
     def bind_root(self, root) -> None:
-        # weakref avoids registering the whole model as a child module.
         self._fma_root_ref = weakref.ref(root)
 
     def _token_ids(self) -> Tensor:
@@ -58,8 +61,7 @@ class Qwen3FMAAttention(Qwen3Attention):  # type: ignore[misc]
     def load_native_(self, native) -> list[str]:
         native_state = native.state_dict()
         own = self.state_dict()
-        # Bank tensors are extra; every native tensor must still exist exactly.
-        missing = [k for k in native_state if k not in own]
+        missing = [key for key in native_state if key not in own]
         if missing:
             raise RuntimeError(f"retrofit missing native tensors: {missing}")
         with torch.no_grad():
@@ -77,13 +79,23 @@ class Qwen3FMAAttention(Qwen3Attention):  # type: ignore[misc]
         past_key_values=None,
         **kwargs: Any,
     ):
+        gate = float(self.fma_bank.gates[self.fma_bank.slot(self.layer_idx)].item())
+        if gate == 0.0:
+            return super().forward(
+                hidden_states=hidden_states,
+                position_embeddings=position_embeddings,
+                attention_mask=attention_mask,
+                past_key_values=past_key_values,
+                **kwargs,
+            )
+
         input_shape = hidden_states.shape[:-1]
         hidden_shape = (*input_shape, -1, self.head_dim)
 
-        query = self.q_norm(self.q_proj(hidden_states).view(hidden_shape)).transpose(1, 2)
-        key_pre_rope_heads = self.k_norm(self.k_proj(hidden_states).view(hidden_shape)).transpose(1, 2)
-        # [B, KV, T, d_h] -> [B, T, KV*d_h] for factorized MA.
-        key_pre_rope = key_pre_rope_heads.transpose(1, 2).reshape(*input_shape, -1)
+        query_raw_heads = self.q_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+        key_raw_heads = self.k_proj(hidden_states).view(hidden_shape).transpose(1, 2)
+        key_pre_rope = key_raw_heads.transpose(1, 2).reshape(*input_shape, -1)
+
         token_ids = self._token_ids()
         value_flat = self.fma_bank.value(
             hidden_states=hidden_states,
@@ -94,14 +106,13 @@ class Qwen3FMAAttention(Qwen3Attention):  # type: ignore[misc]
         )
         value = value_flat.view(hidden_shape).transpose(1, 2)
 
+        query = self.q_norm(query_raw_heads)
+        key_for_scores = self.k_norm(key_raw_heads)
         cos, sin = position_embeddings
-        query, key = apply_rotary_pos_emb(query, key_pre_rope_heads, cos, sin)
+        query, key = apply_rotary_pos_emb(query, key_for_scores, cos, sin)
         if past_key_values is not None:
             key, value = past_key_values.update(key, value, self.layer_idx)
 
-        # Qualification deliberately uses the eager mathematical path.  It leaves
-        # the causal mask unchanged and mirrors native Qwen3 GQA expansion.  Fused
-        # kernel support is a later performance study, not a qualification shortcut.
         key_expanded = repeat_kv(key, self.num_key_value_groups)
         value_expanded = repeat_kv(value, self.num_key_value_groups)
         attn_weights = torch.matmul(query, key_expanded.transpose(2, 3)) * self.scaling
@@ -129,27 +140,33 @@ def _input_post_hook(module, args, kwargs, output):
     return output
 
 
-def convert_qwen3_model(model, bank: FactorizedMemoryBank, *, layers: tuple[int, ...] | list[int]):
-    """Replace selected native attention modules without modifying source checkpoint files."""
-    if not TRANSFORMERS_AVAILABLE:  # pragma: no cover
+def convert_qwen3_model(model, bank: FactorizedMemoryBank, *, layers):
+    """Replace selected native attention modules without mutating checkpoint files."""
+    if not TRANSFORMERS_AVAILABLE:
         raise RuntimeError("Transformers with Qwen3 support is required")
     decoder = model.model.layers
-    selected = sorted(set(int(i) for i in layers))
+    selected = sorted(set(int(index) for index in layers))
     if selected:
         native0 = decoder[selected[0]].self_attn
-        bank.to(device=next(native0.parameters()).device, dtype=next(native0.parameters()).dtype)
+        bank.to(
+            device=next(native0.parameters()).device,
+            dtype=next(native0.parameters()).dtype,
+        )
     model.fma_memory_bank = bank
     records = []
-    for idx in selected:
-        if idx < 0 or idx >= len(decoder):
-            raise ValueError(f"layer {idx} outside model")
-        native = decoder[idx].self_attn
-        replacement = Qwen3FMAAttention(model.config, idx, bank)
-        replacement = replacement.to(device=next(native.parameters()).device, dtype=next(native.parameters()).dtype)
+    for index in selected:
+        if index < 0 or index >= len(decoder):
+            raise ValueError(f"layer {index} outside model")
+        native = decoder[index].self_attn
+        replacement = Qwen3FMAAttention(model.config, index, bank)
+        replacement = replacement.to(
+            device=next(native.parameters()).device,
+            dtype=next(native.parameters()).dtype,
+        )
         reused = replacement.load_native_(native)
         replacement.bind_root(model)
-        decoder[idx].self_attn = replacement
-        records.append({"layer_index": idx, "reused_native_tensors": reused})
+        decoder[index].self_attn = replacement
+        records.append({"layer_index": index, "reused_native_tensors": reused})
     handles = [
         model.register_forward_pre_hook(_input_pre_hook, with_kwargs=True),
         model.register_forward_hook(_input_post_hook, with_kwargs=True),

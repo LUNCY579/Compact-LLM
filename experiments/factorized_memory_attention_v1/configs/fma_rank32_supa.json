@@ -10,7 +10,7 @@
   "headwise_rmsnorm_scale_sharing": "one d_h scale vector per layer, broadcast across KV heads",
   "calibration": {
     "backbone_frozen": true,
-    "target": "Norm(U[token] @ P_l) ~= X W_V,l - K_l(pre-RoPE, after native Qwen3 k_norm)",
+    "target": "Norm(U[token] @ P_l) ~= X W_V,l - K_l(raw k_proj output, before Qwen3 k_norm and RoPE)",
     "sealed_data_forbidden": true
   },
   "seed": 20260925
