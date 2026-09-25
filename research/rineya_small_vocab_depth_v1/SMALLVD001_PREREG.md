@@ -1,6 +1,6 @@
 # SMALLVD-001 PREREG — smaller Rineya students by vocabulary and depth reduction: structural qualification and surgery-only damage
 
-> **STATUS: REGISTERED, WITH AMENDMENTS 1-4 (all filed before any layer was scored; end of document).
+> **STATUS: REGISTERED, WITH AMENDMENTS 1-4 (before any result) AND 6 (after the vocabulary result, disclosed); end of document.
 > NO STUDENT BUILT, NO LAYER CONFIGURATION SCORED, NO CANDIDATE VOCABULARY SELECTED.** G0 identity is complete (all nine recorded hashes match, `G0_TEACHER_LINEAGE.json`).
 > Nothing below has been measured on a pruned model at the time of this commit.
 >
@@ -707,3 +707,71 @@ its objective is tested equal to the study's.
 
 The fit set, the position-0 exclusion, both arms, the 0.20 bar, the bootstrap, and the fact that
 nothing here touches A2/A3, §5 or §10.
+
+---
+
+## Amendment 6 — 2026-09-25, filed AFTER the vocabulary result: REJECT rule 1 rejected the identity tokenizer
+
+**This amendment follows a result and says so.** The vocabulary candidates were built at
+2026-09-25T01:41Z (`vocab/VOCAB_CANDIDATES.json`). That record is untouched, and it stands as
+written. It is the reason this amendment exists.
+
+### A6.1 What was registered, and what it returned
+
+Registered REJECT rule 1 (§3): *"any row fails exact round-trip (decode(encode(s)) == NFC(s))"*.
+
+**All four candidates were REJECTED by it, on exactly ONE of 9,838 HELD-OUT rows** —
+`py:97f3297b4e9e2c4d`, the same row in all four. It is a Python regex character class made of
+Arabic and Syriac combining marks. No other REJECT rule fired, and no FLAG fired.
+
+### A6.2 The missing positive control: the rule rejects the unpruned teacher
+
+The teacher's own tokenizer fails rule 1 on that same row (`vocab/VOCAB_RULE1_TEACHER_EQUIVALENCE.json`,
+`teacher_fails_registered_rule1: ["py:97f3297b4e9e2c4d"]`). So rule 1 rejects the **identity**
+tokenizer. What it measures on this row is a normaliser property of the text, not pruning.
+
+The likely cause is canonical-ordering differences for these marks between the Rust normaliser in
+tokenizers 0.21.4 and Python's `unicodedata` 14.0.0. That is **not established**, and nothing here
+depends on it.
+
+The rule was never run on the identity candidate before registration. The fixture test did compare
+against both the teacher and NFC, but the fixtures contain no such marks. It is the same gap as
+every other gate in this programme that was never shown able to pass.
+
+### A6.3 The corrected rule 1′ is stricter in the relevant sense, not looser
+
+**Rule 1′:** a candidate's `decode(encode(s))` must equal the **teacher's** `decode(encode(s))`,
+byte for byte, on every HELD-OUT row.
+
+- **Result:** 0 differing rows for V1, V2, V3 and V4, out of 9,838.
+- **So:** pruning introduced no round-trip loss at all. All four candidates PASS rule 1′. With no
+  other REJECT and no FLAG, all four are **PASS**, and V2 stays the registered A1/A3 vocabulary.
+- **The NFC comparison stays reported:** each candidate fails it on exactly the one row the teacher
+  fails.
+
+### A6.4 Why this is not moving the goalposts
+
+1. The correction is forced by the **teacher's** behaviour, a positive control independent of how
+   any candidate performed.
+2. Rule 1′ is equality with the teacher, the strongest round-trip property a pruned tokenizer can
+   have. It is not a tolerance, and not a looser threshold.
+3. Both verdicts are recorded side by side: **REJECT under rule 1 as registered, PASS under 1′.** A
+   reader can apply either.
+
+Asked of the independent reviewer before any use of V2 is reported: is this correction admissible,
+or should the vocabulary arms be reported as REJECT-by-registration with 1′ as a sensitivity
+analysis?
+
+### A6.5 Measured, alongside (all registered expectations met)
+
+| candidate | HELD-OUT token ratio | P99 per-row ratio | author's expectation |
+|---|---:|---:|---|
+| V1 | 1.0005 | 1.002 | — |
+| V2 | 1.0027 | 1.017 | V2 ≤ 1.05 |
+| V3 | 1.0070 | 1.039 | — |
+| V4 | 1.0196 | 1.094 | V4 ≤ 1.12 |
+
+- **Word-level invariance (REJECT 5):** 0 violations over 68,670 / 65,955 / 61,575 / 50,362
+  qualifying distinct words (qualifying fraction 0.994 / 0.955 / 0.891 / 0.729).
+- **G1:** 16/16 on the real candidates. Fixture word coverage is 0.987 / 0.955 / 0.919 / 0.893
+  against floors of 0.860 / 0.805 / 0.777 / 0.750.
