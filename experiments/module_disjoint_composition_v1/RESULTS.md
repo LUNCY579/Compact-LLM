@@ -19,6 +19,13 @@ All predictions registered in `PREREG.md` + Amendments 1–3 before the correspo
 
 ## P4 — the output convention is carried by ATTENTION, not MLP
 
+> **ERRATUM (2026-09-25, CONVENTION-LOC-001 step 1, `../convention_localization_v1/RESULTS_STEP1.md`).**
+> The heading's inference is **wrong**. P4 measured only the MLP-only half, which gives 0 periods, and read
+> "attention carries it" from that. The attention-plus-layer-norm-only half (H1c = SPARSE + dOpallo|ATTN+LN,
+> full strength, the same V2 bank) also gives **0/192** trailing periods, while the full donor gives 178. The
+> convention needs **both** module groups together. The measured number below (0 periods for MLP-only)
+> stands. The localisation to attention does not.
+
 `MODULE_DISJOINT` takes Opallo's contribution **only from MLP**, at coefficient 1.0 — that is
 ‖dOpallo\|MLP‖ = 1.058, i.e. 78% of the full Opallo delta's norm and 60.8% of its energy.
 
