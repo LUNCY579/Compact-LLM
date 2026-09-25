@@ -29,7 +29,7 @@
   "dtype": "float64 for deterministic qualification tensors",
   "evidence_classification": "mechanical qualification; no model-quality or improvement claim",
   "gflowrl": false,
-  "head_sha_at_measurement": "1eb064602a83bdb11b42c0f38248035bb28a9e1f",
+  "head_sha_at_measurement": "ec4c2a375696c20ce38bc5f79f8c97bdf77d5af6",
   "milestone": "STR-QUAL-001",
   "native_checkpoint_loaded": false,
   "qualification_scope": "mechanical tensor qualification only",
@@ -38,6 +38,7 @@
     "batch": 2,
     "device": "cuda",
     "dtype": "float32",
+    "elapsed_seconds": 0.3548432000006869,
     "embedding_numel": 187,
     "embedding_width": 11,
     "finite": true,
@@ -47,14 +48,16 @@
       "torch": "2.6.0+cu124"
     },
     "logits_numel": 136,
-    "loss": 0.21259646117687225,
+    "loss": 0.21976211667060852,
     "measured_tensor_bytes": 1292,
+    "microsteps": 5,
+    "microsteps_per_second": 14.090730779088682,
     "note": "CUDA peak allocation/reservation measured for this exact tensor path.",
     "seed": 20260925,
     "sequence": 4,
     "status": "MEASURED",
     "vocabulary": 17,
-    "vram_peak_allocated_bytes": 17057280,
+    "vram_peak_allocated_bytes": 17058304,
     "vram_peak_reserved_bytes": 23068672
   },
   "runtime": {
@@ -70,6 +73,7 @@
   "status": "PASS",
   "tests": {
     "command": "python -m pytest -q experiments/soft_token_reasoning_v1/tests",
+    "passed": 19,
     "sealed_tests": false
   },
   "training_status": "not_run"
