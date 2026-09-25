@@ -46,12 +46,24 @@ ABSTAIN_RE = re.compile(r"\b(unknown|cannot be determined|not (?:stated|mentione
                         r"cannot (?:tell|answer))\b", re.I)
 
 
-def configure_runtime(seed: int = 17) -> dict:
+CUDA_MEMORY_FRACTION = 0.78
+
+
+def configure_runtime(seed: int = 17, device: str | None = None) -> dict:
+    """On WINDOWS the driver backs CUDA allocations beyond physical VRAM with SYSTEM RAM instead of
+    failing, so PyTorch's caching allocator never sees the out-of-memory that makes it free its cache
+    -- it grows into host RAM. The first real layer study reached 7.9 GB on the 8 GB card and dragged
+    the host to 0.44 GiB free. A per-process cap makes the allocator free-and-retry INSIDE the cap,
+    and a genuine overrun fails loudly (CUDA OOM) instead of spilling silently."""
     torch.manual_seed(seed)
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
     torch.set_float32_matmul_precision("highest")
-    return {"tf32": False, "matmul_precision": "highest", "seed": seed}
+    out = {"tf32": False, "matmul_precision": "highest", "seed": seed, "cuda_memory_fraction": None}
+    if device is not None and str(device).startswith("cuda") and torch.cuda.is_available():
+        torch.cuda.set_per_process_memory_fraction(CUDA_MEMORY_FRACTION, 0)
+        out["cuda_memory_fraction"] = CUDA_MEMORY_FRACTION
+    return out
 
 
 @contextlib.contextmanager

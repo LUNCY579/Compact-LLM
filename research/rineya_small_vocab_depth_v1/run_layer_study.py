@@ -136,7 +136,7 @@ def main(argv=None) -> int:
         import torch
         import tokenizers
         import transformers
-        rt = la.configure_runtime(17)
+        rt = la.configure_runtime(17, a.device)
         dev = a.device
         chunk = 128 if dev == "cpu" else 512      # logits chunk: host RAM on CPU, VRAM on GPU
         rows = [json.loads(l) for l in a.panels.read_text(encoding="utf-8").splitlines() if l.strip()]

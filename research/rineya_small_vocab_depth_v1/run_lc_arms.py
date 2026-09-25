@@ -83,7 +83,7 @@ def main(argv=None) -> int:
     try:
         import tokenizers
         import torch
-        rt = la.configure_runtime(17)
+        rt = la.configure_runtime(17, a.device)
         dev = a.device
         S1 = json.loads((a.study / "S1_teacher_outputs.json").read_text(encoding="utf-8"))
         S3 = json.loads((a.study / "S3_single_ablation.json").read_text(encoding="utf-8"))
