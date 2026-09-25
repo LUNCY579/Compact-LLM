@@ -118,10 +118,15 @@ def final_hidden(model, ids, mask):
     return out.last_hidden_state
 
 
-# Eager attention materialises B x heads x T x T fp32 scores per layer. B*T^2 <= 1.6e7 keeps that
-# under ~1 GB on the 8 GB card next to 2.4 GB of fp32 weights (16 long-context rows at 2.7K tokens
-# would need ~7.5 GB at prefill).
-QUAD_BUDGET = 16_000_000
+# Eager attention materialises B x heads x T x T fp32 scores per layer -- and ~3 copies of that at
+# once (scores, masked scores, softmax output). The first budget, B*T^2 <= 1.6e7, allowed B = 2 at the
+# 2.8K-token long-context prompts: ~3 GB transient on top of 2.4 GB of fp32 weights, which filled the
+# 8 GB card; Windows then spilled GPU allocations into SYSTEM RAM and the layer study's own S1 took
+# the host to 0.44 GiB free (committed 28.7 GiB). The RAM guard stood down, correctly, and every
+# retry would have repeated it. 6e6 forces B = 1 at that length (~1.5 GB transient) and still
+# batches the short rows (B = 6 at 1K tokens). Batching changes numerics only at fp32 rounding, and
+# the teacher reference and every student go through the same batching function.
+QUAD_BUDGET = 6_000_000
 
 
 def batches_by_length(items: list[dict], max_tokens: int, max_rows: int = 64,
