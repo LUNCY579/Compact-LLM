@@ -1,4 +1,12 @@
-# Runbook: the two exploratory GPU batteries
+# Runbook: the two exploratory GPU batteries, then CONFIRM-002 Stage A and Stage B
+
+> **UPDATED 2026-09-25: the operator authorised the full chain ("chain Stage A and Stage B after the
+> batteries").** Launch `experiments/composition_confirmation_v2/run_chain.py`, NOT `run_gpu_batteries.py`
+> alone. Use the same WMI command below, with the target replaced by `…\composition_confirmation_v2\run_chain.py`,
+> cwd `…\composition_confirmation_v2`, log `run_chain.log` and rc file `CHAIN_RC.json`. The chain runs the
+> batteries, then Stage A. It runs Stage B only if Stage A exited 0, and Stage B's own preflight also requires
+> Stage A's canary PASS and no pending extension. Progress is in `CHAIN_STATUS.json`. The whole window is
+> about 3.5 h.
 
 **Authorised by the operator on 2026-09-24:** "run the batteries when DOSELORA sends ended."
 **Trigger:** the DOSELORA-001 / SMALLVD-001 session sends "ended". Do not use the lock file's absence
