@@ -152,17 +152,22 @@ def verify(spec: str, out: Path) -> None:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--arms", nargs="+", default=["beta:0.5", "beta:0.6", "beta:0.9", "H1", "H1c"])
-    ap.add_argument("--control-only", action="store_true")
+    ap.add_argument("--control-only", action="store_true", help="run the positive control and the partition check, then exit")
+    ap.add_argument("--no-controls", action="store_true",
+                    help="skip both checks; only for a driver that ran --control-only earlier in the SAME run")
     a = ap.parse_args()
-    worst = positive_control()
-    print(f"positive control: max |SPARSE + 0.75*(ADD-100 - SPARSE) - ADD-O75| = {worst:.3e} (tol {CONTROL_TOL})", flush=True)
-    if worst > CONTROL_TOL:
-        raise SystemExit("POSITIVE CONTROL FAILED: the recipe does not reproduce ADD-O75")
-    if a.control_only:
-        raise SystemExit(0)
-    sq = partition_check()
-    print(f"partition check: dOpallo squared norm MLP {sq['MLP']:.4f}, ATTN_LN {sq['ATTN_LN']:.4f}, OTHER 0 "
-          f"(MLP share of energy {sq['MLP'] / (sq['MLP'] + sq['ATTN_LN']):.3f})", flush=True)
+    if not a.no_controls:
+        worst = positive_control()
+        print(f"positive control: max |SPARSE + 0.75*(ADD-100 - SPARSE) - ADD-O75| = {worst:.3e} (tol {CONTROL_TOL})", flush=True)
+        if worst > CONTROL_TOL:
+            raise SystemExit("POSITIVE CONTROL FAILED: the recipe does not reproduce ADD-O75")
+        sq = partition_check()
+        print(f"partition check: dOpallo squared norm MLP {sq['MLP']:.4f}, ATTN_LN {sq['ATTN_LN']:.4f}, OTHER 0 "
+              f"(MLP share of energy {sq['MLP'] / (sq['MLP'] + sq['ATTN_LN']):.3f})", flush=True)
+        if a.control_only:
+            raise SystemExit(0)
+    else:
+        print("controls skipped (--no-controls): the calling driver ran them in this run", flush=True)
     for spec in a.arms:
         name = f"ADD-O{round(float(spec[5:]) * 100):02d}" if spec.startswith("beta:") else spec
         out = HERE / "arms" / name

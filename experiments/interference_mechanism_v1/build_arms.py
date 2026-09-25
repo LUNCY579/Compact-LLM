@@ -161,11 +161,19 @@ if __name__ == "__main__":
     ap.add_argument("--arms", nargs="+", default=list(ARMS))
     ap.add_argument("--outdir", type=Path, default=HERE / "arms")
     ap.add_argument("--smoke-keys", nargs="*", default=None, help="restrict to these tensors (smoke test only)")
+    ap.add_argument("--control-only", action="store_true", help="run the positive controls, then exit")
+    ap.add_argument("--no-controls", action="store_true",
+                    help="skip the controls; only for a driver that ran --control-only earlier in the SAME run")
     a = ap.parse_args()
-    worst = positive_controls(a.smoke_keys)
-    print("positive controls (max abs error):", {k: f"{v:.2e}" for k, v in worst.items()}, flush=True)
-    if any(v > TOL for v in worst.values()):
-        raise SystemExit("POSITIVE CONTROL FAILED")
+    if not a.no_controls:
+        worst = positive_controls(a.smoke_keys)
+        print("positive controls (max abs error):", {k: f"{v:.2e}" for k, v in worst.items()}, flush=True)
+        if any(v > TOL for v in worst.values()):
+            raise SystemExit("POSITIVE CONTROL FAILED")
+        if a.control_only:
+            raise SystemExit(0)
+    else:
+        print("controls skipped (--no-controls): the calling driver ran them in this run", flush=True)
     for arm in a.arms:
         out = a.outdir / arm
         print(json.dumps(build(arm, out, a.smoke_keys)), flush=True)
