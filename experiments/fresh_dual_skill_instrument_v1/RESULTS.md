@@ -7,6 +7,14 @@ collected under the shared GPU lease. Instrument admitted as **attempt 2 of 2** 
 
 ## Headline
 
+> **CONFIRMATION RESULT (2026-09-24, CONFIRM-001, fresh content-disjoint bank, 864 rows, read
+> once; `../composition_confirmation_v1/RESULTS.md`).** Attenuation replicates and is confirmed:
+> AVG loses 116/447 (26%), and ADD-100 beats AVG by +82 (C1, C2 pass). **The claim below that
+> interference is "not distinguishable from zero" does NOT replicate:** under the registered
+> period-tolerant rule, ADD-100 loses 56 rows and gains 22 (net −34, p = 1.5e-4). That is 3.8–11.4%
+> of SPARSE's skill, and the registered ≤ 10% margin (C3) failed. Every lost row is a genuine content
+> error: none is formatting residue.
+
 > **CORRECTED 2026-09-24 (Erratum 3).** The paragraph that stood here led with a post-hoc result.
 > Read in registration order:
 
