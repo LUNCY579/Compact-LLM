@@ -1,0 +1,127 @@
+{
+  "experiment_id": "FMA-QUAL-001",
+  "branch": "research/factorized-memory-attention-v1",
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "qualified_head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
+  "paper": {
+    "title": "Memory Attention",
+    "arxiv": "2609.28399",
+    "version": "v1",
+    "equation_audit": {
+      "standard": "Q=XW_Q, K=XW_K, V=XW_V",
+      "memory": "M=Norm(E[s])",
+      "memory_value": "Q=XW_Q, K=XW_K, V=K+M",
+      "rope": "Q^R=RoPE(Q), K^R=RoPE(K), V=K+M",
+      "qwen3_ordering": "Rineya uses raw k_proj output for V before QK normalization and before RoPE; this matches the authors' reference implementation."
+    }
+  },
+  "model": {
+    "name": "Rineya-Supa-1.7.0-devfreeze",
+    "config_path": "Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze/config.json",
+    "config_git_blob_sha": "f5c3703b78ae2a478ae15b247e9f855e0ce2107b",
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "checkpoint_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "baseline_serialized_parameters": 596049920,
+    "dtype": "bfloat16",
+    "vocab_size": 151936,
+    "hidden_size": 1024,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "value_width": 1024
+  },
+  "architecture": {
+    "modified_layers": 28,
+    "layer_indices": "0..27",
+    "rank": 32,
+    "shared_U_shape": [151936, 32],
+    "per_layer_P_shape": [32, 1024],
+    "added_parameter_count": 5783040,
+    "added_fraction_of_baseline": 0.009702274601429356,
+    "transition_gate_trainable": false,
+    "hard_memory_gate": 1.0,
+    "standard_WV_parameters_bypassed_at_g1": 29360128,
+    "hard_replacement_total_params_if_WV_removed": 572472832
+  },
+  "parameter_matched_control": {
+    "arm": "M2",
+    "kind": "residual low-rank value adapter",
+    "rank": 101,
+    "added_parameter_count": 5791744,
+    "delta_vs_M1": 8704,
+    "delta_fraction_vs_M1": 0.0015050907481186366
+  },
+  "literal_full_MA_cost": {
+    "parameter_count": 4356312576,
+    "bf16_bytes": 8712625152,
+    "bf16_gib": 8.114264488220215,
+    "instantiated": false
+  },
+  "calibration": {
+    "prepared": true,
+    "performed": false,
+    "data_ids": [],
+    "teacher_target": "X W_V,l - K_raw,l, with K_raw before QK normalization and RoPE",
+    "backbone_freeze_contract_tested": true
+  },
+  "seed": 20260925,
+  "runtime": {
+    "python": "3.13.5",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "torch": "2.10.0+cpu",
+    "pytest": "9.0.2",
+    "transformers": null
+  },
+  "resources": {
+    "agent_host_ram_total_bytes": 6236913664,
+    "agent_host_ram_available_bytes_at_probe": 3667619840,
+    "cuda_available": false,
+    "rtx_4070_probe": "BLOCKED",
+    "blocker": "Agent runtime is CPU-only; native checkpoint and RTX 4070 8GB exact-host execution were not available. No host-RAM or VRAM guard was weakened."
+  },
+  "tests": {
+    "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests/test_fma_qualification.py",
+    "local_qualification_mirror": {
+      "passed": 18,
+      "skipped": 1,
+      "failed": 0,
+      "elapsed_seconds_approx": 1.01,
+      "skip_reason": "Native Qwen3 checkpoint/RTX 4070 exact-host qualification unavailable on CPU-only agent."
+    },
+    "remote_commit_diff_whitespace_scan": "PASS",
+    "remote_code_commit_files_changed": 8
+  },
+  "requirements": {
+    "01_g0_equivalence": "SYNTHETIC_PASS; native pretrained exact-host comparison BLOCKED",
+    "02_g1_WV_bypass": "PASS",
+    "03_token_ids": "PASS",
+    "04_config_derived_shapes": "PASS",
+    "05_exact_parameter_count": "PASS",
+    "06_rank_scaling": "PASS",
+    "07_normalization": "PASS",
+    "08_attention_masks": "STATIC_AND_TOY_PASS; native exact-host execution BLOCKED",
+    "09_causal_no_future_leakage": "PASS",
+    "10_cache_semantics": "TOY_PASS; native exact-host cache run BLOCKED",
+    "11_serialization_reload": "PASS",
+    "12_baseline_not_mutated": "PASS",
+    "13_frozen_backbone_contract": "PASS",
+    "14_teacher_residual": "PASS",
+    "15_dense_toy_equivalence": "PASS",
+    "16_dtype_device": "PASS_CPU",
+    "17_no_nan_inf": "PASS",
+    "18_micro_generation": "PASS_SYNTHETIC",
+    "19_resource_probe": "PASS_ANALYTICAL_AND_CPU; RTX_4070_BLOCKED",
+    "20_no_sealed_access": "PASS"
+  },
+  "qualification_result": {
+    "mechanical_synthetic": "PASS",
+    "native_exact_host": "BLOCKED",
+    "overall": "BLOCKED_EXACT_HOST",
+    "architecture_efficacy": "NOT_EVALUATED"
+  },
+  "sealed_data_access": false,
+  "training_performed": false,
+  "evidence_classification": "mechanical/synthetic qualification evidence only; no architecture improvement claim"
+}

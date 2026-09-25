@@ -1,8 +1,14 @@
 {
   "kind": "FMA_RESOURCE_PROBE",
+  "qualified_head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
   "python": "3.13.5",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
   "torch": "2.10.0+cpu",
   "cuda_available": false,
+  "host_ram": {
+    "total_bytes": 6236913664,
+    "available_bytes_at_probe": 3667619840
+  },
   "shape": {
     "vocab_size": 151936,
     "hidden_size": 1024,
@@ -16,29 +22,22 @@
     "query_width": 2048
   },
   "budget": {
-    "vocab_size": 151936,
-    "hidden_size": 1024,
-    "value_width": 1024,
-    "head_dim": 128,
-    "modified_layers": 28,
     "rank": 32,
     "shared_token_table_params": 4861952,
     "layer_projection_params": 917504,
     "normalization_params": 3584,
     "added_fma_params": 5783040,
-    "transition_model_total_params": 601832960,
-    "hard_replacement_model_total_params": 572472832,
-    "removed_standard_value_params": 29360128,
+    "factorized_bf16_bytes": 11566080,
     "full_ma_params": 4356312576,
     "full_ma_bf16_bytes": 8712625152,
-    "factorized_bf16_bytes": 11566080,
+    "full_ma_bf16_gib": 8.114264488220215,
     "control_rank": 101,
-    "control_added_params": 5791744,
-    "control_budget_delta_params": 8704,
-    "control_budget_delta_fraction": 0.0015050907481186366
+    "control_added_params": 5791744
   },
-  "cuda": {
+  "full_ma_instantiated": false,
+  "rtx_4070": {
     "status": "BLOCKED",
-    "reason": "agent runtime is CPU-only; no RTX 4070 VRAM claim made"
-  }
+    "reason": "Agent runtime is CPU-only; no RTX 4070 VRAM measurement or native checkpoint load was possible."
+  },
+  "guard_policy": "No host-RAM or VRAM guard was weakened."
 }

@@ -1,28 +1,37 @@
 {
-  "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
-  "result": "PASS",
-  "passed": 22,
+  "qualified_head_sha": "e5c1a7813151abeda3891e9e33cb484ad7273610",
+  "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests/test_fma_qualification.py",
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "pytest": "9.0.2",
+    "transformers": null,
+    "cuda_available": false
+  },
+  "result": "PASS_SYNTHETIC_WITH_EXACT_HOST_BLOCKED",
+  "passed": 18,
   "skipped": 1,
   "failed": 0,
-  "skipped_scope": "native Qwen3 integration tests skipped because Transformers is absent in the agent CPU runtime",
-  "synthetic_coverage": [
-    "g=0 exact value-path identity",
+  "skipped_scope": "Native Qwen3 checkpoint and RTX 4070 exact-host qualification were unavailable in the CPU-only agent runtime.",
+  "covered": [
+    "g=0 exact standard-value short circuit in the mechanical harness",
     "g=1 structural W_V bypass",
-    "token lookup IDs",
-    "config-derived shapes",
-    "exact parameter count and rank scaling",
-    "head-wise RMSNorm",
+    "exact token lookup IDs",
+    "repository-config-derived shape contract",
+    "exact rank-32 parameter count and rank scaling",
+    "per-token/per-KV-head RMSNorm semantics",
+    "raw-key-before-QK-norm/RoPE source ordering",
+    "attention-mask pass-through",
     "causal prefix behavior",
-    "cache continuation parity",
+    "cache continuation parity in the deterministic toy harness",
     "serialization/reload",
-    "source mutation guard",
+    "baseline mutation guard",
     "frozen-backbone calibration contract",
-    "teacher residual",
-    "dense-vs-factorized toy equivalence",
-    "dtype/device transfer",
-    "finite values",
+    "hand-verifiable teacher residual and calibration loss",
+    "dense-vs-factorized toy equivalence plus dense-allocation guard",
+    "dtype/device transfer and finite values",
     "micro-generation",
-    "parameter-matched M2 budget"
+    "full-MA analytical resource cost and parameter-matched M2"
   ],
-  "evidence_boundary": "Mechanical/synthetic qualification only. Native checkpoint and RTX 4070 qualification remain blocked on this agent host."
+  "evidence_boundary": "Mechanical/synthetic tests only. Exact native checkpoint qualification remains BLOCKED."
 }
