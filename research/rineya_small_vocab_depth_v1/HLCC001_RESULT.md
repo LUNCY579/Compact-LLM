@@ -4,6 +4,8 @@
 
 **Registered verdict (PRIMARY, V4_32768/20): CONFIRMED** · size_large = **False** · §8 licence: CONFIRMED without size_large: the DIRECTION only is licensed -- among rows from these pools, with this T, more rows improve than worsen on both measures; the initialisation recommendation does NOT change.
 
+**Independent cold read:** Rineya Delta scored §7 and §8 blind from the JSON (records b8eb3a7), then compared with this document (e17e1d0): every number recomputed with independent binomial and order-statistic code matches; forecasts 5/7; the §8 reading "CONFIRMED without size_large, so direction only" is confirmed. `hlcc001-20260925/HLCC_RESULT_COLD_READ.md`.
+
 ## Run integrity
 
 - One attempt, rc 0, lease `hlcc001` acquired and released; no attempt records (no failure after the panel boundary).
@@ -42,7 +44,7 @@ The direction survives collapsing every shared generator (121 KL / 36 bpb units 
 | F6 | LC flip rate < plain (PRIMARY, teacher-vocabulary generations) | 0.698 vs 0.979 | MET |
 | F7 | sensitivity agrees in direction on KL | yes | MET |
 
-5/7 met. The two misses are the same fact seen twice: on the recommended student the answer-likelihood gain is real but smaller than forecast.
+5/7 met. The two misses are correlated misses on the SAME limb (answer nats on the recommended student): F2 is the fraction of rows improving and F3 the certified median bound -- they can come apart, and here both fall short. The KL bound (x1.666) is a bound, and size_large is a JOINT annotation: the KL limb alone is not called large.
 
 ## Descriptive (registered as descriptive; never a verdict)
 
@@ -62,13 +64,15 @@ Computed after the verdict from the recorded per-row values. Eight strata, no mu
 
 | stratum | PRIMARY rows better | median ratio | SECONDARY rows better | median ratio |
 |---|---|---|---|---|
-| abstention_unknown | 16/16 | ×3.266 | 16/16 | ×8.343 |
+| abstention_unknown — ALL rows | 19/32 | ×2.022 | 32/32 | ×3.365 |
+| abstention_unknown — known answer | 16/16 | ×3.266 | 16/16 | ×8.343 |
 | abstention_unknown — reference UNKNOWN | 3/16 | ×0.671 | 16/16 | ×1.665 |
 | concise_reasoning | 30/32 | ×1.523 | 31/32 | ×1.598 |
 | conversation | 22/32 | ×1.081 | 31/32 | ×1.208 |
 | grounded_extraction | 29/32 | ×1.196 | 28/32 | ×1.337 |
 | instruction_writing | 14/32 | ×0.980 | 24/32 | ×1.106 |
-| long_context | 30/30 | ×2.744 | 30/30 | ×4.235 |
+| long_context — ALL rows | 32/32 | ×2.843 | 32/32 | ×4.458 |
+| long_context — known answer | 30/30 | ×2.744 | 30/30 | ×4.235 |
 | long_context — reference UNKNOWN | 2/2 | ×11.839 | 2/2 | ×68.732 |
 
 **The one reversal worth a registered follow-up:** on the recommended V4/20 student, compensation makes the reference answer `UNKNOWN` LESS likely in most abstention rows, while on the 18-block set it makes it more likely in every one. Abstention is the programme's most fragile axis (DOSEINT-001's abstention collapse), so the V4/20 direction-only licence must not be read as licensing abstention. The recorded data cannot separate the two candidate causes -- the depth set (PRIMARY keeps blocks 7 and 19) and the V4 re-tokenisation -- because per-row values were stored only in each set's own vocabulary. The panel's read is spent; a follow-up needs a fresh panel and its own registration.

@@ -56,6 +56,10 @@ def main(argv=None) -> int:
       f"Registration: `HLCC001_PREREG.md` (267cec9b, R1 d321280c, R2 bf617378, launcher 8db8858e).\n")
     w(f"**Registered verdict (PRIMARY, V4_32768/20): {r['REGISTERED_VERDICT']}** · size_large = "
       f"**{V['size_large']}** · §8 licence: {licence(V)}.\n")
+    w("**Independent cold read:** Rineya Delta scored §7 and §8 blind from the JSON (records b8eb3a7), then compared "
+      "with this document (e17e1d0): every number recomputed with independent binomial and order-statistic code "
+      "matches; forecasts 5/7; the §8 reading \"CONFIRMED without size_large, so direction only\" is confirmed. "
+      "`hlcc001-20260925/HLCC_RESULT_COLD_READ.md`.\n")
     w("## Run integrity\n")
     w(f"- One attempt, rc 0, lease `hlcc001` acquired and released; no attempt records (no failure after the "
       f"panel boundary).")
@@ -106,8 +110,10 @@ def main(argv=None) -> int:
     w("|---|---|---|---|")
     for k, t, o, ok in fc:
         w(f"| {k} | {t} | {o} | {'MET' if ok else '**MISSED**'} |")
-    w(f"\n{sum(ok for *_, ok in fc)}/7 met. The two misses are the same fact seen twice: on the recommended "
-      f"student the answer-likelihood gain is real but smaller than forecast.\n")
+    w(f"\n{sum(ok for *_, ok in fc)}/7 met. The two misses are correlated misses on the SAME limb (answer nats on "
+      f"the recommended student): F2 is the fraction of rows improving and F3 the certified median bound -- they "
+      f"can come apart, and here both fall short. The KL bound (x{V['kl']['min_median_reduction_factor']:.3f}) is a "
+      f"bound, and size_large is a JOINT annotation: the KL limb alone is not called large.\n")
 
     w("## Descriptive (registered as descriptive; never a verdict)\n")
     w("| | PRIMARY plain → LC | SECONDARY plain → LC |")
@@ -131,10 +137,15 @@ def main(argv=None) -> int:
     w("| stratum | PRIMARY rows better | median ratio | SECONDARY rows better | median ratio |")
     w("|---|---|---|---|---|")
     strata = collections.OrderedDict()
+    mixed = {rows[i]["category"] for i in P["per_row"]["d_bpb"] if rows[i]["reference"] == "UNKNOWN"}
     for role, s in (("p", P), ("s", S)):
         for i, v in s["per_row"]["d_bpb"].items():
-            c = rows[i]["category"] + (" — reference UNKNOWN" if rows[i]["reference"] == "UNKNOWN" else "")
+            cat = rows[i]["category"]
+            c = cat + ((" — reference UNKNOWN" if rows[i]["reference"] == "UNKNOWN" else " — known answer")
+                       if cat in mixed else "")
             strata.setdefault(c, {"p": [], "s": []})[role].append(v)
+            if cat in mixed:
+                strata.setdefault(cat + " — ALL rows", {"p": [], "s": []})[role].append(v)
     for c in sorted(strata):
         cp, cs = strata[c]["p"], strata[c]["s"]
         w(f"| {c} | {sum(v > 0 for v in cp)}/{len(cp)} | ×{math.exp(st.median(cp)):.3f} | "
