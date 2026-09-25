@@ -203,7 +203,12 @@ Every claim reads: "among rows from these pools, with this T, more rows improve 
 - **Read budget:** the panel is read **once** by the real run.
   - After an **infrastructure** failure (GPU reset, OOM, RAM stand-down), the same command may be rerun on the same code. The attempt record and any partial console lines are disclosed.
   - No other rerun is permitted.
-- **Registered command** (R = `smallvd001-20260924`, H = `hlcc001-20260925`, T = the Rineya-Supa-1.7.0-devfreeze teacher), in `.venv-rab001-cu126`, detached through the WMI runner by a hash-gated script:
+- **Registered command** (R = `smallvd001-20260924`, H = `hlcc001-20260925`, T = the Rineya-Supa-1.7.0-devfreeze teacher), in `.venv-rab001-cu126`. It is launched detached through WMI by the committed `launch/launch_hlcc.ps1`, which runs `launch/smallvd_runner.py`, which runs `launch/hlcc_run.sh`.
+- `hlcc_run.sh` refuses (exit 3) unless `hlcc_verdict.py`, `run_hlcc.py`, `linear_compensation.py`, the panel and the all-axis map hash to the §10 values.
+- The gate was shown to pass on the registered files (rc 0) and to refuse a map hash changed by one value (rc 3).
+- Its only retry is on the GPU-reset signature.
+
+The command it runs:
 
 ```
 python -B run_hlcc.py --teacher T --panels R/calibration/LAYER_PANELS.jsonl --study R/layer_study \
@@ -231,6 +236,11 @@ python -B run_hlcc.py --teacher T --panels R/calibration/LAYER_PANELS.jsonl --st
 | `design/hlcc_canary_variants.py` | `b5a41be2fbda0b78afef6ad82cf3f89cc83dd8fad816361a9e5d27452b223940` |
 | `tests/test_hlcc_verdict.py` (11 pass) | `8153e96dc81178ac13842c26d928d0190c8c26469840763251379191bbcbde4d` |
 | data: `HLCC_ALLAXIS_UNIT_MAP.json` | `b5137cde168a667619fa31edea45b7cd5c15b1791b8268601eafa2baef407a64` |
+| `launch/hlcc_run.sh` (hash gate + registered command) | `d05c8a44c3b2e60747241b8d1adc7e26b6d1b9bd2073c546d67940857feaff9c` |
+| `launch/launch_hlcc.ps1` (WMI) | `b3449378a95e33222083fd66207b5fd4a2b1560d7d6942516d2b654cc843af96` |
+| `launch/smallvd_runner.py` (detached runner, writes rc.json) | `f2ea35d60aa817cc93ae296ea462e4eedd593144f1e0680af1dc56216cb962ab` |
+
+The cold reviewer confirmed that R2 at bf617378 implements option A faithfully and needs no code change. They suggested committing the launch gate with the map hash in it, which the three `launch/` rows above do.
 
 **Dry run** (tiny random 6-layer teacher, CPU, 3 rows per category, R2 code):
 
