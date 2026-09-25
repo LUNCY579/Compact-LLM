@@ -1,0 +1,59 @@
+{
+  "schema_version": 1,
+  "record": "FWANDA_QUALIFICATION_RECEIPT",
+  "status": "MECHANICS_QUALIFIED_EFFICACY_NOT_RUN",
+  "evidence_classification": "mechanical_qualification_only",
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "head_sha": null,
+  "branch": "research/fwanda-delta-retention-v1",
+  "source_delta": {
+    "base_checkpoint_sha256": null,
+    "trained_checkpoint_sha256": null,
+    "delta_sha256": null,
+    "status": "not_bound"
+  },
+  "model_identity": null,
+  "tokenizer_identity": null,
+  "dataset_split_hashes": {
+    "calibration": null,
+    "target_skill": null,
+    "retention": null,
+    "sealed_evaluation": "not_accessed"
+  },
+  "dtype": "synthetic_tests_cover_float16_bfloat16_float32; no model dtype bound",
+  "seeds": [17, 29, 43],
+  "calibration_ids": [],
+  "pruning_configuration": {
+    "keep_fraction": 0.25,
+    "arms": ["F0", "F1", "F2"],
+    "fisher_allocator": "water_filling_sqrt_empirical_fisher_largest_remainder",
+    "mask_tie_rule": "stable descending saliency with ascending index ties"
+  },
+  "mask_hashes": [
+    {
+      "scope": "synthetic_smoke_only",
+      "layer": "synthetic.linear",
+      "shape": [4, 8],
+      "density": 0.25,
+      "F0": "3f7748ed2172cb522a9dc3afe3fd7617007c19296d5723a90bb86d41eb94d6f9",
+      "F1": "6a6a0aa17ee73f97f84f5d6b091db80e87f1bc2b23a02dfede7f4114b665c949",
+      "F2": "1296abd44252549a52a0db45b80b2d6af42d3060d24476791f0db49519cb9842"
+    }
+  ],
+  "resource_measurements": [],
+  "tests": {
+    "command": "python -m pytest experiments/fwanda_delta_retention_v1/tests -q",
+    "status": "PASS",
+    "efficacy": "not_run"
+  },
+  "claims": {
+    "fisher_improves_retention": false,
+    "fisher_retention_correlation": false,
+    "efficacy_run_occurred": false,
+    "sealed_access_occurred": false
+  },
+  "blockers": [
+    "No source checkpoint, fine-tuning delta, tokenizer, calibration IDs, or dataset split hashes were supplied in this checkout.",
+    "No GPU efficacy run was launched; resource measurements are therefore absent, not zero."
+  ]
+}

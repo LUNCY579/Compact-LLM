@@ -1,0 +1,105 @@
+{
+  "schema_version": 1,
+  "repository": "https://github.com/LUNCY579/ChatBubble.git",
+  "audit_date": "2026-09-25",
+  "prompt_claimed_main_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "actual_origin_main_sha_after_fetch": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "target_branch": {
+    "name": "research/fwanda-delta-retention-v1",
+    "preexisting_remote": true,
+    "remote_sha_before_work": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+    "interpretation": "The requested target name already existed as an empty placeholder at origin/main. The implementation is prepared as a fast-forward only; no force push or rewrite of any existing branch is permitted."
+  },
+  "required_repository_commands": {
+    "status": "run before fetch; fresh sparse checkout was clean after index materialization",
+    "remote": "origin = https://github.com/LUNCY579/ChatBubble.git",
+    "fetch": "git fetch --all --prune --tags",
+    "rev_parse_origin_main": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+    "log": "git log --graph --decorate --oneline --all --date-order"
+  },
+  "historical_branches_inspected": [
+    {
+      "name": "research/retention-dose-parameterization-v1",
+      "remote_ref": "origin/research/retention-dose-parameterization-v1",
+      "head_sha": "9abd010e675d2853fe689404c188baecb21af719",
+      "inspected_for": ["retention dose", "delta context", "protocol and receipt conventions"]
+    },
+    {
+      "name": "research/titan-model-soup-mini-v1",
+      "remote_ref": "origin/research/titan-model-soup-mini-v1",
+      "head_sha": "962abee4695bb88b5d41f0314911f7dfbf402215",
+      "inspected_for": ["delta provenance", "layerwise experiment conventions"]
+    },
+    {
+      "name": "research/titan-tangent-task-arithmetic-v1",
+      "remote_ref": "origin/research/titan-tangent-task-arithmetic-v1",
+      "head_sha": "bd512fadeedf50de15bd65367d49a465387767d0",
+      "inspected_for": ["task vectors", "delta integration provenance"]
+    },
+    {
+      "name": "research/cross-scale-orthogonal-composable-skills-v1",
+      "remote_ref": "origin/research/cross-scale-orthogonal-composable-skills-v1",
+      "head_sha": "b5ec6e2126f49790dc1e1bac1f05499a05c2061a",
+      "inspected_for": ["retention and composability analysis conventions"]
+    }
+  ],
+  "historical_names_without_remote_branches": [
+    "research/single-layer-fine-tuning",
+    "research/Titan-Sparse",
+    "research/delta-pruning",
+    "research/retention-repair"
+  ],
+  "historical_tag_evidence": [
+    {
+      "tag": "archive/Titan-Sparse/single-layer-fine-tuning",
+      "tag_ref": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "peeled_commit": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "note": "Historical method name is represented by a tag, not by a current remote branch."
+    }
+  ],
+  "verified_commit_anchors": [
+    {"abbrev": "a6ee824", "sha": "a6ee824584a9e28881826ab92a11db48e124d90c", "subject": "docs: archive ChatBubble experiment program audit"},
+    {"abbrev": "ba438bb", "sha": "ba438bb5d5171822fe60467fc71d9b8f2704abdc", "subject": "docs(rineya): register every family weight under its working label"},
+    {"abbrev": "c684301", "sha": "c684301962d7ab9cfa265c2667975993a9057f11", "subject": "Implement v2.3.1 Grokking Dynamics Observatory with New Analysis Tools"},
+    {"abbrev": "34de429", "sha": "34de429e391274d095c411273f81cee377d2c136", "subject": "feat(rineya): publish Supa-A1.1 — float16 store recovers 2 showcase points"},
+    {"abbrev": "e448986", "sha": "e44898695e0b4cca42e2238090a48f4e01142f78", "subject": "feat(invisible-limit): Stage 1-3 tooling — one capture, offline gates"},
+    {"abbrev": "49a6d9e", "sha": "49a6d9e5d3497e22b0e7d808792a51f05a64498f", "subject": "fix(invisible-limit): substrate final — and abstention here is lexically cued"}
+  ],
+  "historical_method_evidence": [
+    {
+      "commit": "5fb460edaa78019df253d2479c5e0def0e9db777",
+      "subject": "feat(titan-sparse): promote the SPARSE-001 k=0.25 magnitude-pruned core",
+      "path": "Rineya_Published_Cores/Rineya-Titan-Sparse-Experimental-1.0.0-devfreeze/evidence/build_sparse.py",
+      "method": "delta = trained_fp32 - base; per-tensor top floor(k*numel) by abs(delta); stable descending argsort; ascending flat-index ties; FP32"
+    },
+    {
+      "commit": "0254572f28f36013f26b43c965ffe103292adef8",
+      "subject": "probe(dmrf): addendum 2 -- register the Titan-Sparse repair test BEFORE generating",
+      "role": "historical preregistration and k=0.25 context"
+    },
+    {
+      "commit": "d501810123b649f0533fbe8863a20e177e13f589",
+      "subject": "research(dmrf): Titan-Sparse RESULT — the mask partially repairs the causal mechanism",
+      "role": "historical result; not used as efficacy evidence for this branch"
+    },
+    {
+      "commit": "954a0c2637e691b493c5ac3d488653a8c1adf675",
+      "subject": "research(titan-sparse): amendment 1 -- REP-001 replicates direction 3/3, not magnitude",
+      "role": "historical amendment; not used as efficacy evidence for this branch"
+    }
+  ],
+  "search_terms": [
+    "single-layer-fine-tuning",
+    "Titan-Sparse",
+    "delta pruning",
+    "retention repair",
+    "retention dose",
+    "task vectors",
+    "delta registry"
+  ],
+  "source_porting": {
+    "whole_branch_merge": false,
+    "minimum_reused_infrastructure": "None copied wholesale; the historical Titan-Sparse algorithm was re-expressed as F0 in the new standalone mechanics module.",
+    "source_shas_recorded": true
+  }
+}

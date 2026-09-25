@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "F-WANDA layer statistics",
+  "type": "object",
+  "required": ["layer_name", "arm", "shape", "target_keep", "kept", "density", "row_budgets", "saliency", "mask_sha256"],
+  "properties": {
+    "layer_name": {"type": "string"},
+    "arm": {"enum": ["F0", "F1", "F2"]},
+    "shape": {"type": "array", "prefixItems": [{"type": "integer"}, {"type": "integer"}], "minItems": 2, "maxItems": 2},
+    "dtype": {"type": "string"},
+    "target_keep": {"type": "integer", "minimum": 0},
+    "kept": {"type": "integer", "minimum": 0},
+    "density": {"type": "number", "minimum": 0, "maximum": 1},
+    "row_budgets": {"type": "array", "items": {"type": "integer", "minimum": 0}},
+    "row_fisher": {"type": ["array", "null"], "items": {"type": "number", "minimum": 0}},
+    "saliency": {"type": "object"},
+    "mask_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}
