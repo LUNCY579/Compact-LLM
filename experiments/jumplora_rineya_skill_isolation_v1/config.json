@@ -1,0 +1,84 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "jumplora_rineya_skill_isolation_v1",
+  "qualification_id": "JLR-QUAL-001",
+  "repository": "LUNCY579/ChatBubble",
+  "base_commit": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "target_remote_branch": "research/jumplora-rineya-skill-isolation-v1",
+  "model": {
+    "family": "Rineya",
+    "reference_checkpoint": null,
+    "reference_config": "Rineya_Published_Cores/Rineya-Pulse-1.6.0-devfreeze/config.json",
+    "actual_config_observed": {
+      "model_type": "qwen3",
+      "architectures": ["Qwen3ForCausalLM"],
+      "hidden_size": 1024,
+      "num_hidden_layers": 28,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "vocab_size": 151936
+    },
+    "runtime_checkpoint_required_before_efficacy": true
+  },
+  "adapter": {
+    "rank": 8,
+    "alpha": 32.0,
+    "target_modules": ["q_proj", "v_proj"],
+    "dropout": 0.0,
+    "jump_epsilon": 0.001,
+    "s_start_fraction_of_epoch": 0.2,
+    "s_final_fraction_of_epoch": 0.8,
+    "threshold_initialization": "paper_algorithm_1_at_s_start",
+    "threshold_gate": "strict_abs_delta_greater_than_tau"
+  },
+  "arms": {
+    "J0": {
+      "name": "dense_lora",
+      "support_policy": "all_delta_coordinates"
+    },
+    "J1": {
+      "name": "post_training_matched_density_magnitude_pruning",
+      "support_policy": "dense_training_then_topk_mask",
+      "density_binding": "frozen_j3_final_active_count_on_development"
+    },
+    "J2": {
+      "name": "early_frozen_mask",
+      "support_policy": "topk_mask_at_warmup_then_frozen",
+      "density_binding": "same_frozen_j3_reference_count"
+    },
+    "J3": {
+      "name": "jumplora",
+      "support_policy": "learnable_symmetric_jumprelu_with_gamma_schedule"
+    }
+  },
+  "splits": {
+    "qualification": "synthetic_cpu_only",
+    "development_calibration": "repository_bound_dev_or_calibration_only",
+    "held_out_evaluation": "must_be_frozen_before_authorization",
+    "sealed": "forbidden_during_qualification_and_implementation",
+    "sealed_path_tokens": ["sealed", "ANY_READ", "private_confirmation"]
+  },
+  "preregistered_success_criteria": {
+    "individual_skill_aggregate_drop_max_percentage_points": 1.0,
+    "composed_damage_reduction_min_relative": 0.25,
+    "composed_damage_reduction_min_absolute_percentage_points": 2.0,
+    "base_retention_drop_max_percentage_points": 1.0,
+    "seed_consistency_minimum": 3,
+    "orders_required": ["A_then_B", "B_then_A"],
+    "mechanism_claim_requires_j3_lower_support_overlap_than_j1": true
+  },
+  "resource_policy": {
+    "primary_host": "RTX 4070 8GB",
+    "resource_failure_classification": "BLOCKED",
+    "guards_must_not_be_weakened": true,
+    "full_training_authorization": "not present"
+  },
+  "qualification": {
+    "model_loaded": false,
+    "source_weight_files_read": false,
+    "sealed_access": false,
+    "full_rineya_training": false,
+    "micro_run_training_allowed": true
+  }
+}

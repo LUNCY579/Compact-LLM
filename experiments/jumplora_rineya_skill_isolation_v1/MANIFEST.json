@@ -1,0 +1,39 @@
+{
+  "schema_version": "1.0",
+  "experiment_id": "jumplora_rineya_skill_isolation_v1",
+  "qualification_id": "JLR-QUAL-001",
+  "repository_url": "https://github.com/LUNCY579/ChatBubble.git",
+  "base_commit": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "branch": "research/jumplora-rineya-skill-isolation-v1",
+  "remote_target_preexisting": true,
+  "remote_target_sha_before_work": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "remote_push_status": "BLOCKED_UNTIL_BRANCH_OWNERSHIP_RESOLVED",
+  "paper": {
+    "title": "JumpLoRA: Sparse Adapters for Continual Learning in Large Language Models",
+    "arxiv": "2604.16171v3",
+    "url": "https://arxiv.org/abs/2604.16171v3"
+  },
+  "arms": ["J0", "J1", "J2", "J3"],
+  "artifact_files": [
+    "README.md",
+    "PROTOCOL.md",
+    "HISTORY_AUDIT.json",
+    "config.json",
+    "QUALIFICATION_RECEIPT.json",
+    "jump_lora.py",
+    "integration.py",
+    "metrics.py",
+    "resources.py",
+    "checkpoint.py",
+    "qualification.py",
+    "run_qualification.py",
+    "scripts/qualify.py",
+    "schemas/qualification_receipt.schema.json",
+    "schemas/per_example.schema.json",
+    "schemas/resource.schema.json",
+    "tests/test_qualification.py"
+  ],
+  "result_classification": "MECHANICAL_ONLY",
+  "full_training_authorized": false,
+  "sealed_access": false
+}
