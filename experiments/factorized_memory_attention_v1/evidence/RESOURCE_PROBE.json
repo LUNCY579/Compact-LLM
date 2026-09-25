@@ -1,0 +1,44 @@
+{
+  "kind": "FMA_RESOURCE_PROBE",
+  "python": "3.13.5",
+  "torch": "2.10.0+cpu",
+  "cuda_available": false,
+  "shape": {
+    "vocab_size": 151936,
+    "hidden_size": 1024,
+    "num_hidden_layers": 28,
+    "num_attention_heads": 16,
+    "num_key_value_heads": 8,
+    "head_dim": 128,
+    "rms_norm_eps": 1e-06,
+    "model_type": "qwen3",
+    "value_width": 1024,
+    "query_width": 2048
+  },
+  "budget": {
+    "vocab_size": 151936,
+    "hidden_size": 1024,
+    "value_width": 1024,
+    "head_dim": 128,
+    "modified_layers": 28,
+    "rank": 32,
+    "shared_token_table_params": 4861952,
+    "layer_projection_params": 917504,
+    "normalization_params": 3584,
+    "added_fma_params": 5783040,
+    "transition_model_total_params": 601832960,
+    "hard_replacement_model_total_params": 572472832,
+    "removed_standard_value_params": 29360128,
+    "full_ma_params": 4356312576,
+    "full_ma_bf16_bytes": 8712625152,
+    "factorized_bf16_bytes": 11566080,
+    "control_rank": 101,
+    "control_added_params": 5791744,
+    "control_budget_delta_params": 8704,
+    "control_budget_delta_fraction": 0.0015050907481186366
+  },
+  "cuda": {
+    "status": "BLOCKED",
+    "reason": "agent runtime is CPU-only; no RTX 4070 VRAM claim made"
+  }
+}
