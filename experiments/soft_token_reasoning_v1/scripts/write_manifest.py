@@ -26,7 +26,7 @@ def main(argv: list[str] | None = None) -> int:
     package = root / "experiments" / "soft_token_reasoning_v1"
     files = {}
     for path in sorted(package.rglob("*")):
-        if path.is_file() and path.name != "MANIFEST.json":
+        if path.is_file() and path.name != "MANIFEST.json" and "__pycache__" not in path.parts and ".pytest_cache" not in path.parts:
             rel = path.relative_to(root).as_posix()
             files[rel] = {"bytes": path.stat().st_size, "sha256": sha256(path)}
     payload = {
