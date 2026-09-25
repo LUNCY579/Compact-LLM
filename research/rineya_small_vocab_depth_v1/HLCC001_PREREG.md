@@ -48,9 +48,9 @@ Neither description can confirm itself: those rows have been seen, and the test 
 - **Method:** ridge toward I, λ = 1e-3 × the median eigenvalue of XᵀX, position 0 excluded, fp32 model, folds applied cumulatively.
 - **Settings:** no refit, no λ choice, no set choice.
 
-**Refusal controls (the run exits and writes nothing):**
+**Refusal controls (the run exits and writes nothing).** Controls (a) and (b) run on SELECT rows, for both sets, **before the real teacher performs any forward pass on the confirmation panel** (Revision R1). A refusal therefore never spends the panel's read. The console line `refusal controls passed ... the confirmation panel is read now` marks the boundary.
 
-- **(a) Identity fold.** For each set, folding I must reproduce the plain student's hidden states bitwise.
+- **(a) Identity fold.** For each set, folding I must reproduce the plain student's hidden states bitwise, on the SELECT rows.
 - **(b) Fit canary.** The SECONDARY set's fresh fits must reproduce SMALLVD-001's recorded `fit_residual_rel_fitted` at every fold point within 1e-6. The recorded values are 0.342781, 0.449361, 0.388918 and 0.214652 at p = 4, 11, 18, 22. The canary set runs first, so a failure costs one fit.
   - It is required (`--smallvd-lc` is mandatory).
   - It refuses a mismatched kept set rather than skipping.
@@ -178,7 +178,7 @@ python -B run_hlcc.py --teacher T --panels R/calibration/LAYER_PANELS.jsonl --st
 | file | sha256 |
 |---|---|
 | `hlcc_verdict.py` | `0179acad620667043bc246c7b95c4cc40dc6d32caddf73f2ab70b0d723c94254` |
-| `run_hlcc.py` | `4d8702c64e3a5448a06fc234f747ffa3ac709afd8884a7eeb8e7cc87bb579776` |
+| `run_hlcc.py` (R1) | `74b55d433b4cbbd62f73fe77f66b62b40f6035d4b461b2cf2d4c24718a897a99` (was `4d8702c6…` at 267cec9b) |
 | `build_confirm_panel.py` | `c8d2c6f2ceac5a3bd523020bf0710dc00d12b779d4f7aa1730747f26675274ce` |
 | `tests/test_hlcc_verdict.py` (9 pass) | `1bd0029f0de99221a5f512f1a540036a9d916aa4fbc75395b9868130754e12ae` |
 
@@ -191,3 +191,12 @@ Dry run: tiny random 6-layer teacher, CPU, 3 rows per category. It ran end to en
 - **D3 — empty probe directory.** A mistyped probe of the builder created an empty directory `H/panel_probe_do_not_use/`: the builder creates its output directory before loading the tokenizer. Git does not track empty directories. It is left in place, because nothing may be removed from the records tree without operator approval.
 - **D4 — builder flaw kept.** The builder still has that early-mkdir flaw. It was not fixed, so that the manifest's `builder_sha256` matches the committed file.
 - **D5 — unit rule added after seeing ids, before any model output.** The unit rule (§6) was added after the panel was built. At that point only row ids and metadata had been inspected: 19 books behind the 32 prose rows, 11 tasks behind the 32 long-context rows. No model output of any kind had been seen. It replaced a row-level test that the measurements above show is anticonservative on this panel.
+
+## 12. Revisions before the run
+
+- **R1 (2026-09-25, from Rineya Delta's cold review, before any real run).** In the 267cec9b code, the fit canary and the identity control ran only *after* the real teacher had generated on the confirmation panel and collected its hidden states. A canary refusal would therefore have spent the panel's single read and recorded nothing.
+  - Both controls, and both sets' fits, now run on SELECT rows before the panel is touched.
+  - The identity control checks the fold mechanism on SELECT rows instead of panel rows.
+  - Nothing measured changes. Rerun on the dry model, every per-row d, per-unit d and fit was bitwise identical to the 267cec9b code's dry run.
+  - The tampered canary now refuses before the "panel is read" line and writes nothing.
+  - The tests, the measures and the verdict are unchanged.

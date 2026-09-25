@@ -115,12 +115,39 @@ def main(argv=None) -> int:
         Vp = vs.Vocab(a.vocab_primary, a.teacher / "tokenizer.json")
         Vs = vs.Vocab(a.vocab_secondary, a.teacher / "tokenizer.json")
 
+        # EVERY refusal control runs BEFORE the real teacher touches the confirmation panel (cold review,
+        # Rineya Delta): a refusal after the panel was read would spend its read budget and record nothing.
+        # The controls need only SELECT rows: the identity fold is checked on them, and the fits use them.
+        items_sel = rls.build_items(sel, tok, S1, im_end)
+        sets = (("secondary", a.secondary_kept, "secondary_vocab"), ("primary", a.primary_kept, "primary_vocab"))
+        prepared = {}
+        for role, kept, _ in sets:            # the canary set FIRST: a failed canary costs one fit
+            ident = {r["p"]: torch.eye(model.config.hidden_size, device=dev) for r in lc.runs(kept, L) if r["p"] is not None}
+            with la.keep_layers(model, kept):
+                Hp = la.collect_positions(model, items_sel, eot, dev)
+            with lc.folded(model, ident), la.keep_layers(model, kept):
+                Hi = la.collect_positions(model, items_sel, eot, dev)
+            if not all(torch.equal(x, y) for x, y in zip(Hp, Hi)):
+                raise SystemExit(f"{role}: the identity fold does not reproduce the plain student bitwise")
+            del Hp, Hi
+            folds, fits = lc.fit_compensation(model, kept, items_sel, eot, dev)
+            hostbudget.guard(guard_gib, f"HLCC {role} fit")
+            if role == "secondary":
+                ref = [(f["p"], f["fit_residual_rel_fitted"]) for f in canary_ref["fits"] if f.get("compensated")]
+                got = [(f["p"], f["fit_residual_rel_fitted"]) for f in fits if f.get("compensated")]
+                diff = max((abs(x[1] - y[1]) for x, y in zip(ref, got)), default=float("inf"))
+                if [x[0] for x in ref] != [y[0] for y in got] or not diff <= CANARY_TOL:
+                    raise SystemExit(f"FIT CANARY FAILED: SMALLVD-001 {ref} vs now {got} -- not the same method")
+                canary = {"smallvd001": ref, "now": got, "max_abs_diff": diff, "tolerance": CANARY_TOL,
+                          "status": "reproduced"}
+            prepared[role] = (folds, fits)
+        print("[HLCC] refusal controls passed (identity x2, fit canary); the confirmation panel is read now", flush=True)
+
         # fresh teacher continuations (same settings as SMALLVD-001 S1)
         chat_c = [r for r in confirm if r["kind"] == "chat"]
         t0 = time.time()
         Tc = {g["id"]: g for g in vs.generate_rows(model, V0, chat_c, full, eos, eot, dev, a.gen_tokens)}
         hostbudget.guard(guard_gib, "HLCC teacher outputs")
-        items_sel = rls.build_items(sel, tok, S1, im_end)
         items_c = rls.build_items(confirm, tok, Tc, im_end)
         H_c = la.collect_positions(model, items_c, eot, dev)
         ref_c = [r for r in chat_c if r.get("reference")]
@@ -140,26 +167,10 @@ def main(argv=None) -> int:
         result = {"schema": 1, "record": "HLCC_RESULT", "experiment": "HLCC-001",
                   "teacher_weight_sha256": rls.sha256_file(a.teacher / "model.safetensors"),
                   "confirm_panel_sha256": rls.sha256_file(a.confirm), "panels_sha256": rls.sha256_file(a.panels),
-                  "teacher_outputs_seconds": round(time.time() - t0, 1), "sets": {}}
-        # the canary set FIRST, and every fit before any measurement: a failed canary costs one fit
-        for role, kept, pvocab in (("secondary", a.secondary_kept, "secondary_vocab"), ("primary", a.primary_kept, "primary_vocab")):
-            ident = {r["p"]: torch.eye(model.config.hidden_size, device=dev) for r in lc.runs(kept, L) if r["p"] is not None}
-            Hp = student_H(kept)
-            with lc.folded(model, ident):
-                Hi = student_H(kept)
-            if not all(torch.equal(x, y) for x, y in zip(Hp, Hi)):
-                raise SystemExit(f"{role}: the identity fold does not reproduce the plain student bitwise")
-            del Hp, Hi
-            folds, fits = lc.fit_compensation(model, kept, items_sel, eot, dev)
-            hostbudget.guard(guard_gib, f"HLCC {role} fit")
-            if role == "secondary":
-                ref = [(f["p"], f["fit_residual_rel_fitted"]) for f in canary_ref["fits"] if f.get("compensated")]
-                got = [(f["p"], f["fit_residual_rel_fitted"]) for f in fits if f.get("compensated")]
-                diff = max((abs(x[1] - y[1]) for x, y in zip(ref, got)), default=float("inf"))
-                if [x[0] for x in ref] != [y[0] for y in got] or not diff <= CANARY_TOL:
-                    raise SystemExit(f"FIT CANARY FAILED: SMALLVD-001 {ref} vs now {got} -- not the same method")
-                result["fit_canary"] = {"smallvd001": ref, "now": got, "max_abs_diff": diff, "tolerance": CANARY_TOL,
-                                        "status": "reproduced"}
+                  "teacher_outputs_seconds": round(time.time() - t0, 1), "fit_canary": canary,
+                  "identity_control_rows": "SELECT (before the panel was read)", "sets": {}}
+        for role, kept, pvocab in sets:
+            folds, fits = prepared[role]
             plain = measure(kept)
             hostbudget.guard(guard_gib, f"HLCC {role} plain")
             with lc.folded(model, folds):
