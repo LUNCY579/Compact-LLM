@@ -42,6 +42,19 @@ Z_POWER = NormalDist().inv_cdf(0.80)
 MDE_MULT = NormalDist().inv_cdf(1 - ALPHA / 2) + Z_POWER   # two-sided 5%, power 80%, normal approximation
 READ_A, READ_B = 0.85, 0.60     # FOLLOWUP_PROPOSAL P4 readings on P_O^content(H1)
 
+# AMENDMENT_1 (pre-run): provenance of every score file, checked before anything is combined.
+REGISTERED_RUNTIME = {"python": "3.11.15", "torch": "2.6.0+cu124", "transformers": "5.14.1",
+                      "device": "NVIDIA GeForce RTX 4070 Laptop GPU"}   # device as recorded in O_REPLY_NLL.json
+REGISTERED_SHA = {"BASE": "75b0a92cd28eb90d121d72aa7618c497a6ff1b4522b73bdf01cabf515c30ad93",
+                  "OPALLO": "5ff1c9a5cf3674ace09eaf33bfc21431ea63718cff3cbf5b52701fd3de1416f8",
+                  "OPALLO-BF16": "5ff1c9a5cf3674ace09eaf33bfc21431ea63718cff3cbf5b52701fd3de1416f8",
+                  "SPARSE": "6ae85f5bdab9437edc06b20716e6e7008d8aa402ec95a0a65ebc7bf8da1e94ed",
+                  "ADD-100": "95a7576725721e8143c1be8b21448326d6d87dc69087da39ea378c47fadf0d5b",
+                  "ADD-O50": "bc69a4ec403b74fb09de815ec55738a7126da345802a7b45e520f205e3c68051",
+                  "H1": "3ff2aa596ccdc8234dae053362c1cabc8f5c3e274f3ea78591a9a7b219729fc1",
+                  "H1c": "ea46496c1a713c971589f3575532d0dd7f64e85cf7eaf8dd410c4b206c82043e"}
+INPUT_KEYS = ("o_reply_nll_py_sha256", "source_train_sha256", "consumed_arm_dose_sha256")
+
 
 # ---------------------------------------------------------------- readouts and the class-cluster bootstrap
 class Readout:
@@ -126,6 +139,8 @@ def null_cell(readout: Readout, a1: str = "H1", a2: str = "ADD-O50", outer: int 
 
 def outcome(ci) -> str:
     lo, hi = ci
+    if not (np.isfinite(lo) and np.isfinite(hi)):         # AMENDMENT_1: a NaN interval is never a NULL
+        return "INDETERMINATE_NONFINITE"
     if lo > 0:
         return "MODULE_ROUTE_BETTER"
     if hi < 0:
@@ -155,6 +170,8 @@ def row_arrays(score: dict, man: dict) -> dict:
         v = np.asarray(s["nll"], float)
         if len(v) != m["n_tokens"]:
             raise SystemExit(f"{score['arm']} row {m['id']}: {len(v)} tokens, manifest says {m['n_tokens']}")
+        if not np.isfinite(v).all():
+            raise SystemExit(f"{score['arm']} row {m['id']}: non-finite NLL (a harness failure, AMENDMENT_1)")
         c = v[:-1] if m["terminal"] else v
         out["c_mean"][i], out["c_sum"][i], out["c_n"][i] = c.mean(), c.sum(), len(c)
         out["final"][i] = v[-1] if m["terminal"] else 0.0
@@ -168,27 +185,84 @@ def canary(scores: dict, recorded: dict, arms) -> dict:
     for a in arms:
         s, r = scores[a], rec[a]
         ids_equal = sorted(x["id"] for x in s["rows"]) == sorted(r)
-        diffs, internal, tok_bad = [], [], 0
+        diffs, internal, tok_bad, nonfinite = [], [], 0, 0
         for x in s["rows"]:
             y = r.get(x["id"])
             if y is None:
                 continue
+            nonfinite += int(not np.isfinite(np.asarray(x["nll"], float)).all())
             diffs.append(abs(x["mean_nll_gpu"] - y["mean_nll"]))
             internal.append(abs(float(np.mean(x["nll"])) - x["mean_nll_gpu"]))
             tok_bad += int(len(x["nll"]) != y["tokens"])
-        mx, mi = (max(diffs) if diffs else float("inf")), (max(internal) if internal else float("inf"))
+        # np.max propagates NaN (Python's max() skips it unless it comes first); AMENDMENT_1
+        mx = float(np.max(diffs)) if diffs else float("inf")
+        mi = float(np.max(internal)) if internal else float("inf")
         out["arms"][a] = {"rows_compared": len(diffs), "ids_equal": ids_equal, "token_count_mismatches": tok_bad,
+                          "rows_with_nonfinite_nll": nonfinite,
                           "max_abs_diff_vs_recorded": mx, "max_abs_internal_mean_diff": mi,
-                          "PASS": bool(ids_equal and tok_bad == 0 and mx <= CANARY_TOL and mi <= CANARY_TOL)}
+                          "PASS": bool(ids_equal and tok_bad == 0 and nonfinite == 0 and np.isfinite(mx) and np.isfinite(mi)
+                                       and mx <= CANARY_TOL and mi <= CANARY_TOL)}
     out["runtime_recorded"] = recorded["runtime"]
     out["PASS"] = all(v["PASS"] for v in out["arms"].values())
     return out
 
 
+def provenance(scores: dict, man: dict, expected_sha: dict) -> dict:
+    """AMENDMENT_1: every score file must carry the expected weight hash and cast flag, no row limit, all 6,741
+    rows with finite NLLs, the registered runtime and device (pinned per file, so a failure is attributable to one
+    file), and the manifest's input hashes. A failure is a HARNESS_FAILURE. The driver checks each file with this
+    function as soon as it is written (weights still present) and at every resume, and moves a failing file aside
+    (never deleted) for rescoring; see AMENDMENT_1."""
+    n_rows = len(man["rows"])
+    arms, devices = {}, set()
+    for a, s in scores.items():
+        rt = s.get("runtime", {})
+        devices.add(rt.get("device"))
+        problems = []
+        if s.get("weight_sha256") != expected_sha.get(a):
+            problems.append(f"weight_sha256 {str(s.get('weight_sha256'))[:12]} != expected {str(expected_sha.get(a))[:12]}")
+        if bool(s.get("cast_bf16")) != (a == "OPALLO-BF16"):
+            problems.append(f"cast_bf16 {s.get('cast_bf16')}")
+        if s.get("limit") is not None:
+            problems.append(f"limit {s.get('limit')}")
+        if len(s.get("rows", [])) != n_rows:
+            problems.append(f"{len(s.get('rows', []))} rows")
+        for k, v in REGISTERED_RUNTIME.items():
+            if rt.get(k) != v:
+                problems.append(f"runtime {k} {rt.get(k)} != {v}")
+        for k in INPUT_KEYS:
+            if s.get("input_sha256", {}).get(k) != man.get(k):
+                problems.append(f"input {k} differs from the manifest")
+        bad_rows = sum(int(not np.isfinite(np.asarray(x["nll"], float)).all()) for x in s.get("rows", []))
+        if bad_rows:
+            problems.append(f"{bad_rows} rows with non-finite NLL")
+        arms[a] = {"problems": problems, "PASS": not problems}
+    one_device = len(devices) == 1
+    return {"arms": arms, "devices": sorted(map(str, devices)), "one_device": one_device,
+            "PASS": one_device and all(v["PASS"] for v in arms.values())}
+
+
+def expected_hashes() -> dict:
+    """Registered hashes for the fixed arms; each seed replicate's hash comes from its own BUILD.json."""
+    exp = dict(REGISTERED_SHA)
+    for s in SEEDS:
+        b = HERE / "arms" / s / "BUILD.json"
+        try:                                               # a torn BUILD.json is a provenance failure, not a crash
+            exp[s] = json.loads(b.read_text(encoding="utf-8"))["weight_sha256"] if b.is_file() else None
+        except (ValueError, KeyError, OSError, TypeError):
+            exp[s] = None
+    return exp
+
+
 # ---------------------------------------------------------------- the registered analysis
-def analyse(man: dict, scores: dict, recorded: dict) -> dict:
+def analyse(man: dict, scores: dict, recorded: dict, prov: dict | None = None) -> dict:
     res = {"schema": 1, "experiment": "OSIDE-001", "manifest_sha256": MANIFEST_SHA,
            "score_files": {a: scores[a]["_sha256"] for a in scores}, "quality_claim": False}
+    if prov is not None:
+        res["provenance"] = prov
+        if not prov["PASS"]:
+            res["status"] = "HARNESS_FAILURE"
+            return res
     res["canary"] = canary(scores, recorded, CANARY_ARMS)
     if not res["canary"]["PASS"]:
         res["status"] = "HARNESS_FAILURE"
@@ -257,14 +331,16 @@ def analyse(man: dict, scores: dict, recorded: dict) -> dict:
     # ---- secondary, descriptive
     ph1 = comp["P_content_H1"]["point"]
     desc = {
-        "P4_reading_on_H1": ("A_content_carried_by_MLP" if ph1 >= READ_A else
-                             "B_mostly_attention_carried_style" if ph1 <= READ_B else "inconclusive"),
+        # FOLLOWUP_PROPOSAL P4: "if [the denominator gate] fails, P4 is undefined" (AMENDMENT_1)
+        "P4_reading_on_H1": (("A_content_carried_by_MLP" if ph1 >= READ_A else
+                              "B_mostly_attention_carried_style" if ph1 <= READ_B else "inconclusive")
+                             if gate["PASS"] else "UNDEFINED_DENOMINATOR_GATE_FAILED"),
         "raw_content_nats_ADD-O50_minus_H1": strip(boot(content, lambda m: m["ADD-O50"] - m["H1"])),
         "content_M": {a: float(M[a]) for a in ALL_ARMS},
         "P_content": {a: strip(boot(content, lambda m, a=a: P(m, a))) for a in ALL_ARMS if a not in ("BASE", "OPALLO")},
         "P_final": {a: strip(boot(final, lambda m, a=a: P(m, a))) for a in ALL_ARMS if a not in ("BASE", "OPALLO")},
         "final_M": {a: float(v) for a, v in final.means().items()},
-        "P_content_by_token": {a: strip(boot(by_token, lambda m, a=a: P(m, a))) for a in ("H1", "ADD-O50", "H1c", "ADD-100", "SPARSE")},
+        "P_content_by_token": {a: strip(boot(by_token, lambda m, a=a: P(m, a))) for a in ALL_ARMS if a not in ("BASE", "OPALLO")},
         "D_by_token": strip(boot(by_token, D_stat)),
         "additivity_H1_plus_H1c": strip(boot(content, lambda m: P(m, "H1") + P(m, "H1c"))),
         "specificity_SPARSE_P_content": strip(boot(content, lambda m: P(m, "SPARSE"))),
@@ -292,12 +368,24 @@ def main() -> int:
     a = ap.parse_args()
     recorded = json.loads(RECORDED.read_text(encoding="utf-8"))
     if a.canary_only:
-        c = canary(load_scores(a.canary_only), recorded, a.canary_only)
-        print(json.dumps({k: v for k, v in c.items() if k != "runtime_recorded"}, indent=2))
-        return 0 if c["PASS"] else 3
+        sc = load_scores(a.canary_only)
+        p = provenance(sc, load_manifest(), expected_hashes())
+        c = canary(sc, recorded, [x for x in a.canary_only if x in CANARY_ARMS])
+        print(json.dumps({"provenance": p, **{k: v for k, v in c.items() if k != "runtime_recorded"}}, indent=2))
+        return 0 if (c["PASS"] and p["PASS"]) else 3
     if a.output.exists():
         raise SystemExit(f"refusing to overwrite {a.output}")
-    res = analyse(load_manifest(), load_scores(ALL_ARMS), recorded)
+    man, scores = load_manifest(), load_scores(ALL_ARMS)
+    res = analyse(man, scores, recorded, prov=provenance(scores, man, expected_hashes()))
+    if res["status"] == "HARNESS_FAILURE":
+        # AMENDMENT_1: a harness failure must not occupy the result name, or the permitted rerun is refused
+        import time
+        fail = a.output.with_name(f"O_SIDE_HARNESS_FAILURE_{time.strftime('%Y%m%dT%H%M%S')}.json")
+        fail.write_bytes((json.dumps(res, indent=2) + "\n").encode("utf-8"))
+        print(json.dumps({"status": res["status"], "written": fail.name,
+                          "provenance": res.get("provenance", {}).get("PASS"),
+                          "canary": res.get("canary", {}).get("PASS")}, indent=2))
+        return 3
     a.output.write_bytes((json.dumps(res, indent=2) + "\n").encode("utf-8"))
     comp = res.get("registered_comparison", {})
     print(json.dumps({"status": res["status"], "canary": res["canary"]["PASS"],

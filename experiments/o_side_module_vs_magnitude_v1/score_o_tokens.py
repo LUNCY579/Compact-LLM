@@ -11,7 +11,7 @@ opallo_roundtrip 596,049,920 of 596,049,920 elements), and three tensors are spo
 """
 from __future__ import annotations
 
-import argparse, gc, hashlib, json, platform, sys, time
+import argparse, gc, hashlib, json, os, platform, sys, time
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
@@ -28,6 +28,8 @@ PUBLISHED_OPALLO = Path(r"C:/Users/clclc/BusinessProject/ChatBubble-ced-native-l
                         r"Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/model.safetensors")
 CAST_SPOT = ("model.layers.27.mlp.down_proj.weight", "model.layers.20.self_attn.q_proj.weight", "model.embed_tokens.weight")
 VRAM_FRACTION = 0.78
+REGISTERED_RUNTIME = ("3.11.15", "2.6.0+cu124", "5.14.1")   # PREREG section 10; enforced by AMENDMENT_1
+REGISTERED_DEVICE = "NVIDIA GeForce RTX 4070 Laptop GPU"      # as recorded in O_REPLY_NLL.json; AMENDMENT_1
 
 
 def sha256(p: Path) -> str:
@@ -69,6 +71,12 @@ def main() -> int:
     if sha256(MANIFEST) != MANIFEST_SHA:
         raise SystemExit("ROWS_MANIFEST.json does not match its registered hash")
     man = json.loads(MANIFEST.read_text(encoding="utf-8"))
+    # AMENDMENT_1: the prompt/answer source must still be the one the manifest was built from
+    inputs = {"o_reply_nll_py_sha256": sha256(Path(O.__file__)), "source_train_sha256": sha256(O.TRAIN),
+              "consumed_arm_dose_sha256": sha256(O.ARM_DOSE)}
+    for k, v in inputs.items():
+        if v != man[k]:
+            raise SystemExit(f"{k}: the imported source differs from the manifest ({v[:12]} vs {man[k][:12]})")
     rows = O.make_rows()
     if [r["id"] for r in rows] != [m["id"] for m in man["rows"]]:
         raise SystemExit("make_rows() order differs from the manifest")
@@ -86,6 +94,11 @@ def main() -> int:
     from transformers import AutoModelForCausalLM, AutoTokenizer
     if not torch.cuda.is_available():
         raise SystemExit("CUDA required")
+    if (platform.python_version(), torch.__version__, transformers.__version__) != REGISTERED_RUNTIME:
+        raise SystemExit(f"runtime {(platform.python_version(), torch.__version__, transformers.__version__)} "
+                         f"differs from the registered {REGISTERED_RUNTIME}")
+    if torch.cuda.get_device_name(0) != REGISTERED_DEVICE:
+        raise SystemExit(f"device {torch.cuda.get_device_name(0)!r} differs from the registered {REGISTERED_DEVICE!r}")
     torch.set_float32_matmul_precision("highest")
     torch.backends.cuda.matmul.allow_tf32 = False
     torch.backends.cudnn.allow_tf32 = False
@@ -116,6 +129,8 @@ def main() -> int:
         pos = torch.arange(pids.numel() - 1, pids.numel() + len(tids) - 1, device=device)
         targets = torch.tensor(tids, dtype=torch.long, device=device)
         logp = torch.log_softmax(logits[pos], dim=-1).gather(1, targets[:, None]).squeeze(1)
+        if not bool(torch.isfinite(logp).all()):             # AMENDMENT_1: a crash, never a stored NaN
+            raise SystemExit(f"{a.arm} row {row['id']}: non-finite NLL")
         out_rows.append({"id": row["id"], "nll": (-logp).tolist(), "mean_nll_gpu": float(-logp.mean().item())})
         if ix % 1000 == 0:
             print(json.dumps({"arm": a.arm, "rows": ix, "seconds": round(time.time() - started, 1)}), flush=True)
@@ -123,7 +138,7 @@ def main() -> int:
     gc.collect(); torch.cuda.empty_cache()
     res = {"schema": 1, "experiment": "OSIDE-001", "instrument": "OPALLO-HELDOUT-REPLY-PER-TOKEN-NLL-001",
            "arm": a.arm, "model_dir": str(a.model_dir), "weight_sha256": wsha, "cast_bf16": a.cast_bf16, "limit": a.limit,
-           "cast_spot_check_mismatches": spot, "manifest_sha256": MANIFEST_SHA,
+           "cast_spot_check_mismatches": spot, "manifest_sha256": MANIFEST_SHA, "input_sha256": inputs,
            "runtime": {"python": platform.python_version(), "torch": torch.__version__,
                        "transformers": transformers.__version__, "device": torch.cuda.get_device_name(0),
                        "dtype": "float32", "tf32": False, "use_cache": False,
@@ -132,7 +147,9 @@ def main() -> int:
            "quality_claim": False, "release_permitted": False}
     a.output.parent.mkdir(parents=True, exist_ok=True)
     tmp = a.output.with_suffix(".partial")
-    tmp.write_bytes((json.dumps(res) + "\n").encode("utf-8"))
+    with open(tmp, "wb") as f:                                # AMENDMENT_1: durable before the rename
+        f.write((json.dumps(res) + "\n").encode("utf-8"))
+        f.flush(); os.fsync(f.fileno())
     tmp.rename(a.output)
     print(f"wrote {a.output} ({len(out_rows)} rows, {res['seconds']} s)", flush=True)
     return 0
