@@ -236,3 +236,17 @@ def test_code_table_is_the_analysis_table():
     assert lv.CALIBRATION == tuple((c["band_upper_s_ratio"], c["alpha_benefit"], c["alpha_size"]) for c in rec["bands"])
     assert lv.ALPHA_HARM == rec["alpha_harm_uniform"]
     assert lv.CALIBRATED_FOR["resamples"] == rec["resamples"] == lv.BOOTSTRAP_RESAMPLES
+    assert {float(k): v for k, v in rec["harm_power_r_minus020_min_by_band"].items()} == lv.HARM_POWER_R020_BY_BAND
+    # adoption under harm, P(SUPPORTED | r < 0), measured and within the claim (review e4b502f)
+    assert rec["max_adoption_under_harm_r_minus020_wilson_upper_as_applied"] <= 0.025
+    assert rec["max_adoption_under_harm_r_minus030_wilson_upper_as_applied"] <= 0.025
+
+
+def test_harm_detectability_is_declared_in_the_verdict():
+    import lc_verdict as lv
+    assert lv.calibrated(_raw(s_ratio_hat=0.1))["harm_detectability"] == "YES"
+    assert lv.calibrated(_raw(s_ratio_hat=0.3))["harm_detectability"] == "PARTIAL"
+    v = lv.calibrated(_raw(s_ratio_hat=0.6, boot_frac_le_0=0.5))
+    assert v["harm_detectability"] == "NO" and "UNDETECTABLE" in v["harm_reading"]
+    u = lv.calibrated(_raw(s_ratio_hat=2.0))
+    assert u["verdict"] == "UNCALIBRATED" and u["harm_detectability"] == "NO"

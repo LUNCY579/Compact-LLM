@@ -959,3 +959,21 @@ sits below the 0.34–0.41 already measured at 0.8. UNCALIBRATED above 0.8 stays
 
 **6. Unchanged:** the bands, the upper-edge rule for benefit, the binding constraints (A5.4), and
 the pre-declared UNCALIBRATED outcome (A5.5).
+
+### A5.7 Adoption under harm is measured, and harm detectability is pre-declared (`HLC_CALIBRATION_COLD_CHECK_2.md`, records `e4b502f`)
+
+- **Adoption under harm, P(SUPPORTED | r < 0), is a different quantity from the controlled
+  P(SUPPORTED | r = 0), and it is now measured.** It is a second tally of the same harm-power draws
+  at zero compute: **0 of 150 in every cell, at both r = −0.20 and r = −0.30**, one-sided Wilson
+  upper bound 0.0177. So "a missed harm cannot cause adoption" is now a measurement, not an
+  argument.
+- **Harm detectability, pre-declared.** Harm power at r = −0.20 (minimum over s_kl) is 0.96 /
+  0.50 / 0.027 / 0.00 for spread bands ≤0.2 / ≤0.45 / ≤0.8 / above.
+  - **Benefit is certifiable to 0.8. Harm is meaningfully detectable only to 0.45.**
+  - Above 0.45, a non-HARMFUL verdict means harm was **UNDETECTABLE, not absent**.
+  - Above 0.8, the verdict is UNCALIBRATED for benefit **and** blind for harm. This is the single
+    most misreadable outcome of the design, so it is written down here, before any number exists.
+- **The verdict record carries it itself:** `harm_detectability` (YES / PARTIAL / NO),
+  `harm_power_r_minus020_at_band`, and `harm_reading`. The report cannot state an
+  uncertified-benefit verdict while silently implying the harm side was checked. The constants are
+  tested equal to `HLC_CALIBRATION.json`.

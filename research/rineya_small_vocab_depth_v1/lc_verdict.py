@@ -113,6 +113,10 @@ def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: fl
 # (upper edge of s_ratio_hat, alpha_benefit, alpha_size)
 CALIBRATION = ((0.2, 0.004, 0.025), (0.45, 0.002, 0.002), (0.8, 0.0005, 0.0005), (1.2, None, None))
 ALPHA_HARM = 0.01
+# Harm POWER at r = -0.20 by band (minimum over s_kl, as applied; HLC_CALIBRATION.json
+# harm_power_r_minus020_min_by_band). A non-HARMFUL verdict where this is low means harm was
+# UNDETECTABLE, not absent: benefit is certifiable to 0.8, harm is meaningfully detectable only to 0.45.
+HARM_POWER_R020_BY_BAND = {0.2: 0.96, 0.45: 0.5, 0.8: 0.02666666666666667, 1.2: 0.0}
 CALIBRATED_FOR = {"seed": 17, "resamples": 2000,
                   "rows_per_category": {"abstention_unknown": 14, "concise_reasoning": 16, "conversation": 18,
                                         "grounded_extraction": 13, "instruction_writing": 14, "long_context": 15,
@@ -136,6 +140,7 @@ def calibrated(v: dict) -> dict:
            "size_precise": None, "size_claim_calibrated": False}
     if v["verdict"] == "UNDERPOWERED":
         return out
+    out.update(harm_detectability(v["s_ratio_hat"]))
     binding = (v["seed"] == CALIBRATED_FOR["seed"] and v["resamples"] == CALIBRATED_FOR["resamples"]
                and v["rows_per_category"] == CALIBRATED_FOR["rows_per_category"])
     band = next((b for b in CALIBRATION if v["s_ratio_hat"] <= b[0]), None)
@@ -153,3 +158,14 @@ def calibrated(v: dict) -> dict:
             # a band with no calibratable size level certifies NO size claim (None, never False)
             "size_precise": (v["boot_frac_le_precise"] < a_s) if (vc == "SUPPORTED" and a_s is not None) else None,
             "size_claim_calibrated": a_s is not None}
+
+
+def harm_detectability(s_ratio_hat: float) -> dict:
+    """Pre-declared (Amendment 5, A5.7): what a NON-HARMFUL verdict means at this observed spread."""
+    band = next((b for b in sorted(HARM_POWER_R020_BY_BAND) if s_ratio_hat <= b), None)
+    power = 0.0 if band is None else HARM_POWER_R020_BY_BAND[band]
+    level = "YES" if power >= 0.9 else "PARTIAL" if power >= 0.5 else "NO"
+    return {"harm_detectability": level, "harm_power_r_minus020_at_band": power,
+            "harm_reading": {"YES": "harm at r = -0.20 would be detected with power >= 0.9",
+                             "PARTIAL": "harm at r = -0.20 would be detected only about half the time",
+                             "NO": "a non-HARMFUL verdict here means harm was UNDETECTABLE, not absent"}[level]}

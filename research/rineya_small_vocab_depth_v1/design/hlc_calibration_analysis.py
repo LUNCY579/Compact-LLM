@@ -101,6 +101,10 @@ def main():
                                   ("power", "power_r030_uncalibrated", lambda v: v[0] == "UNCALIBRATED"),
                                   ("harm_power_020", "harm_power_r_minus020", lambda v: v[0] == "HARMFUL"),
                                   ("harm_power_030", "harm_power_r_minus030", lambda v: v[0] == "HARMFUL"),
+                                  # ADOPTION UNDER HARM: P(SUPPORTED | r < 0) -- not the same quantity as the
+                                  # controlled P(SUPPORTED | r = 0); measured, not argued (review e4b502f)
+                                  ("harm_power_020", "adoption_under_harm_r_minus020", lambda v: v[0] == "SUPPORTED"),
+                                  ("harm_power_030", "adoption_under_harm_r_minus030", lambda v: v[0] == "SUPPORTED"),
                                   ("n2_harm", "n2_false_benefit", lambda v: v[0] in ("SUPPORTED", "REAL_BUT_SMALL"))):
                 xs = g.get((b, k, kind), [])
                 if not xs:
@@ -108,11 +112,13 @@ def main():
                     continue
                 kk = sum(1 for x in xs if ev(applied(x)))
                 cell[key], cell[key + "_n"] = kk / len(xs), len(xs)
-                if key in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim"):
+                if key in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim",
+                           "adoption_under_harm_r_minus020", "adoption_under_harm_r_minus030"):
                     cell[key + "_wilson_upper"] = wilson_upper(kk, len(xs))
             oc.append(cell)
     res["operating_characteristic_as_applied"] = oc
-    for key in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim"):
+    for key in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim",
+                "adoption_under_harm_r_minus020", "adoption_under_harm_r_minus030"):
         res[f"max_{key}_as_applied"] = max(o[key] for o in oc)
         res[f"max_{key}_wilson_upper_as_applied"] = max(o[key + "_wilson_upper"] for o in oc)
     # the names the canary test reads
@@ -120,16 +126,23 @@ def main():
     res["max_boundary_false_size_as_applied"] = res["max_boundary_false_size_claim_as_applied"]
     res["claim_holds_within_mc_error"] = all(res[f"max_{k}_wilson_upper_as_applied"] <= CLAIM
                                              for k in ("null_false_benefit", "null_false_HARMFUL",
-                                                       "boundary_false_size_claim"))
+                                                       "boundary_false_size_claim",
+                                                       "adoption_under_harm_r_minus020",
+                                                       "adoption_under_harm_r_minus030"))
+    # harm DETECTABILITY by band, from the measured harm power at r = -0.20 (minimum over s_kl)
+    res["harm_power_r_minus020_min_by_band"] = {
+        b: min(o["harm_power_r_minus020"] for o in oc if o["generative_s_ratio"] == b) for b in bands}
     json.dump(res, open(out, "w", encoding="utf-8", newline=chr(10)), indent=1)
     print("draws", len(rows), "| harm profile", res["harm_null_rate_profile_by_band"], "| uniform harm", ah_min)
     for c in res["bands"]:
         print(" band", c["band_upper_s_ratio"], "alpha_benefit", c["alpha_benefit"], "alpha_size", c["alpha_size"],
               "harm design", c["alpha_harm_per_band_design"], "floor" if c["at_resolution_floor"] else "")
-    for k in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim"):
+    for k in ("null_false_benefit", "null_false_HARMFUL", "boundary_false_size_claim",
+              "adoption_under_harm_r_minus020", "adoption_under_harm_r_minus030"):
         print(" AS APPLIED", k, "worst", round(res[f"max_{k}_as_applied"], 5),
               "wilson upper", round(res[f"max_{k}_wilson_upper_as_applied"], 5))
     print(" claim holds within MC error:", res["claim_holds_within_mc_error"])
+    print(" harm power r=-0.20 (min over s_kl) by band:", res["harm_power_r_minus020_min_by_band"])
     for o in oc:
         print("  ", o["generative_s_ratio"], o["s_kl"], "pow0.3", o["power_r030_SUPPORTED"],
               "harm-0.2", o["harm_power_r_minus020"], "harm-0.3", o["harm_power_r_minus030"])
