@@ -54,6 +54,15 @@ def ram_gib() -> float:
     return psutil.virtual_memory().available / 2 ** 30
 
 
+VRAM_FLOOR_GIB = 3.5     # scoring needs about 2.5 GiB; on Windows, overflow past VRAM silently pages into host RAM
+
+
+def vram_free_gib() -> float:
+    out = subprocess.run(["nvidia-smi", "--query-gpu=memory.total,memory.used", "--format=csv,noheader,nounits"],
+                         capture_output=True, text=True).stdout.split(",")
+    return (float(out[0]) - float(out[1])) / 1024
+
+
 def run(cmd, cwd):
     print("  $", " ".join(str(c) for c in cmd), flush=True)
     rc = subprocess.call([str(c) for c in cmd], cwd=str(cwd))
@@ -96,6 +105,9 @@ def battery(b):
             raise SystemExit(f"disk below {DISK_FLOOR_GIB} GiB before building {name}")
         run([PY, "-u", b["builder"], "--arms", spec, "--no-controls"], b["dir"])
         out = b["dir"] / "scores" / f"{name}.json"
+        v = vram_free_gib()
+        if v < VRAM_FLOOR_GIB:        # a co-tenant on the card would make allocations spill into host RAM
+            raise SystemExit(f"VRAM free {v:.2f} GiB < {VRAM_FLOOR_GIB} before scoring {name}; stopping")
         run([PY, "-u", FDS / "score_arms.py", "--bank", b["bank"], "--arms-root", b["dir"] / "arms",
              "--arms", name, "--output", out, "--no-lease"], FDS)
         n = sum(len(a["predictions"]) for a in json.loads(out.read_text(encoding="utf-8"))["arms"])
