@@ -23,7 +23,7 @@ from __future__ import annotations
 import argparse, hashlib, json, math, os, shutil, struct, sys
 from pathlib import Path
 import torch
-from safetensors import safe_open
+import numpy as np
 
 HERE = Path(__file__).resolve().parent
 EXP = HERE.parent
@@ -62,6 +62,77 @@ def check_sources():
         raise SystemExit("trained_H_fp32 does not match its backup-manifest hash")
 
 
+
+class FileST:
+    """Minimal safetensors reader using plain seek/read, NOT mmap. safe_open's memory map keeps every page it has
+    touched in this process's working set: a first pre-build attempt measured 1.30 GiB RSS after reading one
+    embedding. Plain reads leave the bytes in the OS file cache (which counts as available memory), and this
+    process holds only the chunk it is working on. F32 only, which is all CONFIRM-002's sources are."""
+
+    def __init__(self, path):
+        self.f = open(path, "rb")
+        n = struct.unpack("<Q", self.f.read(8))[0]
+        self.header = json.loads(self.f.read(n)); self.header.pop("__metadata__", None)
+        self.start = 8 + n
+
+    def keys(self):
+        return list(self.header)
+
+    def shape(self, k):
+        return list(self.header[k]["shape"])
+
+    def rows(self, k, lo, hi):
+        e = self.header[k]
+        if e["dtype"] != "F32":
+            raise SystemExit(f"{k}: expected F32, found {e['dtype']}")
+        shape = e["shape"]; per_row = math.prod(shape[1:]) if len(shape) > 1 else 1
+        self.f.seek(self.start + e["data_offsets"][0] + lo * per_row * 4)
+        buf = bytearray(self.f.read((hi - lo) * per_row * 4))
+        return torch.from_numpy(np.frombuffer(buf, dtype="<f4")).reshape([hi - lo] + shape[1:])
+
+    def get_tensor(self, k):
+        return self.rows(k, 0, self.shape(k)[0])
+
+    def close(self):
+        self.f.close()
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *exc):
+        self.close()
+
+
+CHUNK_ELEMS = 4_000_000        # ~16 MB of float32 per chunk; tensors outside delta_H are never held whole
+
+
+def chunks(st, k):
+    """Yield row chunks of tensor k as float32 (the embedding alone is 155M elements, so never load it whole)."""
+    shape = st.shape(k)
+    per_row = math.prod(shape[1:]) if len(shape) > 1 else 1
+    step = max(1, CHUNK_ELEMS // per_row)
+    for lo in range(0, shape[0], step):
+        yield st.rows(k, lo, min(lo + step, shape[0]))
+
+
+def peak_rss_gib():
+    import psutil
+    mi = psutil.Process().memory_info()
+    return getattr(mi, "peak_wset", mi.rss) / 2 ** 30
+
+
+FSYNC_EVERY = 64 << 20        # bound dirty pages: without this, 7.2 GB of writes sit in the OS's modified list
+
+
+def put(fh, arr, written):
+    """Write one chunk; flush + fsync the file every FSYNC_EVERY (64 MB) bytes so unflushed pages cannot pile up."""
+    b = arr.contiguous().numpy().astype("<f4", copy=False).tobytes(order="C")
+    fh.write(b)
+    written[fh] = written.get(fh, 0) + len(b)
+    if written[fh] >= FSYNC_EVERY:
+        fh.flush(); os.fsync(fh.fileno()); written[fh] = 0
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--arms", nargs="+", default=list(ARMS))
@@ -76,21 +147,24 @@ def main():
     if not a.smoke_keys:
         check_sources()
 
-    with safe_open(str(SV / "BASE" / "model.safetensors"), "pt") as B, safe_open(str(SV / "SPARSE" / "model.safetensors"), "pt") as S, \
-         safe_open(str(TRAINED_H), "pt") as H:
+    with FileST(SV / "BASE" / "model.safetensors") as B, FileST(SV / "SPARSE" / "model.safetensors") as S, FileST(TRAINED_H) as H:
         keys = sorted(B.keys()) if not a.smoke_keys else sorted(a.smoke_keys)
         hkeys = set(H.keys())
-        # pass 1: canary norms (and keep nothing but scalars)
+        # pass 1: canary norms. delta_H tensors (<= 3072x1024) are loaded whole; every other tensor streams.
         nh16 = nhf = nds = 0.0
         for k in keys:
-            b = B.get_tensor(k).float()
-            nds += float(((S.get_tensor(k).double() - b.double()) ** 2).sum())
             if k in hkeys:
+                b = B.get_tensor(k).float()
+                nds += float(((S.get_tensor(k).double() - b.double()) ** 2).sum())
                 dh = H.get_tensor(k).float() - b
                 nh16 += float((p16(dh) ** 2).sum()); nhf += float((dh.double() ** 2).sum())
+                del b, dh
+            else:
+                for bc, sc in zip(chunks(B, k), chunks(S, k)):
+                    nds += float(((sc.double() - bc.double()) ** 2).sum())
         nh16, nhf, nds = math.sqrt(nh16), math.sqrt(nhf), math.sqrt(nds)
         print(f"||P16(delta_H)|| = {nh16:.13f} (recorded {P16_H_NORM_RECORDED:.13f}) | ||delta_H|| = {nhf:.10f} | "
-              f"||dSparse|| = {nds:.13f} (recorded {DSPARSE_NORM:.13f})", flush=True)
+              f"||dSparse|| = {nds:.13f} (recorded {DSPARSE_NORM:.13f}) | peak RSS {peak_rss_gib():.2f} GiB", flush=True)
         if not a.smoke_keys:
             if abs(nh16 - P16_H_NORM_RECORDED) > 2e-6:
                 raise SystemExit("CANARY FAILED: ||P16(delta_H)|| does not reproduce INDEP's recorded norm")
@@ -100,9 +174,9 @@ def main():
         # headers (all F32, same layout for every arm)
         header, off = {}, 0
         for k in keys:
-            shape = list(B.get_slice(k).get_shape()); nb = math.prod(shape) * 4
+            shape = B.shape(k); nb = math.prod(shape) * 4
             header[k] = {"dtype": "F32", "shape": shape, "data_offsets": [off, off + nb]}; off += nb
-        outs, fhs, per_tensor = {}, {}, {arm: {} for arm in a.arms}
+        outs, fhs, per_tensor, written = {}, {}, {arm: {} for arm in a.arms}, {}
         for arm in a.arms:
             h = dict(header); h["__metadata__"] = {"format": "pt", "experiment": "CONFIRM-002", "arm": arm}
             enc = json.dumps(h, separators=(",", ":"), ensure_ascii=True).encode(); enc += b" " * (-len(enc) % 8)
@@ -110,24 +184,28 @@ def main():
             (d / "INCOMPLETE.json").write_bytes(b'{"building": true}\n')
             fhs[arm] = open(d / "model.safetensors.partial", "xb"); fhs[arm].write(struct.pack("<Q", len(enc))); fhs[arm].write(enc)
             outs[arm] = (d, len(enc))
-        # pass 2: write
+        # pass 2: write, tensor by tensor in header order
         for k in keys:
-            b = B.get_tensor(k).float(); s = S.get_tensor(k).float()
             if k in hkeys:
+                b = B.get_tensor(k).float(); s = S.get_tensor(k).float()
                 dh = H.get_tensor(k).float() - b
                 d16 = p16(dh)
-            for arm in a.arms:
-                base_name, coef, kind = ARMS[arm]
-                base = b if base_name == "BASE" else s
-                if k in hkeys:
+                for arm in a.arms:
+                    base_name, coef, kind = ARMS[arm]
+                    base = b if base_name == "BASE" else s
                     upd = coef * (d16 if kind == "p16" else dh.double())
                     w = (base.double() + upd).float()
                     per_tensor[arm][k] = float(torch.linalg.norm(upd))
-                else:
-                    w = base
-                if not torch.isfinite(w).all():
-                    raise RuntimeError(f"nonfinite in {arm}/{k}")
-                fhs[arm].write(w.contiguous().numpy().astype("<f4", copy=False).tobytes(order="C"))
+                    if not torch.isfinite(w).all():
+                        raise RuntimeError(f"nonfinite in {arm}/{k}")
+                    put(fhs[arm], w, written)
+                    del upd, w
+                del b, s, dh, d16
+            else:
+                for bc, sc in zip(chunks(B, k), chunks(S, k)):
+                    for arm in a.arms:
+                        c = bc if ARMS[arm][0] == "BASE" else sc
+                        put(fhs[arm], c, written)
         for arm in a.arms:
             fhs[arm].flush(); os.fsync(fhs[arm].fileno()); fhs[arm].close()
             d, enclen = outs[arm]
@@ -137,15 +215,15 @@ def main():
                 shutil.copyfile(SV / "BASE" / f, d / f)
             (d / "model.safetensors.partial").rename(d / "model.safetensors")
 
-    # verify each arm independently of the writer
-    with safe_open(str(SV / "BASE" / "model.safetensors"), "pt") as B, safe_open(str(SV / "SPARSE" / "model.safetensors"), "pt") as S:
+    # verify each arm independently of the writer (untouched tensors streamed, bitwise)
+    with FileST(SV / "BASE" / "model.safetensors") as B, FileST(SV / "SPARSE" / "model.safetensors") as S:
         for arm in a.arms:
-            base_name = ARMS[arm][0]; d = a.outdir / arm
+            base_name = ARMS[arm][0]; d = a.outdir / arm; src = B if base_name == "BASE" else S
             bad_untouched, worst, n_out_of_tol = 0, 0.0, 0
-            with safe_open(str(d / "model.safetensors"), "pt") as O:
+            with FileST(d / "model.safetensors") as O:
                 for k in keys:
-                    o = O.get_tensor(k); base = (B if base_name == "BASE" else S).get_tensor(k).float()
                     if k in per_tensor[arm]:
+                        o = O.get_tensor(k); base = src.get_tensor(k).float()
                         got = float(torch.linalg.norm(o.double() - base.double()))
                         want = per_tensor[arm][k]
                         # float32 rounding floor: casting base+update to float32 perturbs each element by
@@ -153,8 +231,10 @@ def main():
                         tol = max(1e-3 * want, 2 * 1.1920929e-07 * float(torch.linalg.norm(base.double())))
                         n_out_of_tol += abs(got - want) > tol
                         worst = max(worst, abs(got - want) / max(want, 1e-30))
+                        del o, base
                     else:
-                        bad_untouched += int((o.view(torch.int32) != base.view(torch.int32)).sum())
+                        for oc, bc in zip(chunks(O, k), chunks(src, k)):
+                            bad_untouched += int((oc.view(torch.int32) != bc.view(torch.int32)).sum())
             upd_norm = math.sqrt(sum(v * v for v in per_tensor[arm].values()))
             ok = bad_untouched == 0 and n_out_of_tol == 0
             print(f"verify {arm}: untouched-tensor bit mismatches {int(bad_untouched)}, H tensors outside the rounding "
@@ -171,6 +251,7 @@ def main():
             (d / "BUILD.json").write_bytes((json.dumps(rec, indent=2) + "\n").encode())
             (d / "INCOMPLETE.json").unlink()
             print(json.dumps({k: rec[k] for k in ("arm", "norm_H_update", "weight_sha256")}), flush=True)
+    print(f"peak RSS of this build: {peak_rss_gib():.2f} GiB", flush=True)
 
 
 if __name__ == "__main__":
