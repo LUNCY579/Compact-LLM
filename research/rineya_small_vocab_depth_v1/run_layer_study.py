@@ -138,7 +138,7 @@ def main(argv=None) -> int:
         import transformers
         rt = la.configure_runtime(17, a.device)
         dev = a.device
-        chunk = 128 if dev == "cpu" else 512      # logits chunk: host RAM on CPU, VRAM on GPU
+        chunk = 128 if dev == "cpu" else 256      # logits chunk (x 151,936 fp32 x ~5 tensors): 256 keeps ~0.8 GB transient under the 0.78 VRAM cap
         rows = [json.loads(l) for l in a.panels.read_text(encoding="utf-8").splitlines() if l.strip()]
         if a.max_rows_per_category:
             keep, seen = [], {}

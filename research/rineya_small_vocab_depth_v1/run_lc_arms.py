@@ -77,7 +77,7 @@ def main(argv=None) -> int:
         token, guard_gib, chunk = None, 0.4, 128
     else:
         hostbudget.require(3.6, "SMALLVD-001 LC arms")
-        token, guard_gib, chunk = gpu_lease.acquire(timeout_s=7200, label="smallvd001:lc-arms"), 1.5, 512
+        token, guard_gib, chunk = gpu_lease.acquire(timeout_s=7200, label="smallvd001:lc-arms"), 1.5, 256
     if a.out.exists():                 # checked up front; CREATED only at the end, so a RAM stand-down
         raise SystemExit(f"{a.out} exists (create-only)")   # mid-run leaves nothing to block a retry
     try:
