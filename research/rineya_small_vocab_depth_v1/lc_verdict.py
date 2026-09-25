@@ -88,21 +88,30 @@ def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: fl
 
 
 # ---------------------------------------------------------------------------------------------------
-# Amendment 5: the REGISTERED verdict is calibrated (design/HLC_CALIBRATION.json, from
-# design/hlc_calibration_sim.py + design/hlc_calibration_analysis.py, target 0.02 so that the 0.025
-# target holds within Monte-Carlo error). The raw rule above (lower 2.5 % bound > 0) was measured
-# anticonservative under the mean-ratio null (up to 0.168 false benefit), driven by the per-row
-# log-ratio spread -- NOT by effective n. Each band of the OBSERVED spread s_ratio_hat carries a
-# one-sided benefit level calibrated at the band's UPPER edge (the benefit null rate rises with the
-# spread, monotone in every measured row), and a size level calibrated at the r = 0.10 boundary. The
-# harm null rate FALLS with the spread, so harm uses ONE uniform level, the minimum over bands.
-# As applied (band chosen from the noisy observed spread) the worst generative cell gave: false
-# benefit 0.01375, false size claim 0.0167, false harm 0.01875, false benefit under the harmful
-# alternative 0.
-# BINDING: the table is valid only for BOOTSTRAP_SEED = 17, BOOTSTRAP_RESAMPLES = 2000 and the REPORT
-# category sizes it was simulated at; any other combination returns UNCALIBRATED.
-# (upper edge of s_ratio_hat, alpha_benefit, alpha_size); above 0.8 no benefit level is achievable
-CALIBRATION = ((0.2, 0.003, 0.004), (0.45, 0.001, 0.002), (0.8, 0.0005, 0.001), (1.2, None, None))
+# Amendment 5 (revised): the REGISTERED verdict is calibrated (design/HLC_CALIBRATION.json, from
+# design/hlc_calibration_sim.py + design/hlc_calibration_analysis.py, 36,300 committed draws).
+# CLAIM, ONE-SIDED: at every simulated cell, P(false certification) <= 0.025, accepted only when the
+# worst cell's one-sided 95 % WILSON UPPER BOUND is <= 0.025 -- the claim holds within Monte-Carlo
+# error, explicitly. The raw rule (lower 2.5 % bound > 0) was anticonservative under the mean-ratio
+# null (up to 0.168), driven by the per-row log-ratio spread -- NOT by effective n.
+#   benefit  per band of the OBSERVED spread s_ratio_hat, calibrated at the band's upper edge (the
+#            benefit null rate rises with the spread in every measured row)
+#   size     SUPPORTED only, calibrated at the r = 0.10 boundary
+#   harm     ONE uniform level: harm's null rate is NOT monotone in the spread -- it peaks at the
+#            INTERIOR band 0.45 (0.027 / 0.030 / 0.015 / 0.012) -- so no edge rule is safe and the only
+#            correct target is the maximum; the minimum over bands is band 0.45's own level
+#            (calibration AT the measured maximum, not a fallback)
+#   floor    the smallest level is 1/2000: band 0.8 sits ON it, i.e. certifies only when at most ONE
+#            bootstrap draw falls at or below 0 (a named fragility); above 0.8 no level exists at this
+#            resolution, so the edge is FORCED by the resample count, not chosen
+# As applied (band from the noisy observed spread), worst generative cell, [Wilson upper]:
+#   false benefit 0.016 [0.0223]   false harm 0.014 [0.0199]   false size 0.0125 [0.0190]
+#   false benefit under the harmful alternative 0.  Harm POWER at r = -0.20: 0.96-1.00 (spread <= 0.2),
+#   0.50-0.85 (0.45), 0.03-0.09 (0.8). A missed harm cannot cause adoption: adoption needs SUPPORTED.
+# BINDING: valid only for BOOTSTRAP_SEED = 17, BOOTSTRAP_RESAMPLES = 2000 and the REPORT category
+# sizes it was simulated at; any other combination returns UNCALIBRATED.
+# (upper edge of s_ratio_hat, alpha_benefit, alpha_size)
+CALIBRATION = ((0.2, 0.004, 0.025), (0.45, 0.002, 0.002), (0.8, 0.0005, 0.0005), (1.2, None, None))
 ALPHA_HARM = 0.01
 CALIBRATED_FOR = {"seed": 17, "resamples": 2000,
                   "rows_per_category": {"abstention_unknown": 14, "concise_reasoning": 16, "conversation": 18,
@@ -124,7 +133,7 @@ def calibrated(v: dict) -> dict:
     effective n, so refusing a calibrated verdict for low effective n would be a too-strict gate."""
     out = {**v, "verdict_uncalibrated": v["verdict"], "size_precise_uncalibrated": v["size_precise"],
            "calibration_band": None, "alpha_benefit": None, "alpha_size": None, "alpha_harm": None,
-           "size_precise": None}
+           "size_precise": None, "size_claim_calibrated": False}
     if v["verdict"] == "UNDERPOWERED":
         return out
     binding = (v["seed"] == CALIBRATED_FOR["seed"] and v["resamples"] == CALIBRATED_FOR["resamples"]
@@ -141,4 +150,6 @@ def calibrated(v: dict) -> dict:
           "REAL_BUT_SMALL" if benefit else "HARMFUL" if harm else "INCONCLUSIVE")
     return {**out, "verdict": vc, "calibration_band": band[0], "alpha_benefit": a_b, "alpha_size": a_s,
             "alpha_harm": ALPHA_HARM,
-            "size_precise": (v["boot_frac_le_precise"] < a_s) if vc == "SUPPORTED" else None}
+            # a band with no calibratable size level certifies NO size claim (None, never False)
+            "size_precise": (v["boot_frac_le_precise"] < a_s) if (vc == "SUPPORTED" and a_s is not None) else None,
+            "size_claim_calibrated": a_s is not None}

@@ -857,6 +857,8 @@ A permutation test is exact for exchangeability, not for a mean-ratio null.
   minimum over bands: 0.01**.
 - **Calibration target:** 0.02, so that the registered 0.025 holds within Monte-Carlo error.
 
+*[Superseded by A5.6: same design, an explicit Monte-Carlo criterion, and 36,300 draws.]*
+
 | observed spread band | α benefit | α size | α harm |
 |---|---:|---:|---:|
 | ≤ 0.2 | 0.003 | 0.004 | 0.01 |
@@ -897,3 +899,63 @@ draws, which the code never makes. The analysis was aligned to the code.
 
 **If the realised spread is above 0.8, H-LC ends UNCALIBRATED.** It then reports r and its interval
 and certifies nothing. That is the honest outcome of this design, not a failure of the run.
+
+### A5.6 Revision, same day, before any fit: `HLC_CALIBRATION_COLD_CHECK.md` (records `b53b46d`)
+
+**1. The criterion is explicit.** The claim is ONE-SIDED: at every simulated cell,
+P(false certification) ≤ 0.025. A level is accepted only if the worst cell's one-sided 95 %
+**Wilson upper bound** is ≤ 0.025.
+
+The earlier "0.02 point target" did not deliver this for harm: at 800 draws harm's worst cell had
+an upper bound of 0.0266. The null cells now have 1,500 draws (700 added on an independent seed
+stream), and the size boundary cells have 1,200 (900 added). That makes 36,300 committed draws in
+`design/band_*.jsonl.gz`.
+
+**2. The registered table** (`lc_verdict.CALIBRATION`, equal to `HLC_CALIBRATION.json`, tested):
+
+| observed spread band | α benefit | α size | α harm |
+|---|---:|---:|---:|
+| ≤ 0.2 | 0.004 | 0.025 | 0.01 |
+| ≤ 0.45 | 0.002 | 0.002 | 0.01 |
+| ≤ 0.8 | 0.0005 (the resolution floor) | 0.0005 | 0.01 |
+| > 0.8 | **UNCALIBRATED** | — | — |
+
+**As applied, worst generative cell** (Wilson upper bound in brackets):
+
+| quantity | worst cell |
+|---|---:|
+| false benefit | 0.016 [0.0223] |
+| false harm | 0.014 [0.0199] |
+| false size claim | 0.0125 [0.0190] |
+| false benefit under the harmful alternative | 0 |
+
+The claim holds within Monte-Carlo error for all three.
+
+**3. The harm rationale is corrected.** Harm's null rate is **not** monotone in the spread. By band,
+at the uncalibrated rule, it is 0.027 / 0.030 / 0.015 / 0.012: it RISES first and peaks at the
+**interior** band 0.45. "Falls with spread", as A5.3 said, is withdrawn: acting on it would suggest
+a lower-edge rule, which would under-protect band 0.45. For a non-monotone rate no edge rule is
+safe, and the only correct target is the maximum. The uniform level of 0.01 is band 0.45's own
+design level: **calibration at the measured maximum, not a conservative fallback.**
+
+**4. Harm POWER, measured for the first time** (as applied):
+
+| spread | r = −0.20 | r = −0.30 |
+|---|---:|---:|
+| ≤ 0.2 | 0.96–1.00 | 1.00 |
+| 0.45 | 0.50–0.85 | 0.74–1.00 |
+| 0.8 | 0.03–0.09 | 0.10–0.34 |
+| above 0.8 | 0 (UNCALIBRATED) | 0 (UNCALIBRATED) |
+
+A missed harm cannot lead to adopting the method, because adoption requires SUPPORTED, and a false
+SUPPORTED is the controlled error. What a miss loses is the information that the method is
+harmful.
+
+**5. The 0.8 edge is FORCED by the resample count, not chosen.** The smallest level is 1/2000 =
+0.0005. Band 0.8 sits on that floor: there the rule certifies only when **at most one** of 2,000
+bootstrap draws falls at or below 0, a one-draw margin. It is deterministic given seed 17, and it
+is named here as a fragility. A 1.0 band would need about 20,000 resamples to buy a band whose power
+sits below the 0.34–0.41 already measured at 0.8. UNCALIBRATED above 0.8 stays the answer.
+
+**6. Unchanged:** the bands, the upper-edge rule for benefit, the binding constraints (A5.4), and
+the pre-declared UNCALIBRATED outcome (A5.5).

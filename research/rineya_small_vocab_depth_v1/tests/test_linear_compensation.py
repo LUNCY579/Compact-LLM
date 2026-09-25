@@ -191,8 +191,8 @@ def test_calibrated_verdict_branches():
     v = c(_raw(boot_frac_le_0=0.002, boot_frac_le_precise=0.001))
     assert v["verdict"] == "SUPPORTED" and v["size_precise"] is True and v["calibration_band"] == 0.2
     assert c(_raw(boot_frac_le_0=0.002, boot_frac_le_precise=0.2))["size_precise"] is False
-    assert c(_raw(boot_frac_le_0=0.004))["verdict"] == "INCONCLUSIVE"          # 0.004 >= alpha 0.003
-    assert c(_raw(s_ratio_hat=0.3, boot_frac_le_0=0.002))["verdict"] == "INCONCLUSIVE"   # band 0.45: alpha 0.001
+    assert c(_raw(boot_frac_le_0=0.004))["verdict"] == "INCONCLUSIVE"          # not < band-0.2 alpha 0.004
+    assert c(_raw(s_ratio_hat=0.3, boot_frac_le_0=0.002))["verdict"] == "INCONCLUSIVE"   # not < band-0.45 alpha 0.002
     assert c(_raw(relative_reduction_r=0.1, boot_frac_le_0=0.001))["verdict"] == "REAL_BUT_SMALL"
     assert c(_raw(relative_reduction_r=-0.5, boot_frac_le_0=0.995))["verdict"] == "HARMFUL"   # mass above 0 = 0.005
     assert c(_raw(relative_reduction_r=-0.5, boot_frac_le_0=0.985))["verdict"] == "INCONCLUSIVE"
@@ -216,7 +216,7 @@ def test_code_rule_reproduces_the_calibration_analysis():
                                    boot_frac_le_0=x["boot_frac_le_0"], boot_frac_le_precise=x["boot_frac_le_precise"],
                                    s_ratio_hat=x["s_ratio_hat"]))
             g[(x["band_s_ratio"], x["s_kl"], x["kind"])].append(v)
-    assert sum(len(v) for v in g.values()) == 16200
+    assert sum(len(v) for v in g.values()) == rec["total_draws"]
     rate = lambda xs, f: sum(1 for x in xs if f(x)) / len(xs)
     fb = max(rate(v, lambda y: y["verdict"] in ("SUPPORTED", "REAL_BUT_SMALL")) for k, v in g.items() if k[2] == "null")
     fh = max(rate(v, lambda y: y["verdict"] == "HARMFUL") for k, v in g.items() if k[2] == "null")
@@ -224,4 +224,15 @@ def test_code_rule_reproduces_the_calibration_analysis():
     assert fb == rec["max_null_false_benefit_as_applied"]
     assert fh == rec["max_null_false_harm_as_applied"]
     assert fs == rec["max_boundary_false_size_as_applied"]
-    assert fb <= 0.02 and fh <= 0.02 and fs <= 0.02
+    assert rec["claim_holds_within_mc_error"] is True
+
+
+def test_code_table_is_the_analysis_table():
+    """The registered constants in lc_verdict must be exactly what the analysis derived -- no hand
+    transcription between the calibration record and the code."""
+    import json
+    import lc_verdict as lv
+    rec = json.loads((HERE / "design" / "HLC_CALIBRATION.json").read_text(encoding="utf-8"))
+    assert lv.CALIBRATION == tuple((c["band_upper_s_ratio"], c["alpha_benefit"], c["alpha_size"]) for c in rec["bands"])
+    assert lv.ALPHA_HARM == rec["alpha_harm_uniform"]
+    assert lv.CALIBRATED_FOR["resamples"] == rec["resamples"] == lv.BOOTSTRAP_RESAMPLES

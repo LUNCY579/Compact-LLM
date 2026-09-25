@@ -13,6 +13,10 @@ Models (as design/hlc_power_sim.py): per-row plain KL lognormal(0, s_kl); ratio 
   N1: mean (1 - r_true)   -- the MEAN-ratio null/alternatives for r (the estimand)
   N2: log-mean log(1 - r_true), i.e. median (1 - r_true) -- at r_true = 0 a HARMFUL alternative
 usage: python hlc_calibration_sim.py <band_upper_s_ratio> <n_null> <n_boundary> <n_power> <n_n2> <out.jsonl>
+                                     [--seed-offset K] [--harm-power N]
+  --seed-offset K   an independent RNG stream for EXTENSION draws (Amendment 5 revision: 700 more null
+                    draws per cell, so harm's worst cell clears 0.025 within Monte-Carlo error)
+  --harm-power N    N draws at each of r_true = -0.20 and -0.30 (N1): harm POWER, never measured before
 """
 import json
 import math
@@ -46,13 +50,17 @@ def data(rng, r_true, s_kl, s_ratio, model):
 
 def main():
     band, n_null, n_bnd, n_pow, n_n2, out = float(sys.argv[1]), *map(int, sys.argv[2:6]), sys.argv[6]
-    rng = random.Random(int(band * 1000) + 5)
+    opts = dict(zip(sys.argv[7::2], sys.argv[8::2]))
+    off, n_hp = int(opts.get("--seed-offset", 0)), int(opts.get("--harm-power", 0))
+    rng = random.Random(int(band * 1000) + 5 + 100003 * off)
     keep = ("relative_reduction_r", "boot_frac_le_0", "boot_frac_le_precise", "s_ratio_hat", "s_kl_hat",
             "min_eff_n", "verdict")
     with open(out, "w", encoding="utf-8", newline=chr(10)) as f:
         for s_kl in S_KL:
             for kind, r_true, model, n in (("null", 0.0, "N1", n_null), ("boundary", 0.10, "N1", n_bnd),
-                                           ("power", 0.30, "N1", n_pow), ("n2_harm", 0.0, "N2", n_n2)):
+                                           ("power", 0.30, "N1", n_pow), ("n2_harm", 0.0, "N2", n_n2),
+                                           ("harm_power_020", -0.20, "N1", n_hp),
+                                           ("harm_power_030", -0.30, "N1", n_hp)):
                 for _ in range(n):
                     v = lv.verdict(*data(rng, r_true, s_kl, band, model))
                     f.write(json.dumps({"band_s_ratio": band, "s_kl": s_kl, "kind": kind, "r_true": r_true,
