@@ -15,7 +15,15 @@ as a stand-in for that message: its queue releases and retakes the lock between 
 - Interpreter: `C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe`. This is the
   development environment. Do NOT use `.venv-rab001-cu126`: it has no `accelerate`.
 - Target: `experiments/interference_mechanism_v1/run_gpu_batteries.py`, with cwd in the same directory.
-- Use a runner that opens its own log (`run_gpu_batteries.log`) and writes `RUN_RC.json` on exit.
+- Runner: `wmi_runner.py` in this directory. It opens its own log and writes an rc file on exit.
+  Launch it from PowerShell:
+  ```powershell
+  $d = 'C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\interference_mechanism_v1'
+  $py = 'C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe'
+  $cl = "`"$py`" -u `"$d\wmi_runner.py`" `"$d\run_gpu_batteries.py`" `"$d`" `"$d\run_gpu_batteries.log`" `"$d\RUN_RC.json`""
+  $si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{ShowWindow=[uint16]0}
+  Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine=$cl; CurrentDirectory=$d; ProcessStartupInformation=$si}
+  ```
   Wait on `RUN_RC.json`, not on the process.
 
 ## What it does
