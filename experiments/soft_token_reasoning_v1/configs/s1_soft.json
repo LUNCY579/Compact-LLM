@@ -1,0 +1,16 @@
+{
+  "arm": "S1",
+  "description": "Faithful noisy soft-token training with ordinary discrete inference",
+  "model_id": "Qwen/Qwen3-0.6B",
+  "tokenizer_id": "Qwen/Qwen3-0.6B",
+  "train_inference": {"train_soft": true, "infer_hard": true, "temperature": 0.5, "noise_scale": 0.33, "add_noise": true},
+  "dataset_id": "Rineya-Puzzle-Reasoning-51k",
+  "train_split": "train",
+  "held_out_split": "validation",
+  "test_split": "test",
+  "seeds": [20260925, 20260926, 20260927],
+  "max_reasoning_tokens": 8,
+  "pass_at_k": [1, 8],
+  "sealed_access": false,
+  "gflowrl": false
+}
