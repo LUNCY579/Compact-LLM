@@ -977,3 +977,42 @@ the pre-declared UNCALIBRATED outcome (A5.5).
   `harm_power_r_minus020_at_band`, and `harm_reading`. The report cannot state an
   uncertified-benefit verdict while silently implying the harm side was checked. The constants are
   tested equal to `HLC_CALIBRATION.json`.
+
+### A5.8 The shape guard, and adoption under harm at 300 draws (`HLC_CALIBRATION_SHAPE_ASSUMPTION.md`, records `1ff9373`)
+
+**1. OUT_OF_FAMILY shape guard.** The calibration adapts to the SCALE of the per-row log-ratios (the
+spread bands) but assumed their SHAPE: log(LC/plain) normal, and independent of log plain KL. The
+verdict now computes three statistics from the realised REPORT rows:
+
+- skewness and excess kurtosis of log(LC_i / plain_i);
+- corr(log kl_plain_i, log ratio_i).
+
+**A gross departure marks the verdict OUT_OF_FAMILY.** The would-be calibrated verdict is kept as
+`verdict_if_in_family`, the departures are named, and nothing is certified.
+
+The thresholds come from `design/hlc_shape_guard_sim.py` (`HLC_SHAPE_GUARD_SIM.json`): 30,000
+in-family sets at 124 rows.
+
+| statistic | threshold | in-family 99.9th percentile |
+|---|---:|---:|
+| \|skew\| | > 0.75 | 0.77 |
+| excess kurtosis | > 1.5 | 2.01 |
+| \|corr\| | > 0.3 | 0.30 |
+
+Together they fire on **0.59 %** of in-family sets, so they flag gross departures only.
+
+The correlation is also a mechanism readout, reported whatever the verdict. Negative means the
+compensation helps most where the pruning damage is worst.
+
+**2. Adoption under harm, at 300 draws per cell** (+150 on an independent seed stream, 39,900 draws
+in total):
+
+- **One event appeared:** P(SUPPORTED | r = −0.20) was 1/300 in the band 0.8 / s_kl 1.5 cell. That
+  is the fragile corner already named: resolution floor, lowest harm power.
+- **Worst-cell Wilson upper bound is 0.0148** (0/300 at r = −0.30, upper 0.0089). The claim holds,
+  and at 300 draws it tolerates the one event that 150 draws could not have.
+- **Harm power minima are updated to 0.953 / 0.483 / 0.023 / 0.00**, and the detectability labels
+  are re-anchored on the conventional 0.8 power line: YES ≥ 0.8, PARTIAL 0.2–0.8, NO < 0.2. They
+  are descriptive, not gates, and the statement is unchanged: benefit is certifiable to 0.8, harm is
+  meaningfully detectable only to 0.45, with a non-HARMFUL verdict meaning *undetectable* above that.
+- **The calibration table is unchanged** (verified by diffing the regenerated bands).

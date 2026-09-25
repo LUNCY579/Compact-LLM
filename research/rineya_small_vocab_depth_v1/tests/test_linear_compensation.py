@@ -172,7 +172,8 @@ def _raw(**kw):
     import lc_verdict as lv
     v = {"verdict": "INCONCLUSIVE", "size_precise": None, "seed": 17, "resamples": 2000,
          "rows_per_category": dict(lv.CALIBRATED_FOR["rows_per_category"]), "support_bar": 0.20,
-         "relative_reduction_r": 0.3, "boot_frac_le_0": 0.5, "boot_frac_le_precise": 0.5, "s_ratio_hat": 0.1}
+         "relative_reduction_r": 0.3, "boot_frac_le_0": 0.5, "boot_frac_le_precise": 0.5, "s_ratio_hat": 0.1,
+         "skew": 0.0, "excess_kurtosis": 0.0, "corr_logkl_logratio": 0.0}
     v.update(kw)
     return v
 
@@ -250,3 +251,25 @@ def test_harm_detectability_is_declared_in_the_verdict():
     assert v["harm_detectability"] == "NO" and "UNDETECTABLE" in v["harm_reading"]
     u = lv.calibrated(_raw(s_ratio_hat=2.0))
     assert u["verdict"] == "UNCALIBRATED" and u["harm_detectability"] == "NO"
+
+
+def test_out_of_family_shape_guard():
+    """A5.8: a gross departure from the calibrated shape withholds certification, keeps the would-be
+    verdict, and names the departure; in-family values pass through unchanged."""
+    import lc_verdict as lv
+    base = dict(boot_frac_le_0=0.001, relative_reduction_r=0.3)
+    assert lv.calibrated(_raw(**base))["verdict"] == "SUPPORTED"
+    for kw, name in ((dict(skew=-0.9), "skew"), (dict(excess_kurtosis=2.5), "excess_kurtosis"),
+                     (dict(corr_logkl_logratio=-0.45), "corr_logkl_logratio")):
+        v = lv.calibrated(_raw(**base, **kw))
+        assert v["verdict"] == "OUT_OF_FAMILY" and v["verdict_if_in_family"] == "SUPPORTED"
+        assert v["shape_departures"] == [name]
+    assert lv.calibrated(_raw(**base, skew=0.5, excess_kurtosis=1.0, corr_logkl_logratio=0.2))["verdict"] == "SUPPORTED"
+
+
+def test_shape_stats_known_values():
+    import lc_verdict as lv
+    s = lv.shape_stats([1.0, 2.0, 3.0, 4.0, 100.0], [0.0, 0.1, 0.2, 0.3, 5.0])
+    assert s["skew"] > 1.0 and s["excess_kurtosis"] > 0 and s["corr_logkl_logratio"] > 0.99
+    z = lv.shape_stats([-1.0, 0.0, 1.0], [1.0, 0.0, -1.0])
+    assert abs(z["skew"]) < 1e-12 and abs(z["corr_logkl_logratio"] + 1) < 1e-12

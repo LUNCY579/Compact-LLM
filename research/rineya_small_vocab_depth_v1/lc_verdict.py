@@ -25,6 +25,24 @@ def cat_mean_kl(rows: list[dict]) -> float:
     return sum(s / n for s, n in by.values()) / len(by)
 
 
+def shape_stats(lr: list[float], lk: list[float]) -> dict:
+    """A5.8: the calibration family draws per-row log(LC/plain) NORMAL and INDEPENDENT of log plain KL.
+    Sample skewness and excess kurtosis (population moments) of lr, and Pearson corr(lk, lr)."""
+    n = len(lr)
+    m = sum(lr) / n
+    d = [x - m for x in lr]
+    m2 = sum(x * x for x in d) / n
+    m3 = sum(x ** 3 for x in d) / n
+    m4 = sum(x ** 4 for x in d) / n
+    mk = sum(lk) / n
+    dk = [x - mk for x in lk]
+    vk = sum(x * x for x in dk) / n
+    cov = sum(a * b for a, b in zip(dk, d)) / n
+    return {"skew": m3 / m2 ** 1.5 if m2 > 0 else 0.0,
+            "excess_kurtosis": m4 / m2 ** 2 - 3 if m2 > 0 else 0.0,
+            "corr_logkl_logratio": cov / math.sqrt(vk * m2) if vk > 0 and m2 > 0 else 0.0}
+
+
 def diagnostics(plain_rows: list[dict], comp_rows: list[dict]) -> dict:
     """Observable after the fit: the spread of per-row log(LC/plain) KL, the spread of log plain KL,
     and the minimum per-category effective n (sum w)^2 / sum w^2 of the plain weights w = kl * n.
@@ -40,7 +58,8 @@ def diagnostics(plain_rows: list[dict], comp_rows: list[dict]) -> dict:
     for r in plain_rows:
         w.setdefault(r["category"], []).append(r["kl"] * r["n"])
     return {"s_ratio_hat": sd(lr), "s_kl_hat": sd(lk),
-            "min_eff_n": min(sum(x) ** 2 / sum(y * y for y in x) for x in w.values())}
+            "min_eff_n": min(sum(x) ** 2 / sum(y * y for y in x) for x in w.values()),
+            **shape_stats(lr, lk)}
 
 
 def verdict(plain: list[dict], comp: list[dict], ids: list[str], support_bar: float = SUPPORT_BAR,
@@ -116,7 +135,12 @@ ALPHA_HARM = 0.01
 # Harm POWER at r = -0.20 by band (minimum over s_kl, as applied; HLC_CALIBRATION.json
 # harm_power_r_minus020_min_by_band). A non-HARMFUL verdict where this is low means harm was
 # UNDETECTABLE, not absent: benefit is certifiable to 0.8, harm is meaningfully detectable only to 0.45.
-HARM_POWER_R020_BY_BAND = {0.2: 0.96, 0.45: 0.5, 0.8: 0.02666666666666667, 1.2: 0.0}
+HARM_POWER_R020_BY_BAND = {0.2: 0.9533333333333334, 0.45: 0.48333333333333334, 0.8: 0.023333333333333334, 1.2: 0.0}
+# A5.8 SHAPE GUARD: the calibration family draws per-row log(LC/plain) NORMAL and INDEPENDENT of log
+# plain KL. A realised REPORT set departing GROSSLY from that is OUT_OF_FAMILY: the certification was
+# never tested there. Thresholds from design/hlc_shape_guard_sim.py (30,000 in-family sets at 124
+# rows): together they fire on 0.59 % of IN-family sets, so they flag gross departures only.
+SHAPE_GUARD = {"abs_skew": 0.75, "excess_kurtosis": 1.5, "abs_corr_logkl_logratio": 0.3}
 CALIBRATED_FOR = {"seed": 17, "resamples": 2000,
                   "rows_per_category": {"abstention_unknown": 14, "concise_reasoning": 16, "conversation": 18,
                                         "grounded_extraction": 13, "instruction_writing": 14, "long_context": 15,
@@ -133,6 +157,9 @@ def calibrated(v: dict) -> dict:
       REAL_BUT_SMALL boot_frac_le_0 < alpha_benefit(band) and r < 0.20
       HARMFUL        bootstrap mass above 0 < ALPHA_HARM
       INCONCLUSIVE   otherwise
+      OUT_OF_FAMILY  (checked last) the realised per-row log-ratios depart grossly from the calibrated
+                     shape (skew / kurtosis / dependence on plain KL): the in-family verdict is kept as
+                     verdict_if_in_family and NOT certified
     min_eff_n is an INFORMATION diagnostic only: calibration was measured to follow the spread, not
     effective n, so refusing a calibrated verdict for low effective n would be a too-strict gate."""
     out = {**v, "verdict_uncalibrated": v["verdict"], "size_precise_uncalibrated": v["size_precise"],
@@ -153,6 +180,14 @@ def calibrated(v: dict) -> dict:
     harm = (1 - v["boot_frac_le_0"]) < ALPHA_HARM
     vc = ("SUPPORTED" if benefit and v["relative_reduction_r"] >= v["support_bar"] else
           "REAL_BUT_SMALL" if benefit else "HARMFUL" if harm else "INCONCLUSIVE")
+    departures = [k for k, bad in (("skew", abs(v["skew"]) > SHAPE_GUARD["abs_skew"]),
+                                   ("excess_kurtosis", v["excess_kurtosis"] > SHAPE_GUARD["excess_kurtosis"]),
+                                   ("corr_logkl_logratio",
+                                    abs(v["corr_logkl_logratio"]) > SHAPE_GUARD["abs_corr_logkl_logratio"])) if bad]
+    if departures:
+        # the verdict the calibrated rule WOULD give is kept for the record, and not certified
+        return {**out, "verdict": "OUT_OF_FAMILY", "verdict_if_in_family": vc, "shape_departures": departures,
+                "calibration_band": band[0]}
     return {**out, "verdict": vc, "calibration_band": band[0], "alpha_benefit": a_b, "alpha_size": a_s,
             "alpha_harm": ALPHA_HARM,
             # a band with no calibratable size level certifies NO size claim (None, never False)
@@ -164,8 +199,9 @@ def harm_detectability(s_ratio_hat: float) -> dict:
     """Pre-declared (Amendment 5, A5.7): what a NON-HARMFUL verdict means at this observed spread."""
     band = next((b for b in sorted(HARM_POWER_R020_BY_BAND) if s_ratio_hat <= b), None)
     power = 0.0 if band is None else HARM_POWER_R020_BY_BAND[band]
-    level = "YES" if power >= 0.9 else "PARTIAL" if power >= 0.5 else "NO"
+    # labels anchored on the conventional 0.8 power line (descriptive, not a gate)
+    level = "YES" if power >= 0.8 else "PARTIAL" if power >= 0.2 else "NO"
     return {"harm_detectability": level, "harm_power_r_minus020_at_band": power,
-            "harm_reading": {"YES": "harm at r = -0.20 would be detected with power >= 0.9",
-                             "PARTIAL": "harm at r = -0.20 would be detected only about half the time",
+            "harm_reading": {"YES": "harm at r = -0.20 would be detected with power >= 0.8",
+                             "PARTIAL": "harm at r = -0.20 would be detected only part of the time (0.2-0.8)",
                              "NO": "a non-HARMFUL verdict here means harm was UNDETECTABLE, not absent"}[level]}
