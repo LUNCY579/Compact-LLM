@@ -375,6 +375,7 @@ Two reported cells show the dependence: **D2r** (generic damage with 60% of know
 **In every case:** GO/HOLD stays HOLD; no quality claim; no release.
 
 **Read budget: ONE primary.** R1 hardens the budget (cold review M2 and M3, soup review). The rules live in `run_abst.py` itself, not only in the launcher.
+- **In one sentence:** at most **3** boundary crossings in total; none after **two recorded (infrastructure) failures**; none after any primary exists. 2f0a21f5 allowed one crossing plus one rerun after an infrastructure failure. The extra crossing exists only for hard kills (reboot, power loss), which leave no attempt record and persist no panel values.
 
 - **Where things are written.**
   - A real run reads **only** the registered panel and writes **only** to `<records>/abst001-20260925/result`. Its attempts directory is `<records>/abst001-20260925/attempts`. The location is fixed in the runner, so a copy of the panel elsewhere is refused (R1 review).
