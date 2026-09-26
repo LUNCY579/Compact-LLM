@@ -71,7 +71,8 @@ def verify(path: Path, weight_sha: str) -> dict:
               "hf_target": str(result.get("target", "")).startswith("hf:"),
               "weight_sha": result.get("hf_candidate_identity", {}).get("weight_sha256") == weight_sha,
               "device": result.get("device") == "cuda",
-              "frozen_n": result.get("frozen_reference_sizes", {}).get("permissive") == 47}
+              "frozen_n": result.get("frozen_reference_sizes", {}).get("permissive") == 47,
+              "source_correct_n": result.get("by_bare_policy", {}).get("permissive", {}).get("source_correct_total") == 47}
     if not all(checks.values()):
         raise SystemExit(f"retention comparability tuple failed: {checks}")
     lost = result["by_bare_policy"]["permissive"]["lost_total"]
