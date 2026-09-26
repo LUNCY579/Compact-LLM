@@ -47,8 +47,10 @@ def gates_met() -> bool:
 
 def main() -> int:
     start = time.monotonic()
-    if (HERE / "STAGE_A_RESULT.json").exists() or (HERE / "stage_a").exists():
-        raise SystemExit("refusing new detached launch: Stage A outputs already exist")
+    if (HERE / "STAGE_A_RESULT.json").exists():
+        raise SystemExit("refusing launch: Stage A result already exists")
+    if (HERE / "stage_a").exists():
+        print("[stage-a-wait] resuming registered runner from completed units", flush=True)
     while time.monotonic() - start < MAX_WAIT_SECONDS:
         if gates_met():
             time.sleep(10)
