@@ -38,6 +38,7 @@ from .sources import stable_hash
 from . import instrument as _registers_rrp002_baseline  # noqa: F401
 from . import gen2_second_generator as _registers_gen2  # noqa: F401  GEN2-001
 from . import clockfix_clock_repair as _registers_clockfix  # noqa: F401  CLOCKFIX-001
+from . import triskill_rules_skill as _registers_triskill  # noqa: F401  TRISKILL-001
 
 PACKAGE = Path(__file__).resolve().parent
 BRANCH = "research/rineya-reasoning-posttraining-v1"
@@ -62,7 +63,8 @@ RESOURCE_PROFILE = {"qualify": "qualify", "train": "train", "resume": "train",
 # unregistered plan is still refused -- the guard's value is the refusal, not the literal.
 REGISTERED_PLANS = ("RRP-001-MICROFIT", "RRP-003-ARM-A1",
                     "GEN2-001-SECOND-GENERATOR",
-                    "CLOCKFIX-001-CLOCK-REPAIR")
+                    "CLOCKFIX-001-CLOCK-REPAIR",
+                    "TRISKILL-001-RULES-SKILL")
 
 
 # Disk headroom kept free on the volume regardless of the approved byte allowance.
