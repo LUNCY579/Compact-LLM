@@ -1,6 +1,6 @@
-# ABST-001 — result: LC lowers the gold UNKNOWN likelihood on V4/20, in the teacher's direction; the sign follows depth
+# ABST-001 — result: LC lowers the gold UNKNOWN likelihood on V4/20 (pooled; prerequisite_schedule reverses), in the teacher's direction; the sign follows depth
 
-**Generated** by `write_abst_result.py` from the committed artifacts only: records `abst001-20260925/` `result/ABST_PRIMARY.json`, `result/ABST_H3.json`, the attempt record and the BOUNDARY marker (sha256s in `result/ABST_DESCRIPTIVE.json`). No number in this document was typed by hand.
+**Generated** by `write_abst_result.py` from the committed artifacts only: records `abst001-20260925/` `result/ABST_PRIMARY.json`, `result/ABST_H3.json`, the attempt record and the BOUNDARY marker (sha256s in `result/ABST_DESCRIPTIVE.json`). No number in this document was typed by hand. **Wording revised after the independent cold read (§7): no number changed.** The A/B identity line in §5 was computed by a check on the attempt record; its command is in the revision commit.
 **Run:** code 8486d817 (R1, harness 31/31, finalized chain), launched via `launch_abst.ps1`, lease abst001. BOUNDARY 20260926T065525Z. **GO/HOLD stays HOLD; no quality claim; no release.**
 
 ## 1. Registered outcome
@@ -50,9 +50,11 @@
 | E | 187 / 69 | 198 | 0 / 256 |
 | F | 0 / 256 | 56 | 0 / 256 |
 
+- **A and B (depth 20, V4 vs V2):** the sign vectors are **identical on 256/256** UNKNOWN rows, but no row's values are bitwise equal (0/256 plain NLLs equal), and the effect-size contrast dV has 256 non-ties, 228 of them d_B > d_A. B did not re-read A's data. At depth 20 the vocabulary moves the size of LC's effect, never its sign.
 - **By family (cell A, UNKNOWN rows, LC worse / better):** counterfactual_state 64/0; evidence_chain 62/2; prerequisite_schedule 0/64; register_machine 63/1.
 - **Geometry:** plain V4/20 is below the teacher on 220/256 (85.9%) of UNKNOWN rows and on 0/256 (0.0%) of known rows. Median gap closure on UNKNOWN rows 0.702; rows crossing the teacher in either direction 63 (over-suppressing, one direction: 32). Teacher median UNKNOWN NLL 8.09 nats.
 - **M1:** TEACHER_TRACKING (nearly implied by the geometry; not independent evidence). **M2:** BIAS_SHIFT (AUROC plain 0.547, LC 0.558, teacher 0.558).
+- **Read M2 and tracking together.** BIAS_SHIFT (the margin moves on both strata while discrimination is unchanged) is the descriptive signature of the teacher-blind UNKNOWN→digit shift that the licence cannot exclude. Within-family tracking says only that the per-row sizes line up with the teacher. Neither is evidence that LC is teacher-specific (wording rule 3), and together they describe a shift of mass away from `UNKNOWN` whose per-row size correlates with the teacher's position.
 - **Row-level tracking (within-family partial Spearman; correlational, licenses nothing):** UNKNOWN 0.476 (TRACKING_SIGNAL; pooled 0.716; per family counterfactual_state 0.19, evidence_chain 0.39, prerequisite_schedule 0.61, register_machine 0.62); known 0.787 (TRACKING_SIGNAL). Rows move in proportion to where the teacher sits, within families; a row feature could still drive both, so this is not 'tracks the teacher'.
 - **UNKNOWN token alone:** LC worse 189 / better 67; agrees with the two-token endpoint on 256/256 rows. **Gold digit alone (known rows):** LC worse 29 / better 227; digit-only anchor closer 217 / farther 39.
 - **Gap cue:** 192 UNKNOWN / 114 known rows carry it; cue-only AUROC 0.652.
@@ -84,4 +86,5 @@
 
 - The run is R1 (71acefb8) plus a harness-forced two-line fix (1d2f5552), finalized at 8486d817; the cold reviewer re-checked R1 and the fix diff first-hand before launch.
 - The descriptive block is computed after the run, from the attempt record, because the result file was never written (§4). ABST_PRIMARY's per-row values equal the attempt record's on all 512 rows (checked by this generator).
+- **Independent cold read.** Rineya Delta scored the result blind from bbc10e3's artifacts with independent code and committed it (records edcc476) before this document existed. Its comparison (records 547d5ce, §7 of `ABST_RESULT_COLD_READ.md`) agrees on every registered number, the licence, the forecasts and the wording rules. Of its four wording flags, three concern this document (the A/B identity, the title's reversal and pairing M2 with tracking) and are applied above. The fourth, a greedy false-abstention count of 11 against this document's 10/256, was in the cold read's own ad-hoc matcher, and it defers to the registered `summarise`.
 - Spent-data framing (§1 of the prereg) predicted most of this: F1–F7 and F10 follow from the spent geometry plus HLCC's lead, and TEACHER_CONSISTENT_DIRECTION was close to implied once H1 replicated. The new information is the replication on fresh rows, the family reversal's size, the depth attribution, and the descriptive greedy numbers.
