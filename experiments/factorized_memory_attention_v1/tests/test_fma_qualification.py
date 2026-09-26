@@ -9,6 +9,7 @@ from torch import nn
 from experiments.factorized_memory_attention_v1.fma.budget import parameter_budget
 from experiments.factorized_memory_attention_v1.fma.config import FMAConfig, ModelShape, shape_from_dict
 from experiments.factorized_memory_attention_v1.fma.control import ParameterMatchedValueAdapter
+from experiments.factorized_memory_attention_v1.fma.calibration import native_qwen3_teacher
 from experiments.factorized_memory_attention_v1.fma.memory import (
     FactorizedMemoryBank,
     HeadwiseRMSNorm,
@@ -90,7 +91,7 @@ def test_07_headwise_rmsnorm_semantics():
     assert torch.allclose(torch.sqrt(y.square().mean(-1)), torch.ones(1, 1, 2), atol=1e-5)
 
 
-def test_08_native_source_preserves_mask_and_raw_key_ordering():
+def test_08_native_source_preserves_backend_mask_and_raw_key_ordering():
     src = (Path(__file__).parents[1] / "fma/qwen3.py").read_text()
     raw = src.index("key_raw_heads = self.k_proj")
     val = src.index("key_pre_rope = key_raw_heads")
@@ -98,7 +99,28 @@ def test_08_native_source_preserves_mask_and_raw_key_ordering():
     rope = src.index("apply_rotary_pos_emb(query, key_for_scores")
     assert raw < val < norm < rope
     assert "return super().forward(" in src
-    assert "attention_mask[:, :, :, : key_expanded.shape[-2]]" in src
+    assert "ALL_ATTENTION_FUNCTIONS.get_interface" in src
+    assert "attention_mask," in src
+
+
+def test_08b_calibration_teacher_uses_raw_key_before_qk_norm():
+    class ForbiddenNorm(nn.Module):
+        def forward(self, _value):
+            raise AssertionError("k_norm must not be used by the MA teacher target")
+
+    class TinyAttention(nn.Module):
+        def __init__(self):
+            super().__init__()
+            self.v_proj = nn.Linear(4, 4, bias=False)
+            self.k_proj = nn.Linear(4, 4, bias=False)
+            self.k_norm = ForbiddenNorm()
+
+    torch.manual_seed(3)
+    attn = TinyAttention()
+    hidden = torch.randn(2, 3, 4)
+    standard, key_raw = native_qwen3_teacher(attn, hidden)
+    torch.testing.assert_close(standard, attn.v_proj(hidden))
+    torch.testing.assert_close(key_raw, attn.k_proj(hidden))
 
 
 def make_lm(g):
