@@ -1,0 +1,131 @@
+"""TRISKILL-001 Stage B: generate T_BANK_V5 (864 rows = 288 per family), registered in
+titan_third_skill_v1/PREREG.md (0d2b64b4) section 5 before this file produced any row.
+
+This is CONFIRM-002's make_t_bank_v4.py with exactly four changes:
+  - the seed (20260927);
+  - T_BANK_V4 is added to the own-bank exclusions;
+  - the positive control is run on V4, and must flag all 864 of its rows;
+  - the output name.
+Oracles, verbatim system prompts, the recorded-marginal sampler and every rejection rule are
+unchanged. A row is rejected if its full payload, OPERATIVE key or (before-state, answer) pair
+matches:
+  - any historical payload;
+  - any row of T_BANK, T_BANK_V2, T_BANK_V3X or T_BANK_V4;
+  - any row already emitted into this bank.
+Collisions are recomputed after generation and must be 0 on all three keys. Create-only, LF,
+byte mode.
+"""
+from __future__ import annotations
+
+import hashlib, json, random, sys
+from pathlib import Path
+
+HERE = Path(__file__).resolve().parent
+FDS = HERE.parent / "fresh_dual_skill_instrument_v1"
+V4 = HERE.parent / "composition_confirmation_v2" / "T_BANK_V4.json"
+V4_SHA = "82f0a6423dd6b58b81319708e7fbda7c5880b9734742323ea11574ff354c93c0"
+V3X = HERE.parent / "composition_confirmation_v1" / "T_BANK_V3X.json"
+V3X_SHA = "173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c"
+sys.path.insert(0, str(FDS))
+from oracles import ORACLES, dumps  # noqa: E402
+from generate import SYSTEM, harvest_exclusions, content_keys, operative_key  # noqa: E402
+from generate_v2 import load_marginals, GENS  # noqa: E402
+
+SEED = 20260927
+PER_FAMILY = 288
+FAMILIES = ("ledger_replay", "prerequisite_plan", "register_machine")
+
+
+def bank_payloads(path: Path) -> set[str]:
+    rows = json.loads(path.read_text(encoding="utf-8"))["rows"]
+    return {dumps(json.loads(r["prompt"][1]["content"])) for r in rows}
+
+
+def main():
+    out = HERE / "T_BANK_V5.json"
+    if out.exists():
+        raise SystemExit(f"refusing to overwrite {out}: the read budget is ONE")
+    if hashlib.sha256(V3X.read_bytes()).hexdigest() != V3X_SHA:
+        raise SystemExit("T_BANK_V3X.json does not match its committed sha256")
+    v3x = json.loads(V3X.read_text(encoding="utf-8"))
+    if hashlib.sha256(V4.read_bytes()).hexdigest() != V4_SHA:
+        raise SystemExit("T_BANK_V4.json does not match its committed sha256")
+    v4 = json.loads(V4.read_text(encoding="utf-8"))
+
+    hist = harvest_exclusions()
+    own = bank_payloads(FDS / "T_BANK.json") | bank_payloads(FDS / "T_BANK_V2.json") | bank_payloads(V3X) | bank_payloads(V4)
+    excl_full = hist | own
+    excl_op, excl_io = content_keys(excl_full)
+    print(f"exclusion: {len(hist):,} historical + {len(own):,} own-bank payloads -> "
+          f"{len(excl_op):,} operative keys, {len(excl_io):,} (before,answer) pairs", flush=True)
+
+    m = load_marginals()
+    rng = random.Random(SEED)
+    rows, seen_full, seen_op, seen_io = [], set(), set(), set()
+    rejected = {"full": 0, "operative": 0, "before_answer": 0, "internal": 0, "trivial": 0}
+    for fam in FAMILIES:
+        made = guard = 0
+        while made < PER_FAMILY:
+            guard += 1
+            if guard > PER_FAMILY * 2000:
+                raise RuntimeError(f"could not fill {fam} content-disjointly")
+            u = GENS[fam](rng, m)
+            text = dumps(u)
+            gold = ORACLES[fam](u)
+            op = (fam, operative_key(fam, u))
+            io = (fam, dumps(u["before"]), gold)
+            if text in excl_full:
+                rejected["full"] += 1; continue
+            if op in excl_op:
+                rejected["operative"] += 1; continue
+            if io in excl_io:
+                rejected["before_answer"] += 1; continue
+            if text in seen_full or op in seen_op or io in seen_io:
+                rejected["internal"] += 1; continue
+            unchanged = gold == dumps(u["before"])
+            if unchanged and rng.random() < 0.75:
+                rejected["trivial"] += 1; continue
+            seen_full.add(text); seen_op.add(op); seen_io.add(io)
+            rid = f"CF2-{fam}-{hashlib.sha256(text.encode()).hexdigest()[:16]}"
+            rows.append({"id": rid, "parent_id": rid, "family": fam, "domain": "transition",
+                         "prompt": [{"role": "system", "content": SYSTEM[fam]},
+                                    {"role": "user", "content": text}],
+                         "reference": gold, "copy_baseline": dumps(u["before"]),
+                         "answer_equals_input": unchanged,
+                         "gold_verified_by": "oracles.py validated 384/384 on process-transition-probe-001"})
+            made += 1
+        print(f"  {fam}: {made} (attempts {guard})", flush=True)
+
+    post = {"full": 0, "operative": 0, "before_answer": 0}
+    for r in rows:
+        u = json.loads(r["prompt"][1]["content"]); fam = r["family"]
+        post["full"] += dumps(u) in excl_full
+        post["operative"] += (fam, operative_key(fam, u)) in excl_op
+        post["before_answer"] += (fam, dumps(u["before"]), r["reference"]) in excl_io
+    if any(post.values()):
+        raise SystemExit(f"COLLISION CHECK FAILED: {post}")
+    ctl = sum((r["family"], operative_key(r["family"], json.loads(r["prompt"][1]["content"]))) in excl_op for r in v4["rows"])
+    if ctl != len(v4["rows"]):
+        raise SystemExit(f"POSITIVE CONTROL FAILED: only {ctl}/{len(v4['rows'])} V4 rows detected")
+
+    doc = {"schema": 1, "instrument": "TRISKILL-001", "split": "T", "version": 5,
+           "registered_in": "titan_third_skill_v1/PREREG.md (0d2b64b4), before this bank existed",
+           "seed": SEED, "per_family": PER_FAMILY, "n": len(rows),
+           "generator": "FRESH-DUAL-SKILL-001 generate_v2 recorded-marginal sampler",
+           "exclusion": {"historical_payloads": len(hist), "own_bank_payloads": len(own),
+                         "operative_keys": len(excl_op), "before_answer_pairs": len(excl_io)},
+           "collisions_after_generation": post,
+           "positive_control": f"{ctl}/{len(v4['rows'])} T_BANK_V4 rows detected by the operative-key check",
+           "rejected_during_generation": rejected,
+           "copy_baseline_rows": sum(r["answer_equals_input"] for r in rows),
+           "scoring_primary": "exact match after stripping whitespace and AT MOST ONE trailing '.'",
+           "read_budget": "ONE", "rows": rows}
+    payload = (json.dumps(doc, indent=2) + "\n").encode("utf-8")
+    with open(out, "xb") as f:
+        f.write(payload)
+    print(f"wrote {out.name}: n={len(rows)} sha256={hashlib.sha256(payload).hexdigest()}")
+    print(f"rejected: {rejected} | copy-baseline rows {doc['copy_baseline_rows']}")
+
+
+if __name__ == "__main__":
+    main()
