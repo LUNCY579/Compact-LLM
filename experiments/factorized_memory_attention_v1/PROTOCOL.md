@@ -94,6 +94,21 @@ M2 is mandatory because the primary paper explicitly notes that its reported qua
 
 Synthetic/mechanical tests and a tiny native Qwen3 wiring check are necessary but not sufficient. Exact Supa checkpoint execution remains blocked because the external model weights are not resident; no language-quality or calibration result exists.
 
+## Exact-host native checkpoint runner
+
+`scripts/qualify_native_checkpoint.py` is the executable handoff for the still-blocked full-checkpoint boundary. It is deliberately data-free and uses only a short synthetic prompt. Before loading, it streams SHA-256 over the single Supa `model.safetensors` plus the repository-bound config/tokenizer assets; it never reads the multi-GB checkpoint into RAM as one byte string. It enforces the 7.4 GiB free-host-RAM guard, verifies the expected checkpoint SHA, measures g=0 native-logit parity, structurally traps any `v_proj` call at g=1, compares cached hard-memory continuation against full-prefix reforward, round-trips the factorized bank state, records CUDA peak allocation/reservation, and re-hashes the source assets afterward to prove the checkpoint directory was not mutated.
+
+Example exact-host invocation:
+
+```bash
+python experiments/factorized_memory_attention_v1/scripts/qualify_native_checkpoint.py \
+  --model /path/to/Rineya-Supa-1.7.0-devfreeze \
+  --output experiments/factorized_memory_attention_v1/evidence/FMA_QUAL_001_NATIVE.json \
+  --rank 32 --device cuda
+```
+
+A PASS from this runner is still mechanical qualification only. It does not satisfy the future perplexity/downstream noninferiority gate and it does not justify an architecture-improvement claim.
+
 ## Future efficacy gate
 
 Before final/confirmation evaluation, hard-memory M1 (g_l=1 for every selected layer) must satisfy the preregistered initial noninferiority gate against M0:
