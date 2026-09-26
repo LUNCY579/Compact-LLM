@@ -63,8 +63,7 @@ def percentile(values: list[int], q: float) -> float:
     return ordered[lo] + (at - lo) * (ordered[hi] - ordered[lo])
 
 
-def bootstrap(diffs: list[int], seed: int) -> list[int]:
-    rng = random.Random(seed)
+def bootstrap(diffs: list[int], rng: random.Random) -> list[int]:
     n = len(diffs)
     return [sum(diffs[rng.randrange(n)] for _ in range(n)) for _ in range(BOOT)]
 
@@ -211,8 +210,9 @@ def main() -> int:
     c_pair = paired(tt_c, x_c, "semantic_correct")
     t_diffs = [int(x_t[i]["primary"]) - int(tt_t[i]["primary"]) for i in tt_t]
     h_diffs = [int(x_h[i]["credited"]) - int(tt_h[i]["credited"]) for i in tt_h]
-    bt = bootstrap(t_diffs, SEED + 1)
-    bh = bootstrap(h_diffs, SEED + 2)
+    rng = random.Random(SEED)
+    bt = bootstrap(t_diffs, rng)
+    bh = bootstrap(h_diffs, rng)
     t_margin = -0.05 * t_pair["reference"]
     h_margin = -0.05 * h_pair["reference"]
     c1 = {**t_pair, "margin": t_margin, "lower95": percentile(bt, 0.05),
@@ -230,7 +230,6 @@ def main() -> int:
         c_world_refusal[row["parent_id"]] += int(x_c[row_id]["refusal"]) - int(row["refusal"])
     if len(c_world_refusal) != 112:
         raise SystemExit("C4 world count mismatch")
-    rng = random.Random(SEED + 4)
     worlds = list(c_world_refusal.values())
     b4 = [sum(t_refusal[rng.randrange(864)] for _ in range(864)) +
           sum(worlds[rng.randrange(112)] for _ in range(112)) for _ in range(BOOT)]
