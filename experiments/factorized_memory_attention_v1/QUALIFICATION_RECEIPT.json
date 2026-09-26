@@ -90,7 +90,7 @@
     "checkpoint_blocker": "Supa model.safetensors is external/gitignored and was not resident; no checkpoint efficacy run was attempted."
   },
   "tests": {
-    "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests/test_fma_qualification.py",
+    "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
     "local_qualification_mirror": {
       "passed": 19,
       "skipped": 1,
@@ -120,7 +120,7 @@
     "16_dtype_device": "PASS_CPU_AND_CUDA_PROBE",
     "17_no_nan_inf": "PASS",
     "18_micro_generation": "PASS_SYNTHETIC",
-    "19_resource_probe": "PASS_ANALYTICAL_AND_RTX_4070_FACTORIAL_PROBE",
+    "19_resource_probe": "PASS_ANALYTICAL_AND_RTX_4070_FACTORIZED_PROBE",
     "20_no_sealed_access": "PASS"
   },
   "qualification_result": {
