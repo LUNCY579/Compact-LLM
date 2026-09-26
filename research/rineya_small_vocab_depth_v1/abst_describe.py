@@ -82,6 +82,75 @@ def auroc(pos, neg):
     return wins / (len(pos) * len(neg))
 
 
+def ranks(xs):
+    """Average ranks (1-based), ties averaged."""
+    order = sorted(range(len(xs)), key=lambda i: xs[i])
+    r = [0.0] * len(xs)
+    i = 0
+    while i < len(order):
+        j = i
+        while j + 1 < len(order) and xs[order[j + 1]] == xs[order[i]]:
+            j += 1
+        for k in range(i, j + 1):
+            r[order[k]] = (i + j) / 2 + 1
+        i = j + 1
+    return r
+
+
+def pearson(a, b):
+    n = len(a)
+    ma, mb = sum(a) / n, sum(b) / n
+    va = sum((x - ma) ** 2 for x in a)
+    vb = sum((y - mb) ** 2 for y in b)
+    if va == 0 or vb == 0:
+        return None
+    return sum((x - ma) * (y - mb) for x, y in zip(a, b)) / math.sqrt(va * vb)
+
+
+def _partial(d, x, z):
+    rdx, rdz, rxz = pearson(d, x), pearson(d, z), pearson(x, z)
+    if None in (rdx, rdz, rxz) or (1 - rdz ** 2) <= 0 or (1 - rxz ** 2) <= 0:
+        return None
+    return (rdx - rdz * rxz) / math.sqrt((1 - rdz ** 2) * (1 - rxz ** 2))
+
+
+def tracking(P, Q, T, fam=None):
+    """ABST001_PREREG.md §7 (R1, cold review M1): row-level teacher tracking, DESCRIPTIVE ONLY.
+    Over rows with all three NLLs finite and > 0: delta = log NLL_lc - log NLL_plain, x = log NLL_T,
+    z = log NLL_plain. The registered statistic is the WITHIN-FAMILY Spearman partial correlation
+    rho(delta, x | z): ranks are taken within each family and centred on the family's mean rank, and the partial
+    Pearson correlation is computed on the pooled centred ranks (R1 review: a teacher-blind shift that is uniform
+    within each family but differs between families -- the split F4 forecasts -- makes a POOLED partial look like
+    tracking; the within-family version removes family means). Zero in expectation when delta is independent of
+    x given z within families; positive when rows move in proportion to where the teacher sits. Also reported:
+    the pooled partial, the per-family partials, and the raw Spearman rho(delta, x - z) (confounded through z)."""
+    keep = [k for k, (p, q, t) in enumerate(zip(P, Q, T))
+            if None not in (p, q, t) and all(v == v and 0 < v < float("inf") for v in (p, q, t))]
+    rows = [(math.log(Q[k]) - math.log(P[k]), math.log(T[k]), math.log(P[k])) for k in keep]
+    fams = [fam[k] for k in keep] if fam is not None else ["all"] * len(rows)
+    empty = {"rows": len(rows), "partial_spearman": None, "pooled_partial_spearman": None, "per_family": {},
+             "raw_spearman_delta_gap": None, "reading": None}
+    if len(rows) < 3:
+        return empty
+    pooled = _partial(*(ranks([r[j] for r in rows]) for j in range(3)))
+    D, X, Z = [0.0] * len(rows), [0.0] * len(rows), [0.0] * len(rows)
+    per_family = {}
+    for f in sorted(set(fams)):
+        idx = [k for k in range(len(rows)) if fams[k] == f]
+        rd, rx, rz = (ranks([rows[k][j] for k in idx]) for j in range(3))
+        m = (len(idx) + 1) / 2
+        for k, a, b, c in zip(idx, rd, rx, rz):
+            D[k], X[k], Z[k] = a - m, b - m, c - m
+        per_family[f] = {"rows": len(idx), "partial_spearman": _partial(rd, rx, rz) if len(idx) >= 3 else None}
+    part = _partial(D, X, Z)
+    raw = pearson(ranks([r[0] for r in rows]), ranks([r[1] - r[2] for r in rows]))
+    reading = (None if part is None else "TRACKING_SIGNAL" if part >= 0.2 else
+               "NO_TRACKING_SIGNAL" if abs(part) < 0.1 else "WEAK_OR_NEGATIVE")
+    return {"rows": len(rows), "partial_spearman": part, "within_family": fam is not None,
+            "pooled_partial_spearman": pooled, "per_family": per_family, "raw_spearman_delta_gap": raw,
+            "reading": reading}
+
+
 def med(xs):
     xs = [x for x in xs if x is not None and x == x and not math.isinf(x)]
     return st.median(xs) if xs else None
@@ -173,6 +242,35 @@ def summarise(records: dict) -> dict:
         end_s.append(av.sgn(nats(records[i], "S20_plain", "V4") - nats(records[i], "S20_lc", "V4")))
     out["A_unk_unknown_token_only"] = {"lc_worse": sum(x < 0 for x in tok_s), "lc_better": sum(x > 0 for x in tok_s),
                                        "agrees_with_endpoint": sum(1 for a, b in zip(tok_s, end_s) if a == b), "rows": len(tok_s)}
+    # the gold digit alone on known rows (step 2b's endpoint includes <|im_end|>)
+    ks = []
+    for i in by["known"]:
+        try:
+            ks.append(av.sgn(records[i]["m"]["S20_plain"]["V4"]["V4"]["per_token"][0] - records[i]["m"]["S20_lc"]["V4"]["V4"]["per_token"][0]))
+        except (KeyError, IndexError):
+            continue
+    out["A_known_digit_token_only"] = {"lc_worse": sum(x < 0 for x in ks), "lc_better": sum(x > 0 for x in ks), "rows": len(ks)}
+    # the step-2b anchor on the gold digit ALONE (R1 review: is step 2b carried by the digit or by <|im_end|>?)
+    dP, dQ, dT = [], [], []
+    for i in by["known"]:
+        try:
+            dP.append(records[i]["m"]["S20_plain"]["V4"]["V4"]["per_token"][0])
+            dQ.append(records[i]["m"]["S20_lc"]["V4"]["V4"]["per_token"][0])
+            dT.append(records[i]["m"]["T"]["V4"]["V4"]["per_token"][0])
+        except (KeyError, IndexError):
+            continue
+    da = av.anchor_signs(dP, dQ, dT)
+    out["A_known_digit_anchor"] = {"closer": sum(x > 0 for x in da), "farther": sum(x < 0 for x in da), "rows": len(da),
+                                   "plain_digit_nll_below_teacher": sum(1 for p, t in zip(dP, dT) if p < t)}
+    # row-level tracking (R1, M1): cell A, UNKNOWN rows and known rows SEPARATELY, teacher T4, within family
+    out["A_tracking"] = {s: tracking([nats(records[i], "S20_plain", "V4") for i in by[s]],
+                                     [nats(records[i], "S20_lc", "V4") for i in by[s]],
+                                     [nats(records[i], "T", "V4") for i in by[s]],
+                                     [records[i]["family"] for i in by[s]]) for s in by}
+    # the literal gap cue ('not recorded' in the prompt) as a stratum predictor (R1, cold review #22)
+    cue = {s: [1.0 if records[i].get("cue_not_recorded") else 0.0 for i in by[s]] for s in by}
+    out["cue_not_recorded"] = {"unk_rows_with_cue": int(sum(cue["unk"])), "known_rows_with_cue": int(sum(cue["known"])),
+                               "cue_only_auroc_unknown_vs_known": auroc(cue["unk"], cue["known"])}
     tid = {}
     for flag in (True, False):
         rows = [i for i in by["unk"] if records[i]["input_equal_V0"]["V4"] == flag]

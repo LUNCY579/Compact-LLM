@@ -2,9 +2,9 @@
  "schema": 1,
  "record": "ABST_NULL_SIM",
  "code_sha256": {
-  "abst_verdict.py": "0253b69dbe0870b30df12f4d66bba21ebefd67c88c1b65a5b0c8318a5c6d5bbc",
+  "abst_verdict.py": "abeb12ea027e99566e9af4fa9ca499ab142a45aa3294ff23d5525383a17ea289",
   "hlcc_verdict.py": "baf465b803c25d26d95d70c90dc138e68b774d617bd4e18932e4bb7f90952531",
-  "abst_null_sim.py": "dc0e0c1135604ecce65c9967bd7815303c4fd5c196cba8c608e40af5ff59a7df"
+  "abst_null_sim.py": "2e440cce143b2abe982e6d4b4931bd06c16df19a56c685b07e55e7371264e334"
  },
  "seed": 20260926,
  "sims": 20000,
@@ -77,21 +77,41 @@
   },
   "N4_unknown_anchor_null": {
    "false_step2_rejection": {
-    "rate": 0.02015,
-    "k": 403,
+    "rate": 0.02005,
+    "k": 401,
     "n": 20000,
-    "upper_3se": 0.023130736465204534
+    "upper_3se": 0.023023482617235216
    }
   },
-  "D1_teacher_blind_generic_damage": {
-   "false_FIDELITY": {
+  "D1_teacher_blind_answer_type_shift": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
+    "rate": 0.99915,
+    "k": 19983,
+    "n": 20000,
+    "upper_3se": 0.99976820293998
+   },
+   "step2_toward_rate": 0.99915,
+   "reading": "REPORTED: the label is not teacher-specific"
+  },
+  "D2_teacher_blind_generic_damage": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
     "rate": 0.0,
     "k": 0,
     "n": 20000,
     "upper_3se": 2.1213203435596425e-08
    },
-   "step2_toward_rate": 0.99925,
-   "reading": "step 2 alone cannot tell; step 2b keeps FIDELITY at alpha"
+   "step2_toward_rate": 0.99905,
+   "reading": "must stay <= 0.025; holds by construction of the spent known-row geometry (plain above the teacher)"
+  },
+  "D2r_generic_damage_60pct_known_rows_reversed": {
+   "TEACHER_CONSISTENT_DIRECTION_rate": {
+    "rate": 0.47195,
+    "k": 9439,
+    "n": 20000,
+    "upper_3se": 0.4825398979633894
+   },
+   "step2_toward_rate": 0.99945,
+   "reading": "REPORTED: with most known rows reversed, step 2b no longer excludes generic damage"
   },
   "N5_holm_sign_nulls": {
    "fwer_over_true_nulls": {
@@ -100,7 +120,7 @@
     "n": 5000,
     "upper_3se": 4.242640687119285e-08
    },
-   "step3_reached": 0.9998,
+   "step3_reached": 1.0,
    "true_nulls": [
     "D+",
     "D-",
@@ -112,10 +132,10 @@
   },
   "N6_holm_contrast_nulls": {
    "fwer_over_true_nulls": {
-    "rate": 0.0016,
-    "k": 8,
+    "rate": 0.001,
+    "k": 5,
     "n": 5000,
-    "upper_3se": 0.0032956980863349467
+    "upper_3se": 0.0023409697983176204
    },
    "step3_reached": 1.0,
    "true_nulls": [
@@ -129,23 +149,28 @@
    "power_LC_LOWERS": 1.0
   },
   "P2_homog_060": {
-   "power_LC_LOWERS": 0.9496
+   "power_LC_LOWERS": 0.9524
   },
   "P3_homog_065": {
    "power_LC_LOWERS": 1.0
   },
-  "P4_fidelity_truth": {
-   "power_FIDELITY": 1.0
+  "P4_teacher_consistent_truth": {
+   "power_TEACHER_CONSISTENT_DIRECTION": 1.0,
+   "note": "UNKNOWN rows all closer, known rows 85% toward: an extreme alternative"
+  },
+  "P4b_teacher_consistent_known_060": {
+   "power_TEACHER_CONSISTENT_DIRECTION": 0.8138,
+   "reading": "REPORTED"
   },
   "P5_holm_depth_truth": {
    "power_DEPTH_label": 1.0
   },
   "S1_superpopulation_family_effect_sd015": {
    "false_LC_LOWERS_for_new_families": {
-    "rate": 0.2014,
-    "k": 1007,
+    "rate": 0.2148,
+    "k": 1074,
     "n": 5000,
-    "upper_3se": 0.21841494848655146
+    "upper_3se": 0.23222382644541661
    },
    "reading": "above alpha: the row-level test licenses the POOLS, not new families"
   }
@@ -153,10 +178,10 @@
  "checks": {
   "N1-N3 each directional false rate <= 0.025 + 3SE": true,
   "N4 false step-2 rejection <= 0.025 + 3SE": true,
-  "D1 false FIDELITY under teacher-blind damage <= 0.025 + 3SE": true,
+  "D2 TEACHER_CONSISTENT_DIRECTION under teacher-blind generic damage <= 0.025 + 3SE": true,
   "N5/N6 Holm FWER <= 0.0125 + 3SE": true,
   "P1 power >= 0.95": true,
-  "P4 FIDELITY power >= 0.95": true,
+  "P4 TEACHER_CONSISTENT_DIRECTION power >= 0.95": true,
   "P5 DEPTH power >= 0.90": true
  },
  "all_pass": true

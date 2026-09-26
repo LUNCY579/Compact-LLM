@@ -18,15 +18,19 @@ FIXED SEQUENCE (alpha carried forward; steps not reached are UNTESTED):
           two-sided 0.025 (0.0125 per tail): TOWARD_TEACHER / AWAY_FROM_TEACHER / ANCHOR_UNRESOLVED (stop).
           NOTE (review): with the spent geometry (plain more UNKNOWN-prone than the teacher on every row),
           TOWARD_TEACHER is nearly implied by step 1 unless LC overshoots -- it is a statement of DIRECTION
-          toward the teacher, not of mechanism. The FIDELITY label therefore needs step 2b and no overshoot.
+          toward the teacher, not of mechanism.
   After step 2 rejects in either direction, the remaining 0.025 is split equally (Bonferroni):
   Step 2b (0.0125, only after TOWARD_TEACHER): KNOWN-row anchor, cell A vs T4, one-sided toward the teacher.
           On known rows the geometry is reversed (plain LESS confident in the gold digit than the teacher),
-          so generic damage moves AWAY there while teacher-directed change moves TOWARD.
-            FIDELITY                        step 2 TOWARD, step 2b rejects, and fewer than half of the
-                                            UNKNOWN rows cross the teacher (no overshoot majority)
-            TOWARD_TEACHER_OVERSHOOT        TOWARD, but at least half the UNKNOWN rows cross the teacher
-            TOWARD_TEACHER_NOT_CORROBORATED TOWARD, no overshoot majority, step 2b does not reject
+          so generic damage (every NLL up) moves AWAY there.
+            TEACHER_CONSISTENT_DIRECTION    step 2 TOWARD, step 2b rejects, and fewer than half of the UNKNOWN
+                                            rows with defined values OVER-SUPPRESS (plain < T < LC: LC's UNKNOWN
+                                            NLL passes above the teacher's)
+            TOWARD_TEACHER_OVER_SUPPRESSION TOWARD, but at least half of those rows over-suppress
+            TOWARD_TEACHER_NOT_CORROBORATED TOWARD, no over-suppression majority, step 2b does not reject
+          R1 (cold review M1): this label is DIRECTION-CONSISTENT, not teacher-specific -- a teacher-blind
+          shift of probability mass from UNKNOWN to the digits also passes steps 1, 2 and 2b. No label
+          licenses abstention; a row-level tracking statistic is reported descriptively (abst_describe).
   Step 3  (0.0125) Holm over eight one-sided hypotheses (valid under any dependence):
             D+ / D-  LC makes UNKNOWN more / less likely in D (S18/V2 -- HLCC's secondary)
             B+ / B-  ... in B (S20/V2 -- vocabulary swapped)     C+ / C-  ... in C (S18/V4 -- depth swapped)
@@ -110,15 +114,16 @@ def anchor_signs(plain: list, lc: list, teacher: list) -> list[int]:
     return out
 
 
-def crossed(plain: list, lc: list, teacher: list) -> list[bool]:
-    """Row crosses the teacher: plain and LC on opposite sides of it (strictly)."""
-    out = []
+def over_suppression(plain: list, lc: list, teacher: list) -> tuple[int, int]:
+    """(rows where plain < T < LC -- LC's NLL passes ABOVE the teacher's, i.e. over-suppresses the
+    reference --, rows with all three values finite). Crossings in the other direction are not counted."""
+    k = n = 0
     for a, b, t in zip(plain, lc, teacher):
-        if None in (a, b, t) or a != a or b != b or t != t:
-            out.append(False)
+        if None in (a, b, t) or any(x != x or math.isinf(x) for x in (a, b, t)):
             continue
-        out.append((a - t) * (b - t) < 0)
-    return out
+        n += 1
+        k += a < t < b
+    return k, n
 
 
 def contrast_signs(d_ref: list, d_other: list) -> list[int]:
@@ -146,10 +151,10 @@ def holm(pvals: dict, alpha: float) -> dict:
 
 
 ATTRIBUTION = {  # (B sign, C sign) -> label, used only when D+ is rejected (the 18/V2 sign replicated)
-    (-1, 1): "DEPTH",
-    (1, -1): "VOCABULARY",
-    (-1, -1): "EITHER_SUFFICIENT",
-    (1, 1): "BOTH_REQUIRED",
+    (-1, 1): "SIGN_FOLLOWS_DEPTH",
+    (1, -1): "SIGN_FOLLOWS_VOCABULARY",
+    (-1, -1): "A_SIGN_EITHER_FEATURE_SUFFICIENT__REVERSAL_NEEDS_BOTH",
+    (1, 1): "A_SIGN_NEEDS_BOTH_FEATURES__EITHER_CHANGE_REVERSES",
 }
 
 
@@ -174,18 +179,17 @@ def verdict(cells: dict) -> dict:
     T = cells["T4"]["teacher"]
     t2 = signed_test(anchor_signs(A["plain"], A["lc"], T))
     toward, away = t2["p_positive"] < ALPHA_ANCHOR_TAIL, t2["p_negative"] < ALPHA_ANCHOR_TAIL
-    cr = crossed(A["plain"], A["lc"], T)
-    n_cross = sum(cr)
-    h2 = {**t2, "alpha_per_tail": ALPHA_ANCHOR_TAIL, "crossed_the_teacher": n_cross,
-          "overshoot_majority": n_cross * 2 >= max(t2["n"], 1)}
+    n_over, n_def = over_suppression(A["plain"], A["lc"], T)
+    h2 = {**t2, "alpha_per_tail": ALPHA_ANCHOR_TAIL, "over_suppressing_rows": n_over, "rows_defined": n_def,
+          "over_suppression_majority": n_over * 2 >= max(n_def, 1)}
     if toward:
         tk = signed_test(anchor_signs(cells["A_known"]["plain"], cells["A_known"]["lc"], cells["T4_known"]["teacher"]))
         k_ok = tk["p_positive"] < ALPHA_AFTER_ANCHOR
         h2["step_2b_known_anchor"] = {**tk, "alpha": ALPHA_AFTER_ANCHOR, "rejects_toward_teacher": k_ok}
-        if h2["overshoot_majority"]:
-            h2["label"] = "TOWARD_TEACHER_OVERSHOOT"
+        if h2["over_suppression_majority"]:
+            h2["label"] = "TOWARD_TEACHER_OVER_SUPPRESSION"
         elif k_ok:
-            h2["label"] = "FIDELITY"
+            h2["label"] = "TEACHER_CONSISTENT_DIRECTION"
         else:
             h2["label"] = "TOWARD_TEACHER_NOT_CORROBORATED"
     elif away:

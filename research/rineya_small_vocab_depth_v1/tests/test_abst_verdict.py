@@ -55,11 +55,11 @@ def test_primary_labels_reachable_and_thresholds():
 
 def test_anchor_labels_reachable():
     w = [True] * 200 + [False] * 56
-    assert av.verdict(cells_from(w, anchor=[1] * 256))["H2"]["label"] == "FIDELITY"
+    assert av.verdict(cells_from(w, anchor=[1] * 256))["H2"]["label"] == "TEACHER_CONSISTENT_DIRECTION"
     assert av.verdict(cells_from(w, anchor=[1] * 256, known_anchor=[-1] * 256))["H2"]["label"] == "TOWARD_TEACHER_NOT_CORROBORATED"
     assert av.verdict(cells_from(w, anchor=[1] * 256, known_anchor=[1, -1] * 128))["H2"]["label"] == "TOWARD_TEACHER_NOT_CORROBORATED"
     v = av.verdict(cells_from(w, anchor=[1] * 256, overshoot=True))
-    assert v["H2"]["label"] == "TOWARD_TEACHER_OVERSHOOT" and v["H2"]["overshoot_majority"]
+    assert v["H2"]["label"] == "TOWARD_TEACHER_OVER_SUPPRESSION" and v["H2"]["over_suppression_majority"]
     v = av.verdict(cells_from(w, anchor=[-1] * 256))
     assert v["H2"]["label"] == "AWAY_FROM_TEACHER" and "step_2b_known_anchor" not in v["H2"]
     v = av.verdict(cells_from(w, anchor=[1, -1] * 128))
@@ -69,17 +69,17 @@ def test_anchor_labels_reachable():
 def test_step3_is_reached_after_away_too_and_uses_the_split_alpha():
     w = [True] * 220 + [False] * 36
     v = av.verdict(cells_from(w, anchor=[-1] * 256, D=[1] * 256, B=[-1] * 256, C=[1] * 256))
-    assert v["H2"]["label"] == "AWAY_FROM_TEACHER" and v["H3"]["label"] == "DEPTH" and v["H3"]["alpha"] == 0.0125
+    assert v["H2"]["label"] == "AWAY_FROM_TEACHER" and v["H3"]["label"] == "SIGN_FOLLOWS_DEPTH" and v["H3"]["alpha"] == 0.0125
 
 
 def test_attribution_labels_reachable():
     w = [True] * 220 + [False] * 36
     good, bad, mixed = [1] * 256, [-1] * 256, [1, -1] * 128
     lab = lambda **k: av.verdict(cells_from(w, **k))["H3"]["label"]
-    assert lab(D=good, B=bad, C=good) == "DEPTH"
-    assert lab(D=good, B=good, C=bad) == "VOCABULARY"
-    assert lab(D=good, B=bad, C=bad) == "EITHER_SUFFICIENT"
-    assert lab(D=good, B=good, C=good) == "BOTH_REQUIRED"
+    assert lab(D=good, B=bad, C=good) == "SIGN_FOLLOWS_DEPTH"
+    assert lab(D=good, B=good, C=bad) == "SIGN_FOLLOWS_VOCABULARY"
+    assert lab(D=good, B=bad, C=bad) == "A_SIGN_EITHER_FEATURE_SUFFICIENT__REVERSAL_NEEDS_BOTH"
+    assert lab(D=good, B=good, C=good) == "A_SIGN_NEEDS_BOTH_FEATURES__EITHER_CHANGE_REVERSES"
     assert lab(D=good, B=bad, C=mixed) == "PARTIAL"
     assert lab(D=good, B=mixed, C=mixed) == "UNRESOLVED"
     assert lab(D=bad, B=bad, C=bad) == "NO_REVERSAL"
@@ -147,16 +147,17 @@ def anchor_null_teacher(rng, plain, lc):
     return [math.exp((math.log(p) + math.log(q)) / 2 + rng.gauss(0, 1.0)) for p, q in zip(plain, lc)]
 
 
-def known_cells(rng, toward=True, n=256):
-    """Known rows: plain less confident in the digit than the teacher (the spent geometry); LC moves the
-    digit NLL toward the teacher (toward=True) or away from it."""
+def known_cells(rng, toward=True, n=256, p_toward=0.85):
+    """Known rows, NOISY: teacher 0.11-0.57x plain (the spent geometry); LC moves the digit NLL down on a
+    fraction p_toward of rows (toward=True) or up on that fraction (toward=False), by a random factor."""
     kp = [math.exp(rng.gauss(1.0, 0.4)) for _ in range(n)]
-    kt = [p * 0.3 for p in kp]
-    kl = [p * (0.7 if toward else 1.3) for p in kp]
+    kt = [p * rng.uniform(0.11, 0.57) for p in kp]
+    frac = p_toward if toward else 1 - p_toward
+    kl = [p * (math.exp(-abs(rng.gauss(0, 0.3))) if rng.random() < frac else math.exp(abs(rng.gauss(0, 0.3)))) for p in kp]
     return {"A_known": {"plain": kp, "lc": kl}, "T4_known": {"teacher": kt}}
 
 
-TOWARD_LABELS = ("FIDELITY", "TOWARD_TEACHER_OVERSHOOT", "TOWARD_TEACHER_NOT_CORROBORATED")
+TOWARD_LABELS = ("TEACHER_CONSISTENT_DIRECTION", "TOWARD_TEACHER_OVER_SUPPRESSION", "TOWARD_TEACHER_NOT_CORROBORATED")
 
 
 def test_power_at_the_lead_shape_and_exact_anchor_null():
@@ -172,13 +173,13 @@ def test_power_at_the_lead_shape_and_exact_anchor_null():
         fired += v["H1"]["label"] == "LC_LOWERS_UNKNOWN"
         anchor_false += v["H2"]["label"] in TOWARD_LABELS + ("AWAY_FROM_TEACHER",)
         beyond = [q * math.exp(0.5 * math.log(q / p)) for p, q in zip(plain, lc)]
-        fidelity += av.verdict({"A": {"plain": plain, "lc": lc}, "T4": {"teacher": beyond}, **kc})["H2"]["label"] == "FIDELITY"
+        fidelity += av.verdict({"A": {"plain": plain, "lc": lc}, "T4": {"teacher": beyond}, **kc})["H2"]["label"] == "TEACHER_CONSISTENT_DIRECTION"
     assert fired / sims > 0.95
     assert anchor_false / sims <= 0.025 + 3 * math.sqrt(0.025 * 0.975 / sims), anchor_false / sims
     assert fidelity / sims > 0.95
 
 
-def test_teacher_blind_generic_damage_does_not_earn_fidelity():
+def test_teacher_blind_generic_damage_does_not_earn_teacher_consistent_direction():
     """The review's scenario: LC inflates every NLL (UNKNOWN AND known rows) regardless of the teacher, with
     the spent geometry (UNKNOWN: plain below the teacher by x1.1-2.9; known: plain above it). Step 2 then
     says TOWARD on UNKNOWN rows -- but step 2b must not corroborate, so FIDELITY stays <= 0.025."""
@@ -192,6 +193,60 @@ def test_teacher_blind_generic_damage_does_not_earn_fidelity():
         kc = known_cells(rng, toward=False)
         v = av.verdict({"A": {"plain": plain, "lc": lc}, "T4": {"teacher": teacher}, **kc})
         toward += v["H2"]["label"] in TOWARD_LABELS
-        fid += v["H2"]["label"] == "FIDELITY"
+        fid += v["H2"]["label"] == "TEACHER_CONSISTENT_DIRECTION"
     assert toward / sims > 0.9                   # the UNKNOWN anchor alone cannot tell (the review was right)
     assert fid / sims <= 0.025 + 3 * math.sqrt(0.025 * 0.975 / sims), fid / sims
+
+
+def test_teacher_blind_answer_type_shift_DOES_earn_the_label():
+    """R1 (cold review M1): a teacher-blind shift of mass from UNKNOWN to the digits (UNKNOWN NLL up, gold
+    digit NLL down) passes steps 1, 2 and 2b -- TEACHER_CONSISTENT_DIRECTION is direction-consistent, NOT
+    teacher-specific. This test pins that limitation so no licence can forget it."""
+    rng = random.Random(13)
+    sims, tcd = 300, 0
+    for _ in range(sims):
+        plain = [math.exp(rng.gauss(1.4, 0.3)) for _ in range(256)]
+        teacher = [p * rng.uniform(1.14, 2.85) for p in plain]
+        lc = [p * math.exp(abs(rng.gauss(0, 0.4))) if rng.random() < 0.7 else p / math.exp(abs(rng.gauss(0, 0.4)))
+              for p in plain]
+        v = av.verdict({"A": {"plain": plain, "lc": lc}, "T4": {"teacher": teacher}, **known_cells(rng, toward=True)})
+        tcd += v["H2"]["label"] == "TEACHER_CONSISTENT_DIRECTION"
+    assert tcd / sims > 0.5, tcd / sims
+
+
+def _known_toward(n=256):
+    kp = [2.0 + 0.01 * i for i in range(n)]
+    kl = [p / 1.3 for p in kp]
+    return {"A_known": {"plain": kp, "lc": kl}, "T4_known": {"teacher": teacher_for(kp, kl, [1] * n)}}
+
+
+def _h2(rows):
+    """rows: (plain, lc, teacher) triples on the UNKNOWN stratum; known rows move toward the teacher."""
+    P, Q, Tt = (list(x) for x in zip(*rows))
+    return av.verdict({"A": {"plain": P, "lc": Q}, "T4": {"teacher": Tt}, **_known_toward()})["H2"]
+
+
+def test_over_suppression_counts_one_direction_over_defined_rows():
+    """R1 (cold review #18/#12; R1 review found no test pinned these): only plain < T < LC counts, never the
+    reverse crossing LC < T < plain; the denominator is the rows with all three values finite (None, NaN and
+    inf excluded from both k and n)."""
+    plain = [4.0] * 100 + [6.0] * 60 + [4.0] * 60 + [4.0] * 36
+    lc = [6.0] * 100 + [4.0] * 60 + [4.5] * 60 + [None] * 12 + [float("nan")] * 12 + [float("inf")] * 12
+    teacher = [5.0] * 256
+    assert av.over_suppression(plain, lc, teacher) == (100, 220)
+
+
+def test_over_suppression_label_direction_denominator_and_boundary():
+    over, closer = (4.0, 6.0, 5.0), (4.0, 4.8, 5.0)          # both LC-worse and closer to the teacher
+    reverse = (6.0, 4.8, 5.0)                                 # LC < T < plain: closer, crosses the OTHER way
+    tie = (4.0, 4.0, 5.0)                                     # bitwise tie: dropped from the anchor test, still defined
+    # direction: 120 over + 20 reverse + 116 closer -> one-directional k = 120 < 128 (a two-directional count, 140, would flip it)
+    h = _h2([over] * 120 + [reverse] * 20 + [closer] * 116)
+    assert (h["over_suppressing_rows"], h["rows_defined"], h["label"]) == (120, 256, "TEACHER_CONSISTENT_DIRECTION")
+    # denominator: 120 over + 16 ties + 120 closer -> 240 < 256 defined rows (the non-tied anchor count, 240, would flip it)
+    h = _h2([over] * 120 + [tie] * 16 + [closer] * 120)
+    assert h["n"] == 240 and (h["over_suppressing_rows"], h["rows_defined"]) == (120, 256)
+    assert h["label"] == "TEACHER_CONSISTENT_DIRECTION"
+    # boundary: exactly half over-suppress -> majority (2k >= n); one fewer -> not
+    assert _h2([over] * 128 + [closer] * 128)["label"] == "TOWARD_TEACHER_OVER_SUPPRESSION"
+    assert _h2([over] * 127 + [closer] * 129)["label"] == "TEACHER_CONSISTENT_DIRECTION"
