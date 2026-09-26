@@ -102,10 +102,10 @@ def code_hashes() -> dict:
     out = {}
     for m in list(sys.modules.values()):
         f = getattr(m, "__file__", None)
-        if not f:
-            continue
+        if not f or not os.path.isabs(f):      # torch.ops / torch.classes carry RELATIVE __file__ ('_ops.py', '_classes.py'):
+            continue                           # resolved against a cwd of HERE they named package files that do not exist
         q = Path(f).resolve()
-        if q.suffix == ".py" and q.parent in (HERE, RAB.resolve()):
+        if q.suffix == ".py" and q.parent in (HERE, RAB.resolve()) and q.is_file():
             out[f"{q.parent.name}/{q.name}"] = rls.sha256_file(q)
     return dict(sorted(out.items()))
 

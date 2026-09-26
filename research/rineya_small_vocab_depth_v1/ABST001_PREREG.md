@@ -616,4 +616,10 @@ Changes:
 - The structure_id controls: both caught on the full panel (512 distinct, 0 overlap). With the train side's structure_id removed, the train control fails, as it should.
 - `pid_alive` checked on self, on self with an epoch 1 h old (False), on a live child, on a child against an earlier epoch (False) and on a dead pid (False).
 - The restart query returned tonight's three restarts, in UTC.
-- The harness and dry battery are pending (§10).
+- The harness and dry battery: see the next paragraph.
+
+**Harness-forced fix (2026-09-26, after the cold re-check of 71acefb8).** The first harness run on 71acefb8 failed every scenario that launches the runner.
+- **Cause:** `code_hashes()` walks `sys.modules`, and `torch.ops` and `torch.classes` carry RELATIVE `__file__` values (`_ops.py`, `_classes.py`). Resolved against a working directory of the package, they named package files that do not exist, so the call raised FileNotFoundError at start-up, before any control.
+- **Effect on a real run:** it would have crashed before reading anything, which fails safe.
+- **Fix:** only absolute paths to existing `.py` files are hashed. In the pinned venv, `code_hashes()` then returns exactly the 12 gated modules and `hostbudget`. Under Python 3.11 the script-mode `__main__.__file__` is absolute, so the real launch records `run_abst.py` under the same key.
+- **Record:** the failed run's log is kept in the registrant's scratchpad, and no pass log was written from it. The pass log in `design/ABST_HARNESS_PASS.json` is from the re-run on the fixed code.
