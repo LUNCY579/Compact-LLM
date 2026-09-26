@@ -11,22 +11,23 @@ import weakref
 from typing import Any
 
 import torch
-import torch.nn.functional as F
 from torch import Tensor
 
 from .memory import FactorizedMemoryBank
 
 try:
+    from transformers.modeling_utils import ALL_ATTENTION_FUNCTIONS
     from transformers.models.qwen3.modeling_qwen3 import (
         Qwen3Attention,
         apply_rotary_pos_emb,
-        repeat_kv,
+        eager_attention_forward,
     )
     TRANSFORMERS_AVAILABLE = True
 except Exception:
+    ALL_ATTENTION_FUNCTIONS = None
     Qwen3Attention = object
     apply_rotary_pos_emb = None
-    repeat_kv = None
+    eager_attention_forward = None
     TRANSFORMERS_AVAILABLE = False
 
 
@@ -113,17 +114,24 @@ class Qwen3FMAAttention(Qwen3Attention):
         if past_key_values is not None:
             key, value = past_key_values.update(key, value, self.layer_idx)
 
-        key_expanded = repeat_kv(key, self.num_key_value_groups)
-        value_expanded = repeat_kv(value, self.num_key_value_groups)
-        attn_weights = torch.matmul(query, key_expanded.transpose(2, 3)) * self.scaling
-        if attention_mask is not None:
-            attn_weights = attn_weights + attention_mask[:, :, :, : key_expanded.shape[-2]]
-        attn_weights = torch.softmax(attn_weights, dim=-1, dtype=torch.float32).to(query.dtype)
-        if self.training and self.attention_dropout:
-            attn_weights = F.dropout(attn_weights, p=self.attention_dropout)
-        attn_output = torch.matmul(attn_weights, value_expanded)
-        attn_output = attn_output.transpose(1, 2).reshape(*input_shape, -1).contiguous()
-        return self.o_proj(attn_output), attn_weights
+        attention_interface = ALL_ATTENTION_FUNCTIONS.get_interface(
+            self.config._attn_implementation,
+            eager_attention_forward,
+        )
+        attn_output, attn_weights = attention_interface(
+            self,
+            query,
+            key,
+            value,
+            attention_mask,
+            dropout=0.0 if not self.training else self.attention_dropout,
+            scaling=self.scaling,
+            sliding_window=self.sliding_window,
+            **kwargs,
+        )
+        attn_output = attn_output.reshape(*input_shape, -1).contiguous()
+        attn_output = self.o_proj(attn_output)
+        return attn_output, attn_weights
 
 
 def _input_pre_hook(module, args, kwargs):
