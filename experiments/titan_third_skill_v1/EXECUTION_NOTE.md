@@ -28,3 +28,12 @@ lease and exited 1. All completed units remain resumable. Before resuming, the
 BASE/TT byte canaries, A1 and TTC25's completed row counts and weight-deletion
 receipt were independently rechecked and passed. The wait wrapper now permits
 this verified partial state, while still refusing an existing final result.
+
+The next attempt cleared two RAM checks at 6.58/6.58 GiB, then `safetensors`
+could not rename TTC50's temporary weight file (Windows error 32). A later
+read-only Restart Manager query identified a Codex-app `git hash-object
+--stdin-paths` child holding that file; it is consistent with the failed rename,
+though the exact holder at failure time was not captured. No TTC50 row was scored. The temporary file
+was moved to `failed_builds/` after the handle released, and the empty TTC50
+arm directory was removed. `.gitignore` now excludes these multi-GB tensor
+files from Git scanning. The registered builder will create TTC50 afresh.
