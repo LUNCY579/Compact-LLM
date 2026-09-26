@@ -85,5 +85,22 @@
     }
   },
   "training_authorized": false,
-  "paper_runtime_fidelity": "BLOCKED"
+  "paper_runtime_fidelity": "BLOCKED",
+  "evaluation_contract": {
+    "frozen_helper": "evaluation.py",
+    "arm_schema": "schemas/result.schema.json",
+    "pair_schema": "schemas/pair_comparison.schema.json",
+    "exact_blob_bindings": {
+      "evaluation.py": "de2c26cd5fe9e680ea08af436d2ea9844b796b8c",
+      "tests/test_evaluation.py": "759cf8ac59be42e750b2a6b077263b558de47e92",
+      "schemas/result.schema.json": "56704f48c5a26e3b3380dfc72c9b9b9227209501",
+      "schemas/pair_comparison.schema.json": "851e7fdde19a01c2bba807930b34d23812209c55"
+    },
+    "rules": [
+      "pass@k excludes prompts with fewer than k valid rollouts and reports denominators",
+      "paired repairs/damages use rollout_index=0 only and report missing prompt IDs",
+      "successful-mode diversity is summarized per prompt and globally",
+      "strategy labels are carried from a separately frozen metric; this helper does not infer strategies"
+    ]
+  }
 }
