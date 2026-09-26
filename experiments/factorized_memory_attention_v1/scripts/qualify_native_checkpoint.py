@@ -25,7 +25,6 @@ if str(ROOT) not in sys.path:
 from experiments.factorized_memory_attention_v1.fma.budget import parameter_budget
 from experiments.factorized_memory_attention_v1.fma.config import FMAConfig, load_shape
 from experiments.factorized_memory_attention_v1.fma.memory import FactorizedMemoryBank
-from experiments.factorized_memory_attention_v1.fma.qwen3 import convert_qwen3_model
 from experiments.factorized_memory_attention_v1.fma.resources import require_host_ram
 
 
@@ -144,6 +143,8 @@ def main() -> None:
             attention_mask=attention_mask,
             use_cache=False,
         ).logits.detach().float().cpu()
+
+    from experiments.factorized_memory_attention_v1.fma.qwen3 import convert_qwen3_model
 
     bank = FactorizedMemoryBank(shape, cfg)
     conversion = convert_qwen3_model(model, bank, layers=cfg.resolved_layers(shape))
