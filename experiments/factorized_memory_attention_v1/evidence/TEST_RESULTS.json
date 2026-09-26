@@ -35,5 +35,44 @@
     "full-MA analytical resource cost and parameter-matched M2",
     "tiny native Qwen3 g=0 parity and g=1 v_proj bypass"
   ],
-  "evidence_boundary": "Mechanical/synthetic tests plus tiny native Qwen3 wiring only. Supa checkpoint efficacy/calibration remains unrun."
+  "evidence_boundary": "Mechanical/synthetic tests plus tiny native Qwen3 wiring only. Supa checkpoint efficacy/calibration remains unrun.",
+  "continuation": {
+    "code_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+    "local_cpu": {
+      "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
+      "passed": 23,
+      "skipped": 1,
+      "failed": 0,
+      "elapsed_seconds": 1.41,
+      "python": "3.13.5",
+      "torch": "2.10.0+cpu",
+      "note": "Continuation mirror; Transformers absent, so native-Qwen3 integration was skipped rather than simulated."
+    },
+    "compileall": "PASS",
+    "static_text_scan": {
+      "result": "PASS",
+      "scope": "continuation experiment mirror",
+      "checks": [
+        "trailing whitespace",
+        "merge-conflict markers"
+      ]
+    },
+    "github_actions": {
+      "run_id": 36215083474,
+      "trigger_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+      "conclusion": "failure",
+      "classification": "INFRASTRUCTURE_BLOCKED",
+      "runner_id": 0,
+      "executed_steps": 0,
+      "note": "No workflow step ran; do not count this as a test failure."
+    },
+    "semantic_hardening": [
+      "raw K for MA value/calibration teacher before qk_norm and RoPE",
+      "native Transformers attention backend retained for g>0",
+      "minimum free host-RAM guard 7.4 GiB"
+    ],
+    "training_performed": false,
+    "calibration_performed": false,
+    "sealed_data_access": false
+  }
 }
