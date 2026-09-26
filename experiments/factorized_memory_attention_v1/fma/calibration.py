@@ -107,13 +107,15 @@ def capture_attention_inputs(model, layers: tuple[int, ...]):
 
 
 def native_qwen3_teacher(attn, hidden: Tensor) -> tuple[Tensor, Tensor]:
-    """Return (standard V, content K) with native Qwen3 k_norm, before RoPE."""
-    hidden_shape = (*hidden.shape[:-1], -1, attn.head_dim)
+    """Return (standard V, raw content K) before QK normalization and RoPE.
+
+    This matches Memory Attention Eq. 8/9 and the authors' reference
+    implementation, where v = k + m_norm(m) is formed before optional q_norm /
+    k_norm is applied to the scoring path.
+    """
     standard_value = attn.v_proj(hidden)
-    key_pre_rope = attn.k_norm(attn.k_proj(hidden).view(hidden_shape)).reshape(
-        *hidden.shape[:-1], -1
-    )
-    return standard_value, key_pre_rope
+    key_raw = attn.k_proj(hidden)
+    return standard_value, key_raw
 
 
 def calibrate_qwen3_memory(
