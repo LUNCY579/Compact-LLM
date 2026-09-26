@@ -36,4 +36,8 @@ read-only Restart Manager query identified a Codex-app `git hash-object
 though the exact holder at failure time was not captured. No TTC50 row was scored. The temporary file
 was moved to `failed_builds/` after the handle released, and the empty TTC50
 arm directory was removed. `.gitignore` now excludes these multi-GB tensor
-files from Git scanning. The registered builder will create TTC50 afresh.
+files from Git scanning. A fresh registered build of TTC50 and TTC100 then
+finished, and Stage A exited 0 with the registered
+`STOP_NO_ELIGIBLE_BETA` result. After verifying TTC50's successful BUILD and
+WEIGHTS_DELETED hashes and all score files, the unverified 2.38 GB failure
+temp was deleted. The trained δ_C file and checkpoint remain intact.
