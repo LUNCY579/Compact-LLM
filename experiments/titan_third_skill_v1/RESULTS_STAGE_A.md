@@ -60,6 +60,8 @@ In absolute terms, T's top-16 directions contained a median 22.5% of C's
 `o_proj` energy and 20.4% of C's `down_proj` energy, versus chance fractions
 of 0.78% and 0.52% for those input widths. This targeted measurement uses one
 randomized SVD seed and does not sample activation frequencies.
+Two alternate randomized-SVD seeds reproduced the T collision median at
+36.39× and 36.77×, versus the original 36.97×.
 
 Thus a small flattened weight cosine did not mean the learned updates used
 disjoint same-layer input directions. The structural overlap is consistent with
