@@ -1,0 +1,13 @@
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 310/310 [00:00<00:00, 5802.31it/s]
+W0905 20:50:54.778000 304432 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\peft\tuners\tuners_utils.py:302: UserWarning: Already found a `peft_config` attribute in the model. This will lead to having multiple adapters in the model. Make sure to know what you are doing!
+  warnings.warn(
+  arm B (lora): trainable 122,880 (0.0206%)  invariants PASS  serialisation PASS
+  arm C (nora): trainable 122,880 (0.0206%)  invariants PASS  serialisation PASS
+
+status: PASS
+L17-19 trainable: 122,880
+L17,18,19,25,27 trainable (sizing only): 204,800
+wrote C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\results\phase1_adapter_verification\receipt.json

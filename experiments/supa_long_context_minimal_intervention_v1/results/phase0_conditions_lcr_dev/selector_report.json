@@ -1,0 +1,81 @@
+{
+  "n_examples": 200,
+  "selector_config": {
+    "chunk_target_tokens": 192,
+    "select_budget_tokens": 384,
+    "neighbour_radius": 1,
+    "hard_ceiling_tokens": 576,
+    "anchor": "first 1 sentence(s), applied to B/C/D alike",
+    "scorer": "Okapi BM25, k1=1.5 b=0.75, IDF over this document's chunks",
+    "oracle_min_confidence": 0.34,
+    "random_seed_base": 20260905
+  },
+  "chunks_per_document": {
+    "min": 13,
+    "median": 14.0,
+    "mean": 13.98,
+    "max": 16
+  },
+  "anchor_tokens": {
+    "min": 4,
+    "median": 4.0,
+    "mean": 4,
+    "max": 4
+  },
+  "tokens": {
+    "A_full": {
+      "min": 2112,
+      "median": 2315.5,
+      "mean": 2296.36,
+      "max": 2554
+    },
+    "B_query": {
+      "min": 411,
+      "median": 532.5,
+      "mean": 524.45,
+      "max": 578
+    },
+    "C_random": {
+      "min": 277,
+      "median": 514.5,
+      "mean": 520.06,
+      "max": 719
+    },
+    "D_oracle": {
+      "min": 425,
+      "median": 516.0,
+      "mean": 523.51,
+      "max": 705
+    }
+  },
+  "mean_retention_vs_full": {
+    "B_query": 0.2284,
+    "C_random": 0.2265,
+    "D_oracle": 0.228
+  },
+  "budget_match_B_over_C": 1.0084,
+  "oracle_availability": {
+    "eligible": 150,
+    "answerable_rows": 150,
+    "all_rows": 200,
+    "share_of_answerable": 1.0,
+    "unavailable_reason_unanswerable": 50,
+    "unavailable_reason_localisation": 0,
+    "note": "Oracle is excluded for unanswerable rows by construction: a question with no determined answer has no supporting evidence to select. Rows are also excluded when a supporting fact fails to localise, rather than being approximated."
+  },
+  "query_vs_oracle_overlap": {
+    "mean_jaccard": 0.4827,
+    "identical_selections": 20,
+    "note": "Low overlap means D selects different chunks from B. Whether D is an upper bound is measured in the eval stage, not assumed here."
+  },
+  "degenerate_queries": 0,
+  "source": {
+    "rows": 200
+  },
+  "suite": {
+    "key": "lcr_dev",
+    "role": "confirmatory",
+    "note": "Held-out dev split of the Phase 1 curriculum, disjoint from its train split and from the demo suite. Longer contexts and 2688/2688 verbatim supporting_facts, so D is localised exactly. No published baseline exists for this split, so it carries no validity gate.",
+    "oracle_localisation_mode": "exact"
+  }
+}

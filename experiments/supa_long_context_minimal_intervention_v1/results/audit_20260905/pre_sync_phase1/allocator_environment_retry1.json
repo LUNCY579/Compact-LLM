@@ -1,0 +1,15 @@
+{
+  "policy": "backend:native,garbage_collection_threshold:0.7,per_process_memory_fraction:0.8",
+  "variables": [
+    "PYTORCH_ALLOC_CONF",
+    "PYTORCH_CUDA_ALLOC_CONF"
+  ],
+  "applied_to": [
+    "B",
+    "C"
+  ],
+  "CUDA_VISIBLE_DEVICES": "0",
+  "recovery": "Retain completed A; repeat interrupted B from initialization, then execute C",
+  "fixed_budget": "300 optimizer attempts per trained arm; no model/data/hyperparameter changes",
+  "recorded_utc": "2026-09-05T23:39:57.2625372Z"
+}

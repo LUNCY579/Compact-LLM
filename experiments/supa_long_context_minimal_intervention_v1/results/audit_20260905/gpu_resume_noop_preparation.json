@@ -1,0 +1,20 @@
+{
+  "schema_version": 1,
+  "prepared_at_utc": "2026-09-06T02:00:55.1925102Z",
+  "status": "PREPARED_NOT_EXECUTED",
+  "script": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\audit_20260905\\verify_completed_gpu_resume.py",
+  "script_sha256": "d8287d472bded4d557a0e00ecae115ce92ae02689834cb5886636cb92fea997d",
+  "usage": "GPU_RESUME_NOOP.md",
+  "syntax_parse": "PASS with required ../Chat-Bubble/.venv/Scripts/python.exe; AST parse only",
+  "verifier_executed": false,
+  "cuda_initialized_during_preparation": false,
+  "models_loaded_during_preparation": 0,
+  "production_sources_modified": false,
+  "review": {
+    "reviewer": "/root/audit_resume",
+    "method": "Read-only static review; no execution or edits",
+    "issue_fixed": "PEFT creates wrapper in training mode; explicitly call model.eval() before completed no-op restore",
+    "outcome": "No remaining blocker found after fix"
+  },
+  "execution_precondition": "Root chooses execution after selected fresh smoke arm is COMPLETE, six total attempts and no pending validation"
+}

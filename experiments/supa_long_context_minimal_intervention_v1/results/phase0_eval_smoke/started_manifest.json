@@ -1,0 +1,61 @@
+{
+  "status": "STARTED",
+  "stage": "phase0_eval_smoke",
+  "start_utc": "2026-09-05T18:51:03.424139+00:00",
+  "git_commit": "d8475ea3b9de3e17c5193a00ed01cc4aa6f1a136",
+  "git_branch": "research/mini-experiment",
+  "git_status": "?? experiments/supa_long_context_minimal_intervention_v1/",
+  "config": {
+    "stage": "phase0_eval_smoke",
+    "arm": "frozen_supa_a1.1",
+    "conditions": [
+      "A_full",
+      "B_query",
+      "C_random",
+      "D_oracle"
+    ],
+    "device": "cuda",
+    "dtype": "float16",
+    "max_new_tokens": 24,
+    "do_sample": false,
+    "seed": 17,
+    "enable_thinking": false,
+    "scorer": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py::normalize + strict exact",
+    "n_condition_rows": 116
+  },
+  "canonical_core": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "checkpoint_sha256_before": {
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+  },
+  "source_sha256": {
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase0_build_conditions.py": "aa9ce6ef800c4a897279c77da23342f9697db163f94631c3138bb1820cb6cd0c",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase0_run_eval.py": "fe4a8083af95b0c8d1ded8a2659c060424d0d37ddb51cda9fc79ea616f3b6a88",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/context_selection.py": "bcbd3d7012eec45dc41b34ebce17f5d3410af62f0485981ebf4c7ff46af7ec07",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/evaluation.py": "f484148753f0f5915ec3eeab3ee5bb5849bae1197c80700565cb32f74a7f2d6a",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/provenance.py": "2fc7f7558510fdbf0d4e31730d1e646e09ea2c00e651866d6238982a0fcefaef",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/stats.py": "4b66f7e4cb4592cee76b1dcafaa52c7a10f215f0ee0a4a1c6d0b9ec5b94e4abe"
+  },
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.1",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.26200-SP0",
+  "logical_cpus": 32,
+  "physical_memory_bytes": 16340398080,
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_bytes": 8585216000,
+    "free_bytes_at_start": 7411335168,
+    "used_by_others_bytes": 1173880832
+  }
+}

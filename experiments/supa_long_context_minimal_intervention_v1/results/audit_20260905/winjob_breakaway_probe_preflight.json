@@ -1,0 +1,28 @@
+{
+  "status": "not_launched_guard_requirement_unsatisfied",
+  "launch_attempted": false,
+  "static_checks": {"ast_parse": "passed", "compile_without_execution": "passed"},
+  "source_sha256": "EC07BED03138C91FF7152D0FEA9E1D54ECDEE99C1DD333861E634CE346DDE3C0",
+  "required_guard": "Parent immediate job must have JOB_OBJECT_LIMIT_BREAKAWAY_OK (0x0800)",
+  "read_only_python_audit": {
+    "timestamp_utc": "2026-09-06T00:59:28.816864+00:00",
+    "identity": {
+      "pid": 213696,
+      "creation_filetime_100ns": "134331299686850862",
+      "creation_utc": "2026-09-06T00:59:28.685086+00:00"
+    },
+    "parent_pid": 214676,
+    "executable": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+    "cwd": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment",
+    "in_any_job": true,
+    "immediate_job": {
+      "flags_decimal": 12288,
+      "flags_hex": "0x00003000",
+      "breakaway_ok": false,
+      "silent_breakaway_ok": true,
+      "kill_on_job_close": true,
+      "returned_bytes": 144
+    }
+  },
+  "interpretation": "The required venv Python has a different immediate job from pwsh (which reported 0x2800). No launch was attempted because the parent-specified explicit BREAKAWAY_OK guard is unsatisfied. Silent-breakaway semantics have not been used as a fallback."
+}

@@ -1,0 +1,57 @@
+{
+  "schema_version": 1,
+  "completed_at_utc": "2026-09-06T01:20:11.7608373Z",
+  "purpose": "Adopt reviewed exact checkpoint recovery without changing optimizer, mathematics, data, model recipe, or total attempt budget",
+  "source_prototype": "results/audit_20260905/resume_prototype/src/slcmi",
+  "live_sources_byte_identical_to_reviewed_prototype": true,
+  "original_source_snapshot": "results/audit_20260905/resume_adoption/original_training.py",
+  "python": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\.venv\\Scripts\\python.exe",
+  "python_version": "3.11.15",
+  "torch_version": "2.12.1+cu126",
+  "cuda_visible_devices": "-1",
+  "cuda_available": false,
+  "cuda_device_count": 0,
+  "working_directory": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment",
+  "tests": [
+    {
+      "selection": "test_training_safety.py and test_resume_equivalence.py",
+      "passed": 57,
+      "failed": 0,
+      "console_seconds": 32.85,
+      "junit": "test_results.xml"
+    },
+    {
+      "selection": "test_resume_equivalence.py -k real_process_exit",
+      "passed": 2,
+      "failed": 0,
+      "deselected": 40,
+      "console_seconds": 27.19,
+      "junit": "hardexit_results.xml",
+      "reason": "After adapting hard-exit workers to literal CUDA_VISIBLE_DEVICES=-1, asserting CUDA unavailable, and repo-root cwd"
+    }
+  ],
+  "train_api": [
+    "checkpoint_dir: str | Path | None = None",
+    "checkpoint_fingerprints: dict[str, str] | None = None",
+    "resume_from_checkpoint: bool = False"
+  ],
+  "required_fingerprint_keys": [
+    "recipe_sha256",
+    "train_data_sha256",
+    "eval_data_sha256",
+    "base_checkpoint_sha256",
+    "adapter_initialization_sha256"
+  ],
+  "total_budget_contract": "Every new or resumed segment receives original max_steps; production recipe remains 300 total attempts",
+  "model_jobs_launched": 0,
+  "gpu_validation": "Not performed; CPU synthetic adapter state/process-death equivalence only",
+  "source_sha256": {
+    "src/slcmi/training.py": "9b04f43a3fa8500706158536d773c9e9caaf5b3edbeeb26663c4c0b61e54f650",
+    "src/slcmi/checkpoint_resume.py": "e2b2a4fa521299c249e830a86bd4f69e2ad2f172fd91277ce19e68a1f529aded",
+    "tests/test_training_safety.py": "6b8573603bda555844661442d1cb3773d14fcda9b8e25c358f3f7a2c5c51d99e",
+    "tests/test_resume_equivalence.py": "62a7859bae6c31663e5ea40a792a43bc1048b54aa7de97b413a08055d1dd381e",
+    "tests/fixtures/cpu_process_worker.py": "b40459123fd4d9718f21395f323828327617270af27e6cacb1e614e0d11c5df9",
+    "tests/fixtures/resume_baseline_training.py": "b7da076ef654b785747abbf2f161f312f03759d97616c01a20c21e3899c02c6d",
+    "results/audit_20260905/resume_adoption/original_training.py": "b7da076ef654b785747abbf2f161f312f03759d97616c01a20c21e3899c02c6d"
+  }
+}

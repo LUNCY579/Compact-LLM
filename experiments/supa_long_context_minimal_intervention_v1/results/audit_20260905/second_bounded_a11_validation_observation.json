@@ -1,0 +1,82 @@
+{
+  "scope": "Partial live execution evidence only; no final target score or Phase2 decision; checkpoint metadata only",
+  "observed": {
+    "observed_utc": "2026-09-05T22:39:06.0477827-05:00",
+    "status_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\logs\\resumable_phase1_status.json",
+    "recorded_state": "RUNNING_COMMAND",
+    "status_updated_utc": "2026-09-06T02:34:18.3202382Z",
+    "controller": {
+      "recorded_pid": 8988,
+      "expected_start_utc": "2026-09-06T02:28:08.6818557Z",
+      "expected_start_utc_ticks": "639242584886818557",
+      "actual": {
+        "pid": 8988,
+        "start_utc": "2026-09-06T02:28:08.6818557Z",
+        "start_utc_ticks": "639242584886818557"
+      },
+      "pid_and_start_verified": true
+    },
+    "phase1_python_processes": [
+      {
+        "pid": 49712,
+        "start_utc": "2026-09-06T02:34:18.3419231Z",
+        "start_utc_ticks": "639242588583419231"
+      },
+      {
+        "pid": 54016,
+        "start_utc": "2026-09-06T02:34:18.364454Z",
+        "start_utc_ticks": "639242588583644540"
+      }
+    ],
+    "phase1_python_process_count": 2,
+    "label": "phase1_B",
+    "stage": "phase1",
+    "arm": "B",
+    "arm_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B",
+    "identity_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\identity.json",
+    "segment_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\segments\\000001-e671889ad1ec",
+    "total_attempt_budget": 300,
+    "configured_validation_every": 75,
+    "logged_progress": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\segments\\000001-e671889ad1ec\\training_progress.jsonl",
+      "intact_event_count": 158,
+      "trailing_fragment_ignored": false,
+      "attempt": 156,
+      "applied": 156,
+      "skipped_scaler": 0,
+      "skipped_safety": 0,
+      "examples_consumed": 1248,
+      "most_recent_validation": {
+        "event": "validation",
+        "step": 150,
+        "loss": 0.302356,
+        "n_examples": 160,
+        "n_answer_tokens": 1189
+      },
+      "interpretation": "Observed append-only segment log only; callbacks may lag committed progress. No checkpoint contents inspected."
+    },
+    "latest_checkpoint_metadata": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\checkpoints\\latest.pt",
+      "exists": true,
+      "bytes": 1555898,
+      "last_write_utc": "2026-09-06T03:38:48.1864874Z",
+      "contents_read": false
+    },
+    "command_log_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\logs\\resumable_708a57d64a34474eb506e5432461be51_04_phase1_B.log",
+    "command_log_tail": [
+      "    step 120/300: train 0.127363 |g| 0.773 |adapter| 4.099",
+      "    step 150: train 0.51513 val 0.3024 |g| 13.484"
+    ],
+    "notes": []
+  },
+  "append_only_trajectory_checks": {
+    "unique_sequential_attempts": true,
+    "all_logged_gradients_finite": true,
+    "all_logged_gradients_nonzero": true,
+    "all_logged_attempts_applied": true,
+    "validation_steps_match_fixed_recipe": true,
+    "validation_losses_finite": true,
+    "validation_examples_match_dev": true
+  },
+  "watch_session_10434": "completed normally after validation150 event; GPU process remains separate and live"
+}

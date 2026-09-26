@@ -1,0 +1,16 @@
+    dataset: kept 2400, dropped 0, median 2243 tokens
+    dataset: kept 160, dropped 0, median 2373 tokens
+
+=== ARM B ===
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 310/310 [00:00<00:00, 6905.12it/s]
+W0905 17:32:49.708000 166884 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+  trainable 122,880 params (0.0206%) on layers (17, 18, 19)
+  invariant checks: PASS
+    step 30/300: train 0.828315 |g| 2.176 |adapter| 4.016
+    step 60/300: train 0.215697 |g| 1.629 |adapter| 4.038
+    step 75: train 0.59631 val 0.4269 |g| 4.118
+    step 90/300: train 0.523724 |g| 1.759 |adapter| 4.066
+    step 120/300: train 0.127363 |g| 0.773 |adapter| 4.099
+    step 150: train 0.51513 val 0.3024 |g| 13.484

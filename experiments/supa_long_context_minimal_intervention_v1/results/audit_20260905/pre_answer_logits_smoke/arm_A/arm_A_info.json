@@ -1,0 +1,53 @@
+{
+  "arm": "A",
+  "loaded_core_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "loaded_dtype": "float16",
+  "dataset_fingerprint": {
+    "train": "70f559a6630234ec67555a092feeb8896080eeb434da63b27df42de1acb7a480",
+    "dev": "3d96eef7cb895be211a3b743d1673e7ede609a672d39fb11e0191e8d5db6db22",
+    "target": "30ca3a702ef58fcaaf5090a4288e3e705cb5471c09580cffc4eaf13326341b21",
+    "preservation": "d7a4579e87b6ea4cc684468eedfbb4a606b0398f6cd18bd6d3616f0256a97929",
+    "train_count": 32,
+    "dev_count": 16,
+    "target_count": 32,
+    "preservation_count": 16
+  },
+  "training": null,
+  "adapter": {
+    "kind": "none",
+    "trainable_params": 0,
+    "total_params": 596049920,
+    "trainable_fraction": 0.0,
+    "trainable_tensor_count": 0,
+    "trainable_param_names": []
+  },
+  "frozen_base": {
+    "algorithm": "sha256-native-frozen-parameters-v1",
+    "before": "a1bc365f17726c279e0f5269aa29c9b917d0ad0e225c3bda1bd36283fd4023d9",
+    "after": "a1bc365f17726c279e0f5269aa29c9b917d0ad0e225c3bda1bd36283fd4023d9",
+    "unchanged": true
+  },
+  "evaluation_gate_on": true,
+  "target": {
+    "n": 32,
+    "correct": 20,
+    "accuracy": 0.625,
+    "accuracy_points": 62.5
+  },
+  "preservation": {
+    "matched": {
+      "n": 16,
+      "correct": 6,
+      "accuracy": 0.375,
+      "accuracy_points": 37.5
+    },
+    "exact": {
+      "n": 16,
+      "correct": 3,
+      "accuracy": 0.1875,
+      "accuracy_points": 18.75
+    },
+    "mean_response_words": 3.25
+  },
+  "target_malformed_rate": 0.0
+}

@@ -1,0 +1,48 @@
+{
+  "status": "UNADOPTED",
+  "scope": "CPU-only synthetic adapter checkpoint proof; no canonical model or GPU loaded",
+  "python_executable": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+  "torch_version": "2.13.0+cpu",
+  "full_suite_before_final_numerical_fix": {
+    "report": "test_results.xml",
+    "tests": 55,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 38.931
+  },
+  "targeted_scaler_regression_after_final_numerical_fix": {
+    "report": "scaler_review_results.xml",
+    "tests": 4,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 4.66
+  },
+  "full_suite_repeated_after_final_numerical_fix": false,
+  "unique_test_cases_exercised": 57,
+  "true_process_death_cases": [
+    "os._exit(37) after committed attempt 2 with validation pending",
+    "os._exit(37) inside accumulation after prior attempt 1 commit"
+  ],
+  "equivalence": "torch.equal for tensors plus exact recursive state/receipt equality, excluding wall timing and throughput",
+  "canonical_source_hash_matches_build_input": true,
+  "canonical_sources_modified_by_prototype": false,
+  "review_findings_resolved": [
+    "dose-accounting corruption",
+    "AdamW/scheduler state mismatch",
+    "RNG validation before checkpoint tensor copy",
+    "float32 scaler underflow/growth saturation"
+  ],
+  "artifact_sha256": {
+    "src/slcmi/training.py": "9b04f43a3fa8500706158536d773c9e9caaf5b3edbeeb26663c4c0b61e54f650",
+    "src/slcmi/checkpoint_resume.py": "e2b2a4fa521299c249e830a86bd4f69e2ad2f172fd91277ce19e68a1f529aded",
+    "training.patch": "bddc54ef3d05a1f74c9992638b27c1b2cec15f86fd4f7b6041f9566dd6c0ca5e",
+    "baseline_training.py": "b7da076ef654b785747abbf2f161f312f03759d97616c01a20c21e3899c02c6d",
+    "tests/test_training_safety.py": "6b8573603bda555844661442d1cb3773d14fcda9b8e25c358f3f7a2c5c51d99e",
+    "tests/test_resume_equivalence.py": "0c089cc44da47ec63a3dfbea1cbb8050c3c9f2957b3508e9922362fd5074d7e6",
+    "cpu_process_worker.py": "40346e6182902d3aed052e8dd58041fc10a0c06a20ce9fc1d9cc417013ad1999",
+    "README.md": "a76968c3c4de4f5d4053cdd3782dc24fd96c185b22a247a60c52d4d6c11f9db2",
+    "REVIEW.md": "c3011aa2098c99b5cc493566b83a67ca67b7b7314e40e288d5aaa12a58518d15"
+  }
+}
