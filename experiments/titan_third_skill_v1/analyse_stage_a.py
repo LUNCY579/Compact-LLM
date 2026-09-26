@@ -153,14 +153,28 @@ def power_projection(c_tt, c_x, t_tt, t_x, h_tt, h_x, draws=2000, seed=20260926)
     cp = [(int(c_tt[i]["semantic_correct"]), int(c_x[i]["semantic_correct"])) for i in c_tt]
     tp = [(int(t_tt[i]["primary"]), int(t_x[i]["primary"])) for i in t_tt]
     hp = [(int(h_tt[i]["credited"]), int(h_x[i]["credited"])) for i in h_tt if h_tt[i]["row_type"] == "boundary"]
-    ok = {"C1": 0, "C2": 0, "C3": 0}
+    # C resampled by WORLD (AMENDMENT_1 §1): 112 worlds x their JSON variants, as C_FRESH is built.
+    worlds = {}
+    for i in c_tt:
+        worlds.setdefault(c_tt[i]["parent_id"], []).append((int(c_tt[i]["semantic_correct"]), int(c_x[i]["semantic_correct"])))
+    wl = list(worlds.values())
+    ok = {"C1": 0, "C2": 0, "C3_row": 0, "C3_world": 0, "C3_both": 0}
+    nontied = 0
     for _ in range(draws):
         b1, t1 = lb(tp, 864); ok["C1"] += b1 > -0.05 * t1
         b2, t2 = lb(hp, 336); ok["C2"] += b2 > -0.05 * t2
-        s = [rng.choice(cp) for _ in range(336)]
-        g = sum(x and not t for t, x in s); l = sum(t and not x for t, x in s)
-        ok["C3"] += (g - l) >= 34 and mcnemar_one_sided(g, l) < 0.05
-    return {k: round(v / draws, 3) for k, v in ok.items()} | {"draws": draws, "note": "descriptive; changes no Stage B rule"}
+        s = [rng.choice(wl) for _ in range(112)]
+        rows = [p for w in s for p in w]
+        g = sum(x and not t for t, x in rows); l = sum(t and not x for t, x in rows)
+        net = [sum(x - t for t, x in w) for w in s]
+        up, down = sum(v > 0 for v in net), sum(v < 0 for v in net)
+        nontied += up + down
+        r_ok = (g - l) >= 34 and mcnemar_one_sided(g, l) < 0.05
+        w_ok = mcnemar_one_sided(up, down) < 0.05
+        ok["C3_row"] += r_ok; ok["C3_world"] += w_ok; ok["C3_both"] += r_ok and w_ok
+    return ({k: round(v / draws, 3) for k, v in ok.items()} |
+            {"expected_nontied_worlds_of_112": round(nontied / draws, 1), "draws": draws,
+             "note": "descriptive; changes no Stage B rule. C3 passes only if row AND world tests pass (AMENDMENT_1)"})
 
 
 def full() -> int:
