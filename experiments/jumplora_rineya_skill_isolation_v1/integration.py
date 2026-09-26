@@ -7,6 +7,7 @@ the source of model/tokenizer behavior.
 """
 from __future__ import annotations
 
+from collections.abc import Mapping
 from dataclasses import dataclass
 from typing import Iterable
 
@@ -51,36 +52,90 @@ class InjectedArm:
             if isinstance(adapter, JumpLoRALinear):
                 adapter.set_step(step)
 
-    def initialize_jump_thresholds(self, active_count: int | None = None) -> None:
-        jumps = [adapter for adapter in self.adapters if isinstance(adapter, JumpLoRALinear)]
+    def paper_initial_support_counts(self) -> dict[str, int]:
+        """Algorithm-1 support budget for each adapted weight matrix.
+
+        JumpLoRA learns a threshold for each layer/update matrix. Therefore the
+        initialization cardinality is derived independently for every injected
+        q/v module, not from one global cross-layer threshold.
+        """
+        result: dict[str, int] = {}
+        for binding in self.bindings:
+            adapter = binding.adapter
+            result[binding.name] = min(
+                adapter.raw_delta().numel(),
+                adapter.lora_A.numel() + adapter.lora_B.numel(),
+            )
+        return result
+
+    def initialize_jump_thresholds(self,
+                                   active_counts: Mapping[str, int] | int | None = None) -> dict[str, int]:
+        """Initialize each J3 module's own threshold from its unscaled ``B @ A``.
+
+        A single integer is accepted only for a one-module fixture. Multi-module
+        native use must bind explicit per-module counts so a global threshold
+        cannot silently change the layerwise sparsity profile.
+        """
+        jumps = [(binding.name, binding.adapter) for binding in self.bindings
+                 if isinstance(binding.adapter, JumpLoRALinear)]
         if not jumps:
-            return
-        if active_count is None:
-            active_count = min(sum(adapter.dense_delta().numel() for adapter in jumps),
-                               sum(adapter.lora_A.numel() + adapter.lora_B.numel() for adapter in jumps))
-        active_count = int(active_count)
-        values = torch.cat([adapter.dense_delta().detach().abs().reshape(-1) for adapter in jumps])
-        global_tau = values.sort(descending=True).values
-        if active_count <= 0:
-            threshold = global_tau[0] + torch.finfo(values.dtype).eps
-        elif active_count >= values.numel():
-            threshold = global_tau[-1] - torch.finfo(values.dtype).eps
+            return {}
+        if active_counts is None:
+            counts = self.paper_initial_support_counts()
+        elif isinstance(active_counts, int):
+            if len(jumps) != 1:
+                raise ValueError("multi-module J3 threshold initialization requires per-module counts")
+            counts = {jumps[0][0]: int(active_counts)}
         else:
-            threshold = (global_tau[active_count - 1] + global_tau[active_count]) / 2.0
-        for adapter in jumps:
-            with torch.no_grad():
-                adapter.threshold.copy_(threshold.to(adapter.threshold))
+            counts = {str(k): int(v) for k, v in active_counts.items()}
+            names = {name for name, _ in jumps}
+            if set(counts) != names:
+                raise ValueError("J3 threshold count module set mismatch")
+        realized: dict[str, int] = {}
+        for name, adapter in jumps:
+            count = counts[name]
+            if not 0 <= count <= adapter.raw_delta().numel():
+                raise ValueError(f"support count out of range for {name}")
+            adapter.initialize_threshold(count)
+            realized[name] = int(adapter.support_mask().sum().item())
+            if realized[name] != count:
+                raise RuntimeError(f"threshold cardinality mismatch for {name}")
+        return realized
+
+    def freeze_matched_support_counts(self, active_counts: Mapping[str, int]) -> dict[str, int]:
+        """Freeze J1/J2 deterministic top-k masks to J3's per-module counts."""
+        counts = {str(k): int(v) for k, v in active_counts.items()}
+        names = {binding.name for binding in self.bindings}
+        if set(counts) != names:
+            raise ValueError("matched-density module set mismatch")
+        realized: dict[str, int] = {}
+        for binding in sorted(self.bindings, key=lambda item: item.name):
+            adapter = binding.adapter
+            if not hasattr(adapter, "set_frozen_mask"):
+                raise ValueError(f"arm {self.arm} does not support frozen masks")
+            count = counts[binding.name]
+            if not 0 <= count <= adapter.raw_delta().numel():
+                raise ValueError(f"support count out of range for {binding.name}")
+            mask = deterministic_topk_mask(adapter.raw_delta(), count)
+            adapter.set_frozen_mask(mask)
+            realized[binding.name] = int(mask.sum().item())
+        return realized
 
     def freeze_global_topk(self, active_count: int) -> dict[str, int]:
-        """Freeze J1/J2 support using one deterministic global budget."""
-        supports = {binding.name: binding.adapter.dense_delta() for binding in self.bindings}
+        """Exploratory global-budget helper; not the registered J1/J2 control.
+
+        The registered matched-density comparison uses
+        :meth:`freeze_matched_support_counts` so layer/module allocation cannot
+        confound support-selection mechanism with support-budget relocation.
+        """
+        supports = {binding.name: binding.adapter.raw_delta() for binding in self.bindings}
         names = sorted(supports)
         values = torch.cat([supports[name].detach().abs().reshape(-1) for name in names])
         global_mask = deterministic_topk_mask(values, int(active_count)).reshape(-1)
         offset = 0
         counts: dict[str, int] = {}
         for binding in sorted(self.bindings, key=lambda item: item.name):
-            size = binding.adapter.dense_delta().numel()
+            size = binding.adapter.raw_delta().numel()
             local = global_mask[offset:offset + size].reshape(binding.adapter.base.weight.shape)
             if not hasattr(binding.adapter, "set_frozen_mask"):
                 raise ValueError(f"arm {self.arm} does not support frozen masks")
@@ -91,6 +146,10 @@ class InjectedArm:
 
     def final_support_count(self) -> int:
         return sum(int(adapter.support_mask().sum().item()) for adapter in self.adapters)
+
+    def final_support_counts(self) -> dict[str, int]:
+        return {binding.name: int(binding.adapter.support_mask().sum().item())
+                for binding in self.bindings}
 
     def parameter_counts(self) -> dict[str, int]:
         return {

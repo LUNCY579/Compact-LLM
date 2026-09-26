@@ -1,9 +1,10 @@
 """Dense, frozen-mask, and JumpLoRA linear adapters.
 
 The implementation follows JumpLoRA v3, arXiv:2604.16171, equations (1)--(5):
-the forward gate is a symmetric hard threshold over the materialized LoRA
-delta, while the threshold receives the paper's band-limited straight-through
-pseudo-gradient.  All support selection is deterministic and tie-aware.
+the forward gate is a symmetric hard threshold over the *unscaled* materialized
+LoRA delta ``B @ A``.  The LoRA scale ``alpha/r`` is applied only after the
+dense/sparse interpolation, matching Algorithm 1 line 14.  Threshold/support
+selection is deterministic and tie-aware.
 """
 from __future__ import annotations
 
@@ -52,6 +53,8 @@ class _SymmetricJumpReLU(Function):
     @staticmethod
     def forward(ctx, x: torch.Tensor, tau: torch.Tensor, epsilon: float) -> torch.Tensor:
         _require(tau.ndim == 0, "JumpLoRA threshold must be scalar")
+        _require(bool(torch.isfinite(x).all()) and bool(torch.isfinite(tau).all()),
+                 "JumpLoRA received nonfinite values")
         ctx.save_for_backward(x, tau)
         ctx.epsilon = float(epsilon)
         return x * (x.abs() > tau).to(dtype=x.dtype)
@@ -61,8 +64,8 @@ class _SymmetricJumpReLU(Function):
         x, tau = ctx.saved_tensors
         epsilon = ctx.epsilon
         active = (x.abs() > tau).to(dtype=x.dtype)
-        # Equation (2) applied to J_tau(x) - J_tau(-x).  The two indicator
-        # differences are the finite band around +tau and -tau respectively.
+        # Eq. (2) applied to J_tau(x)-J_tau(-x). The signs differ for the
+        # negative term because d[-J_tau(-x)]/d tau has the opposite sign.
         positive_band = (((x - tau) / epsilon) >= -0.5) & (((x - tau) / epsilon) < 0.5)
         negative_band = (((-x - tau) / epsilon) >= -0.5) & (((-x - tau) / epsilon) < 0.5)
         d_tau = (-tau / epsilon) * positive_band.to(dtype=x.dtype)
@@ -76,11 +79,13 @@ def symmetric_jump_relu(x: torch.Tensor, tau: torch.Tensor | float,
                         epsilon: float = 1.0e-3) -> torch.Tensor:
     """Return ``x * H(abs(x)-tau)`` with the paper's threshold STE."""
     _require(torch.is_floating_point(x), "JumpLoRA input must be floating point")
+    _require(bool(torch.isfinite(x).all()), "JumpLoRA input must be finite")
     if not isinstance(tau, torch.Tensor):
         tau = torch.as_tensor(tau, dtype=x.dtype, device=x.device)
     if tau.device != x.device or tau.dtype != x.dtype:
         tau = tau.to(device=x.device, dtype=x.dtype)
-    _require(tau.ndim == 0, "JumpLoRA threshold must be scalar")
+    _require(tau.ndim == 0 and bool(torch.isfinite(tau)),
+             "JumpLoRA threshold must be one finite scalar")
     _require(math.isfinite(float(epsilon)) and epsilon > 0.0,
              "epsilon must be finite and positive")
     return _SymmetricJumpReLU.apply(x, tau, float(epsilon))
@@ -104,20 +109,28 @@ def deterministic_topk_mask(values: torch.Tensor, active_count: int) -> torch.Te
 def threshold_for_mask(values: torch.Tensor, active_count: int) -> torch.Tensor:
     """Return a scalar threshold whose strict gate selects exactly ``active_count``.
 
-    A scalar threshold cannot express a deterministic tie break.  We therefore
+    A scalar threshold cannot express a deterministic tie break. We therefore
     reject a tied boundary instead of silently reporting a mismatched density.
     """
     _require(values.numel() > 0, "threshold selection requires non-empty values")
-    _require(0 <= active_count <= values.numel(), "active_count is outside tensor size")
-    magnitudes = values.detach().abs().reshape(-1).sort(descending=True).values
+    _require(torch.is_floating_point(values) and bool(torch.isfinite(values).all()),
+             "threshold selection requires finite floating values")
+    _require(isinstance(active_count, int) and 0 <= active_count <= values.numel(),
+             "active_count is outside tensor size")
+    magnitudes = values.detach().abs().reshape(-1).sort(descending=True, stable=True).values
     if active_count == 0:
-        return magnitudes[0].clone() + torch.finfo(values.dtype).eps
+        return torch.nextafter(magnitudes[0], torch.tensor(float("inf"), dtype=values.dtype,
+                                                           device=values.device)).reshape(())
     if active_count == magnitudes.numel():
-        return magnitudes[-1].clone() - torch.finfo(values.dtype).eps
+        return torch.nextafter(magnitudes[-1], torch.tensor(float("-inf"), dtype=values.dtype,
+                                                            device=values.device)).reshape(())
     high = magnitudes[active_count - 1]
     low = magnitudes[active_count]
     _require(bool(high > low), "cannot represent a tied support boundary with one threshold")
-    return ((high + low) / 2.0).reshape(())
+    tau = ((high + low) / 2.0).reshape(())
+    _require(int(values.detach().abs().gt(tau).sum()) == active_count,
+             "strict threshold failed to realize requested support")
+    return tau
 
 
 class LoRALinear(nn.Module):
@@ -149,21 +162,30 @@ class LoRALinear(nn.Module):
         self._unmerged_weight: torch.Tensor | None = None
         self.train(base.training)
 
+    def raw_delta(self) -> torch.Tensor:
+        """Return the paper's unscaled ``Delta W = B @ A``."""
+        return self.lora_B @ self.lora_A
+
     def dense_delta(self) -> torch.Tensor:
-        return (self.lora_B @ self.lora_A) * self.scale
+        """Return the ordinary LoRA update added to the base, including alpha/r.
+
+        This preserves the package's pre-existing public helper semantics.
+        JumpLoRA thresholding itself always operates on :meth:`raw_delta`.
+        """
+        return self.raw_delta() * self.scale
 
     def support_mask(self) -> torch.Tensor:
-        return self.dense_delta().detach().ne(0)
+        return self.raw_delta().detach().ne(0)
 
     def effective_delta(self, step: int | None = None) -> torch.Tensor:
+        """Return the update actually added to the frozen base weight."""
         del step
         return self.dense_delta()
 
     def forward(self, x: torch.Tensor, step: int | None = None) -> torch.Tensor:
         if self._merged:
             return self.base(x)
-        delta = self.effective_delta(step)
-        return self.base(x) + F.linear(x, delta)
+        return self.base(x) + F.linear(x, self.effective_delta(step))
 
     def merge(self, step: int | None = None) -> None:
         _require(not self._merged, "adapter is already merged")
@@ -249,19 +271,22 @@ class JumpLoRALinear(LoRALinear):
 
     def initialize_threshold(self, active_count: int) -> None:
         with torch.no_grad():
-            self.threshold.copy_(threshold_for_mask(self.dense_delta(), active_count))
+            self.threshold.copy_(threshold_for_mask(self.raw_delta(), active_count))
 
     def effective_delta(self, step: int | None = None) -> torch.Tensor:
         actual_step = self.current_step if step is None else step
         gamma = self.schedule.gamma(actual_step)
-        dense = self.dense_delta()
+        dense_unscaled = self.raw_delta()
         if gamma == 0.0:
-            return dense
-        jumped = symmetric_jump_relu(dense, self.threshold, self.schedule.epsilon)
-        return (1.0 - gamma) * dense + gamma * jumped
+            return dense_unscaled * self.scale
+        jumped_unscaled = symmetric_jump_relu(dense_unscaled, self.threshold,
+                                               self.schedule.epsilon)
+        interpolated_unscaled = ((1.0 - gamma) * dense_unscaled
+                                 + gamma * jumped_unscaled)
+        return interpolated_unscaled * self.scale
 
     def support_mask(self) -> torch.Tensor:
-        return self.dense_delta().detach().abs().gt(self.threshold.detach())
+        return self.raw_delta().detach().abs().gt(self.threshold.detach())
 
 
 def build_adapter(base: nn.Linear, arm: str, *, rank: int = 8, alpha: float = 32.0,

@@ -1,5 +1,5 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "experiment_id": "jumplora_rineya_skill_isolation_v1",
   "qualification_id": "JLR-QUAL-001",
   "repository": "LUNCY579/ChatBubble",
@@ -29,8 +29,9 @@
     "jump_epsilon": 0.001,
     "s_start_fraction_of_epoch": 0.2,
     "s_final_fraction_of_epoch": 0.8,
-    "threshold_initialization": "paper_algorithm_1_at_s_start",
-    "threshold_gate": "strict_abs_delta_greater_than_tau"
+    "threshold_initialization": "paper_algorithm_1_per_adapted_weight_at_s_start_on_unscaled_B_at_A",
+    "threshold_gate": "strict_abs_unscaled_delta_greater_than_tau",
+    "lora_scale_placement": "apply_alpha_over_r_after_dense_sparse_interpolation"
   },
   "arms": {
     "J0": {
@@ -40,16 +41,16 @@
     "J1": {
       "name": "post_training_matched_density_magnitude_pruning",
       "support_policy": "dense_training_then_topk_mask",
-      "density_binding": "frozen_j3_final_active_count_on_development"
+      "density_binding": "frozen_j3_final_active_count_per_module_on_development"
     },
     "J2": {
       "name": "early_frozen_mask",
       "support_policy": "topk_mask_at_warmup_then_frozen",
-      "density_binding": "same_frozen_j3_reference_count"
+      "density_binding": "same_frozen_j3_per_module_reference_counts"
     },
     "J3": {
       "name": "jumplora",
-      "support_policy": "learnable_symmetric_jumprelu_with_gamma_schedule"
+      "support_policy": "learnable_symmetric_jumprelu_with_gamma_schedule_on_unscaled_B_at_A"
     }
   },
   "splits": {
@@ -80,5 +81,6 @@
     "sealed_access": false,
     "full_rineya_training": false,
     "micro_run_training_allowed": true
-  }
+  },
+  "amendments": ["AMENDMENT_001.md"]
 }
