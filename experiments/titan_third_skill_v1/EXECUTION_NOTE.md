@@ -14,3 +14,10 @@ at least 5.0 GiB free host RAM and 6.0 GiB free disk, plus an unheld GPU lease,
 then calls the registered `run_stage_a.py` without changing its arms, banks,
 coefficients, scoring, canaries, or stop rules. It times out after four hours.
 The wrapper does not read model outputs or Stage B banks.
+
+The first WMI launch was interrupted by Windows with `0xC000013A` during the
+wrapper's initial 10-second wait; it never called Stage A. A second launch used
+relative target paths and exited 2 before calling Stage A. Their logs are
+`STAGE_A_LAUNCH_ATTEMPT1.log` and `STAGE_A_LAUNCH_ATTEMPT2.log` (with its RC JSON).
+The actual Stage A run began at 16:42:08 local in a persistent terminal session,
+with its output captured in `STAGE_A_RUN.log` and final `STAGE_A_RC.json`.
