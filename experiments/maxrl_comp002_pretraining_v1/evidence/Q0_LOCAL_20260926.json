@@ -1,0 +1,73 @@
+{
+  "atomic_banks": {
+    "R": {
+      "ids_sha256": "69e70546eef085c8cebbdbee75d6199cc0d559889fb2a4f35f811dd82e023d3f",
+      "manifest_sha256": "23e0986d5c4c37162a9f237f27b1774aa4128ab1985e3aaff9ef13084dfc8fbb",
+      "parents": 3000,
+      "rows": 3000
+    },
+    "S": {
+      "ids_sha256": "e5ac6571ae048eae02fdd554f1563cf78e57f35a904ae03e02e6f0b53a14e1bc",
+      "manifest_sha256": "9ba50fdfaac5fc31fc63dcdf668591601df8d3959a61d61b1e5f7f2e9ad45d85",
+      "parents": 3000,
+      "rows": 3000
+    }
+  },
+  "base_commit": "a97df24c2c7dd062985942ead8c3375bf20c66b9",
+  "blocked": [
+    "exact selected model/assets",
+    "exact tokenizer/template/token IDs",
+    "selected runtime/loader and bounded host permit",
+    "actual trainable/tied-parameter inventory",
+    "native completion/EOS/logprob/gradient receipts",
+    "actual source competence and source-correct enrollment"
+  ],
+  "boundary": "Q0_SOURCE_DATA_BINDING_ONLY",
+  "calibration": {
+    "R": {
+      "ids_sha256": "6b2b2033622265007dd7a6076f7c6913f14a4040afc0cc459613dd192d525a3a",
+      "rows": 150
+    },
+    "S": {
+      "ids_sha256": "8da52db5a8fd1dd4fe5086ff3adc34f2d7b6db8baf3ee18cf5939bb81d24336a",
+      "rows": 150
+    }
+  },
+  "experiment": "MAXRL-COMP-002",
+  "guard_dev": {
+    "bank_sha256": "b66a22cc420d65c3619af1d72967310aaadfc5906a8a049c13be7b71f227e7d6",
+    "rows": 1200,
+    "source_correct_enrollment": "NOT_RUN"
+  },
+  "interpretation": "No acquisition, retention, composition, release or orthogonality claim.",
+  "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+  "native_backward_calls": 0,
+  "native_forward_calls": 0,
+  "native_generations": 0,
+  "native_model_loads": 0,
+  "native_qualified": false,
+  "native_tokenizer_loads": 0,
+  "native_training_runs": 0,
+  "observed_environment": {
+    "packages": {
+      "pytest": "9.0.2",
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15",
+    "role": "inspection host, NOT selected experiment runtime"
+  },
+  "optimizer_steps": 0,
+  "pair_status": "study-guide candidate; not a claim of prior pair registration",
+  "qualification_candidate": [
+    "R",
+    "S"
+  ],
+  "source_lock_sha256": "73e7d9f35fe779978b64a2d29236156d47dffb05864ea4e0c5f7fe9464beb323",
+  "status": "SOURCE_DATA_PASS_NATIVE_BLOCKED",
+  "training_authorized": false,
+  "verified_data_files": 68
+}

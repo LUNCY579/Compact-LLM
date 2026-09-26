@@ -1,0 +1,92 @@
+{
+  "architecture": {
+    "architectures": [
+      "Qwen3ForCausalLM"
+    ],
+    "model_type": "qwen3",
+    "num_hidden_layers": 28,
+    "tie_word_embeddings": true,
+    "vocab_size": 151936
+  },
+  "assets": {
+    "config.json": {
+      "bytes": 726,
+      "sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd"
+    },
+    "generation_config.json": {
+      "bytes": 239,
+      "sha256": "2325da0f15bb848e018c5ae071b7943332e9f871d6b60e2ed22ca97d4cb993d2"
+    },
+    "merges.txt": {
+      "bytes": 1671853,
+      "sha256": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5"
+    },
+    "model.safetensors": {
+      "bytes": 1192135096,
+      "sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "tokenizer.json": {
+      "bytes": 11422654,
+      "sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4"
+    },
+    "tokenizer_config.json": {
+      "bytes": 9732,
+      "sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
+    },
+    "vocab.json": {
+      "bytes": 2776833,
+      "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  },
+  "candidate_anchor": "Rineya-Supa-1.7.0-devfreeze",
+  "config_bos_eos": {
+    "bos": 151643,
+    "eos": 151645
+  },
+  "config_dtype": "bfloat16",
+  "config_max_position_embeddings": 40960,
+  "experiment": "COMP-RS-001",
+  "generation_token_ids": {
+    "bos_token_id": 151643,
+    "eos_token_id": [
+      151645,
+      151643
+    ],
+    "pad_token_id": 151643
+  },
+  "model_header": {
+    "data_bytes": 1192099840,
+    "dtypes": [
+      "BF16"
+    ],
+    "first_keys": [
+      "model.embed_tokens.weight",
+      "model.layers.0.input_layernorm.weight",
+      "model.layers.0.mlp.down_proj.weight",
+      "model.layers.0.mlp.gate_proj.weight",
+      "model.layers.0.mlp.up_proj.weight"
+    ],
+    "header_bytes": 35248,
+    "tensors": 310
+  },
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze",
+  "native_model_loads": 0,
+  "native_qualified": false,
+  "native_tokenizer_loads": 0,
+  "note": "File/header binding only. Candidate selection, loader, tokenization, scope, mechanics and competence remain open.",
+  "runtime_candidate": {
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15",
+    "python_executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe"
+  },
+  "stage": "Q1_ASSET_CANDIDATE",
+  "tokenizer_template_chars": 4168,
+  "tokenizer_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "training_authorized": false
+}
