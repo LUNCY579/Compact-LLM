@@ -1,0 +1,16 @@
+# TRISKILL-001 Stage A launch handoff
+
+The native `train-001` run ended successfully after 29 updates and 53,933 processed
+tokens. `trained_C_fp32.safetensors` was consolidated from checkpoint-00029;
+`DELTA_C_CONSOLIDATION.json` binds its SHA-256. `BUILD_CANARY.json` records 310/310
+matching tensors for both positive controls and a delta norm of 0.8575171663.
+
+The Codex continuation runs from the registered `9da67940` commit in an isolated
+worktree. The trained tensor was copied byte for byte from the prior checkout;
+its SHA-256 was verified after the copy. The two JSON receipts were copied too.
+
+`run_stage_a_wait.py` is a resource-only wrapper. It waits for two readings with
+at least 5.0 GiB free host RAM and 6.0 GiB free disk, plus an unheld GPU lease,
+then calls the registered `run_stage_a.py` without changing its arms, banks,
+coefficients, scoring, canaries, or stop rules. It times out after four hours.
+The wrapper does not read model outputs or Stage B banks.
