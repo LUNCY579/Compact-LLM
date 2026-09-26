@@ -20,14 +20,20 @@
     "tokenizer_config_sha256": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101"
   },
   "data": {
-    "optimization_splits": ["train", "dev"],
+    "optimization_splits": [
+      "train",
+      "dev"
+    ],
     "confirmation_split": "confirmation",
     "confirmation_access": "denied",
-    "dataset_status": "not selected or loaded before qualification",
+    "dataset_status": "not selected or loaded before qualification; native launch blocked",
     "qualification_input": "fixed synthetic micro-examples only",
     "historical_726_row_dataset": "not assumed or used"
   },
-  "arms": ["R0", "R1"],
+  "arms": [
+    "R0",
+    "R1"
+  ],
   "seed": 20260925,
   "precision": "float64 qualification toy path; production precision unqualified",
   "runtime": {
@@ -57,5 +63,27 @@
     "denied": true,
     "selection_or_tuning_used_confirmation": false
   },
-  "self_binding_note": "payload_head_sha identifies the commit containing the implementation payload; the final branch head is reported by git verification because a commit cannot contain its own SHA without a self-referential hash."
+  "self_binding_note": "payload_head_sha identifies the commit containing the implementation payload; the final branch head is reported by git verification because a commit cannot contain its own SHA without a self-referential hash.",
+  "continuation_audit": {
+    "parent_head_sha": "219e9dc097aa4ac275c514698e5c420421a34095",
+    "gate_status": "BLOCKED_CANONICAL_R0_AND_FULL_RUNTIME",
+    "standalone_objective_suite": "PASS_HISTORICAL_20_TEST_EXECUTION",
+    "canonical_r0_binding": "CANONICAL_R0_BINDING.json",
+    "paper_fidelity_matrix": "PAPER_FIDELITY_MATRIX.json",
+    "native_launch_guard": "launch_gate.py",
+    "training_authorized": false,
+    "exact_blob_bindings": {
+      "PROTOCOL.md": "7715a9857fb4be5745b2e822091204535539619d",
+      "HISTORY_AUDIT.json": "7d8186e17ee43785959869fca6a5f67a042daa43",
+      "QUALIFICATION_RECEIPT.json": "5d12ad6b3df2a92bd53081febab1fd5505d64977",
+      "CANONICAL_R0_BINDING.json": "c5f2fd7e7878fb71aa8bbdf088d9fa773fccc54b",
+      "PAPER_FIDELITY_MATRIX.json": "5be3cf90113c0fdf85c361a6b135d5cc846af228",
+      "reference_math.py": "8f3f96239107963f5a4f61931d092b87641490dc",
+      "launch_gate.py": "e403839f7ab11d26c5cde1bf1fe85d8d9ab3414f",
+      "tests/test_reference_math.py": "075df9d3ac1130746fb0fb6580146414de7f29fe",
+      "tests/test_launch_gate.py": "59f9bfdd5e45cf25aaf52c894253b28d601d5653"
+    }
+  },
+  "training_authorized": false,
+  "paper_runtime_fidelity": "BLOCKED"
 }

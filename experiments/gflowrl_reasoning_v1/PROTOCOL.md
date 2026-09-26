@@ -141,3 +141,66 @@ evaluation.
 The resource probe is objective-only and does not load a model. The exact RTX 4070 8GB host
 gate is not established by this qualification receipt. No full reasoning run, checkpoint
 update, remote model load, or training occurred.
+
+## Amendment 1 — canonical-baseline and full-method fidelity audit (2026-09-25)
+
+A continuation audit narrowed the earlier qualification claim. The historical canonical
+reasoning-posttraining lineage at `c2b09f7413bfbff3f9f582ca8438ce922e0f916b` does **not** contain a qualified
+reward-maximizing RL control. Its native training objective remains
+`assistant_response_plus_eos`, implemented as supervised response cross-entropy, and its
+registry keeps `D-on-policy-RL` in an unrun readiness state. The status record also reports
+zero on-policy RL rollout tokens. Therefore the local `compute_r0_loss` helper in this
+experiment is a **provisional synthetic control only**; it is not evidence that the current
+canonical Rineya reasoning objective has been preserved byte-for-byte.
+
+This changes the interpretation of GFRL-QUAL-001:
+
+- the standalone Eq. 4–8 objective checks remain useful implementation evidence;
+- the earlier 20-test execution remains a historical standalone qualification result;
+- requirement 1, "baseline objective is unchanged with GFlowRL disabled", is not satisfied
+  against a canonical RL baseline because no such qualified baseline exists in the inspected
+  RRP lineage;
+- consequently **GFRL-QUAL-001 is BLOCKED for native R0/R1 training**, not globally PASS.
+
+`CANONICAL_R0_BINDING.json` records the exact historical evidence and
+`launch_gate.py` refuses native launch until an exact canonical RL baseline, authorized
+train/dev data, and the remaining paper-runtime semantics are bound.
+
+### Paper-runtime settings not silently reconstructed
+
+The primary paper's Table 9 reports, in addition to Eq. 4–8, AdamW with learning rate
+1e-6, constant schedule with 10-step linear warmup, weight decay 0.1, gradient clipping
+1.0, GRPO advantage estimation, token-mean loss aggregation, zero KL and entropy
+coefficients, 16 responses per prompt, train temperature/top-p 1.0/1.0, evaluation
+temperature/top-p 1.0/0.7, enabled overlong reward shaping with penalty factor 1.0,
+sequence-level importance sampling with threshold 2.0, geometric ratio scaling with
+upper/lower thresholds 1.01/0.99, and accuracy-based group filtering.
+
+The qualification implementation intentionally does **not** claim all of those runtime
+semantics. It uses G=4 synthetic groups, identity reward, and masks truncated rollouts;
+it does not implement the paper's geometric ratio scaling, RS thresholds, accuracy-based
+group filtering, native token-mean trainer aggregation, or overlong shaping. The paper
+table names those settings but does not supply enough executable detail in the body to
+justify inventing their exact runtime behavior here. `PAPER_FIDELITY_MATRIX.json`
+separates equation fidelity from full-runtime fidelity.
+
+The paper's own fixed-point analysis also deserves an explicit distinction: Eq. 2 writes
+a reward-softmax target, while the reference-relative trajectory-balance formulation used
+by GFlowRL has fixed point proportional to
+`pi_ref(y|x) * exp(beta * r(x,y))`. This experiment follows the reference-relative
+Eq. 3–8 formulation and does not erase that reference-policy factor in its interpretation.
+
+### Resource correction
+
+The bounded probe observed an NVIDIA GeForce RTX 4070 Laptop GPU with 8188 MB total
+memory and 6781 MB free at the probe. That establishes a target-class host observation
+only. No model, tokenizer, rollout worker, reference model, optimizer state, or native
+backward pass was loaded, so rollout throughput and training fit remain unqualified.
+
+### Next admissible milestone
+
+Before any reasoning training, bind a canonical reward-maximizing R0 from the Rineya
+reasoning lineage (or explicitly authorize and qualify a new one), bind the exact train/dev
+dataset and split hashes, qualify native rollout/current/reference log-prob collection, and
+resolve the full-method runtime items above. Confirmation/sealed data remains denied.
+
