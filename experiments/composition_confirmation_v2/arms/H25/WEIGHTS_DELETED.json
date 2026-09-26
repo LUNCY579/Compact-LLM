@@ -3,6 +3,11 @@
   "weight_sha256": "6c402fefbe1846bb2f06d9c02456ac9e11c03033b1ebc215eb554eec59166ffc",
   "weight_bytes": 2384235008,
   "reason": "operator-approved disk reclaim for OSIDE-001 (C: at 3.0 GiB after the pagefile grew to 19.25 GiB); the confirmation is complete and its read budget spent",
-  "rebuild": "experiments/composition_confirmation_v2/build_arms_c2.py (committed), then check weight_sha256 above",
-  "hash_verified_before_delete": true
+  "rebuild": "restore trained_H from the vault first (rebuild_prerequisite), then experiments/composition_confirmation_v2/build_arms_c2.py (committed), then check weight_sha256 above",
+  "hash_verified_before_delete": true,
+  "rebuild_prerequisite": {
+    "source_deleted": "rineya-dataset-retention-records/compose001-20260918/trained_H_fp32.safetensors (deleted 2026-09-26 00:33:40 local by the operator-approved retention audit; tombstone compose001-20260918/WEIGHTS_DELETED.json; root record storage-delete-20260926.json)",
+    "sha256": "a1103060591a91ee7d9ceb2ad7450621be352b087cd19188f2c383a0dbbc7b90",
+    "restore_first": "huggingface_hub.hf_hub_download(repo_id='Luncy1978/rineya-published-cores', filename='research-records/delta-weight-screens-20260918/_trained_tensors/delta_H_boundary.safetensors', revision='33b5f9a46f4c49f22f1a305fdb21373f15401eb8') -> copy to compose001-20260918/trained_H_fp32.safetensors; require sha256 == the value above (build_arms_c2.py also checks it)"
+  }
 }
