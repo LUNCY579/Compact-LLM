@@ -7,10 +7,10 @@ $sp = "C:\Users\clclc\AppData\Local\Temp\claude\C--Users-clclc-BusinessProject-C
 $scratchFwd = $sp -replace '\\', '/'
 $pkg = "C:\Users\clclc\BusinessProject\ChatBubble-small-vocab-depth\research\rineya_small_vocab_depth_v1"
 $pkgFwd = $pkg -replace '\\', '/'
-$expectedRunSh = "__RUN_SH_SHA__"
+$expectedRunSh = "e11cc355a3f1f277ff3f81f3cabbcd163a18266692794c0d2102a264b8d09739"
 $gotRunSh = (Get-FileHash -Algorithm SHA256 "$pkg\launch\abst_run.sh").Hash.ToLower()
 if ($gotRunSh -ne $expectedRunSh) { "REFUSE: launch/abst_run.sh is not the registered script ($gotRunSh)"; exit 3 }
-$expectedRunner = "__RUNNER_SHA__"
+$expectedRunner = "f2ea35d60aa817cc93ae296ea462e4eedd593144f1e0680af1dc56216cb962ab"
 $gotRunner = (Get-FileHash -Algorithm SHA256 "$pkg\launch\smallvd_runner.py").Hash.ToLower()
 if ($gotRunner -ne $expectedRunner) { "REFUSE: launch/smallvd_runner.py is not the registered runner ($gotRunner)"; exit 3 }
 $ts = (Get-Date).ToUniversalTime().ToString("yyyyMMddTHHmmssZ")

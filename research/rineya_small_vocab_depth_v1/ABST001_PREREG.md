@@ -481,6 +481,15 @@ Windows commit headroom is not gated (disclosed, cold review #35).
 | W1–W3 | a post-boundary dip **waits** and completes; a dip past the bound gives an infrastructure record; a dip right after the last primary cell still leaves `ABST_PRIMARY.json` written first |
 | I | classification: host and GPU OOM, TDR and LowMemoryAbort are infrastructure; KeyboardInterrupt, a device-side assert and SystemExit are not |
 
+**Status after the R1 commits (2026-09-26).**
+- **Harness PASSED** at commit 1d2f5552 (`design/ABST_HARNESS_PASS.json`): 31/31 scenarios, 1081 s, records panel dir untouched, its 13 module hashes equal to the committed files. The first run had failed on a start-up bug, fixed and disclosed (§13).
+- **Chain FINALIZED** by `launch/finalize_abst_gate.py`, which checked the pass log against the code. The three sha256s:
+  - `abst_hashes.txt`: `e92c8a72…` (38 gated files, including the pass log);
+  - `abst_run.sh`: `e11cc355…`;
+  - `launch_abst.ps1`: `a0cc9154…`, which also pins `smallvd_runner.py` `f2ea35d6…`.
+- **Gate proven** by `launch/prove_abst_gate.py` (`launch/ABST_GATE_PROOF.json`, all_pass): the committed gate passes; a flipped entry, a wrong list sha and a missing gated file each exit 3.
+- **The cold reviewer re-checked R1** at 71acefb8 (all items PASS). The harness-forced diff is sent for the same check.
+
 **Status at the R1 commit.**
 - **Done on the R1 code:** the null sim (all checks pass) and the unit tests (17 pass).
 - **Not yet run:** the harness and the dry end-to-end run with its three negative controls. They need about 3.5 GB of commit for the CUDA torch import. They are queued, with the peers' agreement, after the soup lane's OSIDE run ends.

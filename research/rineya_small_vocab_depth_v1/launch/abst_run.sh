@@ -14,7 +14,7 @@ HL=C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/hlcc001-20260
 A=C:/Users/clclc/BusinessProject/rineya-dataset-retention-records/abst001-20260925
 RTG1=C:/Users/clclc/BusinessProject/ChatBubble-rtg1/research/rineya_reasoning_corpus_v1/sft
 LOG="$1"
-HASHES_SHA=__HASHES_SHA__
+HASHES_SHA=e92c8a726b407dea83820f4e81751824c8d49842290e0f38d5260b77cee90dc7
 cd "$PKG" || exit 2
 # the hash list verifies ITSELF first (it does not list this script), then every line strictly
 [ "$(sha256sum launch/abst_hashes.txt | cut -d' ' -f1)" = "$HASHES_SHA" ] || { echo "REFUSE: launch/abst_hashes.txt is not the registered list" | tee -a "$LOG"; exit 3; }
