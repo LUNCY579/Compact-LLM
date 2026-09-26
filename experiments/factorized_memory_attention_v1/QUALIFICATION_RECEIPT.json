@@ -135,7 +135,7 @@
   "head_sha": "7dc0a0a6bbd1733c57d838bb78d3d507d8c40a42",
   "receipt_parent_head_sha": "6df8b61ac0c8ddfdaaa633d3469bf143769e21af",
   "post_qualification_hardening": {
-    "code_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+    "code_head_sha": "07926d8354cf6217189a1a1fe9e50496f0902afb",
     "purpose": "Continuation hardening after the original FMA-QUAL-001 qualified head; does not replace or inflate the original exact-host receipt.",
     "changes": [
       "preserve the native Transformers attention backend for g>0 instead of silently switching to a handwritten eager path",
@@ -147,29 +147,46 @@
     ],
     "local_cpu_continuation_check": {
       "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
-      "mirror_scope": "continuation mirror containing the continuation hardening test suite; Transformers unavailable, so native integration module skipped",
-      "passed": 23,
+      "mirror_scope": "continuation experiment mirror; native Transformers dependency unavailable, so native integration module skipped",
+      "passed": 26,
       "skipped": 1,
       "failed": 0,
-      "elapsed_seconds": 1.41,
+      "elapsed_seconds": 1.47,
       "python": "3.13.5",
       "torch": "2.10.0+cpu"
     },
     "compile_check": "PASS",
     "static_text_whitespace_and_conflict_scan": "PASS",
     "github_actions": {
-      "run_id": 36215083474,
+      "run_id": 36215567331,
       "workflow": "FMA qualification",
-      "trigger_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+      "trigger_head_sha": "07926d8354cf6217189a1a1fe9e50496f0902afb",
       "status": "completed",
       "conclusion": "failure",
       "interpretation": "CI_INFRASTRUCTURE_BLOCKED",
-      "evidence": "GitHub reported runner_id=0 and zero job steps; no test or install step executed, so this is not classified as a code/test failure."
+      "runner_id": 0,
+      "executed_steps": 0,
+      "evidence": "GitHub reported runner_id=0 and an empty steps array; no checkout/install/test command executed."
     },
     "calibration_performed": false,
     "training_performed": false,
     "sealed_data_access": false,
-    "architecture_efficacy": "NOT_EVALUATED"
+    "architecture_efficacy": "NOT_EVALUATED",
+    "native_checkpoint_runner": {
+      "path": "experiments/factorized_memory_attention_v1/scripts/qualify_native_checkpoint.py",
+      "status": "PREPARED_NOT_RUN_CHECKPOINT_ABSENT",
+      "checks": [
+        "streamed checkpoint/config/tokenizer integrity snapshot",
+        "7.4 GiB minimum free-host-RAM guard",
+        "g=0 native logit equivalence",
+        "g=1 structural v_proj trap",
+        "hard-memory cached continuation vs full reforward",
+        "factorized-bank serialization round trip",
+        "checkpoint non-mutation re-hash",
+        "CUDA peak allocation/reservation receipt"
+      ],
+      "sealed_or_confirmation_data_used": false
+    }
   },
-  "receipt_binding_semantics": "qualified_head_sha remains the original exact-host mechanical qualification boundary. post_qualification_hardening.code_head_sha binds the later executable hardening state; evidence-only receipt commits necessarily advance the branch beyond that code head."
+  "receipt_binding_semantics": "qualified_head_sha remains the original exact-host mechanical qualification boundary. post_qualification_hardening.code_head_sha binds the later executable/docs hardening state. Receipt/evidence-only commits necessarily advance the branch beyond that code head."
 }
