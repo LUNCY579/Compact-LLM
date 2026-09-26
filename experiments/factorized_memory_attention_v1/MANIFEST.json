@@ -43,10 +43,12 @@
     "scripts/calibrate_teacher.py",
     "scripts/probe_resources.py",
     "scripts/qualify.py",
+    "scripts/qualify_native_checkpoint.py",
     "scripts/smoke_generate.py",
     "tests/test_budget.py",
     "tests/test_fma.py",
     "tests/test_fma_qualification.py",
+    "tests/test_native_qualifier_helpers.py",
     "tests/test_native_qwen3_smoke.py",
     "tests/test_qwen3_integration.py",
     "tests/test_toy_attention.py"
@@ -56,5 +58,7 @@
   "continuation_note": "Post-qualification hardening adds direct frozen-backbone calibration, host-RAM guard, native-backend preservation, and redundant mechanical regression coverage; the original exact-host qualification receipt remains evidence-bound to its recorded qualified head.",
   "external_validation_workflow": ".github/workflows/fma-qualification.yml",
   "latest_continuation_code_head": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
-  "ci_status": "BLOCKED_AT_RUNNER_STARTUP_ZERO_STEPS"
+  "ci_status": "BLOCKED_AT_RUNNER_STARTUP_ZERO_STEPS",
+  "native_checkpoint_runner": "scripts/qualify_native_checkpoint.py",
+  "native_checkpoint_runner_status": "PREPARED_NOT_RUN_CHECKPOINT_ABSENT"
 }
