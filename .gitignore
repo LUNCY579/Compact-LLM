@@ -152,3 +152,8 @@ Rineya_R2_CrossDepth_Soup_Mini_v1/scaffolds/**/merges.txt
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/*.log
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/results.jsonl
 Rineya_R2_CrossDepth_Soup_Mini_v1/outputs/**/evaluation_progress.json
+
+# TRISKILL-001: native tensor files are multi-GB local artifacts; track receipts only.
+/experiments/titan_third_skill_v1/**/*.safetensors
+/experiments/titan_third_skill_v1/**/.tmp*
+/experiments/titan_third_skill_v1/failed_builds/
