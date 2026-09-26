@@ -1,0 +1,282 @@
+{
+  "access_event_count": 19,
+  "audited_git_head": "21a0f0daa343a1f01e22e604d483bf5d0e464d60",
+  "branch": "research/rineya-cross-scale-capability-transfer",
+  "complete_count": 22,
+  "forbidden_access_count": 0,
+  "gated_count": 3,
+  "missing_count": 0,
+  "missing_scripts": [],
+  "objective_satisfied": true,
+  "required_scripts": [
+    "inspect_architectures.py",
+    "project_large_to_small.py",
+    "project_aligned_to_small.py",
+    "project_spectral_to_small.py",
+    "build_cross_scale_delta.py",
+    "merge_interpolate.py",
+    "merge_task_vector.py",
+    "merge_consensus.py",
+    "merge_ties.py",
+    "merge_dare.py",
+    "estimate_fisher.py",
+    "merge_fisher.py",
+    "analyze_delta_similarity.py",
+    "inject_layer.py",
+    "inject_module.py",
+    "run_candidate_eval.py",
+    "compare_candidates.py",
+    "promote_candidates.py",
+    "build_evidence_manifest.py"
+  ],
+  "requirements": [
+    {
+      "evidence": [
+        "cross_scale_evidence/01_environment/git_base.txt"
+      ],
+      "id": "R01",
+      "note": "",
+      "statement": "Clean remote-backed dedicated research branch from recorded main commit",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/00_protocol/preregistration.md",
+        "cross_scale_evidence/00_protocol/hypothesis_matrix.md",
+        "cross_scale_evidence/00_protocol/claim_rules.md"
+      ],
+      "id": "R02",
+      "note": "",
+      "statement": "Protocol, hypotheses, claim rules, leakage firewall, and coefficient grids frozen before experiments",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/06_dev_results/**/access_ledger.jsonl",
+        "src/rineya_cross_scale/leakage.py"
+      ],
+      "id": "R03",
+      "note": "access_events=19, forbidden=0, tracked_private=0",
+      "statement": "Invisible-Limit TEST2 and sealed data excluded from development",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/02_architecture/compatibility_report.md"
+      ],
+      "id": "R04",
+      "note": "",
+      "statement": "Architecture/tokenizer/tensor audit for Supa, Qwen0.6, 4B, and 8B",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/projection.py",
+        "cross_scale_evidence/03_projection/stage_a_summary.md"
+      ],
+      "id": "R05",
+      "note": "",
+      "statement": "Deterministic depth/width projection and exact semantic mappings",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/aligned_projection.py",
+        "src/rineya_cross_scale/spectral_projection.py"
+      ],
+      "id": "R06",
+      "note": "",
+      "statement": "Additional learned/SVD target-basis projection strategies",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/06_dev_results/mergedev/baselines",
+        "cross_scale_evidence/06_dev_results/mergedev/projected_controls"
+      ],
+      "id": "R07",
+      "note": "",
+      "statement": "Official Qwen0.6, Supa, and projected-donor controls reproduced",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/05_candidates/manifests",
+        "cross_scale_evidence/06_dev_results/mergedev_fast/candidates"
+      ],
+      "id": "R08",
+      "note": "",
+      "statement": "Absolute interpolation, task vectors, and multi-scale consensus implemented and screened",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/04_deltas/spectral_s010_delta_similarity.json"
+      ],
+      "id": "R09",
+      "note": "",
+      "statement": "Delta diagnostics and 4B/8B scale-trajectory agreement at tensor/layer/module/head levels",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/advanced.py",
+        "src/rineya_cross_scale/fisher.py",
+        "src/rineya_cross_scale/interventions.py",
+        "cross_scale_evidence/08_advanced_merging/OUTCOME_GATE.md"
+      ],
+      "id": "R10",
+      "note": "",
+      "statement": "TIES, DARE, DARE-TIES, Fisher, layer, and module tooling implemented and tested",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/08_advanced_merging/not_run_manifest.json"
+      ],
+      "id": "R11",
+      "note": "DEV-FULL provided no positive signal; outcome runs intentionally not authorized.",
+      "statement": "Advanced/localization real-checkpoint outcomes obey staged GO gate",
+      "status": "gated"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/evaluation/runner.py",
+        "cross_scale_evidence/00_protocol/evaluator_freeze_v1.json"
+      ],
+      "id": "R12",
+      "note": "",
+      "statement": "CPU-first evaluator, frozen inference, preservation metrics, and access ledger",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "data/evaluation/bank_manifest.json"
+      ],
+      "id": "R13",
+      "note": "",
+      "statement": "MERGEDEV, DEV-FULL, and fresh sealed bank built with zero prompt overlap",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/comparison.py",
+        "cross_scale_evidence/06_dev_results/dev_full/candidates/CONS_MEAN_A1500_vs_supa.json"
+      ],
+      "id": "R14",
+      "note": "",
+      "statement": "Scenario-cluster paired statistics and error-complementarity sets",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/05_candidates/registry.jsonl"
+      ],
+      "id": "R15",
+      "note": "events=38",
+      "statement": "Immutable experiment registry preserves failures and statuses",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/validation.py",
+        "cross_scale_evidence/05_candidates/validation"
+      ],
+      "id": "R16",
+      "note": "",
+      "statement": "Functional/state-dict/numerical validation for generated checkpoints",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/operations.py",
+        "cross_scale_evidence/05_candidates/tensor_stats/CONS_MEAN_A1500.json"
+      ],
+      "id": "R17",
+      "note": "",
+      "statement": "FP32 construction and storage-precision retention diagnostics",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "src/rineya_cross_scale/promotion.py",
+        "cross_scale_evidence/09_finalists/promotion_dev_full.json"
+      ],
+      "id": "R18",
+      "note": "",
+      "statement": "Deterministic promotion applies preservation-first objective",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/09_finalists/NO_GO.json"
+      ],
+      "id": "R19",
+      "note": "No candidate passed DEV-FULL; sealed access correctly withheld.",
+      "statement": "Sealed confirmation only after finalist freeze",
+      "status": "gated"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/11_report/final_report.md"
+      ],
+      "id": "R20",
+      "note": "No training-free finalist passed; recovery training was not authorized.",
+      "statement": "Optional recovery LoRA isolated by comparison",
+      "status": "gated"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/01_environment/compute_accounting.json"
+      ],
+      "id": "R21",
+      "note": "",
+      "statement": "Compute accounting and 0.6B inference footprint",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "scripts/promote_candidates.py",
+        "scripts/build_evidence_manifest.py"
+      ],
+      "id": "R22",
+      "note": "",
+      "statement": "Automated promotion and evidence-manifest tooling",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "tests/"
+      ],
+      "id": "R23",
+      "note": "............................................                             [100%]\n44 passed in 11.52s",
+      "statement": "Unit/integration tests cover projection, merging, TIES/DARE/Fisher, serialization, registry, leakage, and statistics",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "cross_scale_evidence/11_report/final_report.md",
+        "cross_scale_evidence/11_report/limitations.md"
+      ],
+      "id": "R24",
+      "note": "",
+      "statement": "Final scientific report answers all twenty questions and states limitations/claim boundary",
+      "status": "complete"
+    },
+    {
+      "evidence": [
+        "git log origin/main..HEAD"
+      ],
+      "id": "R25",
+      "note": "21a0f0d feat(cross-scale): complete advanced framework\nd2f74d0 feat(cross-scale): test spectral consensus\nb901b99 feat(cross-scale): close P1 projection stage\n6f7d2ad feat(cross-scale): add architecture gate\n0e9b2ee docs(cross-scale): freeze research protocol",
+      "statement": "Meaningful milestones committed and pushed without rewriting published branches",
+      "status": "complete"
+    }
+  ],
+  "schema_version": "1.0",
+  "test_command": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe -m pytest -q",
+  "test_output": "............................................                             [100%]\n44 passed in 11.52s",
+  "test_returncode": 0,
+  "tracked_private_count": 0,
+  "upstream": "origin/research/rineya-cross-scale-capability-transfer"
+}

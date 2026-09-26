@@ -1,0 +1,22 @@
+    dataset: kept 2400, dropped 0, median 2243 tokens
+    dataset: kept 160, dropped 0, median 2373 tokens
+
+=== ARM C ===
+  trainable 122,880 params (0.0206%) on layers (17, 18, 19)
+  invariant checks: PASS
+    step 120/300: train 0.012311 |g| 2.888 |adapter| 123.941
+    step 150: train 0.110822 val 0.0890 |g| 30.833
+    step 180/300: train 0.00763 |g| 2.291 |adapter| 123.944
+    step 210/300: train 0.172602 |g| 20.626 |adapter| 123.945
+    step 225: train 0.137591 val 0.0410 |g| 19.185
+    step 240/300: train 0.018599 |g| 7.506 |adapter| 123.945
+    step 270/300: train 0.004065 |g| 1.187 |adapter| 123.946
+    step 300: train 0.001045 val 0.0457 |g| 0.480
+  target eval (full context)...
+    64/256  29s
+    128/256  59s
+    192/256  88s
+    256/256  118s
+  preservation eval...
+  target 128/256 = 50.0%   preservation 26.5%
+phase1_a1: COMPLETE; completed=['A', 'B', 'C']; missing=[]; winner=FROZEN; phase_2_licensed=False

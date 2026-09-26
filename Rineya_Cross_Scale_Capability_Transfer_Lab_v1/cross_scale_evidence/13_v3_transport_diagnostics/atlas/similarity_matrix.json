@@ -1,0 +1,84 @@
+{
+  "depth_pairs_36_to_28": [
+    {
+      "donor_layer": 0,
+      "fraction": 0.0,
+      "target_layer": 0
+    },
+    {
+      "donor_layer": 9,
+      "fraction": 0.25,
+      "target_layer": 7
+    },
+    {
+      "donor_layer": 18,
+      "fraction": 0.5,
+      "target_layer": 14
+    },
+    {
+      "donor_layer": 26,
+      "fraction": 0.75,
+      "target_layer": 20
+    },
+    {
+      "donor_layer": 35,
+      "fraction": 1.0,
+      "target_layer": 27
+    }
+  ],
+  "e4": {
+    "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/cross_scale_evidence/13_v3_transport_diagnosis/e4_functional_atlas/functional_atlas.json",
+    "sha256": "0f8c0d16c27221a7bc73ff5e0f04e3ce1a9ff207512fc82d33f64c7ba01d69aa"
+  },
+  "e5": {
+    "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/cross_scale_evidence/13_v3_transport_diagnosis/e5_cross_scale_atlas/cross_scale_atlas_last.json",
+    "sha256": "33e58408d6d00632e443a8b454166b9be9f791c40220ad04156067a50f4a79a9"
+  },
+  "heatmap_rows": [
+    {
+      "comparison": "E5_decision",
+      "control": 0.1,
+      "lift": 0.9340090021667994,
+      "metric": "best_donor_target_matched_lift",
+      "value": 0.9340090021667994
+    },
+    {
+      "comparison": "qwen4b__vs__qwen06",
+      "control": 0.112356,
+      "lift": 0.785661,
+      "metric": "mean_diag_cka",
+      "value": 0.898017
+    },
+    {
+      "comparison": "qwen4b__vs__qwen8b",
+      "control": 0.130393,
+      "lift": 0.802721,
+      "metric": "mean_diag_cka",
+      "value": 0.933114
+    },
+    {
+      "comparison": "qwen4b__vs__supa",
+      "control": 0.11947,
+      "lift": 0.764289,
+      "metric": "mean_diag_cka",
+      "value": 0.883759
+    },
+    {
+      "comparison": "qwen8b__vs__qwen06",
+      "control": 0.110209,
+      "lift": 0.755556,
+      "metric": "mean_diag_cka",
+      "value": 0.865765
+    },
+    {
+      "comparison": "qwen8b__vs__supa",
+      "control": 0.116279,
+      "lift": 0.757008,
+      "metric": "mean_diag_cka",
+      "value": 0.873287
+    }
+  ],
+  "hypothesis": "Locate where 4B↔8B agreement lives vs what ports to 0.6B/Supa",
+  "interpretation_pointer": "13_v3_transport_diagnosis/report/v3_report.md and 13_v3_transport_diagnosis/report/v3_1_donor_side_report.md",
+  "schema_version": "3.0-diagnostics-index"
+}

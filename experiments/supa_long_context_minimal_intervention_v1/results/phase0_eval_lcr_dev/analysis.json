@@ -1,0 +1,623 @@
+{
+  "suite": "lcr_dev",
+  "question_1_abstention_shift": {
+    "note": "The 64 unanswerable rows are scored correct precisely when the model says UNKNOWN. If refinement raises the abstention rate, it buys those rows at the cost of every answerable row, which is a response-bias shift rather than a reasoning gain.",
+    "frames": {
+      "all": {
+        "n_examples": 200,
+        "headline": {
+          "A_full": {
+            "n": 200,
+            "correct": 59,
+            "accuracy": 0.295,
+            "accuracy_points": 29.5
+          },
+          "B_query": {
+            "n": 200,
+            "correct": 74,
+            "accuracy": 0.37,
+            "accuracy_points": 37.0
+          },
+          "C_random": {
+            "n": 200,
+            "correct": 59,
+            "accuracy": 0.295,
+            "accuracy_points": 29.5
+          }
+        },
+        "abstention_rate": {
+          "A_full": 0.14,
+          "B_query": 0.375,
+          "C_random": 0.765
+        },
+        "contrasts": {
+          "B_minus_A": {
+            "n": 200,
+            "delta": 0.075,
+            "delta_points": 7.5,
+            "ci_low_points": -0.5,
+            "ci_high_points": 15.0,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 39,
+              "a_only_correct": 24,
+              "discordant": 63,
+              "p_value": 0.076926
+            }
+          },
+          "B_minus_C": {
+            "n": 200,
+            "delta": 0.075,
+            "delta_points": 7.5,
+            "ci_low_points": 0.0,
+            "ci_high_points": 15.0,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 38,
+              "a_only_correct": 23,
+              "discordant": 61,
+              "p_value": 0.072177
+            }
+          }
+        }
+      },
+      "answerable_only": {
+        "n_examples": 150,
+        "headline": {
+          "A_full": {
+            "n": 150,
+            "correct": 49,
+            "accuracy": 0.326667,
+            "accuracy_points": 32.67
+          },
+          "B_query": {
+            "n": 150,
+            "correct": 45,
+            "accuracy": 0.3,
+            "accuracy_points": 30.0
+          },
+          "C_random": {
+            "n": 150,
+            "correct": 15,
+            "accuracy": 0.1,
+            "accuracy_points": 10.0
+          },
+          "D_oracle": {
+            "n": 150,
+            "correct": 57,
+            "accuracy": 0.38,
+            "accuracy_points": 38.0
+          }
+        },
+        "abstention_rate": {
+          "A_full": 0.12,
+          "B_query": 0.3067,
+          "C_random": 0.7267,
+          "D_oracle": 0.2467
+        },
+        "contrasts": {
+          "B_minus_A": {
+            "n": 150,
+            "delta": -0.026667,
+            "delta_points": -2.667,
+            "ci_low_points": -10.667,
+            "ci_high_points": 5.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 18,
+              "a_only_correct": 22,
+              "discordant": 40,
+              "p_value": 0.635828
+            }
+          },
+          "B_minus_C": {
+            "n": 150,
+            "delta": 0.2,
+            "delta_points": 20.0,
+            "ci_low_points": 12.0,
+            "ci_high_points": 28.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 37,
+              "a_only_correct": 7,
+              "discordant": 44,
+              "p_value": 5e-06
+            }
+          },
+          "D_minus_A": {
+            "n": 150,
+            "delta": 0.053333,
+            "delta_points": 5.333,
+            "ci_low_points": -2.667,
+            "ci_high_points": 13.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 22,
+              "a_only_correct": 14,
+              "discordant": 36,
+              "p_value": 0.242985
+            }
+          },
+          "D_minus_B": {
+            "n": 150,
+            "delta": 0.08,
+            "delta_points": 8.0,
+            "ci_low_points": 0.0,
+            "ci_high_points": 16.0,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 25,
+              "a_only_correct": 13,
+              "discordant": 38,
+              "p_value": 0.072951
+            }
+          }
+        }
+      },
+      "unanswerable_only": {
+        "n_examples": 50,
+        "headline": {
+          "A_full": {
+            "n": 50,
+            "correct": 10,
+            "accuracy": 0.2,
+            "accuracy_points": 20.0
+          },
+          "B_query": {
+            "n": 50,
+            "correct": 29,
+            "accuracy": 0.58,
+            "accuracy_points": 58.0
+          },
+          "C_random": {
+            "n": 50,
+            "correct": 44,
+            "accuracy": 0.88,
+            "accuracy_points": 88.0
+          }
+        },
+        "abstention_rate": {
+          "A_full": 0.2,
+          "B_query": 0.58,
+          "C_random": 0.88
+        },
+        "contrasts": {
+          "B_minus_A": {
+            "n": 50,
+            "delta": 0.38,
+            "delta_points": 38.0,
+            "ci_low_points": 22.0,
+            "ci_high_points": 54.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 21,
+              "a_only_correct": 2,
+              "discordant": 23,
+              "p_value": 6.6e-05
+            }
+          },
+          "B_minus_C": {
+            "n": 50,
+            "delta": -0.3,
+            "delta_points": -30.0,
+            "ci_low_points": -44.0,
+            "ci_high_points": -16.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 1,
+              "a_only_correct": 16,
+              "discordant": 17,
+              "p_value": 0.000275
+            }
+          }
+        }
+      },
+      "oracle_eligible": {
+        "n_examples": 150,
+        "headline": {
+          "A_full": {
+            "n": 150,
+            "correct": 49,
+            "accuracy": 0.326667,
+            "accuracy_points": 32.67
+          },
+          "B_query": {
+            "n": 150,
+            "correct": 45,
+            "accuracy": 0.3,
+            "accuracy_points": 30.0
+          },
+          "C_random": {
+            "n": 150,
+            "correct": 15,
+            "accuracy": 0.1,
+            "accuracy_points": 10.0
+          },
+          "D_oracle": {
+            "n": 150,
+            "correct": 57,
+            "accuracy": 0.38,
+            "accuracy_points": 38.0
+          }
+        },
+        "abstention_rate": {
+          "A_full": 0.12,
+          "B_query": 0.3067,
+          "C_random": 0.7267,
+          "D_oracle": 0.2467
+        },
+        "contrasts": {
+          "B_minus_A": {
+            "n": 150,
+            "delta": -0.026667,
+            "delta_points": -2.667,
+            "ci_low_points": -10.667,
+            "ci_high_points": 5.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 18,
+              "a_only_correct": 22,
+              "discordant": 40,
+              "p_value": 0.635828
+            }
+          },
+          "B_minus_C": {
+            "n": 150,
+            "delta": 0.2,
+            "delta_points": 20.0,
+            "ci_low_points": 12.0,
+            "ci_high_points": 28.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 37,
+              "a_only_correct": 7,
+              "discordant": 44,
+              "p_value": 5e-06
+            }
+          },
+          "D_minus_A": {
+            "n": 150,
+            "delta": 0.053333,
+            "delta_points": 5.333,
+            "ci_low_points": -2.667,
+            "ci_high_points": 13.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 22,
+              "a_only_correct": 14,
+              "discordant": 36,
+              "p_value": 0.242985
+            }
+          },
+          "D_minus_B": {
+            "n": 150,
+            "delta": 0.08,
+            "delta_points": 8.0,
+            "ci_low_points": 0.0,
+            "ci_high_points": 16.0,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 25,
+              "a_only_correct": 13,
+              "discordant": 38,
+              "p_value": 0.072951
+            }
+          }
+        }
+      },
+      "oracle_eligible_answerable": {
+        "n_examples": 150,
+        "headline": {
+          "A_full": {
+            "n": 150,
+            "correct": 49,
+            "accuracy": 0.326667,
+            "accuracy_points": 32.67
+          },
+          "B_query": {
+            "n": 150,
+            "correct": 45,
+            "accuracy": 0.3,
+            "accuracy_points": 30.0
+          },
+          "C_random": {
+            "n": 150,
+            "correct": 15,
+            "accuracy": 0.1,
+            "accuracy_points": 10.0
+          },
+          "D_oracle": {
+            "n": 150,
+            "correct": 57,
+            "accuracy": 0.38,
+            "accuracy_points": 38.0
+          }
+        },
+        "abstention_rate": {
+          "A_full": 0.12,
+          "B_query": 0.3067,
+          "C_random": 0.7267,
+          "D_oracle": 0.2467
+        },
+        "contrasts": {
+          "B_minus_A": {
+            "n": 150,
+            "delta": -0.026667,
+            "delta_points": -2.667,
+            "ci_low_points": -10.667,
+            "ci_high_points": 5.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 18,
+              "a_only_correct": 22,
+              "discordant": 40,
+              "p_value": 0.635828
+            }
+          },
+          "B_minus_C": {
+            "n": 150,
+            "delta": 0.2,
+            "delta_points": 20.0,
+            "ci_low_points": 12.0,
+            "ci_high_points": 28.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 37,
+              "a_only_correct": 7,
+              "discordant": 44,
+              "p_value": 5e-06
+            }
+          },
+          "D_minus_A": {
+            "n": 150,
+            "delta": 0.053333,
+            "delta_points": 5.333,
+            "ci_low_points": -2.667,
+            "ci_high_points": 13.333,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 22,
+              "a_only_correct": 14,
+              "discordant": 36,
+              "p_value": 0.242985
+            }
+          },
+          "D_minus_B": {
+            "n": 150,
+            "delta": 0.08,
+            "delta_points": 8.0,
+            "ci_low_points": 0.0,
+            "ci_high_points": 16.0,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905,
+            "mcnemar": {
+              "b_only_correct": 25,
+              "a_only_correct": 13,
+              "discordant": 38,
+              "p_value": 0.072951
+            }
+          }
+        }
+      }
+    }
+  },
+  "question_2_task_families": {
+    "address_route_tracking": {
+      "n": 16,
+      "accuracy_points": {
+        "A_full": 25.0,
+        "B_query": 6.25,
+        "C_random": 25.0
+      },
+      "B_minus_A": {
+        "n": 16,
+        "delta": -0.1875,
+        "delta_points": -18.75,
+        "ci_low_points": -43.75,
+        "ci_high_points": 6.25,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "alias_resolution": {
+      "n": 4,
+      "accuracy_points": {
+        "A_full": 75.0,
+        "B_query": 25.0,
+        "C_random": 25.0
+      },
+      "B_minus_A": {
+        "n": 4,
+        "delta": -0.5,
+        "delta_points": -50.0,
+        "ci_low_points": -100.0,
+        "ci_high_points": 0.0,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "causal_disambiguation": {
+      "n": 24,
+      "accuracy_points": {
+        "A_full": 12.5,
+        "B_query": 20.83,
+        "C_random": 25.0
+      },
+      "B_minus_A": {
+        "n": 24,
+        "delta": 0.083333,
+        "delta_points": 8.333,
+        "ci_low_points": 0.0,
+        "ci_high_points": 20.833,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "count_exclusions_duplicates": {
+      "n": 8,
+      "accuracy_points": {
+        "A_full": 0.0,
+        "B_query": 25.0,
+        "C_random": 25.0
+      },
+      "B_minus_A": {
+        "n": 8,
+        "delta": 0.25,
+        "delta_points": 25.0,
+        "ci_low_points": 0.0,
+        "ci_high_points": 62.5,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "definition_binding": {
+      "n": 24,
+      "accuracy_points": {
+        "A_full": 4.17,
+        "B_query": 20.83,
+        "C_random": 20.83
+      },
+      "B_minus_A": {
+        "n": 24,
+        "delta": 0.166667,
+        "delta_points": 16.667,
+        "ci_low_points": 0.0,
+        "ci_high_points": 33.333,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "latest_verified_record_vs_rumor": {
+      "n": 40,
+      "accuracy_points": {
+        "A_full": 37.5,
+        "B_query": 65.0,
+        "C_random": 35.0
+      },
+      "B_minus_A": {
+        "n": 40,
+        "delta": 0.275,
+        "delta_points": 27.5,
+        "ci_low_points": 10.0,
+        "ci_high_points": 45.0,
+        "ci_excludes_zero": true,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "multi_condition_identity": {
+      "n": 20,
+      "accuracy_points": {
+        "A_full": 40.0,
+        "B_query": 20.0,
+        "C_random": 30.0
+      },
+      "B_minus_A": {
+        "n": 20,
+        "delta": -0.2,
+        "delta_points": -20.0,
+        "ci_low_points": -45.0,
+        "ci_high_points": 5.0,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "object_state_tracking": {
+      "n": 32,
+      "accuracy_points": {
+        "A_full": 46.88,
+        "B_query": 68.75,
+        "C_random": 34.38
+      },
+      "B_minus_A": {
+        "n": 32,
+        "delta": 0.21875,
+        "delta_points": 21.875,
+        "ci_low_points": 3.125,
+        "ci_high_points": 40.625,
+        "ci_excludes_zero": true,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "rule_exception": {
+      "n": 20,
+      "accuracy_points": {
+        "A_full": 35.0,
+        "B_query": 10.0,
+        "C_random": 30.0
+      },
+      "B_minus_A": {
+        "n": 20,
+        "delta": -0.25,
+        "delta_points": -25.0,
+        "ci_low_points": -50.0,
+        "ci_high_points": 0.0,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    },
+    "temporal_correction": {
+      "n": 12,
+      "accuracy_points": {
+        "A_full": 25.0,
+        "B_query": 50.0,
+        "C_random": 33.33
+      },
+      "B_minus_A": {
+        "n": 12,
+        "delta": 0.25,
+        "delta_points": 25.0,
+        "ci_low_points": 0.0,
+        "ci_high_points": 50.0,
+        "ci_excludes_zero": false,
+        "resamples": 10000,
+        "seed": 20260905
+      }
+    }
+  },
+  "retention_ratio_mean": {
+    "A_full": 1.0,
+    "B_query": 0.2292,
+    "C_random": 0.2272,
+    "D_oracle": 0.2293
+  }
+}

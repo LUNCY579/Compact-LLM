@@ -1,0 +1,19 @@
+{
+  "authorised": false,
+  "candidates_created": 0,
+  "escalation": {
+    "DEV_FULL": false,
+    "sealed": false,
+    "sealed_status": "CLOSED"
+  },
+  "gate_inputs": {
+    "consensus": "FAIL",
+    "localization": "FAIL",
+    "translator_suggests_injection": false,
+    "transport_sanity": "FAIL"
+  },
+  "hypothesis": "Single-region injection can beat both controls",
+  "reason": "Upstream diagnostics failed the plan's injection gate (sanity/localization/consensus/translator). Recorded as NO_GO.",
+  "schema_version": "3.0-diagnostics-index",
+  "verdict": "FAIL"
+}

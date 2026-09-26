@@ -1,0 +1,125 @@
+    dataset: kept 2400, dropped 0, median 2243 tokens
+    dataset: kept 160, dropped 0, median 2373 tokens
+
+=== ARM B ===
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights:  72%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûÅ  | 223/310 [00:00<00:00, 2229.64it/s]
+Loading weights: 100%|ΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûêΓûê| 310/310 [00:00<00:00, 2295.10it/s]
+W0905 18:40:45.465000 56600 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+  trainable 122,880 params (0.0206%) on layers (17, 18, 19)
+  invariant checks: PASS
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\scripts\phase1_run.py", line 597, in main
+    info, _, _ = run_arm(
+                 ^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\scripts\phase1_run.py", line 200, in run_arm
+    info["training"] = train(
+                       ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\src\slcmi\training.py", line 264, in train
+    out = model(**batch)
+          ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\peft\peft_model.py", line 1993, in forward
+    return self.base_model(
+           ^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\peft\tuners\tuners_utils.py", line 330, in forward
+    return self.model.forward(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\.cache\huggingface\modules\transformers_modules\Rineya_hyphen_Supa_hyphen_A1_dot_1_hyphen_1_dot_1_dot_0_hyphen_devfreeze\8f4297a203b4732e\modeling_supa_a11.py", line 42, in forward
+    outputs = super().forward(*args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\utils\generic.py", line 911, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 492, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\utils\generic.py", line 1040, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\utils\output_capturing.py", line 262, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 424, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\modeling_layers.py", line 109, in __call__
+    return self._gradient_checkpointing_func(partial(super().__call__, **kwargs), *args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\_compile.py", line 54, in inner
+    return disable_fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\_dynamo\eval_frame.py", line 1298, in _fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\utils\checkpoint.py", line 518, in checkpoint
+    ret = function(*args, **kwargs)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 331, in forward
+    hidden_states = self.post_attention_layernorm(hidden_states)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1778, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\nn\modules\module.py", line 1789, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 62, in forward
+    variance = hidden_states.pow(2).mean(-1, keepdim=True)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\scripts\phase1_run.py", line 619, in <module>
+    main()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\scripts\phase1_run.py", line 610, in main
+    summary = combine_stage(out, config, core, targets, preservation)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\scripts\phase1_run.py", line 440, in combine_stage
+    with Run(out.name, config, results_dir=out.parent, core_path=core["path"]) as run:
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\src\slcmi\provenance.py", line 239, in __enter__
+    "gpu": gpu_summary(),
+           ^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-cross-scale-mini-experiment\experiments\supa_long_context_minimal_intervention_v1\src\slcmi\provenance.py", line 177, in gpu_summary
+    free, total = torch.cuda.mem_get_info()
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\Chat-Bubble\.venv\Lib\site-packages\torch\cuda\memory.py", line 847, in mem_get_info
+    return torch.cuda.cudart().cudaMemGetInfo(device)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: an illegal memory access was encountered
+Search for `cudaErrorIllegalAddress' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+

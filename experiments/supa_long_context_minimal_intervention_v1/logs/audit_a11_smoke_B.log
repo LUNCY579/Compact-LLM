@@ -1,0 +1,20 @@
+    dataset: kept 32, dropped 0, median 2084 tokens
+    dataset: kept 16, dropped 0, median 2239 tokens
+
+=== ARM B ===
+
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]
+Loading weights: 100%|██████████| 310/310 [00:00<00:00, 6177.32it/s]
+W0905 17:06:24.007000 115520 Lib\site-packages\torch\utils\flop_counter.py:29] triton not found; flop counting will not work for triton kernels
+  trainable 122,880 params (0.0206%) on layers (17, 18, 19)
+  invariant checks: PASS
+    step 1: train 2.562905 val 0.7143 |g| 2.757
+    step 2: train 1.042694 val 0.7079 |g| 6.614
+    step 3: train 1.35971 val 0.7016 |g| 6.651
+    step 4: train 1.400203 val 0.6974 |g| 1.846
+    step 5: train 2.454024 val 0.6946 |g| 3.504
+    step 6: train 0.831217 val 0.6935 |g| 7.308
+  target eval (full context)...
+  preservation eval...
+  target 22/32 = 68.8%   preservation 37.5%
+phase1_smoke: PARTIAL; completed=['A', 'B']; missing=['C']; winner=None; phase_2_licensed=False

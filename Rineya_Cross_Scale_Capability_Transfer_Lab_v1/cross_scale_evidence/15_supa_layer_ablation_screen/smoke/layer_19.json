@@ -1,0 +1,180 @@
+{
+  "catastrophe_score": 0.5725166838280031,
+  "condition": "skip_layer_19",
+  "critical": false,
+  "invalid_rate": 0.0,
+  "layer": 19,
+  "mean_logit_cosine_vs_intact": 0.7137416580859984,
+  "mean_nll": 0.3711876509405556,
+  "n_prompts": 8,
+  "predictions": [
+    {
+      "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+      "family": "common_sense",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9709502903911766,
+      "mean_nll": 1.0361884832382202,
+      "response": "Ice cubes and ice cubes in warm air.",
+      "short_period_repetition": false,
+      "token_ids": [
+        51330,
+        54104,
+        323,
+        9853,
+        54104,
+        304,
+        8205,
+        3720,
+        13,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_mathematics_429ca310e753b947",
+      "family": "mathematics",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9001386286607805,
+      "mean_nll": 0.898635745048523,
+      "response": "807",
+      "short_period_repetition": false,
+      "token_ids": [
+        23,
+        15,
+        22,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_instruction_following_1d15f77eca5d17f0",
+      "family": "instruction_following",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.21268373705286606,
+      "mean_nll": 0.014724373817443848,
+      "response": "{\"label\":\"tag-813637\",\"ok\":true}",
+      "short_period_repetition": false,
+      "token_ids": [
+        4913,
+        1502,
+        3252,
+        4578,
+        12,
+        23,
+        16,
+        18,
+        21,
+        18,
+        22,
+        2198,
+        562,
+        788,
+        1866,
+        92,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_science_9cf33d8dbb5fd050",
+      "family": "science",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9665045957043129,
+      "mean_nll": 0.13575559854507446,
+      "response": "The SI unit of electric current is ampere (A).",
+      "short_period_repetition": false,
+      "token_ids": [
+        785,
+        30548,
+        4982,
+        315,
+        9072,
+        1482,
+        374,
+        22758,
+        485,
+        320,
+        32,
+        568,
+        151645
+      ],
+      "top1_vs_intact": 0,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_multi_hop_binding_caa1eea53ea0585a",
+      "family": "multi_hop_binding",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.17787010018922042,
+      "mean_nll": 0.06250729411840439,
+      "response": "Faye",
+      "short_period_repetition": false,
+      "token_ids": [
+        37,
+        59955,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_short_response_15273c49b438f1a9",
+      "family": "short_response",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.7166772434808313,
+      "mean_nll": 0.02261205017566681,
+      "response": "F",
+      "short_period_repetition": false,
+      "token_ids": [
+        37,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_normal_conversation_029382dc0a778c44",
+      "family": "normal_conversation",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.9492945949006828,
+      "mean_nll": 0.7988865971565247,
+      "response": "Hi!",
+      "short_period_repetition": false,
+      "token_ids": [
+        13048,
+        0,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    },
+    {
+      "case_id": "calibration_unanswerable_abstention_3006ee0f901c7173",
+      "family": "unanswerable_abstention",
+      "invalid_generation": false,
+      "invalid_reason": null,
+      "logit_cosine_vs_intact": 0.8158140743081167,
+      "mean_nll": 0.00019106542458757758,
+      "response": "UNKNOWN",
+      "short_period_repetition": false,
+      "token_ids": [
+        51378,
+        151645
+      ],
+      "top1_vs_intact": 1,
+      "weird_char_rate": 0.0
+    }
+  ],
+  "wall_seconds": 15.922000000000025,
+  "weird_hits_ge_0_25": 0
+}

@@ -1,0 +1,156 @@
+{
+  "schema_version": 1,
+  "observed_at_utc": "2026-09-06T07:10:38.5564033Z",
+  "scope": "Immutable initializer receipts and source only; no live checkpoint, tensor, model, or test execution",
+  "observation": "B initializer actual-value digests differ across native cores, while parameter names/order/shapes and final float32 dtype metadata match exactly. A1.1 smoke and bounded B receipts match exactly.",
+  "same_parameter_metadata_across_smokes": true,
+  "same_full_receipt_across_smokes": false,
+  "same_full_receipt_a11_smoke_bounded": true,
+  "evidence": [
+    {
+      "stage": "phase1_smoke",
+      "arm": "B",
+      "core": "a11",
+      "native_dtype": "float16",
+      "seed": 17,
+      "rank": 4,
+      "alpha": 8,
+      "initializer_sha256": "0cbeeb7c13efcd90c6468b6f9cbf91f177db59006f5a91e1f5541b0c46a5fab3",
+      "algorithm": "sha256-native-trainable-parameters-v1",
+      "trainable_tensor_count": 24,
+      "final_adapter_dtypes": [
+        "torch.float32"
+      ],
+      "fingerprint_matches": true,
+      "identity_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke\\arm_B\\identity.json",
+      "identity_file_sha256": "b694390b93f15f19267c5bfa83762c395c3c323fb3b5f36ba583771d3f616277",
+      "segment_receipts": [
+        {
+          "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke\\arm_B\\segments\\000001-e87ddbe0f101\\adapter_initialization.json",
+          "file_sha256": "2454ecd29e40dce238bcdcf067eba0ab4c1a5f7b571d5582665393de3cac1fbb",
+          "matches_identity": true
+        }
+      ]
+    },
+    {
+      "stage": "phase1_smoke_a1",
+      "arm": "B",
+      "core": "a1",
+      "native_dtype": "bfloat16",
+      "seed": 17,
+      "rank": 4,
+      "alpha": 8,
+      "initializer_sha256": "a5dbdb4bda62b937e2110f4b5a2d4c13b9aae9756f889808ddbec64272472e08",
+      "algorithm": "sha256-native-trainable-parameters-v1",
+      "trainable_tensor_count": 24,
+      "final_adapter_dtypes": [
+        "torch.float32"
+      ],
+      "fingerprint_matches": true,
+      "identity_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke_a1\\arm_B\\identity.json",
+      "identity_file_sha256": "17722d1378cb362d8daede52d499d63393a76c0d273a528c167903b849d8df1b",
+      "segment_receipts": [
+        {
+          "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke_a1\\arm_B\\segments\\000001-4bf8c01b6f21\\adapter_initialization.json",
+          "file_sha256": "ac8a1d3042bf694134b02e8691b1a490c908efbb00e0f7bd9881f68a4ba3802a",
+          "matches_identity": true
+        }
+      ]
+    },
+    {
+      "stage": "phase1",
+      "arm": "B",
+      "core": "a11",
+      "native_dtype": "float16",
+      "seed": 17,
+      "rank": 4,
+      "alpha": 8,
+      "initializer_sha256": "0cbeeb7c13efcd90c6468b6f9cbf91f177db59006f5a91e1f5541b0c46a5fab3",
+      "algorithm": "sha256-native-trainable-parameters-v1",
+      "trainable_tensor_count": 24,
+      "final_adapter_dtypes": [
+        "torch.float32"
+      ],
+      "fingerprint_matches": true,
+      "identity_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\identity.json",
+      "identity_file_sha256": "b96a1294fe726094d10e2e4aa644fa83b8efe06fb759eda53a45f47d22f9411b",
+      "segment_receipts": [
+        {
+          "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\segments\\000001-e671889ad1ec\\adapter_initialization.json",
+          "file_sha256": "2454ecd29e40dce238bcdcf067eba0ab4c1a5f7b571d5582665393de3cac1fbb",
+          "matches_identity": true
+        }
+      ]
+    }
+  ],
+  "a1_dtype_evidence": {
+    "identity_dtype": "bfloat16",
+    "canonical_config_path": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-A1-1.0.0-devfreeze/config.json",
+    "canonical_config_dtype_line": 8,
+    "completed_arm_A_info": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke_a1\\arm_A\\arm_A_info.json",
+    "completed_arm_A_loaded_dtype": "bfloat16",
+    "B_evidence_limit": "B identity/started manifest records bfloat16. Its initializer receipt exists after the source loaded_dtype assertion at phase1_run.py:168, supporting successful native-bfloat16 load; no live model introspection was performed."
+  },
+  "source_based_explanation": "Same seeded Kaiming initialization is followed by installed PEFT moving adapters to the native base dtype (fp16 or bf16), then promoting them to float32. Distinct low-precision rounding survives promotion. This source-derived mechanism explains the observed digest difference; elementwise magnitude/location was not measured.",
+  "interpretation": "The cross-core comparison uses the same seed/rank/algorithm, but does not hold actual initial LoRA tensor bytes identical. Do not describe it as a comparison with bit-identical adapter initialization across cores.",
+  "source_references": [
+    {
+      "path": "src/slcmi/adapters.py",
+      "lines": [
+        122,
+        123
+      ],
+      "fact": "Seed 17 then PEFT construction"
+    },
+    {
+      "path": "../Chat-Bubble/.venv/Lib/site-packages/peft/tuners/lora/layer.py",
+      "lines": [
+        243,
+        245,
+        269,
+        274
+      ],
+      "fact": "Kaiming A and zero B reset, then move to base device/dtype"
+    },
+    {
+      "path": "../Chat-Bubble/.venv/Lib/site-packages/peft/tuners/tuners_utils.py",
+      "lines": [
+        1649,
+        1660,
+        1677,
+        2151
+      ],
+      "fact": "Move/cast to base dtype; cast_adapter_dtype promotes lower-precision adapters to float32"
+    },
+    {
+      "path": "../Chat-Bubble/.venv/Lib/site-packages/peft/peft_model.py",
+      "lines": [
+        131,
+        132
+      ],
+      "fact": "PEFT constructor invokes adapter dtype promotion"
+    },
+    {
+      "path": "scripts/phase1_run.py",
+      "lines": [
+        160,
+        163,
+        168,
+        193,
+        212,
+        213
+      ],
+      "fact": "Load selected native dtype, assert actual dtype, promote final adapters, record initializer"
+    },
+    {
+      "path": "src/slcmi/provenance.py",
+      "lines": [
+        255,
+        259,
+        264,
+        265
+      ],
+      "fact": "Digest includes sorted tensor metadata and actual native bytes"
+    }
+  ]
+}

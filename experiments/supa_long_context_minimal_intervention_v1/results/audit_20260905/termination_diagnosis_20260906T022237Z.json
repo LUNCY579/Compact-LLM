@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "observed_utc": "2026-09-06T02:30:43.4061063+00:00",
+  "scope": "Read-only OS/event-log diagnosis; no production edits, settings changes, model launches, process isolation probes, or checkpoint inspection.",
+  "query_window_utc": {
+    "start": "2026-09-06T02:22:00Z",
+    "end": "2026-09-06T02:25:00Z"
+  },
+  "last_boot_utc": "2026-09-06T02:23:23.5000000Z",
+  "queried_event_counts": {
+    "System": 165,
+    "Application": 49
+  },
+  "system_shutdown_boot_events": [
+    {
+      "time_utc": "2026-09-06T02:22:37.3101428Z",
+      "provider": "User32",
+      "event_id": 1074,
+      "record_id": 234519,
+      "message": "The process C:\\WINDOWS\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe (THEFAKEGOD) has initiated the restart of computer THEFAKEGOD on behalf of user TheFakeGod\\clclc for the following reason: Other (Unplanned)\r\n Reason Code: 0x0\r\n Shutdown Type: restart\r\n Comment: ",
+      "xml": "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='User32' Guid='{b0aa8734-56f7-41cc-b2f4-de228e98b946}' EventSourceName='User32'/><EventID Qualifiers='32768'>1074</EventID><Version>0</Version><Level>4</Level><Task>0</Task><Opcode>0</Opcode><Keywords>0x8080000000000000</Keywords><TimeCreated SystemTime='2026-09-06T02:22:37.3101428Z'/><EventRecordID>234519</EventRecordID><Correlation/><Execution ProcessID='1996' ThreadID='7472'/><Channel>System</Channel><Computer>TheFakeGod</Computer><Security UserID='S-1-5-21-791331450-968580878-3431241769-1001'/></System><EventData><Data Name='param1'>C:\\WINDOWS\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe (THEFAKEGOD)</Data><Data Name='param2'>THEFAKEGOD</Data><Data Name='param3'>Other (Unplanned)</Data><Data Name='param4'>0x0</Data><Data Name='param5'>restart</Data><Data Name='param6'></Data><Data Name='param7'>TheFakeGod\\clclc</Data></EventData></Event>"
+    },
+    {
+      "time_utc": "2026-09-06T02:23:06.0108533Z",
+      "provider": "EventLog",
+      "event_id": 6006,
+      "record_id": 234523,
+      "message": "The Event log service was stopped.",
+      "xml": null
+    },
+    {
+      "time_utc": "2026-09-06T02:23:09.3719441Z",
+      "provider": "Microsoft-Windows-Kernel-Power",
+      "event_id": 109,
+      "record_id": 234536,
+      "message": "The kernel power manager has initiated a shutdown transition.\r\n\r\nAction: Power Action Reboot \r\nEvent Code: 0x0 \r\nReason: Kernel API",
+      "xml": "<Event xmlns='http://schemas.microsoft.com/win/2004/08/events/event'><System><Provider Name='Microsoft-Windows-Kernel-Power' Guid='{331c3b3a-2005-44c2-ac5e-77220c37d6b4}'/><EventID>109</EventID><Version>0</Version><Level>4</Level><Task>103</Task><Opcode>0</Opcode><Keywords>0x8000400000000404</Keywords><TimeCreated SystemTime='2026-09-06T02:23:09.3719441Z'/><EventRecordID>234536</EventRecordID><Correlation/><Execution ProcessID='2108' ThreadID='2112'/><Channel>System</Channel><Computer>TheFakeGod</Computer><Security UserID='S-1-5-18'/></System><EventData><Data Name='ShutdownActionType'>5</Data><Data Name='ShutdownEventCode'>0</Data><Data Name='ShutdownReason'>5</Data></EventData></Event>"
+    },
+    {
+      "time_utc": "2026-09-06T02:23:11.4329773Z",
+      "provider": "Microsoft-Windows-Kernel-General",
+      "event_id": 13,
+      "record_id": 234538,
+      "message": "The operating system is shutting down at system time ‎2026‎-‎09‎-‎06T02:23:11.432976400Z.",
+      "xml": null
+    },
+    {
+      "time_utc": "2026-09-06T02:23:24.0136102Z",
+      "provider": "Microsoft-Windows-Kernel-General",
+      "event_id": 12,
+      "record_id": 234539,
+      "message": "The operating system started at system time ‎2026‎-‎09‎-‎06T02:23:23.500000000Z.",
+      "xml": null
+    },
+    {
+      "time_utc": "2026-09-06T02:23:38.8725871Z",
+      "provider": "EventLog",
+      "event_id": 6005,
+      "record_id": 234532,
+      "message": "The Event log service was started.",
+      "xml": null
+    }
+  ],
+  "related_application_error_events": [
+    {
+      "time_utc": "2026-09-06T02:22:26.7629446Z",
+      "provider": "Windows Error Reporting",
+      "event_id": 1001,
+      "message": "Fault bucket 2056819974388802822, type 5\r\nEvent Name: MoAppHang\r\nResponse: Not available\r\nCab Id: 0\r\n\r\nProblem signature:\r\nP1: Microsoft.Windows.ShellExperienceHost_10.0.26100.8115_neutral_neutral_cw5n1h2txyewy\r\nP2: praid:App\r\nP3: 10.0.26100.8972\r\nP4: ef55ecbc\r\nP5: 93ab\r\nP6: 2097153\r\nP7: \r\nP8: \r\nP9: \r\nP10: \r\n\r\nAttached files:\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.c134b479-249a-4337-b64b-571c3547f060.tmp.WERInternalMetadata.xml\r\nWPR_initiated_DiagTrackMiniLogger_OneTrace_User_Logger_20260821_1_EC_0_inject.etl\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.71160d8b-3696-438b-8a4e-ed80f380152a.tmp.etl\r\nWPR_initiated_DiagTrackMiniLogger_WPR System Collector_inject.etl\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.64b0b723-2824-4060-a5c3-2e5b42a78238.tmp.etl\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.c6d77b0d-5ab8-4a47-8153-d5a27102374a.tmp.csv\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.02cc2a44-f329-4b4d-8815-186f061c2e3c.tmp.txt\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\Temp\\WER.20bd833a-66f7-427d-8a42-6644ddb02ca5.tmp.xml\r\n\r\nThese files may be available here:\r\n\\\\?\\C:\\ProgramData\\Microsoft\\Windows\\WER\\ReportArchive\\AppHang_Microsoft.Window_27a6b785ecf5cddcf3c459b251e3aa56b4b6e2_e7ece8d2_6feb9510-488c-4756-ae85-7105d2aaaf64\r\n\r\nAnalysis symbol: \r\nRechecking for solution: 0\r\nReport Id: f6354a1b-4eb6-4053-9a79-d9d2af86e354\r\nReport Status: 26843545"
+    },
+    {
+      "time_utc": "2026-09-06T02:22:26.7756568Z",
+      "provider": "Application Hang",
+      "event_id": 1002,
+      "message": "The program ShellExperienceHost.exe version 10.0.26100.8972 stopped interacting with Windows and was closed. To see if more information about the problem is available, check the problem history in the Security and Maintenance control panel.\r\n"
+    }
+  ],
+  "gpu_or_hardware_provider_events_in_window": 0,
+  "codex_python_powershell_error_events_in_window": 0,
+  "observed_conclusion": "Windows recorded a StartMenuExperienceHost-initiated restart at 02:22:37Z, an orderly shutdown sequence at 02:23:06-11Z, and a new boot at 02:23:23.5Z. The whole-OS restart occurred in the reported controller/model loss window.",
+  "inference": "The observed whole-OS restart explains why the prior controller and model processes disappeared without writing terminal receipts.",
+  "not_established": [
+    "The logs do not establish why the restart was requested or whether the user manually clicked Restart.",
+    "The prior ShellExperienceHost hang is temporal context, not proof that it caused the restart.",
+    "No per-PID termination event was required or queried; this conclusion uses the directly observed whole-OS shutdown and boot."
+  ]
+}

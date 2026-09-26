@@ -1,0 +1,38 @@
+{
+  "label": "phase1_a1",
+  "wall_seconds": 11656.395,
+  "peak_rss_bytes": 3047149568,
+  "peak_gpu_allocated_bytes": 5094263296,
+  "peak_gpu_reserved_bytes": 6012534784,
+  "model_loads": 6,
+  "model_load_attempts": 7,
+  "metric_errors": {},
+  "resource_accounting_complete": false,
+  "aggregation_wall_seconds": 5.671,
+  "model_loads_upper_bound": 7,
+  "model_load_seconds": 19.483,
+  "optimizer_steps_attempted": 600,
+  "optimizer_steps_applied": 600,
+  "steps_skipped_by_scaler": 0,
+  "steps_skipped_by_safety_check": 0,
+  "examples_consumed": 4800,
+  "numeric_costs_are_lower_bounds": true,
+  "unknown_segment_ids": [
+    "000002-b3a310af3b06",
+    "000003-906f954f4d7a",
+    "000001-5fbac7f2f439"
+  ],
+  "incomplete_metric_fields": [
+    "model_load_seconds",
+    "peak_gpu_allocated_bytes",
+    "peak_gpu_reserved_bytes",
+    "peak_rss_bytes",
+    "wall_seconds"
+  ],
+  "trainable_params_by_arm": {
+    "A": 0,
+    "B": 122880,
+    "C": 122880
+  },
+  "resource_scope": "sum of arm process costs (including failed arms); maximum arm memory peaks"
+}

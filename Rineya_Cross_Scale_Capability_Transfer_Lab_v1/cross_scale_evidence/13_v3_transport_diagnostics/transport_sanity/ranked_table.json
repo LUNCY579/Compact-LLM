@@ -1,0 +1,78 @@
+{
+  "early_reject_thresholds": {
+    "cosine_drop_vs_raw": 0.15,
+    "norm_ratio_hi": 2.0,
+    "norm_ratio_lo": 0.5,
+    "target_margin_over_control": 0.02
+  },
+  "families": {
+    "P4_spectral_s010": {
+      "checks": [
+        {
+          "name": "consensus_vs_shape_null",
+          "note": "shape-matched Gaussians match or beat real donors",
+          "pass": false,
+          "real_cosine": 0.9682115493180963,
+          "shape_matched_null_cosine": 0.998781739191866
+        },
+        {
+          "donor_scalars": 1568,
+          "effective_scalars": 275,
+          "name": "donor_directions_transmitted",
+          "note": "P4 keeps target singular vectors; donor directions are discarded",
+          "pass": false
+        }
+      ],
+      "failed": [
+        {
+          "name": "consensus_vs_shape_null",
+          "note": "shape-matched Gaussians match or beat real donors",
+          "pass": false,
+          "real_cosine": 0.9682115493180963,
+          "shape_matched_null_cosine": 0.998781739191866
+        },
+        {
+          "donor_scalars": 1568,
+          "effective_scalars": 275,
+          "name": "donor_directions_transmitted",
+          "note": "P4 keeps target singular vectors; donor directions are discarded",
+          "pass": false
+        }
+      ],
+      "transformation": "P4_spectral_s010",
+      "verdict": "FAIL"
+    },
+    "P5_direction_transfer": {
+      "best_control_cosine": 0.00011812506738360824,
+      "cosine_vs_delta_supa": 0.0006821730570793143,
+      "margin": 0.0005640479896957061,
+      "note": "Must beat shuffle/random controls in target basis before injection",
+      "transformation": "P5_direction_transfer",
+      "verdict": "FAIL"
+    },
+    "controls_required": [
+      "norm_matched_random",
+      "layer_shuffled",
+      "sign_shuffled",
+      "shape_matched_gaussian_donors"
+    ],
+    "sources": {
+      "e1": {
+        "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/cross_scale_evidence/13_v3_transport_diagnosis/e1_channel_capacity/channel_capacity.json",
+        "sha256": "4fb099bd9b396b9191ac8e9a7f6c1367c9e1faf37aacf857bf868e29e1865114"
+      },
+      "e1c": {
+        "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/cross_scale_evidence/13_v3_transport_diagnosis/e1_channel_capacity/shape_matched_donor_null.json",
+        "sha256": "a40b22bea63005bf512e6519cf242dc7c892c2dcbdfcea91a51f3e708aa9dece"
+      },
+      "e2": {
+        "path": "C:/Users/clclc/BusinessProject/ChatBubble-cross-scale/Rineya_Cross_Scale_Capability_Transfer_Lab_v1/cross_scale_evidence/13_v3_transport_diagnosis/e2_target_basis_alignment/target_basis_alignment.json",
+        "sha256": "056e3436ef64b3f671020cfad0b66e6e727c7f1a3fb3351313324cab78e3219f"
+      }
+    }
+  },
+  "hypothesis": "T preserves known structure before capability transfer",
+  "next_action": "Do not create merge candidates from P4/P5; prefer aligned-transport research only if functional atlas (E5) shows structure",
+  "overall_verdict": "FAIL",
+  "schema_version": "3.0-diagnostics-index"
+}

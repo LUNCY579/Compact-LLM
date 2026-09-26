@@ -1,0 +1,75 @@
+{
+  "output": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\audit_20260905\\resumable_708a57d64a34474eb506e5432461be51\\phase1_audit.json",
+  "decisions": {
+    "phase1": {
+      "status": "VALID",
+      "arms": {
+        "B": {
+          "target_gain_points": -23.4375,
+          "relative_error_reduction": -0.6976744186046512,
+          "preservation_regression_points": 2.5,
+          "target_gain_fraction": "-375/16",
+          "relative_error_reduction_fraction": "-30/43",
+          "preservation_regression_fraction": "5/2",
+          "meets_gain_gate": false,
+          "meets_preservation_gate": false,
+          "meaningfully_positive": false,
+          "target_row_bootstrap_vs_A": {
+            "n": 256,
+            "delta": -0.234375,
+            "delta_points": -23.438,
+            "ci_low_points": -32.031,
+            "ci_high_points": -14.844,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905
+          },
+          "preservation_row_bootstrap_vs_A": {
+            "n": 200,
+            "delta": -0.025,
+            "delta_points": -2.5,
+            "ci_low_points": -7.0,
+            "ci_high_points": 1.5,
+            "ci_excludes_zero": false,
+            "resamples": 10000,
+            "seed": 20260905
+          }
+        },
+        "C": {
+          "target_gain_points": -14.453125,
+          "relative_error_reduction": -0.43023255813953487,
+          "preservation_regression_points": 11.0,
+          "target_gain_fraction": "-925/64",
+          "relative_error_reduction_fraction": "-37/86",
+          "preservation_regression_fraction": "11",
+          "meets_gain_gate": false,
+          "meets_preservation_gate": false,
+          "meaningfully_positive": false,
+          "target_row_bootstrap_vs_A": {
+            "n": 256,
+            "delta": -0.144531,
+            "delta_points": -14.453,
+            "ci_low_points": -22.656,
+            "ci_high_points": -6.25,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905
+          },
+          "preservation_row_bootstrap_vs_A": {
+            "n": 200,
+            "delta": -0.11,
+            "delta_points": -11.0,
+            "ci_low_points": -16.0,
+            "ci_high_points": -6.0,
+            "ci_excludes_zero": true,
+            "resamples": 10000,
+            "seed": 20260905
+          }
+        }
+      },
+      "winner": "FROZEN",
+      "phase_2_licensed": false,
+      "composition_check_licensed": false
+    }
+  }
+}

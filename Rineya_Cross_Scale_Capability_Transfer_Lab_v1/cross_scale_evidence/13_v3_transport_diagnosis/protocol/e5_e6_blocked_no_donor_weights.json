@@ -1,0 +1,29 @@
+{
+  "schema_version": "1.0",
+  "status": "blocked_no_donor_weights",
+  "experiments": ["v3_e5_cross_scale_functional_atlas", "v3_e6_low_rank_functional_translator"],
+  "reason": "Qwen3-4B and Qwen3-8B are no longer resident in the Hugging Face cache. Only lock directories remain under models--Qwen--Qwen3-4B and models--Qwen--Qwen3-8B; both snapshot trees are absent. Qwen3-0.6B is present and verified at revision c1899de289a04d12100db370d81485cdf75e47ca. No donor activation, donor weight, or donor-side alignment measurement can be taken in this state.",
+  "not_a_compute_limit": "This is distinct from the v2 'not_run_compute' records, which were caused by GPU occupancy. The installed Torch build here is 2.13.0+cpu and reports CUDA unavailable, so GPU occupancy is irrelevant; the blocker is the absent donor weights.",
+  "what_would_unblock": {
+    "action": "pinned re-download of the two donor revisions already recorded in 01_environment/huggingface_cache_verification.md",
+    "qwen3_4b_revision": "1cfa9a7208912126459214e8b04321603b3df60c",
+    "qwen3_8b_revision": "b968826d9c46dd6066d109eabc6255188de91218",
+    "approximate_bytes": 25000000000,
+    "requires_operator_authorization": true,
+    "verification_on_arrival": "hf cache verify --fail-on-missing-files against the pinned revisions, then re-check every weight-shard SHA-256 already recorded in 02_architecture/qwen4b.json and qwen8b.json"
+  },
+  "e5_design_frozen_here": {
+    "name": "cross-scale functional alignment atlas, donor side",
+    "measurement": "final-prompt-token residual-stream states for Qwen3-4B and Qwen3-8B on the frozen calibration prompts, captured at matched RELATIVE depths (fractions 0.00/0.25/0.50/0.75/1.00 of each donor's 36-layer stack, i.e. layers 0/9/18/27/35), one donor loaded at a time, CPU float32, streamed and released",
+    "purpose": "produce the depth x depth cross-scale similarity surface that neither v1 nor v2 ever measured, and determine whether 4B/8B agreement is stronger in function space than in raw parameter space",
+    "controls": ["prompt-shuffled pairing", "random matched-norm direction", "within-donor depth permutation"]
+  },
+  "e6_design_frozen_here": {
+    "name": "low-rank functional translator",
+    "measurement": "fit A minimising ||z_0.6 - A z_donor||^2 on cached calibration activations at matched relative depth, with ridge, orthogonal Procrustes, and rank 4/8/16 variants",
+    "fit_cost": "a 1024 x 2560 (4B) or 1024 x 4096 (8B) least-squares solve on 59 samples per depth; CPU seconds, not LLM training",
+    "purpose": "decide whether a per-depth residual-stream basis correspondence exists at all. v1 fitted its only basis map on the vocabulary EMBEDDING matrices and applied it at every depth; held-out cosine was 0.335 (ridge) and 0.536/0.275 (Procrustes). No per-depth residual-stream map has ever been fitted.",
+    "sample_size_caveat": "59 calibration prompts give 59 final-token samples per depth, which is far fewer than the 1024 target dimensions. The fit is rank-deficient unless it is restricted to low rank or extended to all token positions. E6 must therefore use all token positions, or an explicit low-rank constraint, and must report held-out error on a prompt-disjoint split. This is recorded before the experiment, not after."
+  },
+  "recorded_at_commit": "538687fb8ddab999f825e300e7c91d43947c5c4e"
+}

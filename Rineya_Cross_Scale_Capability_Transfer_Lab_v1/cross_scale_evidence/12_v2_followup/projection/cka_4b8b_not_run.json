@@ -1,0 +1,7 @@
+{
+  "status": "not_run_compute",
+  "reason": "GPU was occupied under the v2 snapshot rule (utilization >= 10% or memory.used >= 1024 MiB). 4B/8B hidden-state CKA was not collected on CPU.",
+  "planned": ["qwen3-4b vs qwen3-0.6b linear CKA", "qwen3-8b vs qwen3-0.6b linear CKA"],
+  "completed_instead": "cka_qwen06_vs_supa.json",
+  "calibration_only": true
+}

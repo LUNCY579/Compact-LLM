@@ -1,0 +1,188 @@
+{
+  "created_utc": "2026-09-05T22:10:41.638588+00:00",
+  "scope": "CPU read-only audit execution; audit code patched in memory only; no model/training/source/config writes",
+  "script_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\scripts\\audit_phase1_results.py",
+  "source_file_sha256_before": "644e5caae318f98490d63fea34bf0ebfb45a448b733ca88d9101a59e486c6467",
+  "source_file_sha256_after": "644e5caae318f98490d63fea34bf0ebfb45a448b733ca88d9101a59e486c6467",
+  "executed_patched_code_sha256": "aa08df6e4d37c23b827f62ca9711c3a64d63e8adb2fa59d81f2210c67796c53b",
+  "source_file_unchanged": true,
+  "replacement_count": 1,
+  "old": "manifest, info, resource = [json_file(out / p) for p in required[1:]]",
+  "new": "manifest, resource, info = [json_file(out / p) for p in required[1:]]",
+  "smoke_review": {
+    "core": "a11",
+    "smoke": true,
+    "arms": {
+      "A": {
+        "status": "VALID",
+        "source": "experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_smoke\\arm_A\\per_example.jsonl",
+        "source_sha256": "1387e4a13b30bb821d12b953b3968891d3ebe0196d3af730688ef3503bf81571",
+        "n_observations": 48,
+        "recomputed": {
+          "target": {
+            "n": 32,
+            "correct": 20,
+            "accuracy": 0.625,
+            "accuracy_points": 62.5
+          },
+          "preservation": {
+            "matched": {
+              "n": 16,
+              "correct": 6,
+              "accuracy": 0.375,
+              "accuracy_points": 37.5
+            },
+            "exact": {
+              "n": 16,
+              "correct": 3,
+              "accuracy": 0.1875,
+              "accuracy_points": 18.75
+            }
+          },
+          "preservation_by_class": {
+            "counting_sets": {
+              "n": 8,
+              "correct": 3,
+              "accuracy": 0.375,
+              "accuracy_points": 37.5
+            },
+            "conditional_rules": {
+              "n": 8,
+              "correct": 3,
+              "accuracy": 0.375,
+              "accuracy_points": 37.5
+            }
+          }
+        },
+        "discrepancies": [],
+        "receipt_checks": {
+          "manifest_complete": true,
+          "checkpoint_preservation_receipt": true,
+          "core_path": true,
+          "dtype": true,
+          "evaluation_gate_on": true,
+          "frozen_base_receipt": true,
+          "one_model_load": true,
+          "manifest_core": true,
+          "requested_step_budget": true,
+          "no_training": true
+        },
+        "training_trajectory_recomputation": null,
+        "recorded_resource": {
+          "label": "arm_A",
+          "wall_seconds": 26.368,
+          "peak_rss_bytes": 2231689216,
+          "peak_gpu_allocated_bytes": 1836633088,
+          "peak_gpu_reserved_bytes": 4110417920,
+          "model_loads": 1,
+          "trainable_params": 0,
+          "optimizer_steps_attempted": 0,
+          "optimizer_steps_applied": 0,
+          "steps_skipped_by_scaler": 0,
+          "steps_skipped_by_safety_check": 0,
+          "examples_consumed": 0
+        },
+        "dataset_fingerprint": {
+          "train": "70f559a6630234ec67555a092feeb8896080eeb434da63b27df42de1acb7a480",
+          "dev": "3d96eef7cb895be211a3b743d1673e7ede609a672d39fb11e0191e8d5db6db22",
+          "target": "30ca3a702ef58fcaaf5090a4288e3e705cb5471c09580cffc4eaf13326341b21",
+          "preservation": "d7a4579e87b6ea4cc684468eedfbb4a606b0398f6cd18bd6d3616f0256a97929",
+          "train_count": 32,
+          "dev_count": 16,
+          "target_count": 32,
+          "preservation_count": 16
+        },
+        "config": {
+          "schema_version": 2,
+          "stage": "phase1_smoke",
+          "smoke": true,
+          "core": "a11",
+          "core_label": "Supa-A1.1 (float16 store)",
+          "core_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+          "dtype": "float16",
+          "device": "cuda",
+          "required_arms": [
+            "A",
+            "B",
+            "C"
+          ],
+          "trainable_layers": [
+            17,
+            18,
+            19
+          ],
+          "protected_layers": [
+            0,
+            1,
+            2
+          ],
+          "target_modules": [
+            "q_proj",
+            "k_proj",
+            "v_proj",
+            "o_proj"
+          ],
+          "rank": 4,
+          "alpha": 8,
+          "dropout": 0.0,
+          "max_steps": 6,
+          "step_budget_unit": "optimizer attempts",
+          "grad_accum": 8,
+          "lr": 0.0001,
+          "max_length": 3840,
+          "seed": 17,
+          "train_packs": 8,
+          "dev_packs": 4,
+          "curriculum": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_LCR_SFT_v1\\Rineya_LCR_SFT_v1\\data\\lcr_sft_v1.jsonl",
+          "target_suite": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\Rineya_Long_Context_Demo_v1\\data\\rineya_long_context_demo_full.jsonl",
+          "external_scorer_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+          "data_sha256": {
+            "curriculum": "8f0bc0174408eb513851443a6f9c32e2e79a00563fb9d35d659e7d27ab792c9c",
+            "target_suite": "ccd7d70577940b74e945d2eb0ec2fd14391752275b5485fe8736711733bc8f8e",
+            "preservation_counting_sets": "92c4a460086953d3c18b834d89d2da5c866831007a1c5ec0f9a41b0396708db2",
+            "preservation_conditional_rules": "1bd5978f188b3804819fe81981ff41e9d61953bb04611d55d06f425fb819bac9"
+          },
+          "target_context": "FULL",
+          "preservation_classes": [
+            "counting_sets",
+            "conditional_rules"
+          ],
+          "preservation_per_class": 8,
+          "eval_max_new_tokens": 24,
+          "arm": "A"
+        }
+      },
+      "B": {
+        "status": "INCOMPLETE",
+        "missing_files": [
+          "per_example.jsonl",
+          "run_manifest.json",
+          "resource.json",
+          "arm_B_info.json"
+        ]
+      },
+      "C": {
+        "status": "INCOMPLETE",
+        "missing_files": [
+          "per_example.jsonl",
+          "run_manifest.json",
+          "resource.json",
+          "arm_C_info.json"
+        ]
+      }
+    },
+    "decision": {
+      "status": "INCOMPLETE",
+      "phase_2_licensed": false,
+      "missing_or_incomplete_arms": [
+        "B",
+        "C"
+      ]
+    }
+  },
+  "limits": [
+    "This snapshot may be partial while smoke executes; it does not read or alter a model.",
+    "Audit source/hash compatibility and root COMPLETE status must additionally pass the production combine guard before interpretation.",
+    "The independent auditor does not independently compare root combined observations against per-arm concatenation or recompute current checkpoint file hashes."
+  ]
+}

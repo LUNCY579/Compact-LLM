@@ -1,0 +1,928 @@
+{
+ "checked_utc": "2026-09-07T02:37:15.543148+00:00",
+ "n_runs": 12,
+ "runs": {
+  "a11_A_frozen_gate_off": {
+   "core": "a11",
+   "arm": "A",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": null,
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 162,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 149,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 13,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 0,
+    "unanswerable_unknown_predictions": 13,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 74,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 37,
+      "n": 100
+     }
+    }
+   },
+   "adapter": null
+  },
+  "a11_A_frozen_gate_on_control": {
+   "core": "a11",
+   "arm": "A",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": null,
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 170,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 148,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 22,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 2,
+    "unanswerable_unknown_predictions": 22,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 74,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 37,
+      "n": 100
+     }
+    }
+   },
+   "adapter": null,
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_A\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   }
+  },
+  "a11_B_lora_gate_off": {
+   "core": "a11",
+   "arm": "B",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": "phase1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 165,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 122,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 43,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 35,
+    "unanswerable_unknown_predictions": 43,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 69,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 35,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 34,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\adapter",
+    "adapter_sha256": "57dc70ff38cc7d7f81860b5500e63da1a5ba9d99c2437e3b7f2a1b03722259a0",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a11",
+    "core_stage_pairing_correct": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 162,
+    "this_arm_target_correct": 165,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a11_B_lora_gate_on_control": {
+   "core": "a11",
+   "arm": "B",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": "phase1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 110,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 59,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 51,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 116,
+    "unanswerable_unknown_predictions": 51,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 69,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 35,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 34,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\adapter",
+    "adapter_sha256": "57dc70ff38cc7d7f81860b5500e63da1a5ba9d99c2437e3b7f2a1b03722259a0",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a11",
+    "core_stage_pairing_correct": true
+   },
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_B\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 170,
+    "this_arm_target_correct": 110,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a11_C_nora_gate_off": {
+   "core": "a11",
+   "arm": "C",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": "phase1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 171,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 115,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 56,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 66,
+    "unanswerable_unknown_predictions": 56,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 52,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 15,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_C\\adapter",
+    "adapter_sha256": "eb1f1e2b657e59e3dc720dde31c0f8dc220204f7b622c8c0ee21896e88043c70",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a11",
+    "core_stage_pairing_correct": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 162,
+    "this_arm_target_correct": 171,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a11_C_nora_gate_on_control": {
+   "core": "a11",
+   "arm": "C",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": "phase1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 133,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 71,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 62,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 116,
+    "unanswerable_unknown_predictions": 62,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 52,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 15,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_C\\adapter",
+    "adapter_sha256": "eb1f1e2b657e59e3dc720dde31c0f8dc220204f7b622c8c0ee21896e88043c70",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a11",
+    "core_stage_pairing_correct": true
+   },
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1\\arm_C\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 170,
+    "this_arm_target_correct": 133,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a1_A_frozen_gate_off": {
+   "core": "a1",
+   "arm": "A",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": null,
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 161,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 148,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 13,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 0,
+    "unanswerable_unknown_predictions": 13,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 74,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 37,
+      "n": 100
+     }
+    }
+   },
+   "adapter": null
+  },
+  "a1_A_frozen_gate_on_control": {
+   "core": "a1",
+   "arm": "A",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": null,
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 168,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 147,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 21,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 2,
+    "unanswerable_unknown_predictions": 21,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 74,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 37,
+      "n": 100
+     }
+    }
+   },
+   "adapter": null,
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_A\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   }
+  },
+  "a1_B_lora_gate_off": {
+   "core": "a1",
+   "arm": "B",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": "phase1_a1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 164,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 121,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 43,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 37,
+    "unanswerable_unknown_predictions": 43,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 68,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 35,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 33,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_B\\adapter",
+    "adapter_sha256": "15751d26d9e5b8d639658ebf62508a427caf90dd4ff291e4df092d4453695520",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a1",
+    "core_stage_pairing_correct": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 161,
+    "this_arm_target_correct": 164,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a1_B_lora_gate_on_control": {
+   "core": "a1",
+   "arm": "B",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": "phase1_a1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 108,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 57,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 51,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 117,
+    "unanswerable_unknown_predictions": 51,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 68,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 35,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 33,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_B\\adapter",
+    "adapter_sha256": "15751d26d9e5b8d639658ebf62508a427caf90dd4ff291e4df092d4453695520",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a1",
+    "core_stage_pairing_correct": true
+   },
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_B\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 168,
+    "this_arm_target_correct": 108,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a1_C_nora_gate_off": {
+   "core": "a1",
+   "arm": "C",
+   "gate": "off",
+   "abstain_logit_bias_used": 0.0,
+   "adapter_stage": "phase1_a1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 175,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 120,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 55,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 65,
+    "unanswerable_unknown_predictions": 55,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 53,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 16,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_C\\adapter",
+    "adapter_sha256": "83c9a3f9437d87999f62036225648d9635dfd73f2ce21ddf98ff4fb4a9e1c395",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a1",
+    "core_stage_pairing_correct": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 161,
+    "this_arm_target_correct": 175,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  },
+  "a1_C_nora_gate_on_control": {
+   "core": "a1",
+   "arm": "C",
+   "gate": "on",
+   "abstain_logit_bias_used": 5.156249985098839,
+   "adapter_stage": "phase1_a1",
+   "canonical_checkpoint_unchanged": true,
+   "frozen_base_unchanged": true,
+   "summary": {
+    "target_total": {
+     "correct": 128,
+     "n": 256
+    },
+    "target_answerable": {
+     "correct": 65,
+     "n": 192
+    },
+    "target_unanswerable": {
+     "correct": 63,
+     "n": 64
+    },
+    "answerable_unknown_predictions": 124,
+    "unanswerable_unknown_predictions": 63,
+    "target_malformed": 0,
+    "preservation_matched": {
+     "matched": 53,
+     "n": 200
+    },
+    "preservation_by_class": {
+     "conditional_rules": {
+      "matched": 37,
+      "n": 100
+     },
+     "counting_sets": {
+      "matched": 16,
+      "n": 100
+     }
+    }
+   },
+   "adapter": {
+    "adapter_dir": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_C\\adapter",
+    "adapter_sha256": "83c9a3f9437d87999f62036225648d9635dfd73f2ce21ddf98ff4fb4a9e1c395",
+    "adapter_bytes": 494672,
+    "declared_base_model": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "core_path_used": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1-1.0.0-devfreeze",
+    "base_model_matches_core": true,
+    "target_modules": [
+     "k_proj",
+     "o_proj",
+     "q_proj",
+     "v_proj"
+    ],
+    "layers_to_transform": [
+     17,
+     18,
+     19
+    ],
+    "r": 4,
+    "lora_alpha": 8,
+    "expected_core_for_stage": "a1",
+    "core_stage_pairing_correct": true
+   },
+   "reproduction": {
+    "stored": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_C\\per_example.jsonl",
+    "n_new": 456,
+    "n_stored": 456,
+    "same_example_ids": true,
+    "compared_fields": [
+     "answerable",
+     "arm",
+     "condition",
+     "correct",
+     "evaluation",
+     "exact",
+     "example_id",
+     "has_reference_numbers",
+     "malformed",
+     "matched",
+     "normalized_prediction",
+     "prompt_tokens",
+     "question",
+     "raw_prediction",
+     "reference",
+     "response_words",
+     "split",
+     "task_family",
+     "task_type",
+     "variant"
+    ],
+    "ignored_fields": [
+     "inference_seconds"
+    ],
+    "n_mismatched_rows": 0,
+    "mismatched": [],
+    "reproduced_stored_rows": true
+   },
+   "adapter_attachment_positive_control": {
+    "frozen_same_gate_target_correct": 168,
+    "this_arm_target_correct": 128,
+    "differs_from_frozen": true,
+    "note": "identical scores would suggest the adapter did not attach"
+   }
+  }
+ },
+ "problems": [],
+ "status": "PASS"
+}

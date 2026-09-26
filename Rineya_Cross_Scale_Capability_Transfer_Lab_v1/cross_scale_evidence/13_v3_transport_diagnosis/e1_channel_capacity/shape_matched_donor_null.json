@@ -1,0 +1,104 @@
+{
+  "arms": [
+    {
+      "arm": "real_4b_vs_real_8b",
+      "cosine": 0.9682115493180963,
+      "note": "the v1 headline comparison"
+    },
+    {
+      "arm": "shape_matched_gaussian_donors_seed17",
+      "cosine": 0.9987816537267749,
+      "note": "iid Gaussian matrices at the true 4B/8B tensor shapes, independent draw per tensor"
+    },
+    {
+      "arm": "shape_matched_gaussian_donors_seed23",
+      "cosine": 0.9987770449342567,
+      "note": "iid Gaussian matrices at the true 4B/8B tensor shapes, independent draw per tensor"
+    },
+    {
+      "arm": "shape_matched_gaussian_donors_seed42",
+      "cosine": 0.9987865189145663,
+      "note": "iid Gaussian matrices at the true 4B/8B tensor shapes, independent draw per tensor"
+    }
+  ],
+  "donor_shapes": {
+    "qwen4b": {
+      "mlp.down_proj": [
+        2560,
+        9728
+      ],
+      "mlp.gate_proj": [
+        9728,
+        2560
+      ],
+      "mlp.up_proj": [
+        9728,
+        2560
+      ],
+      "self_attn.k_proj": [
+        1024,
+        2560
+      ],
+      "self_attn.o_proj": [
+        2560,
+        4096
+      ],
+      "self_attn.q_proj": [
+        4096,
+        2560
+      ],
+      "self_attn.v_proj": [
+        1024,
+        2560
+      ]
+    },
+    "qwen8b": {
+      "mlp.down_proj": [
+        4096,
+        12288
+      ],
+      "mlp.gate_proj": [
+        12288,
+        4096
+      ],
+      "mlp.up_proj": [
+        12288,
+        4096
+      ],
+      "self_attn.k_proj": [
+        1024,
+        4096
+      ],
+      "self_attn.o_proj": [
+        4096,
+        4096
+      ],
+      "self_attn.q_proj": [
+        4096,
+        4096
+      ],
+      "self_attn.v_proj": [
+        1024,
+        4096
+      ]
+    }
+  },
+  "experiment": "v3_e1c_shape_matched_donor_null",
+  "protocol": "amendment_v3_transport_diagnosis.md 3.0.0-diagnostic",
+  "rank": 8,
+  "resources": {
+    "models_loaded": 0,
+    "wall_seconds": 301.80260339999995
+  },
+  "schema_version": "1.0",
+  "strength": 0.1,
+  "supersedes": "the two_random_donors arms in channel_capacity.json",
+  "tensors": 196,
+  "verdict": {
+    "HT2_agreement_is_operator_induced": true,
+    "lift_over_null": -0.030570189873769693,
+    "real_cosine": 0.9682115493180963,
+    "real_exceeds_null": false,
+    "shape_matched_null_mean": 0.998781739191866
+  }
+}

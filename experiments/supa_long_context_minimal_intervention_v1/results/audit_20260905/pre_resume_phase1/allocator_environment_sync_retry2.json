@@ -1,0 +1,17 @@
+{
+  "policy": "backend:native,garbage_collection_threshold:0.7,per_process_memory_fraction:0.8",
+  "variables": [
+    "PYTORCH_ALLOC_CONF",
+    "PYTORCH_CUDA_ALLOC_CONF"
+  ],
+  "applied_to": [
+    "A",
+    "B",
+    "C"
+  ],
+  "CUDA_VISIBLE_DEVICES": "0",
+  "CUDA_LAUNCH_BLOCKING": "1",
+  "recovery": "Regenerate A, then B/C from initialization; same frozen recipe with synchronized CUDA launches",
+  "fixed_budget": "300 optimizer attempts per trained arm; no model/data/hyperparameter changes",
+  "recorded_utc": "2026-09-06T00:04:39.1414515Z"
+}

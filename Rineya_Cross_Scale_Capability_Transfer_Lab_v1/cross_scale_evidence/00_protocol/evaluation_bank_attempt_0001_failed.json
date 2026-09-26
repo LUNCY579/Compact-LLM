@@ -1,0 +1,36 @@
+{
+  "schema_version": "1.0",
+  "status": "failed_pre_freeze",
+  "reason": "cross_split_prompt_hash_overlap",
+  "prompt_hash_overlap": {
+    "calibration__mergedev": 0,
+    "calibration__dev_full": 1,
+    "calibration__sealed": 1,
+    "mergedev__dev_full": 0,
+    "mergedev__sealed": 0,
+    "dev_full__sealed": 5
+  },
+  "files": {
+    "calibration": {
+      "items": 59,
+      "bytes": 43955,
+      "sha256": "90ebe2da0b43280fc06fd9a68638306cda688fd10795e1de40cda8e032d0d67e"
+    },
+    "mergedev": {
+      "items": 59,
+      "bytes": 43406,
+      "sha256": "c34d937f8f23c1a416b026393eff6af6c195bb19fa08a3f2a15e80700ffa09e8"
+    },
+    "dev_full": {
+      "items": 180,
+      "bytes": 146823,
+      "sha256": "6a4b81da08a02f311bd126cb90e0b805e68d57a8b511b705af3771edbdcc458a"
+    },
+    "sealed": {
+      "items": 239,
+      "bytes": 188897,
+      "sha256": "03d7f81f8b5637993ef2d95bc05d2cb28b18cb0b5808d644acf245fdd7bb65fb"
+    }
+  },
+  "handling": "All four invalid files were moved without inspection to ignored local_data/invalid_bank_attempt_0001. No split was frozen or evaluated."
+}

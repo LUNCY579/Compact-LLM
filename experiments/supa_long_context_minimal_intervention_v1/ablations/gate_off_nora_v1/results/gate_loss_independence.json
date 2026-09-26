@@ -1,0 +1,73 @@
+{
+ "test": "abstention gate cannot affect teacher-forced loss",
+ "core": "a11",
+ "arm": "C",
+ "adapter_stage": "phase1",
+ "abstain_token_id": 51378,
+ "canonical_bias": 5.156249985098839,
+ "n_dev_examples": 160,
+ "dev_dataset_stats": {
+  "n_input": 160,
+  "n_kept": 160,
+  "n_dropped_too_long": 0,
+  "max_length": 3840,
+  "tokens_min": 2195,
+  "tokens_median": 2373,
+  "tokens_mean": 2378.6,
+  "tokens_max": 2628,
+  "answer_tokens_mean": 7.43,
+  "variants": {
+   "base": 40,
+   "counterfactual": 40,
+   "paraphrase": 40,
+   "unanswerable": 40
+  },
+  "task_types": {
+   "address_route_tracking": 16,
+   "alias_resolution": 16,
+   "causal_disambiguation": 16,
+   "count_exclusions_duplicates": 16,
+   "definition_binding": 16,
+   "latest_verified_record_vs_rumor": 16,
+   "multi_condition_identity": 16,
+   "object_state_tracking": 16,
+   "rule_exception": 16,
+   "temporal_correction": 16
+  }
+ },
+ "weighted_loss_gate_on": 0.04797873464580445,
+ "weighted_loss_gate_off": 0.04797873464580445,
+ "weighted_loss_absolute_difference": 0.0,
+ "weighted_loss_bit_identical": true,
+ "per_example_bit_identical_count": 160,
+ "per_example_n": 160,
+ "all_per_example_bit_identical": true,
+ "max_per_example_absolute_difference": 0.0,
+ "checkpoint_sha256_before": {
+  "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+  "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+  "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+  "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+  "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+  "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+  "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+  "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+ },
+ "checkpoint_sha256_after": {
+  "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+  "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+  "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+  "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+  "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+  "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+  "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+  "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+  "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+ },
+ "checked_utc": "2026-09-07T00:24:08.052310+00:00",
+ "canonical_checkpoint_unchanged": true,
+ "conclusion": "gate is absent from the objective; saved adapters are gate-off-trained"
+}

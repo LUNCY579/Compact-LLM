@@ -1,0 +1,58 @@
+{
+  "abstain_logit_bias_control": {
+    "original": null,
+    "resolved": null
+  },
+  "batch_size": 1,
+  "completed_at_utc": "2026-08-30T21:40:48.556528+00:00",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "created_at_utc": "2026-08-30T21:40:14.445631+00:00",
+  "dataset_items_selected": 16,
+  "dataset_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\mergedev_fast.jsonl",
+  "decoding": "greedy",
+  "device": "cpu",
+  "gpu_before": {
+    "available": true,
+    "returncode": 0,
+    "summary": "NVIDIA GeForce RTX 4070 Laptop GPU, 33, 5373, 8188"
+  },
+  "load_seconds": 14.372854499999903,
+  "model_class": "Qwen3ForCausalLM",
+  "model_fingerprint": {
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "digest": "9c44c7f191964aedfba1c9848e69e2700293f4d42a1542bd37a8a85ad971f470",
+    "index_sha256": null,
+    "path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\local_models\\projected\\P5_D2_WDIR\\qwen4b_dir_s010",
+    "tensor_count": 311,
+    "weight_files": [
+      {
+        "bytes": 1503300016,
+        "name": "model.safetensors",
+        "sha256": "34011e16a443c08c547499b2327bfede9d143b28d17630f64574c504e4d34d66"
+      }
+    ]
+  },
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\local_models\\projected\\P5_D2_WDIR\\qwen4b_dir_s010",
+  "predictions_sha256": "4e2a941fe2e1eb0ee2210468eab7b0eb6268b7999312148b740cc1e337ff29f2",
+  "resolved_attention_implementation": "eager",
+  "resume": true,
+  "rss_after_load_bytes": 1850191872,
+  "run_identity": {
+    "abstain_logit_bias": null,
+    "case_limit": null,
+    "dataset_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+    "dtype": "float32",
+    "max_context_tokens": 4096,
+    "model_hash": "9c44c7f191964aedfba1c9848e69e2700293f4d42a1542bd37a8a85ad971f470",
+    "seed": 17,
+    "split": "mergedev_fast",
+    "threads": 16,
+    "trust_remote_code": false
+  },
+  "schema_version": "1.0",
+  "status": "complete",
+  "summary_sha256": "f1765e147c390e6c5ddf5f75a9a7bb73469fa955740d661904744bd5122bfeed",
+  "temperature": 0,
+  "thinking": "disabled",
+  "tokenizer_class": "Qwen2Tokenizer"
+}

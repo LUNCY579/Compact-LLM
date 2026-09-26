@@ -1,0 +1,99 @@
+{
+  "status": "STARTED",
+  "start_utc": "20260905T042932_800954Z",
+  "git_commit": "251bb463054284e4dd03d62ec75bee5e24b5bc69",
+  "git_branch": "research/supa-a1.1-anchor-routed-middle-recurrence-v1",
+  "git_status": "",
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "config": {
+    "protocol_version": "1.0",
+    "seed": 17,
+    "threads": 4,
+    "dtype": "float32",
+    "device": "cpu",
+    "use_cache": false,
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "max_new_tokens": 24,
+    "max_prompt_seconds": 90,
+    "max_rss_gib": 8,
+    "top_k": 10,
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "minimum_mean_logit_cosine": 0.9,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "maximum_invalid_increase": 0.0,
+    "baseline_cosine_tolerance": 0.02,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "development_file": "mergedev_fast.jsonl",
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+  },
+  "dataset": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\mergedev_fast.jsonl",
+  "dataset_sha256": "b75df9368e27cfc7de58e55370090e55bd5bcb4d1bd86aeb079b486555925da0",
+  "source_sha256": {
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\evaluation.py": "e262761b45105d6586221c2c99b6f56ecc7d3aba2fe276b392e9b1e13cd80bfa",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\hooks.py": "a73baf73515ca905c39a631feb576caad232bec60bb05f0150204e952e0d36a3",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\metrics.py": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\provenance.py": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\recurrence.py": "88ab4c791b1871dc3765a85f89dbd857023bcf5e4dfa55b6c24142aaee0edea9",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\reporting.py": "99ca41eed1da02d7ef5a3d3a7a43c004c60f18cccaa328267ba41b980cfd2021",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\__init__.py": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\audit_completed_screen.py": "ccfae3d90cf60b357a00f07f2faebe2bcd635b1fa72f9f762dd005c64a24d3be",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\diagnose_late_failure.py": "9d375e0bf9fef2e2b1913b27bb1ed58a92918aef57cce433d6a559946384d484",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\run_experiment.py": "170e5b0a9e49a9867ae847c2ddbc26f306013f7c44402fdfbc65fd28d73a3c98",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\run_fixed_recurrence.py": "35407c2d59e771dbdbc7d3d71347eb5c4454329779acdd16821d6f7e46a7b934",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\summarize_results.py": "75d33b845ee0aceb6a8c9e36cc58254b38d82acc3504b0ece48ce42c2f8c5ba1",
+    "experiments\\anchor_routed_middle_recurrence_v1\\README.md": "6d8b363bd3da476be75dd4144b2a036cdceea20743dc6eed244b052e8f894579",
+    "experiments\\anchor_routed_middle_recurrence_v1\\configs\\reapplication_screen.json": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c"
+  },
+  "qwen_implementation_sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.1",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.26200-SP0",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "logical_cpus": 32,
+  "physical_memory_bytes": 16340398080,
+  "device": "cpu",
+  "dtype": "float32",
+  "kv_strategy": "full_prefix_recompute_no_kv",
+  "kv_cache_bytes": 0,
+  "gpu_memory_bytes": null,
+  "model_loads": 1,
+  "training": false
+}

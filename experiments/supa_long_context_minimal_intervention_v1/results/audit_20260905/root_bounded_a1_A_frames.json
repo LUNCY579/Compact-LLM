@@ -1,0 +1,282 @@
+{
+  "created_utc": "2026-09-06T07:22:34.277849+00:00",
+  "method": "Independent raw-output exact scoring; existing Phase 0 abstention function; paired descriptive count differences",
+  "helper_sha256": "e679e0556d146cb6a570602de75776311353fb2c3b0070ab6a1749e1d78f020d",
+  "target_source": "Rineya_Long_Context_Demo_v1\\data\\rineya_long_context_demo_full.jsonl",
+  "target_source_sha256": "ccd7d70577940b74e945d2eb0ec2fd14391752275b5485fe8736711733bc8f8e",
+  "rules": {
+    "official_normalizer": "Rineya_Long_Context_Demo_v1\\scripts\\evaluate_predictions.py",
+    "official_normalizer_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+    "abstention_source": "experiments\\supa_long_context_minimal_intervention_v1\\scripts\\phase0_analyse.py",
+    "abstention_source_sha256": "8f765da9483e5333abf2cd3c36cdbe9134700b301397277c7e35b85e8f0e0db9",
+    "normalized_abstention_forms": [
+      "cannot be determined",
+      "not determinable",
+      "unknown"
+    ]
+  },
+  "stages": {
+    "phase1_a1": {
+      "core": "a1",
+      "smoke": false,
+      "status": "PARTIAL",
+      "preliminary": true,
+      "completed_analyzed_arms": [
+        "A"
+      ],
+      "arms": {
+        "A": {
+          "status": "COMPLETE",
+          "source": "experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_A\\per_example.jsonl",
+          "raw_sha256": "a930787755692c54b3553a39491d7bae136c413bea47fed75955e43126d5b96b",
+          "manifest_sha256": "2a22fb636eaf64c7ac6e0d47acbf92a246f3dd6755623bbdefa0e368fcf7bf32",
+          "manifest_status": "COMPLETE",
+          "target_rows": 256,
+          "snapshot_stable": true,
+          "verification_discrepancies": {
+            "correct": 0,
+            "normalized_prediction": 0,
+            "target_metadata": 0
+          },
+          "errors": []
+        },
+        "B": {
+          "status": "INCOMPLETE",
+          "source": "experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_B\\per_example.jsonl",
+          "reason": "completed manifest or raw observations absent"
+        },
+        "C": {
+          "status": "INCOMPLETE",
+          "source": "experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\arm_C\\per_example.jsonl",
+          "reason": "completed manifest or raw observations absent"
+        }
+      },
+      "raw_stage_source": "experiments\\supa_long_context_minimal_intervention_v1\\results\\phase1_a1\\per_example.jsonl",
+      "raw_stage_sha256": "a930787755692c54b3553a39491d7bae136c413bea47fed75955e43126d5b96b",
+      "root_manifest_status": "PARTIAL",
+      "root_manifest_sha256": "a1d6f6ba4148542beef20b16245fac26b663df9ad48c0840293f9c8d43885642",
+      "root_snapshot_stable": true,
+      "root_target_predictions_match_analyzed_arms": true,
+      "all": {
+        "n": 256,
+        "arms": {
+          "A": {
+            "correct": 168,
+            "accuracy_points": 65.625,
+            "abstentions": 23,
+            "abstention_points": 8.984375
+          }
+        },
+        "matched_deltas_vs_A": {}
+      },
+      "groups": {
+        "answerability": {
+          "answerable": {
+            "n": 192,
+            "arms": {
+              "A": {
+                "correct": 147,
+                "accuracy_points": 76.5625,
+                "abstentions": 2,
+                "abstention_points": 1.041667
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "unanswerable": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 21,
+                "accuracy_points": 32.8125,
+                "abstentions": 21,
+                "abstention_points": 32.8125
+              }
+            },
+            "matched_deltas_vs_A": {}
+          }
+        },
+        "variant": {
+          "base": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 53,
+                "accuracy_points": 82.8125,
+                "abstentions": 1,
+                "abstention_points": 1.5625
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "counterfactual": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 38,
+                "accuracy_points": 59.375,
+                "abstentions": 1,
+                "abstention_points": 1.5625
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "paraphrase": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 56,
+                "accuracy_points": 87.5,
+                "abstentions": 0,
+                "abstention_points": 0.0
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "unanswerable": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 21,
+                "accuracy_points": 32.8125,
+                "abstentions": 21,
+                "abstention_points": 32.8125
+              }
+            },
+            "matched_deltas_vs_A": {}
+          }
+        },
+        "task_type": {
+          "alias_resolution": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 4,
+                "accuracy_points": 12.5,
+                "abstentions": 0,
+                "abstention_points": 0.0
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "causal_disambiguation": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 32,
+                "accuracy_points": 100.0,
+                "abstentions": 8,
+                "abstention_points": 25.0
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "count_with_exclusions": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 15,
+                "accuracy_points": 46.875,
+                "abstentions": 0,
+                "abstention_points": 0.0
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "latest_verified_record": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 26,
+                "accuracy_points": 81.25,
+                "abstentions": 2,
+                "abstention_points": 6.25
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "multi_condition_identity": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 19,
+                "accuracy_points": 59.375,
+                "abstentions": 1,
+                "abstention_points": 3.125
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "object_state_tracking": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 26,
+                "accuracy_points": 81.25,
+                "abstentions": 2,
+                "abstention_points": 6.25
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "rule_exception": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 15,
+                "accuracy_points": 46.875,
+                "abstentions": 3,
+                "abstention_points": 9.375
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "temporal_correction": {
+            "n": 32,
+            "arms": {
+              "A": {
+                "correct": 31,
+                "accuracy_points": 96.875,
+                "abstentions": 7,
+                "abstention_points": 21.875
+              }
+            },
+            "matched_deltas_vs_A": {}
+          }
+        },
+        "split": {
+          "showcase": {
+            "n": 64,
+            "arms": {
+              "A": {
+                "correct": 43,
+                "accuracy_points": 67.1875,
+                "abstentions": 6,
+                "abstention_points": 9.375
+              }
+            },
+            "matched_deltas_vs_A": {}
+          },
+          "stability_test": {
+            "n": 192,
+            "arms": {
+              "A": {
+                "correct": 125,
+                "accuracy_points": 65.104167,
+                "abstentions": 17,
+                "abstention_points": 8.854167
+              }
+            },
+            "matched_deltas_vs_A": {}
+          }
+        }
+      },
+      "descriptive_composite_decomposition_vs_A": {}
+    }
+  },
+  "limitations": [
+    "No statistical inference or causal attribution is performed.",
+    "PARTIAL or INVALID stages have no final experimental interpretation.",
+    "Use the separate mechanical and gate audits before interpreting any adaptation result."
+  ]
+}

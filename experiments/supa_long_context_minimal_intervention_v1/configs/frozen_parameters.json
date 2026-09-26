@@ -1,0 +1,93 @@
+{
+  "_note": "Generated snapshot of live module constants. Not read by any script; the modules are the single source of truth.",
+  "selector (slcmi.context_selection)": {
+    "CHUNK_TARGET_TOKENS": 192,
+    "CHUNK_OVERLAP_SENTENCES": 0,
+    "SELECT_BUDGET_TOKENS": 384,
+    "NEIGHBOUR_RADIUS": 1,
+    "HARD_CEILING_TOKENS": 576,
+    "USE_SENTENCE_ANCHOR": true,
+    "ANCHOR_SENTENCES": 1,
+    "BM25_K1": 1.5,
+    "BM25_B": 0.75,
+    "ORACLE_MIN_CONFIDENCE": 0.34,
+    "n_stopwords": 57
+  },
+  "decoding (slcmi.evaluation)": {
+    "MAX_NEW_TOKENS": 24,
+    "SEED": 17,
+    "DTYPE": "torch.float16",
+    "SYSTEM_PROMPT": "You are answering a closed-context reading test. Use only the supplied context. Reply with the shortest exact answer and no explanation. If the context does not determine the answer, reply UNKNOWN.",
+    "USER_TEMPLATE": "CONTEXT\n{context}\n\nQUESTION\n{question}\n\nANSWER",
+    "do_sample": false,
+    "enable_thinking": false,
+    "scorer": "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py::normalize"
+  },
+  "adapters (slcmi.adapters)": {
+    "PROTECTED_LAYERS": [
+      0,
+      1,
+      2
+    ],
+    "DEFAULT_LAYERS": [
+      17,
+      18,
+      19
+    ],
+    "EXPANDED_LAYERS": [
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "ATTENTION_TARGETS": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "DEFAULT_RANK": 4,
+    "DEFAULT_ALPHA": 8,
+    "DEFAULT_DROPOUT": 0.0
+  },
+  "curriculum (slcmi.training_data)": {
+    "LCR_SFT": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_LCR_SFT_v1\\Rineya_LCR_SFT_v1\\data\\lcr_sft_v1.jsonl",
+    "CURRICULUM_SEED": 20260905,
+    "UNKNOWN_SURFACE": "UNKNOWN"
+  },
+  "preservation (slcmi.preservation)": {
+    "PRESERVATION_CLASSES": [
+      "counting_sets",
+      "conditional_rules"
+    ],
+    "PRESERVATION_PER_CLASS": 100,
+    "PRESERVATION_SEED": 20260905
+  },
+  "statistics (slcmi.stats)": {
+    "BOOTSTRAP_RESAMPLES": 10000,
+    "BOOTSTRAP_SEED": 20260905,
+    "significance_claimed": false
+  },
+  "suites": {
+    "demo": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\Rineya_Long_Context_Demo_v1\\data\\rineya_long_context_demo_full.jsonl",
+    "lcr_dev_source": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_LCR_SFT_v1\\Rineya_LCR_SFT_v1\\data\\lcr_sft_v1.jsonl",
+    "LCR_DEV_SAMPLE": 200,
+    "LCR_DEV_SEED": 20260905
+  },
+  "canonical_checkpoint": {
+    "path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "sha256": {
+      "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+      "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+      "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+      "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+      "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+      "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+      "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+      "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+      "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+      "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+    }
+  }
+}

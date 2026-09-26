@@ -1,0 +1,43 @@
+{
+  "status": "PASS",
+  "created_utc": "2026-09-05T23:05:07.9544294Z",
+  "host_powershell": "C:\\Users\\clclc\\.cache\\codex-runtimes\\codex-primary-runtime\\dependencies\\native\\powershell\\pwsh.exe",
+  "powershell_version": "7.6.5",
+  "scope": "Two disposable hidden PowerShell helpers only; each sleeps briefly then exits 0 or 7. Driver and model processes untouched.",
+  "driver_executed": false,
+  "model_or_gpu_process_started": false,
+  "helper_sha256": "7f98d1617d730b46ce5a3a2f9bb4e66b4fe84b011eeab2969ff175740f9d82f9",
+  "verification_script_sha256": "25374a55d588afb15d9a327196a6f0fb99755462438eb738a949bcb8443f106b",
+  "records": [
+    {
+      "expected_exit_code": 0,
+      "observed_exit_code_from_external_object": 0,
+      "exit_code_matches": true,
+      "process_id": 234512,
+      "expected_start_time_utc": "2026-09-05T23:05:04.9088805Z",
+      "observed_start_time_utc": "2026-09-05T23:05:04.9088805Z",
+      "start_ticks_match": true,
+      "handle_retained_before_wait": true,
+      "external_process_object_used": true,
+      "wait_loop_identity_checks": 1,
+      "wait_elapsed_milliseconds": 1260,
+      "has_exited_after_refresh": true,
+      "hidden_window": true
+    },
+    {
+      "expected_exit_code": 7,
+      "observed_exit_code_from_external_object": 7,
+      "exit_code_matches": true,
+      "process_id": 259488,
+      "expected_start_time_utc": "2026-09-05T23:05:06.4389414Z",
+      "observed_start_time_utc": "2026-09-05T23:05:06.4389414Z",
+      "start_ticks_match": true,
+      "handle_retained_before_wait": true,
+      "external_process_object_used": true,
+      "wait_loop_identity_checks": 1,
+      "wait_elapsed_milliseconds": 1262,
+      "has_exited_after_refresh": true,
+      "hidden_window": true
+    }
+  ]
+}

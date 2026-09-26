@@ -1,0 +1,170 @@
+{
+  "status": "PASS",
+  "start_utc": "20260905T042230_021876Z",
+  "git_commit": "bc7ce209b297c802d491e69ec223e704cec98e56",
+  "git_branch": "research/supa-a1.1-anchor-routed-middle-recurrence-v1",
+  "git_status": "?? experiments/anchor_routed_middle_recurrence_v1/evidence/01_middle_reapplication_screen/\n?? experiments/anchor_routed_middle_recurrence_v1/scripts/diagnose_late_failure.py\n?? experiments/anchor_routed_middle_recurrence_v1/scripts/summarize_results.py",
+  "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "config": {
+    "protocol_version": "1.0",
+    "seed": 17,
+    "threads": 4,
+    "dtype": "float32",
+    "device": "cpu",
+    "use_cache": false,
+    "anchor_layers": [
+      0,
+      1,
+      2
+    ],
+    "baseline_skip_layers": [
+      0,
+      1,
+      2,
+      8,
+      19
+    ],
+    "candidate_layers": [
+      4,
+      5,
+      8,
+      12,
+      13,
+      14,
+      16,
+      17,
+      18,
+      19,
+      25,
+      27
+    ],
+    "applications": [
+      2,
+      3
+    ],
+    "max_new_tokens": 24,
+    "max_prompt_seconds": 90,
+    "max_rss_gib": 8,
+    "top_k": 10,
+    "hidden_rms_ratio_bounds": [
+      0.25,
+      4.0
+    ],
+    "emergency_rms_ratio_bounds": [
+      0.05,
+      10.0
+    ],
+    "minimum_mean_logit_cosine": 0.9,
+    "maximum_mean_kl": 0.5,
+    "maximum_score_drop": 0.0,
+    "maximum_invalid_increase": 0.0,
+    "baseline_cosine_tolerance": 0.02,
+    "smoke_file": "supa_layer_ablation_smoke.jsonl",
+    "development_file": "mergedev_fast.jsonl",
+    "checkpoint_sha256": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026"
+  },
+  "dataset": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale\\Rineya_Cross_Scale_Capability_Transfer_Lab_v1\\data\\evaluation\\supa_layer_ablation_smoke.jsonl",
+  "dataset_sha256": "404c866f64f36422e5e9e5d52170a358d6c2dd28d276492a38f348ce18f2050f",
+  "source_sha256": {
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\evaluation.py": "3688018b74d5b39f34de759c276c111baec2fe495b599241d2feda8bec2f9fa0",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\hooks.py": "902afbb6c22144947aa20a67078f30794d0cdd055bb025a66dfa33b7040db4aa",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\metrics.py": "c2653a5129f4cf03b3c7081d0c99f6540fcefd0d17a717c7132b8c1ccf50ed67",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\provenance.py": "3f84bc41851a4709ff123217b0f781e6d1ec93e3f40dc7c911a95f44c1ee9018",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\reporting.py": "baf24cdddad09c82d0ee10b1f1b367f3c5b701517739afa92aace67c5fc877dc",
+    "experiments\\anchor_routed_middle_recurrence_v1\\src\\armr\\__init__.py": "45bf40eb692379c12c31d90c5e6fe4a78358f28b23783f24a0bf658893ba5065",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\diagnose_late_failure.py": "9d375e0bf9fef2e2b1913b27bb1ed58a92918aef57cce433d6a559946384d484",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\run_experiment.py": "6c89381c7e76fb5398ca57856c94c818cc441124a95c3a575893aedc90d62261",
+    "experiments\\anchor_routed_middle_recurrence_v1\\scripts\\summarize_results.py": "75d33b845ee0aceb6a8c9e36cc58254b38d82acc3504b0ece48ce42c2f8c5ba1",
+    "experiments\\anchor_routed_middle_recurrence_v1\\README.md": "6d8b363bd3da476be75dd4144b2a036cdceea20743dc6eed244b052e8f894579",
+    "experiments\\anchor_routed_middle_recurrence_v1\\configs\\reapplication_screen.json": "207cf9744b7a3c288b6a0dd1f9bd1373f580e7514333bb3ef2b59c82112d373c"
+  },
+  "qwen_implementation_sha256": "fbdcfeeb1b54135ca67ba7df924da92f4b264e1252b517eea2de989289ebaeab",
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.1",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.26200-SP0",
+  "cpu": "AMD64 Family 25 Model 97 Stepping 2, AuthenticAMD",
+  "logical_cpus": 32,
+  "physical_memory_bytes": 16340398080,
+  "device": "cpu",
+  "dtype": "float32",
+  "kv_strategy": "full_prefix_recompute_no_kv",
+  "kv_cache_bytes": 0,
+  "gpu_memory_bytes": null,
+  "model_loads": 1,
+  "training": false,
+  "checkpoint_files_before": {
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+  },
+  "checkpoint_files_after": {
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e"
+  },
+  "state_hash_before": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "state_hash_after": "b23dec7edc2413189c9a35cc7a2596cdc03cb67b08628a0c443173c305d61551",
+  "canonical_unchanged": true,
+  "wall_seconds": 24.56204080000043,
+  "peak_rss_bytes": 3252023296,
+  "decision": {
+    "status": "PASS",
+    "checks": {
+      "same_guard_stopped_forward": true,
+      "recorded_two_applications": true,
+      "restored_logits_bit_identical": true,
+      "state_unchanged": true,
+      "checkpoint_files_unchanged": true,
+      "no_gradients": true,
+      "no_wrapper_left": true
+    },
+    "case_id": "calibration_common_sense_ac2b34a1ecce0a8d",
+    "layer": 27,
+    "applications": 2,
+    "hidden": [
+      {
+        "application": 1,
+        "rms": 22.75017547607422,
+        "l2": 3920.43017578125,
+        "variance": 517.330810546875,
+        "rms_ratio_to_normal": 1.0,
+        "cosine_to_normal": 0.9999998807907104,
+        "delta_to_normal_l2": 0.0,
+        "delta_l2": 5795.03759765625,
+        "cosine_to_previous": 0.8158643841743469,
+        "rho": null,
+        "delta_cosine": null
+      },
+      {
+        "application": 2,
+        "rms": 277.024658203125,
+        "l2": 47738.31640625,
+        "variance": 76719.25,
+        "rms_ratio_to_normal": 12.17681413026747,
+        "cosine_to_normal": -0.16627803444862366,
+        "delta_to_normal_l2": 48544.33203125,
+        "delta_l2": 48544.33203125,
+        "cosine_to_previous": -0.16627803444862366,
+        "rho": 8.376879565178887,
+        "delta_cosine": 0.1353067010641098
+      }
+    ],
+    "generation_performed": false,
+    "interpretation": "PASS means expected safety failure reproduced and isolated; L27 recurrence remains FAIL"
+  }
+}

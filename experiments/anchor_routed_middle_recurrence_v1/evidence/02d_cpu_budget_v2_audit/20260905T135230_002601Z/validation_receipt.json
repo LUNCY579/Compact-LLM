@@ -1,0 +1,22 @@
+{
+  "status": "PASS",
+  "python_executable": "C:/Users/clclc/BusinessProject/Chat-Bubble/.venv/Scripts/python.exe",
+  "checks": [
+    {
+      "command": "python -m pytest -q experiments/anchor_routed_middle_recurrence_v1/tests",
+      "passed": 65,
+      "failed": 0
+    },
+    {
+      "command": "python -m compileall -q experiments/anchor_routed_middle_recurrence_v1/src experiments/anchor_routed_middle_recurrence_v1/scripts experiments/anchor_routed_middle_recurrence_v1/tests",
+      "status": "PASS"
+    },
+    {
+      "command": "git diff --check",
+      "status": "PASS"
+    }
+  ],
+  "real_model_audit": {"passed": 19, "failed": 0},
+  "fidelity": "66 complete prior generations and six timeout prefixes reproduce exactly; first-logit metric differences are zero for all 72 case-runs.",
+  "scope": "The registered A0/A1/A3 matrix only; no router, training, PEFT or sealed evaluation."
+}

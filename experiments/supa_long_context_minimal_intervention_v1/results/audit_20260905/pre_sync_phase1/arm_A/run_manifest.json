@@ -1,0 +1,152 @@
+{
+  "status": "COMPLETE",
+  "stage": "arm_A",
+  "start_utc": "2026-09-05T22:28:41.097094+00:00",
+  "git_commit": "d8475ea3b9de3e17c5193a00ed01cc4aa6f1a136",
+  "git_branch": "research/mini-experiment",
+  "git_status": "?? experiments/supa_long_context_minimal_intervention_v1/",
+  "config": {
+    "schema_version": 2,
+    "stage": "phase1",
+    "smoke": false,
+    "core": "a11",
+    "core_label": "Supa-A1.1 (float16 store)",
+    "core_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+    "dtype": "float16",
+    "device": "cuda",
+    "required_arms": [
+      "A",
+      "B",
+      "C"
+    ],
+    "trainable_layers": [
+      17,
+      18,
+      19
+    ],
+    "protected_layers": [
+      0,
+      1,
+      2
+    ],
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "rank": 4,
+    "alpha": 8,
+    "dropout": 0.0,
+    "max_steps": 300,
+    "step_budget_unit": "optimizer attempts",
+    "grad_accum": 8,
+    "lr": 0.0001,
+    "max_length": 3840,
+    "seed": 17,
+    "train_packs": 600,
+    "dev_packs": 40,
+    "curriculum": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_LCR_SFT_v1\\Rineya_LCR_SFT_v1\\data\\lcr_sft_v1.jsonl",
+    "target_suite": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-cross-scale-mini-experiment\\Rineya_Long_Context_Demo_v1\\data\\rineya_long_context_demo_full.jsonl",
+    "external_scorer_sha256": "92c9e17762ff5979ac6c0657be26ee0a99bfce0620453886a2e2bc81632af1b5",
+    "data_sha256": {
+      "curriculum": "8f0bc0174408eb513851443a6f9c32e2e79a00563fb9d35d659e7d27ab792c9c",
+      "target_suite": "ccd7d70577940b74e945d2eb0ec2fd14391752275b5485fe8736711733bc8f8e",
+      "preservation_counting_sets": "92c4a460086953d3c18b834d89d2da5c866831007a1c5ec0f9a41b0396708db2",
+      "preservation_conditional_rules": "1bd5978f188b3804819fe81981ff41e9d61953bb04611d55d06f425fb819bac9"
+    },
+    "target_context": "FULL",
+    "preservation_classes": [
+      "counting_sets",
+      "conditional_rules"
+    ],
+    "preservation_per_class": 100,
+    "eval_max_new_tokens": 24,
+    "arm": "A"
+  },
+  "canonical_core": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-A1.1-1.1.0-devfreeze",
+  "checkpoint_sha256_before": {
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "source_sha256": {
+    "experiments/supa_long_context_minimal_intervention_v1/configs/frozen_parameters.json": "93521e03a76248cb595eb1858b508704c0e8845b9fb7f05e5842cfc39a84f842",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/audit_data_design.py": "b6fcb0af2a1b5838ea6c95425e0082cbf472eb330444aab840846ed596311984",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/audit_phase1_results.py": "9ec8984b519049710a04548f0d8993e78f6d5499f343b3912223f550b0efaa7d",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/audit_result_numbers.py": "0733c8271ac66c27141afdc37d1e0e0d411c26bd24b851bb5dc9288e258bbc27",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/audit_training_provenance.py": "ddcbe2d35ad4baa2c0afc35f18375829a0dc217864d6fe6afcd9d62223638d57",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/compare_core_gate_arms.py": "5515b7be296445f901f89f929370b6deea648246511e38b8c2a3e5f7c680ce9b",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/emit_frozen_config.py": "8efec1a090513989188ad28abc86790e092ac7dbb0c1126d63e01ccad1362c4e",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase0_analyse.py": "8f765da9483e5333abf2cd3c36cdbe9134700b301397277c7e35b85e8f0e0db9",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase0_build_conditions.py": "f493d4a49d71d1ffa7197e78cbd09bcb3491ada77d4b28fc5f050706a3bb1f7f",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase0_run_eval.py": "d6550dd3f763eec93b2d91ff60975beff2778259a331a32451022a254526d77e",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase1_run.py": "bb3070b8467261cd3f2ad6576991cc1e982cda974f9d66addf2cab5804637d72",
+    "experiments/supa_long_context_minimal_intervention_v1/scripts/phase1_verify_adapters.py": "be9922ba2fdef8c67765f24d9441357feacccf876fdaa383ef91e5d88d169980",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/adapters.py": "08e8b1cd349e875c1b0bf5b35704a1f777fed7eb878ebf401251c16a036c90be",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/context_selection.py": "2830da5aacde6d6859b1d91dfa08b3860dab031f5e008c952e84c2a2bbedfba7",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/evaluation.py": "cf3d57085041610bd69d4e2f07c69a211ed828df0af14afafa88dbfb7434cd03",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/preservation.py": "f67929bb41c31a879dbbb6b76d48d76d42db1f846a4bb94f6eff91c763fda49e",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/provenance.py": "cef36be9dead9c69b9d143bea87086ca2e9e8589d7b78bfa6e082dd7094e9644",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/stats.py": "4b66f7e4cb4592cee76b1dcafaa52c7a10f215f0ee0a4a1c6d0b9ec5b94e4abe",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/suites.py": "c87b7f5220e28ce6b50664b026f2e35a979cf78930e44b05eb407d63ac83bf3c",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/training.py": "b7da076ef654b785747abbf2f161f312f03759d97616c01a20c21e3899c02c6d",
+    "experiments/supa_long_context_minimal_intervention_v1/src/slcmi/training_data.py": "8fef3eda3aaace1b81c09ff27fbdd8b6aceb76766635e04581e0368aba88ee31"
+  },
+  "state_hash_algorithm": "sha256-native-state-v1",
+  "frozen_parameter_hash_algorithm": "sha256-native-frozen-parameters-v1",
+  "torch": "2.12.1+cu126",
+  "transformers": "5.14.1",
+  "python": "3.11.15",
+  "os": "Windows-10-10.0.26200-SP0",
+  "logical_cpus": 32,
+  "physical_memory_bytes": 16340398080,
+  "gpu": {
+    "available": true,
+    "name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "total_bytes": 8585216000,
+    "free_bytes_at_start": 7411335168,
+    "used_by_others_bytes": 1173880832
+  },
+  "end_utc": "2026-09-05T22:32:12.678423+00:00",
+  "checkpoint_sha256_after": {
+    "CORE.json": "bf640ab323d29c2fc18c306294c7e6f7c53e19cd67364f5df8aa041992075914",
+    "FILES.json": "4446aef8d1f19f4c968aaa20636200094da0df7d6e518bca6acc4041896b8b6e",
+    "config.json": "89c4ae7398449895d044750c858614584b07db8d67130074920ef524c6eb5705",
+    "generation_config.json": "0a6ef79013177858dd5820698b12270863e03baf60ec36521e5c6a34da63dbdc",
+    "merges.txt": "8831e4f1a044471340f7c0a83d7bd71306a5b867e95fd870f74d0c5308a904d5",
+    "model.safetensors": "a99f079d32212bbcbb703c2e2bad801ea32d43afea52004f38bf94eec5dc4026",
+    "modeling_supa_a11.py": "b77b7d709fac3690d86f5978d46de409fd7ad3548c66a9d400188c225d99fa3d",
+    "tokenizer.json": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+    "tokenizer_config.json": "d5d09f07b48c3086c508b30d1c9114bd1189145b74e982a265350c923acd8101",
+    "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+  },
+  "canonical_checkpoint_unchanged": true,
+  "resource": {
+    "label": "arm_A",
+    "wall_seconds": 210.218,
+    "peak_rss_bytes": 2547130368,
+    "peak_gpu_allocated_bytes": 1858188800,
+    "peak_gpu_reserved_bytes": 5020581888,
+    "model_loads": 1,
+    "trainable_params": 0,
+    "optimizer_steps_attempted": 0,
+    "optimizer_steps_applied": 0,
+    "steps_skipped_by_scaler": 0,
+    "steps_skipped_by_safety_check": 0,
+    "examples_consumed": 0
+  },
+  "decision": {
+    "arm": "A",
+    "frozen_base_unchanged": true,
+    "evaluation_gate_on": true
+  }
+}
