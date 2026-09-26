@@ -79,8 +79,7 @@ def paired(ref: dict, arm: dict, field: str) -> dict:
             "gained": gained, "lost": lost, "net": gained - lost}
 
 
-def load_c(name: str) -> dict:
-    _, keys = load_c_bank("cfresh")
+def load_c(name: str, keys: list[dict]) -> dict:
     gold = {r["id"]: r["answer"] for r in keys}
     path = SB / "c_preds" / f"{name}.jsonl"
     preds = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
@@ -188,16 +187,19 @@ def main() -> int:
         for path in (SB / "c_preds" / f"{name}.jsonl", SB / "t" / f"{name}.json", SB / "h" / f"{name}.json"):
             if not path.exists():
                 raise SystemExit(f"Stage B incomplete: {path}")
-    t_sha = sha256(T_BANK)
-    t_bank = json.loads(T_BANK.read_text(encoding="utf-8"))
+    t_raw = T_BANK.read_bytes()
+    t_sha = hashlib.sha256(t_raw).hexdigest()
+    t_bank = json.loads(t_raw)
     if len(t_bank["rows"]) != 864:
         raise SystemExit("T_BANK_V5 length mismatch")
-    if sha256(H_BANK) != H_SHA:
+    h_raw = H_BANK.read_bytes()
+    if hashlib.sha256(h_raw).hexdigest() != H_SHA:
         raise SystemExit("H_FRESH sha256 mismatch")
-    h_bank = {r["id"]: r for r in (json.loads(line) for line in H_BANK.read_text(encoding="utf-8").splitlines() if line.strip())}
+    h_bank = {r["id"]: r for r in (json.loads(line) for line in h_raw.decode("utf-8").splitlines() if line.strip())}
     if len(h_bank) != 336:
         raise SystemExit("H_FRESH length mismatch")
-    C = {name: load_c(name) for name in names}
+    _, c_keys = load_c_bank("cfresh")
+    C = {name: load_c(name, c_keys) for name in names}
     T = {name: load_t(name, t_bank, t_sha) for name in names}
     H = {name: load_h(name, h_bank) for name in names}
     tt_t, x_t = T["TT"], T[composite]

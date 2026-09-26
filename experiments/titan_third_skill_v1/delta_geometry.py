@@ -94,9 +94,10 @@ def main() -> int:
         tensor_rows = []
         for key in keys:
             base = files["BASE"].tensor(key)
+            sparse = files["SPARSE"].tensor(key)
             dc = files["C"].tensor(key) - base
-            dt = files["SPARSE"].tensor(key) - base
-            dh = files["TT"].tensor(key) - files["SPARSE"].tensor(key)
+            dt = sparse - base
+            dh = files["TT"].tensor(key) - sparse
             cc = float(np.vdot(dc, dc)); tt = float(np.vdot(dt, dt)); hh = float(np.vdot(dh, dh))
             tc = float(np.vdot(dt, dc)); hc = float(np.vdot(dh, dc)); th = float(np.vdot(dt, dh))
             measures = {"cc": cc, "tt": tt, "hh": hh, "tc": tc, "hc": hc, "th": th}
@@ -107,7 +108,7 @@ def main() -> int:
             tensor_rows.append({"tensor": key, "module": group, "norm_C": math.sqrt(cc),
                                 "cos_C_T": cosine(tc, cc, tt), "cos_C_H_effective": cosine(hc, cc, hh),
                                 "norm_T": math.sqrt(tt), "norm_H_effective": math.sqrt(hh)})
-            del base, dc, dt, dh
+            del base, sparse, dc, dt, dh
         norm_c = math.sqrt(sums["cc"])
         norm_t = math.sqrt(sums["tt"])
         norm_h = math.sqrt(sums["hh"])
