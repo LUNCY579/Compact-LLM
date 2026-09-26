@@ -10,3 +10,4 @@ final-analysis HARNESS_FAILURE ends the attempt; any move after it is an operato
 
 | # | started (UTC) | launcher | exit | completed score files | note |
 |---|---|---|---|---|---|
+| 1 | 2026-09-25 23:33:20 | WMI (wmi_runner.py; log RUN_O_SIDE_LOG.txt, rc RUN_O_SIDE_RC.json) | 1 (after 23 s) | none | Preflight refused before the lease: `NOT STARTED: RAM 3.71 GiB / disk 3.0 GiB` (registered minimum 6 GiB disk). After the ~19:40Z host reboot, commit ~22.8 GB grew the system-managed pagefile to 19.25 GiB. No lease, no score, no build, no PREFLIGHT.json; nothing read. |
