@@ -100,16 +100,29 @@ def h_rows(arm: str) -> dict:
     return {p["id"]: p for p in d["arms"][0]["predictions"]}
 
 
+def world_sign_test(ref: dict, arm: dict, key: str, two_sided: bool) -> dict:
+    """AMENDMENT_1 §1: per-world net change (sum over the world's JSON variants), exact sign test."""
+    net = {}
+    for i, r in ref.items():
+        net[r["parent_id"]] = net.get(r["parent_id"], 0) + int(arm[i][key]) - int(r[key])
+    pos = sum(v > 0 for v in net.values()); neg = sum(v < 0 for v in net.values())
+    p = mcnemar_two_sided(pos, neg) if two_sided else mcnemar_one_sided(pos, neg)
+    return {"worlds": len(net), "worlds_up": pos, "worlds_down": neg, "worlds_tied": len(net) - pos - neg,
+            "p": p, "sided": "two" if two_sided else "one"}
+
+
 def a1() -> dict:
     base, c100 = json192(c_rows("BASE")), json192(c_rows("C100"))
     g, l = paired(base, c100, "semantic_correct")
     p = mcnemar_two_sided(g, l)
-    return {"rule": f"C100 - BASE on C semantic (192 JSON rows) >= +{A1_MIN_NET}, exact McNemar p < {A1_MAX_P}",
+    w = world_sign_test(base, c100, "semantic_correct", two_sided=True)
+    return {"rule": f"C100 - BASE on C semantic (192 JSON rows) >= +{A1_MIN_NET}, exact McNemar p < {A1_MAX_P}; "
+                    f"AND (AMENDMENT_1) exact two-sided world sign test over DEV+CAL worlds p < {A1_MAX_P}",
             "base_semantic": sum(r["semantic_correct"] for r in base.values()),
             "c100_semantic": sum(r["semantic_correct"] for r in c100.values()),
             "c100_strict": sum(r["strict_correct"] for r in c100.values()),
-            "gained": g, "lost": l, "net": g - l, "p_two_sided": p,
-            "pass": (g - l) >= A1_MIN_NET and p < A1_MAX_P}
+            "gained": g, "lost": l, "net": g - l, "p_two_sided": p, "world_level": w,
+            "pass": (g - l) >= A1_MIN_NET and p < A1_MAX_P and w["p"] < A1_MAX_P}
 
 
 def canaries() -> dict:
