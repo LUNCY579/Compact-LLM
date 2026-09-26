@@ -15,7 +15,7 @@ For hidden states X, standard attention forms Q = X W_Q, K = X W_K, V = X W_V (p
 
 MA then uses Q = X W_Q, K = X W_K, V = K + M (Eq. 8). With RoPE, the paper specifies Q^R = RoPE(Q), K^R = RoPE(K), V = K + M (Eq. 9), so the value path uses K before positional rotation.
 
-Qwen3 additionally has QK RMS normalization. The paper authors' reference implementation constructs v = k + m_norm(m) from the raw k_proj output and only afterward applies q_norm / k_norm for attention scoring. The Rineya retrofit therefore uses the raw key projection, before QK normalization and before RoPE, in the MA value path.
+Qwen3 additionally has QK RMS normalization. The paper authors' reference implementation constructs v = k + m_norm(m) from the raw k_proj output and only afterward applies q_norm / k_norm for attention scoring. The Rineya retrofit therefore uses the raw key projection, before QK normalization and before RoPE, in the MA value path. For g>0 the retrofit then hands Q/K/V to the same Transformers attention backend selected by model.config._attn_implementation (with the native eager implementation as fallback), so the experiment does not silently change mask/backend semantics merely because the value construction changed.
 
 The paper uses a separate full table per layer. This branch intentionally does not reproduce that parameterization first.
 
@@ -78,7 +78,7 @@ M2 is mandatory because the primary paper explicitly notes that its reported qua
 5. Added parameter count is exact and receipt-bound.
 6. Changing rank changes parameter count by the analytical formula.
 7. Normalization is independent per token/KV head with intended affine sharing.
-8. Existing attention masks are not rewritten.
+8. Existing attention masks and the native Transformers attention backend are passed through unchanged; g=0 delegates directly to native Qwen3 attention.
 9. Causal behavior is preserved; no future-token leakage in the deterministic toy harness.
 10. Generation-cache continuation matches full-prefix execution in the deterministic toy harness; native cache qualification remains an exact-host gate.
 11. FMA state serializes and reloads exactly.
