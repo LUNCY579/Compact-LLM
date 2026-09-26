@@ -133,5 +133,43 @@
   "training_performed": false,
   "evidence_classification": "mechanical/synthetic qualification evidence only; no architecture improvement claim",
   "head_sha": "7dc0a0a6bbd1733c57d838bb78d3d507d8c40a42",
-  "receipt_parent_head_sha": "6df8b61ac0c8ddfdaaa633d3469bf143769e21af"
+  "receipt_parent_head_sha": "6df8b61ac0c8ddfdaaa633d3469bf143769e21af",
+  "post_qualification_hardening": {
+    "code_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+    "purpose": "Continuation hardening after the original FMA-QUAL-001 qualified head; does not replace or inflate the original exact-host receipt.",
+    "changes": [
+      "preserve the native Transformers attention backend for g>0 instead of silently switching to a handwritten eager path",
+      "bind the calibration teacher to raw k_proj output before QK normalization and RoPE, matching Memory Attention Eq. 8/9 and the authors reference implementation",
+      "add a direct frozen-backbone calibration runner and retain the precomputed-teacher calibration path",
+      "add a 7.4 GiB minimum free-host-RAM guard that refuses weakening",
+      "add redundant budget, causality, cache, serialization, native-Qwen3, and calibration regression tests",
+      "add a GitHub Actions qualification workflow"
+    ],
+    "local_cpu_continuation_check": {
+      "command": "python -m pytest -q experiments/factorized_memory_attention_v1/tests",
+      "mirror_scope": "continuation mirror containing the continuation hardening test suite; Transformers unavailable, so native integration module skipped",
+      "passed": 23,
+      "skipped": 1,
+      "failed": 0,
+      "elapsed_seconds": 1.41,
+      "python": "3.13.5",
+      "torch": "2.10.0+cpu"
+    },
+    "compile_check": "PASS",
+    "static_text_whitespace_and_conflict_scan": "PASS",
+    "github_actions": {
+      "run_id": 36215083474,
+      "workflow": "FMA qualification",
+      "trigger_head_sha": "237d0ccc43cc6d757a79c133efe4cc219c2c7b92",
+      "status": "completed",
+      "conclusion": "failure",
+      "interpretation": "CI_INFRASTRUCTURE_BLOCKED",
+      "evidence": "GitHub reported runner_id=0 and zero job steps; no test or install step executed, so this is not classified as a code/test failure."
+    },
+    "calibration_performed": false,
+    "training_performed": false,
+    "sealed_data_access": false,
+    "architecture_efficacy": "NOT_EVALUATED"
+  },
+  "receipt_binding_semantics": "qualified_head_sha remains the original exact-host mechanical qualification boundary. post_qualification_hardening.code_head_sha binds the later executable hardening state; evidence-only receipt commits necessarily advance the branch beyond that code head."
 }
