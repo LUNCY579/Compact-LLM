@@ -1,0 +1,40 @@
+[wmi_runner] start 2026-09-26 14:59:59 target=C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\run_phase0.py
+[run_phase0] launching: RAM 4.67/4.72 GiB, lease free, waited 10s
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  scorer canary PASS: {'rows_checked': 640, 'shuffled_gold_strict_accuracy_C': 0.0}
+  weight hashes verified for ['BASE', 'SPARSE', 'TT']
+  [gpu-lease] acquired rineya-gpu-0.lock label=triskill001-phase0 token=0c9eca6f
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:00<02:35,  1.99it/s]Loading weights:  54%|#####4    | 168/310 [00:00<00:00, 366.85it/s]Loading weights:  85%|########4 | 262/310 [00:00<00:00, 439.68it/s]Loading weights: 100%|##########| 310/310 [00:00<00:00, 355.69it/s]
+{"arm": "BASE", "bank": "A", "strict_json96": 3, "semantic_json96": 3, "format_json96": 52, "strict_all128": 3}
+{"arm": "BASE", "bank": "C", "strict_json96": 11, "semantic_json96": 15, "format_json96": 47, "strict_all128": 13}
+{"arm": "BASE", "bank": "P", "strict_json96": 0, "semantic_json96": 0, "format_json96": 23, "strict_all128": 3}
+{"arm": "BASE", "bank": "R", "strict_json96": 5, "semantic_json96": 6, "format_json96": 32, "strict_all128": 12}
+{"arm": "BASE", "bank": "S", "strict_json96": 1, "semantic_json96": 6, "format_json96": 2, "strict_all128": 4}
+Loading weights:   0%|          | 0/310 [00:00<?, ?it/s]Loading weights:   0%|          | 1/310 [00:01<05:08,  1.00it/s]Loading weights:   4%|3         | 11/310 [00:01<00:22, 13.31it/s]Loading weights:   6%|6         | 19/310 [00:01<00:12, 23.28it/s]Loading weights:   9%|8         | 27/310 [00:01<00:08, 31.89it/s]Loading weights:  12%|#1        | 37/310 [00:01<00:06, 44.11it/s]Loading weights:  15%|#5        | 47/310 [00:01<00:04, 54.61it/s]Loading weights:  18%|#7        | 55/310 [00:01<00:04, 60.20it/s]Loading weights:  20%|##        | 63/310 [00:01<00:03, 63.79it/s]Loading weights:  23%|##2       | 71/310 [00:01<00:03, 62.77it/s]Loading weights:  26%|##6       | 82/310 [00:02<00:03, 70.52it/s]Loading weights:  30%|##9       | 92/310 [00:02<00:02, 76.26it/s]Loading weights:  33%|###2      | 101/310 [00:02<00:02, 73.78it/s]Loading weights:  35%|###5      | 109/310 [00:02<00:02, 73.11it/s]Loading weights:  38%|###7      | 117/310 [00:02<00:02, 70.37it/s]Loading weights:  40%|####      | 125/310 [00:02<00:03, 58.58it/s]Loading weights:  44%|####3     | 135/310 [00:02<00:02, 64.74it/s]Loading weights:  46%|####5     | 142/310 [00:03<00:03, 54.73it/s]Loading weights:  48%|####7     | 148/310 [00:03<00:03, 52.00it/s]Loading weights:  51%|#####     | 158/310 [00:03<00:02, 61.59it/s]Loading weights:  55%|#####4    | 169/310 [00:03<00:02, 70.38it/s]Loading weights:  57%|#####7    | 177/310 [00:03<00:01, 71.28it/s]Loading weights:  60%|#####9    | 185/310 [00:03<00:01, 65.32it/s]Loading weights:  62%|######1   | 192/310 [00:03<00:01, 59.58it/s]Loading weights:  65%|######4   | 201/310 [00:03<00:01, 59.47it/s]Loading weights:  67%|######7   | 208/310 [00:04<00:01, 56.50it/s]Loading weights:  69%|######9   | 214/310 [00:04<00:01, 52.30it/s]Loading weights:  72%|#######2  | 224/310 [00:04<00:01, 61.13it/s]Loading weights:  75%|#######5  | 233/310 [00:04<00:01, 66.96it/s]Loading weights:  78%|#######8  | 243/310 [00:04<00:00, 74.19it/s]Loading weights:  81%|########  | 251/310 [00:04<00:00, 69.90it/s]Loading weights:  84%|########3 | 259/310 [00:04<00:00, 70.26it/s]Loading weights:  86%|########6 | 268/310 [00:04<00:00, 71.37it/s]Loading weights:  90%|########9 | 278/310 [00:05<00:00, 76.26it/s]Loading weights:  92%|#########2| 286/310 [00:05<00:00, 72.23it/s]Loading weights:  95%|#########4| 294/310 [00:05<00:00, 71.17it/s]Loading weights:  97%|#########7| 302/310 [00:05<00:00, 55.71it/s]Loading weights: 100%|##########| 310/310 [00:05<00:00, 55.85it/s]
+{"arm": "SPARSE", "bank": "A", "strict_json96": 2, "semantic_json96": 3, "format_json96": 21, "strict_all128": 2}
+{"arm": "SPARSE", "bank": "C", "strict_json96": 1, "semantic_json96": 17, "format_json96": 6, "strict_all128": 2}
+  [gpu-lease] released rineya-gpu-0.lock
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\run_phase0.py", line 44, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\run_phase0.py", line 40, in main
+    return screen_source.main()
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\titan_third_skill_v1\screen_source.py", line 136, in main
+    enc = tok(text, return_tensors="pt", add_special_tokens=False).to("cuda")
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\transformers\tokenization_utils_base.py", line 787, in to
+    self.data = {
+                ^
+  File "C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Lib\site-packages\transformers\tokenization_utils_base.py", line 788, in <dictcomp>
+    k: v.to(device=device, non_blocking=non_blocking) if hasattr(v, "to") and callable(v.to) else v
+       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: CUDA error: unknown error
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+[wmi_runner] exit rc=1 after 418s

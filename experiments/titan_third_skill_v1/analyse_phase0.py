@@ -64,8 +64,16 @@ def main() -> int:
     if selected:
         c = contrasts[f"TT-BASE/{selected}"]
         flag = bool(c["net"] >= FLAG_ROWS and c["p_exact_mcnemar"] < 0.05)
+    # Amendment 1 determinism canary: every unit finished in attempt 1 must be byte-identical now.
+    determinism = {}
+    a1 = HERE / "attempt1" / "phase0_predictions"
+    if a1.exists():
+        for p in sorted(a1.glob("*.jsonl")):
+            now = HERE / "phase0_predictions" / p.name
+            determinism[p.stem] = now.exists() and now.read_bytes() == p.read_bytes()
     result = {
         "schema": 1, "experiment": "TRISKILL-001", "phase": 0,
+        "determinism_vs_attempt1": {"units": determinism, "all_identical": bool(determinism) and all(determinism.values())},
         "registered_in": "PHASE0_PREREG.md", "scores_file": "PHASE0_SCORES.json",
         "population": "96 JSON-contract rows per bank (full, counterfactual, distractor); strict = SIF scorer",
         "table": table, "contrasts": contrasts, "G0_HEADROOM": headroom,

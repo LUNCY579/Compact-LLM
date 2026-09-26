@@ -77,10 +77,32 @@ def scorer_canary(banks) -> dict:
     return {"rows_checked": n, "shuffled_gold_strict_accuracy_C": summ["groups"]["all_rows_diagnostic"]["strict_accuracy"]}
 
 
+def unit_path(arm: str, bank: str) -> Path:
+    return PRED_DIR / f"{arm}__atomic_{bank}.jsonl"
+
+
+def unit_complete(arm: str, bank: str, inputs) -> bool:
+    """A unit counts as done only if its file holds exactly this bank's ids with matching prompt hashes.
+
+    Files are written atomically (tmp + rename), so a crash mid-bank leaves no file, never a short one.
+    """
+    p = unit_path(arm, bank)
+    if not p.exists():
+        return False
+    preds = [json.loads(l) for l in p.read_text(encoding="utf-8").splitlines() if l.strip()]
+    want = {r["id"]: hashlib.sha256(r["messages"][1]["content"].encode()).hexdigest() for r in inputs}
+    got = {x["id"]: x["prompt_sha256"] for x in preds}
+    if len(preds) != len(inputs) or got != want:
+        raise SystemExit(f"CORRUPT UNIT {p.name}: refusing to resume over it")
+    return True
+
+
 def main() -> int:
+    """Amendment 1 (ATTEMPT_LOG.md): per-(arm, bank) checkpointing, so a GPU driver reset costs one
+    bank, not the run. Generation, decoding and scoring are unchanged."""
     print("startup checks", flush=True)
-    if OUT.exists() or PRED_DIR.exists():
-        raise SystemExit(f"refusing to overwrite {OUT} / {PRED_DIR}")
+    if OUT.exists():
+        raise SystemExit(f"refusing to overwrite {OUT}")
     template_selftest()
     banks = {b: load_bank(b) for b in BANKS}
     canary = scorer_canary(banks)
@@ -118,43 +140,56 @@ def main() -> int:
         "gpu_lease": str(LOCK), "arms": {},
         "quality_claim": False, "release_permitted": False,
     }
-    PRED_DIR.mkdir()
-    with lease(label="triskill001-phase0", job="source screen: 3 arms x 640 SIF dev rows"):
-        for arm, (d, _) in ARMS.items():
-            t0 = time.time()
-            tok = AutoTokenizer.from_pretrained(str(d), local_files_only=True)
-            model = AutoModelForCausalLM.from_pretrained(str(d), torch_dtype=torch.float32, local_files_only=True,
-                                                         low_cpu_mem_usage=True, device_map={"": "cuda"})
-            model.eval()
-            if next(model.parameters()).dtype != torch.float32:
-                raise SystemExit(f"{arm}: not FP32")
-            arm_rec = {}
-            for bank, (inputs, keys) in banks.items():
-                preds = []
-                for r in inputs:
-                    text = render(r["messages"][0]["content"], r["messages"][1]["content"])
-                    enc = tok(text, return_tensors="pt", add_special_tokens=False).to("cuda")
-                    with torch.inference_mode():
-                        out = model.generate(**enc, do_sample=False, max_new_tokens=MAX_NEW,
-                                             eos_token_id=tok.eos_token_id, pad_token_id=tok.eos_token_id)
-                    gen = tok.decode(out[0, enc["input_ids"].shape[1]:], skip_special_tokens=True)
-                    preds.append({"id": r["id"], "prompt_sha256": hashlib.sha256(r["messages"][1]["content"].encode()).hexdigest(),
-                                  "completion": gen})
-                pp = PRED_DIR / f"{arm}__atomic_{bank}.jsonl"
-                pp.write_text("".join(json.dumps(p, ensure_ascii=False) + "\n" for p in preds), encoding="utf-8", newline="\n")
-                # SIF scorer strips the completion itself; pass the raw generation.
-                summary, rows = score_records(keys, preds)
-                arm_rec[bank] = {"summary": summary, "rows": rows, "predictions_sha256": sha256_file(pp)}
-                g = summary["groups"]
-                js = [x for x in rows if x["variant"] != "alternate_format"]
-                print(json.dumps({"arm": arm, "bank": bank,
-                                  "strict_json96": sum(x["strict_correct"] for x in js),
-                                  "semantic_json96": sum(x["semantic_correct"] for x in js),
-                                  "format_json96": sum(x["format_valid"] for x in js),
-                                  "strict_all128": round(g["all_rows_diagnostic"]["strict_accuracy"] * 128)}), flush=True)
-            result["arms"][arm] = {"seconds": round(time.time() - t0, 1), "banks": arm_rec}
-            del model, tok
-            gc.collect(); torch.cuda.empty_cache()
+    PRED_DIR.mkdir(exist_ok=True)
+    todo = {arm: [b for b, (inputs, _) in banks.items() if not unit_complete(arm, b, inputs)] for arm in ARMS}
+    print(f"  units remaining: { {a: v for a, v in todo.items() if v} }", flush=True)
+    if any(todo.values()):
+        with lease(label="triskill001-phase0", job="source screen: 3 arms x 640 SIF dev rows (resumable)"):
+            for arm, (d, _) in ARMS.items():
+                if not todo[arm]:
+                    continue
+                tok = AutoTokenizer.from_pretrained(str(d), local_files_only=True)
+                model = AutoModelForCausalLM.from_pretrained(str(d), torch_dtype=torch.float32, local_files_only=True,
+                                                             low_cpu_mem_usage=True, device_map={"": "cuda"})
+                model.eval()
+                if next(model.parameters()).dtype != torch.float32:
+                    raise SystemExit(f"{arm}: not FP32")
+                for bank in todo[arm]:
+                    inputs, _ = banks[bank]
+                    preds = []
+                    for r in inputs:
+                        text = render(r["messages"][0]["content"], r["messages"][1]["content"])
+                        enc = tok(text, return_tensors="pt", add_special_tokens=False).to("cuda")
+                        with torch.inference_mode():
+                            out = model.generate(**enc, do_sample=False, max_new_tokens=MAX_NEW,
+                                                 eos_token_id=tok.eos_token_id, pad_token_id=tok.eos_token_id)
+                        gen = tok.decode(out[0, enc["input_ids"].shape[1]:], skip_special_tokens=True)
+                        preds.append({"id": r["id"], "prompt_sha256": hashlib.sha256(r["messages"][1]["content"].encode()).hexdigest(),
+                                      "completion": gen})
+                    pp = unit_path(arm, bank)
+                    tmp = pp.with_suffix(".jsonl.tmp")
+                    tmp.write_text("".join(json.dumps(p, ensure_ascii=False) + "\n" for p in preds), encoding="utf-8", newline="\n")
+                    tmp.replace(pp)
+                    print(f"  unit done {arm}/{bank}", flush=True)
+                del model, tok
+                gc.collect(); torch.cuda.empty_cache()
+    # Aggregate from the unit files only, so a resumed run and a single run score identically.
+    for arm in ARMS:
+        arm_rec = {}
+        for bank, (inputs, keys) in banks.items():
+            pp = unit_path(arm, bank)
+            preds = [json.loads(l) for l in pp.read_text(encoding="utf-8").splitlines() if l.strip()]
+            # SIF scorer strips the completion itself; pass the raw generation.
+            summary, rows = score_records(keys, preds)
+            arm_rec[bank] = {"summary": summary, "rows": rows, "predictions_sha256": sha256_file(pp)}
+            g = summary["groups"]
+            js = [x for x in rows if x["variant"] != "alternate_format"]
+            print(json.dumps({"arm": arm, "bank": bank,
+                              "strict_json96": sum(x["strict_correct"] for x in js),
+                              "semantic_json96": sum(x["semantic_correct"] for x in js),
+                              "format_json96": sum(x["format_valid"] for x in js),
+                              "strict_all128": round(g["all_rows_diagnostic"]["strict_accuracy"] * 128)}), flush=True)
+        result["arms"][arm] = {"banks": arm_rec}
     OUT.write_text(json.dumps(result, indent=1) + "\n", encoding="utf-8", newline="\n")
     print(f"wrote {OUT}", flush=True)
     return 0
