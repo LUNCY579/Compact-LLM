@@ -1,0 +1,23 @@
+{
+ "experiment": "TRISKILL-001",
+ "arm": "TTR",
+ "base": "tt",
+ "base_sha256": "a4d73353db9a91cbba7b4cd7c8fe4fe6822670d10fe523b26a6d651bb9509567",
+ "beta": 0.25,
+ "update": "gaussian_norm_matched_per_tensor",
+ "rand_seed": 20260926,
+ "construction": "FP32(float64(base) + update), per tensor; non-trained tensors copied from base",
+ "trained_C_fp32_sha256": "e42afe6a89231188cf03879647267b2040d2a6fccc1ff1fc3a85448d28c9e447",
+ "delta_C_norm_fro": 0.8575171663087725,
+ "update_norm_fro": 0.21437929157715252,
+ "update_sq_norm_share": {
+  "attn": 0.3996184751320063,
+  "mlp": 0.6002537077507307,
+  "other": 0.00012781711726255062
+ },
+ "weight_sha256": "f8c8c8e0e9b080b040c7ee3004405baddf9b10a0a843496a2d9526c509140aae",
+ "status": "MATERIALIZED_NOT_EVALUATED",
+ "quality_claim": false,
+ "release_permitted": false,
+ "model_calls": 0
+}
