@@ -1,0 +1,139 @@
+{
+ "schema": 1,
+ "experiment": "TRISKILL-001",
+ "stage": "A",
+ "registered_in": "PREREG.md (0d2b64b4) section 6",
+ "canaries": {
+  "K1_base_dev_C_bytes_equal_phase0": true,
+  "K2_tt_T_generations_equal_confirm002_TH25": true,
+  "K3_tt_H_generations_equal_confirm002_TH25": true,
+  "tt_T_strict": 444,
+  "tt_boundary": 86,
+  "expected": {
+   "tt_T_strict": 444,
+   "tt_boundary": 86
+  },
+  "pass": true
+ },
+ "quality_claim": false,
+ "release_permitted": false,
+ "A1": {
+  "rule": "C100 - BASE on C semantic (192 JSON rows) >= +30, exact McNemar p < 0.01; AND (AMENDMENT_1) exact two-sided world sign test over DEV+CAL worlds p < 0.01",
+  "base_semantic": 33,
+  "c100_semantic": 73,
+  "c100_strict": 73,
+  "gained": 57,
+  "lost": 17,
+  "net": 40,
+  "p_two_sided": 3.3971668169915196e-06,
+  "world_level": {
+   "worlds": 64,
+   "worlds_up": 34,
+   "worlds_down": 9,
+   "worlds_tied": 21,
+   "p": 0.00017015517460094998,
+   "sided": "two"
+  },
+  "pass": true
+ },
+ "A2": {
+  "TTC25": {
+   "beta": 0.25,
+   "g_C_semantic_gain": 47,
+   "C_gained": 66,
+   "C_lost": 19,
+   "T_loss": 16,
+   "T_gained": 9,
+   "T_lost": 25,
+   "H_loss": 2,
+   "H_gained": 0,
+   "H_lost": 2,
+   "eligible": false
+  },
+  "TTC50": {
+   "beta": 0.5,
+   "g_C_semantic_gain": 43,
+   "C_gained": 67,
+   "C_lost": 24,
+   "T_loss": 19,
+   "T_gained": 28,
+   "T_lost": 47,
+   "H_loss": 3,
+   "H_gained": 0,
+   "H_lost": 3,
+   "eligible": false
+  },
+  "TTC100": {
+   "beta": 1.0,
+   "g_C_semantic_gain": 40,
+   "C_gained": 64,
+   "C_lost": 24,
+   "T_loss": 84,
+   "T_gained": 36,
+   "T_lost": 120,
+   "H_loss": 1,
+   "H_gained": 6,
+   "H_lost": 7,
+   "eligible": false
+  }
+ },
+ "table": {
+  "TT": {
+   "C_semantic": 37,
+   "C_strict": 0,
+   "T_primary": 444,
+   "H_boundary": 86
+  },
+  "TTC25": {
+   "C_semantic": 84,
+   "C_strict": 84,
+   "T_primary": 428,
+   "T_strict": 428,
+   "T_trailing_periods": 0,
+   "H_boundary": 84,
+   "H_answerable_attempts": 112,
+   "refusals_on_C": 0,
+   "refusals_on_T": 0
+  },
+  "TTC50": {
+   "C_semantic": 80,
+   "C_strict": 80,
+   "T_primary": 425,
+   "T_strict": 425,
+   "T_trailing_periods": 0,
+   "H_boundary": 83,
+   "H_answerable_attempts": 112,
+   "refusals_on_C": 0,
+   "refusals_on_T": 0
+  },
+  "TTC100": {
+   "C_semantic": 77,
+   "C_strict": 77,
+   "T_primary": 360,
+   "T_strict": 360,
+   "T_trailing_periods": 0,
+   "H_boundary": 85,
+   "H_answerable_attempts": 112,
+   "refusals_on_C": 0,
+   "refusals_on_T": 0
+  },
+  "BASE": {
+   "C_semantic": 33,
+   "C_strict": 26
+  },
+  "C25": {
+   "C_semantic": 84,
+   "C_strict": 84
+  },
+  "C50": {
+   "C_semantic": 76,
+   "C_strict": 76
+  },
+  "C100": {
+   "C_semantic": 73,
+   "C_strict": 73
+  }
+ },
+ "verdict": "STOP_NO_ELIGIBLE_BETA",
+ "A3": null
+}
