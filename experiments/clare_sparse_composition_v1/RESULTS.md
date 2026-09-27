@@ -51,12 +51,17 @@ and E both retrain through the sparse path.
 (`qualification/native-20260927/`) was **BLOCKED at preflight on host RAM**: 3.55 GiB free
 against the 3.6 GiB floor. The floor was not changed; attempt 2 ran when RAM allowed.
 
-Provenance caveat: attempt 2 ran on the uncommitted working tree **before** two later changes.
-(a) The evaluation-only weight cache touches only cache paths, which are off unless enabled.
-(b) The port-motivated fixes add validation, failure cleanup, and claim-after-training; they
-change no training arithmetic. That version of `native-qualify` did not yet record a code digest;
-it does now. The report's `config_sha256` equals the committed configuration. A re-qualification
-on the committed code is cheap (≈ 10 min) and is recommended before tier 1.
+**Re-qualified on the committed code (current reference):**
+`qualification/native-20260927-committed-6759d95b/NATIVE_QUALIFICATION.json`: QUALIFIED, 11/11
+gates, git `6759d95b` with a clean experiment tree, code digest `a0306194` (= the committed
+`clare/` package), the same `config_sha256`. **MEASURED: its numerics are bit-identical to
+attempt 2**: the same dense losses (1.35407…, 0.64093…), the same non-zero count after the probe
+(169,812,686) and the same selection report, the same sparse-delta norm (0.0447604578…), the same
+parity (1.9e-5), the same memory peaks, and the same 14 base-competence responses. Only wall-clock
+timings differ (dense 1.80 s/update, sparse 1.84 s, generation 1.18 s/row, selection 37 s). So the
+port-motivated fixes changed no training arithmetic, and the GPU path is run-to-run deterministic
+on these checks. Attempt 2 had run on the uncommitted tree before those fixes and did not record a
+code digest; it is kept as history.
 
 | gate (MEASURED) | result |
 |---|---|
@@ -99,7 +104,8 @@ listed as pending below.
 Status: **ready to launch, resource-gated.** The chain (`run_phase4.py`) is qualified to start; no
 training step, arm or evaluation has run. Open items:
 
-1. the native eval-cache speed/canary check: blocked twice, first on host RAM (0.96 GiB free), then
+1. the native eval-cache speed/canary check (use `--qualification
+   qualification/native-20260927-committed-6759d95b/NATIVE_QUALIFICATION.json`): blocked twice, first on host RAM (0.96 GiB free), then
    at preflight on DISK (`qualification/EVAL_CACHE_CHECK.json`: 0.85 GiB free on C:);
 2. **disk: C: fell from 8.47 GiB to 0.84 GiB free during the session**, from writes outside this
    experiment (none of this study's steps write more than a few MB). Every native step now refuses at

@@ -109,7 +109,9 @@ checkout with the identical `architecture_benchmark_001` tree, digest `a329eb7b`
   `qualification/SYNTHETIC_QUALIFICATION.json`.
 - Phase 3 native qualification: attempt 1 **BLOCKED at preflight on host RAM** (3.55 GiB free vs
   the 3.6 GiB floor; `qualification/native-20260927/`). Attempt 2 **QUALIFIED**, all 11 gates
-  (`qualification/native-20260927-attempt2/`). Earlier in the session the NVIDIA adapter was absent
+  (`qualification/native-20260927-attempt2/`). **Re-qualified on the committed code** `6759d95b`
+  (clean tree, code digest `a0306194`): QUALIFIED, 11/11, numerics bit-identical to attempt 2
+  (`qualification/native-20260927-committed-6759d95b/`, the current reference). Earlier in the session the NVIDIA adapter was absent
   (services disabled 16:00:44–16:01:08Z) and host RAM was at 0.48 GiB.
 - Pending: the native eval-cache speed/canary check (`scripts/eval_cache_check.py`), blocked on host
   RAM (0.96 GiB free) and then on disk (0.85 GiB free on C:, `qualification/EVAL_CACHE_CHECK.json`).
@@ -119,6 +121,6 @@ checkout with the identical `architecture_benchmark_001` tree, digest `a329eb7b`
 Run the cache check before tier 1 (≈ 2 min, CALIBRATION only):
 
 ```powershell
-& C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -B -u scripts\eval_cache_check.py --qualification qualification\native-20260927-attempt2\NATIVE_QUALIFICATION.json --out qualification\EVAL_CACHE_CHECK_2.json
+& C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -B -u scripts\eval_cache_check.py --qualification qualification\native-20260927-committed-6759d95b\NATIVE_QUALIFICATION.json --out qualification\EVAL_CACHE_CHECK_2.json
 ```
 - Phase 4: not started. No real training has occurred.
