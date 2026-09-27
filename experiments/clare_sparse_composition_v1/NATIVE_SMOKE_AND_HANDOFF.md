@@ -75,16 +75,16 @@ run directory). Completed skills, stages and scored rows are skipped.
 Tiers (the chain stops at the first BLOCKED step, so the most important results land first):
 
 GPU time below is DERIVED from the Phase 3 measurements (1.69 s per ≤ 2048-token update ≈ 14 min
-per 1,000-row stage on the longest (R) prompts; 50 s selection; 1.62 s per generated row UNCACHED,
-≈ 55 min per arm's 2,048 scheduled rows). The evaluation-only weight cache is expected to shorten
-evaluation; its native speed is not yet measured.
+per 1,000-row stage on the longest (R) prompts; 37–50 s selection) and from the native cache check
+(1.355 s per generated row with the evaluation cache, ≈ 46 min per arm's 2,048 scheduled rows;
+1.79 s uncached).
 
-| tier | content | new artifacts on C: | GPU time (DERIVED, uncached evaluation) |
+| tier | content | new artifacts on C: | GPU time (DERIVED, cached evaluation) |
 |---|---|---|---|
 | 0 | qualification + LR build gate (≤ 3 dense R stages + 150 CALIBRATION rows each) | ~0 | 0.3–1 h |
-| 1 | seed 0, RUSP: A, D, E (train, evaluate, interact) + base | ~3.5 GiB (A 4 × 0.703 GiB dense; D, E ~0.33 GiB each) | ~6.5 h |
-| 2 | seed 1, RUSP: A, D, E | ~3.5 GiB | ~6 h |
-| 3 | seed 0, PSUR: D, E | ~0.7 GiB | ~4 h |
+| 1 | seed 0, RUSP: A, D, E (train, evaluate, interact) + base | ~3.5 GiB (A 4 × 0.703 GiB dense; D, E ~0.33 GiB each) | ~6 h |
+| 2 | seed 1, RUSP: A, D, E | ~3.5 GiB | ~5.5 h |
+| 3 | seed 0, PSUR: D, E | ~0.7 GiB | ~3.5 h |
 | 4 | seed 0, RUSP: B (3 new dense deltas), C | ~2.4 GiB | ~2.5 h |
 
 **Disk is the binding constraint for the full run:** tiers 0–4 need ≈ 10.1 GiB of artifacts plus the
@@ -113,14 +113,9 @@ checkout with the identical `architecture_benchmark_001` tree, digest `a329eb7b`
   (clean tree, code digest `a0306194`): QUALIFIED, 11/11, numerics bit-identical to attempt 2
   (`qualification/native-20260927-committed-6759d95b/`, the current reference). Earlier in the session the NVIDIA adapter was absent
   (services disabled 16:00:44–16:01:08Z) and host RAM was at 0.48 GiB.
-- Pending: the native eval-cache speed/canary check (`scripts/eval_cache_check.py`), blocked on host
-  RAM (0.96 GiB free) and then on disk (0.85 GiB free on C:, `qualification/EVAL_CACHE_CHECK.json`).
-- **Disk fell from 8.47 to 0.84 GiB free on C: during the session** (writes outside this study).
-  Every native step refuses at preflight until ≥ 4 GiB + its artifacts are free; tier 1 needs ≈ 7.5 GiB.
-
-Run the cache check before tier 1 (≈ 2 min, CALIBRATION only):
-
-```powershell
-& C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe -B -u scripts\eval_cache_check.py --qualification qualification\native-20260927-committed-6759d95b\NATIVE_QUALIFICATION.json --out qualification\EVAL_CACHE_CHECK_2.json
-```
+- Evaluation cache native check **PASS** (`qualification/EVAL_CACHE_CHECK_2.json`): 14/14 recorded
+  responses reproduced byte-for-byte with the caches on, cached == uncached outputs, 1.32× faster
+  (1.786 → 1.355 s/row). The first attempt was BLOCKED on disk (`qualification/EVAL_CACHE_CHECK.json`).
+- **Disk:** 5.42 GiB free on C: (it fell to 0.84 GiB during the session from writes outside this
+  study). Arm A's training preflight needs ≈ 6.8 GiB; all of tier 1 ≈ 7.5 GiB.
 - Phase 4: not started. No real training has occurred.

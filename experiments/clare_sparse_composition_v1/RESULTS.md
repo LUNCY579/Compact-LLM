@@ -94,24 +94,28 @@ format for the others. This is why the protocol reports seen pairs, floors and r
 and does not read a composition number in isolation.
 
 *PROJECTED (DERIVED from the measured rates, not yet observed):* one dense skill stage on 1,000 R
-rows ≈ 14 min; one probe ≈ 3.5 min plus 1 min selection; scoring 960 rows uncached ≈ 26 min. An
-evaluation-only FP32 weight cache was added afterwards; its tiny-model parity test passes (identical
-logits and generations), and its native speed/canary check (`scripts/eval_cache_check.py`) is
-listed as pending below.
+rows ≈ 14 min; one probe ≈ 3.5 min plus 1 min selection; scoring 960 rows ≈ 22 min with the
+evaluation cache (below), ≈ 26 min without.
+
+**Evaluation-only FP32 weight cache — native check PASS** (`qualification/EVAL_CACHE_CHECK_2.json`,
+reference = the committed-code qualification; CALIBRATION rows only). MEASURED: with the caches ON
+the 14 recorded base-competence responses are reproduced byte-for-byte (14/14 canary), and cached and
+uncached generation give identical outputs. Speed 1.786 → 1.355 s/row (**1.32×**). The uncached pass
+ran first and so also carried any warm-up, so the speed-up may be slightly overstated; the
+correctness result does not depend on order. The first attempt (`qualification/EVAL_CACHE_CHECK.json`)
+was BLOCKED at preflight on disk and is kept as history.
 
 ## Phase 4 — not started
 
 Status: **ready to launch, resource-gated.** The chain (`run_phase4.py`) is qualified to start; no
 training step, arm or evaluation has run. Open items:
 
-1. the native eval-cache speed/canary check (use `--qualification
-   qualification/native-20260927-committed-6759d95b/NATIVE_QUALIFICATION.json`): blocked twice, first on host RAM (0.96 GiB free), then
-   at preflight on DISK (`qualification/EVAL_CACHE_CHECK.json`: 0.85 GiB free on C:);
-2. **disk: C: fell from 8.47 GiB to 0.84 GiB free during the session**, from writes outside this
-   experiment (none of this study's steps write more than a few MB). Every native step now refuses at
-   preflight (4 GiB floor). Tiers 0–4 need ≈ 14 GiB free; tier 1 alone needs ≈ 7.5 GiB. Freeing
-   space is an operator decision;
-3. the n = 47 general-retention panel needs an operator decision (it writes into another session's
+1. **disk:** C: has 5.42 GiB free (it fell to 0.84 GiB during the session from writes outside this
+   study, then partly recovered). Arm A's training preflight needs ≈ 6.8 GiB (2.81 GiB of dense deltas
+   plus the 4 GiB floor), so tier 1 refuses at its first training step; all of tier 1 needs ≈ 7.5 GiB
+   and tiers 0–4 ≈ 14 GiB. The LR gate (tier 0) writes almost nothing and fits now. Freeing space is
+   an operator decision;
+2. the n = 47 general-retention panel needs an operator decision (it writes into another session's
    worktree).
 
 ## Recommended next single experiment
