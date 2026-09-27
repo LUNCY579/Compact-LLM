@@ -39,6 +39,10 @@ marker was matched away (B 23/160, D 20/160, p = 0.25) and was **demoted before 
 | **scale amplifies the tiny-delta effect** — 270/384 and 180/256 on a 4B base from 142 s of training, beating every 596M arm on both axes at once | QWEN-FT-001 |
 | multi-reasoning adds nothing here — MR is the *identity* on the delta candidate, 0 repairs / 0 damage over 128 items, role oracle headroom 2 | DMRF-001 |
 
+*(Erratum 2026-09-26: the MAG-001 `TH16s` row above is retracted. 12 of its 16 rows are δ_T's
+own attenuation, and the residual −4 is inside the floor, p = 0.45. See "Erratum (2026-09-26)" at
+the end of this file.)*
+
 ### What the confirmation read decomposes into — **exploratory, receipt-backed**
 
 Receipt: `confirm/decompose_rci.py` → `rci001-20260918/RCI_DECOMPOSITION.json`. Full write-up in
@@ -190,6 +194,9 @@ closed on three grounds — magnitude is the only lever, allocation is already a
 point, and per-item selection is unaddressable. **The untried direction is more than one
 genuinely different delta**, and the open question is whether the 16-row conflict residual
 grows, stays flat, or vanishes with a third and fourth skill.
+
+*(Erratum 2026-09-26: the "16-row residual" cited in the two paragraphs above was retracted. See
+"Erratum (2026-09-26)" at the end of this file.)*
 
 This is the expensive one and it needs a training grant.
 
@@ -374,3 +381,65 @@ failure process lesson 1 already names. `probe/generate_alias.py` is the reconst
 is **proven** rather than asserted: it reproduces the frozen source's existing 64-row chunk
 **byte-for-byte, 64/64**. It also records torch, the CUDA build, the interpreter and the
 generator's SHA, none of which the original manifest did.
+
+---
+
+# Erratum (2026-09-26) — the "16-row residual of genuine conflict" is retracted
+
+Appended, not rewritten. Lines 35, 190 and 195 stand as written.
+
+**What this agenda says.**
+
+- Line 35: *"the composition penalty **partitions**: ~73% magnitude, a real **16-row residual**
+  of genuine conflict"* (MAG-001 `TH16s`).
+- Line 190: *"near-orthogonal deltas still interfere, with a 16-row residual beyond magnitude"*.
+- Line 195: *"the open question is whether the 16-row conflict residual grows, stays flat, or
+  vanishes with a third and fourth skill"*.
+
+**Why it does not hold.** `TH16s` rescales the *sum*:
+
+    TH16s = s_t * ( P16(delta_T) + P16(delta_H) )      s_t min 0.5175 / median 0.6750 / max 0.7496
+
+So δ_T inside it sits at ~68.9 % of its solo strength, and the 16 rows compared two different
+δ_T magnitudes. The control holds δ_T at the same `s_t` with no δ_H. It is T16s-solo in
+`ATTENUATION_CORRECTION_20260918` and SCALED_T in SCALED-T-001, and it splits the 16 rows:
+
+| arm | acquisition /384 | step | paired p |
+|---|---:|---|---:|
+| T16 — `P16(δ_T)` at full strength | 235 | — | — |
+| T16s-solo / SCALED_T — `s_t · P16(δ_T)`, no δ_H | 223 | attenuation **−12** | 0.043 |
+| TH16s — `s_t · (P16(δ_T) + P16(δ_H))` | 219 | second skill **−4** | 0.45 |
+
+**12 of the 16 rows are δ_T's own attenuation.** The remaining 4 are inside the 7-row floor.
+With 16 discordant pairs, a 10-row effect would have reached p ≤ 0.05, so this is a powered null.
+The conflict term is bounded below the instrument's resolution, which is not the same as
+measured at zero. MAG-001 Amendment 1 (2026-09-21) withdraws the "genuine skill-conflict
+component". It states that magnitude explains effectively all of the composition penalty, not
+~73 %.
+
+This agenda's own *UPDATE 2026-09-18 (late)*, §3 (*"Matched magnitude" needs the question
+matched on what*), already reported the 68.9 % figure from `analysis/norm_audit.py`. It did not
+carry it back to these three lines.
+
+**What this changes here.**
+
+- **Line 35's row:** the composition penalty is effectively all magnitude. The second-skill term
+  is −4, p = 0.45, and is not a measured conflict.
+- **Direction 3 (lines 188–196) loses one of its two supports.** The TH16s evidence gives no
+  support for the "still interfere" clause at line 190 beyond the bound above. There is no
+  measured conflict residual to track across a third and fourth skill. The redundancy-null leg
+  is untouched: +31 is thin because every arm is a scalar variant of one δ. More than one
+  genuinely different delta also remains untried. So the direction stands, but its open
+  question becomes whether the second-skill term stays inside the floor as skills are added.
+  Per Amendment 1, giving each delta its own coefficient instead of rescaling the sum recovers
+  acquisition to 235.
+
+**Correcting sources:**
+
+- `experiments/delta_multi_reasoning_v1/analysis/COMPOSITION_PAIRED_20260920.md` (this branch):
+  the construction and the `s_t` spread (lines 79–81), and the SCALED-T / SCALED-H synthesis.
+- Records repo `rineya-dataset-retention-records`:
+  - `ATTENUATION_CORRECTION_20260918.md`: the 235 → 223 → 219 decomposition and its retractions.
+  - `NORM_AUDIT.json` (`component_doses_inside_TH16s`), written by `analysis/norm_audit.py`.
+  - `mag001-20260918/MAG001_RESULTS_PARTIAL.md`, Amendment 1 (2026-09-21).
+  - `scaledt001-20260920/` (SCALED_T scored 223).
