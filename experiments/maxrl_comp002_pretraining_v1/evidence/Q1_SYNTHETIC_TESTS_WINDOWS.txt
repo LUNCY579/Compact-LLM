@@ -1,0 +1,17 @@
+2026-09-26 local, candidate runtime:
+C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe
+
+Command:
+python -m pytest -q experiments/maxrl_comp002_pretraining_v1/tests
+
+Result:
+..............................................                           [100%]
+46 passed in 3.27s
+
+After adding a tied-state positive control and a one-element mutation negative
+control for the Q1 loader fingerprint, the same suite was rerun:
+................................................                         [100%]
+48 passed in 7.80s
+
+This covers synthetic mechanics tests only. It does not establish native model
+loading, generation, gradient correctness or training readiness.
