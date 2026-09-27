@@ -169,6 +169,12 @@ Three cost terms, only one of which orthogonality touches:
 | **Cross-skill interference** | 223 → 219 = **4 rows**, paired p = .45 | Yes — and this analysis says it is genuinely small. |
 | **Donor's own retention damage** | Opallo long-context strict 161 → 135/256 | **No.** Imported at any coefficient. |
 
+*(Erratum 2026-09-26: this table's first row misstates the construction. The 12 rows are δ_T
+alone, scaled by the per-tensor factor `s_t` (~69 % of solo strength) that the sum-rescaled
+rank-16 composition `TH16s` applies to δ_T + δ_H. No donor was at half strength and no 0.5/0.5
+soup was measured. See "Erratum (2026-09-26)" at the end of this file; the table is left as
+written.)*
+
 The strength-matched decomposition is from `ATTENUATION_CORRECTION_20260918`. The term
 orthogonality governs is the one that was already nonsignificant; the dominant term is
 attenuation, which a 0.5/0.5 average pays by construction. That is the concrete case for
@@ -217,3 +223,58 @@ carries 83.6% of the *norm* — which is **70.0% of the energy** (0.836² = 0.69
 python subspace.py --k 32 --output SUBSPACE.json
 python controls.py
 ```
+
+---
+
+# Erratum (2026-09-26) — the attenuation row misstates how the 235 → 223 → 219 arms were built
+
+Appended, not rewritten. The text above stands as written.
+
+**What the cost-terms table says (line 168):** *"Attenuation — each donor at half strength in a
+0.5/0.5 soup | 235 → 223 = 12 rows"*. The same framing recurs at line 180 (*"which a 0.5/0.5
+average pays by construction"*) and line 209 (*"Attenuating a delta to half strength … cost 12
+rows"*).
+
+**What was actually measured.** The 235 → 223 → 219 decomposition comes from the rescaled
+rank-16 composition arm `TH16s`, not from a soup:
+
+```
+TH16s = s_t * ( P16(delta_T,t) + P16(delta_H,t) )      per 2D tensor
+s_t   = ||P16(delta_T,t)|| / ||P16(delta_T,t) + P16(delta_H,t)||
+
+s_t over 220 tensors:  min 0.5175   median 0.6750   max 0.7496   (0 fallbacks)
+```
+
+The rescale is applied to the **sum**, so each skill sits at **~68.9 % of its solo strength**
+(`T_content_as_fraction_of_solo_T16 = 0.6891`), not 50 %, and no tensor's factor reaches 0.5.
+The two deltas are δ_T (the RRP-015 generator update, rank-16 truncated) and δ_H (the boundary /
+gate skill). They are **not** dSparse and dOpallo, the pair this analysis studies.
+
+| arm | construction | acquisition /384 | step | paired p |
+|---|---|---:|---|---:|
+| T16 | `P16(δ_T)` at full strength | 235 | — | — |
+| T16s-solo | `s_t · P16(δ_T)`, no δ_H | 223 | attenuation **−12** | 0.043 |
+| TH16s | `s_t · (P16(δ_T) + P16(δ_H))` | 219 | second skill **−4** | 0.45 |
+
+**What this changes.** The 12 rows are the cost of scaling δ_T alone down to the ~0.69 of its
+solo strength that it has inside the sum-rescaled composition. They are **not** a measured cost
+of a 0.5/0.5 soup, and no 0.5/0.5 soup of dSparse and dOpallo was scored for this table. The
+sizes in its first two rows are borrowed from the δ_T / δ_H pair. The nearest measured half-strength point is INT-001's
+α = 0.50 on the full, untruncated δ_T, at 219/384 against 235 at α = 1
+(`int001-20260917/INT001_RESULTS.md`). That is a different construction, cited for scale only.
+
+**What does not change.** The ranking the table argues from still holds. Attenuation is
+significant (p = 0.043), the second-skill term is inside the 7-row floor (p = 0.45), and
+attenuation is a property of the coefficient, not the angle. Line 209's conclusion also
+survives. The removed component `(1 − s_t) · P16(δ_T)` is 25–48 % of the truncated delta's
+norm per tensor, which is still a smaller relative change than the 50–65 % BF16 noise that moved
+acquisition by one row. So *"Frobenius norm is a poor predictor of functional effect"* is
+unaffected.
+
+**Correcting sources:**
+
+- `research/delta-multi-reasoning-factorial-v1:experiments/delta_multi_reasoning_v1/analysis/COMPOSITION_PAIRED_20260920.md`
+  — the construction and the `s_t` spread (lines 79–81), and the SCALED-T synthesis.
+- Records repo `rineya-dataset-retention-records`: `ATTENUATION_CORRECTION_20260918.md` (the
+  235 → 223 → 219 table and both p values) and `NORM_AUDIT.json`
+  (`component_doses_inside_TH16s`).
