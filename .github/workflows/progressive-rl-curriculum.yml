@@ -1,0 +1,32 @@
+name: Progressive RL curriculum tests
+on:
+  push:
+    branches: [research/progressive-rl-curriculum-v1]
+    paths:
+      - 'experiments/progressive_rl_curriculum_v1/**'
+      - '.github/workflows/progressive-rl-curriculum.yml'
+  pull_request:
+    paths:
+      - 'experiments/progressive_rl_curriculum_v1/**'
+      - '.github/workflows/progressive-rl-curriculum.yml'
+permissions:
+  contents: read
+jobs:
+  controller:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m unittest discover -s experiments/progressive_rl_curriculum_v1/tests -p test_core.py -v
+      - run: python -m experiments.progressive_rl_curriculum_v1 demo --run-dir "${{ runner.temp }}/prlc-demo"
+  torch-cpu:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install 'torch>=2.7,<3' --index-url https://download.pytorch.org/whl/cpu
+      - run: python -m unittest discover -s experiments/progressive_rl_curriculum_v1/tests -v

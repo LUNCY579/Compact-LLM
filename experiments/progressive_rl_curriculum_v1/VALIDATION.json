@@ -1,0 +1,75 @@
+{
+  "experiment": "PRLC-001",
+  "validation_date": "2026-09-27",
+  "base_commit": "b0ca54bdc1b69e2b19d7baeca2e3fdde3ff0a7b2",
+  "branch": "research/progressive-rl-curriculum-v1",
+  "environment": {
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu",
+    "platform": "Linux CPU",
+    "cuda_available": false
+  },
+  "tests": {
+    "command": "python -m unittest discover -s experiments/progressive_rl_curriculum_v1/tests -v",
+    "passed": 90,
+    "failed": 0,
+    "skipped": 0,
+    "test_log_sha256": "8d59915b6c7f8142ec6aa2e98fc6a06394b753341924243aab16bb3a9de5f7c6",
+    "scope": "New additive package only; not the entire repository test suite"
+  },
+  "compileall": "PASS",
+  "config_parse": {
+    "rineya_344m.json": "PASS",
+    "rineya_596m.json": "PASS"
+  },
+  "synthetic_end_to_end": {
+    "command": "python -m experiments.progressive_rl_curriculum_v1 demo --run-dir <new-output-directory>",
+    "status": "COMPLETE",
+    "stage": "consolidation",
+    "optimizer_updates": 12,
+    "generated_tokens": 10808,
+    "rollout_calls": 2288,
+    "identity": {
+      "schema": 1,
+      "plan": "8d4ee01023c4eafe9ffbe3d8fcdbd70685195a283e9a4eaf9d237a8433d69ed8",
+      "catalog": "9a51848f18ddf17d04759c333b61047704de5ba20a1dae463927c50b0a1d967b",
+      "backend": {
+        "kind": "synthetic",
+        "implementation": "bernoulli-arithmetic-v1"
+      },
+      "source": "42f43dc66e1dc8db9608dd2067f6777a059cf4ddc5864561d614f99ef27e4d25"
+    },
+    "native_model_run": false,
+    "report_sha256": "8a6bc02fdf24c43934f5174ef205d8dd589cca3f12df92b1f05fb5f506200f86"
+  },
+  "native_hf_loader": "IMPLEMENTED_NOT_EXECUTED",
+  "rineya_model_loads": 0,
+  "rineya_training_runs": 0,
+  "gpu_training_runs": 0,
+  "mimo_environment_executions": 0,
+  "pretrained_model_downloads": 0,
+  "live_mimo_runtime": "NOT_IMPLEMENTED_IMPORT_QUARANTINE_ONLY",
+  "github_ci": "Workflow supplied; local validation is not a remote CI result",
+  "source_sha256": {
+    ".github/workflows/progressive-rl-curriculum.yml": "91143c66bbb363b390aa50204f9d0242035660e41fb73594cd405e363d563a3e",
+    "docs/PROGRESSIVE_RL_CURRICULUM.md": "53df360e85abcfd19a1f15bd5257f56f91649f5f6fc400d8b8a93f269a0d36cc",
+    "experiments/progressive_rl_curriculum_v1/README.md": "38a6cdf053bb0b34ad7e68e346afce38417b26e1118d7e5e650b860b00537dd2",
+    "experiments/progressive_rl_curriculum_v1/RECONNAISSANCE.md": "96bacefea508bb3a341abd7a53b76215f708f9a5e8d189579aff2476eb2a4338",
+    "experiments/progressive_rl_curriculum_v1/SOURCES.md": "33ad668aa2648247c7ee0f25987ad3a71081488e42dc1ff81b6d35952f11d299",
+    "experiments/progressive_rl_curriculum_v1/__init__.py": "250e2e05053ee90c691593dcd037461c232c62d35a09357e38547313955f29e2",
+    "experiments/progressive_rl_curriculum_v1/__main__.py": "935a1c1166b0c1ea35a82256345000bf2c73ded718d77773bc27a71ecce28f7d",
+    "experiments/progressive_rl_curriculum_v1/backends.py": "8bf23bcb6d49a47343c9f0df93f9a3ed6aa226dbbd9f7b3666597f9769be0ff8",
+    "experiments/progressive_rl_curriculum_v1/cli.py": "964fac7175e3b8de2a0305397ae9e1e7d52eb81ab606bf38d506a2756a34f3cd",
+    "experiments/progressive_rl_curriculum_v1/configs/rineya_344m.json": "c9e974f6ef0df401afb1e17cea776d2c536262626b0c780fe0dc9543beda0bb0",
+    "experiments/progressive_rl_curriculum_v1/configs/rineya_596m.json": "524b594cb177d922f6ed6f752827e96b554502cea80a81fc939e9c5658f635eb",
+    "experiments/progressive_rl_curriculum_v1/curriculum.py": "d1803699b3f2bdae086531b4edd0084a4fd19b409cd7967189fca8185883357e",
+    "experiments/progressive_rl_curriculum_v1/data.py": "a223d6ef57245e25d2a8964341f21650726562ed40278e049bed9b3c02048e2e",
+    "experiments/progressive_rl_curriculum_v1/engine.py": "23e560cf8dca281ac02a3ac49f22edf0ba2dbf768a5f622f3be1c1d272f1c0ef",
+    "experiments/progressive_rl_curriculum_v1/evidence.py": "e081149ea4a4b4c99820e95409e333247ad716130a17fc240bc52948fe5eaa28",
+    "experiments/progressive_rl_curriculum_v1/objectives.py": "365a3c1d1a580523a49391a9440e3a48d855f635c8875a9e6b615c242b0cbe08",
+    "experiments/progressive_rl_curriculum_v1/requirements-native.txt": "a7939ffdc62be1e0f959db487c25020f3e8a553d1d677c96df12030687b7f199",
+    "experiments/progressive_rl_curriculum_v1/schema.py": "29ec473d097dfb3ffe0f8c26c9ad55674c6c024ce503720751df22d4390c779b",
+    "experiments/progressive_rl_curriculum_v1/tests/test_core.py": "8a4b91d8a57810a0091b508eac9efb8743ca7b794fc618e390ee42b59bf91a36",
+    "experiments/progressive_rl_curriculum_v1/tests/test_torch_backend.py": "4cad961341fa5a88a20f42c67a7219a9f75da6894ce5e4730668f0e7191f8601"
+  }
+}

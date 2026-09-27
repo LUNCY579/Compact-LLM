@@ -1,0 +1,119 @@
+{
+  "name": "rineya-596m-progressive-rl-v1",
+  "stages": [
+    {
+      "name": "foundation",
+      "fraction": 0.1,
+      "source_weights": {
+        "rineya_exact": 1.0
+      },
+      "band_weights": {
+        "unknown": 0.2,
+        "frontier": 0.55,
+        "easy": 0.2,
+        "hard": 0.05
+      },
+      "replay_fraction": 0.1,
+      "group_size": 4,
+      "batch_tasks": 10,
+      "max_new_tokens": 512,
+      "max_updates": 40,
+      "eval_every": 5
+    },
+    {
+      "name": "expansion",
+      "fraction": 0.25,
+      "source_weights": {
+        "rineya_exact": 1.0
+      },
+      "band_weights": {
+        "unknown": 0.2,
+        "frontier": 0.55,
+        "easy": 0.2,
+        "hard": 0.05
+      },
+      "replay_fraction": 0.15,
+      "group_size": 4,
+      "batch_tasks": 10,
+      "max_new_tokens": 512,
+      "max_updates": 60,
+      "eval_every": 5
+    },
+    {
+      "name": "broadening",
+      "fraction": 0.5,
+      "source_weights": {
+        "rineya_exact": 1.0
+      },
+      "band_weights": {
+        "unknown": 0.2,
+        "frontier": 0.55,
+        "easy": 0.2,
+        "hard": 0.05
+      },
+      "replay_fraction": 0.15,
+      "group_size": 4,
+      "batch_tasks": 10,
+      "max_new_tokens": 512,
+      "max_updates": 80,
+      "eval_every": 5
+    },
+    {
+      "name": "consolidation",
+      "fraction": 1.0,
+      "source_weights": {
+        "rineya_exact": 1.0
+      },
+      "band_weights": {
+        "unknown": 0.2,
+        "frontier": 0.55,
+        "easy": 0.2,
+        "hard": 0.05
+      },
+      "replay_fraction": 0.2,
+      "group_size": 4,
+      "batch_tasks": 10,
+      "max_new_tokens": 512,
+      "max_updates": 80,
+      "eval_every": 5
+    }
+  ],
+  "gates": {
+    "min_eval_groups": 128,
+    "min_train_groups": 16,
+    "min_mixed_fraction": 0.1,
+    "min_valid_action_rate": 0.95,
+    "min_gain_lcb": 0.0,
+    "max_retention_drop": 0.02,
+    "max_truncation": 0.1,
+    "consecutive_passes": 2,
+    "min_observations": 16,
+    "stale_after_updates": 5,
+    "zero_signal_patience": 3,
+    "bootstrap_samples": 1000
+  },
+  "limits": {
+    "generated_tokens": 10000000,
+    "processed_tokens": 30000000,
+    "rollout_calls": 100000,
+    "optimizer_steps": 1000,
+    "wall_seconds": 86400,
+    "max_prompt_tokens": 512,
+    "max_context_tokens": 1024,
+    "host_free_gib": 7.4,
+    "worker_free_gib": 6.0,
+    "gpu_free_gib": 4.0,
+    "disk_free_gib": 4.0
+  },
+  "seed": 20260927,
+  "qualification_tasks": 32,
+  "learning_rate": 1e-05,
+  "kl_beta": 0.02,
+  "clip_epsilon": 0.2,
+  "trainable_patterns": [
+    ".*lora_[AB].*"
+  ],
+  "replay_ce_weight": 0.1,
+  "bootstrap_max_steps": 20,
+  "schema": 1
+}
