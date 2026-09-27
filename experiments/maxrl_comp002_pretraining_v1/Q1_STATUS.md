@@ -21,7 +21,8 @@ status remains in force.
   below the model config's 40,960 positions. The tokenizer reports no BOS ID
   while config/generation files list 151643; the actual chat prefix, EOS and
   PAD IDs are recorded in the tokenizer receipt. TEST/CHALLENGE were not read.
-- The Q0/Q1 synthetic suite passes 64 tests, including a loaded-state
+- The original v1+v2 source suite passes **462 tests** in the candidate
+  Windows runtime. The Q0/Q1 synthetic suite passes 64 tests, including a loaded-state
   one-element mutation negative control, bounded strict/content parser
   negatives and parent-cluster RS repair bookkeeping. These are **synthetic
   mechanics**, not pretrained model evidence.
