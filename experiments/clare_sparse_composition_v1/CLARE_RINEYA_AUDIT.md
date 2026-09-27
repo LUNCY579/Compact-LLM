@@ -75,6 +75,40 @@ scorer; and the analysis metrics.
 | parent-line separation results (random mask = expectation, DARE = addition, module = scalar, orthogonality = nothing) | R | CONFIRM-001, INTERFERENCE-MECH, OSIDE-001, ARMPERP records |
 | Titan recipe: FP32, TF32 off, AdamW (0.9, 0.95), clip 1, WSD 20/60/20, ≤ 2048-token groups, answer+EOS loss, peak LR 1e-5, 5.4 s/update | R | Titan CORE.json and steps logs |
 
+## 6b. The superseded parallel implementation (added 2026-09-27, after the first commit)
+
+A second agent, given the same brief, pushed its own implementation to the requested branch name
+(`research/titan-clare-sparse-composable-skills-v1`, `76230adc` then `e320ba33`) while this one was
+in progress. Both used `experiments/clare_sparse_composition_v1/`, colliding on 6 paths. It was
+Linux/CPU-only (torch 2.10.0+cpu, no transformers): 87 passing CPU tests and a five-arm synthetic
+run, with native preflight BLOCKED and zero model loads.
+
+The operator made `...-v1-claude` canonical and asked for the CPU tests to be merged in. The merge
+uses strategy "ours" (history preserved, tree unchanged), and every one of its test cases was
+re-expressed against the canonical API (`tests/test_ported_e320ba33.py`). **Control:** the ported
+cases were run against the pre-port canonical commit `7c0f18ef`. 30 failed. Two were artifacts of
+the control copy not being a git repository; the other **28 exposed 10 real gaps**, all now fixed:
+
+1. `ArmSpec` accepted rho 0/1/NaN, non-skill order entries ("X", "RU", ints), lists and bool seeds;
+2. selection silently cast a float eligibility mask to bool;
+3. no training-boundary check: empty rows/groups, out-of-range indices, and rows whose provenance
+   said another skill or a non-TRAIN role were all accepted;
+4. a mid-skill exception left an open stage and a frozen delta on the host (now cleaned up, and a
+   skill's coordinates are claimed only after its training succeeds);
+5. the same for non-finite losses and guard aborts;
+6. a missing footprint module raised `AttributeError`, and a float64 model was accepted;
+7. zero-norm geometry produced NaN cosine and a 0.0 Jaccard; the NaN would have crashed the
+   `allow_nan=False` result writer (both are now `None`);
+8. `vocab_interaction` broadcast mismatched shapes silently;
+9. the corpus adapter could not be tested on a fixture corpus (its manifest pin is now a parameter);
+10. `metrics.paired` compared rows scored under different registrations.
+
+Four cases target deliberate design differences and keep the invariant rather than the letter:
+importance ties (seeded hash, not index order), an empty capacity pool (refuses, not an empty
+mask), weight decay (the registered recipe requires 0), and "acquisition" (accuracy after the
+skill's own stage, not the gain over the previous stage). One has no counterpart: the
+`shared_private` merge helper.
+
 ## 7. Hazards carried into the design
 
 1. **Host RAM is the binding resource** (15.2 GB shared by several live sessions): models load with

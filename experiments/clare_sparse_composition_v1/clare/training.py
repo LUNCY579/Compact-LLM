@@ -78,11 +78,17 @@ class DeltaHost:
         for slot in footprint:
             if not slot.name.endswith(".weight"):
                 raise ValueError(f"{slot.name}: footprint slots must be Linear weights")
-            module = model.get_submodule(slot.name[: -len(".weight")])
+            try:
+                module = model.get_submodule(slot.name[: -len(".weight")])
+            except AttributeError as exc:
+                raise ValueError(f"{slot.name}: no such module in the model") from exc
             if not isinstance(module, nn.Linear):
                 raise TypeError(f"{slot.name}: expected nn.Linear, got {type(module).__name__}")
             if tuple(module.weight.shape) != slot.shape:
                 raise ValueError(f"{slot.name}: shape {tuple(module.weight.shape)} != footprint {slot.shape}")
+            if module.weight.dtype not in (torch.float32, torch.bfloat16, torch.float16):
+                raise ValueError(f"{slot.name}: unsupported weight dtype {module.weight.dtype} "
+                                 "(deltas are FP32 over a BF16/FP16/FP32 base)")
             st = _SlotState(slot, module)
             module.forward = types.MethodType(_delta_forward(self, st), module)
             self.slots[slot.name] = st
@@ -339,6 +345,8 @@ def run_stage(host: DeltaHost, rows: Sequence[dict], groups: Sequence[Sequence[i
     params = host.trainable_parameters()
     if not params:
         raise RuntimeError("no trainable parameters: open a stage first")
+    if not groups or any(len(g) == 0 for g in groups):
+        raise ValueError("no update groups, or an empty group: refusing a zero-step stage")
     opt = optimizer or make_optimizer(params, recipe)
     total = total_tokens or sum(len(rows[i]["ids"]) for g in groups for i in g)
     done_tokens = sum(len(rows[i]["ids"]) for g in groups[:start_update] for i in g)

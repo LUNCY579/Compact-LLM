@@ -38,10 +38,11 @@ def pair_geometry(a: Delta, b: Delta) -> dict:
         inter += int(both.sum())
         union += int((sx | sy).sum())
         agree += int((np.sign(x[both]) == np.sign(y[both])).sum())
-    cos = dot / math.sqrt(na * nb) if na > 0 and nb > 0 else float("nan")
+    # Undefined quantities are None (never NaN): results are written with allow_nan=False.
+    cos = dot / math.sqrt(na * nb) if na > 0 and nb > 0 else None
     return {"dot": dot, "cosine": cos, "norm_a": math.sqrt(na), "norm_b": math.sqrt(nb),
             "nonzero_a": nnz_a, "nonzero_b": nnz_b, "support_intersection": inter,
-            "support_union": union, "jaccard": inter / union if union else 0.0,
+            "support_union": union, "jaccard": inter / union if union else None,
             "sign_agreement_on_overlap": agree / inter if inter else None,
             "overlap_coordinates_for_sign_agreement": inter}
 

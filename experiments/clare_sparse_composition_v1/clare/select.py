@@ -161,10 +161,21 @@ def select_smallest(fp: Footprint, provider: KeyProvider, budget: int,
 
 # -- convenience wrappers -----------------------------------------------------------------
 
+def _eligible(slot: Slot, arr) -> np.ndarray:
+    """Eligibility must be an explicit boolean array of the slot's size (no silent casting)."""
+    a = np.asarray(arr)
+    if a.dtype != np.bool_:
+        raise ValueError(f"{slot.name}: eligibility must be boolean, got {a.dtype}")
+    a = a.reshape(-1)
+    if a.size != slot.numel:
+        raise ValueError(f"{slot.name}: eligibility has {a.size} entries, slot has {slot.numel}")
+    return a
+
+
 def select_random(fp: Footprint, eligible: Mapping[str, np.ndarray], budget: int,
                   key: np.uint64) -> tuple[dict[str, np.ndarray], SelectionReport]:
     def provider(slot: Slot):
-        return random_keys(slot, key), np.asarray(eligible[slot.name], dtype=bool).reshape(-1)
+        return random_keys(slot, key), _eligible(slot, eligible[slot.name])
     return select_smallest(fp, provider, budget)
 
 
@@ -179,6 +190,6 @@ def select_top_importance(fp: Footprint, importance: Mapping[str, np.ndarray] | 
         if eligible is None:
             elig = np.ones(slot.numel, dtype=bool)
         else:
-            elig = np.asarray(eligible[slot.name], dtype=bool).reshape(-1)
+            elig = _eligible(slot, eligible[slot.name])
         return keys, elig
     return select_smallest(fp, provider, budget)

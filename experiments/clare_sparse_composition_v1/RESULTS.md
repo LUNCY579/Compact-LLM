@@ -11,6 +11,14 @@ interpretation.
 The `clare/` package, CLI, zero-argument chain, registered configuration and documentation are
 all in this directory.
 
+## Canonical branch and the ported CPU tests
+
+`research/titan-clare-sparse-composable-skills-v1-claude` is canonical. The parallel CPU-only
+implementation (`e320ba33`) is merged with strategy "ours", and its 87 CPU test cases are ported
+(`tests/test_ported_e320ba33.py`, 99 cases). **MEASURED:** 154 offline tests pass. Run against the
+pre-port commit, the ported cases fail 30 times; 28 of those are real gaps, all fixed, and 2 are
+control-environment artifacts (see `CLARE_RINEYA_AUDIT.md` §6b).
+
 ## Phase 2 — synthetic qualification: PASS
 
 `qualification/SYNTHETIC_QUALIFICATION.json` (tiny CPU models only):
@@ -43,10 +51,12 @@ and E both retrain through the sparse path.
 (`qualification/native-20260927/`) was **BLOCKED at preflight on host RAM**: 3.55 GiB free
 against the 3.6 GiB floor. The floor was not changed; attempt 2 ran when RAM allowed.
 
-Provenance caveat: attempt 2 ran on the uncommitted working tree **before** the evaluation-only
-weight cache was added (that later patch touches only cache paths, which are off unless enabled),
-and that version of `native-qualify` did not yet record a code digest. It does now. The report's
-`config_sha256` equals the committed configuration.
+Provenance caveat: attempt 2 ran on the uncommitted working tree **before** two later changes.
+(a) The evaluation-only weight cache touches only cache paths, which are off unless enabled.
+(b) The port-motivated fixes add validation, failure cleanup, and claim-after-training; they
+change no training arithmetic. That version of `native-qualify` did not yet record a code digest;
+it does now. The report's `config_sha256` equals the committed configuration. A re-qualification
+on the committed code is cheap (≈ 10 min) and is recommended before tier 1.
 
 | gate (MEASURED) | result |
 |---|---|

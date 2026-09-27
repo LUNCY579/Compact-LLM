@@ -13,6 +13,16 @@ pruning, or random disjoint allocation at identical capacity?
 - **Status and measured results:** [RESULTS.md](RESULTS.md)
 - **Future work (not in 001):** [GRADIENT_AWARE_REUSE_DESIGN_NOTE.md](GRADIENT_AWARE_REUSE_DESIGN_NOTE.md)
 
+## Canonical branch
+
+**`research/titan-clare-sparse-composable-skills-v1-claude` is the canonical CLARE-RINEYA-001
+branch** (operator decision, 2026-09-27). A parallel agent implemented the same brief on
+`research/titan-clare-sparse-composable-skills-v1` (author LuncyNever, `76230adc`, `e320ba33`) as
+CPU-only mechanics with native preflight BLOCKED. That branch is merged here with strategy "ours":
+its commits are ancestors of the canonical branch, its implementation is **superseded and not in
+this tree**, and its 87 CPU test cases are ported to the canonical API in
+`tests/test_ported_e320ba33.py` (99 cases, with a per-test provenance map).
+
 ## Lineage (Titan / model soup)
 
 Branch `research/titan-clare-sparse-composable-skills-v1`, cut from
@@ -57,7 +67,8 @@ configs/          the registered configuration
 cli.py            plan | native-qualify | lr-pilot | train | evaluate | interact | analyse
 run_phase4.py     zero-argument tiered chain (WMI-launchable, resumable)
 scripts/          synthetic_qualification.py (Phase 2 report)
-tests/            55 offline tests (mask safety x14 + extras, arms, metrics, native parity)
+tests/            154 offline tests (mask safety x14 + extras, arms, metrics, native parity,
+                  and 99 cases ported from the superseded parallel implementation)
 qualification/    Phase 2 and Phase 3 reports (committed evidence)
 runs/             Phase 4 artifacts (gitignored: large; back up by hash)
 ```

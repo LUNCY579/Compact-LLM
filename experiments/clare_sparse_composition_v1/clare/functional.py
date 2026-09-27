@@ -110,6 +110,9 @@ def vocab_interaction(logsm: Mapping[str, "object"], topk: int = 32) -> dict:
         torch = None
     if set(logsm) != set(CONFIGS):
         raise ValueError(f"need exactly configs {CONFIGS}")
+    shapes = {tuple(v.shape) for v in logsm.values()}
+    if len(shapes) != 1 or len(next(iter(shapes))) != 2:
+        raise ValueError(f"all four configs need the same [positions, vocab] shape, got {sorted(shapes)}")
     if torch is not None and all(isinstance(v, torch.Tensor) for v in logsm.values()):
         t = {k: v.double() for k, v in logsm.items()}
         I = t["AB"] - t["A"] - t["B"] + t["0"]

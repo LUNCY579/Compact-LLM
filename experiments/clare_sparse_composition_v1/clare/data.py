@@ -103,11 +103,13 @@ def _readjsonl(path: Path) -> Iterable[dict]:
 
 class Corpus:
     def __init__(self, root: str | Path = DEFAULT_ROOT, verify: bool = True,
-                 refused_roles: Sequence[str] = REFUSED_ROLES_001):
+                 refused_roles: Sequence[str] = REFUSED_ROLES_001, manifest_sha256: str = MANIFEST_SHA256):
+        """``manifest_sha256`` defaults to the registered MAXRL-COMP-002 pin; tests pass the pin
+        of a synthetic fixture corpus. Every other check is identical."""
         self.root = Path(root)
         self.data = self.root / "data"
         manifest_path = self.data / "manifest.json"
-        if verify and sha256_file(manifest_path) != MANIFEST_SHA256:
+        if verify and sha256_file(manifest_path) != manifest_sha256:
             raise ValueError("MAXRL-COMP-002 manifest hash mismatch")
         self.manifest = json.loads(manifest_path.read_bytes().decode("utf-8"))
         self.verify = verify

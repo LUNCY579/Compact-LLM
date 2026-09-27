@@ -384,6 +384,10 @@ def _paired_rows(records_a, records_b, a: str, b: str) -> tuple[list[str], dict,
     for i in A:
         if (A[i]["parent_id"], A[i]["signature"]) != (B[i]["parent_id"], B[i]["signature"]):
             raise MetricsError(f"row {i!r}: parent/signature differ between {a} and {b}")
+    ra = {r.get("config_sha256") for r in A.values()} - {None}
+    rb = {r.get("config_sha256") for r in B.values()} - {None}
+    if ra and rb and ra != rb:
+        raise MetricsError(f"{a} and {b} were scored under different registrations {sorted(ra)} vs {sorted(rb)}")
     return sorted(A), A, B
 
 

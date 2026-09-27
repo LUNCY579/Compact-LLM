@@ -237,6 +237,7 @@ def compile_train_rows(rows, tokenizer, max_sequence: int = 2048, completion_res
         c["id"] = r.id
         c["parent_id"] = r.parent_id
         c["signature"] = r.signature
+        c["role"] = r.role
         out.append(c)
     return out
 
