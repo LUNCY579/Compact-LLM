@@ -1,0 +1,329 @@
+{
+  "code_digest": "4d9530eae6f88975b0621fe875acaa29144c40c004bd983aaee9b9db92203d09",
+  "direct_checks": [
+    {
+      "check": "D_random_disjoint: mask budgets == schedule [51, 46, 42, 37]",
+      "measured": [
+        51,
+        46,
+        42,
+        37
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: max pairwise support intersection",
+      "measured": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: max |parameter dot product|",
+      "measured": 0.0,
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: frozen deltas unchanged by every later stage",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: mask budgets == schedule [51, 46, 42, 37]",
+      "measured": [
+        51,
+        46,
+        42,
+        37
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: max pairwise support intersection",
+      "measured": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: max |parameter dot product|",
+      "measured": 0.0,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: frozen deltas unchanged by every later stage",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "E: discovery reset restores the exact pre-discovery effective weights (per skill)",
+      "measured": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "E: selected coordinates with zero importance (0 = selection fully learned)",
+      "measured": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "D and E choose different supports at identical capacity",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "base weights unchanged after both arms",
+      "measured": true,
+      "status": "PASS"
+    }
+  ],
+  "experiment": "CLARE-RINEYA-001",
+  "phase": "2-synthetic-qualification",
+  "runtime": {
+    "device": "cpu",
+    "executable": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124"
+  },
+  "scope": "tiny synthetic models only; says nothing about the native 596M model or about skills",
+  "status": "PASS",
+  "suite": {
+    "counts": {
+      "error": 0,
+      "failed": 0,
+      "passed": 55,
+      "skipped": 0
+    },
+    "returncode": 0,
+    "seconds": 17.2,
+    "summary_line": "55 passed in 14.53s",
+    "tests": [
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_every_arm_records_every_skill_in_order"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_dense_arms_touch_everything_and_B_first_equals_A_first"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_C_is_magnitude_pruned_B_at_clare_budgets"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_F_private_masks_disjoint_from_each_other_and_from_shared"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_layer_and_rank_diagnostics_are_well_formed"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_interaction_is_zero_for_additive_effects_and_detected_otherwise"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_accuracy_effects_definitions"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_lambda_gate_falls_back_when_the_probe_is_too_sparse"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_footprint_offsets_digest_and_locate"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_qwen3_footprint_counts_match_native_arithmetic"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_budgets_exact_and_rho_semantics"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[7]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[40]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[81]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_respects_eligibility_and_budget_bounds"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_random_selection_is_seeded_reproducible_and_distinct_keys"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_importance_selection_prefers_large_and_breaks_zero_ties_by_hash_not_position"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_mask_pack_roundtrip_checksum_and_binary"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_invert_clears_padding_and_union_overlap"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_strict_allocation_refuses_reclaim_and_tracks_free"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_loose_allocation_allows_overlap_only_when_not_strict"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_01_claimed_coordinates_cannot_be_reassigned"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_02_masks_are_binary_and_payload_exact"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.80]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.90]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.95]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.975]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_04_inaccessible_parameters_receive_zero_gradient"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_05_frozen_coordinates_and_base_are_bit_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_06_discovery_reset_restores_the_exact_state"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_07_random_and_learned_capacity_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_08_checkpoint_resume"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_09_skill_order_is_reproducible_and_recorded"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_10_no_heldout_data_reaches_discovery"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_11_merge_is_deterministic_and_disjoint_sum_order_invariant"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_12_support_metrics_match_brute_force"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_13_strict_disjoint_deltas_have_zero_overlap_and_zero_dot"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_14_parameter_accounting_is_exact"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_dense_masked_and_sparse_training_agree_to_float32_rounding"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_disk_deltas_round_trip_with_the_same_content_checksum"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_retention_matrix_known_values"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_retention_refuses_missing_stage_and_row_mismatch"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_validation_refusals"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_composition_matrix_covers_and_final"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_paired_counts_mcnemar_and_bootstrap_determinism"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_damage_does_not_net_offsetting_changes"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_floor_adjustment_and_csv_determinism"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_vendored_mcnemar_is_verbatim"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_logits_bit_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_gradients_bit_identical_and_masked"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_frozen_delta_equals_materialised_weights"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_greedy_matches_full_recompute_and_teacher_forced"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_eval_weight_caches_are_bit_identical_and_invalidated"
+      }
+    ]
+  }
+}

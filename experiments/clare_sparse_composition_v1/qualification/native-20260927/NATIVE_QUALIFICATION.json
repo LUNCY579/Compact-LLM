@@ -1,0 +1,48 @@
+{
+  "blockers": [
+    "host free 3.55 GiB < 3.6 GiB"
+  ],
+  "config_sha256": "65eaf8f53d5411950b32ed597bc59ff946ca25035488a7eaff19f4e03ace98e2",
+  "experiment": "CLARE-RINEYA-001",
+  "is_research_result": false,
+  "phase": "3-native-qualification",
+  "preflight": {
+    "artifact_gib": 0.3,
+    "blockers": [
+      "host free 3.55 GiB < 3.6 GiB"
+    ],
+    "disk_floor_gib": 4.0,
+    "disk_free_gib": 8.470771789550781,
+    "display_adapters": [
+      {
+        "DriverVersion": "32.0.11002.41",
+        "Name": "AMD Radeon(TM) 610M",
+        "Status": "OK"
+      },
+      {
+        "DriverVersion": "32.0.15.6607",
+        "Name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+        "Status": "OK"
+      }
+    ],
+    "foreign_gpu_holder": null,
+    "gpu_lock_present": false,
+    "host": {
+      "available": true,
+      "commit_limit_gib": 28.458797454833984,
+      "commit_over_phys_gib": 3.511188507080078,
+      "committed_gib": 18.7293701171875,
+      "free_phys_gib": 3.546916961669922,
+      "memory_load_percent": 76,
+      "total_phys_gib": 15.218181610107422
+    },
+    "host_floor_gib": 3.6,
+    "kind": "train",
+    "nvidia_present": true,
+    "status": "BLOCKED",
+    "vram_free_gib": 7.1982421875,
+    "vram_need_gib": 5.5
+  },
+  "started_utc": "2026-09-27T20:02:55Z",
+  "status": "BLOCKED"
+}
