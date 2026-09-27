@@ -90,6 +90,8 @@ count **composition-only repairs** (`B=R=S=0, RS=1`) and **joint damage**
 (`max(R,S)=1, RS=0`). Parent-cluster intervals use whole generated worlds as
 the unit. Retaining atomic R and S without RS success is not a joint-skill
 result.
+The exposed DEV bank contains 250 aligned parent worlds with one R, S and RS
+core view each; its source-bound ID/parent digests are in `evidence/Q1_DEV_SCOPE.json`.
 
 ## Stage 4 — sequential order controls
 
