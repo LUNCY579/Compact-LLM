@@ -160,3 +160,53 @@ While blocked, use the completed tokenizer/analysis controls to resolve historic
 preservation design. E1 seed 101 remains blocked until E0, data/replay and evaluation gates pass.
 The larger multi-method research program is ongoing; this report closes only the
 present source/data/preflight cycle.
+
+## Continuation 002: replay preparation advances; native gate still blocked
+
+A fresh end-of-turn OS check found 6.999 GiB free host RAM before imports, with no
+Python worker running. It remains below the 7.4 GiB post-import native admission
+floor. No new native attempt was launched. The unchanged Titan remains the primary
+and current best; there are still zero pretrained loads, updates or efficacy results.
+
+AMENDMENT_002 froze fixed original retrieval, priority-instruction and answerability
+banks. Construction verified 768 TRAIN rows (640 parents) and 256 DEV rows (192
+parents), including grouped answerability twins. All 1024 reference answers and
+wrong-answer controls passed. Construction took 14.495s; tokenizer-only profiling
+69.459s. TRAIN contains 243,336 nonpadding and 11,814 supervised tokens. Maximum
+open-role length is 401 tokens; no truncation. CHECK contains 384 additional parent
+hash reservations only, and FINAL remains closed.
+
+Exact TRAIN-source inspection found that 4,000 original v1 rows were incorrectly
+labeled v2 in the 14,000-row preservation slice. Origin was recovered through exact
+original file/record membership, preserving source bytes. Source-quality exclusions
+left 4,644 v2 candidates in 298 conservative template groups; these are not proved
+independent statistical parents. Frozen quotas selected 256 language candidates.
+Assistant reviewers read all selected conversations: 250 references were acceptable
+and six had unsupported referents or claims. AMENDMENT_003 resolved five with
+reviewed pre-ranked alternatives and one with the next fixed-order same-class
+cluster. No target was rewritten; originals and rejected candidates remain available.
+This is assistant source review, not human approval or native grader calibration.
+
+The curated 256 language rows have 22,642 nonpadding and 2,460 supervised tokens,
+with a maximum of 122 total tokens. The full candidate sequence epoch now has
+**5,120 rows, 680,532 nonpadding tokens and 63,546 supervised tokens**. Its maximum
+TRAIN length is 398 tokens. These are measured candidate-data quantities, not
+training throughput, a launch grant, or evidence of preserved capabilities.
+
+A scoped audit compared 5,632 open acquisition/deterministic-retention rows against
+32,800 historical whole-chat fingerprints and current normalized prompts, finding
+no collisions. It did not test historical user-only equality, all Titan ancestry,
+cross-schema semantic equivalence or pretraining exclusion. No protected payloads
+were opened. These limits remain explicit rather than becoming a blanket clean-data claim.
+
+Validation passed 129 aggregate CPU tests plus five subsequent resolver tests.
+A shared-process tokenizer test issue was fixed solely in test isolation, preserving
+production no-PyTorch guards. Designs for fresh language DEV/calibration and a separate
+2048/4096 long-context sentinel are registered as PROPOSED_UNQUALIFIED. Neither short
+retrieval nor source-reference review substitutes for those native evaluation gates.
+
+The runtime has no removable sklearn/scipy/pandas/audio/vision bundle: only four
+testing packages exceed its required dependency closure. Cloning it is not a
+substantiated RAM fix. The original preload RSS also includes CUDA setup, so it must
+not be described as pure import overhead. Native work needs a real resource-state
+change; the user was asked to free host memory while independent preparation continued.

@@ -39,3 +39,58 @@ Question: does the corrected resource probe admit unchanged Titan BF16 qualifica
 Token-only stock HF profiling completed on pinned Transformers4.57.1 in111.268s. No PyTorch imported, no model loaded/called. All4608 open rows fit; max total157 and completion38inclEOS. TRAIN414554 nonpadding/49272 supervised tokens. No truncation; CHECK/FINAL unopened. Wrong-runtime attempt1 is retained with bounded/unmeasured exact duration and corrected progress wording. Parent-level DEV analyzer and trivial TRAIN-mode answer control qualify mechanics only. Replay, historical exclusions, native E0 and broad preservation remain unresolved; no recipe promotion.
 
 Final validation:80 aggregate CPU tests passed in25.732s (imports excluded). A wrong-runtime negative-control test initially saw the preexisting-torch guard because another test imports torch; its mocked sys namespace was isolated, with no production tokenizer changes. Failed and passing logs retained. Native E0 remains blocked and E1 remains unlaunched.
+
+## Continuation 002: retention data and language source qualification
+
+Previous turn classification: PROGRESS (source, data, E0 receipts and pushes).
+The same native host-RAM blocker remains at the second consecutive goal turn:
+7.1833 GiB available before imports, below the 7.4 GiB post-import admission floor.
+No native retry, model load or training occurred. Independent FAST work remained
+available, so this is not an overall goal-impasse declaration.
+
+Question: can the proposed 1024-row replay dose be built from auditable, usable
+sources without consuming evaluation banks? AMENDMENT_002 froze fixed original
+retrieval/instruction/answerability banks; no baseline-outcome selection/replacement.
+MEASURED: 768 TRAIN rows/640 parents and 256 DEV rows/192 parents; all 1024 positives
+and wrong-answer controls passed in14.495s. Tokenizer-only profiling took69.459s;
+max401 total tokens, max21 completion. Deterministic TRAIN243336 nonpadding/11814
+supervised tokens. CHECK384 parent hashes only; FINAL closed. This qualifies data
+mechanics, not preserved Titan behavior.
+
+The actual 14000-row language source hash matches. Exact original TRAIN membership
+revealed4000 V1 rows mislabeledV2. Source bytes were preserved and origin recovered
+from original file/row hashes. Twelve source-quality flags removed unsupported
+references and conflicting wrappers; 4644 V2 candidates in298 conservative template
+clusters remained. No statistical independence was inferred from those clusters.
+
+Frozen class quotas selected256 primaries plus768 bounded alternatives in21.131s.
+Two assistant reviewers read every selected conversation:250 acceptable references,
+6 flags. AMENDMENT_003 resolved five with reviewed same-cluster alternatives and one
+with the next fixed-hash same-class cluster, after the original alternative budget
+was exhausted. No original text was rewritten and no teacher targets were authored.
+This is assistant source review, not human approval or calibrated native grading.
+Original failed candidates and review receipts remain permanent evidence.
+
+Curated language256 rows:22642 nonpadding/2460 supervised tokens; max122 total,
+max20 completion; no truncation and no Torch/model load during profiling. The full
+candidate sequence epoch is5120 rows,680532 nonpadding and63546 supervised tokens.
+This is a candidate data-dose receipt, not the post-E0 launch manifest.
+
+Scoped exact exclusions compared5632 open acquisition/deterministic-retention rows
+against32800 historical whole-chat fingerprints and current normalized prompts,
+with no collisions. The audit did not compare user-only historical text, cross-schema
+semantic specifications, all Titan ancestry or pretraining. Protected payloads were
+not read. Full historical exclusion remains explicitly unproved.
+
+Validation:129 aggregate CPU tests passed in54.989s;5 additional resolver controls
+passed in0.004s. A tokenizer-test isolation failure was retained and fixed only in
+the test's local sys namespace, preserving production no-Torch guards. No native
+acquisition/retention effect measured. Current best remains unchanged Titan.
+
+Ruled out: trusting preservation_source_version as origin; silently admitting six
+flagged references; calling5120 rows5120 independent parents; equating short retrieval
+with long-context preservation; expecting an unused ML dependency bundle to solve
+RAM admission (the actual runtime has no sklearn/scipy/pandas/audio/vision extras).
+Next: sufficient native headroom for E0, then current-source enrollment; independently
+qualify fresh language DEV/grader calibration and2048/4096 sentinels. No CHECK/FINAL
+opening or E1 launch is earned yet.

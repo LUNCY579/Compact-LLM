@@ -21,3 +21,10 @@ controls. None authorizes E1 automatically. No CHECK or FINAL access is earned y
 
 Then E1 seed101 only. A passing DEV screen earns211/307; failing screens earn
 diagnosis. Current best stays unchanged Titan until behavioral promotion succeeds.
+
+Continuation 002 prepared the full candidate dose (not a launch manifest): 4096
+acquisition +768 deterministic replay +256 language rows;680532 nonpadding tokens.
+Source-reference flags are resolved with immutable original records. Baseline source-
+correct enrollment, fresh language DEV/calibrated grading and long-context qualification
+remain. The latest no-worker OS check has6.999GiB free before imports, still below
+native admission. Recheck resources after user/external state changes; no blind retry.

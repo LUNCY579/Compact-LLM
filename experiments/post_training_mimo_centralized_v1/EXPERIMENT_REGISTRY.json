@@ -38,7 +38,7 @@
     },
     {
       "id": "RINEYA-0P6B-BRIDGE-SFT-E1",
-      "status": "BLOCKED_E0_AND_RETENTION",
+      "status": "BLOCKED_E0_SOURCE_ENROLLMENT_LANGUAGE_GRADER_LONG_CONTEXT",
       "registration": "RESEARCH_PROTOCOL.md",
       "data_manifest": "manifests/E1_DATA_REQUIREMENTS.json",
       "parent_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
@@ -53,7 +53,14 @@
       "CHECK": "CLOSED",
       "FINAL": "CLOSED",
       "acquisition_effect": null,
-      "retention_effect": null
+      "retention_effect": null,
+      "candidate_data_dose": "manifests/E1_CANDIDATE_DOSE.json",
+      "unqualified_gates": [
+        "E0 RAM admission/native mechanics",
+        "current-source baseline enrollment",
+        "fresh language DEV and calibrated grader",
+        "long-context runtime/sentinel"
+      ]
     }
   ],
   "later_tracks": {

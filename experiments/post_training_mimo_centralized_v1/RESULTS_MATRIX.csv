@@ -6,3 +6,8 @@ E0_v1,IMPLEMENTATION_FAILURE,MEASURED / REPRODUCED,WindowsPath rejected by psuti
 E0_v2,BLOCKED,MEASURED / REPRODUCED,Host free6.9113GiB<7.4GiB floor,,,No model memory-fit or quality result
 E1,BLOCKED,UNMEASURED,Requires E0 and qualified replay/preservation,,,No training; no candidate promoted
 TOKENIZER_v2,PASS_TOKEN_ONLY,MEASURED / REPRODUCED,4608 rows;max157 total/38 completion;TRAIN414554/49272tokens;no truncation,,,Tokenizer data fit only; E1 blocked
+RETENTION_DATA,PASS_DATA_MECHANICS,MEASURED / REPRODUCED,768TRAIN/256DEVrows verified;max401open-role tokens,,,Not actual preservation
+LANGUAGE_SOURCE_AUDIT,SOURCE_DEFECT_VERIFIED,MEASURED / REPRODUCED,4000V1rows mislabeledV2;originrecovered by exactTRAINmembership,,,Original bytes preserved
+LANGUAGE_REVIEW,ASSISTANT_SOURCE_REVIEW,MEASURED / REPRODUCED,250accepted/6flags;6replacements under frozen amendment,,,No humanapproval or calibratednativegrading
+CANDIDATE_DOSE,MEASURED_NOT_LAUNCH,MEASURED / REPRODUCED,5120rows;680532nonpadding/63546supervisedtokens,,,E1 blocked
+CONTINUATION_TESTS,PASS_CPU_ONLY,MEASURED / REPRODUCED,129aggregate+5focusedtests pass,,,No pretrained effect

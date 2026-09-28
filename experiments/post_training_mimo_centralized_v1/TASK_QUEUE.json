@@ -96,9 +96,9 @@
       "gpu_gib": 0,
       "disk_gib": 0.1,
       "artifact": "evidence/RETENTION_DESIGN.md",
-      "blocker": "Design proposed; source/target quality and native enrollment incomplete",
+      "blocker": "Fixed candidate data/tokenization/source review complete; native source-correct enrollment, fresh language grader and long-context sentinel incomplete",
       "status": "blocked",
-      "evidence_receipt": "evidence/RETENTION_DESIGN.md",
+      "evidence_receipt": "manifests/E1_CANDIDATE_DOSE.json",
       "native_gate_receipt": null,
       "expected_information_value": "qualify prerequisite or discriminate next gate",
       "next_decision_impact": "Which fresh preservation panels and replay are eligible?"
@@ -144,6 +144,26 @@
       "native_gate_receipt": null,
       "expected_information_value": "qualify prerequisite or discriminate next gate",
       "next_decision_impact": "Does operational gain survive seed variation?"
+    },
+    {
+      "task_id": "RETENTION_DATA",
+      "research_question": "Build usable fixed replay inputs without held-out access",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.2,
+      "artifact": "manifests/E1_CANDIDATE_DOSE.json",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "manifests/E1_CANDIDATE_DOSE.json",
+      "native_gate_receipt": null,
+      "expected_information_value": "resolved candidate dose and source-reference defects",
+      "next_decision_impact": "native enrollment afterE0"
     }
   ]
 }

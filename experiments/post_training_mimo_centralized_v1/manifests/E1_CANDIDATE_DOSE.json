@@ -1,0 +1,38 @@
+{
+  "status": "MEASURED_CANDIDATE_DATA_DOSE_NOT_LAUNCH_MANIFEST",
+  "components": {
+    "acquisition": {
+      "rows": 4096,
+      "total_tokens": 414554,
+      "supervised_tokens": 49272,
+      "receipt": "receipts/BRIDGE_TOKENIZATION_RECEIPT.json",
+      "receipt_sha256": "d04610fb0284bbbe0357239b22bf10c2684f1faeb66b988827fcc7431475381b"
+    },
+    "deterministic_replay": {
+      "rows": 768,
+      "total_tokens": 243336,
+      "supervised_tokens": 11814,
+      "receipt": "receipts/RETENTION_TOKENIZATION_RECEIPT.json",
+      "receipt_sha256": "702e33adf2eab32e7b0269e42b559d5f801ea2f7f940e85c910e4d86283512a1"
+    },
+    "language_replay_candidates": {
+      "rows": 256,
+      "total_tokens": 22642,
+      "supervised_tokens": 2460,
+      "receipt": "receipts/LANGUAGE_CURATED_TOKENIZATION_RECEIPT.json",
+      "receipt_sha256": "301bea4e719f086e6952a582f3648c6c948af4853872c27ea62067d1ba1a6edb"
+    }
+  },
+  "training_sequences": 5120,
+  "nonpadding_tokens_per_sequence_epoch": 680532,
+  "supervised_tokens_per_sequence_epoch": 63546,
+  "model_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "runtime_model_fit_qualified": false,
+  "source_correct_enrollment": false,
+  "fresh_language_DEV_grader_qualified": false,
+  "long_context_sentinel_qualified": false,
+  "E1_launch_ready": false,
+  "training_updates": 0,
+  "maximum_all_open_role_tokens": 401,
+  "maximum_training_sequence_tokens": 398
+}

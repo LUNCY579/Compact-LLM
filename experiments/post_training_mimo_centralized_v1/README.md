@@ -44,3 +44,9 @@ historical DenseReference FP32 scores.
 Cycle results: [report](CENTRALIZED_EXPERIMENT_REPORT.md), [PDF](CENTRALIZED_EXPERIMENT_REPORT.pdf),
 [results matrix](RESULTS_MATRIX.csv), [resource ledger](RESOURCE_LEDGER.csv),
 [next experiment](NEXT_EXPERIMENT.md). The research goal remains ongoing.
+
+Continuation 002: 768 deterministic replay rows and 256 curated language candidates
+are prepared and tokenized. Candidate dose: 5120 sequences / 680532 nonpadding /
+63546 supervised tokens. Validation: 129 aggregate +5 focused CPU tests. See
+[AMENDMENT_002](AMENDMENT_002.md), [AMENDMENT_003](AMENDMENT_003.md) and
+[E1 candidate dose](manifests/E1_CANDIDATE_DOSE.json). No native E0/E1 grant follows.
