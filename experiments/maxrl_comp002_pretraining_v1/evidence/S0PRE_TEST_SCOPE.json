@@ -1,0 +1,54 @@
+{
+  "absent_signatures": [],
+  "amendment": "COMP_RS_001_AMENDMENT_1.md section 1; clarification C8",
+  "canonical_test_sha256": "4e60ef62d72e6f6ce4587989e5d2eb0720e8cebf6f8b1646086d4f00a003f3f6",
+  "code_bundle_sha256": "a92cf8afafc55f18c936c8d8b2406db26cea4e593dec78e14bf2574760b94335",
+  "code_sha256": {
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "scope_receipt.py": "d755a2690083e31733dd47e08786c1f35f7c2459ce3b93a42c06f2519ca22419"
+  },
+  "core_filter": "tag == 'core'",
+  "dataset_manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+  "experiment": "COMP-RS-001",
+  "fields_retained": [
+    "id",
+    "parent_id",
+    "tag",
+    "skills"
+  ],
+  "model_outputs_read": false,
+  "note": "Scope identities only. Every scorer asserts this receipt's digest.",
+  "policy_test_sha256": "fe6e72bc8e5cda2a068cafb80b620c9740cb047b17be0b71e0646e0718dc3714",
+  "role": "test",
+  "rows_in_bank": 4150,
+  "shared_parent_worlds": 250,
+  "signatures": {
+    "P": {
+      "ids_sha256": "4d64b076aaa30b1de97ddba76018da02cbc026aa89de12328ed85cc976c12c3d",
+      "parents": 250,
+      "parents_sha256": "d95d6aefbfdb98db694835e139fa5c39427068841d4ad8b904a40ac3e5e8cece",
+      "rows": 250
+    },
+    "R": {
+      "ids_sha256": "da0405921bd6bc15e318ab169b4e28096de60150eaba4779851b98a813a883ef",
+      "parents": 250,
+      "parents_sha256": "d95d6aefbfdb98db694835e139fa5c39427068841d4ad8b904a40ac3e5e8cece",
+      "rows": 250
+    },
+    "RS": {
+      "ids_sha256": "50d8ac6b742342c8c5a2d163e5086828377cd6cd4fb9b78481489fce1f0e755d",
+      "parents": 250,
+      "parents_sha256": "d95d6aefbfdb98db694835e139fa5c39427068841d4ad8b904a40ac3e5e8cece",
+      "rows": 250
+    },
+    "S": {
+      "ids_sha256": "6833cd3f136a0300313a7b6b0aa8202d6840e27a2c9bc73fbffd5df776c2858e",
+      "parents": 250,
+      "parents_sha256": "d95d6aefbfdb98db694835e139fa5c39427068841d4ad8b904a40ac3e5e8cece",
+      "rows": 250
+    }
+  },
+  "spec_only_ack": true,
+  "stage": "S0PRE_TEST_SCOPE",
+  "test_challenge_read": true
+}
