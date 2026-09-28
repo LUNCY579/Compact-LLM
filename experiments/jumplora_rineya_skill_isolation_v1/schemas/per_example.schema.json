@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/LUNCY579/ChatBubble/schemas/jumplora-per-example.schema.json",
+  "title": "Paired per-example JumpLoRA result",
+  "type": "object",
+  "required": ["id", "arm", "order", "base_correct", "individual_correct", "composed_correct", "repair", "damage"],
+  "properties": {
+    "id": {"type": "string", "minLength": 1},
+    "arm": {"enum": ["J0", "J1", "J2", "J3"]},
+    "order": {"enum": ["A", "B", "A_then_B", "B_then_A"]},
+    "base_correct": {"type": "boolean"},
+    "individual_correct": {"type": "boolean"},
+    "composed_correct": {"type": "boolean"},
+    "repair": {"type": "boolean"},
+    "damage": {"type": "boolean"},
+    "latency_ms": {"type": ["number", "null"], "minimum": 0},
+    "generated_tokens": {"type": ["integer", "null"], "minimum": 0}
+  },
+  "additionalProperties": true
+}
