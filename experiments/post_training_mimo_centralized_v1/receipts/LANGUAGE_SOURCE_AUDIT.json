@@ -1,0 +1,1103 @@
+{
+  "schema_version": 1,
+  "audit_id": "LANGUAGE-TRAIN-SOURCE-AUDIT-001",
+  "audit_date": "2026-09-28",
+  "status": "SOURCE_VERIFIED_CANDIDATE_UNENROLLED",
+  "code_head_at_audit": "43d2ed3c438a64fdd6a4088db0a151f7e604d0ee",
+  "scope": "Read-only TRAIN provenance and target inspection; no selection or export of 256 replay rows",
+  "authorization_basis": "Parent-directed current retention qualification and raw TRAIN reads; prior RETENTION_REQUIREMENTS remains proposal-only historical context",
+  "native_model_calls": 0,
+  "selected_replay_rows": 0,
+  "protected_scored_content_reads": 0,
+  "historical_source_mutations": 0,
+  "source": {
+    "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/data/sft/rineya_v1_v2_preservation_slice_14000.jsonl",
+    "sha256": "5ee0c283b290cf89f6fcfbcf52bd2bcd03f6c63bb06793b9fa4b957d91973d50",
+    "bytes": 17341591,
+    "rows": 14000,
+    "all_split_train": true,
+    "unique_row_ids": 14000,
+    "role_order_failures": 0,
+    "empty_message_rows": 0,
+    "human_review_status": "pending for all 14000 rows",
+    "top_level_schema": [
+      "id",
+      "messages",
+      "metadata",
+      "system_policy_version"
+    ]
+  },
+  "original_train_sources": [
+    {
+      "version": "v1.0",
+      "path": "Rineya_Short_Response_Behavior_Corpus_v1.0/data/sft/rineya_short_response_new_train.jsonl",
+      "sha256": "20d662836e9343d2024486ff89dece0b6a618f53a6c9b8449445aa0340a72dbb",
+      "bytes": 9720811,
+      "rows": 10000,
+      "all_split_train": true,
+      "preservation_members": 4000,
+      "exact_structural_matches_after_removing_two_added_fields": 4000,
+      "mismatches": 0,
+      "parent_metadata": "metadata.template_family",
+      "observed_parent_labels": 1299,
+      "semantic_parent_recovery_status": "UNQUALIFIED_FOR_ADMISSION; metadata exists but generator/semantic grouping not recovered by this audit"
+    },
+    {
+      "version": "v2.0",
+      "path": "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/data/sft/rineya_v2_new_all_train.jsonl",
+      "sha256": "dc68d9400419e2158144f8832ca52b005628f9b24862f95667e482e34998faee",
+      "bytes": 39659277,
+      "rows": 32000,
+      "all_split_train": true,
+      "preservation_members": 10000,
+      "exact_structural_matches_after_removing_two_added_fields": 10000,
+      "mismatches": 0,
+      "parent_metadata": "metadata.base_template_family",
+      "observed_parent_labels": 452,
+      "semantic_parent_recovery_status": "GENERATOR_SUPPORTED_CONSERVATIVE_TEMPLATE_CLUSTERS; not a proof of statistical independence"
+    }
+  ],
+  "origin_comparison_removed_metadata_fields": [
+    "preservation_replay_for",
+    "preservation_source_version"
+  ],
+  "confirmed_metadata_defect": {
+    "field": "metadata.preservation_source_version",
+    "observed": "v2.0 on all 14000 rows",
+    "affected_rows": 4000,
+    "affected_predicate": "original exact membership in V1 new_train; IDs begin rineya_srb_v1_",
+    "generator_cause": "V3 generate_dataset.py:875 checks startswith train_ or rineya_short, omitting actual rineya_srb_v1 IDs",
+    "resolution": "Use exact original TRAIN membership and source hash; preserve source defect in history"
+  },
+  "parent_contract_recommendation": {
+    "preferred_source": "v2.0 exact original TRAIN membership",
+    "key": "source_version + ':' + metadata.base_template_family",
+    "justification": "V2 generator returns base scenario identifiers; template_family appends a surface-variant suffix. Source ID numerals and wrapper changes do not define new parents.",
+    "counterfactual_policy": "Keep shared counterfactual_group_id connected; validate it never crosses recovered base groups before admitting a derived pool",
+    "one_row_per_group": true,
+    "all_derivatives_train_only": true,
+    "independent_parent_count_claim": false,
+    "cross_class_semantic_overlap": "Not exhaustively resolved; training coverage clusters cannot supply fresh held-out units or statistical sample size"
+  },
+  "candidate_pool": {
+    "predicate": "V2 exact origin and metadata.capability_group in communication/integrated",
+    "rows": 5000,
+    "base_family_groups": 320,
+    "unique_exact_targets": 982,
+    "selection_frozen": false,
+    "source_correct_enrollment": "NOT_RUN",
+    "target_review": "Generator-table review and targeted actual-row inspection, not exhaustive human approval",
+    "recommendation": "Prefer V2 non-roleplay classes, exclude flagged target/family predicates before deterministic ordering, cap context-update/grounded short-answer representation, and retain broad communication coverage. Insufficient qualified groups must block rather than use evaluation rows.",
+    "class_counts": {
+      "acknowledgment_update": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 89,
+        "unique_targets": 94
+      },
+      "apology_repair": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 250,
+        "unique_targets": 63
+      },
+      "boundary_setting": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 46,
+        "unique_targets": 16
+      },
+      "clarification_request": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 49,
+        "unique_targets": 48
+      },
+      "communication_rewrite": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 47,
+        "unique_targets": 56
+      },
+      "comparative_recommendation": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 43,
+        "unique_targets": 48
+      },
+      "conversation_closure": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 0,
+        "unique_targets": 43
+      },
+      "decision_explanation": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 40,
+        "unique_targets": 48
+      },
+      "deescalation": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 40,
+        "unique_targets": 48
+      },
+      "empathy_validation": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 48,
+        "unique_targets": 48
+      },
+      "evidence_grounded_dialogue": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 127,
+        "unique_targets": 48
+      },
+      "informal_texting": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 0,
+        "unique_targets": 48
+      },
+      "multi_turn_context_update": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 250,
+        "unique_targets": 48
+      },
+      "natural_follow_up": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 74,
+        "unique_targets": 52
+      },
+      "negotiation_compromise": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 42,
+        "unique_targets": 48
+      },
+      "plan_revision": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 250,
+        "unique_targets": 48
+      },
+      "practical_next_step": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 34,
+        "unique_targets": 48
+      },
+      "preference_opinion": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 48,
+        "unique_targets": 48
+      },
+      "roleplay_reasoning": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 73,
+        "unique_targets": 48
+      },
+      "tactful_disagreement": {
+        "rows": 250,
+        "base_families": 16,
+        "multi_turn_rows": 46,
+        "unique_targets": 48
+      }
+    },
+    "multi_turn_rows": 1596
+  },
+  "remaining_gates": [
+    "Root freezes exact eligibility predicates, bounded candidate count, class quotas and ordering before native behavior",
+    "Authorized current historical ID/fingerprint exclusions; no protected scored-content reads",
+    "Selected-record semantic target review including wrappers and prior conversation",
+    "Native tokenizer/template fit without truncation",
+    "Frozen semantic language rubric and bounded source-correct enrollment",
+    "Fresh independent language DEV and long-context sentinels remain separate unqualified obligations"
+  ],
+  "license": "Project-internal research provenance only; V1 manifest explicitly requires third-party/source-model obligation review before redistribution. No public redistribution clearance inferred.",
+  "quality_flags": [
+    {
+      "family": "v2_rewrite_05",
+      "scope": "entire_family",
+      "reason": "Invents a handoff, step, or place of causation absent from the sentence being rewritten.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_communication_rewrite_00357",
+        "rineya_grnc_v2_communication_rewrite_00549",
+        "rineya_grnc_v2_communication_rewrite_00277",
+        "rineya_grnc_v2_communication_rewrite_00165",
+        "rineya_grnc_v2_communication_rewrite_00693",
+        "rineya_grnc_v2_communication_rewrite_00773",
+        "rineya_grnc_v2_communication_rewrite_00133",
+        "rineya_grnc_v2_communication_rewrite_00005",
+        "rineya_grnc_v2_communication_rewrite_00501",
+        "rineya_grnc_v2_communication_rewrite_00261",
+        "rineya_grnc_v2_communication_rewrite_00789",
+        "rineya_grnc_v2_communication_rewrite_00597",
+        "rineya_grnc_v2_communication_rewrite_00469",
+        "rineya_grnc_v2_communication_rewrite_00069"
+      ]
+    },
+    {
+      "family": "v2_rewrite_07",
+      "scope": "entire_family",
+      "reason": "Ambiguous referents remain unresolved while target invents current/previous process interpretation; conservative quarantine.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_communication_rewrite_00695",
+        "rineya_grnc_v2_communication_rewrite_00551",
+        "rineya_grnc_v2_communication_rewrite_00343",
+        "rineya_grnc_v2_communication_rewrite_00727",
+        "rineya_grnc_v2_communication_rewrite_00103",
+        "rineya_grnc_v2_communication_rewrite_00503",
+        "rineya_grnc_v2_communication_rewrite_00759",
+        "rineya_grnc_v2_communication_rewrite_00567",
+        "rineya_grnc_v2_communication_rewrite_00535",
+        "rineya_grnc_v2_communication_rewrite_00087",
+        "rineya_grnc_v2_communication_rewrite_00631",
+        "rineya_grnc_v2_communication_rewrite_00327"
+      ]
+    },
+    {
+      "family": "v2_rewrite_09",
+      "scope": "entire_family",
+      "reason": "Adds frustration or failed-attempt assertions to a bare try-again sentence; conservative quarantine.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_communication_rewrite_00793",
+        "rineya_grnc_v2_communication_rewrite_00553",
+        "rineya_grnc_v2_communication_rewrite_00153",
+        "rineya_grnc_v2_communication_rewrite_00777",
+        "rineya_grnc_v2_communication_rewrite_00297",
+        "rineya_grnc_v2_communication_rewrite_00393",
+        "rineya_grnc_v2_communication_rewrite_00649",
+        "rineya_grnc_v2_communication_rewrite_00505",
+        "rineya_grnc_v2_communication_rewrite_00345",
+        "rineya_grnc_v2_communication_rewrite_00185",
+        "rineya_grnc_v2_communication_rewrite_00137",
+        "rineya_grnc_v2_communication_rewrite_00681",
+        "rineya_grnc_v2_communication_rewrite_00313",
+        "rineya_grnc_v2_communication_rewrite_00041"
+      ]
+    },
+    {
+      "family": "v2_rewrite_11",
+      "scope": "entire_family",
+      "reason": "Changes willingness to stay late into advance-notice conditions or refusal; semantic-preservation concern.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_communication_rewrite_00123",
+        "rineya_grnc_v2_communication_rewrite_00651",
+        "rineya_grnc_v2_communication_rewrite_00667",
+        "rineya_grnc_v2_communication_rewrite_00443",
+        "rineya_grnc_v2_communication_rewrite_00315",
+        "rineya_grnc_v2_communication_rewrite_00267",
+        "rineya_grnc_v2_communication_rewrite_00219",
+        "rineya_grnc_v2_communication_rewrite_00347",
+        "rineya_grnc_v2_communication_rewrite_00251",
+        "rineya_grnc_v2_communication_rewrite_00699",
+        "rineya_grnc_v2_communication_rewrite_00427",
+        "rineya_grnc_v2_communication_rewrite_00283",
+        "rineya_grnc_v2_communication_rewrite_00683",
+        "rineya_grnc_v2_communication_rewrite_00091",
+        "rineya_grnc_v2_communication_rewrite_00331",
+        "rineya_grnc_v2_communication_rewrite_00571",
+        "rineya_grnc_v2_communication_rewrite_00635",
+        "rineya_grnc_v2_communication_rewrite_00059",
+        "rineya_grnc_v2_communication_rewrite_00779"
+      ]
+    },
+    {
+      "family": "v2_decision_reason_13",
+      "scope": "entire_family",
+      "reason": "Urgent low-impact task versus tomorrow blocker has no explicit tradeoff rule; target is plausible advice rather than a uniquely supported decision.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_decision_explanation_00749",
+        "rineya_grnc_v2_decision_explanation_00637",
+        "rineya_grnc_v2_decision_explanation_00557",
+        "rineya_grnc_v2_decision_explanation_00765",
+        "rineya_grnc_v2_decision_explanation_00061",
+        "rineya_grnc_v2_decision_explanation_00653",
+        "rineya_grnc_v2_decision_explanation_00493",
+        "rineya_grnc_v2_decision_explanation_00109",
+        "rineya_grnc_v2_decision_explanation_00477",
+        "rineya_grnc_v2_decision_explanation_00781",
+        "rineya_grnc_v2_decision_explanation_00445",
+        "rineya_grnc_v2_decision_explanation_00669",
+        "rineya_grnc_v2_decision_explanation_00253",
+        "rineya_grnc_v2_decision_explanation_00717",
+        "rineya_grnc_v2_decision_explanation_00269"
+      ]
+    },
+    {
+      "family": "v2_roleplay_reason_11",
+      "scope": "entire_family",
+      "reason": "Only-for condition does not prove valid-code iff green; target assumes a stronger rule; conservative quarantine.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_roleplay_reasoning_00763",
+        "rineya_grnc_v2_roleplay_reasoning_00059",
+        "rineya_grnc_v2_roleplay_reasoning_00331",
+        "rineya_grnc_v2_roleplay_reasoning_00267",
+        "rineya_grnc_v2_roleplay_reasoning_00651",
+        "rineya_grnc_v2_roleplay_reasoning_00475",
+        "rineya_grnc_v2_roleplay_reasoning_00283",
+        "rineya_grnc_v2_roleplay_reasoning_00139",
+        "rineya_grnc_v2_roleplay_reasoning_00171",
+        "rineya_grnc_v2_roleplay_reasoning_00571",
+        "rineya_grnc_v2_roleplay_reasoning_00747",
+        "rineya_grnc_v2_roleplay_reasoning_00635"
+      ]
+    },
+    {
+      "family": "v2_plan_revision_00",
+      "scope": "target_predicate",
+      "operator": "contains",
+      "text": "two",
+      "reason": "Target invents exactly two core/must-have features.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_plan_revision_00208",
+        "rineya_grnc_v2_plan_revision_00672",
+        "rineya_grnc_v2_plan_revision_00544",
+        "rineya_grnc_v2_plan_revision_00160",
+        "rineya_grnc_v2_plan_revision_00288",
+        "rineya_grnc_v2_plan_revision_00256",
+        "rineya_grnc_v2_plan_revision_00000",
+        "rineya_grnc_v2_plan_revision_00112",
+        "rineya_grnc_v2_plan_revision_00016"
+      ]
+    },
+    {
+      "family": "v2_rewrite_12",
+      "scope": "target_predicate",
+      "operator": "not_equal",
+      "text": "Running about 10 minutes late.",
+      "reason": "Target changes lateness to arrival in ten minutes or invents heading over now.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_communication_rewrite_00316",
+        "rineya_grnc_v2_communication_rewrite_00700",
+        "rineya_grnc_v2_communication_rewrite_00332",
+        "rineya_grnc_v2_communication_rewrite_00220"
+      ]
+    },
+    {
+      "family": "v2_ack_update_08",
+      "scope": "target_predicate",
+      "operator": "equals",
+      "text": "Okay, no call today.",
+      "reason": "Target inserts today although cancellation prompt supplies no date.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_acknowledgment_update_00792",
+        "rineya_grnc_v2_acknowledgment_update_00216",
+        "rineya_grnc_v2_acknowledgment_update_00600",
+        "rineya_grnc_v2_acknowledgment_update_00696",
+        "rineya_grnc_v2_acknowledgment_update_00744"
+      ]
+    },
+    {
+      "family": "v2_texting_02",
+      "scope": "target_predicate",
+      "operator": "contains",
+      "text": "we survived",
+      "reason": "Target implies assistant attended the meeting.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_informal_texting_00034",
+        "rineya_grnc_v2_informal_texting_00418",
+        "rineya_grnc_v2_informal_texting_00178",
+        "rineya_grnc_v2_informal_texting_00130",
+        "rineya_grnc_v2_informal_texting_00466"
+      ]
+    },
+    {
+      "family": "v2_roleplay_reason_10",
+      "scope": "target_predicate",
+      "operator": "contains",
+      "text": "staff escort",
+      "reason": "Target invents an escort exception to staff-only access.",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_roleplay_reasoning_00202",
+        "rineya_grnc_v2_roleplay_reasoning_00010",
+        "rineya_grnc_v2_roleplay_reasoning_00634"
+      ]
+    },
+    {
+      "family": "v2_context_update_00",
+      "scope": "cross_turn_project_conflict",
+      "reason": "Original explicit deadline project differs from latest-user wrapper project; source target ignores conflicting task identity.",
+      "predicate": "regex The (word) deadline is in first user differs from regex on (word) with in final user",
+      "disposition": "RECOMMEND_EXCLUDE_BEFORE_SELECTION",
+      "affected_row_ids": [
+        "rineya_grnc_v2_multi_turn_context_update_00640",
+        "rineya_grnc_v2_multi_turn_context_update_00097",
+        "rineya_grnc_v2_multi_turn_context_update_00545",
+        "rineya_grnc_v2_multi_turn_context_update_00736",
+        "rineya_grnc_v2_multi_turn_context_update_00065",
+        "rineya_grnc_v2_multi_turn_context_update_00001",
+        "rineya_grnc_v2_multi_turn_context_update_00288",
+        "rineya_grnc_v2_multi_turn_context_update_00480",
+        "rineya_grnc_v2_multi_turn_context_update_00673"
+      ]
+    }
+  ],
+  "representative_train_examples": [
+    {
+      "id": "rineya_grnc_v2_acknowledgment_update_00009",
+      "class": "acknowledgment_update",
+      "base_family": "v2_ack_update_09",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond like a capable person texting: brief, natural, accurate, and attentive to context. Give one short answer or one useful question. Do not add unnecessary explanation."
+        },
+        {
+          "role": "user",
+          "content": "Quick update on Juniper with Tara."
+        },
+        {
+          "role": "assistant",
+          "content": "Sure."
+        },
+        {
+          "role": "user",
+          "content": "For the afternoon review on Juniper with Tara at the library: We changed the meeting place to Room 204."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it\u2014Room 204."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_apology_repair_00009",
+      "class": "apology_repair",
+      "base_family": "v2_apology_09",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond like a capable person texting: brief, natural, accurate, and attentive to context. Give one short answer or one useful question. Do not add unnecessary explanation."
+        },
+        {
+          "role": "user",
+          "content": "Quick check for Summit with Mira at the market."
+        },
+        {
+          "role": "assistant",
+          "content": "We need three copies."
+        },
+        {
+          "role": "user",
+          "content": "One correction for the setup check on Summit with Mira: We actually need five."
+        },
+        {
+          "role": "assistant",
+          "content": "You're right\u2014we need five. Sorry."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_boundary_setting_00000",
+      "class": "boundary_setting",
+      "base_family": "v2_boundary_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise conversational assistant. Reply naturally in a few words or one short sentence. Preserve correctness and conversation context. Ask one brief clarification when information is missing. For high-stakes requests, give a concise safe boundary or escalation."
+        },
+        {
+          "role": "user",
+          "content": "Can I tell you something about River?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course."
+        },
+        {
+          "role": "user",
+          "content": "Quick context from Vela: Can you say you reviewed the file even though I did not send it?"
+        },
+        {
+          "role": "assistant",
+          "content": "No\u2014I can only comment on what you share."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_clarification_request_00000",
+      "class": "clarification_request",
+      "base_family": "v2_clarification_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise conversational assistant. Reply naturally in a few words or one short sentence. Preserve correctness and conversation context. Ask one brief clarification when information is missing. For high-stakes requests, give a concise safe boundary or escalation."
+        },
+        {
+          "role": "user",
+          "content": "Can I tell you something about Pine?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course."
+        },
+        {
+          "role": "user",
+          "content": "Quick context from Kite: For Solace, make it faster."
+        },
+        {
+          "role": "assistant",
+          "content": "Which part feels slow?"
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_communication_rewrite_00005",
+      "class": "communication_rewrite",
+      "base_family": "v2_rewrite_05",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the whole conversation, resolve the immediate question, and answer like a person texting. Keep the result short, accurate, and context-aware."
+        },
+        {
+          "role": "user",
+          "content": "Before the safety check: Make this less accusatory: 'You caused the delay.'"
+        },
+        {
+          "role": "assistant",
+          "content": "The delay came from this step; let's fix it together."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_comparative_recommendation_00003",
+      "class": "comparative_recommendation",
+      "base_family": "v2_recommend_03",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Give a brief human-sounding response that reflects both the facts and the user's practical goal. Ask one short question only when the answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "To finish the Willow review: Tool A is feature-rich but complex; B is simpler and covers my needs. I am a beginner."
+        },
+        {
+          "role": "assistant",
+          "content": "Start with Tool B."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_conversation_closure_00006",
+      "class": "conversation_closure",
+      "base_family": "v2_closure_06",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Keep the reply compact and human-sounding. Use the conversation's facts, avoid guessing, and ask a short clarification only when needed. Safety and correctness come before brevity."
+        },
+        {
+          "role": "user",
+          "content": "A quick update before the setup check: That solves it."
+        },
+        {
+          "role": "assistant",
+          "content": "Great."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_decision_explanation_00000",
+      "class": "decision_explanation",
+      "base_family": "v2_decision_reason_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond naturally and concisely. Use the stated context to reason, preserve updates and corrections, and give only the useful final reply."
+        },
+        {
+          "role": "user",
+          "content": "Can we make one quick decision for Solace?"
+        },
+        {
+          "role": "assistant",
+          "content": "Sure\u2014what are the options?"
+        },
+        {
+          "role": "user",
+          "content": "For the Echo decision: A is cheaper but misses the deadline; B costs more but arrives on time. Which should I choose if timing matters most?"
+        },
+        {
+          "role": "assistant",
+          "content": "B\u2014it meets the deadline."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_deescalation_00002",
+      "class": "deescalation",
+      "base_family": "v2_deescalation_02",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Keep the reply compact and human-sounding. Use the conversation's facts, avoid guessing, and ask a short clarification only when needed. Safety and correctness come before brevity."
+        },
+        {
+          "role": "user",
+          "content": "One more thing about Solace: I want to argue with every comment."
+        },
+        {
+          "role": "assistant",
+          "content": "Address only the comments that affect the result."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_empathy_validation_00007",
+      "class": "empathy_validation",
+      "base_family": "v2_empathy_07",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Give the shortest natural response that fully handles the immediate need. Stay context-consistent, do not invent facts, and use one compact sentence when a few words are not enough."
+        },
+        {
+          "role": "user",
+          "content": "This is what I am dealing with on Summit: I miss my friends back home."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds lonely. Reach out to someone you trust."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_evidence_grounded_dialogue_00000",
+      "class": "evidence_grounded_dialogue",
+      "base_family": "v2_grounded_supported_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond naturally and concisely. Use the stated context to reason, preserve updates and corrections, and give only the useful final reply."
+        },
+        {
+          "role": "user",
+          "content": "For the Pine decision: Here is the available information: Record: the device is at the warehouse."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay."
+        },
+        {
+          "role": "user",
+          "content": "Using only the information above from the schedule review at the clinic: Where is the device?"
+        },
+        {
+          "role": "assistant",
+          "content": "At the warehouse."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_informal_texting_00000",
+      "class": "informal_texting",
+      "base_family": "v2_texting_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise conversational assistant. Reply naturally in a few words or one short sentence. Preserve correctness and conversation context. Ask one brief clarification when information is missing. For high-stakes requests, give a concise safe boundary or escalation."
+        },
+        {
+          "role": "user",
+          "content": "Quick context from Kite: ngl that build took forever"
+        },
+        {
+          "role": "assistant",
+          "content": "Yeah, but you got it done \ud83d\ude04"
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_multi_turn_context_update_00001",
+      "class": "multi_turn_context_update",
+      "base_family": "v2_context_update_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Read the whole conversation, resolve the immediate question, and answer like a person texting. Keep the result short, accurate, and context-aware."
+        },
+        {
+          "role": "user",
+          "content": "During the first review with Theo: The Summit deadline is Thursday."
+        },
+        {
+          "role": "assistant",
+          "content": "Got it."
+        },
+        {
+          "role": "user",
+          "content": "Correction: it is Monday."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay."
+        },
+        {
+          "role": "user",
+          "content": "For the first review on Kite with Theo at the cafe: What day is the deadline?"
+        },
+        {
+          "role": "assistant",
+          "content": "Monday."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_natural_follow_up_00001",
+      "class": "natural_follow_up",
+      "base_family": "v2_followup_01",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond like a capable person texting: brief, natural, accurate, and attentive to context. Give one short answer or one useful question. Do not add unnecessary explanation."
+        },
+        {
+          "role": "user",
+          "content": "This came up with June during the final review: The model finally loaded."
+        },
+        {
+          "role": "assistant",
+          "content": "Nice\u2014how are the outputs?"
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_negotiation_compromise_00000",
+      "class": "negotiation_compromise",
+      "base_family": "v2_compromise_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise conversational assistant. Reply naturally in a few words or one short sentence. Preserve correctness and conversation context. Ask one brief clarification when information is missing. For high-stakes requests, give a concise safe boundary or escalation."
+        },
+        {
+          "role": "user",
+          "content": "Can I tell you something about Willow?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course."
+        },
+        {
+          "role": "user",
+          "content": "Quick context from Kite: I want the cheaper hotel; my friend wants to be downtown."
+        },
+        {
+          "role": "assistant",
+          "content": "Choose a smaller place near a direct transit line."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_plan_revision_00000",
+      "class": "plan_revision",
+      "base_family": "v2_plan_revision_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond naturally and concisely. Use the stated context to reason, preserve updates and corrections, and give only the useful final reply."
+        },
+        {
+          "role": "user",
+          "content": "For the Atlas decision: We planned to finish all five features this week."
+        },
+        {
+          "role": "assistant",
+          "content": "Okay."
+        },
+        {
+          "role": "user",
+          "content": "For the budget check on Atlas with Ben at the clinic: The deadline moved up to tomorrow. What should change?"
+        },
+        {
+          "role": "assistant",
+          "content": "Ship the two core features first."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_practical_next_step_00007",
+      "class": "practical_next_step",
+      "base_family": "v2_next_step_07",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Give a brief human-sounding response that reflects both the facts and the user's practical goal. Ask one short question only when the answer cannot be determined."
+        },
+        {
+          "role": "user",
+          "content": "For today's plan at the library: The package is marked delivered but is not at the door. Next step?"
+        },
+        {
+          "role": "assistant",
+          "content": "Check nearby delivery spots and the carrier notice."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_preference_opinion_00000",
+      "class": "preference_opinion",
+      "base_family": "v2_preference_00",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a concise conversational assistant. Reply naturally in a few words or one short sentence. Preserve correctness and conversation context. Ask one brief clarification when information is missing. For high-stakes requests, give a concise safe boundary or escalation."
+        },
+        {
+          "role": "user",
+          "content": "Can I tell you something about Willow?"
+        },
+        {
+          "role": "assistant",
+          "content": "Of course."
+        },
+        {
+          "role": "user",
+          "content": "Quick context from Lumen: For a daily laptop, would you prioritize battery life or a brighter screen?"
+        },
+        {
+          "role": "assistant",
+          "content": "Battery life, unless you work outdoors a lot."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_roleplay_reasoning_00005",
+      "class": "roleplay_reasoning",
+      "base_family": "v2_roleplay_reason_05",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are Aya, a calm field medic, in Asterfall, a city where old magic and advanced technology coexist. Voice: steady, concise, reassuring. Current scene: over a route map. Stay in character, use only established facts, and reply with one natural short utterance. Reason silently and do not mention being an AI. Current objective: help Ava with Orchid during the quick comparison at the campus."
+        },
+        {
+          "role": "user",
+          "content": "With Ava beside us during the quick comparison for Orchid at the campus: The blue key opens the archive, and we have the blue key. Can we enter?"
+        },
+        {
+          "role": "assistant",
+          "content": "Yes. The archive is open to us."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    },
+    {
+      "id": "rineya_grnc_v2_tactful_disagreement_00001",
+      "class": "tactful_disagreement",
+      "base_family": "v2_disagreement_01",
+      "messages": [
+        {
+          "role": "system",
+          "content": "Respond like a capable person texting: brief, natural, accurate, and attentive to context. Give one short answer or one useful question. Do not add unnecessary explanation."
+        },
+        {
+          "role": "user",
+          "content": "This came up with Tara during the setup check: Let's skip testing and deploy now."
+        },
+        {
+          "role": "assistant",
+          "content": "I would test first; a quick deploy is not worth the risk."
+        }
+      ],
+      "status": "INSPECTED_REPRESENTATIVE_NOT_ENROLLED"
+    }
+  ],
+  "reviewed_source_hashes": {
+    "Rineya_Short_Response_Behavior_Corpus_v1.0/README.md": "5d3fca5eafe21c1f54cb50e6177f377aa175be11a0d1e0965bf7ff6cfd5e25f6",
+    "Rineya_Short_Response_Behavior_Corpus_v1.0/DATA_CARD.md": "c3a380eb2c48ac593977b52d9adf811ea37da6dc1b4afec5b6b0556087ce28ef",
+    "Rineya_Short_Response_Behavior_Corpus_v1.0/manifests/dataset_manifest.json": "b226cfba067102d1490fd261fd24684ecf434f175dcc19e4b0eef0bb482658e0",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/README.md": "f594a876fb1b139e40175d1464a203235a43bcbe3832637c0eb28188adb0f409",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/DATA_CARD.md": "cf8dd3d3f08e7ecac94d1c22ee7ea66e63b7e95c77eadec8ca88205bf92f8d44",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/manifests/dataset_manifest.json": "35d952713f700a42c012e5d03b67f216db9780ef3e6cddf581256f66550ff6ed",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/README.md": "70c77e3fd10bb6188c33893ed872e4b83eb65e60997df03cfea4600d2b14b969",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/DATA_CARD.md": "3c0ca66d09a12a634a765fa1c93332b348f020dce57d3579d04524630d806284",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/manifests/dataset_manifest.json": "077c166e09f64a0001153bf62e0236de26b11202024273b56867d967134bb3bd",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v2.0/scripts/generate_dataset.py": "bfd2ddcc2064f93724f92a46cf06bf0d218c4215de32ff52c72bdcd14cba92a8",
+    "Rineya_General_Reasoning_and_Natural_Communication_Corpus_v3.0/scripts/generate_dataset.py": "9d4b3850127c8194717f30a0ba1daa0bf00b268c7517eda69dc4e0592a16fba2",
+    "experiments/post_training_mimo_centralized_v1/manifests/RETENTION_REQUIREMENTS.json": "f7d57ab03323bb3ab52cfc6d2d5d11fa3756dc1803938ae32f29a1e8c063688a",
+    "experiments/post_training_mimo_centralized_v1/evidence/RETENTION_DESIGN.md": "a5d9229d23502ddc6fcf2d12abb2c2caae66bf42e6277a4d411447473098fcc9"
+  },
+  "counterfactual_base_group_conflicts": {},
+  "proposed_eligibility_after_flags": {
+    "frozen": false,
+    "rows": 4644,
+    "base_family_groups": 298,
+    "distinct_classes": 19,
+    "rule": "Exact V2 origin; communication/integrated; non-roleplay; exclude every quality_flags affected_row_id",
+    "class_quotas": {
+      "acknowledgment_update": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 245
+      },
+      "apology_repair": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "boundary_setting": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "clarification_request": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "communication_rewrite": {
+        "requested_rows": 12,
+        "available_groups": 12,
+        "available_rows": 187
+      },
+      "comparative_recommendation": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "conversation_closure": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "decision_explanation": {
+        "requested_rows": 12,
+        "available_groups": 15,
+        "available_rows": 235
+      },
+      "deescalation": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "empathy_validation": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "evidence_grounded_dialogue": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "informal_texting": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 245
+      },
+      "multi_turn_context_update": {
+        "requested_rows": 12,
+        "available_groups": 15,
+        "available_rows": 241
+      },
+      "natural_follow_up": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "negotiation_compromise": {
+        "requested_rows": 16,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "plan_revision": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 241
+      },
+      "practical_next_step": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "preference_opinion": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      },
+      "tactful_disagreement": {
+        "requested_rows": 12,
+        "available_groups": 16,
+        "available_rows": 250
+      }
+    },
+    "quota_total": 256,
+    "native_source_correct_quota_feasibility": "UNMEASURED"
+  },
+  "schema_fields_to_freeze": [
+    "audit_id_and_sha256",
+    "source_file_sha256",
+    "original_train_file_sha256",
+    "original_line_number",
+    "original_row_id",
+    "canonical_original_record_sha256",
+    "recovered_source_version",
+    "base_template_family",
+    "counterfactual_group_id",
+    "reply_class",
+    "system_policy_version",
+    "source_provenance",
+    "human_review_status",
+    "messages",
+    "target",
+    "normalized_prompt_hash",
+    "tokenized_prompt_hash",
+    "tokenizer_hash",
+    "chat_template_hash",
+    "full_context_tokens",
+    "target_tokens",
+    "target_quality_flags",
+    "exclusion_inventory_revision",
+    "selection_seed",
+    "family_rank",
+    "within_family_row_rank",
+    "training_eligibility",
+    "semantic_rubric_revision"
+  ],
+  "recommended_deterministic_order": {
+    "status": "PROPOSED_ROOT_TO_FREEZE",
+    "family_rank": "SHA256(canonical JSON [selection namespace, selection seed, reply_class, recovered source version, base_template_family])",
+    "within_family_rank": "SHA256(canonical JSON [selection namespace, selection seed, original TRAIN row ID])",
+    "tie_break": "lexicographic original identifiers",
+    "native_response_use": "Never reorder based on responses; source-correct enrollment follows frozen bounded candidate order. Quota shortage blocks."
+  }
+}
