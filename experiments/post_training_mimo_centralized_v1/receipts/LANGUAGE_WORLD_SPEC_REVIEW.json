@@ -1,0 +1,131 @@
+{
+  "status": "ASSISTANT_SPEC_REVIEW_NOT_QUALIFIED_GRADING",
+  "reviewer_id": "/root",
+  "reviewed_parents": [
+    "LDEV-explanation-01",
+    "LDEV-explanation-02",
+    "LDEV-explanation-03",
+    "LDEV-explanation-04",
+    "LDEV-explanation-05",
+    "LDEV-explanation-06",
+    "LDEV-explanation-07",
+    "LDEV-explanation-08",
+    "LCAL-explanation-01",
+    "LCAL-explanation-02",
+    "LDEV-meaning_preserving_rewrite-01",
+    "LDEV-meaning_preserving_rewrite-02",
+    "LDEV-meaning_preserving_rewrite-03",
+    "LDEV-meaning_preserving_rewrite-04",
+    "LDEV-meaning_preserving_rewrite-05",
+    "LDEV-meaning_preserving_rewrite-06",
+    "LDEV-meaning_preserving_rewrite-07",
+    "LDEV-meaning_preserving_rewrite-08",
+    "LCAL-meaning_preserving_rewrite-01",
+    "LCAL-meaning_preserving_rewrite-02",
+    "LDEV-synthesis-01",
+    "LDEV-synthesis-02",
+    "LDEV-synthesis-03",
+    "LDEV-synthesis-04",
+    "LDEV-synthesis-05",
+    "LDEV-synthesis-06",
+    "LDEV-synthesis-07",
+    "LDEV-synthesis-08",
+    "LCAL-synthesis-01",
+    "LCAL-synthesis-02",
+    "LDEV-clarification-01",
+    "LDEV-clarification-02",
+    "LDEV-clarification-03",
+    "LDEV-clarification-04",
+    "LDEV-clarification-05",
+    "LDEV-clarification-06",
+    "LDEV-clarification-07",
+    "LDEV-clarification-08",
+    "LCAL-clarification-01",
+    "LCAL-clarification-02",
+    "LDEV-supportive_conversation-01",
+    "LDEV-supportive_conversation-02",
+    "LDEV-supportive_conversation-03",
+    "LDEV-supportive_conversation-04",
+    "LDEV-supportive_conversation-05",
+    "LDEV-supportive_conversation-06",
+    "LDEV-supportive_conversation-07",
+    "LDEV-supportive_conversation-08",
+    "LCAL-supportive_conversation-01",
+    "LCAL-supportive_conversation-02",
+    "LDEV-disagreement_and_compromise-01",
+    "LDEV-disagreement_and_compromise-02",
+    "LDEV-disagreement_and_compromise-03",
+    "LDEV-disagreement_and_compromise-04",
+    "LDEV-disagreement_and_compromise-05",
+    "LDEV-disagreement_and_compromise-06",
+    "LDEV-disagreement_and_compromise-07",
+    "LDEV-disagreement_and_compromise-08",
+    "LCAL-disagreement_and_compromise-01",
+    "LCAL-disagreement_and_compromise-02",
+    "LDEV-contextual_recommendation-01",
+    "LDEV-contextual_recommendation-02",
+    "LDEV-contextual_recommendation-03",
+    "LDEV-contextual_recommendation-04",
+    "LDEV-contextual_recommendation-05",
+    "LDEV-contextual_recommendation-06",
+    "LDEV-contextual_recommendation-07",
+    "LDEV-contextual_recommendation-08",
+    "LCAL-contextual_recommendation-01",
+    "LCAL-contextual_recommendation-02",
+    "LDEV-followup_and_closure-01",
+    "LDEV-followup_and_closure-02",
+    "LDEV-followup_and_closure-03",
+    "LDEV-followup_and_closure-04",
+    "LDEV-followup_and_closure-05",
+    "LDEV-followup_and_closure-06",
+    "LDEV-followup_and_closure-07",
+    "LDEV-followup_and_closure-08",
+    "LCAL-followup_and_closure-01",
+    "LCAL-followup_and_closure-02"
+  ],
+  "source_files": {
+    "SPECS_A.json": {
+      "sha256": "7c0c2d7ecde5229672782a764230fafa23271b38b16e68a71cf74b154889b340",
+      "bytes": 77145
+    },
+    "SPECS_B.json": {
+      "sha256": "9a00e21e9196e41a3ba60960ce72798da8952f1f381eaba8dec7412e9fcc55e0",
+      "bytes": 81422
+    }
+  },
+  "peer_reviews": [
+    {
+      "reviewer_id": "/root/e1_review",
+      "reviewed": "All40 A specs against own40 B specs",
+      "findings": [
+        "Potential CAL/DEV choice-graph overlap: LCAL-contextual_recommendation-02 vs LDEV-clarification-04"
+      ]
+    },
+    {
+      "reviewer_id": "/root/baseline_enrollment",
+      "reviewed": "All40 B specs against own40 A specs",
+      "findings": [
+        "LDEV-contextual_recommendation-06 lacks explicit sign/box/lid/car fit",
+        "Concurred potential CAL/DEV choice-graph overlap"
+      ]
+    }
+  ],
+  "resolution": {
+    "LDEV-contextual_recommendation-06": "Explicit supplied fit/clearance facts added before freeze",
+    "LCAL-contextual_recommendation-02": "Revised notebook world to reversible preparation under pending title decision, with independent settled interior work"
+  },
+  "repair_record": "sources/language_dev_cal_v1/revisions/REPAIRS_B_001.json",
+  "original_B_preserved": {
+    "sha256": "b4102d9ee3627d2b51bffe7c4e5c1909bcf0db14758a342acf33a1425cd28fb8",
+    "bytes": 80267
+  },
+  "remaining_blocking_spec_findings": [],
+  "limitations": [
+    "Assistant review, not human approval or qualified reference labels",
+    "No claim of80 independent mechanisms or unknown-pretraining exclusion",
+    "Rendered conversations and exemplar/control responses not yet authored at freeze"
+  ],
+  "native_calls": 0,
+  "qualified_graders": 0,
+  "reference_score_vectors": null
+}
