@@ -1,0 +1,57 @@
+{
+  "audit_limitations": [
+    "Scoped live source review, not an exhaustive repository or raw prediction reanalysis.",
+    "No full corpus scan, human target review, native capture, pretrained loading, or training.",
+    "Historical reported metrics retained as source-reported; no rescoring or reclassification claimed."
+  ],
+  "cited_subject": "08910b691ae66175f5202fb9f0724ce0ac6bebc5",
+  "new_branch": "research/opallo-format-abstention-screen-v1",
+  "observed_existing_heads_before": {
+    "codex/exp-peer-stabilizer-matrix": "3b2aa5f239188da92f8cfcb402e17e001ad5a86e",
+    "main": "a6ee824584a9e28881826ab92a11db48e124d90c",
+    "research/ced-cross-scale-e28-d36-v1": "d82e27c48b2a75b3a9459148990127cd9b14a2e9",
+    "research/ced-cross-scale-remote-receipt-d82e27c-v1": "2645f8ea92d1bfdd3bee5be3b2a51e6ad6f325de",
+    "research/ced-dual28-local-p1-preparation-v1": "6a56cb64ec03fb729b006192fd58a7d55975e707",
+    "research/ced-full-width-remote-receipt-94fbe179-v1": "1490dc05bb9bd8d363d214a51115685697851f8f",
+    "research/ced-native-loader-issue4-v2": "165789576fce93b48132effedd3a515763da3fa2",
+    "research/ced-official-conversion-v1": "8056e41cc2483407a90ac066099e2dc58c74e878",
+    "research/ced-rab001-hotfix001-qualification-v1": "a36de96b30eb03265db3a18e464a2e2a23ee67bf",
+    "research/positional-sequential-attention": "b234327382570c8aaf6e270d354b482bd5ab1b13",
+    "research/rineya-cross-scale-qwen4b-8b": "fde553c908db39e87a15a52ed239d1ba0a68bfd3",
+    "research/tgsa-rineya-pretrained-retrofit": "927405ab1b35a42cf7a5acb16fd42d2123ded567",
+    "research/tgsa-v5-1-unified-programme": "b60d4703fc546581998bd06e64d67c3a0e3067c5"
+  },
+  "parent_tree": "d10656049fc6673cdfdf031cba83845a661a1861",
+  "partial_source_reads": {
+    ".github/workflows/benchmark-001-architecture.yml": "lines 1-60",
+    ".github/workflows/ced-native-loader-issue4-v2.yml": "lines 1-45",
+    ".github/workflows/xsc-d82-mechanical-receipt.yml": "lines 1-38",
+    "Rineya_Abstention_Gate_Lab_v1/scripts/gate_core.py": "lines 1-210",
+    "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py": "lines 1-180",
+    "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py": "lines 180-400"
+  },
+  "protocol": "OPALLO-BEH-001",
+  "relationship": "parent is two commits ahead of cited subject; no behind commits",
+  "remote_transport": "GitHub Git Data API; container git HTTPS could not resolve github.com",
+  "repository": "LUNCY579/ChatBubble",
+  "review_date": "2026-09-14",
+  "reviewed_parent": "a36de96b30eb03265db3a18e464a2e2a23ee67bf",
+  "source_git_blobs": {
+    ".github/workflows/benchmark-001-architecture.yml": "01631d7e897638b8a464ed02dbb5eb14dcb8e178",
+    ".github/workflows/ced-native-loader-issue4-v2.yml": "0f18fdfa1b95cd2831563a76aa2c3700dbe879c8",
+    ".github/workflows/xsc-d82-mechanical-receipt.yml": "cb41a81662b0ecd03a5bb7357d03cdec47ab43a5",
+    "CONTINUATION.md": "e51a42b57321bcae5004801cb6cc3041b092516e",
+    "LONG_CONTEXT_RETENTION.md": "7acac2750e2d16a31b8521f9a6e85ad706719b7f",
+    "REPAIR_PREREG.md": "8b79fe7dbfee935364e58d2c2cf24c3b1a53dd0e",
+    "Rineya_Abstention_Gate_Lab_v1/README.md": "88a69c67e7d3fe4fb42e16a5f26b13818c8b3a0b",
+    "Rineya_Abstention_Gate_Lab_v1/scripts/gate_core.py": "5a0be0140069396fb2d676a1f43ed8de786a9777",
+    "Rineya_Long_Context_Demo_v1/scripts/evaluate_predictions.py": "b7cf9a84e14712bb0d52800b03f67c37f05aa544",
+    "Rineya_Long_Context_Demo_v1/scripts/run_local_hf.py": "8cd420e0f7e00dd72319974642223aeb6c801137",
+    "Rineya_Published_Cores/Rineya-Opallo-1.0.0-devfreeze/CORE.json": "74318f540cb8d9702aeeae67b6fde762bb3ed88b",
+    "Rineya_Short_Response_Behavior_Corpus_v1.0/DATA_CARD.md": "66b3bf55b30ba4702045f83f80e0cc08e5d1766a",
+    "Rineya_Short_Response_Behavior_Corpus_v1.0/manifests/category_distribution.csv": "73d51b4c971f95fe9d99e79546aded26bebe0dc7",
+    "experiments/rab001_exploration/long_context_probe.py": "1caf53b73983f73b75353433706e6c4514fe75c0"
+  },
+  "workflow_review": "All three observed workflows restrict push to other named branches; no workflow dispatch requested.",
+  "write_scope": "additive new experiment directory only; no parent files, registrations, assets, workflows, or registries edited"
+}
