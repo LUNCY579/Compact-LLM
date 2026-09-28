@@ -1,0 +1,70 @@
+{
+  "experiment": "CLARE-RINEYA-001",
+  "date": "2026-09-27",
+  "source_commit": "76230adc4f7edc89b5992fbe93b2f5c6839e487b",
+  "parent_commit": "816a1e8f4d1ab1c9d1ab847697d962a141521bac",
+  "source_subtree": "91148ef0876ecdbb39ad0f3bfc0eae17056d99bf",
+  "status": "CPU_MECHANICS_PASS_NATIVE_BLOCKED",
+  "tests": {
+    "command": "OMP_NUM_THREADS=1 python -m pytest -q experiments/clare_sparse_composition_v1/tests --junitxml=/mnt/data/clare_validation/pytest.xml",
+    "total": 87,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "pytest_version": "9.0.2",
+    "junit_sha256": "914758434d7d1e24734d1e9aa69af2aa395c246e70a21bfb7749463dc7934bc3",
+    "stdout_sha256": "cb0f25ff2647708423cf59a887d093691906ff03418b8b6ace9386bb8032c0ff"
+  },
+  "checks": {
+    "compileall": "PASS",
+    "git_diff_cached_check": "PASS",
+    "result_json_schema": "PASS",
+    "source_bytes_match_github_tree": "PASS",
+    "all_three_study_configs": "PASS"
+  },
+  "synthetic": {
+    "arms": 5,
+    "skills_per_arm": 4,
+    "eligible_coordinates": 20,
+    "discovery_steps_per_skill": 4,
+    "retrain_steps_per_skill": 8,
+    "total_optimizer_steps": 240,
+    "seed": 17,
+    "all_20_resets_exact": true,
+    "matched_D_E_budgets": [
+      4,
+      3,
+      3,
+      2
+    ],
+    "strict_delta_pairs": 12,
+    "maximum_strict_support_overlap": 0,
+    "maximum_strict_abs_dot": 0.0,
+    "efficacy_evidence": false
+  },
+  "native": {
+    "status": "BLOCKED",
+    "model_loads": 0,
+    "tokenizer_loads": 0,
+    "real_dataset_loads": 0,
+    "training_steps": 0,
+    "full_training_authorized": false
+  },
+  "scope_limitations": [
+    "New-package CPU tests only; not a whole-repository regression or remote CI run.",
+    "Synthetic regression stand-ins are not Rineya language skills.",
+    "Native loss/rollout/verifier adapter and matched native collector still require host implementation/qualification.",
+    "Final eligible tensor pool, native token budget and evaluation enrollment remain unbound.",
+    "Native smoke is implemented but not executed; its plumbing-only objective is not skill training."
+  ],
+  "evidence_files": {
+    "allocation_by_layer.csv": "89cab7c1db4ed48011f5cb062ed9cc7c927b7b24d375d9d230ebeb403d408f8d",
+    "composition_matrix.csv": "5cf04d8abcc7cfd30e081fef14dfceed8432c165d9b2c1847b7aaf6de695dc4b",
+    "delta_geometry.csv": "85fb820e8e12b59c4aefc2ae3ae81eec597ffa87902ee7b148ebd3d086cf6abb",
+    "native_preflight.json": "26bdab8247e24a8c41edda3b42b07e8872f51b7891779e4968ab18a83d7f1004",
+    "pytest.txt": "cb0f25ff2647708423cf59a887d093691906ff03418b8b6ace9386bb8032c0ff",
+    "results.json": "c6051cc93c0991064afeb547ccecbc4dfb46c945cdfd1309b1caef7153620224",
+    "retention_matrix.csv": "19055de70f2c745c38ac3b88aff6b0bf3a584037d82670baadcdff6851ccc45a",
+    "source_blobs.json": "7263654a1bdcf9b7265027d1dfadf08374f2fb50708c7121176fb768ab53bbdf"
+  }
+}
