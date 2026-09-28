@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "experiment_id": "RINEYA-0P6B-E0",
+  "status": "BLOCKED_E0",
+  "evidence_level": "MEASURED / REPRODUCED",
+  "code_sha": "285529d9ad328de49a3e820ebc8fbdb0d18d693e",
+  "dirty_at_launch": false,
+  "config_sha256": "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d",
+  "pretrained_loads": 0,
+  "optimizer_steps": 0,
+  "training_tokens": 0,
+  "generation_tokens": 0,
+  "teacher_calls": 0,
+  "checks": {},
+  "resources": [
+    {
+      "stage": "preload",
+      "elapsed_seconds": 67.76600000000008,
+      "host_available_gib": 6.9113311767578125,
+      "rss_gib": 0.6685791015625,
+      "gpu_free_gib": 6.890625,
+      "gpu_allocated_gib": 0.0,
+      "gpu_reserved_gib": 0.0,
+      "peak_allocated_gib": 0.0,
+      "disk_free_gib": 150.57550430297852
+    }
+  ],
+  "error": "HOST_RAM_GUARD",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 195, in run\n    guard(\"preload\", True)\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 186, in guard\n    require(snap[\"host_available_gib\"] >= cfg[\"host_free_gib\"] if admission else\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 39, in require\n    raise RuntimeError(message)\nRuntimeError: HOST_RAM_GUARD\n",
+  "wall_seconds": 67.79700000000003,
+  "e1_authorized": false
+}

@@ -1,0 +1,16 @@
+======================================================================
+FAIL: test_wrong_runtime_rejected_before_transformers_import (test_tokenize_bridge.DatasetTests.test_wrong_runtime_rejected_before_transformers_import)
+----------------------------------------------------------------------
+ValueError: tokenizer process must not already contain torch
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-post-training-Mimo\experiments\post_training_mimo_centralized_v1\tests\test_tokenize_bridge.py", line 168, in test_wrong_runtime_rejected_before_transformers_import
+    with self.assertRaisesRegex(ValueError, "wrong runtime"):
+AssertionError: "wrong runtime" does not match "tokenizer process must not already contain torch"
+
+----------------------------------------------------------------------
+Ran 80 tests in 24.656s
+
+FAILED (failures=1)

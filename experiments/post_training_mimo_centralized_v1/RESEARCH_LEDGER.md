@@ -29,3 +29,13 @@ Next: E0 mechanics/resource qualification alongside frozen original bridge data.
 ## E0 attempt 1: pre-load implementation failure
 
 Measured wall185.313s, zero pretrained loads, zero optimizer steps, zero training/generation tokens. Runtime imports and CUDA device discovery completed. psutil.disk_usage rejected WindowsPath before the first resource snapshot. This is a host API plumbing failure, not model capability or memory fit evidence. Failure and supervisor receipts are preserved in results/e0_titan_v1*. Fix only string conversion, add import progress events, and retry the identical registered numerical/resource envelope. No tolerances or guards changed.
+
+## E0 attempt 2: resource admission block
+
+Question: does the corrected resource probe admit unchanged Titan BF16 qualification? Same model, code fixture, numerical thresholds and resource floors. MEASURED: runtime import66.391s; preload host available6.911331GiB, required7.4GiB; GPU free6.890625GiB, required4.0GiB; worker RSS0.668579GiB. Native admission blocked before pretrained load. Zero model loads, updates, training tokens, generation tokens and teacher calls. This is a host-resource result, not evidence that Titan itself cannot fit, cannot learn or regresses. No frozen forward/backward fit, acquisition or retention measured. Stop native lane; do not lower guards, change model scale, quantize or rent hardware without a registered reason. Continue tokenization, analysis and preservation design. Next native attempt needs measured sufficient host headroom plus6GiB throughout; no automatic identical retry.
+
+## Open-role tokenization and analysis controls
+
+Token-only stock HF profiling completed on pinned Transformers4.57.1 in111.268s. No PyTorch imported, no model loaded/called. All4608 open rows fit; max total157 and completion38inclEOS. TRAIN414554 nonpadding/49272 supervised tokens. No truncation; CHECK/FINAL unopened. Wrong-runtime attempt1 is retained with bounded/unmeasured exact duration and corrected progress wording. Parent-level DEV analyzer and trivial TRAIN-mode answer control qualify mechanics only. Replay, historical exclusions, native E0 and broad preservation remain unresolved; no recipe promotion.
+
+Final validation:80 aggregate CPU tests passed in25.732s (imports excluded). A wrong-runtime negative-control test initially saw the preexisting-torch guard because another test imports torch; its mocked sys namespace was isolated, with no production tokenizer changes. Failed and passing logs retained. Native E0 remains blocked and E1 remains unlaunched.

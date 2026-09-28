@@ -4,7 +4,7 @@
   "experiments": [
     {
       "id": "E0",
-      "status": "REGISTERED_NOT_RUN",
+      "status": "BLOCKED_HOST_RAM",
       "question": "Native identity, parity, masks, gradients, reversible update and resume?",
       "config": "configs/E0_TITAN_BF16.json",
       "hypothesis": "Exact Titan supports fixed q/v adapter mechanics within inherited resource floors",
@@ -32,11 +32,13 @@
       "seeds": [
         20260928
       ],
-      "teacher_calls": 0
+      "teacher_calls": 0,
+      "latest_result": "results/e0_titan_v2/E0_RESULT.json",
+      "measured_available_ram_gib": 6.9113311767578125
     },
     {
       "id": "RINEYA-0P6B-BRIDGE-SFT-E1",
-      "status": "BLOCKED_PENDING_E0_DATA_REPLAY",
+      "status": "BLOCKED_E0_AND_RETENTION",
       "registration": "RESEARCH_PROTOCOL.md",
       "data_manifest": "manifests/E1_DATA_REQUIREMENTS.json",
       "parent_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",

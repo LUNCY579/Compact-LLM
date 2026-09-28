@@ -5,8 +5,10 @@ Weight SHA256: `537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7
 See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
-Initial state: exact static Titan identity measured; E0 native qualification pending;
-no trained candidate or capability improvement claimed. The original 344M draft is
+Current state: exact static Titan identity measured; E0 blocked before model load
+by host RAM (6.9113 GiB available versus 7.4 GiB admission). All 80 focused CPU
+tests pass; 4608 original open-role bridge parents are independently verified.
+No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
 
 The source branch was fetched and verified at
@@ -38,3 +40,7 @@ The [method inventory](METHOD_INVENTORY.csv) has source/evidence boundaries for 
 components. Historical native measurements are not new Titan qualification. The
 report's 344M resource estimates are not reused. BF16 stock Qwen3 does not inherit
 historical DenseReference FP32 scores.
+
+Cycle results: [report](CENTRALIZED_EXPERIMENT_REPORT.md), [PDF](CENTRALIZED_EXPERIMENT_REPORT.pdf),
+[results matrix](RESULTS_MATRIX.csv), [resource ledger](RESOURCE_LEDGER.csv),
+[next experiment](NEXT_EXPERIMENT.md). The research goal remains ongoing.

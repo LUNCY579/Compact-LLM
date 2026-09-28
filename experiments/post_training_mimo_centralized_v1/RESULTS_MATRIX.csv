@@ -1,0 +1,8 @@
+experiment,status,evidence,primary_endpoint,acquisition_delta,retention_delta,interpretation
+STATIC_TITAN_BINDING,PASS,MEASURED / REPRODUCED,596049920 params;310 BF16 tensors;weight hash matched,,,Identity only
+CPU_CONTROLS,PASS,MEASURED / REPRODUCED,80 focused synthetic tests passed; one integration-test isolation failure fixed without production changes,,,Mechanics only
+BRIDGE_DATA,PASS_MECHANICS,MEASURED / REPRODUCED,4608 open parents verified;512 CHECK hashes only;FINAL closed,,,Data mechanics not efficacy
+E0_v1,IMPLEMENTATION_FAILURE,MEASURED / REPRODUCED,WindowsPath rejected by psutil.disk_usage before model load,,,Fixed without changing thresholds
+E0_v2,BLOCKED,MEASURED / REPRODUCED,Host free6.9113GiB<7.4GiB floor,,,No model memory-fit or quality result
+E1,BLOCKED,UNMEASURED,Requires E0 and qualified replay/preservation,,,No training; no candidate promoted
+TOKENIZER_v2,PASS_TOKEN_ONLY,MEASURED / REPRODUCED,4608 rows;max157 total/38 completion;TRAIN414554/49272tokens;no truncation,,,Tokenizer data fit only; E1 blocked

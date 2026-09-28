@@ -82,7 +82,7 @@ Three-seed pilot: positive acquisition >=2/3 seeds, descriptive mean >=3pp,
 paired parent-bootstrap 95% acquisition interval excludes0, same preservation
 screens. This is exploratory screening, not a noninferiority certificate.
 
-Bootstrap entire parents with all variants/seeds together (10000 resamples,
+Bootstrap entire parents within family strata with all variants/seeds together (10000 resamples,
 seed20260927). Report per-seed and per-family effects, source-correct losses and
 source-incorrect repairs; zero denominators are undefined. Report all attempted
 tokens, calls, failures, resources and runtime. Do not pool row-by-seed as independent.
