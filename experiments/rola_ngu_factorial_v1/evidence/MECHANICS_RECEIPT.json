@@ -1,0 +1,39 @@
+{
+  "actions_dispatched": 0,
+  "counts": {
+    "errors": 0,
+    "failures": 0,
+    "skipped": 0,
+    "tests": 97
+  },
+  "evidence_class": "ASSISTANT_CONTAINER_SCOPED_CPU_MECHANICS_ONLY",
+  "experiment": "RNGF-001",
+  "native_status": "BLOCKED_NATIVE_AND_TRAINING",
+  "parent_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+  "passed": 97,
+  "pretrained_model_calls": 0,
+  "pretrained_training_updates": 0,
+  "raw_evidence_sha256": {
+    "junit.xml": "83a2f9cbc5adef71c83e043e4e5911925757b7211eff41a44f35d13def4a041a",
+    "preflight.json": "e749fe37dbb3801c38f39df4564545692564ef720b95b67c4129364afd7e14db",
+    "pytest.txt": "2cf268736a92831baee36c969b17a929889866f7c9e731581b31f431f7083223"
+  },
+  "recorded_utc": "2026-09-18T15:06:00.949066+00:00",
+  "release_permitted": false,
+  "runtime": {
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "pytest": "9.0.2",
+    "python": "3.13.5",
+    "torch": "2.10.0+cpu"
+  },
+  "schema": 1,
+  "scope_limitations": [
+    "New package only; not full repository regression testing.",
+    "Tiny random tensors and synthetic event fixtures; not a pretrained model.",
+    "Complete native model adapter and asynchronous trainer are not implemented.",
+    "Native source, data, optimizer, budget, and effect-size gates remain closed."
+  ],
+  "sealed_evaluation_opened": false,
+  "source_sha256": "ae0a0b9f5b4018d4ff76f3f78e0a1d02463b86984e68b16d9392cd9978ef31d7",
+  "test_command": "python -m pytest -q experiments/rola_ngu_factorial_v1/tests --junitxml=<external-output>/junit.xml"
+}

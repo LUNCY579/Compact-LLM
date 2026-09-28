@@ -1,0 +1,112 @@
+{
+  "schema": 1,
+  "receipt_id": "RNGF-001-PUBLICATION-RECONCILIATION-20260919",
+  "experiment": "RNGF-001",
+  "repository": "LUNCY579/ChatBubble",
+  "scope": "PUBLICATION_AND_REPOSITORY_SOURCE_BINDING_ONLY",
+  "observed_date_local": "2026-09-19",
+  "timezone": "America/Chicago",
+  "observed_date_utc": "2026-09-20",
+  "publication_status": "PUBLISHED_IMPLEMENTATION_OBSERVED",
+  "observation": {
+    "method": "Connected GitHub GET: ref, immutable commits, compare, package directory/tree, and pinned evidence files.",
+    "target_branch": "research/rola-ngu-factorial-v1",
+    "target_ref": "refs/heads/research/rola-ngu-factorial-v1",
+    "target_head_observed": "ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+    "original_base_commit": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+    "compare_status": "ahead",
+    "ahead_by": 2,
+    "behind_by": 0,
+    "published_implementation_commits_observed": 2,
+    "historical_successful_write_call_count": null,
+    "count_note": "Two reachable implementation commits are observed. The commit graph does not count successful API calls or retrospectively change a failed-attempt counter.",
+    "read_urls": [
+      "https://api.github.com/repos/LUNCY579/ChatBubble/git/ref/heads/research/rola-ngu-factorial-v1",
+      "https://api.github.com/repos/LUNCY579/ChatBubble/compare/fbec90a0d0653aeb745d5223137ae3cfdd9c48dd...ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+      "https://api.github.com/repos/LUNCY579/ChatBubble/git/commits/3a83618a96a82f87255e982e888d0ecb78dd94b0",
+      "https://api.github.com/repos/LUNCY579/ChatBubble/git/commits/ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+      "https://api.github.com/repos/LUNCY579/ChatBubble/contents/experiments?ref=ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+      "https://api.github.com/repos/LUNCY579/ChatBubble/git/trees/7617dcc8ab7d41036e1f4fe5106faa3524d121ac?recursive=1"
+    ]
+  },
+  "lineage": [
+    {
+      "commit": "3a83618a96a82f87255e982e888d0ecb78dd94b0",
+      "parent": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+      "role": "Original 97-test mechanics publication"
+    },
+    {
+      "commit": "ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+      "parent": "3a83618a96a82f87255e982e888d0ecb78dd94b0",
+      "role": "Shared actor and resumable logical-async fixture integration; recorded 152-test CPU pass"
+    }
+  ],
+  "repository_source_binding": {
+    "subject_commit": "ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+    "repository_tree_sha": "f62cbac03fe28fc583440001a6ede3543ac62644",
+    "package_path": "experiments/rola_ngu_factorial_v1",
+    "package_tree_sha": "7617dcc8ab7d41036e1f4fe5106faa3524d121ac",
+    "package_blob_count": 33,
+    "manifest_blob_sha": "a2f65f26e8e47a4b2fc789000aeefab669c237de",
+    "manifest_declared_source_sha256": "e88e246b37c1b0febb4266919089eea7bb48c07da7e0aaa25b47fa9d8582afa2",
+    "validation_blob_sha": "e9ef706f8ed12c5c8fb445a4b2e4d79983ddf419",
+    "validation_declared_source_sha256": "e88e246b37c1b0febb4266919089eea7bb48c07da7e0aaa25b47fa9d8582afa2",
+    "declared_source_digests_equal": true,
+    "git_package_tree_reconstructed_from_33_observed_blob_entries": true,
+    "source_file_sha256_rehash_performed_this_reconciliation": false,
+    "source_lock_blob_sha": "b51beed39cd9a1b019f30eea3441ec949c3e1b9b",
+    "model_revision_declared_in_source_lock": "a36de96b30eb03265db3a18e464a2e2a23ee67bf",
+    "native_assets_verified_this_reconciliation": false,
+    "interpretation": "Repository object identity and matching recorded digests only; not native checkpoint qualification or re-execution of historical tests."
+  },
+  "historical_publication_attempt": {
+    "path": "REMOTE_STATUS.json",
+    "git_blob_sha": "b4038f41a8e18434891997a0ae0858b943a7a763",
+    "recorded_observed_date": "2026-09-18",
+    "recorded_write_result": "BLOCKED_BY_TOOL",
+    "recorded_successful_remote_writes": 0,
+    "recorded_target_head_after": "fbec90a0d0653aeb745d5223137ae3cfdd9c48dd",
+    "preserve_bytes": true,
+    "supersession_scope": "CURRENT_PUBLICATION_INTERPRETATION_ONLY",
+    "interpretation": "A valid historical failed-attempt snapshot, not the present branch head or a lifetime publication total. This receipt does not erase or relabel the failed attempt."
+  },
+  "recorded_engineering_evidence": {
+    "path": "integration_20260918/VALIDATION.json",
+    "status": "PASS_CPU_FIXTURES_NATIVE_BLOCKED",
+    "tests": 152,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "rerun_this_reconciliation": false,
+    "historical_fixture_optimizer_steps": 128,
+    "historical_fixture_accounted_tokens": 6144,
+    "historical_pretrained_calls": 0,
+    "interpretation": "Preserved source-bound CPU evidence, including toy fixture updates. Not a fresh run, native evidence, or pretrained training."
+  },
+  "authority": {
+    "grant_created": false,
+    "exact_source_native_qualification": "BLOCKED_NOT_AUTHORIZED_BY_THIS_RECEIPT",
+    "pretrained_loading_or_training": "BLOCKED_NOT_AUTHORIZED_BY_THIS_RECEIPT",
+    "sealed_evaluation": "BLOCKED_NOT_AUTHORIZED_BY_THIS_RECEIPT",
+    "quality_efficiency_or_release_claims": "BLOCKED_NOT_AUTHORIZED_BY_THIS_RECEIPT",
+    "production_async_throughput": "NOT_ESTABLISHED",
+    "native_or_pretrained_calls_this_reconciliation": 0,
+    "optimizer_updates_this_reconciliation": 0,
+    "sealed_rows_read_this_reconciliation": 0,
+    "workflow_dispatches_this_reconciliation": 0
+  },
+  "reconciliation_contract": {
+    "successor_branch": "research/rola-ngu-publication-reconciliation-v1",
+    "parent_commit": "ebfb6aeec1e6eb55bf520afb604ab46d652d9297",
+    "allowed_added_paths": [
+      "evidence/README.md",
+      "evidence/PUBLICATION_RECONCILIATION_20260919.json"
+    ],
+    "allowed_modified_or_deleted_existing_paths": [],
+    "existing_package_blobs_to_preserve": 33,
+    "root_readme_manifest_registration_source_lock_and_all_prior_evidence": "PRESERVE_BYTE_FOR_BYTE",
+    "original_branch_update_authorized": false,
+    "self_binding_rule": "This snapshot binds the observed implementation parent. Its containing evidence-only commit has a different tree and must be verified by a separate post-publication ref/commit/compare readback. It does not assert its own future commit SHA or publication success.",
+    "freshness_rule": "This is a dated snapshot, not a floating latest-head assertion. A moved ref requires a new observation; an unavailable or failed read means unknown, not unpublished."
+  }
+}
