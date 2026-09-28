@@ -1,55 +1,57 @@
 # Next experiment
 
-**Next native work remains unchanged E0 after a meaningful resource-state change.**
-The last actual pre-load host measurement, 6.911331 GiB, failed the 7.4 GiB floor.
-Later OS-only observations also stayed below admission. No pretrained load, native
-fit or acquisition/retention effect has been measured. Do not retry blindly or
-reduce guards.
+**Research is blocked at native E0 pending a real resource-state change.**
+The latest OS-only check found 5.987 GiB available before imports with no Python
+workers. E0 requires at least 7.4 GiB available after runtime imports and 6 GiB
+throughout the worker, plus 4 GiB GPU and 4 GiB disk admission. Keep every floor
+unchanged. The repeated memory block is not evidence that Titan cannot fit or learn.
 
-Use the same Titan hash, BF16/q-v rank8 config, numerical tolerances and external
-process-tree watchdog. Require at least 7.4 GiB host available after imports, 6 GiB
-throughout, 4 GiB GPU before load and 4 GiB disk. These minima are not model-fit
-measurements. Qualify exact load, 32 zero-adapter fixtures, likelihood, masks,
-causality, 256/512/1024 profiles, finite confined gradients, reversible updates
-and deterministic resume. Commit source first and retain every failed run.
+The finite independent preparation has been completed and checked: exact source
+identity, method audit, acquisition/replay data, language and long-context candidate
+inputs, E1 input/schedule plan, and actual DEV prompt/scorer binding. No eligible
+independent FAST task remains on the current critical path. See
+`receipts/CONTINUATION_007_BLOCKED_AUDIT.json` for completed evidence and remaining
+requirements. Do not regenerate banks, retry unchanged admission, invent grading
+or add generic wrappers to substitute for the missing native evidence.
 
-## Next independent FAST action
+## Resume sequence
 
-Implement the concrete open-DEV input/scorer adapter identified in
-`evidence/SCOPE_AUDIT_CONTINUATION_005.md`. Bind the actual source rows and token
-arrays for 256 acquisition, 256 deterministic-retention and 256 long-context rows
-(480 parents), plus the 64 language DEV inputs. Short-bank `input_ids` include the
-reference completion: policy input must be `input_ids[:prompt_tokens]`, verified
-against the stored prompt hash. Long-context and language use different prompt-only
-fields. Never provide reference targets to a policy or treat derivative rows as
-independent parents.
+After host headroom changes, resume the unchanged bounded E0 qualifier with the
+pinned Python 3.11.15 environment, exact Titan weight/config/tokenizer hashes and
+external process-tree containment. Commit any necessary source changes first; use
+a new immutable run directory. Recheck live resources and stop on any failed gate.
+Qualify exact load, 32 zero-adapter cases, likelihood/masks/causality, 256/512/1024
+profiles, finite confined gradients, reversible update and deterministic resume.
+No current E0 pass, native source responses or trained candidate exists.
 
-Connect existing pure deterministic verifiers and freeze malformed-response handling
-and transitive source hashes. Language scoring stays blocked. Produce a finite
-static binding and meaningful synthetic controls. Do not invent qualified runtime,
-decoding identities or numerical budgets to fill an enrollment manifest. Actual
-capture remains E0- and run-registration-gated; a full native trainer is not the
-priority before those measured dependencies.
+Only after measured E0 should numerical native collection budgets and the actual
+runtime identity be frozen, the collector/executor be completed against that
+runtime, and unchanged-source responses be captured. Language still needs qualified
+reference labels, reviewer assignment and calibration. The 2048/4096 forward-only
+extension remains separate. E1 seed 101 follows all of those gates; seeds 211/307
+require its registered passing DEV screen. CHECK/FINAL stay closed.
 
-## Prepared dependencies
+## Prepared DEV binding
 
-The E1 TRAIN plan remains 4096 acquisition +768 deterministic replay +256 language
-sequences: 680532 nonpadding/63546 supervised tokens, 256 steps of16+4, seed101 only,
-13 warmup steps, final LR0 and final-checkpoint selection. Its selected runtime-bound
-plan is `artifacts/mimo_central/e1_plan_seed101_v2` under pinned Python3.11.15.
-No native E1 executor or launch authority follows from that artifact.
+`manifests/DEV_INPUT_SCORER_BINDING.json` indexes
+`artifacts/mimo_central/dev_binding_v1`, produced at
+`ead560f3ed0fcc879e2b26f77003b9053d37553d` in 107.513 s.
+It contains 832 rows/544 parent groups and 890874 prompt tokens:
+22914 acquisition, 80773 deterministic retention, 780288 long context, 6899 language.
+The policy file has exactly six fields; only verified IDs/mask or equivalent
+messages go to a model. Row IDs are routing metadata and never prompt content.
+Complete evaluator data are separate. Short-bank slices exclude 6883 reference-token
+positions; twins and all eight long-context variants remain grouped.
 
-Long-context DEV has 32 worlds/256 rows at exact2024/4072 prompt tokens. The new
-language candidate index is `manifests/LANGUAGE_DEV_CAL_CANDIDATE_INDEX.json`:
-64 DEV/16 CAL worlds,96 authored CAL controls and two unassigned112-item JSON packets.
-Native-tokenizer measurement: max166 prompt/max63 exemplar-or-control tokens including
-EOS, no truncation. These are inputs, not generated Titan responses. Qualified labels,
-reviewers, calibration, native baseline enrollment and 2048/4096 runtime fit remain
-missing. CHECK/FINAL stay closed.
+Pure deterministic scorers enforce the prospectively frozen malformed policy and
+check pinned helper code before imports and each call. Language scoring refuses
+unqualified exemplar matching. The static binding has no fabricated runtime,
+decoding, seed or budget registration. It is not an enrollment manifest or native
+grant. Forty new tests passed in 87.582 s; a separate audit checked 832 row mappings
+and 34 file identities without finding a discrepancy. No model accuracy was measured.
 
-Validation comprises 43 new controls plus two focused fingerprint controls, with
-214 artifact checks; prior172+89 test runs remain separate. Comparisons covered
-42000 TRAIN rows and32800 historical chat fingerprints separately, plus review of
-240 retrieved neighbor contexts. They do not prove full semantic or pretraining
-exclusion. E1 seed101 still requires every scientific gate; only its passing DEV
-screen earns seeds211/307. Current best stays unchanged Titan.
+The E1 TRAIN plan remains 5120 sequences/680532 nonpadding/63546 supervised tokens,
+256 steps with 16 acquisition+4 replay sequences, seed 101 only, 13 warmup steps and
+final LR 0. Current best stays the unchanged exact Titan checkpoint. Additional
+heavy training is not justified until native qualification and preservation gates
+actually pass.

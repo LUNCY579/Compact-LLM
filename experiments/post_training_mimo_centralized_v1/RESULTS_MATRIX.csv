@@ -18,3 +18,5 @@ LANGUAGE_DEV_CAL_CANDIDATES,PREPARED_UNQUALIFIED_GRADING,MEASURED / REPRODUCED,6
 LANGUAGE_DEV_CAL_TOKENIZER,PASS_TOKEN_ONLY,MEASURED / REPRODUCED,80prompts/8680tokens/max166;160references/5603tokens/max63EOSincluded,,,No truncation; no model fit implication
 LANGUAGE_SCOPED_EXCLUSIONS,PARTIAL_COMPARISONS_ONLY,MEASURED / REPRODUCED,42000TRAINrows+32800historicalhashes separately;0matches;240neighborcontexts reviewed,,,Not semantic independence or unknown-pretraining exclusion
 LANGUAGE_PREPARATION_CONTROLS,PASS_CPU_ONLY,MEASURED / REPRODUCED,43newtests in40.998s plus2focusedfingerprintcontrols;214artifactchecks,,,Separate runs; no grader or pretrained qualification
+DEV_INPUT_SCORER_BINDING,PASS_STATIC_ONLY,MEASURED / REPRODUCED,832DEVrows/544parents/890874prompttokens;6883shortreferencepositions separated,,,No generated responses or native enrollment
+DEV_BINDING_CONTROLS,PASS_CPU_ONLY,MEASURED / REPRODUCED,40newtests in87.582s;832artifactrow comparisons and34filechecks,,,No pretrained or language-grader qualification

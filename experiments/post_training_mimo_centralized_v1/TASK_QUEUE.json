@@ -76,7 +76,7 @@
       "gpu_gib": 4.0,
       "disk_gib": 4,
       "artifact": "results/e0_titan_v1/E0_RESULT.json",
-      "blocker": "HOST_RAM_GUARD:6.9113GiB<7.4GiB",
+      "blocker": "HOST_RAM_GUARD persists: latest OS-only5.987GiB before imports <7.4GiB post-import admission; no retry",
       "status": "blocked",
       "evidence_receipt": "results/e0_titan_v2/E0_RESULT.json",
       "native_gate_receipt": "configs/E0_TITAN_BF16.json",
@@ -96,7 +96,7 @@
       "gpu_gib": 0,
       "disk_gib": 0.1,
       "artifact": "evidence/RETENTION_DESIGN.md",
-      "blocker": "Candidate banks and tokenization complete; actual source enrollment, independently qualified language labels/graders and long-context native runtime remain unqualified",
+      "blocker": "Inputs/scorers prepared; current-source native enrollment, independent qualified language labels/calibration and2048/4096 native runtime remain missing",
       "status": "blocked",
       "evidence_receipt": "manifests/E1_CANDIDATE_DOSE.json",
       "native_gate_receipt": null,
@@ -241,13 +241,13 @@
       "ram_gib": 0.5,
       "gpu_gib": 0,
       "disk_gib": 0.2,
-      "artifact": "receipts/DEV_INPUT_SCORER_BINDING.json",
+      "artifact": "manifests/DEV_INPUT_SCORER_BINDING.json",
       "blocker": null,
-      "status": "pending",
-      "evidence_receipt": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/DEV_INPUT_SCORER_BINDING.json",
       "native_gate_receipt": null,
       "expected_information_value": "Prevent use of target-bearing token arrays as policy prompts; remove manual source/scorer wiring",
-      "next_decision_impact": "Concrete static input/scorer package for later E0-qualified native collection; runtime identity/budgets/qualification stay unresolved"
+      "next_decision_impact": "832 actual DEV prompt inputs and separate evaluator semantics bound; native capture and language grading remain unqualified"
     }
   ]
 }

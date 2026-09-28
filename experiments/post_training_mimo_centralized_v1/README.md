@@ -6,8 +6,8 @@ See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
 Current state: exact static Titan identity measured; E0 blocked before model load
-by host RAM (6.9113 GiB available versus 7.4 GiB admission). The prior 172+89 test runs and 43 new language controls plus two fingerprint
-controls passed separately; 4608 open-role bridge parents are independently verified.
+by host RAM (6.9113 GiB available versus 7.4 GiB admission). The native research lane is blocked. Current DEV preparation passed 40 new
+controls; earlier test runs remain separate. No native result follows from them.
 No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
 
@@ -55,12 +55,12 @@ Continuation 003: exact long-context DEV data are built (32 worlds, 256 rows;
 2024/4072 full-template tokens). Independent artifact audit found no discrepancies;
 172 CPU tests pass. Native resource fit and preservation remain unqualified.
 Continuation004 completed the E1 input/schedule plan and diagnostic preflight:
-5120 TRAIN rows,256 steps,16 acquisition+4 replay per step,seed101 only. The
+5120 TRAIN rows,256 steps,16 acquisition+4 replay per step,seed 101 only. The
 [frozen plan index](manifests/E1_EXECUTION_PLAN.json) binds the actual data and
 source/config bytes. It grants no native execution. The enrollment importer
 preserves parent groups and every attempt but cannot certify model capture or grading.
 
-Reproduce the plan in a new directory with the pinned Python3.11.15 interpreter:
+Reproduce the plan in a new directory with the pinned Python 3.11.15 interpreter:
 
 ```text
 C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.prepare_e1 --config experiments/post_training_mimo_centralized_v1/configs/E1_PLAN_V1.json --output <new-directory>
@@ -90,3 +90,14 @@ Keep coordinator mappings separate from rating views. `validate_ratings` require
 fresh validated source rows and remains diagnostic; no packet can grant grading or
 native qualification. Next is the concrete DEV input/scorer adapter, including prompt
 slicing that prevents target-bearing short-task arrays from leaking reference answers.
+
+Continuations 006-007 completed the [DEV prompt/scorer binding](manifests/DEV_INPUT_SCORER_BINDING.json):
+832 rows/544 parent groups, 890874 prompt tokens, with evaluator targets in a separate
+sidecar. Short-task prompt slices exclude 6883 reference-token positions. Scorers pin
+all three verifier dependencies and keep language grading blocked. Production source
+was committed before the artifact; 40 tests and the separate artifact audit passed.
+
+The [blocked audit](receipts/CONTINUATION_007_BLOCKED_AUDIT.json) records why the next
+useful experiment needs changed host headroom for E0. Native collection, language
+calibration, the 2048/4096 extension and native E1 execution remain incomplete.
+The full goal is unachieved. No further heavy training is justified yet.

@@ -238,3 +238,57 @@ preserve parent variants. Runtime identity, run budgets, native capture, qualifi
 language grading, the 2048/4096 runtime extension and native E1 executor still need
 actual evidence. The goal remains active, current best remains unchanged Titan,
 and no preparation result opens CHECK/FINAL or earns behavioral promotion.
+
+## Continuations 006-007: concrete DEV binding and blocked audit
+
+Both goal turns made progress. Continuation 006 froze AMENDMENT_007 and produced
+DEV binder/scorer code; all 832 actual source rows passed an integration check.
+A delegated publisher agent then reported a usage limit before creating its files.
+Continuation 007 inspected the current worktree, found no partial publisher, and
+completed the publisher locally. No alternative account, paid provider or native
+runtime was introduced. The full research objective was not reduced.
+
+The native host-RAM condition persisted: initial OS observations 5647876KiB and
+5770976KiB were below admission, and the later 14:24 UTC observation 6277916KiB
+(5.987 GiB) also remained below 7.4 GiB before imports, with no Python workers.
+No native retry, guard change or unrelated-process termination occurred.
+
+AMENDMENT_007 freezes strict JSON/type/shape distinctions for malformed responses.
+Well-shaped wrong values remain semantic errors; false abstention is not automatically
+malformed. Long-context scoring retains its strict symbol/UNKNOWN parser. Language
+scoring remains blocked. The callback hard-pins its three pure verifier dependencies
+before import and at every call; the importer separately binds the callback file.
+Host data/lineage errors raise rather than becoming model failure observations.
+
+Forty focused binder/scorer/publisher tests passed in 87.582 s. They include source/token
+joins, reference separation, complete parent variants, strict scorer behavior,
+dependency drift, publication snapshot/HEAD changes and write-once output. Earlier
+test runs remain separate. Source/config committed at
+ead560f3ed0fcc879e2b26f77003b9053d37553d before actual publication.
+
+Production took 107.513 s under pinned Python 3.11.15, with a clean overall checkout
+snapshot and no imported model/tokenizer frameworks. It bound 256 acquisition,
+256 deterministic-retention, 256 long-context and 64 language DEV rows: 832 rows and
+544 parent groups. Prompt-token sums 22914/80773/780288/6899 total 890874. The language
+sum excludes CAL. Policy records contain only row routing ID, messages, prompt IDs,
+mask, count and hash; row IDs do not enter model messages. Evaluator semantics and
+labels remain separate. 6883 short-task reference-token positions were excluded.
+
+The publication validates 768 deterministic data references plus 64 language source
+identities, not student outputs. No response records, native loads, optimizer calls,
+generated model tokens or source-correct membership were produced. Runtime identity,
+decoding, seeds and collection budgets remain null rather than invented permits.
+A separate stdlib audit compared all 832 policy rows with actual stored prompt arrays,
+checked 34 file identities and complete parent closures, and found no discrepancies
+in 11.749 s. The root authored both publisher and audit; this is not independent human
+review. Stored-token mapping checks are not fresh tokenization or native fit.
+
+The blocked audit verified eight completed preparation tasks and no remaining
+eligible independent FAST task on the current critical path. The same native
+admission blocker has persisted for seven goal turns. Exact native E0, source
+capture, qualified language grading, longer-context runtime, the native executor,
+E1 results and all later dependency-gated experiments remain incomplete. Drafting
+more speculative execution scaffolding without measured runtime/budget decisions
+would not resolve the next empirical gate. Record the goal as BLOCKED after final
+artifact publication; never COMPLETE. Resume unchanged E0 after a real host-resource
+change, keeping the original objective and all scientific gates intact.

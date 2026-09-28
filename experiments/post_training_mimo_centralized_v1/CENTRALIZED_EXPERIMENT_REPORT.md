@@ -3,7 +3,8 @@
 28 September 2026. **Data and measurement preparation have advanced; native E0 is
 blocked by host-RAM admission. No pretrained model has been loaded or trained in
 this campaign, no acquisition or retention effect has been measured, and no recipe
-has been promoted. The full research goal remains active and incomplete.**
+has been promoted. The full research goal is incomplete and blocked pending a
+resource-state change and the remaining scientific qualifications.**
 
 ## Exact primary student and source
 
@@ -45,7 +46,8 @@ Its 344M resource estimates were not reused as Titan measurements.
 | E1 input/schedule plan | 5120 sequences; 680532 nonpadding; 63546 supervised tokens; 256 steps | Frozen seed 101 schedule | No native executor or launch grant |
 | Long-context DEV | 32 worlds, 256 rows; exact 2024/4072 prompts | Tokenizer/visible-evidence mechanics | No model fit or preservation result |
 | Language DEV/CAL | 64 DEV +16 CAL worlds; 96 authored controls; max 166 prompt tokens | Candidate inputs and unassigned packets | Reference labels and grading unqualified |
-| Software controls | 43 new controls passed in 40.998 s, plus 2 fingerprint controls | Prior 172+89 runs retained separately | No pretrained efficacy implication |
+| DEV input/scorer binding | 832 rows /544 parent groups; 890874 prompt tokens | Prompt-only policy export, separate evaluator data | Native collection and language grading unqualified |
+| Software controls | 40 new binding/scorer/publisher controls passed in 87.582 s | Prior runs retained separately | No pretrained efficacy implication |
 
 The maximum candidate TRAIN sequence is 398 tokens. Every target fits its
 registered cap without truncation. The shared non-thinking chat template and
@@ -198,6 +200,35 @@ backward peaks, training/generation throughput and checkpoint/resume remain
 UNMEASURED. Historical FP32 DenseReference Titan scores are RECORDED FROM PRIOR
 WORK; they cannot be imported as current BF16 capability or source-correct membership.
 
+## Concrete DEV input and scorer binding
+
+AMENDMENT_007 froze prompt separation and malformed-response rules before any
+native response. Production code at `ead560f3ed0fcc879e2b26f77003b9053d37553d`
+bound all 832 DEV rows across 544 parent groups in 107.513 s. Prompt totals are
+22914 acquisition, 80773 deterministic retention, 780288 long context and 6899 language:
+890874 in total. CAL rows are excluded; the language total is DEV-only.
+
+Policy records contain exactly six fields: routing row ID, messages, prompt IDs,
+attention mask, prompt count and prompt hash. Only IDs/mask or equivalent verified
+messages may enter a future model; the row ID is never conversational content.
+Evaluation metadata, targets and answerability/variant labels are in a separate
+sidecar. The short-task prompt slices exclude 6883 stored reference-token positions.
+Prior language assistant turns remain authored context. All twins and eight-way
+long-context groups are retained; 832 rows are not 832 independent samples.
+
+Pure deterministic scorers validate source semantics and distinguish wrong values
+from malformed output. Their dependency hashes are checked before helper imports
+and at every call. Language scoring explicitly refuses unqualified exemplar matching.
+The 40 focused tests passed in 87.582 s. A separately written artifact check compared
+all 832 rows and 34 file identities with no findings in 11.749 s; the root authored
+both publisher and audit, so this is not independent human review. No model response
+records, accuracy table or source-correct membership were produced.
+
+The publisher subagent reported a usage limit before creating its files. The root
+completed publication locally; this did not change model, data or resource gates.
+Native runtime identity, decoding, seeds and numerical collection budgets remain
+unresolved. The static binding is not a runnable enrollment manifest or native grant.
+
 ## Next decisive work and evidence limits
 
 The next native experiment is unchanged E0 after a real resource-state change.
@@ -225,14 +256,12 @@ worlds, but all imports remain structural or diagnostic. Callback claims cannot
 certify native capture, and language grading remains blocked. No actual responses
 have been enrolled. The 89 new CPU controls test bindings, schedules, resume accounting,
 gate rejection and import mechanics; they are not a rerun of all 172 prior tests.
-There is still no runnable native E1 trainer or qualified current-source collector.
-
-The next independent task is a concrete DEV input/scorer adapter. Short acquisition
-and retention token files contain reference completions after the prompt; a collector
-must bind and slice only the prompt positions. Long-context and language arrays have
-different prompt-only layouts. Bind actual source/token rows, parent groups and pure
-deterministic verifiers; keep targets separate from policy inputs. Do not invent a
-qualified runtime identity or numerical run budget to complete a generic manifest.
+There is still no runnable native E1 trainer or qualified current-source collector. The previously identified finite DEV adapter task is now complete as static
+preparation. The blocked audit verified eight completed preparation tasks and no
+remaining eligible independent FAST task on the current critical path. The same
+host-RAM admission blocker has recurred through seven goal turns. A fresh OS-only
+check at 14:24 UTC found 5.987 GiB available with no Python workers, already below
+the 7.4 GiB post-import gate. No new native attempt was justified or launched.
 
 Language grading still needs assigned qualified reviewers, independent reference
 labels and calibration; source review cannot fabricate that authority. The 2048/4096
@@ -242,6 +271,9 @@ not noninferiority certificates. No preparation result earns native launch.
 
 All judgments remain MEASURED / REPRODUCED, VERIFIED SOURCE, RECORDED FROM PRIOR
 WORK, INFERRED, PROPOSED, UNMEASURED or BLOCKED according to their actual evidence.
-Native training is blocked; the overall goal stays active because meaningful
-independent implementation work remains. See RESEARCH_LEDGER, RESULTS_MATRIX,
-RESOURCE_LEDGER, CHECKPOINT_LINEAGE and NEXT_EXPERIMENT for the durable audit trail.
+The full goal remains unachieved. Further heavy training is not justified before
+E0. Collector/trainer implementation still remains, but drafting more scaffolding
+without the measured runtime and budget decisions would not resolve the next
+empirical gate. Resume with unchanged E0 after host headroom changes, then qualify
+actual capture, grading and the longer-context path before E1. See RESEARCH_LEDGER,
+RESULTS_MATRIX, RESOURCE_LEDGER, CHECKPOINT_LINEAGE and NEXT_EXPERIMENT.
