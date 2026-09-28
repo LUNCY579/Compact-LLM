@@ -1,0 +1,49 @@
+name: FMA qualification
+
+on:
+  push:
+    branches:
+      - research/factorized-memory-attention-v1
+    paths:
+      - "experiments/factorized_memory_attention_v1/**"
+      - ".github/workflows/fma-qualification.yml"
+  workflow_dispatch:
+
+jobs:
+  mechanical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install qualification dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install --index-url https://download.pytorch.org/whl/cpu torch==2.6.0
+          python -m pip install transformers==5.14.1 pytest==9.1.1
+      - name: Environment
+        run: |
+          python - <<'PY'
+          import platform, torch, transformers, pytest
+          print("python", platform.python_version())
+          print("torch", torch.__version__)
+          print("transformers", transformers.__version__)
+          print("pytest", pytest.__version__)
+          print("cuda_available", torch.cuda.is_available())
+          PY
+      - name: Qualification tests
+        run: python -m pytest -q experiments/factorized_memory_attention_v1/tests
+      - name: Compile check
+        run: python -m compileall -q experiments/factorized_memory_attention_v1
+      - name: Diff whitespace check
+        run: |
+          git fetch origin main
+          git diff --check origin/main...HEAD
+      - name: Branch evidence
+        run: |
+          git status --short
+          git diff --stat origin/main...HEAD
+          git log --oneline origin/main..HEAD
