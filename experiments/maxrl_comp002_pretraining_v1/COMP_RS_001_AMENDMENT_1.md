@@ -731,3 +731,22 @@ the pilot ends UNMEASURED_NO_UPDATE and no inventory is adopted. S0-C then runs 
 **The runtime freeze (S0-F)** is written by `s0_freeze.py` from the passed S0-Q1 receipt and the adopted pilot
 receipt (plus the A receipt when B is adopted). The decoding preimage is the one S0-Q1 made on cuda:0, and the pilot
 must have run under the same `decoding_sha256`.
+
+**C13 — S0-C samples one at a time as well (2026-09-28, after attempt 1 failed on memory).**
+
+*What happened.* S0-C attempt 1 used the registered one-batch-of-8 sampling. It journaled 2 groups and then died
+with CUDA OOM on the third prompt: 5.62 GiB allocated against the 6.24 GiB cap. C10's 5.2 GiB estimate counted the
+weights and the KV cache but not the attention intermediates of an 8-row prefill on long prompts.
+
+*The change.* S0-C now draws a prompt's 8 samples as 8 sequential single-sample calls. Sample k is seeded with
+`int(SHA256("COMP-RS-001-S0-COMP|" + id + "|" + k)[:16], 16) mod 2^63`. The samples remain i.i.d. draws from the
+unchanged registered sampler; only the RNG stream differs. The estimand (mixed-group fraction) and every rule are
+unchanged.
+
+*Why this is admissible after attempt 1.* The failure is infrastructural, a memory limit, not an outcome. The 2
+journaled groups were both R and both 0/8. That result is kept and reported, and it cannot have steered the change:
+any sampling scheme would have produced the same verdict on them.
+
+*How the rerun happens.* The journal binds the code bundle, so a resume under changed code is refused, as §12
+requires. Attempt 1's journal and attempts log are therefore preserved under an `attempt1_OOM` name, and all 450
+groups are re-sampled under one scheme in a fresh journal. The receipt reports attempt 1 beside the result.

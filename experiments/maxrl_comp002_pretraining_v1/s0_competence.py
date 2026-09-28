@@ -77,7 +77,7 @@ from . import canary, content_scoring, preflight, scoped_scorer
 from . import s0_runtime as s0
 from .preflight import MANIFEST, digest, require
 
-SCHEMA = 'COMP-RS-001-S0-COMPETENCE-1'
+SCHEMA = 'COMP-RS-001-S0-COMPETENCE-2'
 STAGE = 'S0_COMPETENCE'
 LABEL = 'comp-rs-001-s0-competence'
 REGISTRATION = 'COMP_RS_001_AMENDMENT_1.md section 16, source competence (S0-C)'
@@ -90,6 +90,8 @@ DELTA_ACQ_ROWS = 13                      # section 16: Delta_acq for the section
 SEED_SALT = 'COMP-RS-001-S0-COMP|'
 SEED_LIMIT = 2 ** 63
 SEED_RULE = "int(sha256('COMP-RS-001-S0-COMP|' + id).hexdigest()[:16], 16) mod 2**63"
+SAMPLE_SEED_RULE = ("C13: the G samples of a prompt are G sequential single-sample calls; sample k is seeded with "
+                    "int(sha256('COMP-RS-001-S0-COMP|' + id + '|' + k).hexdigest()[:16], 16) mod 2**63")
 PLAN_RULE = 'CALIBRATION core rows of R, then S, then P; within a skill sorted by id'
 REGISTERED = {'device': 'cuda:0', 'group_size': 8, 'max_new_tokens': s0.MAX_NEW_TOKENS, 'rows_per_skill': 150}
 CALIBRATION_SCOPE = s0.HERE / 'evidence' / 'S0PRE_CALIBRATION_SCOPE.json'
@@ -185,6 +187,13 @@ def process_identity(session: str) -> dict:
 
 
 # ------------------------------------------------------------------------------------------ plan
+def sample_seed(row_id: str, k: int) -> int:
+    """C13: the seed of sample k of a competence prompt (one single-sample call per sample)."""
+    require(type(row_id) is str and row_id, 'row id')
+    require(type(k) is int and k >= 0, 'sample index')
+    return int(hashlib.sha256((SEED_SALT + row_id + '|' + str(k)).encode('utf-8')).hexdigest()[:16], 16) % SEED_LIMIT
+
+
 def comp_seed(row_id: str) -> int:
     require(type(row_id) is str and row_id, 'row id')
     return int(hashlib.sha256((SEED_SALT + row_id).encode('utf-8')).hexdigest()[:16], 16) % SEED_LIMIT
@@ -776,10 +785,22 @@ def _parser() -> argparse.ArgumentParser:
 
 def _competence_row(tokenizer, group_size: int, max_new_tokens: int):
     def decode_one(g, model, item, device) -> dict:
-        result, wall = timed(device, lambda: g.sample_group(model, item['prompt_ids'], group_size, item['seed'],
-                                                            max_new_tokens=max_new_tokens))
-        require(result['seed'] == item['seed'] and result['group_size'] == group_size
-                and len(result['completions']) == group_size, 'sampled group shape')
+        seeds = [sample_seed(item['id'], k) for k in range(group_size)]
+
+        def sequential():
+            calls = []
+            for seed in seeds:                          # C13: one sample per call (memory), i.i.d. samples
+                one = g.sample_group(model, item['prompt_ids'], 1, seed, max_new_tokens=max_new_tokens)
+                require(one['seed'] == seed and one['group_size'] == 1 and len(one['completions']) == 1,
+                        'single-sample call shape')
+                calls.append(one)
+            return calls
+        calls, wall = timed(device, sequential)
+        sampler = {k: v for k, v in calls[0]['sampler'].items() if k != 'seed_path'}
+        require(all({k: v for k, v in c['sampler'].items() if k != 'seed_path'} == sampler for c in calls),
+                'the sampler record differs between the sequential sample calls')
+        result = {'completions': [c['completions'][0] for c in calls],
+                  'decode_steps': sum(c['decode_steps'] for c in calls), 'sampler': calls[0]['sampler']}
         completions = []
         for k, completion in enumerate(result['completions']):
             text = response_text(tokenizer, completion['completion_ids'], completion['stop_reason'])
@@ -796,7 +817,8 @@ def _competence_row(tokenizer, group_size: int, max_new_tokens: int):
         return {'id': item['id'], 'index': item['index'], 'skill': row['skills'][0], 'parent_id': row['parent_id'],
                 'prompt_hash': row['prompt_hash'], 'prompt_tokens': item['prompt_tokens'],
                 'prompt_ids_sha256': item['prompt_ids_sha256'], 'render_sha256': item['render_sha256'],
-                'seed': item['seed'], 'group_size': group_size, 'decode_steps': result['decode_steps'],
+                'seed': item['seed'], 'sample_seeds': seeds, 'sampling': 'C13 sequential single-sample calls',
+                'group_size': group_size, 'decode_steps': result['decode_steps'],
                 'completions': completions, 'rewards': rewards, 'outcome': group_outcome(rewards),
                 'sampler': {k: v for k, v in result['sampler'].items() if k != 'seed_path'}, 'wall_s': wall}
     return decode_one
@@ -874,7 +896,7 @@ def main(argv=None, *, lease_module=None, host_module=None) -> int:
     prompts = render_prompts(tokenizer, rows, 'calibration')
     for item in prompts:
         item['seed'] = comp_seed(item['id'])
-    state['inputs'] = dict(cal['record'], policy=policy, plan_rule=PLAN_RULE, seed_rule=SEED_RULE,
+    state['inputs'] = dict(cal['record'], policy=policy, plan_rule=PLAN_RULE, seed_rule=SEED_RULE, sample_seed_rule=SAMPLE_SEED_RULE,
                            planned=len(prompts), plan_ids_sha256=digest([p['id'] for p in prompts]),
                            plan_by_skill={s: sum(p['row']['skills'] == [s] for p in prompts) for s in SKILLS},
                            full_plan=full)

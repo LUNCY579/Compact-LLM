@@ -184,6 +184,7 @@ class Injector:
         self.by_digest = {digest(s0.render(tokenizer, row['prompt'])): row['id'] for row in rows}
         self.plan, self.fail_at, self.error, self.perturb = plan, fail_at, error, perturb
         self.calls, self.real_sample, self.real_greedy = 0, g.sample_group, g.greedy_decode
+        self.sample_index = {}
 
     def _tick(self):
         self.calls += 1
@@ -193,8 +194,16 @@ class Injector:
     def sample_group(self, model, prompt_ids, G, seed, max_new_tokens=128, **kwargs):
         self._tick()
         result = self.real_sample(model, prompt_ids, G, seed, max_new_tokens=max_new_tokens, **kwargs)
-        for k, ids in self.plan.get(self.by_digest[digest(list(prompt_ids))], {}).items():
-            result['completions'][k] = completion(ids)
+        rid = self.by_digest[digest(list(prompt_ids))]
+        planned = self.plan.get(rid, {})
+        if G == 1:                                    # C13: one call per sample; count the sample index per prompt
+            k = self.sample_index.get(rid, 0)
+            self.sample_index[rid] = k + 1
+            if k in planned:
+                result['completions'][0] = completion(planned[k])
+        else:
+            for k, ids in planned.items():
+                result['completions'][k] = completion(ids)
         return result
 
     def greedy_decode(self, model, prompt_ids, max_new_tokens=128, **kwargs):
@@ -719,7 +728,7 @@ def test_competence_resumes_after_a_crash_and_a_torn_line(tmp_path, competence_r
     root = tmp_path / 'records'
     rows = cal_subset(cal['rows_by_skill'])
     plan = _competence_plan(tokenizer, oracles, rows)
-    first = Injector(tokenizer, rows, plan, fail_at=2)
+    first = Injector(tokenizer, rows, plan, fail_at=3)   # C13: 2 sample calls per group, so call 3 = group 2
     with pytest.raises(RuntimeError, match='simulated crash'):
         _run_competence(root, tiny_dir, tokenizer, cal, oracles, injector=first)
     journal = root / 'S0_COMPETENCE.jsonl'
@@ -728,7 +737,7 @@ def test_competence_resumes_after_a_crash_and_a_torn_line(tmp_path, competence_r
     with open(journal, 'ab') as stream:
         stream.write(b'{"id":"torn-by-a-crash')
     second = _run_competence(root, tiny_dir, tokenizer, cal, oracles, injector=Injector(tokenizer, rows, plan))
-    assert second.code == 0 and second.injector.calls == 2
+    assert second.code == 0 and second.injector.calls == 4   # C13: 2 groups x 2 single-sample calls
     assert journal.read_bytes().startswith(kept)
     receipt = _receipt(second.out)
     assert receipt['this_launch'] == {'resume_index': 1, 'appended': 2}
@@ -770,7 +779,7 @@ def test_competence_refuses_a_journal_with_another_bind(tmp_path, tiny_dir, toke
     rows = cal_subset(cal['rows_by_skill'])
     with pytest.raises(RuntimeError):
         _run_competence(root, tiny_dir, tokenizer, cal, oracles,
-                        injector=Injector(tokenizer, rows, _competence_plan(tokenizer, oracles, rows), fail_at=2))
+                        injector=Injector(tokenizer, rows, _competence_plan(tokenizer, oracles, rows), fail_at=3))
     with pytest.MonkeyPatch.context() as mp:              # a resume under a different group size is another read
         mp.setattr(comp, 'calibration_plan', cal_subset)
         with pytest.raises(ValueError, match='bind field group_size differs'):
@@ -1101,3 +1110,24 @@ def test_modules_are_torch_free_at_import_and_hash_their_code():
         assert set(scoped_scorer.CODE_FILES) <= set(files)
     assert comp.PACKAGE + 's0_enroll.py' in enroll.CODE_FILES and comp.PACKAGE + 's0_churn.py' in churn.CODE_FILES
     assert comp.PACKAGE + 's0_enroll.py' not in comp.CODE_FILES
+
+
+def test_c13_samples_are_sequential_single_calls_with_registered_seeds(tmp_path, tiny_dir, tokenizer, cal, oracles):
+    rows = cal_subset(cal['rows_by_skill'])
+    seen = []
+    injector = Injector(tokenizer, rows, _competence_plan(tokenizer, oracles, rows))
+    real = injector.sample_group
+
+    def spy(model, prompt_ids, G, seed, **kwargs):
+        seen.append((G, seed))
+        return real(model, prompt_ids, G, seed, **kwargs)
+    injector.sample_group = spy
+    run = _run_competence(tmp_path / 'records', tiny_dir, tokenizer, cal, oracles, injector=injector)
+    assert run.code == 0 and seen and all(G == 1 for G, _ in seen)
+    lines = _lines(run.journal)
+    expected = [comp.sample_seed(line['id'], k) for line in lines for k in range(line['group_size'])]
+    assert [seed for _, seed in seen] == expected
+    for line in lines:
+        assert line['sample_seeds'] == [comp.sample_seed(line['id'], k) for k in range(line['group_size'])]
+        assert line['sampling'] == 'C13 sequential single-sample calls'
+    assert comp.sample_seed('MC2-a', 0) != comp.sample_seed('MC2-a', 1) != comp.comp_seed('MC2-a')

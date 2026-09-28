@@ -1,0 +1,120 @@
+{
+  "checkout": {
+    "clean": true,
+    "head": "97fb158714c0d077cfc1e18d1588dd7fd261c633",
+    "repo": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1"
+  },
+  "code_bundle_sha256": "e2a58720da38bfdb581302bda309952fd97bf76ccc8ecd0dc4704545aaddd800",
+  "code_sha256": {
+    "mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "s0_churn.py": "fee2a8a02b5a49263f991e0c2a32fd10383544ef79ffc2a1a2d79981656c1bc5",
+    "s0_competence.py": "3acca3b436739014921ea8b5801e72a1119ca8d3c8b9ce2e9f33b8530b917a39",
+    "s0_enroll.py": "666e708fc2387add2ef6494d04a677cda0f661daca57489fae1ebf967a70e1d5",
+    "s0_freeze.py": "8aca0cfb47a0ab280b758f30efc672385e37d382675292686f9c5053fe721c41",
+    "s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+    "s0_pilot.py": "21c839a8997f1c6f98e897fac965d938b95119f9523749f46394da6276f44891",
+    "s0_q1_fp32.py": "4c7af10214c2eb0f5fa1296a42344b8635383d4b503cb012bfd1d2b175ae1c87",
+    "s0_runtime.py": "952696d93d5c157975663db924d6d79833489cb401c0160a6377076f1e3cbbf2"
+  },
+  "created_utc": "2026-09-28T20:18:49+00:00",
+  "decoding_preimage": {
+    "attn_implementation": "sdpa",
+    "cublas_workspace_config": ":4096:8",
+    "cuda": {
+      "capability": [
+        8,
+        9
+      ],
+      "cuda_build": "12.6",
+      "cudnn_version": 91002,
+      "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "driver_version": "566.07",
+      "nvidia_smi_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "sdp_backends": {
+        "cudnn": true,
+        "flash": true,
+        "math": true,
+        "mem_efficient": true
+      }
+    },
+    "decoding": {
+      "add_generation_prompt": true,
+      "add_special_tokens": false,
+      "batch_size": 1,
+      "do_sample": false,
+      "enable_thinking": false,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "greedy": true,
+      "max_new_tokens": 128,
+      "num_beams": 1,
+      "pad_token_id": 151643
+    },
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "device": "cuda:0",
+    "dtype": "float32",
+    "float32_matmul_precision": "highest",
+    "num_threads": 4,
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "python": "3.11.15",
+    "schema": "COMP-RS-001-S0-DECODING-1",
+    "tf32_cuda_matmul": false,
+    "tf32_cudnn": false
+  },
+  "decoding_sha256": "87220f47bedea9c4520abfcbd622aa042aaf6437a46cba0b825c3a6bef3f16b8",
+  "experiment": "COMP-RS-001",
+  "host_floor": {
+    "margin_gib": 1.0,
+    "peak_worker_rss_gib": 1.9738121032714844,
+    "source": "S0-Q1 host_floor.peak_worker_rss_gib"
+  },
+  "host_floor_gib": 2.9738121032714844,
+  "inputs": {
+    "a_pilot": null,
+    "pilot": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_PILOT_A.json",
+      "sha256": "a9930c088ae2d330829a87a5216501d2bcd5bdf23b4bb66ca2dd7fbdd46d2272"
+    },
+    "q1": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_Q1_FP32.json",
+      "sha256": "b1fa6d660abc89b889b914834bc01fc4c9dba8df31b4df5eea24692e7e47094e"
+    }
+  },
+  "inventory": {
+    "blocks": null,
+    "decision": {
+      "cap_gib": 6.236572265625,
+      "completed": true,
+      "free_phys_gib_at_launch": 3.517017364501953,
+      "host_ok": true,
+      "inventory": "A",
+      "inventory_fits": null,
+      "max_memory_reserved_gib": 3.45703125,
+      "oom": false,
+      "outcome": "UNMEASURED_NO_UPDATE",
+      "peak_worker_rss_gib": 1.9989242553710938,
+      "rule": "fits iff no OOM and max_memory_reserved <= 0.95 x cap (cap = 0.78 x total VRAM), over a completed pilot with >= 1 update; A fits -> ADOPT_A, else RERUN_WITH_B; B fits -> ADOPT_B, else STOP_HOST_INFEASIBLE; STOP_HOST_INFEASIBLE if peak worker RSS + 1.0 GiB > free RAM at launch",
+      "threshold_gib": 5.92474365234375,
+      "updates": 0,
+      "vram_ok": true
+    },
+    "name": "PENDING",
+    "registered_numel": null,
+    "rule": "C12: UNMEASURED_NO_UPDATE defers the inventory decision to after S0-C"
+  },
+  "registered_run": true,
+  "registration": "COMP_RS_001_AMENDMENT_1.md section 16 (S0-F) and Clarifications C10-C12",
+  "schema": "COMP-RS-001-S0-FREEZE-1",
+  "scoring_code_bundle_sha256": "df351b69179cf67d04dc73928e0173f63834a80a00a2bc2453a25254987d56a8",
+  "stage": "S0_RUNTIME_FREEZE",
+  "test_mode": false
+}

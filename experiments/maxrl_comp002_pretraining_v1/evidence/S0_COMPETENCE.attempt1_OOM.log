@@ -1,0 +1,93 @@
+[lease] acquired by pid 96844 (comp-rs-001-s0-competence)
+[lease] released
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 911, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 898, in main
+    run_read(args, cfg, host, state, prompts, bind_extra={'group_size': cfg['group_size']},
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 612, in run_read
+    body()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 604, in body
+    _read(cfg, host, state, prompts, bind_extra, decode_one)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 662, in _read
+    row = decode_one(g, model, item, device)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 779, in decode_one
+    result, wall = timed(device, lambda: g.sample_group(model, item['prompt_ids'], group_size, item['seed'],
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 586, in timed
+    result = call()
+             ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 779, in <lambda>
+    result, wall = timed(device, lambda: g.sample_group(model, item['prompt_ids'], group_size, item['seed'],
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 331, in sample_group
+    out = model.generate(input_ids=ids, attention_mask=torch.ones_like(ids), generation_config=config,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\utils\_contextlib.py", line 124, in decorate_context
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\generation\utils.py", line 2564, in generate
+    result = decoding_method(
+             ^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\generation\utils.py", line 2784, in _sample
+    outputs = self(**model_inputs, return_dict=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\utils\generic.py", line 918, in wrapper
+    output = func(self, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 480, in forward
+    outputs: BaseModelOutputWithPast = self.model(
+                                       ^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\utils\generic.py", line 1064, in wrapper
+    outputs = func(self, *args, **kwargs)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 410, in forward
+    hidden_states = decoder_layer(
+                    ^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\modeling_layers.py", line 94, in __call__
+    return super().__call__(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\utils\deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 260, in forward
+    hidden_states, _ = self.self_attn(
+                       ^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1776, in _wrapped_call_impl
+    return self._call_impl(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\nn\modules\module.py", line 1787, in _call_impl
+    return forward_call(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\utils\deprecation.py", line 172, in wrapped_func
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\models\qwen3\modeling_qwen3.py", line 216, in forward
+    attn_output, attn_weights = attention_interface(
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\transformers\integrations\sdpa_attention.py", line 96, in sdpa_attention_forward
+    attn_output = torch.nn.functional.scaled_dot_product_attention(
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 180.00 MiB. GPU 0 has a total capacity of 8.00 GiB of which 520.31 MiB is free. 6.24 GiB allowed; Of the allocated memory 5.62 GiB is allocated by PyTorch, and 522.01 MiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
