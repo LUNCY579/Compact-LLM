@@ -12,6 +12,9 @@ Tiers run in priority order and the chain STOPS at the first failure or BLOCKED 
   tier 4  seed 0, canonical order: secondary arms B, then C (from B)
   final   analyse every completed run
 
+Run scope: runs/clare-rineya-001/SCOPE.json {"max_tier": N} limits the chain to tiers 0..N (the
+operator's GPU grant); without the file every tier runs. The cap is recorded in CHAIN_STATUS.json.
+
 Every step is a separate process, so GPU memory and host RAM are returned between steps.
 Artifacts go under runs/clare-rineya-001/ (gitignored: deltas are large and are the irreplaceable
 product of GPU time; back them up by hash, never delete them to make room).
@@ -30,6 +33,8 @@ ROOT = HERE / "runs" / "clare-rineya-001"
 PY = sys.executable
 CLI = [PY, "-u", "-B", str(HERE / "cli.py")]
 STATUS = ROOT / "CHAIN_STATUS.json"
+SCOPE = ROOT / "SCOPE.json"
+TIERS = (0, 1, 2, 3, 4)
 
 
 def _write_status(state: dict) -> None:
@@ -41,6 +46,22 @@ def _write_status(state: dict) -> None:
 def _qualified() -> bool:
     return any(json.loads(p.read_bytes()).get("status") == "QUALIFIED"
                for p in ROOT.glob("native-qualify-*/NATIVE_QUALIFICATION.json"))
+
+
+def max_tier(scope: Path = SCOPE) -> int | None:
+    """The operator's run scope, or None (every tier) when there is no SCOPE.json. Fails closed on a malformed file."""
+    if not scope.exists():
+        return None
+    value = json.loads(scope.read_bytes()).get("max_tier")
+    if type(value) is not int or value not in TIERS:
+        raise SystemExit(f"{scope}: max_tier must be an int in {TIERS}, got {value!r}")
+    return value
+
+
+def in_scope(all_steps: list[dict], cap: int | None) -> tuple[list[dict], list[str]]:
+    """(steps to run, names of the steps the cap leaves out)."""
+    keep = [st for st in all_steps if cap is None or st["tier"] <= cap]
+    return keep, [st["name"] for st in all_steps if st not in keep]
 
 
 def steps() -> list[dict]:
@@ -75,8 +96,11 @@ def steps() -> list[dict]:
 
 def main() -> int:
     ROOT.mkdir(parents=True, exist_ok=True)
-    state = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "python": PY, "steps": []}
-    for st in steps():
+    cap = max_tier()
+    todo, out_of_scope = in_scope(steps(), cap)
+    state = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "python": PY, "steps": [],
+             "max_tier": cap, "out_of_scope": out_of_scope}
+    for st in todo:
         entry = {"tier": st["tier"], "name": st["name"]}
         if st["done"]():
             entry["status"] = "SKIPPED_ALREADY_COMPLETE"

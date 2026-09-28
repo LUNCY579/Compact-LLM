@@ -66,6 +66,12 @@ $si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{Sh
 Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine=$cl; CurrentDirectory=$d; ProcessStartupInformation=$si}
 ```
 
+**Run scope.** To run only tiers 0..N (the operator's GPU grant), create
+`runs\clare-rineya-001\SCOPE.json` containing `{"max_tier": N}` before launching; without it every
+tier runs. The cap and the steps it leaves out are recorded in `CHAIN_STATUS.json` (`max_tier`,
+`out_of_scope`). The operator's 2026-09-28 grant is tiers 0-1, launched only after COMP-RS S0
+finishes and releases the GPU lease.
+
 Wait on `runs\PHASE4_RC.json` (and `runs\clare-rineya-001\CHAIN_STATUS.json`), **not** on the
 process, and do not arm a `tail -f` monitor on the log (monitors have killed jobs here). To resume
 after a BLOCKED stop, a failure or a driver reset, relaunch the same command: `wmi_runner.py`
