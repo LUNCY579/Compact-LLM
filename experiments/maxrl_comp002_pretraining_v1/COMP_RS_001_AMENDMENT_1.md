@@ -687,3 +687,47 @@ Every later stage asserts it.
 **Records.** Native outputs are written to `C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\`, outside the
 bound checkout. All code is committed and `git status` is clean before every launch. Receipts are copied into
 `evidence/` and committed after each stage.
+
+## 17. Clarifications 10–12 (2026-09-28, pre-data)
+
+Registered before the first native model load. They came from building the S0 harness and checking its memory
+arithmetic against the Supa 1.7 shapes. None changes an estimand, an endpoint or a threshold.
+
+**C10 — Rollouts are sampled one at a time, and gradients are accumulated one sequence at a time.**
+
+*Why.* The FP32 KV cache is 224 KiB per token per sequence (28 layers × K/V × 8 heads × 128 dims × 4 bytes).
+Sampling all G = 8 in one batch while the optimizer state is resident needs about 2.3 GiB at 1,300 tokens and
+3.2 GiB at 1,900. That breaks the 6.24 GiB cap for both inventories purely through execution batching, so the
+§16 inventory rule would have measured the batching rather than the inventory.
+
+*What changes, in the pilot (and, unless re-registered, in training):*
+- **Sampling.** The G completions of a group are drawn as G sequential single-sample calls with the registered
+  sampler. The seed for sample k is `int(SHA256("COMP-RS-001-S0-PILOT-SAMPLE|" + id + "|" + k)[:16], 16) mod 2^63`.
+- **Update.** The loss −(1/G) Σ_i A_i Σ_t log π(y_it) is computed one unpadded sequence per micro-batch, with
+  gradients accumulated over the G sequences before one optimizer step. The gradient is unchanged up to
+  floating-point summation order.
+
+*Competence (S0-C)* has no optimizer state resident, so it keeps one unpadded batch of 8 per prompt. At the
+1,763-token CALIBRATION maximum that is about 5.2 GiB. Samples are i.i.d. under either scheme; only the RNG stream
+differs, and it is recorded.
+
+*The registered ladder still runs.* The arithmetic predicts that inventory A cannot meet the 0.95 × cap rule even
+at one sample at a time: 5.74 GiB of state plus 0.26–0.40 GiB of KV cache, against 5.93 GiB. Inventory B is
+predicted to fit (about 5.1 GiB). **The A → B ladder is run as registered anyway:** a prediction from shapes is not
+a measurement, and A fails fast at the cap.
+
+**C11 — One response rule in every stage: the strict body.** The response string passed to `corpus.reward` is the
+completion minus its terminal EOS (removed by position), decoded with `skip_special_tokens=False`. An ID the
+tokenizer cannot render becomes `<|unrenderable:ID|>`. The pilot's earlier lenient rule (strip every special token)
+would have turned a special token inside the body into a success, which QUALIFICATION.md forbids. The lenient score
+is recorded as a diagnostic only.
+
+**C12 — A pilot with no mixed group defers the inventory decision to S0-C.** If all 25 pilot groups are uniform,
+the pilot ends UNMEASURED_NO_UPDATE and no inventory is adopted. S0-C then runs with the runtime frozen from S0-Q1
+(the inventory field reads PENDING).
+- **If S0-C stops on STOP_NO_SIGNAL,** the study stops there, and the inventory question is moot.
+- **If S0-C passes,** the pilot is re-run on the next 25 hash-ordered `atomic_R` TRAIN groups before any S1 run.
+
+**The runtime freeze (S0-F)** is written by `s0_freeze.py` from the passed S0-Q1 receipt and the adopted pilot
+receipt (plus the A receipt when B is adopted). The decoding preimage is the one S0-Q1 made on cuda:0, and the pilot
+must have run under the same `decoding_sha256`.
