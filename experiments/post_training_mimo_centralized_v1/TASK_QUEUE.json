@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "resource_policy": {
+    "host_free_gib": 7.4,
+    "worker_free_gib": 6.0,
+    "gpu_free_gib": 4.0,
+    "disk_free_gib": 4.0
+  },
+  "tasks": [
+    {
+      "task_id": "SOURCE",
+      "research_question": "Bind remote source and Titan checkpoint",
+      "dependency": [],
+      "lane": "FAST",
+      "expected_seconds": 120,
+      "cpu_cores": 1,
+      "ram_gib": 0.2,
+      "gpu_gib": 0,
+      "disk_gib": 0.1,
+      "artifact": "receipts/SOURCE_RECEIPT.json",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/SOURCE_RECEIPT.json",
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Bind remote source and Titan checkpoint"
+    },
+    {
+      "task_id": "METHODS",
+      "research_question": "Which centralized mechanisms have what evidence?",
+      "dependency": [],
+      "lane": "FAST",
+      "expected_seconds": 900,
+      "cpu_cores": 1,
+      "ram_gib": 0.2,
+      "gpu_gib": 0,
+      "disk_gib": 0.1,
+      "artifact": "evidence/METHOD_AUDIT.md",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "evidence/METHOD_AUDIT.md",
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Which centralized mechanisms have what evidence?"
+    },
+    {
+      "task_id": "BRIDGE",
+      "research_question": "Do original bridge parents pass independent verifiers?",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 300,
+      "cpu_cores": 1,
+      "ram_gib": 0.3,
+      "gpu_gib": 0,
+      "disk_gib": 0.1,
+      "artifact": "datasets/bridge_v1/DATA_RECEIPT.json",
+      "blocker": null,
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Do original bridge parents pass independent verifiers?"
+    },
+    {
+      "task_id": "E0",
+      "research_question": "Does exact Titan support scoped native mechanics?",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 1.0,
+      "gpu_gib": 4.0,
+      "disk_gib": 4,
+      "artifact": "results/e0_titan_v1/E0_RESULT.json",
+      "blocker": null,
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": "configs/E0_TITAN_BF16.json",
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Does exact Titan support scoped native mechanics?"
+    },
+    {
+      "task_id": "RETENTION",
+      "research_question": "Which fresh preservation panels and replay are eligible?",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.3,
+      "gpu_gib": 0,
+      "disk_gib": 0.1,
+      "artifact": "evidence/RETENTION_DESIGN.md",
+      "blocker": null,
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Which fresh preservation panels and replay are eligible?"
+    },
+    {
+      "task_id": "E1_101",
+      "research_question": "Is verified capability transferable with replay?",
+      "dependency": [
+        "E0",
+        "BRIDGE",
+        "RETENTION"
+      ],
+      "lane": "HEAVY",
+      "expected_seconds": 86400,
+      "cpu_cores": 1,
+      "ram_gib": 2.0,
+      "gpu_gib": 6.0,
+      "disk_gib": 4,
+      "artifact": "results/e1_seed101/DECISION.md",
+      "blocker": "E0/data/replay qualification incomplete",
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Is verified capability transferable with replay?"
+    },
+    {
+      "task_id": "E1_CONFIRM",
+      "research_question": "Does operational gain survive seed variation?",
+      "dependency": [
+        "E1_101"
+      ],
+      "lane": "HEAVY",
+      "expected_seconds": 172800,
+      "cpu_cores": 1,
+      "ram_gib": 2.0,
+      "gpu_gib": 6.0,
+      "disk_gib": 4,
+      "artifact": "results/e1_confirmation/DECISION.md",
+      "blocker": "DEV seed101 gate not passed",
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify prerequisite or discriminate next gate",
+      "next_decision_impact": "Does operational gain survive seed variation?"
+    }
+  ]
+}

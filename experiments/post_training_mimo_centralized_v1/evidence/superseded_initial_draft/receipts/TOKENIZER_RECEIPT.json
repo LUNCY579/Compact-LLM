@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "source_sha": "03db218ceebc61a2bc04f2482cf7e094045e01c1",
+  "recorded_at_utc": "2026-09-28T04:43:30.901385+00:00",
+  "evidence_level": "MEASURED_STATIC_FILES_AND_HEADERS",
+  "native_model_loads": 0,
+  "gpu_runs": 0,
+  "training_updates": 0,
+  "scientific_design_source": "Rineya_MiMo_PostTraining_Research_Report.pdf",
+  "scientific_design_source_sha256": "a1c5b5c66e1cef0edd04631ab7c487c93731b1a207bb67ee87fddd40cf43c2d7",
+  "status": "TOKENIZER_FILES_BOUND_RUNTIME_AND_PROMPT_IDS_UNQUALIFIED",
+  "source_path": "C:\\Users\\clclc\\BusinessProject\\Short_Response_Memory_Governor_Lab\\qwen_models\\warm_344m_initialization",
+  "files": {
+    "tokenizer.json": {
+      "bytes": 11422650,
+      "sha256": "be75606093db2094d7cd20f3c2f385c212750648bd6ea4fb2bf507a6a4c55506"
+    },
+    "tokenizer_config.json": {
+      "bytes": 723,
+      "sha256": "1f18fb516a5b9ec1286b09ef8df6cbe736ad8298c77d99953d85f182572b273e"
+    },
+    "chat_template.jinja": {
+      "bytes": 4256,
+      "sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9"
+    }
+  },
+  "historical_adapter_tokenizer_files_identical": {
+    "tokenizer.json": true,
+    "tokenizer_config.json": true,
+    "chat_template.jinja": true
+  },
+  "tokenizer_class_from_config": "Qwen2Tokenizer",
+  "tokenizer_config": {
+    "add_prefix_space": false,
+    "backend": "tokenizers",
+    "bos_token": null,
+    "clean_up_tokenization_spaces": false,
+    "eos_token": "<|im_end|>",
+    "errors": "replace",
+    "extra_special_tokens": [
+      "<|im_start|>",
+      "<|im_end|>",
+      "<|object_ref_start|>",
+      "<|object_ref_end|>",
+      "<|box_start|>",
+      "<|box_end|>",
+      "<|quad_start|>",
+      "<|quad_end|>",
+      "<|vision_start|>",
+      "<|vision_end|>",
+      "<|vision_pad|>",
+      "<|image_pad|>",
+      "<|video_pad|>"
+    ],
+    "is_local": true,
+    "local_files_only": false,
+    "model_max_length": 131072,
+    "pad_token": "<|endoftext|>",
+    "split_special_tokens": false,
+    "tokenizer_class": "Qwen2Tokenizer",
+    "unk_token": null
+  },
+  "special_token_ids_from_tokenizer_json": {
+    "<|endoftext|>": 151643,
+    "<|im_start|>": 151644,
+    "<|im_end|>": 151645,
+    "<|object_ref_start|>": 151646,
+    "<|object_ref_end|>": 151647,
+    "<|box_start|>": 151648,
+    "<|box_end|>": 151649,
+    "<|quad_start|>": 151650,
+    "<|quad_end|>": 151651,
+    "<|vision_start|>": 151652,
+    "<|vision_end|>": 151653,
+    "<|vision_pad|>": 151654,
+    "<|image_pad|>": 151655,
+    "<|video_pad|>": 151656,
+    "<tool_call>": 151657,
+    "</tool_call>": 151658,
+    "<|fim_prefix|>": 151659,
+    "<|fim_middle|>": 151660,
+    "<|fim_suffix|>": 151661,
+    "<|fim_pad|>": 151662,
+    "<|repo_name|>": 151663,
+    "<|file_sep|>": 151664,
+    "<tool_response>": 151665,
+    "</tool_response>": 151666,
+    "<think>": 151667,
+    "</think>": 151668
+  },
+  "eos_token_id": 151645,
+  "pad_token_id": 151643,
+  "bos_token_id_from_model_config": 151643,
+  "model_config_pad_token_id": null,
+  "generation_config": {
+    "bos_token_id": 151643,
+    "do_sample": true,
+    "eos_token_id": [
+      151645,
+      151643
+    ],
+    "pad_token_id": 151643,
+    "temperature": 0.6,
+    "top_k": 20,
+    "top_p": 0.95,
+    "transformers_version": "5.14.1"
+  },
+  "model_max_context": 40960,
+  "tokenizer_declared_max_context": 131072,
+  "chat_template_sha256": "51fa65c79bb57f058dc7ef8734884bd325fe9d45bb03a61bfef59785d3bc2da9",
+  "chat_template_runtime_render_sha256": null,
+  "prompt_token_id_hash": null,
+  "historical_tokenizer_fingerprint_recorded": "f838295947572fa85cee95ff29f956c3d3edc7f6a90f5e803dcfa70145fdc685",
+  "historical_tokenizer_fingerprint_reproduced": false,
+  "registered_template_kwargs": null,
+  "template_decision_required": "Explicitly freeze enable_thinking=false for answer-only bridge only after a formal serializer choice; inherited PRLC _prompt_ids does not specify it.",
+  "eos_decision_required": "File generation EOS list is [151645,151643], whereas PRLC uses tokenizer EOS151645 only. Freeze and qualify termination/masking contract; do not silently equate PAD151643 with EOS151645.",
+  "native_pad_equals_eos_edge_case_tested": false,
+  "native_causal_shift_tested": false,
+  "native_sampling_logprob_tested": false
+}

@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "primary_student_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "experiments": [
+    {
+      "id": "E0",
+      "status": "REGISTERED_NOT_RUN",
+      "question": "Native identity, parity, masks, gradients, reversible update and resume?",
+      "config": "configs/E0_TITAN_BF16.json",
+      "hypothesis": "Exact Titan supports fixed q/v adapter mechanics within inherited resource floors",
+      "independent_variable": "zero vs bounded q/v LoRA update",
+      "controls": [
+        "unchanged base",
+        "zero adapter",
+        "restored identical optimizer/RNG"
+      ],
+      "primary_endpoint": "all qualification checks pass",
+      "datasets": "mechanical non-evaluation fixtures",
+      "entry": [
+        "static identity",
+        "clean source",
+        "resource admission"
+      ],
+      "stop": [
+        "identity drift",
+        "numerical disagreement",
+        "gradient leak",
+        "resource floor",
+        "30min ceiling"
+      ],
+      "promotion": "qualifies only this runtime, not efficacy",
+      "seeds": [
+        20260928
+      ],
+      "teacher_calls": 0
+    },
+    {
+      "id": "RINEYA-0P6B-BRIDGE-SFT-E1",
+      "status": "BLOCKED_PENDING_E0_DATA_REPLAY",
+      "registration": "RESEARCH_PROTOCOL.md",
+      "data_manifest": "manifests/E1_DATA_REQUIREMENTS.json",
+      "parent_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+      "seeds": [
+        101,
+        211,
+        307
+      ],
+      "initial_seed": 101,
+      "later_seeds_gate": "DEV screen",
+      "final_checkpoint": "step256",
+      "CHECK": "CLOSED",
+      "FINAL": "CLOSED",
+      "acquisition_effect": null,
+      "retention_effect": null
+    }
+  ],
+  "later_tracks": {
+    "E2A": "order-only curriculum",
+    "E2B": "replay CE then KL",
+    "E2C": "scope diagnosis only after verified underfit",
+    "E2D": "WSD schedule",
+    "E2E": "training-side data selection",
+    "E3": "matched RSFT / GRPO / MaxRL",
+    "E4": "fixed sampler vs bounded NGU",
+    "E5": "competent modular skill donors then composition",
+    "E6": "actual MiMo sandbox transfer",
+    "SIDE": "architecture / inference separate; all need new full registration"
+  }
+}
