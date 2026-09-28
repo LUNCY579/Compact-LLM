@@ -1,0 +1,64 @@
+{
+  "arms": {
+    "adaptive": {
+      "attempts": 12,
+      "auc": 0.4844975126666666,
+      "auc_gain": 0.08449751266666657,
+      "hypervolume": 0.534424736,
+      "revealed": 10.4,
+      "support_misses": 1.6
+    },
+    "fixed": {
+      "attempts": 12,
+      "auc": 0.48862161983333335,
+      "auc_gain": 0.08862161983333335,
+      "hypervolume": 0.53493196,
+      "revealed": 10,
+      "support_misses": 2
+    },
+    "greedy": {
+      "attempts": 12,
+      "auc": 0.48862161983333335,
+      "auc_gain": 0.08862161983333335,
+      "hypervolume": 0.53493196,
+      "revealed": 10,
+      "support_misses": 2
+    },
+    "random": {
+      "attempts": 12,
+      "auc": 0.46506753627777775,
+      "auc_gain": 0.06506753627777775,
+      "hypervolume": 0.5319684213333333,
+      "revealed": 11,
+      "support_misses": 1
+    }
+  },
+  "candidate_count": 21,
+  "catalog_hash": "a0a3c5e563acd58cbc1202765d2922dad321972757b07d1517208c13c5831cac",
+  "cost_note": "Attempt budgets are matched. Unknown/missing costs remain null in traces. No GPU-budget matching claimed.",
+  "engine_hash": "a478e8c3e5e2a49da737ed4b4c925c2bd2b57840fcc95122d001b75cb71d81a0",
+  "episodes": 60,
+  "freeze_hash": "59681d5c5e071bf45eda3e3e37160d9b838fb9b397dc04d0779287b5c6982b76",
+  "heldout_worlds": 5,
+  "independent_declared_groups": 5,
+  "kind": "synthetic",
+  "live_controller_deployments": 0,
+  "live_efficiency_improvement_established": false,
+  "llm_calls": 0,
+  "native_model_loads": 0,
+  "native_training_steps": 0,
+  "primary_comparison": {
+    "bootstrap_95_percentile": [
+      -0.013640326333333442,
+      0.0035405416666664745
+    ],
+    "bootstrap_replicates": 2000,
+    "cluster_count": 5,
+    "contrast": "adaptive - fixed",
+    "mean_delta": -0.0041241071666667795,
+    "metric": "attempt-normalized hypervolume AUC",
+    "scope": "descriptive cluster bootstrap; not a live-performance claim; small-cluster uncertainty"
+  },
+  "schema": "rineya-dream-report-v1",
+  "status": "PASS_SYNTHETIC_MECHANICS_ONLY"
+}
