@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_FAST_LANE_LONG_CONTEXT_ONLY",
+  "amendment": "AMENDMENT_004.md",
+  "selection_seed": 20260928,
+  "counts": {
+    "DEV": 32,
+    "CHECK": 64,
+    "FINAL": 0
+  },
+  "families": [
+    "three_fact_keyed_join",
+    "latest_authorized_record_selection"
+  ],
+  "positions": [
+    "early",
+    "middle",
+    "late",
+    "distributed"
+  ],
+  "prompt_lengths": [
+    2024,
+    4072
+  ],
+  "generation_reserve_tokens": 24,
+  "max_target_tokens": 16,
+  "template_kwargs": {
+    "enable_thinking": false,
+    "add_generation_prompt": true
+  },
+  "fit_policy": {
+    "algorithm": "native_additive_note_dp_v1",
+    "maximum_prompt_tokens": 4072,
+    "maximum_slot_width_candidates": 128,
+    "maximum_placement_offset_candidates": 32
+  },
+  "wall_seconds": 1800,
+  "authorization": {
+    "dataset_artifact_generation": true,
+    "native_execution": false,
+    "training": false,
+    "check_rendering": false,
+    "final_rendering": false
+  },
+  "model_outcome_based_selection": false,
+  "primary_student_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "support_units": "three necessary record blocks; scalar entries within blocks are not individually claimed necessary",
+  "parent_scope": "alias-normalized numeric semantic worlds; only two structural mechanisms",
+  "combined_prospective_preservation_counts": {
+    "DEV": {
+      "parents": 288,
+      "rows": 576
+    },
+    "CHECK": {
+      "parents": 576,
+      "rows": 1152
+    }
+  },
+  "combined_counts_status": "includes unbuilt language panels; not native qualified",
+  "source_correct_enrollment": false,
+  "runtime_resource_fit_qualified": false,
+  "e1_launch_ready": false,
+  "tokenizer_sha256": "aeb13307a71acd8fe81861d94ad54ab689df773318809eed3cbe794b4492dae4",
+  "chat_template_sha256": "a55ee1b1660128b7098723e0abcd92caa0788061051c62d51cbe87d9cf1974d8",
+  "latest_catalog_entries": 4,
+  "latest_entries_per_writer": 2,
+  "authorization_independent_of_time_order": true,
+  "distractor_modes_per_adversarial_parent": [
+    "different_key",
+    "archive_same_key",
+    "unsigned_same_key"
+  ],
+  "decoy_payloads_independent_of_winner": true
+}
