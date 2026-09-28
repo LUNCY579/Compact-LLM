@@ -1,0 +1,128 @@
+{
+  "experiment": "CLARE-RINEYA-001",
+  "title": "Capacity-Aware Sparse Skill Composition",
+  "status": "REGISTERED_BEFORE_ANY_NATIVE_ARM",
+  "registered_utc": "2026-09-27",
+  "lineage": {
+    "branch": "research/titan-clare-sparse-composable-skills-v1",
+    "parent_branch": "research/titan-model-soup-mini-v1",
+    "parent_commit": "816a1e8f4d1ab1c9d1ab847697d962a141521bac",
+    "method_source": "CLARE, Fu, Lou, Liao & Yu, arXiv:2609.17026 (BMVC 2026)"
+  },
+  "model": {
+    "id": "Rineya-Supa-1.7.0-devfreeze",
+    "path": "C:/Users/clclc/BusinessProject/Chat-Bubble/Rineya_Published_Cores/Rineya-Supa-1.7.0-devfreeze",
+    "weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "tokenizer": "same directory (tokenizer.json aeb13307..., tokenizer_config.json d5d09f07...; pins in titan_model_soup_mini_v1/soup.py ASSETS)",
+    "architecture": "Qwen3ForCausalLM, 28 layers, hidden 1024, intermediate 3072, vocab 151936, tied embeddings",
+    "storage": "bfloat16 (as published; exact FP32 upcast at compute time)",
+    "compute_dtype": "float32",
+    "attn_implementation": "eager",
+    "enable_thinking": false
+  },
+  "runtime": {
+    "python_executable": "C:/Users/clclc/AppData/Local/hermes/hermes-agent/venv/Scripts/python.exe",
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1",
+    "tf32": false,
+    "float32_matmul_precision": "highest",
+    "deterministic_algorithms": true,
+    "cuda_memory_fraction": 0.78,
+    "device": "cuda:0 (NVIDIA GeForce RTX 4070 Laptop GPU)"
+  },
+  "footprint": {
+    "kind": "qwen3_mlp",
+    "first_layer": 8,
+    "last_layer": 27,
+    "modules": ["gate_proj", "up_proj", "down_proj"],
+    "hidden": 1024,
+    "intermediate": 3072,
+    "expected_total_coordinates": 188743680,
+    "rationale": "Titan's native block range (8-27). MLP matrices only, so a DENSE AdamW state (arms A/B, the E discovery probe) fits on the 8 GB card without host offload; attention and norms are frozen in every arm. Registered restriction, not a claim that skills live only in MLPs."
+  },
+  "dataset": {
+    "id": "MAXRL-COMP-002",
+    "root": "C:/Users/clclc/BusinessProject/Rineya-Dataset",
+    "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+    "code_commit": "847cd27e9427c8c5e3acaf81191b2136a628b130",
+    "note": "read in place (never copied); every file verified against the manifest before use; the verifier is loaded with bytecode writing disabled"
+  },
+  "skills": ["R", "U", "S", "P"],
+  "orders": {
+    "canonical": ["R", "U", "S", "P"],
+    "secondary": ["P", "S", "U", "R"]
+  },
+  "rho": "0.9",
+  "rho_sweep_supported_not_registered": ["0.80", "0.90", "0.95", "0.975"],
+  "arms": {
+    "primary": ["A_dense_sequential", "D_random_disjoint", "E_learned_disjoint"],
+    "secondary": ["B_independent_sum", "C_magnitude_sparse"],
+    "config_support_only": ["F_shared_private"]
+  },
+  "seeds": {"primary": [0, 1], "secondary_order": [0]},
+  "train": {
+    "role": "train",
+    "banks": "manifests/atomic_{R,U,S,P}.json (3,000 rows each, all four on the same 3,000 parent worlds)",
+    "rows_per_skill": 1000,
+    "row_order": "ascending sha256('CLARE-RINEYA-001|order|<seed>|<skill>|<row id>'); first rows_per_skill rows; identical across arms",
+    "target": "oracle references[0] (canonical compact JSON). Declared deviation: the corpus was designed for online RL; this study uses SFT on one valid certificate.",
+    "loss": "assistant answer tokens + <|im_end|> (Titan contract, vendored compile_row); prompt rendered with enable_thinking=False",
+    "update_grouping": "vendored group_updates, <= 2048 tokens per update, order-preserving"
+  },
+  "recipe": {
+    "peak_lr": 1e-05,
+    "warmup_fraction": 0.2,
+    "decay_fraction": 0.2,
+    "minimum_lr_fraction": 0.1,
+    "beta1": 0.9,
+    "beta2": 0.95,
+    "epsilon": 1e-08,
+    "weight_decay": 0.0,
+    "clip_norm": 1.0,
+    "update_tokens": 2048,
+    "max_sequence": 2048,
+    "completion_reserve": 128
+  },
+  "lr_pilot": {
+    "rule": "OUTCOME-BLIND BUILD GATE, run before any arm: train skill R dense (arm-A stage 1 recipe) at peak_lr 1e-5; score CALIBRATION R rows (150). If accuracy <= base accuracy + 0.10, repeat at 3e-5, then 1e-4, then stop. Freeze the first LR that clears the bar for EVERY arm. If none clears it, CLARE-RINEYA-001 is BLOCKED on acquisition (not a negative result). Uses CALIBRATION (train signatures only) and never DEV/TEST.",
+    "ladder": [1e-05, 3e-05, 0.0001],
+    "acquisition_bar_over_base": 0.10
+  },
+  "discovery": {
+    "fraction_of_update_groups": 0.25,
+    "l1_lambda": 0.1,
+    "l1_form": "decoupled proximal soft-threshold after each AdamW step, threshold = lr_t * l1_lambda (Adam-scale; CLARE's 1e-4 is SGD-scale and does not transfer)",
+    "importance": "|delta_j| at the end of the probe (CLARE Eq. 5), free coordinates only",
+    "selection": "exact budget; ties broken by seeded hash, then global index (deviation: CLARE includes all threshold ties)",
+    "reset": "discard every probe value and the probe optimiser; verified by effective-weight checksum",
+    "lambda_fallback": [0.03, 0.0],
+    "lambda_gate": "OUTCOME-BLIND, applied per skill inside arm E (TRAIN rows only; reads only the probe's non-zero count): if the probe leaves fewer than 2x budget non-zero free coordinates, the probe is reset and repeated with the next lambda_fallback value; every attempt is recorded in the skill manifest"
+  },
+  "evaluation": {
+    "role": "dev",
+    "tag": "core",
+    "signatures": ["R", "U", "S", "P", "RU", "US", "SP", "RS", "RP", "UP", "RUS", "RUP", "RSP", "USP", "RUSP"],
+    "heldout_signatures": ["RS", "RP", "UP", "RUS", "RUP", "RSP", "USP", "RUSP"],
+    "seen_pair_signatures": ["RU", "US", "SP"],
+    "n_per_signature": 64,
+    "selection_key": "CLARE-RINEYA-001/dev-v1",
+    "decoding": "greedy, batch 1, KV cache, max_new_tokens 64, stop at any of EOS ids [151645, 151643]; EOS not part of the response",
+    "scorer": "MAXRL-COMP-002 verifier.score (strict JSON, any valid certificate)",
+    "schedule": "base: all 15 signatures; after each stage k of an arm: the 4 atomic signatures + every signature whose skills are all learned by stage k; the final stage scores all 15",
+    "never_read": ["test", "challenge", "guard_dev", "guard_test", "guard_challenge"]
+  },
+  "interaction": {
+    "rows_per_pair": 32,
+    "bank": "the first 32 DEV-sample rows of the pair's own signature (RU, US, SP seen; RS, RP, UP held-out)",
+    "vocab_topk": 32,
+    "estimators": ["I_lp per row (unclipped teacher-forced log-prob of the reference)", "kappa_A (FA-001)", "kappa_sum", "full-vocab and top-k-restricted log-softmax interaction norms"]
+  },
+  "general_retention": {
+    "instrument": "n=47 retention panel (monitor_probe.jsonl sha 5f6df1c1..., reference receipt content ec3fca1e..., implementation_digest a329eb7b)",
+    "invocation": "<.venv-rab001-cu126 python> experiments/rab001_exploration/retention_probe.py <label> hf:<arm dir> cuda, cwd = ChatBubble-ced-native-loader-qualification",
+    "statistic": "retained = 47 - lost_total (Supa-correct denominator); report arm_correct_outside_source separately; format/value channels split via lenient_value_present",
+    "status": "SECONDARY; requires an operator decision because the probe writes into another session's worktree"
+  },
+  "decision_rules_file": "CLARE_RINEYA_001_PROTOCOL.md section 7"
+}

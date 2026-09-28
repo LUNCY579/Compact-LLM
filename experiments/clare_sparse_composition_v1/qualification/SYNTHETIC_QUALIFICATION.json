@@ -1,0 +1,725 @@
+{
+  "code_digest": "a03061947fcf232cdcfa58489253fbcdc023de41e5b7a261bfb298b719e9c9df",
+  "direct_checks": [
+    {
+      "check": "D_random_disjoint: mask budgets == schedule [51, 46, 42, 37]",
+      "measured": [
+        51,
+        46,
+        42,
+        37
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: max pairwise support intersection",
+      "measured": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: max |parameter dot product|",
+      "measured": 0.0,
+      "status": "PASS"
+    },
+    {
+      "check": "D_random_disjoint: frozen deltas unchanged by every later stage",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: mask budgets == schedule [51, 46, 42, 37]",
+      "measured": [
+        51,
+        46,
+        42,
+        37
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: max pairwise support intersection",
+      "measured": 0,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: max |parameter dot product|",
+      "measured": 0.0,
+      "status": "PASS"
+    },
+    {
+      "check": "E_learned_disjoint: frozen deltas unchanged by every later stage",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "E: discovery reset restores the exact pre-discovery effective weights (per skill)",
+      "measured": [
+        true,
+        true,
+        true,
+        true
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "E: selected coordinates with zero importance (0 = selection fully learned)",
+      "measured": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "status": "PASS"
+    },
+    {
+      "check": "D and E choose different supports at identical capacity",
+      "measured": true,
+      "status": "PASS"
+    },
+    {
+      "check": "base weights unchanged after both arms",
+      "measured": true,
+      "status": "PASS"
+    }
+  ],
+  "experiment": "CLARE-RINEYA-001",
+  "phase": "2-synthetic-qualification",
+  "runtime": {
+    "device": "cpu",
+    "executable": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "numpy": "2.4.6",
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124"
+  },
+  "scope": "tiny synthetic models only; says nothing about the native 596M model or about skills",
+  "status": "PASS",
+  "suite": {
+    "counts": {
+      "error": 0,
+      "failed": 0,
+      "passed": 154,
+      "skipped": 0
+    },
+    "returncode": 0,
+    "seconds": 18.0,
+    "summary_line": "154 passed in 16.38s",
+    "tests": [
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_every_arm_records_every_skill_in_order"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_dense_arms_touch_everything_and_B_first_equals_A_first"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_C_is_magnitude_pruned_B_at_clare_budgets"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_F_private_masks_disjoint_from_each_other_and_from_shared"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_layer_and_rank_diagnostics_are_well_formed"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_interaction_is_zero_for_additive_effects_and_detected_otherwise"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_accuracy_effects_definitions"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_arms_synthetic::test_lambda_gate_falls_back_when_the_probe_is_too_sparse"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_footprint_offsets_digest_and_locate"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_qwen3_footprint_counts_match_native_arithmetic"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_budgets_exact_and_rho_semantics"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[7]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[40]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_smallest_matches_brute_force_with_ties[81]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_select_respects_eligibility_and_budget_bounds"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_random_selection_is_seeded_reproducible_and_distinct_keys"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_importance_selection_prefers_large_and_breaks_zero_ties_by_hash_not_position"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_mask_pack_roundtrip_checksum_and_binary"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_invert_clears_padding_and_union_overlap"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_strict_allocation_refuses_reclaim_and_tracks_free"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_core_masks::test_loose_allocation_allows_overlap_only_when_not_strict"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_01_claimed_coordinates_cannot_be_reassigned"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_02_masks_are_binary_and_payload_exact"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.80]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.90]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.95]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_03_budget_is_exact[0.975]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_04_inaccessible_parameters_receive_zero_gradient"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_05_frozen_coordinates_and_base_are_bit_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_06_discovery_reset_restores_the_exact_state"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_07_random_and_learned_capacity_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_08_checkpoint_resume"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_09_skill_order_is_reproducible_and_recorded"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_10_no_heldout_data_reaches_discovery"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_11_merge_is_deterministic_and_disjoint_sum_order_invariant"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_12_support_metrics_match_brute_force"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_13_strict_disjoint_deltas_have_zero_overlap_and_zero_dot"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_14_parameter_accounting_is_exact"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_dense_masked_and_sparse_training_agree_to_float32_rounding"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_mask_safety::test_disk_deltas_round_trip_with_the_same_content_checksum"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_retention_matrix_known_values"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_retention_refuses_missing_stage_and_row_mismatch"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_validation_refusals"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_composition_matrix_covers_and_final"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_paired_counts_mcnemar_and_bootstrap_determinism"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_damage_does_not_net_offsetting_changes"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_floor_adjustment_and_csv_determinism"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_metrics::test_vendored_mcnemar_is_verbatim"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_logits_bit_identical"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_gradients_bit_identical_and_masked"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_frozen_delta_equals_materialised_weights"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_greedy_matches_full_recompute_and_teacher_forced"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_native_tiny::test_eval_weight_caches_are_bit_identical_and_invalidated"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_capacity_schedule[0.8-counts0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_capacity_schedule[0.9-counts1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_capacity_schedule[0.95-counts2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_capacity_schedule[0.975-counts3]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_budget_rounding[1-0.999-1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_budget_rounding[10-0.95-1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_budget_rounding[3-0.5-2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_budget_rounding[100-0.8-20]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_budget_rounding_empty_pool_refuses"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw3]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw4]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw5]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw6]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw7]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw8]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw9]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_arm_spec[kw10]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_recipe[kw0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_recipe[kw1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_recipe[kw2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_recipe[kw3]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[order_X]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[order_repeat]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[eval_role_test]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[train_role_dev]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[footprint_total]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[dataset_pin]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_bad_study_config[signatures]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_config_roundtrip"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_spec_rejects_malformed_order[order0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_spec_rejects_malformed_order[order1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_spec_rejects_malformed_order[order2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_spec_rejects_malformed_order[order3]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_spec_rejects_malformed_order[order4]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_exact_ties_and_unavailable_scores"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_random_determinism"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_selection_refusals[floatmask]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_selection_refusals[shape]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_selection_refusals[nan]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_selection_refusals[budget]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_selection_refusals[negative]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_allocation_protected_and_defensive_copy"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[A_dense_sequential]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[B_independent_sum]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[C_magnitude_sparse]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[D_random_disjoint]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[E_learned_disjoint]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arm_execution_reset_finite_and_accounting[F_shared_private]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_random_vs_learned_exact_capacity"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_adamw_frozen_coords_momentum_and_decay[0.0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_adamw_frozen_coords_momentum_and_decay[0.2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_adamw_frozen_coords_momentum_and_decay[1.0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_reset_equivalent_to_fresh_masked_retrain"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_previous_delta_is_unchanged_after_later_skills"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_without_mutation[role]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_without_mutation[signature]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_without_mutation[empty_rows]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_without_mutation[empty_group]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_without_mutation[bad_index]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_training_boundary_refuses_assistant_leak_and_eval_roles"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_failure_leaves_host_clean_and_rerun_matches"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_nonfinite_loss_and_guard_refused"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arbitrary_order_and_reproducibility[order0]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arbitrary_order_and_reproducibility[order1]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_arbitrary_order_and_reproducibility[order2]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_resume_matches_uninterrupted[A_dense_sequential]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_resume_matches_uninterrupted[B_independent_sum]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_resume_matches_uninterrupted[D_random_disjoint]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_resume_matches_uninterrupted[E_learned_disjoint]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_resume_matches_uninterrupted[F_shared_private]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_artifacts_reject_drift[payload_bytes]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_artifacts_reject_drift[mask_sidecar]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_artifacts_reject_drift[stage_binding]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_artifacts_reject_drift[run_spec]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_coordinate_safety"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_geometry_zero_norm_and_overlap"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_disjoint_geometry_does_not_imply_functional_additivity"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_logit_constant_shift_diagnostic"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_rank_and_merges"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_delta_checksum_binds_values_and_shape"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_optimizer_sees_zero_frozen_gradients"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_l1_discovery_objective_has_effect"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_corpus_adapter_reads_train_only"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_corpus_refusal[pin]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_corpus_refusal[bytes]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_corpus_refusal[missing]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_corpus_refusal[curriculum]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_parent_cluster_pairing_and_undefined_retention"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_evaluation_refuses_unmatched[drop]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_evaluation_refuses_unmatched[duplicate]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_evaluation_refuses_unmatched[registration]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_evaluation_refuses_unmatched[parent]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_evaluation_refuses_unmatched[nonbinary]"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_forgetting_matrix"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_blocked_native_never_loads_a_model"
+      },
+      {
+        "outcome": "passed",
+        "test": "tests.test_ported_e320ba33::test_cli_refusal_is_recorded_and_never_overwritten"
+      }
+    ]
+  }
+}
