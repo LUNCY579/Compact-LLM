@@ -1,0 +1,35 @@
+[wmi_runner] start 2026-09-24 16:54:55 target=C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\composition_confirmation_v1\run_confirm.py
+  RAM free 6.79 then 6.78 GiB (floor 3.5)
+  [gpu-lease] acquired rineya-gpu-0.lock label=confirm001:T_BANK_V3X token=73b0449d
+  preflight BASE: OK
+  preflight SPARSE: OK
+  preflight AVG: OK
+  preflight ADD-100: OK
+  preflight SPARSE_ATTN: OK
+  preflight SCALAR_MATCHED: OK
+  scoring gates: ['BASE', 'SPARSE']
+startup checks
+  template self-test: 384 recorded prompts reproduced byte-exactly (negative control rejects a missing think block)
+  bank T_BANK_V3X.json n=864 sha256=173aa372466d5e3cc8efbebe4cc7e7ba09a8eb34de4598ce8f9d96a2b8e6557c
+  [gpu-lease] --no-lease: caller holds the lease for this window
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py", line 171, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py", line 122, in main
+    _score_all(names, a, rows, result, torch, AutoModelForCausalLM, AutoTokenizer, gc)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-titan-model-soup-mini-v1\experiments\fresh_dual_skill_instrument_v1\score_arms.py", line 137, in _score_all
+    model = AutoModelForCausalLM.from_pretrained(
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-rab001-cu126\Lib\site-packages\transformers\models\auto\auto_factory.py", line 571, in from_pretrained
+    return model_class.from_pretrained(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-rab001-cu126\Lib\site-packages\transformers\modeling_utils.py", line 279, in _wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\.venv-rab001-cu126\Lib\site-packages\transformers\modeling_utils.py", line 4139, in from_pretrained
+    raise ValueError(
+ValueError: Using a `device_map` or `tp_plan` requires `accelerate`. You can install it with `pip install accelerate`
+  [gpu-lease] released rineya-gpu-0.lock
+scoring step gates failed (exit 1)
+[wmi_runner] exit rc=1 after 36s

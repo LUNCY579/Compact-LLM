@@ -1,0 +1,46 @@
+{
+ "bank": "T_BANK_V2 (exposed)",
+ "n": 192,
+ "SPARSE_correct": 102,
+ "loss_ADD-100": {
+  "n_lost": 11,
+  "auc_low_margin_predicts_loss": 0.7672327672327672,
+  "perm_p": 0.001,
+  "median_margin_lost": 0.0457000732421875,
+  "median_margin_kept": 0.9387054443359375
+ },
+ "loss_AVG": {
+  "n_lost": 36,
+  "auc_low_margin_predicts_loss": 0.7175925925925924,
+  "perm_p": 0.0,
+  "median_margin_lost": 0.2942647933959961,
+  "median_margin_kept": 1.2758874893188477
+ },
+ "gain_ADD-100": {
+  "n_gained": 6,
+  "auc_high_margin_predicts_gain": 0.871031746031746,
+  "perm_p": 0.0002,
+  "median_margin_gained": -0.8227624893188477,
+  "median_margin_other_wrong": -2.326420783996582
+ },
+ "overlap_lost": {
+  "ADD_lost": 11,
+  "AVG_lost": 36,
+  "both": 7
+ },
+ "perturbation": {
+  "mean_shift_weakest_token_logodds": -0.28388509403461365,
+  "sd_shift": 0.8020382170053117,
+  "sd_shift_on_SPARSE_correct": 0.7771124134709032,
+  "corr_shift_vs_SPARSE_margin": -0.7180610340375416
+ },
+ "gaussian_flip_model": {
+  "note": "uses the observed shift distribution; a consistency check, not an out-of-sample prediction",
+  "predicted_lost": 29.71768541190481,
+  "observed_lost": 11,
+  "predicted_gained": 2.8144613527558677,
+  "observed_gained": 6,
+  "margin_sign_agrees_with_generation_SPARSE": 179,
+  "margin_sign_agrees_with_generation_ADD100": 168
+ }
+}

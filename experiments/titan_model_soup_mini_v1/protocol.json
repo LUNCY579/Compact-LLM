@@ -1,0 +1,97 @@
+{
+  "schema": 1,
+  "experiment": "SOUP-MINI-001",
+  "status": "REGISTERED_PROPOSAL_NATIVE_BOUNDARY_OPEN_ITEMS",
+  "primary_pair": [
+    "titan_sparse",
+    "opallo"
+  ],
+  "secondary_pair": [
+    "titan",
+    "opallo"
+  ],
+  "phase_a": {
+    "endpoints": [
+      "supa",
+      "titan",
+      "titan_sparse",
+      "opallo"
+    ],
+    "new_arms": [
+      "supa_titan_50",
+      "supa_sparse_50",
+      "supa_opallo_50",
+      "titan_opallo_50",
+      "sparse_opallo_50"
+    ],
+    "alpha_right": 0.5,
+    "max_configurations": 9,
+    "training_steps": 0
+  },
+  "conditional_local": {
+    "max_new_local_checkpoints": 1,
+    "requires": [
+      "exact_published_parent",
+      "reviewed_lineage_receipt",
+      "full_weights_export",
+      "all_ancestor_training_parent_ledgers",
+      "separate_budget_and_native_read_grant"
+    ],
+    "arms": [
+      "local_parent_50",
+      "local_supa_50",
+      "local_opallo_50"
+    ],
+    "not_part_of_phase_a_budget": true
+  },
+  "evaluation_proposal": {
+    "CAL_rows_max": 256,
+    "CHECK_rows_max": 256,
+    "CAL_max_configurations": 9,
+    "CHECK_max_configurations": 5,
+    "CHECK_candidate_limit": 1,
+    "phase_a_completion_cap": 3584,
+    "max_input_plus_output_tokens": 4096,
+    "max_new_tokens": 64,
+    "decoding": "greedy, batch1, FP32, no sampling, identical tokenizer/template/stop policy",
+    "domains": [
+      "transition",
+      "arithmetic",
+      "short_format",
+      "answerable_retrieval",
+      "unanswerable_abstention",
+      "long_context"
+    ],
+    "report_false_abstention_separately": true,
+    "native_suite_hashes": null,
+    "native_scorer_sha256": null,
+    "native_runtime_sha256": null,
+    "qualification_receipt": null
+  },
+  "selection_proposal": {
+    "class": "exploratory_not_confirmatory",
+    "requires": "pre-native endpoint skill-floor competence and complete fresh-bank ancestry audit",
+    "acquisition_floor": "observed transition score >= 95% of relevant Titan endpoint AND arithmetic >= 95% of Opallo endpoint on CAL",
+    "retention_ceiling": "in EACH retention domain, source-correct losses <= floor(0.05 * Supa source-correct count); report source-correct denominator",
+    "additional_guard": "false abstention on answerable rows must not increase versus Supa",
+    "tie_break": "lower total source-correct losses, then higher mean of the two donor-normalized acquisition scores, then primary sparse soup",
+    "margin_note": "proposed screening tolerances, not a statistical noninferiority margin or user-confirmed product tolerance",
+    "frozen_before_CHECK": true,
+    "CHECK_peeking_forbidden": true,
+    "scorer_does_not_implement_candidate_selection": true
+  },
+  "native_authorized": false,
+  "training_authorized": false,
+  "automatic_retries": 0,
+  "quality_improvement_established": false,
+  "release_permitted": false,
+  "remaining_gates": [
+    "materialized_local_input_hashes",
+    "native_endpoint_load_and_decode_parity",
+    "fresh_parent_disjoint_CAL_CHECK_and_scoring_floors",
+    "whole_ancestor_ledger_completeness",
+    "frozen_runtime_and_decoding",
+    "experiment_specific_resources_and_native_read_grant",
+    "candidate_lock_before_CHECK"
+  ]
+}

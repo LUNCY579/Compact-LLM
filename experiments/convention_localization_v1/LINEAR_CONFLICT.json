@@ -1,0 +1,73 @@
+{
+ "source": "TF_EXACT.json",
+ "n": 192,
+ "wins_measured": {
+  "BASE": 1,
+  "SPARSE": 0,
+  "OPALLO": 68,
+  "ADD-O75": 68,
+  "ADD-100": 182
+ },
+ "generation_trailing_periods": {
+  "ADD-O75": 63,
+  "ADD-100": 178
+ },
+ "T1_additivity": {
+  "mean_I": 1.1054754633015211,
+  "ci95": [
+   0.6758403039860298,
+   1.515761774681772
+  ],
+  "mean_dOpallo_effect_on_BASE": 11.255850589256928,
+  "mean_dOpallo_effect_on_SPARSE": 12.361326052558448,
+  "interaction_as_fraction_of_effect": 0.09821340950959627,
+  "corr_effect_on_BASE_vs_on_SPARSE": 0.8618073535090204
+ },
+ "T2_linearity_out_of_sample": {
+  "predicted_wins_beta_0.75": 61,
+  "measured_TF_wins_ADD-O75": 68,
+  "generation_periods_ADD-O75": 63,
+  "per_row_sign_agreement": 185,
+  "per_row_corr": 0.9799287653544597,
+  "mean_residual_obs_minus_hat": 0.22760918122209736,
+  "curvature_obs_over_linear": 1.0245506757936635,
+  "by_kind": {
+   "merged": {
+    "predicted": 0,
+    "measured": 6,
+    "n": 128
+   },
+   "integer": {
+    "predicted": 61,
+    "measured": 62,
+    "n": 64
+   }
+  }
+ },
+ "T3_predicted_period_rows_by_beta": {
+  "linear": {
+   "0.00": 0,
+   "0.05": 0,
+   "0.10": 0,
+   "0.15": 0,
+   "0.20": 0,
+   "0.25": 0,
+   "0.30": 0,
+   "0.35": 0,
+   "0.40": 0,
+   "0.45": 2,
+   "0.50": 3,
+   "0.55": 6,
+   "0.60": 12,
+   "0.65": 23,
+   "0.70": 46,
+   "0.75": 61,
+   "0.80": 70,
+   "0.85": 97,
+   "0.90": 127,
+   "0.95": 167,
+   "1.00": 182
+  },
+  "largest_beta_with_at_most_2pct_period_rows": 0.5
+ }
+}

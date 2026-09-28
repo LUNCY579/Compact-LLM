@@ -1,0 +1,22 @@
+{
+  "experiment": "CONFIRM-002",
+  "arm": "THFULL",
+  "base_arm": "SPARSE",
+  "coefficient_H": 1.0,
+  "H_form": "full",
+  "construction": "SPARSE + 1.0 * delta_H (unrounded), float64 sum, cast to float32",
+  "rank_r": 16,
+  "trained_H_sha256": "a1103060591a91ee7d9ceb2ad7450621be352b087cd19188f2c383a0dbbc7b90",
+  "norm_P16_delta_H": 0.7098943555451114,
+  "norm_delta_H": 1.038194787918927,
+  "norm_dSparse": 0.6940550846962167,
+  "norm_H_update": 1.038194787918578,
+  "canary": {
+    "P16_norm_recorded": 0.7098943555451119,
+    "abs_error": 5.551115123125783e-16
+  },
+  "smoke_subset": null,
+  "weight_sha256": "a8e46cccf05792843028b6f26b5409396d568be4364b2d2be2ba8b6c7f213b1d",
+  "status": "MATERIALIZED_NOT_EVALUATED",
+  "quality_claim": false
+}

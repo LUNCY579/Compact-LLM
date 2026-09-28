@@ -1,0 +1,130 @@
+{
+ "bank": "T_BANK_V2 (exposed)",
+ "n": 192,
+ "exploratory": true,
+ "periods": {
+  "ADD-100": 178,
+  "ADD-75": 63,
+  "ADD-O50": 0,
+  "ADD-O60": 2,
+  "ADD-O75": 63,
+  "ADD-O90": 148,
+  "ADD-S75": 178,
+  "AVG": 0,
+  "BASE": 0,
+  "CONFLICT-LOCAL": 178,
+  "H1": 0,
+  "H1c": 0,
+  "OPALLO": 79,
+  "SPARSE": 0
+ },
+ "tolerant": {
+  "ADD-100": 97,
+  "ADD-75": 94,
+  "ADD-O50": 100,
+  "ADD-O60": 100,
+  "ADD-O75": 98,
+  "ADD-O90": 98,
+  "ADD-S75": 89,
+  "AVG": 69,
+  "BASE": 0,
+  "CONFLICT-LOCAL": 97,
+  "H1": 102,
+  "H1c": 99,
+  "OPALLO": 8,
+  "SPARSE": 102
+ },
+ "strict": {
+  "ADD-100": 6,
+  "ADD-75": 59,
+  "ADD-O50": 100,
+  "ADD-O60": 98,
+  "ADD-O75": 63,
+  "ADD-O90": 24,
+  "ADD-S75": 4,
+  "AVG": 69,
+  "BASE": 0,
+  "CONFLICT-LOCAL": 6,
+  "H1": 102,
+  "H1c": 99,
+  "OPALLO": 1,
+  "SPARSE": 102
+ },
+ "beta_arms": {
+  "ADD-O50": {
+   "beta": 0.5,
+   "predicted_period_rows": 3,
+   "registered_prediction": 3,
+   "observed_period_rows": 0,
+   "band": [
+    0,
+    8
+   ],
+   "count_in_band": true,
+   "per_row_agreement": 189,
+   "agreement_ok": true,
+   "tolerant": 100,
+   "tolerant_ok": true,
+   "PASS": true
+  },
+  "ADD-O60": {
+   "beta": 0.6,
+   "predicted_period_rows": 12,
+   "registered_prediction": 12,
+   "observed_period_rows": 2,
+   "band": [
+    7,
+    17
+   ],
+   "count_in_band": false,
+   "per_row_agreement": 180,
+   "agreement_ok": true,
+   "tolerant": 100,
+   "tolerant_ok": true,
+   "PASS": false
+  },
+  "ADD-O90": {
+   "beta": 0.9,
+   "predicted_period_rows": 127,
+   "registered_prediction": 127,
+   "observed_period_rows": 148,
+   "band": [
+    95,
+    159
+   ],
+   "count_in_band": true,
+   "per_row_agreement": 169,
+   "agreement_ok": false,
+   "tolerant": 98,
+   "tolerant_ok": true,
+   "PASS": false
+  }
+ },
+ "H1": {
+  "P1": {
+   "H1_periods": 0,
+   "H1_verdict": "PASS",
+   "H1c_periods": 0,
+   "H1c_verdict": "NOT_SUFFICIENT"
+  },
+  "P2": {
+   "diff_tolerant_H1_minus_SPARSE": 0,
+   "lower95_one_sided": -3.0,
+   "margin": -10.200000000000001,
+   "PASS": true
+  },
+  "P3": {
+   "strict_H1": 102,
+   "strict_ADD-100": 6,
+   "gain": 96,
+   "required": 30.599999999999998,
+   "p": 6.979604631123946e-26,
+   "PASS": true
+  },
+  "additive_prediction": {
+   "H1c_ge_150": false,
+   "sum_periods": 0,
+   "sum_within_178_pm_25": false
+  }
+ }
+}
