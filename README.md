@@ -1,3 +1,5 @@
+> **Current model-quality research:** [MODEL_QUALITY_STATUS.md](MODEL_QUALITY_STATUS.md) is the authoritative continuation for this successor. Historical programme material below remains preserved.
+
 Private Hugging Face family vault:
 
 `Luncy1978/rineya-published-cores`

@@ -1,0 +1,93 @@
+{
+  "schema": 1,
+  "evidence_kind": "derived_comparison_summary_only",
+  "note": "Derived by summing per-row/per-path fields from the receipts and NUMERICS.json listed in source_paths. Not a receipt; authorizes nothing.",
+  "implementation_sha256": "eab80e9f99494268a113fba381f4178818aab759e3acbc6193ea936d33560fe6",
+  "source_paths": [
+    "outputs/diagnostics/b28-fp32/NUMERICS.json",
+    "outputs/diagnostics/d40-fp32/NUMERICS.json",
+    "outputs/ladder-eab80e9f-v1/G1_CED_C28/attempt-0001/numerics.json",
+    "outputs/ladder-eab80e9f-v1/G1_CED_C40/attempt-0001/numerics.json",
+    "outputs/diagnostics/b28-fp64/NUMERICS.json",
+    "outputs/diagnostics/c28-fp64/NUMERICS.json"
+  ],
+  "arms": [
+    {
+      "arm": "B28",
+      "precision": "FP32",
+      "rows": 8,
+      "max_abs_error_any_path": 0.00017261505126953125,
+      "total_elementwise_violations": 4,
+      "paths_with_any_failure": [
+        "chunk_size_1"
+      ],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    },
+    {
+      "arm": "D40",
+      "precision": "FP32",
+      "rows": 8,
+      "max_abs_error_any_path": 8.106231689453125e-05,
+      "total_elementwise_violations": 0,
+      "paths_with_any_failure": [],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    },
+    {
+      "arm": "C28",
+      "precision": "FP32",
+      "rows": 8,
+      "max_abs_error_any_path": 0.0008234977722167969,
+      "total_elementwise_violations": 401863,
+      "paths_with_any_failure": [
+        "chunk_halves",
+        "chunk_size_1",
+        "chunk_size_16",
+        "chunk_size_7",
+        "prefix",
+        "tail_only"
+      ],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    },
+    {
+      "arm": "C40",
+      "precision": "FP32",
+      "rows": 8,
+      "max_abs_error_any_path": 0.005885601043701172,
+      "total_elementwise_violations": 726228,
+      "paths_with_any_failure": [
+        "chunk_halves",
+        "chunk_size_1",
+        "chunk_size_7",
+        "prefix",
+        "tail_only"
+      ],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    },
+    {
+      "arm": "B28",
+      "precision": "FP64",
+      "rows": 4,
+      "max_abs_error_any_path": 3.7703173916270316e-13,
+      "total_elementwise_violations": 0,
+      "paths_with_any_failure": [],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    },
+    {
+      "arm": "C28",
+      "precision": "FP64",
+      "rows": 4,
+      "max_abs_error_any_path": 4.099831585335778e-12,
+      "total_elementwise_violations": 0,
+      "paths_with_any_failure": [],
+      "causal_suffix_isolation_exact_all_rows": true,
+      "decode_choices_exact_all_rows": true
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

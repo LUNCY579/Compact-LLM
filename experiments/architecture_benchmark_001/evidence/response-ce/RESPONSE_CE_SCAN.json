@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_position_resolved_ce_only",
+  "note": "Cross-entropy split by target position: assistant reply vs prompt/boilerplate. At INITIALIZATION, no training. Tests whether the displaced-layer penalty is uniform over positions or concentrated in the answer. Open splits only; no receipt, no gate, no efficacy claim.",
+  "baseline_arm": "source_control",
+  "dev_rows": 40,
+  "dev_target_tokens": 4979,
+  "dev_response_target_tokens": 381,
+  "dev_response_fraction": 0.07652138983731673,
+  "arms": {
+    "source_control": {
+      "dev_ce_nats": 5.578166207004967,
+      "dev_response_ce_nats": 2.6492320762218764,
+      "dev_boilerplate_ce_nats": 5.820863907105926,
+      "displaced_layers": 0,
+      "penalty_overall_nats": 0.0,
+      "penalty_response_nats": 0.0,
+      "response_concentration": null
+    },
+    "ced_last4": {
+      "dev_ce_nats": 6.533941627099443,
+      "dev_response_ce_nats": 4.042612627735288,
+      "dev_boilerplate_ce_nats": 6.740378241686263,
+      "displaced_layers": 3,
+      "penalty_overall_nats": 0.9557754200944757,
+      "penalty_response_nats": 1.3933805515134114,
+      "response_concentration": 1.4578535105827264
+    },
+    "ced_last8": {
+      "dev_ce_nats": 8.421801461156388,
+      "dev_response_ce_nats": 6.961047840869333,
+      "dev_boilerplate_ce_nats": 8.542842604482418,
+      "displaced_layers": 7,
+      "penalty_overall_nats": 2.8436352541514207,
+      "penalty_response_nats": 4.311815764647457,
+      "response_concentration": 1.516304089405503
+    },
+    "C28": {
+      "dev_ce_nats": 12.88797328663198,
+      "dev_response_ce_nats": 12.21811082294294,
+      "dev_boilerplate_ce_nats": 12.943479586912789,
+      "displaced_layers": 13,
+      "penalty_overall_nats": 7.309807079627012,
+      "penalty_response_nats": 9.568878746721063,
+      "response_concentration": 1.3090466878927975
+    }
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

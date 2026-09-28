@@ -1,0 +1,97 @@
+{
+  "record": "MODEL_EXECUTION_AUTHORIZATION",
+  "authorization_id": "RRP-001-AUTH-001",
+  "recorded_utc": "2026-09-15T06:05:31.989797+00:00",
+  "supersedes_pending_request": "BUDGET_REQUEST.json (RRP-001-MICROFIT, decision was PENDING)",
+  "operator_grant": {
+    "channel": "interactive session chat, operator turn",
+    "verbatim": "I will be aways for hours so you will be taking over the experiments continuously and automatically for hours, and GPU will be available for long-running, large targeted fine tuning and reasoning enhance experiment whenever you needed it.",
+    "grant_class": "QUALITATIVE_OPEN_ENDED_LOCAL_GPU",
+    "what_it_plainly_authorizes": [
+      "local GPU model execution, long-running",
+      "targeted fine-tuning at scale on the local host",
+      "reasoning-enhancement training experiments",
+      "autonomous continuation across hours without per-step approval"
+    ],
+    "what_it_does_not_mention_and_stays_closed": [
+      "cloud GPU or any paid service",
+      "teacher/frontier model API spend",
+      "remote workflow dispatch",
+      "production registry edit or model replacement",
+      "human data-review sign-off (cannot be granted by an availability statement)",
+      "on-policy RL rollouts (GOAL section 8 requires a verifier adversarial pass and a readiness gate first)"
+    ]
+  },
+  "numeric_envelope_provenance": "The operator supplied authority and availability, NOT numbers. The limits below are AGENT-INSTANTIATED from that grant, sized to the measured local host, and are binding on this agent. They are not a quotation of an operator-specified figure. GOAL section 1 requires numeric limits to exist before model execution; this record creates them.",
+  "limits": {
+    "total_owned_work_wall_seconds": 36000,
+    "model_worker_wall_seconds_and_conservative_gpu_seconds": 25200,
+    "processed_training_tokens_all_attempts": 40000000,
+    "generated_tokens_all_candidates": 4000000,
+    "evaluation_and_qualification_model_calls": 6000,
+    "model_worker_launches": 48,
+    "retries": 12,
+    "new_disk_bytes": 17179869184,
+    "adaptive_model_selection_rounds": 3,
+    "on_policy_rl_rollout_tokens": 0,
+    "cloud_or_teacher_spend": 0
+  },
+  "limits_are_inclusive_of": [
+    "zero-update source and longest-shape qualification",
+    "every failed attempt and retry",
+    "all evaluation and scoring calls",
+    "fresh-process resume verification",
+    "checkpoint and artifact disk growth"
+  ],
+  "scope_opened": [
+    "RRP-001-QUAL: local zero-update source/shape/parity qualification on real Supa 1.7 weights",
+    "RRP-001-MICROFIT: the frozen 32-world engineering microfit per MICROFIT_PLAN.json",
+    "RRP-001-RESUME: fresh-process save/resume equivalence verification",
+    "RRP-001-LADDER-A/B/C: the sequential SFT ablation ladder of GOAL section 7, subject to its own pre-registration and to the data-review constraint below"
+  ],
+  "scope_still_closed": [
+    "ladder arm D (verifiable RL) and any on-policy rollout",
+    "larger-teacher distillation",
+    "cloud or paid execution",
+    "dense export, adapter merge, quantization, registry edit, release",
+    "architectural change, merging, pruning"
+  ],
+  "measured_host_at_authorization": {
+    "gpu": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "vram_total_mib": 8188,
+    "vram_free_mib": 7200,
+    "vram_used_mib_desktop_only": 749,
+    "ram_total_gib": 15.22,
+    "ram_free_gib": 7.45,
+    "disk_c_free_gib": 35.8,
+    "foreign_gpu_compute_jobs": 0,
+    "foreign_python_model_jobs": 0,
+    "foreign_python_processes_seen": "4 harness/helper processes, each <=0.02 GiB working set, not model jobs, not owned by this agent, NOT to be terminated"
+  },
+  "guards_unchanged_and_non_negotiable": {
+    "concurrent_model_jobs_max": 1,
+    "ram_free_gib_floor_before_training_preload": 6.0,
+    "disk_c_free_gib_hard_floor": 14.0,
+    "gpu_lease": "cooperative file lock must be acquired; a stale lock is never assumed dead without process evidence",
+    "watchdog": "required; the historical no-watchdog --_worker bypass is forbidden",
+    "on_breach": "fail closed, journal the breach, do not lower the guard to force a run",
+    "never": [
+      "terminate another user's or agent's processes",
+      "delete or evict unexplained locks",
+      "delete existing checkpoints or branches",
+      "force-push or rewrite history",
+      "retry indefinitely"
+    ]
+  },
+  "human_data_review_status": {
+    "state": "NOT_PERFORMED",
+    "consequence_accepted": "The qualification, microfit and resume verification are ENGINEERING evidence only and make no data-quality or model-quality claim, so they proceed. Any ladder arm whose DEV/retention comparison is offered as a quality claim requires the operator to sign REVIEW_PACKET.md first. This agent will not self-certify that review, and will report ladder results as review-pending if it runs them before sign-off."
+  },
+  "stop_conditions": [
+    "any single limit above is reached",
+    "a resource guard fails and cannot be satisfied without lowering it",
+    "a safety or validity failure in the instrument",
+    "a prospectively defined plateau",
+    "3 adaptive research rounds consumed"
+  ]
+}

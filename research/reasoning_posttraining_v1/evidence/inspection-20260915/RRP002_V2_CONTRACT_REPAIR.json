@@ -1,0 +1,217 @@
+{
+  "record": "RRP002_V2_CONTRACT_REPAIR_DIAGNOSTIC",
+  "headline_policy": "strict pass@1 JSON, unchanged; the repaired column is a DIAGNOSTIC and never the reported accuracy",
+  "repair": "one rule: quote bare identifiers inside JSON arrays; no value is altered and no reference is consulted",
+  "predictions_textually_repaired": 87,
+  "of": 230,
+  "strict": {
+    "rows": 230,
+    "correct": 4,
+    "accuracy": 0.017391304347826087,
+    "format_valid": 139,
+    "schema_valid": 132,
+    "false_abstention_on_answerable": 0,
+    "unsupported_answer_on_unanswerable": 99,
+    "wrong_sentinel_on_unanswerable": 0,
+    "per_stratum": {
+      "ANSWER": {
+        "n": 131,
+        "correct": 4
+      },
+      "IMPOSSIBLE": {
+        "n": 66,
+        "correct": 0
+      },
+      "UNKNOWN": {
+        "n": 33,
+        "correct": 0
+      }
+    },
+    "per_family": {
+      "budget_selection": {
+        "n": 35,
+        "correct": 0
+      },
+      "continuous_replan": {
+        "n": 32,
+        "correct": 0
+      },
+      "deadline_schedule": {
+        "n": 32,
+        "correct": 0
+      },
+      "evidence_chain": {
+        "n": 33,
+        "correct": 0
+      },
+      "ledger_replay": {
+        "n": 17,
+        "correct": 0
+      },
+      "prerequisite_plan": {
+        "n": 30,
+        "correct": 4
+      },
+      "register_machine": {
+        "n": 16,
+        "correct": 0
+      },
+      "temporal_route": {
+        "n": 35,
+        "correct": 0
+      }
+    },
+    "per_answer_shape": {
+      "actions": {
+        "n": 14,
+        "correct": 4
+      },
+      "answer": {
+        "n": 16,
+        "correct": 0
+      },
+      "items": {
+        "n": 19,
+        "correct": 0
+      },
+      "order": {
+        "n": 15,
+        "correct": 0
+      },
+      "path": {
+        "n": 34,
+        "correct": 0
+      },
+      "status": {
+        "n": 99,
+        "correct": 0
+      },
+      "value": {
+        "n": 33,
+        "correct": 0
+      }
+    },
+    "verifier_reasons": {
+      "answer_requires_status": 33,
+      "feasible_suboptimal": 19,
+      "incorrect_value": 66,
+      "invalid_witness": 10,
+      "optimal_verified": 4,
+      "parse_failure": 91,
+      "schema": 7
+    },
+    "cluster_unit": "family; paired variants share group_id",
+    "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+    "quality_claim": false
+  },
+  "repaired": {
+    "rows": 230,
+    "correct": 4,
+    "accuracy": 0.017391304347826087,
+    "format_valid": 205,
+    "schema_valid": 198,
+    "false_abstention_on_answerable": 0,
+    "unsupported_answer_on_unanswerable": 99,
+    "wrong_sentinel_on_unanswerable": 0,
+    "per_stratum": {
+      "ANSWER": {
+        "n": 131,
+        "correct": 4
+      },
+      "IMPOSSIBLE": {
+        "n": 66,
+        "correct": 0
+      },
+      "UNKNOWN": {
+        "n": 33,
+        "correct": 0
+      }
+    },
+    "per_family": {
+      "budget_selection": {
+        "n": 35,
+        "correct": 0
+      },
+      "continuous_replan": {
+        "n": 32,
+        "correct": 0
+      },
+      "deadline_schedule": {
+        "n": 32,
+        "correct": 0
+      },
+      "evidence_chain": {
+        "n": 33,
+        "correct": 0
+      },
+      "ledger_replay": {
+        "n": 17,
+        "correct": 0
+      },
+      "prerequisite_plan": {
+        "n": 30,
+        "correct": 4
+      },
+      "register_machine": {
+        "n": 16,
+        "correct": 0
+      },
+      "temporal_route": {
+        "n": 35,
+        "correct": 0
+      }
+    },
+    "per_answer_shape": {
+      "actions": {
+        "n": 14,
+        "correct": 4
+      },
+      "answer": {
+        "n": 16,
+        "correct": 0
+      },
+      "items": {
+        "n": 19,
+        "correct": 0
+      },
+      "order": {
+        "n": 15,
+        "correct": 0
+      },
+      "path": {
+        "n": 34,
+        "correct": 0
+      },
+      "status": {
+        "n": 99,
+        "correct": 0
+      },
+      "value": {
+        "n": 33,
+        "correct": 0
+      }
+    },
+    "verifier_reasons": {
+      "answer_requires_status": 67,
+      "feasible_suboptimal": 19,
+      "incorrect_value": 66,
+      "invalid_witness": 11,
+      "optimal_verified": 4,
+      "parse_failure": 25,
+      "schema": 38
+    },
+    "cluster_unit": "family; paired variants share group_id",
+    "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+    "quality_claim": false
+  },
+  "reason_transitions": {
+    "parse_failure -> schema": 31,
+    "parse_failure -> invalid_witness": 1,
+    "parse_failure -> answer_requires_status": 34,
+    "parse_failure -> parse_failure": 21
+  },
+  "shortcut_floor_same_subset": 0.287,
+  "finding": "The repair converts parse failures into scorable verdicts but does NOT make the model competent: it remains far below the 0.2870 trivial floor either way. So B-3 (response-contract violation) is real and large on v2, and it is masking a separate and deeper semantic failure rather than explaining it away.",
+  "model_calls": 0,
+  "quality_claim": false
+}

@@ -1,0 +1,62 @@
+{
+  "schema": 2,
+  "evidence_kind": "local_ladder_summary_only",
+  "expected_stages": [
+    "G0",
+    "G1_IDENTITY",
+    "G1_WIDTH",
+    "G1_CED_C28",
+    "G1_CED_C40"
+  ],
+  "status": "FAIL",
+  "results": [
+    {
+      "stage": "G0",
+      "status": "PASS",
+      "exit_code": 0,
+      "reused": false,
+      "attempt": "G0/attempt-0001",
+      "log": "G0/attempt-0001.log",
+      "receipt": "G0/attempt-0001/G0.json"
+    },
+    {
+      "stage": "G1_IDENTITY",
+      "status": "PASS",
+      "exit_code": 0,
+      "reused": false,
+      "attempt": "G1_IDENTITY/attempt-0001",
+      "log": "G1_IDENTITY/attempt-0001.log",
+      "receipt": "G1_IDENTITY/attempt-0001/G1_IDENTITY.json"
+    },
+    {
+      "stage": "G1_WIDTH",
+      "status": "PASS",
+      "exit_code": 0,
+      "reused": false,
+      "attempt": "G1_WIDTH/attempt-0001",
+      "log": "G1_WIDTH/attempt-0001.log",
+      "receipt": "G1_WIDTH/attempt-0001/G1_WIDTH.json"
+    },
+    {
+      "stage": "G1_CED_C28",
+      "status": "FAIL",
+      "exit_code": 2,
+      "reused": false,
+      "attempt": "G1_CED_C28/attempt-0001",
+      "log": "G1_CED_C28/attempt-0001.log",
+      "reason": "child failed; log or failure receipt is not a clean review"
+    },
+    {
+      "stage": "G1_CED_C40",
+      "status": "FAIL",
+      "exit_code": 2,
+      "reused": false,
+      "attempt": "G1_CED_C40/attempt-0001",
+      "log": "G1_CED_C40/attempt-0001.log",
+      "reason": "child failed; log or failure receipt is not a clean review"
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "receipt_sha256": "b9054959db80bfb23625780302834fd2929cd34159c3df5fb03e5e8aac265c64"
+}

@@ -1,0 +1,355 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_multiseed_matched_comparison_only",
+  "note": "Family-disjoint splits; arithmetic_chain held out of TRAIN/DEV so the task set measures retention. Open splits only; not a sealed or DEV evaluation and not an efficacy claim. Outside the experiment package; no receipt, no gate.",
+  "arm": "C28",
+  "seed": 43,
+  "steps": 40,
+  "optimizer": "AdamW lr=1e-05 wd=0 clip=1.0",
+  "seed_controls": "training row order (shuffle of TRAIN); nothing else in the run is stochastic, so this is the only source of between-seed variance",
+  "task_scoring": "normalised-string match OR exact equality of the full number sequence (decimals and clock times included); leading-integer matching was too lenient and is not used",
+  "train_rows_available": 800,
+  "train_rows_seen": 40,
+  "dev_rows": 40,
+  "dev_target_tokens": 4979,
+  "task_rows": 60,
+  "source_dev_ce_nats": 5.5781664337875325,
+  "trainable_parameters": 596311424,
+  "supervised_target_tokens": 4902,
+  "wall_seconds": 596.7897991000004,
+  "checkpoints": [
+    {
+      "step": 0,
+      "tokens": 0,
+      "dev_ce_nats": 12.887973752455625,
+      "dev_kl_to_source_nats": 9.32850643601564,
+      "dev_top1_agreement": 0.013054830287206266,
+      "task_numeric_hits": 0,
+      "task_strict_hits": 0,
+      "task_n": 60,
+      "task_numeric_rate": 0.0,
+      "task_terminated": 0,
+      "task_distinct": 60
+    },
+    {
+      "step": 20,
+      "tokens": 2400,
+      "dev_ce_nats": 4.644160399213807,
+      "dev_kl_to_source_nats": 2.7354445127053153,
+      "dev_top1_agreement": 0.3052821851777465,
+      "task_numeric_hits": 0,
+      "task_strict_hits": 0,
+      "task_n": 60,
+      "task_numeric_rate": 0.0,
+      "task_terminated": 60,
+      "task_distinct": 32
+    },
+    {
+      "step": 40,
+      "tokens": 4902,
+      "dev_ce_nats": 3.2134662512484073,
+      "dev_kl_to_source_nats": 2.761360623554476,
+      "dev_top1_agreement": 0.34324161478208476,
+      "task_numeric_hits": 0,
+      "task_strict_hits": 0,
+      "task_n": 60,
+      "task_numeric_rate": 0.0,
+      "task_terminated": 60,
+      "task_distinct": 28
+    }
+  ],
+  "trajectory": [
+    {
+      "step": 1,
+      "train_ce": 14.690421104431152,
+      "grad_norm": 848.196533203125,
+      "tokens": 102
+    },
+    {
+      "step": 2,
+      "train_ce": 12.1336088180542,
+      "grad_norm": 482.7616271972656,
+      "tokens": 209
+    },
+    {
+      "step": 3,
+      "train_ce": 11.905962944030762,
+      "grad_norm": 458.33660888671875,
+      "tokens": 324
+    },
+    {
+      "step": 4,
+      "train_ce": 10.45378303527832,
+      "grad_norm": 394.9613952636719,
+      "tokens": 411
+    },
+    {
+      "step": 5,
+      "train_ce": 9.901134490966797,
+      "grad_norm": 284.21124267578125,
+      "tokens": 538
+    },
+    {
+      "step": 6,
+      "train_ce": 8.38892936706543,
+      "grad_norm": 246.4418182373047,
+      "tokens": 634
+    },
+    {
+      "step": 7,
+      "train_ce": 7.854918003082275,
+      "grad_norm": 176.4423828125,
+      "tokens": 773
+    },
+    {
+      "step": 8,
+      "train_ce": 8.42852783203125,
+      "grad_norm": 276.879150390625,
+      "tokens": 922
+    },
+    {
+      "step": 9,
+      "train_ce": 7.391075611114502,
+      "grad_norm": 126.25945281982422,
+      "tokens": 1035
+    },
+    {
+      "step": 10,
+      "train_ce": 7.019972324371338,
+      "grad_norm": 131.7102813720703,
+      "tokens": 1146
+    },
+    {
+      "step": 11,
+      "train_ce": 6.704330921173096,
+      "grad_norm": 100.11223602294922,
+      "tokens": 1260
+    },
+    {
+      "step": 12,
+      "train_ce": 6.264039516448975,
+      "grad_norm": 78.5210952758789,
+      "tokens": 1410
+    },
+    {
+      "step": 13,
+      "train_ce": 5.80474328994751,
+      "grad_norm": 94.09031677246094,
+      "tokens": 1504
+    },
+    {
+      "step": 14,
+      "train_ce": 5.547983169555664,
+      "grad_norm": 72.11554718017578,
+      "tokens": 1602
+    },
+    {
+      "step": 15,
+      "train_ce": 5.3062005043029785,
+      "grad_norm": 75.37305450439453,
+      "tokens": 1702
+    },
+    {
+      "step": 16,
+      "train_ce": 5.761595249176025,
+      "grad_norm": 67.97342681884766,
+      "tokens": 1829
+    },
+    {
+      "step": 17,
+      "train_ce": 5.185354709625244,
+      "grad_norm": 62.506248474121094,
+      "tokens": 2007
+    },
+    {
+      "step": 18,
+      "train_ce": 5.1806769371032715,
+      "grad_norm": 55.814414978027344,
+      "tokens": 2111
+    },
+    {
+      "step": 19,
+      "train_ce": 4.730082035064697,
+      "grad_norm": 49.4376220703125,
+      "tokens": 2224
+    },
+    {
+      "step": 20,
+      "train_ce": 4.788797378540039,
+      "grad_norm": 47.08112716674805,
+      "tokens": 2400
+    },
+    {
+      "step": 21,
+      "train_ce": 5.005073547363281,
+      "grad_norm": 47.28632736206055,
+      "tokens": 2520
+    },
+    {
+      "step": 22,
+      "train_ce": 4.305224418640137,
+      "grad_norm": 52.4334716796875,
+      "tokens": 2645
+    },
+    {
+      "step": 23,
+      "train_ce": 4.4943060874938965,
+      "grad_norm": 45.78657150268555,
+      "tokens": 2742
+    },
+    {
+      "step": 24,
+      "train_ce": 5.151591777801514,
+      "grad_norm": 46.21696472167969,
+      "tokens": 2869
+    },
+    {
+      "step": 25,
+      "train_ce": 4.31747579574585,
+      "grad_norm": 36.41188430786133,
+      "tokens": 3002
+    },
+    {
+      "step": 26,
+      "train_ce": 4.015744686126709,
+      "grad_norm": 38.34549331665039,
+      "tokens": 3132
+    },
+    {
+      "step": 27,
+      "train_ce": 3.779039144515991,
+      "grad_norm": 35.45542907714844,
+      "tokens": 3231
+    },
+    {
+      "step": 28,
+      "train_ce": 4.8248186111450195,
+      "grad_norm": 42.61483383178711,
+      "tokens": 3439
+    },
+    {
+      "step": 29,
+      "train_ce": 3.9262003898620605,
+      "grad_norm": 43.941810607910156,
+      "tokens": 3538
+    },
+    {
+      "step": 30,
+      "train_ce": 3.4785640239715576,
+      "grad_norm": 34.416526794433594,
+      "tokens": 3651
+    },
+    {
+      "step": 31,
+      "train_ce": 3.8436617851257324,
+      "grad_norm": 31.08196449279785,
+      "tokens": 3811
+    },
+    {
+      "step": 32,
+      "train_ce": 3.6553025245666504,
+      "grad_norm": 41.52043914794922,
+      "tokens": 3962
+    },
+    {
+      "step": 33,
+      "train_ce": 2.9784772396087646,
+      "grad_norm": 33.058692932128906,
+      "tokens": 4128
+    },
+    {
+      "step": 34,
+      "train_ce": 3.505850076675415,
+      "grad_norm": 41.73250198364258,
+      "tokens": 4216
+    },
+    {
+      "step": 35,
+      "train_ce": 3.9379076957702637,
+      "grad_norm": 55.75627899169922,
+      "tokens": 4294
+    },
+    {
+      "step": 36,
+      "train_ce": 3.171410083770752,
+      "grad_norm": 35.12610626220703,
+      "tokens": 4385
+    },
+    {
+      "step": 37,
+      "train_ce": 3.935903549194336,
+      "grad_norm": 28.84722137451172,
+      "tokens": 4552
+    },
+    {
+      "step": 38,
+      "train_ce": 3.439187526702881,
+      "grad_norm": 34.73231887817383,
+      "tokens": 4653
+    },
+    {
+      "step": 39,
+      "train_ce": 3.1936328411102295,
+      "grad_norm": 30.506385803222656,
+      "tokens": 4758
+    },
+    {
+      "step": 40,
+      "train_ce": 3.4515745639801025,
+      "grad_norm": 58.833980560302734,
+      "tokens": 4902
+    }
+  ],
+  "final_samples": [
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s05__01577",
+      "expected": "64.",
+      "got": "In the current state, the current state is 100.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__percentage_reasoning__reas_percentage_reasoning_s01__00515",
+      "expected": "40.",
+      "got": "The current value is 100.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s08__02677",
+      "expected": "45 minutes.",
+      "got": "No.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s03__00982",
+      "expected": "90 minutes.",
+      "got": "In the current state, the current use of the stati",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s06__01827",
+      "expected": "10:25 AM.",
+      "got": "No.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s05__01656",
+      "expected": "4:20 PM.",
+      "got": "No.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__ratio_proportion__reas_ratio_proportion_s02__00699",
+      "expected": "54 spare fuses.",
+      "got": "I cannot provide the answer.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__time_duration__reas_time_duration_s09__02781",
+      "expected": "6:55 PM.",
+      "got": "No.",
+      "numeric_match": false
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

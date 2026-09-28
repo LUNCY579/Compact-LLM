@@ -1,0 +1,100 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_multiseed_matched_comparison_only",
+  "note": "Family-disjoint splits; arithmetic_chain held out of TRAIN/DEV so the task set measures retention. Open splits only; not a sealed or DEV evaluation and not an efficacy claim. Outside the experiment package; no receipt, no gate.",
+  "arm": "source_control",
+  "seed": 17,
+  "steps": 2,
+  "optimizer": "AdamW lr=1e-05 wd=0 clip=1.0",
+  "train_rows_available": 800,
+  "train_rows_seen": 2,
+  "dev_rows": 4,
+  "dev_target_tokens": 514,
+  "task_rows": 6,
+  "source_dev_ce_nats": 5.512517194339737,
+  "trainable_parameters": 596049920,
+  "supervised_target_tokens": 214,
+  "wall_seconds": 94.15151799999967,
+  "checkpoints": [
+    {
+      "step": 0,
+      "tokens": 0,
+      "dev_ce_nats": 5.512517194339737,
+      "dev_kl_to_source_nats": 0.0,
+      "dev_top1_agreement": 1.0,
+      "task_numeric_hits": 0,
+      "task_strict_hits": 0,
+      "task_n": 6,
+      "task_numeric_rate": 0.0,
+      "task_terminated": 6,
+      "task_distinct": null
+    },
+    {
+      "step": 2,
+      "tokens": 214,
+      "dev_ce_nats": 3.946459284088491,
+      "dev_kl_to_source_nats": 0.44641007894671847,
+      "dev_top1_agreement": 0.8404669260700389,
+      "task_numeric_hits": 0,
+      "task_strict_hits": 0,
+      "task_n": 6,
+      "task_numeric_rate": 0.0,
+      "task_terminated": 6,
+      "task_distinct": null
+    }
+  ],
+  "trajectory": [
+    {
+      "step": 1,
+      "train_ce": 5.956790447235107,
+      "grad_norm": 83.75716400146484,
+      "tokens": 87
+    },
+    {
+      "step": 2,
+      "train_ce": 4.444023132324219,
+      "grad_norm": 44.8851318359375,
+      "tokens": 214
+    }
+  ],
+  "final_samples": [
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s01__00482",
+      "expected": "65.",
+      "got": "100 units.",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s05__01594",
+      "expected": "40.",
+      "got": "25 + 15 - 4 + 4 = 30",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s04__01504",
+      "expected": "62.",
+      "got": "100",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s03__01152",
+      "expected": "198.",
+      "got": "100",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s07__02435",
+      "expected": "36.",
+      "got": "32",
+      "numeric_match": false
+    },
+    {
+      "id": "rineya_v3_sft__arithmetic_chain__reas_arithmetic_chain_s03__01002",
+      "expected": "32.",
+      "got": "2 packs remain.",
+      "numeric_match": false
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

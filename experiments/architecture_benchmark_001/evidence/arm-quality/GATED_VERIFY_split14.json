@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_architecture_verification_only",
+  "variant": "zero_gated_shared_memory_augmentation",
+  "split": 14,
+  "rows": 6,
+  "scored_tokens": 796,
+  "bitwise_identical_to_source": true,
+  "max_abs_logit_delta": 0.0,
+  "ce_source_nats": 5.516794866053902,
+  "ce_gated_nats": 5.516794866053902,
+  "branch_params_with_nonzero_grad": 1,
+  "branch_params_checked": 8,
+  "perturbation_changes_output": true,
+  "load_info": {
+    "operation": "zero_gated_shared_memory_augmentation",
+    "split": 14,
+    "function_preserving": true,
+    "original_tensors_copied": 310,
+    "branch_tensors_seeded": 60,
+    "o_proj_zero_initialised": true,
+    "added_parameters": 60834688
+  },
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

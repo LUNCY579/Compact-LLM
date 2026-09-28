@@ -1,0 +1,53 @@
+{
+  "record": "RRP-001-RESUME-VERIFICATION",
+  "candidate_run": "train-001",
+  "resumed_run": "resume-001",
+  "model_calls_by_this_comparator": 0,
+  "checks": {
+    "final_parameters_match": true,
+    "final_predictions_match": true,
+    "frozen_source_unchanged": true,
+    "binding_identical": true,
+    "candidate_complete": true,
+    "resumed_complete": true,
+    "candidate_did_all_updates": true,
+    "resumed_did_fewer_updates": true,
+    "candidate_processed_tokens": true,
+    "resumed_reprocessed_only_the_tail": true,
+    "resumed_from_candidate_checkpoint": true,
+    "resume_started_at_update_2": true,
+    "no_baseline_reprobe": true,
+    "no_quality_claim": true,
+    "per_row_predictions_match": true
+  },
+  "status": "PASS",
+  "failed_checks": [],
+  "candidate": {
+    "final_state_sha256": "e8c72eb4542fa4bfddd7ac03bc4c799c51cb7b2a5ddff88b1c4bc1a0bb7cdc76",
+    "frozen_sha256": "4e3c74c44bc99cdc096444ad694e119abf8d7601caffafc99de365402776846d",
+    "attempt_updates": 105,
+    "complete": true
+  },
+  "resumed": {
+    "final_state_sha256": "e8c72eb4542fa4bfddd7ac03bc4c799c51cb7b2a5ddff88b1c4bc1a0bb7cdc76",
+    "frozen_sha256": "4e3c74c44bc99cdc096444ad694e119abf8d7601caffafc99de365402776846d",
+    "attempt_updates": 103,
+    "attempt_processed_tokens": 164528,
+    "complete": true
+  },
+  "candidate_final_canonical_correct": 31,
+  "resumed_final_canonical_correct": 31,
+  "denominator": 32,
+  "quality_or_generalization_claim": false,
+  "substantive_evaluation_sha256": {
+    "candidate": "fb637dd9f0635ca312ac0f2fe2f114af6e4fca7089f7b1a2af564f5080bd2063",
+    "resumed": "fb637dd9f0635ca312ac0f2fe2f114af6e4fca7089f7b1a2af564f5080bd2063"
+  },
+  "raw_file_digest_mismatch_is_expected": {
+    "candidate_final_evaluation_sha256": "35e22a0ebd4988dded205b957cb405f5747993cfa5240a999306dcbcec67b9e9",
+    "resumed_final_evaluation_sha256": "b36fd8864a3d5021b4626209c50084abe4820e36c061c986979f547b77eadde8",
+    "equal": false,
+    "sole_differing_field": "generation_wall_seconds (all 32 records)",
+    "explanation": "engine.microfit records final_evaluation_sha256 = file_hash(final.json), and native_runtime.evaluate writes a time.monotonic() delta into every record, so that digest is nondeterministic by construction and cannot serve as a resume/determinism criterion. Verified by field-by-field diff: predictions, generated token ids, correctness, termination, truncation, forward-call counts and token counts are all identical; only wall-clock timing differs."
+  }
+}

@@ -1,0 +1,125 @@
+{
+  "schema": 1,
+  "evidence_kind": "exploratory_device_parity_only",
+  "note": "Raw-logit differences between runtimes/devices on identical rows. The programme tolerance for elementwise parity is 1e-4; `within_1e-4` says whether a configuration could be compared against the existing CPU FP32 corpus at that tolerance. No receipt, no gate, no efficacy claim.",
+  "configurations": {
+    "cpu_ref": {
+      "tag": "cpu_ref",
+      "device": "cpu",
+      "torch": "2.10.0+cpu",
+      "cuda_available": false,
+      "tf32_matmul": null,
+      "tf32_cudnn": null,
+      "rows": 4,
+      "target_tokens": 458,
+      "dev_ce_nats": 5.49095387021527,
+      "forward_seconds": 38.285143199999766,
+      "tokens_per_second": 11.962865010258152,
+      "load_seconds": 27.814499500000238,
+      "peak_vram_gib": null
+    },
+    "cpu_cu126venv": {
+      "tag": "cpu_cu126venv",
+      "device": "cpu",
+      "torch": "2.10.0+cu126",
+      "cuda_available": true,
+      "tf32_matmul": null,
+      "tf32_cudnn": null,
+      "rows": 4,
+      "target_tokens": 458,
+      "dev_ce_nats": 5.49095387021527,
+      "forward_seconds": 8.001124299999901,
+      "tokens_per_second": 57.241955358699485,
+      "load_seconds": 32.99904440000046,
+      "peak_vram_gib": null
+    },
+    "cuda_fp32": {
+      "tag": "cuda_fp32",
+      "device": "cuda",
+      "torch": "2.10.0+cu126",
+      "cuda_available": true,
+      "tf32_matmul": false,
+      "tf32_cudnn": false,
+      "rows": 4,
+      "target_tokens": 458,
+      "dev_ce_nats": 5.490953603686203,
+      "forward_seconds": 5.971473300000071,
+      "tokens_per_second": 76.69799009232689,
+      "load_seconds": 91.38911420000022,
+      "peak_vram_gib": 2.3096823692321777
+    },
+    "cuda_tf32": {
+      "tag": "cuda_tf32",
+      "device": "cuda",
+      "torch": "2.10.0+cu126",
+      "cuda_available": true,
+      "tf32_matmul": true,
+      "tf32_cudnn": true,
+      "rows": 4,
+      "target_tokens": 458,
+      "dev_ce_nats": 5.4911460376722845,
+      "forward_seconds": 8.332770199999686,
+      "tokens_per_second": 54.96371422795474,
+      "load_seconds": 92.2489072999997,
+      "peak_vram_gib": 2.3096823692321777
+    }
+  },
+  "comparisons": [
+    {
+      "a": "cpu_ref",
+      "b": "cpu_cu126venv",
+      "max_abs_logit_delta": 0.0,
+      "mean_abs_logit_delta": 0.0,
+      "top1_agreement": 1.0,
+      "dev_ce_delta_nats": 0.0,
+      "within_1e-4": true
+    },
+    {
+      "a": "cpu_ref",
+      "b": "cuda_fp32",
+      "max_abs_logit_delta": 9.965896606445312e-05,
+      "mean_abs_logit_delta": 4.477317105716496e-06,
+      "top1_agreement": 1.0,
+      "dev_ce_delta_nats": -2.665290663728115e-07,
+      "within_1e-4": true
+    },
+    {
+      "a": "cpu_ref",
+      "b": "cuda_tf32",
+      "max_abs_logit_delta": 0.05415534973144531,
+      "mean_abs_logit_delta": 0.0024970161462180705,
+      "top1_agreement": 0.9978354978354979,
+      "dev_ce_delta_nats": 0.0001921674570146692,
+      "within_1e-4": false
+    },
+    {
+      "a": "cpu_cu126venv",
+      "b": "cuda_fp32",
+      "max_abs_logit_delta": 9.965896606445312e-05,
+      "mean_abs_logit_delta": 4.477317105716496e-06,
+      "top1_agreement": 1.0,
+      "dev_ce_delta_nats": -2.665290663728115e-07,
+      "within_1e-4": true
+    },
+    {
+      "a": "cpu_cu126venv",
+      "b": "cuda_tf32",
+      "max_abs_logit_delta": 0.05415534973144531,
+      "mean_abs_logit_delta": 0.0024970161462180705,
+      "top1_agreement": 0.9978354978354979,
+      "dev_ce_delta_nats": 0.0001921674570146692,
+      "within_1e-4": false
+    },
+    {
+      "a": "cuda_fp32",
+      "b": "cuda_tf32",
+      "max_abs_logit_delta": 0.05415630340576172,
+      "mean_abs_logit_delta": 0.0024968763472909827,
+      "top1_agreement": 0.9978354978354979,
+      "dev_ce_delta_nats": 0.000192433986081042,
+      "within_1e-4": false
+    }
+  ],
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false
+}

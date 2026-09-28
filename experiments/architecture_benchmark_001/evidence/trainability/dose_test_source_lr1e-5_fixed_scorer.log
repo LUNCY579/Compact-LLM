@@ -1,0 +1,11 @@
+arm=source_control steps=40 lr=1e-05 | held-out rows=8 tokens=1001 source CE=5.6679
+  step   0 | held CE=  5.6679 KL= 0.0000 top1=1.000 | hits=6/6 term=6 distinct=6
+  step  20 | held CE=  2.1091 KL= 2.0539 top1=0.454 | hits=6/6 term=6 distinct=6 | train_ce= 2.1036 tok=2585 628s
+        pilot-d1-v0    expected='3'    got='3.'
+        pilot-d1-v1    expected='5'    got='5.'
+  step  40 | held CE=  1.5165 KL= 3.4908 top1=0.396 | hits=6/6 term=6 distinct=6 | train_ce= 1.0784 tok=4968 1161s
+        pilot-d1-v0    expected='3'    got='3.'
+        pilot-d1-v1    expected='5'    got='5.'
+
+source held-out CE 5.6679 | arm held-out CE 5.6679 -> 1.5165
+wrote C:\Users\clclc\BusinessProject\ChatBubble-ced-native-loader-qualification\experiments\architecture_benchmark_001\outputs\recovery-pilot\RECOVERY_PILOT_source_control_lr1e-05_s40.json

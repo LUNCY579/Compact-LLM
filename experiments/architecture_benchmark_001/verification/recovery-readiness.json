@@ -1,0 +1,31 @@
+{
+  "schema": 2,
+  "evidence_kind": "readiness_check_only",
+  "plan_sha256": "66744d7ce2ec27e401c74d777ca7a4f2847ee7b5d8aef465d3ed2b075b611665",
+  "status": "BLOCKED",
+  "configuration_complete": false,
+  "missing_items": [
+    "positive integer recovery_tokens_per_arm",
+    "positive integer search_trials_per_arm",
+    "positive integer max_device_memory_bytes",
+    "finite positive minimum_effect",
+    "finite positive noninferiority_margin",
+    "finite positive regression_band",
+    "finite positive max_decode_latency_ratio",
+    "actual frozen recovery_data_manifest_sha256",
+    "actual frozen dev_data_manifest_sha256",
+    "actual frozen regression_data_manifest_sha256",
+    "actual frozen sealed_test_manifest_sha256",
+    "optimizer",
+    "schedule",
+    "primary_endpoint",
+    "reviewed_data_provenance",
+    "recovered_ordinary_donor_plan",
+    "matched_continuation_plan",
+    "cost_accounting_plan"
+  ],
+  "recovery_runner_implemented": false,
+  "licenses_registered_training": false,
+  "licenses_efficacy_claim": false,
+  "reason": "G3-G5 remain closed even when these declarations are filled. This lint check neither verifies scientific adequacy nor opens an optimizer campaign."
+}

@@ -1,0 +1,288 @@
+{
+  "B28_1024_official_shape": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 1024,
+      "intermediate_size": 3072,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "encoder_layers": 28,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 596049920,
+      "embedding_parameters": 155582464,
+      "body_and_final_norm_parameters": 440467456,
+      "shared_bank_parameters": 0,
+      "kv_banks": 28,
+      "kv_bytes_per_token_batch1": 114688,
+      "kv_mib_at_8192_tokens_batch1": 896.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "D40_1024_expansion_diagnostic": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 1024,
+      "intermediate_size": 3072,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "encoder_layers": 40,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 784821248,
+      "embedding_parameters": 155582464,
+      "body_and_final_norm_parameters": 629238784,
+      "shared_bank_parameters": 0,
+      "kv_banks": 40,
+      "kv_bytes_per_token_batch1": 163840,
+      "kv_mib_at_8192_tokens_batch1": 1280.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "D40_896_proportional": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 896,
+      "intermediate_size": 2688,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 7,
+      "head_dim": 128,
+      "encoder_layers": 40,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 617907072,
+      "embedding_parameters": 136134656,
+      "body_and_final_norm_parameters": 481772416,
+      "shared_bank_parameters": 0,
+      "kv_banks": 40,
+      "kv_bytes_per_token_batch1": 143360,
+      "kv_mib_at_8192_tokens_batch1": 1120.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "W28_896_width_only_diagnostic": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 896,
+      "intermediate_size": 2496,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 7,
+      "head_dim": 128,
+      "encoder_layers": 28,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 458924928,
+      "embedding_parameters": 136134656,
+      "body_and_final_norm_parameters": 322790272,
+      "shared_bank_parameters": 0,
+      "kv_banks": 28,
+      "kv_bytes_per_token_batch1": 100352,
+      "kv_mib_at_8192_tokens_batch1": 784.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "D40_896_near_baseline_budget": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 896,
+      "intermediate_size": 2496,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 7,
+      "head_dim": 128,
+      "encoder_layers": 40,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 597263232,
+      "embedding_parameters": 136134656,
+      "body_and_final_norm_parameters": 461128576,
+      "shared_bank_parameters": 0,
+      "kv_banks": 40,
+      "kv_bytes_per_token_batch1": 143360,
+      "kv_mib_at_8192_tokens_batch1": 1120.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "D40_768_compact": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 768,
+      "intermediate_size": 2304,
+      "num_attention_heads": 12,
+      "num_key_value_heads": 6,
+      "head_dim": 128,
+      "encoder_layers": 40,
+      "decoder_layers": 0,
+      "architecture": "plain",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 470653696,
+      "embedding_parameters": 116686848,
+      "body_and_final_norm_parameters": 353966848,
+      "shared_bank_parameters": 0,
+      "kv_banks": 40,
+      "kv_bytes_per_token_batch1": 122880,
+      "kv_mib_at_8192_tokens_batch1": 960.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "C28_1024_topology_diagnostic": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 1024,
+      "intermediate_size": 3072,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "encoder_layers": 14,
+      "decoder_layers": 14,
+      "architecture": "ced",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 568786304,
+      "embedding_parameters": 155582464,
+      "body_and_final_norm_parameters": 413203840,
+      "shared_bank_parameters": 2098304,
+      "kv_banks": 15,
+      "kv_bytes_per_token_batch1": 61440,
+      "kv_mib_at_8192_tokens_batch1": 480.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "C28_1024_near_baseline_budget": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 1024,
+      "intermediate_size": 3392,
+      "num_attention_heads": 16,
+      "num_key_value_heads": 8,
+      "head_dim": 128,
+      "encoder_layers": 14,
+      "decoder_layers": 14,
+      "architecture": "ced",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 596311424,
+      "embedding_parameters": 155582464,
+      "body_and_final_norm_parameters": 440728960,
+      "shared_bank_parameters": 2098304,
+      "kv_banks": 15,
+      "kv_bytes_per_token_batch1": 61440,
+      "kv_mib_at_8192_tokens_batch1": 480.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "C40_896_proportional": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 896,
+      "intermediate_size": 2688,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 7,
+      "head_dim": 128,
+      "encoder_layers": 20,
+      "decoder_layers": 20,
+      "architecture": "ced",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 587398528,
+      "embedding_parameters": 136134656,
+      "body_and_final_norm_parameters": 451263872,
+      "shared_bank_parameters": 1606656,
+      "kv_banks": 21,
+      "kv_bytes_per_token_batch1": 75264,
+      "kv_mib_at_8192_tokens_batch1": 588.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "C40_896_near_baseline_budget": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 896,
+      "intermediate_size": 2752,
+      "num_attention_heads": 14,
+      "num_key_value_heads": 7,
+      "head_dim": 128,
+      "encoder_layers": 20,
+      "decoder_layers": 20,
+      "architecture": "ced",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 594279808,
+      "embedding_parameters": 136134656,
+      "body_and_final_norm_parameters": 458145152,
+      "shared_bank_parameters": 1606656,
+      "kv_banks": 21,
+      "kv_bytes_per_token_batch1": 75264,
+      "kv_mib_at_8192_tokens_batch1": 588.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  },
+  "C40_768_compact": {
+    "config": {
+      "vocab_size": 151936,
+      "hidden_size": 768,
+      "intermediate_size": 2304,
+      "num_attention_heads": 12,
+      "num_key_value_heads": 6,
+      "head_dim": 128,
+      "encoder_layers": 20,
+      "decoder_layers": 20,
+      "architecture": "ced",
+      "rope_theta": 1000000.0,
+      "rms_norm_eps": 1e-06,
+      "max_position_embeddings": 40960
+    },
+    "analytic_budget": {
+      "parameters": 448238720,
+      "embedding_parameters": 116686848,
+      "body_and_final_norm_parameters": 331551872,
+      "shared_bank_parameters": 1180544,
+      "kv_banks": 21,
+      "kv_bytes_per_token_batch1": 64512,
+      "kv_mib_at_8192_tokens_batch1": 504.0,
+      "assumptions": "dense; tied embeddings; no biases; no decoder local SWA; no stored hidden-state cache; KV only, excluding temporary activations/allocator overhead"
+    }
+  }
+}

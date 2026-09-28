@@ -1,0 +1,543 @@
+{
+  "record": "CLAIM_LEDGER",
+  "recorded_utc": "2026-09-15T15:05:53.236129+00:00",
+  "purpose": "Contradictions found reconciling the inherited records against live code and disk. Preserved, each with the evidence that settles it.",
+  "claims": [
+    {
+      "id": "CL-001",
+      "topic": "Which prepared input is authoritative",
+      "source_reported": "CONTINUE.md and STATUS.json name prepared-003, data_contract_sha256 ad3fc4c0...",
+      "freshly_reproduced": "prepared-004 (23:46) and preflight-002 (23:48) postdate the STATUS record (23:43 local). microfit-train.jsonl, REVIEW_PACKET.jsonl, SOURCE_BINDINGS.json and TOKENIZER_SURVEY.json are BYTE-IDENTICAL between 003 and 004. Only DATA_CONTRACT.json differs (3512 vs 3945 B) because preparation_code additionally covers engine.py, overlap.py, preflight.py.",
+      "resolution": "Bound RRP-001 to prepared-004 + preflight-002. No training byte changes. MICROFIT_PLAN.json is byte-identical across preflight-001, preflight-002 and the repo copy, and digest(plan)=9208fc92... is unchanged.",
+      "classification": "RESOLVED_STALE_RECORD_NOT_DATA_DRIFT"
+    },
+    {
+      "id": "CL-002",
+      "topic": "preparation_code cannot be re-verified",
+      "observed": "DATA_CONTRACT.preparation_code is produced once by prepare.py via rglob('*.py') and is never read back by any module (single reference: prepare.py:198).",
+      "consequence": "It is a write-once provenance record of the code that produced the data, not a runtime gate. Adding controller.py/tests cannot invalidate it. Only contract['files'] (the data bytes) is enforced at run time, by controller.inputs().",
+      "classification": "CLARIFIED_NOT_A_DEFECT"
+    },
+    {
+      "id": "CL-003",
+      "topic": "Checkpoints are labelled MQ-001",
+      "observed": "MQ checkpoints.save_checkpoint hardcodes experiment='MQ-001' and validate_checkpoint requires that exact value, so RRP-001 checkpoint manifests carry the MQ-001 label.",
+      "consequence": "Cosmetic only: the RRP-001 lineage is carried by the separate binding dict (experiment='RRP-001-MICROFIT', plan/data/grant/code hashes), and binding equality is enforced on resume. MQ code was deliberately NOT edited, because its hash is bound into every MQ qualification.",
+      "classification": "KNOWN_COSMETIC_MISLABEL_LINEAGE_PRESERVED_ELSEWHERE"
+    },
+    {
+      "id": "CL-004",
+      "topic": "Budget journal tail truncation is undetectable",
+      "observed": "budget.Journal hash-chains create-only events. Editing an event or removing a MID-CHAIN event is refused. Deleting the NEWEST event(s) leaves a valid prefix and silently returns that spend.",
+      "why_unfixable_here": "Create-only files cannot carry a rewritable head pointer, and any additional marker file would be equally deletable.",
+      "mitigation_that_does_hold": "read() refuses run evidence with no reservation, so a launch cannot be erased while its runs/<id>/ directory exists. That covers every worker attempt, which is where the real cost is.",
+      "classification": "DOCUMENTED_LIMITATION_MEASURED_AND_NARROWED",
+      "measured_tamper_matrix_on_the_committed_copy": {
+        "method": "The committed evidence copy of the journal (346 events) was rebuilt in a temp dir and re-opened after each mutation.",
+        "chain_re_validates_as_committed": "YES - 346 events, all three launches settled, no unsettled reservation, no breach",
+        "inflated_charge_amount": "DETECTED (object digest mismatch)",
+        "zeroed_charge_then_re_sealed_so_its_own_digest_is_valid": "DETECTED (budget event chain differs - the previous-hash link catches it)",
+        "mid_chain_event_deleted": "DETECTED (incomplete or unexpected budget event inventory)",
+        "newest_event_deleted": "NOT DETECTED"
+      },
+      "refinement_the_effect_of_tail_deletion_depends_on_the_event_kind": "Deleting the trailing event is undetectable, but it is only an ATTACK when that event is a charge. Here the newest event was resume-001 settle, and deleting it raised apparent GPU spend from 1067 to 1758 seconds (the timeout-based reservation no longer collapses to the measured wall time) and left resume-001 as an unsettled active reservation, which blocks the next launch. So removing a trailing settle is self-penalizing. The residual risk is narrower than first stated: a trailing CHARGE event can be removed to return spend."
+    },
+    {
+      "id": "CL-005",
+      "topic": "Reused run_id bricked the journal",
+      "found_by": "new fixture gate test_reused_run_id_and_unsafe_run_id_are_refused",
+      "defect": "Journal.start() appended the duplicate 'start' event first and only read() caught it afterwards, leaving the chain permanently unreadable and stranding the remaining approved envelope.",
+      "fix": "start() now rejects a run_id already in self.started before appending; read() exposes started/settled. Regression-tested.",
+      "classification": "DEFECT_FOUND_AND_FIXED_THIS_SESSION"
+    },
+    {
+      "id": "CL-006",
+      "topic": "MQ native.runtime() crashes with an empty CUDA_VISIBLE_DEVICES",
+      "observed": "torch.cuda.is_available() is true while device_count() is 0, so get_device_properties(0) raises AssertionError('Invalid device id'). Reproduced via the controller 'environment' command under CUDA_VISIBLE_DEVICES=''.",
+      "consequence": "Pre-existing MQ robustness issue, not on the RRP critical path: real runs have the GPU visible, and CPU fixture tests do not call runtime(). NOT patched, because editing MQ code changes the MQ code identity hashed into its qualifications.",
+      "classification": "PREEXISTING_UPSTREAM_ISSUE_UNPATCHED_BY_CHOICE"
+    },
+    {
+      "id": "CL-007",
+      "topic": "Inherited README 'no native training' statements",
+      "observed": "The GOAL brief warns that the inherited README describes an earlier implementation boundary.",
+      "status": "RRP-001 native model execution had genuinely not occurred as of the inherited head: pretrained_optimizer_steps=0 and pretrained_evaluation_calls=0 in STATUS.json, and no run receipts exist on disk. The statement was accurate for this successor, not stale.",
+      "classification": "VERIFIED_ACCURATE_AS_INHERITED"
+    },
+    {
+      "id": "CL-008",
+      "topic": "qualify() under-charges its model calls",
+      "observed": "native_runtime.qualify reserves evaluation_and_qualification_model_calls=2 but performs roughly 16-17 forward passes (1 direct + 1 hidden_states + ceil(31/3)=11 cached-parity chunks + 1 perturbed + 2 gradient probes). Measured probe length was 31 tokens.",
+      "allotment": "MICROFIT_PLAN evaluation_schedule allots 'at most 128 generations plus 32 qualification calls', so the physical work stayed inside its allotment even though the journal charged 2.",
+      "decision": "native_runtime.py was NOT edited and the receipt was NOT retroactively adjusted. The discrepancy is recorded here instead. The accounting is conservative in the wrong direction (under-charging), which is a fidelity defect, not a budget breach.",
+      "classification": "ACCOUNTING_FIDELITY_DEFECT_RECORDED_NOT_REWRITTEN"
+    },
+    {
+      "id": "CL-009",
+      "topic": "Evaluation-call headroom is nearly exhausted by design",
+      "observed": "LIMITS allows 160 evaluation_and_qualification_model_calls. Planned spend: qualify 2 + train 96 (baseline/midpoint/final x 32 rows) + resume 32 (final only) = 130, leaving 30.",
+      "consequence": "A retried resume attempt needs 32 further calls and would be refused (162 > 160), even though retries:1 is nominally available. The journal fails closed, which is the correct behaviour; recovering would require an explicit amendment rather than a quiet top-up.",
+      "classification": "KNOWN_TIGHT_ENVELOPE_FAILS_CLOSED"
+    },
+    {
+      "id": "CL-010",
+      "topic": "Journal replay cost was projected as a wall-clock risk and measured as minor",
+      "audit_projection": "~0.34 s per reserve() call from an O(n^2) re-read, ~100 s of the 2400 s worker budget.",
+      "measured": "Per-update wall time on the real run held at a 3.70 s median with no pathological growth (first-half mean 5.07 s including the update-2 checkpoint write, second-half mean 3.81 s). Journal bookkeeping is inside that and is not the binding cost.",
+      "classification": "PROJECTED_RISK_MEASURED_AND_NOT_MATERIAL_AT_THIS_SCALE"
+    },
+    {
+      "id": "CL-011",
+      "topic": "Checkpoint cadence forfeits work on a late abort",
+      "observed": "engine.microfit saves only at update 2 and at the final group; Design.checkpoint_every=4 exists and is ignored by this engine.",
+      "consequence": "An abort at update 104 of 105 falls back to the update-2 checkpoint and forfeits 102 already-charged updates. This is the frozen plan's stated checkpoint_policy ('Preserve update2 and final'), so it was NOT changed mid-experiment.",
+      "classification": "FROZEN_PLAN_LIMITATION_NOT_CHANGED_MID_RUN"
+    },
+    {
+      "id": "CL-012",
+      "topic": "Two audit reader claims were wrong and were overruled by direct measurement",
+      "claims": [
+        "a reader asserted compile_row always raises 'native token prefix mismatch' under transformers 5.x and proposed editing serialization.py:52",
+        "a reader asserted build_plan yields 108 update groups"
+      ],
+      "resolution": "Neither reproduced. The pinned runtime is transformers 4.57.1, and the live qualification recompiled 32/32 approved rows exactly. group_updates over the frozen 8-exposure order yields 105 groups (59 of size 2, 46 of size 3), matching the plan element-for-element, and the executed run used 105. No code was changed on the strength of either claim.",
+      "classification": "AGENT_CLAIM_REFUTED_BY_MEASUREMENT"
+    },
+    {
+      "id": "CL-013",
+      "topic": "Binding equality forbids any repo change between the train and resume attempts",
+      "observed": "binding includes code_sha256 (RRP package identity) and checkout (HEAD sha), and checkpoints.validate_checkpoint requires binding equality on resume. checkout() additionally requires an empty `git status --porcelain --untracked-files=all`.",
+      "consequence": "Editing or committing ANY repo file between the candidate and resumed attempts would invalidate the resume it is meant to verify. The resume comparator was therefore written to the session scratchpad rather than added to the package, and all record updates were deferred until after the resumed attempt finished.",
+      "classification": "OPERATIONAL_CONSTRAINT_RESPECTED"
+    },
+    {
+      "id": "CL-014",
+      "topic": "final_evaluation_sha256 is nondeterministic by construction and cannot verify a resume",
+      "found_by": "RRP-001 resume verification; the first comparator run returned FAIL on exactly this check",
+      "observed": "engine.microfit records final_evaluation_sha256 = file_hash(final.json), while native_runtime.evaluate writes generation_wall_seconds (a time.monotonic() delta) into every record. The two attempts differ in that field in all 32 of 32 records and in no other field.",
+      "verified": "Field-by-field diff of the two final.json files: prediction, generated_ids_including_terminal, canonical_training_target_match, strict_target_text_match, literal_unknown, reference, terminated, truncated, generated_tokens_including_terminal, generation_forward_calls, prefill_tokens, fixed_ce_input_tokens, reasoning_tokens, family and parent_id are all identical. Only generation_wall_seconds differs.",
+      "consequence": "The plan criterion \"final parameters and predictions must match\" IS met: parameters are bit-identical (e8c72eb4...) and every prediction and generated id sequence is identical. But the engine field advertised as the evaluation identity can never match across runs, so any determinism or resume gate built on it fails spuriously.",
+      "resolution": "The comparator now hashes the evaluation with wall-clock timing excluded, and reports the raw file-digest mismatch as an explained expected difference rather than a failure. native_runtime.py and engine.py were NOT edited after the fact: their code identity is bound into the executed runs receipts.",
+      "recommended_for_next_experiment": "Move per-row timing out of the hashed evaluation artifact (separate timings file), or exclude timing fields before hashing, so final_evaluation_sha256 becomes a usable determinism criterion.",
+      "classification": "INSTRUMENT_DEFECT_FOUND_BY_RUNNING_IT_FIXED_IN_COMPARATOR_NOT_RETROACTIVELY"
+    },
+    {
+      "id": "CL-015",
+      "topic": "This agent's own B-1 finding was over-claimed and then refuted by its own test",
+      "first_claim": "Recorded in BOTTLENECK_CANDIDATES.md and in commit 3967d06: the one unfitted world's prediction 211 was 'uniquely explained by opening + last delta only (241-30)', i.e. a last-mentioned recency shortcut, on the grounds that no other arithmetic rule tested reproduced 211.",
+      "what_was_missed": "A non-arithmetic explanation was not tested. World RRF1-7158b22893bb3c80418b in the same 32-row set is also signed_ledger and its gold answer IS 211 (opening 233 + posted sum -22). The two prompts are structurally near-identical.",
+      "discriminating_test": "The untrained source model could not have memorized anything, so its baseline prediction separates the hypotheses. Source predicted UNKNOWN on the failing world, not 211. 211 appears only at midpoint and final, after fitting, while the sibling world is answered 211 correctly.",
+      "corrected_conclusion": "The recency-shortcut reading is REFUTED: 241-30 and 233-22 both equal 211 by coincidence. The mechanism evidenced is cross-world memorization interference induced by the microfit - CE driven to 0.0000 and one world inheriting its structural sibling's answer.",
+      "why_it_matters": "The two readings prescribe opposite remedies. A reasoning-capacity/shortcut reading says apply more state-history pressure and more exposures; an interference reading says more exposures of similar worlds make it worse and the ladder needs collision monitoring. The headline 31/32 conceals an interference failure.",
+      "still_n_equals_1": "The corrected reading is also a single world. With 4 worlds per family and few distinct numeric answers, matching a sibling gold by accident is not rare. The falsifying test now requires reporting that chance level explicitly.",
+      "classification": "AGENT_OVERCLAIM_SELF_REFUTED_BOTH_READINGS_PRESERVED"
+    },
+    {
+      "id": "CL-016",
+      "topic": "Both length-stress splits are unusable on this host, and that is a host limit not a model finding",
+      "measured": "v1 test_length 11,179-35,875 native tokens (p50 15,918); v2 test_length 26,971-61,231 (p50 42,600). Zero rows of either fit 2048, 4096, 8192 or 16384 with the 128-token completion reserve.",
+      "why_it_cannot_be_fixed_here": "attn_implementation is pinned to eager, so attention scores are materialized. At 16 heads and fp32 one layer costs roughly 1.07 GiB at 4096 tokens, 4.3 GiB at 8192 and 17 GiB at 16384, against about 7.2 GiB free VRAM. 4096 is the realistic next qualified window, 8192 is marginal, 16K is out.",
+      "consequence": "Long-context claims from these releases are unavailable on this host. Any report must state this as a host constraint and must not present it as evidence about the model, or about sub-billion models generally.",
+      "classification": "HARD_HOST_LIMIT_RECORDED_BEFORE_ANY_ARM_RUNS"
+    },
+    {
+      "id": "CL-017",
+      "topic": "No independent confirmation bank can be built from anything on this machine",
+      "evidence": "Nothing is label-sealed: every gold for every split of both releases ships in plaintext metadata/*.jsonl.gz, and the v1 DATA_CARD says its holdouts are not cryptographically sealed or independently administered. Authorship is shared: v2 oracle.py concedes shared grammar and authorship as common-mode risks, and the v1 DATA_CARD says parser and generator authorship is shared. A new seed changes instances only, and the v1 README says a new seed makes another candidate corpus, not a new independent benchmark.",
+      "strongest_honest_label": "FRESH_INSTANCE_WITHIN_GRAMMAR_SAME_AUTHOR_NOT_INDEPENDENT",
+      "mitigation": "Treat Forge v1 and v2 as two separately rendered composition domains and the non-Forge v3 corpus as a third. Cross-domain agreement is weaker than independence but stronger than one grammar alone.",
+      "instruction": "Do not let the word fresh in an artifact filename imply independence.",
+      "classification": "STRUCTURAL_LIMITATION_RECORDED_BEFORE_ANY_RESULT_DEPENDS_ON_IT"
+    },
+    {
+      "id": "CL-018",
+      "topic": "A new generator seed is not automatically fresh; collisions with the shipped release were measured",
+      "measured": "Sampling 480 new-seed (20260916) validation-index cases, 7 collided exactly on case_sha256 with the original 10,000 - 6 of 30 in hanoi (20 percent) and 1 in communication.",
+      "cause": "the generator duplicate check is within-build only and cannot see the previous release",
+      "required_build_gate": "Any regenerated bank must diff every new case against the original case and prompt hashes, drop collisions, and report how many were dropped. Published without that diff it is contaminated.",
+      "classification": "CONTAMINATION_HAZARD_MEASURED_GATE_SPECIFIED"
+    },
+    {
+      "id": "CL-019",
+      "topic": "v1 non-ANSWER strata are confounded with family, and BOTH is not abstention",
+      "measured": "v1 validation, 800 rows: reference_answer is a plain string carrying a literal sentinel. UNKNOWN 79 across 9 of 16 families; IMPOSSIBLE 10 in temporal_order only; UNREACHABLE 10 in weighted_routes only; INCONSISTENT 5 in truth_tellers only; BOTH 12 in deduction.",
+      "consequences": [
+        "BOTH is a real logical verdict and must never be counted as abstention.",
+        "The four unanswerable sentinels mean different things - missing information, no valid ordering, no path exists, premises contradict - and must not be collapsed into one bucket.",
+        "Only UNKNOWN spans families, so in v1 every other stratum IS its family and cross-family comparison of it is impossible. Use v2, which carries a structured reference.status with UNKNOWN and IMPOSSIBLE spanning families, for the stratified abstention analysis."
+      ],
+      "classification": "DATA_STRUCTURE_CONSTRAINT_VERIFIED_INDEPENDENTLY"
+    },
+    {
+      "id": "CL-020",
+      "topic": "The inherited 64-row DEV cap does not bind this successor",
+      "observed": "config.Design.max_dev_rows = 64 is enforced only in data.compile_plan and data.validate_plan. No RRP path calls either: prepare.py, preflight.py, controller.py and engine.py import Design for the trainable-tail and token constants only.",
+      "consequence": "RRP-002 may register a DEV of any size without amending MQ-001 or touching validate_native_design. The cap was an MQ-001 pool constraint, not a programme one.",
+      "also": "MQ-001 supplies no statistics layer: evaluation.classify supports only exact and number contracts and refuses the rest, and analyze.summarize skips unscoreable rows. World-paired comparison with cluster dependence must be built, not reused.",
+      "classification": "INHERITED_ASSUMPTION_CORRECTED"
+    },
+    {
+      "id": "CL-021",
+      "topic": "The Forge v2 verifier survives adversarial audit, and two of my own audit invariants were wrong first",
+      "result": "280 worlds x 22 attack classes = 4390 scored attacks, 0 violations, no credit leaks. Every class that must never earn credit earned none: 6 malformed classes (1,680 attacks), 5 reward-manipulation classes including injected reward/correct keys (1,400), false UNKNOWN and false IMPOSSIBLE in both directions (440), plus off-by-one, nonoptimal cost, infeasible, truncated, duplicated and invalid-token plans.",
+      "key_positive_finding": "20 of 82 reversed plans were accepted, empirically confirming the release comment at rewards.py:73 that equally optimal plans are not penalized. Exact-text matching against reference_text would therefore have been WRONG for the four optimization families.",
+      "my_first_two_invariants_were_wrong": [
+        "I asserted that correct=True must imply feasible=True. False: `feasible` is plan-specific, and a correct abstention returns reason=correct_status with feasible=False meaning NOT APPLICABLE. Measured: all 36 status-only golds behave this way, all 48 non-status golds report feasible=True. 72 spurious violations came from my assertion, not the verifier.",
+        "I then guessed the reason vocabulary and missed several values, producing 820 more spurious violations. The vocabulary was read off the source instead: parse_failure (rewards.py:60), schema, correct_status/incorrect_status, answer_requires_status, exact_match/incorrect_value, and optimal_verified/feasible_suboptimal/invalid_witness (oracle.py:287-365)."
+      ],
+      "honest_gap": "2 of 10 reasons were never exercised by this attack set: ['answer_requires_status', 'feasible_suboptimal']. Producing feasible_suboptimal needs a genuinely feasible but non-optimal plan, which requires solving the world; it is not claimed as tested.",
+      "why_it_matters": "Semantic correctness, format validity, schema validity, feasibility and optimality are all separately observable, which is what the programme requires before any reward or accuracy number is trusted. The audit is also tested against deliberately broken stub verifiers (credulous, stingy, inconsistent, under-rewarding, crashing) so that a passing audit means something.",
+      "classification": "INSTRUMENT_VALIDATED_AGENT_INVARIANTS_CORRECTED_TWICE"
+    },
+    {
+      "id": "CL-022",
+      "topic": "The v1 question text leaks the abstention sentinel, so the UNKNOWN stratum is trivially guessable",
+      "observed": "Every v1 question ends with instruction wording like 'Return the value only or UNKNOWN.', so the literal sentinel is always present as a capitalized token in the model-visible prompt. A baseline that simply copies the last capitalized token from the question therefore scores 56/56 on the UNKNOWN stratum of the 384-row DEV bank.",
+      "consequence": "The measured shortcut floor is 0.1458 strict accuracy (56/384), reached independently by constant_unknown, constant_train_majority (whose TRAIN-fitted majority answer IS 'UNKNOWN', 566/4000) and copy_question_sentinel. Any model accuracy at or below that is not evidence of reasoning, and any abstention improvement must be compared against copy_question_sentinel rather than chance.",
+      "fix_applied": "cue_copy now excludes sentinel and verdict tokens so it measures actual cue copying, and the leak is measured separately and explicitly by copy_question_sentinel.",
+      "classification": "SURFACE_LEAK_IN_THE_SOURCE_DATA_MEASURED_AND_ISOLATED"
+    },
+    {
+      "id": "CL-023",
+      "topic": "I published a meaningless chance level for the B-1 collision test and removed it",
+      "first_version": "sibling_collision reported chance_level_estimate as distinct sibling golds divided by distinct family golds, which returned 0.935 on the DEV bank. That is not the probability a wrong answer coincidentally equals a sibling gold; it is near 1 whenever answers are mostly unique, and comparing an observed 3 percent rate against it would have 'refuted' B-1 for the wrong reason.",
+      "correction": "The analytic estimate is deleted. The statistic now reports the raw rate only, counts sentinel collisions separately, and states that the comparison baseline must be supplied empirically by the answer-agnostic shortcut predictors, which cannot be performing memorization interference by construction.",
+      "measured_baselines": "specific-sibling collision rate on the 384-row bank: first_mentioned 0.0000, constant_unknown 0.0000, copy_question_sentinel 0.0000, cue_copy 0.0026, last_delta_only 0.0292, last_mentioned 0.0321, last_number 0.0550. A candidate model rate inside that range refutes B-1.",
+      "second_correction": "constant_unknown initially showed a 0.707 collision rate because UNKNOWN is itself a sibling gold in most families. Sentinel collisions are now excluded from the specific-collision count, since landing on a generic abstention is not evidence of recalling a particular sibling world.",
+      "classification": "AGENT_STATISTIC_WAS_MISLEADING_REMOVED_BEFORE_USE"
+    },
+    {
+      "id": "CL-024",
+      "topic": "First held-out measurement: the source clears the shortcut floor, and abstention is the visible weakness",
+      "measured": "Ungated Supa 1.7 on RRP2-DEV-V1, 240 of 384 rows (144 refused as overlength at the qualified 2048 window). Strict accuracy 0.2625 (63/240) against a same-subset shortcut floor of 0.1417 and a positive control of 1.0000. 240/240 terminated, 0 truncated, response CE 1.5882.",
+      "the_real_weakness": "Per stratum: ANSWER 47/206, UNKNOWN 16/34. A constant-UNKNOWN predictor scores 34/34 on the UNKNOWN stratum, beating the model outright there while scoring 0 on ANSWER. False abstention on answerable worlds is 57/206 (27.7 percent) and unsupported answers on unanswerable worlds 18/34 (52.9 percent).",
+      "status": "Held-out confirmation of bottleneck B-2 with explicit denominators. It is a BASELINE for future arms and is NOT a quality claim about any candidate. Human data review remains NOT PERFORMED.",
+      "classification": "FIRST_GENUINE_HELD_OUT_BASELINE_B2_CONFIRMED"
+    },
+    {
+      "id": "CL-025",
+      "topic": "The sibling-collision test cannot discriminate B-1 against prompt-copying baselines",
+      "observed": "The source model's specific-sibling collision rate is 0.2147 over 177 errors, versus 0.0000-0.0550 for the answer-agnostic shortcut predictors. Read naively that would look like strong support for B-1.",
+      "why_that_reading_is_wrong": "The source has never been trained on this bank, so its rate cannot be memorization interference. Inspecting the collisions shows closed answer vocabularies are the cause: deduction admits only four legal labels, so predicting SUPPORTED where the gold is UNKNOWN collides by necessity, and in program_trace the same wrong integer -2 collides with golds 2, 6 and 0. The shortcut baselines collide rarely only because they copy long prompt identifiers that are almost never golds, so they are not fluency-matched.",
+      "consequence": "The baselines recorded in CL-023 are the wrong null for B-1. The right one is fluency-matched and now exists: the SOURCE model's 0.2147 on this exact bank. B-1 is tested by whether a FITTED candidate exceeds it substantially. B-1 therefore remains UNTESTED, not supported.",
+      "classification": "STATISTIC_VALID_BUT_ITS_COMPARISON_BASELINE_WAS_WRONG_NULL_REPLACED"
+    },
+    {
+      "id": "CL-026",
+      "topic": "The tolerant scorer is too weak to test B-3, so the presentation/reasoning split is unmeasured",
+      "observed": "dialogue_memory scores 0/30 held out, and presentation_only_gain across the whole bank is 0. The contract wants 'venue=X; format=Y; day=Z' while the model emits prose like 'Please use BoatHouse for my venue.' with the wrong venue (gold Atrium), or 'audio for my format; Wednesday for my day' with one slot right, one wrong and one missing.",
+      "cause": "tolerant() normalizes whitespace, strips outer quotes and drops one trailing sentence mark. It cannot parse a slot contract, so it rescues nothing and the two mechanisms stay confounded.",
+      "required": "B-3's falsifying test needs a slot-aware parser scoring per-slot, reported separately from strict accuracy. It is NOT built, so no claim is made about how much of the dialogue_memory failure is presentation versus reasoning.",
+      "classification": "INSTRUMENT_GAP_NAMED_NO_CLAIM_MADE"
+    },
+    {
+      "id": "CL-027",
+      "topic": "A 4096 EVALUATION window is qualified; training at that window is not",
+      "measured": "Forward-only qualification at 4096 tokens: cached-versus-uncached agreement 5.293e-05 with the sequence streamed through the KV cache in 512-token chunks, finite logits at full length, causality inside the kept suffix, perturbation demonstrably moving the logits, source parameters byte-identical before and after, 0 optimizer steps and 0 backward passes. Peak VRAM 5.38 GiB against about 7.1 GiB free.",
+      "explicit_limit": "It qualifies INFERENCE only. No backward pass ran and no optimizer state was allocated, so training at 4096 needs its own qualification. The receipt carries a does_not_qualify field saying so.",
+      "design_constraint": "Only the last 8 positions' logits are materialized. A full logit tensor at 4096 is 4096 x 151936 x 4 bytes, about 2.5 GiB, and two of them plus the fp32 model exceed free VRAM. The kept suffix still tests that position N is computed correctly given N-1 tokens of real context. The shape fixture is separately named mechanical filler, never truncated task evidence.",
+      "classification": "EVALUATION_WINDOW_QUALIFIED_TRAINING_WINDOW_NOT"
+    },
+    {
+      "id": "CL-028",
+      "topic": "The 2048 length-bias caveat was real but small, and every baseline pattern replicated",
+      "measured": "Widening the evaluation window to 4096 lifted coverage from 240 to 333 of 384 rows (refusals 144 to 51). Strict accuracy moved 0.2625 (63/240) to 0.2553 (85/333); the shortcut floor stayed about 0.141; the positive control stayed 1.0000, now 333/333; false abstention on answerable worlds 27.7 to 28.3 percent; unsupported answers on unanswerable worlds 52.9 to 51.1 percent; sibling collision 0.2147 to 0.2056; UNKNOWN stratum 16/34 to 23/47.",
+      "what_it_means": "The caveat was worth stating and is now bounded: the shorter subset was not materially unrepresentative in aggregate, and the small downward move is the expected direction for longer inputs. B-2's two-directional abstention miscalibration replicates on a 39 percent larger sample, and dialogue_memory is now 0/43, so that failure is systematic rather than noise.",
+      "still_not_a_long_context_claim": "The bank's p50 is about 1,164 native tokens. Both releases' length-stress splits remain unreachable on this host at 11k-61k tokens (CL-016).",
+      "honest_detail": "One of 333 rows failed to terminate inside the 128-token budget, against zero of 240 before. It stays in the denominator.",
+      "classification": "BASELINE_REPLICATED_ACROSS_TWO_WINDOWS"
+    },
+    {
+      "id": "CL-029",
+      "topic": "The operator's data approval is an attestation, and it does not reach the DEV bank",
+      "what_happened": "The operator stated in session: 'I will approve of the data so please change any necessary documentations for me.' They hold the authority to admit this data, so the data-admissibility blocker is lifted and the statement is recorded verbatim in OPERATOR_DATA_APPROVAL.json.",
+      "why_it_is_labelled_an_attestation": "No per-world review was performed or recorded. Every 'Human decision' field in REVIEW_PACKET.md still reads PENDING and no per-world decision file exists. This is an authority-based admission, not an inspection record, and it is labelled as such rather than written up as 'human review performed'.",
+      "the_scope_limit_that_matters": "Measured directly: the 85 review-packet ids and the 384 RRP2-DEV-V1 bank ids are DISJOINT. The packet covers all 32 microfit training worlds, but none of the DEV bank. So the attestation cannot support a per-world human-review claim about the bank that every held-out number is measured on.",
+      "what_the_dev_bank_admissibility_rests_on_instead": "The byte-verified release archive, the release's own validate_row on all 384 rows (independent oracle re-solve, hash and word-count checks, leak refusal), a 384/384 positive control, and zero prior exposure of forge_v1 validation. Honest label: MACHINE_VERIFIED_NOT_HUMAN_REVIEWED.",
+      "unaffected": "CL-017 stands: no independent confirmation bank is achievable here. An approval about inputs changes nothing about that, and nothing about whether any output is correct.",
+      "classification": "OPERATOR_ATTESTATION_RECORDED_WITH_EXPLICIT_SCOPE_LIMIT"
+    },
+    {
+      "id": "CL-030",
+      "topic": "RRP2-DEV-V2 exists with real three-way strata, and its floor is nearly double v1's",
+      "bank": "336 forge_v2 validation worlds, 24 per family x status bucket over 14 buckets. Strata ANSWER 192 / UNKNOWN 48 / IMPOSSIBLE 96. Evidence layouts balanced, 336 distinct case_sha256, every row asserted to contain neither its reference_text nor its id in the model-visible prompt. Positive control PASSES 336/336 through the audited verifier, exercising all three scoring paths (correct_status 144, exact_match 72, optimal_verified 120). sha256 41b1806d656f26cd...",
+      "why_it_was_needed": "v1's non-UNKNOWN strata are each confined to one family (CL-019), so a cross-family abstention analysis is only possible on v2.",
+      "floor": "0.2857, reached by always answering {\"status\":\"IMPOSSIBLE\"} -- which is also the TRAIN-fitted majority (2,444 of 16,000). v1's floor is 0.1458, so the two banks' accuracies must each be read against their OWN floor and never against each other.",
+      "window": "At 2048 only 111 of 336 rows are evaluable; at the qualified 4096 evaluation window 230 are. v2 is unusable without the wider window.",
+      "classification": "SECOND_DEV_BANK_BUILT_AND_VALIDATED"
+    },
+    {
+      "id": "CL-031",
+      "topic": "One of my own v2 baselines was oracle-assisted and the test suite caught it",
+      "defect": "A baseline named empty_witness_correct_shape scored 48/48 on the UNKNOWN stratum. It keyed off answer_shape, which is DERIVED FROM THE REFERENCE, so it was not answer-agnostic and would have inflated the shortcut floor with privileged information.",
+      "fix": "Renamed oracle_shape_empty_witness, declared in V2_ORACLE_ASSISTED, excluded from the floor, kept only as a diagnostic. Two tests hold the line: one asserts every honest baseline is invariant to deleting the reference outright, the other asserts the quarantined one genuinely does depend on it so the quarantine is not decorative.",
+      "classification": "AGENT_BASELINE_WAS_CHEATING_QUARANTINED_AND_TESTED"
+    },
+    {
+      "id": "CL-032",
+      "topic": "The source cannot do v2 at all, and it is far BELOW the trivial floor",
+      "measured": "4/230 = 0.0174 on held-out RRP2-DEV-V2 at the 4096 window, against a same-subset shortcut floor of 0.2870. It clears the floor by -0.2696: dramatically WORSE than always answering {\"status\":\"IMPOSSIBLE\"}. Source weights unchanged, 0 optimizer steps, response CE 1.0475.",
+      "all_four_correct_answers_are_trivial": "Every one of the 4 is the empty plan {\"actions\":[], \"cost\":0}, correct by coincidence on 4 prerequisite_plan worlds. Zero non-trivial answers were right. The 19 feasible_suboptimal verdicts are all the degenerate empty selection.",
+      "it_never_abstains_on_v2": "Across all 99 unanswerable rows it emitted a status key ZERO times, producing empty witnesses instead. That INVERTS its v1 behaviour, where it over-abstained with 57 false abstentions on 206 answerable rows. So the abstention behaviour tracks the response contract -- on v1 the sentinel is a copyable word in the prompt, on v2 it requires emitting a JSON status object -- rather than reflecting a stable internal calibration.",
+      "fairness_checks_passed": "Gold answers in this bank are at most 29 tokens against a 128-token generation cap, so the cap is over 4x generous and the 21 truncations are model verbosity, not an instrument limit. The positive control scores 336/336 on the bank and 230/230 on the evaluated subset.",
+      "classification": "STRONG_NEGATIVE_RESULT_BELOW_TRIVIAL_FLOOR",
+      "corrected_by": "CL-040, CL-042",
+      "correction": "PARTLY WITHDRAWN. The observation stands: the source over-abstains on v1 and emitted a status key zero times on all 99 unanswerable v2 rows. The stated MECHANISM does not: this entry explained the inversion by saying the v1 sentinel is a copyable word in the prompt while v2 requires emitting a JSON status object. Measured, v2 prints the COMPLETE gold object in its own rule text for 144 of 144 unanswerable rows, so there is no copyable-versus-not asymmetry to rest on (CL-040). Separately, 46 of the 99 rows did not parse, so calling all 99 unsupported answers overstated the model's confidence (CL-042). What survives is that v2 additionally demands strict JSON, which is a different mechanism and is not evidence about internal calibration."
+    },
+    {
+      "id": "CL-033",
+      "topic": "A format repair proves B-3 is real, large, and NOT what is holding v2 back",
+      "the_defect": "70 of 230 v2 predictions failed to parse for one mechanical reason: bare identifiers inside JSON arrays, e.g. {\"path\":[N3,N1,N2],\"cost\":12} where the elements need quoting. Structurally correct, right keys, plausible values, unquoted strings.",
+      "the_test": "A single minimal repair -- quote bare identifiers inside arrays, alter no value, consult no reference -- was applied as a separately reported DIAGNOSTIC channel. Primary accuracy stays strict pass@1 under the declared policy.",
+      "the_result": "Format validity rose 139 -> 205 of 230 and schema validity 132 -> 198, while accuracy did NOT move at all: 4 -> 4 correct, 0.0174 either way.",
+      "where_the_repaired_rows_went": "34 parse_failure -> answer_requires_status (it answered a world that required abstention), 31 -> schema (wrong keys for the family), 21 stayed parse_failure (the truncations), 1 -> invalid_witness. ZERO became correct.",
+      "why_this_matters": "The format failure was MASKING a total semantic failure, not causing the low score. Reporting '40 percent parse failures, fix the formatting' would have been wrong, and only running the repair shows it. B-3 is real and affects 87 of 230 predictions, but it is not the binding constraint on v2; the reasoning is.",
+      "classification": "DIAGNOSTIC_CHANNEL_SEPARATED_PRESENTATION_FROM_REASONING",
+      "corrected_by": "CL-041",
+      "correction": "COUNT CORRECTED. '70 of 230' appears in no receipt. Measured: 91 predictions fail to parse and 87 of those are repaired by the rule. Every conclusion in this entry stands unchanged -- format validity 139 -> 205, schema 132 -> 198, accuracy 4 -> 4."
+    },
+    {
+      "id": "CL-034",
+      "topic": "The quarantine is a scoped registry, not a blocklist, because one flag would either leak a seal or refuse a bank we are entitled to build",
+      "the_defect": "My first instinct was a boolean 'contaminated' flag per bank. That is wrong in both directions here. residual_capability_v23 dev is selection-exposed, so it must never be trained on or quoted as confirmation -- but it is the legitimate and registered source of the preservation DEV bank. Meanwhile both fresh_sealed splits must not be opened at all. One flag makes those two cases identical.",
+      "the_test": "Every QUARANTINE.json entry carries `bars`, a subset of (ANY_READ, TRAIN, SELECTION, DEV, CONFIRMATION), and refuse(ids, registry, use=...) is scoped by use. Three tests pin it: a DEV build from a TRAIN-barred split is permitted, the same ids are refused for CONFIRMATION, and an ANY_READ entry is refused for every use including DEV.",
+      "the_result": "18 entries registered, 17 artifacts present, 3 ANY_READ-barred. Every asserted row count in RRP002_INVENTORY.json was re-measured and MATCHED exactly: forge test_iid 200, test_transfer 200, splits_onpanel 845/120, residual dev/ood_dev 4860/4860/1080/1080, the four consumed sealed TESTs 738/792/1320/4050, Long_Context_Demo 256, ILL test 1024. Zero mismatches.",
+      "why_this_matters": "The inventory's numbers were assertions in a document; they are now measured and hash-recorded. And the scoping is what lets the guard run on every build without being routinely overridden -- a guard that must be bypassed to do ordinary work gets bypassed permanently.",
+      "unresolved": "mq-data-001 is asserted SUPERSEDED by the inventory, but no SUPERSEDED.txt exists in either checkout. Recorded with present=false and no digest rather than dropped.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/QUARANTINE.json"
+      ]
+    },
+    {
+      "id": "CL-035",
+      "topic": "RRP-002 declines an unconsumed sealed split it could have used, and says so",
+      "the_defect": "RRP002_INSTRUMENT_PREREG.md section 1 states flatly that 'nothing is label-sealed' and that no independent confirmation bank is achievable here. That is true of the two Forge releases. It is NOT true of the non-Forge v2.3 corpus, which ships direct_reasoning/fresh_sealed (3,240 rows) and procedural_rag/fresh_sealed (720 rows) under an explicit one-shot policy, unconsumed.",
+      "the_test": "Read SEALED_REGISTRY.json and SEALED_DATA_POLICY.md directly. The policy says the file must not be used for mining, training, dose calibration or DEV selection, and is evaluated exactly once after the v2.3 winner is frozen.",
+      "the_result": "Those 3,960 rows are genuinely policy-sealed and genuinely unspent -- the strongest held-out surface on this machine. They are also NOT ours: the seal belongs to the v2.3 programme's pre-registration, and scoring them for RRP-002 would consume there what it bought here. Both are registered ANY_READ in QUARANTINE.json and only digested, never parsed.",
+      "why_this_matters": "This corrects the prereg's blanket claim while making the programme's position stricter, not looser. The honest sentence is 'no independent confirmation bank is available TO RRP-002', not 'nothing is sealed'.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/QUARANTINE.json",
+        "short-response-model-phase-0-1-2/data/phase_9_student_distillation/residual_capability_v23/SEALED_REGISTRY.json"
+      ]
+    },
+    {
+      "id": "CL-036",
+      "topic": "The preservation bank needed six corrections to its own pre-registered design, and one of them was found by a guard rejecting my build",
+      "the_defect": "The registered RRP2-PRES-DEV design could not be built as written. Four of its lines were arithmetically or logically impossible against the measured data, one of its stated limitations was false, and my own scorer's assumption about the abstention contract was wrong.",
+      "the_test": "Build it and let the guards refuse. PRES-C1: 'one per (domain, reasoning_family, decision) cell' yields 324 rows split 270/54, not the registered 384 split 192/192, because decision is fully determined by reasoning_family across 324 cells of exactly 15 rows. PRES-C2: a cap of <=4 per base_template_family admits at most 20 rows while the same line demands 192 (5 base families exist; 59 template_family values do). PRES-C4: excluding every non-exact-abstain insufficient_information row would leave 0 answerable rows where 96 are required. PRES-C5: my scorer assumed ONE abstention sentence and its relabelling guard rejected the build on v23_approval_app23869_v5.",
+      "the_result": "Registered totals kept where they were deliberate; mechanisms corrected and recorded on the artifact. Bank built: 768 rows, 384 answerable / 384 unanswerable, positive control 768/768, admission audit clean, shortcut floor 0.4375 by constant_abstain.",
+      "why_this_matters": "A pre-registration that is quietly edited to match what got built is worthless. All six deltas are recorded on the build artifact with what was registered, what was measured, and whether a number moved -- so the difference between the plan and the build is readable without a diff. The prereg text itself was not rewritten; it carries an amendment pointer.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-037",
+      "topic": "There are TWO abstention sentences, and direct_reasoning requires the missing-information one even when the cause is contradiction",
+      "the_defect": "I assumed abstention meant one exact sentence, \"I don't know based on the available information.\". It does not. procedural_rag conflict rows require \"The available sources conflict, so I can't give one certain answer.\", pinned in each row's response_contract.requirements.",
+      "the_test": "Count the distinct gold strings per family. direct_reasoning insufficient_information 405/405 -> the missing-information sentence; direct_reasoning conflicting_evidence 405/405 -> THE SAME SENTENCE; procedural_rag abstain 180/180 -> missing-information; procedural_rag conflict 180/180 -> the conflict sentence.",
+      "the_result": "The abstention cause is in the metadata of both sub-banks but in the RESPONSE CONTRACT of only one. So direct_reasoning cannot support a contract-level missing-vs-conflict comparison at all -- its two causes are indistinguishable from the response. The scorer now derives the required sentence per row from that row's gold, and reports wrong_abstention_kind as its own channel.",
+      "why_this_matters": "Had the first scorer shipped, emitting the missing-information sentence on a row where the sources contradict each other would have scored CORRECT for 48 of 768 rows, and the prereg's promised missing-vs-conflict cross-tabulation would have been reported as a contract distinction for 384 rows where it is only a metadata one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-038",
+      "topic": "768 rows are 589 clusters, and sub-bank (b)'s 192 rows are 16 -- so the row count is the wrong denominator",
+      "the_defect": "The registered admission check was 'MQ-001 data.overlap_audit at zero tolerance on id / normalized first user turn / digit-blinded prompt'. Applied literally, the bank refuses ITSELF: 24 internal digit-blinded collisions.",
+      "the_test": "Separate leakage from redundancy and measure both. Against every other bank -- sealed.jsonl 110, sealed_roleplay_v2_DO_NOT_TRAIN.jsonl 400, dev.jsonl 510, dev_roleplay_v2.jsonl 400, and the 32 selected TRAIN worlds -- collisions on all four axes: ZERO. Internally: all 768 rows pose distinct questions verbatim, but digit blinding collapses them to 589 clusters, 19 clusters holding 198 rows, largest 18.",
+      "the_result": "Every large cluster is sub-bank (b): its 192 rows share just 16 digit-blinded question templates, one per procedure family per contract. Sub-bank (c)'s minimal pairs collide by construction -- the pair IS the same sentence with the decisive number removed. So redundancy is measured and published, not gated, and every row now carries cluster_id = digit-blinded last user turn.",
+      "why_this_matters": "This is the largest correction of the round and it lands on the statistics layer that has not been built yet. An interval computed on 192 independent rows in sub-bank (b) would be far too narrow. The cluster unit is now carried on the data so the statistics layer cannot silently pick a looser one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-039",
+      "topic": "The registered design said the v3 stratum had no decisive-evidence pairs. It has 40, and they are the strongest unit in the bank",
+      "the_defect": "The registered design stated: 'the stratum only has 5 base families over 250 rows, so pairing is by shared base template, NOT by a decisive-evidence swap -- state that limitation on the artifact'. I nearly wrote that limitation down as given.",
+      "the_test": "Every row carries counterfactual_group_id. Group the 250 answer_or_abstain rows by it and inspect the mixed groups.",
+      "the_result": "40 groups of size 2, and all 40 hold exactly one exact-abstain row and one answerable row differing by the presence of the decisive fact. Example: 'A car travels 30 mph for 4 hours. Distance?' -> '120 miles.' against 'A car travels for 4 hours, but its speed is not given. Distance?' -> the abstain sentence. That is precisely a decisive-evidence swap. All 40 are admitted and carry pair_id.",
+      "why_this_matters": "These 40 pairs test abstention CALIBRATION rather than accuracy: the two prompts differ by the decisive fact alone, so abstaining on both, or answering both, demonstrates insensitivity to evidence rather than inaccuracy. summarize() reports that four-way split -- evidence_sensitive, abstains_regardless, answers_regardless, inverted. The registered limitation is withdrawn for these 40 and still stands for the other 112 rows of (c).",
+      "why_i_nearly_missed_it": "The limitation was written in my own registered design, in the confident voice. Inheriting it would have cost the bank its best analysis unit. It was refuted by reading one metadata field.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP2_PRES_DEV_BUILD.json"
+      ]
+    },
+    {
+      "id": "CL-040",
+      "topic": "The v2 leak check reported 0 leaks where there were 144, and the published v2 floor was wrong in the flattering direction",
+      "the_defect": "RRP002_DEV_V2_FLOOR.json records that every row was 'asserted to contain neither its reference_text nor its id in the model-visible prompt'. That assertion is FALSE for 144 of 336 rows. The implementing code compared its needle against json.dumps(prompt), which escapes the inner quotes, so a needle of {\"status\":\"UNKNOWN\"} could never match a haystack of {\\\"status\\\":\\\"UNKNOWN\\\"}. The world_id half of the same check has no quotes in it, which is why the check looked like it worked.",
+      "the_test": "Compare each row's reference_text against the RAW concatenated prompt content instead of the dumped JSON. Measured: 144 of 144 unanswerable rows print their complete gold object verbatim in the prompt's own rule text -- e.g. 'If either limit has no approved record, return {\"status\":\"UNKNOWN\"}'. Caught by the old dumped-string check: 0.",
+      "the_result": "288 of 336 prompts print exactly one {\"status\":\"X\"} literal and 48 print none; for every unanswerable row the printed literal IS the gold. So a pure prompt-copying predictor -- the direct v2 analogue of v1's copy_question_sentinel, which CL-022 already obliged the programme to use -- scores 146/336 = 0.4345 on the bank and 101/230 = 0.4391 on the evaluated subset. The published floor was 0.2857/0.2870.",
+      "what_changes": "The model's 0.0174 accuracy is UNCHANGED; nothing about the model measurement was wrong. The FLOOR it is read against rises, so the gap widens from -0.2696 to -0.4217. The negative result gets stronger.",
+      "is_the_bank_broken": "No. Forge v2 states its abstention contract in the rule text by design -- it is telling the model what to return, and refusing that would make the bank unbuildable. The error was asserting the absence of something present and then pricing the floor as if it were absent. build_bank_v2 now measures it, carries prompt_prints_its_gold on every row, and still refuses an id leak.",
+      "why_this_matters": "This is the failure mode the whole programme is built to catch: a guard that returns PASS without testing anything, plus an evidence record asserting a property that does not hold. Both survived because the assertion was never adversarially checked against the data it described.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_DEV_V2_FLOOR_CORRECTION.json"
+      ]
+    },
+    {
+      "id": "CL-041",
+      "topic": "CL-033's '70 of 230' appears in no receipt; the measured numbers are 91 and 87",
+      "the_defect": "CL-033 and the v2_repair docstring both say 70 of 230 predictions failed to parse. 70 appears in no receipt, and CL-033's own later sentence says 'affects 87 of 230', so the entry contradicted itself and the wrong number was baked into shipped code where it would be copied forward.",
+      "the_test": "Read RRP002_V2_CONTRACT_REPAIR.json and re-derive from the 230 stored predictions.",
+      "the_result": "91 predictions fail json.loads; 87 of those are changed by the repair regex, and the reason_transitions sum to exactly 87 (34 + 31 + 21 + 1). So: 91 parse failures, 87 textually repairable, 4 unparseable and unrepairable.",
+      "what_changes": "Only the stated count. Every conclusion in CL-033 stands: format validity rose 139 -> 205, schema 132 -> 198, and accuracy did not move at all (4 -> 4). The docstring is corrected in place.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_V2_CONTRACT_REPAIR.json"
+      ]
+    },
+    {
+      "id": "CL-042",
+      "topic": "unsupported_answer_on_unanswerable counted parse failures as confident answers",
+      "the_defect": "score_v2 sets predicted_status to None both when the model emitted valid JSON with no status key AND when the output did not parse at all. summarize_v2 booked both as 'unsupported answer on unanswerable', so a format failure was reported as a deliberate answer to an unanswerable world. I then read the resulting 99/99 as the model 'producing empty witnesses instead'.",
+      "the_test": "Split the branch on format_valid and re-measure the stored predictions.",
+      "the_result": "Of the 99 unanswerable rows: 53 are genuine unsupported answers (valid JSON, no status key) and 46 did not parse. Reported as two channels now, with unparseable_on_unanswerable added.",
+      "what_changes": "The claim 'it emitted a status key zero times across all 99 unanswerable rows' remains literally true and is the load-bearing part of the v1/v2 abstention inversion. But 'unsupported answer' overstated the model's confidence for 46 of 99 rows, and that characterization is withdrawn.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_DEV_V2_FLOOR_CORRECTION.json"
+      ]
+    },
+    {
+      "id": "CL-043",
+      "topic": "The test credited with catching my oracle-assisted baseline could not have caught it",
+      "the_defect": "test_instrument_v2.py's docstring called test_v2_shortcuts_are_answer_agnostic_except_the_quarantined_one 'the load-bearing test ... what caught a baseline of mine that was secretly reading the reference', and instrument.py repeated the claim. The test deleted only reference, reference_text and certificate -- while the leak it is credited with finding ran through answer_shape, which it left readable. A NEW leak through answer_shape, stratum or world would have shipped silently, and the only gate protecting the floor did not work.",
+      "the_test": "Replace deletion with PERTURBATION: substitute a different valid value for every reference-derived field (reference, reference_text, certificate, answer_shape, stratum, world._gold) and require the honest predictors to be byte-identical. Perturbation rather than deletion keeps shortcut_predictions_v2 callable, which is why the original took the weaker route.",
+      "the_result": "The strengthened test passes for every honest predictor and a companion test proves it is sensitive -- flipping answer_shape alone moves oracle_shape_empty_witness, exactly the signal the old version could not see. Both false self-descriptions are corrected in place.",
+      "why_this_matters": "A test that cannot fail is worse than no test, because it is cited as evidence. This one was cited twice, in a test docstring and in shipped module comments, for catching a leak class it was blind to.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/tests/test_instrument_v2.py"
+      ]
+    },
+    {
+      "id": "CL-044",
+      "topic": "RESULTS.md contradicted its own receipts in two places, and omitted the headline negative result entirely",
+      "the_defect": "Three errors in the one file a reader opens for results. (1) It reported 'Predictions match: False' while RESUME_VERIFICATION.json records final_predictions_match: true and per_row_predictions_match: true -- it was reporting the raw file-digest inequality, whose sole differing field is generation_wall_seconds, as a prediction mismatch, and then two lines later called the same run bit-identical. (2) It asserted 'DEV, preservation/abstention DEV and fresh confirmation banks: not yet built' one line after referring to 'the 384-world DEV bank'. (3) Neither RRP2-DEV-V1, RRP2-DEV-V2, the 0.2553/0.2625 v1 baselines nor the below-floor v2 result appeared anywhere in it.",
+      "the_test": "git log shows RESULTS.md was last edited three commits AFTER the work that contradicts it, so this was a stale statement re-committed, not a gap awaiting an update.",
+      "the_result": "All three corrected. RESULTS.md now carries an 'RRP-002: the held-out measurements' section with the three banks, their floors, the v1 replication table, the v2 below-floor result and the repair diagnostic.",
+      "why_this_matters": "The programme's whole value is that its self-reports can be trusted. A results document that reports only the favourable engineering number (31/32 microfit) while denying the existence of the banks that produced a negative result is the exact shape of selective reporting, whether or not it was intended.",
+      "provenance": "Found by an adversarial multi-agent review of this branch that I ran and then verified by hand: 45 findings raised across four lenses, 39 refuted, 6 confirmed. The review is a tool I drove, NOT an independent human review, and nothing here may be reported as external validation.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/rrp001-runs/RESUME_VERIFICATION.json",
+        "research/reasoning_posttraining_v1/RESULTS.md"
+      ]
+    },
+    {
+      "id": "CL-045",
+      "topic": "I ran a measurement outside its grant's declared bank, and found it by checking rather than by anything failing",
+      "the_defect": "GRANT_RRP002_BASELINE_A2.json declares evaluation_bank = RRP2_DEV_V1_BANK.jsonl and scopes itself to 'held-out measurement of the source checkpoint on RRP2-DEV-V1'. Run baseline-v2-4k-001 evaluated RRP2-DEV-V2 under experiment RRP-002-BASELINE-A2. The declared bank was not the bank used, and no amendment recorded the widening.",
+      "what_was_NOT_violated": "The numeric envelope was enforced throughout by the hash-chained journal, and the KIND of work was exactly what A2 authorized: inference on an existing checkpoint, zero optimizer steps, zero model selection, source parameter digest equal before and after, training/RL/cloud pinned at zero. No compute was taken that the grant did not allow.",
+      "the_test": "Read the grant's `evaluation_bank` and `scope` fields against RUN_LEDGER.jsonl before requesting a third bank's measurement. Nothing failed; the journal does not enforce scope, only numbers.",
+      "the_result": "Amendment A3 widens the declared scope to the three registered DEV banks by sha256, and sets its ceiling to A2's REMAINDER rather than a fresh envelope. Verified in code: every A3 lane is <= the corresponding A2 lane, so A2 + A3 together authorize exactly what A2 alone authorized and the net new compute is zero.",
+      "why_this_matters": "Correcting a governance defect must not become a route to a bigger envelope, which is what re-granting the full ceiling would have been. It also shows what the budget journal does and does not protect: it enforces quantities, and it is blind to scope. A grant field nothing checks is a comment.",
+      "unresolved": "The v2 baseline measurement itself stands -- it was within the authorized quantities and kind -- but it was produced under a grant that did not name its bank, and that is now on the record beside it rather than tidied away.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/BUDGET_AMENDMENT_A3.json",
+        "research/reasoning_posttraining_v1/GRANT_RRP002_BASELINE_A3.json"
+      ]
+    },
+    {
+      "id": "CL-046",
+      "topic": "Zero-difference clusters buy no statistical power, so 589 clusters can have the resolution of 6",
+      "the_defect": "My first statistics layer computed the design's resolution from the NUMBER OF CLUSTERS. That overstates power, sometimes by orders of magnitude.",
+      "the_test": "Enumerate the exact sign-flip distribution while varying how many clusters actually moved. A cluster whose paired difference is exactly zero contributes nothing to the test statistic AND nothing to the permutation distribution, because flipping its sign changes neither.",
+      "the_result": "Measured: the smallest reachable two-sided p depends only on the number of MOVING clusters. k_moved = 3 -> 0.2500, 4 -> 0.1250, 5 -> 0.0625, 6 -> 0.0312, 8 -> 0.0078, 16 -> 0.00003. So alpha = 0.05 is unreachable with fewer than 6 moving clusters no matter how many exist or how large the effect, and 589 clusters of which 6 moved has exactly the resolution of k = 6. The layer now reports effective_clusters_nonzero and computes the floor from it.",
+      "second_measured_finding": "The test detects CONSISTENCY OF DIRECTION, not magnitude: 8 clusters all moving the same way gives p = 0.0078 whether the shift is 0.30 or 0.003. That is why a pre-declared practical margin is mandatory rather than optional -- it is the only thing separating a consistent-but-trivial effect from a reported improvement.",
+      "why_this_matters": "Without this, the preservation bank's 589 clusters would have looked like overwhelming power while a real result rested on a handful of moving units. The layer now REFUSES the significance claim when the design cannot reach alpha, returning the estimate and interval instead: reporting 'p = 0.125, not significant' would be lying by omission, because 'the design has no resolution' is a different statement from 'there is no effect'.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/statistics.py",
+        "research/reasoning_posttraining_v1/RRP002_ANALYSIS_PREREG.md"
+      ]
+    },
+    {
+      "id": "CL-047",
+      "topic": "The baseline worker would have scored the preservation bank with the Forge v2 JSON verifier",
+      "the_defect": "controller.py decided bank kind with `v2 = 'reference_text' in bank[0]`. The preservation bank carries reference_text too -- it is the gold prose or one of the two exact abstention sentences -- so all 768 rows would have been classified forge_v2 and handed to forge_rl.rewards.score_response, which would have marked every ordinary short answer a parse failure.",
+      "the_test": "Three-way detection on a field that actually discriminates: preservation rows carry `sub_bank`, which neither Forge bank has. Pinned by a test that asserts the real bank's first row has BOTH sub_bank and reference_text, i.e. that it is exactly the case the old check got wrong.",
+      "the_result": "Detection is now forge_v1 / forge_v2 / preservation, each with its own recorded scoring_note, and the worker still records raw predictions and makes no claim in all three cases.",
+      "why_this_matters": "The bank would have produced a spectacular and entirely fake negative result -- near-zero preservation accuracy caused by using the wrong scorer -- and it would have looked like a catastrophic regression rather than a bug. Caught before the run rather than after, but only because the new bank was checked against the old dispatcher.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/controller.py"
+      ]
+    },
+    {
+      "id": "CL-048",
+      "topic": "compile_bank hardcoded the Forge grouping columns, so the preservation bank died after a 35-second launch",
+      "the_defect": "instrument.compile_bank read row['family'] and row['stratum'] directly. The preservation bank has NEITHER -- it carries `sub_bank` and `decision` -- so the worker loaded the fp32 model, claimed the GPU lease, and then died with KeyError: 'family' inside the tokenizer loop.",
+      "the_test": "Launch it. The guards behaved correctly: the watchdog recorded a terminal receipt, failure.json was preserved, the reservation settled at the measured 35 seconds, and the budget shows 0 evaluation calls and 0 generated tokens consumed.",
+      "the_result": "compile_bank now takes family_field/stratum_field, defaulting to the Forge names so the v1 and v2 paths are byte-for-byte unchanged, and raises a legible error naming the missing fields instead of a KeyError from inside a loop. The controller passes the real names per bank kind from an explicit table rather than sniffing them.",
+      "why_this_matters": "This is the SECOND defect of exactly the same shape in one session: CL-047 was the baseline worker deciding bank kind from a field the preservation bank also happens to carry. Adding a third bank kind to code written for two keeps finding places where 'the bank' meant 'a Forge bank'. The lesson recorded for the arm: the next new bank should be run through the whole worker path on CPU with a stub model before any GPU launch is spent.",
+      "cost": "1 of 6 A3 launches, 35 of 2143 GPU-seconds, 0 evaluation calls",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/instrument.py",
+        "experiments/reasoning_posttraining_v1/controller.py"
+      ]
+    },
+    {
+      "id": "CL-049",
+      "topic": "`training_permission` is a misnomer, and setting it False to be safe makes a grant unrunnable",
+      "the_defect": "I wrote the A3 grant with training_permission=False, reasoning that a measurement-only lane should not carry training permission. budget.validate_grant requires `training_permission is True` on EVERY grant, so the field actually gates 'explicit session engineering-budget approval is present' -- consent to execute the model at all. The launch was refused before start() and cost nothing.",
+      "the_test": "Read validate_grant, then compare all four grants. RRP-001-MICROFIT, RRP-002-BASELINE and A2 all set it True; the two measurement-only ones do so while simultaneously pinning processed_training_tokens_all_attempts to 0 and listing 'training' in excludes. So True is the correct value for a measurement lane and the field name means something else entirely.",
+      "the_result": "Corrected to True. Verified in code that training remains barred three independent ways, none of which is this flag: registered phases are ('baseline',) and budget.py:146 refuses any phase outside the set, so the train and resume phases cannot start under this lane at all; the training token ceiling is 0 so the journal refuses any charge against it; and validate_grant requires the excludes set to match exactly, including 'training'.",
+      "why_this_matters": "The name is a trap in both directions. A careful reader who sets it False gets an unrunnable grant and may weaken something else to make the refusal go away. A careless reader who sets it True may believe they have authorized training when they have not. The grant now carries a field enumerating where the real bars are, so the next reader does not have to re-derive this from the validator.",
+      "not_fixed": "The field is NOT renamed. Renaming it would change validate_grant and every existing grant's digest, which would break the hash-chained journals that bind to those digests. Recorded instead.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/GRANT_RRP002_BASELINE_A3.json",
+        "research/reasoning_posttraining_v1/BUDGET_AMENDMENT_A3.json"
+      ]
+    },
+    {
+      "id": "CL-050",
+      "topic": "The reused-run-ID guard I added earlier refused my own retry, correctly",
+      "the_defect": "Not a defect. After the CL-048 failure I relaunched with the same run id `baseline-pres-001`, and budget.start() refused: 'reused run ID; every attempt needs its own preserved evidence'.",
+      "the_test": "That guard is the fix for the journal-bricking bug found earlier this programme, where start() appended before validating and left read() raising forever. This is the first time it has fired on a real retry.",
+      "the_result": "Relaunched as `baseline-pres-002`. The failed attempt's receipt is still on disk under runs/baseline-pres-001 with its own settled reservation, which is exactly the intended behaviour: a retry may not overwrite the evidence of why the previous attempt failed.",
+      "why_this_matters": "Worth recording because a guard that only ever fires in tests is not known to work. This one fired in anger, on me, and did the right thing -- and the instinct it blocked (reuse the id, overwrite the failure) is precisely how an inconvenient failed attempt disappears from a record.",
+      "evidence": [
+        "experiments/reasoning_posttraining_v1/budget.py"
+      ]
+    },
+    {
+      "id": "CL-051",
+      "topic": "The preservation bank contains 31 rows the qualified evaluation path cannot score, and the receipt calls them 'overlength' when none of them is",
+      "the_defect": "baseline.json reports rejected_overlength_rows: 31 for a bank whose longest prompt is 143 tokens against a 2048 window. Not one refusal is a length refusal. All 31 are 'only explicit system/user evidence is allowed': serialization.compile_row accepts exactly one system turn and one user turn, and those rows are MULTI-TURN. So part of a bank I built cannot be evaluated by the path that is qualified to evaluate it, and the receipt field name actively misdescribes why.",
+      "the_test": "Read the refusal reasons out of the receipt instead of trusting the field name. 31/31 are the multi-turn contract refusal, all from sub-bank (c), all with decision=answer.",
+      "the_result": "The loss is NOT random. Sub-bank (c)'s evaluated balance shifts from 96 answer / 96 abstain to 65 / 96, which raises its constant-abstain floor from 0.5000 to 0.5963. Every floor in the measurement is recomputed on the EVALUATED SUBSET for exactly this reason. The controller now records refusal_reasons, refused_by_family and refused_by_stratum, and the length_bias_warning text no longer claims all refusals are length refusals.",
+      "why_this_matters": "A non-random refusal that silently removes part of one stratum is worse than a length bias, because it changes the floor rather than just the sample. Had the floor been quoted from the full bank the reported gap would have been wrong in my favour by 0.04 on that sub-bank. The bank build should have screened multi-turn rows against the evaluation contract; it did not, and that is the defect.",
+      "not_fixed": "The 31 rows are NOT deleted from the bank and the bank is not rebuilt. They are legitimate preservation rows; it is the single-turn evaluation contract that cannot reach them. Recorded as a known scope limit instead of quietly shrinking the bank to match the tool.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
+    },
+    {
+      "id": "CL-052",
+      "topic": "The preservation baseline is BELOW its own trivial floor, which changes what P3 can ever mean",
+      "the_defect": "P3 was pre-registered as non-inferiority against the source, which is the correct definition of preservation. I did not anticipate that the source would be 0.2307 BELOW the trivial floor on this bank. Passing P3 therefore means only 'the arm did not make a bad thing worse'.",
+      "the_test": "Measure it. Source on RRP2-PRES-DEV at the qualified 2048 window: tolerant accuracy 0.2252 (166/737) against a 0.4559 same-subset floor reached by constant_abstain. Strict accuracy 0.0651.",
+      "the_result": "Registered before any arm exists: every P3 report must carry the absolute position against the floor alongside the non-inferiority verdict. 'Non-inferiority demonstrated' may not be reported as 'preservation is good'.",
+      "why_this_matters": "This is the third of three banks on which the source sits below trivial. Only Forge v1 is cleared (0.2553 against 0.1411). The coherent reading is that the model has some short-string reasoning in the v1 contract and fails wherever the contract demands strict JSON or calibrated abstention -- and a non-inferiority margin anchored to a below-floor baseline is a weak guarantee that must be labelled as one.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
+    },
+    {
+      "id": "CL-053",
+      "topic": "Zero evidence sensitivity: on 29 minimal pairs the model answered BOTH members, every time",
+      "the_defect": "Not a defect -- the headline behavioural finding, and the one the minimal pairs were built to expose.",
+      "the_test": "Each of the 40 pairs in sub-bank (c) differs only by whether the decisive fact is present: 'A car travels 30 mph for 4 hours. Distance?' against 'A car travels for 4 hours, but its speed is not given. Distance?'. 29 pairs survived the multi-turn refusals with both members present, and the pair is its own control.",
+      "the_result": "29 of 29 complete pairs: answers_regardless. evidence_sensitivity_rate 0.0000. evidence_sensitive 0, abstains_regardless 0, inverted 0. The model never once noticed that the fact it needed was absent.",
+      "corroborating_channels": "Across all 384 unanswerable rows it abstained only 96 times and answered anyway 288 times. And of the 96 abstentions, 48 used the wrong sentence: on ALL 48 conflicting-evidence rows it abstained but always with the missing-information sentence, never the conflict sentence -- 0 of 48 correct on SOURCES_CONFLICT. So it can detect unanswerability in the conflict case yet never reports the reason, and in the missing-fact case it does not detect it at all.",
+      "why_this_matters": "Row-level accuracy cannot distinguish 'inaccurate' from 'insensitive to evidence'. 0.2252 against a 0.4559 floor says the model is bad; the 29 pairs say something sharper and more actionable -- it is not reading the evidence for presence at all. That is a mechanism, not a score, and it is exactly what the first arm must move. It is also the channel most at risk FROM the arm: training the v2 abstention contract could raise abstention indiscriminately, which would show up here as abstains_regardless rather than as evidence_sensitive.",
+      "caveat": "29 pairs is a small unit count and the design's resolution floor needs 6 moving pairs to reach alpha (CL-046). A perfect 0/29 needs no test to be believed, but any future IMPROVEMENT on this channel will be power-limited.",
+      "evidence": [
+        "research/reasoning_posttraining_v1/evidence/inspection-20260915/RRP002_PRESERVATION_BASELINE.json"
+      ]
+    }
+  ]
+}

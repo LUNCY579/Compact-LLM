@@ -1,0 +1,39 @@
+{
+  "record": "SYNTHETIC_OPTIMIZER_STEP_BENCHMARK",
+  "recorded_utc": "2026-09-15T06:30:36.483796+00:00",
+  "why": "Size the watchdog timeout from measurement. The audit flagged that CpuAdamW.step moves ~3.8 GiB over PCIe and does single-threaded fp32 math over 314,618,880 elements per update, 105 updates per attempt, against a 2400 s worker ceiling.",
+  "what_this_is_not": "No model weights were loaded. No forward/backward ran. No optimizer step touched a real parameter. Synthetic zero tensors at the real tail-20 shapes only.",
+  "model_calls": 0,
+  "pretrained_optimizer_steps": 0,
+  "inventory_verified": {
+    "tail_tensors": 220,
+    "tail_parameters": 314618880
+  },
+  "threads": 1,
+  "dtype": "float32",
+  "per_step_seconds": {
+    "cpu_resident": [
+      3.33,
+      3.3,
+      3.33,
+      3.33
+    ],
+    "cuda_resident": [
+      2.45,
+      2.14,
+      2.19,
+      2.45
+    ]
+  },
+  "cuda_resident_median_seconds": 2.45,
+  "peak_vram_bytes_during_benchmark": 2538971136,
+  "projection": {
+    "updates_full_attempt": 105,
+    "updates_resume_attempt": 103,
+    "optimizer_only_seconds_full": 258,
+    "optimizer_only_seconds_resume": 253,
+    "optimizer_only_seconds_both": 510,
+    "note": "Optimizer cost only. Excludes model load, asset hashing, parameter_digest, forward/backward, probe generation and checkpoint writes."
+  },
+  "conclusion": "The optimizer is affordable inside the approved 2400 s worker ceiling; it is not the binding constraint. Remaining unknowns are measured by running the authorized qualify phase next."
+}

@@ -1,0 +1,91 @@
+name: XSC d82 exact-head mechanics only
+on:
+  push:
+    branches: [research/ced-cross-scale-remote-receipt-d82e27c-v1]
+    paths:
+      - '.github/workflows/xsc-d82-mechanical-receipt.yml'
+      - 'experiments/cross_scale_remote_receipt_d82_v1/receipt.py'
+      - 'experiments/cross_scale_remote_receipt_d82_v1/test_receipt.py'
+permissions:
+  contents: read
+concurrency:
+  group: xsc-d82-mechanics-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  mechanics:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      HF_HUB_OFFLINE: '1'
+      TRANSFORMERS_OFFLINE: '1'
+      HF_HUB_DISABLE_TELEMETRY: '1'
+      TOKENIZERS_PARALLELISM: 'false'
+      CUDA_VISIBLE_DEVICES: ''
+      OMP_NUM_THREADS: '1'
+      MKL_NUM_THREADS: '1'
+      PYTHONDONTWRITEBYTECODE: '1'
+      PYTEST_DISABLE_PLUGIN_AUTOLOAD: '1'
+    steps:
+      - name: Reserve attempt-specific evidence directory
+        shell: bash
+        run: |
+          set -euo pipefail
+          out="$RUNNER_TEMP/xsc-d82-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          mkdir "$out"
+          echo "XSC_EVIDENCE=$out" >> "$GITHUB_ENV"
+      - name: Checkout receipt tooling, not the tested model revision
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.sha }}
+          path: harness
+          persist-credentials: false
+          lfs: false
+          submodules: false
+      - name: Checkout the immutable subject
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: d82e27c48b2a75b3a9459148990127cd9b14a2e9
+          path: subject
+          persist-credentials: false
+          lfs: false
+          submodules: false
+      - uses: actions/setup-python@a26af69be951a213d495a4c3e4e4022e16d87065
+        with:
+          python-version: '3.13.5'
+      - name: Receipt validator self-tests, not model evidence
+        run: |
+          set -euo pipefail
+          python harness/experiments/cross_scale_remote_receipt_d82_v1/test_receipt.py 2>&1 | tee "$XSC_EVIDENCE/harness-tests.log"
+      - name: Install exact CPU runtime in an isolated environment
+        id: runtime
+        timeout-minutes: 6
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m venv "$RUNNER_TEMP/xsc-d82-venv"
+          py="$RUNNER_TEMP/xsc-d82-venv/bin/python"
+          {
+            "$py" -m pip install --disable-pip-version-check 'torch==2.10.0+cpu' --index-url https://download.pytorch.org/whl/cpu
+            "$py" -m pip install --disable-pip-version-check -r subject/experiments/cross_scale_ced_v1/requirements.txt
+            "$py" -m pip freeze --all
+          } 2>&1 | tee "$XSC_EVIDENCE/runtime-install.log"
+      - name: Exact 134-case subject receipt, zero skips required
+        if: ${{ always() && steps.runtime.outcome != 'skipped' }}
+        timeout-minutes: 13
+        shell: bash
+        run: |
+          set -euo pipefail
+          py="$RUNNER_TEMP/xsc-d82-venv/bin/python"
+          if [ ! -x "$py" ]; then py="$(command -v python)"; fi
+          "$py" harness/experiments/cross_scale_remote_receipt_d82_v1/receipt.py \
+            --subject "$GITHUB_WORKSPACE/subject" \
+            --output "$XSC_EVIDENCE/mechanics"
+      - name: Preserve failed and successful attempt evidence
+        if: ${{ always() && env.XSC_EVIDENCE != '' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
+        with:
+          name: XSC-d82-${{ github.run_id }}-attempt-${{ github.run_attempt }}
+          path: ${{ env.XSC_EVIDENCE }}/
+          if-no-files-found: error
+          retention-days: 30
+          overwrite: false

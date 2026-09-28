@@ -1,0 +1,45 @@
+{
+  "recorded_utc": "2026-09-15T22:11:09.505961+00:00",
+  "execution_head": "87beb552b02d83ed7282e14dd30b9978374f99f4",
+  "phase": "LAUNCH_REFUSED_BEFORE_RESERVATION",
+  "observed_refusal": "host RAM 5.17 GiB is below the 6.0 GiB train-profile pre-load guard for phase train",
+  "model_loaded": false,
+  "optimizer_steps": 0,
+  "model_calls": 0,
+  "quality_improvement_established": false,
+  "owned_model_worker_active": false,
+  "journal": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\a1-journal",
+  "budget": {
+    "used_or_reserved": {
+      "adaptive_model_selection_rounds": 0,
+      "cloud_or_teacher_spend": 0,
+      "evaluation_and_qualification_model_calls": 0,
+      "generated_tokens_all_candidates": 0,
+      "model_worker_launches": 0,
+      "model_worker_wall_seconds_and_conservative_gpu_seconds": 0,
+      "new_disk_bytes": 0,
+      "on_policy_rl_rollout_tokens": 0,
+      "processed_training_tokens_all_attempts": 0,
+      "retries": 0,
+      "total_owned_work_wall_seconds": 0
+    },
+    "active_reservations": [],
+    "budget_breached": false,
+    "remaining": {
+      "adaptive_model_selection_rounds": 1,
+      "cloud_or_teacher_spend": 0,
+      "evaluation_and_qualification_model_calls": 3000,
+      "generated_tokens_all_candidates": 262144,
+      "model_worker_launches": 2,
+      "model_worker_wall_seconds_and_conservative_gpu_seconds": 12000,
+      "new_disk_bytes": 10737418240,
+      "on_policy_rl_rollout_tokens": 0,
+      "processed_training_tokens_all_attempts": 4000000,
+      "retries": 1,
+      "total_owned_work_wall_seconds": 16000
+    }
+  },
+  "next_launch": "research/reasoning_posttraining_v1/rrp004/run_control.ps1 -RunId train-001",
+  "precondition": "At least 6 GiB available host RAM at the unchanged preload guard, adequate GPU/disk headroom, no conflicting model job; the worker checks again after importing the native runtime",
+  "goal": "ACTIVE_NOT_COMPLETE"
+}

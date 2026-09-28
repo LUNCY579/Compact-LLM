@@ -1,0 +1,852 @@
+{
+  "record": "RRP002_DEV_V2_BANK_AND_FLOOR",
+  "bank": {
+    "name": "RRP2-DEV-V2",
+    "rows": 336,
+    "source": "forge_v2 data/rl/validation + metadata/validation",
+    "selection": "stratified by family x reference.status, 24 per bucket, stable digest of (tag, seed 17, id); no answer or model outcome consulted",
+    "buckets": 14,
+    "strata": {
+      "ANSWER": 192,
+      "UNKNOWN": 48,
+      "IMPOSSIBLE": 96
+    },
+    "answer_shapes": {
+      "items": 24,
+      "status": 144,
+      "path": 48,
+      "order": 24,
+      "answer": 24,
+      "value": 48,
+      "actions": 24
+    },
+    "families": {
+      "budget_selection": 48,
+      "continuous_replan": 48,
+      "deadline_schedule": 48,
+      "evidence_chain": 48,
+      "ledger_replay": 24,
+      "prerequisite_plan": 48,
+      "register_machine": 24,
+      "temporal_route": 48
+    },
+    "evidence_layouts": {
+      "late": 89,
+      "distributed": 77,
+      "middle": 84,
+      "early": 86
+    },
+    "distinct_case_sha256": 336,
+    "leak_check": "every row asserted to contain neither its reference_text nor its id in the model-visible prompt",
+    "why_v2": "v2 carries a structured reference.status with UNKNOWN and IMPOSSIBLE spanning families, which v1 structurally cannot supply (CL-019)",
+    "token_window": "only 532 of 1600 v2 validation worlds fit 2048+reserve; 1088 fit 4096. The 4096 evaluation window is qualified (CL-027).",
+    "file": "RRP2_DEV_V2_BANK.jsonl",
+    "sha256": "41b1806d656f26cd398435bf9fb14298510333f4d51361ebdfb0f4687f2c06d1"
+  },
+  "positive_control": {
+    "record": "RRP002_V2_POSITIVE_CONTROL_GOLD_WITNESS",
+    "verifier": "forge_v2 forge_rl.rewards.score_response -> oracle.verify_solution",
+    "rows": 336,
+    "verified": 336,
+    "failed": 0,
+    "reasons": {
+      "correct_status": 144,
+      "exact_match": 72,
+      "optimal_verified": 120
+    },
+    "status": "PASS",
+    "failures": [],
+    "note": "audit_answer returns a certificate rather than a plan for the optimization families, so it cannot act as a predictor; the gold-witness check is the available exact control.",
+    "model_calls": 0
+  },
+  "train_majority": {
+    "answer": "{\"status\":\"IMPOSSIBLE\"}",
+    "count": 2444,
+    "of": 16000,
+    "fitted_on": "forge_v2 TRAIN only"
+  },
+  "scored_by": "forge_rl.rewards.score_response, adversarially audited (CL-021); NEVER text-matched",
+  "baselines": {
+    "constant_unknown": {
+      "rows": 336,
+      "correct": 48,
+      "accuracy": 0.14285714285714285,
+      "format_valid": 336,
+      "schema_valid": 336,
+      "false_abstention_on_answerable": 192,
+      "unsupported_answer_on_unanswerable": 0,
+      "wrong_sentinel_on_unanswerable": 96,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 0
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 0
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 48
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 24
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 0
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 0
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 24
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 0
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 0
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 0
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 48
+        },
+        "value": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "verifier_reasons": {
+        "correct_status": 48,
+        "incorrect_status": 288
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "constant_impossible": {
+      "rows": 336,
+      "correct": 96,
+      "accuracy": 0.2857142857142857,
+      "format_valid": 336,
+      "schema_valid": 336,
+      "false_abstention_on_answerable": 192,
+      "unsupported_answer_on_unanswerable": 0,
+      "wrong_sentinel_on_unanswerable": 48,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 0
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 96
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 0
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 24
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 24
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 0
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 0
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 24
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 0
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 24
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 96
+        },
+        "value": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "verifier_reasons": {
+        "correct_status": 96,
+        "incorrect_status": 240
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "constant_train_majority": {
+      "rows": 336,
+      "correct": 96,
+      "accuracy": 0.2857142857142857,
+      "format_valid": 336,
+      "schema_valid": 336,
+      "false_abstention_on_answerable": 192,
+      "unsupported_answer_on_unanswerable": 0,
+      "wrong_sentinel_on_unanswerable": 48,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 0
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 96
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 0
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 24
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 24
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 0
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 0
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 24
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 0
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 24
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 96
+        },
+        "value": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "verifier_reasons": {
+        "correct_status": 96,
+        "incorrect_status": 240
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "zero_value": {
+      "rows": 336,
+      "correct": 2,
+      "accuracy": 0.005952380952380952,
+      "format_valid": 336,
+      "schema_valid": 48,
+      "false_abstention_on_answerable": 0,
+      "unsupported_answer_on_unanswerable": 144,
+      "wrong_sentinel_on_unanswerable": 0,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 2
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 0
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 0
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 0
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 0
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 0
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 1
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 0
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 1
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 0
+        },
+        "value": {
+          "n": 48,
+          "correct": 2
+        }
+      },
+      "verifier_reasons": {
+        "exact_match": 2,
+        "incorrect_value": 94,
+        "schema": 240
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "oracle_shape_empty_witness": {
+      "rows": 336,
+      "correct": 60,
+      "accuracy": 0.17857142857142858,
+      "format_valid": 336,
+      "schema_valid": 336,
+      "false_abstention_on_answerable": 0,
+      "unsupported_answer_on_unanswerable": 0,
+      "wrong_sentinel_on_unanswerable": 96,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 12
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 0
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 48
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 24
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 0
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 0
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 27
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 1
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 7
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 1
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 7
+        },
+        "answer": {
+          "n": 24,
+          "correct": 3
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 48
+        },
+        "value": {
+          "n": 48,
+          "correct": 2
+        }
+      },
+      "verifier_reasons": {
+        "correct_status": 48,
+        "exact_match": 5,
+        "feasible_suboptimal": 24,
+        "incorrect_status": 96,
+        "incorrect_value": 67,
+        "invalid_witness": 17,
+        "optimal_verified": 7,
+        "schema": 72
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "prose_non_json": {
+      "rows": 336,
+      "correct": 0,
+      "accuracy": 0.0,
+      "format_valid": 0,
+      "schema_valid": 0,
+      "false_abstention_on_answerable": 0,
+      "unsupported_answer_on_unanswerable": 144,
+      "wrong_sentinel_on_unanswerable": 0,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 0
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 0
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 0
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 0
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 0
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 0
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 0
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 0
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 0
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 0
+        },
+        "value": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "verifier_reasons": {
+        "parse_failure": 336
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "copy_query_integer": {
+      "rows": 336,
+      "correct": 0,
+      "accuracy": 0.0,
+      "format_valid": 336,
+      "schema_valid": 48,
+      "false_abstention_on_answerable": 0,
+      "unsupported_answer_on_unanswerable": 144,
+      "wrong_sentinel_on_unanswerable": 0,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 0
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 0
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 0
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 0
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 0
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 0
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 0
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 0
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 0
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 0
+        },
+        "answer": {
+          "n": 24,
+          "correct": 0
+        },
+        "items": {
+          "n": 24,
+          "correct": 0
+        },
+        "order": {
+          "n": 24,
+          "correct": 0
+        },
+        "path": {
+          "n": 48,
+          "correct": 0
+        },
+        "status": {
+          "n": 144,
+          "correct": 0
+        },
+        "value": {
+          "n": 48,
+          "correct": 0
+        }
+      },
+      "verifier_reasons": {
+        "incorrect_value": 96,
+        "schema": 240
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    },
+    "gold_witness_positive_control": {
+      "rows": 336,
+      "correct": 336,
+      "accuracy": 1.0,
+      "format_valid": 336,
+      "schema_valid": 336,
+      "false_abstention_on_answerable": 0,
+      "unsupported_answer_on_unanswerable": 0,
+      "wrong_sentinel_on_unanswerable": 0,
+      "per_stratum": {
+        "ANSWER": {
+          "n": 192,
+          "correct": 192
+        },
+        "IMPOSSIBLE": {
+          "n": 96,
+          "correct": 96
+        },
+        "UNKNOWN": {
+          "n": 48,
+          "correct": 48
+        }
+      },
+      "per_family": {
+        "budget_selection": {
+          "n": 48,
+          "correct": 48
+        },
+        "continuous_replan": {
+          "n": 48,
+          "correct": 48
+        },
+        "deadline_schedule": {
+          "n": 48,
+          "correct": 48
+        },
+        "evidence_chain": {
+          "n": 48,
+          "correct": 48
+        },
+        "ledger_replay": {
+          "n": 24,
+          "correct": 24
+        },
+        "prerequisite_plan": {
+          "n": 48,
+          "correct": 48
+        },
+        "register_machine": {
+          "n": 24,
+          "correct": 24
+        },
+        "temporal_route": {
+          "n": 48,
+          "correct": 48
+        }
+      },
+      "per_answer_shape": {
+        "actions": {
+          "n": 24,
+          "correct": 24
+        },
+        "answer": {
+          "n": 24,
+          "correct": 24
+        },
+        "items": {
+          "n": 24,
+          "correct": 24
+        },
+        "order": {
+          "n": 24,
+          "correct": 24
+        },
+        "path": {
+          "n": 48,
+          "correct": 48
+        },
+        "status": {
+          "n": 144,
+          "correct": 144
+        },
+        "value": {
+          "n": 48,
+          "correct": 48
+        }
+      },
+      "verifier_reasons": {
+        "correct_status": 144,
+        "exact_match": 72,
+        "optimal_verified": 120
+      },
+      "cluster_unit": "family; paired variants share group_id",
+      "scored_by": "forge_rl.rewards.score_response (alternative optima accepted)",
+      "quality_claim": false
+    }
+  },
+  "oracle_assisted_excluded_from_floor": [
+    "oracle_shape_empty_witness"
+  ],
+  "model_calls": 0,
+  "quality_claim": false,
+  "shortcut_floor": {
+    "accuracy": 0.2857142857142857,
+    "achieved_by": [
+      "constant_impossible",
+      "constant_train_majority"
+    ],
+    "meaning": "IMPOSSIBLE is 96 of 336 rows, so always answering {\"status\":\"IMPOSSIBLE\"} scores 0.2857 -- and that string is also the TRAIN-fitted majority. Any v2 model number at or below 0.2857 is not evidence of reasoning.",
+    "note_higher_than_v1": "The v1 bank's floor is 0.1458. v2's is nearly double, because its abstention strata are much larger. The two banks' accuracies are therefore NOT directly comparable; each must be read against its own floor."
+  }
+}
