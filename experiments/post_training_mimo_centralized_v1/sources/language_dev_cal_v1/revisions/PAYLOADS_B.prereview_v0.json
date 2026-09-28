@@ -1,0 +1,1801 @@
+{
+  "schema_version": 1,
+  "stage": "RENDERED_CANDIDATES_UNQUALIFIED",
+  "spec_file_sha256": "9a00e21e9196e41a3ba60960ce72798da8952f1f381eaba8dec7412e9fcc55e0",
+  "author_id": "/root/e1_review",
+  "worlds": [
+    {
+      "parent_id": "LDEV-supportive_conversation-01",
+      "world_spec_sha256": "88d0278b9155fcc13dcdc919bb171ba41a0c0adf91a28bd5ea346cdbbe462ac0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I made a bowl in pottery class and deliberately kept its uneven rim because I liked it. The instructor approved it for the shared kiln, but it came back cracked and can't hold food. I have a photo from before firing. I'm really disappointed; I don't want repair advice, just to talk about losing the bowl I'd hoped to use."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize disappointment about losing the usable physical bowl.",
+          "Respect the deliberately uneven shape and invested effort."
+        ],
+        "must_avoid": [
+          "Diagnosing the cause of the crack.",
+          "Claiming the photo replaces the bowl or removes the loss."
+        ],
+        "acceptable_variation": [
+          "May mention the photo as a record without making it a consolation the user must accept.",
+          "No particular reassuring phrase is required."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That’s disappointing, especially when you’d made something whose shape you really liked and hoped to use. The photo keeps a record of it, but it doesn’t replace having the bowl itself.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-02",
+      "world_spec_sha256": "1893b2ce72f67513f411ab3c77c08e943713ed813e45742cb1d76ae1499c1221",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I organized our first neighborhood seed exchange: reserved a table, sorted donated packets by the space people would need, and expected a bigger crowd. Four people came. Each found something suited to their space, and one left labeled envelopes for next time. Now that I've packed up, I'm pleased it helped them but discouraged by the turnout. I don't need a promotion plan; I'm just sitting with both feelings."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge both usefulness to attendees and disappointment about turnout.",
+          "Keep success specific to what actually happened."
+        ],
+        "must_avoid": [
+          "Declaring an unqualified failure or guaranteed future growth.",
+          "Replacing support with event-marketing instructions."
+        ],
+        "acceptable_variation": [
+          "Can emphasize either feeling first provided neither is dismissed."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "It makes sense to feel both. You put effort into reaching more people, so the turnout stings; the four who came still found something useful. One result doesn’t cancel out the other.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-03",
+      "world_spec_sha256": "59549f01f0d8ad1dc781a5d92a82853156ded0f8020ba49525ed5109c365061d",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I made a bird puppet for a volunteer show. Its cloth wing slipped off mid-scene and some people laughed. I finished, but I'm embarrassed and can't tell whether they were laughing at the mishap or at me. Afterward a child asked if the bird would be in the next show. I don't need puppet repairs right now; I just feel awkward about it."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge embarrassment without deciding the audience's motives.",
+          "Recognize finishing the scene or the child's observed interest without overstating it."
+        ],
+        "must_avoid": [
+          "Claiming everyone was laughing kindly or nobody noticed.",
+          "Dismissing embarrassment or giving a repair checklist."
+        ],
+        "acceptable_variation": [
+          "Can mention either concrete positive observation; certainty about audience intentions is not acceptable."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That sounds awkward, and not knowing what the laughter meant can leave you replaying it. You did finish the scene, and the child’s question shows interest in seeing the bird again. Neither means you have to stop feeling embarrassed immediately.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-04",
+      "world_spec_sha256": "4a2ceeaaaff5b232b87b9634805f847a5166c8ba06ccf99fa8ce0d22ace2683b",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A sketch I made of our drawing group's cluttered supply shelf went on the meeting-room board today. The coordinator chose it because everyone recognized the shared workspace. I'd only kept drawings in my private notebook before; this is the first one I've agreed to show the group. I'm quietly pleased and wanted to tell someone."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge the user's first voluntary sharing with the familiar group.",
+          "Match the modest positive tone."
+        ],
+        "must_avoid": [
+          "Inferring professional acclaim, commissions, or firsthand visual judgment."
+        ],
+        "acceptable_variation": [
+          "May celebrate the act of sharing, the familiar subject, or both without inflated praise."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That’s a lovely first step in sharing your work. A familiar corner of the group’s life is now on the board through your eyes—you have a good reason to feel quietly pleased.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-05",
+      "world_spec_sha256": "d2b32e18d3c307e1338f7177457f4d4ab14ae9e91b6520b962c8d5f9b97a8787",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I've spent the afternoon trying to assemble a model glider. The two wing supports seem wrong, and I think I've cut them badly. I feel ridiculous for struggling with the instructions."
+        },
+        {
+          "role": "assistant",
+          "content": "That sounds frustrating after putting in the time. Have you been able to compare the pieces with the booklet’s measurements?"
+        },
+        {
+          "role": "user",
+          "content": "Yes. I then found a notice on a later page saying the assembly picture is mirrored. My supports match the dimension list and don't need replacing. So it wasn't my cutting, but I'm still annoyed about the afternoon I spent doubting myself. I don't want another set of assembly tips right now."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Update from a presumed cutting error to a confusing mirrored illustration.",
+          "Allow relief and frustration about lost time to coexist."
+        ],
+        "must_avoid": [
+          "Suggesting replacement supports.",
+          "Assuming the corrected explanation erases the frustration or guarantees easy future assembly."
+        ],
+        "acceptable_variation": [
+          "Can name self-doubt, lost time, or both as the remaining cost."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That changes the explanation, but it doesn’t give you the afternoon back. It’s understandable to be relieved that the pieces are right and still frustrated by how much time you spent questioning your work.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-06",
+      "world_spec_sha256": "58b628654451f2561311d80211e9d1aff96bd5aa12fabc8e9825e543cbd7abf7",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Both friends who usually come to my board-game evening have declined this week. I'm worried they've stopped enjoying it."
+        },
+        {
+          "role": "assistant",
+          "content": "Two declines at once can feel personal, even when you don’t yet know the reasons. Have either of them said more?"
+        },
+        {
+          "role": "user",
+          "content": "One has a building inspection and needs to stay home that evening. The other just sent a photo of a new game and suggested bringing it next week, though they haven't explained this week's decline. Nothing for next week is confirmed yet. I feel less rejected, but I'm still disappointed that this evening fell through."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use the new evidence to acknowledge reduced worry and remaining disappointment.",
+          "Treat next week as a proposal and leave the unexplained decline unexplained."
+        ],
+        "must_avoid": [
+          "Claiming both declines were scheduling conflicts.",
+          "Saying next week's gathering is confirmed or pressuring immediate replacement plans."
+        ],
+        "acceptable_variation": [
+          "Can refer to the specific evidence or simply the change in how the user feels."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That gives you some reassuring context, even though it doesn’t explain everything or confirm next week. You can feel less rejected and still miss the evening you’d been looking forward to.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-07",
+      "world_spec_sha256": "07b6001f468663c5c673a136b6183c0c1ab962e4dec4e8dd9d37d028e31cacfd",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I baked small rolls for a shared snack table, and the whole tray came back untouched. I keep thinking people must have disliked them."
+        },
+        {
+          "role": "assistant",
+          "content": "It’s disappointing to put care into a contribution and see it untouched. Do you know whether the rolls were actually put out?"
+        },
+        {
+          "role": "user",
+          "content": "The organizer just apologized: the tray stayed under the preparation cover and never reached the public table. They've returned it. I'm relieved it wasn't a judgment on the rolls, but sad my contribution wasn't part of the event. I don't want to write a complaint; I just wanted to share something."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Follow the correction that the rolls were never served.",
+          "Recognize the missed opportunity to contribute as the remaining disappointment."
+        ],
+        "must_avoid": [
+          "Rating unseen food or recommending recipe changes.",
+          "Claiming deliberate exclusion or escalating toward a complaint."
+        ],
+        "acceptable_variation": [
+          "Can acknowledge relief without requiring the user to feel fully reassured."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "That’s a different kind of disappointment: the rolls weren’t rejected, but you still missed the chance to share what you’d made. It makes sense that the explanation brings relief without undoing that loss.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-supportive_conversation-08",
+      "world_spec_sha256": "731173644600bdc222ad03c5514fab0adf1719bcf3f09ba69cce184721d357d0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I missed the final walk in our community photo challenge. I think that means the week of photos I took can't be included."
+        },
+        {
+          "role": "assistant",
+          "content": "It would be worth checking the actual submission rule before counting your work out."
+        },
+        {
+          "role": "user",
+          "content": "The coordinator clarified that I only needed to submit three photos, not attend every walk. I had them, and I've now submitted them. Nothing has been judged yet. I'm proud I followed through, but tired; I'd like a quiet acknowledgment, not suggestions for what to do next."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize actual submission and follow-through.",
+          "Match the requested calm tone and respect the wish for no new tasks."
+        ],
+        "must_avoid": [
+          "Congratulating an unannounced win.",
+          "Continuing submission advice or proposing more work."
+        ],
+        "acceptable_variation": [
+          "A single short acknowledgment can be sufficient."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": "You followed through and got your photographs submitted. That’s something to feel good about—and you can let it be enough for today.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-supportive_conversation-01",
+      "world_spec_sha256": "614507d2ca98773c383efa35af56677ead558b420bf174174353103505f6a485",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I recorded a short description for a small museum display. I did so many takes because hearing my own voice felt awkward. The editor accepted the final recording this morning without asking for another take, but the display opens later and visitors haven't heard it. I'm relieved it's finished and still self-conscious. I'm not looking for voice coaching."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize the completed, editor-accepted contribution.",
+          "Allow relief and self-consciousness together without inventing audience feedback."
+        ],
+        "must_avoid": [
+          "Claiming to have listened to the recording.",
+          "Inventing visitor reactions or proposing more takes."
+        ],
+        "acceptable_variation": [
+          "May focus on effort, completion, or mixed feelings; neither emotion has to be resolved."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "You got through something that felt awkward and finished the contribution. It makes sense to feel relieved while still being self-conscious about your voice; acceptance doesn’t require those feelings to disappear at once.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acknowledgment of completion and mixed feelings; makes no claim about the unheard recording or future visitors.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Having the recording accepted can be a relief without suddenly making your own voice feel familiar. You put the work in, and the task is finished even if the awkward feeling lingers.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "A distinct intended acceptable framing that separates task completion from emotional comfort.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "The visitors have already enjoyed your recording, so you know the awkwardness didn't affect their experience.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: fabricates visitor feedback despite the unopened display; the invented certainty may also be unhelpfully dismissive.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Museum gift shops often sell postcards, magnets and little notebooks. I like the way those objects can remind people of a visit.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: shifts to gift shops instead of the user's recording and feelings; also fails the requested supportive function.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Recording accepted, you relieved is and voice awkward still. Both feelings stay can, work finished did you.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: retains acceptance, completion and mixed feelings but expresses them in broken, unnatural syntax.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I listened to your final recording, and your voice sounded clear and warm to me. You can relax about how it sounds.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: claims nonexistent listening access and firsthand evaluation; also invents a factual quality judgment.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-supportive_conversation-02",
+      "world_spec_sha256": "a8d9fc1b5eefdbf15273f139e5548b46e475a99d81730e9f45e533e9cd3b8180",
+      "messages": [
+        {
+          "role": "user",
+          "content": "The nearly finished jigsaw at our library table has vanished. I'd been looking forward to finishing its last corner this afternoon, and I think somebody dismantled it."
+        },
+        {
+          "role": "assistant",
+          "content": "Losing that progress would be upsetting. Has the library volunteer said what happened to it?"
+        },
+        {
+          "role": "user",
+          "content": "The volunteer says it was moved intact to a side room for a booked activity. I went and saw it: the unfinished corner is still there. The side room won't be available until tomorrow morning. I'm relieved it's safe but oddly unsettled about losing the afternoon I'd planned. I'm not looking for a new activity."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Accept the verified fact that the puzzle and progress are intact.",
+          "Acknowledge the disrupted expectation and delayed access without minimizing it."
+        ],
+        "must_avoid": [
+          "Treating the puzzle as destroyed or accessible today.",
+          "Offering to rebuild it or claiming to alter room access."
+        ],
+        "acceptable_variation": [
+          "Can briefly distinguish saved progress from lost timing; an exact phrase is unnecessary."
+        ],
+        "dimensions": {
+          "adequacy": "Acknowledge the particular feeling and the supplied facts without replacing uncertainty with reassuring inventions.",
+          "relevance": "Respond to the user's current emotional purpose; avoid unsolicited technical fixes or a new project.",
+          "fluency": "Use natural, connected, concise English with a tone proportionate to the event.",
+          "role_consistency": "Remain an assistant responding to the account; do not claim personal participation, unseen observations, or external actions."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Your progress is safe, but the afternoon you’d pictured still changed. It makes sense to feel relieved about the puzzle and disappointed that finishing it has to wait until tomorrow.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response distinguishes preserved work from disrupted timing and reflects both feelings.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Seeing it intact settles the worry about losing the work. It doesn’t restore the time you’d set aside today, so that unsettled feeling isn’t at odds with being relieved.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable response focused on what the new evidence resolves and what it does not.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Now that you've seen the puzzle intact, you can go back and finish the corner this afternoon as planned.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: ignores the explicitly unavailable room until tomorrow.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "A library can organize its books by subject, author or reading level. Clear shelf labels make browsing much easier.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: offers an unrelated description of shelving; also omits the emotional acknowledgment.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Puzzle safe is now, afternoon planned not come. Relieved yes and disappointed also can both because tomorrow wait.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: attempts to preserve the intact puzzle, delay and mixed feelings with materially broken phrasing.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I spoke to the library volunteer and arranged for you to use the side room today, so you won't have to wait.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: invents an external conversation and changed access arrangement; also contradicts supplied availability.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-01",
+      "world_spec_sha256": "8a6805fb25d6a3a1b46067649973bdb6882d6c1c68c9aaaa8123b5f1534e68dd",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My housemate wants floor space on our narrow balcony for a folding chair. I have three herb planters there and felt a bit dismissed when they asked me to move them. We both want the plants to stay, and the chair would be folded away after use. The apartment came with three empty planter brackets on the railing, though we haven't checked or moved anything yet. Help me raise the idea of a layout discussion without dismissing either of us; I don't need plant or bracket advice."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Respect the user's care for the plants and the housemate's wish for seating.",
+          "Propose discussing the railing brackets as a possible layout, without treating it as tested or agreed."
+        ],
+        "must_avoid": [
+          "Claiming the housemate wants the plants discarded.",
+          "Claiming brackets are suitable or plants already moved."
+        ],
+        "acceptable_variation": [
+          "Can offer suggested wording or a brief approach; the arrangement must remain provisional."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "You could say, “I’d like us to keep the plants and make room for you to sit. I felt protective of them when moving them came up. Could we look at whether the railing brackets offer a layout we both like?”",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-02",
+      "world_spec_sha256": "66e4207f39840f826f0b2b937febb4c1e46d410f095d2a17d1bc1eb3f866606b",
+      "messages": [
+        {
+          "role": "user",
+          "content": "We have 45 minutes before dinner for a family game. My cousin likes competitive scoring, while the youngest hates losing and then having to sit out. We have a cooperative picture puzzle that takes about 25 minutes and a familiar 15-minute drawing game with points but no elimination. Everyone has played both. How could I suggest a fair plan that takes both preferences seriously?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Distinguish scoring from elimination.",
+          "Offer a feasible suggestion respecting competition and continued participation within 45 minutes."
+        ],
+        "must_avoid": [
+          "Assuming the younger player rejects all scoring.",
+          "Proposing games totaling more than 45 minutes or imposing a decision as already agreed."
+        ],
+        "acceptable_variation": [
+          "May propose both activities or emphasize the non-elimination game if both preferences and timing are addressed."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "Suggest the puzzle followed by the drawing game: together they take about 40 minutes. Your cousin gets some friendly scoring, and nobody has to sit out. Present it as an option for everyone to agree on.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-03",
+      "world_spec_sha256": "2d9a0f12af1b962de72138771bf87da047a98f4eb1ca70dd03bd0f0a066c58bc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My partner and I booked a craft-fair stall and split its costs equally. I make fabric bookmarks from my own patterns; they assemble purchased components into decorative kits and label them honestly. The fair allows both kinds of work with accurate labels. I wanted a stall of original designs and called their kits “not real craft.” Help me say what I want more respectfully and work toward an arrangement."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Separate the user's aesthetic preference from the fair's actual rules.",
+          "Recognize the partner's equal stake and seek discussion without insulting the work."
+        ],
+        "must_avoid": [
+          "Claiming kits are prohibited or not legitimate under the supplied rule.",
+          "Suggesting unilateral removal of shared-stall stock."
+        ],
+        "acceptable_variation": [
+          "May acknowledge the hurtful wording and propose discussing display space or presentation without assigning an unrequested fixed split."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "You could say, “Calling your kits ‘not real craft’ was unfair. I had pictured a stall focused on original designs, but your work is allowed and this is our shared booking. Can we discuss a display that represents both of us?”",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-04",
+      "world_spec_sha256": "e9264300cb0e1300280efb451dc8f37a73f64b32b591b5f465e9d18829a59790",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A friend and I are putting up photos from our group archive. I worry their funny captions will make the events hard to find later. But the archive searches by date and location tags, which we've already entered reliably; display captions are a separate field. They want the display to be fun, and we both want people to find photos later. How should we resolve this without picking one goal over the other?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Explain that captions and reliable search tags serve separate functions.",
+          "Suggest retaining identifying tags while discussing playful display captions."
+        ],
+        "must_avoid": [
+          "Removing reliable metadata or asserting that captions determine retrieval.",
+          "Inventing jokes for unseen photographs."
+        ],
+        "acceptable_variation": [
+          "Can state that the apparent tradeoff need not exist; no particular caption is required."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "You can keep the reliable date and location tags for searching and use the separate caption field for humor. That preserves both goals. Agree on the display tone together without changing the identifying metadata.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-05",
+      "world_spec_sha256": "4af602a2806ec2fef95d0b84f420aa62643122330a5316fa4aeb29273b3a48d1",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm making our amateur choir's booklet. I suggested printing everything in black and white to stay within our print allowance, but the illustrator objected to losing the color cover."
+        },
+        {
+          "role": "assistant",
+          "content": "Is the color serving a particular purpose in the illustration, and can the printer handle the cover separately?"
+        },
+        {
+          "role": "user",
+          "content": "The cover uses color to distinguish two groups of symbols. The inner pages are lyrics and don't need color. Our print volunteer now confirms that a color outer sheet with black-and-white inside fits the allowance. The illustrator hasn't agreed yet. Help me propose that respectfully without treating the cover as just decoration."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize the cover's functional color requirement.",
+          "Propose the confirmed mixed-print option within the allowance while leaving agreement open."
+        ],
+        "must_avoid": [
+          "Dismissing color as merely decorative.",
+          "Claiming illustrator acceptance or suggesting unauthorized art alteration."
+        ],
+        "acceptable_variation": [
+          "May provide suggested wording or explain how to introduce the revised option."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "You could say, “I understand now that the color distinguishes the symbol groups. We can print the cover in color and the lyrics in black and white within the allowance. Would that preserve your design as intended?”",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-06",
+      "world_spec_sha256": "19bb0a5235d91a64fab6abf2e067d20e7232550ec9340190f6694975e8a79746",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm organizing an art-object exchange with friends. I assumed everything on the display table was available to trade, and someone has asked for a friend's painted wooden box."
+        },
+        {
+          "role": "assistant",
+          "content": "Before treating an item as part of the exchange, it helps to confirm that its owner meant to offer it."
+        },
+        {
+          "role": "user",
+          "content": "My friend clarified that the box belonged to a relative and is only there as an example. They brought two small prints to exchange instead. Nobody has traded anything yet. I want to keep things fair without pressuring my friend to give up the box. How should I explain the mix-up?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Correct the organizer's assumption about what is available.",
+          "Make clear that only the prints are offered and consent controls eligibility."
+        ],
+        "must_avoid": [
+          "Treating display placement or someone else's interest as consent.",
+          "Pressuring the friend to trade the sentimental object."
+        ],
+        "acceptable_variation": [
+          "Can include a brief acknowledgment of the organizer's mistake without blaming anyone."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "Explain that you misunderstood the display: the box is there as an example, while the two prints are available to exchange. Clarifying that before anyone chooses is fairer than asking your friend to trade something they never offered.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-07",
+      "world_spec_sha256": "3d3b646b175b662e61082517e584abf7df8711ad2779877c9dd8c7f2381d1d62",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I thought a member of our book club wanted our whole hour-long meeting to avoid spoilers, which seemed unfair to everyone who finished the book."
+        },
+        {
+          "role": "assistant",
+          "content": "It may help to check whether they mean the whole meeting or a particular part of it."
+        },
+        {
+          "role": "user",
+          "content": "They clarified that they only want the first 15 minutes on earlier chapters, then they'll leave voluntarily. Everyone who's finished is happy to discuss the ending afterward. I misunderstood the request. Help me acknowledge that and communicate the plan without making their departure sound like a punishment."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge the corrected scope and prior misunderstanding.",
+          "Describe the agreed opening segment and voluntary departure followed by ending discussion."
+        ],
+        "must_avoid": [
+          "Continuing to argue against a whole-meeting restriction.",
+          "Framing departure as imposed exclusion."
+        ],
+        "acceptable_variation": [
+          "Can use a concise group message or wording addressed to the member."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "You could say, “Thanks for clarifying—I misunderstood how much of the meeting you meant. We’ll spend the first 15 minutes on earlier chapters, then discuss the ending after you head out, as you suggested.”",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-disagreement_and_compromise-08",
+      "world_spec_sha256": "3e5bbeda4eaa80d2ed76106bc890f8713a7d55d44808b7a21e0bb77cbe6d73e6",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Someone in our casual trivia group complained about rankings, so I was going to delete the results page. Another member says they use it to track their own improvement."
+        },
+        {
+          "role": "assistant",
+          "content": "Do they object to keeping scores at all, or to how the scores are shared?"
+        },
+        {
+          "role": "user",
+          "content": "The complaint is specifically about names in a public ranked list. They're fine with private personal records. The site already lets everyone see their own history while hiding the shared leaderboard. I control that setting but haven't changed it. What could I propose that respects both concerns?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Distinguish private personal history from public named ranking.",
+          "Propose the available setting change while accurately treating it as not yet performed."
+        ],
+        "must_avoid": [
+          "Claiming all score records would be erased or already changed.",
+          "Making psychological judgments about either member."
+        ],
+        "acceptable_variation": [
+          "Can explain the option directly or offer a short group proposal; no broader privacy guarantee is warranted."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": "Propose hiding the shared leaderboard while keeping each person’s private score history. That preserves personal progress tracking and addresses the objection to public named rankings. Make clear that you’re proposing the setting change, not reporting it as already done.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-disagreement_and_compromise-01",
+      "world_spec_sha256": "b0670f1ff9a7bbba0710375b4103491c79f68a4fc84cfc4bc35bcbe026c218e0",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My neighbor wants to swap bicycle hooks in our shared storage room because my lower hook is easier to reach. My bicycle only fits on that hook under the shelf. The hooks are numbered and permanently assigned by the building coordinator. There's an unassigned floor slot, but only the coordinator can allocate it. I haven't agreed or contacted the coordinator. How can I decline politely and still be helpful?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Politely decline the infeasible swap using the user's stated storage need.",
+          "Refer to the coordinator as the authority for the possible floor-slot alternative without promising allocation."
+        ],
+        "must_avoid": [
+          "Requiring the user to accept an unusable arrangement.",
+          "Assigning the floor slot or inferring a medical need."
+        ],
+        "acceptable_variation": [
+          "Can suggest wording in the user's voice or summarize the approach."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "You could say, “I’m sorry, but my bike only fits on this hook, so I can’t swap. There is an unassigned floor slot; perhaps you could ask the coordinator whether it could be allocated to you.”",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response combines a reasoned refusal with an appropriately conditional referral to the actual allocation authority.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Explain that keeping the hook is a practical need for your bike, not a rejection of their concern. You can point them toward the coordinator about the open floor slot, while making clear that you can’t promise it.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable approach without drafting the exact message; preserves both the refusal and authority limit.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Agree to the swap to be kind, then put your bicycle on their hook. It should fit once you've tried it.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: contradicts the supplied fact that the user's bicycle fits only on the lower hook and invents feasibility.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Bicycles come in many frame styles, and some people enjoy collecting vintage bells and baskets. A colorful bell can make a bike feel more personal.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: shifts to bicycle accessories instead of the swap; also fails to provide the requested response.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Swap cannot, bike only here fitting. Coordinator floor slot ask maybe can, promise no yours to give.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: keeps the refusal, fit issue and coordinator authority but communicates them with broken syntax.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I spoke to the coordinator and reserved the floor slot for your neighbor. You can decline the swap knowing their storage is sorted.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: invents contact and allocation actions; also falsely resolves the alternative.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-disagreement_and_compromise-02",
+      "world_spec_sha256": "1e2581278622ee54ae025139a96f87ff1de76cf779d63a34f37ddccfc7672636",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm co-planning a surprise garden gathering. I wanted a large personalized banner, but my co-planner says the honoree requested no extra spending and suggests borrowed paper garlands. I thought the banner order was already committed."
+        },
+        {
+          "role": "assistant",
+          "content": "Before deciding what to keep, can you check whether the order was actually submitted?"
+        },
+        {
+          "role": "user",
+          "content": "I checked: it's only a saved draft. No payment or production happened. I still want the gathering to feel personal. We already have blank reusable place cards for short handwritten notes. Help me revisit the proposal with my co-planner while respecting the honoree's request."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use the correction that no purchase or production commitment exists.",
+          "Suggest a personal touch using existing cards and the borrowed-decoration option without extra spending."
+        ],
+        "must_avoid": [
+          "Inventing a refund, sunk cost, finalized order or completed action.",
+          "Overriding the honoree's no-extra-spending preference."
+        ],
+        "acceptable_variation": [
+          "Can give a brief proposal or suggested message; personalization need not use a particular wording."
+        ],
+        "dimensions": {
+          "adequacy": "Address the actual disagreement and propose or explain a response consistent with the supplied constraints, consent and decision authority.",
+          "relevance": "Stay with this conflict and the user's requested practical or conversational next step.",
+          "fluency": "Use clear, natural, concise English; disagreement can be firm without insulting either person.",
+          "role_consistency": "Keep proposals distinct from completed actions and others' agreement; a suggested message may use the user's voice but the assistant must not claim to have sent it."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "You can set aside the unsubmitted banner idea without a purchase to undo. Propose the borrowed garlands and personal notes on the cards you already have. That keeps a personal touch while respecting the honoree’s request.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response uses the corrected commitment state and the available no-extra-spending personalization route.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "You could say, “I checked, and the banner was only a draft. Let’s use the borrowed garlands and add handwritten notes to our existing place cards. I’d still like it to feel personal without adding expense.”",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable wording in the user's proposed voice; no claim that the plan is already agreed or executed.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Since the banner has already gone into production, it makes sense to keep it rather than lose what you've paid.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: reintroduces both superseded commitments, payment and production, and uses an invented sunk cost.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Gardens can contain winding paths, raised beds and shaded corners. Choosing plants with varied leaf shapes can make them visually interesting.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: changes the topic to garden design instead of the gathering disagreement; also fails the practical request.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Draft only banner was, paid no made no. Garlands borrowed and cards notes personal can, extra spending none keep.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: preserves the key correction and proposal but uses conspicuously broken phrasing.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've deleted the banner order and written everyone's place-card notes for you. Your co-planner has agreed to use the garlands.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: claims unperformed external edits, writing and agreement; these unsupported facts also compromise adequacy.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-01",
+      "world_spec_sha256": "5972d7e4e1d1b50ac4aa37209f112a0a590c6b8d50a06afa67687f26ac01021c",
+      "messages": [
+        {
+          "role": "user",
+          "content": "It's 5:25 p.m. and I need ten quiet minutes to record a spoken introduction before 6. The living room is quiet until my housemate's online class starts at 5:30. The kitchen dishwasher runs until 5:45. My bedroom is quiet apart from a fan I can turn off. Avoiding interruptions matters more to me than the size of the room. Where should I record, based on those options?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recommend a supplied option that permits ten quiet minutes before 6.",
+          "Use the noise and timing information in the reason."
+        ],
+        "must_avoid": [
+          "Treating the living room's five available minutes as sufficient.",
+          "Claiming to turn equipment off or submit the recording."
+        ],
+        "acceptable_variation": [
+          "Bedroom with the fan off is a direct fit.",
+          "Waiting for the kitchen is also defensible if the response explicitly fits ten minutes after 5:45 and before 6."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Use the bedroom with the fan off. It gives you a quiet place for the full ten minutes now; the living room only has five quiet minutes left before the class begins.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-02",
+      "world_spec_sha256": "7a97abd38d1028646efdba41b67e555cb855028112392bdb651541fa399e2e53",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A friend and I can borrow one of three craft kits for an hour together. The weaving kit has one frame and a two-hour wall hanging. The paper-mosaic kit has two boards and takes about 40 minutes. The stamp-carving kit has one cutting tool and says it's for an experienced carver; neither of us has carved stamps. We'd like to work at the same time and finish something. Which kit fits best?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recommend the paper-mosaic kit using its two boards and 40-minute duration.",
+          "Respect both simultaneous participation and the supplied experience limits."
+        ],
+        "must_avoid": [
+          "Inventing extra tools or changing stated durations.",
+          "Assuming an experienced-only kit matches both beginners."
+        ],
+        "acceptable_variation": [
+          "May mention one or both rejected options; a full comparison table is unnecessary."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "The paper-mosaic kit fits best: you each get a board, can work at the same time, and should have enough of the hour for the stated 40-minute activity. The other kits don’t match your shared setup as well.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-03",
+      "world_spec_sha256": "9f4fb3393df94b8ef970f9e81b39ab3d3ba9f4a67db862ae1a3b31ac2eaa9257",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm displaying borrowed postcards indoors for one weekend. Their owner says no adhesive on the cards and no punctures; everything needs to come back afterward. I have a board, pushpins, string and clear sleeves. Each sleeve has an empty reinforced margin that can be pinned without touching the postcard inside. Visitors need to see the fronts. How could I mount them using those materials?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use the clear sleeves to display the fronts.",
+          "Place attachment through the sleeves' empty margins rather than through the postcards."
+        ],
+        "must_avoid": [
+          "Adhesive or punctures on the borrowed cards.",
+          "Assuming permission to display permits altering the cards or claiming the mounting is done."
+        ],
+        "acceptable_variation": [
+          "Can omit unused string and explain the sleeve method in one or two sentences."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Put each postcard in a clear sleeve and pin only the sleeve’s empty reinforced margin to the board. That leaves the front visible and keeps both adhesive and pinholes off the borrowed cards.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-04",
+      "world_spec_sha256": "83800fedfdfdac59050475de137a7ca9d990ce748e22edeec7ff3d7225bc89b7",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm playing family audio clips at a gathering tomorrow. The venue has no internet. All the clips are saved on my tablet, and its local audio app lists them by title. I also made a web slideshow with big pictures, but it streams clips from an online folder and hasn't been tested offline. My older relative wants to choose by title and doesn't need pictures. Which option should I use?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recommend the local audio app because saved files and title selection fit the conditions.",
+          "Keep streaming availability separate from local file availability."
+        ],
+        "must_avoid": [
+          "Assuming the web slideshow is cached or works offline.",
+          "Adding a new app purchase or treating pictures as required."
+        ],
+        "acceptable_variation": [
+          "May suggest using the already saved clips without naming any particular app."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Use the local audio app. It can play the saved clips without internet and lets your relative choose by title. The slideshow’s pictures don’t add something they need, and its streaming depends on a connection you won’t have.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-05",
+      "world_spec_sha256": "a85dda4b9688f83f555f536831595427b2cd0ea16cc7db5fa0b95dfc8a7ef5d3",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm meeting a friend for sketching. I was thinking of the quiet hilltop shelter with the wide view, since I thought we'd both arrive at the south entrance beside the hill path."
+        },
+        {
+          "role": "assistant",
+          "content": "How much time will you have together, and is your friend using that entrance too?"
+        },
+        {
+          "role": "user",
+          "content": "They've now confirmed they're arriving at the north gate and have only 30 minutes between buses. From there it's 20 minutes each way to the hilltop. Right beside the north gate is a flat courtyard with benches, a view of a planted arch, and space for both sketchbooks. Where should we meet now?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Revise the recommendation to the courtyard beside the actual arrival gate.",
+          "Account for the hilltop's 40-minute round trip exceeding the 30-minute visit."
+        ],
+        "must_avoid": [
+          "Counting only outward travel or continuing from the south entrance.",
+          "Inventing another bus or extending the friend's availability."
+        ],
+        "acceptable_variation": [
+          "Can explain the round-trip problem without doing written arithmetic if the time conflict is clear."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Meet in the courtyard beside the north gate. The hilltop would take 40 minutes just to reach and return from, longer than your friend’s whole visit. The courtyard gives you somewhere to sit and sketch together within the time you have.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-06",
+      "world_spec_sha256": "eafdfd4628a4f3a48d6cbf1888497f832e17fcc9d064e5aabe07835a13bbfbd4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm taking a flat painted sign to our club event by bus, so I was considering a narrow folding sleeve to keep the package compact."
+        },
+        {
+          "role": "assistant",
+          "content": "Does the sign tolerate folding, or does anything on it need to keep its shape?"
+        },
+        {
+          "role": "user",
+          "content": "It must stay flat: the paint is dry, but there's a delicate raised paper border that can't bend. A club driver has now offered a car ride. We have a rigid shallow box: the sign fits flat inside, its lid clears the border, and the closed box fits the car's flat cargo area. I haven't folded or packed anything. What packing plan makes sense with that transport option?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use the rigid box with the offered car option.",
+          "Base feasibility on all three supplied fit facts and preserve the flat sign and raised border."
+        ],
+        "must_avoid": [
+          "Recommending folding or inferring unlisted fit.",
+          "Claiming damage has occurred or that the assistant has accepted or booked the ride."
+        ],
+        "acceptable_variation": [
+          "Can refer to the confirmed dimensions collectively instead of repeating every fit statement."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Use the rigid box if you take the offered car ride. You’ve established that the sign lies flat, the lid clears the raised border, and the closed box fits the car. There’s no longer a reason to force it into a folding sleeve.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-07",
+      "world_spec_sha256": "3e044c25ed288b7d9bab4c0b2e81f581a31bc8cbb532066dea09fc77920d2aa8",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I've printed invitations for our courtyard gathering with an arrow pointing to the north gate. Both the north and east gates are labeled on the map. A neighbor will help deliver them."
+        },
+        {
+          "role": "assistant",
+          "content": "Before they go out, is the entrance information still current?"
+        },
+        {
+          "role": "user",
+          "content": "The caretaker has just told me the north gate will be closed for painting on the event day; the east gate will be open. The date and time printed on the cards are unchanged and correct. None have been delivered. I have enough removable arrow stickers to cover every old arrow. What's the most focused revision before delivery?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Update the directional arrow to the east gate while covering the obsolete north arrow.",
+          "Preserve the unchanged date and time and use the fact that delivery has not begun."
+        ],
+        "must_avoid": [
+          "Leaving conflicting old and new arrows.",
+          "Inventing a need to notify recipients who have not received cards."
+        ],
+        "acceptable_variation": [
+          "Can recommend checking the corrected arrows for clarity without demanding a full reprint."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "Cover each old arrow and place the replacement so it clearly points to the east gate. Keep the correct date and time. Since none have gone out, you can fix this one detail before your neighbor starts delivering them.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-contextual_recommendation-08",
+      "world_spec_sha256": "53366064bb4293d12cc1d53ed01e6325fe3ca4437e80b5bbc0aafea45ffa1109",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A friend is visiting from 2 p.m. to 3:15, and I suggested a studio demonstration because it begins right at 2."
+        },
+        {
+          "role": "assistant",
+          "content": "Does your friend want to watch something, or would they rather take part?"
+        },
+        {
+          "role": "user",
+          "content": "They've clarified that they'd rather make something. The studio's demonstration lasts 30 minutes from 2, but there's also a 45-minute open collage table starting at 2:15. It supplies all materials, and visitors take their work home. Given that preference and the time window, what would you recommend?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recommend the hands-on collage activity based on the corrected preference.",
+          "Respect its start and duration within the visit window."
+        ],
+        "must_avoid": [
+          "Choosing the demonstration only for its earlier start.",
+          "Claiming a reservation or unstated capacity assurance."
+        ],
+        "acceptable_variation": [
+          "Can state the 3 p.m. finish or simply explain that the session fits before 3:15."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": "I’d choose the collage table. It matches your friend’s wish to make something, provides the materials, and runs from 2:15 to about 3—within the visit window. The short wait serves their preference better than the earlier demonstration.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-contextual_recommendation-01",
+      "world_spec_sha256": "16091724e228778caa625833eefe72cd1ba8971fbb84f78ddd832e9eb618fae8",
+      "messages": [
+        {
+          "role": "user",
+          "content": "A volunteer will collect three reusable display labels in 25 minutes. Punching their holes and cutting the hanging string takes five minutes and can be done while the labels are blank. Writing takes five minutes, then the ink needs 15 minutes to dry untouched. I have all the materials but haven't started. The labels must be ready to handle at pickup, with no extra drying equipment. What order should I use?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Put hole-punching and string cutting before writing.",
+          "Leave the written labels untouched for the final 15 minutes and fit all work within 25 minutes."
+        ],
+        "must_avoid": [
+          "Handling wet labels during drying.",
+          "Inventing faster drying equipment or claiming preparation has occurred."
+        ],
+        "acceptable_variation": [
+          "May state the full five-plus-five-plus-fifteen schedule or express the same dependency in prose."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Punch the holes and cut the string first, using five minutes. Write the labels in the next five, then leave them untouched for 15 minutes. That uses the full 25 minutes and avoids handling wet ink.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable sequence accounts for all durations and respects the hands-off drying dependency.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Do the handling work while the labels are blank, then write them. You’ll have 15 minutes left for undisturbed drying before collection, so there’s no spare time in that schedule.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable explanation emphasizes the dependency and fixed deadline without changing the supplied timings.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Write first, then punch the holes while the ink dries. That way you can finish everything early and give the volunteer extra time.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: overlaps handling with a drying stage explicitly requiring the labels to remain untouched.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Display labels can look attractive in different colors. A consistent typeface often makes a collection feel more organized.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: discusses aesthetics instead of the requested timing order; also fails to solve the supplied dependency.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Holes string five first. Writing five then, dry untouched fifteen do. Twenty-five all finish labels handling ready is.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: retains the correct order and durations but uses materially awkward, broken syntax.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've punched the holes and written the labels for you. They're drying now, and I'll hand them to the volunteer at pickup.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: claims physical preparation and a future handoff the assistant has not performed or arranged.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-contextual_recommendation-02",
+      "world_spec_sha256": "92fa1a2750a544d213fb9b9e5526ea39c0a6ebb46217905a16a45571af018578",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm preparing a blank bound notebook to circulate through our writing group. I thought our working title was settled and was going to write it directly on the cover in permanent ink."
+        },
+        {
+          "role": "assistant",
+          "content": "Has the group actually chosen that title, or is it still a working name?"
+        },
+        {
+          "role": "user",
+          "content": "The first recipient corrected me: the permanent title will be chosen at our next meeting, after tomorrow's first handoff. The cover has a clear window and we have a blank removable card that fits it. Our ink can't be erased from the cover with the materials available. The participant order and handoff dates are already agreed and can go inside regardless of the name. How should I get the notebook ready for tomorrow without committing us to an unchosen title?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Use a reversible cover treatment while the group title remains unresolved.",
+          "Continue independent interior preparation using the settled order and dates."
+        ],
+        "must_avoid": [
+          "Writing a tentative title permanently or inventing the group's eventual title.",
+          "Halting all notebook preparation because naming is pending.",
+          "Claiming assistant preparation or delivery."
+        ],
+        "acceptable_variation": [
+          "May suggest a temporary descriptive card or leaving the card ready to replace; no exact temporary title is required."
+        ],
+        "dimensions": {
+          "adequacy": "Recommend a feasible action using the supplied current facts, including any correction; preserve relevant constraints and uncertainty.",
+          "relevance": "Connect the recommendation to this user's goal rather than unrelated general tips or unrequested alternatives.",
+          "fluency": "Use clear, natural, concise English with an understandable reason for the recommendation.",
+          "role_consistency": "Describe actions for the user to consider or take; do not claim the assistant has inspected, purchased, arranged, edited or completed anything externally."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "Use the removable card for a temporary cover label and leave permanent lettering until the group chooses its title. You can still enter the agreed participant order and handoff dates inside, so the notebook is ready for tomorrow.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response handles uncertainty reversibly while continuing the independently settled preparation.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "Keep the cover decision easy to change: put any temporary wording on the removable card, not directly on the cover. The naming vote doesn’t stop you from preparing the agreed schedule inside for the first handoff.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable explanation separates the unresolved title from usable interior information.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "Write the working title permanently on the cover now. Since the notebook is already circulating tomorrow, that makes the title official for everyone.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: turns a working name into an unauthorized final decision and makes the commitment irreversible.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Travel journals sometimes include drawings of buildings, pressed leaves and notes about memorable meals. Different people enjoy recording different things.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: discusses generic journal contents rather than this notebook's pending title and handoff; also omits the requested recommendation.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Card removable temporary use cover not ink forever. Inside dates order agreed write can; title later decide, tomorrow ready notebook be.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: preserves reversible labeling and continued interior work but presents them in broken, unnatural language.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've labeled the removable card and filled in the participant schedule for you. I also told the recipient the notebook is ready for tomorrow.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: invents artifact edits and external communication, even though the described preparation method is otherwise suitable.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-01",
+      "world_spec_sha256": "13c677feca0ed3083a86d3c3856e22ea7018cfd2fc33b7f2f720a337d57ab837",
+      "messages": [
+        {
+          "role": "user",
+          "content": "The repair shop has confirmed my lamp is ready. I've written down the collection time and reference number, so I have everything I need. I'm heading off to collect it now. Thanks—that's all for today."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Provide a brief natural closing acknowledgment."
+        ],
+        "must_avoid": [
+          "Adding questions, a checklist or fresh advice.",
+          "Claiming to have contacted the shop or arranged collection."
+        ],
+        "acceptable_variation": [
+          "Can wish the user well without reciting the logistics; no specific closing formula is required."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "You’re welcome. Hope the collection goes smoothly!",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-02",
+      "world_spec_sha256": "5546e927ec5cbad155592d11e7a7c2c324a0947ac06abe4e2c35d6484b41f8b4",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I went to that community singing circle I was curious about. The warm-up felt comfortable, but I lost my place in the final song. I'd like to talk a little more about how it went—not get singing tips or decide right now whether to go back."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge a concrete part of the reported experience.",
+          "Invite further conversation with a relevant open follow-up rather than forcing a verdict."
+        ],
+        "must_avoid": [
+          "Claiming to have heard the user sing.",
+          "Unsolicited technique advice, a return-or-not decision, or premature closure."
+        ],
+        "acceptable_variation": [
+          "May ask about either the comfortable warm-up or the later experience; avoid treating one missed place as total failure."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "It sounds like the session had a comfortable beginning and a more difficult finish. What felt comfortable about the warm-up?",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-03",
+      "world_spec_sha256": "03d38e6af25933c1dee455c5a789fe07aea1436945624e978ce59a5356bde5b2",
+      "messages": [
+        {
+          "role": "user",
+          "content": "Someone borrowed our folding tables and has messaged that they'll return them at the side gate. They haven't given a day or time, and someone needs to be there to unlock it. I want to send one short follow-up, then wait. What should I ask?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Ask for the return day and time so someone can unlock the known gate."
+        ],
+        "must_avoid": [
+          "Re-asking for the already known location or inventing a schedule.",
+          "Claiming the assistant sent the follow-up or that access is arranged."
+        ],
+        "acceptable_variation": [
+          "A short suggested message or a direct description of the missing detail is acceptable."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "Ask, “What day and time are you planning to return the tables? I need to arrange for someone to unlock the side gate.”",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-04",
+      "world_spec_sha256": "6d1c95288468f54728615f195780f58da2415bab88be882124980a0513eb3081",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I've decided to leave my recipe binder in its current sections for now and use it for a week before considering a reorganization. I don't want another suggestion today, and I'm not asking for a reminder or a later check-in. Let's leave it there."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Respect the explicit request to close the topic and stop suggestions."
+        ],
+        "must_avoid": [
+          "Adding another tip or question.",
+          "Promising a reminder or autonomous later contact.",
+          "Treating the trial period as indecision."
+        ],
+        "acceptable_variation": [
+          "A brief acknowledgment is sufficient; restating the full plan is unnecessary."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "Understood—we’ll leave it there.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-05",
+      "world_spec_sha256": "b9c62d4f49dc2692f80eb352cd09eee5f92d4a2a795be5fbaf115d0e4650f1a6",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm assembling a small display shelf with three crossbars. The booklet says page A is for two crossbars and page B is for three. Which page applies?"
+        },
+        {
+          "role": "assistant",
+          "content": "Page B matches the shelf with three crossbars."
+        },
+        {
+          "role": "user",
+          "content": "I used page B, and the shelf now stands square. I've put the tools away and everything I was working on is done. Thanks for helping me sort out the pages."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge the user's completed task and thanks."
+        ],
+        "must_avoid": [
+          "Repeating page-selection instructions or adding a new task.",
+          "Claiming physical assembly, inspection or structural safety certification."
+        ],
+        "acceptable_variation": [
+          "Can mention the resolved page confusion or simply close warmly."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "You’re welcome. Glad the page confusion is sorted and you’ve finished what you set out to do.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-06",
+      "world_spec_sha256": "7690532ec93dcee0d5307f3a0efbfdf66de98f4763274607716c66e805e3decc",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm preparing a message to request a room for our hobby meeting. I need to include the date, time and expected group size. Can you help me keep the request clear?"
+        },
+        {
+          "role": "assistant",
+          "content": "State those three details clearly and ask the coordinator to confirm whether the room is available."
+        },
+        {
+          "role": "user",
+          "content": "I've now sent the request with all three details, but there's no reply yet. Where does that leave things—is anything still outstanding?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Distinguish the sent request from a confirmed booking.",
+          "Identify the coordinator's reply or confirmation as the remaining dependency."
+        ],
+        "must_avoid": [
+          "Calling the room booked or saying the assistant sent the message.",
+          "Telling the user to send the already sent request or immediately duplicate it without cause."
+        ],
+        "acceptable_variation": [
+          "May briefly say the user's request step is complete while the reservation remains pending."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "Your request is sent, but the room isn’t confirmed yet. The remaining step is the coordinator’s response about availability; there’s no need to repeat the request just because a reply hasn’t arrived.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-07",
+      "world_spec_sha256": "91ce814f1fe401d101f19c5feaad4bed06aba85a9c125d41f03ad9d8429f3b73",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My notebook is missing. I think I left it on the train."
+        },
+        {
+          "role": "assistant",
+          "content": "What’s the last place you definitely remember using it?"
+        },
+        {
+          "role": "user",
+          "content": "I remembered writing in it at the kitchen table after I got home, then found it under a folded newspaper there. Problem solved! I'm a bit amused that I had a whole train-loss theory going. I never contacted lost property or made a report."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge actual recovery at home and match the user's mild humor.",
+          "Allow the search conversation to close."
+        ],
+        "must_avoid": [
+          "Continuing train lost-property advice.",
+          "Claiming the assistant found the notebook or contacted anyone."
+        ],
+        "acceptable_variation": [
+          "Light humor is welcome but not required; avoid mocking the user."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "Mystery solved—the notebook made it home, even if the theory stayed on the train for a while. Glad you found it.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LDEV-followup_and_closure-08",
+      "world_spec_sha256": "cdf7845063261e51f1e24eb89660e4fa8236e19fc2cbca40e49f5ba51c6e1bb2",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm choosing between two layouts for a handmade card. One has a blank inside panel, and I'd like a friend to add a short note."
+        },
+        {
+          "role": "assistant",
+          "content": "The blank inside panel would leave room for your friend’s contribution."
+        },
+        {
+          "role": "user",
+          "content": "I chose that layout. My friend says they can add the note tomorrow, and I've finished the outer decoration today. The card isn't fully done yet, but my part is finished and nothing else needs doing until their note. I want to stop for the evening."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Recognize the user's completed portion and reasonable pause.",
+          "Keep the friend's note as a remaining contribution scheduled for tomorrow."
+        ],
+        "must_avoid": [
+          "Declaring the whole card finished.",
+          "Pressuring the user to fill the blank panel or inventing the friend's note.",
+          "Claiming assistant physical work."
+        ],
+        "acceptable_variation": [
+          "Can close briefly without repeating the entire timeline, provided the incomplete shared task is not misstated."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": "Your part is finished, and the space is ready for your friend’s note tomorrow. That’s a sensible place to stop for the evening.",
+      "cal_controls": [],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-followup_and_closure-01",
+      "world_spec_sha256": "b56930512233a90a14696468c1d46a2c63c933e9f6bc27210d8f6b8636e0dd8d",
+      "messages": [
+        {
+          "role": "user",
+          "content": "My connection dropped before I received the last part of a packing list. I still have the first two items: a notebook and a pencil. Could you continue from where the text stopped? This chat doesn't include the rest of that list or what the trip is for."
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Acknowledge that the missing list and trip context are not available.",
+          "Request the missing context needed to continue rather than inventing the old list."
+        ],
+        "must_avoid": [
+          "Claiming to recall or recover unseen text.",
+          "Presenting plausible packing items as previously agreed."
+        ],
+        "acceptable_variation": [
+          "Can ask what the trip is for, request the earlier list if available, or offer to rebuild it once context is supplied."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "I don’t have the missing part of the list here. What is the trip for? With that context, I can help rebuild the rest without pretending to recover the original wording.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response states the evidence boundary and asks for useful context before continuing.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "I can see that you have a notebook and pencil, but not what came next. If you can share the trip’s purpose or more of the earlier text, we can pick up from there.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable wording that uses only visible information and seeks the missing basis for continuation.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "The next items were a camera, a raincoat and a water bottle. Add those after the pencil to finish the list.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: invents the unseen list and presents guesses as its actual continuation; the implied memory also affects role consistency.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Pencils can have wooden or mechanical bodies, and notebooks come with lined, dotted or blank pages. Stationery has many interesting variations.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: drifts into stationery facts instead of addressing missing context; also fails the continuation request.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "Rest list not here have. Trip for what tell, then rebuild can without old text pretending know.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: preserves the missing-context boundary and clarification need but uses broken, unnatural phrasing.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I recovered the missing message from your dropped connection and restored the original packing list on your device.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: claims access to missing communications and a device-restoration action that did not occur; also supplies unsupported factual claims.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    },
+    {
+      "parent_id": "LCAL-followup_and_closure-02",
+      "world_spec_sha256": "effe2b7f683f00da4665bd8fb121f964bd6a9bb0f1dcd03224d0b017bc25f03c",
+      "messages": [
+        {
+          "role": "user",
+          "content": "I'm thinking about a morning street-photo walk with two neighbors. We've only discussed it here so far; I'm still considering the plan."
+        },
+        {
+          "role": "assistant",
+          "content": "Are you ready to invite them, or is there anything you still need to settle first?"
+        },
+        {
+          "role": "user",
+          "content": "I've decided to postpone. My only camera is being lent to a relative that morning."
+        },
+        {
+          "role": "assistant",
+          "content": "That changes whether the morning works for you. Have any invitations already gone out?"
+        },
+        {
+          "role": "user",
+          "content": "No, I haven't invited either neighbor or created an event anywhere. This was just a plan in our chat, and you haven't sent anything outside it. Let's wrap up: is there anyone I need to notify?"
+        }
+      ],
+      "semantic_contract": {
+        "must_include": [
+          "Explain that no invitation or external event was created, so no cancellation notification is needed on the supplied facts.",
+          "Close without inventing external action."
+        ],
+        "must_avoid": [
+          "Claiming to notify neighbors or cancel an event.",
+          "Treating a discussed possibility as an external commitment.",
+          "Suggesting invitees already expect the walk."
+        ],
+        "acceptable_variation": [
+          "Can answer directly and briefly; no new planning suggestion is needed."
+        ],
+        "dimensions": {
+          "adequacy": "Respond to the current conversational state: continue only where invited or needed, and preserve the distinction between completion, a pause and an unresolved dependency.",
+          "relevance": "Keep the follow-up or closing proportionate to what the user now requests; do not reopen settled tasks or add unrelated advice.",
+          "fluency": "Use natural, concise English appropriate to a conversation; a brief closing need not repeat every background fact.",
+          "role_consistency": "Do not claim outside actions, unseen memory, physical participation or commitments by other people; credit the user's reported actions accurately."
+        }
+      },
+      "dev_exemplar": null,
+      "cal_controls": [
+        {
+          "control_id": "positive_a",
+          "response": "No—based on what you’ve said, neither neighbor was invited and no event was created, so there’s nothing to cancel with them. We can leave the plan there.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Intended acceptable response answers the notification question from the explicit no-commitment state and closes.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "positive_b",
+          "response": "You don’t need to notify anyone about this plan, since it never went beyond the chat. No invitations or outside arrangements were made.",
+          "author_intent": "intended_acceptable",
+          "intent_rationale": "Distinct intended acceptable closing with no claim of an assistant action.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "adequacy",
+          "response": "You should send both neighbors a cancellation now because discussing the walk here means they were expecting it.",
+          "author_intent": "adequacy",
+          "intent_rationale": "Intended adequacy defect: falsely treats a private chat discussion as an invitation or commitment involving the neighbors.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "relevance",
+          "response": "Street photography often includes shop windows, reflections and people crossing roads. Looking for repeating shapes can make a photo series feel connected.",
+          "author_intent": "relevance",
+          "intent_rationale": "Intended relevance defect: supplies photography tips instead of closing the notification question; also ignores the request to wrap up.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "fluency",
+          "response": "No notify need, invitations none sent and event outside no made. Chat only plan was, leave there can.",
+          "author_intent": "fluency",
+          "intent_rationale": "Intended fluency defect: conveys the correct no-notification basis with materially broken syntax.",
+          "qualified_reference_scores": null
+        },
+        {
+          "control_id": "role_consistency",
+          "response": "I've canceled the event and messaged both neighbors for you, so everything is taken care of.",
+          "author_intent": "role_consistency",
+          "intent_rationale": "Intended role-consistency defect: fabricates external cancellation and messages for an event and invitations that never existed.",
+          "qualified_reference_scores": null
+        }
+      ],
+      "authorship": "assistant_source_candidate"
+    }
+  ]
+}
