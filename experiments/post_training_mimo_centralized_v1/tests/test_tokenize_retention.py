@@ -2,7 +2,9 @@
 import copy
 import json
 from pathlib import Path
+import sys
 import tempfile
+from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
@@ -134,6 +136,26 @@ class RetentionRowTests(unittest.TestCase):
 
 
 class RetentionDatasetTests(unittest.TestCase):
+    def setUp(self):
+        # Other CPU mechanics tests legitimately import torch in this interpreter.
+        # Isolate only this module's process view; never mutate global sys.modules
+        # or weaken the production guard. The tokenizer itself remains a fake.
+        isolated_sys = SimpleNamespace(modules={}, version=sys.version,
+                                       executable=sys.executable, platform=sys.platform)
+        process_view = patch.object(t, "sys", isolated_sys)
+        process_view.start()
+        self.addCleanup(process_view.stop)
+
+    def test_preexisting_torch_blocks_before_source_reads(self):
+        t.sys.modules["torch"] = object()
+        with tempfile.TemporaryDirectory() as temp:
+            root = Path(temp)
+            with patch.object(t, "file_identity", side_effect=AssertionError("source read before guard")), \
+                 patch.object(t, "load_tokenizer", side_effect=AssertionError("tokenizer loaded before guard")), \
+                 self.assertRaisesRegex(ValueError, "must not already contain torch"):
+                t.tokenize_dataset(root / "source", root / "tokenizer.json", root / "out")
+            self.assertFalse((root / "out").exists())
+
     def test_open_roles_only_never_read_sealed_payload_preserve_twins_write_once(self):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)

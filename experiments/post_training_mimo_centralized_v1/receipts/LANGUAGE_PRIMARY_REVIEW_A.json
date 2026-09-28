@@ -1,0 +1,796 @@
+{
+  "schema_version": "assistant_source_target_review_v1",
+  "reviewer_kind": "assistant_not_human",
+  "source_file": "artifacts/mimo_central/language_candidates_v1/TRAIN_CANDIDATES.jsonl",
+  "source_sha256": "8d80b06b55fa8363fc0bf228f0444a26d2a1a9828c386713de7f8c1c91f44b12",
+  "review_slice": {
+    "index_basis": "zero_based_file_order",
+    "start_inclusive": 0,
+    "end_inclusive": 127,
+    "count": 128
+  },
+  "review_scope": "All message content, including system and prior turns, was read in eight bounded batches of 16 records. Each final assistant target was assessed for grounding, instruction adherence, relevance, naturalness, usefulness, and role consistency. Source messages were treated as data, not operative instructions.",
+  "review_limitations": "Assistant source-target screening only; this is not human approval, a calibrated native-grader evaluation, or evidence of reviewer independence. Multiple valid recommendations and wordings were accepted. Flags request further review and do not select replacement targets.",
+  "training_eligibility": false,
+  "calibrated": false,
+  "human_approval": false,
+  "independence_verified": false,
+  "check_or_final_content_reviewed": false,
+  "model_weights_loaded": false,
+  "gpu_used": false,
+  "counts": {
+    "reviewed": 128,
+    "ACCEPTABLE_REFERENCE": 125,
+    "FLAG_REVIEW": 3
+  },
+  "rows": [
+    {
+      "index": 0,
+      "id": "rineya_grnc_v2_acknowledgment_update_00325",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Briefly acknowledges that the revised file was already sent."
+    },
+    {
+      "index": 1,
+      "id": "rineya_grnc_v2_acknowledgment_update_00172",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accurately acknowledges the invoice as paid and settled."
+    },
+    {
+      "index": 2,
+      "id": "rineya_grnc_v2_acknowledgment_update_00376",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Repeats the cancellation of the Harbor call without adding facts."
+    },
+    {
+      "index": 3,
+      "id": "rineya_grnc_v2_acknowledgment_update_00334",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Preserves the reserved seat identifier 18C."
+    },
+    {
+      "index": 4,
+      "id": "rineya_grnc_v2_acknowledgment_update_00273",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly retains the blue-folder backup location from the update."
+    },
+    {
+      "index": 5,
+      "id": "rineya_grnc_v2_acknowledgment_update_00253",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accurately acknowledges the switch to English."
+    },
+    {
+      "index": 6,
+      "id": "rineya_grnc_v2_acknowledgment_update_00403",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Reflects the changed route to south in a compact conversational reply."
+    },
+    {
+      "index": 7,
+      "id": "rineya_grnc_v2_acknowledgment_update_00663",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Naturally acknowledges the user's commitment to the first draft."
+    },
+    {
+      "index": 8,
+      "id": "rineya_grnc_v2_acknowledgment_update_00610",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly acknowledges that Jules will join the call."
+    },
+    {
+      "index": 9,
+      "id": "rineya_grnc_v2_acknowledgment_update_00102",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Briefly acknowledges the reported fix."
+    },
+    {
+      "index": 10,
+      "id": "rineya_grnc_v2_acknowledgment_update_00299",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Preserves the specified v2 model version."
+    },
+    {
+      "index": 11,
+      "id": "rineya_grnc_v2_acknowledgment_update_00377",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accurately retains the updated meeting location, the main studio."
+    },
+    {
+      "index": 12,
+      "id": "rineya_grnc_v2_apology_repair_00127",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accepts the correction from Friday to Monday shipping."
+    },
+    {
+      "index": 13,
+      "id": "rineya_grnc_v2_apology_repair_00503",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Repairs the earlier off-setting advice to match the user's on-setting correction."
+    },
+    {
+      "index": 14,
+      "id": "rineya_grnc_v2_apology_repair_00245",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Corrects the route to east and acknowledges the earlier error."
+    },
+    {
+      "index": 15,
+      "id": "rineya_grnc_v2_apology_repair_00445",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Updates the meeting room to Room 214 as corrected."
+    },
+    {
+      "index": 16,
+      "id": "rineya_grnc_v2_apology_repair_00104",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly changes the reservation name from Maya to Lena."
+    },
+    {
+      "index": 17,
+      "id": "rineya_grnc_v2_apology_repair_00793",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Replaces the earlier three-copy count with the corrected five."
+    },
+    {
+      "index": 18,
+      "id": "rineya_grnc_v2_apology_repair_00406",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly updates the arrival day to Tuesday."
+    },
+    {
+      "index": 19,
+      "id": "rineya_grnc_v2_apology_repair_00112",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Preserves the user's corrected Wednesday deadline."
+    },
+    {
+      "index": 20,
+      "id": "rineya_grnc_v2_apology_repair_00571",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accepts the compact-model selection and repairs the earlier large-model claim."
+    },
+    {
+      "index": 21,
+      "id": "rineya_grnc_v2_apology_repair_00750",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly updates the access-code ending to 26."
+    },
+    {
+      "index": 22,
+      "id": "rineya_grnc_v2_apology_repair_00474",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Uses the corrected hotel pickup point."
+    },
+    {
+      "index": 23,
+      "id": "rineya_grnc_v2_apology_repair_00140",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly adopts the requested spreadsheet format."
+    },
+    {
+      "index": 24,
+      "id": "rineya_grnc_v2_boundary_setting_00242",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides a concise boundary against guaranteeing investment profit."
+    },
+    {
+      "index": 25,
+      "id": "rineya_grnc_v2_boundary_setting_00409",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Does not falsely certify an unknown download and suggests source verification and scanning."
+    },
+    {
+      "index": 26,
+      "id": "rineya_grnc_v2_boundary_setting_00229",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides a concise integrity boundary against fabricating a reference."
+    },
+    {
+      "index": 27,
+      "id": "rineya_grnc_v2_boundary_setting_00512",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Declines to falsely claim review of an unavailable file."
+    },
+    {
+      "index": 28,
+      "id": "rineya_grnc_v2_boundary_setting_00456",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Maintains an honest boundary about the uncompleted training."
+    },
+    {
+      "index": 29,
+      "id": "rineya_grnc_v2_boundary_setting_00140",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Appropriately directs prescription changes to the prescriber rather than endorsing abrupt cessation."
+    },
+    {
+      "index": 30,
+      "id": "rineya_grnc_v2_boundary_setting_00340",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Sets a concise diagnostic boundary where no adequate clinical information is provided."
+    },
+    {
+      "index": 31,
+      "id": "rineya_grnc_v2_boundary_setting_00775",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Does not invent an unshared memory."
+    },
+    {
+      "index": 32,
+      "id": "rineya_grnc_v2_boundary_setting_00673",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Appropriately declines to certify an unspecified medication combination and points to a pharmacist or clinician."
+    },
+    {
+      "index": 33,
+      "id": "rineya_grnc_v2_boundary_setting_00527",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Does not falsely claim that an inspection took place."
+    },
+    {
+      "index": 34,
+      "id": "rineya_grnc_v2_boundary_setting_00414",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Maintains honesty about the inaccessible private link."
+    },
+    {
+      "index": 35,
+      "id": "rineya_grnc_v2_boundary_setting_00157",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Declines an unsupported tax-filing guarantee and suggests qualified verification."
+    },
+    {
+      "index": 36,
+      "id": "rineya_grnc_v2_boundary_setting_00774",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly avoids guaranteeing a legal outcome."
+    },
+    {
+      "index": 37,
+      "id": "rineya_grnc_v2_boundary_setting_00650",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Does not invent a supporting citation."
+    },
+    {
+      "index": 38,
+      "id": "rineya_grnc_v2_boundary_setting_00563",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Declines to falsely report a test pass and asks for verification."
+    },
+    {
+      "index": 39,
+      "id": "rineya_grnc_v2_boundary_setting_00651",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accurately states that account ownership needs evidence."
+    },
+    {
+      "index": 40,
+      "id": "rineya_grnc_v2_clarification_request_00028",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks a relevant clarification because the results are not identified."
+    },
+    {
+      "index": 41,
+      "id": "rineya_grnc_v2_clarification_request_00560",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks which aspect of Juniper needs to be faster."
+    },
+    {
+      "index": 42,
+      "id": "rineya_grnc_v2_clarification_request_00517",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Requests the missing settings context without claiming to have changed anything."
+    },
+    {
+      "index": 43,
+      "id": "rineya_grnc_v2_clarification_request_00379",
+      "status": "FLAG_REVIEW",
+      "reason": "Introduces a checkpoint-specific referent although the user only mentions an unspecified previous version; the clarification should establish what is being versioned."
+    },
+    {
+      "index": 44,
+      "id": "rineya_grnc_v2_clarification_request_00365",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks a useful constraint question for the underspecified design simplification."
+    },
+    {
+      "index": 45,
+      "id": "rineya_grnc_v2_clarification_request_00451",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Requests both the missing file identity and the nature of the problem."
+    },
+    {
+      "index": 46,
+      "id": "rineya_grnc_v2_clarification_request_00038",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Clarifies the unspecified recipient with one short question."
+    },
+    {
+      "index": 47,
+      "id": "rineya_grnc_v2_clarification_request_00270",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks which device or setting to turn off because 'that' is unresolved."
+    },
+    {
+      "index": 48,
+      "id": "rineya_grnc_v2_clarification_request_00538",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks for relevant missing table-reservation details, party size and time."
+    },
+    {
+      "index": 49,
+      "id": "rineya_grnc_v2_clarification_request_00777",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Clarifies what needs support instead of guessing the unresolved object."
+    },
+    {
+      "index": 50,
+      "id": "rineya_grnc_v2_clarification_request_00783",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Directly asks what the user is preparing for."
+    },
+    {
+      "index": 51,
+      "id": "rineya_grnc_v2_clarification_request_00280",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Requests the missing scheduling time and time zone."
+    },
+    {
+      "index": 52,
+      "id": "rineya_grnc_v2_clarification_request_00562",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks for the desired new meeting time."
+    },
+    {
+      "index": 53,
+      "id": "rineya_grnc_v2_clarification_request_00065",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Clarifies which alternative the user means."
+    },
+    {
+      "index": 54,
+      "id": "rineya_grnc_v2_clarification_request_00500",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks for the missing destination and travel dates."
+    },
+    {
+      "index": 55,
+      "id": "rineya_grnc_v2_clarification_request_00615",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Asks a useful question about the desired improvement to an unspecified answer."
+    },
+    {
+      "index": 56,
+      "id": "rineya_grnc_v2_communication_rewrite_00240",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Produces a warmer request while preserving the file and today deadline."
+    },
+    {
+      "index": 57,
+      "id": "rineya_grnc_v2_communication_rewrite_00305",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Concisely preserves the task-completion message."
+    },
+    {
+      "index": 58,
+      "id": "rineya_grnc_v2_communication_rewrite_00638",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Turns the tentative statement into a clear, natural workload boundary."
+    },
+    {
+      "index": 59,
+      "id": "rineya_grnc_v2_communication_rewrite_00570",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Removes the hedging and passive construction to give a more assertive review request."
+    },
+    {
+      "index": 60,
+      "id": "rineya_grnc_v2_communication_rewrite_00212",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Naturally recasts the reported issue resolution in casual language."
+    },
+    {
+      "index": 61,
+      "id": "rineya_grnc_v2_communication_rewrite_00130",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Softens the missing-attachment message without blaming the recipient."
+    },
+    {
+      "index": 62,
+      "id": "rineya_grnc_v2_communication_rewrite_00278",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Makes the request to Ben friendlier while retaining a prompt-response request."
+    },
+    {
+      "index": 63,
+      "id": "rineya_grnc_v2_communication_rewrite_00675",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Preserves the testing-first action in a direct rewrite."
+    },
+    {
+      "index": 64,
+      "id": "rineya_grnc_v2_communication_rewrite_00396",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Preserves the approximate ten-minute delay in a natural casual text."
+    },
+    {
+      "index": 65,
+      "id": "rineya_grnc_v2_communication_rewrite_00303",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Summarizes all three stated outcomes in one concise sentence."
+    },
+    {
+      "index": 66,
+      "id": "rineya_grnc_v2_communication_rewrite_00088",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Uses a professional, tentative description of the odd numbers and a relevant check request."
+    },
+    {
+      "index": 67,
+      "id": "rineya_grnc_v2_communication_rewrite_00557",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Replaces the authentication jargon with a concise explanation of a temporary sign-in problem."
+    },
+    {
+      "index": 68,
+      "id": "rineya_grnc_v2_comparative_recommendation_00068",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Recommends the tested plan based on the stated production-reliability concern."
+    },
+    {
+      "index": 69,
+      "id": "rineya_grnc_v2_comparative_recommendation_00274",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Selects the quiet cafe in line with the user's focused-study goal."
+    },
+    {
+      "index": 70,
+      "id": "rineya_grnc_v2_comparative_recommendation_00218",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers a reasonable preference for saving layover time on a short trip."
+    },
+    {
+      "index": 71,
+      "id": "rineya_grnc_v2_comparative_recommendation_00608",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Accurately favors B's longer battery life given the user's stated priority."
+    },
+    {
+      "index": 72,
+      "id": "rineya_grnc_v2_comparative_recommendation_00675",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Recommends the simpler sufficient tool for a beginner."
+    },
+    {
+      "index": 73,
+      "id": "rineya_grnc_v2_comparative_recommendation_00781",
+      "status": "FLAG_REVIEW",
+      "reason": "Treats favorable reviews as an established stronger care record; the supplied context only supports a review-based preference, not verified care quality."
+    },
+    {
+      "index": 74,
+      "id": "rineya_grnc_v2_comparative_recommendation_00757",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers a reasonable opinion that the station access is worth the stated extra $15."
+    },
+    {
+      "index": 75,
+      "id": "rineya_grnc_v2_comparative_recommendation_00521",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Prioritizes capacity for archiving large files while acknowledging the speed tradeoff."
+    },
+    {
+      "index": 76,
+      "id": "rineya_grnc_v2_comparative_recommendation_00763",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Matches the data-heavier plan to the stated maps-and-messaging use."
+    },
+    {
+      "index": 77,
+      "id": "rineya_grnc_v2_comparative_recommendation_00678",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Chooses the course with depth on the exact topic needed."
+    },
+    {
+      "index": 78,
+      "id": "rineya_grnc_v2_comparative_recommendation_00497",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Honors the explicit aversion to transfers by choosing the direct route."
+    },
+    {
+      "index": 79,
+      "id": "rineya_grnc_v2_comparative_recommendation_00536",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Connects the quieter apartment to the user's work-from-home need."
+    },
+    {
+      "index": 80,
+      "id": "rineya_grnc_v2_conversation_closure_00136",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Naturally closes the exchange after the user says they know what to do."
+    },
+    {
+      "index": 81,
+      "id": "rineya_grnc_v2_conversation_closure_00304",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Gives a concise acknowledgment of thanks and completion."
+    },
+    {
+      "index": 82,
+      "id": "rineya_grnc_v2_conversation_closure_00233",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Briefly acknowledges the user's plan to try the suggestion and return if needed."
+    },
+    {
+      "index": 83,
+      "id": "rineya_grnc_v2_conversation_closure_00325",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides a natural farewell when the user needs to leave."
+    },
+    {
+      "index": 84,
+      "id": "rineya_grnc_v2_conversation_closure_00615",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Matches the user's statement that the matter is sorted."
+    },
+    {
+      "index": 85,
+      "id": "rineya_grnc_v2_conversation_closure_00774",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Appropriately acknowledges that the issue is solved."
+    },
+    {
+      "index": 86,
+      "id": "rineya_grnc_v2_conversation_closure_00252",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Supports stopping for the evening with a short, natural closing."
+    },
+    {
+      "index": 87,
+      "id": "rineya_grnc_v2_conversation_closure_00106",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers a brief encouraging farewell before the user returns to work."
+    },
+    {
+      "index": 88,
+      "id": "rineya_grnc_v2_conversation_closure_00574",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Follows the user's explicit statement that saving the notes completes the matter."
+    },
+    {
+      "index": 89,
+      "id": "rineya_grnc_v2_conversation_closure_00482",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Returns the user's natural 'talk later' farewell."
+    },
+    {
+      "index": 90,
+      "id": "rineya_grnc_v2_conversation_closure_00563",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Acknowledges the user's stated understanding."
+    },
+    {
+      "index": 91,
+      "id": "rineya_grnc_v2_conversation_closure_00369",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Closes warmly after the user says they are done for the day."
+    },
+    {
+      "index": 92,
+      "id": "rineya_grnc_v2_conversation_closure_00111",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides an appropriate short farewell."
+    },
+    {
+      "index": 93,
+      "id": "rineya_grnc_v2_conversation_closure_00635",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Respects the user's closure without adding questions."
+    },
+    {
+      "index": 94,
+      "id": "rineya_grnc_v2_conversation_closure_00541",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Uses 'Done' as a conversational closing to the user's request to close out."
+    },
+    {
+      "index": 95,
+      "id": "rineya_grnc_v2_conversation_closure_00260",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Briefly acknowledges the user's taking over."
+    },
+    {
+      "index": 96,
+      "id": "rineya_grnc_v2_decision_explanation_00614",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Chooses the course that teaches the explicitly needed project topic."
+    },
+    {
+      "index": 97,
+      "id": "rineya_grnc_v2_decision_explanation_00473",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Reasonably prioritizes the much faster model for the stated low-risk live-chat use."
+    },
+    {
+      "index": 98,
+      "id": "rineya_grnc_v2_decision_explanation_00538",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Matches better lumbar support to prolonged daily sitting."
+    },
+    {
+      "index": 99,
+      "id": "rineya_grnc_v2_decision_explanation_00231",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Favors the setup with an additional encrypted cloud copy for the stated redundancy goal."
+    },
+    {
+      "index": 100,
+      "id": "rineya_grnc_v2_decision_explanation_00785",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Honors the explicit battery priority and preserves B's ten-hour figure."
+    },
+    {
+      "index": 101,
+      "id": "rineya_grnc_v2_decision_explanation_00068",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Recommends the quieter hotel for the user's sleep priority."
+    },
+    {
+      "index": 102,
+      "id": "rineya_grnc_v2_decision_explanation_00040",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Matches the shorter commute to the user's explicit time priority."
+    },
+    {
+      "index": 103,
+      "id": "rineya_grnc_v2_decision_explanation_00396",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Reasonably connects better low-light performance to concert photography."
+    },
+    {
+      "index": 104,
+      "id": "rineya_grnc_v2_decision_explanation_00467",
+      "status": "FLAG_REVIEW",
+      "reason": "Claims Plan B fits the fixed deadline although no deadline date or Plan B delivery time is supplied; reliable core scope supports a preference but not that timing assertion."
+    },
+    {
+      "index": 105,
+      "id": "rineya_grnc_v2_decision_explanation_00706",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Correctly computes the five-minute tradeoff and honors fewer transfers."
+    },
+    {
+      "index": 106,
+      "id": "rineya_grnc_v2_decision_explanation_00389",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Reasonably favors the fully tested option for the stated reliability priority."
+    },
+    {
+      "index": 107,
+      "id": "rineya_grnc_v2_decision_explanation_00495",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Selects the flexible monthly subscription in light of a possible move."
+    },
+    {
+      "index": 108,
+      "id": "rineya_grnc_v2_deescalation_00370",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers relevant, concise advice to focus replies on comments that affect the work."
+    },
+    {
+      "index": 109,
+      "id": "rineya_grnc_v2_deescalation_00012",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Suggests a practical separation of immediate cleanup from broader roommate expectations."
+    },
+    {
+      "index": 110,
+      "id": "rineya_grnc_v2_deescalation_00097",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides a short deescalating response focused on facts."
+    },
+    {
+      "index": 111,
+      "id": "rineya_grnc_v2_deescalation_00516",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Suggests verifying the facts and explaining the personal impact without inventing intent."
+    },
+    {
+      "index": 112,
+      "id": "rineya_grnc_v2_deescalation_00602",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers a restrained alternative to sending ten follow-ups."
+    },
+    {
+      "index": 113,
+      "id": "rineya_grnc_v2_deescalation_00779",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Suggests a concise, calm clarification for the stated misunderstanding."
+    },
+    {
+      "index": 114,
+      "id": "rineya_grnc_v2_deescalation_00765",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Redirects defensiveness toward repairing the customer's problem."
+    },
+    {
+      "index": 115,
+      "id": "rineya_grnc_v2_deescalation_00798",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Offers a concrete way to move the team's delay discussion from blame to the blockage."
+    },
+    {
+      "index": 116,
+      "id": "rineya_grnc_v2_deescalation_00503",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Refocuses the competitive impulse on the shared project goal."
+    },
+    {
+      "index": 117,
+      "id": "rineya_grnc_v2_deescalation_00453",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Suggests keeping private messages private and addressing the conflict directly."
+    },
+    {
+      "index": 118,
+      "id": "rineya_grnc_v2_deescalation_00614",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides a concise next step for a stalled discussion."
+    },
+    {
+      "index": 119,
+      "id": "rineya_grnc_v2_deescalation_00288",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Encourages a pause and direct inquiry before escalating an unanswered message."
+    },
+    {
+      "index": 120,
+      "id": "rineya_grnc_v2_deescalation_00552",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Discourages mirroring rudeness while preserving a substantive response."
+    },
+    {
+      "index": 121,
+      "id": "rineya_grnc_v2_deescalation_00051",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Directly addresses talking over each other with turn-taking."
+    },
+    {
+      "index": 122,
+      "id": "rineya_grnc_v2_deescalation_00089",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Suggests an orderly, concise way to surface concerns in the heated meeting."
+    },
+    {
+      "index": 123,
+      "id": "rineya_grnc_v2_deescalation_00255",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Recommends waiting for emotions to settle before ending the friendship."
+    },
+    {
+      "index": 124,
+      "id": "rineya_grnc_v2_empathy_validation_00097",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Validates embarrassment and gives proportionate reassurance about one poor presentation."
+    },
+    {
+      "index": 125,
+      "id": "rineya_grnc_v2_empathy_validation_00697",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Responds empathetically to a team-affecting mistake and emphasizes repair."
+    },
+    {
+      "index": 126,
+      "id": "rineya_grnc_v2_empathy_validation_00371",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Provides concise empathy for disrupted last-minute plans."
+    },
+    {
+      "index": 127,
+      "id": "rineya_grnc_v2_empathy_validation_00454",
+      "status": "ACCEPTABLE_REFERENCE",
+      "reason": "Recognizes the stated disappointment after another failed test and suggests a brief reset."
+    }
+  ]
+}
