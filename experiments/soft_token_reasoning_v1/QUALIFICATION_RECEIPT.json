@@ -1,0 +1,80 @@
+{
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "branch": "research/soft-token-reasoning-v1",
+  "canonical_model": {
+    "model_id": "Qwen/Qwen3-0.6B",
+    "source": "RESEARCH_PAPER_DATA.md",
+    "tokenizer_id": "Qwen/Qwen3-0.6B"
+  },
+  "dataset_binding": {
+    "dataset_id": "Rineya-Puzzle-Reasoning-51k",
+    "manifest_path": "C:/sbr/Rineya-Puzzle-Reasoning-51k/data/manifest.json",
+    "manifest_sha256": "9997d39ad027397282410c739880fe39f2ed8cce0cb7dd006984f00433a5bf97",
+    "sealed_access": false,
+    "splits": {
+      "train": {
+        "bytes": 87079668,
+        "manifest_key": "train.jsonl",
+        "rows": 40800,
+        "sha256": "9e48cb5c207605209aa642438fc6bbb186f76cea22bd3fcef78807495175a703"
+      },
+      "validation": {
+        "bytes": 8730799,
+        "manifest_key": "validation.jsonl",
+        "rows": 4080,
+        "sha256": "f717d9f19a904a0278ba932afca76976a331dd4e184fd8a997af93843cd93b95"
+      }
+    }
+  },
+  "dtype": "float64 for deterministic qualification tensors",
+  "evidence_classification": "mechanical qualification; no model-quality or improvement claim",
+  "gflowrl": false,
+  "head_sha_at_measurement": "ec4c2a375696c20ce38bc5f79f8c97bdf77d5af6",
+  "milestone": "STR-QUAL-001",
+  "native_checkpoint_loaded": false,
+  "qualification_scope": "mechanical tensor qualification only",
+  "resource_probe": {
+    "approximation": null,
+    "batch": 2,
+    "device": "cuda",
+    "dtype": "float32",
+    "elapsed_seconds": 0.3548432000006869,
+    "embedding_numel": 187,
+    "embedding_width": 11,
+    "finite": true,
+    "host": {
+      "platform": "Windows-10-10.0.26200-SP0",
+      "python": "3.11.15",
+      "torch": "2.6.0+cu124"
+    },
+    "logits_numel": 136,
+    "loss": 0.21976211667060852,
+    "measured_tensor_bytes": 1292,
+    "microsteps": 5,
+    "microsteps_per_second": 14.090730779088682,
+    "note": "CUDA peak allocation/reservation measured for this exact tensor path.",
+    "seed": 20260925,
+    "sequence": 4,
+    "status": "MEASURED",
+    "vocabulary": 17,
+    "vram_peak_allocated_bytes": 17058304,
+    "vram_peak_reserved_bytes": 23068672
+  },
+  "runtime": {
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15"
+  },
+  "sealed_access": false,
+  "seed": 20260925,
+  "source_files": {
+    "implementation/rollout.py": "925a32a8ed82e7ef6147d37f14be8c7583e4c6ffeabb0ae5eb84d3cfc8913ff6",
+    "implementation/soft_tokens.py": "c03fa6473dcdbf5d433ca0dfa083a9d5898590de03b0647ee9b45e7147c0dc2c"
+  },
+  "status": "PASS",
+  "tests": {
+    "command": "python -m pytest -q experiments/soft_token_reasoning_v1/tests",
+    "passed": 19,
+    "sealed_tests": false
+  },
+  "training_status": "not_run"
+}

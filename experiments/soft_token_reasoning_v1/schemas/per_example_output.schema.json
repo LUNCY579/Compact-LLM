@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["example_id", "arm", "seed", "sample_index", "correct", "answer_norm", "reasoning_length", "mean_token_entropy"],
+  "properties": {
+    "example_id": {"type": "string", "minLength": 1},
+    "arm": {"enum": ["D0", "S1"]},
+    "seed": {"type": "integer", "minimum": 0},
+    "sample_index": {"type": "integer", "minimum": 0},
+    "correct": {"type": "boolean"},
+    "answer_norm": {"type": "string"},
+    "reasoning_length": {"type": "integer", "minimum": 0},
+    "mean_token_entropy": {"type": "number", "minimum": 0},
+    "stop_reason": {"enum": ["eos", "length"]},
+    "train_inference_mode": {"enum": ["hard", "soft_train_hard_infer"]}
+  }
+}

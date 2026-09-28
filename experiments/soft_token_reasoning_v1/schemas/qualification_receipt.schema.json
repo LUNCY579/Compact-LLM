@@ -1,0 +1,13 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["milestone", "status", "tests", "sealed_access", "training_status", "resource_probe"],
+  "properties": {
+    "milestone": {"const": "STR-QUAL-001"},
+    "status": {"enum": ["PASS", "BLOCKED", "FAIL"]},
+    "tests": {"type": "object"},
+    "sealed_access": {"const": false},
+    "training_status": {"enum": ["not_run", "blocked", "completed"]},
+    "resource_probe": {"type": "object"}
+  }
+}
