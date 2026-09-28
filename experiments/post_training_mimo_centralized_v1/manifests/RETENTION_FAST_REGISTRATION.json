@@ -1,0 +1,54 @@
+{
+  "schema_version": 1,
+  "status": "FROZEN_FAST_LANE_RETENTION_ONLY",
+  "amendment": "AMENDMENT_002.md",
+  "selection_seed": 20260928,
+  "domains": [
+    "retrieval",
+    "instruction_following",
+    "answerability_abstention"
+  ],
+  "authorization": {
+    "dataset_artifact_generation": true,
+    "native_execution": false,
+    "training": false,
+    "check_rendering": false,
+    "final_rendering": false
+  },
+  "counts": {
+    "TRAIN": {
+      "retrieval": 256,
+      "instruction_following": 256,
+      "answerability_abstention": 128
+    },
+    "TRAIN_SELECTION": {
+      "retrieval": 0,
+      "instruction_following": 0,
+      "answerability_abstention": 0
+    },
+    "DEV": {
+      "retrieval": 64,
+      "instruction_following": 64,
+      "answerability_abstention": 64
+    },
+    "CHECK": {
+      "retrieval": 128,
+      "instruction_following": 128,
+      "answerability_abstention": 128
+    },
+    "FINAL": {
+      "retrieval": 0,
+      "instruction_following": 0,
+      "answerability_abstention": 0
+    }
+  },
+  "primary_student_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "role_policy": "canonical parent before rendering/solving; twins inherit same role",
+  "model_outcome_based_selection": false,
+  "context_ceiling": 1024,
+  "completion_ceiling_including_eos": 128,
+  "language_replay_rows_remaining": 256,
+  "language_dev_parents_remaining": 64,
+  "long_context_sentinel": "separate proposal; required before broad claim",
+  "e1_launch_ready": false
+}

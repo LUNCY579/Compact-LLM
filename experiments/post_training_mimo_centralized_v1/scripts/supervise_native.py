@@ -11,6 +11,8 @@ from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import
 
 
 def main():
+    if os.name != "nt":
+        raise RuntimeError("This registered E0 supervisor is Windows-only; other hosts require a new containment qualification")
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument("--config",required=True,type=Path)
     p.add_argument("--output",required=True,type=Path)
