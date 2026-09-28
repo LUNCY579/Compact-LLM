@@ -1,0 +1,582 @@
+{
+  "amendment": "COMP_RS_001_AMENDMENT_1.md section 1 (read discipline); review finding DS-8",
+  "code_sha256": {
+    "experiments/maxrl_comp002_pretraining_v1/arm_build.py": "a1b0a0f099de6e2765c1915915f4b4e22b4e3bec89f876bd9e445991c1af1598",
+    "experiments/maxrl_comp002_pretraining_v1/canary.py": "82cc8df002cf545110895f374182fba08fa6f2ac2403ad55cb3743e947e97a64",
+    "experiments/maxrl_comp002_pretraining_v1/content_scoring.py": "df51285c05fb7d4d0b56287b7f6d4913943888fa67b6e7ceaf037617dfab9a1b",
+    "experiments/maxrl_comp002_pretraining_v1/data_gates.py": "fe72c3ba4cdeb7b6fda9519b627ffe82c69a46dc9ad6f31309dd14c70f311d37",
+    "experiments/maxrl_comp002_pretraining_v1/failure_taxonomy.py": "f89ca68c6d631918828677d2ca8ff88bc1d854da1b4ee795eb67482a5379e2e5",
+    "experiments/maxrl_comp002_pretraining_v1/h3b_null_cell.py": "670170c7543e2c80cfe2ac9b3fc2130763341302ef82684e9419557f2e2cbd0f",
+    "experiments/maxrl_comp002_pretraining_v1/mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+    "experiments/maxrl_comp002_pretraining_v1/preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "experiments/maxrl_comp002_pretraining_v1/q1_assets.py": "b47af0ce00c178ba8b71aa5451383512cd721c8101196aeb6d4a778bcdb31b2c",
+    "experiments/maxrl_comp002_pretraining_v1/q1_dev_scope.py": "435cadd7ac0f856d480fe1ffa68d930e0d4badc87257eef5d6964d249b926333",
+    "experiments/maxrl_comp002_pretraining_v1/q1_native_loader.py": "c83def7112f77fdc7f9ef8f9a3427e0c1ed15e038d232e195fdc833cabae5798",
+    "experiments/maxrl_comp002_pretraining_v1/q1_native_wait.py": "f4b1315d3fb6aa697c2b541b6c91f1c238c0c9e45b884547b0abbc72a73df272",
+    "experiments/maxrl_comp002_pretraining_v1/q1_tokenizer.py": "312413068abd65f38aca97ef1d500a17637fec9b7d3138298c1210669ffb962b",
+    "experiments/maxrl_comp002_pretraining_v1/q2_select_source_smoke.py": "b988dafa2903608fd7c2483dc466d262ef91e2945e499c1fcb52ecf9792a7bf4",
+    "experiments/maxrl_comp002_pretraining_v1/rs_repairs.py": "e3121fa1f3456f1af78e9053db26baa0b121ec9d1f1572941e8c47f528454506",
+    "experiments/maxrl_comp002_pretraining_v1/s0pre_evidence.py": "440dbbd3b6ca82cbe94f9aabc93fac0ad039572d6c0bfb638e8c2b120ec6288e",
+    "experiments/maxrl_comp002_pretraining_v1/scope_receipt.py": "d755a2690083e31733dd47e08786c1f35f7c2459ce3b93a42c06f2519ca22419",
+    "experiments/maxrl_comp002_pretraining_v1/scoped_scorer.py": "761bea1c66418e04ff3e7409ac9b8a90418f8274ac7474398bd7f5a304a4643d",
+    "experiments/maxrl_comp002_pretraining_v1/source_lock.json": "73e7d9f35fe779978b64a2d29236156d47dffb05864ea4e0c5f7fe9464beb323",
+    "experiments/maxrl_comp002_pretraining_v1/stats_exact.py": "30e8e0868f7dbbd8d6a9833210424faf794df3082076d290fb7903013d9775df",
+    "experiments/maxrl_composable_skills_v2/__init__.py": "66ca8262778d26b4e05a0449ec489138ac317707b6aa7f6b66f19ee6c5f8716d",
+    "experiments/maxrl_composable_skills_v2/behaviour.py": "e9befeccc131e91cd5fe7c9d2c1337ba12a0c4df5f14ee1fd845027019e35936",
+    "experiments/maxrl_composable_skills_v2/contracts.py": "6f04b61a31e07c23b4621cfb850cbf4711d8cc95e2bcf4bad28a328bf4d587e9",
+    "experiments/maxrl_composable_skills_v2/corpus.py": "07bcf505db976007403c9c4f41193e32e1f75b5eb4acf8db587e298237f91fde",
+    "experiments/maxrl_composable_skills_v2/export.py": "69150d84e52d1cb663683b3bcc077b5fcd47c81bf66a936516e3c3e3d6febec1",
+    "experiments/maxrl_composable_skills_v2/generator.py": "58bc2264d5b56b34115f93050032d88cfe2d137afc27e56c5ed3e12cae6d970f",
+    "experiments/maxrl_composable_skills_v2/oracle.py": "23b76918a588891d87fc99e6abacc69ac6c63e5993b2dd896d9e11e013fe4085",
+    "experiments/maxrl_composable_skills_v2/verifier.py": "38e53ff8408ff262d925450a4dcd99c1c5af9a903f60ec3c5a7eb504c688eeb2",
+    "experiments/maxrl_verifiable_data_v1/__init__.py": "5f57f5df31e7bd70ccac234db736ca79629387fab576fc4270200da19021d1b3",
+    "experiments/maxrl_verifiable_data_v1/corpus.py": "76d45fa9e79dd3c91d6869e41c98220b4fb8fb406ed4557bf763a81c0ade4ee9",
+    "experiments/maxrl_verifiable_data_v1/export.py": "4c1f3932784da0dc11093a7a389cec5545751f8427d479235d6e5282dc19ed34",
+    "experiments/maxrl_verifiable_data_v1/generators.py": "48dec4edb385f48ed5842c491610523538e98ddbac6e907f6ce9e4e269478acf",
+    "experiments/maxrl_verifiable_data_v1/maxrl.py": "b32900b3ca56dd2796a64b4b984ae86e4e4b5fe03020284c87fa1a072e1aba24",
+    "experiments/maxrl_verifiable_data_v1/oracle.py": "a2fc59f01cd191f65a3f5109c6cf91262f775f93538867136d65a498b7f78ab7",
+    "experiments/maxrl_verifiable_data_v1/specs.py": "b6e1f96a9fd534af6f4d14c0627e8371fed9d2858d993255717e3a468ea21a1b",
+    "experiments/maxrl_verifiable_data_v1/verifier.py": "b20550c1a923ecf97bed3d49dbcfe8e5506a956499fb141be6473bcaf544616a"
+  },
+  "code_unchanged_during_run": true,
+  "data_files_opened": {
+    "canonical/calibration.jsonl": 3,
+    "canonical/dev.jsonl": 4,
+    "canonical/guard_dev.jsonl": 3,
+    "canonical/train.jsonl": 1,
+    "manifest.json": 14,
+    "manifests/atomic_S.json": 1,
+    "oracles/calibration.jsonl": 2,
+    "oracles/dev.jsonl": 2,
+    "oracles/guard_dev.jsonl": 3,
+    "policy/calibration.jsonl": 1,
+    "policy/dev.jsonl": 1
+  },
+  "data_files_opened_outside_steps": {},
+  "data_listings": {
+    "os.listdir .": 1
+  },
+  "data_root": "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+  "data_root_mutations": [],
+  "data_root_writes": [],
+  "expected_data_files": [
+    "canonical/calibration.jsonl",
+    "canonical/dev.jsonl",
+    "canonical/guard_dev.jsonl",
+    "canonical/train.jsonl",
+    "manifest.json",
+    "manifests/atomic_S.json",
+    "oracles/calibration.jsonl",
+    "oracles/dev.jsonl",
+    "oracles/guard_dev.jsonl",
+    "policy/calibration.jsonl",
+    "policy/dev.jsonl"
+  ],
+  "experiment": "COMP-RS-001",
+  "failures": [],
+  "finished": "2026-09-27T17:03:18-05:00",
+  "git": {
+    "branch": "research/comp-rs-001-amendment-1",
+    "head": "ccdabdc99c06fb80d1787d48bf9b828f397c990e",
+    "note": "the S0PRE sources are uncommitted working-tree files; their sha256 are in code_sha256"
+  },
+  "hook": {
+    "installed_before_package_import": true,
+    "native_readers_imported": [],
+    "package_modules_loaded_at_install": [],
+    "recorded_events": [
+      "glob.glob",
+      "open",
+      "os.chmod",
+      "os.chown",
+      "os.link",
+      "os.listdir",
+      "os.mkdir",
+      "os.remove",
+      "os.rename",
+      "os.rmdir",
+      "os.scandir",
+      "os.symlink",
+      "os.truncate",
+      "os.utime",
+      "shutil.chown",
+      "shutil.copyfile",
+      "shutil.copymode",
+      "shutil.copystat",
+      "shutil.copytree",
+      "shutil.move",
+      "shutil.rmtree"
+    ],
+    "refused_events": [
+      "open",
+      "os.link",
+      "os.rename",
+      "shutil.copyfile"
+    ],
+    "rule": "refuse a sealed final name on any path (raw, absolute and resolved forms; case-folded; trailing dots/spaces and ':stream' dropped); record every open, listing and mutation under the data root",
+    "sealed_names": [
+      "challenge.jsonl",
+      "challenge_boundary.json",
+      "challenge_core.json",
+      "guard_challenge.json",
+      "guard_challenge.jsonl",
+      "guard_test.json",
+      "guard_test.jsonl",
+      "test.jsonl",
+      "test_boundary.json",
+      "test_core.json"
+    ]
+  },
+  "kind": "s0pre_evidence_open_log",
+  "model_outputs_read": false,
+  "note": "CPU mechanics only: no model, tokenizer or GPU. Guard (preservation) banks are bound by their manifest-checked bank sha; a guard scope receipt is future work (C8).",
+  "outputs": {
+    "calibration_scope": "1acd416dea7bcf61cd439fa54665975ffc34c047acc0dfde2a37c1fac370140f",
+    "canary_calibration": "4df404e7e503db7f64e215f2698e485119179df036a4683a05609b68781ea4da",
+    "canary_dev": "e8ded988ff4dc3819dc3d8b5044de7ffeec7f6b67fbc47469c3cbc6fc15c87c5",
+    "canary_guard_dev": "623a553309cadfce2960160b193b11f25d556d24a6d343d793ab0e269addf463",
+    "data_gates": "1a1be2152d43c74ff10ebf23531db90cb48f1df8700a349c99c80b3b0ca722cd",
+    "dev_scope": "89af04f58f073b0c70508b046600470060f4dc83ad6c6324d76c9be6a0ebc532",
+    "h3b_null_cell_dev": "100f0248dde53714a20c0fdadcc5ac56847dcc40db3be26196cc2088d491935e"
+  },
+  "positive_control": {
+    "allowed_spellings": [
+      {
+        "opened": true,
+        "spelling": "dev.jsonl"
+      },
+      {
+        "opened": true,
+        "spelling": "DEV.JSONL"
+      },
+      {
+        "opened": true,
+        "spelling": "dev.jsonl."
+      },
+      {
+        "opened": true,
+        "spelling": "dev.jsonl::$DATA"
+      }
+    ],
+    "failures": [],
+    "note": "The sealed files are synthetic, in a temporary directory outside the data root; they were written before the hook was installed. An allowed spelling that opens shows that the refused spelling of a sealed name would have reached the file.",
+    "recorder": {
+      "data_root_entries": 8,
+      "listed": [
+        "os.listdir ."
+      ],
+      "manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+      "opened": [
+        "manifest.json"
+      ]
+    },
+    "refusals": 12,
+    "sealed_routes": [
+      {
+        "refused": true,
+        "route": "builtins.open test.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "io.open challenge.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "os.open guard_test.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "io.FileIO guard_challenge.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "io.open_code test.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "Path.read_bytes challenge.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "Path.read_text guard_test.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "shutil.copyfile test.jsonl"
+      },
+      {
+        "refused": true,
+        "route": "builtins.open TEST.JSONL"
+      },
+      {
+        "refused": true,
+        "route": "builtins.open 'test.jsonl.'"
+      },
+      {
+        "refused": true,
+        "route": "builtins.open 'test.jsonl::$DATA'"
+      },
+      {
+        "refused": true,
+        "route": "builtins.open manifests/test_core.json"
+      }
+    ],
+    "status": "PASS"
+  },
+  "reference_dir": "C:\\Users\\clclc\\BusinessProject\\s0pre_superseded_evidence_20260927",
+  "refusals": [],
+  "runner": {
+    "argv": [
+      "--reference-dir",
+      "C:\\Users\\clclc\\BusinessProject\\s0pre_superseded_evidence_20260927"
+    ],
+    "path": "experiments/maxrl_comp002_pretraining_v1/s0pre_evidence.py",
+    "sha256": "440dbbd3b6ca82cbe94f9aabc93fac0ad039572d6c0bfb638e8c2b120ec6288e",
+    "unchanged_at_end": true
+  },
+  "runtime": {
+    "executable": "C:\\Users\\clclc\\AppData\\Local\\hermes\\hermes-agent\\venv\\Scripts\\python.exe",
+    "numpy": "2.4.6",
+    "peak_working_set_gib": 0.42,
+    "platform": "Windows-10-10.0.26200-SP0",
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "torch_source": "distribution metadata; torch was not imported"
+  },
+  "sealed_files_opened": [],
+  "stage": "S0PRE_OPEN_LOG",
+  "started": "2026-09-27T17:02:04-05:00",
+  "status": "PASS",
+  "steps": [
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "calibration",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_CALIBRATION_SCOPE.json"
+      ],
+      "data_files_opened": {
+        "canonical/calibration.jsonl": 1,
+        "manifest.json": 1,
+        "policy/calibration.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.scope_receipt",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_CALIBRATION_SCOPE.json",
+      "output_bytes": 1875,
+      "output_has_cr": false,
+      "output_sha256": "1acd416dea7bcf61cd439fa54665975ffc34c047acc0dfde2a37c1fac370140f",
+      "printed": {
+        "absent": [
+          "RS"
+        ],
+        "role": "calibration",
+        "rows_per_signature": {
+          "P": 150,
+          "R": 150,
+          "S": 150
+        },
+        "shared_parents": 150
+      },
+      "status": "PASS",
+      "step": "calibration_scope",
+      "wall_seconds": 0.06
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "dev",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_DEV_SCOPE.json"
+      ],
+      "data_files_opened": {
+        "canonical/dev.jsonl": 1,
+        "manifest.json": 1,
+        "policy/dev.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.scope_receipt",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_DEV_SCOPE.json",
+      "output_bytes": 2070,
+      "output_has_cr": false,
+      "output_sha256": "89af04f58f073b0c70508b046600470060f4dc83ad6c6324d76c9be6a0ebc532",
+      "printed": {
+        "absent": [],
+        "role": "dev",
+        "rows_per_signature": {
+          "P": 250,
+          "R": 250,
+          "RS": 250,
+          "S": 250
+        },
+        "shared_parents": 250
+      },
+      "status": "PASS",
+      "step": "dev_scope",
+      "wall_seconds": 0.18
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--roles",
+        "dev",
+        "calibration",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_DATA_GATES.json"
+      ],
+      "data_files_opened": {
+        "canonical/calibration.jsonl": 1,
+        "canonical/dev.jsonl": 1,
+        "canonical/train.jsonl": 1,
+        "manifest.json": 1,
+        "manifests/atomic_S.json": 1,
+        "oracles/calibration.jsonl": 1,
+        "oracles/dev.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.data_gates",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_DATA_GATES.json",
+      "output_bytes": 131266,
+      "output_has_cr": false,
+      "output_sha256": "1a1be2152d43c74ff10ebf23531db90cb48f1df8700a349c99c80b3b0ca722cd",
+      "printed": {
+        "calibration": {
+          "first_lex": null,
+          "leak": [
+            0,
+            0
+          ],
+          "overlap": {
+            "RS": 0,
+            "S": 5
+          },
+          "rs_floor_mean": null,
+          "shortcut_S": 19,
+          "triple_structure": "PASS"
+        },
+        "dev": {
+          "first_lex": 83,
+          "leak": [
+            62,
+            33
+          ],
+          "overlap": {
+            "RS": 5,
+            "S": 1
+          },
+          "rs_floor_mean": 0.3437191763191763,
+          "shortcut_S": 36,
+          "triple_structure": "PASS"
+        }
+      },
+      "status": "PASS",
+      "step": "data_gates",
+      "wall_seconds": 4.68
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "dev",
+        "--signatures",
+        "R",
+        "S",
+        "P",
+        "RS",
+        "--scope-receipt",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_DEV_SCOPE.json",
+        "--scope-receipt-sha256",
+        "89af04f58f073b0c70508b046600470060f4dc83ad6c6324d76c9be6a0ebc532",
+        "--reference-receipt",
+        "C:\\Users\\clclc\\BusinessProject\\s0pre_superseded_evidence_20260927\\S0PRE_CANARY_DEV.json",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_CANARY_DEV.json"
+      ],
+      "data_files_opened": {
+        "canonical/dev.jsonl": 1,
+        "canonical/guard_dev.jsonl": 1,
+        "manifest.json": 4,
+        "oracles/dev.jsonl": 1,
+        "oracles/guard_dev.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.canary",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_CANARY_DEV.json",
+      "output_bytes": 357436,
+      "output_has_cr": false,
+      "output_sha256": "e8ded988ff4dc3819dc3d8b5044de7ffeec7f6b67fbc47469c3cbc6fc15c87c5",
+      "printed": {
+        "overall": "PASS",
+        "receipt_sha256": "e8ded988ff4dc3819dc3d8b5044de7ffeec7f6b67fbc47469c3cbc6fc15c87c5",
+        "role": "dev",
+        "summary": {
+          "a_references": "PASS",
+          "b_composition_signatures": "PASS",
+          "b_wrappers": "PASS",
+          "c_derangement": "PASS",
+          "d_lookup_blind": "PASS",
+          "e_legacy_families": "PASS"
+        }
+      },
+      "status": "PASS",
+      "step": "canary_dev",
+      "wall_seconds": 21.1
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "calibration",
+        "--signatures",
+        "R",
+        "S",
+        "P",
+        "--scope-receipt",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_CALIBRATION_SCOPE.json",
+        "--scope-receipt-sha256",
+        "1acd416dea7bcf61cd439fa54665975ffc34c047acc0dfde2a37c1fac370140f",
+        "--reference-receipt",
+        "C:\\Users\\clclc\\BusinessProject\\s0pre_superseded_evidence_20260927\\S0PRE_CANARY_CALIBRATION.json",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_CANARY_CALIBRATION.json"
+      ],
+      "data_files_opened": {
+        "canonical/calibration.jsonl": 1,
+        "canonical/guard_dev.jsonl": 1,
+        "manifest.json": 4,
+        "oracles/calibration.jsonl": 1,
+        "oracles/guard_dev.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.canary",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_CANARY_CALIBRATION.json",
+      "output_bytes": 323334,
+      "output_has_cr": false,
+      "output_sha256": "4df404e7e503db7f64e215f2698e485119179df036a4683a05609b68781ea4da",
+      "printed": {
+        "overall": "PASS",
+        "receipt_sha256": "4df404e7e503db7f64e215f2698e485119179df036a4683a05609b68781ea4da",
+        "role": "calibration",
+        "summary": {
+          "a_references": "PASS",
+          "b_composition_signatures": "PASS",
+          "b_wrappers": "PASS",
+          "c_derangement": "PASS",
+          "d_lookup_blind": "NOT_RUN",
+          "e_legacy_families": "PASS"
+        }
+      },
+      "status": "PASS",
+      "step": "canary_calibration",
+      "wall_seconds": 9.57
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "guard_dev",
+        "--reference-receipt",
+        "C:\\Users\\clclc\\BusinessProject\\s0pre_superseded_evidence_20260927\\S0PRE_CANARY_GUARD_DEV.json",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_CANARY_GUARD_DEV.json"
+      ],
+      "data_files_opened": {
+        "canonical/guard_dev.jsonl": 1,
+        "manifest.json": 2,
+        "oracles/guard_dev.jsonl": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.canary",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_CANARY_GUARD_DEV.json",
+      "output_bytes": 229111,
+      "output_has_cr": false,
+      "output_sha256": "623a553309cadfce2960160b193b11f25d556d24a6d343d793ab0e269addf463",
+      "printed": {
+        "overall": "PASS",
+        "receipt_sha256": "623a553309cadfce2960160b193b11f25d556d24a6d343d793ab0e269addf463",
+        "role": "guard_dev",
+        "summary": {
+          "a_references": "PASS",
+          "b_composition_signatures": "NOT_RUN",
+          "b_wrappers": "PASS",
+          "c_derangement": "PASS",
+          "d_lookup_blind": "NOT_RUN",
+          "e_legacy_families": "PASS"
+        }
+      },
+      "status": "PASS",
+      "step": "canary_guard_dev",
+      "wall_seconds": 3.69
+    },
+    {
+      "argv": [
+        "--data",
+        "C:\\Users\\clclc\\BusinessProject\\Rineya-Dataset\\data",
+        "--role",
+        "dev",
+        "--redraws",
+        "2000",
+        "--flips",
+        "1000000",
+        "--seed",
+        "20260926",
+        "--out",
+        "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\S0PRE_H3B_NULL_CELL_DEV.json"
+      ],
+      "data_files_opened": {
+        "canonical/dev.jsonl": 1,
+        "manifest.json": 1
+      },
+      "data_listings": {},
+      "error": null,
+      "exit": 0,
+      "module": "experiments.maxrl_comp002_pretraining_v1.h3b_null_cell",
+      "output": "experiments/maxrl_comp002_pretraining_v1/evidence/S0PRE_H3B_NULL_CELL_DEV.json",
+      "output_bytes": 3974,
+      "output_has_cr": false,
+      "output_sha256": "100f0248dde53714a20c0fdadcc5ac56847dcc40db3be26196cc2088d491935e",
+      "printed": {
+        "flips": 1000000,
+        "pairs": {
+          "lex_first_vs_fixed_random": [
+            0.0465,
+            0.055004012207973574
+          ],
+          "lex_first_vs_lex_last": [
+            0.0435,
+            0.05176630079949973
+          ]
+        },
+        "redraws": 2000,
+        "role": "dev",
+        "rule": "SIGNFLIP_REFERENCE",
+        "rule_compliant": true
+      },
+      "status": "PASS",
+      "step": "h3b_null_cell_dev",
+      "wall_seconds": 33.46
+    }
+  ],
+  "test_challenge_read": false,
+  "unexpected_data_files_opened": []
+}

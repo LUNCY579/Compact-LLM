@@ -1,0 +1,50 @@
+{
+  "absent_signatures": [
+    "RS"
+  ],
+  "amendment": "COMP_RS_001_AMENDMENT_1.md section 1; clarification C8",
+  "canonical_calibration_sha256": "9bde3b8b7c8f13ee12367bb3de1d978cfebb1b12c421b8eb9dc6d8ec8ac02bed",
+  "code_bundle_sha256": "a92cf8afafc55f18c936c8d8b2406db26cea4e593dec78e14bf2574760b94335",
+  "code_sha256": {
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "scope_receipt.py": "d755a2690083e31733dd47e08786c1f35f7c2459ce3b93a42c06f2519ca22419"
+  },
+  "core_filter": "tag == 'core'",
+  "dataset_manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+  "experiment": "COMP-RS-001",
+  "fields_retained": [
+    "id",
+    "parent_id",
+    "tag",
+    "skills"
+  ],
+  "model_outputs_read": false,
+  "note": "Scope identities only. Every scorer asserts this receipt's digest.",
+  "policy_calibration_sha256": "fcf3a21c7a165b99f9b20ee71f423aafb197a63deb8f1bddc9942a5d975cb997",
+  "role": "calibration",
+  "rows_in_bank": 1250,
+  "shared_parent_worlds": 150,
+  "signatures": {
+    "P": {
+      "ids_sha256": "5080387400e22a43d1779a8421f04ee7d62e1e28aed51d92977b188bec4a1d22",
+      "parents": 150,
+      "parents_sha256": "30c15ebc06f65ab85959f7bda15de2e810df87b07dc9ee31f6c759e84aeb523b",
+      "rows": 150
+    },
+    "R": {
+      "ids_sha256": "6b2b2033622265007dd7a6076f7c6913f14a4040afc0cc459613dd192d525a3a",
+      "parents": 150,
+      "parents_sha256": "30c15ebc06f65ab85959f7bda15de2e810df87b07dc9ee31f6c759e84aeb523b",
+      "rows": 150
+    },
+    "S": {
+      "ids_sha256": "8da52db5a8fd1dd4fe5086ff3adc34f2d7b6db8baf3ee18cf5939bb81d24336a",
+      "parents": 150,
+      "parents_sha256": "30c15ebc06f65ab85959f7bda15de2e810df87b07dc9ee31f6c759e84aeb523b",
+      "rows": 150
+    }
+  },
+  "spec_only_ack": false,
+  "stage": "S0PRE_CALIBRATION_SCOPE",
+  "test_challenge_read": false
+}

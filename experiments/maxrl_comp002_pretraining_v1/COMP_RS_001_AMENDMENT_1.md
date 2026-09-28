@@ -539,3 +539,151 @@ opened.
 - **Operational facts from memory notes:** the 0.78 VRAM cap, driver-reset events and WMI detachment.
 - **The inherited 14 GiB disk floor.**
 - **Cost figures.** The decode-cost estimates behind the read scopes. The S0 pilot replaces them with measurements.
+
+## 15. Clarifications 1–9 (2026-09-27, pre-data)
+
+Registered before any model output exists. No arm has been trained, built or scored. Each clarification settles
+something the text above left open, or states it more narrowly; none changes a margin, an endpoint or a
+comparison. They came from an adversarial review of the pre-S0 implementation, and each was checked against the
+code before being adopted.
+
+- **C1 — UNCERTIFIABLE is for non-significant limbs only.** A limb that is significant under its registered
+  procedure is never UNCERTIFIABLE. Significant with net ≥ floor is PASS. Significant with net < floor is FAIL
+  (below floor). Not significant with nd < nd_min at the procedure's smallest level is UNCERTIFIABLE. Anything
+  else is FAIL. This matters for H4, where Holm's later steps can reject a limb whose nd is below 8.
+- **C2 — The H4 family size is fixed at m = 12.** A gate-failed comparator's limbs stay in the family as
+  GATE_FAILED and are never rejected, so m never shrinks. Shrinking it would move the other limbs' Holm
+  thresholds.
+- **C3 — F_E when the replicates barely disagree.** If the replicate pair's discordance on E is too small for any
+  net to be significant, F_E = 0: draw noise on E is negligible, and Holm significance alone decides.
+- **C4 — "Int list" means a non-empty list whose elements all have type int** (bools excluded), everywhere. An
+  empty answer list has e = 0 either way.
+- **C5 — H3b's candidate is the content-contract candidate.** This is the same parse that `classify_rs` uses, so a
+  wrapper cannot hide lookup use. A multiple-candidate object, UNKNOWN, unparseable output or a non-int-list gives
+  e = 0.
+- **C6 — Rows normalised as `multiple_candidates_in_object` are named by that category and get no subtype.**
+- **C7 — The null cell's registered counts are ≥ 2,000 re-draws and 10^6 flips per sign-flip test.** Only a
+  compliant run may emit the §3 rule outcome. The freeze run uses H3b's registered flip seed.
+  - **A 400-re-draw run cannot certify the rule.** Revision 1's own 0.062 at 400 re-draws has a CP upper bound of
+    0.086, which is above the 0.075 switch bound.
+  - **DEV at the registered counts** (seed 20260926): 0.0435 and 0.0465 for the two pairs, with upper bounds 0.052
+    and 0.055. The outcome is the sign-flip reference.
+- **C8 — Scope receipts are mandatory when scoring CALIBRATION, DEV composition rows and TEST.**
+  - **Each receipt** binds the bank sha, and every signature of a multi-signature scope.
+  - **The DEV receipt** is extended to include P, which the H1 P gate needs.
+  - **Guard banks** are bound by their manifest-checked bank sha until guard scope receipts exist.
+  - **Boundary rows are refused** by the scorer unless the call is flagged diagnostic. The flag is recorded, and
+    no endpoint may use a diagnostic call.
+- **C9 — "No ordering cue" rests on code facts, not a spec-level test.** The facts are `canonical()` sorting keys
+  and `requested` being shuffled; `contracts.py` is pinned in the scorer's code bundle, and `generator.py` by the Q0 source lock (`source_lock.json`). The
+  ordering statistics stay descriptive. On DEV the excluded member's rank within its triple is lowest 630, middle
+  702, highest 666 (χ² ≈ 3.9 on 2 df), which is consistent with uniform.
+
+## 16. S0 registration (2026-09-27, before any native output)
+
+Fixed before the first native model load in this study. The operator authorised S0 on 2026-09-27: *"Go ahead
+with S0 once the fixes land"*, with the standing instruction to keep host RAM low and use VRAM freely. Nothing
+here authorises S1.
+
+**Runtime.**
+- **Interpreter.** `C:\Users\clclc\BusinessProject\.venv-mq001` (Python 3.11.15, torch 2.10.0+cu126, transformers
+  4.57.1, tokenizers 0.22.2, safetensors 0.7.0), asserted at start.
+- **Determinism settings, before CUDA initialises:**
+  - `CUBLAS_WORKSPACE_CONFIG=:4096:8`;
+  - `torch.use_deterministic_algorithms(True)`;
+  - both TF32 flags off;
+  - `torch.set_num_threads(4)`;
+  - `torch.cuda.set_per_process_memory_fraction(0.78, 0)`.
+- **GPU lease.** Every GPU stage holds the shared lease for its whole run: `gpu_lease.py` from
+  `rineya-dataset-retention-records/hplat-rehearsal-20260921`, sha `049742734eea…`, lock `rineya-gpu-0.lock`.
+- **Host-RAM guard.** Host RAM is guarded with the programme's `hostbudget.py`, sha `9f9dcf35…`, used unmodified:
+  `require` at launch, `guard` before every unit.
+
+**Loader (low host RAM).**
+- **Build on the GPU.** The model is instantiated from `config.json` directly on the GPU in FP32.
+- **Stream the weights.** Each of the 310 stored BF16 tensors is streamed from `model.safetensors` and upcast into
+  place. lm_head is tied to the input embedding.
+- **Identity.** Every loaded FP32 tensor cast back to BF16 must equal its stored tensor bitwise, with no missing,
+  extra or re-initialised tensors.
+- **No CPU materialisation.** The model is never built on the CPU.
+
+**Q1-FP32 probe (stage S0-Q1).** Launch floor: `hostbudget.require(2.5)`, then `guard(1.0)`.
+
+*Prompts.* Eight CALIBRATION core prompts: the R and S prompts of the first four parents, in the order recorded in
+`evidence/Q2_SOURCE_SMOKE_SELECTION.json`.
+
+*Checks, with tolerances frozen now (FP32, TF32 off):*
+- **T1 identity.** As above, plus the tied-head alias and the `parameter_inventory` record.
+- **T2 determinism.** Two forwards produce bitwise-equal logits.
+- **T3 generation vs teacher forcing.** Greedy generation with raw scores. The selected-token log-probability at
+  every generated position, EOS included, must match a teacher-forced full-sequence forward within **1e-4 nats**,
+  with identical argmax.
+- **T4 cache vs full prefix.** Incremental KV-cache logprobs must equal the full-prefix logprobs within **1e-4**.
+- **T5 padded vs unpadded.** A left-padded batch of the eight prompts plus completions must match the individual
+  forwards within **1e-4** on real positions, and `mechanics.completion_labels` must mask padding and include EOS.
+- **T6 backward only.** Trainable scope is candidate inventory A (§16 pilot). The loss is the mean selected
+  completion logprob on two prompts. Every trainable gradient must be finite, every frozen gradient None, and the
+  full state fingerprint bitwise identical before and after. No optimizer is constructed.
+- **T7 resources.** Record peak CUDA allocated and reserved, peak worker RSS, and GPU shared-usage memory once at
+  the end.
+
+**The later S0 stages** use a host floor equal to Q1's measured peak worker RSS plus 1.0 GiB.
+
+**On-policy throughput pilot (S0-P).**
+- **Prompts and sampling.** 25 `atomic_R` TRAIN groups, selected by sorting
+  `SHA256("COMP-RS-001-S0-PILOT|" + id)`. G = 8 sampled completions per prompt, with the Q2 sampler (T = 1.0,
+  top-p 1.0, top-k 0, repetition penalty 1.0, `max_new_tokens=128`, thinking disabled).
+- **Batching.** The 8 samples share one prompt and so are an unpadded batch.
+- **Update.** One update per group, with MaxRL advantages from the inherited estimator (zero for uniform groups).
+  The loss is −(1/G) Σ_i A_i · Σ_t log π(y_it). AdamW runs on the GPU with lr 1e-6 and weight decay 0. Gradient
+  checkpointing is on, and logits are computed only at completion positions.
+- **Weights are discarded.** This stage measures cost and memory; it fixes no training recipe.
+- **Inventory rule, frozen now:**
+  - Candidate A is blocks 8–27 (314,618,880 parameters), with FP32 parameters, gradients and Adam moments all on
+    the GPU (5.74 GiB of state against the 6.24 GiB cap).
+  - **If the A pilot completes with no OOM and `max_memory_reserved ≤ 0.95 × cap`, inventory A is the training
+    inventory.**
+  - Otherwise the pilot is re-run with candidate B, blocks 14–27 (220,233,216 parameters), which is adopted if it
+    fits.
+  - Otherwise STOP_HOST_INFEASIBLE.
+- **Host check.** STOP_HOST_INFEASIBLE also applies if the pilot's peak worker RSS + 1.0 GiB exceeds the free RAM
+  measured at its launch.
+- **Other outputs.** The pilot records eval-decode wall time per greedy completion, which prices the reads, and the
+  pilot groups' mixed/all-fail/all-success counts (descriptive).
+
+**Runtime freeze (S0-F).** After the pilot, write `S0_RUNTIME_FREEZE.json` containing:
+- the `decoding_sha256` preimage (§8.2);
+- the inventory decision;
+- the host floor;
+- the code bundle of the scoring entrypoint.
+
+Every later stage asserts it.
+
+**Source competence (S0-C).**
+- **Prompts and sampling.** All 150 CALIBRATION core rows each of R, S and P, G = 8, with the pilot's sampler and
+  batching.
+- **Seed.** Per prompt: `int(SHA256("COMP-RS-001-S0-COMP|" + id)[:16], 16) mod 2^63`.
+- **What is kept.** Every attempt is kept, with no refill.
+- **Reported:**
+  - pass@1 (the mean over the 8 samples);
+  - pass@8;
+  - all-fail, mixed and all-success group counts;
+  - UNKNOWN, format and cutoff diagnostics;
+  - token costs.
+- **m_min = 0.10.** STOP_NO_SIGNAL if R's or S's mixed-group fraction is below 0.10 (fewer than 15 of 150). P's
+  fraction is recorded, not gated (D2).
+- **Δ_acq = 13 rows** (≈ 5 points of the 250 DEV rows), for the §3 H1 gate. Both values are fixed here, before the
+  competence run.
+
+**Enrollment and churn (S0-E).**
+- **Run 1.** Greedy, batch size 1, in one process: all 1,200 guard_dev rows, then the 450 CALIBRATION core R, S and
+  P rows. guard_dev is enrolled through the unchanged `behaviour.enroll`, a full bank. The CALIBRATION rows go
+  through the scoped scorer with `score_with_canary`.
+- **Run 2.** The same rows in a separate process.
+- **Churn.** Churn is the number of rows whose generated token IDs differ between runs. **It must be 0**, otherwise
+  STOP_NONDETERMINISTIC.
+- **Reads are resumable.** A read appends each row with its hash and resumes at the first missing row (§12).
+
+**Records.** Native outputs are written to `C:\Users\clclc\BusinessProject\comp-rs-001-records\s0\`, outside the
+bound checkout. All code is committed and `git status` is clean before every launch. Receipts are copied into
+`evidence/` and committed after each stage.

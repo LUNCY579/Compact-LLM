@@ -1,0 +1,120 @@
+{
+  "amendment_reference": {
+    "false_rejection": {
+      "lex_first_vs_fixed_random": 0.05,
+      "lex_first_vs_lex_last": 0.062
+    },
+    "floor_dev": 0.344,
+    "lex_first_passes_dev": 83,
+    "mc_se": 0.011,
+    "mean_e_blind": -0.0015,
+    "note": "revision 1 figures at 400 re-draws: not a registered run (C7)",
+    "redraws": 400,
+    "sd_across_redraws": 0.03
+  },
+  "at_freeze": false,
+  "canaries": {
+    "floor_by_k": {
+      "2": {
+        "mean": 0.44411375661375657,
+        "rows": 84
+      },
+      "3": {
+        "mean": 0.29291709954360556,
+        "rows": 166
+      }
+    },
+    "floor_mean": 0.3437191763191763,
+    "lex_first_passes": 83,
+    "rows": 250
+  },
+  "canonical_file": "canonical/dev.jsonl",
+  "canonical_file_sha256": "147ff62bf516913f9e207e7659c0ad1090c9fa6ff8a7dd67cabb3c975e68ee45",
+  "code_bundle_sha256": "e6ebb271a95b3eb6a700f93d28081e04f3461f74b00fe3b6e60b40fe11fc9a6c",
+  "code_hash_rule": "hashed at import, re-checked unchanged before the receipt is written",
+  "code_sha256": {
+    "content_scoring.py": "df51285c05fb7d4d0b56287b7f6d4913943888fa67b6e7ceaf037617dfab9a1b",
+    "h3b_null_cell.py": "670170c7543e2c80cfe2ac9b3fc2130763341302ef82684e9419557f2e2cbd0f",
+    "maxrl_composable_skills_v2/contracts.py": "6f04b61a31e07c23b4621cfb850cbf4711d8cc95e2bcf4bad28a328bf4d587e9",
+    "maxrl_composable_skills_v2/corpus.py": "07bcf505db976007403c9c4f41193e32e1f75b5eb4acf8db587e298237f91fde",
+    "maxrl_composable_skills_v2/verifier.py": "38e53ff8408ff262d925450a4dcd99c1c5af9a903f60ec3c5a7eb504c688eeb2",
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "stats_exact.py": "30e8e0868f7dbbd8d6a9833210424faf794df3082076d290fb7903013d9775df"
+  },
+  "core_rs_rows": 250,
+  "dataset_manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+  "experiment": "COMP-RS-001",
+  "flips": 1000000,
+  "ids_sha256": "54abc9034bf36155cdee6512ef251608c73442284c43cd5a2dc01c34d51c89c3",
+  "model_outputs_read": false,
+  "pairs": {
+    "lex_first_vs_fixed_random": {
+      "exceeds_switch_bound": false,
+      "false_rejection_rate": 0.0465,
+      "mc_se": 0.004708383480558906,
+      "mean_p": 0.5223321731678268,
+      "rejections": 93,
+      "rows_differing": 238,
+      "upper95": 0.055004012207973574
+    },
+    "lex_first_vs_lex_last": {
+      "exceeds_switch_bound": false,
+      "false_rejection_rate": 0.0435,
+      "mc_se": 0.004561126505590478,
+      "mean_p": 0.49425119524880473,
+      "rejections": 87,
+      "rows_differing": 250,
+      "upper95": 0.05176630079949973
+    }
+  },
+  "parents": 250,
+  "policies": {
+    "fixed_random": {
+      "mean_e": 0.0009814814814814992,
+      "observed_mean_e": -0.0065185185185185,
+      "sd_across_redraws": 0.029546886625406533
+    },
+    "lex_first": {
+      "mean_e": 5.2888888888907635e-05,
+      "observed_mean_e": -0.011111111111111092,
+      "sd_across_redraws": 0.029601541000677776
+    },
+    "lex_last": {
+      "mean_e": -0.0003978518518518339,
+      "observed_mean_e": 0.008148148148148167,
+      "sd_across_redraws": 0.030198905128091442
+    }
+  },
+  "redraws": 2000,
+  "role": "dev",
+  "rows": 250,
+  "rule": {
+    "basis": "switch if ANY registered pair's one-sided 95% CP upper bound exceeds the bound",
+    "flips": 1000000,
+    "level": 0.05,
+    "outcome": "SIGNFLIP_REFERENCE",
+    "redraws": 2000,
+    "registered_counts": {
+      "flips": 1000000,
+      "min_redraws": 2000
+    },
+    "rule_compliant": true,
+    "switch_bound": 0.075,
+    "switch_indicated": false
+  },
+  "runtime": {
+    "numpy": "2.4.6",
+    "python": "3.11.15"
+  },
+  "seeds": {
+    "flip_seed": 1682207009112451762,
+    "flip_seed_source": "derived: SeedSequence(seed).spawn(3)[2]",
+    "policy_seed": 16349228688594815059,
+    "redraw_seed": 6690759044734223049,
+    "seed": 20260926
+  },
+  "signflip_chunk": 16384,
+  "stage": "S0PRE_H3B_NULL_CELL",
+  "test_challenge_read": false,
+  "triple_structure_rows_verified": 250
+}

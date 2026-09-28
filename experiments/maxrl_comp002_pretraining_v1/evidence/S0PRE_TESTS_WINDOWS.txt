@@ -1,0 +1,22 @@
+COMP-RS-001 pre-S0 CPU qualification suite, 2026-09-27T21:28:38-05:00
+HEAD ccdabdc99c06fb80d1787d48bf9b828f397c990e (working tree = the commit that adds this file)
+
+=== interpreter: C:\Users\clclc\AppData\Local\hermes\hermes-agent\venv\Scripts\python.exe
+python 3.11.15 numpy 2.4.6 torch 2.6.0+cu124
+--- dataset present
+......................................................                   [100%]
+486 passed in 195.81s (0:03:15)
+--- COMP_RS_DATA=C:/nonexistent/data
+s...................................................ss                   [100%]
+460 passed, 26 skipped in 97.13s (0:01:37)
+
+=== interpreter: C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe
+python 3.11.15 numpy 2.4.6 torch 2.10.0+cu126
+--- dataset present
+.....s................................................                   [100%]
+485 passed, 1 skipped in 156.32s (0:02:36)
+--- COMP_RS_DATA=C:/nonexistent/data
+s....s..............................................ss                   [100%]
+459 passed, 27 skipped in 53.89s
+
+Note: the single extra skip under .venv-mq001 is test_s0pre_stats.py:123, the optional scipy cross-check (scipy is absent in the pinned runtime; package code never imports scipy).
