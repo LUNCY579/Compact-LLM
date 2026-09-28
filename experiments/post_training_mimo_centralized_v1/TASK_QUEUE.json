@@ -164,6 +164,46 @@
       "native_gate_receipt": null,
       "expected_information_value": "resolved candidate dose and source-reference defects",
       "next_decision_impact": "native enrollment afterE0"
+    },
+    {
+      "task_id": "LONG_CONTEXT_DATA",
+      "research_question": "Construct exactlength pairedDEV sentinel",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.2,
+      "artifact": "receipts/LONG_CONTEXT_DEV_DATA_RECEIPT.json",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/LONG_CONTEXT_DEV_DATA_RECEIPT.json",
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify essential pre-native preparation",
+      "next_decision_impact": "Construct exactlength pairedDEV sentinel"
+    },
+    {
+      "task_id": "E1_PLAN",
+      "research_question": "Bind candidate data and executable step/preflight contracts",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.2,
+      "artifact": "manifests/E1_EXECUTION_PLAN.json",
+      "blocker": null,
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "qualify essential pre-native preparation",
+      "next_decision_impact": "Bind candidate data and executable step/preflight contracts"
     }
   ]
 }

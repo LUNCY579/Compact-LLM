@@ -94,3 +94,39 @@ RAM admission (the actual runtime has no sklearn/scipy/pandas/audio/vision extra
 Next: sufficient native headroom for E0, then current-source enrollment; independently
 qualify fresh language DEV/grader calibration and2048/4096 sentinels. No CHECK/FINAL
 opening or E1 launch is earned yet.
+
+## Continuation 003: exact long-context DEV bank
+
+The previous turn was PROGRESS. The same native RAM blocker recurred a third time
+(7036512KiB free, about6.711GiB, before imports; no Python workers). The overall
+blocked audit failed: long-context bank construction was still a meaningful FAST
+action, so only the native lane remained stopped. No E0 retry or guard relaxation.
+
+AMENDMENT_004 froze tokenizer-only construction:32DEV worlds across2mechanisms
+and4placements,8paired rows each, exact2024/4072-token full prompts;64CHECK hashes,
+FINALclosed. Source review found and fixed position-based answer shortcuts,
+authority-frequency/timeline inference and winner-dependent decoy keys before
+production. The latest catalog has4entries/2perwriter and independent authority;
+all3required record blocks are necessary under independent visible parsing. Three
+adversarial provenance modes occur in every adversarial row. No claim of3atomic
+facts or32independent reasoning mechanisms is made.
+
+MEASURED: tokenizer-only production at75e71793922a03e9dbc24588bf673fd8cbf202ab
+finished in139.455s without Torch/model/GPU calls.256DEV rows (128each length),
+780288total prompt tokens; native support spans remain in frozen bands; all factor
+pairings preserved; no truncation or PAD/EOS filler. CHECKpayloads remain unopened.
+An independent artifact audit found0discrepancies in15044consistency checks,
+including640ablation tests,64causal interventions and288decoy controls. It checked
+stored native mappings internally rather than rerunning the tokenizer; mapping
+itself remains the bound production measurement. Full CPU suite:172tests passed
+in144.592s. Native resource fit, source correctness and preservation remain unmeasured.
+
+Next-action audit found another real preparation gap: no standalone central E1
+SFT driver or current-source enrollment adapter exists. The immediate FAST task is
+a stdlib E1 plan/preflight binding exactdatahashes and256steps of16acquisition+
+4replay rows, fixed LR rounding/cadence/resume cursor/cost accounting, seed101-only,
+and fail-closed E0/enrollment/language/long-context gates. A paired enrollment adapter
+must aggregate twins/eight-row worlds before parent-level statistics. This is not
+permission to launch native training; don't import preparation modules that set
+USE_TORCH=0 into a native worker. The goal remains active, not complete or at a
+verified overall impasse.

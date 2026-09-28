@@ -6,7 +6,7 @@ See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
 Current state: exact static Titan identity measured; E0 blocked before model load
-by host RAM (6.9113 GiB available versus 7.4 GiB admission). All 80 focused CPU
+by host RAM (6.9113 GiB available versus 7.4 GiB admission). All 172 focused CPU
 tests pass; 4608 original open-role bridge parents are independently verified.
 No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
@@ -50,3 +50,8 @@ are prepared and tokenized. Candidate dose: 5120 sequences / 680532 nonpadding /
 63546 supervised tokens. Validation: 129 aggregate +5 focused CPU tests. See
 [AMENDMENT_002](AMENDMENT_002.md), [AMENDMENT_003](AMENDMENT_003.md) and
 [E1 candidate dose](manifests/E1_CANDIDATE_DOSE.json). No native E0/E1 grant follows.
+
+Continuation 003: exact long-context DEV data are built (32 worlds, 256 rows;
+2024/4072 full-template tokens). Independent artifact audit found no discrepancies;
+172 CPU tests pass. Native resource fit and preservation remain unqualified.
+The next FAST task is the missing E1 execution-plan/preflight implementation.

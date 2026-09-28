@@ -28,3 +28,13 @@ Source-reference flags are resolved with immutable original records. Baseline so
 correct enrollment, fresh language DEV/calibrated grading and long-context qualification
 remain. The latest no-worker OS check has6.999GiB free before imports, still below
 native admission. Recheck resources after user/external state changes; no blind retry.
+
+
+Continuation 003 completed the exact long-context DEV bank:32worlds/256rows at
+2024/4072prompt tokens;64CHECK hashes only.172CPUtests pass; no native fit/retention
+claim. The next available FAST action is concrete E1 plan/preflight code plus
+synthetic coverage: bind candidate data, schedule256steps with16acq+4replay,
+freeze warmup rounding/checkpoints/resume cursor/costs, and reject every native
+launch until existing gates pass. No central E1 trainer or actual-response enrollment
+adapter yet exists. Language DEV/CAL authoring and blind packet preparation are
+possible separately, but grader qualification requires assigned qualified reviewers.
