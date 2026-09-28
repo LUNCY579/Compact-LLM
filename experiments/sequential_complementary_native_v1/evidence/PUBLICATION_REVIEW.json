@@ -1,0 +1,97 @@
+{
+  "schema": "SCP_NQ_PUBLICATION_REVIEW_V1",
+  "experiment": "SCP-NQ-001",
+  "status": "CODE_REVIEW_SNAPSHOT_NATIVE_UNEXECUTED",
+  "parent_commit": "3ad2769a9f8343a9697e1720fcdc9efa18c3845a",
+  "dedicated_branch": "research/sequential-complementary-native-v1",
+  "source_files": {
+    "experiments/sequential_complementary_native_v1/__init__.py": {
+      "bytes": 88,
+      "git_blob_sha1": "6bdfa410d5cf792292133205d2fffd4b7768af70",
+      "sha256": "1bf54140b3337ccb44b4a24320cc2c116fef3dbd7c72fbb358383823136fea5c"
+    },
+    "experiments/sequential_complementary_native_v1/__main__.py": {
+      "bytes": 79,
+      "git_blob_sha1": "d4a2ff8b1cec10409ec01249348e1fa629ebac99",
+      "sha256": "e1db44950e96e96cdf38c5aa2b9a523d1d492b58577b8c3edb4dc0aedc40bdd2"
+    },
+    "experiments/sequential_complementary_native_v1/contracts.py": {
+      "bytes": 16987,
+      "git_blob_sha1": "c7c537f5c72f102378e82056679b716fdace74aa",
+      "sha256": "7a2feb60eead63d73bf445daef29f0c3186b00255e2d580503a1e7714d27f0b8"
+    },
+    "experiments/sequential_complementary_native_v1/native.py": {
+      "bytes": 20724,
+      "git_blob_sha1": "3adabc38eaa79172c72eb0905a319d0f6d0e5804",
+      "sha256": "d3ffa417faeed9df981dba86c1a42faa0fe9c56e571c97f5d207de0a3a2df560"
+    },
+    "experiments/sequential_complementary_native_v1/run.py": {
+      "bytes": 12749,
+      "git_blob_sha1": "4b117c455ae172dcb4d8b3fcc90146b7c49c0d37",
+      "sha256": "ea4542b72892c3012b0189cef2ed3de92f6845c2cf20159f213c4b4eae404460"
+    },
+    "experiments/sequential_complementary_native_v1/tests/test_native_contracts.py": {
+      "bytes": 20096,
+      "git_blob_sha1": "8629b1205597d5d8ca01b755e3f5f29b2f8b2f74",
+      "sha256": "e7f7a533ad875de20b459c0860af0b79a8f358349aa830a726396a79ab39dd23"
+    },
+    "experiments/sequential_complementary_native_v1/tests/test_supervision.py": {
+      "bytes": 11785,
+      "git_blob_sha1": "87c3a98ca330b1909febbd9cc420e856351abc56",
+      "sha256": "24ad289c3d1b4dd35e8c12f989aa58edd4dda2e5d60adf3393e5a2b7b5bc75ba"
+    },
+    "experiments/sequential_complementary_v1/reasoning.py": {
+      "bytes": 8210,
+      "git_blob_sha1": "66ff8b1ccd99ff3a0aac53e05fab296a695f46b6",
+      "sha256": "315a3c649a91f990ad220760c4466f3dc9407919f1ca12219f509e297ebebdd0"
+    }
+  },
+  "python_files_unchanged_from_conversation_attachments": true,
+  "publication_syntax_check": {
+    "status": "PASS",
+    "python_files": 8,
+    "method": "compile(source_bytes, path, exec); no module execution or imports",
+    "python_version": "3.13.5"
+  },
+  "prior_session_tests": {
+    "provenance": "Imported original prior-session text/XML; not executed again during publication",
+    "reported_passed": 112,
+    "reported_failed": 0,
+    "reported_errors": 0,
+    "reported_skipped": 0,
+    "reported_text_seconds": 5.02,
+    "reported_xml_seconds": 5.018,
+    "xml_timestamp": "2026-09-18T20:32:57.704261+00:00",
+    "complete_checkout_source_binding": "NOT_PRESENT_IN_IMPORTED_TEST_ARTIFACTS",
+    "full_original_scp_85_test_suite_rerun": false,
+    "full_rrp_preflight_regression": false,
+    "journal_test_import_isolation": "See tests/test_supervision.py; empty default-RRP LIMITS import fixture, real SCP registration and Journal"
+  },
+  "artifacts": {
+    "prior_session_pytest.txt": {
+      "bytes": 180,
+      "sha256": "0353334662ad53e5e858d1d7bdf4f867496385c6635921b66ce4dc280eee6c9d"
+    },
+    "prior_session_junit.xml.gz": {
+      "bytes": 1927,
+      "sha256": "3b89a65ff3d94f8079c5615567a8f8397f3d074a1c4891b92a0c3b626b2faf9e",
+      "uncompressed_sha256": "7f2a573ddf0396a88a2157f0517acd66170fc3027e67a42edbc90d94a263f1e7"
+    }
+  },
+  "native_execution_performed": false,
+  "native_qualification_established": false,
+  "training_permission": false,
+  "teacher_comparisons_permission": false,
+  "confirmation_permission": false,
+  "quality_permission": false,
+  "release_permission": false,
+  "remaining": [
+    "Code review",
+    "Fresh complete-checkout CPU regression",
+    "Exact local asset and pinned runtime binding",
+    "Explicit numeric inference-only approval",
+    "Subject-specific student qualification",
+    "Settled-receipt-dependent MR qualification"
+  ],
+  "transport_verification": "Verify separately against the remote branch head, commit parent, changed paths and Git blob hashes; this file is not a push receipt"
+}

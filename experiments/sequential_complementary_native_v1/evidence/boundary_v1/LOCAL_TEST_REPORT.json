@@ -1,0 +1,90 @@
+{
+  "schema": "SCP_NATIVE_BOUNDARY_LOCAL_TEST_REPORT_V1",
+  "parent_commit": "b4f010619290a562c54cdaf3bb6edd4eb9112a91",
+  "branch": "research/sequential-complementary-native-boundary-v1",
+  "scope": "PARTIAL_SOURCE_STDLIB_BOUNDARY_TESTS_NOT_NATIVE_QUALIFICATION",
+  "test_command": "PYTHONDONTWRITEBYTECODE=1 python -m pytest -p no:cacheprovider experiments/sequential_complementary_native_v1/tests_boundary -q --junitxml=<new external path>",
+  "tests": {
+    "tests": "121",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "2.551",
+    "timestamp": "2026-09-19T16:22:57.630452+00:00"
+  },
+  "runtime": {
+    "python": "3.13.5 (main, Jul 15 2026, 20:25:40) [GCC 14.2.0]",
+    "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+    "pytest": "9.0.2"
+  },
+  "source_files": {
+    "__main__.py": {
+      "bytes": 467,
+      "sha256": "1048d0e755026b7b0d9de9d030d071dad7af22ff375ea34db5a9016db255d01e",
+      "git_blob_sha1": "a4a5c1ff078bc95e1bec14426f7a21d2c16ea8b5"
+    },
+    "boundary.py": {
+      "bytes": 12705,
+      "sha256": "1a11f06c12944d1a46722e4b09fbeb51d8ddcdf90afd24619a7d48da6fe9eac8",
+      "git_blob_sha1": "435c21223efd542f78d04ddb83710aa104999ad2"
+    },
+    "native.py": {
+      "bytes": 21918,
+      "sha256": "a0e63aa641737d63194e64124d44ccc2a92fd69365df26591288f28381b1a779",
+      "git_blob_sha1": "5e0f6e82e0f65df856a36480694c2e7cd2f0c5db"
+    },
+    "run.py": {
+      "bytes": 12967,
+      "sha256": "430f025ff95e8e66e0712735477d63c71b84d932276919f107f8eaed99548652",
+      "git_blob_sha1": "4955ec3da528110eb129623ace25ae3cd555c80e"
+    },
+    "receipt_review.py": {
+      "bytes": 5074,
+      "sha256": "6d094002b6df412335414cdd605f76b4fd03d24943ad4b88059cf949191aed1f",
+      "git_blob_sha1": "c2abd2f2065f37399c24cea15d1b759f21df7ec6"
+    },
+    "tests_boundary/test_boundary.py": {
+      "bytes": 15120,
+      "sha256": "9b2bab3098c02751233bc37eb1a8ffd0d81435ac689f9ba960ce52ccdef8d82d",
+      "git_blob_sha1": "d8152939f9206476995b2f93de7da20642fe6de7"
+    },
+    "BOUNDARY_REVIEW.md": {
+      "bytes": 10123,
+      "sha256": "af24fcaa116ef16e25a6bfc4d704b3a88038b265693f9179e9802ea02d4f7b75",
+      "git_blob_sha1": "a06759dde463dddef27821210a6b5ece7c160b98"
+    }
+  },
+  "artifacts": {
+    "pytest.txt": {
+      "bytes": 180,
+      "sha256": "35ea3effc66d57282d51b472c926601423a679c086c13b3ca0e70669bee156e0",
+      "git_blob_sha1": "3d604b45a965b678f0240fa47d56f353db98ce87"
+    },
+    "junit.xml.gz": {
+      "bytes": 1943,
+      "sha256": "68e9a7e678fdca8475ca6826151ec14b86fb914bc49deb089be840c144263d9c",
+      "git_blob_sha1": "a397330a3a65dc5447f1df6e6142594b609cf9c9"
+    }
+  },
+  "verified_parent_git_blobs": {
+    "native.py": "3adabc38eaa79172c72eb0905a319d0f6d0e5804",
+    "run.py": "4b117c455ae172dcb4d8b3fcc90146b7c49c0d37",
+    "__init__.py": "6bdfa410d5cf792292133205d2fffd4b7768af70"
+  },
+  "native_qualification": "NOT_RUN",
+  "full_checkout_regression": "NOT_RUN",
+  "historical_112_test_suite": "NOT_RERUN",
+  "pretrained_loads": 0,
+  "native_worker_launches": 0,
+  "optimizer_steps": 0,
+  "training_tokens": 0,
+  "protected_bank_reads": 0,
+  "limitations": [
+    "Partial source tree, not a complete checkout.",
+    "Extracted-function tests prove cold refusal ordering, not full module/runtime integration.",
+    "EOS helpers execute on CPU; native loader/decoder wiring checks are structural.",
+    "No actual host, checkpoint, pinned native runtime, or independent approval was available or claimed.",
+    "Old positive native-helper fixtures need explicit review under the new lock before full-checkout qualification."
+  ],
+  "publication_verification": "Read remote branch ref, commit parent/tree and all changed blob identities separately after publication."
+}
