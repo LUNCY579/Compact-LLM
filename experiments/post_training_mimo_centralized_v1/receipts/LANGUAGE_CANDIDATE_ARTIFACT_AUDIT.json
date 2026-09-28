@@ -1,0 +1,1114 @@
+{
+  "schema_version": 1,
+  "status": "PASS_ARTIFACT_BYTES_AND_TOPOLOGY_UNQUALIFIED",
+  "recorded_at_utc": "2026-09-28T08:31:59.884321+00:00",
+  "auditor_id": "/root/e1_schedule",
+  "auditor_relationship": "Same assistant agent authored language_eval_inputs.py and prepare_language_eval.py. Checks below were separately implemented without importing/calling either builder or validators; this is not independent human review.",
+  "method": "Standalone standard-library parsing, canonical JSON/SHA256, independent fixed population construction, direct source/export joins, Git blob and working-byte comparisons, explicit packet/repeat topology checks. INSTRUCTIONS read as inert AST literal, not executed.",
+  "export_directory": "artifacts/mimo_central/language_dev_cal_v1",
+  "export_code_commit": "c6d64603874c6f4d81a639624b8a855d10dc13dd",
+  "audit_code_commit": "c6d64603874c6f4d81a639624b8a855d10dc13dd",
+  "checks": [
+    {
+      "name": "export_receipt_status",
+      "passed": true
+    },
+    {
+      "name": "exact_six_manifested_output_files",
+      "passed": true
+    },
+    {
+      "name": "exact_bank_inventory_no_rating_import_files",
+      "passed": true,
+      "detail": [
+        "CAL.jsonl",
+        "DATA_RECEIPT.json",
+        "DEV.jsonl",
+        "coordinator/TEMPLATE_A.mapping.json",
+        "coordinator/TEMPLATE_B.mapping.json",
+        "packets/TEMPLATE_A.rating_view.json",
+        "packets/TEMPLATE_B.rating_view.json"
+      ]
+    },
+    {
+      "name": "all_six_file_bytes_match_export_receipt",
+      "passed": true
+    },
+    {
+      "name": "exact_critical_source_inventory",
+      "passed": true
+    },
+    {
+      "name": "current_source_bytes_match_export_snapshot",
+      "passed": true
+    },
+    {
+      "name": "source_inventory_aggregate_hash",
+      "passed": true
+    },
+    {
+      "name": "source_bytes_match_export_commit",
+      "passed": true,
+      "detail": {
+        "export_commit": "c6d64603874c6f4d81a639624b8a855d10dc13dd"
+      }
+    },
+    {
+      "name": "source_bytes_match_current_commit",
+      "passed": true,
+      "detail": {
+        "audit_commit": "c6d64603874c6f4d81a639624b8a855d10dc13dd"
+      }
+    },
+    {
+      "name": "critical_source_paths_currently_clean",
+      "passed": true,
+      "detail": ""
+    },
+    {
+      "name": "all_eleven_input_identities_match",
+      "passed": true
+    },
+    {
+      "name": "frozen_registration_and_review_exact_bytes",
+      "passed": true
+    },
+    {
+      "name": "original_proposal_identity_bound",
+      "passed": true
+    },
+    {
+      "name": "all_eighty_registered_slots_exact",
+      "passed": true
+    },
+    {
+      "name": "source_document_scope_A",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-explanation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-explanation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-explanation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-meaning_preserving_rewrite-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-meaning_preserving_rewrite-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-meaning_preserving_rewrite-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-synthesis-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-synthesis-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-synthesis-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-clarification-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-clarification-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-clarification-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-explanation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-explanation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-explanation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-meaning_preserving_rewrite-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-meaning_preserving_rewrite-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-meaning_preserving_rewrite-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-synthesis-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-synthesis-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-synthesis-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-clarification-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-clarification-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-clarification-02",
+      "passed": true
+    },
+    {
+      "name": "source_document_scope_B",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-supportive_conversation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-supportive_conversation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-supportive_conversation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-disagreement_and_compromise-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-disagreement_and_compromise-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-disagreement_and_compromise-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-contextual_recommendation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-contextual_recommendation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-contextual_recommendation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-02",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-03",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-04",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-05",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-06",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-07",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LDEV-followup_and_closure-08",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-followup_and_closure-01",
+      "passed": true
+    },
+    {
+      "name": "unique_spec_LCAL-followup_and_closure-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-supportive_conversation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-supportive_conversation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-supportive_conversation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-disagreement_and_compromise-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-disagreement_and_compromise-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-disagreement_and_compromise-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-contextual_recommendation-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-contextual_recommendation-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-contextual_recommendation-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-02",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-03",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-04",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-05",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-06",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-07",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LDEV-followup_and_closure-08",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-followup_and_closure-01",
+      "passed": true
+    },
+    {
+      "name": "unique_payload_LCAL-followup_and_closure-02",
+      "passed": true
+    },
+    {
+      "name": "source_population_exact_no_omission",
+      "passed": true
+    },
+    {
+      "name": "frozen_spec_source_hashes",
+      "passed": true
+    },
+    {
+      "name": "source_world_role_form_and_payload_spec_lineage",
+      "passed": true
+    },
+    {
+      "name": "all_eighty_world_hashes_match_freeze",
+      "passed": true
+    },
+    {
+      "name": "DEV_population_and_role",
+      "passed": true
+    },
+    {
+      "name": "CAL_population_and_role",
+      "passed": true
+    },
+    {
+      "name": "normalized_population_has_exact_eighty_unique_parents",
+      "passed": true
+    },
+    {
+      "name": "all_normalized_rows_equal_exact_source_content_and_bindings",
+      "passed": true
+    },
+    {
+      "name": "all_eighty_normalized_row_hashes",
+      "passed": true
+    },
+    {
+      "name": "normalized_aggregate_hash_matches_receipt",
+      "passed": true
+    },
+    {
+      "name": "exact_ninety_six_unique_unqualified_cal_controls",
+      "passed": true
+    },
+    {
+      "name": "sixty_four_dev_exemplars_are_authored_not_native_outputs",
+      "passed": true
+    },
+    {
+      "name": "bound_complete_cross_review_A",
+      "passed": true
+    },
+    {
+      "name": "bound_complete_cross_review_B",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_opaque_id_and_item_inventory",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_aggregate_hashes",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_unassigned_registered_template",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_displayed_messages_responses_and_control_hashes_equal_sources",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_all_mapping_source_lineage_equals_normalized_rows",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_no_parent_intent_control_or_model_annotations_in_rating_view",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_ninety_six_original_controls_exact",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_sixteen_repeats_one_per_cal_parent",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_A_all_repeats_exact_content_and_provenance",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_opaque_id_and_item_inventory",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_aggregate_hashes",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_unassigned_registered_template",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_displayed_messages_responses_and_control_hashes_equal_sources",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_all_mapping_source_lineage_equals_normalized_rows",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_no_parent_intent_control_or_model_annotations_in_rating_view",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_ninety_six_original_controls_exact",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_sixteen_repeats_one_per_cal_parent",
+      "passed": true
+    },
+    {
+      "name": "TEMPLATE_B_all_repeats_exact_content_and_provenance",
+      "passed": true
+    },
+    {
+      "name": "template_item_id_sets_disjoint",
+      "passed": true
+    },
+    {
+      "name": "all_export_authority_flags_explicitly_false",
+      "passed": true
+    },
+    {
+      "name": "export_call_and_update_counts_zero_with_explicit_scope",
+      "passed": true
+    },
+    {
+      "name": "exact_receipt_counts_no_actual_ratings",
+      "passed": true
+    },
+    {
+      "name": "all_audited_bytes_stable_through_audit",
+      "passed": true
+    },
+    {
+      "name": "git_head_stable_during_audit",
+      "passed": true,
+      "detail": {
+        "start": "c6d64603874c6f4d81a639624b8a855d10dc13dd",
+        "finish": "c6d64603874c6f4d81a639624b8a855d10dc13dd"
+      }
+    }
+  ],
+  "checks_passed": 214,
+  "checks_total": 214,
+  "findings": [],
+  "artifact_file_identities": {
+    "CAL.jsonl": {
+      "sha256": "f770158fcd46cbb5d93025367e8fef65fb4da5bed3464ab6baab7391ae1ff15b",
+      "bytes": 102336
+    },
+    "DEV.jsonl": {
+      "sha256": "2b5cfbad9aceabeb64f75ccb04510e990b2910f80e9dd032df4510590aa218eb",
+      "bytes": 257925
+    },
+    "coordinator/TEMPLATE_A.mapping.json": {
+      "sha256": "c5675f50c28d8cac0135c1db4969049c530599a21ff99d0e89b085bb8351cffc",
+      "bytes": 126851
+    },
+    "coordinator/TEMPLATE_B.mapping.json": {
+      "sha256": "7f5ff806bbcf22449e1d5dbcc1f6b9efaad4289a3c683ea33b9dfc9be9543aca",
+      "bytes": 126768
+    },
+    "packets/TEMPLATE_A.rating_view.json": {
+      "sha256": "30736d9d4569fd576bfb5bb8c6d02c35a2985a432fa0e8c939053a70def1922e",
+      "bytes": 178576
+    },
+    "packets/TEMPLATE_B.rating_view.json": {
+      "sha256": "78d6a9b4d0f53788ce3896117dce3197087f92fc1a60bcf85cfa2441527c4de6",
+      "bytes": 178490
+    }
+  },
+  "data_receipt_identity": {
+    "sha256": "eb1bebd154292d78c05b99a57f98e29996d8850840713ad3ff8a61911a680325",
+    "bytes": 6626
+  },
+  "current_source_identities": {
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_006.md": {
+      "sha256": "1e4da6e946160c014c81ecc2cdbbca6fba58649669af58771fa464bec22b98be",
+      "bytes": 5327
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_AUTHORING_REGISTRATION.json": {
+      "sha256": "77b6222b151bf9517862bfab1f58b9852a7746c92a5e5f077726bc194f8a0226",
+      "bytes": 28531
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_DEV_PROPOSAL.json": {
+      "sha256": "388e9c73cf5c1486e1a69d8319cdef37742fb2649c0d65a7a951a7d0ddd6763f",
+      "bytes": 15533
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_WORLD_SPEC_FREEZE.json": {
+      "sha256": "36ea82790dda34b6e310e5738b59b2006d56fc3e7a88ecd62d3aaaa67fe8393b",
+      "bytes": 32325
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_PAYLOAD_REVIEW_A.json": {
+      "sha256": "96efc379ea21be152a48a2840488d508e70e5db8905a20e1de36fed48db90966",
+      "bytes": 3424
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_PAYLOAD_REVIEW_B.json": {
+      "sha256": "12a323a1f6dc3e4e8b6786881d5e5117a4107f07fafa7d4c6ecb4f883d2dae21",
+      "bytes": 12421
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_WORLD_SPEC_REVIEW.json": {
+      "sha256": "0dfd00735e6c0992aa5ac0008d7534e95cb87f1f226ef3439c888959251217c7",
+      "bytes": 4672
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/language_eval_inputs.py": {
+      "sha256": "8112a0521eb4fe39c1fdc5c0e13190b0ea56fa5009380cc9f60de3ab6b662913",
+      "bytes": 28247
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/prepare_language_eval.py": {
+      "sha256": "93b7e9e82fdcbd0384f9b2e2884e5816c04cdee8b29df543eb68afd13aa75b13",
+      "bytes": 13653
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/SPECS_A.json": {
+      "sha256": "7c0c2d7ecde5229672782a764230fafa23271b38b16e68a71cf74b154889b340",
+      "bytes": 77145
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/SPECS_B.json": {
+      "sha256": "9a00e21e9196e41a3ba60960ce72798da8952f1f381eaba8dec7412e9fcc55e0",
+      "bytes": 81422
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/PAYLOADS_A.json": {
+      "sha256": "fcfa65d1b893c2a29e8c9c427a93f5f75db89e9b2737ab330b77a31815269863",
+      "bytes": 115059
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/PAYLOADS_B.json": {
+      "sha256": "09dfc4b73ab163961689fa8247e5f636c0671e7dbd5a7284de48fba852d77055",
+      "bytes": 111947
+    }
+  },
+  "current_source_inventory_sha256": "6115ace61408726a14b8ba7c4a985259e29c176098ca5fa4f30c5efb3131d861",
+  "read_file_identities": {
+    "artifacts/mimo_central/language_dev_cal_v1/DATA_RECEIPT.json": {
+      "sha256": "eb1bebd154292d78c05b99a57f98e29996d8850840713ad3ff8a61911a680325",
+      "bytes": 6626
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/CAL.jsonl": {
+      "sha256": "f770158fcd46cbb5d93025367e8fef65fb4da5bed3464ab6baab7391ae1ff15b",
+      "bytes": 102336
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/DEV.jsonl": {
+      "sha256": "2b5cfbad9aceabeb64f75ccb04510e990b2910f80e9dd032df4510590aa218eb",
+      "bytes": 257925
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/coordinator/TEMPLATE_A.mapping.json": {
+      "sha256": "c5675f50c28d8cac0135c1db4969049c530599a21ff99d0e89b085bb8351cffc",
+      "bytes": 126851
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/coordinator/TEMPLATE_B.mapping.json": {
+      "sha256": "7f5ff806bbcf22449e1d5dbcc1f6b9efaad4289a3c683ea33b9dfc9be9543aca",
+      "bytes": 126768
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/packets/TEMPLATE_A.rating_view.json": {
+      "sha256": "30736d9d4569fd576bfb5bb8c6d02c35a2985a432fa0e8c939053a70def1922e",
+      "bytes": 178576
+    },
+    "artifacts/mimo_central/language_dev_cal_v1/packets/TEMPLATE_B.rating_view.json": {
+      "sha256": "78d6a9b4d0f53788ce3896117dce3197087f92fc1a60bcf85cfa2441527c4de6",
+      "bytes": 178490
+    },
+    "experiments/post_training_mimo_centralized_v1/AMENDMENT_006.md": {
+      "sha256": "1e4da6e946160c014c81ecc2cdbbca6fba58649669af58771fa464bec22b98be",
+      "bytes": 5327
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_AUTHORING_REGISTRATION.json": {
+      "sha256": "77b6222b151bf9517862bfab1f58b9852a7746c92a5e5f077726bc194f8a0226",
+      "bytes": 28531
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_DEV_PROPOSAL.json": {
+      "sha256": "388e9c73cf5c1486e1a69d8319cdef37742fb2649c0d65a7a951a7d0ddd6763f",
+      "bytes": 15533
+    },
+    "experiments/post_training_mimo_centralized_v1/manifests/LANGUAGE_WORLD_SPEC_FREEZE.json": {
+      "sha256": "36ea82790dda34b6e310e5738b59b2006d56fc3e7a88ecd62d3aaaa67fe8393b",
+      "bytes": 32325
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_PAYLOAD_REVIEW_A.json": {
+      "sha256": "96efc379ea21be152a48a2840488d508e70e5db8905a20e1de36fed48db90966",
+      "bytes": 3424
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_PAYLOAD_REVIEW_B.json": {
+      "sha256": "12a323a1f6dc3e4e8b6786881d5e5117a4107f07fafa7d4c6ecb4f883d2dae21",
+      "bytes": 12421
+    },
+    "experiments/post_training_mimo_centralized_v1/receipts/LANGUAGE_WORLD_SPEC_REVIEW.json": {
+      "sha256": "0dfd00735e6c0992aa5ac0008d7534e95cb87f1f226ef3439c888959251217c7",
+      "bytes": 4672
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/language_eval_inputs.py": {
+      "sha256": "8112a0521eb4fe39c1fdc5c0e13190b0ea56fa5009380cc9f60de3ab6b662913",
+      "bytes": 28247
+    },
+    "experiments/post_training_mimo_centralized_v1/scripts/prepare_language_eval.py": {
+      "sha256": "93b7e9e82fdcbd0384f9b2e2884e5816c04cdee8b29df543eb68afd13aa75b13",
+      "bytes": 13653
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/SPECS_A.json": {
+      "sha256": "7c0c2d7ecde5229672782a764230fafa23271b38b16e68a71cf74b154889b340",
+      "bytes": 77145
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/SPECS_B.json": {
+      "sha256": "9a00e21e9196e41a3ba60960ce72798da8952f1f381eaba8dec7412e9fcc55e0",
+      "bytes": 81422
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/PAYLOADS_A.json": {
+      "sha256": "fcfa65d1b893c2a29e8c9c427a93f5f75db89e9b2737ab330b77a31815269863",
+      "bytes": 115059
+    },
+    "experiments/post_training_mimo_centralized_v1/sources/language_dev_cal_v1/PAYLOADS_B.json": {
+      "sha256": "09dfc4b73ab163961689fa8247e5f636c0671e7dbd5a7284de48fba852d77055",
+      "bytes": 111947
+    }
+  },
+  "counts": {
+    "CAL_parents": 16,
+    "CAL_unique_controls": 96,
+    "DEV_parents": 64,
+    "actual_rating_records": 0,
+    "hidden_repeats_per_template": 16,
+    "packet_templates": 2,
+    "rating_items_per_template": 112,
+    "worlds": 80
+  },
+  "packet_topology": {
+    "TEMPLATE_A": {
+      "items": 112,
+      "original_controls": 96,
+      "hidden_repeats": 16,
+      "repeat_parents": 16,
+      "rating_view_sha256": "3f314e0ae42948a3a8582a2890bd78f7f83e28ca9a4967a06d2acb677af732cc",
+      "mapping_sha256": "48047fb78f246b5551c3b52fe3f91fc92b750bea55da64e9a13e186f6c01fb31"
+    },
+    "TEMPLATE_B": {
+      "items": 112,
+      "original_controls": 96,
+      "hidden_repeats": 16,
+      "repeat_parents": 16,
+      "rating_view_sha256": "4830a429bf356989441da56de8a566d43208b99bbd853b66972095def6214f90",
+      "mapping_sha256": "1fa460c4290cf07a8740bf64687a9e6d9a6ff7e85da5d17eb6be5e2c03325742"
+    }
+  },
+  "wall_seconds": 10.526871199999732,
+  "scope": {
+    "bank_and_packet_only": true,
+    "semantic_quality_rejudged": false,
+    "tokenizer_profiles_used": false,
+    "lexical_profiles_used": false,
+    "builder_or_validator_calls": 0,
+    "model_calls": 0,
+    "torch_imports": 0,
+    "tokenizer_calls": 0,
+    "native_calls": 0,
+    "training_updates": 0,
+    "actual_ratings_imported": 0,
+    "CHECK_payload_reads": 0,
+    "FINAL_payload_reads": 0
+  },
+  "native_launch_authorized": false,
+  "grading_qualified": false,
+  "reference_labels_qualified": false,
+  "human_approval": false,
+  "training_eligibility": false,
+  "limitations": [
+    "Byte and lineage agreement does not establish semantic freshness or unknown-pretraining exclusion.",
+    "Author intent remains unqualified; no reference score vectors or grader assignment validated.",
+    "Packet-file separation does not prove reviewer access separation or blinding in an actual run.",
+    "Audit excludes separate tokenizer/lexical jobs and all native or scientific efficacy claims."
+  ]
+}
