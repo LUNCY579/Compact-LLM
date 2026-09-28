@@ -44,7 +44,8 @@ Its 344M resource estimates were not reused as Titan measurements.
 | Replay candidate | 768 deterministic +256 curated language rows | Fixed sources, tokenized inputs | Current-source enrollment and broad preservation unqualified |
 | E1 input/schedule plan | 5120 sequences; 680532 nonpadding; 63546 supervised tokens; 256 steps | Frozen seed 101 schedule | No native executor or launch grant |
 | Long-context DEV | 32 worlds, 256 rows; exact 2024/4072 prompts | Tokenizer/visible-evidence mechanics | No model fit or preservation result |
-| Software controls | 89 new controls passed in 70.474 s; prior 172-test baseline retained | Synthetic mechanics; separate runs | No pretrained efficacy implication |
+| Language DEV/CAL | 64 DEV +16 CAL worlds; 96 authored controls; max 166 prompt tokens | Candidate inputs and unassigned packets | Reference labels and grading unqualified |
+| Software controls | 43 new controls passed in 40.998 s, plus 2 fingerprint controls | Prior 172+89 runs retained separately | No pretrained efficacy implication |
 
 The maximum candidate TRAIN sequence is 398 tokens. Every target fits its
 registered cap without truncation. The shared non-thinking chat template and
@@ -75,9 +76,7 @@ Actual source inspection recovered all 14000 preservation rows by exact original
 TRAIN membership. It found 4000 v1 rows mislabeled v2 by the old generator. Original
 bytes were preserved; membership, not the defective label, determines origin.
 Quality exclusions left 4644 v2 candidates in 298 conservative template groups.
-Those groups are not asserted to be independent statistical parents.
-
-Frozen class quotas selected 256 language primaries and 768 bounded alternatives.
+Those groups are not asserted to be independent statistical parents. Frozen class quotas selected 256 language primaries and 768 bounded alternatives.
 Two assistant reviewers read all selected conversations: 250 references were
 acceptable and six had unsupported referents or claims. AMENDMENT_003 resolved
 five with reviewed same-group alternatives and one with the next fixed-order group
@@ -93,6 +92,46 @@ historical whole-chat fingerprints and current normalized prompts. It found no
 collisions. It did not test historical user-only equality, all Titan ancestry,
 cross-schema semantic equivalence or pretraining exclusion. Protected payloads
 were not opened. No blanket decontamination claim follows.
+
+## Language candidate evaluation inputs
+
+AMENDMENT_006 accepted data-only preparation of the proposed eight language strata.
+All 80 world specifications and their DEV/CAL roles were reviewed and committed at
+`5c2542b17613ed520de739dcc9e68b868a98143b` before conversations or replies were
+rendered. The resulting source package has 64 DEV worlds (32 single and 32 multi-turn),
+16 separate CAL worlds, 64 illustrative DEV replies and 96 candidate CAL controls.
+The controls comprise two intended acceptable wordings and four primarily targeted
+defects per CAL world. Dimensions can interact; no qualified score vectors exist.
+
+Two identified assistant reviewers read each other's complete source package.
+Before freeze, review added missing box/lid/car fit facts and changed one CAL decision
+structure that was too close to a DEV choice graph. Before export, one unsupported
+"naming vote" became "naming decision." Original drafts, hashes and reviews remain
+preserved. These are assistant source-quality checks, not human approval, qualified
+reference labels, 80 independent mechanisms or statistical scorer calibration.
+
+Production at `c6d64603` exported the bank in 21.378 s and two unassigned JSON packet
+templates, each with 96 unique CAL controls and 16 hidden repeats. Rating views contain
+only opaque IDs, exact conversations/responses and instructions; coordinator mappings
+remain separate. Procedural separation does not guarantee blinding. Rating imports
+require freshly bound source rows, reject changed packets, retain missing/unjudgeable
+items and always remain diagnostic. No actual rating records or student responses exist.
+
+Pinned tokenizer-only measurement took 34.202 s: 80 prompts total 8680 tokens, max 166;
+160 exemplar/control completions total 5603 tokens, max 63 including EOS. All fit the
+896/128 caps without truncation; 41 prior assistant turns are authored context.
+An artifact audit passed 214 checks with no findings, using separately written checks
+by the exporter author; it was not independent human review. The 43 new CPU controls
+passed in 40.998 s, plus two focused historical-fingerprint controls in 0.002 s.
+
+The comparison against 42,000 original V1/V2 TRAIN rows found no full-context,
+system-stripped, normalized-context or normalized-user-sequence matches. Review of
+all 240 retrieved nearest contexts found no clear direct reuse within those pairs.
+A separate 32,800-entry historical whole-chat fingerprint comparison also found no
+matches and opened no protected payloads. These bounded checks do not establish
+complete Titan ancestry, semantic independence or unknown-pretraining exclusion.
+Comparison walls were 63.491 s and 1.215 s. Assistant authorship/review cost is not
+metered by these script receipts; it is not asserted to be free.
 
 ## Exact long-context sentinel
 
@@ -188,13 +227,18 @@ have been enrolled. The 89 new CPU controls test bindings, schedules, resume acc
 gate rejection and import mechanics; they are not a rerun of all 172 prior tests.
 There is still no runnable native E1 trainer or qualified current-source collector.
 
-The next independent task is fresh language DEV/CAL authoring and blinded packets:
-64 DEV worlds, 16 CAL worlds and 96 candidate control responses under a new prospective
-data-only amendment. Intended control defects remain unqualified author annotations.
-Language grading needs assigned qualified reviewers, reference labels and calibration;
-code or assistant source review cannot fabricate that authority. The 2048/4096
-forward-only runtime extension and current-source enrollment are also unqualified.
-The 2 pp/5 pp preservation screens are exploratory, not noninferiority certificates.
+The next independent task is a concrete DEV input/scorer adapter. Short acquisition
+and retention token files contain reference completions after the prompt; a collector
+must bind and slice only the prompt positions. Long-context and language arrays have
+different prompt-only layouts. Bind actual source/token rows, parent groups and pure
+deterministic verifiers; keep targets separate from policy inputs. Do not invent a
+qualified runtime identity or numerical run budget to complete a generic manifest.
+
+Language grading still needs assigned qualified reviewers, independent reference
+labels and calibration; source review cannot fabricate that authority. The 2048/4096
+forward-only runtime extension, actual source enrollment and native E1 executor
+remain unqualified or absent. The 2 pp/5 pp preservation screens are exploratory,
+not noninferiority certificates. No preparation result earns native launch.
 
 All judgments remain MEASURED / REPRODUCED, VERIFIED SOURCE, RECORDED FROM PRIOR
 WORK, INFERRED, PROPOSED, UNMEASURED or BLOCKED according to their actual evidence.

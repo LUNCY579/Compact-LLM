@@ -6,9 +6,8 @@ See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
 Current state: exact static Titan identity measured; E0 blocked before model load
-by host RAM (6.9113 GiB available versus 7.4 GiB admission). The prior172-test
-baseline and89 new preparation controls passed in separate runs;4608 original
-open-role bridge parents are independently verified.
+by host RAM (6.9113 GiB available versus 7.4 GiB admission). The prior 172+89 test runs and 43 new language controls plus two fingerprint
+controls passed separately; 4608 open-role bridge parents are independently verified.
 No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
 
@@ -22,9 +21,9 @@ Run from repository root, using the measured CUDA environment
 `C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe` for native work.
 
 ```text
-python -B -m unittest discover -s experiments/post_training_mimo_centralized_v1/tests -v
+C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m unittest discover -s experiments/post_training_mimo_centralized_v1/tests -v
 python -B -m experiments.post_training_mimo_centralized_v1.scripts.bridge_data --registration experiments/post_training_mimo_centralized_v1/manifests/E1_DATA_REQUIREMENTS.json --output <new-directory> --source-revision <committed-code-sha>
-python -B -m experiments.post_training_mimo_centralized_v1.scripts.supervise_native --config experiments/post_training_mimo_centralized_v1/configs/E0_TITAN_BF16.json --output artifacts/mimo_central/e0_titan_v1
+C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.supervise_native --config experiments/post_training_mimo_centralized_v1/configs/E0_TITAN_BF16.json --output artifacts/mimo_central/e0_titan_v1
 ```
 
 Every native run requires clean source and a new ignored artifact directory.
@@ -73,3 +72,21 @@ is part of the shuffle contract: the preserved3.13 plan is superseded by the3.11
 Cursor validity covers accounting only; no native optimizer/checkpoint/RNG restoration
 is implied. Next independent work is fresh language DEV/CAL candidate authoring and
 review packets under a new prospective amendment; qualified grading remains external.
+
+Continuation005 completed the [language candidate bank](manifests/LANGUAGE_DEV_CAL_CANDIDATE_INDEX.json):
+64 DEV worlds,16 CAL worlds,96 candidate controls and two unassigned JSON review
+packets. Specs were frozen before rendering; assistant cross-reviews and all repairs
+are retained. Prompt max166 and reference/control max63 tokens including EOS fit
+without truncation. No qualified reference labels, grader, native responses or source
+membership exist. Script cost excludes unmetered assistant authorship/review.
+
+Reproduce the candidate export after confirming all source/review files are committed:
+
+```text
+C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.prepare_language_eval --output <new-directory>
+```
+
+Keep coordinator mappings separate from rating views. `validate_ratings` requires
+fresh validated source rows and remains diagnostic; no packet can grant grading or
+native qualification. Next is the concrete DEV input/scorer adapter, including prompt
+slicing that prevents target-bearing short-task arrays from leaking reference answers.

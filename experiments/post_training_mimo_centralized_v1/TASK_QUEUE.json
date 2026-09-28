@@ -96,7 +96,7 @@
       "gpu_gib": 0,
       "disk_gib": 0.1,
       "artifact": "evidence/RETENTION_DESIGN.md",
-      "blocker": "Data and structural import mechanics prepared; actual native source enrollment, fresh language bank/qualified grading and long-context runtime remain unqualified",
+      "blocker": "Candidate banks and tokenization complete; actual source enrollment, independently qualified language labels/graders and long-context native runtime remain unqualified",
       "status": "blocked",
       "evidence_receipt": "manifests/E1_CANDIDATE_DOSE.json",
       "native_gate_receipt": null,
@@ -217,13 +217,37 @@
       "ram_gib": 0.5,
       "gpu_gib": 0,
       "disk_gib": 0.2,
-      "artifact": "receipts/LANGUAGE_DEV_CAL_CANDIDATE_RECEIPT.json",
+      "artifact": "manifests/LANGUAGE_DEV_CAL_CANDIDATE_INDEX.json",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/LANGUAGE_DEV_CAL_CANDIDATE_RECEIPT.json",
+      "native_gate_receipt": null,
+      "expected_information_value": "Remove missing language measurement inputs while native E0 is blocked",
+      "next_decision_impact": "Candidate inputs and unassigned packets prepared; qualified labels/graders and actual native source collection remain missing"
+    },
+    {
+      "task_id": "DEV_INPUT_SCORER_BINDING",
+      "research_question": "Bind actual open DEV policy inputs without reference leakage and connect deterministic verifiers",
+      "dependency": [
+        "SOURCE",
+        "BRIDGE",
+        "RETENTION_DATA",
+        "LONG_CONTEXT_DATA",
+        "LANGUAGE_DEV_CAL_INPUTS"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.2,
+      "artifact": "receipts/DEV_INPUT_SCORER_BINDING.json",
       "blocker": null,
       "status": "pending",
       "evidence_receipt": null,
       "native_gate_receipt": null,
-      "expected_information_value": "Remove missing language measurement inputs while native E0 is blocked",
-      "next_decision_impact": "Prepared candidates still require independently qualified reference labels/calibration; no native launch"
+      "expected_information_value": "Prevent use of target-bearing token arrays as policy prompts; remove manual source/scorer wiring",
+      "next_decision_impact": "Concrete static input/scorer package for later E0-qualified native collection; runtime identity/budgets/qualification stay unresolved"
     }
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "status": "AUTHORED_REVIEWED_TOKENIZED_CANDIDATES_UNQUALIFIED_GRADING",
+  "amendment": "AMENDMENT_006.md",
+  "spec_freeze": "manifests/LANGUAGE_WORLD_SPEC_FREEZE.json",
+  "bank_directory": "artifacts/mimo_central/language_dev_cal_v1",
+  "token_directory": "artifacts/mimo_central/language_eval_tokenized_v1",
+  "comparison_directory": "artifacts/mimo_central/language_eval_exclusion_v1",
+  "DEV_parents": 64,
+  "CAL_parents": 16,
+  "DEV_exemplars": 64,
+  "CAL_candidate_controls": 96,
+  "prior_authored_assistant_turns": 41,
+  "packet_templates": 2,
+  "items_per_template": 112,
+  "hidden_repeats_per_template": 16,
+  "actual_rating_records": 0,
+  "prompt_tokens_total": 8680,
+  "prompt_tokens_max": 166,
+  "reference_control_tokens_total": 5603,
+  "reference_control_tokens_max_including_EOS": 63,
+  "truncation": false,
+  "receipts": {
+    "LANGUAGE_DEV_CAL_CANDIDATE_RECEIPT.json": {
+      "sha256": "eb1bebd154292d78c05b99a57f98e29996d8850840713ad3ff8a61911a680325",
+      "bytes": 6626
+    },
+    "LANGUAGE_DEV_CAL_TOKENIZATION_RECEIPT.json": {
+      "sha256": "ed94468968313abebff16ca9157dddbb930774dbe5b5b4662f01a65ce613797e",
+      "bytes": 2480
+    },
+    "LANGUAGE_DEV_CAL_TRAIN_COMPARISON.json": {
+      "sha256": "9758f9e40ae01c839102d09f1303e910646567f342493666567a0320d9b15bf0",
+      "bytes": 1803
+    },
+    "LANGUAGE_DEV_CAL_HISTORICAL_FINGERPRINTS.json": {
+      "sha256": "7163d0581dba42b5251d4c880076aae8da0d38cc8277ff93eab4dfb832f139c2",
+      "bytes": 1821
+    },
+    "LANGUAGE_LEXICAL_NEIGHBOUR_REVIEW.json": {
+      "sha256": "4c2a7aa1e57abea94f67d2f5f9f6b938821840973f34a35dc014dfab2635ba9d",
+      "bytes": 97276
+    },
+    "LANGUAGE_CANDIDATE_ARTIFACT_AUDIT.json": {
+      "sha256": "0544703a3e1f9644428b5cef7e8002cfff68c4fc5cb2b73a0baa574793939abc",
+      "bytes": 31366
+    }
+  },
+  "model_responses_collected": 0,
+  "native_qualification": false,
+  "qualified_reference_labels": false,
+  "qualified_graders": 0,
+  "source_correct_enrollment": false,
+  "human_approval": false,
+  "training_eligibility": false,
+  "e1_launch_ready": false,
+  "CHECK_payloads": 0,
+  "FINAL_payloads": 0,
+  "limitations": [
+    "Assistant source review, not human approval or calibrated grading",
+    "No full historical, semantic independence or unknown-pretraining exclusion",
+    "CAL intended dimensions may have collateral defects; no qualified reference vectors",
+    "Packet coordinator separation is procedural; no qualified reviewer assignment"
+  ]
+}

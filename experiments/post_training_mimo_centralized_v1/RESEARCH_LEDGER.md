@@ -178,3 +178,63 @@ Independent scope review found a finite remaining FAST task: fresh language64DEV
 a new data-only amendment. Intended labels remain unqualified author annotations;
 qualified independent reference labels and grader calibration still require real
 reviewer evidence. Goal stays active. No recipe promotion or CHECK/FINAL opening.
+
+## Continuation 005: original language DEV/CAL inputs and unassigned packets
+
+Previous goal turn: PROGRESS. The current turn's initial OS observation was
+6184748 KiB free (about 5.898 GiB), below native admission before imports, with no
+Python workers. The same native RAM condition has recurred on five consecutive
+goal turns. No blind E0 retry or floor reduction. Independent data work remained.
+
+AMENDMENT_006 and LANGUAGE_AUTHORING_REGISTRATION accepted source preparation only.
+Root and cross-author assistant reviews examined all 80 world specifications.
+Review added explicit box/lid/car fit and changed a CAL notebook choice graph too
+close to a DEV constraint-conjunction case. The original B spec was preserved.
+Freeze 5c2542b17613ed520de739dcc9e68b868a98143b preceded rendered conversations and
+responses. Eight strata contain 64 DEV worlds (32 single/32 multi-turn) and 16 CAL
+worlds (8 single/8 multi-turn). CHECK has 128 count reservations only; FINAL is closed.
+
+Authors rendered 80 conversations, 64 illustrative DEV replies and 96 CAL candidate
+controls: two intended acceptable responses and four primary defects per CAL world.
+Cross-author assistants read every conversation, contract, exemplar and control.
+One unsupported 'naming vote' became 'naming decision'; original bytes and review
+were preserved. No qualified score vectors or human approval exist. Defect dimensions
+can interact; source review does not calibrate a scorer. The 41 prior assistant turns
+are authored context, not Titan outputs. Script receipts do not meter authorship or
+assistant review cost and do not assert that this work is free.
+
+Source/code committed at c6d64603 before production. Export took 21.378 s, producing
+64 DEV/16 CAL rows and two unassigned JSON CAL templates of 112 items each (96 unique
+controls plus 16 hidden repeats). Coordinator mappings remain separate; this is not
+cryptographic blinding. Rating imports require fresh source rows and exact packet
+reconstruction. Rehashed altered responses or context cannot pass on self-consistency
+alone. Missing/unjudgeable items remain explicit, and every qualification flag stays
+false. There are no actual rating records or native student responses.
+
+Tokenizer-only measurement took 34.202 s in the pinned Python 3.11.15 environment:
+80 prompts total 8680 tokens, max 166; 160 exemplar/control completions total 5603,
+max 63 including EOS. No truncation, Torch or model calls. The 43 new focused CPU
+tests passed in 40.998 s; two additional historical-fingerprint controls passed in
+0.002 s. Prior 172+89 test baselines remain separate. An audit with separately written
+checks by the exporter author passed 214 checks; this is byte/topology evidence,
+not independent human review, scorer calibration or native model qualification.
+
+Comparison with 42000 rows from two pinned original TRAIN corpora found no exact,
+system-stripped or normalized conversation/user-sequence matches, and no within-bank
+matches. Assistant review read all 240 retrieved neighbor contexts (232 distinct
+TRAIN rows), finding no clear direct reuse within those pairs. Shared functions and
+topics remain; this does not establish semantic independence. A separate hash-only
+comparison with 32800 historical whole-chat fingerprints found no matches. Comparison
+walls were 63.491 s and 1.215 s. No protected scored payload was read. Complete Titan
+ancestry, semantic exclusion and unknown-pretraining exclusion remain unqualified.
+The neighbor review's initial oversized shell write failed before process creation
+with Windows error206; a file tool saved the receipt, which records that failure.
+
+The next-action audit found a concrete missing adapter: short acquisition/retention
+DEV token files include reference completions, whereas long-context/language arrays
+contain prompt-only inputs. Bind actual source/token rows, slice only short-bank
+prompt positions, keep targets separate, connect pure deterministic verifiers and
+preserve parent variants. Runtime identity, run budgets, native capture, qualified
+language grading, the 2048/4096 runtime extension and native E1 executor still need
+actual evidence. The goal remains active, current best remains unchanged Titan,
+and no preparation result opens CHECK/FINAL or earns behavioral promotion.
