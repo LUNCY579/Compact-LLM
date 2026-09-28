@@ -1,0 +1,6185 @@
+{
+  "argv": [
+    "--device",
+    "cuda"
+  ],
+  "checkout": {
+    "checked": true,
+    "clean": true,
+    "head": "5a1b7e32da9931519b6a91f6d3cd1af187bb4bfb",
+    "injected": false,
+    "repo": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1"
+  },
+  "checks": {
+    "T1": {
+      "arm_sha256": "c0655a042a8812c3a8237b553dde1ab878ffcce2fb18aff4dcf1a82e119543f4",
+      "checks": {
+        "fp32_on_device": true,
+        "parameter_inventory": true,
+        "registered_layers": true,
+        "registered_tensor_count": true,
+        "tensors_matched_bitwise": true,
+        "tied_alias": true
+      },
+      "inventory_sha256": "d4a12e1686b37c06ea5f2b7de20ac72cd36ac05f67455f1219715c8e1130b821",
+      "n": 310,
+      "pass": true,
+      "state_fingerprint": "5ae6769b8b40032ad250fffb0dd8f60535c88e33df05b36318119cce0d0c9cd4",
+      "stored_sha256": "112139c46fa518a656c976d9b123dc6559f93d6461be2d18e12de2c23eb6fc2f",
+      "stored_tensors": 310,
+      "tensors_matched_bitwise": 310,
+      "tied": {
+        "alias": "lm_head.weight",
+        "of": "model.embed_tokens.weight",
+        "same_parameter": true,
+        "same_storage": true
+      },
+      "unique_numel": 596049920,
+      "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+    },
+    "T2": {
+      "argmax_equal": true,
+      "bitwise_equal": true,
+      "max_abs": 0.0,
+      "n": 3753,
+      "n_sequences": 8,
+      "pass": true,
+      "sequences": [
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+          "max_abs": 0.0,
+          "n_logits": 132640128,
+          "n_positions": 873,
+          "pass": true,
+          "position": 0,
+          "wall_s": 0.8018871000022045
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+          "max_abs": 0.0,
+          "n_logits": 36768512,
+          "n_positions": 242,
+          "pass": true,
+          "position": 1,
+          "wall_s": 0.22923919999811915
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+          "max_abs": 0.0,
+          "n_logits": 82349312,
+          "n_positions": 542,
+          "pass": true,
+          "position": 2,
+          "wall_s": 0.46869579999838606
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+          "max_abs": 0.0,
+          "n_logits": 34641408,
+          "n_positions": 228,
+          "pass": true,
+          "position": 3,
+          "wall_s": 0.22860539999965113
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+          "max_abs": 0.0,
+          "n_logits": 129145600,
+          "n_positions": 850,
+          "pass": true,
+          "position": 4,
+          "wall_s": 0.7817721999999776
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+          "max_abs": 0.0,
+          "n_logits": 36160768,
+          "n_positions": 238,
+          "pass": true,
+          "position": 5,
+          "wall_s": 0.09089489999678335
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+          "max_abs": 0.0,
+          "n_logits": 83412864,
+          "n_positions": 549,
+          "pass": true,
+          "position": 6,
+          "wall_s": 0.18915689999994356
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": true,
+          "id": "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2",
+          "max_abs": 0.0,
+          "n_logits": 35097216,
+          "n_positions": 231,
+          "pass": true,
+          "position": 7,
+          "wall_s": 0.08972970000104397
+        }
+      ]
+    },
+    "T3": {
+      "argmax_equal": true,
+      "eos_exercised": true,
+      "eos_positions": 8,
+      "max_abs": 1.5854835510253906e-05,
+      "n": 138,
+      "n_sequences": 8,
+      "pass": true,
+      "sequences": [
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 38,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.0192394256591797e-05,
+            "n": 38,
+            "within_tolerance": true
+          },
+          "id": "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+          "max_abs": 1.0192394256591797e-05,
+          "n": 38,
+          "pass": true,
+          "position": 0,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.0192394256591797e-05,
+            "n": 38,
+            "within_tolerance": true
+          },
+          "wall_s": 0.3454630999985966
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 11,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.3589859008789062e-05,
+            "n": 11,
+            "within_tolerance": true
+          },
+          "id": "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+          "max_abs": 1.3589859008789062e-05,
+          "n": 11,
+          "pass": true,
+          "position": 1,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 3.7550926208496094e-06,
+            "n": 11,
+            "within_tolerance": true
+          },
+          "wall_s": 0.10607299999901443
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 19,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.5854835510253906e-05,
+            "n": 19,
+            "within_tolerance": true
+          },
+          "id": "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+          "max_abs": 1.5854835510253906e-05,
+          "n": 19,
+          "pass": true,
+          "position": 2,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.5854835510253906e-05,
+            "n": 19,
+            "within_tolerance": true
+          },
+          "wall_s": 0.20266540000011446
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 6.079673767089844e-06,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "id": "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+          "max_abs": 6.079673767089844e-06,
+          "n": 9,
+          "pass": true,
+          "position": 3,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 5.543231964111328e-06,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "wall_s": 0.10369680000076187
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 28,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.4662742614746094e-05,
+            "n": 28,
+            "within_tolerance": true
+          },
+          "id": "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+          "max_abs": 1.4662742614746094e-05,
+          "n": 28,
+          "pass": true,
+          "position": 4,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.4662742614746094e-05,
+            "n": 28,
+            "within_tolerance": true
+          },
+          "wall_s": 0.16543480000109412
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 10,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 9.894371032714844e-06,
+            "n": 10,
+            "within_tolerance": true
+          },
+          "id": "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+          "max_abs": 9.894371032714844e-06,
+          "n": 10,
+          "pass": true,
+          "position": 5,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 2.86102294921875e-06,
+            "n": 10,
+            "within_tolerance": true
+          },
+          "wall_s": 0.04899210000075982
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 14,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 7.88271427154541e-06,
+            "n": 14,
+            "within_tolerance": true
+          },
+          "id": "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+          "max_abs": 7.88271427154541e-06,
+          "n": 14,
+          "pass": true,
+          "position": 6,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 6.020069122314453e-06,
+            "n": 14,
+            "within_tolerance": true
+          },
+          "wall_s": 0.09476159999758238
+        },
+        {
+          "argmax_equal": true,
+          "cross_entropy_vs_selected": {
+            "argmax_equal": null,
+            "bitwise_equal": true,
+            "max_abs": 0.0,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "eos_max_abs": 0.0,
+          "eos_positions": 1,
+          "full_forward_mechanics": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 1.1771917343139648e-05,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "id": "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2",
+          "max_abs": 1.1771917343139648e-05,
+          "n": 9,
+          "pass": true,
+          "position": 7,
+          "stop_reason": "eos",
+          "teacher_forced_head_only": {
+            "argmax_equal": true,
+            "bitwise_equal": false,
+            "max_abs": 3.039836883544922e-06,
+            "n": 9,
+            "within_tolerance": true
+          },
+          "wall_s": 0.04800890000115032
+        }
+      ],
+      "tolerance_nats": 0.0001
+    },
+    "T4": {
+      "argmax_equal": true,
+      "max_abs": 1.5854835510253906e-05,
+      "n": 138,
+      "n_sequences": 8,
+      "pass": true,
+      "sequences": [
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+          "max_abs": 1.0192394256591797e-05,
+          "n": 38,
+          "pass": true,
+          "position": 0,
+          "wall_s": 1.4638315000011062,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+          "max_abs": 1.3589859008789062e-05,
+          "n": 11,
+          "pass": true,
+          "position": 1,
+          "wall_s": 0.4055063000014343,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+          "max_abs": 1.5854835510253906e-05,
+          "n": 19,
+          "pass": true,
+          "position": 2,
+          "wall_s": 0.7469896000002336,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+          "max_abs": 6.079673767089844e-06,
+          "n": 9,
+          "pass": true,
+          "position": 3,
+          "wall_s": 0.34578359999795794,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+          "max_abs": 1.4662742614746094e-05,
+          "n": 28,
+          "pass": true,
+          "position": 4,
+          "wall_s": 0.9914639000016905,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+          "max_abs": 9.894371032714844e-06,
+          "n": 10,
+          "pass": true,
+          "position": 5,
+          "wall_s": 0.32746689999839873,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+          "max_abs": 7.88271427154541e-06,
+          "n": 14,
+          "pass": true,
+          "position": 6,
+          "wall_s": 0.4975038999982644,
+          "within_tolerance": true
+        },
+        {
+          "argmax_equal": true,
+          "bitwise_equal": false,
+          "id": "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2",
+          "max_abs": 1.1771917343139648e-05,
+          "n": 9,
+          "pass": true,
+          "position": 7,
+          "wall_s": 0.29694630000085454,
+          "within_tolerance": true
+        }
+      ],
+      "tolerance_nats": 0.0001
+    },
+    "T5": {
+      "labels": {
+        "eos_rows": 8,
+        "eos_rows_expected": 8,
+        "pad_id": 151643,
+        "pad_id_is_an_eos_id": true,
+        "pad_positions": 3231,
+        "pads_masked": true,
+        "pass": true,
+        "rows": [
+          {
+            "completion": 38,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 38,
+            "offset": 0,
+            "row": 0,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 11,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 11,
+            "offset": 631,
+            "row": 1,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 19,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 19,
+            "offset": 331,
+            "row": 2,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 9,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 9,
+            "offset": 645,
+            "row": 3,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 28,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 28,
+            "offset": 23,
+            "row": 4,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 10,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 10,
+            "offset": 635,
+            "row": 5,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 14,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 14,
+            "offset": 324,
+            "row": 6,
+            "stop_reason": "eos"
+          },
+          {
+            "completion": 9,
+            "eos_labelled": true,
+            "exact": true,
+            "labelled": 9,
+            "offset": 642,
+            "row": 7,
+            "stop_reason": "eos"
+          }
+        ],
+        "rows_exact": true
+      },
+      "max_abs": 7.62939453125e-05,
+      "n": 138,
+      "offsets": [
+        0,
+        631,
+        331,
+        645,
+        23,
+        635,
+        324,
+        642
+      ],
+      "pass": true,
+      "real_positions_selected": {
+        "diagnostic_argmax_mismatches": 0,
+        "diagnostic_full_vocab_logprob_max_abs": 0.0001983642578125,
+        "diagnostic_logits_max_abs": 0.00017833709716796875,
+        "max_abs": 7.62939453125e-05,
+        "n": 3745,
+        "real_positions": 3753,
+        "within_tolerance": true
+      },
+      "rows": 8,
+      "teacher_forced_left_vs_individual": {
+        "argmax_equal": null,
+        "bitwise_equal": false,
+        "max_abs": 1.862645149230957e-05,
+        "n": 138,
+        "within_tolerance": true
+      },
+      "width": 873
+    },
+    "T6": {
+      "all_zero_grads": 0,
+      "backward_calls": 1,
+      "fingerprint_after": "5ae6769b8b40032ad250fffb0dd8f60535c88e33df05b36318119cce0d0c9cd4",
+      "fingerprint_before": "5ae6769b8b40032ad250fffb0dd8f60535c88e33df05b36318119cce0d0c9cd4",
+      "fingerprint_unchanged": true,
+      "frozen_with_grad": [],
+      "grad_norm": 22.573756946152887,
+      "inventory": {
+        "blocks": [
+          8,
+          27
+        ],
+        "frozen_names": 91,
+        "frozen_names_sha256": "9432f34921cf461dd241aa9ccb921672694b1daf9820706cef0331aa372a6419",
+        "inventory_sha256": "16ec1f1c5a01a37d8891335221a2e6db2839b691499b19fca1c1ef49051fa3ea",
+        "num_hidden_layers": 28,
+        "rule": "every parameter under model.layers.{8..27}.",
+        "status": "OBSERVED_INVENTORY_NOT_NATIVE_QUALIFICATION",
+        "trainable_names": 220,
+        "trainable_names_sha256": "a60d9b9bc4f09813ad149221cbabef750979b8f0a3bd454694ed98c6f03e2363",
+        "trainable_numel": 314618880,
+        "unique_numel": 596049920
+      },
+      "loss": -0.26077648997306824,
+      "loss_tokens": 20,
+      "missing_grads": [],
+      "nonfinite_grads": [],
+      "optimizer_steps": 0,
+      "optimizers_after": 0,
+      "optimizers_before": 0,
+      "pass": true,
+      "prompt_positions": [
+        1,
+        3
+      ],
+      "registered_numel": 314618880,
+      "registered_numel_ok": true,
+      "requires_grad_drift": [],
+      "trainable_parameters": 220,
+      "trainable_with_grad": 220,
+      "unchanged_since_load": true
+    },
+    "T7": {
+      "cuda_cap_gib": 6.236572265625,
+      "device": "cuda:0",
+      "free_phys_gib": 5.723663330078125,
+      "gpu_shared_usage": {
+        "adapter_shared_usage_bytes": {
+          "luid_0x00000000_0x0001099f_phys_0": 114778112.0,
+          "luid_0x00000000_0x000124ca_phys_0": 8192.0,
+          "luid_0x00000000_0x00012511_phys_0": 524288.0
+        },
+        "available": true,
+        "counters": [
+          "\\GPU Process Memory(*)\\Shared Usage",
+          "\\GPU Process Memory(*)\\Dedicated Usage",
+          "\\GPU Adapter Memory(*)\\Shared Usage"
+        ],
+        "error": null,
+        "method": "powershell Get-Counter",
+        "pid": 77732,
+        "process_dedicated_usage_bytes": 4293840896.0,
+        "process_instances": {
+          "pid_77732_luid_0x00000000_0x0001099f_phys_0": {
+            "dedicated": 4293840896.0,
+            "shared": 81788928.0
+          }
+        },
+        "process_shared_usage_bytes": 81788928.0,
+        "utc": "2026-09-28T20:05:42.865944+00:00"
+      },
+      "pass": true,
+      "peak_cuda_allocated_gib": 3.6110496520996094,
+      "peak_cuda_reserved_gib": 3.83984375,
+      "peak_worker_rss_gib": 1.9738121032714844,
+      "read": "once, at the end of the probe",
+      "resources": {
+        "cuda": {
+          "fraction_cap_gib": 6.236572265625,
+          "free_gib": 3.013671875,
+          "max_memory_allocated_gib": 3.6110496520996094,
+          "max_memory_reserved_gib": 3.83984375,
+          "memory_allocated_gib": 2.283447742462158,
+          "memory_reserved_gib": 3.83984375,
+          "total_gib": 7.99560546875
+        },
+        "free_phys_gib": 5.723663330078125,
+        "host": {
+          "available": true,
+          "commit_limit_gib": 35.21818161010742,
+          "commit_over_phys_gib": 1.9207000732421875,
+          "committed_gib": 17.13888168334961,
+          "free_phys_gib": 5.723663330078125,
+          "memory_load_percent": 62,
+          "total_phys_gib": 15.218181610107422
+        },
+        "process_peak_rss_gib": 1.9738121032714844,
+        "process_rss_gib": 1.4784011840820312
+      },
+      "total_vram_gib": 7.99560546875,
+      "worker_rss_gib": 1.4784011840820312
+    }
+  },
+  "code_sha256": {
+    "maxrl_composable_skills_v2/contracts.py": "6f04b61a31e07c23b4621cfb850cbf4711d8cc95e2bcf4bad28a328bf4d587e9",
+    "mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+    "s0_q1_fp32.py": "4c7af10214c2eb0f5fa1296a42344b8635383d4b503cb012bfd1d2b175ae1c87",
+    "s0_runtime.py": "952696d93d5c157975663db924d6d79833489cb401c0160a6377076f1e3cbbf2"
+  },
+  "completed": true,
+  "completions": [
+    {
+      "completion_ids": [
+        58,
+        16,
+        24,
+        11,
+        17,
+        19,
+        11,
+        16,
+        18,
+        11,
+        16,
+        18,
+        11,
+        17,
+        19,
+        11,
+        16,
+        24,
+        11,
+        16,
+        24,
+        11,
+        17,
+        19,
+        11,
+        16,
+        16,
+        11,
+        16,
+        16,
+        11,
+        16,
+        18,
+        11,
+        16,
+        16,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 963,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 38,
+      "greedy_wall_s": 1.8104426999998395,
+      "id": "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+      "position": 0,
+      "raw_step_logprobs": [
+        -0.13701270520687103,
+        -0.8400812149047852,
+        -1.0227992534637451,
+        -0.031215567141771317,
+        -0.5327840447425842,
+        -0.0067065865732729435,
+        -0.016240328550338745,
+        -0.05803614482283592,
+        -0.12358453869819641,
+        -0.019321681931614876,
+        -0.12258278578519821,
+        -0.16417603194713593,
+        -0.010452644899487495,
+        -0.07539777457714081,
+        -0.000674616196192801,
+        -0.0028509944677352905,
+        -0.003743665525689721,
+        -0.010243108496069908,
+        -0.02943851612508297,
+        -0.018101027235388756,
+        -0.018797941505908966,
+        -0.00834643840789795,
+        -0.0061683752574026585,
+        -0.00027450130437500775,
+        -0.0065673235803842545,
+        -0.006053209770470858,
+        -0.009941705502569675,
+        -0.007997632957994938,
+        -0.0019263536669313908,
+        -0.0032147890888154507,
+        -0.002734614070504904,
+        -0.002606924856081605,
+        -0.00036149643710814416,
+        -0.0028456454165279865,
+        -0.0020166554022580385,
+        -0.0102814557030797,
+        -0.025524962693452835,
+        -2.658331868587993e-05
+      ],
+      "skill": "R",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        16,
+        24,
+        11,
+        17,
+        19,
+        11,
+        16,
+        18,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 359,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 11,
+      "greedy_wall_s": 0.42004000000088126,
+      "id": "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+      "position": 1,
+      "raw_step_logprobs": [
+        -0.4000159204006195,
+        -0.4475930333137512,
+        -0.6537851095199585,
+        -0.0019839382730424404,
+        -0.6302950978279114,
+        -0.01202335674315691,
+        -0.008608612231910229,
+        -0.10404885560274124,
+        -0.2029876708984375,
+        -0.10910595208406448,
+        -2.2172682292875834e-05
+      ],
+      "skill": "S",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        15,
+        11,
+        220,
+        18,
+        11,
+        220,
+        19,
+        11,
+        220,
+        21,
+        11,
+        220,
+        22,
+        11,
+        220,
+        23,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 651,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 19,
+      "greedy_wall_s": 0.7716670999980124,
+      "id": "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+      "position": 2,
+      "raw_step_logprobs": [
+        -0.061916518956422806,
+        -0.8365134000778198,
+        -0.09841154515743256,
+        -1.161742091178894,
+        -1.0095711946487427,
+        -0.3475174605846405,
+        -0.0032600611448287964,
+        -0.5799088478088379,
+        -0.017529673874378204,
+        -0.0004942387458868325,
+        -0.7668085694313049,
+        -0.04108021780848503,
+        -0.001731921685859561,
+        -0.26423490047454834,
+        -0.18202203512191772,
+        -0.00012766500003635883,
+        -0.08968452364206314,
+        -0.29013490676879883,
+        -2.682172998902388e-05
+      ],
+      "skill": "R",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        18,
+        16,
+        11,
+        220,
+        17,
+        23,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 347,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 9,
+      "greedy_wall_s": 0.35758720000012545,
+      "id": "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+      "position": 3,
+      "raw_step_logprobs": [
+        -0.14033904671669006,
+        -0.8687304854393005,
+        -0.13813717663288116,
+        -0.013409780338406563,
+        -0.794856071472168,
+        -0.5252058506011963,
+        -0.12018700689077377,
+        -0.04416068270802498,
+        -2.2291887944447808e-05
+      ],
+      "skill": "S",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        15,
+        11,
+        16,
+        11,
+        17,
+        11,
+        18,
+        11,
+        19,
+        11,
+        20,
+        11,
+        21,
+        11,
+        22,
+        11,
+        23,
+        11,
+        24,
+        11,
+        16,
+        15,
+        11,
+        16,
+        16,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 950,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 28,
+      "greedy_wall_s": 1.1867467999982182,
+      "id": "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+      "position": 4,
+      "raw_step_logprobs": [
+        -0.09574175626039505,
+        -1.3492963314056396,
+        -0.054715171456336975,
+        -1.2960025072097778,
+        -0.21127039194107056,
+        -0.4925287961959839,
+        -0.008579892106354237,
+        -0.5176217555999756,
+        -0.011109520681202412,
+        -0.41748782992362976,
+        -0.01406718511134386,
+        -0.15746842324733734,
+        -0.003749009920284152,
+        -0.04874754324555397,
+        -0.007270899601280689,
+        -0.06869105249643326,
+        -0.02159101702272892,
+        -0.11646004766225815,
+        -0.05380791425704956,
+        -0.0137909185141325,
+        -0.20553052425384521,
+        -0.002168924082070589,
+        -0.08197053521871567,
+        -0.2579818665981293,
+        -0.0028029698878526688,
+        -0.00273199868388474,
+        -0.08632536232471466,
+        -4.5060096454108134e-05
+      ],
+      "skill": "R",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        23,
+        11,
+        17,
+        18,
+        11,
+        18,
+        16,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 356,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 10,
+      "greedy_wall_s": 0.3356949999979406,
+      "id": "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+      "position": 5,
+      "raw_step_logprobs": [
+        -0.3133983016014099,
+        -1.204681158065796,
+        -0.01137533225119114,
+        -0.8256040811538696,
+        -0.0063929809257388115,
+        -0.04839494824409485,
+        -0.6081743240356445,
+        -0.002234464045614004,
+        -0.028168730437755585,
+        -1.7404405298293568e-05
+      ],
+      "skill": "S",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        18,
+        11,
+        20,
+        11,
+        21,
+        11,
+        16,
+        11,
+        22,
+        11,
+        23,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 663,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 14,
+      "greedy_wall_s": 0.49497499999779393,
+      "id": "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+      "position": 6,
+      "raw_step_logprobs": [
+        -0.1193840354681015,
+        -1.343562126159668,
+        -0.025780465453863144,
+        -1.0300214290618896,
+        -0.003735589561983943,
+        -0.09914344549179077,
+        -0.006739741191267967,
+        -0.9636757373809814,
+        -0.14487884938716888,
+        -0.8284932971000671,
+        -0.03158917278051376,
+        -0.3591025769710541,
+        -0.2028939574956894,
+        -2.407998726994265e-05
+      ],
+      "skill": "R",
+      "stop_reason": "eos"
+    },
+    {
+      "completion_ids": [
+        58,
+        16,
+        15,
+        11,
+        220,
+        17,
+        22,
+        60,
+        151645
+      ],
+      "decoder": {
+        "argmax_replay_verified": true,
+        "attn_implementation": "sdpa",
+        "effective_config": {
+          "bad_words_ids": null,
+          "begin_suppress_tokens": null,
+          "bos_token_id": 151643,
+          "cache_implementation": null,
+          "do_sample": false,
+          "eos_token_id": [
+            151645,
+            151643
+          ],
+          "epsilon_cutoff": 0.0,
+          "eta_cutoff": 0.0,
+          "max_length": 350,
+          "max_new_tokens": 128,
+          "min_length": 0,
+          "min_new_tokens": null,
+          "min_p": null,
+          "no_repeat_ngram_size": 0,
+          "num_beams": 1,
+          "num_return_sequences": 1,
+          "output_logits": true,
+          "output_scores": false,
+          "pad_token_id": 151643,
+          "prefill_chunk_size": null,
+          "renormalize_logits": false,
+          "repetition_penalty": 1.0,
+          "return_dict_in_generate": true,
+          "suppress_tokens": null,
+          "temperature": 1.0,
+          "top_k": 50,
+          "top_p": 1.0,
+          "typical_p": 1.0,
+          "use_cache": true
+        },
+        "logits_processors": [
+          "_RawStepRecorder"
+        ],
+        "mode": "greedy",
+        "raw_logits_source": "output_logits",
+        "stopping_criteria": [
+          "MaxLengthCriteria",
+          "EosTokenCriteria"
+        ],
+        "transformers": "4.57.1"
+      },
+      "generated_tokens": 9,
+      "greedy_wall_s": 0.301897999997891,
+      "id": "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2",
+      "position": 7,
+      "raw_step_logprobs": [
+        -0.4036575257778168,
+        -0.4108498990535736,
+        -0.27677157521247864,
+        -0.009249573573470116,
+        -0.7733179926872253,
+        -0.530297040939331,
+        -0.017927512526512146,
+        -0.12769058346748352,
+        -2.9444261599564925e-05
+      ],
+      "skill": "S",
+      "stop_reason": "eos"
+    }
+  ],
+  "counts": {
+    "backward_calls": 1,
+    "decoder_forwards": 311,
+    "generated_tokens": 138,
+    "generations": 8,
+    "lm_forwards": 300,
+    "model_loads": 1,
+    "optimizer_steps": 0,
+    "optimizers_at_end": 0
+  },
+  "decoding_preimage": {
+    "attn_implementation": "sdpa",
+    "cublas_workspace_config": ":4096:8",
+    "cuda": {
+      "capability": [
+        8,
+        9
+      ],
+      "cuda_build": "12.6",
+      "cudnn_version": 91002,
+      "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "driver_version": "566.07",
+      "nvidia_smi_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "sdp_backends": {
+        "cudnn": true,
+        "flash": true,
+        "math": true,
+        "mem_efficient": true
+      }
+    },
+    "decoding": {
+      "add_generation_prompt": true,
+      "add_special_tokens": false,
+      "batch_size": 1,
+      "do_sample": false,
+      "enable_thinking": false,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "greedy": true,
+      "max_new_tokens": 128,
+      "num_beams": 1,
+      "pad_token_id": 151643
+    },
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "device": "cuda:0",
+    "dtype": "float32",
+    "float32_matmul_precision": "highest",
+    "num_threads": 4,
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "python": "3.11.15",
+    "schema": "COMP-RS-001-S0-DECODING-1",
+    "tf32_cuda_matmul": false,
+    "tf32_cudnn": false
+  },
+  "decoding_sha256": "87220f47bedea9c4520abfcbd622aa042aaf6437a46cba0b825c3a6bef3f16b8",
+  "error": null,
+  "experiment": "COMP-RS-001",
+  "failed_checks": [],
+  "finished_utc": "2026-09-28T20:05:44.713363+00:00",
+  "generation_contract": {
+    "contract_sha256": "78952b51a44b9a2dd0f9ce0b447cb79e73b84fed1924f7a4eb5bc7cc0ed2f45e",
+    "eos_token_ids": [
+      151645,
+      151643
+    ],
+    "greedy": {
+      "batch_size": 1,
+      "do_sample": false,
+      "num_beams": 1,
+      "raw_logits_source": "generate(output_logits=True) float32 step logits, cross-checked bitwise against the pass-through recorder",
+      "use_cache": true
+    },
+    "logits_processors": [
+      "_RawStepRecorder"
+    ],
+    "max_new_tokens": 128,
+    "pad_token_id": 151643,
+    "sampler": {
+      "batch": "one unpadded batch of G identical prompts",
+      "do_sample": true,
+      "num_beams": 1,
+      "raw_logits_source": "pass-through logits processor (sole processor, streamed)",
+      "repetition_penalty": 1.0,
+      "temperature": 1.0,
+      "top_k": 0,
+      "top_p": 1.0,
+      "use_cache": true
+    },
+    "sampler_semantics": "transformers 4.57.1 generation/utils.py. _get_logits_processor adds RepetitionPenaltyLogitsProcessor iff repetition_penalty is not None and != 1.0 (L1141), and, only when do_sample, TemperatureLogitsWarper iff temperature is not None and != 1.0 (L1266), TopKLogitsWarper iff top_k is not None and != 0 (L1268), TopPLogitsWarper iff top_p is not None and < 1.0 (L1272); min_p None, typical_p 1.0 and epsilon/eta cutoffs 0.0 add nothing. top_k=0 therefore disables top-k; omitting it leaves GenerationConfig's global default top_k=50 (configuration_utils.py L357), a live top-50 truncation. When a GenerationConfig object is passed with use_model_defaults=None and the model generation config is from >= 4.50, every field equal to the global default (temperature 1.0, top_p 1.0) is replaced by the model generation config value (L1761-1783); the Supa generation_config.json holds temperature 0.6, top_k 20, top_p 0.95, so this module always passes use_model_defaults=False with a complete config. _sample stores output_logits as the float32 copy of outputs.logits[:, -1] BEFORE the processors (L2800, L2810), then samples torch.multinomial(softmax(processed scores), num_samples=1) with no generator argument (L2828-2829); greedy is torch.argmax(processed scores). With the processor list reduced to the pass-through recorder, processed scores are the raw logits, so the sampling distribution is the raw policy softmax; this is checked per token by replay, not assumed.",
+    "seed_path": "transformers 4.57.1 _sample passes no generator to torch.multinomial, so the draw consumes the default generator of the device holding the logits. Per call, inside torch.random.fork_rng (devices=[] on CPU, [index] on CUDA, so the caller's RNG state is restored afterwards), that default generator is seeded with the integer seed: torch.default_generator.manual_seed(seed) on CPU, torch.cuda.manual_seed(seed) under torch.cuda.device(index) on CUDA. No other RNG consumer runs during generate (eval mode is required). A separate torch.Generator(device) seeded with the same integer replays softmax(raw logits) -> torch.multinomial(., 1, generator=replay) at every step, and every sampled token of every sequence must equal its replay draw.",
+    "seed_range": [
+      0,
+      9223372036854775807
+    ],
+    "stopping_criteria": [
+      "MaxLengthCriteria",
+      "EosTokenCriteria"
+    ],
+    "transformers": "4.57.1",
+    "use_model_defaults": false
+  },
+  "host_floor": {
+    "later_stages_floor_gib": 2.9738121032714844,
+    "margin_gib": 1.0,
+    "peak_worker_rss_gib": 1.9738121032714844,
+    "rule": "later S0 stages launch with hostbudget.require(Q1 peak worker RSS + 1.0 GiB) (section 16)"
+  },
+  "identity": {
+    "arm_sha256": "c0655a042a8812c3a8237b553dde1ab878ffcce2fb18aff4dcf1a82e119543f4",
+    "asset_receipt_sha256": "9d9908cbcbb83a7feb75ad45ac38bd1d768f2841def8a6fb7ad9f4b6444798a3",
+    "attn_implementation": "sdpa",
+    "config_sha256": "660db3b73d788119c04535e48cf9be5f55bc3100841a718637ae695b442f27dd",
+    "device": "cuda:0",
+    "digest_format": "arm_build.tensor_digest / state_digest (chunked)",
+    "dtype": "float32",
+    "model_class": "Qwen3ForCausalLM",
+    "model_path": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze",
+    "non_persistent_buffers": [
+      "model.rotary_emb.inv_freq"
+    ],
+    "parameter_inventory": {
+      "inventory_sha256": "d4a12e1686b37c06ea5f2b7de20ac72cd36ac05f67455f1219715c8e1130b821",
+      "parameters": [
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "lm_head.weight",
+            "model.embed_tokens.weight"
+          ],
+          "numel": 155582464,
+          "requires_grad": true,
+          "shape": [
+            151936,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.0.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.1.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.10.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.11.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.12.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.13.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.14.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.15.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.16.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.17.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.18.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.19.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.2.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.20.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.21.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.22.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.23.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.24.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.25.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.26.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.27.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.3.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.4.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.5.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.6.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.7.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.8.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.input_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.mlp.down_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            3072
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.mlp.gate_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.mlp.up_proj.weight"
+          ],
+          "numel": 3145728,
+          "requires_grad": true,
+          "shape": [
+            3072,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.post_attention_layernorm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.k_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.k_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.o_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            2048
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.q_norm.weight"
+          ],
+          "numel": 128,
+          "requires_grad": true,
+          "shape": [
+            128
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.q_proj.weight"
+          ],
+          "numel": 2097152,
+          "requires_grad": true,
+          "shape": [
+            2048,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.layers.9.self_attn.v_proj.weight"
+          ],
+          "numel": 1048576,
+          "requires_grad": true,
+          "shape": [
+            1024,
+            1024
+          ]
+        },
+        {
+          "device": "cuda:0",
+          "dtype": "torch.float32",
+          "names": [
+            "model.norm.weight"
+          ],
+          "numel": 1024,
+          "requires_grad": true,
+          "shape": [
+            1024
+          ]
+        }
+      ],
+      "status": "OBSERVED_INVENTORY_NOT_NATIVE_QUALIFICATION",
+      "trainable_numel": 596049920,
+      "unique_numel": 596049920
+    },
+    "state_fingerprint": "5ae6769b8b40032ad250fffb0dd8f60535c88e33df05b36318119cce0d0c9cd4",
+    "state_names": 312,
+    "stored_dtype": "BF16",
+    "stored_sha256": "112139c46fa518a656c976d9b123dc6559f93d6461be2d18e12de2c23eb6fc2f",
+    "stored_tensor_sha256": {
+      "model.embed_tokens.weight": "b0d5029e212b4906d0e5bb829de3b2dbb94105b1699956d33fd75667360434e7",
+      "model.layers.0.input_layernorm.weight": "8e25d800499efe6b68eb5bfb06909679d4900c2a59725f1930bfbdf201d363ed",
+      "model.layers.0.mlp.down_proj.weight": "6ee1c200b4d24e9030bf68a76259ca22d1a2156093caa063cc642659b34f0796",
+      "model.layers.0.mlp.gate_proj.weight": "f4a429775553b2a830b4739cf9d322085254a46d2fc39dcc60307eff00de8359",
+      "model.layers.0.mlp.up_proj.weight": "72e0140e8cdb69f845d78bb84162463fe9e4cb08b5c4e386ea359ea242dec09e",
+      "model.layers.0.post_attention_layernorm.weight": "8aa8b2010d3275cf31af2c43c13c91d6083e5385df37e21bc95cce2f02e4c263",
+      "model.layers.0.self_attn.k_norm.weight": "392e9fd2481f8f5b6c77d32f64eb0ed63e792e6a07204fcf56fb143577ac75ea",
+      "model.layers.0.self_attn.k_proj.weight": "8c0bff60ac49ef7564af017239334149f000e4106802e4d3813d2b605e40448a",
+      "model.layers.0.self_attn.o_proj.weight": "a860c4603bfa21dcbecfbde381376401d633541a9fe9ca7f8d1133275ba0eb29",
+      "model.layers.0.self_attn.q_norm.weight": "c3b36f4cebe04dfd9d5a558137475427a3fe04a36d9736817105b76537ed0406",
+      "model.layers.0.self_attn.q_proj.weight": "69f96e5c2a634a121d2048a990f63d14b671b83919d067d01404ed640b5d085c",
+      "model.layers.0.self_attn.v_proj.weight": "2b9b95afb5e156e5b7df130d7d69426983e2b236ae2bb1715bd3fbc67d8fc0da",
+      "model.layers.1.input_layernorm.weight": "4d51c2db2d518b8bd2ba5d4847806cd22c4517d0f819691be07815b86dbb93b8",
+      "model.layers.1.mlp.down_proj.weight": "fd52349dddea097c0428bdb3af9f5b59ae5d8a0a5e409f2b41b78f5de2b68c65",
+      "model.layers.1.mlp.gate_proj.weight": "e1cff80b895dcbdff6f3b31453bc58675459c031be60ed91a4ec83ab51532123",
+      "model.layers.1.mlp.up_proj.weight": "ceb6d7091aaf7738581410cf848cbfe4686b6e2d60713ea716438b09c986e92f",
+      "model.layers.1.post_attention_layernorm.weight": "9e899f608d4c98d6038564119bf6ee8e304584328d370c463e596e27c922f93f",
+      "model.layers.1.self_attn.k_norm.weight": "ad517ee0830b91f66cab4ddc827abcbd3909da40dbc349c7ba13034d257a529f",
+      "model.layers.1.self_attn.k_proj.weight": "3f3be213e3236b885ac302332528b3c5f7e595054b83343071a729e09a810736",
+      "model.layers.1.self_attn.o_proj.weight": "e2b3e813c126cab6675c29a619002b77dbc0618ea415df420b71bef33c0a1bae",
+      "model.layers.1.self_attn.q_norm.weight": "35ae40774bd1fd26991ca48aff78800098f57c839587ae2c5c1b3fb7be3bdfd9",
+      "model.layers.1.self_attn.q_proj.weight": "9714158de35c14605c31c0b7ffa08868a5c0557221f18a0b2d43ea738fe035da",
+      "model.layers.1.self_attn.v_proj.weight": "a10730ffaacbf08ec33d75b11bc88fc65a31ff37fadb73d4afb460f5f07f4655",
+      "model.layers.10.input_layernorm.weight": "b78c75ba7579c3092c1bb54233ab9726209abfe70f80153aeaae585ad9fac774",
+      "model.layers.10.mlp.down_proj.weight": "8a3205a1f9160f6a8e34eea30a7742b85b7d0bf7c55b87120c7c5e14ceeeb3a5",
+      "model.layers.10.mlp.gate_proj.weight": "0f5eac05afea7c9128038102219570f908195dc528abe4cdef7cd5a7b1112772",
+      "model.layers.10.mlp.up_proj.weight": "559477860a94ecc539af2f2fe7e4fe4c8915e5a26ea37dee1c0f2075667ac94f",
+      "model.layers.10.post_attention_layernorm.weight": "2123aa6af83de93a353253dbd2675939a55b635c96c33924e3b33672a238e2f0",
+      "model.layers.10.self_attn.k_norm.weight": "5f5774e250f73df049893b2e405dbb8f34c8009da306c2a8f2548c362fa9f65b",
+      "model.layers.10.self_attn.k_proj.weight": "361d97ecc88cabf14102376d7318c900f7786b64ba7b9a7e63390ac3af5cbc8b",
+      "model.layers.10.self_attn.o_proj.weight": "6beb5e7b71c2a8e92af113be2d05360dda25d7c94971148976b04d59d08b3dc8",
+      "model.layers.10.self_attn.q_norm.weight": "0aba45b48977c0915b7a5455975736901ea70ab9d69bdb28581ead77509e55e7",
+      "model.layers.10.self_attn.q_proj.weight": "daa0d565c94cf081c5d95cfe3f19499308614c7fd0c54348e344fef78151d9b2",
+      "model.layers.10.self_attn.v_proj.weight": "b1381a259aacb243b9123eb092def2456b9c5a24e5db950142ba80c0e31a580a",
+      "model.layers.11.input_layernorm.weight": "b542f991ec024cd141c10369390544c8e0fa95e76a730d6d15e6037cdb423284",
+      "model.layers.11.mlp.down_proj.weight": "cb0efc4d01ec67dacdcb68c617b3292f3811d592b8e89360797aa149aec248d6",
+      "model.layers.11.mlp.gate_proj.weight": "44d2ef14ffac4b344dd03f937bb8ba8c44843ba717eb98320d06d9aa942e8bc3",
+      "model.layers.11.mlp.up_proj.weight": "ec63ad838c2e6fb00af14e1c83d194ee1715777e0a5c5801a6bad62f1889376e",
+      "model.layers.11.post_attention_layernorm.weight": "f5786adc5cdf85e23fef9e55ed5ba240c7fe7992b09cf9d479c3cad41c7ec325",
+      "model.layers.11.self_attn.k_norm.weight": "e0b47a7198d3d9ce315d53ad6ba2bf162b346bb92d80cdc82ba427ba18948832",
+      "model.layers.11.self_attn.k_proj.weight": "ab18238c6be7c286dbccdd4ae51a29e05cdc0b73bc7d928462f8f33c805e299e",
+      "model.layers.11.self_attn.o_proj.weight": "37147c574c5343af322945a476002434dcd14d297f96187ff89a21d458a62160",
+      "model.layers.11.self_attn.q_norm.weight": "00cc70025c479f7c5bb69fd6397496e34dd50aadbf56ad0c56fe5477de19ae5c",
+      "model.layers.11.self_attn.q_proj.weight": "9bf21017caf52e28616ccb34df2a25c929a66c3ba6c6fab60df4a347d85011a0",
+      "model.layers.11.self_attn.v_proj.weight": "c7fcd980556b6f5030fd0b8179e7f0052e2515010bc764eb28d3966067f74732",
+      "model.layers.12.input_layernorm.weight": "3a5bf2a417c2458a3f9f0cd12295457536b1f23198e99e636de2524cbf61d51a",
+      "model.layers.12.mlp.down_proj.weight": "a52011889cd4ba669f4aa509637cf59bb0a7a65322b4b5923850793d533f021c",
+      "model.layers.12.mlp.gate_proj.weight": "45ba9a2937694ca9611acc98565609f02bf6cf05af13de91e9dca746f7492a8b",
+      "model.layers.12.mlp.up_proj.weight": "bd16caa06c97fbce5582a19191a3786a6d37b3b3f67543cf1776a862924ce144",
+      "model.layers.12.post_attention_layernorm.weight": "912ca4043959f4c17e829f4ff3e8b34156da9e4e848210ed7b63799d313bd6fa",
+      "model.layers.12.self_attn.k_norm.weight": "6ee012df4b90ead48ce0df9e74f4800a7abf33d4e4c2748d72102703d6db365e",
+      "model.layers.12.self_attn.k_proj.weight": "db0590e1a354b9c447d171451c6e14c672017fc661c2ac439aac283bf52ac153",
+      "model.layers.12.self_attn.o_proj.weight": "f739f8c52a3d542aa053ca9074e587c7248d291acf3bbb26edd6c3f921c805fa",
+      "model.layers.12.self_attn.q_norm.weight": "fa9335f92e3207938e1bfe8eb439065ef541d9e8118c454967930f7c64373a03",
+      "model.layers.12.self_attn.q_proj.weight": "5bdf210a1a1c6176e0aa21886bf4e70221b995a135e3cf9d16e215c3e1a6b548",
+      "model.layers.12.self_attn.v_proj.weight": "0fd25cab7f2debedd3f4616f10de831ea3ba4908b1a999bcea590f19fccde40a",
+      "model.layers.13.input_layernorm.weight": "a77a0279482f773c3f1ea0639199863f62e2d5c8438a3c24a67c7bfa5ee2e924",
+      "model.layers.13.mlp.down_proj.weight": "24737efcaa88b936905b359944e9cadd61cd42bc6d7b0c14febb704b4228746b",
+      "model.layers.13.mlp.gate_proj.weight": "fb56fc5ee48d96e32cfcc90b7d0ef924847fec1af5ff133dd44d76acb9f903c0",
+      "model.layers.13.mlp.up_proj.weight": "e27c9f9015afaf8461f5e7724437cd00c600f296659e1d86e8f7c225963aae80",
+      "model.layers.13.post_attention_layernorm.weight": "4a9cd828cc45bddfd7eb254d62467925ebe464a2a253a46ce527534f46cbd821",
+      "model.layers.13.self_attn.k_norm.weight": "a519596a04c9ff3ba4f6f224a5e0d38cfb11fa8467bf6440e4e358d4081a1b65",
+      "model.layers.13.self_attn.k_proj.weight": "aae7fc6d35dec9a89ad16c2890e72327000584eb73a3f2a3fbaeba8a5d0aa912",
+      "model.layers.13.self_attn.o_proj.weight": "316f5289364d532935f63472776dd6a5a8d1055bcb28aaceace72d8320d5eba1",
+      "model.layers.13.self_attn.q_norm.weight": "3cfe8c86e19a0c84cd7f93eed1e14fa9e5578e4ab4ef12ac9075bbd0066c975e",
+      "model.layers.13.self_attn.q_proj.weight": "ee67d5a55759d96b07f3e8e8b878dafc209211ac043f38c80f4583ffa431494a",
+      "model.layers.13.self_attn.v_proj.weight": "6dda46668c905adc45e9757de2d71592d394f8709af7c3d727c191a08907c39e",
+      "model.layers.14.input_layernorm.weight": "af1bae78f3b371d5482f17bb36696cacc901cde18879b28da3693955dcfbe00a",
+      "model.layers.14.mlp.down_proj.weight": "5c23efb09834cdd24ce995020cd5d4ae6114bcfea71a2a940efe2618506ca8a6",
+      "model.layers.14.mlp.gate_proj.weight": "3771e5f0a244416c10a142df55cfb33befc11f2859f0388f8ddc2711d6fb34db",
+      "model.layers.14.mlp.up_proj.weight": "4c51c0f94da02de0424163649811ade663119705dd8d7c318c2c9df1a289bb75",
+      "model.layers.14.post_attention_layernorm.weight": "15dba27d35772524eb9ad80cae23fc806f8e2eeb1a69ca9780ab171a0c0f736c",
+      "model.layers.14.self_attn.k_norm.weight": "ab2e894fa0a78394cb36837c48c72fa2a32a4f17faa1b33b6410fdac36d4476a",
+      "model.layers.14.self_attn.k_proj.weight": "38742e045c3e4e258d9c969ffe478b84e3b21fa94f70116acee7abfc9b7ecbe7",
+      "model.layers.14.self_attn.o_proj.weight": "47c1668010efe5e4b8629ff92df5c052fc2f902a26e309f761fe6e170fbdfe70",
+      "model.layers.14.self_attn.q_norm.weight": "21668025761ff2933a9c7d441ddeedea44237786187a53626eeef7ab558cd3ec",
+      "model.layers.14.self_attn.q_proj.weight": "4d3a987d98db84d2d2cb42f7e9c11227ee46033c058b3c4823f1e1a5af6191fb",
+      "model.layers.14.self_attn.v_proj.weight": "6dc1af1c58b1e96317077eb438b5abcda764f607ca88e8c81adf1a4377d2f806",
+      "model.layers.15.input_layernorm.weight": "c51239ec0b3e314297e23b4803802a89ec83c92f87e137693c6f98f55ed75942",
+      "model.layers.15.mlp.down_proj.weight": "f254239272c74e8ef47afa6f381f6f4d2a8288a390ea1fe0b3ffd3e1402021e9",
+      "model.layers.15.mlp.gate_proj.weight": "69aaf1cb1f763a7da8bbf8507cb7c34d564037efec1385b339bc9726ba9a2f29",
+      "model.layers.15.mlp.up_proj.weight": "b10fd4ef8b6de0cd294067682213f84dd7670263af76d07db3d977a345bdee6b",
+      "model.layers.15.post_attention_layernorm.weight": "6846154e2eb2677259b376e8ea5b48f95aff28c8b4aebe7530b00f94a254d2b1",
+      "model.layers.15.self_attn.k_norm.weight": "bdfff1d6c13a9aab51cb83e31ec42956c1f5a0fa22dc826f8a2790b95b32a6a8",
+      "model.layers.15.self_attn.k_proj.weight": "085800e5d756e15b12d074fac87c5d9df2f364bf6970dba0630d444e1b57c598",
+      "model.layers.15.self_attn.o_proj.weight": "cc00f241226fc914d27e7d504ecbee60373132bfb77edf86dbd808a77279be78",
+      "model.layers.15.self_attn.q_norm.weight": "e54c61ff2bcc3241acc3359119923f4e3d4d7aa2cecfc915efab77e576637ecf",
+      "model.layers.15.self_attn.q_proj.weight": "2edc07b4b5041bcf49f754a0eaac4e6eb9e95ac815dbcaab583d20560b095f4f",
+      "model.layers.15.self_attn.v_proj.weight": "27be84ed546a5acef521b2b8ac215643a2bd26ad1d9c1bbdc7d2dbf377936fd0",
+      "model.layers.16.input_layernorm.weight": "519f2502c3b01991a9d56507e86f0e098e3d2c561ff3e76e81e694f51145a1f1",
+      "model.layers.16.mlp.down_proj.weight": "a0c2350fef79381fcb44cdc0b22b3eac6918fbc7b5a0b82c7c7b5bcdfe39bde9",
+      "model.layers.16.mlp.gate_proj.weight": "3b794f700875cc20d2da3a2852736a84a632f25980ec65c8ea74cd71a90098f9",
+      "model.layers.16.mlp.up_proj.weight": "9ce37b4972dd7c4799d6cefc7203e66466c4dd14c67462eaca718ba9a8ae2ca5",
+      "model.layers.16.post_attention_layernorm.weight": "cd60eef72250dbddf1cad1b5920a93e60bb756b0e4984ea219c0b3dd9bf3e414",
+      "model.layers.16.self_attn.k_norm.weight": "68d899e49d54e860523ef6f2dfe680cfa6276bd54d58d1201344ad457e9c90e8",
+      "model.layers.16.self_attn.k_proj.weight": "fbd6a52b0af16c76e3f9bde4917facf03b0817ffa126d68bfc2ff25e62a11c09",
+      "model.layers.16.self_attn.o_proj.weight": "68eb162db3d8fd12ae0995450631081f6de095b1bf3da47484dcbc2f0f911781",
+      "model.layers.16.self_attn.q_norm.weight": "276b0482064eb4488a758b27d51290a4e8510cb7961cca408941a7892f13f7f7",
+      "model.layers.16.self_attn.q_proj.weight": "afcd9608fdf69b4986642b9a5571f07312f829c8e1a83b2dc3f42fb7bd9880ab",
+      "model.layers.16.self_attn.v_proj.weight": "0e9844e23ffd72e8e8b0d6c196b8b07d7a7a432a3298479a6d0e54afc2ad128d",
+      "model.layers.17.input_layernorm.weight": "358b243bcd4faeb3de3d4d7c094c8c34cb24eb45db8711bf806ac4851805b437",
+      "model.layers.17.mlp.down_proj.weight": "9e3cad46c2894d210bd07b9bc87c2040c15ca9eefb34329ad1e0b150522b8da9",
+      "model.layers.17.mlp.gate_proj.weight": "2ee0a18ab7107ccbff7f3066d9a5f1e96f61b0a2e3808668460a82a7d44241a8",
+      "model.layers.17.mlp.up_proj.weight": "ebc533096b36a9eb9d62a22c66ee76efad8f4a33903495df76c527f863ce50a3",
+      "model.layers.17.post_attention_layernorm.weight": "d2ba121d7e713432eceb57cc33dabdfd7b4338c6b4b05d112f64f5357fa1f463",
+      "model.layers.17.self_attn.k_norm.weight": "4eae7b6a78a261c19dabd20cd7f2b4a23877b7b970bbc4f5a8ac5dbb45ce7263",
+      "model.layers.17.self_attn.k_proj.weight": "a91bda95eaf60e5c9cb8d3dae24b0a6d3ed085c75cc847b24b0b9973c5c3db73",
+      "model.layers.17.self_attn.o_proj.weight": "ecfab16cc76c1f42a86b39563d0834d6c94a978f6eb37ec55ef3be0c1273cb81",
+      "model.layers.17.self_attn.q_norm.weight": "0f6ac285c1a02a739cc74a07e552e299d90d0b10be58eeb077828fe1983470db",
+      "model.layers.17.self_attn.q_proj.weight": "7380079ee38fc8f9178fb46465933a7c1498e1522d5a688fa2e28ba70665b499",
+      "model.layers.17.self_attn.v_proj.weight": "b1aa03c0db4c3296aa49101b7ab63139ee02f47ab7d08103e645aa2505814baa",
+      "model.layers.18.input_layernorm.weight": "7ca54594f808f5a77e70585e08fb624f4b0da26b47564397a567a7f67e10cd57",
+      "model.layers.18.mlp.down_proj.weight": "395999de5709d0c0df96f4670587e7d9ba4b89611ac26ac256e447805efc0bc1",
+      "model.layers.18.mlp.gate_proj.weight": "91c22521a32cb108444ca6f559051db4b965def3348efd32bb792b5123f21899",
+      "model.layers.18.mlp.up_proj.weight": "a78d11100fc5eca9174b1e317d9c5e181655e7d2de96d0ee8ea380eed2a5fcb6",
+      "model.layers.18.post_attention_layernorm.weight": "a31ff4d3d61019d0edac23e119deca8889bcce753293b896b3b62d06393ad43f",
+      "model.layers.18.self_attn.k_norm.weight": "4e781b8dc441de3e52c1c437f04e3df0092cb755be841b863d09ae5b3509c7de",
+      "model.layers.18.self_attn.k_proj.weight": "5d8eee6fa2beabb5323882a3d8f2f078e27abcf76f82ba3a70ffdf0c0641cbac",
+      "model.layers.18.self_attn.o_proj.weight": "9891c20fb0eb307e8b46f64a0633af7f66f5167b6d75510a043a90e4353f697b",
+      "model.layers.18.self_attn.q_norm.weight": "2997f0f1eee7feab0aeb185f536f6ef29c8eeebecdabf47c0a42d229b92d1709",
+      "model.layers.18.self_attn.q_proj.weight": "2c2b3826ce010adfd038733cb9c7b72e6b016670c1fb9e2ce8d026786a94c893",
+      "model.layers.18.self_attn.v_proj.weight": "3e8f70954079b362a2a62403cc0035d5b4cf7a9f73eebc904f81da0ff7a593e4",
+      "model.layers.19.input_layernorm.weight": "d67a3ae53778caeeffc2ffda8e62e1cc0c4763fde96a783e7f863e3ac0b0ed0e",
+      "model.layers.19.mlp.down_proj.weight": "905578b60c167a9cf787f50d89d7e34992deddc81776f21d089f35cff233626d",
+      "model.layers.19.mlp.gate_proj.weight": "768034f8da987fb492af16e85189637ce9a501179e757cfdef054c57475323d3",
+      "model.layers.19.mlp.up_proj.weight": "144bcce7d7d606d8c7ce9f313a6a687e81c7378c4e34c457a3908a37c9b50259",
+      "model.layers.19.post_attention_layernorm.weight": "3f7196414461283866a4a607abfd8014e11a7d0e5ded1c473670f83a5dbcef0f",
+      "model.layers.19.self_attn.k_norm.weight": "69a0f6bffb71b87eae904b3df8b63e3a3a5f65ba2c287f8379aef729774cc85d",
+      "model.layers.19.self_attn.k_proj.weight": "c9c9652fd225b0c393544e9f65b8df1587834c3063fba26d834ef64db2447afa",
+      "model.layers.19.self_attn.o_proj.weight": "be8ee423120d9aa521167a434d4fc98c517cba24feafbf9526567894ff658172",
+      "model.layers.19.self_attn.q_norm.weight": "d12f726e818dd061ae7f39b4c17947c6095d6fd1b9bf552c38bdc469cdba2798",
+      "model.layers.19.self_attn.q_proj.weight": "4397e871a466e1c4ac0202678acc43ce80c0a5488b42b756aab340a7fe6291e4",
+      "model.layers.19.self_attn.v_proj.weight": "3c226cab7b9b9228a0d8b6b0f4f4df7824c44339b84f0fc0cb8fb703cd45e413",
+      "model.layers.2.input_layernorm.weight": "cf843209942e2cbcb693f0bd556850eb0b0e1be8c683ac39b0283ed75b088425",
+      "model.layers.2.mlp.down_proj.weight": "a2510e32fb808f44b57fdb63e572072146b4ca7d51e74bcb46762be83390e267",
+      "model.layers.2.mlp.gate_proj.weight": "9ef1b500c53ce401ee3657d8d73108032442a8c0873fcf08e856413a31be9b83",
+      "model.layers.2.mlp.up_proj.weight": "1c5309a8c7bd656fdb8adf2aaa46792ebc2c652e1ec8f33f42005918644be3ed",
+      "model.layers.2.post_attention_layernorm.weight": "2ad2ff7222da499110f53a3b6999d755ce0929d44618505a2fd596d6137c1a58",
+      "model.layers.2.self_attn.k_norm.weight": "8ff15d52c86a2756ddb163981101d8cf65f645bf5919ba4561c5d11a99e1dd2a",
+      "model.layers.2.self_attn.k_proj.weight": "05ed941e2a784ab416cbae42e062f6f782bf2e8caf1fe81a2e107c57ee7dc9ab",
+      "model.layers.2.self_attn.o_proj.weight": "c52c4c5d72b0f0048e9e22b76cc9ce7b56a02f3a33ee13710a961b4b6be65ac0",
+      "model.layers.2.self_attn.q_norm.weight": "79f0a18fffa81419f74156ca1a4bca218483b1d4d4dd0a1eeb1395393e9833ae",
+      "model.layers.2.self_attn.q_proj.weight": "40b4f38d246362bbde0bbce238b6aa42c378d44dfcefd9c31a7eb101b547099d",
+      "model.layers.2.self_attn.v_proj.weight": "66ad7b0d1ac9f5b17d1c9c7a1edc15ffbd0527b7a982f0e6c2f9c6e2c1be311b",
+      "model.layers.20.input_layernorm.weight": "e69f8068ef1237ce507bde818afd0cb800fa8c5544a9ea571011d44644393150",
+      "model.layers.20.mlp.down_proj.weight": "e2f4aae84af17c4396b8b693271792aa73263186991dfdea8ada34e9e54907b9",
+      "model.layers.20.mlp.gate_proj.weight": "77ea8d95d34e63d25913457c95efa37064c1b59d95476abbb8231a51a28d5538",
+      "model.layers.20.mlp.up_proj.weight": "e8133f30df5baf62456fdae01209c88a289ca5249ab41d672b3d54ccde77771f",
+      "model.layers.20.post_attention_layernorm.weight": "189b800c2b916865fb51c9329e2a9579e43aaf2da03a3409305f830faaf044d5",
+      "model.layers.20.self_attn.k_norm.weight": "b8ce911c318af841f4dd62fd46741d6c87774f4db0d6ac94059c369329933aec",
+      "model.layers.20.self_attn.k_proj.weight": "123d101c05975463d0d64f1389a9617bbdff1971538286e379fbcc4a710a25f8",
+      "model.layers.20.self_attn.o_proj.weight": "f634cfc864bb68d00a341ea1c8da43994cd8e18d5bd337903e63a2e4cc7fc8c8",
+      "model.layers.20.self_attn.q_norm.weight": "380fb176312bea406bd566d91ff4109fee372cd0279ba2a84b2709950ab9d4a9",
+      "model.layers.20.self_attn.q_proj.weight": "dbe783109af6507fe8e33abb45346269d6b292ad34412745ae48ff9a6a2a0514",
+      "model.layers.20.self_attn.v_proj.weight": "2240bf6f50cd33558134211a2943738dc8955f25c132c512cb1b9554600e144d",
+      "model.layers.21.input_layernorm.weight": "d2036b144506e7ff106bfa6dae0cdf8d5082b3f7f74d7a1dcdeed9918b01e136",
+      "model.layers.21.mlp.down_proj.weight": "709d2ce07487ec971a4d3a4de43f3cece637d1830ccec81fe4cd8d3be81f5471",
+      "model.layers.21.mlp.gate_proj.weight": "9583746ddb8b37773a53f95a11871ffd47ebf9cd9d1cd7afd4789f12d3d952ea",
+      "model.layers.21.mlp.up_proj.weight": "1147b5532158410d7911bb4d8a22d6b9e8f9131d60d1dfda8d1b2aaced1906f6",
+      "model.layers.21.post_attention_layernorm.weight": "f42b3749b7f682e3872ff7cc69cafa0c91067e32ceaef2af29b2d7cc4ef87d38",
+      "model.layers.21.self_attn.k_norm.weight": "168a651aff56d3d40f32f030dacc9c24a1c947c2e3fb72e05c20bc0572a54d39",
+      "model.layers.21.self_attn.k_proj.weight": "b0e64dec07277ee0d68c0136194ea31b3e8ea50e505549c1b1521b220e5972d5",
+      "model.layers.21.self_attn.o_proj.weight": "ae879b44a2683609ad6f470442b6948e4a0397b67a27a4ace150ab25f3c7fc22",
+      "model.layers.21.self_attn.q_norm.weight": "9805fcfed848138066685fd07958bba21c033185699a3afd9fba19348bc3e531",
+      "model.layers.21.self_attn.q_proj.weight": "5911056a3659dcd815eef494d5bcd342ce5d1c6577aa0656e7daf32414d9c9e3",
+      "model.layers.21.self_attn.v_proj.weight": "e54ab45edc703b5ef41456ffa66fa06cfc130689759fcadd188815fc993767bb",
+      "model.layers.22.input_layernorm.weight": "14288a331b247d6a3b0e1f056ab8b2a427e3c808bf9df2d71e879608329c45fd",
+      "model.layers.22.mlp.down_proj.weight": "ca91c669bdbabc42d3e4c38d2c189aa4632299c94d042224b4883bebe62a0167",
+      "model.layers.22.mlp.gate_proj.weight": "fe690214788c79e5de7e1c32073cd9b689f7e9df75d666467fc8504feeef5552",
+      "model.layers.22.mlp.up_proj.weight": "d538da48ca6747d06c618846edcabcd3c774ed8670a9c7ee49c1d833f5bf6edc",
+      "model.layers.22.post_attention_layernorm.weight": "def4341bc7f6481d44845263ab2795aced5ca86bb971326a7ced0420cbf4f77e",
+      "model.layers.22.self_attn.k_norm.weight": "d4f465ea98eb47a0ce45e75e2238f4205809127044f8b44ddb8afd14a28514e0",
+      "model.layers.22.self_attn.k_proj.weight": "d56339d5d80689906008b0f819268c557c8dfd56f473ef10987e122939e51d59",
+      "model.layers.22.self_attn.o_proj.weight": "f888baa5581d0ec387847bf8a67fdf72a45491f6f348a254e371e393a7b471c7",
+      "model.layers.22.self_attn.q_norm.weight": "3780b274e36c12359d483b7159b3cf55338cda0bd04197064a586d259d5baabe",
+      "model.layers.22.self_attn.q_proj.weight": "3557b58bc6d8682a97d8f8692604bdc81c94e6edecfecee2280f4360c2f088b3",
+      "model.layers.22.self_attn.v_proj.weight": "a060dc038b6364e9e7abd3a2d8f29dcce0092907e2cc615a3d349cd3a882fc38",
+      "model.layers.23.input_layernorm.weight": "26e8d32b2fafc3e4ce5ccbbc6e80a5d89a4daec039e4c34ca31e66fd43d1c287",
+      "model.layers.23.mlp.down_proj.weight": "3ee491a18ca9ee220b120cb9108d07dc80f5732b08cb6cbc34463f17f8b20351",
+      "model.layers.23.mlp.gate_proj.weight": "076008688a1497cc31c9e389fb1bc38a2fb1351362532a86b85449f115c1f503",
+      "model.layers.23.mlp.up_proj.weight": "1112599f1ac879f20c5b4207876ab765045269a0c9aef271dc16c5c8c0610d37",
+      "model.layers.23.post_attention_layernorm.weight": "687cf17c6de166a4675482645482f38301fa99bcd3f7529b46580310f9b29395",
+      "model.layers.23.self_attn.k_norm.weight": "827bac00e10765bfa3426168b6c2fe3c47b46588d660dbfbcec66b3d28703aec",
+      "model.layers.23.self_attn.k_proj.weight": "3c27a09cb25c66d97e806c67c8b397464c06bd7809335e22077b1a15d11ba6b9",
+      "model.layers.23.self_attn.o_proj.weight": "7eea455e991561dfce8edffd43cece15495d27c2eb06d55e631c8317b645d38a",
+      "model.layers.23.self_attn.q_norm.weight": "c9f8eb232a4aab64c6894cf41d6b1277ed53b81b9c73a9e0321a777854d3aeb7",
+      "model.layers.23.self_attn.q_proj.weight": "afdd1324df478ed2bd60cb415221b9ecd799d56135f9e80a13283c74522a44da",
+      "model.layers.23.self_attn.v_proj.weight": "85c8637d1594242bc6fa0fc69ccee80798401b27818302199ec57675276b7acf",
+      "model.layers.24.input_layernorm.weight": "26a629ad96cf3e2bd15474dae7a6c06b546f8373dc2e2b723b30be93bd833404",
+      "model.layers.24.mlp.down_proj.weight": "1a50d8dcc06085e0f71574cfb199cf25378110c4f400caa3d7440a464dc8e19c",
+      "model.layers.24.mlp.gate_proj.weight": "712d546c96273c3b8ff75872f25ad166fb4cfc80f704916dfca9926f1d8bf94f",
+      "model.layers.24.mlp.up_proj.weight": "8cfcaaff6b0544a648b2031c4a8afe8f49e10864d94c22598196d33834a19bf3",
+      "model.layers.24.post_attention_layernorm.weight": "c1c89512d587bc8dad7be1baf258f148b97ca5c648575b29624d64cd82f7503c",
+      "model.layers.24.self_attn.k_norm.weight": "d12708007ed2bc2b5cceb48ac7396ab7ac3c4be6bad29b2b222a8869f02a9d0e",
+      "model.layers.24.self_attn.k_proj.weight": "3a83a7a584384e127150d40953e330897d7d80ae8b4139f371bccbec2f2a6739",
+      "model.layers.24.self_attn.o_proj.weight": "e31cb12b485cf782c0b021a93771022558ab922d7b5b61a1219654dbc744395f",
+      "model.layers.24.self_attn.q_norm.weight": "5681022aad09d0acfc51a83b27050b7b99b0100fc9917192c41e5007841a4f01",
+      "model.layers.24.self_attn.q_proj.weight": "f75de93998dc73d957ce442f0df27a97625cba6d6dbfb9fab438ba91d441e109",
+      "model.layers.24.self_attn.v_proj.weight": "d8998c374eb080eb5573d6c5d4432478f3474d4b57ded27c421fd51fe0c54dbf",
+      "model.layers.25.input_layernorm.weight": "00f6a9d6d51d704fdc3cc6399301cb7486fc4a0e0d9da9e99823a67dd2832021",
+      "model.layers.25.mlp.down_proj.weight": "6a19b6940f18dfcfb4454bca805b5ca7df9757f86e08a358f30e6bac68117247",
+      "model.layers.25.mlp.gate_proj.weight": "2c06aef080989fc0f4c21153407d25fbe0c136f6aefc2cf562d69402b4d22f03",
+      "model.layers.25.mlp.up_proj.weight": "888dffafeb3bfb3af2f8291605fd92e39f6ce1fbbf1c4a068f2cc9a014880231",
+      "model.layers.25.post_attention_layernorm.weight": "af04c90b1942a9832213d5c0a5187687a03385af2c15b605267a1c4401135c93",
+      "model.layers.25.self_attn.k_norm.weight": "77ac2b99bac25ff7eadf21a7aaadc4c7f61abbaf3635aa7fe16676e62f99b5b1",
+      "model.layers.25.self_attn.k_proj.weight": "3b4dc8920e18c0ccb8fb634b882104f63493e4aee2e7fe9b641d27c253f81c5c",
+      "model.layers.25.self_attn.o_proj.weight": "77607cbbb605f47e3fbc25f8b1b6331306e287270760c02376a3d59724d0de56",
+      "model.layers.25.self_attn.q_norm.weight": "6a9e021441025a20f1db5a6e8c4fdcd09bcf623c3d1a48918599950f8d14c188",
+      "model.layers.25.self_attn.q_proj.weight": "927f8a555eb44b512bc23101025621ff20aff67a0e57483d12296aaa674f9162",
+      "model.layers.25.self_attn.v_proj.weight": "0ddb64ac87cd0555bf0093c3efceb7c9c45d5b951ff15914a730673f05cbdb25",
+      "model.layers.26.input_layernorm.weight": "8522264ff580dd8d3a476bbb3a2e9987d44d5421e59fc03c181c0332eb941f62",
+      "model.layers.26.mlp.down_proj.weight": "47a1639ac4226223f3a0d53a0749edd7cd15be803744fd3f7d4f3a3b0359f3d4",
+      "model.layers.26.mlp.gate_proj.weight": "ab0ec42a5c4b14e0149db21bd1c4b900a3b1fec8f61d10b679ead3539c44a5f3",
+      "model.layers.26.mlp.up_proj.weight": "6869ddb911c00fc3509160810cff419124e072aee278439668008e9268a7632d",
+      "model.layers.26.post_attention_layernorm.weight": "85738e35576eaf83f75eb758f151e42ed04e6c0b7ac9890b3dfb88bd3057f6df",
+      "model.layers.26.self_attn.k_norm.weight": "9a5940814356da3484ad65a6d5669de6fa5d1306afc0594d159611effeba0ef4",
+      "model.layers.26.self_attn.k_proj.weight": "dc0feaf08630ccb7430af90400ecc6e885554ec86ef71c908ed10f08f1128dfd",
+      "model.layers.26.self_attn.o_proj.weight": "2a3a29329b0bd230d9011db18fba7ffe26adc19f847ba88004aa38d5c92c2750",
+      "model.layers.26.self_attn.q_norm.weight": "b7f56e632140e5669ada4c198c15eed59207d1d464706d3be3eac276af993f32",
+      "model.layers.26.self_attn.q_proj.weight": "e0342d8aa751cd0e4c86ab8d69d4fab17d54d9bb111cca0b2780de5cef3b5fbb",
+      "model.layers.26.self_attn.v_proj.weight": "efdb769e2b76aa61a3c1ffa29f81b150d2986e743b631795a95d4be839a53a90",
+      "model.layers.27.input_layernorm.weight": "0102e0a7ad3991f049497a2847522f0251b522a014f0ff4153eb9da80640bdc6",
+      "model.layers.27.mlp.down_proj.weight": "9a9fde65e8cf56ccae8611b4c25a85c10e2ad3158066427e9b5adfe80dcc8c3a",
+      "model.layers.27.mlp.gate_proj.weight": "18b7f5c9a62bfe4dbdb81420d804feb82ad5bbbdd00ac9548611c534c0186d67",
+      "model.layers.27.mlp.up_proj.weight": "2bbd5893a80f581c2c5b06546654c1963e234b42aa888ff9b8b3550095553d42",
+      "model.layers.27.post_attention_layernorm.weight": "fcd114785de3ea2a40c2efa311b329206ad55eaa4312c2e829c507a8b900af55",
+      "model.layers.27.self_attn.k_norm.weight": "8e7d5a9ff9ece3876b53208dad2acd1cfacd6843472db3b2490d9d223512f1bd",
+      "model.layers.27.self_attn.k_proj.weight": "a1b34a29d76f2a99f0d5b4f372dee2f54b790a5a407e197bfd62d0653030e8f2",
+      "model.layers.27.self_attn.o_proj.weight": "7b8fde725b1317676eafaa11af3f1a51bcd29aad1cf009f6b5050d8a986324a6",
+      "model.layers.27.self_attn.q_norm.weight": "d7e2041f4f796a358552c5b7f32792b970fe571f21ae54ff3c5f372ba533586c",
+      "model.layers.27.self_attn.q_proj.weight": "c577292c8d26844897c10a1f2a86df1d3f99f6126a6878f03335c1b461b8b88e",
+      "model.layers.27.self_attn.v_proj.weight": "99d0a39a942f7309472ab5efb0ef0391f3f8a6ae9aa0f5eafb9827abc4716727",
+      "model.layers.3.input_layernorm.weight": "3d5691d35ee89f38d9d64a1ba214dafd51822bd92fded9b0fc926bad1c0715dd",
+      "model.layers.3.mlp.down_proj.weight": "307f94c419d74246ac309c3957bb9db52a72c9f2f348a9cfb3f79f492a4a5e42",
+      "model.layers.3.mlp.gate_proj.weight": "e1a83094be657891d0d5ffd17c0fc010a936c8af3b3e3e56b54efedeff667c41",
+      "model.layers.3.mlp.up_proj.weight": "33783f55460bd782ee52253c0cc1a2b745e212be23d70318114e03d741b690d1",
+      "model.layers.3.post_attention_layernorm.weight": "83271a5cd6bd1a48e6fb71e6cb6ff1ba68bf033e1f75a6ea88850b27b063ad94",
+      "model.layers.3.self_attn.k_norm.weight": "20ecae4992aa6289549ae56a26490269f563fb13cd78c9925c19ef3a2e0ba228",
+      "model.layers.3.self_attn.k_proj.weight": "dbe14f649b0d83026c6f29f4aae4082a75ee3d6ccf9ea64d2a96db09f5589676",
+      "model.layers.3.self_attn.o_proj.weight": "fb75cab54dbcf4d8e7c73c4f775c55be98936251fec209367f502f2f95e8d32d",
+      "model.layers.3.self_attn.q_norm.weight": "b56da28d2adede23e7ca524a2a9d187686eee786d37227b01e5f202c68b165c2",
+      "model.layers.3.self_attn.q_proj.weight": "888a1448d8f787e6706671f74a4096a83672d2be156c4d971fc8205196f4d85e",
+      "model.layers.3.self_attn.v_proj.weight": "e351a6d5478973be1d4190ff0efd0acd7dda8cf4c01f1cea25efefba418434c6",
+      "model.layers.4.input_layernorm.weight": "e17c1684c4205c688781a5d0312b7379fc5ae1657eaded53edda8fa9107bc266",
+      "model.layers.4.mlp.down_proj.weight": "62090dd9b496a5fa7d9a604289d6527c4275386edf06d6be39b3ef5e747194f4",
+      "model.layers.4.mlp.gate_proj.weight": "288e23dde5f079aeb100b631aeb39fdd2f9bfeddfb5b8c284b4d121cba9c4a38",
+      "model.layers.4.mlp.up_proj.weight": "65c057d593a759ee52ebff120c331b090a43243e84bb6d976664b64fa67db408",
+      "model.layers.4.post_attention_layernorm.weight": "c2fb97e4a4f90b32fa2dc9e820e8025f57df3f1b4160d8954ebd93aa2596eb04",
+      "model.layers.4.self_attn.k_norm.weight": "39e8c49c7a992c631c0eb805b3d868853b3e9c320ed6523246936d0e1bef40aa",
+      "model.layers.4.self_attn.k_proj.weight": "822a4ddcac8dec30ef1a37ceec9a877cb0bf7431e2a96135abe1e4beef93f451",
+      "model.layers.4.self_attn.o_proj.weight": "718910000f4564a8f864cd3d6fc690629373d94fd1c66fb93557bbbdd8310c74",
+      "model.layers.4.self_attn.q_norm.weight": "64c625a52ec8f811820489e1825fe6148c590bb7abef9a353db5dfa23c6377a4",
+      "model.layers.4.self_attn.q_proj.weight": "d823be89d081311e3ab86c76d2bd22dc2019b06a28ed75c164669a805ea35b69",
+      "model.layers.4.self_attn.v_proj.weight": "037a1603b7a000e4bd04735670bbe06006a91a3a743e00d26209ebda65ad66fd",
+      "model.layers.5.input_layernorm.weight": "83c32913bd2f07414e7d9c9a0ab99ac7858048eecebec22adfd5fd85c663f5df",
+      "model.layers.5.mlp.down_proj.weight": "88f191396336b6774e0e9aa54bdedf852070ebac4d2a80d3b89d7b91f610cb7e",
+      "model.layers.5.mlp.gate_proj.weight": "0e0c5b16fd05fe2d11ecc7cfdb91b74f4ceb8efc9be394ba348a7e59ac575f4d",
+      "model.layers.5.mlp.up_proj.weight": "3008510903e671a29721ff6e7f170605443882fe24ecf03d90040a8125762726",
+      "model.layers.5.post_attention_layernorm.weight": "54c8fc4dcd3708014596ce00fe1afdeb57395bf959f6828a80dc770879877478",
+      "model.layers.5.self_attn.k_norm.weight": "7e6e73a1ad7dc857b9c35747c1275fadd76c836ce3cb2cc2480f729b27c4a60a",
+      "model.layers.5.self_attn.k_proj.weight": "3b8354beb8a4addf5c2fa20c454bdac0d7ef5c932bccafdbeb429348333061a6",
+      "model.layers.5.self_attn.o_proj.weight": "783cdff61e8b03f2530c7ae636c10820451a868249a2e8ac9720af27a91dd480",
+      "model.layers.5.self_attn.q_norm.weight": "a36ea2aa36db4df27e8b89a702948a8d182a6f72cb2070e7e62ce482b3e92fd5",
+      "model.layers.5.self_attn.q_proj.weight": "ae7845fbff71451fb99308ba97116b3e17b6cef6ccdf447169662f375808bb45",
+      "model.layers.5.self_attn.v_proj.weight": "8e72b6c0ef10434b2c335fb505632f10cbfb24408922efb4b87d8d2103a5134c",
+      "model.layers.6.input_layernorm.weight": "1c9957f98079fd5327612d857f2c07df08663a755b2b09e809dda92db1a6b57c",
+      "model.layers.6.mlp.down_proj.weight": "1fdb5d5dca736d6d6b672a3eeb2b3ca3d48a4257135e5de5a191fd23bbb4ef8b",
+      "model.layers.6.mlp.gate_proj.weight": "639adf4a279eb0619815dfc7e953a2ff19b5de3297c22e1f0edc5cc7951b942c",
+      "model.layers.6.mlp.up_proj.weight": "9effcc9708e23cf0931c8d19c838261ec3c6be1f11ba2380977a265475ddb3e4",
+      "model.layers.6.post_attention_layernorm.weight": "d5d9b5bceade7c93ba01a145449647d76831ab32d0e44aee695b109e4c9f39cb",
+      "model.layers.6.self_attn.k_norm.weight": "14528e0c5010e52bf80fe7234fa245112c8669fc8d03e511a732da0df818c735",
+      "model.layers.6.self_attn.k_proj.weight": "caaefb649de1d27b68651c89d4cfae94f532b4fc12ec5327d426c05aab5030e9",
+      "model.layers.6.self_attn.o_proj.weight": "d9d078840953ca78995b5fb97679a788b575637ea2695c6e2852809841a839df",
+      "model.layers.6.self_attn.q_norm.weight": "cf01f9eed6a27d69ff03915432b333d228bec533d3927de2d5858b43db3d627e",
+      "model.layers.6.self_attn.q_proj.weight": "345caf4639b77bb16fc8ff7d2a21abe70e6690ccecf9c7dfcafbe7609412ff56",
+      "model.layers.6.self_attn.v_proj.weight": "5d3e90a587ad37b962e6fba015891799d99ec7c7c50e8add7a8b23cddcbc2dbd",
+      "model.layers.7.input_layernorm.weight": "ae8421c9c6eb89162c1b5d36d25cc3d8b219129e2c4fa2de83ba7e3fa95adcd4",
+      "model.layers.7.mlp.down_proj.weight": "c45b7310ec47b40572836fec19d06552197a57f7815422e9c3ca5ef65d0c5b54",
+      "model.layers.7.mlp.gate_proj.weight": "a741e92e2590377e88a86f0dc82dbbc2c69b5d7bb230a37f805cd0d614fe9dbf",
+      "model.layers.7.mlp.up_proj.weight": "ce0fc88d510b85bd36887509ba48fbfcdb0a6a9ee73366f982b1e95ea6fa1c34",
+      "model.layers.7.post_attention_layernorm.weight": "78a15ae8124b279da5fe4c5c56660d0339d2d163282d9976873dcf6f73f46415",
+      "model.layers.7.self_attn.k_norm.weight": "8e4e405bad86a6cf1b0ef8a896c6ec0b07ad73d2b60a66847970079f6126b891",
+      "model.layers.7.self_attn.k_proj.weight": "b86bfc1ff4f7f7054b88fe138c5a1345b1ea514af224d91114bf37848a9ffe4c",
+      "model.layers.7.self_attn.o_proj.weight": "573ed2169f3007c396e0edfab2cd8ec7878063806d964ff6b5d857cea9884aeb",
+      "model.layers.7.self_attn.q_norm.weight": "bfc06c7446140d23d65f26a0e68ab8ba9d2daa2197dbdaa7f2aa8ef2aebe7586",
+      "model.layers.7.self_attn.q_proj.weight": "09c295be9cd964e25b987a24213aa2d84e8a2b2976472b5fc2473f088b91b248",
+      "model.layers.7.self_attn.v_proj.weight": "f69c1eb65cdb4521fd45bdff4639c2b8874ffec39044dfd2746671c4f5a85f39",
+      "model.layers.8.input_layernorm.weight": "88c379ba694e59c1ce4dd16036301e176d39acab270019eb577e765c510d8f0a",
+      "model.layers.8.mlp.down_proj.weight": "41f523a622044cfa95b8b6d3052bd1fe1dbc0ffdd18c4fb713348a036ed7537d",
+      "model.layers.8.mlp.gate_proj.weight": "731344e1beb3e37b8d6f569522edc31213c17d5443672c870db908d544ea0e74",
+      "model.layers.8.mlp.up_proj.weight": "cc66c31dc12cf52e81d6de10150840556fe00307cfc93665dafa6e256aa930c1",
+      "model.layers.8.post_attention_layernorm.weight": "3fc7c07f93e3cbfe6416bac92a38229e29a97c9b4602034ddc3d178869f4aff3",
+      "model.layers.8.self_attn.k_norm.weight": "003834174ef5f8175dfc581c1147a2571e73ab07a86e92cee2f2a1e8bfb9bb1f",
+      "model.layers.8.self_attn.k_proj.weight": "139572b745d7541af96a48b19aa37c214579e7a826ab9c73a2d9dcafa5ea6e13",
+      "model.layers.8.self_attn.o_proj.weight": "7f5fe51f23003423235185273456d5eecccc554ecc85a6be4d05d8bdaa5e2f53",
+      "model.layers.8.self_attn.q_norm.weight": "43263327b4b66772f34941279b6def2c0c067bba8ae61e0b130138cf61d6db20",
+      "model.layers.8.self_attn.q_proj.weight": "c0dd20e5a86bcd71a176ed3289b055e35ab0e590e3f974869ff2aa8f6330a25d",
+      "model.layers.8.self_attn.v_proj.weight": "b8ad50625cb71c181744b9515122f814397f80c2155542f738997f8804ffaecc",
+      "model.layers.9.input_layernorm.weight": "f291983ccaceaf166ee46091059fa10265ee6d892a01248b69df1d9fd277e708",
+      "model.layers.9.mlp.down_proj.weight": "3ba67ecb6069c2c74d7f30a825da2641aaf02f59f680e3e5e03c8442d0eeaac0",
+      "model.layers.9.mlp.gate_proj.weight": "21d1c68e4d1f2db7f55013afe1273f6ff068fb773db128187e747a47d59ab181",
+      "model.layers.9.mlp.up_proj.weight": "b79da9c493c1ff63971ad2484cb49fe65874db244aedf59830a0d5e5b615af34",
+      "model.layers.9.post_attention_layernorm.weight": "abd861a80c87967e815aa50acd290af83ee0e375c49dac837f93c5e93b54dd8b",
+      "model.layers.9.self_attn.k_norm.weight": "2407aed85508b03f72a3f7ea0f21477cbb8a546e48644d1510f22c2eba780b76",
+      "model.layers.9.self_attn.k_proj.weight": "f83070053f09451c7dc68bb620a6f2127ccc4c7794aba7cc5f5c02eb5fe46f12",
+      "model.layers.9.self_attn.o_proj.weight": "d627a76fb065e8b26c08d45f1e65fcdb78c0e734a7e66c33af2bf2436b499a4f",
+      "model.layers.9.self_attn.q_norm.weight": "c1c3077b053cabeb6a986d539251121caeae081d554497fc32a881d76559bf40",
+      "model.layers.9.self_attn.q_proj.weight": "bf32c0fdcd7aad7b8ba52de48155b4c05af7bf9203275bc9147296fcef705344",
+      "model.layers.9.self_attn.v_proj.weight": "0a4ff24783669b545f4a9438b6ff56281d5b0a4e82806d526816d35737d21ea2",
+      "model.norm.weight": "df47f756ba61e6b63b6d7d09c1ae79c9c0436718af11f4bdd9832222cc6140af"
+    },
+    "stored_tensors": 310,
+    "tensors_matched_bitwise": 310,
+    "tied": {
+      "alias": "lm_head.weight",
+      "of": "model.embed_tokens.weight",
+      "same_parameter": true,
+      "same_storage": true
+    },
+    "weights_bytes": 1192135096,
+    "weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b"
+  },
+  "inputs": {
+    "asset_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\Q1_ASSET_CANDIDATE.json",
+    "asset_receipt_sha256": "9d9908cbcbb83a7feb75ad45ac38bd1d768f2841def8a6fb7ad9f4b6444798a3",
+    "canonical_calibration_sha256": "9bde3b8b7c8f13ee12367bb3de1d978cfebb1b12c421b8eb9dc6d8ec8ac02bed",
+    "dataset_manifest_sha256": "86ac8f0d851f2178752357f62249eab5a23fd3de8fa032e7373614891df4cd44",
+    "model_dir": "C:\\Users\\clclc\\BusinessProject\\Chat-Bubble\\Rineya_Published_Cores\\Rineya-Supa-1.7.0-devfreeze",
+    "pinned": true,
+    "policy_calibration_sha256": "fcf3a21c7a165b99f9b20ee71f423aafb197a63deb8f1bddc9942a5d975cb997",
+    "probe_ids": [
+      "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+      "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+      "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+      "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+      "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+      "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+      "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+      "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2"
+    ],
+    "probe_ids_digest": "8a8d5b5699b12e1f23189a7bd60f939970e53bb9947394bdcd417d66d5e43a3c",
+    "probe_parents": 4,
+    "rule": "the R and S rows of the first 4 parent_worlds of evidence/Q2_SOURCE_SMOKE_SELECTION.json, in the receipt's row order (R then S per parent); policy/calibration.jsonl messages, rendered by s0_runtime.render_prompt (add_generation_prompt, enable_thinking=False, add_special_tokens=False)",
+    "selection_digest": "2fe82dc84e5fb1dd5a8a5438c4caab30eea1d26af621c8e9572b28b253942ae1",
+    "selection_receipt": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-comp-rs-amendment-1\\experiments\\maxrl_comp002_pretraining_v1\\evidence\\Q2_SOURCE_SMOKE_SELECTION.json",
+    "selection_receipt_sha256": "ae72fcca600d0def7e7dafc9b4ec8edfc129334189f8a430b9865ad08d327f0c",
+    "source_weight_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "tokenizer_receipt_sha256": "6130cea7c36c9466eb51e1365a3740245efce4549c0a7f3fcdac4dba896da30a"
+  },
+  "interrupted": null,
+  "inventory": {
+    "blocks": [
+      8,
+      27
+    ],
+    "frozen_names": 91,
+    "frozen_names_sha256": "9432f34921cf461dd241aa9ccb921672694b1daf9820706cef0331aa372a6419",
+    "inventory_sha256": "16ec1f1c5a01a37d8891335221a2e6db2839b691499b19fca1c1ef49051fa3ea",
+    "num_hidden_layers": 28,
+    "rule": "every parameter under model.layers.{8..27}.",
+    "status": "OBSERVED_INVENTORY_NOT_NATIVE_QUALIFICATION",
+    "trainable_names": 220,
+    "trainable_names_sha256": "a60d9b9bc4f09813ad149221cbabef750979b8f0a3bd454694ed98c6f03e2363",
+    "trainable_numel": 314618880,
+    "unique_numel": 596049920
+  },
+  "launch": {
+    "floor_gib": 2.5,
+    "guard": "passed",
+    "guard_gib": 1.0,
+    "require": {
+      "available": true,
+      "commit_limit_gib": 35.21818161010742,
+      "commit_over_phys_gib": 0.0,
+      "committed_gib": 11.958675384521484,
+      "free_phys_gib": 6.679019927978516,
+      "memory_load_percent": 56,
+      "total_phys_gib": 15.218181610107422
+    },
+    "utc": "2026-09-28T20:05:11.724834+00:00"
+  },
+  "lease": {
+    "held": true,
+    "label": "comp-rs-001-s0-q1-fp32",
+    "lock": "rineya-gpu-0.lock",
+    "module": "pinned gpu_lease.py"
+  },
+  "native_outputs_scored": false,
+  "note": "S0-Q1 mechanical probe: nothing is scored, trained or saved; no optimizer is constructed.",
+  "optimizer_steps": 0,
+  "passed": true,
+  "prompts": [
+    {
+      "id": "MC2-1f4888c351282acc025bfc5f9087d0723e855abb22ebf6c6c96320353a499462",
+      "parent_id": "world-41b7b17a3c52ee1727f546a21a54283353731891c32aef3347161b1854b7a0db",
+      "position": 0,
+      "prompt_hash": "592594db4c64ae71628e4fe8eb21a478a68ec23ecf6dcd9639e28ec5b9aed74a",
+      "prompt_ids_sha256": "57f4b883c2c773ddbf3e6950d9f14dcd1de4d1219dc7fa877bb5f9f092496cfe",
+      "prompt_tokens": 835,
+      "render_sha256": "cb7c7b30afa1d2ac4bb1d930bd4786494c98850b1c5afa920772540f72bfd781",
+      "skill": "R"
+    },
+    {
+      "id": "MC2-805a778723dbafce5a67a454b7100f87ef14e8fb9fce486b54c4deaf5bf433cb",
+      "parent_id": "world-41b7b17a3c52ee1727f546a21a54283353731891c32aef3347161b1854b7a0db",
+      "position": 1,
+      "prompt_hash": "8fc05d75901304c2617415f51d615e69e9d3851189c4d49fcc72e50aea713c7e",
+      "prompt_ids_sha256": "5450e65736b3396fa79fff3ba2e8aac9fb7b1ac2ceaaa6d14dd9768a01eef600",
+      "prompt_tokens": 231,
+      "render_sha256": "f7f4934cbda2be30c0e08985bdd140af3fc0c5b2046b7756a05b8b160d7d53a4",
+      "skill": "S"
+    },
+    {
+      "id": "MC2-d383220218d988eb3ccc0250f0b10c297b44a5f55e9d9746ad63e308bc703cb6",
+      "parent_id": "world-3a56a3e24d9f230cc6fd9fbc738e9f75f672e9925a3689b353d51d518dad200f",
+      "position": 2,
+      "prompt_hash": "6874baf820d2b82d2cc5e95706590b98c8978fe9e475dbd5e73de89c8c0cc5bd",
+      "prompt_ids_sha256": "a26b3ade33ae00abea5c5486906bfbf0a14081581c7317582fe44f276450c851",
+      "prompt_tokens": 523,
+      "render_sha256": "7257e44e0de692d9e91b0ae9419e7c7f5c1efbe6df6d8767ab052972f5610442",
+      "skill": "R"
+    },
+    {
+      "id": "MC2-2b291506555d985d76017457b8f7a8ee08835dc3d8069cd8dca3685dc64369f4",
+      "parent_id": "world-3a56a3e24d9f230cc6fd9fbc738e9f75f672e9925a3689b353d51d518dad200f",
+      "position": 3,
+      "prompt_hash": "057ea6aa7d738400fa94fb13453d7ae8d1606a6a463f45b8acadb387872c0eb9",
+      "prompt_ids_sha256": "93b5ec1caccee6383d33dbbeddccc0970864e776be2c1409404d62306b85ffd9",
+      "prompt_tokens": 219,
+      "render_sha256": "6085ab734b9f01dfd213da8c3f36bbdcff3b2de95b11607f7646c7e78cfe20db",
+      "skill": "S"
+    },
+    {
+      "id": "MC2-ad992b91cf30373415188099f936244ae360acd21433758ab51529a2bfaf1f78",
+      "parent_id": "world-0addb1e97aab019d9a136edb86917618cb057b631ec8059d90b5555448365eb8",
+      "position": 4,
+      "prompt_hash": "32d277186a02aa7a0592c6c36925587e8ce182aa330c65414c50399b2d95bfd5",
+      "prompt_ids_sha256": "a54184a05ce2d923ec0e312c6b67ea25b2e6141c0f693f46ab150d8777016341",
+      "prompt_tokens": 822,
+      "render_sha256": "402e8470b0fccce3973105d5f980169bd72b868a8eb24b62e2be7ab99d14dfc2",
+      "skill": "R"
+    },
+    {
+      "id": "MC2-8a1e5b905a93946ee8de28ea55a2674ca355e6e014f36607088d551a1b4dc314",
+      "parent_id": "world-0addb1e97aab019d9a136edb86917618cb057b631ec8059d90b5555448365eb8",
+      "position": 5,
+      "prompt_hash": "06d9f91cf4bc1ad72fc4b3f01732a00ccdfd663ac384bc0df9d67bd21061b198",
+      "prompt_ids_sha256": "2d2843aa65990786179cdb85fd1243f1251b669383df0a26ef9027cf7cd3f9b3",
+      "prompt_tokens": 228,
+      "render_sha256": "ef26d49f3a6379cfbbaea75f89bcd42d1c0248bb8c6a09ccd023b6aa8a7818e8",
+      "skill": "S"
+    },
+    {
+      "id": "MC2-c638ac87c642e73d6c808511bd4a7d7bba39c763a4c307b4b5d47703248cb694",
+      "parent_id": "world-729c18e45886efd707c3fedbbe2f191538ce04c45055dff10f0716c30a6414f6",
+      "position": 6,
+      "prompt_hash": "a9d67e649375fbcb22056c88ab358088caf5821dfa257a19a82a5b0dd6a3d94c",
+      "prompt_ids_sha256": "5e055ccaee4c95097caa4d9fc815cdb5c1423105d3ddf5119577a8da9f7bb9b9",
+      "prompt_tokens": 535,
+      "render_sha256": "eec6fa73d2db6454ee5dc91c4002531adb774d2656f8964e381f47c280251b40",
+      "skill": "R"
+    },
+    {
+      "id": "MC2-fd069535c16eb318b77f4d6beab18a1b2fcf556871e2c5403dd94d3e217588d2",
+      "parent_id": "world-729c18e45886efd707c3fedbbe2f191538ce04c45055dff10f0716c30a6414f6",
+      "position": 7,
+      "prompt_hash": "e8086c805b72430796d8fb69be0800bb8a3fcd6193e0b356123eaeab3f5767a9",
+      "prompt_ids_sha256": "1109799cf6b7c9638a34d7b48d5cb5f72dda3798ddb8711a64bd083aafd3f9dc",
+      "prompt_tokens": 222,
+      "render_sha256": "4ce46eb3833e412ca5ee034abe1f92a19596c77730f927ac1236cc397f0828fb",
+      "skill": "S"
+    }
+  ],
+  "registered_run": true,
+  "registration": "COMP_RS_001_AMENDMENT_1.md section 16, 'Q1-FP32 probe (stage S0-Q1)'",
+  "resources": {
+    "cuda_cap_gib": 6.236572265625,
+    "free_phys_gib": 5.723663330078125,
+    "gpu_shared_usage": {
+      "adapter_shared_usage_bytes": {
+        "luid_0x00000000_0x0001099f_phys_0": 114778112.0,
+        "luid_0x00000000_0x000124ca_phys_0": 8192.0,
+        "luid_0x00000000_0x00012511_phys_0": 524288.0
+      },
+      "available": true,
+      "counters": [
+        "\\GPU Process Memory(*)\\Shared Usage",
+        "\\GPU Process Memory(*)\\Dedicated Usage",
+        "\\GPU Adapter Memory(*)\\Shared Usage"
+      ],
+      "error": null,
+      "method": "powershell Get-Counter",
+      "pid": 77732,
+      "process_dedicated_usage_bytes": 4293840896.0,
+      "process_instances": {
+        "pid_77732_luid_0x00000000_0x0001099f_phys_0": {
+          "dedicated": 4293840896.0,
+          "shared": 81788928.0
+        }
+      },
+      "process_shared_usage_bytes": 81788928.0,
+      "utc": "2026-09-28T20:05:42.865944+00:00"
+    },
+    "peak_cuda_allocated_gib": 3.6110496520996094,
+    "peak_cuda_reserved_gib": 3.83984375,
+    "peak_worker_rss_gib": 1.9738121032714844,
+    "total_vram_gib": 7.99560546875,
+    "worker_rss_gib": 1.4784011840820312
+  },
+  "rules": {
+    "T2": "bitwise: torch.equal of the two float32 logit tensors of model(input_ids) over every position",
+    "T3": "raw greedy step logprobs vs (a) mechanics.selected_logprobs of the full-sequence logits and (b) s0_generate.teacher_forced_logprobs; max_abs <= 1e-4 nats and teacher-forced argmax == generated token at every position; cross-entropy vs (a) <= 1e-4; >= 1 generated EOS",
+    "T4": "s0_generate.cached_logprobs(prefill=True) vs the full-prefix logprobs of T3 (a): max_abs <= 1e-4",
+    "T5": "left-padded batch of the eight sequences: teacher_forced_logprobs(left) vs individual <= 1e-4; selected next-token logprob at every real position (padded decoder + head vs the individual forward) <= 1e-4; completion_labels masks every pad and prompt position, labels exactly the completion and every EOS; >= 1 pad position and >= 1 EOS row",
+    "T6": "requires_grad on exactly model.layers.{first..last}. (registered: 8..27, inventory A); loss = mean selected completion logprob of probe positions 1 and 3 (one left-padded batch); one backward; trainable grads present and finite, frozen grads None, state_fingerprint identical before/after and equal to the load fingerprint, zero torch.optim.Optimizer objects",
+    "T7": "resources once at the end: CUDA peaks, peak worker RSS, free RAM, Windows GPU shared-usage counters",
+    "host_floor": "later S0 stages launch with hostbudget.require(Q1 peak worker RSS + 1.0 GiB) (section 16)",
+    "prompts": "the R and S rows of the first 4 parent_worlds of evidence/Q2_SOURCE_SMOKE_SELECTION.json, in the receipt's row order (R then S per parent); policy/calibration.jsonl messages, rendered by s0_runtime.render_prompt (add_generation_prompt, enable_thinking=False, add_special_tokens=False)"
+  },
+  "runtime": {
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "python": "3.11.15",
+    "python_executable": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe"
+  },
+  "schema": "COMP-RS-001-S0-Q1-FP32-1",
+  "settings": {
+    "cublas_workspace_config": ":4096:8",
+    "cublas_workspace_config_before": null,
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "device": "cuda:0",
+    "float32_matmul_precision": "highest",
+    "memory_fraction": 0.78,
+    "num_threads": 4,
+    "tf32_cuda_matmul": false,
+    "tf32_cudnn": false
+  },
+  "sizes": {
+    "blocks": [
+      8,
+      27
+    ],
+    "head_chunk": 256,
+    "max_new_tokens": 128,
+    "probe_parents": 4,
+    "prompts": 8,
+    "t6_positions": [
+      1,
+      3
+    ]
+  },
+  "stage": "S0_Q1_FP32",
+  "started_utc": "2026-09-28T20:05:11.719154+00:00",
+  "summary": {
+    "T1": {
+      "argmax_equal": null,
+      "max_abs": null,
+      "n": 310,
+      "pass": true,
+      "skipped": null
+    },
+    "T2": {
+      "argmax_equal": true,
+      "max_abs": 0.0,
+      "n": 3753,
+      "pass": true,
+      "skipped": null
+    },
+    "T3": {
+      "argmax_equal": true,
+      "max_abs": 1.5854835510253906e-05,
+      "n": 138,
+      "pass": true,
+      "skipped": null
+    },
+    "T4": {
+      "argmax_equal": true,
+      "max_abs": 1.5854835510253906e-05,
+      "n": 138,
+      "pass": true,
+      "skipped": null
+    },
+    "T5": {
+      "argmax_equal": null,
+      "max_abs": 7.62939453125e-05,
+      "n": 138,
+      "pass": true,
+      "skipped": null
+    },
+    "T6": {
+      "argmax_equal": null,
+      "max_abs": null,
+      "n": null,
+      "pass": true,
+      "skipped": null
+    },
+    "T7": {
+      "argmax_equal": null,
+      "max_abs": null,
+      "n": null,
+      "pass": true,
+      "skipped": null
+    }
+  },
+  "test_mode": false,
+  "tolerances": {
+    "T2": "bitwise",
+    "frozen_in": "section 16 (before any native output)",
+    "nats": 0.0001
+  },
+  "wall_s": 32.990168399999675,
+  "walls": {
+    "T1_s": 4.165033400000539,
+    "T5_s": 3.1428902999978163,
+    "T6_s": 2.8586933000005956,
+    "T7_s": 1.8405380000003788,
+    "prelaunch_s": 2.876328399997874,
+    "sequences_s": 14.754108300003281,
+    "setup_s": 0.07915130000037607
+  },
+  "weights_saved": false
+}
