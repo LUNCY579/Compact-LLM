@@ -130,3 +130,51 @@ must aggregate twins/eight-row worlds before parent-level statistics. This is no
 permission to launch native training; don't import preparation modules that set
 USE_TORCH=0 into a native worker. The goal remains active, not complete or at a
 verified overall impasse.
+
+## Continuation 004: frozen E1 inputs and schedule; diagnostic enrollment
+
+Previous turn classification: PROGRESS. Native host RAM remained below admission
+on the fourth consecutive goal turn (initial OS-only6770644KiB free, before imports).
+No E0 retry or resource-floor change. Independent FAST work remained, so this is
+not an overall goal-impasse declaration.
+
+AMENDMENT_005 prospectively froze exact sequence order,13-update warmup/finalLR0,
+256 optimizer calls,16acquisition+4replay per step,final-only checkpoint selection
+and accounting cursor semantics. The language stream previously stored token hashes
+without arrays. The committed materializer regenerated all256rows in34.716s and
+matched prior per-row token hashes/counts:22642nonpadding/2460supervised tokens,
+completion-only labels including EOS and prior assistant turns masked. No Torch call.
+
+Implemented standard-library TRAIN binding, schedule/cursor validation, E0 evidence
+consistency inspection and structural response import. Review found and fixed lax
+config scalar/loss/resource checks, stale source/config publication races, resolved
+path scope checks, incomplete E0 cost/helper bindings and callback promotion risk.
+All89 new focused controls passed in70.474s; the old172-test baseline is retained
+separately, not represented as a combined new run. Source/config committed at
+676dcbabcd59247e97617e6eb7ad97fd5aa5af40 before plan publication.
+
+MEASURED: planv1 under Python3.13.2 took17.406s; its exact runtime-bound validation
+would reject the future Python3.11.15 worker. Preservev1 and regeneratev2 under the
+pinned3.11 interpreter, using unchanged source/config/data. Selectedv2 took17.272s,
+5120TRAIN rows/256steps/680532nonpadding/63546supervised tokens. No actual model calls,
+updates, training tokens, generated model tokens or teacher calls in either plan.
+An input/schedule artifact is not evidence that its planned token dose was consumed.
+Independent pinned3.11 standard-library audit passed68checks without invoking the
+binder or scheduler validators. Actual TRAIN bytes/masks, hashes, offsets, exact
+coverage, LR/prefix math and cursor match. Both plans have identical rows/steps;
+only Python-version metadata and derived hashes differ. No findings or native claim.
+
+The gate report remains E0_NOT_PASSED/HOST_RAM_GUARD and denies native launch.
+Even claimed E0 success does not provide downstream native qualification. Enrollment
+imports preserve raw failed attempts and parent-linked twins/eight-row worlds; every
+import remains structural or diagnostic, and language grading is explicitly blocked.
+No actual native responses were imported and no source-correct membership was frozen.
+Cursors establish prospective data/step accounting, not restored native optimizer,
+checkpoint tensors or RNG. No native E1 executor has been implemented.
+
+Next decisive native work is unchanged E0 only after actual resource-state change.
+Independent scope review found a finite remaining FAST task: fresh language64DEV/
+16CAL candidate worlds,96 intended control texts and blinded review packets under
+a new data-only amendment. Intended labels remain unqualified author annotations;
+qualified independent reference labels and grader calibration still require real
+reviewer evidence. Goal stays active. No recipe promotion or CHECK/FINAL opening.

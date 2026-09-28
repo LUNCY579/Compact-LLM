@@ -1,40 +1,51 @@
 # Next experiment
 
-**Native E0 retry after a meaningful resource-state change.** Do not repeat the same
-blocked launch automatically. Latest pre-load host available6.911331GiB failed7.4GiB;
-GPU free6.890625GiB passed4GiB. No model fit or training efficacy was tested.
+**Next native work remains unchanged E0 after a meaningful resource-state change.**
+Latest actual pre-load host available6.911331GiB failed the7.4GiB floor. GPU free
+6.890625GiB passed4GiB. Later OS-only observations also stayed below host admission.
+No pretrained load, model fit or acquisition/retention effect has been measured.
+Do not repeat the same blocked launch automatically or reduce any guard.
 
-Use the same Titan hash, frozen BF16/q-v rank8 config, numerical tolerances and
-external process-tree watchdog. A fresh runtime needs >=7.4GiB host available after
-imports, >=6GiB throughout, >=4GiB GPU before load and >=4GiB disk. Keep enough
-additional margin for the actual model and buffers; no fixed sufficiency claim.
+Use the same Titan hash, BF16/q-v rank8 configuration, numerical tolerances and
+external process-tree watchdog. Require >=7.4GiB host available after imports,
+>=6GiB throughout, >=4GiB GPU before load and >=4GiB disk. These minima do not
+certify enough memory for the actual forward/backward buffers. Qualify exact load,
+32 zero-adapter fixtures, likelihood/padding/causality,256/512/1024 profiles, finite
+confined gradients, reversible updates and deterministic save/resume. Commit source
+first, use a new immutable run directory, and stop on any failed gate.
 
-First complete native exact load,32 zero-adapter fixtures, likelihood/padding/causality,
-256/512/1024 forward/backward profiles, finite confined gradients, reversible scoped
-updates and deterministic save/resume. Keep a new immutable run directory and commit
-source before launch. Stop on any failure; do not weaken thresholds.
+## Next independent FAST action
 
-Independent FAST work: tokenization receipts are complete (max157 total tokens); finish historical exclusion scope;
-freeze a reviewed retention design with fresh DEV parents and actual source-correct
-enrollment; qualify language and longer-context sentinels; use parent-level analysis
-controls. None authorizes E1 automatically. No CHECK or FINAL access is earned yet.
+Author the missing fresh language DEV/CAL candidate inputs under a new prospective
+data-only amendment:64DEV worlds,16CAL worlds and96 candidate control responses,
+with the proposed eight strata and single/multi-turn balance. Freeze parent roles
+before rendering. Review complete conversations and latent structures against
+permitted TRAIN/exclusion evidence; prepare blind review packets and strict
+four-dimension rating imports. Do not invent qualified graders, independent labels,
+calibration outcomes, native token lengths or human approval. CHECK/FINAL stay closed.
+See evidence/SCOPE_AUDIT_CONTINUATION_004.md for the finite completion boundary.
 
-Then E1 seed101 only. A passing DEV screen earns211/307; failing screens earn
-diagnosis. Current best stays unchanged Titan until behavioral promotion succeeds.
+## Prepared dependencies
 
-Continuation 002 prepared the full candidate dose (not a launch manifest): 4096
-acquisition +768 deterministic replay +256 language rows;680532 nonpadding tokens.
-Source-reference flags are resolved with immutable original records. Baseline source-
-correct enrollment, fresh language DEV/calibrated grading and long-context qualification
-remain. The latest no-worker OS check has6.999GiB free before imports, still below
-native admission. Recheck resources after user/external state changes; no blind retry.
+Acquisition4096 + deterministic replay768 + curated language256 =5120 TRAIN
+sequences,680532 nonpadding/63546 supervised tokens. All actual token arrays and
+masks are materialized and bound. Long-context DEV has32worlds/256rows at exact
+2024/4072prompt tokens; this is data qualification only, with no native fit claim.
 
+AMENDMENT_005 now has an actual input/schedule artifact at
+artifacts/mimo_central/e1_plan_seed101_v2, indexed by manifests/E1_EXECUTION_PLAN.json.
+It uses the pinned Python3.11.15 runtime,256steps of16acquisition+4replay,13warmup
+updates, finalLR0 and finalcheckpoint-only selection. The first valid Python3.13.2
+plan is preserved because its runtime binding cannot validate in the future3.11
+worker. This runtime adjustment changes no input rows, dose or training outcome.
 
-Continuation 003 completed the exact long-context DEV bank:32worlds/256rows at
-2024/4072prompt tokens;64CHECK hashes only.172CPUtests pass; no native fit/retention
-claim. The next available FAST action is concrete E1 plan/preflight code plus
-synthetic coverage: bind candidate data, schedule256steps with16acq+4replay,
-freeze warmup rounding/checkpoints/resume cursor/costs, and reject every native
-launch until existing gates pass. No central E1 trainer or actual-response enrollment
-adapter yet exists. Language DEV/CAL authoring and blind packet preparation are
-possible separately, but grader qualification requires assigned qualified reviewers.
+E1 preflight is diagnostic and always denies launch. The response importer preserves
+attempts and parent groups but cannot certify native capture or language grading.
+There are no actual source responses/enrollment, qualified language graders,
+2048/4096runtime extension or native E1 executor. The89new preparation controls
+passed separately from the retained172-test baseline; no efficacy claim follows.
+
+A concrete open-DEV-bank adapter or bounded collector may be useful later preparation,
+but do not prioritize a full runnable trainer over the missing language inputs.
+Native capture needs E0 and frozen measured budgets. E1seed101 requires all scientific
+gates; only its passing DEV screen earns211/307. Current best remains unchanged Titan.

@@ -42,9 +42,9 @@ Its 344M resource estimates were not reused as Titan measurements.
 | Primary binding | Exact files/header, 596049920 parameters | Static identity | Native loader/tie/parity unqualified |
 | Acquisition | 4096 TRAIN +256 selection +256 DEV parents | Independent deterministic verification | No student learning measured |
 | Replay candidate | 768 deterministic +256 curated language rows | Fixed sources, tokenized inputs | Current-source enrollment and broad preservation unqualified |
-| E1 candidate dose | 5120 sequences; 680532 nonpadding; 63546 supervised tokens | One candidate sequence epoch | Not a launch manifest |
+| E1 input/schedule plan | 5120 sequences; 680532 nonpadding; 63546 supervised tokens; 256 steps | Frozen seed 101 schedule | No native executor or launch grant |
 | Long-context DEV | 32 worlds, 256 rows; exact 2024/4072 prompts | Tokenizer/visible-evidence mechanics | No model fit or preservation result |
-| Software controls | 172 CPU tests passed in144.592 s | Synthetic mechanics; imports excluded from timing | No pretrained efficacy implication |
+| Software controls | 89 new controls passed in 70.474 s; prior 172-test baseline retained | Synthetic mechanics; separate runs | No pretrained efficacy implication |
 
 The maximum candidate TRAIN sequence is 398 tokens. Every target fits its
 registered cap without truncation. The shared non-thinking chat template and
@@ -54,7 +54,7 @@ file hashes are retained. Raw generated arrays remain local and reproducible fro
 committed code and registrations; no model binaries were pushed.
 
 Acquisition construction verified all 4608 open-row reference answers and rejected
-4608 wrong-answer mutations in17.009 s. Tokenizer profiling took 111.268 s. TRAIN
+4608 wrong-answer mutations in 17.009 s. Tokenizer profiling took 111.268 s. TRAIN
 contains 414554 nonpadding/49272 supervised tokens. CHECK has 512 acquisition parent
 hash reservations; FINAL remains unopened. Empty-set/text targets and repeated
 answers are disclosed: TRAIN has 105 empty sets and 12 empty strings; arithmetic
@@ -74,17 +74,19 @@ tokenizer profiling 69.459 s. Deterministic TRAIN contributes 243336 nonpadding 
 Actual source inspection recovered all 14000 preservation rows by exact original
 TRAIN membership. It found 4000 v1 rows mislabeled v2 by the old generator. Original
 bytes were preserved; membership, not the defective label, determines origin.
-Quality exclusions left 4644 v2 candidates in298 conservative template groups.
+Quality exclusions left 4644 v2 candidates in 298 conservative template groups.
 Those groups are not asserted to be independent statistical parents.
 
 Frozen class quotas selected 256 language primaries and 768 bounded alternatives.
-Two assistant reviewers read all selected conversations:250 references were
+Two assistant reviewers read all selected conversations: 250 references were
 acceptable and six had unsupported referents or claims. AMENDMENT_003 resolved
 five with reviewed same-group alternatives and one with the next fixed-order group
 in the same class. No target text was rewritten and no teacher target was authored.
 Original selections, flags and lineage are preserved. Curated language contributes
 22642 nonpadding/2460 supervised tokens, maximum 122 total and 20 completion tokens.
 This is assistant source review, not human approval or calibrated native grading.
+The 256 language TRAIN token arrays were subsequently materialized in 34.716 s,
+matching every previously measured token hash/count. No Torch/model call occurred.
 
 A scoped audit compared 5632 open acquisition/deterministic-replay rows with 32800
 historical whole-chat fingerprints and current normalized prompts. It found no
@@ -96,7 +98,7 @@ were not opened. No blanket decontamination claim follows.
 
 AMENDMENT_004 prospectively accepted tokenizer-only construction after an independent
 blocked audit identified this remaining FAST task. Production at code commit
-`75e71793922a03e9dbc24588bf673fd8cbf202ab` completed in139.455 s without Torch,
+`75e71793922a03e9dbc24588bf673fd8cbf202ab` completed in 139.455 s without Torch,
 model or GPU calls. DEV has 32 sampled numeric worlds, four per two-family/four-
 placement cell, and eight related rows per world. CHECK has 64 hash-only parent
 reservations, representing 512 future rows; no CHECK payload was rendered. FINAL 0
@@ -104,8 +106,8 @@ remains closed, not a selected confirmation population.
 
 Each world crosses prompt length 2024/4072 with answerability and neutral/adversarial
 distractors. Thus 128 rows occupy each exact full-template length, totaling 780288
-prompt tokens. A24-token reserve gives total sequence envelopes 2048/4096. Targets
-are short symbols or UNKNOWN, measured at1-4 tokens. No truncation or PAD/EOS filler
+prompt tokens. A 24-token reserve gives total sequence envelopes 2048/4096. Targets
+are short symbols or UNKNOWN, measured at 1-4 tokens. No truncation or PAD/EOS filler
 is used. Required evidence spans are verified in body-relative native-token bands:
 early 10-20%, middle 45-55%, late 80-90%, or one block in each band when distributed.
 Paired rows preserve query, unchanged support text and controlled span positions.
@@ -121,7 +123,7 @@ and unauthorized UNSIGNED shadows; their keys/payloads do not reveal the winner.
 Pre-production review removed fixed-table-position, writer-count/time-order and
 decoy-key shortcuts. Independent reference and visible-text solvers verify all
 block ablations and causal interventions. A separate artifact audit found zero
-discrepancies in15044 consistency checks, including 640 ablations,64 causal controls
+discrepancies in 15044 consistency checks, including 640 ablations, 64 causal controls
 and 288 decoy controls. It verified stored IDs/offsets internally, not by re-running
 the tokenizer; the native mapping is the separately bound production measurement.
 This bank qualifies measurement inputs, not student long-context capability.
@@ -160,19 +162,35 @@ WORK; they cannot be imported as current BF16 capability or source-correct membe
 ## Next decisive work and evidence limits
 
 The next native experiment is unchanged E0 after a real resource-state change.
-The user was asked to free host memory. No paid cloud/teacher work,344M fallback,
+The user was asked to free host memory. No paid cloud/teacher work, 344M fallback,
 guard reduction, CHECK/FINAL opening or automatic promotion has been authorized
 by a mechanics pass. Candidate recipe remains unchanged Titan with null acquisition
 and retention effects.
 
-A remaining authorized FAST task is concrete E1 plan/preflight code: bind actual
-candidate hashes; schedule exactly 256steps of16 acquisition+4 replay rows; freeze
-warmup rounding, checkpoint cadence, resume cursor and all costs; gate seed 101 only.
-There is no runnable central E1 trainer or current-source enrollment adapter yet.
-Older controllers are not silently treated as compatible native E1 routes. Twin
-and eight-row worlds require parent-aware aggregation before statistical analysis.
+AMENDMENT_005 and production code at `676dcbabcd59247e97617e6eb7ad97fd5aa5af40`
+now bind all actual TRAIN arrays and a seed 101 plan: exactly 256 steps of 16 acquisition
++4 replay rows, every row once, 13 warmup updates, final LR 0, checkpoints 0/64/128/192/256
+and final-only selection. Prefix cursors bind schedule/data/config identity but do
+not establish restored native parameters, optimizer or RNG. The first plan used
+Python 3.13.2 and is preserved; the selected second plan uses pinned Python 3.11.15,
+which the future native worker needs for exact runtime-bound plan validation.
+Planning took 17.406/17.272 s respectively, with zero model calls or updates.
+A separate standard-library audit passed 68 checks with no findings, including
+actual TRAIN bytes, exact coverage, step math, cursor and source/config hashes.
+The two plans have identical row order and steps; only runtime metadata and its
+derived hashes differ. This audit qualifies the plan artifact, not a model run.
 
-Fresh language DEV/CAL authoring and blinded packets remain separate preparation.
+New preflight validates the E0 evidence bundle and always denies native launch.
+The response importer preserves failed attempts and parent-linked twins/eight-row
+worlds, but all imports remain structural or diagnostic. Callback claims cannot
+certify native capture, and language grading remains blocked. No actual responses
+have been enrolled. The 89 new CPU controls test bindings, schedules, resume accounting,
+gate rejection and import mechanics; they are not a rerun of all 172 prior tests.
+There is still no runnable native E1 trainer or qualified current-source collector.
+
+The next independent task is fresh language DEV/CAL authoring and blinded packets:
+64 DEV worlds, 16 CAL worlds and 96 candidate control responses under a new prospective
+data-only amendment. Intended control defects remain unqualified author annotations.
 Language grading needs assigned qualified reviewers, reference labels and calibration;
 code or assistant source review cannot fabricate that authority. The 2048/4096
 forward-only runtime extension and current-source enrollment are also unqualified.

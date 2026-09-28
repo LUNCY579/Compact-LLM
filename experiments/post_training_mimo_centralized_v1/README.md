@@ -6,8 +6,9 @@ See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
 Current state: exact static Titan identity measured; E0 blocked before model load
-by host RAM (6.9113 GiB available versus 7.4 GiB admission). All 172 focused CPU
-tests pass; 4608 original open-role bridge parents are independently verified.
+by host RAM (6.9113 GiB available versus 7.4 GiB admission). The prior172-test
+baseline and89 new preparation controls passed in separate runs;4608 original
+open-role bridge parents are independently verified.
 No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
 
@@ -54,4 +55,21 @@ are prepared and tokenized. Candidate dose: 5120 sequences / 680532 nonpadding /
 Continuation 003: exact long-context DEV data are built (32 worlds, 256 rows;
 2024/4072 full-template tokens). Independent artifact audit found no discrepancies;
 172 CPU tests pass. Native resource fit and preservation remain unqualified.
-The next FAST task is the missing E1 execution-plan/preflight implementation.
+Continuation004 completed the E1 input/schedule plan and diagnostic preflight:
+5120 TRAIN rows,256 steps,16 acquisition+4 replay per step,seed101 only. The
+[frozen plan index](manifests/E1_EXECUTION_PLAN.json) binds the actual data and
+source/config bytes. It grants no native execution. The enrollment importer
+preserves parent groups and every attempt but cannot certify model capture or grading.
+
+Reproduce the plan in a new directory with the pinned Python3.11.15 interpreter:
+
+```text
+C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.prepare_e1 --config experiments/post_training_mimo_centralized_v1/configs/E1_PLAN_V1.json --output <new-directory>
+```
+
+This command uses the standard library and cannot load or train a model. It requires
+the local bound TRAIN files and clean committed planning code/config. Python version
+is part of the shuffle contract: the preserved3.13 plan is superseded by the3.11 plan.
+Cursor validity covers accounting only; no native optimizer/checkpoint/RNG restoration
+is implied. Next independent work is fresh language DEV/CAL candidate authoring and
+review packets under a new prospective amendment; qualified grading remains external.

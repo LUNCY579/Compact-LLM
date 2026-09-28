@@ -96,7 +96,7 @@
       "gpu_gib": 0,
       "disk_gib": 0.1,
       "artifact": "evidence/RETENTION_DESIGN.md",
-      "blocker": "Fixed candidate data/tokenization/source review complete; native source-correct enrollment, fresh language grader and long-context sentinel incomplete",
+      "blocker": "Data and structural import mechanics prepared; actual native source enrollment, fresh language bank/qualified grading and long-context runtime remain unqualified",
       "status": "blocked",
       "evidence_receipt": "manifests/E1_CANDIDATE_DOSE.json",
       "native_gate_receipt": null,
@@ -118,7 +118,7 @@
       "gpu_gib": 6.0,
       "disk_gib": 4,
       "artifact": "results/e1_seed101/DECISION.md",
-      "blocker": "E0/data/replay qualification incomplete",
+      "blocker": "E0/source enrollment/language grading/long-context runtime unqualified; native executor absent",
       "status": "pending",
       "evidence_receipt": null,
       "native_gate_receipt": null,
@@ -199,11 +199,31 @@
       "disk_gib": 0.2,
       "artifact": "manifests/E1_EXECUTION_PLAN.json",
       "blocker": null,
-      "status": "pending",
-      "evidence_receipt": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/E1_PLAN_SEED101_V2_RECEIPT.json",
       "native_gate_receipt": null,
       "expected_information_value": "qualify essential pre-native preparation",
       "next_decision_impact": "Bind candidate data and executable step/preflight contracts"
+    },
+    {
+      "task_id": "LANGUAGE_DEV_CAL_INPUTS",
+      "research_question": "Author fresh language DEV/CAL candidate worlds and review packets without fabricated grader qualification",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.2,
+      "artifact": "receipts/LANGUAGE_DEV_CAL_CANDIDATE_RECEIPT.json",
+      "blocker": null,
+      "status": "pending",
+      "evidence_receipt": null,
+      "native_gate_receipt": null,
+      "expected_information_value": "Remove missing language measurement inputs while native E0 is blocked",
+      "next_decision_impact": "Prepared candidates still require independently qualified reference labels/calibration; no native launch"
     }
   ]
 }
