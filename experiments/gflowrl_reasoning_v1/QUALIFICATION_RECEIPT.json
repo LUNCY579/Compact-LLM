@@ -1,0 +1,67 @@
+{
+  "experiment": "gflowrl_reasoning_v1",
+  "gate": "GFRL-QUAL-001",
+  "status": "BLOCKED",
+  "base_sha": "7d9b4fd450bc56405f6cec41459a7e83df7958ae",
+  "payload_head_sha": "4643ea64fe97e900d3431f6610892986e0c180be",
+  "test_command": "python -m pytest experiments/gflowrl_reasoning_v1/tests -q",
+  "tests": {
+    "baseline_unchanged": "BLOCKED_CANONICAL_R0_NOT_ESTABLISHED",
+    "toy_loss": "PASS",
+    "partition_estimator": "PASS",
+    "importance_weights": "PASS",
+    "asymmetric_clipping": "PASS",
+    "zero_constant_reward": "PASS",
+    "all_invalid_masking": "PASS",
+    "eos_truncation": "PASS",
+    "frozen_gradient_isolation": "PASS",
+    "policy_reference_convention": "PASS",
+    "extreme_ratio_stability": "PASS",
+    "nan_inf_guard": "PASS",
+    "fixed_seed_determinism": "PASS",
+    "dataset_split_binding": "PASS",
+    "sealed_asset_denial": "PASS",
+    "resource_probe": "PASS"
+  },
+  "test_summary": "20 passed in 2.94s",
+  "runtime": {
+    "python": "3.11.15",
+    "platform": "Windows-10-10.0.26200-SP0",
+    "torch": "2.6.0+cu124",
+    "cuda_available": true,
+    "cuda_device_count": 1,
+    "pytest": "9.1.1"
+  },
+  "resource_probe": {
+    "path": "resource_probe.json",
+    "status": "PASS",
+    "model_loaded": false,
+    "training_occurred": false,
+    "exact_host_gate": "TARGET_CLASS_MATCHED_BUT_MODEL_RUN_NOT_QUALIFIED",
+    "duration_seconds": 0.2502729999996518,
+    "steps": 392,
+    "steps_per_second": 1566.2896117461546
+  },
+  "training_occurred": false,
+  "sealed_access": "denied",
+  "efficacy_claim": "none",
+  "evidence_classification": "standalone objective implementation qualified; canonical/native experiment blocked",
+  "status_reason": "The prior PASS covered the standalone synthetic objective suite only. Canonical-baseline parity (required check 1) is not established because the inspected Rineya reasoning lineage has no qualified reward-maximizing RL baseline.",
+  "prior_standalone_execution": {
+    "status": "PASS_OBJECTIVE_ONLY",
+    "test_summary": "20 passed in 2.94s",
+    "payload_head_sha": "4643ea64fe97e900d3431f6610892986e0c180be",
+    "interpretation": "historical execution evidence retained; it is not a native/canonical launch permit"
+  },
+  "canonical_r0_binding": "CANONICAL_R0_BINDING.json",
+  "paper_fidelity_matrix": "PAPER_FIDELITY_MATRIX.json",
+  "native_launch": "BLOCKED",
+  "training_authorized": false,
+  "blockers": [
+    "canonical reward-maximizing R0 is not established in the inspected reasoning-posttraining lineage",
+    "exact train/dev dataset for this R0/R1 study is not selected or hash-bound",
+    "native rollout/current/reference logprob collection is not qualified",
+    "paper-reported ratio scaling, RS thresholds, accuracy-based group filtering, overlong shaping, and native token-mean aggregation are not fully bound",
+    "objective-only GPU probe is not a model/rollout/training resource qualification"
+  ]
+}
