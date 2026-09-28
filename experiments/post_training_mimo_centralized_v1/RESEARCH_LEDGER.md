@@ -25,3 +25,7 @@ was not continuously metered and remains UNMEASURED rather than fabricated.
 Ruled out: automatic 344M fallback, raw MiMo rows as verified trajectories, and
 merged/synthetic code as current native efficacy.
 Next: E0 mechanics/resource qualification alongside frozen original bridge data.
+
+## E0 attempt 1: pre-load implementation failure
+
+Measured wall185.313s, zero pretrained loads, zero optimizer steps, zero training/generation tokens. Runtime imports and CUDA device discovery completed. psutil.disk_usage rejected WindowsPath before the first resource snapshot. This is a host API plumbing failure, not model capability or memory fit evidence. Failure and supervisor receipts are preserved in results/e0_titan_v1*. Fix only string conversion, add import progress events, and retry the identical registered numerical/resource envelope. No tolerances or guards changed.

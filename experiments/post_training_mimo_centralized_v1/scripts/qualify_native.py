@@ -144,6 +144,7 @@ def run(args):
         with (out / "EVENTS.jsonl").open("a", encoding="utf-8") as f:
             f.write(json.dumps({"elapsed_seconds": time.monotonic()-started, "event": kind, **values}) + "\n")
     try:
+        event("runtime_import_start")
         os.environ["HF_HUB_OFFLINE"] = "1"
         os.environ["TRANSFORMERS_OFFLINE"] = "1"
         os.environ["CUBLAS_WORKSPACE_CONFIG"] = ":4096:8"
@@ -151,6 +152,7 @@ def run(args):
         import torch
         from safetensors import safe_open
         from transformers import AutoTokenizer, Qwen3Config, Qwen3ForCausalLM
+        event("runtime_import_complete")
         torch.set_num_threads(2)
         torch.use_deterministic_algorithms(True)
         torch.backends.cuda.matmul.allow_tf32 = False
@@ -178,7 +180,7 @@ def run(args):
                         gpu_allocated_gib=torch.cuda.memory_allocated() / 2**30,
                         gpu_reserved_gib=torch.cuda.memory_reserved() / 2**30,
                         peak_allocated_gib=torch.cuda.max_memory_allocated() / 2**30,
-                        disk_free_gib=psutil.disk_usage(out).free / 2**30)
+                        disk_free_gib=psutil.disk_usage(str(out)).free / 2**30)
             result["resources"].append(snap)
             event("resource", **snap)
             require(snap["host_available_gib"] >= cfg["host_free_gib"] if admission else
