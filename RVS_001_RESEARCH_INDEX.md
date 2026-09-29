@@ -1,20 +1,18 @@
 # RVS-001 — Rineya Verified Resampling
 
-Saved research direction: use repeated sampling to separate candidate-generation coverage, deployable selection quality, and end-to-end cost for frozen Rineya-Titan.
+**Current: implemented and CPU-tested; exact-Titan native efficacy remains unmeasured.**
 
-Start with [the research package](experiments/rineya_verified_resampling_v1/README.md).
+Start with the [runnable experiment README](experiments/rineya_verified_resampling_v1/README.md) for CPU tests/demo and the Windows Titan prepare -> freeze -> qualify -> collect -> evaluate commands.
 
-- [Research analysis and hypotheses](experiments/rineya_verified_resampling_v1/RESEARCH_PLAN.md)
-- [Prospective experiment protocol](experiments/rineya_verified_resampling_v1/PROTOCOL.md)
-- [Integration roadmap and implementation handoff](experiments/rineya_verified_resampling_v1/INTEGRATION_ROADMAP.md)
-- [Sources and pinned repository evidence](experiments/rineya_verified_resampling_v1/SOURCES.md)
-- [Machine-readable planning record](experiments/rineya_verified_resampling_v1/plan.json)
-
-**Status: planning-only documentation. No RVS collector, selector, evaluator, training exporter, or native runner is implemented by this delivery. No RVS model load, inference, training, paid teacher call, or protected evaluation is authorized or performed.**
+- [Implementation amendment](experiments/rineya_verified_resampling_v1/AMENDMENT_001_IMPLEMENTATION.md)
+- [Local measured validation receipt](experiments/rineya_verified_resampling_v1/receipts/CPU_VALIDATION.json)
+- [Historical research analysis](experiments/rineya_verified_resampling_v1/RESEARCH_PLAN.md)
+- [Historical protocol](experiments/rineya_verified_resampling_v1/PROTOCOL.md)
+- [Pinned sources](experiments/rineya_verified_resampling_v1/SOURCES.md)
 
 Repository: `LUNCY579/ChatBubble`.
 Branch: `research/rineya-verified-resampling-v1`.
-Parent: `research/post-training-mimo-centralized-v1` at `ba683ac0fcadbf04e4e179200d035b6a980e388f`.
-Recorded: 2026-09-29.
+Original centralized parent: `ba683ac0fcadbf04e4e179200d035b6a980e388f`.
+Completed planning snapshot: `88efa852689c162c131d9c698923d4327cdec853`.
 
-This is an additive side-track record. It does not amend centralized E0/E1, modify production inference, change historical registrations, relax resource guards, or promote a checkpoint. The parent branch and main are not targets of this delivery.
+The original `plan.json` and `DELIVERY_RECEIPT.json` describe the earlier planning-only delivery and are preserved unchanged. The user's subsequent request authorized actual implementation. This successor does not alter centralized E0/E1, source weights, production inference, resource floors, or protected evaluation. No optimizer, paid model call, or automatic model download is present.
