@@ -58,7 +58,7 @@ def render(source, output):
         canvas.line(48,32,564,32)
         canvas.setFont("Helvetica",7)
         canvas.setFillColor(colors.HexColor("#52646a"))
-        canvas.drawString(48,21,"RINEYA RESEARCH  |  28 SEPTEMBER 2026  |  NO EFFICACY CLAIM")
+        canvas.drawString(48,21,"RINEYA RESEARCH  |  29 SEPTEMBER 2026  |  NO EFFICACY CLAIM")
         canvas.drawRightString(564,21,str(doc.page))
         canvas.restoreState()
     doc.build(story,onFirstPage=page,onLaterPages=page)

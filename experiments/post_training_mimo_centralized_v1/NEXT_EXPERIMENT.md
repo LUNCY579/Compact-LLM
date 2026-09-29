@@ -1,24 +1,34 @@
 # Next experiment
 
-**Research is blocked at native E0 pending a real resource-state change.**
-The latest OS-only check found 5.987 GiB available before imports with no Python
-workers. E0 requires at least 7.4 GiB available after runtime imports and 6 GiB
+**Next native step: E0 only after a meaningful resource-state change.**
+Resumed attempt v3 stopped at preload: 6.936687469482422 GiB host RAM available
+after imports, below 7.4 GiB. Its unchanged-at-launch source was
+`5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`; its original
+`results/e0_titan_v3/E0_RESULT.json` remains immutable. This is blocked observation 1
+of the fresh resumed audit; the earlier seven-observation audit is historical.
+E0 requires at least 7.4 GiB available after runtime imports and 6 GiB
 throughout the worker, plus 4 GiB GPU and 4 GiB disk admission. Keep every floor
-unchanged. The repeated memory block is not evidence that Titan cannot fit or learn.
+unchanged. The preload block is not evidence that Titan cannot fit or learn.
+Native model loads, optimizer updates and generated tokens remain zero; efficacy
+is UNMEASURED.
 
 The finite independent preparation has been completed and checked: exact source
 identity, method audit, acquisition/replay data, language and long-context candidate
-inputs, E1 input/schedule plan, and actual DEV prompt/scorer binding. No eligible
-independent FAST task remains on the current critical path. See
-`receipts/CONTINUATION_007_BLOCKED_AUDIT.json` for completed evidence and remaining
-requirements. Do not regenerate banks, retry unchanged admission, invent grading
+inputs, historical E1 input/schedule plans, actual DEV prompt/scorer binding, and
+AMENDMENT_008 attempted-work accounting. The accounting source-review/CPU-test task
+is complete: 52 stdlib tests passed in 0.681 s (process 1.1190241 s), and 12 existing
+tiny CPU tests passed separately in 1.459 s (process 6.6929375 s). Evidence is in
+`receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json`. The revised accounting code remains
+natively UNQUALIFIED; these checks do not replace native evidence.
+Do not regenerate banks, retry unchanged admission, invent grading
 or add generic wrappers to substitute for the missing native evidence.
 
 ## Resume sequence
 
-After host headroom changes, resume the unchanged bounded E0 qualifier with the
+After host headroom changes, qualify the accounting-v2 bounded E0 source with the
 pinned Python 3.11.15 environment, exact Titan weight/config/tokenizer hashes and
-external process-tree containment. Commit any necessary source changes first; use
+external process-tree containment. The original math, inputs, numerical tolerances
+and resource guards remain unchanged. Commit the source changes first; use
 a new immutable run directory. Recheck live resources and stop on any failed gate.
 Qualify exact load, 32 zero-adapter cases, likelihood/masks/causality, 256/512/1024
 profiles, finite confined gradients, reversible update and deterministic resume.
@@ -50,8 +60,10 @@ decoding, seed or budget registration. It is not an enrollment manifest or nativ
 grant. Forty new tests passed in 87.582 s; a separate audit checked 832 row mappings
 and 34 file identities without finding a discrepancy. No model accuracy was measured.
 
-The E1 TRAIN plan remains 5120 sequences/680532 nonpadding/63546 supervised tokens,
+The historical E1 TRAIN plan remains 5120 sequences/680532 nonpadding/63546 supervised tokens,
 256 steps with 16 acquisition+4 replay sequences, seed 101 only, 13 warmup steps and
-final LR 0. Current best stays the unchanged exact Titan checkpoint. Additional
-heavy training is not justified until native qualification and preservation gates
-actually pass.
+final LR 0. Its source bindings predate the accounting-v2 gate-checker change;
+preserve existing plans/receipts and rebind a new plan to qualified current source
+and runtime before native execution. Current best stays the unchanged exact Titan
+checkpoint. Additional heavy training is not justified until native qualification
+and preservation gates actually pass.

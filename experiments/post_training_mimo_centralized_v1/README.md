@@ -5,9 +5,13 @@ Weight SHA256: `537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7
 See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
-Current state: exact static Titan identity measured; E0 blocked before model load
-by host RAM (6.9113 GiB available versus 7.4 GiB admission). The native research lane is blocked. Current DEV preparation passed 40 new
-controls; earlier test runs remain separate. No native result follows from them.
+Current state: exact static Titan identity measured; resumed E0 v3 stopped at preload
+with 6.936687469482422 GiB host RAM available, below the unchanged 7.4 GiB admission
+floor. Its source was `5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`; see
+[v3 result](results/e0_titan_v3/E0_RESULT.json). This is the first blocked observation
+in the fresh resumed audit. Native model loads, optimizer updates and generated tokens
+remain zero; efficacy is UNMEASURED. Independent DEV preparation and the subsequent
+accounting source-review/CPU-test work are complete, without a native qualification.
 No trained candidate or capability improvement is claimed. The original 344M draft is
 preserved under evidence/superseded_initial_draft and is out of primary scope.
 
@@ -23,14 +27,15 @@ Run from repository root, using the measured CUDA environment
 ```text
 C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m unittest discover -s experiments/post_training_mimo_centralized_v1/tests -v
 python -B -m experiments.post_training_mimo_centralized_v1.scripts.bridge_data --registration experiments/post_training_mimo_centralized_v1/manifests/E1_DATA_REQUIREMENTS.json --output <new-directory> --source-revision <committed-code-sha>
-C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.supervise_native --config experiments/post_training_mimo_centralized_v1/configs/E0_TITAN_BF16.json --output artifacts/mimo_central/e0_titan_v1
+C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.post_training_mimo_centralized_v1.scripts.supervise_native --config experiments/post_training_mimo_centralized_v1/configs/E0_TITAN_BF16.json --output artifacts/mimo_central/<new-e0-run-directory>
 ```
 
 Every native run requires clean source and a new ignored artifact directory.
 The supervisor uses the existing Opallo Windows Job Object/process-tree watchdog,
 a cooperative GPU lock, RAM/RSS/time limits and a containment GO handshake.
-Failures are durable; no automatic retry or tolerance relaxation. Reusable receipt
-JSON is copied into this package after the run; model binaries stay local.
+Failures are durable; no retry until a meaningful resource-state change and no
+tolerance relaxation. The accounting-v2 qualifier is itself natively UNQUALIFIED.
+Reusable receipt JSON is copied into this package after the run; model binaries stay local.
 
 Data preparation exports only TRAIN, TRAIN_SELECTION and DEV prompt/target rows;
 CHECK exports identities only; FINAL remains unopened. Preparation alone does not
@@ -70,8 +75,11 @@ This command uses the standard library and cannot load or train a model. It requ
 the local bound TRAIN files and clean committed planning code/config. Python version
 is part of the shuffle contract: the preserved3.13 plan is superseded by the3.11 plan.
 Cursor validity covers accounting only; no native optimizer/checkpoint/RNG restoration
-is implied. Next independent work is fresh language DEV/CAL candidate authoring and
-review packets under a new prospective amendment; qualified grading remains external.
+is implied. Language DEV/CAL authoring and review-packet preparation were subsequently
+completed; qualified grading remains external. Existing E1 plan receipts retain
+their historical source bindings. AMENDMENT_008 changed the gate-checker source, so
+rebind a new plan to qualified current source/runtime before native execution; preserve
+the existing plans and receipts unchanged.
 
 Continuation005 completed the [language candidate bank](manifests/LANGUAGE_DEV_CAL_CANDIDATE_INDEX.json):
 64 DEV worlds,16 CAL worlds,96 candidate controls and two unassigned JSON review
@@ -88,8 +96,8 @@ C:/Users/clclc/BusinessProject/.venv-mq001/Scripts/python.exe -B -m experiments.
 
 Keep coordinator mappings separate from rating views. `validate_ratings` requires
 fresh validated source rows and remains diagnostic; no packet can grant grading or
-native qualification. Next is the concrete DEV input/scorer adapter, including prompt
-slicing that prevents target-bearing short-task arrays from leaking reference answers.
+native qualification. The concrete DEV input/scorer adapter described below also
+includes prompt slicing that prevents short-task reference-answer leakage.
 
 Continuations 006-007 completed the [DEV prompt/scorer binding](manifests/DEV_INPUT_SCORER_BINDING.json):
 832 rows/544 parent groups, 890874 prompt tokens, with evaluator targets in a separate
@@ -97,7 +105,15 @@ sidecar. Short-task prompt slices exclude 6883 reference-token positions. Scorer
 all three verifier dependencies and keep language grading blocked. Production source
 was committed before the artifact; 40 tests and the separate artifact audit passed.
 
-The [blocked audit](receipts/CONTINUATION_007_BLOCKED_AUDIT.json) records why the next
-useful experiment needs changed host headroom for E0. Native collection, language
+The seven-turn [blocked audit](receipts/CONTINUATION_007_BLOCKED_AUDIT.json) is historical;
+the fresh resumed audit has one blocked observation, v3. Native collection, language
 calibration, the 2048/4096 extension and native E1 execution remain incomplete.
 The full goal is unachieved. No further heavy training is justified yet.
+
+[AMENDMENT_008](AMENDMENT_008.md) adds durable attempted/returned/failed/pending E0
+operation accounting and retains completed profiles after later failures. Original
+math, inputs, numerical checks and resource floors are unchanged. Source review and
+52 stdlib tests passed in 0.681 s (process 1.1190241 s); 12 existing tiny CPU tests
+passed separately in 1.459 s (process 6.6929375 s). See
+[accounting validation](receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json).
+These are CPU/source checks, not native qualification or evidence of efficacy.

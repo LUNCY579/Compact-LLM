@@ -33,8 +33,39 @@
         20260928
       ],
       "teacher_calls": 0,
-      "latest_result": "results/e0_titan_v2/E0_RESULT.json",
-      "measured_available_ram_gib": 6.9113311767578125
+      "latest_result": "results/e0_titan_v3/E0_RESULT.json",
+      "latest_attempt_source_sha": "5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80",
+      "measured_available_ram_gib": 6.936687469482422,
+      "fresh_resumption_blocked_observations": 1,
+      "historical_seven_observation_audit": "receipts/CONTINUATION_007_BLOCKED_AUDIT.json",
+      "pretrained_loads": 0,
+      "optimizer_steps": 0,
+      "generation_tokens": 0,
+      "efficacy": "UNMEASURED",
+      "prepared_accounting_version": 2,
+      "accounting_source_native_qualified": false,
+      "next_attempt_gate": "Meaningful resource-state change, clean committed accounting-v2 source and unchanged resource/numerical gates; new immutable run directory"
+    },
+    {
+      "id": "E0_ACCOUNTING",
+      "status": "COMPLETE_SOURCE_REVIEW_AND_CPU_TESTS_ONLY",
+      "registration": "AMENDMENT_008.md",
+      "validation_receipt": "receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json",
+      "stdlib_tests": {
+        "passed": 52,
+        "test_seconds": 0.681,
+        "process_seconds": 1.1190241
+      },
+      "existing_tiny_cpu_tests": {
+        "passed": 12,
+        "test_seconds": 1.459,
+        "process_seconds": 6.6929375
+      },
+      "native_qualified": false,
+      "native_model_loads": 0,
+      "native_optimizer_steps": 0,
+      "native_generated_tokens": 0,
+      "scope": "Durable attempted/returned/failed/pending work and partial-profile accounting; original math, tolerances and resource guards unchanged"
     },
     {
       "id": "RINEYA-0P6B-BRIDGE-SFT-E1",
@@ -66,6 +97,7 @@
       "long_context_native_qualified": false,
       "input_schedule_plan": "manifests/E1_EXECUTION_PLAN.json",
       "plan_receipt": "receipts/E1_PLAN_SEED101_V2_RECEIPT.json",
+      "plan_source_binding_status": "HISTORICAL_PRIOR_GATE_CHECKER_SOURCE; preserve immutable plans/receipts and rebind to qualified current source/runtime before native execution",
       "preflight": "receipts/E1_PREFLIGHT_GATES.json",
       "source_enrollment_importer_scope": "Structural/diagnostic only; no actual responses or native qualification",
       "native_executor_implemented": false,
@@ -88,5 +120,5 @@
     "E6": "actual MiMo sandbox transfer",
     "SIDE": "architecture / inference separate; all need new full registration"
   },
-  "cycle_status": "BLOCKED_PENDING_NATIVE_RESOURCES_AND_QUALIFICATION"
+  "cycle_status": "RESUMED_PREPARATION_COMPLETE_NATIVE_E0_PENDING_RESOURCE_CHANGE"
 }

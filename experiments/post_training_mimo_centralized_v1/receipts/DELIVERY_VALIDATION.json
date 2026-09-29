@@ -1,35 +1,33 @@
 {
-  "status": "PASS_STATIC_DEV_PREPARATION_FULL_RESEARCH_BLOCKED",
-  "recorded_at_utc": "2026-09-28T14:42:09.410774+00:00",
-  "report_markdown_sha256": "d8d39b874a16718b31b7645d001bcc3e78689d82513073470c48284874720d4b",
-  "report_pdf_sha256": "0b8d317ddeef5002b979389677aed57aa4f3da9f3c556bfbaa17c56b3ab6a6c1",
-  "report_pages": 5,
-  "visual_QA": "All five final pages reviewed; pages1-4 unchanged after final paragraph repair; no clipping, overflow or missing glyphs",
-  "new_cpu_tests": 40,
-  "new_cpu_test_seconds": 87.582,
-  "prior_test_runs": [
-    172,
-    89,
-    43,
-    2
+  "status": "PASS_V3_EVIDENCE_AND_CPU_ACCOUNTING_ONLY",
+  "recorded_at_utc": "2026-09-29T05:47:17.828993+00:00",
+  "native_source_commit": "748fcc2da74e6f490e889a32f88a0ce475888269",
+  "report_markdown_sha256": "14486715a380f397fe7fd39be279a69a0a79eccff50a738c3f31cf5102ddac3c",
+  "report_pdf_sha256": "517f4282ac60c6454c1c0abd7650c3a488780fffd577acacc94e188a31df8b63",
+  "report_pages": 6,
+  "visual_QA": "All six final page PNGs reviewed; no clipping, overlap or missing glyphs",
+  "validation_receipt": "receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json",
+  "test_runs": [
+    {
+      "count": 52,
+      "seconds": 0.681,
+      "scope": "stdlib accounting and gate suite"
+    },
+    {
+      "count": 12,
+      "seconds": 1.459,
+      "scope": "existing tiny random CPU numerical helpers"
+    }
   ],
-  "test_scope": "Separate runs; no new aggregate-suite claim",
-  "DEV_rows": 832,
-  "DEV_parent_groups": 544,
-  "prompt_tokens_total": 890874,
-  "short_reference_positions_excluded": 6883,
-  "artifact_row_comparisons": 832,
-  "artifact_file_identity_checks": 34,
-  "artifact_findings": 0,
-  "production_seconds": 107.51324249999743,
-  "artifact_audit_seconds": 11.749030400002084,
-  "native_model_loads": 0,
-  "native_updates": 0,
-  "actual_response_records": 0,
-  "qualified_language_grading": false,
-  "CAL_CHECK_FINAL_payloads_opened_this_binding": false,
+  "test_scope": "Two focused runs; no aggregate historical-suite or native-efficacy claim",
+  "v3_raw_artifacts_byte_identical": 14,
+  "append_only_ledgers_preserved": true,
+  "native_pretrained_model_loads": 0,
+  "native_optimizer_steps": 0,
+  "native_generated_tokens": 0,
+  "teacher_calls": 0,
   "goal_complete": false,
-  "overall_blocked_audit_passed": true,
-  "next_native_experiment": "Unchanged E0 only after real resource-state change",
-  "next_independent_FAST_task": null
+  "goal_status": "active after resumption",
+  "resumed_blocked_observation_count": 1,
+  "next_native_experiment": "E0 accounting-v2 under unchanged scientific settings only after meaningful resource-state change"
 }

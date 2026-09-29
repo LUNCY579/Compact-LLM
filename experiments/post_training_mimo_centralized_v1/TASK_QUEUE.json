@@ -67,7 +67,8 @@
       "task_id": "E0",
       "research_question": "Does exact Titan support scoped native mechanics?",
       "dependency": [
-        "SOURCE"
+        "SOURCE",
+        "E0_ACCOUNTING"
       ],
       "lane": "FAST",
       "expected_seconds": 1800,
@@ -75,13 +76,33 @@
       "ram_gib": 1.0,
       "gpu_gib": 4.0,
       "disk_gib": 4,
-      "artifact": "results/e0_titan_v1/E0_RESULT.json",
-      "blocker": "HOST_RAM_GUARD persists: latest OS-only5.987GiB before imports <7.4GiB post-import admission; no retry",
+      "artifact": "results/e0_titan_v3/E0_RESULT.json",
+      "blocker": "Resumed v3 preload host RAM 6.936687469482422 GiB <7.4 GiB; fresh resumed audit observation 1. Accounting-v2 source remains natively unqualified; no retry before meaningful resource change",
       "status": "blocked",
-      "evidence_receipt": "results/e0_titan_v2/E0_RESULT.json",
+      "evidence_receipt": "results/e0_titan_v3/E0_RESULT.json",
       "native_gate_receipt": "configs/E0_TITAN_BF16.json",
       "expected_information_value": "qualify prerequisite or discriminate next gate",
       "next_decision_impact": "Does exact Titan support scoped native mechanics?"
+    },
+    {
+      "task_id": "E0_ACCOUNTING",
+      "research_question": "Retain attempted E0 work and partial profiles without changing registered mechanics",
+      "dependency": [
+        "SOURCE"
+      ],
+      "lane": "FAST",
+      "expected_seconds": 1800,
+      "cpu_cores": 1,
+      "ram_gib": 0.5,
+      "gpu_gib": 0,
+      "disk_gib": 0.1,
+      "artifact": "receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json",
+      "blocker": null,
+      "status": "complete",
+      "evidence_receipt": "receipts/E0_ACCOUNTING_V2_CPU_VALIDATION.json",
+      "native_gate_receipt": null,
+      "expected_information_value": "Source review and 52 stdlib / 12 tiny CPU tests verify version 2 accounting controls; no native qualification",
+      "next_decision_impact": "Qualify changed accounting source in a new E0 run only after meaningful resource change; retain historical E1 plans and rebind before native execution"
     },
     {
       "task_id": "RETENTION",
@@ -118,7 +139,7 @@
       "gpu_gib": 6.0,
       "disk_gib": 4,
       "artifact": "results/e1_seed101/DECISION.md",
-      "blocker": "E0/source enrollment/language grading/long-context runtime unqualified; native executor absent",
+      "blocker": "E0/source enrollment/language grading/long-context runtime unqualified; native executor absent; historical E1 source bindings need rebinding before native execution",
       "status": "pending",
       "evidence_receipt": null,
       "native_gate_receipt": null,
@@ -203,7 +224,7 @@
       "evidence_receipt": "receipts/E1_PLAN_SEED101_V2_RECEIPT.json",
       "native_gate_receipt": null,
       "expected_information_value": "qualify essential pre-native preparation",
-      "next_decision_impact": "Bind candidate data and executable step/preflight contracts"
+      "next_decision_impact": "Historical input/schedule plan retained; rebind a new plan to qualified current source/runtime before native execution after the accounting-v2 gate-checker change"
     },
     {
       "task_id": "LANGUAGE_DEV_CAL_INPUTS",

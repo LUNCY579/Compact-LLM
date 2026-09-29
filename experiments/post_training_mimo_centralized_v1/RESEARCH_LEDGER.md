@@ -292,3 +292,56 @@ more speculative execution scaffolding without measured runtime/budget decisions
 would not resolve the next empirical gate. Record the goal as BLOCKED after final
 artifact publication; never COMPLETE. Resume unchanged E0 after a real host-resource
 change, keeping the original objective and all scientific gates intact.
+
+
+## Resumption 001: renewed E0 preload block and accounting repair
+
+29 September 2026. Question: does the improved host resource state now admit the
+same exact Titan qualification? OS available RAM rose to 8020856 KiB (7.649284 GiB)
+before imports. Clean committed source5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80
+and the unchanged registered config produced immutable attempt e0_titan_v3.
+At preload, after runtime imports and CUDA probes, available RAM was6.936687469482422
+GiB versus7.4 required. Worker RSS0.669048 GiB; GPU free6.890625 GiB;
+peak process-tree RSS722874368bytes. Worker/supervisor walls25.219/25.891s.
+The traceback and source ordering prove no checkpoint hashing, tokenizer creation,
+model construction, weight load, forward, update or generated model token occurred.
+The floor and containment worked; post-admission fit and all efficacy remain unknown.
+
+This is blocked observation1 in the resumed audit, not observation8. The goal
+remains active and incomplete. Prior seven-turn blocked receipts stay historical.
+No guard reduction, unrelated-process termination, protected payload access or
+same-state native retry followed. The v3 worker and supervisor files are preserved
+byte-exact under results, with RESUMPTION_001_E0_AUDIT.json as the concise index.
+
+A separate source review exposed a concrete FAST task: later E0 failures could
+underreport attempted work and discard completed resource profiles. AMENDMENT_008
+prospectively registered version2 accounting before the repair. Implemented at
+748fcc2da74e6f490e889a32f88a0ce475888269, selected operations now have durable
+attempt/returned/failed events and explicit pending calls. Python return is not
+GPU completion or finite numerical success. Forward positions include padding;
+training-forward positions and completed-update tokens are distinct. Only310initial
+serialized base-checkpoint copies are individually counted. Checkpoint reload is
+composite; restore_initial housekeeping is not a separate tensor-copy census.
+
+The existing five optimizer attempts are enforced before dispatch. Returned update
+counts advance before subsequent finite-state checks. Completed profiles remain in
+results and events even if a later stage fails. Gate code independently validates
+full order, closure, workload totals, resource/profile events and cost agreement.
+Historical failed receipts are not rewritten. Source review by a non-author assistant
+found no numerical, RNG, input, mask, dtype, sampler, context or resource-gate change.
+Review is not independent human approval. Added telemetry overhead must be measured
+in the next resource-admitted native run.
+
+52 stdlib controls passed0.681s (1.1190241s process wall);12 existing tiny random CPU
+controls passed1.459s (6.6929375s process wall). Logs, exact source hashes and commands
+are in E0_ACCOUNTING_V2_CPU_VALIDATION.json; the separate source review is retained.
+These tests exercise failure accounting and unchanged CPU helper mechanics, not
+pretrained learning. No native model loads/updates/generation or teacher calls.
+
+The repair rules out the covered bookkeeping failures under these CPU controls;
+it does not rule out native numerical or memory failures. Old E1 plans bind the
+prior gate-checker source and remain historical, not current launch manifests.
+Rebind before native E1 against qualified current source/runtime; preserve data dose,
+row order and optimizer schedule. DEV binding is unaffected by this dependency change.
+The next highest-information experiment remains E0 under unchanged scientific settings
+after another meaningful headroom change. Heavy training is not justified beforehand.

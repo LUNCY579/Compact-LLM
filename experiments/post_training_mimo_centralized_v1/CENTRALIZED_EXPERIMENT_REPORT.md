@@ -1,10 +1,10 @@
 # Centralized Rineya Titan 0.6B: current research state
 
-28 September 2026. **Data and measurement preparation have advanced; native E0 is
-blocked by host-RAM admission. No pretrained model has been loaded or trained in
-this campaign, no acquisition or retention effect has been measured, and no recipe
-has been promoted. The full research goal is incomplete and blocked pending a
-resource-state change and the remaining scientific qualifications.**
+29 September 2026. **The resumed E0 v3 attempt stopped at the unchanged host-RAM
+admission guard. A separate attempted-work accounting fix passed CPU controls.
+No pretrained model has been loaded or trained in this campaign, no acquisition
+or retention effect has been measured, and no recipe has been promoted. The goal
+is active after resumption; native E0 remains blocked and the full goal incomplete.**
 
 ## Exact primary student and source
 
@@ -48,6 +48,7 @@ Its 344M resource estimates were not reused as Titan measurements.
 | Language DEV/CAL | 64 DEV +16 CAL worlds; 96 authored controls; max 166 prompt tokens | Candidate inputs and unassigned packets | Reference labels and grading unqualified |
 | DEV input/scorer binding | 832 rows /544 parent groups; 890874 prompt tokens | Prompt-only policy export, separate evaluator data | Native collection and language grading unqualified |
 | Software controls | 40 new binding/scorer/publisher controls passed in 87.582 s | Prior runs retained separately | No pretrained efficacy implication |
+| E0 accounting v2 | 52 stdlib controls plus 12 existing tiny CPU controls passed | Failure accounting and source review | Changed worker still needs native qualification |
 
 The maximum candidate TRAIN sequence is 398 tokens. Every target fits its
 registered cap without truncation. The shared non-thinking chat template and
@@ -187,6 +188,21 @@ bytes. No pretrained load, update, training token or generated model token occur
 Later raw OS checks remained below 7.4 GiB even before imports, including 6.711 GiB on
 the third consecutive goal turn. No blind native retry was launched.
 
+After the user resumed the goal on 29 September, OS available memory increased to
+7.649284 GiB before imports, permitting a new bounded attempt under the same config.
+E0 v3 at `5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80` then measured
+6.936687 GiB available at preload, still below 7.4 GiB. GPU free was 6.890625 GiB;
+worker RSS 0.669048 GiB; peak process-tree RSS 722874368 bytes. Worker/supervisor
+walls were 25.219/25.891 s. Runtime imports and CUDA probes occurred, but the
+traceback and bound source prove the guard preceded checkpoint hashing, tokenizer
+construction and every model operation. Native loads, updates and generated tokens
+remain zero. All v3 worker/supervisor evidence is preserved byte-for-byte.
+
+This is the first blocked observation after resumption. The previous seven-turn
+blocked audit is historical and is not reused as the resumed count. The accounting
+review below supplied new independent FAST work; it did not justify another native
+attempt on unchanged resources.
+
 The pinned runtime is Python 3.11.15, Torch 2.10.0+cu126, Transformers 4.57.1,
 safetensors 0.7.0 and tokenizers 0.22.2 on an RTX 4070 Laptop with 8188 MiB. It has no
 removable sklearn/scipy/pandas/audio/vision dependency bundle; a minimal clone is
@@ -199,6 +215,33 @@ Titan cannot fit after admission, cannot learn or regresses. Model load/forward/
 backward peaks, training/generation throughput and checkpoint/resume remain
 UNMEASURED. Historical FP32 DenseReference Titan scores are RECORDED FROM PRIOR
 WORK; they cannot be imported as current BF16 capability or source-correct membership.
+
+## Prospective failure accounting
+
+AMENDMENT_008 addresses a source-review finding: a later failure could underreport
+attempted work or omit already completed context profiles. Code at
+`748fcc2da74e6f490e889a32f88a0ce475888269` journals intent before selected operations
+and Python returns or exceptions afterward, with explicit pending calls after an
+interruption. Returned does not mean GPU completion or numerical success. Forward
+input positions include actual padding; training-forward positions are separate
+from legacy completed-update token counts. Generated-token accounting is unchanged.
+
+The tensor-copy count covers only 310 initial base-checkpoint copies. Adapter,
+optimizer and RNG restoration are within the checkpoint-reload span; restore_initial
+housekeeping is not individually counted. This is not a census of CUDA operations
+or FLOPs. Completed profiles are retained incrementally. The existing five-call
+optimizer ceiling is checked before dispatch, including failed attempts. New PASS
+claims require an ordered journal consistent with costs, resource guards and checks.
+Old failed receipts remain unchanged. A separate assistant source reviewer found
+no change to numerical operations, RNG order, inputs, masks, dtypes or thresholds.
+
+The 52 stdlib accounting/gate tests passed in 0.681 s (1.119 s process wall); 12
+existing tiny random CPU numerical controls passed in 1.459 s (6.693 s process wall).
+These include interruption, failed and returned calls, five-call limits, partial
+profiles, malformed journals, LoRA parity, masks and reversible CPU resume. They are
+not native Titan measurements. Journal I/O overhead belongs to the next measured
+runtime. The changed worker remains native-unqualified, and no new model attempt
+followed the repair.
 
 ## Concrete DEV input and scorer binding
 
@@ -231,8 +274,9 @@ unresolved. The static binding is not a runnable enrollment manifest or native g
 
 ## Next decisive work and evidence limits
 
-The next native experiment is unchanged E0 after a real resource-state change.
-The user was asked to free host memory. No paid cloud/teacher work, 344M fallback,
+The next native experiment uses the unchanged E0 scientific config with the
+committed accounting repair, after another real resource-state change.
+No paid cloud/teacher work, 344M fallback,
 guard reduction, CHECK/FINAL opening or automatic promotion has been authorized
 by a mechanics pass. Candidate recipe remains unchanged Titan with null acquisition
 and retention effects.
@@ -249,6 +293,9 @@ A separate standard-library audit passed 68 checks with no findings, including
 actual TRAIN bytes, exact coverage, step math, cursor and source/config hashes.
 The two plans have identical row order and steps; only runtime metadata and its
 derived hashes differ. This audit qualifies the plan artifact, not a model run.
+AMENDMENT_008 changes the gate-checker source these plans bind. Preserve the plans
+as historical artifacts and rebind to qualified current source/runtime before any
+native E1 execution; data dose, row order and optimizer schedule are unchanged.
 
 New preflight validates the E0 evidence bundle and always denies native launch.
 The response importer preserves failed attempts and parent-linked twins/eight-row
@@ -256,12 +303,11 @@ worlds, but all imports remain structural or diagnostic. Callback claims cannot
 certify native capture, and language grading remains blocked. No actual responses
 have been enrolled. The 89 new CPU controls test bindings, schedules, resume accounting,
 gate rejection and import mechanics; they are not a rerun of all 172 prior tests.
-There is still no runnable native E1 trainer or qualified current-source collector. The previously identified finite DEV adapter task is now complete as static
-preparation. The blocked audit verified eight completed preparation tasks and no
-remaining eligible independent FAST task on the current critical path. The same
-host-RAM admission blocker has recurred through seven goal turns. A fresh OS-only
-check at 14:24 UTC found 5.987 GiB available with no Python workers, already below
-the 7.4 GiB post-import gate. No new native attempt was justified or launched.
+There is still no runnable native E1 trainer or qualified current-source collector.
+The prior blocked audit verified eight completed preparation tasks. Resumption
+added the concrete accounting repair identified from failure review; its bounded
+CPU work is now complete. No prepared artifact substitutes for the missing native
+measurements, reviewer qualifications or empirical E1 result.
 
 Language grading still needs assigned qualified reviewers, independent reference
 labels and calibration; source review cannot fabricate that authority. The 2048/4096
@@ -274,6 +320,6 @@ WORK, INFERRED, PROPOSED, UNMEASURED or BLOCKED according to their actual eviden
 The full goal remains unachieved. Further heavy training is not justified before
 E0. Collector/trainer implementation still remains, but drafting more scaffolding
 without the measured runtime and budget decisions would not resolve the next
-empirical gate. Resume with unchanged E0 after host headroom changes, then qualify
+empirical gate. Resume E0 with unchanged scientific settings after host headroom changes, then qualify
 actual capture, grading and the longer-context path before E1. See RESEARCH_LEDGER,
 RESULTS_MATRIX, RESOURCE_LEDGER, CHECKPOINT_LINEAGE and NEXT_EXPERIMENT.
