@@ -20,7 +20,9 @@ Earlier [v3](results/e0_titan_v3/E0_RESULT.json) stopped at 6.936687469482422 Gi
 source `5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`. OS-only available RAM improved
 from 7.649 GiB before v3 to 8.251 GiB, then 8.156 GiB before v4, justifying the
 new bounded attempt. Both attempts occurred in the same resumed goal turn:
-the fresh blocked-turn count is 1, with two failed preload attempts.
+that first resumed turn contained two failed preload attempts. A subsequent OS-only
+check found 7.287 GiB before imports and no Python workers; the fresh blocked-turn
+count is now 2. See receipts/RESUMPTION_002_BLOCKED_AUDIT.json.
 
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that
@@ -113,7 +115,7 @@ all three verifier dependencies and keep language grading blocked. Production so
 was committed before the artifact; 40 tests and the separate artifact audit passed.
 
 The seven-turn [blocked audit](receipts/CONTINUATION_007_BLOCKED_AUDIT.json) is historical;
-the fresh resumed audit has one blocked turn containing v3 and v4. Native collection, language
+the fresh resumed audit now has two blocked turns; only the first launched v3/v4. Native collection, language
 calibration, the 2048/4096 extension and native E1 execution remain incomplete.
 The full goal is unachieved. No further heavy training is justified yet.
 

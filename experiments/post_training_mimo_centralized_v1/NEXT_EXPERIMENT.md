@@ -1,6 +1,10 @@
 # Next experiment
 
 **Next native step: E0 only after a meaningful resource-state change.**
+The second resumed turn measured 7.287 GiB available before imports at 05:52 UTC,
+already below the 7.4 GiB post-import floor, with no Python workers. No attempt
+was launched. See receipts/RESUMPTION_002_BLOCKED_AUDIT.json. The earlier v3/v4
+attempts below remain the latest native evidence.
 Latest attempt v4 stopped at preload: 7.378871917724609 GiB host RAM available
 after imports, below 7.4 GiB. Its source was
 `62ad48e2ade0ec4b3023e2aef5736bc34c6022d1`; the result is

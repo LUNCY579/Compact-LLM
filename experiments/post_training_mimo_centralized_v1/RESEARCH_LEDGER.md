@@ -366,3 +366,25 @@ no model work began. All14worker/supervisor files remain byte-exact. The audit i
 RESUMPTION_001_E0_V4_AUDIT.json. Bothv3 andv4 occurred in the first resumed goal turn;
 two attempts do not mean two consecutive blocked goal turns. The goal remainsactive.
 No further retry on unchanged headroom and no threshold relaxation is justified.
+
+
+## Resumption 002: repeated host-resource block, no new native work
+
+The previous turn made concrete progress through accounting repair, tests and
+preserved E0v3/v4 admission results. On this continuation, the clean checkout at
+6e1e455489077cf192ca5d85817e97b9fd995763 and live OS observation were rechecked.
+At05:52:13 UTC available RAM7641004KiB (7.287029 GiB) was already below the7.4 GiB
+post-import admission floor. No Python workers existed; no live native process can
+be waited on. GPU free7320MiB does not resolve the host-RAM blocker. No launch,
+model import, checkpoint load, optimizer step, model generation or new test occurred.
+
+Read-only process aggregation found no abandoned Python worker to reclaim; the
+largest application group was ChatGPT at1885.7MiB working set across12processes.
+These sums are not promised reclaimable memory. No applications, services or shared
+helpers were terminated. Existing9completed FAST-task receipts were read and hashed.
+Remaining work depends on native measurements or qualified external grading. Repeating
+preparation, drafting speculative wrappers or lowering admission would not establish
+those facts. Current turn is an audit-only no-progress turn on the empirical gate,
+not a verified wait or successful experiment. This is resumed blocked turn2; the
+old seven-turn audit is not carried forward. Goal staysactive until the required
+fresh audit threshold is met or resource state enables genuine progress.
