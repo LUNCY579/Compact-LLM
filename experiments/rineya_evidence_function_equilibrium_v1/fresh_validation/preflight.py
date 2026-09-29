@@ -85,7 +85,8 @@ def main(argv=None) -> int:
               "time_zone_for_report": "America/Chicago", "status": "HOLD",
               "worktree": str(ROOT), "branch": subprocess.check_output(
                   ["git", "branch", "--show-current"], cwd=ROOT, text=True).strip(),
-              "base_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
+              "base_commit": protocol["base_commit"],
+              "code_commit": subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip(),
               "package_file_sha256": hashes, "protocol_sha256": hashes["protocol.json"],
               "asset_audit_sha256": hashes["asset_audit.json"],
               "exact_source_reverified": source_matches_now,
