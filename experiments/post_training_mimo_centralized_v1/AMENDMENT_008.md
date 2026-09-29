@@ -14,9 +14,14 @@ is independently supported by its traceback, event order and bound source, not
 merely by zero counters.
 
 Register accounting version2 prospectively for future E0 attempts. Journal each
-model-construction, checkpoint-load, tensor-copy, forward, backward, optimizer-step,
-checkpoint-save and reload attempt before invocation and record Python returns
-or exceptions afterward. Record submitted forward token positions, including
+model-construction, checkpoint-load, initial base-checkpoint tensor-copy, forward,
+backward, optimizer-step, checkpoint-save and reload attempt before invocation
+and record Python returns or exceptions afterward. The tensor-copy operation
+covers the 310 explicit serialized-checkpoint-to-base copies. Adapter, optimizer
+and RNG restoration belong to the composite checkpoint-reload span; separate
+restore_initial housekeeping is not individually counted. This journal records
+selected operation boundaries, not every tensor transfer or CUDA operation.
+Record submitted forward token positions, including
 padding where present, and training-forward positions separately. These are
 submission/return counters, not FLOP measurements or declarations of numerical
 success. A hard kill may leave a pending call; missing completion cannot mean zero

@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from experiments.post_training_mimo_centralized_v1.scripts import e1_gates as gates
 
@@ -15,11 +16,11 @@ from experiments.post_training_mimo_centralized_v1.scripts import e1_gates as ga
 ROOT = Path(__file__).resolve().parents[1]
 
 
-def synthetic_result():
+def synthetic_result(generated=1):
     """A values-only fixture. It deliberately has no model/bundle provenance."""
     stages = ["preload", "loaded"] + [f"base_parity_{i}" for i in range(32)]
     stages += [f"zero_parity_{i}" for i in range(32)]
-    stages += ["native_padding_2_0", "native_padding_0_2", "native_padding_2_2", "sample"]
+    stages += ["native_padding_2_0", "native_padding_0_2", "native_padding_2_2"] + ["sample"] * generated
     for length in (256, 512, 1024):
         stages += [f"before_backward_{length}", f"backward_{length}", f"after_step_{length}"]
     stages += ["complete"]
@@ -28,20 +29,115 @@ def synthetic_result():
                   "gpu_reserved_gib": 1, "peak_allocated_gib": 1, "disk_free_gib": 10}
                  for i, stage in enumerate(stages)]
     checks = {name: True for name in gates.TRUE_CHECKS}
+    tokens = [42] * generated
+    if generated < 32:
+        tokens[-1] = 151645
     checks.update(zero_adapter_parity={"prompts": 32, "max_abs": 0.0},
-                  sampled_logprobs={"max_abs": .001, "mean_abs": .0001, "tokens": [151645],
-                                    "stop_reason": "eos", "backend": "full_prefix_no_cache_temperature1_topk0_topp1"})
+                  sampled_logprobs={"max_abs": .001, "mean_abs": .0001, "tokens": tokens,
+                                    "stop_reason": "eos" if tokens[-1] == 151645 else "length",
+                                    "backend": "full_prefix_no_cache_temperature1_topk0_topp1"})
+    operations = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310,
+                  "forward": 75 + generated, "backward": 5, "optimizer_step": 5,
+                  "checkpoint_save": 1, "checkpoint_reload": 1}
+    positions = 41704 + 81 * generated + generated * (generated - 1) // 2
+    accounting = {"accounting_version": 2, "max_optimizer_calls": 5, "last_call_id": 399 + generated,
+                  "operations": {name: {"attempted": number, "returned": number, "failed": 0, "pending": 0}
+                                 for name, number in operations.items()},
+                  "pending_calls": [], "forward_input_positions_attempted": positions,
+                  "forward_input_positions_returned": positions,
+                  "training_forward_input_positions_attempted": 3840,
+                  "training_forward_input_positions_returned": 3840}
     return {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0", "status": gates.PASS_STATUS,
             "evidence_level": "MEASURED / REPRODUCED", "dirty_at_launch": False,
             "pretrained_loads": 1, "optimizer_steps": 5, "training_tokens": 3840,
-            "generation_tokens": 1, "teacher_calls": 0, "e1_authorized": False,
+            "generation_tokens": generated, "teacher_calls": 0, "e1_authorized": False,
+            "accounting_version": 2, "call_accounting": accounting,
             "code_sha": "a" * 40, "config_sha256": gates.CONFIG_SHA256,
-            "wall_seconds": 100, "checks": checks, "resources": resources,
+            "wall_seconds": 1000, "checks": checks, "resources": resources,
             "resource_profiles": [{"context": length, "loss": 1, "gradient_norm": 1, "seconds": 2,
                                    "tokens_per_second": length / 2, "peak_allocated_bytes": 1024,
                                    "optimizer_tensor_bytes": 512} for length in (256, 512, 1024)],
-            "load_seconds": 1, "generation_seconds": 1, "generation_tokens_per_second": 1,
+            "load_seconds": 1, "generation_seconds": 1, "generation_tokens_per_second": generated,
             "checkpoint_save_seconds": 1, "checkpoint_reload_seconds": 1}
+
+
+def synthetic_journal(result, tensor_names):
+    """Independently stage the registered mechanics with synthetic times, never native calls."""
+    events = []
+    resource_index = call_index = 0
+
+    def emit(kind, **fields):
+        event = {"elapsed_seconds": len(events) / 10, "event": kind, **fields}
+        events.append(event)
+
+    def begin(operation, stage, positions=0, training=False):
+        nonlocal call_index
+        call_index += 1
+        fields = {"accounting_version": 2, "call_id": call_index, "operation": operation,
+                  "stage": stage, "input_positions": positions, "training": training}
+        emit("operation_attempt", **fields)
+        return fields
+
+    def call(operation, stage, positions=0, training=False):
+        fields = begin(operation, stage, positions, training)
+        emit("operation_returned", **fields)
+
+    def resource(stage):
+        nonlocal resource_index
+        sample = result["resources"][resource_index]
+        assert sample["stage"] == stage
+        resource_index += 1
+        sample["elapsed_seconds"] = len(events) / 10
+        emit("resource", **sample)
+
+    emit("runtime_import_start")
+    emit("runtime_import_complete")
+    resource("preload")
+    call("model_construct", "model_construct")
+    checkpoint = begin("checkpoint_load", "checkpoint_load")
+    for tensor in sorted(tensor_names):
+        call("tensor_copy", "tensor_copy:" + tensor)
+    emit("operation_returned", **checkpoint)
+    resource("loaded")
+    for phase in ("base_parity", "zero_parity"):
+        for prompt in range(32):
+            name = f"{phase}_{prompt}"
+            call("forward", name, (256, 512, 1024)[prompt % 3])
+            resource(name)
+    call("forward", "padding_reference", 80)
+    for name, length in (("native_padding_2_0", 82), ("native_padding_0_2", 82), ("native_padding_2_2", 84)):
+        call("forward", name, length)
+        resource(name)
+    call("forward", "causality_perturbed", 80)
+    for sample in range(result["generation_tokens"]):
+        call("forward", f"sample_{sample}", 80 + sample)
+        resource("sample")
+    call("forward", "sampled_logprobs_offline", 80 + result["generation_tokens"])
+    for profile in result["resource_profiles"]:
+        length = profile["context"]
+        stage = f"training_{length}"
+        resource(f"before_backward_{length}")
+        call("forward", stage, length, True)
+        call("backward", stage)
+        resource(f"backward_{length}")
+        call("optimizer_step", stage)
+        emit("resource_profile", profile=deepcopy(profile))
+        resource(f"after_step_{length}")
+    call("checkpoint_save", "adapter_resume_save")
+    for stage in ("resume_uninterrupted", "resume_reloaded"):
+        if stage == "resume_reloaded":
+            call("checkpoint_reload", "adapter_resume_reload")
+        call("forward", stage, 1024, True)
+        call("backward", stage)
+        call("optimizer_step", stage)
+    resource("complete")
+    return events
+
+
+def synthetic_cost(result):
+    return {name: deepcopy(result[name]) for name in (
+        "wall_seconds", "training_tokens", "generation_tokens", "optimizer_steps", "pretrained_loads",
+        "teacher_calls", "accounting_version", "call_accounting")}
 
 
 class E1GateControls(unittest.TestCase):
@@ -71,6 +167,15 @@ class E1GateControls(unittest.TestCase):
         self.assertFalse(report["e1_launch_ready"])
         self.assertFalse(report["native_launch_authorized"])
         self.assertTrue(report["no_native_executor"])
+
+    def test_historical_blocked_v3_needs_no_new_accounting_or_journal(self):
+        result = json.loads((ROOT / "results/e0_titan_v3/E0_RESULT.json").read_bytes())
+        self.assertNotIn("accounting_version", result)
+        report = gates.inspect_e0(ROOT, e0_directory=ROOT / "results/e0_titan_v3")
+        self.assertEqual(report["status"], "BLOCKED")
+        self.assertEqual([item["code"] for item in report["reasons"]], ["E0_NOT_PASSED", "E0_RECORDED_FAILURE"])
+        self.assertEqual(len(report["bound_files"]), 1)
+        self.assertFalse(report["native_launch_authorized"])
 
     def test_status_string_alone_is_not_native_evidence(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -203,9 +308,153 @@ class E1GateControls(unittest.TestCase):
             for name, value in (("E0_RESULT.json", result), ("CONFIG.json", self.config),
                                 ("SOURCE_RECEIPT.json", source), ("RUNTIME_RECEIPT.json", runtime)):
                 (path / name).write_text(json.dumps(value))
-            outcome = gates.inspect_e0(ROOT, e0_directory=path)
+            # Isolate the runtime check while the new worker source is still
+            # uncommitted; no mock grants a passing full evidence bundle.
+            with patch.object(gates, "_verify_source"), patch.object(gates, "_verify_committed_helper"):
+                outcome = gates.inspect_e0(ROOT, e0_directory=path)
         self.assertEqual(outcome["status"], "BLOCKED")
         self.assertEqual(outcome["reasons"][0]["code"], "RUNTIME_IDENTITY")
+
+    def journal_bundle(self, generated=1):
+        result = synthetic_result(generated)
+        names = sorted(self.inventory["tensors"])
+        events = synthetic_journal(result, names)
+        return result, synthetic_cost(result), events, names
+
+    def test_successful_accounting_and_full_journal_for_minimum_and_maximum_generation(self):
+        for generated in (1, 7, 32):
+            result, cost, events, names = self.journal_bundle(generated)
+            with self.subTest(generated=generated):
+                self.assertIsNone(gates.validate_accounting_bundle(result, cost, events, self.config, names))
+                attempts = [event for event in events if event["event"] == "operation_attempt"]
+                forwards = [event for event in attempts if event["operation"] == "forward"]
+                self.assertEqual(len(attempts), 399 + generated)
+                self.assertEqual(len(forwards), 75 + generated)
+                self.assertEqual(sum(event["input_positions"] for event in forwards),
+                                 41704 + 81 * generated + generated * (generated - 1) // 2)
+                self.assertEqual(sum(event["input_positions"] for event in forwards if event["training"]), 3840)
+
+    def test_independent_gate_fixture_agrees_with_worker_pure_journal_reconstruction(self):
+        # Importing this module does not run its guarded native entrypoint.
+        # The gate itself never imports it or delegates journal checking to it.
+        from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import verify_call_journal
+        for generated in (1, 32):
+            result, cost, events, names = self.journal_bundle(generated)
+            rebuilt = verify_call_journal(events, snapshot=result["call_accounting"], maximum_optimizer_calls=5)
+            self.assertEqual(rebuilt, result["call_accounting"])
+            gates.validate_accounting_bundle(result, cost, events, self.config, names)
+
+    def test_inspection_rejects_corrupt_journal_before_weight_streaming(self):
+        result, cost, events, names = self.journal_bundle()
+        source = json.loads((ROOT / "results/e0_titan_v2/SOURCE_RECEIPT.json").read_bytes())
+        runtime = json.loads((ROOT / "results/e0_titan_v2/RUNTIME_RECEIPT.json").read_bytes())
+        result["code_sha"] = source["code_sha"]
+        model, trainable = self.inventories()
+        tokenizer = {"class_name": "Qwen2TokenizerFast", "template_sha256": gates.TEMPLATE_SHA256,
+                     "eos_id": 151645, "original_pad_id": 151643, "raw_roundtrip": True,
+                     "enable_thinking": False, "add_generation_prompt": True, "raw_ids": [42]}
+        events.pop(next(index for index, event in enumerate(events)
+                        if event.get("operation") == "optimizer_step" and event["event"] == "operation_attempt"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory)
+            for name, value in {"E0_RESULT.json": result, "CONFIG.json": self.config,
+                                "SOURCE_RECEIPT.json": source, "RUNTIME_RECEIPT.json": runtime,
+                                "TOKENIZER_RECEIPT.json": tokenizer, "MODEL_RECEIPT.json": model,
+                                "TRAINABLE_INVENTORY.json": trainable, "COST_LEDGER.json": cost,
+                                "RESOURCE_BASELINE.json": {"status": gates.PASS_STATUS,
+                                    "samples": result["resources"], "profiles": result["resource_profiles"]}}.items():
+                (path / name).write_text(json.dumps(value))
+            (path / "EVENTS.jsonl").write_text("".join(json.dumps(event) + "\n" for event in events))
+            with patch.object(gates, "_verify_source"), patch.object(gates, "_verify_committed_helper"), \
+                    patch.object(gates, "_check_weight_tensor_bytes") as weights:
+                report = gates.inspect_e0(ROOT, e0_directory=path)
+            self.assertEqual(report["status"], "BLOCKED")
+            self.assertEqual(report["reasons"][0]["code"], "EVENTS_CONTRACT")
+            self.assertIn(str(path / "EVENTS.jsonl"), report["bound_files"])
+            self.assertFalse(report["native_launch_authorized"])
+            weights.assert_not_called()
+
+    def test_new_pass_without_version2_counts_is_rejected(self):
+        for missing in ("accounting_version", "call_accounting"):
+            result = synthetic_result()
+            del result[missing]
+            with self.subTest(missing=missing), self.assertRaises(gates.GateError):
+                gates.validate_result(result, self.config)
+        result = synthetic_result()
+        result["accounting_version"] = 1
+        with self.assertRaises(gates.GateError):
+            gates.validate_result(result, self.config)
+
+    def test_cost_missing_legacy_or_accounting_fields_and_extra_claims_rejected(self):
+        for field in gates.COST_FIELDS:
+            result, cost, events, names = self.journal_bundle()
+            del cost[field]
+            with self.subTest(field=field), self.assertRaisesRegex(gates.GateError, "costs and version-2"):
+                gates.validate_accounting_bundle(result, cost, events, self.config, names)
+        result, cost, events, names = self.journal_bundle()
+        cost["native_qualified"] = True
+        with self.assertRaises(gates.GateError):
+            gates.validate_accounting_bundle(result, cost, events, self.config, names)
+
+    def test_failed_pending_over_limit_or_undercounted_operations_cannot_pass(self):
+        edits = [lambda acc: acc["operations"]["optimizer_step"].update(attempted=6),
+                 lambda acc: acc["operations"]["forward"].update(returned=75, pending=1),
+                 lambda acc: acc["operations"]["backward"].update(failed=1),
+                 lambda acc: acc["operations"]["model_construct"].update(attempted=True),
+                 lambda acc: acc.update(forward_input_positions_attempted=1),
+                 lambda acc: acc.update(training_forward_input_positions_returned=3839),
+                 lambda acc: acc.update(pending_calls=[{"call_id": 400, "operation": "optimizer_step"}]),
+                 lambda acc: acc.update(max_optimizer_calls=6), lambda acc: acc.update(last_call_id=399)]
+        for edit in edits:
+            result, cost, events, names = self.journal_bundle()
+            edit(result["call_accounting"])
+            cost = synthetic_cost(result)
+            with self.assertRaisesRegex(gates.GateError, "version-2 operation counts"):
+                gates.validate_accounting_bundle(result, cost, events, self.config, names)
+
+    def test_deleted_duplicate_reordered_or_failed_operation_record_rejected(self):
+        for mutation in ("drop", "duplicate", "reorder", "failed", "early_parent_return"):
+            result, cost, events, names = self.journal_bundle()
+            index = next(i for i, event in enumerate(events) if event.get("operation") == "tensor_copy")
+            if mutation == "drop":
+                events.pop(index)
+            elif mutation == "duplicate":
+                events.insert(index, deepcopy(events[index]))
+            elif mutation == "reorder":
+                events[index], events[index + 1] = events[index + 1], events[index]
+            elif mutation == "failed":
+                events[index + 1]["event"] = "operation_failed"
+            else:
+                end = next(i for i, event in enumerate(events) if event.get("operation") == "checkpoint_load"
+                           and event["event"] == "operation_returned")
+                events[index], events[end] = events[end], events[index]
+            with self.subTest(mutation=mutation), self.assertRaises(gates.GateError):
+                gates.validate_accounting_bundle(result, cost, events, self.config, names)
+
+    def test_stage_call_id_input_training_or_timestamp_drift_rejected(self):
+        for field, value in (("stage", "sample_999"), ("call_id", 5000), ("input_positions", 79),
+                             ("training", True), ("elapsed_seconds", -1), ("accounting_version", True)):
+            result, cost, events, names = self.journal_bundle()
+            event = next(event for event in events if event.get("stage") == "sample_0"
+                         and event["event"] == "operation_attempt")
+            event[field] = value
+            with self.subTest(field=field), self.assertRaises(gates.GateError):
+                gates.validate_accounting_bundle(result, cost, events, self.config, names)
+
+    def test_full_resource_profile_events_and_guard_order_required(self):
+        for mutation in ("drop_profile", "profile_cost", "drop_guard", "unknown_event"):
+            result, cost, events, names = self.journal_bundle()
+            index = next(i for i, event in enumerate(events) if event["event"] == "resource_profile")
+            if mutation == "drop_profile":
+                events.pop(index)
+            elif mutation == "profile_cost":
+                events[index]["profile"]["seconds"] = 1
+            elif mutation == "drop_guard":
+                events.pop(index + 1)
+            else:
+                events[index]["event"] = "unregistered_success"
+            with self.subTest(mutation=mutation), self.assertRaises(gates.GateError):
+                gates.validate_accounting_bundle(result, cost, events, self.config, names)
 
     def inventories(self):
         modules = [f"model.layers.{i}.self_attn.{projection}_proj" for i in range(28) for projection in ("q", "v")]

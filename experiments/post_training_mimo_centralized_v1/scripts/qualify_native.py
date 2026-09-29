@@ -39,6 +39,198 @@ def require(condition, message):
         raise RuntimeError(message)
 
 
+ACCOUNTING_VERSION = 2
+CALL_OPERATIONS = ("model_construct", "checkpoint_load", "tensor_copy", "forward",
+                   "backward", "optimizer_step", "checkpoint_save", "checkpoint_reload")
+_POSITION_COUNTERS = ("forward_input_positions_attempted", "forward_input_positions_returned",
+                      "training_forward_input_positions_attempted", "training_forward_input_positions_returned")
+
+
+def _call_metadata(operation, stage, input_positions, training):
+    require(operation in CALL_OPERATIONS, "unregistered accounted operation")
+    require(type(stage) is str and bool(stage) and stage == stage.strip(), "invalid accounting stage")
+    require(type(input_positions) is int and type(training) is bool, "invalid operation metadata types")
+    require(input_positions > 0 if operation == "forward" else input_positions == 0 and not training,
+            "input positions/training flag apply only to forward calls")
+    return {"operation": operation, "stage": stage, "input_positions": input_positions, "training": training}
+
+
+class CallAccounting:
+    """Stdlib call journal; neither RNG nor inputs/results are inspected or changed.
+
+    An attempt marker is emitted before calling the operation. It records intent
+    to invoke, not proof that execution reached the callable before a hard kill.
+    Returned means the wrapped Python call/span returned, not that asynchronous
+    GPU work finished or passed later numerical checks. A raised call is failed;
+    unmatched attempts remain pending. The event sink must persist its records.
+    If journal I/O itself fails, in-memory accounting survives, but a snapshot that
+    cannot be reconciled with durable events is not qualifying evidence.
+
+    on_return is reserved for immediate legacy completed-step accounting; it runs
+    after the operation returned and before the returned event is emitted. Errors
+    from that hook remain errors after a returned call, never failed model calls.
+
+    tensor_copy covers the 310 initial serialized-checkpoint-to-base copies only.
+    Adapter/optimizer/RNG reload work is inside the checkpoint_reload span;
+    restore_initial housekeeping is not separately counted as tensor_copy. This
+    is an explicit operation ledger, not a census of every internal tensor copy.
+    """
+    def __init__(self, emit, maximum_optimizer_calls=5):
+        require(callable(emit), "accounting event sink required")
+        require(type(maximum_optimizer_calls) is int and 0 <= maximum_optimizer_calls <= 5,
+                "accounting optimizer ceiling must not exceed registered five calls")
+        self.emit = emit
+        self.maximum_optimizer_calls = maximum_optimizer_calls
+        self.last_call_id = 0
+        self.operations = {name: {state: 0 for state in ("attempted", "returned", "failed", "pending")}
+                           for name in CALL_OPERATIONS}
+        self.positions = dict.fromkeys(_POSITION_COUNTERS, 0)
+        self.pending = {}
+        self.stack = []
+
+    def begin(self, operation, *, stage, input_positions=0, training=False):
+        metadata = _call_metadata(operation, stage, input_positions, training)
+        if operation == "optimizer_step":
+            require(self.operations[operation]["attempted"] < self.maximum_optimizer_calls,
+                    "OPTIMIZER_CALL_BUDGET")
+        self.last_call_id += 1
+        call = {"call_id": self.last_call_id, **metadata}
+        self.operations[operation]["attempted"] += 1
+        self.operations[operation]["pending"] += 1
+        self.pending[call["call_id"]] = call
+        self.stack.append(call["call_id"])
+        if operation == "forward":
+            self.positions["forward_input_positions_attempted"] += input_positions
+            if training:
+                self.positions["training_forward_input_positions_attempted"] += input_positions
+        self.emit("operation_attempt", accounting_version=ACCOUNTING_VERSION, **call)
+        return call["call_id"]
+
+    def _finish(self, call_id, state):
+        require(type(call_id) is int and bool(self.stack) and self.stack[-1] == call_id,
+                "operation completion must match the innermost pending call")
+        call = self.pending.pop(call_id)
+        self.stack.pop()
+        self.operations[call["operation"]]["pending"] -= 1
+        self.operations[call["operation"]][state] += 1
+        if state == "returned" and call["operation"] == "forward":
+            self.positions["forward_input_positions_returned"] += call["input_positions"]
+            if call["training"]:
+                self.positions["training_forward_input_positions_returned"] += call["input_positions"]
+        return call
+
+    def returned(self, call_id, *, on_return=None):
+        call = self._finish(call_id, "returned")
+        try:
+            if on_return is not None:
+                on_return()
+        finally:
+            self.emit("operation_returned", accounting_version=ACCOUNTING_VERSION, **call)
+
+    def failed(self, call_id, error):
+        call = self._finish(call_id, "failed")
+        self.emit("operation_failed", accounting_version=ACCOUNTING_VERSION, **call,
+                  error_type=type(error).__name__, error_message=str(error)[:1000])
+
+    def call(self, operation, function, *, stage, input_positions=0, training=False, on_return=None):
+        require(callable(function) and (on_return is None or callable(on_return)), "accounted callable required")
+        call_id = self.begin(operation, stage=stage, input_positions=input_positions, training=training)
+        try:
+            value = function()
+        except BaseException as error:
+            # A nested journal-write failure may leave an inner intent pending.
+            # Preserve that uncertainty rather than inventing a terminal marker.
+            if self.stack and self.stack[-1] == call_id:
+                self.failed(call_id, error)
+            raise
+        self.returned(call_id, on_return=on_return)
+        return value
+
+    def snapshot(self):
+        return {"accounting_version": ACCOUNTING_VERSION, "max_optimizer_calls": self.maximum_optimizer_calls,
+                "last_call_id": self.last_call_id,
+                "operations": {name: dict(values) for name, values in self.operations.items()},
+                "pending_calls": [dict(self.pending[key]) for key in sorted(self.pending)],
+                **self.positions}
+
+
+def verify_call_journal(events, snapshot=None, maximum_optimizer_calls=5):
+    """Pure reconstruction of an ordered operation journal, allowing pending calls.
+
+    Accept a parsed EVENTS list, including unrelated runtime/resource records.
+    Unknown operation event kinds, invalid nesting, missing attempt records,
+    repeated completion, changed metadata, budget violations or snapshot drift
+    raise. Returned records are not efficacy or finite-GPU-work certificates.
+    Hard-kill recovery can call this without a final snapshot; pending is explicit.
+    """
+    require(type(events) is list, "journal must be a list")
+    require(type(maximum_optimizer_calls) is int and 0 <= maximum_optimizer_calls <= 5, "invalid journal optimizer ceiling")
+    counts = {name: dict.fromkeys(("attempted", "returned", "failed", "pending"), 0) for name in CALL_OPERATIONS}
+    positions = dict.fromkeys(_POSITION_COUNTERS, 0)
+    pending, stack, last_id = {}, [], 0
+    for record in events:
+        require(type(record) is dict and type(record.get("event")) is str, "invalid journal record")
+        kind = record["event"]
+        if not kind.startswith("operation_"):
+            continue
+        require(kind in {"operation_attempt", "operation_returned", "operation_failed"}, "unknown operation event")
+        fields = {"event", "accounting_version", "call_id", "operation", "stage", "input_positions", "training"}
+        if kind == "operation_failed":
+            fields |= {"error_type", "error_message"}
+            require(type(record.get("error_type")) is str and bool(record["error_type"])
+                    and type(record.get("error_message")) is str and len(record["error_message"]) <= 1000,
+                    "failed call requires bounded exception metadata")
+        require(fields <= set(record) <= fields | {"elapsed_seconds"}, "operation event fields differ")
+        if "elapsed_seconds" in record:
+            require(type(record["elapsed_seconds"]) in (int, float) and math.isfinite(record["elapsed_seconds"])
+                    and record["elapsed_seconds"] >= 0, "invalid event time")
+        require(type(record["accounting_version"]) is int and record["accounting_version"] == ACCOUNTING_VERSION,
+                "operation accounting version drift")
+        call_id = record["call_id"]
+        require(type(call_id) is int and call_id > 0, "invalid operation call ID")
+        call = {"call_id": call_id, **_call_metadata(record["operation"], record["stage"],
+                                                   record["input_positions"], record["training"])}
+        operation = call["operation"]
+        if kind == "operation_attempt":
+            require(call_id == last_id + 1, "operation call IDs must be consecutive")
+            if operation == "optimizer_step":
+                require(counts[operation]["attempted"] < maximum_optimizer_calls, "OPTIMIZER_CALL_BUDGET")
+            last_id = call_id
+            pending[call_id] = call
+            stack.append(call_id)
+            counts[operation]["attempted"] += 1
+            counts[operation]["pending"] += 1
+            if operation == "forward":
+                positions["forward_input_positions_attempted"] += call["input_positions"]
+                if call["training"]:
+                    positions["training_forward_input_positions_attempted"] += call["input_positions"]
+        else:
+            require(bool(stack) and stack[-1] == call_id and pending[call_id] == call,
+                    "operation completion nesting/metadata mismatch")
+            stack.pop()
+            del pending[call_id]
+            state = "returned" if kind == "operation_returned" else "failed"
+            counts[operation]["pending"] -= 1
+            counts[operation][state] += 1
+            if state == "returned" and operation == "forward":
+                positions["forward_input_positions_returned"] += call["input_positions"]
+                if call["training"]:
+                    positions["training_forward_input_positions_returned"] += call["input_positions"]
+    reconstructed = {"accounting_version": ACCOUNTING_VERSION, "max_optimizer_calls": maximum_optimizer_calls,
+                     "last_call_id": last_id, "operations": counts,
+                     "pending_calls": [pending[key] for key in sorted(pending)], **positions}
+    if snapshot is not None:
+        require(json.dumps(snapshot, sort_keys=True, allow_nan=False) == json.dumps(reconstructed, sort_keys=True, allow_nan=False),
+                "operation journal/snapshot mismatch")
+    return reconstructed
+
+
+def record_resource_profile(profiles, profile, emit):
+    """Retain an already measured completed profile before journaling it."""
+    profiles.append(dict(profile))
+    emit("resource_profile", profile=dict(profile))
+
+
 def install_lora(model, torch, rank=8, alpha=16):
     """FP32 factors, BF16 base; zero B preserves the original module function."""
     sites = [(name,module) for name,module in model.named_modules() if name.endswith((".q_proj", ".v_proj"))]
@@ -137,12 +329,17 @@ def run(args):
     result = dict(schema_version=1, experiment_id="RINEYA-0P6B-E0", status="RUNNING",
                   evidence_level="MEASURED / REPRODUCED", code_sha=head, dirty_at_launch=False,
                   config_sha256=sha(config_path), pretrained_loads=0, optimizer_steps=0,
-                  training_tokens=0, generation_tokens=0, teacher_calls=0, checks={}, resources=[])
+                  training_tokens=0, generation_tokens=0, teacher_calls=0, checks={}, resources=[],
+                  resource_profiles=[], accounting_version=ACCOUNTING_VERSION)
     write(out / "CONFIG.json", cfg)
     write(out / "SOURCE_RECEIPT.json", {"code_sha": head, "dirty": False, "script_sha256": sha(__file__)})
     def event(kind, **values):
         with (out / "EVENTS.jsonl").open("a", encoding="utf-8") as f:
-            f.write(json.dumps({"elapsed_seconds": time.monotonic()-started, "event": kind, **values}) + "\n")
+            f.write(json.dumps({"elapsed_seconds": time.monotonic()-started, "event": kind, **values}, allow_nan=False) + "\n")
+            f.flush()
+            os.fsync(f.fileno())
+    accounting = CallAccounting(event, cfg["maximum_optimizer_calls"])
+    result["call_accounting"] = accounting.snapshot()
     try:
         event("runtime_import_start")
         os.environ["HF_HUB_OFFLINE"] = "1"
@@ -226,26 +423,28 @@ def run(args):
         try:
             torch.set_default_dtype(torch.bfloat16)
             with torch.device("cuda:0"):
-                model = Qwen3ForCausalLM(model_cfg)
+                model = accounting.call("model_construct", lambda: Qwen3ForCausalLM(model_cfg), stage="model_construct")
         finally:
             torch.set_default_dtype(previous)
         model.eval().requires_grad_(False)
         states = model.state_dict()
         base_hash = {}
-        with safe_open(str(model_dir / "model.safetensors"), framework="pt", device="cpu") as weights:
-            keys = set(weights.keys())
-            require(set(states) - keys == {"lm_head.weight"} and not keys - set(states), "checkpoint key mismatch")
-            with torch.no_grad():
-                for name in sorted(keys):
-                    source = weights.get_tensor(name)
-                    require(source.shape == states[name].shape and source.dtype == states[name].dtype, "tensor mismatch")
-                    states[name].copy_(source)
-                    base_hash[name] = tensor_digest(torch, source)
-                    require(tensor_digest(torch, states[name]) == base_hash[name], "loaded tensor mismatch")
-            del source
+        def load_checkpoint():
+            with safe_open(str(model_dir / "model.safetensors"), framework="pt", device="cpu") as weights:
+                keys = set(weights.keys())
+                require(set(states) - keys == {"lm_head.weight"} and not keys - set(states), "checkpoint key mismatch")
+                with torch.no_grad():
+                    for name in sorted(keys):
+                        source = weights.get_tensor(name)
+                        require(source.shape == states[name].shape and source.dtype == states[name].dtype, "tensor mismatch")
+                        accounting.call("tensor_copy", lambda: states[name].copy_(source), stage="tensor_copy:" + name)
+                        base_hash[name] = tensor_digest(torch, source)
+                        require(tensor_digest(torch, states[name]) == base_hash[name], "loaded tensor mismatch")
+                del source
+            require(model.lm_head.weight is model.model.embed_tokens.weight, "embedding tie lost")
+            require(sum(p.numel() for p in model.parameters()) == 596049920, "parameter count mismatch")
+        accounting.call("checkpoint_load", load_checkpoint, stage="checkpoint_load")
         del states
-        require(model.lm_head.weight is model.model.embed_tokens.weight, "embedding tie lost")
-        require(sum(p.numel() for p in model.parameters()) == 596049920, "parameter count mismatch")
         result["pretrained_loads"] = 1
         result["load_seconds"] = time.monotonic()-load_start
         result["checks"]["exact_native_load"] = True
@@ -254,6 +453,11 @@ def run(args):
              primary_receipt_sha256=sha(cfg["primary_receipt"]), unique_parameters=596049920,
              tensor_sha256=base_hash, loader="stock Qwen3 allocated BF16 on CUDA; strict streamed safetensors copy",
              tied=True, config=model_cfg.to_dict()))
+
+        def forward(ids, stage, training=False, **kwargs):
+            # numel reads shape metadata and includes actual left/right padding.
+            return accounting.call("forward", lambda: model(ids, **kwargs), stage=stage,
+                                   input_positions=ids.numel(), training=training)
 
         def prompt_ids(i, length):
             prompt = tokenizer.apply_chat_template([{"role": "user", "content":
@@ -271,7 +475,7 @@ def run(args):
             for i in range(cfg["parity_prompts"]):
                 length = cfg["contexts"][i % len(cfg["contexts"]) ]
                 ids = prompt_ids(i, length)
-                logits = model(ids, use_cache=False, logits_to_keep=1).logits.float()
+                logits = forward(ids, f"base_parity_{i}", use_cache=False, logits_to_keep=1).logits.float()
                 require(bool(torch.isfinite(logits).all()), "nonfinite base forward")
                 baseline.append(logits.cpu())
                 del logits
@@ -285,8 +489,8 @@ def run(args):
         parity_max = 0.0
         with torch.no_grad():
             for i, original in enumerate(baseline):
-                logits = model(prompt_ids(i, cfg["contexts"][i % len(cfg["contexts"])]),
-                               use_cache=False, logits_to_keep=1).logits.float().cpu()
+                logits = forward(prompt_ids(i, cfg["contexts"][i % len(cfg["contexts"])]),
+                                 f"zero_parity_{i}", use_cache=False, logits_to_keep=1).logits.float().cpu()
                 diff = (logits-original).abs().max().item()
                 parity_max = max(parity_max, diff)
                 require(diff <= cfg["zero_adapter_atol"], "zero-adapter parity failed")
@@ -297,14 +501,15 @@ def run(args):
 
         with torch.no_grad():
             short_ids = prompt_ids(950,80)
-            short_logits = model(short_ids,use_cache=False).logits
+            short_logits = forward(short_ids, "padding_reference", use_cache=False).logits
             for left,right in ((2,0),(0,2),(2,2)):
                 padded = torch.cat([torch.full((1,left),151645,device="cuda"),short_ids,
                                     torch.full((1,right),151645,device="cuda")],1)
                 am = torch.zeros_like(padded)
                 am[:,left:left+80] = 1
                 positions = (am.cumsum(-1)-1).clamp(min=0)
-                padded_logits = model(padded,attention_mask=am,position_ids=positions,use_cache=False).logits[:,left:left+80]
+                padded_logits = forward(padded, f"native_padding_{left}_{right}",
+                                        attention_mask=am,position_ids=positions,use_cache=False).logits[:,left:left+80]
                 ref = short_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
                 observed = padded_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
                 errors = (ref-observed).abs()
@@ -313,7 +518,7 @@ def run(args):
                 guard(f"native_padding_{left}_{right}")
             perturbed = short_ids.clone()
             perturbed[:,-3:] = torch.tensor([[17,18,19]],device="cuda")
-            altered = model(perturbed,use_cache=False).logits[:,:-3]
+            altered = forward(perturbed, "causality_perturbed", use_cache=False).logits[:,:-3]
             require(torch.equal(short_logits[:,:-3],altered), "future-token causality failure")
             del short_logits, padded_logits, altered, ref, observed
         result["checks"]["native_padding_and_causality"] = True
@@ -326,7 +531,7 @@ def run(args):
         with torch.no_grad():
             while len(generated) < cfg["generation_cap"]:
                 all_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
-                scores = model(all_ids, use_cache=False, logits_to_keep=1).logits[0, -1].float()
+                scores = forward(all_ids, f"sample_{len(generated)}", use_cache=False, logits_to_keep=1).logits[0, -1].float()
                 probs = scores.softmax(-1)
                 tok = int(torch.multinomial(probs, 1).item())
                 online.append(float(scores.log_softmax(-1)[tok]))
@@ -336,7 +541,7 @@ def run(args):
                 if tok in cfg["eos_ids"]:
                     break
             full_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
-            logits = model(full_ids, use_cache=False).logits
+            logits = forward(full_ids, "sampled_logprobs_offline", use_cache=False).logits
             pos = seed_ids.shape[1]-1
             lp = logits[0, pos:pos+len(generated)].float().log_softmax(-1)
             target = torch.tensor(generated, device="cuda")
@@ -368,7 +573,13 @@ def run(args):
             optimizer.state.clear()
             optimizer.zero_grad(set_to_none=True)
 
-        profiles = []
+        def optimizer_step(training_tokens, stage):
+            def completed():
+                result["optimizer_steps"] += 1
+                result["training_tokens"] += training_tokens
+            return accounting.call("optimizer_step", optimizer.step, stage=stage, on_return=completed)
+
+        profiles = result["resource_profiles"]
         for length in cfg["contexts"]:
             restore_initial()
             guard(f"before_backward_{length}")
@@ -380,7 +591,7 @@ def run(args):
             labels[:,-3:] = tail
             torch.cuda.synchronize()
             t0 = time.monotonic()
-            output = model(ids, use_cache=False).logits
+            output = forward(ids, f"training_{length}", training=True, use_cache=False).logits
             loss = completion_loss(torch, output, ids, labels)
             # Independent summed per-position NLL avoids allocating FP32 logits for
             # unsupervised prompt positions solely for this mechanical check.
@@ -389,21 +600,20 @@ def run(args):
             require(abs(float(loss.detach())-float(ref.detach())) <= cfg["ce_atol"], "causal-shift CE disagreement")
             del ref
             require(bool(torch.isfinite(loss)), "nonfinite loss")
-            loss.backward()
+            accounting.call("backward", loss.backward, stage=f"training_{length}")
             require(all(p.grad is None for n,p in model.named_parameters() if n not in allowed), "gradient leak")
             require(all(p.grad is not None and bool(torch.isfinite(p.grad).all()) for p in allowed.values()), "missing/nonfinite gradient")
             norm = torch.nn.utils.clip_grad_norm_(list(allowed.values()),1.0,error_if_nonfinite=True)
             guard(f"backward_{length}")
-            optimizer.step()
-            result["optimizer_steps"] += 1
-            result["training_tokens"] += length
+            optimizer_step(length, f"training_{length}")
             require(any(not torch.equal(p.detach().cpu(), initial[n]) for n,p in allowed.items()), "optimizer made no update")
             torch.cuda.synchronize()
             duration = time.monotonic()-t0
-            profiles.append(dict(context=length, loss=float(loss.detach()), gradient_norm=float(norm), seconds=duration,
-                                 tokens_per_second=length/duration, peak_allocated_bytes=torch.cuda.max_memory_allocated(),
-                                 optimizer_tensor_bytes=sum(v.numel()*v.element_size() for s in optimizer.state.values()
-                                                            for v in s.values() if torch.is_tensor(v))))
+            record_resource_profile(profiles,
+                dict(context=length, loss=float(loss.detach()), gradient_norm=float(norm), seconds=duration,
+                     tokens_per_second=length/duration, peak_allocated_bytes=torch.cuda.max_memory_allocated(),
+                     optimizer_tensor_bytes=sum(v.numel()*v.element_size() for s in optimizer.state.values()
+                                                for v in s.values() if torch.is_tensor(v))), event)
             del output, loss
             optimizer.zero_grad(set_to_none=True)
             guard(f"after_step_{length}")
@@ -413,34 +623,35 @@ def run(args):
         state = dict(parameters={n:p.detach().cpu().clone() for n,p in allowed.items()}, optimizer=optimizer.state_dict(),
                      torch_rng=torch.get_rng_state(), cuda_rng=torch.cuda.get_rng_state_all())
         t0 = time.monotonic()
-        torch.save(state,checkpoint)
+        accounting.call("checkpoint_save", lambda: torch.save(state,checkpoint), stage="adapter_resume_save")
         result["checkpoint_save_seconds"] = time.monotonic()-t0
         del state
-        def one_more():
+        def one_more(stage):
             optimizer.zero_grad(set_to_none=True)
-            output = model(ids,use_cache=False).logits
+            output = forward(ids, stage, training=True, use_cache=False).logits
             loss = completion_loss(torch, output, ids, labels)
             require(bool(torch.isfinite(loss)), "resume nonfinite loss")
-            loss.backward()
+            accounting.call("backward", loss.backward, stage=stage)
             require(all(p.grad is None for n,p in model.named_parameters() if n not in allowed), "resume gradient leak")
             torch.nn.utils.clip_grad_norm_(list(allowed.values()),1.0,error_if_nonfinite=True)
-            optimizer.step()
+            optimizer_step(ids.shape[1], stage)
             require(all(bool(torch.isfinite(p).all()) for p in allowed.values()), "resume nonfinite parameter")
-            result["optimizer_steps"] += 1
-            result["training_tokens"] += ids.shape[1]
             return {n:p.detach().cpu().clone() for n,p in allowed.items()}, float(loss.detach())
-        expected, expected_loss = one_more()
+        expected, expected_loss = one_more("resume_uninterrupted")
         t0 = time.monotonic()
-        saved = torch.load(checkpoint, map_location="cuda", weights_only=True)
-        with torch.no_grad():
-            for n,p in allowed.items():
-                p.copy_(saved["parameters"][n])
-        optimizer.load_state_dict(saved["optimizer"])
-        torch.set_rng_state(saved["torch_rng"].cpu())
-        torch.cuda.set_rng_state_all([s.cpu() for s in saved["cuda_rng"]])
+        def reload_checkpoint():
+            saved = torch.load(checkpoint, map_location="cuda", weights_only=True)
+            with torch.no_grad():
+                for n,p in allowed.items():
+                    p.copy_(saved["parameters"][n])
+            optimizer.load_state_dict(saved["optimizer"])
+            torch.set_rng_state(saved["torch_rng"].cpu())
+            torch.cuda.set_rng_state_all([s.cpu() for s in saved["cuda_rng"]])
+            return saved
+        saved = accounting.call("checkpoint_reload", reload_checkpoint, stage="adapter_resume_reload")
         result["checkpoint_reload_seconds"] = time.monotonic()-t0
         del saved
-        actual, actual_loss = one_more()
+        actual, actual_loss = one_more("resume_reloaded")
         require(expected_loss == actual_loss and all(torch.equal(expected[n],actual[n]) for n in expected),
                 "deterministic resume disagreement")
         result["checks"]["save_reload_resume_bitwise"] = True
@@ -456,7 +667,6 @@ def run(args):
         require(sha(model_dir/"model.safetensors") == cfg["weight_sha256"], "source weight mutated")
         result["checks"]["frozen_base_unchanged"] = True
         result["checks"]["finite_scoped_backward"] = True
-        result["resource_profiles"] = profiles
         result["status"] = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
         result["unqualified"] = ["KV-cache sampler", "E1 data/replay", "held-out capability", "long context beyond1024"]
         guard("complete")
@@ -464,16 +674,19 @@ def run(args):
         result["status"] = "BLOCKED_E0"
         result["error"] = str(exc)
         result["traceback"] = traceback.format_exc()
+        result["call_accounting"] = accounting.snapshot()
         write(out/"FAILURE_RECEIPT.json", {k:v for k,v in result.items() if k != "resources"})
         event("failure", error=str(exc))
     finally:
         result["wall_seconds"] = time.monotonic()-started
         result["e1_authorized"] = False
+        result["call_accounting"] = accounting.snapshot()
         write(out/"E0_RESULT.json", result)
         write(out/"RESOURCE_BASELINE.json", dict(status=result["status"], samples=result["resources"],
                                                 profiles=result.get("resource_profiles")))
         write(out/"COST_LEDGER.json", {k:result[k] for k in ("wall_seconds","training_tokens","generation_tokens",
-                                                           "optimizer_steps","pretrained_loads","teacher_calls")})
+                                                           "optimizer_steps","pretrained_loads","teacher_calls",
+                                                           "accounting_version","call_accounting")})
         print(json.dumps({k:result.get(k) for k in ("status","error","wall_seconds","optimizer_steps")}), flush=True)
     return 0 if result["status"].startswith("PASS") else 2
 

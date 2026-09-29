@@ -2,7 +2,7 @@
 
 Contract: a nonpassing E0_RESULT stops E0 inspection immediately. A claimed pass
 must bind the pinned E0 config/static Titan receipts, committed and current native
-source, all native check values, complete resource/cost records, tokenizer/model/
+source, all native check values, complete version-2 call/resource/cost records, tokenizer/model/
 trainable inventories and process-containment receipts. Only then are current
 checkpoint assets streamed for SHA256 verification (never loaded as tensors).
 The model receipt's per-tensor digests are checked against safetensors byte spans.
@@ -15,6 +15,10 @@ source enrollment, fresh language grading and the 2048/4096 runtime extension
 remain blocked until their scoped native-evidence validators are implemented.
 Every returned report says native_launch_authorized=False/no_native_executor=True.
 E0's e1_authorized field is always False, including real successful E0 runs.
+New PASS claims require the complete ordered operation journal and matching
+attempted/returned counters. Historical nonpassing receipts remain readable
+without any version-2 fields. Journal verification here is independently defined;
+the native qualifier is never imported or executed by this diagnostic module.
 
 Public entry: preflight(experiment_root, *, e0_directory=None). Errors are stable
 codes in gate.reasons; bounded detail strings explain missing/drifted artifacts.
@@ -48,7 +52,9 @@ PACKAGES = {"torch": "2.10.0+cu126", "transformers": "4.57.1",
 TRUE_CHECKS = {"exact_native_load", "native_padding_and_causality", "eos_pad_mask",
                "save_reload_resume_bitwise", "frozen_base_unchanged", "finite_scoped_backward"}
 COST_FIELDS = ("wall_seconds", "training_tokens", "generation_tokens", "optimizer_steps",
-               "pretrained_loads", "teacher_calls")
+               "pretrained_loads", "teacher_calls", "accounting_version", "call_accounting")
+OPERATIONS = ("model_construct", "checkpoint_load", "tensor_copy", "forward", "backward",
+              "optimizer_step", "checkpoint_save", "checkpoint_reload")
 
 
 class GateError(ValueError):
@@ -124,6 +130,24 @@ def _same(actual, expected):
     return json.dumps(actual, sort_keys=True, allow_nan=False) == json.dumps(expected, sort_keys=True, allow_nan=False)
 
 
+def _successful_accounting(generated_tokens, maximum_optimizer_calls):
+    """Registered E0 workload totals; declarations alone are never journal evidence."""
+    counts = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310,
+              "forward": 75 + generated_tokens, "backward": 5, "optimizer_step": 5,
+              "checkpoint_save": 1, "checkpoint_reload": 1}
+    positions = 41704 + 81 * generated_tokens + generated_tokens * (generated_tokens - 1) // 2
+    return {
+        "accounting_version": 2, "max_optimizer_calls": maximum_optimizer_calls,
+        "last_call_id": 399 + generated_tokens,
+        "operations": {name: {"attempted": counts[name], "returned": counts[name], "failed": 0, "pending": 0}
+                       for name in OPERATIONS},
+        "pending_calls": [], "forward_input_positions_attempted": positions,
+        "forward_input_positions_returned": positions,
+        "training_forward_input_positions_attempted": 3840,
+        "training_forward_input_positions_returned": 3840,
+    }
+
+
 def validate_result(result, config):
     """Validate E0 values only. This function alone never qualifies an evidence gate."""
     _finite(result)
@@ -132,7 +156,8 @@ def validate_result(result, config):
     expected = {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0",
                 "evidence_level": "MEASURED / REPRODUCED", "dirty_at_launch": False,
                 "pretrained_loads": 1, "optimizer_steps": 5, "training_tokens": 3840,
-                "teacher_calls": 0, "e1_authorized": False, "config_sha256": CONFIG_SHA256}
+                "teacher_calls": 0, "e1_authorized": False, "config_sha256": CONFIG_SHA256,
+                "accounting_version": 2}
     for name, value in expected.items():
         _require(_same(result.get(name), value), "E0_RESULT_CONTRACT", name)
     _require(not result.get("error") and not result.get("traceback"), "E0_FAILURE_PRESENT", "pass contains failure")
@@ -156,6 +181,8 @@ def validate_result(result, config):
              "LIKELIHOOD_CONTRACT", "invalid sampled token stream")
     _require(type(result.get("generation_tokens")) is int and result["generation_tokens"] == len(tokens),
              "GENERATION_ACCOUNTING", "token stream and counter differ")
+    _require(_same(result.get("call_accounting"), _successful_accounting(len(tokens), config["maximum_optimizer_calls"])),
+             "CALL_ACCOUNTING_CONTRACT", "complete successful version-2 operation counts and input-position totals required")
     _require(sampled.get("backend") == "full_prefix_no_cache_temperature1_topk0_topp1"
              and _number(sampled.get("max_abs"), maximum=.03125)
              and _number(sampled.get("mean_abs"), maximum=.01)
@@ -206,6 +233,107 @@ def validate_result(result, config):
             _require(result[name] <= result["wall_seconds"], "TIMING_MEASUREMENT", name + " exceeds wall duration")
     _require(math.isclose(result["generation_tokens_per_second"], len(tokens) / result["generation_seconds"], rel_tol=1e-9),
              "TIMING_MEASUREMENT", "generation throughput disagrees with measured duration")
+
+
+def _expected_native_events(result, tensor_names):
+    """Complete registered successful event order, including nested checkpoint copies."""
+    _require(type(tensor_names) in (list, tuple) and len(tensor_names) == 310
+             and all(_nonblank(name) for name in tensor_names) and len(set(tensor_names)) == 310,
+             "JOURNAL_TENSOR_INVENTORY", "exact 310 serialized tensor names required")
+    events = [{"event": "runtime_import_start"}, {"event": "runtime_import_complete"}]
+    resources = iter(result["resources"])
+    call_id = 0
+
+    def resource(stage):
+        sample = next(resources)
+        _require(sample["stage"] == stage, "JOURNAL_RESOURCE_ORDER", stage)
+        events.append({"event": "resource", **sample})
+
+    def attempt(operation, stage, positions=0, training=False):
+        nonlocal call_id
+        call_id += 1
+        call = {"accounting_version": 2, "call_id": call_id, "operation": operation,
+                "input_positions": positions, "training": training, "stage": stage}
+        events.append({"event": "operation_attempt", **call})
+        return call
+
+    def returned(call):
+        events.append({"event": "operation_returned", **call})
+
+    def operation(name, stage, positions=0, training=False):
+        returned(attempt(name, stage, positions, training))
+
+    resource("preload")
+    operation("model_construct", "model_construct")
+    checkpoint = attempt("checkpoint_load", "checkpoint_load")
+    for name in sorted(tensor_names):
+        operation("tensor_copy", "tensor_copy:" + name)
+    returned(checkpoint)
+    resource("loaded")
+    for prefix in ("base_parity", "zero_parity"):
+        for index in range(32):
+            stage = f"{prefix}_{index}"
+            operation("forward", stage, (256, 512, 1024)[index % 3])
+            resource(stage)
+    operation("forward", "padding_reference", 80)
+    for left, right in ((2, 0), (0, 2), (2, 2)):
+        stage = f"native_padding_{left}_{right}"
+        operation("forward", stage, 80 + left + right)
+        resource(stage)
+    operation("forward", "causality_perturbed", 80)
+    for index in range(result["generation_tokens"]):
+        operation("forward", f"sample_{index}", 80 + index)
+        resource("sample")
+    operation("forward", "sampled_logprobs_offline", 80 + result["generation_tokens"])
+    for length, profile in zip((256, 512, 1024), result["resource_profiles"]):
+        stage = f"training_{length}"
+        resource(f"before_backward_{length}")
+        operation("forward", stage, length, True)
+        operation("backward", stage)
+        resource(f"backward_{length}")
+        operation("optimizer_step", stage)
+        events.append({"event": "resource_profile", "profile": profile})
+        resource(f"after_step_{length}")
+    operation("checkpoint_save", "adapter_resume_save")
+    for stage in ("resume_uninterrupted", "resume_reloaded"):
+        if stage == "resume_reloaded":
+            operation("checkpoint_reload", "adapter_resume_reload")
+        operation("forward", stage, 1024, True)
+        operation("backward", stage)
+        operation("optimizer_step", stage)
+    resource("complete")
+    _require(next(resources, None) is None and call_id == result["call_accounting"]["last_call_id"],
+             "JOURNAL_WORKLOAD_CONTRACT", "resource or call inventory differs")
+    return events
+
+
+def validate_accounting_bundle(result, cost, events, config, tensor_names):
+    """Check values, exact cost snapshot, and every ordered native journal record.
+
+    A successful journal has no failed or pending operation, duplicate/missing
+    attempt, metadata drift, extra call or unregistered event. Its order binds
+    forwards to resource guards and completed profiles, rather than accepting an
+    event-name whitelist or final counters on their own.
+    """
+    validate_result(result, config)
+    _require(type(cost) is dict and _same(cost, {name: result[name] for name in COST_FIELDS}),
+             "COST_RECEIPT_DRIFT", "legacy costs and version-2 accounting snapshot must match result exactly")
+    _require(type(events) is list, "EVENTS_CONTRACT", "ordered event list required")
+    expected = _expected_native_events(result, tensor_names)
+    _require(len(events) == len(expected), "EVENTS_CONTRACT", "incomplete or extra native operation/resource records")
+    previous = -1
+    for index, (event, contract) in enumerate(zip(events, expected)):
+        _require(type(event) is dict and set(event) == set(contract) | {"elapsed_seconds"},
+                 "EVENTS_CONTRACT", f"event {index} field inventory")
+        _require(_number(event["elapsed_seconds"]) and previous <= event["elapsed_seconds"] <= result["wall_seconds"],
+                 "EVENT_TIME", f"event {index} elapsed time")
+        previous = event["elapsed_seconds"]
+        observed = {key: value for key, value in event.items() if key != "elapsed_seconds"}
+        required = {key: value for key, value in contract.items() if key != "elapsed_seconds"}
+        _require(_same(observed, required), "EVENTS_CONTRACT", f"event {index} operation, stage, nesting or metadata differs")
+        if "elapsed_seconds" in contract:
+            _require(_same(event["elapsed_seconds"], contract["elapsed_seconds"]),
+                     "EVENTS_CONTRACT", f"event {index} resource sample timestamp differs")
 
 
 def _verify_source(repo, code_sha, relative, expected_hash, bound):
@@ -345,18 +473,13 @@ def inspect_e0(experiment_root, *, e0_directory=None):
                  and _same(resources.get("profiles"), result["resource_profiles"]),
                  "RESOURCE_RECEIPT_DRIFT", "resource receipt differs from result")
         cost = _read(bundle / "COST_LEDGER.json", bound)
-        _require(_same(cost, {name: result[name] for name in COST_FIELDS}), "COST_RECEIPT_DRIFT", "native costs differ")
         events_path = bundle / "EVENTS.jsonl"
         event_raw = events_path.read_bytes()
-        events = [_parse(line) for line in event_raw.splitlines() if line.strip()]
-        _require(all(type(event) is dict for event in events) and len(events) >= 2
-                 and events[0].get("event") == "runtime_import_start"
-                 and events[1].get("event") == "runtime_import_complete"
-                 and all(event.get("event") in {"runtime_import_start", "runtime_import_complete", "resource"} for event in events),
-                 "EVENTS_CONTRACT", "native events missing or contain failure")
-        _require(_same([{k: v for k, v in event.items() if k != "event"} for event in events if event["event"] == "resource"],
-                       result["resources"]), "EVENTS_CONTRACT", "event resource accounting differs")
         bound[str(events_path)] = {"sha256": hashlib.sha256(event_raw).hexdigest(), "bytes": len(event_raw)}
+        lines = event_raw.splitlines()
+        _require(bool(lines) and all(line.strip() for line in lines), "EVENTS_CONTRACT", "empty journal or blank journal record")
+        events = [_parse(line) for line in lines]
+        validate_accounting_bundle(result, cost, events, cfg, sorted(inventory["tensors"]))
         supervision = bundle.with_name(bundle.name + "_supervisor")
         supervisor = _read(supervision / "SUPERVISOR.json", bound)
         _require(supervisor.get("status") == "PASS_PROCESS_ONLY" and supervisor.get("reason") is None
