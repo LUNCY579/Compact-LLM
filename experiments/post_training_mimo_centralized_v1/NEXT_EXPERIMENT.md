@@ -1,6 +1,12 @@
 # Next experiment
 
-**Next native step: E0 only after a meaningful resource-state change.**
+**Goal blocked after three resumed turns. Next native step: E0 only after a meaningful resource-state change.**
+The latest OS-only observation at 05:54 UTC was 7.795 GiB, with no Python workers.
+It is below the 8.156 GiB pre-import state that produced the latest v4 failure;
+this is an inference against retrying, not a new post-import measurement.
+The fresh three-turn blocked audit passed; see receipts/RESUMPTION_003_BLOCKED_AUDIT.json.
+No eligible independent FAST task remains on the current critical path.
+
 The second resumed turn measured 7.287 GiB available before imports at 05:52 UTC,
 already below the 7.4 GiB post-import floor, with no Python workers. No attempt
 was launched. See receipts/RESUMPTION_002_BLOCKED_AUDIT.json. The earlier v3/v4

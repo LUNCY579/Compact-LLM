@@ -388,3 +388,26 @@ those facts. Current turn is an audit-only no-progress turn on the empirical gat
 not a verified wait or successful experiment. This is resumed blocked turn2; the
 old seven-turn audit is not carried forward. Goal staysactive until the required
 fresh audit threshold is met or resource state enables genuine progress.
+
+
+## Resumption 003: fresh blocked threshold met
+
+The prior continuation was an audit-only no-progress turn, not a live-job wait.
+Current clean HEAD164b5027c8e677e2663a695a9bab0361fc0f831c and OS state were rechecked.
+At05:54:17 UTC available physical memory8173644KiB (7.794994 GiB) and zero Python
+workers were observed. This is below the8.156063 GiB pre-import state of the latest
+v4 attempt, which failed at7.378872 GiB post-import against7.4 required. No new
+post-import value was measured. The decision not to retry is an inference from
+lack of meaningful improvement over that failed admission state, not an assertion
+that the raw OS number itself failed the post-import guard.
+
+All9completed FAST-task receipt identities were reverified. Native E0, actual
+source enrollment, calibrated language grading, the2048/4096 runtime extension,
+E1 execution and later registered science remain incomplete. No model work or
+new tests occurred, no process was killed and no guard changed. The fresh resumed
+blocker now spans3consecutive goal turns; the first made real accounting/measurement
+progress, and the next2confirmed the same external resource dependency. Historical
+seven-turn records are not used to meet this threshold. No eligible independent
+FAST work or live native job remains. Record goal BLOCKED after final publication,
+never COMPLETE. Resume only after meaningful resource-state change; retain the
+full original research objective and all scientific gates.

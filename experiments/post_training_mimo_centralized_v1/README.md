@@ -22,7 +22,9 @@ from 7.649 GiB before v3 to 8.251 GiB, then 8.156 GiB before v4, justifying the
 new bounded attempt. Both attempts occurred in the same resumed goal turn:
 that first resumed turn contained two failed preload attempts. A subsequent OS-only
 check found 7.287 GiB before imports and no Python workers; the fresh blocked-turn
-count is now 2. See receipts/RESUMPTION_002_BLOCKED_AUDIT.json.
+count is now 3. The latest OS-only check is 7.795 GiB, below the pre-v4 state
+that failed admission. The full goal is blocked after the fresh three-turn audit.
+See receipts/RESUMPTION_003_BLOCKED_AUDIT.json.
 
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that
@@ -115,7 +117,7 @@ all three verifier dependencies and keep language grading blocked. Production so
 was committed before the artifact; 40 tests and the separate artifact audit passed.
 
 The seven-turn [blocked audit](receipts/CONTINUATION_007_BLOCKED_AUDIT.json) is historical;
-the fresh resumed audit now has two blocked turns; only the first launched v3/v4. Native collection, language
+the fresh resumed audit now has three blocked turns; only the first launched v3/v4. Native collection, language
 calibration, the 2048/4096 extension and native E1 execution remain incomplete.
 The full goal is unachieved. No further heavy training is justified yet.
 

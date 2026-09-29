@@ -3,8 +3,8 @@
 29 September 2026. **The resumed E0 v3 and v4 attempts stopped at the unchanged host-RAM
 admission guard. A separate attempted-work accounting fix passed CPU controls.
 No pretrained model has been loaded or trained in this campaign, no acquisition
-or retention effect has been measured, and no recipe has been promoted. The goal
-is active after resumption; native E0 remains blocked and the full goal incomplete.**
+or retention effect has been measured, and no recipe has been promoted. The fresh
+three-turn blocked audit has passed; the full goal is blocked and incomplete.**
 
 ## Exact primary student and source
 
@@ -211,6 +211,15 @@ Both attempts belong to the first resumed goal turn. Two attempts are not two
 consecutive blocked goal turns; the prior seven-turn audit remains historical.
 Each attempt followed a measured resource-state improvement. No guard was relaxed,
 and no additional same-state retry is justified.
+
+The second resumed turn found 7.287 GiB available before imports; the third found
+7.795 GiB at 05:54 UTC. Neither had a Python worker to wait on. The latest raw
+reading is below the 8.156 GiB pre-import state that produced v4's failed admission.
+No new post-import measurement is claimed; lack of improvement over that failed
+state is the reason not to retry. The same resource dependency now spans three
+consecutive resumed turns. Nine completed preparation receipt identities were
+rechecked, with no eligible independent FAST task remaining on the current path.
+The full goal is BLOCKED, not achieved; resume requires external headroom change.
 
 The pinned runtime is Python 3.11.15, Torch 2.10.0+cu126, Transformers 4.57.1,
 safetensors 0.7.0 and tokenizers 0.22.2 on an RTX 4070 Laptop with 8188 MiB. It has no
