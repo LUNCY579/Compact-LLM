@@ -6,9 +6,7 @@ This is the first of two method notes from the SAME diffusion-training paper. It
 
 ## What the idea is about
 
-Suresh et al. assign each corrupted target block's computation to one distributed rank, exploiting the additive block-diffusion loss. Block-local corrupted states need not be exchanged with other block owners. This is a training-execution idea, not a claim of independent learned skills. [P1, Sections 3–4.2]
-
-[P1]: https://arxiv.org/html/2609.19242v1
+Suresh et al. assign each corrupted target block's computation to one distributed rank, exploiting the additive block-diffusion loss. Block-local corrupted states need not be exchanged with other block owners. This is a training-execution idea, not a claim of independent learned skills. [Paper, Sections 3–4.2](https://arxiv.org/html/2609.19242v1).
 
 ## Proposed Rineya research question
 
