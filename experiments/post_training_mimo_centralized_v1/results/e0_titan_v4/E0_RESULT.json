@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "experiment_id": "RINEYA-0P6B-E0",
+  "status": "BLOCKED_E0",
+  "evidence_level": "MEASURED / REPRODUCED",
+  "code_sha": "62ad48e2ade0ec4b3023e2aef5736bc34c6022d1",
+  "dirty_at_launch": false,
+  "config_sha256": "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d",
+  "pretrained_loads": 0,
+  "optimizer_steps": 0,
+  "training_tokens": 0,
+  "generation_tokens": 0,
+  "teacher_calls": 0,
+  "checks": {},
+  "resources": [
+    {
+      "stage": "preload",
+      "elapsed_seconds": 13.844000000000051,
+      "host_available_gib": 7.378871917724609,
+      "rss_gib": 0.6690101623535156,
+      "gpu_free_gib": 6.890625,
+      "gpu_allocated_gib": 0.0,
+      "gpu_reserved_gib": 0.0,
+      "peak_allocated_gib": 0.0,
+      "disk_free_gib": 116.2530632019043
+    }
+  ],
+  "resource_profiles": [],
+  "accounting_version": 2,
+  "call_accounting": {
+    "accounting_version": 2,
+    "max_optimizer_calls": 5,
+    "last_call_id": 0,
+    "operations": {
+      "model_construct": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "checkpoint_load": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "tensor_copy": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "forward": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "backward": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "optimizer_step": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "checkpoint_save": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      },
+      "checkpoint_reload": {
+        "attempted": 0,
+        "returned": 0,
+        "failed": 0,
+        "pending": 0
+      }
+    },
+    "pending_calls": [],
+    "forward_input_positions_attempted": 0,
+    "forward_input_positions_returned": 0,
+    "training_forward_input_positions_attempted": 0,
+    "training_forward_input_positions_returned": 0
+  },
+  "error": "HOST_RAM_GUARD",
+  "traceback": "Traceback (most recent call last):\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 392, in run\n    guard(\"preload\", True)\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 383, in guard\n    require(snap[\"host_available_gib\"] >= cfg[\"host_free_gib\"] if admission else\n  File \"C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\scripts\\qualify_native.py\", line 39, in require\n    raise RuntimeError(message)\nRuntimeError: HOST_RAM_GUARD\n",
+  "wall_seconds": 13.860000000000127,
+  "e1_authorized": false
+}

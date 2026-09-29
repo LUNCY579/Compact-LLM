@@ -1,6 +1,6 @@
 # Centralized Rineya Titan 0.6B: current research state
 
-29 September 2026. **The resumed E0 v3 attempt stopped at the unchanged host-RAM
+29 September 2026. **The resumed E0 v3 and v4 attempts stopped at the unchanged host-RAM
 admission guard. A separate attempted-work accounting fix passed CPU controls.
 No pretrained model has been loaded or trained in this campaign, no acquisition
 or retention effect has been measured, and no recipe has been promoted. The goal
@@ -198,10 +198,19 @@ traceback and bound source prove the guard preceded checkpoint hashing, tokenize
 construction and every model operation. Native loads, updates and generated tokens
 remain zero. All v3 worker/supervisor evidence is preserved byte-for-byte.
 
-This is the first blocked observation after resumption. The previous seven-turn
-blocked audit is historical and is not reused as the resumed count. The accounting
-review below supplied new independent FAST work; it did not justify another native
-attempt on unchanged resources.
+After the accounting repair, OS memory improved again to 8.251488 GiB, then
+8.156063 GiB immediately before a second same-turn attempt. Clean committed source
+`62ad48e2ade0ec4b3023e2aef5736bc34c6022d1` ran E0 v4 with the identical scientific
+config. Its preload reading was 7.378872 GiB, still below 7.4. Worker/supervisor
+walls were 13.860/14.547 s; peak process-tree RSS 722923520 bytes. The accounting-v2
+journal, result and cost snapshots agree: zero calls in all eight selected model
+operations. The trace independently confirms no model construction or load. The
+failure path exercised accounting output, not native numerical qualification.
+
+Both attempts belong to the first resumed goal turn. Two attempts are not two
+consecutive blocked goal turns; the prior seven-turn audit remains historical.
+Each attempt followed a measured resource-state improvement. No guard was relaxed,
+and no additional same-state retry is justified.
 
 The pinned runtime is Python 3.11.15, Torch 2.10.0+cu126, Transformers 4.57.1,
 safetensors 0.7.0 and tokenizers 0.22.2 on an RTX 4070 Laptop with 8188 MiB. It has no
@@ -239,9 +248,9 @@ The 52 stdlib accounting/gate tests passed in 0.681 s (1.119 s process wall); 12
 existing tiny random CPU numerical controls passed in 1.459 s (6.693 s process wall).
 These include interruption, failed and returned calls, five-call limits, partial
 profiles, malformed journals, LoRA parity, masks and reversible CPU resume. They are
-not native Titan measurements. Journal I/O overhead belongs to the next measured
-runtime. The changed worker remains native-unqualified, and no new model attempt
-followed the repair.
+not native Titan measurements. Journal I/O overhead belongs to subsequent measured
+runtime. The changed worker remains native-unqualified: its v4 execution stopped
+at preload before any model operation.
 
 ## Concrete DEV input and scorer binding
 

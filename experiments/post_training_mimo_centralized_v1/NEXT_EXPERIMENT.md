@@ -1,11 +1,18 @@
 # Next experiment
 
 **Next native step: E0 only after a meaningful resource-state change.**
-Resumed attempt v3 stopped at preload: 6.936687469482422 GiB host RAM available
-after imports, below 7.4 GiB. Its unchanged-at-launch source was
-`5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`; its original
-`results/e0_titan_v3/E0_RESULT.json` remains immutable. This is blocked observation 1
-of the fresh resumed audit; the earlier seven-observation audit is historical.
+Latest attempt v4 stopped at preload: 7.378871917724609 GiB host RAM available
+after imports, below 7.4 GiB. Its source was
+`62ad48e2ade0ec4b3023e2aef5736bc34c6022d1`; the result is
+`results/e0_titan_v4/E0_RESULT.json`. Accounting version 2 records zero attempts,
+returns, failures and pending calls across all eight operation classes.
+
+Earlier v3 stopped at 6.936687469482422 GiB on source
+`5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`; its original receipts remain immutable.
+OS-only RAM rose from 7.649 GiB before v3 to 8.251 GiB, then measured 8.156 GiB
+before v4. That meaningful change justified the new bounded attempt. Both failures
+occurred in the same resumed goal turn: blocked-turn count 1, failed-preload-attempt
+count 2. The earlier seven-turn audit is historical and is not carried forward.
 E0 requires at least 7.4 GiB available after runtime imports and 6 GiB
 throughout the worker, plus 4 GiB GPU and 4 GiB disk admission. Keep every floor
 unchanged. The preload block is not evidence that Titan cannot fit or learn.
@@ -32,7 +39,8 @@ and resource guards remain unchanged. Commit the source changes first; use
 a new immutable run directory. Recheck live resources and stop on any failed gate.
 Qualify exact load, 32 zero-adapter cases, likelihood/masks/causality, 256/512/1024
 profiles, finite confined gradients, reversible update and deterministic resume.
-No current E0 pass, native source responses or trained candidate exists.
+No current E0 pass, native source responses or trained candidate exists. Another
+attempt needs a meaningful resource-state change beyond the v4 admission state.
 
 Only after measured E0 should numerical native collection budgets and the actual
 runtime identity be frozen, the collector/executor be completed against that

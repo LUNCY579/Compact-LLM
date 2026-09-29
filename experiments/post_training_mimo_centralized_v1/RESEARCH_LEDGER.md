@@ -345,3 +345,24 @@ Rebind before native E1 against qualified current source/runtime; preserve data 
 row order and optimizer schedule. DEV binding is unaffected by this dependency change.
 The next highest-information experiment remains E0 under unchanged scientific settings
 after another meaningful headroom change. Heavy training is not justified beforehand.
+
+
+### Later same-turn v4 attempt after another measured resource change
+
+OS available RAM rose to8.251488 GiB at05:46 UTC and remained8.156063 GiB at
+05:47 UTC before launch, with no Python workers, GPU free7365 MiB and disk116.254 GiB.
+After committing and pushing62ad48e2ade0ec4b3023e2aef5736bc34c6022d1 with a clean
+checkout, the same config and contained supervisor ran e0_titan_v4. Post-import
+preload RAM7.378871917724609 GiB remained below7.4, so HOST_RAM_GUARD stopped it
+before model construction. Worker/supervisor13.860/14.547s; peak process-tree RSS
+722923520bytes. This is no post-admission memory-fit or model-quality evidence.
+
+The version2 journal, result and cost snapshots reconcile with zero attempted,
+returned, failed or pending calls in all8selected model operations. The trace and
+source ordering independently confirm that only imports/probes preceded the guard.
+The new worker's preload-failure accounting path was exercised; no forward/backward,
+checkpoint load or optimizer path was natively qualified. No profiles exist because
+no model work began. All14worker/supervisor files remain byte-exact. The audit is
+RESUMPTION_001_E0_V4_AUDIT.json. Bothv3 andv4 occurred in the first resumed goal turn;
+two attempts do not mean two consecutive blocked goal turns. The goal remainsactive.
+No further retry on unchanged headroom and no threshold relaxation is justified.
