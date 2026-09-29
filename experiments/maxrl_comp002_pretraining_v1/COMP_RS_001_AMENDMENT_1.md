@@ -750,3 +750,63 @@ any sampling scheme would have produced the same verdict on them.
 *How the rerun happens.* The journal binds the code bundle, so a resume under changed code is refused, as §12
 requires. Attempt 1's journal and attempts log are therefore preserved under an `attempt1_OOM` name, and all 450
 groups are re-sampled under one scheme in a fresh journal. The receipt reports attempt 1 beside the result.
+
+## 18. Amendment 2 — the warm-started anchor θ0′ (2026-09-28, registered before any warm-start output)
+
+**Why.** S0 ended STOP_NO_SIGNAL: `evidence/S0_COMPETENCE.json`, commit `a8070991`. Supa 1.7 passes 0/3,600 strict
+CALIBRATION samples on R, S and P.
+- **Format.** It writes the `{"answer": …}` envelope in 6/3,600 samples.
+- **Content.** Even with bare lists accepted, it solves R 2/1,200, S 56/1,200 and P 0/1,200.
+
+Strict-reward RL from Supa therefore has zero gradient. **The operator chose, verbatim: "Warm-start anchor"**,
+meaning SFT Supa on the dataset's own 600-row WARMSTART bank and re-run S0-C.
+
+**The anchor.** θ0′ = Supa 1.7 + δ_warm. From here on, θ0′ replaces θ0 everywhere in this amendment: donors, arms,
+twins, placebo, MT, sequential arms, B and every enrollment. The warm-start is a declared change to the experiment
+(DATA_CARD: *"Using bridge/boundary training changes the experiment and must be declared"*). Composition is measured
+relative to θ0′.
+
+**Warm-start recipe (frozen now):**
+
+*Data.*
+- **Rows.** All 600 rows of `data/sft/warmstart.messages.jsonl`: atomic R, U, S and P, 150 parents. Each row has a
+  system message, a user message and an assistant message holding the oracle target, e.g. `{"answer":[0,1,3,4,6,7]}`.
+- **Validation.** The ids come from `warmstart.lineage.jsonl` and must equal `manifests/warmstart_core.json`. Each
+  target's sha must equal its lineage `target_sha256`. The manifest sha must be `86ac8f0d…`.
+- **Rendering.** The same chat template as S0 (`enable_thinking=False`, the pre-closed think block). The sequence is
+  prompt tokens, then target tokens, then EOS 151645.
+- **Loss.** Mean token cross-entropy over target + EOS tokens only. Prompt tokens are masked, using the one-shift
+  rule of `mechanics.completion_labels`.
+
+*Optimisation.*
+- **Order.** One epoch, rows sorted by `SHA256("COMP-RS-001-WARMSTART|" + id)`.
+- **Batches.** Micro-batch of one unpadded row; gradients accumulated over 8 rows, which gives 75 optimizer steps.
+- **Optimizer.** AdamW with lr 1e-5, betas (0.9, 0.999), eps 1e-8, weight decay 0, no warmup and no schedule. The
+  gradient is clipped to a global norm of 1.0.
+- **Numerics.** FP32 with TF32 off, deterministic algorithms, fixed threads, and the §16 memory cap and lease.
+
+*Trainable inventory: blocks 14–27* (inventory B, 220,233,216 parameters).
+- **Why B.** By arithmetic, inventory A cannot meet the 0.95 × cap rule (§17 C10), and B fits with margin.
+- **First measurement.** This run is the first measured update memory; its `max_memory_reserved` is recorded.
+- **Donor inventory.** The donor inventory is still decided by the §16 pilot ladder, re-run on θ0′.
+
+*Output.*
+- **Storage.** δ_warm is written create-only as an FP32 delta over inventory B (`arm_build.write_delta`, data-section
+  digest), outside the checkout.
+- **Identity.** θ0′'s identity is the §2 arm digest of Supa + δ_warm.
+- **Rebuild.** Every later stage loads Supa through the S0 FP32 loader and adds δ_warm in FP32. It asserts both the
+  delta digest and the arm digest, which are pinned in a runtime freeze for θ0′.
+
+**What runs next, in order:**
+1. **The warm-start run** (one GPU run).
+2. **A descriptive envelope check.** Greedy decode of the 8 S0-Q1 prompts on θ0′. It is recorded, not gated.
+3. **The runtime freeze for θ0′.** The S0-Q1 decoding preimage and host floor are carried over (the numeric path is
+   unchanged), and the anchor identity is added.
+4. **S0-C on θ0′,** with the unchanged m_min = 0.10 rule on R and S.
+5. **If S0-C passes:** the §16 pilot ladder on θ0′, then S0-E (enrollment and churn) on θ0′.
+
+**Stop rules and reporting.**
+- **If S0-C on θ0′ is STOP_NO_SIGNAL, the study stops.** No second warm-start dose or recipe without a new operator
+  decision. Whether the failure is all-fail (too weak) or all-success (too strong) is reported.
+- **The warm-start's own cost** is reported descriptively, not gated: one extra guard_dev read of Supa, compared
+  against θ0′'s S0-E enrollment. The legacy retention endpoints of §3 stay relative to θ0′.
