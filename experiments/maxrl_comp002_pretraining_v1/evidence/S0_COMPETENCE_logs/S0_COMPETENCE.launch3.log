@@ -1,0 +1,84 @@
+[lease] acquired by pid 100932 (comp-rs-001-s0-competence)
+[lease] released
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\random.py", line 203, in fork_rng
+    yield
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 246, in _seeded_default_generator
+    yield
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 336, in sample_group
+    streamed, predicted = recorder.finish(out.sequences)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 173, in finish
+    return torch.stack(self.selected), torch.stack(self.predicted)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 671, in _read
+    row = decode_one(g, model, item, device)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 798, in decode_one
+    calls, wall = timed(device, sequential)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 595, in timed
+    result = call()
+             ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 793, in sequential
+    one = g.sample_group(model, item['prompt_ids'], 1, seed, max_new_tokens=max_new_tokens)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 330, in sample_group
+    with _observe_generate(model) as seen, _seeded_default_generator(device, seed), torch.inference_mode():
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_generate.py", line 243, in _seeded_default_generator
+    with torch.random.fork_rng(devices=[index], device_type='cuda'):
+  File "C:\Users\clclc\AppData\Roaming\uv\python\cpython-3.11.15-windows-x86_64-none\Lib\contextlib.py", line 158, in __exit__
+    self.gen.throw(typ, value, traceback)
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\random.py", line 207, in fork_rng
+    device_mod.set_rng_state(device_rng_state, device)
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\cuda\random.py", line 79, in set_rng_state
+    _lazy_call(cb)
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\cuda\__init__.py", line 355, in _lazy_call
+    callable()
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\cuda\random.py", line 77, in cb
+    default_generator.set_state(new_state)
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 933, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 920, in main
+    run_read(args, cfg, host, state, prompts, bind_extra={'group_size': cfg['group_size']},
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 621, in run_read
+    body()
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 613, in body
+    _read(cfg, host, state, prompts, bind_extra, decode_one)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 697, in _read
+    _release(device)
+  File "C:\Users\clclc\BusinessProject\ChatBubble-comp-rs-amendment-1\experiments\maxrl_comp002_pretraining_v1\s0_competence.py", line 604, in _release
+    torch.cuda.empty_cache()
+  File "C:\Users\clclc\BusinessProject\.venv-mq001\Lib\site-packages\torch\cuda\memory.py", line 280, in empty_cache
+    torch._C._cuda_emptyCache()
+torch.AcceleratorError: CUDA error: unknown error
+Search for `cudaErrorUnknown' in https://docs.nvidia.com/cuda/cuda-runtime-api/group__CUDART__TYPES.html for more information.
+CUDA kernel errors might be asynchronously reported at some other API call, so the stacktrace below might be incorrect.
+For debugging consider passing CUDA_LAUNCH_BLOCKING=1
+Compile with `TORCH_USE_CUDA_DSA` to enable device-side assertions.
+
