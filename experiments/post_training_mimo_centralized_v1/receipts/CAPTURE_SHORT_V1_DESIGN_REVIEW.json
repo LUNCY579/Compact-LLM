@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "recorded_at_utc": "2026-09-30T11:01:33.439220+00:00",
+  "status": "PROSPECTIVE_DESIGN_REVIEW_NO_NATIVE_GRANT",
+  "reviewers": [
+    "/root/baseline_enrollment",
+    "/root/laptop_resource_rationale"
+  ],
+  "config_sha256": "cab513b8006a8f4212be2e3f8fe1d9862abca96a53ab58ab033165e395a82b27",
+  "scope": "FrozenbareTitan greedyfullprefix, noCache/batch/padding through512; nonDEVqualificationfirst",
+  "independent_actual_count_formula": {
+    "generated": "n1+n2",
+    "forward": "4+n1+n2",
+    "logical_calls": "316+n1+n2",
+    "positions": "1280+129*n1+385*n2+n1*(n1-1)/2+n2*(n2-1)/2"
+  },
+  "ceilings": {
+    "generated": 256,
+    "forwards": 260,
+    "calls": 572,
+    "positions": 83328
+  },
+  "clarified_probe_scope": "Inputlength256/512 withlogits_to_keep1; finite returnedlastpositionvocabulary only, notallpositionlogits",
+  "teacher_forcing": "Fullprompt+generated; keeplastN+1 thenfirstN predicts positionsP-1..P+N-2",
+  "probability_semantics": "Greedybehaviorlogp0; rawselected-model logp separateNLLdiagnostic, notbehavior",
+  "native_EOS_requirement": "Atleastone naturalEOS acrossfixedfixtures; no force/retry/answerfilter; preserveCPUvsnativebranchcoverage",
+  "resource_profile": "Newprovisional2GiBRSS/1.25reserve;beforeworker3.25+0.0625supervisor;old1.75unchanged",
+  "next_condition": "Actualnewworker/helper/supervisor/codeandCPUcontrols reviewed/committed, containedpilot thenactualevidence consistency check",
+  "native_launch_authorized": false,
+  "E1_authorized": false,
+  "language_grading_authorized": false,
+  "CHECK_FINAL_opened": false,
+  "framework_imports_by_reviewers": 0,
+  "model_calls_by_reviewers": 0
+}
