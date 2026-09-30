@@ -61,6 +61,9 @@ def render(source, output):
         canvas.drawString(48,21,"RINEYA RESEARCH  |  30 SEPTEMBER 2026  |  NO EFFICACY CLAIM")
         canvas.drawRightString(564,21,str(doc.page))
         canvas.restoreState()
+    # A trailing table spacer can create an otherwise empty final page.
+    while story and isinstance(story[-1], Spacer):
+        story.pop()
     doc.build(story,onFirstPage=page,onLaterPages=page)
 
 

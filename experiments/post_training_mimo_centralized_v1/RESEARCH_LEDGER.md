@@ -628,3 +628,15 @@ The measured difference motivates a separately registered bounded wait after imp
 
 
 Correction: the preceding D2 preload note worker-wall24.437s was a transcription typo. Actual raw result/CSV/receipt worker time is24.422s; supervisor25.360s. Raw files unchanged.
+
+
+## 2026-09-30: post-import wait successor source reviewed, preworker window stopped
+
+AMENDMENT_018 source/config committed at fadef896. Initial26 CPU controls passed, but independent review reproduced a slow-journal deadline defect: a second observation could admit after60 seconds. Preserved that initial observation and source pins, then sampled time again after journal/measurement and at return. Added slow-journal and final-clock controls. Final28 controls passed in0.015 seconds (process0.2196053 seconds), and finalsource review found no blocking issue. Original D2/capture/geometry configs, code and raw failures remain unchanged.
+
+The successor retains workerRSS2.0 GiB/systemreserve1.25 GiB/GPU4-0.5/disk4/whole600-second bounds, with atmost60seconds afterimports,2secondpolls andtwo currentconsecutive dynamic admission observations. Source/HEAD/runtimefloors remain checked beforeanymodelcall. One preworker window from this newregistration ended terminal at30.1977343seconds,12samples2.061134-2.100109 GiB below3.3125. No native supervisor was invoked; the newpostimportwait has not yet run natively. Allmodel/update/teacher counters0. No unchanged-state model retry is warranted. Scientific capture/preservation/E1 gates remain false and the full objective open.
+
+
+## 2026-09-30: native-backend contract component installed, no model work
+
+AMENDMENT_019 freezes pure metadata/byte contracts for the missing future backend. Exact112adapter/310base-name inventories, sharedparameters/optimizer/RNG artifact references, frozen source/data/plan/weight bindings and owned32MiB path/hash bounds are checked. A Windows enhancement exposed path-stat/fstatctime differences; initial18pass and laterfailed19-control runs remainseparate in the CPU validation history. Cachedsamehandle CreationTime/ChangeTime plus opened/reopened identities now reject same-size/mtime-restored mutation afterhashing. Canonicalpackage21controls passed on pinnedPython3.11.15 in0.254seconds (process0.5278106seconds). No framework/model/checkpoint deserialization/RNGrestore or physicalTensor evidence occurred. Future restore mustverify/loadsameboundedbytes orhandle. Nativebackend connection/publication/physicalqualification/scientificgates remain missing; allgrantsfalse.

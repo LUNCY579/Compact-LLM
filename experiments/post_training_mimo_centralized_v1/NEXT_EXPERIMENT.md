@@ -17,12 +17,16 @@ head, without proving its mechanism. Both attempts and every partial call are
 preserved. No model worker or admission controller remains live.
 
 Follow [the detailed laptop plan](manifests/LAPTOP_EXECUTION_PLAN_V3.json).
-AMENDMENT_016 now registers the four-forward fixed-shape causal diagnostic,
-with reviewed source and fourteen passing CPU controls. Its native admission
-window ended after 30.897 seconds: twelve observations fell to 0.221680 GiB,
-below the unchanged 3.3125 GiB budget. No supervisor or model was invoked.
-Wait for a real resource-state change, then run it once. Only after measured
-causal controls should a distinct exact-prefix scoring scope be registered.
+AMENDMENT_016's admitted resumed worker stopped after imports:1.986759 GiB
+available versus2.581776 GiB required, with every model counter zero.
+AMENDMENT_018 now registers the same four-forward causal diagnostic with a
+bounded post-import resource wait:60 seconds,2-second polls,two consecutive
+current dynamic-budget samples. Full RSS/system/GPU/disk/numerical limits are
+unchanged. Its28 CPU controls and independent source review passed; the first
+preworker window stayed2.061-2.100 GiB below3.3125 and invoked no supervisor.
+The new wait has not run natively. Wait for a real resource-state change, then
+run it once. Only after measured causal controls should a distinct exact-prefix
+scoring scope be registered.
 Keep the failed bulk gate and its 0.03125/0.01 limits intact.
 Do not rerun unchanged E0 or the failed capture merely to produce another receipt.
 

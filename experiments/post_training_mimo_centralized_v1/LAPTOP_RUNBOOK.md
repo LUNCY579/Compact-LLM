@@ -60,3 +60,12 @@ Source, memory, GPU, time or numerical failures stop the attempt and retain its
 partial accounting. Adapter binaries remain local; the published base is not
 overwritten. Decode/score panels sequentially rather than holding another model
 or tokenizer/evaluation process during training. CHECK/FINAL remain closed.
+
+
+AMENDMENT_018 adds a source-reviewed bounded resource wait after framework imports
+for the causal diagnostic only. It retains2 GiB workerRSS,1.25 GiB systemreserve,
+GPU4/0.5 GiB,disk4 GiB and600seconds; no model call precedes two current full-budget
+observations and a strictfresh preload check. The maximum wait is60seconds with
+2-second polls. Timeout or source/runtime-floor failure stops without model retry.
+The prior admitted worker failed before any model call; the successor's first
+preworker window remained below3.3125 GiB. It is not native-qualified or E1-authorized.

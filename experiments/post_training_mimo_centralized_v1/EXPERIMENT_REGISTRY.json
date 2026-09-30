@@ -196,6 +196,16 @@
       "native_backend_connected": false,
       "native_accumulation_resume_qualified": false,
       "E1_authorized": false
+    },
+    {
+      "id": "RINEYA-0P6B-CAPTURE-CAUSAL-D2-WAIT-V2",
+      "status": "SOURCE_CPU_REVIEW_PASS_PREWORKER_ADMISSION_NO_NATIVE",
+      "registration": "AMENDMENT_018.md",
+      "config": "configs/CAPTURE_CAUSAL_DIAGNOSTIC_WAIT_V2.json",
+      "CPU_controls": 28,
+      "admission": "receipts/POST_IMPORT_WAIT_V2_PREWORKER_ADMISSION.json",
+      "native_result": null,
+      "E1_authorized": false
     }
   ],
   "later_tracks": {
@@ -233,5 +243,10 @@
   "latest_diagnostic": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
   "latest_causal_diagnostic": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json",
   "automatic_turn_failure_evidence": "receipts/AUTOMATIC_TURN_CAPACITY_FAILURE_V1.json",
-  "current_scheduled_reader": "receipts/E1_TRAIN_READER_ACTUAL_DATA_AUDIT.json"
+  "current_scheduled_reader": "receipts/E1_TRAIN_READER_ACTUAL_DATA_AUDIT.json",
+  "latest_causal_native_preload": "receipts/CAPTURE_CAUSAL_D2_NATIVE_PRELOAD_FAILURE.json",
+  "latest_causal_wait": "receipts/POST_IMPORT_WAIT_V2_PREWORKER_ADMISSION.json",
+  "native_backend_metadata_contract": "configs/NATIVE_BACKEND_CONTRACT_V1.json",
+  "native_backend_metadata_CPU_validation": "receipts/NATIVE_BACKEND_CONTRACT_V1_CPU_VALIDATION.json",
+  "native_backend_connected": false
 }

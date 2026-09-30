@@ -10,7 +10,9 @@ remains preserved. The observed RSS margin is only 1.39 MiB; sustained E1 fit,
 acquisition and retention remain unmeasured. The first capture pilot then stopped on a raw-model likelihood disagreement
 with comfortable memory headroom. A separate diagnostic reproduced the failure
 and localized the difference upstream of the output head; FP32 head projection
-alone still fails. No recipe is promoted.**
+alone still fails. A resumed causal attempt then stopped after imports before any model call.
+A separately registered post-import admission wait is ready but has not run
+natively. Best remains unchanged Titan.**
 
 ## Exact primary student and source
 
@@ -85,6 +87,7 @@ External 100 ms monitoring, Windows containment, GPU 4/0.5 GiB floors and disk
 | Complete CE512 v2 | Eight checks, four updates, bitwise resume and unchanged base; 32.297 s /33.360 s | 1.7486 GiB | Single unpadded CE through 512; sustained E1 remains unmeasured |
 | Short greedy capture | First fixture generated three tokens; likelihood failed; 25.437 s /26.640 s | 1.405 GiB internal sample | Resource checks passed; no DEV collection |
 | Held-hidden diagnostic | Original failure reproduced; eight forwards and sixteen projections; 20.344 s /21.266 s | 1.409 GiB external peak | Difference localized upstream of head; no qualification |
+| Causal D2 preload | Runtime imported; dynamic RAM admission failed; 24.422 s /25.360 s | 0.672 GiB external peak | No model constructor/load/forward; causality remains unmeasured |
 
 The full attempt failed its first left-padding likelihood comparison against
 maximum error 0.03125 and mean error 0.01. Its original receipt did not store the
@@ -328,6 +331,73 @@ cost budgets. Current packets and managed-agent calls are unassigned diagnostics
 no paid or teacher grading is authorized. A user preference question is pending
 while deterministic qualification continues. Long-context capture remains separate.
 
+## Recovered training components and actual scheduled reader
+
+The last automatic coding turn separately failed with the service error
+"Selected model is at capacity." The app marked the goal blocked; the user's
+status message resumed work in the chat and a later goal continuation is active.
+This interruption is distinct from the laptop RAM and numerical capture gates.
+No training process was running or lost. Saved code was recovered and pushed.
+
+AMENDMENT_017 adds a bounded random-access TRAIN reader, a separate E1 call journal
+and deterministic accumulation/checkpoint components. The old E0 journal's five
+optimizer-call limit is preserved; the E1 component permits256, with explicit
+failed/pending/returned work and no reset on restore. The engine divides each
+sequence's mean completion loss by20, resets/clips/updates once per group and
+still advances optimizer state on the final LR0 update. Synthetic controls cover
+unequal target counts and restored parameters/moments/RNG at a saved boundary.
+Native backend connection, physical accumulation/serialization/cross-process
+resume and launch validators remain unqualified.
+
+All53 combined stdlib controls passed in6.525 seconds (process7.120 seconds).
+The initial reader run had21 pass/one failed drift-check expectation: the selected
+line hash caught a same-size edit, while Windows creation time plus restored
+mtime missed it at the earlier metadata check. Added NTFS ChangeTime and strict
+typed metadata checks. The observed failure is preserved; its original streams
+and initial source hash are explicitly unavailable. Source reviews found no
+remaining blocker within component scope; these are not native approvals.
+
+From producer `c2fd2619412d9ac6f138ab970aa75795a0cd99a3`, Python3.11.15 passed all
+5120 actual scheduled TRAIN lookups, preserving4096 acquisition,768 deterministic
+and256 language replay rows,680532 input/63546 supervised positions,maximum398
+and81 masked prior assistant replies. Order was checked against separately parsed
+byte-pinned PLAN rows; selected-line and finalwholefile hashes and source/HEAD
+checks passed. Trace SHA is
+`8483ddbd19f9cfec8c573cc45d2663b2221d0c2e162cef13a90269e2e0fc8269`.
+The reader took141.094 seconds, with50.797 MiB OS process high-water and5.392 MiB
+retained metadata,zero retained token populations. Enforcement is cooperative
+128 MiB/600 seconds with32-row high-water sampling,not hard containment. All
+model/update/generation/teacher counts are zero; no efficacy or E1 grant follows.
+
+## Causal admission failure and post-import wait successor
+
+On goal resumption, fresh headroom enabled an admitted D2 window at3.797119 and
+3.801788 GiB. Producer `dd48234e0f1000ab227d4a459476826fbc3785a8` imported the
+pinned runtime, then found1.986759 GiB available versus dynamic2.581776 GiB
+required. Worker RSS was0.668224 GiB; all constructor/load/copy/forward counters
+remained zero. Worker/supervisor times were24.422/25.360 seconds. External RSS
+peak was721870848 bytes. No model or causal result exists; every raw failure and
+admission receipt is byte-exact. A new ledger prose typo24.437 seconds is explicitly
+corrected; the raw result, CSV and indexed receipt remain authoritative24.422.
+
+AMENDMENT_018 preserves the full2 GiB RSS/1.25 GiB reserve/GPU4-0.5/disk4/600-second
+bounds and registers up to60 seconds of resource-only waiting after imports,
+polling every2 seconds for two consecutive current growth-budget observations.
+No model call may precede admission and strictfresh preload checks. Runtime floors,
+source/HEAD/byte checks and external100 ms monitoring/Windows containment remain.
+A timeout grants no admission and triggers no model retry. Original four131-token
+forwards,524 positions,316 calls and all numerical fixtures remain unchanged.
+
+Independent review reproduced a deadline gap after the initial26-control pass:
+a slow second journal could admit after60 seconds using stale time. Resampling
+after journal/measurement and at return fixes it; both negative cases are now
+covered. Final28 controls passed in0.015 seconds (process0.220 seconds), with final
+source review. Registered wait source was committed at `fadef896` (abbreviated).
+Its first preworker observation window ended after30.198 seconds with12 samples
+2.061134-2.100109 GiB below3.3125. No native supervisor started; the post-import
+wait is source-ready and not yet physically exercised. A real headroom change is
+still required. No scientific gate or recipe is promoted.
+
 ## Prepared science and milestone audit
 
 Preparation remains available: 4096 acquisition TRAIN parents, 768 deterministic
@@ -349,21 +419,15 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Current state | CE512/data passed; capture failure localized | Partial progress | Distinct numerical scope and qualified capture |
 | Exact model | Titan devfreeze; 596049920 parameters | Bound | Same checkpoint retained |
 | Git/source | Capture 3ed57771; diagnostic 0b48e3cd | Committed | Delivery commit records final docs |
-| Verified | Eight CE512 checks; 5120 source/array/consumer joins | Scoped | Full E0 and E1 not passed |
+| Verified | Eight CE512 checks; source joins and scheduled5120 reader pass | Scoped | Full E0 and E1 not passed |
 | Unmeasured | Sustained E1 fit, preservation and capability gain | Open | Current capture and E1 successors |
 | Completed experiment | Capture failure, geometry diagnostic, D2 admission stop | Recorded | Every failed/partial attempt retained |
 | Exact result | CE512 RAM 1.7486 GiB; diagnostic 1.409 GiB | Measured | Sustained worker overhead |
 | Acquisition effect | Disposable mechanics only | Unmeasured | Qualified E1 |
 | Retention effect | No scored native preservation | Unmeasured | Capture and grading |
-| Compute/memory | Eight laptop workers 149.109 s; supervisors 156.797 s | Measured wall | No sustained throughput inference |
+| Compute/memory | Nine laptop workers 173.531 s; supervisors 182.157 s | Measured wall | No sustained throughput inference |
 | Failure modes | Padding, 1024 VRAM, capture NLL, stale failure counter | Recorded | Correct final accounting and diagnosis |
 | Interpretation | Old reserve overstated this route; capture gap is upstream | Measured scope | Sustained fit and numerical mechanism still open |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Four fixed-shape causal forwards; zero updates | Source ready; RAM wait | Preserve failed bulk test and limits |
+| Next experiment | Same four causal forwards with bounded post-import wait | Source/CPU ready; RAM wait | Preserve failed bulk test and limits |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
-
-The original capability/retention research objective remains incomplete. Current
-best remains unchanged Titan with null acquisition and retention effects. No
-preparation or partial resource pass promotes a recipe. Historical blocked audits
-and 7.4/6 GiB configs remain evidence of earlier conditions; they are superseded
-operationally by the user's authorized laptop route, not rewritten into successes.

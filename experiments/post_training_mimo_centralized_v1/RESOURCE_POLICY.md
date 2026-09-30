@@ -49,3 +49,12 @@ Original configs retain PRLC minima: available host RAM 7.4 GiB before load,
 Named laptop profiles in Amendments 009-016 supersede them only for their explicit
 scopes. No user application is terminated; no cloud rental or paid teacher calls
 are authorized. CHECK/FINAL remain closed.
+
+
+AMENDMENT_018 adds a source-reviewed bounded resource wait after framework imports
+for the causal diagnostic only. It retains2 GiB workerRSS,1.25 GiB systemreserve,
+GPU4/0.5 GiB,disk4 GiB and600seconds; no model call precedes two current full-budget
+observations and a strictfresh preload check. The maximum wait is60seconds with
+2-second polls. Timeout or source/runtime-floor failure stops without model retry.
+The prior admitted worker failed before any model call; the successor's first
+preworker window remained below3.3125 GiB. It is not native-qualified or E1-authorized.
