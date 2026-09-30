@@ -59,3 +59,13 @@ no E1 launch or capability/preservation claim follows.
 Current best is unchanged Titan. Acquisition, retention and sustained training
 fit remain unmeasured. E1 launch flags remain false; CHECK/FINAL remain closed.
 The original one-Titan verified capability/retention objective is still open.
+
+
+AMENDMENT_020 now implements the internal injected-Torch backend and versioned
+engine publication path. Thirty-five fake/synthetic CPU controls pass; these do
+not establish physical math/resource/resume qualification. Next connect an owned,
+separately registered mechanical GPU qualifier using the exact verified loader,
+real20-sequence accumulation, adapter-only durablepublication, sameprocessrestore,
+primitive/outercost witnesses and frozen-base integrity. Do not launch E1 from
+these helpers or merely a supplied approval/status. Resource headroom and all
+original capture/language/longcontext/currentlaunch gates remain necessary.

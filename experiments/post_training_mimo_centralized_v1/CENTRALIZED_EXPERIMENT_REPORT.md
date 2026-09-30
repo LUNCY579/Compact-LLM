@@ -346,8 +346,9 @@ failed/pending/returned work and no reset on restore. The engine divides each
 sequence's mean completion loss by20, resets/clips/updates once per group and
 still advances optimizer state on the final LR0 update. Synthetic controls cover
 unequal target counts and restored parameters/moments/RNG at a saved boundary.
-Native backend connection, physical accumulation/serialization/cross-process
-resume and launch validators remain unqualified.
+The later internal backend source below implements operations; owned worker
+connection,physical accumulation/serialization/cross-process resume and launch
+validators remain unqualified.
 
 All53 combined stdlib controls passed in6.525 seconds (process7.120 seconds).
 The initial reader run had21 pass/one failed drift-check expectation: the selected
@@ -397,6 +398,39 @@ Its first preworker observation window ended after30.198 seconds with12 samples
 2.061134-2.100109 GiB below3.3125. No native supervisor started; the post-import
 wait is source-ready and not yet physically exercised. A real headroom change is
 still required. No scientific gate or recipe is promoted.
+
+## Internal native backend source and publication
+
+AMENDMENT_020 adds real injected-Torch method implementations and a versioned
+engine publication path. Source is committed at
+`c4b67c726544b727940e26eff186e8fdaeb905d9`; no framework/model/GPU run occurred.
+Thirty-five combined CPU controls passed in5.629 seconds (process5.918 seconds):
+21 fake-backend dispatch controls and14 synthetic V2 engine controls. They verify
+Python orchestration and rejection behavior,not real tensor math or native fit.
+
+The backend checks exact frozen-base/adapter inventories and source hashes,keeps
+eager/eval/cache-off CE512 math,uses the qualified completion-loss helper and
+AdamW defaults,and scales sequence mean loss1/20 once. The engine supplies exact
+planned components. Adapterparameters/optimizer/Python+TorchCPU+CUDA0 RNG are
+serialized through bounded owned32 MiB artifacts; returned references avoid five
+resident tensor snapshots. Restore verifies and deserializes the SAME bounded
+BytesIO with weights_only/mapCPU,requiring its own durably published manifest.
+Current support is a controlled same-process saved boundary; cross-process
+reconstruction and rollback after later failed work remain unsupported.
+
+Publication uses typed V2 cursor and POST-save cost metadata before exposing a
+checkpoint. Primitive attempt/returned/failed/pending witnesses distinguish each
+actual Torch call from its outer backend-method span,retaining a returned update
+if a later finite/resource/journal check fails. The constructor factory attaches
+primitive costs to the ORIGINAL exception if construction does not return. The
+future owned worker must preserve both ledgers on failures. Root source review
+fixed unbounded reads,component guessing,envelope version and failure visibility
+before registration; earlier fixture/discovery errors remain separate history.
+
+An owned GPU qualifier,physical accumulation/checkpoint/RNG/bitwise continuation,
+frozen-base integrity and sustained resource measurement remain required. Current
+host readings were1.32-1.38 GiB with no Python workers,so no model retry was made.
+Every scientific/native launch flag remains false; the full objective is open.
 
 ## Prepared science and milestone audit
 
