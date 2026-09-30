@@ -125,9 +125,9 @@
         "AMENDMENT_010.md",
         "AMENDMENT_011.md"
       ],
-      "status": "EXACT_LOAD_ZERO_ADAPTER_PARITY_MEASURED_BACKWARD_PENDING_PADDING_FAIL",
-      "native_pretrained_loads": 2,
-      "native_optimizer_steps": 0,
+      "status": "STREAMED_EXACT_LOAD_UNPADDED_CHECKS_AND256_512_UPDATES_MEASURED_1024_VRAM_GUARD",
+      "native_pretrained_loads": 3,
+      "native_optimizer_steps": 2,
       "native_generated_tokens": 0,
       "load_peak_RSS_GiB": 1.9278907775878906,
       "full_peak_RSS_GiB": 1.9510383605957031,
@@ -136,7 +136,7 @@
       "system_reserve_GiB": 1.25,
       "worker_RSS_ceiling_GiB": 1.75,
       "loader_buffer_bytes": 2097152,
-      "streamed_GPU_loader_qualified": false,
+      "streamed_GPU_loader_qualified": true,
       "backward_resume_qualified": false,
       "full_E0_qualified": false,
       "E1_authorized": false,
@@ -144,7 +144,8 @@
       "native_result_index": [
         "receipts/LAPTOP_NATIVE_STAGE_001_RESULTS.json",
         "receipts/LAPTOP_NATIVE_STAGE_002_RESULTS.json",
-        "receipts/LAPTOP_NATIVE_STAGE_003_RESULTS.json"
+        "receipts/LAPTOP_NATIVE_STAGE_003_RESULTS.json",
+        "receipts/LAPTOP_NATIVE_STAGE_004_RESULTS.json"
       ]
     }
   ],
@@ -160,13 +161,14 @@
     "E6": "actual MiMo sandbox transfer",
     "SIDE": "architecture / inference separate; all need new full registration"
   },
-  "cycle_status": "USER_AUTHORIZED_LAPTOP_REPLAN_PARTIAL_NATIVE_LOAD_MEASURED",
+  "cycle_status": "PARTIAL_STREAMED_NATIVE_TRAINING_MEASURED_512_SUCCESSOR_PREPARATION",
   "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
   "experimental_scope": "Original one-Titan capability/retention objective retained; RAM workflow amended by user",
-  "latest_available_RAM_GiB": 1.3969802856445312,
-  "last_headless_controller": "TERMINAL_ADMISSION_TIMEOUT_NO_NATIVE",
-  "current_native_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE.json",
-  "current_runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE_V1",
+  "latest_available_RAM_GiB": 0.8141975402832031,
+  "last_headless_controller": "TERMINAL_NATIVE_GPU_WORKER_GUARD_1024",
+  "current_native_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+  "current_runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
   "scope_native_qualified": false,
-  "scope_CPU_validation": "receipts/UNPADDED_CE_V2_CPU_VALIDATION.json"
+  "scope_CPU_validation": "receipts/UNPADDED_CE512_V1_CPU_VALIDATION.json",
+  "scoped_evidence_checker": "scripts/unpadded_evidence.py --qualification-stage unpadded_ce512"
 }

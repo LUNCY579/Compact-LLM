@@ -501,3 +501,17 @@ evidence. Native campaign loads now3, disposable updates2, generation/teacher0.
 All raw failure artifacts preserved byteexact. The checker rejects this BLOCKED
 result before asset access. Register activation checkpointing prospectively for
 1024; do not lower GPU/RAM floors. Original goal and best recipe remain unchanged.
+
+
+## Prospective512 CE successor after measured1024 VRAM stop
+
+AMEND013 registers<=512 CE retaining allpreparedTRAIN sequences(max398)
+withouttruncation. Model/math/tolerances/RAM/GPU/diskfloors unchanged; contexts
+256/512 andfourdisposable updatecalls, within-stagebitwise512resume. Original
+1024scope/failure preserved.107stdlibcontrols passed6.107s(process6.538167s),
+including old/new scope separation, input513/1024 rejection andordered timing
+checks. WindowsPowerShellAuditOnly succeeded; no model work. Independentassistant
+source review derived393calls,26608positions,1792trainingpositions and865events.
+The native fixture remains pending after OSheadroomfellto0.814198GiB at08:31UTC,
+with0Pythonworkers. No model was started belowadmission. Scopedchecker always
+E1false; capture/preservation/language/longcontext/currentE1bindings remainopen.

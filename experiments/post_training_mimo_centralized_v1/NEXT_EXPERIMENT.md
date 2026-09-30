@@ -1,42 +1,39 @@
 # Next experiment
 
-30 September 2026. Use the user-authorized laptop route in AMENDMENT_009 through
-011 and manifests/LAPTOP_EXECUTION_PLAN_V2.json. Earlier resource floors and E1
-plans remain historical evidence and require registered successors for new runs.
+30 September 2026. The user-authorized laptop route now has an actual streamed
+GPU measurement. At 5.12 GiB launch headroom, it loaded all 310 tensors exactly,
+passed 32 zero-adapter cases, native unpadded causality and all-one-mask equivalence
+with zero error. It completed 256/512-token backward and two disposable updates.
+At 1024, backward returned but free VRAM fell below the unchanged 0.5 GiB reserve.
+Peak process RAM was 1.740 GiB; minimum sampled host headroom was 3.032 GiB.
+This is a VRAM limit in the attempted envelope, not a new host-RAM failure.
 
-Exact GPU loading and a 256-token frozen forward succeeded at an observed
-1.928 GiB process-tree RSS peak. A full attempt passed 32 bitwise zero-adapter
-cases, then failed padded likelihood. Backward, optimizer updates, resume and model
-generation remain unmeasured. The final OS-only reading had 1.037 GiB available;
-additional same-state launches stopped.
+AMENDMENT_013 registers unpadded_ce512 under the same 1.25 GiB system reserve,
+1.75 GiB worker RSS ceiling and fixed 2 MiB loader. All prepared TRAIN sequences
+are at most 398 tokens, so 512 can retain the complete dose without truncation.
+Complete this scope's four disposable updates, save/reload, bitwise resume and
+frozen-base checks under unchanged numerical tolerances. Preserve the failed
+1024 trial and its partial counters; its two updates are not acquisition evidence.
 
-Run the bounded app-independent trial from scripts/run_laptop_adapter_trial.cmd,
-or scripts/run_laptop_trial.ps1 in a regular PowerShell window outside the app.
-It waits at most ten minutes for two RAM observations >=3.0625 GiB, then runs one
-30-minute trial under the 1.25 GiB system reserve and 1.75 GiB worker RSS cap.
-The 2 MiB loader passed actual CPU byte/RNG tests; its GPU path remains unqualified.
-The controller records admission, source/config identities, exit and failure data.
-It stops on source changes, timeout or failure and never retries automatically.
-See LAPTOP_RUNBOOK.md. Closing the desktop app can reduce its memory use; working
-set totals are not guaranteed reclaimable memory, so actual headroom is measured.
+Use scripts/run_laptop_adapter_trial.cmd or the regular PowerShell launcher,
+which now defaults to unpadded_ce512. It needs a clean committed checkout and
+reviewed config/source, waits at most ten minutes for two measurements >=3.0625
+GiB, then invokes one contained trial of at most 30 minutes. No automatic retry
+or E1 launch. The earlier timed-out controller and latest native controller are
+terminal. Actual resources are measured, not inferred from app working sets.
 
-The default unpadded_ce phase additionally requires native unpadded causality and
-real all-one-mask equivalence before the 256/512/1024 gradients and five reversible
-mechanics updates. It matches actual single-sequence CE inputs and has a distinct
-scoped status. Its success cannot qualify full E0 or authorize E1 alone.
-Run the instrumented full stage separately to record the padding error magnitude,
-retaining the existing tolerances. No E1 training is authorized by a resource pass.
+The scoped consistency checker passed 95 stdlib controls; its 512 successor
+must bind the distinct config, workload, profile timings, inventories and
+containment before accepting a complete scoped native result. It always keeps
+E1 authorization false. After scoped qualification, bind current laptop native
+capture, queue and E1 successors. Keep one resident GPU worker, streamed
+pretokenized microbatch one, GPU adapter/Adam state, adapter-only checkpoints
+and sequential evaluation. Activation checkpointing remains a registered-future
+option for longer training contexts; it is not introduced into the 512 route.
 
-After numerical/native qualification, bind a measured laptop queue/E1 successor.
-Prioritize one resident GPU worker and pretokenized streamed microbatches, with
-adapters/Adam state on GPU and sequential evaluation panels. E1 remains seed 101,
-256 steps, 16 acquisition plus 4 replay sequences per step, 4096 acquisition plus
-1024 replay rows. Language grading and long-context preservation remain separate
-prerequisites. Current best remains unchanged Titan; acquisition/retention are null
-and CHECK/FINAL stay closed. The full research objective remains incomplete.
-
-The previous detached controller is terminal after 601.063 seconds, with zero native
-invocations and all 256 RAM observations below 1 GiB. Preserve that verified wait;
-do not infer a model-memory failure or restart without changed headroom. AMENDMENT_012
-and configs/E0_LAPTOP_STREAM_UNPADDED_CE.json bind the current prospectively tested
-scope. Its evidence validator and native execution remain incomplete.
+Language grading, native long-context evaluation and preservation remain separate
+prerequisites. E1 seed 101 remains 256 planned steps with 16 acquisition plus
+4 replay sequences each; 211/307 are conditional on its DEV screen. Historical
+plans require current source/runtime binding. Current best remains unchanged
+Titan, acquisition/retention are null and CHECK/FINAL remain closed. The original
+verified capability/retention research objective remains incomplete.

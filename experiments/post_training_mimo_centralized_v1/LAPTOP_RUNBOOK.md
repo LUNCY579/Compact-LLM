@@ -10,9 +10,9 @@ The smallest registered route uses a fixed 2 MiB checkpoint read buffer, a 1.75 
 worker RSS ceiling and a 1.25 GiB system reserve. It budgets 3 GiB before worker
 launch, with live admission accounting for already occupied worker RSS. The launcher
 adds 64 MiB for its supervisor and waits for two observations >=3.0625 GiB. The
-new loader passed actual CPU BF16 byte-identity/RNG controls; its first native
-attempt stopped before weight access because desktop/background RAM fell further.
-Its complete GPU path is still unqualified. No new model numerical tolerance was
+new loader passed actual CPU BF16 byte-identity/RNG controls and then loaded all
+310 exact tensors on GPU. The unpadded native trial completed 256/512-token backward
+and two updates; its 1024-token backward stopped at the VRAM reserve. No new model numerical tolerance was
 relaxed, and no user app is terminated by this route.
 
 ## Run outside the desktop app
@@ -23,7 +23,8 @@ Closing the desktop app can reduce its observed roughly 2 GiB working set, but
 working-set totals are not guaranteed reclaimable RAM; the controller measures
 actual available memory. The trial does not need the chat UI to remain open.
 
-The default is the AMENDMENT_012 unpadded_ce stage, matching the prepared single-sequence CE inputs. It waits up to ten
+The default is the AMENDMENT_013 unpadded_ce512 stage, covering prepared single-sequence
+TRAIN inputs up to 398 tokens without truncation. It waits up to ten
 minutes for headroom, then launches one process-contained trial with a 30-minute
 worker ceiling. It stops on memory, GPU, time, source, numerical or resume failure.
 There is no automatic model retry, guard increase or E1 launch. Waiting time and
@@ -43,10 +44,12 @@ local and disposable; the published Titan checkpoint is never overwritten.
 | load_forward | 600 s; zero updates/generation | Exact GPU load and one finite 256-token forward |
 | full | 1800 s; at most five disposable updates | Every original E0 numerical/resource check; currently stops on padded likelihood |
 | unpadded_ce | 1800 s; at most five disposable updates | Unpadded causality, real all-one-mask equivalence, CE, gradients and resume; no full E0 or E1 grant |
+| unpadded_ce512 | 1800 s; at most four disposable updates | Complete CE/save/resume fixture up to 512 tokens; distinct scoped status, E1 remains false |
 | backward_resume | 1800 s; at most five disposable updates | 256/512/1024 backward fit, confined gradients, save/resume and frozen-base identity; padding/sampler unresolved |
 
-Native adapter training fit and resume remain unmeasured until the last phase runs.
-Its resource-only success cannot qualify full E0 or demonstrate capability gain.
+Adapter backward and update fit at 256/512 are measured; complete save/resume and
+frozen-base qualification remain pending. A scoped success cannot qualify full E0
+or demonstrate capability gain.
 E1 still requires numerical qualification, measured runtime/budgets, source capture,
 qualified language grading and preservation checks. CHECK/FINAL remain closed.
 
@@ -58,6 +61,7 @@ successor plans; preserve all historical resource-policy receipts.
 
 The first corrected detached controller exhausted its ten-minute window without
 starting a native supervisor: 256 observations remained below 1 GiB. Its PID is
-terminal. The current scope is CPU-tested and source-reviewed, not natively passed.
-Use the new default after actual host headroom changes; there is no automatic
-same-state model retry.
+terminal. A later controller was admitted above 5 GiB, ran one native trial and stopped at
+the 1024 VRAM guard; worker RSS peak was 1.740 GiB. The 512 successor is prospective.
+Use the default only after source/config qualification and measured admission;
+there is no automatic same-state model retry.

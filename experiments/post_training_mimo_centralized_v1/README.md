@@ -8,11 +8,14 @@ See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 Current state (30 September 2026): exact GPU loading and a 256-token frozen
 forward succeeded, with an observed process-tree RAM peak of 1.928 GiB. A full
 attempt passed 32 bitwise zero-adapter comparisons before a padded-likelihood
-failure. Backward, updates, generation and capability effects remain unmeasured.
+failure. A streamed unpadded trial then passed causality and all-one-mask equivalence,
+completed 256/512-token backward and two disposable updates, and stopped on the
+1024-token VRAM reserve. Resume, generation and capability effects remain unmeasured.
 
 The user authorized a plan for this 16 GB laptop. AMENDMENT_009-011 introduce named
 bounded profiles. The smallest route uses a 2 MiB read buffer, a 1.75 GiB worker
-RSS cap and a 1.25 GiB system reserve. Its complete GPU path still needs qualification.
+RSS cap and a 1.25 GiB system reserve. Exact streamed GPU loading is now measured;
+complete save/resume qualification remains pending.
 See the [laptop runbook](LAPTOP_RUNBOOK.md) and
 [updated plan](manifests/LAPTOP_EXECUTION_PLAN_V2.json). The
 [standalone adapter trial](scripts/run_laptop_adapter_trial.cmd) waits for
@@ -20,16 +23,18 @@ See the [laptop runbook](LAPTOP_RUNBOOK.md) and
 
 The earlier admission failures and blocked audits remain historical evidence under
 their old 7.4/6 GiB policy. Their zero-model-work statements apply to those attempts.
-The new cycle has two verified loads. Historical E1/scheduler plans need measured
+The new cycle has three verified loads and two disposable optimizer calls. Historical E1/scheduler plans need measured
 successors; full E0 and later science remain incomplete. CHECK/FINAL remain closed,
 and the current best recipe remains unchanged Titan.
 
 AMENDMENT_012 adds a CPU-tested unpadded single-sequence CE qualification scope,
 matching prepared E1 inputs while preserving the earlier padded-forward failure.
 It requires separate native causality, mask equivalence, CE, gradients and resume.
-The launcher defaults to this scope. Its native pass and E1 validator are still
-missing. The last controller timed out without invoking a native supervisor;
-no model or controller is currently running. Its wait receipts are preserved.
+The complete 1024 scope did not pass. AMENDMENT_013 registers a 512-token
+successor covering the entire prepared TRAIN dose (maximum 398 tokens) without
+truncation. Its complete native pass remains pending. The scoped evidence checker
+is CPU-tested and keeps E1 authorization false. The launcher defaults to unpadded_ce512;
+no model or controller is currently running. All wait and native failure receipts are preserved.
 
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that

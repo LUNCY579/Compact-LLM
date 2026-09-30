@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "UPDATED_LAPTOP_ROUTE_PARTIAL_NATIVE_MEASUREMENTS",
+  "status": "STREAMED_GPU_PARTIAL_CE_MEASURED_512_SUCCESSOR_PREPARATION",
   "amendment": "AMENDMENT_009.md",
   "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
   "resource_profile": "LAPTOP_STREAMED_V1",
@@ -12,14 +12,15 @@
     {
       "id": "LP0",
       "status": "COMPLETE_CPU_ONLY",
-      "action": "71stdlib and9actual CPUloader controls; historical12tiny numerical controls retained separately"
+      "action": "107currentstdlib controls;9actual tinyCPUloader controls retained separately"
     },
     {
       "id": "LP1",
-      "status": "MEASURED_PREVIOUS_PROFILE",
+      "status": "MEASURED_STREAMED_GPU_LOAD",
       "action": "Exact GPUload+finite256forward",
       "peak_RSS_GiB": 1.9278907775878906,
-      "new_streamed_GPU_path": "UNQUALIFIED"
+      "new_streamed_GPU_path": "EXACT_NATIVE_LOAD_PASSED_PARTIAL_TRIAL",
+      "streamed_trial_peak_RSS_GiB": 1.7404289245605469
     },
     {
       "id": "LP2A",
@@ -33,15 +34,15 @@
     },
     {
       "id": "LP2B",
-      "status": "PENDING_AVAILABLE_RAM",
-      "action": "Independent256/512/1024backward+five disposable updates+resume",
-      "config": "configs/E0_LAPTOP_STREAM_BACKWARD_RESUME.json",
-      "scope": "resource/mechanics only, padding/sampler unresolved"
+      "status": "PARTIAL_256_512_MEASURED_1024_VRAM_GUARD",
+      "action": "Finish512CEbackward+four disposable updates+resume",
+      "config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+      "scope": "UnpaddedCE<=512only; preserve1024failure; nofullE0orE1grant"
     },
     {
       "id": "LP3",
       "status": "PENDING_NATIVE_QUALIFICATION",
-      "action": "Reviewed current-runtime evidence validator, laptop E1 queue/schedule/native collection successor"
+      "action": "512evidenceconsistencychecker CPU/source-ready; measured current-runtime capture/queue/E1successors pending"
     },
     {
       "id": "LP4",
@@ -65,15 +66,19 @@
   "amendments": [
     "AMENDMENT_009.md",
     "AMENDMENT_010.md",
-    "AMENDMENT_011.md"
+    "AMENDMENT_011.md",
+    "AMENDMENT_012.md",
+    "AMENDMENT_013.md"
   ],
   "headless_before_launch_budget_GiB": 3.0625,
   "loader_buffer_bytes": 2097152,
   "headless_launcher": "scripts/run_laptop_trial.ps1",
-  "current_scope_registration": "AMENDMENT_012.md",
-  "current_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE.json",
-  "current_trial_scope": "UNPADDED_SINGLE_SEQUENCE_CE_V1",
-  "current_scoped_qualification": "CPU-tested andsource-reviewed; no native run",
-  "last_headless_controller": "Terminal admission timeout; no native supervisor invoked",
-  "next_trial_requires": "Meaningfully changed headroom meeting same3.0625GiBcontrollerbudget"
+  "current_scope_registration": "AMENDMENT_013.md",
+  "current_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+  "current_trial_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
+  "current_scoped_qualification": "107stdlib controls and separate source reviews passed;512native run pending",
+  "last_headless_controller": "Terminal after37.046s; native worker stopped GPU_WORKER_GUARD at1024",
+  "next_trial_requires": "Actualheadroom>=3.0625GiB; no automaticmodelretry",
+  "prepared_TRAIN_max_tokens": 398,
+  "training_target_truncation": false
 }
