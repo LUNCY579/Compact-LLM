@@ -29,6 +29,12 @@ function Write-TaskReceipt([string]$Path, $Value) {
     try { $taskWriter.WriteLine(($Value | ConvertTo-Json -Depth 12)) }
     finally { $taskWriter.Dispose() }
 }
+function Get-TaskHash([string]$Path) {
+    $taskHashStream = [IO.File]::OpenRead($Path)
+    $taskAlgorithm = [Security.Cryptography.SHA256]::Create()
+    try { return [BitConverter]::ToString($taskAlgorithm.ComputeHash($taskHashStream)).Replace('-','').ToLowerInvariant() }
+    finally { $taskHashStream.Dispose(); $taskAlgorithm.Dispose() }
+}
 Push-Location -LiteralPath $taskRoot
 $taskNativeInvoked = $false
 $taskStarted = [DateTime]::UtcNow
@@ -44,7 +50,7 @@ try {
     & $taskPython -B -c $taskValidation $taskConfig
     if ($LASTEXITCODE -ne 0) { throw 'Registered config validation failed.' }
     $taskCfg = Get-Content -LiteralPath $taskConfig -Raw | ConvertFrom-Json
-    $taskConfigHash = (Get-FileHash -LiteralPath $taskConfig -Algorithm SHA256).Hash.ToLowerInvariant()
+    $taskConfigHash = Get-TaskHash $taskConfig
     # Budget the entire worker plus system reserve and 64 MiB for its supervisor.
     $taskRequired = $taskCfg.worker_free_gib + $taskCfg.worker_rss_limit_gib + 0.0625
     New-Item -ItemType Directory -Path $taskDispatch | Out-Null
@@ -80,7 +86,7 @@ try {
     $taskCurrentHead = (& git rev-parse HEAD).Trim()
     $taskCurrentDirty = @(& git status --porcelain --untracked-files=all)
     if (($taskCurrentHead -ne $taskHead) -or ($taskCurrentDirty.Count -gt 0)) { throw 'Source changed while waiting; no native worker launched.' }
-    if ((Get-FileHash -LiteralPath $taskConfig -Algorithm SHA256).Hash.ToLowerInvariant() -ne $taskConfigHash) { throw 'Config changed while waiting.' }
+    if ((Get-TaskHash $taskConfig) -ne $taskConfigHash) { throw 'Config changed while waiting.' }
     Write-TaskReceipt (Join-Path $taskDispatch 'ADMISSION.json') @{
         status = 'CONTROLLER_RESOURCE_ADMITTED_ONLY'; observations = $taskSamples.ToArray()
         elapsed_wait_seconds = ([DateTime]::UtcNow - $taskStarted).TotalSeconds; e1_authorized = $false
