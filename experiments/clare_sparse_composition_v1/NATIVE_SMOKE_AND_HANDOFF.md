@@ -66,9 +66,10 @@ $si = New-CimInstance -ClassName Win32_ProcessStartup -ClientOnly -Property @{Sh
 Invoke-CimMethod -ClassName Win32_Process -MethodName Create -Arguments @{CommandLine=$cl; CurrentDirectory=$d; ProcessStartupInformation=$si}
 ```
 
-**Run scope.** To run only tiers 0..N (the operator's GPU grant), create
-`runs\clare-rineya-001\SCOPE.json` containing `{"max_tier": N}` before launching; without it every
-tier runs. The cap and the steps it leaves out are recorded in `CHAIN_STATUS.json` (`max_tier`,
+**Run scope.** Before launching, explicitly create `runs\clare-rineya-001\SCOPE.json` containing
+`{"max_tier": N}`, where N is an integer from 0 through 4 matching the operator's GPU grant.
+Missing, unreadable or malformed scope refuses the chain before any step or artifact write.
+The cap and the steps it leaves out are recorded in `CHAIN_STATUS.json` (`max_tier`,
 `out_of_scope`). The operator's 2026-09-28 grant is tiers 0-1, launched only after COMP-RS S0
 finishes and releases the GPU lease.
 

@@ -13,7 +13,8 @@ Tiers run in priority order and the chain STOPS at the first failure or BLOCKED 
   final   analyse every completed run
 
 Run scope: runs/clare-rineya-001/SCOPE.json {"max_tier": N} limits the chain to tiers 0..N (the
-operator's GPU grant); without the file every tier runs. The cap is recorded in CHAIN_STATUS.json.
+operator's GPU grant). An explicit valid scope is required before any step or artifact write;
+missing, unreadable or malformed scope fails closed. The cap is recorded in CHAIN_STATUS.json.
 
 Every step is a separate process, so GPU memory and host RAM are returned between steps.
 Artifacts go under runs/clare-rineya-001/ (gitignored: deltas are large and are the irreplaceable
@@ -48,19 +49,25 @@ def _qualified() -> bool:
                for p in ROOT.glob("native-qualify-*/NATIVE_QUALIFICATION.json"))
 
 
-def max_tier(scope: Path = SCOPE) -> int | None:
-    """The operator's run scope, or None (every tier) when there is no SCOPE.json. Fails closed on a malformed file."""
-    if not scope.exists():
-        return None
-    value = json.loads(scope.read_bytes()).get("max_tier")
+def max_tier(scope: Path = SCOPE) -> int:
+    """Require the operator's explicit valid run scope; never infer an unrestricted grant."""
+    try:
+        data = json.loads(scope.read_bytes())
+    except (OSError, json.JSONDecodeError, UnicodeDecodeError) as exc:
+        raise SystemExit(f"{scope}: explicit valid SCOPE.json required ({exc})") from exc
+    if not isinstance(data, dict):
+        raise SystemExit(f"{scope}: scope must be a JSON object with max_tier")
+    value = data.get("max_tier")
     if type(value) is not int or value not in TIERS:
         raise SystemExit(f"{scope}: max_tier must be an int in {TIERS}, got {value!r}")
     return value
 
 
-def in_scope(all_steps: list[dict], cap: int | None) -> tuple[list[dict], list[str]]:
+def in_scope(all_steps: list[dict], cap: int) -> tuple[list[dict], list[str]]:
     """(steps to run, names of the steps the cap leaves out)."""
-    keep = [st for st in all_steps if cap is None or st["tier"] <= cap]
+    if type(cap) is not int or cap not in TIERS:
+        raise SystemExit(f"scope cap must be an int in {TIERS}, got {cap!r}")
+    keep = [st for st in all_steps if st["tier"] <= cap]
     return keep, [st["name"] for st in all_steps if st not in keep]
 
 
@@ -95,8 +102,8 @@ def steps() -> list[dict]:
 
 
 def main() -> int:
+    cap = max_tier(SCOPE)
     ROOT.mkdir(parents=True, exist_ok=True)
-    cap = max_tier()
     todo, out_of_scope = in_scope(steps(), cap)
     state = {"started": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()), "python": PY, "steps": [],
              "max_tier": cap, "out_of_scope": out_of_scope}
