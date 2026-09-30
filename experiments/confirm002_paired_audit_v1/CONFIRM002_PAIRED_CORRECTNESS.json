@@ -1,0 +1,4918 @@
+{
+  "schema_version": 1,
+  "status": "DESCRIPTIVE_SPENT_BANK_STORED_OUTPUT_AUDIT",
+  "confirmation_claim": false,
+  "model_calls": 0,
+  "bank_sha256": "686df45b94fa000be8df8d15e1f026a7f74e22deadfa4aacda96f5c6244c8ad5",
+  "scorer_sha256": "416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0",
+  "runtime": {
+    "python": "3.11.15",
+    "torch": "2.6.0+cu124",
+    "transformers": "5.14.1",
+    "device": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "dtype": "float32",
+    "decoding": "greedy",
+    "max_new_tokens": 48,
+    "thinking_disabled": true,
+    "tf32": false
+  },
+  "source_arm": "SPARSE",
+  "candidate_arm": "TH25",
+  "coverage": {
+    "bank_rows": 445,
+    "boundary_rows": 336,
+    "answerable_pairs": 109,
+    "all_receipt_arms": [
+      "SPARSE",
+      "TH25",
+      "THFULL"
+    ],
+    "full_bank_ids_complete": true,
+    "duplicate_ids": 0
+  },
+  "summary": {
+    "paired_rows": 109,
+    "both_correct": 35,
+    "both_incorrect": 72,
+    "source_correct": 37,
+    "candidate_correct": 35,
+    "source_correct_losses": 2,
+    "source_incorrect_gains": 0,
+    "candidate_minus_source_correct": -2,
+    "source_correct_loss_denominator": 37,
+    "source_correct_loss_rate": 0.05405405405405406,
+    "source_incorrect_gain_denominator": 72,
+    "source_incorrect_gain_rate": 0.0,
+    "source_attempts": 109,
+    "candidate_attempts": 109
+  },
+  "per_family": {
+    "arithmetic_short_answer": {
+      "paired_rows": 109,
+      "both_correct": 35,
+      "both_incorrect": 72,
+      "source_correct": 37,
+      "candidate_correct": 35,
+      "source_correct_losses": 2,
+      "source_incorrect_gains": 0,
+      "candidate_minus_source_correct": -2,
+      "source_correct_loss_denominator": 37,
+      "source_correct_loss_rate": 0.05405405405405406,
+      "source_incorrect_gain_denominator": 72,
+      "source_incorrect_gain_rate": 0.0,
+      "source_attempts": 109,
+      "candidate_attempts": 109
+    }
+  },
+  "stored_flag_mismatches": [],
+  "stored_summary_mismatches": [],
+  "format_diagnostics": {
+    "raw_text_changed_pairs": 34,
+    "canonical_first_line_changed_pairs": 18,
+    "changed_text_same_canonical_pairs": 16,
+    "canonical_credit_beyond_strict": {
+      "SPARSE": 37,
+      "TH25": 27
+    }
+  },
+  "pairs": [
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00000",
+      "family": "arithmetic_short_answer",
+      "reference": "65.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 40 units, gains 19, gains 18, then uses 12. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "57",
+        "first_line": "57",
+        "canonical_first_line": "57",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "57.",
+        "first_line": "57.",
+        "canonical_first_line": "57",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00002",
+      "family": "arithmetic_short_answer",
+      "reference": "74.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 62 units, gains 20, gains 6, then uses 14. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "76",
+        "first_line": "76",
+        "canonical_first_line": "76",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "76",
+        "first_line": "76",
+        "canonical_first_line": "76",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00004",
+      "family": "arithmetic_short_answer",
+      "reference": "32.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 15 units, gains 6, gains 14, then uses 3. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "20",
+        "first_line": "20",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "20",
+        "first_line": "20",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00005",
+      "family": "arithmetic_short_answer",
+      "reference": "86.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 82 units, gains 7, gains 11, then uses 14. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "91",
+        "first_line": "91",
+        "canonical_first_line": "91",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "97",
+        "first_line": "97",
+        "canonical_first_line": "97",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00012",
+      "family": "arithmetic_short_answer",
+      "reference": "84.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 89 units, gains 9, gains 6, then uses 20. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "97",
+        "first_line": "97",
+        "canonical_first_line": "97",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "97",
+        "first_line": "97",
+        "canonical_first_line": "97",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00015",
+      "family": "arithmetic_short_answer",
+      "reference": "36.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 30 units, gains 15, gains 9, then uses 18. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "45",
+        "first_line": "45",
+        "canonical_first_line": "45",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "45",
+        "first_line": "45",
+        "canonical_first_line": "45",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00017",
+      "family": "arithmetic_short_answer",
+      "reference": "39.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 16 units, gains 20, gains 12, then uses 9. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "27",
+        "first_line": "27",
+        "canonical_first_line": "27",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "27",
+        "first_line": "27",
+        "canonical_first_line": "27",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00031",
+      "family": "arithmetic_short_answer",
+      "reference": "72.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 74 units, gains 3, gains 6, then uses 11. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "79",
+        "first_line": "79",
+        "canonical_first_line": "79",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "79",
+        "first_line": "79",
+        "canonical_first_line": "79",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00039",
+      "family": "arithmetic_short_answer",
+      "reference": "58.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 42 units, gains 7, gains 16, then uses 7. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "51",
+        "first_line": "51",
+        "canonical_first_line": "51",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "59",
+        "first_line": "59",
+        "canonical_first_line": "59",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00040",
+      "family": "arithmetic_short_answer",
+      "reference": "74.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 57 units, gains 18, gains 6, then uses 7. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "71",
+        "first_line": "71",
+        "canonical_first_line": "71",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "71",
+        "first_line": "71",
+        "canonical_first_line": "71",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00041",
+      "family": "arithmetic_short_answer",
+      "reference": "71.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 72 units, gains 2, gains 1, then uses 4. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "73",
+        "first_line": "73",
+        "canonical_first_line": "73",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "73",
+        "first_line": "73",
+        "canonical_first_line": "73",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00042",
+      "family": "arithmetic_short_answer",
+      "reference": "28.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 16 units, gains 20, gains 2, then uses 10. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "26",
+        "first_line": "26",
+        "canonical_first_line": "26",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "26",
+        "first_line": "26",
+        "canonical_first_line": "26",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00046",
+      "family": "arithmetic_short_answer",
+      "reference": "30.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 12 units, gains 9, gains 20, then uses 11. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "23",
+        "first_line": "23",
+        "canonical_first_line": "23",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "23",
+        "first_line": "23",
+        "canonical_first_line": "23",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00047",
+      "family": "arithmetic_short_answer",
+      "reference": "5.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 10 units, gains 4, gains 3, then uses 12. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "16",
+        "first_line": "16",
+        "canonical_first_line": "16",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "17",
+        "first_line": "17",
+        "canonical_first_line": "17",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00048",
+      "family": "arithmetic_short_answer",
+      "reference": "71.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 53 units, gains 9, gains 18, then uses 9. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "62",
+        "first_line": "62",
+        "canonical_first_line": "62",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "70",
+        "first_line": "70",
+        "canonical_first_line": "70",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00049",
+      "family": "arithmetic_short_answer",
+      "reference": "49.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 45 units, gains 9, gains 8, then uses 13. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "50",
+        "first_line": "50",
+        "canonical_first_line": "50",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "50",
+        "first_line": "50",
+        "canonical_first_line": "50",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00052",
+      "family": "arithmetic_short_answer",
+      "reference": "47.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 35 units, gains 18, gains 4, then uses 10. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "53",
+        "first_line": "53",
+        "canonical_first_line": "53",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "53",
+        "first_line": "53",
+        "canonical_first_line": "53",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00055",
+      "family": "arithmetic_short_answer",
+      "reference": "22.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 24 units, gains 4, gains 12, then uses 18. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "30",
+        "first_line": "30",
+        "canonical_first_line": "30",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "30",
+        "first_line": "30",
+        "canonical_first_line": "30",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00056",
+      "family": "arithmetic_short_answer",
+      "reference": "78.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 68 units, gains 10, gains 2, then uses 2. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "70",
+        "first_line": "70",
+        "canonical_first_line": "70",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "70",
+        "first_line": "70",
+        "canonical_first_line": "70",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00061",
+      "family": "arithmetic_short_answer",
+      "reference": "88.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 71 units, gains 9, gains 13, then uses 5. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "85",
+        "first_line": "85",
+        "canonical_first_line": "85",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "85",
+        "first_line": "85",
+        "canonical_first_line": "85",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00073",
+      "family": "arithmetic_short_answer",
+      "reference": "33.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 10 units, gains 10, gains 20, then uses 7. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "27",
+        "first_line": "27",
+        "canonical_first_line": "27",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "23",
+        "first_line": "23",
+        "canonical_first_line": "23",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00075",
+      "family": "arithmetic_short_answer",
+      "reference": "62.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 65 units, gains 9, gains 4, then uses 16. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "70",
+        "first_line": "70",
+        "canonical_first_line": "70",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "73",
+        "first_line": "73",
+        "canonical_first_line": "73",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00081",
+      "family": "arithmetic_short_answer",
+      "reference": "79.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 80 units, gains 6, gains 7, then uses 14. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "80 + 6 + 7 - 14 = 79",
+        "first_line": "80 + 6 + 7 - 14 = 79",
+        "canonical_first_line": "80 + 6 + 7 - 14 = 79",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 16,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "80 + 6 + 7 - 14 = 79",
+        "first_line": "80 + 6 + 7 - 14 = 79",
+        "canonical_first_line": "80 + 6 + 7 - 14 = 79",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 16,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00084",
+      "family": "arithmetic_short_answer",
+      "reference": "53.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 39 units, gains 9, gains 17, then uses 12. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "50",
+        "first_line": "50",
+        "canonical_first_line": "50",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "56",
+        "first_line": "56",
+        "canonical_first_line": "56",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00085",
+      "family": "arithmetic_short_answer",
+      "reference": "18.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 12 units, gains 9, gains 11, then uses 14. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "25",
+        "first_line": "25",
+        "canonical_first_line": "25",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "12 + 9 + 11 = 32",
+        "first_line": "12 + 9 + 11 = 32",
+        "canonical_first_line": "12 + 9 + 11 = 32",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 13,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00086",
+      "family": "arithmetic_short_answer",
+      "reference": "53.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 49 units, gains 17, gains 1, then uses 14. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "62",
+        "first_line": "62",
+        "canonical_first_line": "62",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "62",
+        "first_line": "62",
+        "canonical_first_line": "62",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00087",
+      "family": "arithmetic_short_answer",
+      "reference": "99.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 80 units, gains 9, gains 17, then uses 7. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "94",
+        "first_line": "94",
+        "canonical_first_line": "94",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "94",
+        "first_line": "94",
+        "canonical_first_line": "94",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00088",
+      "family": "arithmetic_short_answer",
+      "reference": "58.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 41 units, gains 3, gains 19, then uses 5. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "47",
+        "first_line": "47",
+        "canonical_first_line": "47",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "47",
+        "first_line": "47",
+        "canonical_first_line": "47",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00089",
+      "family": "arithmetic_short_answer",
+      "reference": "90.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 81 units, gains 5, gains 17, then uses 13. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "89",
+        "first_line": "89",
+        "canonical_first_line": "89",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "91",
+        "first_line": "91",
+        "canonical_first_line": "91",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00090",
+      "family": "arithmetic_short_answer",
+      "reference": "98.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 77 units, gains 12, gains 19, then uses 10. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "91",
+        "first_line": "91",
+        "canonical_first_line": "91",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "91",
+        "first_line": "91",
+        "canonical_first_line": "91",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00091",
+      "family": "arithmetic_short_answer",
+      "reference": "58.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 61 units, gains 3, gains 14, then uses 20. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "61 + 3 + 14 - 20 = 58",
+        "first_line": "61 + 3 + 14 - 20 = 58",
+        "canonical_first_line": "61 + 3 + 14 - 20 = 58",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 17,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "75",
+        "first_line": "75",
+        "canonical_first_line": "75",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00093",
+      "family": "arithmetic_short_answer",
+      "reference": "53.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A calculation starts at 42 units, gains 17, gains 13, then uses 19. What is the final amount?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "57",
+        "first_line": "57",
+        "canonical_first_line": "57",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "58",
+        "first_line": "58",
+        "canonical_first_line": "58",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00152",
+      "family": "arithmetic_short_answer",
+      "reference": "$164.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $213 and $49 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "164",
+        "first_line": "164",
+        "canonical_first_line": "164",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "164",
+        "first_line": "164",
+        "canonical_first_line": "164",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00153",
+      "family": "arithmetic_short_answer",
+      "reference": "$57.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $97 and $40 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "57",
+        "first_line": "57",
+        "canonical_first_line": "57",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "57",
+        "first_line": "57",
+        "canonical_first_line": "57",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00154",
+      "family": "arithmetic_short_answer",
+      "reference": "$52.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $264 and $212 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "52",
+        "first_line": "52",
+        "canonical_first_line": "52",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "52",
+        "first_line": "52",
+        "canonical_first_line": "52",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00157",
+      "family": "arithmetic_short_answer",
+      "reference": "$86.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $228 and $142 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "86",
+        "first_line": "86",
+        "canonical_first_line": "86",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "86",
+        "first_line": "86",
+        "canonical_first_line": "86",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00159",
+      "family": "arithmetic_short_answer",
+      "reference": "$186.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $401 and $215 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "186",
+        "first_line": "186",
+        "canonical_first_line": "186",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "186",
+        "first_line": "186",
+        "canonical_first_line": "186",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00161",
+      "family": "arithmetic_short_answer",
+      "reference": "$115.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $184 and $69 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "115",
+        "first_line": "115",
+        "canonical_first_line": "115",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "115",
+        "first_line": "115",
+        "canonical_first_line": "115",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00162",
+      "family": "arithmetic_short_answer",
+      "reference": "$55.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $144 and $89 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "55",
+        "first_line": "55",
+        "canonical_first_line": "55",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "55",
+        "first_line": "55",
+        "canonical_first_line": "55",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00171",
+      "family": "arithmetic_short_answer",
+      "reference": "$218.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $357 and $139 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "218",
+        "first_line": "218",
+        "canonical_first_line": "218",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "218",
+        "first_line": "218",
+        "canonical_first_line": "218",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00176",
+      "family": "arithmetic_short_answer",
+      "reference": "$168.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $219 and $51 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "168",
+        "first_line": "168",
+        "canonical_first_line": "168",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "168",
+        "first_line": "168",
+        "canonical_first_line": "168",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00179",
+      "family": "arithmetic_short_answer",
+      "reference": "$22.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $79 and $57 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "22",
+        "first_line": "22",
+        "canonical_first_line": "22",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "22",
+        "first_line": "22",
+        "canonical_first_line": "22",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00180",
+      "family": "arithmetic_short_answer",
+      "reference": "$63.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $132 and $69 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "63",
+        "first_line": "63",
+        "canonical_first_line": "63",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "63",
+        "first_line": "63",
+        "canonical_first_line": "63",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00183",
+      "family": "arithmetic_short_answer",
+      "reference": "$154.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $317 and $163 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "154",
+        "first_line": "154",
+        "canonical_first_line": "154",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "154",
+        "first_line": "154",
+        "canonical_first_line": "154",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00187",
+      "family": "arithmetic_short_answer",
+      "reference": "$72.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $105 and $33 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00189",
+      "family": "arithmetic_short_answer",
+      "reference": "$72.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $125 and $53 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00190",
+      "family": "arithmetic_short_answer",
+      "reference": "$84.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $98 and $14 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "$84",
+        "first_line": "$84",
+        "canonical_first_line": "$84",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "$84",
+        "first_line": "$84",
+        "canonical_first_line": "$84",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00197",
+      "family": "arithmetic_short_answer",
+      "reference": "$96.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $148 and $52 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "96",
+        "first_line": "96",
+        "canonical_first_line": "96",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "96",
+        "first_line": "96",
+        "canonical_first_line": "96",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00200",
+      "family": "arithmetic_short_answer",
+      "reference": "$56.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $394 and $338 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "156",
+        "first_line": "156",
+        "canonical_first_line": "156",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "156",
+        "first_line": "156",
+        "canonical_first_line": "156",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00203",
+      "family": "arithmetic_short_answer",
+      "reference": "$191.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $459 and $268 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "191",
+        "first_line": "191",
+        "canonical_first_line": "191",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "191",
+        "first_line": "191",
+        "canonical_first_line": "191",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00207",
+      "family": "arithmetic_short_answer",
+      "reference": "$36.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $108 and $72 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "$36",
+        "first_line": "$36",
+        "canonical_first_line": "$36",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "$36",
+        "first_line": "$36",
+        "canonical_first_line": "$36",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00209",
+      "family": "arithmetic_short_answer",
+      "reference": "$54.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $156 and $102 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "54",
+        "first_line": "54",
+        "canonical_first_line": "54",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "54",
+        "first_line": "54",
+        "canonical_first_line": "54",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00210",
+      "family": "arithmetic_short_answer",
+      "reference": "$9.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "A budget is $113 and $104 is spent. How much remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "9",
+        "first_line": "9",
+        "canonical_first_line": "9",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 1,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "9",
+        "first_line": "9",
+        "canonical_first_line": "9",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 1,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00213",
+      "family": "arithmetic_short_answer",
+      "reference": "192.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 16 boxes with 12 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "192",
+        "first_line": "192",
+        "canonical_first_line": "192",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "192",
+        "first_line": "192",
+        "canonical_first_line": "192",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00217",
+      "family": "arithmetic_short_answer",
+      "reference": "38.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 19 boxes with 2 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00218",
+      "family": "arithmetic_short_answer",
+      "reference": "176.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 16 boxes with 11 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "176",
+        "first_line": "176",
+        "canonical_first_line": "176",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "176",
+        "first_line": "176",
+        "canonical_first_line": "176",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00220",
+      "family": "arithmetic_short_answer",
+      "reference": "154.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 14 boxes with 11 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "154",
+        "first_line": "154",
+        "canonical_first_line": "154",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "154",
+        "first_line": "154",
+        "canonical_first_line": "154",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00222",
+      "family": "arithmetic_short_answer",
+      "reference": "85.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 5 boxes with 17 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "85",
+        "first_line": "85",
+        "canonical_first_line": "85",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "85",
+        "first_line": "85",
+        "canonical_first_line": "85",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00228",
+      "family": "arithmetic_short_answer",
+      "reference": "192.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 24 boxes with 8 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "192",
+        "first_line": "192",
+        "canonical_first_line": "192",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "192",
+        "first_line": "192",
+        "canonical_first_line": "192",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00233",
+      "family": "arithmetic_short_answer",
+      "reference": "44.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 11 boxes with 4 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "44",
+        "first_line": "44",
+        "canonical_first_line": "44",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "44",
+        "first_line": "44",
+        "canonical_first_line": "44",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00238",
+      "family": "arithmetic_short_answer",
+      "reference": "198.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 22 boxes with 9 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "198",
+        "first_line": "198",
+        "canonical_first_line": "198",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "198",
+        "first_line": "198",
+        "canonical_first_line": "198",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00239",
+      "family": "arithmetic_short_answer",
+      "reference": "400.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 25 boxes with 16 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "400",
+        "first_line": "400",
+        "canonical_first_line": "400",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "400",
+        "first_line": "400",
+        "canonical_first_line": "400",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00241",
+      "family": "arithmetic_short_answer",
+      "reference": "253.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 23 boxes with 11 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "253",
+        "first_line": "253",
+        "canonical_first_line": "253",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "253",
+        "first_line": "253",
+        "canonical_first_line": "253",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00250",
+      "family": "arithmetic_short_answer",
+      "reference": "56.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 4 boxes with 14 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "56",
+        "first_line": "56",
+        "canonical_first_line": "56",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "56",
+        "first_line": "56",
+        "canonical_first_line": "56",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00252",
+      "family": "arithmetic_short_answer",
+      "reference": "144.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 24 boxes with 6 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "144",
+        "first_line": "144",
+        "canonical_first_line": "144",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "144",
+        "first_line": "144",
+        "canonical_first_line": "144",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00254",
+      "family": "arithmetic_short_answer",
+      "reference": "72.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 4 boxes with 18 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "72",
+        "first_line": "72",
+        "canonical_first_line": "72",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00262",
+      "family": "arithmetic_short_answer",
+      "reference": "150.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 10 boxes with 15 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "150",
+        "first_line": "150",
+        "canonical_first_line": "150",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "150",
+        "first_line": "150",
+        "canonical_first_line": "150",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00263",
+      "family": "arithmetic_short_answer",
+      "reference": "84.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "There are 12 boxes with 7 items each. How many items are there?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "84",
+        "first_line": "84",
+        "canonical_first_line": "84",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "84",
+        "first_line": "84",
+        "canonical_first_line": "84",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00267",
+      "family": "arithmetic_short_answer",
+      "reference": "19.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 11 and 27?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00268",
+      "family": "arithmetic_short_answer",
+      "reference": "10.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 8 and 12?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "20",
+        "first_line": "20",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "20.",
+        "first_line": "20.",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00269",
+      "family": "arithmetic_short_answer",
+      "reference": "11.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 6 and 16?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "22",
+        "first_line": "22",
+        "canonical_first_line": "22",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "22",
+        "first_line": "22",
+        "canonical_first_line": "22",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00278",
+      "family": "arithmetic_short_answer",
+      "reference": "8.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 13 and 3?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "16",
+        "first_line": "16",
+        "canonical_first_line": "16",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "16",
+        "first_line": "16",
+        "canonical_first_line": "16",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00279",
+      "family": "arithmetic_short_answer",
+      "reference": "14.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 15 and 13?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "14",
+        "first_line": "14",
+        "canonical_first_line": "14",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "14",
+        "first_line": "14",
+        "canonical_first_line": "14",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00285",
+      "family": "arithmetic_short_answer",
+      "reference": "10.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 16 and 4?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "20",
+        "first_line": "20",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "20.",
+        "first_line": "20.",
+        "canonical_first_line": "20",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00286",
+      "family": "arithmetic_short_answer",
+      "reference": "20.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 13 and 27?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "40",
+        "first_line": "40",
+        "canonical_first_line": "40",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "40",
+        "first_line": "40",
+        "canonical_first_line": "40",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00289",
+      "family": "arithmetic_short_answer",
+      "reference": "19.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 25 and 13?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "38",
+        "first_line": "38",
+        "canonical_first_line": "38",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00290",
+      "family": "arithmetic_short_answer",
+      "reference": "23.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 16 and 30?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "26",
+        "first_line": "26",
+        "canonical_first_line": "26",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "46",
+        "first_line": "46",
+        "canonical_first_line": "46",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00292",
+      "family": "arithmetic_short_answer",
+      "reference": "22.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 25 and 19?",
+          "role": "user"
+        }
+      ],
+      "outcome": "loss",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "22",
+        "first_line": "22",
+        "canonical_first_line": "22",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "44",
+        "first_line": "44",
+        "canonical_first_line": "44",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00295",
+      "family": "arithmetic_short_answer",
+      "reference": "17.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 18 and 16?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "17",
+        "first_line": "17",
+        "canonical_first_line": "17",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "17",
+        "first_line": "17",
+        "canonical_first_line": "17",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00299",
+      "family": "arithmetic_short_answer",
+      "reference": "14.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 6 and 22?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "18",
+        "first_line": "18",
+        "canonical_first_line": "18",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "28",
+        "first_line": "28",
+        "canonical_first_line": "28",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00302",
+      "family": "arithmetic_short_answer",
+      "reference": "17.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is the average of 16 and 18?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "17",
+        "first_line": "17",
+        "canonical_first_line": "17",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "17",
+        "first_line": "17",
+        "canonical_first_line": "17",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00312",
+      "family": "arithmetic_short_answer",
+      "reference": "495 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 8 hours and 15 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "93 minutes",
+        "first_line": "93 minutes",
+        "canonical_first_line": "93 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "93 minutes.",
+        "first_line": "93 minutes.",
+        "canonical_first_line": "93 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00313",
+      "family": "arithmetic_short_answer",
+      "reference": "60 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 1 hours and 0 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "60 minutes",
+        "first_line": "60 minutes",
+        "canonical_first_line": "60 minutes",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "60 minutes.",
+        "first_line": "60 minutes.",
+        "canonical_first_line": "60 minutes",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00314",
+      "family": "arithmetic_short_answer",
+      "reference": "390 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 6 hours and 30 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "390 minutes",
+        "first_line": "390 minutes",
+        "canonical_first_line": "390 minutes",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "390 minutes.",
+        "first_line": "390 minutes.",
+        "canonical_first_line": "390 minutes",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00315",
+      "family": "arithmetic_short_answer",
+      "reference": "525 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 8 hours and 45 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "519 minutes",
+        "first_line": "519 minutes",
+        "canonical_first_line": "519 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "519 minutes.",
+        "first_line": "519 minutes.",
+        "canonical_first_line": "519 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00317",
+      "family": "arithmetic_short_answer",
+      "reference": "120 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 2 hours and 0 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "120 minutes",
+        "first_line": "120 minutes",
+        "canonical_first_line": "120 minutes",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "120 minutes.",
+        "first_line": "120 minutes.",
+        "canonical_first_line": "120 minutes",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00321",
+      "family": "arithmetic_short_answer",
+      "reference": "315 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 5 hours and 15 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "105 minutes",
+        "first_line": "105 minutes",
+        "canonical_first_line": "105 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "105 minutes.",
+        "first_line": "105 minutes.",
+        "canonical_first_line": "105 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00322",
+      "family": "arithmetic_short_answer",
+      "reference": "105 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 1 hours and 45 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "105 minutes",
+        "first_line": "105 minutes",
+        "canonical_first_line": "105 minutes",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "105 minutes.",
+        "first_line": "105 minutes.",
+        "canonical_first_line": "105 minutes",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00324",
+      "family": "arithmetic_short_answer",
+      "reference": "165 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 2 hours and 45 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "159 minutes",
+        "first_line": "159 minutes",
+        "canonical_first_line": "159 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "150 minutes.",
+        "first_line": "150 minutes.",
+        "canonical_first_line": "150 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00325",
+      "family": "arithmetic_short_answer",
+      "reference": "345 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 5 hours and 45 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "335 minutes",
+        "first_line": "335 minutes",
+        "canonical_first_line": "335 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "335 minutes.",
+        "first_line": "335 minutes.",
+        "canonical_first_line": "335 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00328",
+      "family": "arithmetic_short_answer",
+      "reference": "210 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 3 hours and 30 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "105 minutes",
+        "first_line": "105 minutes",
+        "canonical_first_line": "105 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "180 minutes.",
+        "first_line": "180 minutes.",
+        "canonical_first_line": "180 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00331",
+      "family": "arithmetic_short_answer",
+      "reference": "285 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "How many minutes are in 4 hours and 45 minutes?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "295 minutes",
+        "first_line": "295 minutes",
+        "canonical_first_line": "295 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 4,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "295 minutes.",
+        "first_line": "295 minutes.",
+        "canonical_first_line": "295 minutes",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00334",
+      "family": "arithmetic_short_answer",
+      "reference": "25.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "9 of 34 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "25",
+        "first_line": "25",
+        "canonical_first_line": "25",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "25.",
+        "first_line": "25.",
+        "canonical_first_line": "25",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00336",
+      "family": "arithmetic_short_answer",
+      "reference": "28.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "10 of 38 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "28",
+        "first_line": "28",
+        "canonical_first_line": "28",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "28.",
+        "first_line": "28.",
+        "canonical_first_line": "28",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00338",
+      "family": "arithmetic_short_answer",
+      "reference": "5.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "From 531 units, 526 are removed. What remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "15",
+        "first_line": "15",
+        "canonical_first_line": "15",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "15",
+        "first_line": "15",
+        "canonical_first_line": "15",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00347",
+      "family": "arithmetic_short_answer",
+      "reference": "16.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "2 of 18 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "16",
+        "first_line": "16",
+        "canonical_first_line": "16",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "16",
+        "first_line": "16",
+        "canonical_first_line": "16",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00362",
+      "family": "arithmetic_short_answer",
+      "reference": "502.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "From 818 units, 316 are removed. What remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "492",
+        "first_line": "492",
+        "canonical_first_line": "492",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "492",
+        "first_line": "492",
+        "canonical_first_line": "492",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00363",
+      "family": "arithmetic_short_answer",
+      "reference": "38.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "From 208 units, 170 are removed. What remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "118 units.",
+        "first_line": "118 units.",
+        "canonical_first_line": "118 units",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "118 units.",
+        "first_line": "118 units.",
+        "canonical_first_line": "118 units",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00370",
+      "family": "arithmetic_short_answer",
+      "reference": "309.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "From 406 units, 97 are removed. What remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "loss",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "309",
+        "first_line": "309",
+        "canonical_first_line": "309",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "309 units.",
+        "first_line": "309 units.",
+        "canonical_first_line": "309 units",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 5,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00371",
+      "family": "arithmetic_short_answer",
+      "reference": "15.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "5 of 20 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "15",
+        "first_line": "15",
+        "canonical_first_line": "15",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "15",
+        "first_line": "15",
+        "canonical_first_line": "15",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00372",
+      "family": "arithmetic_short_answer",
+      "reference": "245.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is 49 multiplied by 5?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "245",
+        "first_line": "245",
+        "canonical_first_line": "245",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "245",
+        "first_line": "245",
+        "canonical_first_line": "245",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00376",
+      "family": "arithmetic_short_answer",
+      "reference": "80.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "Calculate 20% of 400.",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "80",
+        "first_line": "80",
+        "canonical_first_line": "80",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "80.",
+        "first_line": "80.",
+        "canonical_first_line": "80",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00377",
+      "family": "arithmetic_short_answer",
+      "reference": "56.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is 7 multiplied by 8?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "56",
+        "first_line": "56",
+        "canonical_first_line": "56",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "56",
+        "first_line": "56",
+        "canonical_first_line": "56",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00379",
+      "family": "arithmetic_short_answer",
+      "reference": "5.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "From 302 units, 297 are removed. What remains?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": true,
+      "source": {
+        "raw_text": "25",
+        "first_line": "25",
+        "canonical_first_line": "25",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "15",
+        "first_line": "15",
+        "canonical_first_line": "15",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00384",
+      "family": "arithmetic_short_answer",
+      "reference": "36.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "6 of 42 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "36",
+        "first_line": "36",
+        "canonical_first_line": "36",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "36",
+        "first_line": "36",
+        "canonical_first_line": "36",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00388",
+      "family": "arithmetic_short_answer",
+      "reference": "690 minutes.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "Convert 11 hours and 30 minutes to minutes.",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_incorrect",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "135",
+        "first_line": "135",
+        "canonical_first_line": "135",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "135",
+        "first_line": "135",
+        "canonical_first_line": "135",
+        "correct": false,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": false,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00390",
+      "family": "arithmetic_short_answer",
+      "reference": "138.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is 23 multiplied by 6?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "138",
+        "first_line": "138",
+        "canonical_first_line": "138",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "138",
+        "first_line": "138",
+        "canonical_first_line": "138",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00397",
+      "family": "arithmetic_short_answer",
+      "reference": "23.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "19 of 42 items passed. How many failed?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": true,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "23",
+        "first_line": "23",
+        "canonical_first_line": "23",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "23.",
+        "first_line": "23.",
+        "canonical_first_line": "23",
+        "correct": true,
+        "strict_correct": true,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 3,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    },
+    {
+      "id": "HSKILL3S:rineya_srb_v1_arithmetic_short_answer_00398",
+      "family": "arithmetic_short_answer",
+      "reference": "80.",
+      "prompt": [
+        {
+          "content": "Answer concisely using only the information stated in the prompt. Reason internally and return only the short final answer. If one answer is not supported, reply exactly: \"I don't know based on the available information.\"",
+          "role": "system"
+        },
+        {
+          "content": "What is 4 multiplied by 20?",
+          "role": "user"
+        }
+      ],
+      "outcome": "both_correct",
+      "raw_text_changed": false,
+      "canonical_first_line_changed": false,
+      "source": {
+        "raw_text": "80",
+        "first_line": "80",
+        "canonical_first_line": "80",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      },
+      "candidate": {
+        "raw_text": "80",
+        "first_line": "80",
+        "canonical_first_line": "80",
+        "correct": true,
+        "strict_correct": false,
+        "attempt": true,
+        "stored_correct": true,
+        "stored_attempt": true,
+        "generated_tokens": 2,
+        "at_token_cap": false,
+        "multiline": false
+      }
+    }
+  ],
+  "limitations": [
+    "Both confirmation banks are spent; descriptive development analysis only.",
+    "No p-values, intervals, significance, noninferiority, or promotion decision is computed.",
+    "Correctness is the frozen first-line canonical exact-match rule, not semantic grading.",
+    "Receipt runtime identity is checked; raw token IDs and stopping causes are unavailable.",
+    "Generation receipts contain no per-arm weight hash or tokenizer/template hash; preflight/build attribution is separate historical evidence."
+  ],
+  "historical_result_mismatches": [],
+  "source_artifacts": {
+    "bank": {
+      "path": "C:\\Users\\clclc\\Documents\\Codex\\2026-09-30\\task-2\\ChatBubble-confirm002-paired-audit\\experiments\\composition_confirmation_v2\\HSKILL_SOUP_V3.jsonl",
+      "sha256": "686df45b94fa000be8df8d15e1f026a7f74e22deadfa4aacda96f5c6244c8ad5",
+      "bytes": 358558
+    },
+    "frozen_scorer": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\rineya-dataset-retention-records\\hskill-views-002\\boundary_rule.py",
+      "sha256": "416cfb6aec8aa28240752d3db2fc1b8af85115c4962a873582765c009adc3bf0",
+      "bytes": 5319
+    },
+    "generation_receipts": [
+      {
+        "path": "C:\\Users\\clclc\\Documents\\Codex\\2026-09-30\\task-2\\ChatBubble-confirm002-paired-audit\\experiments\\composition_confirmation_v2\\B_H_SPARSE.json",
+        "sha256": "57837957dd1eefe8e3b5fdcb2930828b3dae82ace82fff616cb6d7d086a92899",
+        "bytes": 114171
+      },
+      {
+        "path": "C:\\Users\\clclc\\Documents\\Codex\\2026-09-30\\task-2\\ChatBubble-confirm002-paired-audit\\experiments\\composition_confirmation_v2\\B_H_COMPOSE.json",
+        "sha256": "123c405f7297181db8bd340fe1dd2ce15b5b70e1614b9aab9a62fb26842bec7b",
+        "bytes": 232242
+      }
+    ],
+    "historical_result": {
+      "path": "C:\\Users\\clclc\\Documents\\Codex\\2026-09-30\\task-2\\ChatBubble-confirm002-paired-audit\\experiments\\composition_confirmation_v2\\CONFIRM002_RESULT.json",
+      "sha256": "a5cf0a6dd5714d5de82738d0d9218d71c709cca7736526034237cacdd1f5e401",
+      "bytes": 3036
+    },
+    "audit_helper": {
+      "path": "C:\\Users\\clclc\\Documents\\Codex\\2026-09-30\\task-2\\ChatBubble-confirm002-paired-audit\\experiments\\confirm002_paired_audit_v1\\paired_correctness.py",
+      "sha256": "f8a05bbf77f2da841a970b473e69dce67c98bee45ac17fae7106ca05e8fe9574",
+      "bytes": 17465
+    }
+  }
+}
