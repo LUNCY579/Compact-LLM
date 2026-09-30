@@ -1,5 +1,6 @@
 """Stdlib prospective-profile controls; no Torch imports or native jobs."""
 from copy import deepcopy
+import ast
 import hashlib
 import json
 from pathlib import Path
@@ -28,8 +29,8 @@ class LaptopProfileTests(unittest.TestCase):
             with self.subTest(field=field), self.assertRaises(RuntimeError):
                 qualify_native.validate_config({**legacy, field: value})
 
-    def test_both_exact_stage_registrations_are_accepted(self):
-        for stage in ("load_forward", "full"):
+    def test_all_exact_stage_registrations_are_accepted(self):
+        for stage in ("load_forward", "full", "backward_resume"):
             cfg = laptop_profile.expected_config(stage)
             self.assertTrue(laptop_profile.metadata_present(cfg))
             laptop_profile.validate_config(cfg)
@@ -68,8 +69,25 @@ class LaptopProfileTests(unittest.TestCase):
         self.assertEqual(full["contexts"], [256, 512, 1024])
         self.assertEqual(full["maximum_optimizer_calls"], 5)
 
+    def test_backward_resume_has_fixed_partial_scope_and_distinct_status(self):
+        cfg = laptop_profile.expected_config("backward_resume")
+        self.assertEqual(cfg["contexts"], [256, 512, 1024])
+        self.assertEqual(cfg["parity_prompts"], 32)
+        self.assertEqual(cfg["maximum_optimizer_calls"], 5)
+        self.assertEqual(cfg["generation_cap"], 0)
+        self.assertEqual(cfg["wall_seconds"], 1800)
+        self.assertEqual(cfg["update_semantics"], "disposable adapter backward/update/resume resource qualification only; padding and sampled-likelihood qualification remain separate and unresolved")
+        statuses = {laptop_profile.PROBE_PASS_STATUS, laptop_profile.BACKWARD_PASS_STATUS, laptop_profile.FULL_PASS_STATUS}
+        self.assertEqual(len(statuses), 3)
+        self.assertEqual(laptop_profile.BACKWARD_PASS_STATUS, "PASS_E0_BACKWARD_RESUME_RESOURCE_ONLY")
+        for field, value in (("generation_cap", 32), ("maximum_optimizer_calls", 0),
+                             ("parity_prompts", 0), ("contexts", [256]),
+                             ("qualification_stage", "full"), ("update_semantics", "fully qualified")):
+            with self.subTest(field=field), self.assertRaises(RuntimeError):
+                qualify_native.validate_config({**cfg, field: value})
+
     def test_profile_rejects_missing_extra_and_cross_stage_fields(self):
-        for stage in ("load_forward", "full"):
+        for stage in ("load_forward", "full", "backward_resume"):
             registered = laptop_profile.expected_config(stage)
             for field in registered:
                 cfg = deepcopy(registered)
@@ -128,7 +146,7 @@ class LaptopProfileTests(unittest.TestCase):
                 laptop_profile.admission_required_gib(cfg, rss)
 
     def test_containment_limits_are_explicit_and_not_native_qualification(self):
-        for stage in ("load_forward", "full"):
+        for stage in ("load_forward", "full", "backward_resume"):
             cfg = laptop_profile.expected_config(stage)
             limits = laptop_profile.resource_limits(cfg)
             self.assertEqual(limits["worker_free_gib"], 2.0)
@@ -138,7 +156,7 @@ class LaptopProfileTests(unittest.TestCase):
 
     def test_supervisor_dispatches_exact_limits_and_records_them(self):
         # Replace every external query and the watchdog: this launches no worker.
-        for stage in (None, "load_forward", "full"):
+        for stage in (None, "load_forward", "full", "backward_resume"):
             with self.subTest(stage=stage), tempfile.TemporaryDirectory() as directory:
                 base = Path(directory)
                 cfg = (json.loads(laptop_profile.LEGACY_CONFIG_PATH.read_bytes()) if stage is None
@@ -181,6 +199,63 @@ class LaptopProfileTests(unittest.TestCase):
         code = "import sys; import experiments.post_training_mimo_centralized_v1.scripts.laptop_profile; import experiments.post_training_mimo_centralized_v1.scripts.qualify_native; assert not any(n == 'torch' or n.startswith('torch.') or n == 'transformers' or n.startswith('transformers.') for n in sys.modules)"
         run = subprocess.run([sys.executable, "-B", "-c", code], capture_output=True, text=True)
         self.assertEqual(run.returncode, 0, run.stderr)
+
+    def test_core_math_and_complete_update_resume_body_remain_historical(self):
+        # This compares committed numerical source, not a synthetic efficacy run.
+        relative = "experiments/post_training_mimo_centralized_v1/scripts/qualify_native.py"
+        historical = subprocess.run(["git", "show", "ba683ac0fcadbf04e4e179200d035b6a980e388f:" + relative],
+                                    capture_output=True, text=True, check=True).stdout
+        current = Path(qualify_native.__file__).read_text(encoding="utf-8")
+        old_tree, new_tree = ast.parse(historical), ast.parse(current)
+        for name in ("completion_loss", "install_lora", "tensor_digest"):
+            old = next(node for node in old_tree.body if isinstance(node, ast.FunctionDef) and node.name == name)
+            new = next(node for node in new_tree.body if isinstance(node, ast.FunctionDef) and node.name == name)
+            self.assertEqual(ast.dump(new, include_attributes=False), ast.dump(old, include_attributes=False), name)
+        def update_resume_body(tree):
+            run = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "run")
+            body = next(node for node in run.body if isinstance(node, ast.Try)).body
+            start = next(i for i, node in enumerate(body) if isinstance(node, ast.Assign)
+                         and any(isinstance(target, ast.Name) and target.id == "optimizer" for target in node.targets))
+            end = next(i for i, node in enumerate(body) if isinstance(node, ast.Assign)
+                       and any(ast.unparse(target) == "result['checks']['finite_scoped_backward']" for target in node.targets))
+            return ast.dump(ast.Module(body=body[start:end + 1], type_ignores=[]), include_attributes=False)
+        self.assertEqual(update_resume_body(new_tree), update_resume_body(old_tree))
+
+    def test_padding_failure_telemetry_precedes_unchanged_failure_gate(self):
+        tree = ast.parse(Path(qualify_native.__file__).read_text(encoding="utf-8"))
+        conditional = next(node for node in ast.walk(tree) if isinstance(node, ast.If)
+                           and ast.unparse(node.test) == "not backward_resume_only")
+        require_calls = [node for node in ast.walk(conditional) if isinstance(node, ast.Call)
+                         and isinstance(node.func, ast.Name) and node.func.id == "require"
+                         and len(node.args) > 1 and isinstance(node.args[1], ast.Constant)
+                         and node.args[1].value == "native padding likelihood disagreement"]
+        self.assertEqual(len(require_calls), 1)
+        self.assertEqual(ast.unparse(require_calls[0].args[0]), "padding_ok")
+        telemetry = next(node for node in ast.walk(conditional) if isinstance(node, ast.If)
+                         and ast.unparse(node.test) == "not padding_ok")
+        assignment = telemetry.body[0]
+        self.assertIsInstance(assignment, ast.Assign)
+        self.assertEqual(ast.unparse(assignment.targets[0]), "result['failed_check_measurement']")
+        self.assertEqual({keyword.arg for keyword in assignment.value.keywords},
+                         {"left", "right", "max_abs", "mean_abs", "reference_logprobs",
+                          "observed_logprobs", "changed_argmax_positions"})
+        self.assertEqual(ast.unparse(assignment.value.func), "padding_failure_measurement")
+        self.assertLess(telemetry.lineno, require_calls[0].lineno)
+
+    def test_failed_padding_measurements_preserve_finite_values_and_nonfinite_failure(self):
+        finite = qualify_native.padding_failure_measurement(left=2, right=0, max_abs=.05, mean_abs=.02,
+                    reference_logprobs=[-1.0, -2.0], observed_logprobs=[-1.05, -2.01], changed_argmax_positions=[1])
+        self.assertEqual(finite, {"check": "native_padding_likelihood", "left": 2, "right": 0,
+                    "max_abs": .05, "mean_abs": .02, "reference_logprobs": [-1.0, -2.0],
+                    "observed_logprobs": [-1.05, -2.01], "changed_argmax_positions": [1]})
+        failing = qualify_native.padding_failure_measurement(left=2, right=0, max_abs=float("inf"),
+                    mean_abs=float("nan"), reference_logprobs=[-1.0, float("-inf")],
+                    observed_logprobs=[float("nan"), -2.01], changed_argmax_positions=[])
+        self.assertIsNone(failing["max_abs"])
+        self.assertIsNone(failing["mean_abs"])
+        self.assertEqual(failing["reference_logprobs"], [-1.0, None])
+        self.assertEqual(failing["observed_logprobs"], [None, -2.01])
+        json.dumps(failing, allow_nan=False)
 
 
 if __name__ == "__main__":

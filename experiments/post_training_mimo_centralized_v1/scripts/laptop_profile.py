@@ -16,6 +16,7 @@ RESOURCE_PROFILE = "LAPTOP_GPU_RESIDENT_V1"
 CONFIG_STATUS = "FROZEN_E0_LAPTOP_ONLY"
 ADMISSION_BUDGET = "system_reserve_plus_remaining_worker_rss"
 PROBE_PASS_STATUS = "PASS_E0_LOAD_FORWARD_RESOURCE_ONLY"
+BACKWARD_PASS_STATUS = "PASS_E0_BACKWARD_RESUME_RESOURCE_ONLY"
 FULL_PASS_STATUS = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
 LEGACY_CONFIG_SHA256 = "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d"
 LEGACY_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs/E0_TITAN_BF16.json"
@@ -34,7 +35,7 @@ def metadata_present(cfg):
 
 def expected_config(stage):
     """Derive a complete registration from byte-pinned immutable historical E0."""
-    _require(type(stage) is str and stage in ("load_forward", "full"), "unregistered laptop qualification stage")
+    _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume"), "unregistered laptop qualification stage")
     raw = LEGACY_CONFIG_PATH.read_bytes()
     _require(hashlib.sha256(raw).hexdigest() == LEGACY_CONFIG_SHA256, "historical E0 config drift")
     cfg = deepcopy(json.loads(raw))
@@ -44,6 +45,9 @@ def expected_config(stage):
     if stage == "load_forward":
         cfg.update(maximum_optimizer_calls=0, generation_cap=0, parity_prompts=0, contexts=[256],
                    update_semantics="no adapters, backward, optimizer updates, generation or benchmarks; strict load and one frozen 256-token forward only")
+    elif stage == "backward_resume":
+        cfg.update(generation_cap=0,
+                   update_semantics="disposable adapter backward/update/resume resource qualification only; padding and sampled-likelihood qualification remain separate and unresolved")
     return cfg
 
 

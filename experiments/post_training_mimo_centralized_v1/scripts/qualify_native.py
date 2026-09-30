@@ -41,6 +41,18 @@ def require(condition, message):
         raise RuntimeError(message)
 
 
+def padding_failure_measurement(*, left, right, max_abs, mean_abs, reference_logprobs,
+                                observed_logprobs, changed_argmax_positions):
+    """Preserve failed likelihood measurements; null denotes a nonfinite value."""
+    def finite_or_none(value):
+        return value if math.isfinite(value) else None
+    return dict(check="native_padding_likelihood", left=left, right=right,
+                max_abs=finite_or_none(max_abs), mean_abs=finite_or_none(mean_abs),
+                reference_logprobs=[finite_or_none(value) for value in reference_logprobs],
+                observed_logprobs=[finite_or_none(value) for value in observed_logprobs],
+                changed_argmax_positions=changed_argmax_positions)
+
+
 ACCOUNTING_VERSION = 2
 CALL_OPERATIONS = ("model_construct", "checkpoint_load", "tensor_copy", "forward",
                    "backward", "optimizer_step", "checkpoint_save", "checkpoint_reload")
@@ -530,62 +542,71 @@ def run(args):
         result["checks"]["zero_adapter_parity"] = dict(prompts=len(baseline), max_abs=parity_max)
         del baseline
 
-        with torch.no_grad():
-            short_ids = prompt_ids(950,80)
-            short_logits = forward(short_ids, "padding_reference", use_cache=False).logits
-            for left,right in ((2,0),(0,2),(2,2)):
-                padded = torch.cat([torch.full((1,left),151645,device="cuda"),short_ids,
-                                    torch.full((1,right),151645,device="cuda")],1)
-                am = torch.zeros_like(padded)
-                am[:,left:left+80] = 1
-                positions = (am.cumsum(-1)-1).clamp(min=0)
-                padded_logits = forward(padded, f"native_padding_{left}_{right}",
-                                        attention_mask=am,position_ids=positions,use_cache=False).logits[:,left:left+80]
-                ref = short_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
-                observed = padded_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
-                errors = (ref-observed).abs()
-                require(float(errors.max()) <= cfg["logprob_max_atol"] and float(errors.mean()) <= cfg["logprob_mean_atol"],
-                        "native padding likelihood disagreement")
-                guard(f"native_padding_{left}_{right}")
-            perturbed = short_ids.clone()
-            perturbed[:,-3:] = torch.tensor([[17,18,19]],device="cuda")
-            altered = forward(perturbed, "causality_perturbed", use_cache=False).logits[:,:-3]
-            require(torch.equal(short_logits[:,:-3],altered), "future-token causality failure")
-            del short_logits, padded_logits, altered, ref, observed
-        result["checks"]["native_padding_and_causality"] = True
+        backward_resume_only = laptop and cfg["qualification_stage"] == "backward_resume"
+        if not backward_resume_only:
+            with torch.no_grad():
+                short_ids = prompt_ids(950,80)
+                short_logits = forward(short_ids, "padding_reference", use_cache=False).logits
+                for left,right in ((2,0),(0,2),(2,2)):
+                    padded = torch.cat([torch.full((1,left),151645,device="cuda"),short_ids,
+                                        torch.full((1,right),151645,device="cuda")],1)
+                    am = torch.zeros_like(padded)
+                    am[:,left:left+80] = 1
+                    positions = (am.cumsum(-1)-1).clamp(min=0)
+                    padded_logits = forward(padded, f"native_padding_{left}_{right}",
+                                            attention_mask=am,position_ids=positions,use_cache=False).logits[:,left:left+80]
+                    ref = short_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
+                    observed = padded_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
+                    errors = (ref-observed).abs()
+                    padding_ok = float(errors.max()) <= cfg["logprob_max_atol"] and float(errors.mean()) <= cfg["logprob_mean_atol"]
+                    if not padding_ok:
+                        result["failed_check_measurement"] = padding_failure_measurement(
+                            left=left, right=right,
+                            max_abs=float(errors.max()), mean_abs=float(errors.mean()),
+                            reference_logprobs=ref.detach().cpu().tolist()[0],
+                            observed_logprobs=observed.detach().cpu().tolist()[0],
+                            changed_argmax_positions=(short_logits.argmax(-1) != padded_logits.argmax(-1)).nonzero()[:,1].cpu().tolist())
+                    require(padding_ok, "native padding likelihood disagreement")
+                    guard(f"native_padding_{left}_{right}")
+                perturbed = short_ids.clone()
+                perturbed[:,-3:] = torch.tensor([[17,18,19]],device="cuda")
+                altered = forward(perturbed, "causality_perturbed", use_cache=False).logits[:,:-3]
+                require(torch.equal(short_logits[:,:-3],altered), "future-token causality failure")
+                del short_logits, padded_logits, altered, ref, observed
+            result["checks"]["native_padding_and_causality"] = True
 
-        # Independently computed sequential full-prefix sampling and teacher forcing;
-        # this qualifies this no-cache sampler only, never an untested KV backend.
-        seed_ids = prompt_ids(900, 80)
-        generated, online = [], []
-        gen_start = time.monotonic()
-        with torch.no_grad():
-            while len(generated) < cfg["generation_cap"]:
-                all_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
-                scores = forward(all_ids, f"sample_{len(generated)}", use_cache=False, logits_to_keep=1).logits[0, -1].float()
-                probs = scores.softmax(-1)
-                tok = int(torch.multinomial(probs, 1).item())
-                online.append(float(scores.log_softmax(-1)[tok]))
-                generated.append(tok)
-                result["generation_tokens"] += 1
-                guard("sample")
-                if tok in cfg["eos_ids"]:
-                    break
-            full_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
-            logits = forward(full_ids, "sampled_logprobs_offline", use_cache=False).logits
-            pos = seed_ids.shape[1]-1
-            lp = logits[0, pos:pos+len(generated)].float().log_softmax(-1)
-            target = torch.tensor(generated, device="cuda")
-            offline = lp.gather(1, target[:, None]).squeeze(1).cpu()
-            differences = (offline-torch.tensor(online)).abs()
-            require(float(differences.max()) <= cfg["logprob_max_atol"] and
-                    float(differences.mean()) <= cfg["logprob_mean_atol"], "likelihood disagreement")
-            del logits, lp, scores, probs
-        result["generation_seconds"] = time.monotonic()-gen_start
-        result["generation_tokens_per_second"] = len(generated)/result["generation_seconds"]
-        result["checks"]["sampled_logprobs"] = dict(max_abs=float(differences.max()), mean_abs=float(differences.mean()),
-              tokens=generated, stop_reason="eos" if generated[-1] in cfg["eos_ids"] else "length",
-              backend="full_prefix_no_cache_temperature1_topk0_topp1")
+            # Independently computed sequential full-prefix sampling and teacher forcing;
+            # this qualifies this no-cache sampler only, never an untested KV backend.
+            seed_ids = prompt_ids(900, 80)
+            generated, online = [], []
+            gen_start = time.monotonic()
+            with torch.no_grad():
+                while len(generated) < cfg["generation_cap"]:
+                    all_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
+                    scores = forward(all_ids, f"sample_{len(generated)}", use_cache=False, logits_to_keep=1).logits[0, -1].float()
+                    probs = scores.softmax(-1)
+                    tok = int(torch.multinomial(probs, 1).item())
+                    online.append(float(scores.log_softmax(-1)[tok]))
+                    generated.append(tok)
+                    result["generation_tokens"] += 1
+                    guard("sample")
+                    if tok in cfg["eos_ids"]:
+                        break
+                full_ids = torch.cat([seed_ids, torch.tensor([generated], dtype=torch.long, device="cuda")], 1)
+                logits = forward(full_ids, "sampled_logprobs_offline", use_cache=False).logits
+                pos = seed_ids.shape[1]-1
+                lp = logits[0, pos:pos+len(generated)].float().log_softmax(-1)
+                target = torch.tensor(generated, device="cuda")
+                offline = lp.gather(1, target[:, None]).squeeze(1).cpu()
+                differences = (offline-torch.tensor(online)).abs()
+                require(float(differences.max()) <= cfg["logprob_max_atol"] and
+                        float(differences.mean()) <= cfg["logprob_mean_atol"], "likelihood disagreement")
+                del logits, lp, scores, probs
+            result["generation_seconds"] = time.monotonic()-gen_start
+            result["generation_tokens_per_second"] = len(generated)/result["generation_seconds"]
+            result["checks"]["sampled_logprobs"] = dict(max_abs=float(differences.max()), mean_abs=float(differences.mean()),
+                  tokens=generated, stop_reason="eos" if generated[-1] in cfg["eos_ids"] else "length",
+                  backend="full_prefix_no_cache_temperature1_topk0_topp1")
 
         # Actual EOS=PAD masking is positional, not token-value masking.
         from experiments.maxrl_comp002_pretraining_v1.mechanics import completion_labels
@@ -698,8 +719,13 @@ def run(args):
         require(sha(model_dir/"model.safetensors") == cfg["weight_sha256"], "source weight mutated")
         result["checks"]["frozen_base_unchanged"] = True
         result["checks"]["finite_scoped_backward"] = True
-        result["status"] = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
-        result["unqualified"] = ["KV-cache sampler", "E1 data/replay", "held-out capability", "long context beyond1024"]
+        if backward_resume_only:
+            result["status"] = laptop_profile.BACKWARD_PASS_STATUS
+            result["unqualified"] = ["native padding/causality", "sampled likelihood", "KV-cache sampler",
+                                     "E1 data/replay", "held-out capability", "long context beyond1024"]
+        else:
+            result["status"] = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
+            result["unqualified"] = ["KV-cache sampler", "E1 data/replay", "held-out capability", "long context beyond1024"]
         guard("complete")
     except Exception as exc:
         result["status"] = "BLOCKED_E0"
