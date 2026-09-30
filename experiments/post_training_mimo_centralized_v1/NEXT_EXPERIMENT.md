@@ -84,3 +84,12 @@ Current readings below that budget do not justify an unchanged model retry.
 This disposable mechanics result cannot qualify E1, select a production
 checkpoint or demonstrate acquisition/retention. Capture, language, long-context
 and sustained-training prerequisites remain necessary for the full objective.
+
+
+The first owned qualifier admission window on source commit 5cb79fe7 timed out:
+15 observations were 2.208-2.245 GiB available, below 3.3125 GiB. No framework,
+supervisor or model worker started. Byte-identical copies are tracked; its
+terminal zero-model controller directory was archived without altering records.
+The fixed owned controller path is available again, but re-enter admission only
+after a verified resource-state change. A later failed/partial model worker is
+not eligible for this zero-model archival procedure or an automatic retry.

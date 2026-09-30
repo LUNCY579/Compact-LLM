@@ -685,3 +685,21 @@ bounded owned admission attempt is justified after source commit. Keep 3.3125 Gi
 pre-worker admission, 2 GiB worker RSS, 1.25 GiB reserve and all other original
 guards. Physical result, acquisition and retention remain unmeasured. The full
 one-Titan capability/retention objective remains open and current best unchanged.
+
+
+## 2026-09-30: owned qualifier admission stopped before any framework
+
+Reviewed source was committed and pushed as 5cb79fe7dbbc244d3efb109e86dd029b49e312bb.
+The subsequent bounded admission process is terminal. All 15 samples stayed at
+2.207958-2.244862 GiB below 3.3125; the last recorded observation was 29.469 seconds.
+No worker/supervisor artifact directory was created, and no Python worker remains.
+No framework was imported and all model/update counts are zero. This does not
+measure native Tensor math, model fit, acquisition or retention.
+
+The two raw admission files were copied byte-for-byte into tracked results and
+indexed by hash. After verifying terminal zero-model status and absence of any
+begun worker/supervisor, the owned controller directory was moved to the named
+window001 archive, keeping all bytes and a path-mapping receipt. This reversible
+archive leaves the fixed controller path usable after a real resource change;
+it grants no model retry, changes no source/runtime/limit and overwrites nothing.
+The full goal remains active, with physical and scientific gates unproven.

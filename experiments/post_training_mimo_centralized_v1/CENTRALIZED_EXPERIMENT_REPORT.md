@@ -459,13 +459,15 @@ cannot substitute for these physical measurements. Review corrected the copied
 global no-grad descriptor and requires RNG shapes to be frozen before model work
 and live gradients to remain unchanged during reference passes.
 
-No physical result exists yet. Available RAM rose from 0.80-1.08 to 2.87-2.97 GiB,
-still below the unchanged 3.3125 GiB pre-worker budget; GPU free memory was
-6,980 MiB. Keep worker RSS at most 2 GiB and the 1.25 GiB system
-reserve. The next milestone is this bounded qualification when admitted, while
-the capture numerical failure, calibrated language grading, long-context baseline
-and sustained E1 prerequisites remain open. Best remains unchanged Titan and
-verified acquisition/retention gain remains unmeasured.
+The 17 worker CPU controls and independent source review passed; source was
+committed and pushed at `5cb79fe7`. Its admission window then timed out after
+15 observations at 2.208-2.245 GiB available RAM versus the unchanged 3.3125 GiB
+budget. No worker, framework import or model call occurred. Raw records and byte
+copies are retained; the terminal zero-model controller was archived for a later
+resource-changed admission. Keep the 2 GiB worker cap and 1.25 GiB system reserve.
+Physical qualification, capture, calibrated language grading, long-context
+baseline and sustained E1 remain open. Best stays unchanged Titan; acquisition
+and retention gain remain unmeasured.
 
 ## Prepared science and milestone audit
 
@@ -487,8 +489,8 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 |---|---|---|---|
 | Current state | CE512/data passed; capture failure localized | Partial progress | Distinct numerical scope and qualified capture |
 | Exact model | Titan devfreeze; 596049920 parameters | Bound | Same checkpoint retained |
-| Git/source | Capture 3ed57771; diagnostic 0b48e3cd | Committed | Delivery commit records final docs |
-| Verified | Eight CE512 checks; source joins and scheduled5120 reader pass | Scoped | Full E0 and E1 not passed |
+| Git/source | Qualifier 5cb79fe7; earlier native sources retained | Committed | Delivery receipt binds final report |
+| Verified | CE512 mechanics; full TRAIN reader; 17 worker controls | Scoped | Full E0 and E1 not passed |
 | Unmeasured | Sustained E1 fit, preservation and capability gain | Open | Current capture and E1 successors |
 | Completed experiment | Capture failure, geometry diagnostic, D2 admission stop | Recorded | Every failed/partial attempt retained |
 | Exact result | CE512 RAM 1.7486 GiB; diagnostic 1.409 GiB | Measured | Sustained worker overhead |
