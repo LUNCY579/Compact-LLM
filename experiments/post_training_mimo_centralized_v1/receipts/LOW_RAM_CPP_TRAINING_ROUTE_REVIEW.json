@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "status": "PRIMARY_SOURCE_REVIEW_NOT_SELECTED_AS_REGISTERED_LORA_REPLACEMENT",
+  "retrieved_at_utc": "2026-09-30T21:43:37Z",
+  "upstream_commit": "f872b591121761ac7b2af18283bd99bdc092a63a",
+  "source_files": {
+    "examples/training/README.md": {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/f872b591121761ac7b2af18283bd99bdc092a63a/examples/training/README.md",
+      "sha256": "e654c9e704c8df438e4bde77e37c5303f741b2b7c5db93bda936bb218b8e9578",
+      "bytes": 1003
+    },
+    "examples/training/finetune.cpp": {
+      "url": "https://github.com/ggml-org/llama.cpp/blob/f872b591121761ac7b2af18283bd99bdc092a63a/examples/training/finetune.cpp",
+      "sha256": "1bd5d4979ea4463f4bddfd962f31af658a4becb0a10cfd5e28fb43df91f29312",
+      "bytes": 3356
+    }
+  },
+  "observed_scope": {
+    "documentation": "Experimental FP32 training on limited hardware",
+    "example_parameter_filter": "llama_opt_param_filter_all",
+    "KV_cache_types": "Forced F32",
+    "output": "Full model save"
+  },
+  "scientific_mismatch": "No verified equivalence to the registered frozen-BF16/112-FP32-qv-adapter/completion-mask/equal-sequence/save-RNG pipeline",
+  "memory_arithmetic_inference": {
+    "base_parameters": 596049920,
+    "four_F32_parameter_gradient_two_Adam_state_buffers_GiB": 8.8818359375,
+    "caveat": "Illustrative full-Adam state size, not measured memory or a claim that every optimizer/backend allocation has this layout"
+  },
+  "decision": "Do not build/install/convert solely to escape the current RAM guard; keep the already implemented GPU-resident adapter route while reviewing an evidence-supported smaller inference scope",
+  "external_training_runs": 0,
+  "model_conversions": 0,
+  "framework_imports": 0,
+  "model_calls": 0,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "EVIDENCE_SUPPORTED_PROSPECTIVE_SMALLER_D2_PROFILE_ONLY_NOT_REGISTERED_OR_QUALIFIED",
+  "reviewer": "/root/laptop_gates_review",
+  "source_result": {
+    "relative": "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930/DIAGNOSTIC_RESULT.json",
+    "sha256": "b827f11c29e9a568f4baa37f618b05b9ee96956bd8a9b2cc87b6468634ee0808",
+    "bytes": 28053
+  },
+  "source_supervisor": {
+    "relative": "experiments/post_training_mimo_centralized_v1/results/capture_geometry_d1_20260930_supervisor/SUPERVISOR.json",
+    "sha256": "231025af9cc8e1f1247160f652f0eaec23bde3c44921170827c2d3e1d98b40e3",
+    "bytes": 253
+  },
+  "observed_D1_external_peak_RSS_GiB": 1.4090080261230469,
+  "proposed_D2_RSS_cap_GiB": 1.5,
+  "margin_against_D1_peak_MiB": 93.17578125,
+  "system_reserve_GiB": 1.25,
+  "supervisor_budget_GiB": 0.0625,
+  "proposed_preworker_budget_GiB": 2.8125,
+  "scope": "Bare exact Titan, four fixed-length131 causal-suffix diagnostic forwards only; no adapter or gradients",
+  "comparative_evidence": {
+    "same_constructor_loader_imports": true,
+    "D1_forwards": 8,
+    "D2_forwards": 4,
+    "D1_direct_head_projections": 16,
+    "D2_direct_head_projections": 0,
+    "explicit_extra_host_payload_estimate_bytes": 715197,
+    "estimate_caveat": "Payload estimate excludes framework/RSS variability; physical fit remains unmeasured",
+    "FP32_head_removal_saves": "GPU memory, not an equivalent host RAM amount"
+  },
+  "current_observed_available_GiB": 1.970875,
+  "admission_possible_now": false,
+  "required_future_work": [
+    "Prospective named registration",
+    "Consistent1.5 cap in worker/supervisor/controller/dynamic wait; current helper hardcodes2.0",
+    "Unchanged reserve1.25/GPU4-.5/disk4/time600/numerical gates",
+    "Independent source/CPU controls then real admitted measurement"
+  ],
+  "native_training_budget_changed": false,
+  "framework_imports": 0,
+  "model_calls": 0,
+  "native_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

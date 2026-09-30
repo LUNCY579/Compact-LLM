@@ -93,3 +93,19 @@ terminal zero-model controller directory was archived without altering records.
 The fixed owned controller path is available again, but re-enter admission only
 after a verified resource-state change. A later failed/partial model worker is
 not eligible for this zero-model archival procedure or an automatic retry.
+
+
+A source review of lower-RAM alternatives found an evidence-supported prospective
+1.5 GiB cap for the bare four-forward D2 diagnostic only: the comparable D1 run
+peaked externally at 1.409008 GiB, leaving 93.176 MiB. With the same 1.25 GiB
+reserve and 64 MiB supervisor budget, admission would require 2.8125 GiB. This is
+not yet registered, implemented or physically qualified; current 1.970875 GiB
+cannot admit it. The existing wait helper hardcodes 2 GiB, so all layers need a
+separately registered consistent profile before such a run. Keep the adapter
+worker's existing 3.3125 GiB budget unchanged.
+
+The reviewed llama.cpp example uses experimental FP32 training and selects all
+model parameters; it is not a verified replacement for this frozen-BF16/qv-LoRA
+experiment. Do not spend memory or engineering effort building it merely to
+bypass the guard. Primary source commit and hashes are retained in
+receipts/LOW_RAM_CPP_TRAINING_ROUTE_REVIEW.json.

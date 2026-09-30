@@ -703,3 +703,29 @@ window001 archive, keeping all bytes and a path-mapping receipt. This reversible
 archive leaves the fixed controller path usable after a real resource change;
 it grants no model retry, changes no source/runtime/limit and overwrites nothing.
 The full goal remains active, with physical and scientific gates unproven.
+
+
+## 2026-09-30: lower-RAM route evidence reviewed without a model run
+
+The previous turn made progress: owned worker/CPU controls, actual prefix binding
+and terminal admission evidence were committed. This turn found the checkout
+clean at d1f6f848 and no Python worker. Available RAM was 2.048271 GiB, later
+1.970875 GiB, with 6,576 MiB GPU free. No unchanged admission retry was attempted.
+
+Primary upstream source review pinned llama.cpp commit
+f872b591121761ac7b2af18283bd99bdc092a63a and hashes of its training README/example.
+That example's experimental FP32/all-parameter scope does not establish an
+adapter-only BF16 replacement. The illustrative full-Adam four-FP32-buffer
+arithmetic is 8.881836 GiB for this base; it is an inference, not a measurement or
+claim about every backend layout. No build, conversion, download of model weights
+or training was performed. This rejects an unearned frontend shortcut.
+
+Independent local source review supports considering a stricter 1.5 GiB cap for
+bare D2 only. D1 external peak was 1.409008 GiB, giving 93.176 MiB margin. D2 keeps
+constructor/2 MiB loader/imports, halves forwards and removes head projections;
+explicit extra host payload estimates are under 1 MiB. Removing the FP32 head
+saves VRAM, not that amount of RAM. Framework variation remains unmeasured. The
+prospective full budget would be 2.8125 GiB, still above current memory. Record
+this as proposed evidence, not qualified fit; no new source scaffolding is built
+until the smaller scope could actually be admitted. Current reserve, numerical
+tolerances, adapter training profile, closed banks and full goal remain unchanged.
