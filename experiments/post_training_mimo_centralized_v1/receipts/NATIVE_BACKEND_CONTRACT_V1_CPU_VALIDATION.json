@@ -1,0 +1,51 @@
+{
+  "status": "PASS_21_METADATA_AND_BYTE_CONTROLS_ONLY",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_native_backend_contract"
+  ],
+  "tests": 21,
+  "reported_test_seconds": 0.254,
+  "measured_process_seconds": 0.527810599996883,
+  "files": {
+    "scripts/native_backend_contract.py": {
+      "sha256": "d92126974c1d442624e20082ad8c9c2c15d16275e932b8ee83fab5147e7edbcc",
+      "bytes": 20250
+    },
+    "tests/test_native_backend_contract.py": {
+      "sha256": "4d031c490c2b9cea75ce7a6b2698ebf928cec7a1f65c3b9559aa23cef025d2e7",
+      "bytes": 19926
+    }
+  },
+  "physical_tensor_contents_checked": false,
+  "checkpoint_deserialized": false,
+  "RNG_restored": false,
+  "native_backend_connected": false,
+  "native_qualified": false,
+  "E1_authorized": false,
+  "earlier_draft_history": {
+    "initial18_control_pass_seconds": 0.193,
+    "drift_enhancement_19_controls_failures": [
+      {
+        "passed": 17,
+        "failed": 2,
+        "seconds": 0.263
+      },
+      {
+        "passed": 17,
+        "failed": 2,
+        "seconds": 0.215
+      },
+      {
+        "passed": 18,
+        "failed": 1,
+        "seconds": 0.22
+      }
+    ],
+    "original_draft_streams_retained": false,
+    "finding": "Windows Path.stat and os.fstat ctime meanings differ; normalized CreationTime/ChangeTime on cached handle API resolved falseearlyidentitymismatch and exposes afterhash drift."
+  }
+}
