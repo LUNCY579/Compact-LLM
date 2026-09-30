@@ -1,0 +1,56 @@
+{
+  "status": "PASS_CPU_ONLY",
+  "recorded_at_utc": "2026-09-30T05:08:21.456325+00:00",
+  "source_sha256": {
+    "scripts/qualify_native.py": "4b91ad482d2243e0b6c47d52fc53aa0337cf6ed62479105d710afd9af1f36a86",
+    "scripts/laptop_profile.py": "c517013c689b11691af740feb3f3626ac905dc72adeb46ed8cea45b444c69eac",
+    "scripts/stream_checkpoint.py": "434c62698c2e397048db0d88a7959e34d5b8afb93f90cdf86f2aba852922c67f",
+    "scripts/supervise_native.py": "59bb53e2f38da968a910202c6372cd4d77e07dc4182043d6ee713421ea7cce3d",
+    "scripts/e1_gates.py": "38ae78290c02045fcb87db69cd93d560730583c37370caf99c0ef33feee4a8a6",
+    "configs/E0_LAPTOP_STREAM_FULL.json": "a9e037b976a0e445e7607a3e108eb547abbd34faafdee434a38c5defce776c1e",
+    "configs/E0_LAPTOP_STREAM_LOAD_FORWARD.json": "92bfbe3282b1fcf88011a758303f8bf4700b226609a43bad78e0dbde7ef32cb7",
+    "configs/E0_LAPTOP_STREAM_BACKWARD_RESUME.json": "2bc968ed263f0b929d7698ff2e2db2b5344cb850841cabf8043d0e990c61cfda",
+    "tests/test_laptop_profile.py": "1690194d6b215520cca8bcb551a561c8dab43954ef70fd7d4472a6fe8b630757",
+    "tests/test_stream_checkpoint.py": "438819dbef5925661e41ae15daddc03dc8ec5bb5e3926240fa554c3294f45160",
+    "tests/test_e1_gates.py": "4ee8c896e5ffca858a573cbdf5096a0fb625c80c96993e02a0a52174699c8988"
+  },
+  "runs": [
+    {
+      "command": [
+        "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "experiments.post_training_mimo_centralized_v1.tests.test_laptop_profile",
+        "experiments.post_training_mimo_centralized_v1.tests.test_e0_accounting",
+        "experiments.post_training_mimo_centralized_v1.tests.test_e1_gates",
+        "-v"
+      ],
+      "exit_code": 0,
+      "process_wall_seconds": 1.5065058000000136,
+      "log": "results\\LAPTOP_PROFILE_V4_STDLIB.log",
+      "log_sha256": "6af5b0c0ffcb570a4bbce707aa3717fcffca1b5738cfefbfa15fcbd56884455f"
+    },
+    {
+      "command": [
+        "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "-B",
+        "-m",
+        "unittest",
+        "experiments.post_training_mimo_centralized_v1.tests.test_stream_checkpoint",
+        "-v"
+      ],
+      "exit_code": 0,
+      "process_wall_seconds": 0.42860229999860167,
+      "log": "results\\LAPTOP_PROFILE_V4_STREAM_CPU.log",
+      "log_sha256": "09cf6ab4b29fe85fb47e1e3b857ae2943ae4cc3fd894beaf105858705a3822a9"
+    }
+  ],
+  "scope": "Two named bounded laptop profiles and fixed-buffer BF16 loader; stdlib accounting/gates and actual tiny CPU copy controls; no native-fit claim",
+  "stream_loader_max_CPU_payload_buffer_bytes": 2097152,
+  "native_GPU_calls": 0,
+  "e1_authorized": false,
+  "math_review": "Gates-agent AST controls confirm original math/RNG/update/resume blocks preserved; loader uses blocking exact same-dtype copy and hashes; actual CPU RNG unchanged",
+  "stream_cpu_default_run": "8 raw-byte/simulated tests passed; one actual TorchCPUtest was explicitly opt-in and skipped in that run",
+  "actual_Torch_CPU_validation": "receipts/LAPTOP_STREAM_TORCH_CPU_VALIDATION.json"
+}

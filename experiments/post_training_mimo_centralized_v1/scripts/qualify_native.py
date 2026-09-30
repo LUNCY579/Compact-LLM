@@ -338,6 +338,9 @@ def run(args):
     cfg = json.loads(config_path.read_text())
     validate_config(cfg)
     laptop = laptop_profile.metadata_present(cfg)
+    streamed = laptop and cfg.get("loader_mode") == laptop_profile.STREAMED_LOADER_MODE
+    if streamed:
+        from experiments.post_training_mimo_centralized_v1.scripts import stream_checkpoint
     require(json.loads(args.go_path.read_text())["config_sha256"] == sha(config_path), "GO config mismatch")
     root = Path(__file__).resolve().parents[3]
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
@@ -351,11 +354,15 @@ def run(args):
                   resource_profiles=[], accounting_version=ACCOUNTING_VERSION)
     if laptop:
         result.update(resource_profile=cfg["resource_profile"], qualification_stage=cfg["qualification_stage"])
+    if streamed:
+        result["loader_mode"] = cfg["loader_mode"]
     write(out / "CONFIG.json", cfg)
     source_receipt = {"code_sha": head, "dirty": False, "script_sha256": sha(__file__)}
     if laptop:
         source_receipt["dependency_sha256"] = {
             "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py": sha(laptop_profile.__file__)}
+        if streamed:
+            source_receipt["dependency_sha256"]["experiments/post_training_mimo_centralized_v1/scripts/stream_checkpoint.py"] = sha(stream_checkpoint.__file__)
     write(out / "SOURCE_RECEIPT.json", source_receipt)
     def event(kind, **values):
         with (out / "EVENTS.jsonl").open("a", encoding="utf-8") as f:
@@ -459,17 +466,23 @@ def run(args):
         states = model.state_dict()
         base_hash = {}
         def load_checkpoint():
-            with safe_open(str(model_dir / "model.safetensors"), framework="pt", device="cpu") as weights:
-                keys = set(weights.keys())
-                require(set(states) - keys == {"lm_head.weight"} and not keys - set(states), "checkpoint key mismatch")
-                with torch.no_grad():
-                    for name in sorted(keys):
-                        source = weights.get_tensor(name)
-                        require(source.shape == states[name].shape and source.dtype == states[name].dtype, "tensor mismatch")
-                        accounting.call("tensor_copy", lambda: states[name].copy_(source), stage="tensor_copy:" + name)
-                        base_hash[name] = tensor_digest(torch, source)
-                        require(tensor_digest(torch, states[name]) == base_hash[name], "loaded tensor mismatch")
-                del source
+            if streamed:
+                hashes, diagnostics = stream_checkpoint.load_streamed(
+                    torch, model, model_dir / "model.safetensors", accounting, tensor_digest)
+                base_hash.update(hashes)
+                result["loader_diagnostics"] = diagnostics
+            else:
+                with safe_open(str(model_dir / "model.safetensors"), framework="pt", device="cpu") as weights:
+                    keys = set(weights.keys())
+                    require(set(states) - keys == {"lm_head.weight"} and not keys - set(states), "checkpoint key mismatch")
+                    with torch.no_grad():
+                        for name in sorted(keys):
+                            source = weights.get_tensor(name)
+                            require(source.shape == states[name].shape and source.dtype == states[name].dtype, "tensor mismatch")
+                            accounting.call("tensor_copy", lambda: states[name].copy_(source), stage="tensor_copy:" + name)
+                            base_hash[name] = tensor_digest(torch, source)
+                            require(tensor_digest(torch, states[name]) == base_hash[name], "loaded tensor mismatch")
+                    del source
             require(model.lm_head.weight is model.model.embed_tokens.weight, "embedding tie lost")
             require(sum(p.numel() for p in model.parameters()) == 596049920, "parameter count mismatch")
         accounting.call("checkpoint_load", load_checkpoint, stage="checkpoint_load")
@@ -478,10 +491,14 @@ def run(args):
         result["load_seconds"] = time.monotonic()-load_start
         result["checks"]["exact_native_load"] = True
         guard("loaded")
-        write(out / "MODEL_RECEIPT.json", dict(weight_sha256=cfg["weight_sha256"],
+        model_receipt = dict(weight_sha256=cfg["weight_sha256"],
              primary_receipt_sha256=sha(cfg["primary_receipt"]), unique_parameters=596049920,
              tensor_sha256=base_hash, loader="stock Qwen3 allocated BF16 on CUDA; strict streamed safetensors copy",
-             tied=True, config=model_cfg.to_dict()))
+             tied=True, config=model_cfg.to_dict())
+        if streamed:
+            model_receipt.update(loader="stock Qwen3 allocated BF16 on CUDA; strict safetensors header and 2MiB bounded read buffer copy",
+                                 loader_mode=cfg["loader_mode"], loader_diagnostics=result["loader_diagnostics"])
+        write(out / "MODEL_RECEIPT.json", model_receipt)
 
         def forward(ids, stage, training=False, **kwargs):
             # numel reads shape metadata and includes actual left/right padding.

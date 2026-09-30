@@ -2,6 +2,7 @@
 from copy import deepcopy
 import ast
 import hashlib
+from itertools import product
 import json
 from pathlib import Path
 import subprocess
@@ -41,6 +42,43 @@ class LaptopProfileTests(unittest.TestCase):
             self.assertEqual(cfg["worker_rss_limit_gib"], 2.5)
             self.assertEqual(cfg["gpu_free_gib"], 4.0)
             self.assertEqual(cfg["gpu_worker_free_gib"], .5)
+
+    def test_streamed_profile_is_exact_and_preserves_stage_workload(self):
+        for stage in ("load_forward", "full", "backward_resume"):
+            original = laptop_profile.expected_config(stage)
+            streamed = laptop_profile.expected_config(stage, profile=laptop_profile.STREAMED_PROFILE)
+            qualify_native.validate_config(streamed)
+            self.assertEqual(streamed["resource_profile"], "LAPTOP_STREAMED_V1")
+            self.assertEqual(streamed["loader_mode"], "stream_read_2MiB_v1")
+            self.assertEqual(streamed["host_free_gib"], 1.25)
+            self.assertEqual(streamed["worker_free_gib"], 1.25)
+            self.assertEqual(streamed["worker_rss_limit_gib"], 1.75)
+            differences = {"resource_profile", "host_free_gib", "worker_free_gib", "worker_rss_limit_gib", "loader_mode"}
+            for field in set(original) | set(streamed):
+                if field not in differences:
+                    self.assertEqual(original[field], streamed[field], field)
+            self.assertNotIn("loader_mode", original)
+
+    def test_streamed_identity_loader_and_resource_mutations_fail_closed(self):
+        for stage in ("load_forward", "full", "backward_resume"):
+            cfg = laptop_profile.expected_config(stage, profile=laptop_profile.STREAMED_PROFILE)
+            for field, value in (("loader_mode", "mmap"), ("loader_mode", "stream_read_1MiB_v1"),
+                                 ("resource_profile", laptop_profile.RESOURCE_PROFILE),
+                                 ("resource_profile", "unknown"), ("host_free_gib", 1.0),
+                                 ("worker_free_gib", 1.0), ("worker_rss_limit_gib", 2.0),
+                                 ("worker_rss_limit_gib", True), ("gpu_free_gib", 3.9)):
+                with self.subTest(stage=stage, field=field), self.assertRaises(RuntimeError):
+                    qualify_native.validate_config({**cfg, field: value})
+            for field in cfg:
+                mutated = deepcopy(cfg)
+                del mutated[field]
+                with self.subTest(stage=stage, missing=field), self.assertRaises(RuntimeError):
+                    laptop_profile.validate_config(mutated)
+            with self.assertRaises(RuntimeError):
+                laptop_profile.validate_config({**cfg, "extra_loader_option": "auto"})
+            original = laptop_profile.expected_config(stage)
+            with self.assertRaises(RuntimeError):
+                qualify_native.validate_config({**original, "loader_mode": laptop_profile.STREAMED_LOADER_MODE})
 
     def test_probe_has_zero_update_generation_and_parity_budget(self):
         probe = laptop_profile.expected_config("load_forward")
@@ -145,6 +183,14 @@ class LaptopProfileTests(unittest.TestCase):
             with self.subTest(rss=rss), self.assertRaises(RuntimeError):
                 laptop_profile.admission_required_gib(cfg, rss)
 
+    def test_streamed_admission_reserves_registered_remaining_growth(self):
+        cfg = laptop_profile.expected_config("load_forward", profile=laptop_profile.STREAMED_PROFILE)
+        for rss, required in ((0, 3.0), (.75, 2.25), (1.35, 1.65), (1.75, 1.25)):
+            with self.subTest(rss=rss):
+                self.assertAlmostEqual(laptop_profile.admission_required_gib(cfg, rss), required)
+                self.assertAlmostEqual(required + rss, 3.0)
+        self.assertEqual(laptop_profile.admission_required_gib(cfg, 1.8), 1.25)
+
     def test_containment_limits_are_explicit_and_not_native_qualification(self):
         for stage in ("load_forward", "full", "backward_resume"):
             cfg = laptop_profile.expected_config(stage)
@@ -156,11 +202,13 @@ class LaptopProfileTests(unittest.TestCase):
 
     def test_supervisor_dispatches_exact_limits_and_records_them(self):
         # Replace every external query and the watchdog: this launches no worker.
-        for stage in (None, "load_forward", "full", "backward_resume"):
-            with self.subTest(stage=stage), tempfile.TemporaryDirectory() as directory:
+        profiles = (laptop_profile.RESOURCE_PROFILE, laptop_profile.STREAMED_PROFILE)
+        stages = ("load_forward", "full", "backward_resume")
+        for profile, stage in [(None, None)] + list(product(profiles, stages)):
+            with self.subTest(profile=profile, stage=stage), tempfile.TemporaryDirectory() as directory:
                 base = Path(directory)
                 cfg = (json.loads(laptop_profile.LEGACY_CONFIG_PATH.read_bytes()) if stage is None
-                       else laptop_profile.expected_config(stage))
+                       else laptop_profile.expected_config(stage, profile=profile))
                 config_path = base / "config.json"
                 config_path.write_text(json.dumps(cfg), encoding="utf-8")
                 output = base / "result"
@@ -182,8 +230,8 @@ class LaptopProfileTests(unittest.TestCase):
                 self.assertEqual(len(calls), 1)
                 limits = calls[0][1]
                 self.assertEqual(limits["seconds"], cfg["wall_seconds"])
-                self.assertEqual(limits["min_free_gib"], 6.0 if stage is None else 2.0)
-                self.assertEqual(limits["max_rss_gib"], 4.0 if stage is None else 2.5)
+                self.assertEqual(limits["min_free_gib"], cfg["worker_free_gib"])
+                self.assertEqual(limits["max_rss_gib"], 4.0 if stage is None else cfg["worker_rss_limit_gib"])
                 launch = json.loads((base / "result_supervisor/LAUNCH.json").read_text())
                 self.assertEqual(limits["go"]["config_sha256"], launch["config_sha256"])
                 if stage is None:
@@ -192,7 +240,11 @@ class LaptopProfileTests(unittest.TestCase):
                 else:
                     self.assertEqual(launch["resource_limits"], laptop_profile.resource_limits(cfg))
                     self.assertEqual(launch["qualification_stage"], stage)
-                    self.assertEqual(launch["resource_profile"], laptop_profile.RESOURCE_PROFILE)
+                    self.assertEqual(launch["resource_profile"], profile)
+                    if profile == laptop_profile.STREAMED_PROFILE:
+                        self.assertEqual(launch["loader_mode"], laptop_profile.STREAMED_LOADER_MODE)
+                    else:
+                        self.assertNotIn("loader_mode", launch)
                 self.assertFalse((base / "rineya-central-gpu0.lock").exists())
 
     def test_imports_do_not_load_model_frameworks(self):

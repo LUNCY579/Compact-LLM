@@ -13,6 +13,8 @@ from pathlib import Path
 
 
 RESOURCE_PROFILE = "LAPTOP_GPU_RESIDENT_V1"
+STREAMED_PROFILE = "LAPTOP_STREAMED_V1"
+STREAMED_LOADER_MODE = "stream_read_2MiB_v1"
 CONFIG_STATUS = "FROZEN_E0_LAPTOP_ONLY"
 ADMISSION_BUDGET = "system_reserve_plus_remaining_worker_rss"
 PROBE_PASS_STATUS = "PASS_E0_LOAD_FORWARD_RESOURCE_ONLY"
@@ -20,7 +22,7 @@ BACKWARD_PASS_STATUS = "PASS_E0_BACKWARD_RESUME_RESOURCE_ONLY"
 FULL_PASS_STATUS = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
 LEGACY_CONFIG_SHA256 = "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d"
 LEGACY_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs/E0_TITAN_BF16.json"
-PROFILE_FIELDS = frozenset(("resource_profile", "qualification_stage", "worker_rss_limit_gib", "admission_budget"))
+PROFILE_FIELDS = frozenset(("resource_profile", "qualification_stage", "worker_rss_limit_gib", "admission_budget", "loader_mode"))
 
 
 def _require(condition, message):
@@ -33,15 +35,19 @@ def metadata_present(cfg):
     return type(cfg) is dict and bool(PROFILE_FIELDS.intersection(cfg))
 
 
-def expected_config(stage):
+def expected_config(stage, profile=RESOURCE_PROFILE):
     """Derive a complete registration from byte-pinned immutable historical E0."""
     _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume"), "unregistered laptop qualification stage")
+    _require(type(profile) is str and profile in (RESOURCE_PROFILE, STREAMED_PROFILE), "unregistered laptop resource profile")
     raw = LEGACY_CONFIG_PATH.read_bytes()
     _require(hashlib.sha256(raw).hexdigest() == LEGACY_CONFIG_SHA256, "historical E0 config drift")
     cfg = deepcopy(json.loads(raw))
-    cfg.update(status=CONFIG_STATUS, resource_profile=RESOURCE_PROFILE, qualification_stage=stage,
+    cfg.update(status=CONFIG_STATUS, resource_profile=profile, qualification_stage=stage,
                host_free_gib=2.0, worker_free_gib=2.0, worker_rss_limit_gib=2.5,
                admission_budget=ADMISSION_BUDGET, wall_seconds=600 if stage == "load_forward" else 1800)
+    if profile == STREAMED_PROFILE:
+        cfg.update(host_free_gib=1.25, worker_free_gib=1.25, worker_rss_limit_gib=1.75,
+                   loader_mode=STREAMED_LOADER_MODE)
     if stage == "load_forward":
         cfg.update(maximum_optimizer_calls=0, generation_cap=0, parity_prompts=0, contexts=[256],
                    update_semantics="no adapters, backward, optimizer updates, generation or benchmarks; strict load and one frozen 256-token forward only")
@@ -53,7 +59,7 @@ def expected_config(stage):
 
 def validate_config(cfg):
     _require(type(cfg) is dict, "invalid laptop config")
-    expected = expected_config(cfg.get("qualification_stage"))
+    expected = expected_config(cfg.get("qualification_stage"), cfg.get("resource_profile"))
     try:
         actual_json = json.dumps(cfg, sort_keys=True, allow_nan=False, separators=(",", ":"))
         expected_json = json.dumps(expected, sort_keys=True, allow_nan=False, separators=(",", ":"))
@@ -63,7 +69,7 @@ def validate_config(cfg):
 
 
 def admission_required_gib(cfg, current_rss_gib):
-    """Reserve 2 GiB for the system plus the worker's remaining RSS allowance."""
+    """Reserve the registered system floor plus remaining worker RSS allowance."""
     validate_config(cfg)
     _require(type(current_rss_gib) in (int, float) and math.isfinite(current_rss_gib) and current_rss_gib >= 0,
              "nonfinite/invalid worker RSS")

@@ -49,6 +49,8 @@ def main():
         if laptop:
             launch.update(resource_profile=cfg["resource_profile"], qualification_stage=cfg["qualification_stage"],
                           resource_limits=laptop_profile.resource_limits(cfg))
+            if "loader_mode" in cfg:
+                launch["loader_mode"] = cfg["loader_mode"]
         write(supervision/"LAUNCH.json", launch)
         run_bounded(command,root,supervision,seconds=cfg["wall_seconds"],min_free_gib=cfg["worker_free_gib"],
                     max_rss_gib=cfg["worker_rss_limit_gib"] if laptop else 4.0,go={"config_sha256":sha(a.config)})

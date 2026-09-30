@@ -1,0 +1,21 @@
+{
+  "status": "PASS_ACTUAL_TINY_CPU",
+  "recorded_at_utc": "2026-09-30T05:09:38.117242+00:00",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_stream_checkpoint",
+    "-v"
+  ],
+  "environment_override": {
+    "RINEYA_STREAM_TORCH_CPU_TEST": "1"
+  },
+  "process_wall_seconds": 2.3862362999989273,
+  "log": "results\\LAPTOP_PROFILE_V4_TORCH_CPU.log",
+  "log_sha256": "650354f089b5c6e92d0c87fdeea407ecdec089a485093632f69c4ffc740a3987",
+  "scope": "Nine controls including real BF16CPUtorch.frombuffer/copy/hash identity andunchangedTorchRNG; noCUDA/fullweights",
+  "native_GPU_calls": 0,
+  "e1_authorized": false
+}
