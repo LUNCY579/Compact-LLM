@@ -123,12 +123,16 @@
       "registration": [
         "AMENDMENT_009.md",
         "AMENDMENT_010.md",
-        "AMENDMENT_011.md"
+        "AMENDMENT_011.md",
+        "AMENDMENT_012.md",
+        "AMENDMENT_013.md",
+        "AMENDMENT_014.md",
+        "AMENDMENT_015.md"
       ],
-      "status": "CE512_NATIVE_MECHANICS_PASS_FULL_E0_AND_E1_UNQUALIFIED",
-      "native_pretrained_loads": 4,
+      "status": "CE512_MECHANICS_PASS_CAPTURE_NUMERICAL_FAILURE_DIAGNOSTIC_COMPLETE",
+      "native_pretrained_loads": 6,
       "native_optimizer_steps": 6,
-      "native_generated_tokens": 0,
+      "native_generated_tokens": 3,
       "load_peak_RSS_GiB": 1.9278907775878906,
       "full_peak_RSS_GiB": 1.9510383605957031,
       "peak_CUDA_allocated_GiB": 1.400038242340088,
@@ -149,7 +153,26 @@
         "receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json"
       ],
       "ce512_backward_resume_qualified": true,
-      "ce512_peak_RSS_GiB": 1.7486457824707031
+      "ce512_peak_RSS_GiB": 1.7486457824707031,
+      "capture_resource_profile": "LAPTOP_CAPTURE_RESIDENT_V1",
+      "capture_worker_RSS_ceiling_GiB": 2.0
+    },
+    {
+      "id": "RINEYA-0P6B-CAPTURE-QUAL-SHORT-V1",
+      "status": "BLOCKED_NUMERICAL",
+      "config": "configs/CAPTURE_GREEDY_SHORT_QUAL_V1.json",
+      "latest_result": "receipts/CAPTURE_SHORT_V1_NATIVE_FAILURE.json",
+      "resource_checks_passed": true,
+      "capture_authorized": false,
+      "E1_authorized": false
+    },
+    {
+      "id": "RINEYA-0P6B-CAPTURE-GEOMETRY-D1",
+      "status": "COMPLETE_DIAGNOSTIC_ONLY",
+      "config": "configs/CAPTURE_GEOMETRY_DIAGNOSTIC_V1.json",
+      "latest_result": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
+      "capture_authorized": false,
+      "E1_authorized": false
     }
   ],
   "later_tracks": {
@@ -164,11 +187,11 @@
     "E6": "actual MiMo sandbox transfer",
     "SIDE": "architecture / inference separate; all need new full registration"
   },
-  "cycle_status": "NATIVE_CE512_AND_TRAIN_SOURCE_BINDING_COMPLETE_E1_PREREQUISITES_OPEN",
-  "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
+  "cycle_status": "CE512_AND_TRAIN_SOURCE_JOIN_PASS_CAPTURE_FAILURE_LOCALIZED_UPSTREAM",
+  "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V3.json",
   "experimental_scope": "Original one-Titan capability/retention objective retained; RAM workflow amended by user",
   "latest_available_RAM_GiB": 0.8141975402832031,
-  "last_headless_controller": "TERMINAL_CE512_NATIVE_PASS",
+  "last_headless_controller": "TERMINAL_CAPTURE_FAILURE_AND_TERMINAL_DIAGNOSTIC_PASS_PROCESS_ONLY",
   "current_native_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
   "current_runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
   "scope_native_qualified": true,
@@ -182,5 +205,7 @@
   "scope_consistency_receipt": "receipts/ce512_native_evidence_v2/CONSISTENCY.json",
   "train_scope_binding": "receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json",
   "train_scope_compatible": true,
-  "E1_authorized": false
+  "E1_authorized": false,
+  "latest_capture_qualification": "BLOCKED_NUMERICAL_RESOURCES_PASSED",
+  "latest_diagnostic": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json"
 }

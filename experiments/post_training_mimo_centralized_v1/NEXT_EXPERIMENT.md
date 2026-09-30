@@ -1,35 +1,41 @@
 # Next experiment
 
-30 September 2026. The complete UNPADDED_SINGLE_SEQUENCE_CE512_V1 native trial
-passed all eight checks from source 15901919825dc1855020212edcaf6830ee7caef1:
-exact streamed GPU loading,32 zero-adapter matches, unpadded causality, all-one-mask
-equivalence, positional EOS labels, confined finite gradients, bitwise save/resume
-and unchanged base.393 calls/four disposable updates returned;1792 training positions.
-Observed process-tree RAM peaked 1.748646 GiB, with 2.498425 GiB minimum available RAM
-and 3.326172 GiB minimum free VRAM. The observed RSS margin is only 1.387 MiB; sustained
-training/data/evaluation overhead is not qualified by this short pilot.
+30 September 2026. The laptop route has passed complete single-sequence CE512
+mechanics and the source-to-array contract for all 5120 prepared TRAIN rows.
+The short adapter fixture used four disposable updates and bitwise resume;
+process-tree RAM peaked at 1.748646 GiB. Actual TRAIN length is at most 398,
+so a 512-token envelope preserves every target without truncation.
 
-The stdlib evidence checker passed the actual complete bundle and exact byte/source
-bindings. Full E0 padding and1024VRAMfailures remain preserved. Current best remains
-unchanged Titan; no acquisition/retention result or production recipe is promoted.
-No model worker/controller is live. Do not rerun unchanged E0 merely to produce
-another successful resource receipt.
+The first bare-model greedy capture pilot passed its memory checks but failed
+prefix-versus-bulk raw-model likelihood agreement. It emitted three tokens and
+natural EOS in the first mechanical fixture; no DEV responses were collected.
+The fixed-trace geometry diagnostic reproduced the failure exactly. Changing
+BF16 output-head row count gave zero difference on held hidden values; differences
+in prefix/full hidden states reproduce the likelihood gap. A GPU-only FP32 head
+still fails both frozen limits. This localizes the difference upstream of the
+head, without proving its mechanism. Both attempts and every partial call are
+preserved. No model worker or admission controller remains live.
 
-The source-joined TRAIN contract now passed all 5120 actual source/array pairs,
-canonical semantic parents, target references and CE512 consumer checks, preserving
-680532 input and 63546 supervised positions with 81 masked prior assistant turns.
-The committed production reader took 3.329 seconds and peaked at 39.004 MiB.
-Eighteen new CPU controls passed; all native/E1 grants remain false. Historical
-full-dose data identity is unchanged. No retokenization or dataset rewrite occurred.
+Follow [the detailed laptop plan](manifests/LAPTOP_EXECUTION_PLAN_V3.json).
+The next numerical experiment must be separately registered and bounded: either
+localize the first upstream divergence, or define and qualify a distinct exact-
+prefix scoring scope. Keep the failed bulk gate and its 0.03125/0.01 limits intact.
+Do not rerun unchanged E0 or the failed capture merely to produce another receipt.
 
-Then register and qualify actual frozen-source response capture/decoding and
-preservation, language calibration and native long-context evaluation; bind measured
-current laptop queue/E1 successors and implement the gated native executor. Preserve
-microbatch 1, accumulation 20, rank-8 q/v BF16 base /FP32 adapters, mean-completion-per-sequence
-CE and seed 101: 256 steps, 16 acquisition plus 4 replay sequences per step. Actual full-dose consumer
-fit and sustained RSS must be measured separately; keep GPUresident state, adapter-only
-checkpoints, streamed rows and sequential evaluation. Longer training contexts may
-use separately registered activation checkpointing when required. Original E1 plans
-and 7.4/6 GiB policy receipts remain historical. CHECK/FINAL stay closed and every E1
-launch flag remains false until all prerequisites pass. The original one-Titan
-verified capability/retention research objective remains incomplete.
+After qualified capture, collect the frozen 512-row deterministic acquisition and
+retention baseline sequentially, with measured time/token budgets. Language needs
+independent reference labels and an identified calibrated grader; existing packets
+remain unassigned diagnostics. Qualify 2048/4096 preservation separately. No paid
+grading or cloud rental is authorized.
+
+The short CE worker nearly reaches its 1.75 GiB cap. Before sustained training,
+freeze and measure a successor that budgets actual input-reader, accumulation and
+driver overhead; a proposed 2 GiB cap remains unqualified. Preserve GPU-resident
+BF16 base/FP32 rank-8 q/v adapters, microbatch 1, accumulation 20, sequence-mean
+completion CE, all targets and adapter-only checkpoints. Then bind the current
+native executor and seed-101 schedule: 256 steps, 16 acquisition plus four replay
+sequences per step; seeds 211/307 depend on the registered DEV screen.
+
+Current best is unchanged Titan. Acquisition, retention and sustained training
+fit remain unmeasured. E1 launch flags remain false; CHECK/FINAL remain closed.
+The original one-Titan verified capability/retention objective is still open.

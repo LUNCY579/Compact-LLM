@@ -1,79 +1,59 @@
 # Laptop execution route
 
-30 September 2026, America/Chicago. The earlier 7.4 GiB free-RAM requirement was
-an inherited policy for a different CPU-reference workflow. It was not measured
-Titan demand. Exact Titan loading and a 256-token GPU forward have now succeeded:
-observed process-tree RSS peak 1.928 GiB; PyTorch CUDA allocation peak 1.400 GiB.
-All 32 zero-adapter comparisons also matched exactly in a separate full attempt.
+30 September 2026. The exact Titan BF16 model can load and perform short adapter
+mechanics on this 16 GB laptop using GPU-resident state and a fixed 2 MiB CPU
+loading buffer. Complete CE512 mechanics observed 1.748646 GiB peak process RAM;
+it passed save/resume and unchanged-base checks. The inherited 7.4 GiB free-RAM
+floor was a policy for a different CPU-reference workflow.
 
-The smallest registered route uses a fixed 2 MiB checkpoint read buffer, a 1.75 GiB
-worker RSS ceiling and a 1.25 GiB system reserve. It budgets 3 GiB before worker
-launch, with live admission accounting for already occupied worker RSS. The launcher
-adds 64 MiB for its supervisor and waits for two observations >=3.0625 GiB. The
-new loader passed actual CPU BF16 byte-identity/RNG controls and then loaded all
-310 exact tensors on GPU. The unpadded native trial completed 256/512-token backward
-and two updates; its 1024-token backward stopped at the VRAM reserve. No new model numerical tolerance was
-relaxed, and no user app is terminated by this route.
+Follow [plan V3](manifests/LAPTOP_EXECUTION_PLAN_V3.json). Run one native GPU
+worker at a time. Use one unpadded sequence per microbatch; all prepared TRAIN
+rows have at most 398 tokens. Accumulation, sustained input consumption and full
+training still need separate registered measurement. The short worker's 1.75 GiB
+cap has only 1.387 MiB observed margin; do not treat it as a sustained training fit.
 
-## Run outside the desktop app
+## Execution without the desktop app
 
-Double-click `scripts/run_laptop_adapter_trial.cmd` in File Explorer, or invoke
-`scripts/run_laptop_trial.ps1` from a regular PowerShell window outside Codex/ChatGPT.
-Closing the desktop app can reduce its observed roughly 2 GiB working set, but
-working-set totals are not guaranteed reclaimable RAM; the controller measures
-actual available memory. The trial does not need the chat UI to remain open.
+The retained `scripts/run_laptop_adapter_trial.cmd` and
+`scripts/run_laptop_trial.ps1` work from a regular Windows shell. The default is
+the scoped unpadded_ce512 mechanics qualifier, not E1 training. That qualification
+has already passed; an unchanged repeat is unnecessary. The controller waits for
+two actual available-RAM observations at least 3.0625 GiB, including its supervisor
+allowance, before launching the bounded contained worker. After imports the worker
+reserves only its remaining permitted RSS growth plus 1.25 GiB of system headroom.
 
-The default is the AMENDMENT_013 unpadded_ce512 stage, covering prepared single-sequence
-TRAIN inputs up to 398 tokens without truncation. It waits up to ten
-minutes for headroom, then launches one process-contained trial with a 30-minute
-worker ceiling. It stops on memory, GPU, time, source, numerical or resume failure.
-There is no automatic model retry, guard increase or E1 launch. Waiting time and
-native time are recorded separately. Keep the experiment checkout committed and
-unchanged while it waits or runs. Close the regular PowerShell window to stop its
-controller; the native supervisor's Windows Job Object contains its model worker.
+`scripts/run_capture_trial.ps1` uses the separate 2 GiB RSS profile and 3.3125 GiB
+before-worker budget, with a 600-second native ceiling. Its first pilot stopped
+on the fixed likelihood comparison, with memory headroom. The completed geometry
+diagnostic reproduced that failure and identified an upstream hidden-state
+difference; FP32 output-head projection alone did not resolve it. Do not rerun
+the unchanged failed qualifier or treat its memory pass as a capture pass. A next
+numerical diagnostic/scoring successor needs its own registration and review.
 
-Outputs are write-once under `artifacts/mimo_central/headless_*`, including a
-separate controller dispatch receipt and native worker/supervisor receipts. Failed
-or timed-out trials remain useful evidence. Adapter checkpoint binaries remain
-local and disposable; the published Titan checkpoint is never overwritten.
+The shell controller does not need the chat UI to remain open. Closing a desktop
+app is optional and does not guarantee any particular amount of reclaimable RAM;
+actual available memory decides admission. No user app or unrelated process is
+terminated. A finite admission window ends with receipts if headroom is insufficient;
+it does not restart automatically.
 
-## What each phase establishes
+## What is measured and what remains
 
-| Stage | Bound | Scope |
+| Work | Result | Next condition |
 |---|---|---|
-| load_forward | 600 s; zero updates/generation | Exact GPU load and one finite 256-token forward |
-| full | 1800 s; at most five disposable updates | Every original E0 numerical/resource check; currently stops on padded likelihood |
-| unpadded_ce | 1800 s; at most five disposable updates | Unpadded causality, real all-one-mask equivalence, CE, gradients and resume; no full E0 or E1 grant |
-| unpadded_ce512 | 1800 s; at most four disposable updates | Complete CE/save/resume fixture up to 512 tokens; distinct scoped status, E1 remains false |
-| backward_resume | 1800 s; at most five disposable updates | 256/512/1024 backward fit, confined gradients, save/resume and frozen-base identity; padding/sampler unresolved |
+| Exact streamed GPU load | Passed with exact 310 tensor copies | Same immutable checkpoint/runtime |
+| Single-sequence CE through 512 | Eight checks and four disposable updates passed | Separate sustained/accumulation/input overhead measurement |
+| Actual TRAIN contract | All 5120 source/array joins passed; reader peak 39.004 MiB | Stream that dose into a registered native executor |
+| Short greedy capture | Memory checks passed; raw-model likelihood failed | Qualified distinct numerical capture scope |
+| Held-hidden diagnostic | Exact failure reproduced; head layout isolated | Register smallest upstream/scoring experiment |
+| Deterministic baseline | 512 input rows frozen; no responses collected | Capture qualification and measured production budgets |
+| Language preservation | Candidate packets prepared, grading unqualified | Independent labels, identified calibrated grader and blinding/cost evidence |
+| Long-context preservation | Inputs prepared | Separate native 2048/4096 qualification |
+| E1 acquisition and retention | Unmeasured | Current executor and all scientific prerequisites |
 
-Adapter backward and update fit at 256/512 are measured; complete save/resume and
-frozen-base qualification remain pending. A scoped success cannot qualify full E0
-or demonstrate capability gain.
-E1 still requires numerical qualification, measured runtime/budgets, source capture,
-qualified language grading and preservation checks. CHECK/FINAL remain closed.
-
-After qualification, prioritize one resident GPU worker, pretokenized streamed
-microbatches, rank-8 q/v adapters and adapter-only checkpoints. Perform evaluation
-and token decoding sequentially rather than keeping a CPU reference model or
-extra tokenizer/evaluation process resident during training. Use separate registered
-successor plans; preserve all historical resource-policy receipts.
-
-The first corrected detached controller exhausted its ten-minute window without
-starting a native supervisor: 256 observations remained below 1 GiB. Its PID is
-terminal. A later controller was admitted above 5 GiB, ran one native trial and stopped at
-the 1024 VRAM guard; worker RSS peak was 1.740 GiB. The 512 successor is prospective.
-Use the default only after source/config qualification and measured admission;
-there is no automatic same-state model retry.
-
-The first 512 admission window is now terminal after 62.552 seconds: 27 RAM
-observations remained at 1.441-1.853 GiB. No native supervisor was invoked.
-The 107 current CPU controls and separate native/checker source reviews passed.
-Do not restart this phase without changed headroom meeting the same launch budget.
-
-The later CE512 trial passed all eight native mechanics checks, four disposable
-updates, bitwise save/resume and frozen-base verification. Observed process-tree
-RSS peak was 1.748646 GiB, only 1.387 MiB below the cap. The default launcher
-reproduces that scoped qualification; sustained E1 and data/evaluation overhead
-remain unmeasured. Continue with the source-joined TRAIN contract and separately
-qualified capture/preservation/current E1 plans. No unchanged E0 retry is required.
+Outputs are write-once under `artifacts/mimo_central`, with separate worker,
+supervisor and controller receipts. Keep the checkout committed and unchanged
+during a run. Windows Job containment applies only to its owned worker tree.
+Source, memory, GPU, time or numerical failures stop the attempt and retain its
+partial accounting. Adapter binaries remain local; the published base is not
+overwritten. Decode/score panels sequentially rather than holding another model
+or tokenizer/evaluation process during training. CHECK/FINAL remain closed.

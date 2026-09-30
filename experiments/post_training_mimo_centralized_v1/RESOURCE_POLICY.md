@@ -1,45 +1,51 @@
 # Resource policy
 
-AMENDMENT_011 adds LAPTOP_STREAMED_V1: fixed 2 MiB checkpoint read buffer,
-1.25 GiB system reserve, 1.75 GiB process-tree RSS ceiling and admission reserving
-all remaining allowed worker growth. Before-worker budget is 3 GiB; the standalone
-controller adds 64 MiB for its supervisor. The loader has CPU byte-identity controls,
-but its complete GPU path and backward fit remain unqualified. See LAPTOP_RUNBOOK.
+30 September 2026. The user's revision authorizes a low-host-RAM laptop route.
+The inherited 7.4/6 GiB admission floors budgeted a GPU model plus a CPU reference;
+they were not measured requirements of this Titan checkpoint. The current loader
+constructs BF16 weights directly on GPU and copies through a fixed 2 MiB buffer,
+without a complete CPU model or checkpoint memory map.
 
+| Named scope | Worker process-tree RSS cap | Available system RAM reserve | Before-worker budget including supervisor | Evidence |
+|---|---|---|---|---|
+| LAPTOP_GPU_RESIDENT_V1 | 2.5 GiB | 2 GiB | Dynamic growth budget | Exact load and frozen-forward pilots; historical profile |
+| LAPTOP_STREAMED_V1 / CE512 | 1.75 GiB | 1.25 GiB | 3.0625 GiB | Complete short adapter mechanics passed; sustained training unmeasured |
+| LAPTOP_CAPTURE_RESIDENT_V1 | 2 GiB | 1.25 GiB | 3.3125 GiB | Capture memory checks and held-hidden diagnostic passed; capture likelihood remains failed |
 
-AMENDMENT_009 and the user's 29 September authorization introduce the named
-LAPTOP_GPU_RESIDENT_V1 profile for this 16 GB laptop. Keep 2 GiB system RAM
-available and bound the worker process tree to 2.5 GiB RSS. After imports, admission
-requires available RAM >=2 + max(0, 2.5 - current worker RSS) GiB, budgeting all
-remaining allowed worker growth. An over-cap worker fails. GPU admission/runtime
-floors remain 4/0.5 GiB, disk 4 GiB. Independent containment/watchdog limits apply
-throughout. These prospective pilot bounds require native measurement.
+Admission after imports requires reserve + max(0, RSS cap - current worker RSS).
+The before-worker budget reserves the full allowed worker growth, plus 64 MiB
+for the supervisor. These bounds are prospective limits, not measured demand.
+GPU admission/runtime free-memory floors are 4/0.5 GiB; disk free floor is 4 GiB.
+External 100 ms process-tree monitoring and Windows containment remain active.
+Internal stage samples and external peaks are recorded separately; either can
+observe a peak missed by the other.
 
-The load_forward stage lasts at most 600 seconds, performs strict exact loading
-and one 256-token frozen last-logit forward, and has optimizer/generation caps zero.
-The full stage retains every original E0 numerical fixture and the 1800-second/five-
-optimizer-call bounds. Source, configs and outputs must be committed/write-once.
-No new profile status or resource-only PASS grants E1 authorization. Register the
-measured laptop queue/E1/long-context successors before their affected runs.
+The complete CE512 fixture observed 1.748646 GiB peak process RAM and 3.098094 GiB
+peak CUDA allocation. Only 1.387 MiB of RSS margin remained. A future sustained
+training successor must budget reader/driver/accumulation overhead and measure
+that exact envelope; a proposed 2 GiB cap is not presently a qualified training
+profile. All prepared TRAIN rows have maximum length 398, allowing context 512
+without changing the data dose or truncating targets.
 
-## Historical profile retained
+Use one resident GPU worker, microbatch 1, streamed prepared sequences and
+adapter-only checkpoints. Keep the frozen base and adapter optimizer on GPU;
+run decoding and evaluation sequentially. Do not create a CPU reference or add
+CPU optimizer offload to the first low-RAM route. For a measured VRAM failure,
+register and qualify activation checkpointing before changing precision or
+quantizing the base. Short-context fit does not qualify 2048/4096 preservation.
 
-One major GPU worker. The original config preserves inherited PRLC minima: host available >=7.4 GiB
-before native load, worker available >=6.0 GiB throughout, device available >=4.0
-GiB before load, disk free >=4.0 GiB. These are minima, not evidence of fit.
-Monitor actual worker RSS, available host RAM, GPU allocated/reserved and free
-memory; fail closed when unavailable. Its floors remain fixed. The named laptop
-successor is an explicit authorized amendment, not a modification of old receipts.
+Native short capture/diagnostics have a 600-second ceiling. CE qualification
+retains 1800 seconds and its registered update cap. Future E1 needs current
+source/input/runtime/budgets and its own native executor; historical per-seed
+24-hour ceilings are not launch authority. Resource success grants no numerical
+or efficacy qualification. Preserve fixed numerical tolerances and all failed
+work. A controller admission timeout is terminal; retry only after a real state
+change or an independently registered successor, with durable new receipts.
 
-E0: 30-minute wall ceiling; maximum 32 non-evaluation parity fixtures, 32 generated
-tokens for throughput/logprob check, 256/512/1024 context profiles. Bounded
-reversible optimizer fixture only, with adapter save/reload and deterministic
-repeat; never overwrite the published source. Tensor hashing is streamed.
-E1: <=24h wall/GPU per seed and actual token manifest required; seed101 only until
-DEV gate. No remote rental or paid teacher calls. Resource fit at one context
-does not qualify another. Failed larger context permits a separately documented
-smaller-context amendment, never a silent change. CPU/reference serialization or
-activation checkpointing also changes the registered runtime and must be qualified.
+## Historical policy
 
-Fast work may accompany heavy work only if the same floors continue to hold. The
-queue planner is a planning aid; receipt strings do not themselves authorize a run.
+Original configs retain PRLC minima: available host RAM 7.4 GiB before load,
+6 GiB throughout, GPU 4/0.5 GiB, disk 4 GiB. They and old receipts remain unchanged.
+Named laptop profiles in Amendments 009-015 supersede them only for their explicit
+scopes. No user application is terminated; no cloud rental or paid teacher calls
+are authorized. CHECK/FINAL remain closed.

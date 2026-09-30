@@ -595,3 +595,10 @@ head-only comparators, all0generation/training/grants; no causesclaimedwithout
 measurement andnooriginalproducer/config/pins changed. Fullgoal/best unchanged.
 Languagegradingstillneedsindependentqualifiedlabels/provider/cost/blinding;
 userpreferencequestionpending whiledeterministic work proceeds. No gradercalls.
+
+
+## 2026-09-30: actual capture geometry diagnostic
+
+The fixed failed trace completed from committed source 0b48e3cd322399827b30766caf122d829b93269b. All 320 logical model calls, eight forwards and sixteen separately journaled direct head projections returned; 1036 input positions, zero generation, training updates or teacher calls. Worker time was 20.344 seconds and supervisor time 21.266 seconds. External process-tree RSS peaked at 1512910848 bytes; GPU allocation peaked at 1.737812 GiB, with 2.249592 GiB minimum sampled available host RAM. Final base and source hashes remained unchanged.
+
+Original online/bulk likelihood values and their failure reproduced exactly. BF16 endpoint parity was exact. Holding hidden values fixed while changing head row count produced zero logit/logprob error. Prefix/full hidden states differed by maximum 1.25 and mean 0.055434; either BF16 head layout reproduced the original selected-logprob gap. The FP32 head comparator still exceeded maximum 0.03125 and mean 0.01 limits. This establishes an upstream hidden-state difference for the tested trace, without identifying its mechanism. All byte-exact raw records are preserved. No capture, enrollment, language, long-context, E1 or CHECK/FINAL grant follows. The next step must preserve the bulk failure and register its own scope before execution.

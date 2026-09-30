@@ -1,0 +1,148 @@
+{
+  "schema_version": 1,
+  "status": "SHORT_CE_MECHANICS_PASSED_CAPTURE_NUMERICAL_GATE_OPEN",
+  "supersedes_operational_plan": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
+  "user_authorization": "User requested reducing RAM demand on a 16 GB laptop and revising experiment breakdowns, prioritizing GPU work. Original one-Titan verified capability/retention objective is retained.",
+  "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "execution_principles": [
+    "One native GPU worker at a time.",
+    "Construct the frozen BF16 model directly on GPU and load through a fixed 2 MiB CPU buffer.",
+    "Keep FP32 rank-8 q/v adapters and optimizer state on GPU.",
+    "Use one unpadded sequence at a time; prepared TRAIN rows have maximum length 398.",
+    "Accumulate gradients over 20 sequences for the registered effective batch; do not raise microbatch size.",
+    "Stream prepared inputs; run decoding, scoring and preservation panels sequentially.",
+    "Save adapters, optimizer and RNG rather than copying the full base checkpoint.",
+    "Use an app-independent PowerShell controller with bounded admission wait, resource monitoring and Windows process containment.",
+    "Preserve failed attempts and exact numerical tolerances. No automatic retry merely because a wait timed out."
+  ],
+  "profiles": {
+    "qualified_short_CE": {
+      "profile": "LAPTOP_STREAMED_V1",
+      "config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+      "context_limit": 512,
+      "worker_RSS_cap_GiB": 1.75,
+      "available_system_RAM_reserve_GiB": 1.25,
+      "before_worker_plus_supervisor_GiB": 3.0625,
+      "observed_peak_process_tree_RSS_GiB": 1.7486457824707031,
+      "observed_peak_GPU_allocated_GiB": 3.0980939865112305,
+      "scope": "Eight mechanics checks and four disposable updates; sustained accumulation/training overhead unmeasured."
+    },
+    "short_capture_and_diagnostic": {
+      "profile": "LAPTOP_CAPTURE_RESIDENT_V1",
+      "worker_RSS_cap_GiB": 2.0,
+      "available_system_RAM_reserve_GiB": 1.25,
+      "post_import_admission": "1.25 + max(0, 2.0 - current worker RSS) GiB",
+      "before_worker_plus_supervisor_GiB": 3.3125,
+      "GPU_admission_free_GiB": 4.0,
+      "GPU_runtime_free_GiB": 0.5,
+      "disk_free_GiB": 4.0,
+      "wall_ceiling_seconds": 600,
+      "scope": "Registered mechanical capture/diagnostic only; resource fit does not qualify likelihood."
+    },
+    "future_sustained_training": {
+      "status": "REGISTRATION_AND_MEASUREMENT_REQUIRED",
+      "proposed_worker_RSS_cap_GiB": 2.0,
+      "proposed_available_system_RAM_reserve_GiB": 1.25,
+      "context_limit": 512,
+      "microbatch": 1,
+      "gradient_accumulation": 20,
+      "note": "The 1.75 GiB pilot has only 1.39 MiB observed margin. A separately frozen 2 GiB successor would budget data/driver overhead without changing model math; it is not presently a launch grant."
+    }
+  },
+  "phases": [
+    {
+      "id": "P0",
+      "work": "CPU source and input contracts",
+      "status": "COMPLETE_DATA_ONLY",
+      "evidence": "receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json",
+      "measured_rows": 5120,
+      "measured_reader_peak_MiB": 39.00390625,
+      "reader_seconds": 3.3292842999981076,
+      "new_model_work": false
+    },
+    {
+      "id": "P1",
+      "work": "Short-sequence adapter mechanics",
+      "status": "PASS_SCOPED",
+      "evidence": "receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json",
+      "result": "Eight checks, four disposable updates, bitwise resume and unchanged base. No acquisition or retention claim.",
+      "repeat_required": false
+    },
+    {
+      "id": "P2",
+      "work": "Frozen short greedy capture qualification",
+      "status": "NUMERICAL_FAILURE_RESOURCES_PASSED",
+      "evidence": "receipts/CAPTURE_SHORT_V1_NATIVE_FAILURE.json",
+      "result": "First fixture produced three tokens and natural EOS; prefix versus bulk likelihood exceeded fixed limits. No DEV capture grant."
+    },
+    {
+      "id": "P2D",
+      "work": "Held-hidden output-layer diagnostic",
+      "status": "COMPLETE_DIAGNOSTIC_ONLY",
+      "evidence": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
+      "result": "Original failure reproduced exactly. BF16 head row layouts matched; upstream hidden-state difference carries the gap. FP32 head alone still fails.",
+      "remaining": "Separately register the smallest upstream diagnostic or a distinct exact-prefix scoring scope, preserving the failed bulk test and its interpretation."
+    },
+    {
+      "id": "P3",
+      "work": "Deterministic baseline acquisition and retention responses",
+      "status": "WAIT_CAPTURE_QUALIFICATION",
+      "inputs": "manifests/SHORT_DEV_CAPTURE_INPUT_SCOPE_V1.json",
+      "rows": 512,
+      "parent_groups": 448,
+      "max_generated_tokens": 65536,
+      "max_processed_prefix_positions": 17433472,
+      "budget_status": "Measured production runtime and wall budget required before collection.",
+      "execution": "Stream one prompt, decode, persist and score; no parallel resident evaluator/model."
+    },
+    {
+      "id": "P4",
+      "work": "Language calibration and long-context preservation",
+      "status": "PREREQUISITES_OPEN",
+      "language": "Independent reference labels, identified calibrated grader, blinded assignments and explicit call/cost budget required. Existing packets are unassigned diagnostics.",
+      "long_context": "Qualify 2048 and 4096 separately with frozen fixtures; short-context fit does not establish long-context fit.",
+      "execution": "Sequential panels. No paid provider or cloud rental has been authorized."
+    },
+    {
+      "id": "P5",
+      "work": "Sustained adapter pilot on actual TRAIN inputs",
+      "status": "PLAN_AND_EXECUTOR_REQUIRED",
+      "proposed_profile": "future_sustained_training",
+      "conditions": [
+        "Current numerical/capture and required preservation gates pass.",
+        "Freeze current source, actual input dose, runtime, accounting and bounded pilot schedule.",
+        "Measure cumulative RSS and gradient-accumulation fit before the full seed."
+      ],
+      "preserve": [
+        "All targets; maximum prepared length 398.",
+        "BF16 frozen base; FP32 rank-8 q/v adapters.",
+        "Microbatch 1 and sequence-mean completion CE.",
+        "Adapter-only checkpoint, optimizer/RNG resume and unchanged-base checks."
+      ]
+    },
+    {
+      "id": "P6",
+      "work": "E1 seed 101, then conditional confirmations",
+      "status": "NOT_AUTHORIZED",
+      "historical_schedule": "256 optimizer steps; each uses 16 acquisition plus four replay sequences, accumulation 20, warmup 13, final-only selection.",
+      "seeds": [
+        101,
+        211,
+        307
+      ],
+      "later_seed_condition": "Registered DEV success and preservation screen.",
+      "CHECK": "CLOSED",
+      "FINAL": "CLOSED"
+    }
+  ],
+  "fallback_order": [
+    "For measured VRAM failure, register and qualify activation checkpointing with unchanged targets and optimization.",
+    "Keep CPU model and CPU optimizer offload out of the first low-RAM route.",
+    "Consider quantization only as a separately qualified model/runtime change if BF16 GPU fit fails.",
+    "If available RAM cannot meet the live bound, end the admission window with durable receipts and wait for a real state change."
+  ],
+  "qualified_capture": false,
+  "sustained_training_fit_qualified": false,
+  "E1_authorized": false,
+  "goal_complete": false
+}
