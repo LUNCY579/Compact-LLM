@@ -3,8 +3,11 @@
 30 September 2026, America/Chicago. **The inherited 7.4 GiB admission guard was
 not measured Titan RAM demand. Exact GPU loading and frozen inference have now
 run successfully on this laptop, with observed process-tree RAM peaks below
-2 GiB. Full E0 stopped at a padded-likelihood numerical check. No adapter update,
-generation, acquisition or retention result has been measured; no recipe is promoted.**
+2 GiB. A fixed-buffer unpadded trial then completed 256/512-token backward
+and two disposable adapter updates with a 1.740 GiB RAM peak. It stopped at
+the 1024-token VRAM reserve. Resume, acquisition and retention remain unmeasured;
+no recipe is promoted. A 512-token successor now covers all prepared TRAIN data
+without truncation, but its admission window expired before model work.**
 
 ## Exact primary student and source
 
@@ -24,9 +27,12 @@ Chat-Bubble/Rineya_Published_Cores. The dedicated execution branch is
 research/post-training-mimo-centralized-v1, descended from verified parent
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`. No parent/main merge or history rewrite
 occurred. Historical 344M evidence remains preserved and outside primary training.
-Native runs below used `79ad1a61ba1bb16b93ccc9f0cd27c0e22b9bb00c`.
+The first two native runs used `79ad1a61ba1bb16b93ccc9f0cd27c0e22b9bb00c`.
 The tested streamed implementation was committed at
 `4526d705` (abbreviated; full identity is retained in its run receipt and Git).
+The measured unpadded trial used full producer
+`a4454e17009c9d3aadd87e2b9b633c2969f5be00`. The 512 successor native source is
+`d5640306dac3ea33b862e77bb1eb932a980a9e4f`, with evidence checker at `431a9deb`.
 Final documentation and launcher identities are provided by the delivery commit.
 
 ## Why the RAM policy changed
@@ -41,7 +47,7 @@ therefore established compliance with a policy, not a measured requirement for
 
 Rank-8 q/v adapters contain 1,146,880 FP32 parameters: 4.375 MiB. Parameters,
 gradients and two Adam moments total approximately 17.5 MiB, primarily on GPU.
-Activation and framework peaks still need measurement. Quantization or CPU
+Activation and framework peaks need measurement for each operating envelope. Quantization or CPU
 optimizer offload has not been added to this first route.
 
 AMENDMENT_009 registered a bounded pilot with 2 GiB system reserve and 2.5 GiB
@@ -55,7 +61,9 @@ It validates the BF16 header, offsets, shapes and complete payload coverage, cop
 synchronously to GPU and checks every loaded tensor hash. Its named profile keeps
 1.25 GiB available system RAM and caps process-tree RSS at 1.75 GiB. Admission is
 1.25 + max(0, 1.75 - current RSS) GiB: a 3 GiB before-worker budget. These are
-prospective measured-trial bounds; the complete streamed GPU path remains unqualified.
+prospective trial bounds. A later admitted trial copied all 310 exact GPU tensors
+and completed 256/512 backward and optimizer fixtures within the RAM cap. The
+complete 1024 scope failed its VRAM floor; save/resume remains unqualified.
 External 100 ms monitoring, Windows containment, GPU 4/0.5 GiB floors and disk
 4 GiB floor remain active. No user application was terminated.
 
@@ -67,6 +75,7 @@ External 100 ms monitoring, Windows containment, GPU 4/0.5 GiB floors and disk
 | Full laptop v1 | Exact load and 32 zero-adapter cases, max difference 0; padding check failed at 15.656 s /16.546 s | 1.951 GiB | All recorded resource checks passed; no backward/update/generation |
 | Instrumented full v2 | Preload RAM 2.515 GiB versus dynamic 3.831 GiB; 7.891 s /8.719 s | 0.673 GiB | No model work; numerical error magnitude not remeasured |
 | Streamed load v1 | Preload RAM 2.110 GiB versus dynamic 2.331 GiB; 5.078 s /5.875 s | 0.673 GiB | New loader not reached; no model work |
+| Streamed unpadded v1 | Exact load, numerical gates and 256/512 updates; 32.000 s /33.172 s | 1.740 GiB | 1024 backward returned; free VRAM 0.161 GiB below 0.5 GiB reserve |
 
 The full attempt failed its first left-padding likelihood comparison against
 maximum error 0.03125 and mean error 0.01. Its original receipt did not store the
@@ -76,9 +85,11 @@ found aligned positions and plausible masks. BF16 shape-dependent rounding is a
 hypothesis, not an established cause. No threshold was relaxed.
 
 Two non-author assistant reviews checked native source/config/journal/cost and
-scope consistency; this is not human approval. Native verified loads total two,
-optimizer steps zero, training/generation/teacher tokens or calls zero. The 71
-current stdlib controls and nine actual tiny CPU loader controls passed; earlier
+scope consistency; this is not human approval. Native verified loads total three and disposable optimizer calls total two.
+Completed-step input positions total 768; actual training forwards used 1792
+positions across three contexts. No generation, teacher calls or capability
+measurements occurred. The historical 71 stdlib controls and nine actual tiny CPU
+loader controls passed; earlier
 12 tiny numerical controls remain a separate run. One historical-helper test
 initially failed after adding a new dependency; the corrected fixture verifies
 actual old dependencies and rejects inventing a dependency in an old commit.
@@ -90,10 +101,14 @@ The corrected standalone controller completed its admission window after
 601.063 seconds. It recorded 256 observations, with 0.581-0.955 GiB available,
 and never invoked a native supervisor. Its process is terminal and the raw wait
 receipts are preserved. A later OS reading was 1.397 GiB with no Python workers.
-Further same-state native attempts stopped. A regular PowerShell launcher can run
+Headroom subsequently rose to 5.221 GiB; the controller measured 5.118/5.121 GiB
+and admitted the streamed unpadded trial. No user application was terminated. A regular PowerShell launcher can run
 outside the desktop app. It waits at most ten minutes for two observations at
 least 3.0625 GiB, including supervisor allowance, then invokes one contained
-30-minute scoped qualification trial. It aborts on source/config changes,
+30-minute scoped qualification trial. The latest 512 successor admission window
+was deliberately capped at 60 seconds and returned after 62.552 seconds, with
+27 observations of 1.441-1.853 GiB. No native supervisor was invoked; the controller
+is verified terminal and its wait receipts are preserved. It aborts on source/config changes,
 resource failure, timeout or numerical failure and records durable results.
 Desktop working-set observations near 2 GiB do not guarantee that closing it
 reclaims exactly that amount. Actual headroom is checked before model work.
@@ -130,12 +145,39 @@ profiles, five disposable calls, resume and unchanged-base checks. Padding,
 batched/cached inference, sampled-policy likelihood and evaluation capture remain
 unsupported or unqualified. The known full E0 padding failure remains preserved.
 
-Seventy-six current stdlib controls passed in 1.336 seconds, and non-author source
-review found no blocking source issue. The new native scope has not run. Its
-prospective scoped PASS cannot qualify full E0 or authorize E1; the scope-specific
-validator, current plan and preservation/collection gates remain outstanding.
-The standalone launcher now defaults to unpadded_ce. No new controller or model
-was launched after the expired window at unchanged inadequate headroom.
+The actual trial passed bitwise 77-token causality and all-one-mask likelihood
+with maximum and mean error zero. Finite confined gradients, causal CE and updates
+completed at 256/512. The 512 single-step profile had a 3.089 GiB CUDA allocation
+peak and 0.203-second duration; this is a mechanics fixture, not sustained training
+throughput. At 1024, backward and gradient checks returned, then the VRAM guard
+stopped before the third optimizer call. Peak allocated/reserved VRAM were
+6.254/6.639 GiB; minimum sampled host headroom was 3.032 GiB. All 387 accounted
+operations returned; no checkpoint save/reload or final frozen-base check occurred.
+
+AMENDMENT_013 registers UNPADDED_SINGLE_SEQUENCE_CE512_V1 with contexts 256/512,
+four disposable updates and bitwise 512-token resume. Its hard input ceiling is
+512 tokens. Prepared TRAIN sequences are at most 398 tokens, so the complete
+data dose and targets fit without truncation. Model math, eval mode, optimizer,
+RNG preservation and numerical/resource floors remain unchanged; the narrower
+fixture changes its declared workload/RNG trajectory. Activation checkpointing
+remains a separately registered future option for longer contexts. Long-context
+evaluation and preservation still require independent native qualification.
+
+The scoped consistency checker requires explicit selection of the new 512 stage,
+with distinct config SHA and PASS status. It binds 393 calls, 26608 positions,
+1792 training positions, 75 resource samples and 865 journal records; timing
+measurements must cover the recorded intent/return intervals. It verifies native
+checks, current/committed source, runtime, inventories, containment, opaque resume
+bytes and exact source assets. It never imports the model framework or grants E1.
+This is local byte identity and consistency, not authenticated execution proof.
+
+All 107 current stdlib controls passed in 6.107 seconds (process 6.538 seconds).
+Separate non-author assistant reviews found no blocking native/checker source
+issue; this is not human or native approval. Old/failed/resource-only statuses
+and synthetic values cannot qualify a bundle. Windows PowerShell AuditOnly also
+passed. The default launcher is now unpadded_ce512. Its native save/resume/RAM
+envelope remains pending after the latest admission timeout; no controller or
+model worker is currently running. E1 remains unauthorized.
 
 ## Prepared science and milestone audit
 
@@ -155,20 +197,20 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 
 | Milestone item | Current evidence | State | Remaining work |
 |---|---|---|---|
-| Current state | Laptop route revised, two exact native loads | Partial progress | Numerical/resource qualification |
+| Current state | Three exact native loads; two disposable updates | Partial progress | Complete 512 scope and preservation |
 | Exact model | Titan devfreeze; 596049920 parameters | Bound | Same checkpoint retained |
-| Git/source | Native producer 79ad1a61; streamed implementation 4526d705 | Committed | Delivery commit records final docs |
-| Verified | Exact load/tie, 32 zero-adapter matches, CPU controls | Scoped | Full E0 not passed |
-| Unmeasured | Backward, optimizer/resume, capability | Open | Bounded next phase |
-| Completed experiment | Exact-load pilot and full attempt through padding | Recorded | Failures retained |
-| Exact result | RAM peak 1.928/1.951 GiB; padding gate failure | Measured | Error diagnosis |
-| Acquisition effect | No native training | Unmeasured | Qualified E1 |
+| Git/source | Measured producer a4454e17; 512 source d5640306 | Committed | Delivery commit records final docs |
+| Verified | Streamed load, parity, unpadded checks, 256/512 updates | Scoped | Resume and full E0 not passed |
+| Unmeasured | Resume, preservation and capability gain | Open | Complete 512 native fixture |
+| Completed experiment | Streamed CE trial through 1024 VRAM guard | Recorded | Failures and partial work retained |
+| Exact result | Latest RAM peak 1.740 GiB; 1024 free VRAM 0.161 GiB | Measured | Complete 512 envelope |
+| Acquisition effect | Disposable mechanics only | Unmeasured | Qualified E1 |
 | Retention effect | No scored native preservation | Unmeasured | Capture and grading |
-| Compute/memory | Four workers 39.031 s; supervisors 42.359 s | Measured wall | GPU time/throughput not inferred |
-| Failure modes | Padded likelihood and later headroom drop | Recorded | No tolerance or guard auto-relaxation |
-| Interpretation | 7.4 GiB was inherited reserve, not model demand | Source audit | Training fit still needs proof |
+| Compute/memory | Five workers 71.031 s; supervisors 75.531 s | Measured wall | No sustained throughput inference |
+| Failure modes | Padding, 1024 VRAM reserve and RAM admission | Recorded | No tolerance or guard auto-relaxation |
+| Interpretation | 7.4 GiB was inherited reserve, not model demand | Source audit | Complete training envelope still needs proof |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Standalone unpadded CE qualification; padding diagnosis remains separate | Registered | Actual RAM admission |
+| Next experiment | 512 CE save/resume; full TRAIN dose retained | Registered | Actual RAM admission |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
 
 The original capability/retention research objective remains incomplete. Current

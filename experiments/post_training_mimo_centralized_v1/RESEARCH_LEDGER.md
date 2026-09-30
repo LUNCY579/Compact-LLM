@@ -515,3 +515,14 @@ source review derived393calls,26608positions,1792trainingpositions and865events.
 The native fixture remains pending after OSheadroomfellto0.814198GiB at08:31UTC,
 with0Pythonworkers. No model was started belowadmission. Scopedchecker always
 E1false; capture/preservation/language/longcontext/currentE1bindings remainopen.
+
+
+## Verified512 admission window and delivery
+
+Controller234112 was verifiedlive, then terminal after62.551952s;27OSsamples
+1.440952-1.852760GiB below3.0625budget. Native supervisor neverinvoked;noPython
+modelworker remains. RawPLAN/FAILURE copiesbyteexact. Independentchecker review
+foundnoblockers; it remains source-only evidence andalwaysE1false. Reportupdated
+with1actual native trial thisturn(1load,2disposablesteps) and107CPUcontrols,
+plus thisverifiedwait. Originalresearchobjective remainsactive/incomplete;
+currentbest and CHECK/FINAL unchanged. No repeatedmodelretry atsameheadroom.

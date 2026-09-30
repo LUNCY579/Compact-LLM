@@ -37,3 +37,8 @@ prerequisites. E1 seed 101 remains 256 planned steps with 16 acquisition plus
 plans require current source/runtime binding. Current best remains unchanged
 Titan, acquisition/retention are null and CHECK/FINAL remain closed. The original
 verified capability/retention research objective remains incomplete.
+
+The first 512 admission window is now terminal after 62.552 seconds: 27 RAM
+observations remained at 1.441-1.853 GiB. No native supervisor was invoked.
+The 107 current CPU controls and separate native/checker source reviews passed.
+Do not restart this phase without changed headroom meeting the same launch budget.

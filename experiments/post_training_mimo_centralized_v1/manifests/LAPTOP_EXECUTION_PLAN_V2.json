@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "STREAMED_GPU_PARTIAL_CE_MEASURED_512_SUCCESSOR_PREPARATION",
+  "status": "PARTIAL_NATIVE_CE_MEASURED_512_READY_AWAITING_RAM",
   "amendment": "AMENDMENT_009.md",
   "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
   "resource_profile": "LAPTOP_STREAMED_V1",
@@ -76,9 +76,9 @@
   "current_scope_registration": "AMENDMENT_013.md",
   "current_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
   "current_trial_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
-  "current_scoped_qualification": "107stdlib controls and separate source reviews passed;512native run pending",
-  "last_headless_controller": "Terminal after37.046s; native worker stopped GPU_WORKER_GUARD at1024",
-  "next_trial_requires": "Actualheadroom>=3.0625GiB; no automaticmodelretry",
+  "current_scoped_qualification": "107CPUcontrols and native/checker source reviews passed;512native admissiontimeout",
+  "last_headless_controller": "Terminal512admissionwindow62.552s;27samples1.441-1.853GiB;noNativeSupervisor",
+  "next_trial_requires": "Meaningfully changed RAMheadroom >=3.0625GiB; no same-state restart",
   "prepared_TRAIN_max_tokens": 398,
   "training_target_truncation": false
 }

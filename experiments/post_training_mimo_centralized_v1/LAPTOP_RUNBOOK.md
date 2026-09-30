@@ -65,3 +65,8 @@ terminal. A later controller was admitted above 5 GiB, ran one native trial and 
 the 1024 VRAM guard; worker RSS peak was 1.740 GiB. The 512 successor is prospective.
 Use the default only after source/config qualification and measured admission;
 there is no automatic same-state model retry.
+
+The first 512 admission window is now terminal after 62.552 seconds: 27 RAM
+observations remained at 1.441-1.853 GiB. No native supervisor was invoked.
+The 107 current CPU controls and separate native/checker source reviews passed.
+Do not restart this phase without changed headroom meeting the same launch budget.
