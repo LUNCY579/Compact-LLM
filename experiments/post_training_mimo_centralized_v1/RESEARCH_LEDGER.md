@@ -526,3 +526,27 @@ foundnoblockers; it remains source-only evidence andalwaysE1false. Reportupdated
 with1actual native trial thisturn(1load,2disposablesteps) and107CPUcontrols,
 plus thisverifiedwait. Originalresearchobjective remainsactive/incomplete;
 currentbest and CHECK/FINAL unchanged. No repeatedmodelretry atsameheadroom.
+
+
+## Complete512 native CE qualification after changedheadroom
+
+RAMchangedto4.302673GiB with0Pythonworkers andcleancheckout. Data-validator
+edits werepaused. Controlleradmitted4.274826/4.278355GiB andranonescopefixture
+from15901919825dc1855020212edcaf6830ee7caef1. All8checks passed;393calls returned
+(71forward,4back/steps,save/reload),26608positions/1792trainingpositions,75guards
+and865events. Bitwiseresume andfinalbase/sourcehashespassed. Worker32.297s,
+supervisor33.360s/controller37.247960s. Observedprocess-treeRSS1.748646GiB leaves
+only1.386719MiBbelowcap; sustainedE1overhead remainsunmeasured. Hostminimum
+2.498425GiB, GPUfree>=3.326172GiB, peakallocated3.098094GiB.
+
+Stdlib byte/source/journalchecker passedactualcompletebundle in2.207372s,37file
+bindings; actualweightsreadasbytes only, resume binaryopaque. Independentagent
+metadata/sourceaudit foundnocontradiction. Allrawfiles copiedbyteexact under
+originalbasename; resumebinary localignored. Nativecampaignloads4,disposablesteps6;
+generation/teacher0 andnoeffectclaim. Oldfullpaddingfailure/1024VRAMfailure preserved.
+
+The unchanged oldE1data binder provesarraydose but onlysyntaxchecks sourcehashes.
+A newsource-joinedCE512datacontract isfrozenandunderimplementation tobindactual
+TRAINsources,semantics/token/labelbodies andconsumerkwargs withoutrewritingdata or
+tokenizing. EveryE1/nativegrant remainsfalse; capture/language/longcontext/preservation
+remainmissing. Originalgoal andbestrecipe unchanged.

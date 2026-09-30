@@ -1,0 +1,51 @@
+{
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "experiments.post_training_mimo_centralized_v1.scripts.qualify_native",
+    "--config",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\configs\\E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+    "--output",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\artifacts\\mimo_central\\headless_unpadded_ce512_v2_20260930_0910",
+    "--go-path",
+    "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\artifacts\\mimo_central\\headless_unpadded_ce512_v2_20260930_0910_supervisor\\GO.json"
+  ],
+  "config_sha256": "42a32cfa2fe4dc1250a288bacec2a60d150c5498d8dced9bba23b0c5037f5929",
+  "supervisor_sha256": "59bb53e2f38da968a910202c6372cd4d77e07dc4182043d6ee713421ea7cce3d",
+  "watchdog_sha256": "d31370de4f6b09052fac2f3505fc38a40041e76bd2137435a1f3678f4346a54d",
+  "observed_gpu_processes": [
+    "2664, [Insufficient Permissions]",
+    "13712, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe",
+    "12064, C:\\Windows\\explorer.exe",
+    "15944, C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe",
+    "15912, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe",
+    "19868, C:\\Windows\\SystemApps\\Microsoft.LockApp_cw5n1h2txyewy\\LockApp.exe",
+    "21200, C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.37\\msedgewebview2.exe",
+    "15772, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe",
+    "23116, C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe",
+    "24028, C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.928.1915.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe",
+    "24944, C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\1b30f7d4d73226ca\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe",
+    "16356, C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe",
+    "8412, C:\\Windows\\System32\\ApplicationFrameHost.exe",
+    "6976, C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe",
+    "169168, [Insufficient Permissions]",
+    "197152, C:\\Windows\\System32\\ShellHost.exe",
+    "248012, C:\\Windows\\System32\\PickerHost.exe",
+    "246152, C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\1b30f7d4d73226ca\\bin\\node_modules\\@oai\\sky\\bin\\windows\\codex-computer-use.exe"
+  ],
+  "source_sha": "15901919825dc1855020212edcaf6830ee7caef1",
+  "resource_profile": "LAPTOP_STREAMED_V1",
+  "qualification_stage": "unpadded_ce512",
+  "resource_limits": {
+    "host_free_gib": 1.25,
+    "worker_free_gib": 1.25,
+    "worker_rss_limit_gib": 1.75,
+    "gpu_free_gib": 4.0,
+    "gpu_worker_free_gib": 0.5,
+    "disk_free_gib": 4.0,
+    "wall_seconds": 1800,
+    "admission_budget": "system_reserve_plus_remaining_worker_rss"
+  },
+  "loader_mode": "stream_read_2MiB_v1"
+}
