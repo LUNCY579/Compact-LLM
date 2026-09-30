@@ -191,7 +191,84 @@ def synthetic_bundle(first=3, second=5, *, eos_first=151645, eos_second=151643):
     return result, deepcopy(cost), events
 
 
+def registered_prompt_bundle():
+    """Synthetic outcomes on the original fixed inputs, never native evidence.
+
+    D2 byte-freezes the failed 128-token input. The registered producer's filler
+    is two IDs, so length384 prepends 256 filler IDs to the same chat suffix.
+    This derives intended inputs only; fixture384 was never executed natively.
+    """
+    result, cost, events = synthetic_bundle()
+    prompt128 = json.loads((ROOT / "configs/CAPTURE_CAUSAL_DIAGNOSTIC_V1.json").read_bytes())["prompt_ids"]
+    for row in result["fixtures"]:
+        prompt = [20628, 2266] * ((row["prompt_tokens"] - 128) // 2) + prompt128
+        row["prompt_ids"] = prompt
+        row["prompt_token_ids_sha256"] = evidence.digest(prompt)
+        row["prefix_token_ids_sha256"] = [evidence.digest(prompt + row["generated_ids"][:i])
+                                           for i in range(len(row["generated_ids"]))]
+        row["offline_input_token_ids_sha256"] = evidence.digest(prompt + row["generated_ids"])
+        for event in events:
+            if event.get("fixture_id") == row["fixture_id"]:
+                if event["event"] == "fixture_start":
+                    event["prompt_token_ids_sha256"] = row["prompt_token_ids_sha256"]
+                elif event["event"] == "generated_token":
+                    event["prefix_token_ids_sha256"] = row["prefix_token_ids_sha256"][event["ordinal"]]
+    return result, cost, events
+
+
 class CaptureEvidenceControls(unittest.TestCase):
+    def test_original_frozen_prompts_reach_the_pinned_metadata_stage(self):
+        result, cost, events = registered_prompt_bundle()
+        evidence.validate_accounting_bundle(result, cost, events, TENSORS)
+        self.assertEqual([row["prompt_token_ids_sha256"] for row in result["fixtures"]],
+                         ["c969dec02329b4146e66b0d4704279ad05deacb6a9b3044a51bfd5dbf955ec10",
+                          "914a8d827fb090a047626dc9ceb66240b17ff4d7c0c573d6b71ad54a0865476d"])
+        with tempfile.TemporaryDirectory() as directory:
+            bundle = Path(directory)
+            (bundle / "CAPTURE_RESULT.json").write_text(json.dumps(result), encoding="utf-8")
+            read = evidence._read
+            def metadata_stop(path, bound):
+                if path == ROOT / evidence.CONFIG_RELATIVE:
+                    raise evidence.GateError("PINNED_METADATA_STAGE_REACHED", "synthetic outcome is not native evidence")
+                return read(path, bound)
+            with patch.object(evidence, "_read", side_effect=metadata_stop), \
+                    patch.object(evidence, "_verify_assets", side_effect=AssertionError("asset read forbidden")) as assets:
+                report = evidence.inspect_capture_scope(ROOT, capture_directory=bundle)
+            assets.assert_not_called()
+            self.assertEqual(report["status"], "BLOCKED")
+            self.assertEqual(report["reasons"][0]["code"], "PINNED_METADATA_STAGE_REACHED")
+
+    def test_rehashed_prompt_changes_fail_before_metadata_and_asset_reads(self):
+        for fixture_index, position in ((0, 0), (0, 97), (0, 127), (1, 0), (1, 353), (1, 383)):
+            with self.subTest(fixture=fixture_index, position=position), tempfile.TemporaryDirectory() as directory:
+                result, cost, events = registered_prompt_bundle()
+                row = result["fixtures"][fixture_index]
+                row["prompt_ids"][position] = (row["prompt_ids"][position] + 1) % evidence.VOCAB_SIZE
+                row["prompt_token_ids_sha256"] = evidence.digest(row["prompt_ids"])
+                row["prefix_token_ids_sha256"] = [evidence.digest(row["prompt_ids"] + row["generated_ids"][:i])
+                                                   for i in range(len(row["generated_ids"]))]
+                row["offline_input_token_ids_sha256"] = evidence.digest(row["prompt_ids"] + row["generated_ids"])
+                for event in events:
+                    if event.get("fixture_id") == row["fixture_id"]:
+                        if event["event"] == "fixture_start":
+                            event["prompt_token_ids_sha256"] = row["prompt_token_ids_sha256"]
+                        elif event["event"] == "generated_token":
+                            event["prefix_token_ids_sha256"] = row["prefix_token_ids_sha256"][event["ordinal"]]
+                # Generic value/journal consistency is insufficient to establish
+                # that the run used the registered inputs, even when rehashed.
+                evidence.validate_accounting_bundle(result, cost, events, TENSORS)
+                bundle = Path(directory)
+                (bundle / "CAPTURE_RESULT.json").write_text(json.dumps(result), encoding="utf-8")
+                with patch.object(evidence, "_verify_assets", side_effect=AssertionError("asset read forbidden")) as assets:
+                    report = evidence.inspect_capture_scope(ROOT, capture_directory=bundle)
+                assets.assert_not_called()
+                self.assertEqual(report["status"], "BLOCKED")
+                self.assertEqual(report["reasons"][0]["code"], "FIXTURE_PROMPT_IDENTITY")
+                self.assertEqual(set(report["bound_files"]), {str(bundle / "CAPTURE_RESULT.json")})
+                for grant in ("native_launch_authorized", "native_capture_authorized", "DEV_collection_authorized",
+                              "E1_authorized", "language_grading_authorized", "training_authorized"):
+                    self.assertIs(report[grant], False)
+
     def test_complete_actual_field_inventory_and_independent_trace_reconstruction(self):
         for a, b, eos_a, eos_b in ((1, 1, 151645, 151643), (4, 17, 151643, 151645),
                                   (128, 3, None, 151645), (3, 128, 151643, None),
