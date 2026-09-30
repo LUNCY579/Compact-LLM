@@ -1,0 +1,46 @@
+{
+  "status": "PASS_STDLIB_CONTROLS_ONLY",
+  "command": [
+    "C:\\Users\\clclc\\AppData\\Local\\Programs\\Python\\Python313\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "experiments.post_training_mimo_centralized_v1.tests.test_diagnose_capture_causality"
+  ],
+  "exit_code": 0,
+  "tests": 14,
+  "reported_test_seconds": 0.014,
+  "measured_process_seconds": 0.20880030000262195,
+  "prior_run_tests": 14,
+  "prior_reported_test_seconds": 0.014,
+  "repeat_reason": "Independent review found a missing exposed FP16 split-K flag; read-only runtime enumeration fixed before final validation.",
+  "files": [
+    {
+      "path": "scripts/diagnose_capture_causality.py",
+      "sha256": "05f8b403c0924d8cf129904a5824872eb73827a604e86c3134f56579935f82a9",
+      "bytes": 26026
+    },
+    {
+      "path": "tests/test_diagnose_capture_causality.py",
+      "sha256": "ce03a29e69154a1f9d409190d561c462c56e746b454c4b20e718e9b556d6e80f",
+      "bytes": 4485
+    },
+    {
+      "path": "configs/CAPTURE_CAUSAL_DIAGNOSTIC_V1.json",
+      "sha256": "6db4eb3d02c6a0526720e3e1846533ccc48bf7a42214dfc5d05d38f1df29a11d",
+      "bytes": 7333
+    },
+    {
+      "path": "receipts/capture_causal_d2_cpu/stdout.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0
+    },
+    {
+      "path": "receipts/capture_causal_d2_cpu/stderr.log",
+      "sha256": "43b973f6d900d42971ffe03a10debe47b87128ab932908fa31aa0ad01962f6bd",
+      "bytes": 118
+    }
+  ],
+  "native_calls": 0,
+  "E1_authorized": false
+}
