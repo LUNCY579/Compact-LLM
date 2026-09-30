@@ -7,7 +7,8 @@ run successfully on this laptop, with observed process-tree RAM peaks below
 four disposable updates, bitwise save/resume and unchanged-base verification.
 Its observed process-tree RAM peak was 1.7486 GiB. The earlier 1024 VRAM failure
 remains preserved. The observed RSS margin is only 1.39 MiB; sustained E1 fit,
-acquisition and retention remain unmeasured. No recipe is promoted.**
+acquisition and retention remain unmeasured. The first capture pilot then stopped on a raw-model likelihood disagreement
+with comfortable memory headroom. No recipe is promoted.**
 
 ## Exact primary student and source
 
@@ -89,10 +90,10 @@ found aligned positions and plausible masks. BF16 shape-dependent rounding is a
 hypothesis, not an established cause. No threshold was relaxed.
 
 Two non-author assistant reviews checked native source/config/journal/cost and
-scope consistency; this is not human approval. Native verified loads total four and disposable optimizer calls total six.
+scope consistency; this is not human approval. Native verified loads total five and disposable optimizer calls total six.
 Completed-step input positions total 2560; actual training forwards used 3584
-positions across the two latest trials. No generation, teacher calls or capability
-measurements occurred. The historical 71 stdlib controls and nine actual tiny CPU
+positions across the two latest trials. The capture pilot emitted three mechanical tokens; no DEV generation, teacher
+calls or capability measurements occurred. The historical 71 stdlib controls and nine actual tiny CPU
 loader controls passed; earlier
 12 tiny numerical controls remain a separate run. One historical-helper test
 initially failed after adding a new dependency; the corrected fixture verifies
@@ -226,6 +227,60 @@ retokenization or complete pretraining exclusion. The data pass leaves every E1
 and native launch grant false. Actual capture/decoding, preservation, language
 calibration, long-context runtime and current E1 execution remain prerequisites.
 
+## Frozen-source greedy capture and likelihood failure
+
+AMENDMENT_014 prospectively registered a separate bare-model greedy qualifier,
+with no adapters, updates or DEV bank access. It reuses the exact GPU BF16 model
+and 2 MiB loader, finite raw FP32 argmax with lowest-ID ties, no cache/padding or
+inherited sampling defaults, and fixed 128/384-token mechanical prompts capped at
+128 new tokens each. Terminal EOS IDs remain in generated IDs; visible text removes
+only one terminal EOS ID before decoding, with special filtering and cleanup off.
+Greedy behavior log-probability zero is separate from raw model-NLL diagnostics.
+The new provisional resource profile permits 2 GiB worker RSS and retains a 1.25
+GiB reserve, GPU4/0.5 GiB and disk4 GiB floors, 600 seconds and Windows containment.
+Earlier 1.75 GiB profiles remain unchanged; the allowance is not model RAM demand.
+
+All 44 new stdlib controls passed in 1.130 seconds (process1.381 seconds), and
+independent native/checker source reviews found no remaining blocker. The first
+contained pilot from `3ed5777167817edd7032f8ed3125afd2e6daa3ad` loaded exactly and
+returned all 318 selected calls: 310 copies, six forwards, 1286 input positions.
+The first fixture generated IDs16,22,151645 and visible text17, then natural EOS.
+No answer filtering was used. Online raw-model log-probabilities were
+-0.5026993752,-0.4105024338,-0.0005460678; full131-token teacher forcing gave
+-0.4612669647,-0.3731182814,-0.0006275591. Maximum0.0414324105 and mean0.0262993514
+exceeded the unchanged0.03125/0.01 bounds. The worker stopped; fixture384 was never
+attempted and final base/source checks were not reached. Capture remains unqualified.
+
+Worker/supervisor times were25.437/26.640seconds. Internal sampled RSS peaked at
+1.404602GiB, host available RAM stayed at least2.554611GiB, GPU free at least
+5.400391GiB and CUDA allocation peak1.400038GiB. This failure is numerical rather
+than an admission or memory failure. The100ms supervisor RSS sample can miss the
+instantaneous internal peak. Generation's measured instrumented wall was0.250s
+for3tokens; it includes durable logging and guards and is not sustained throughput.
+
+Raw failure/result/cost/journal copies are byte-exact. The early failure receipt
+contains stale initial zero-call accounting; the final result, cost ledger and
+journal correctly record318 and are authoritative. Both records are preserved.
+The pure capture checker rejects the failed status before reading model assets.
+No source-correct membership, DEV response or E1 grant follows from the pilot.
+
+AMENDMENT_015 fixes the exact failed prompt/generated IDs for a separate numerical
+diagnostic. Reproduce original per-prefix and bulk calls, then hold hidden values
+fixed across one-row/four-row head layouts and compare prefix versus full-sequence
+hidden origins. GPU-only FP32 head copies are diagnostic comparators; the BF16
+base/attention remain unchanged. At most ten model/base forwards and sixteen direct
+head projections are allowed, with zero new generations, updates or teacher calls.
+No cause is assumed and no diagnostic agreement can erase the failed bulk gate.
+
+The next short DEV input scope is frozen at512rows/448parent groups, with full
+prompt hashes and128new-token caps: at most65536generated IDs and17433472processed
+prefix positions. Production time/runtime budgets remain unmeasured and no
+collection is authorized. Language requires independently qualified reference
+labels, grader/provider/runtime/prompt/decoding identities, blinding and complete
+cost budgets. Current packets and managed-agent calls are unassigned diagnostics;
+no paid or teacher grading is authorized. A user preference question is pending
+while deterministic qualification continues. Long-context capture remains separate.
+
 ## Prepared science and milestone audit
 
 Preparation remains available: 4096 acquisition TRAIN parents, 768 deterministic
@@ -244,20 +299,20 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 
 | Milestone item | Current evidence | State | Remaining work |
 |---|---|---|---|
-| Current state | Complete CE512 mechanics and actual TRAIN joins | Partial progress | Preservation/capture/current E1 |
+| Current state | CE512/data passed; capture NLL failed | Partial progress | Numerical diagnosis and qualified capture |
 | Exact model | Titan devfreeze; 596049920 parameters | Bound | Same checkpoint retained |
-| Git/source | Complete CE512 producer 15901919 | Committed | Delivery commit records final docs |
+| Git/source | Capture producer3ed57771; CE51215901919 | Committed | Delivery commit records final docs |
 | Verified | Eight CE512 checks; 5120 source/array/consumer joins | Scoped | Full E0 and E1 not passed |
 | Unmeasured | Sustained E1 fit, preservation and capability gain | Open | Current capture and E1 successors |
-| Completed experiment | Complete native CE512 mechanics | Recorded | Prior failures and partial work retained |
+| Completed experiment | Greedy capture through first NLL gate | Recorded | Every failed/partial attempt retained |
 | Exact result | Latest RAM peak 1.7486 GiB; minimum GPU free 3.326 GiB | Measured | Sustained worker overhead |
 | Acquisition effect | Disposable mechanics only | Unmeasured | Qualified E1 |
 | Retention effect | No scored native preservation | Unmeasured | Capture and grading |
-| Compute/memory | Six workers 103.328 s; supervisors 108.891 s | Measured wall | No sustained throughput inference |
-| Failure modes | Padding, 1024 VRAM reserve and RAM admission | Recorded | No tolerance or guard auto-relaxation |
+| Compute/memory | Seven laptop workers128.765s; supervisors135.531s | Measured wall | No sustained throughput inference |
+| Failure modes | Padding, 1024 VRAM, capture NLL, stale failure counter | Recorded | Correct final accounting and diagnosis |
 | Interpretation | 7.4 GiB was inherited reserve, not model demand | Source audit | Complete training envelope still needs proof |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Qualified capture and graded preservation | Open | Current native plans and E1 fit |
+| Next experiment | Held-hidden/head-layout diagnostic | Registered | Preserve failed likelihood bounds |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
 
 The original capability/retention research objective remains incomplete. Current
