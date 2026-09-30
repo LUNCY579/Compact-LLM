@@ -173,6 +173,17 @@
       "latest_result": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
       "capture_authorized": false,
       "E1_authorized": false
+    },
+    {
+      "id": "RINEYA-0P6B-CAPTURE-CAUSAL-D2",
+      "status": "SOURCE_REVIEWED_ADMISSION_NO_NATIVE",
+      "config": "configs/CAPTURE_CAUSAL_DIAGNOSTIC_V1.json",
+      "latest_result": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json",
+      "native_result": null,
+      "pretrained_loads": 0,
+      "forwards": 0,
+      "capture_authorized": false,
+      "E1_authorized": false
     }
   ],
   "later_tracks": {
@@ -191,7 +202,7 @@
   "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V3.json",
   "experimental_scope": "Original one-Titan capability/retention objective retained; RAM workflow amended by user",
   "latest_available_RAM_GiB": 0.8141975402832031,
-  "last_headless_controller": "TERMINAL_CAPTURE_FAILURE_AND_TERMINAL_DIAGNOSTIC_PASS_PROCESS_ONLY",
+  "last_headless_controller": "TERMINAL_D2_ADMISSION_WINDOW_NO_NATIVE",
   "current_native_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
   "current_runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
   "scope_native_qualified": true,
@@ -207,5 +218,6 @@
   "train_scope_compatible": true,
   "E1_authorized": false,
   "latest_capture_qualification": "BLOCKED_NUMERICAL_RESOURCES_PASSED",
-  "latest_diagnostic": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json"
+  "latest_diagnostic": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
+  "latest_causal_diagnostic": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json"
 }

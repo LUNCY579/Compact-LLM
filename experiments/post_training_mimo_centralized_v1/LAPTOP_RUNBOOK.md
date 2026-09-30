@@ -27,8 +27,11 @@ before-worker budget, with a 600-second native ceiling. Its first pilot stopped
 on the fixed likelihood comparison, with memory headroom. The completed geometry
 diagnostic reproduced that failure and identified an upstream hidden-state
 difference; FP32 output-head projection alone did not resolve it. Do not rerun
-the unchanged failed qualifier or treat its memory pass as a capture pass. A next
-numerical diagnostic/scoring successor needs its own registration and review.
+the unchanged failed qualifier or treat its memory pass as a capture pass.
+AMENDMENT_016 now has a reviewed four-forward causal diagnostic and fourteen
+passing CPU controls. Its admission window ended with no native invocation as
+available RAM fell below the 3.3125 GiB budget. The controller is terminal;
+run only after real headroom changes. No native causal result exists yet.
 
 The shell controller does not need the chat UI to remain open. Closing a desktop
 app is optional and does not guarantee any particular amount of reclaimable RAM;

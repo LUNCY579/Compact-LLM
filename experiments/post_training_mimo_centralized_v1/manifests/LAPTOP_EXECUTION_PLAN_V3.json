@@ -84,6 +84,20 @@
       "remaining": "Separately register the smallest upstream diagnostic or a distinct exact-prefix scoring scope, preserving the failed bulk test and its interpretation."
     },
     {
+      "id": "P2C",
+      "work": "Fixed-shape future-token causality diagnostic",
+      "status": "SOURCE_READY_ADMISSION_WINDOW_TERMINAL_NO_NATIVE",
+      "registration": "AMENDMENT_016.md",
+      "config": "configs/CAPTURE_CAUSAL_DIAGNOSTIC_V1.json",
+      "source": "scripts/diagnose_capture_causality.py",
+      "cpu_controls": 14,
+      "planned_forwards": 4,
+      "planned_input_positions": 524,
+      "evidence": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json",
+      "native_result": null,
+      "remaining": "Real host-memory change meeting 3.3125 GiB budget, then one contained run; all capture/E1 grants remain false."
+    },
+    {
       "id": "P3",
       "work": "Deterministic baseline acquisition and retention responses",
       "status": "WAIT_CAPTURE_QUALIFICATION",

@@ -46,6 +46,6 @@ change or an independently registered successor, with durable new receipts.
 
 Original configs retain PRLC minima: available host RAM 7.4 GiB before load,
 6 GiB throughout, GPU 4/0.5 GiB, disk 4 GiB. They and old receipts remain unchanged.
-Named laptop profiles in Amendments 009-015 supersede them only for their explicit
+Named laptop profiles in Amendments 009-016 supersede them only for their explicit
 scopes. No user application is terminated; no cloud rental or paid teacher calls
 are authorized. CHECK/FINAL remain closed.

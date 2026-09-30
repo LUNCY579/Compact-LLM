@@ -17,9 +17,13 @@ head, without proving its mechanism. Both attempts and every partial call are
 preserved. No model worker or admission controller remains live.
 
 Follow [the detailed laptop plan](manifests/LAPTOP_EXECUTION_PLAN_V3.json).
-The next numerical experiment must be separately registered and bounded: either
-localize the first upstream divergence, or define and qualify a distinct exact-
-prefix scoring scope. Keep the failed bulk gate and its 0.03125/0.01 limits intact.
+AMENDMENT_016 now registers the four-forward fixed-shape causal diagnostic,
+with reviewed source and fourteen passing CPU controls. Its native admission
+window ended after 30.897 seconds: twelve observations fell to 0.221680 GiB,
+below the unchanged 3.3125 GiB budget. No supervisor or model was invoked.
+Wait for a real resource-state change, then run it once. Only after measured
+causal controls should a distinct exact-prefix scoring scope be registered.
+Keep the failed bulk gate and its 0.03125/0.01 limits intact.
 Do not rerun unchanged E0 or the failed capture merely to produce another receipt.
 
 After qualified capture, collect the frozen 512-row deterministic acquisition and

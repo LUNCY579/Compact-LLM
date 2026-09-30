@@ -301,6 +301,24 @@ sustained training requires a separate reader/accumulation/RSS measurement. A
 proposed 2 GiB training cap remains unqualified. The historical seed schedule,
 all TRAIN targets and numerical limits remain preserved.
 
+
+AMENDMENT_016 now freezes four same-length 131-token future-suffix comparisons,
+with actual mask/rotary/final-hidden witnesses and zero generation or updates.
+Root completed the producer after a builder model-capacity error. Fourteen stdlib
+controls passed in 0.014 seconds (process 0.209 seconds); independent review
+resolved a missing exposed FP16 split-K flag. Existing reduction flags are now
+recorded without mutation. Final producer is
+`39add8a9d9ea7df69ac838860c3dcab15639e43d`.
+
+The next native diagnostic did not start. Its initial RAM pair was 2.833652 and
+3.498203 GiB, failing the required two observations at least 3.3125 GiB. A bounded
+30.897-second continuation within the same dispatch recorded twelve observations
+from 3.228485 down to 0.221680 GiB. No native supervisor was invoked; all model
+counts are zero and causality remains unmeasured for these new comparisons.
+Both admission receipts are byte-exact and the controller is terminal. A real
+available-memory change is needed before one admitted run; the code/control
+pass is not a native causal or capture qualification.
+
 The next short DEV input scope is frozen at512rows/448parent groups, with full
 prompt hashes and128new-token caps: at most65536generated IDs and17433472processed
 prefix positions. Production time/runtime budgets remain unmeasured and no
@@ -333,7 +351,7 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Git/source | Capture 3ed57771; diagnostic 0b48e3cd | Committed | Delivery commit records final docs |
 | Verified | Eight CE512 checks; 5120 source/array/consumer joins | Scoped | Full E0 and E1 not passed |
 | Unmeasured | Sustained E1 fit, preservation and capability gain | Open | Current capture and E1 successors |
-| Completed experiment | Capture failure and fixed-trace diagnostic | Recorded | Every failed/partial attempt retained |
+| Completed experiment | Capture failure, geometry diagnostic, D2 admission stop | Recorded | Every failed/partial attempt retained |
 | Exact result | CE512 RAM 1.7486 GiB; diagnostic 1.409 GiB | Measured | Sustained worker overhead |
 | Acquisition effect | Disposable mechanics only | Unmeasured | Qualified E1 |
 | Retention effect | No scored native preservation | Unmeasured | Capture and grading |
@@ -341,7 +359,7 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Failure modes | Padding, 1024 VRAM, capture NLL, stale failure counter | Recorded | Correct final accounting and diagnosis |
 | Interpretation | Old reserve overstated this route; capture gap is upstream | Measured scope | Sustained fit and numerical mechanism still open |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Upstream or distinct prefix-scoring diagnostic | Registration needed | Preserve failed bulk test and limits |
+| Next experiment | Four fixed-shape causal forwards; zero updates | Source ready; RAM wait | Preserve failed bulk test and limits |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
 
 The original capability/retention research objective remains incomplete. Current
