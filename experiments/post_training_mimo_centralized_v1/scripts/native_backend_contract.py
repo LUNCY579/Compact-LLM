@@ -270,14 +270,19 @@ def _path_identity(path):
 
 
 def verify_artifact_bytes(path, artifact):
-    require(type(artifact.get("bytes")) is int and 0 < artifact["bytes"] <= MAX_ARTIFACT_BYTES,
+    expected_bytes = artifact.get("bytes")
+    require(type(expected_bytes) is int and 0 < expected_bytes <= MAX_ARTIFACT_BYTES,
             "ARTIFACT_BUDGET", "positive artifact up to32MiB required")
     before = _path_identity(path)
-    require(path.is_file() and before[2] == artifact["bytes"], "ARTIFACT_SIZE", "exact artifact byte size required")
+    require(path.is_file() and before[2] == expected_bytes, "ARTIFACT_SIZE", "exact artifact byte size required")
     h = hashlib.sha256()
+    consumed = 0
     with path.open("rb") as stream:
         require(_stream_identity(stream) == before, "ARTIFACT_CHANGED", "opened file identity differs")
-        while block := stream.read(1024 * 1024):
+        # One extra byte detects growth without reading an unbounded suffix.
+        while block := stream.read(min(1024 * 1024, expected_bytes - consumed + 1)):
+            consumed += len(block)
+            require(consumed <= expected_bytes, "ARTIFACT_CHANGED", "artifact grew beyond declared size during hash")
             h.update(block)
         require(_stream_identity(stream) == before, "ARTIFACT_CHANGED", "opened file mutated during hash")
     require(_path_identity(path) == before, "ARTIFACT_CHANGED", "artifact path identity changed during hash")
