@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "PARTIAL_NATIVE_CE_MEASURED_512_READY_AWAITING_RAM",
+  "status": "NATIVE_CE512_AND_DATA_COMPATIBILITY_PASSED_E1_CAPTURE_PREREQUISITES_PENDING",
   "amendment": "AMENDMENT_009.md",
   "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
   "resource_profile": "LAPTOP_STREAMED_V1",
@@ -34,15 +34,15 @@
     },
     {
       "id": "LP2B",
-      "status": "PARTIAL_256_512_MEASURED_1024_VRAM_GUARD",
-      "action": "Finish512CEbackward+four disposable updates+resume",
+      "status": "PASS_SCOPED_NATIVE_CE512_MECHANICS",
+      "action": "Completed256/512CE/backward,fourdisposableupdates,bitwiseresume/frozenbase",
       "config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
-      "scope": "UnpaddedCE<=512only; preserve1024failure; nofullE0orE1grant"
+      "scope": "SingleunpaddedCE<=512only; fullE0/E1/preservation/capture notgranted"
     },
     {
       "id": "LP3",
-      "status": "PENDING_NATIVE_QUALIFICATION",
-      "action": "512evidenceconsistencychecker CPU/source-ready; measured current-runtime capture/queue/E1successors pending"
+      "status": "SCOPED_EVIDENCE_AND_DATA_COMPATIBILITY_PASS_CAPTURE_E1_PENDING",
+      "action": "Sourcejoined512TRAINcompatibility complete; next current measuredcapture/queue/E1successors"
     },
     {
       "id": "LP4",
@@ -76,9 +76,14 @@
   "current_scope_registration": "AMENDMENT_013.md",
   "current_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
   "current_trial_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
-  "current_scoped_qualification": "107CPUcontrols and native/checker source reviews passed;512native admissiontimeout",
-  "last_headless_controller": "Terminal512admissionwindow62.552s;27samples1.441-1.853GiB;noNativeSupervisor",
-  "next_trial_requires": "Meaningfully changed RAMheadroom >=3.0625GiB; no same-state restart",
+  "current_scoped_qualification": "Actual8checks/393calls/fourupdates/bitwiseresume/frozenbase PASS; E1false",
+  "last_headless_controller": "Terminalsuccess native32.297s/supervisor33.360s/controller37.248s",
+  "next_trial_requires": "Nextresearchstage separatelyqualified; no unnecessarysame-sourceE0repeat",
   "prepared_TRAIN_max_tokens": 398,
-  "training_target_truncation": false
+  "training_target_truncation": false,
+  "source_join_contract": "manifests/E1_CE512_TRAIN_SCOPE_V1.json",
+  "observed_native_RSS_margin_MiB": 1.38671875,
+  "sustained_E1_fit_qualified": false,
+  "source_join_qualified_data_only": true,
+  "source_join_result": "receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json"
 }

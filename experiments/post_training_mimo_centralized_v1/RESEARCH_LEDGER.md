@@ -550,3 +550,26 @@ A newsource-joinedCE512datacontract isfrozenandunderimplementation tobindactual
 TRAINsources,semantics/token/labelbodies andconsumerkwargs withoutrewritingdata or
 tokenizing. EveryE1/nativegrant remainsfalse; capture/language/longcontext/preservation
 remainmissing. Originalgoal andbestrecipe unchanged.
+
+
+## ActualTRAINsource joins with lowRAM reader
+
+Frozen28-filegraph andproducer e717d87a59263e84db7b555dd902f48a7b928eac bound
+all5120actualsource/array pairs, canonicalsemanticparents/targets andCE512consumer
+kwargs. Full680532inputs/63546supervised positions/max398;81priorassistantturns
+remainmasked. HistoricaldataSHA51b87fe4fd70d2fb23d16f270d1023716172dbbe1c88efd79dff8c3548623d6d
+unchanged; joinSHA555776a347ea7a82e7a111b90ab041f5947bb0e54bd32c8b306e9064fbd5fc68.
+Rootproductionbody3.329284s/process3.800993s, peakreaderworking-set40898560bytes
+(39.003906MiB).18newstdlibcontrols passed0.270s; earlier107run remainsseparate.
+Actualreceipt copiedbyteexact, pluslogs. No newtokenization/framework/model/weight
+access, datasetrewrite or nativegrant.
+
+Independentreview foundaninitialproductionprovenanceblocker: lateHEAD/selfhash
+couldclaima producercommit lackingtheproducer. Upfrontcurrent==committedsnapshot
+andfinalHEAD/self/manifest/budgetrechecks fixedit; nonauthorreviewfoundnofurther
+blocker. CPUbounds arecooperative/highwater, nothardcontainment. Earlierindependent
+arrayobserver hadHANDLEargtypefailure beforedatareads, thenrecovered; preserveits
+limitedreportednote separatelyfromtheactualsourcejoin. Languageorigin/quality
+review is inheritedfromfrozenpriorprovenance; notnewhumanapproval or wholepretraining
+exclusion. Native512scope remainsqualified; sourcecapture/gradedpreservation/long
+context/sustainedE1fit andcurrentnativeexecutor remainopen. Goal staysactive.

@@ -5,36 +5,35 @@ Weight SHA256: `537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7
 See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
-Current state (30 September 2026): exact GPU loading and a 256-token frozen
-forward succeeded, with an observed process-tree RAM peak of 1.928 GiB. A full
-attempt passed 32 bitwise zero-adapter comparisons before a padded-likelihood
-failure. A streamed unpadded trial then passed causality and all-one-mask equivalence,
-completed 256/512-token backward and two disposable updates, and stopped on the
-1024-token VRAM reserve. Resume, generation and capability effects remain unmeasured.
+Current state (30 September 2026): the streamed CE512 native mechanics trial
+passed all eight checks, four disposable updates, bitwise save/resume and unchanged
+base. Observed process-tree RAM peaked at 1.748646 GiB, with at least 2.498425 GiB
+host headroom and 3.326172 GiB free VRAM in the recorded samples. The observed
+RSS margin is only 1.387 MiB; sustained E1/data/evaluation overhead is unmeasured.
+The old full E0 padding and 1024-token VRAM failures remain preserved.
 
-The user authorized a plan for this 16 GB laptop. AMENDMENT_009-011 introduce named
-bounded profiles. The smallest route uses a 2 MiB read buffer, a 1.75 GiB worker
-RSS cap and a 1.25 GiB system reserve. Exact streamed GPU loading is now measured;
-complete save/resume qualification remains pending.
-See the [laptop runbook](LAPTOP_RUNBOOK.md) and
-[updated plan](manifests/LAPTOP_EXECUTION_PLAN_V2.json). The
-[standalone adapter trial](scripts/run_laptop_adapter_trial.cmd) waits for
-3.0625 GiB available and saves its bounded results outside the desktop app.
+The user-authorized laptop route uses GPU-resident BF16 weights and FP32 adapters,
+a fixed 2 MiB read buffer, a 1.75 GiB worker RSS cap and a 1.25 GiB system reserve.
+The [standalone trial](scripts/run_laptop_adapter_trial.cmd) waits for 3.0625 GiB
+available and defaults to reproducing the bounded CE512 qualification. See the
+[laptop runbook](LAPTOP_RUNBOOK.md) and [current plan](manifests/LAPTOP_EXECUTION_PLAN_V2.json).
+No unchanged E0 repeat is needed after the complete scoped pass.
 
-The earlier admission failures and blocked audits remain historical evidence under
-their old 7.4/6 GiB policy. Their zero-model-work statements apply to those attempts.
-The new cycle has three verified loads and two disposable optimizer calls. Historical E1/scheduler plans need measured
-successors; full E0 and later science remain incomplete. CHECK/FINAL remain closed,
-and the current best recipe remains unchanged Titan.
+Native campaign totals are four exact loads and six disposable optimizer calls.
+Generation/teacher calls and acquisition/retention measurements remain absent.
+Full E0, capture, preservation, long context and production E1 remain unqualified.
+Historical 7.4/6 GiB guards and E1/scheduler plans retain their original evidence.
+CHECK/FINAL stay closed; current best remains unchanged Titan.
 
-AMENDMENT_012 adds a CPU-tested unpadded single-sequence CE qualification scope,
-matching prepared E1 inputs while preserving the earlier padded-forward failure.
-It requires separate native causality, mask equivalence, CE, gradients and resume.
-The complete 1024 scope did not pass. AMENDMENT_013 registers a 512-token
-successor covering the entire prepared TRAIN dose (maximum 398 tokens) without
-truncation. Its complete native pass remains pending. The scoped evidence checker
-is CPU-tested and keeps E1 authorization false. The launcher defaults to unpadded_ce512;
-no model or controller is currently running. All wait and native failure receipts are preserved.
+The next independently necessary work is the [source-joined TRAIN contract](TRAIN_SCOPE_CONTRACT.md).
+It binds actual semantic TRAIN source records to all 5120 frozen arrays and the
+CE512 consumer interface, preserving the entire data dose and final-assistant
+supervision. Existing array validation alone only syntax-checks source-row hashes.
+The committed validator passed all 5120 actual source/array joins in 3.329 seconds
+with a 39.004 MiB reader peak. Eighteen new CPU controls passed. It never grants
+native training; current capture and preservation/E1 prerequisites remain open. No
+model or controller is currently running. Scoped native/evidence receipts are in
+receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json and receipts/ce512_native_evidence_v2/.
 
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that

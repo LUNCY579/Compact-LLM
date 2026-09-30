@@ -125,9 +125,9 @@
         "AMENDMENT_010.md",
         "AMENDMENT_011.md"
       ],
-      "status": "STREAMED_EXACT_LOAD_UNPADDED_CHECKS_AND256_512_UPDATES_MEASURED_1024_VRAM_GUARD",
-      "native_pretrained_loads": 3,
-      "native_optimizer_steps": 2,
+      "status": "CE512_NATIVE_MECHANICS_PASS_FULL_E0_AND_E1_UNQUALIFIED",
+      "native_pretrained_loads": 4,
+      "native_optimizer_steps": 6,
       "native_generated_tokens": 0,
       "load_peak_RSS_GiB": 1.9278907775878906,
       "full_peak_RSS_GiB": 1.9510383605957031,
@@ -145,8 +145,11 @@
         "receipts/LAPTOP_NATIVE_STAGE_001_RESULTS.json",
         "receipts/LAPTOP_NATIVE_STAGE_002_RESULTS.json",
         "receipts/LAPTOP_NATIVE_STAGE_003_RESULTS.json",
-        "receipts/LAPTOP_NATIVE_STAGE_004_RESULTS.json"
-      ]
+        "receipts/LAPTOP_NATIVE_STAGE_004_RESULTS.json",
+        "receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json"
+      ],
+      "ce512_backward_resume_qualified": true,
+      "ce512_peak_RSS_GiB": 1.7486457824707031
     }
   ],
   "later_tracks": {
@@ -161,18 +164,23 @@
     "E6": "actual MiMo sandbox transfer",
     "SIDE": "architecture / inference separate; all need new full registration"
   },
-  "cycle_status": "PARTIAL_STREAMED_NATIVE_TRAINING_MEASURED_512_SUCCESSOR_PREPARATION",
+  "cycle_status": "NATIVE_CE512_AND_TRAIN_SOURCE_BINDING_COMPLETE_E1_PREREQUISITES_OPEN",
   "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
   "experimental_scope": "Original one-Titan capability/retention objective retained; RAM workflow amended by user",
   "latest_available_RAM_GiB": 0.8141975402832031,
-  "last_headless_controller": "TERMINAL_CE512_ADMISSION_TIMEOUT_NO_NATIVE",
+  "last_headless_controller": "TERMINAL_CE512_NATIVE_PASS",
   "current_native_trial_config": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
   "current_runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
-  "scope_native_qualified": false,
+  "scope_native_qualified": true,
   "scope_CPU_validation": "receipts/UNPADDED_CE512_V1_CPU_VALIDATION.json",
   "scoped_evidence_checker": "scripts/unpadded_evidence.py --qualification-stage unpadded_ce512",
   "latest_available_RAM_observation_window_GiB": [
     1.4409523010253906,
     1.8527603149414062
-  ]
+  ],
+  "scoped_native_result": "receipts/LAPTOP_NATIVE_STAGE_005_RESULTS.json",
+  "scope_consistency_receipt": "receipts/ce512_native_evidence_v2/CONSISTENCY.json",
+  "train_scope_binding": "receipts/train_scope_v1/TRAIN_SCOPE_RECEIPT.json",
+  "train_scope_compatible": true,
+  "E1_authorized": false
 }

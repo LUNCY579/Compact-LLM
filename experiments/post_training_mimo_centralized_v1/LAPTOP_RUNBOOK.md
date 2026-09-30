@@ -70,3 +70,10 @@ The first 512 admission window is now terminal after 62.552 seconds: 27 RAM
 observations remained at 1.441-1.853 GiB. No native supervisor was invoked.
 The 107 current CPU controls and separate native/checker source reviews passed.
 Do not restart this phase without changed headroom meeting the same launch budget.
+
+The later CE512 trial passed all eight native mechanics checks, four disposable
+updates, bitwise save/resume and frozen-base verification. Observed process-tree
+RSS peak was 1.748646 GiB, only 1.387 MiB below the cap. The default launcher
+reproduces that scoped qualification; sustained E1 and data/evaluation overhead
+remain unmeasured. Continue with the source-joined TRAIN contract and separately
+qualified capture/preservation/current E1 plans. No unchanged E0 retry is required.

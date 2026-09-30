@@ -1,44 +1,35 @@
 # Next experiment
 
-30 September 2026. The user-authorized laptop route now has an actual streamed
-GPU measurement. At 5.12 GiB launch headroom, it loaded all 310 tensors exactly,
-passed 32 zero-adapter cases, native unpadded causality and all-one-mask equivalence
-with zero error. It completed 256/512-token backward and two disposable updates.
-At 1024, backward returned but free VRAM fell below the unchanged 0.5 GiB reserve.
-Peak process RAM was 1.740 GiB; minimum sampled host headroom was 3.032 GiB.
-This is a VRAM limit in the attempted envelope, not a new host-RAM failure.
+30 September 2026. The complete UNPADDED_SINGLE_SEQUENCE_CE512_V1 native trial
+passed all eight checks from source 15901919825dc1855020212edcaf6830ee7caef1:
+exact streamed GPU loading,32 zero-adapter matches, unpadded causality, all-one-mask
+equivalence, positional EOS labels, confined finite gradients, bitwise save/resume
+and unchanged base.393 calls/four disposable updates returned;1792 training positions.
+Observed process-tree RAM peaked 1.748646 GiB, with 2.498425 GiB minimum available RAM
+and 3.326172 GiB minimum free VRAM. The observed RSS margin is only 1.387 MiB; sustained
+training/data/evaluation overhead is not qualified by this short pilot.
 
-AMENDMENT_013 registers unpadded_ce512 under the same 1.25 GiB system reserve,
-1.75 GiB worker RSS ceiling and fixed 2 MiB loader. All prepared TRAIN sequences
-are at most 398 tokens, so 512 can retain the complete dose without truncation.
-Complete this scope's four disposable updates, save/reload, bitwise resume and
-frozen-base checks under unchanged numerical tolerances. Preserve the failed
-1024 trial and its partial counters; its two updates are not acquisition evidence.
+The stdlib evidence checker passed the actual complete bundle and exact byte/source
+bindings. Full E0 padding and1024VRAMfailures remain preserved. Current best remains
+unchanged Titan; no acquisition/retention result or production recipe is promoted.
+No model worker/controller is live. Do not rerun unchanged E0 merely to produce
+another successful resource receipt.
 
-Use scripts/run_laptop_adapter_trial.cmd or the regular PowerShell launcher,
-which now defaults to unpadded_ce512. It needs a clean committed checkout and
-reviewed config/source, waits at most ten minutes for two measurements >=3.0625
-GiB, then invokes one contained trial of at most 30 minutes. No automatic retry
-or E1 launch. The earlier timed-out controller and latest native controller are
-terminal. Actual resources are measured, not inferred from app working sets.
+The source-joined TRAIN contract now passed all 5120 actual source/array pairs,
+canonical semantic parents, target references and CE512 consumer checks, preserving
+680532 input and 63546 supervised positions with 81 masked prior assistant turns.
+The committed production reader took 3.329 seconds and peaked at 39.004 MiB.
+Eighteen new CPU controls passed; all native/E1 grants remain false. Historical
+full-dose data identity is unchanged. No retokenization or dataset rewrite occurred.
 
-The scoped consistency checker passed 95 stdlib controls; its 512 successor
-must bind the distinct config, workload, profile timings, inventories and
-containment before accepting a complete scoped native result. It always keeps
-E1 authorization false. After scoped qualification, bind current laptop native
-capture, queue and E1 successors. Keep one resident GPU worker, streamed
-pretokenized microbatch one, GPU adapter/Adam state, adapter-only checkpoints
-and sequential evaluation. Activation checkpointing remains a registered-future
-option for longer training contexts; it is not introduced into the 512 route.
-
-Language grading, native long-context evaluation and preservation remain separate
-prerequisites. E1 seed 101 remains 256 planned steps with 16 acquisition plus
-4 replay sequences each; 211/307 are conditional on its DEV screen. Historical
-plans require current source/runtime binding. Current best remains unchanged
-Titan, acquisition/retention are null and CHECK/FINAL remain closed. The original
+Then register and qualify actual frozen-source response capture/decoding and
+preservation, language calibration and native long-context evaluation; bind measured
+current laptop queue/E1 successors and implement the gated native executor. Preserve
+microbatch 1, accumulation 20, rank-8 q/v BF16 base /FP32 adapters, mean-completion-per-sequence
+CE and seed101Ã¢â‚¬â„¢s256-step16acquisition+4replay schedule. Actual full-dose consumer
+fit and sustained RSS must be measured separately; keep GPUresident state, adapter-only
+checkpoints, streamed rows and sequential evaluation. Longer training contexts may
+use separately registered activation checkpointing when required. Original E1 plans
+and 7.4/6 GiB policy receipts remain historical. CHECK/FINAL stay closed and every E1
+launch flag remains false until all prerequisites pass. The original one-Titan
 verified capability/retention research objective remains incomplete.
-
-The first 512 admission window is now terminal after 62.552 seconds: 27 RAM
-observations remained at 1.441-1.853 GiB. No native supervisor was invoked.
-The 107 current CPU controls and separate native/checker source reviews passed.
-Do not restart this phase without changed headroom meeting the same launch budget.
