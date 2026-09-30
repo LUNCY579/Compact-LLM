@@ -339,6 +339,7 @@ def run(args):
     validate_config(cfg)
     laptop = laptop_profile.metadata_present(cfg)
     streamed = laptop and cfg.get("loader_mode") == laptop_profile.STREAMED_LOADER_MODE
+    unpadded_ce = streamed and cfg["qualification_stage"] == "unpadded_ce"
     if streamed:
         from experiments.post_training_mimo_centralized_v1.scripts import stream_checkpoint
     require(json.loads(args.go_path.read_text())["config_sha256"] == sha(config_path), "GO config mismatch")
@@ -356,6 +357,8 @@ def run(args):
         result.update(resource_profile=cfg["resource_profile"], qualification_stage=cfg["qualification_stage"])
     if streamed:
         result["loader_mode"] = cfg["loader_mode"]
+    if unpadded_ce:
+        result["runtime_scope"] = cfg["runtime_scope"]
     write(out / "CONFIG.json", cfg)
     source_receipt = {"code_sha": head, "dirty": False, "script_sha256": sha(__file__)}
     if laptop:
@@ -502,6 +505,13 @@ def run(args):
 
         def forward(ids, stage, training=False, **kwargs):
             # numel reads shape metadata and includes actual left/right padding.
+            if unpadded_ce:
+                validated = laptop_profile.prepare_unpadded_forward(ids, kwargs)
+                if stage == "unpad_allones_mask":
+                    require(tuple(ids.shape) == (1,80) and training is False, "all-ones diagnostic requires its fixed frozen 80-token fixture")
+                    require(kwargs.get("attention_mask") is not None, "all-ones diagnostic mask missing")
+                    validated["attention_mask"] = kwargs["attention_mask"]
+                kwargs = validated
             return accounting.call("forward", lambda: model(ids, **kwargs), stage=stage,
                                    input_positions=ids.numel(), training=training)
 
@@ -560,7 +570,36 @@ def run(args):
         del baseline
 
         backward_resume_only = laptop and cfg["qualification_stage"] == "backward_resume"
-        if not backward_resume_only:
+        if unpadded_ce:
+            with torch.no_grad():
+                short_ids = prompt_ids(950,80)
+                short_logits = forward(short_ids, "unpad_reference", use_cache=False).logits
+                require(bool(torch.isfinite(short_logits).all()), "nonfinite unpadded reference")
+                perturbed = short_ids.clone()
+                perturbed[:,-3:] = torch.tensor([[17,18,19]],device="cuda")
+                altered = forward(perturbed, "unpad_causality_perturbed", use_cache=False).logits
+                require(bool(torch.isfinite(altered).all()), "nonfinite unpadded causality forward")
+                require(torch.equal(short_logits[:,:-3],altered[:,:-3]), "unpadded future-token causality failure")
+                result["checks"]["native_unpadded_causality"] = dict(tokens=80, perturbed_tail_tokens=3,
+                                                                     prefix_tokens=77, bitwise=True)
+                guard("unpad_causality")
+                allones_logits = forward(short_ids, "unpad_allones_mask",
+                                         attention_mask=torch.ones_like(short_ids),use_cache=False).logits
+                require(bool(torch.isfinite(allones_logits).all()), "nonfinite explicit all-ones forward")
+                ref = short_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
+                observed = allones_logits[:,:-1].float().log_softmax(-1).gather(-1,short_ids[:,1:,None]).squeeze(-1)
+                errors = (ref-observed).abs()
+                finite = bool(torch.isfinite(ref).all()) and bool(torch.isfinite(observed).all()) and bool(torch.isfinite(errors).all())
+                metrics = dict(tokens=79, finite=finite, max_abs=None, mean_abs=None, qualified=False,
+                               comparison="explicit_allones_mask_vs_omitted_same_80_tokens")
+                result["checks"]["explicit_allones_mask_equivalence"] = metrics
+                require(finite, "nonfinite explicit all-ones likelihood")
+                metrics.update(max_abs=float(errors.max()), mean_abs=float(errors.mean()))
+                metrics["qualified"] = metrics["max_abs"] <= cfg["logprob_max_atol"] and metrics["mean_abs"] <= cfg["logprob_mean_atol"]
+                require(metrics["qualified"], "explicit all-ones likelihood disagreement")
+                guard("unpad_allones_equivalence")
+                del short_logits, allones_logits, altered, ref, observed, errors
+        if not backward_resume_only and not unpadded_ce:
             with torch.no_grad():
                 short_ids = prompt_ids(950,80)
                 short_logits = forward(short_ids, "padding_reference", use_cache=False).logits
@@ -736,7 +775,12 @@ def run(args):
         require(sha(model_dir/"model.safetensors") == cfg["weight_sha256"], "source weight mutated")
         result["checks"]["frozen_base_unchanged"] = True
         result["checks"]["finite_scoped_backward"] = True
-        if backward_resume_only:
+        if unpadded_ce:
+            result["status"] = laptop_profile.UNPADDED_PASS_STATUS
+            result["unqualified"] = ["padding", "packing", "batched inference", "KV-cache sampler",
+                                     "sampled online/offline likelihood", "evaluation capture", "preservation",
+                                     "E1 data/replay", "held-out capability", "long context beyond1024"]
+        elif backward_resume_only:
             result["status"] = laptop_profile.BACKWARD_PASS_STATUS
             result["unqualified"] = ["native padding/causality", "sampled likelihood", "KV-cache sampler",
                                      "E1 data/replay", "held-out capability", "long context beyond1024"]

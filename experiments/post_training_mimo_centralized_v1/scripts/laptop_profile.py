@@ -19,10 +19,12 @@ CONFIG_STATUS = "FROZEN_E0_LAPTOP_ONLY"
 ADMISSION_BUDGET = "system_reserve_plus_remaining_worker_rss"
 PROBE_PASS_STATUS = "PASS_E0_LOAD_FORWARD_RESOURCE_ONLY"
 BACKWARD_PASS_STATUS = "PASS_E0_BACKWARD_RESUME_RESOURCE_ONLY"
+UNPADDED_PASS_STATUS = "PASS_E0_UNPADDED_CE_SCOPED"
+UNPADDED_SCOPE = "UNPADDED_SINGLE_SEQUENCE_CE_V1"
 FULL_PASS_STATUS = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
 LEGACY_CONFIG_SHA256 = "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d"
 LEGACY_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs/E0_TITAN_BF16.json"
-PROFILE_FIELDS = frozenset(("resource_profile", "qualification_stage", "worker_rss_limit_gib", "admission_budget", "loader_mode"))
+PROFILE_FIELDS = frozenset(("resource_profile", "qualification_stage", "worker_rss_limit_gib", "admission_budget", "loader_mode", "runtime_scope"))
 
 
 def _require(condition, message):
@@ -37,8 +39,9 @@ def metadata_present(cfg):
 
 def expected_config(stage, profile=RESOURCE_PROFILE):
     """Derive a complete registration from byte-pinned immutable historical E0."""
-    _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume"), "unregistered laptop qualification stage")
+    _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume", "unpadded_ce"), "unregistered laptop qualification stage")
     _require(type(profile) is str and profile in (RESOURCE_PROFILE, STREAMED_PROFILE), "unregistered laptop resource profile")
+    _require(stage != "unpadded_ce" or profile == STREAMED_PROFILE, "unpadded CE requires streamed profile")
     raw = LEGACY_CONFIG_PATH.read_bytes()
     _require(hashlib.sha256(raw).hexdigest() == LEGACY_CONFIG_SHA256, "historical E0 config drift")
     cfg = deepcopy(json.loads(raw))
@@ -54,6 +57,9 @@ def expected_config(stage, profile=RESOURCE_PROFILE):
     elif stage == "backward_resume":
         cfg.update(generation_cap=0,
                    update_semantics="disposable adapter backward/update/resume resource qualification only; padding and sampled-likelihood qualification remain separate and unresolved")
+    elif stage == "unpadded_ce":
+        cfg.update(generation_cap=0, runtime_scope=UNPADDED_SCOPE,
+                   update_semantics="single-sequence unpadded completion CE qualification; padding, packing, batched inference and sampled-policy likelihood remain unsupported")
     return cfg
 
 
@@ -81,3 +87,27 @@ def resource_limits(cfg):
     return {name: cfg[name] for name in ("host_free_gib", "worker_free_gib", "worker_rss_limit_gib",
                                        "gpu_free_gib", "gpu_worker_free_gib", "disk_free_gib", "wall_seconds",
                                        "admission_budget")}
+
+
+def prepare_unpadded_forward(ids, kwargs):
+    """Validate one unpadded sequence and omit its redundant all-ones mask.
+
+    No packed/custom-position/cache path is supported. The qualification worker
+    has one fixed diagnostic that restores an already validated all-ones mask.
+    """
+    shape = tuple(ids.shape)
+    _require(len(shape) == 2 and type(shape[0]) is int and shape[0] == 1 and type(shape[1]) is int and 0 < shape[1] <= 1024,
+             "UNPADDED_SCOPE requires one 2D sequence of at most 1024 tokens")
+    _require(type(kwargs) is dict and set(kwargs) <= {"use_cache", "logits_to_keep", "attention_mask"},
+             "UNPADDED_SCOPE does not support packing, custom positions or extra forward options")
+    _require(kwargs.get("use_cache") is False, "UNPADDED_SCOPE requires use_cache=False")
+    if "logits_to_keep" in kwargs:
+        keep = kwargs["logits_to_keep"]
+        _require(type(keep) is int and 0 <= keep <= shape[1], "UNPADDED_SCOPE invalid logits selection")
+    mask = kwargs.get("attention_mask")
+    if mask is not None:
+        _require(tuple(mask.shape) == shape and bool((mask == 1).all()),
+                 "UNPADDED_SCOPE attention mask must have the same shape and contain only ones")
+    normalized = dict(kwargs)
+    normalized.pop("attention_mask", None)
+    return normalized

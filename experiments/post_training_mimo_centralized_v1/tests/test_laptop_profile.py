@@ -17,6 +17,16 @@ from experiments.post_training_mimo_centralized_v1.scripts import qualify_native
 from experiments.post_training_mimo_centralized_v1.scripts import supervise_native
 
 
+class FakeData:
+    """Shape and scalar-mask predicates only; no tensor/framework allocation."""
+    def __init__(self, shape, values=None):
+        self.shape = shape
+        self.values = values
+
+    def __eq__(self, value):
+        return SimpleNamespace(all=lambda: all(item == value for item in self.values))
+
+
 class LaptopProfileTests(unittest.TestCase):
     def test_historical_config_remains_byte_pinned_and_accepted(self):
         raw = laptop_profile.LEGACY_CONFIG_PATH.read_bytes()
@@ -191,6 +201,99 @@ class LaptopProfileTests(unittest.TestCase):
                 self.assertAlmostEqual(required + rss, 3.0)
         self.assertEqual(laptop_profile.admission_required_gib(cfg, 1.8), 1.25)
 
+    def test_unpadded_scope_has_exact_streamed_only_stage_and_budget(self):
+        cfg = laptop_profile.expected_config("unpadded_ce", profile=laptop_profile.STREAMED_PROFILE)
+        qualify_native.validate_config(cfg)
+        self.assertEqual(cfg["runtime_scope"], "UNPADDED_SINGLE_SEQUENCE_CE_V1")
+        self.assertEqual(cfg["generation_cap"], 0)
+        self.assertEqual(cfg["parity_prompts"], 32)
+        self.assertEqual(cfg["contexts"], [256, 512, 1024])
+        self.assertEqual(cfg["maximum_optimizer_calls"], 5)
+        self.assertEqual(cfg["wall_seconds"], 1800)
+        self.assertEqual(cfg["host_free_gib"], 1.25)
+        self.assertEqual(cfg["worker_rss_limit_gib"], 1.75)
+        self.assertEqual(cfg["update_semantics"], "single-sequence unpadded completion CE qualification; padding, packing, batched inference and sampled-policy likelihood remain unsupported")
+        self.assertEqual(laptop_profile.UNPADDED_PASS_STATUS, "PASS_E0_UNPADDED_CE_SCOPED")
+        self.assertNotIn(laptop_profile.UNPADDED_PASS_STATUS,
+                         {laptop_profile.FULL_PASS_STATUS, laptop_profile.PROBE_PASS_STATUS, laptop_profile.BACKWARD_PASS_STATUS})
+        with self.assertRaises(RuntimeError):
+            laptop_profile.expected_config("unpadded_ce")
+        for field, value in (("runtime_scope", "full"), ("generation_cap", 32),
+                             ("qualification_stage", "backward_resume"), ("resource_profile", laptop_profile.RESOURCE_PROFILE),
+                             ("logprob_max_atol", .1), ("logprob_mean_atol", .1)):
+            with self.subTest(field=field), self.assertRaises(RuntimeError):
+                qualify_native.validate_config({**cfg, field: value})
+        for field in cfg:
+            changed = deepcopy(cfg)
+            del changed[field]
+            with self.subTest(missing=field), self.assertRaises(RuntimeError):
+                laptop_profile.validate_config(changed)
+        for stage in ("load_forward", "full", "backward_resume"):
+            with self.subTest(old_stage=stage), self.assertRaises(RuntimeError):
+                qualify_native.validate_config({**laptop_profile.expected_config(stage, profile=laptop_profile.STREAMED_PROFILE),
+                                                "runtime_scope": laptop_profile.UNPADDED_SCOPE})
+
+    def test_unpadded_forward_omits_only_valid_redundant_masks(self):
+        ids = FakeData((1, 80))
+        for mask in (None, FakeData((1, 80), [1] * 80), FakeData((1, 80), [True] * 80)):
+            original = dict(use_cache=False, logits_to_keep=1, attention_mask=mask)
+            normalized = laptop_profile.prepare_unpadded_forward(ids, original)
+            self.assertEqual(normalized, {"use_cache": False, "logits_to_keep": 1})
+            self.assertIn("attention_mask", original)
+            self.assertIs(original["attention_mask"], mask)
+        self.assertEqual(laptop_profile.prepare_unpadded_forward(ids, {"use_cache": False}), {"use_cache": False})
+
+    def test_unpadded_forward_rejects_batches_zero_masks_packing_and_cache(self):
+        for shape in ((2, 80), (80,), (1, 80, 1), (0, 80), (True, 80), (1, 0), (1, 1025)):
+            with self.subTest(shape=shape), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(FakeData(shape), {"use_cache": False})
+        ids = FakeData((1, 80))
+        for mask in (FakeData((1, 80), [1] * 79 + [0]), FakeData((1, 80), [0] * 80),
+                     FakeData((1, 80), [1] * 79 + [float("nan")]), FakeData((1, 79), [1] * 79),
+                     FakeData((1, 1, 80, 80), [1] * 6400)):
+            with self.subTest(mask_shape=mask.shape), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(ids, {"use_cache": False, "attention_mask": mask})
+        for field, value in (("packing", True), ("packed", True), ("cu_seqlens", [0, 40, 80]),
+                             ("position_ids", FakeData((1, 80))), ("past_key_values", object()),
+                             ("cache_position", [0]), ("inputs_embeds", object()), ("runtime_scope_bypass", True)):
+            with self.subTest(field=field), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(ids, {"use_cache": False, field: value})
+        for kwargs in ({}, {"use_cache": True}, {"use_cache": 0}, {"use_cache": False, "logits_to_keep": True},
+                       {"use_cache": False, "logits_to_keep": 81}, {"use_cache": False, "logits_to_keep": -1}):
+            with self.subTest(kwargs=kwargs), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(ids, kwargs)
+
+    def test_unpadded_diagnostic_exception_is_private_fixed_and_validated_first(self):
+        tree = ast.parse(Path(qualify_native.__file__).read_text(encoding="utf-8"))
+        run = next(node for node in tree.body if isinstance(node, ast.FunctionDef) and node.name == "run")
+        forward = next(node for node in ast.walk(run) if isinstance(node, ast.FunctionDef) and node.name == "forward")
+        guard = forward.body[0]
+        self.assertIsInstance(guard, ast.If)
+        self.assertEqual(ast.unparse(guard.test), "unpadded_ce")
+        self.assertEqual(ast.unparse(guard.body[0].value.func), "laptop_profile.prepare_unpadded_forward")
+        diagnostic = guard.body[1]
+        self.assertEqual(ast.unparse(diagnostic.test), "stage == 'unpad_allones_mask'")
+        self.assertEqual(ast.unparse(diagnostic.body[0].value.func), "require")
+        self.assertEqual(ast.unparse(diagnostic.body[0].value.args[0]), "tuple(ids.shape) == (1, 80) and training is False")
+        self.assertEqual(ast.unparse(diagnostic.body[1].value.func), "require")
+        self.assertEqual(ast.unparse(diagnostic.body[2].targets[0]), "validated['attention_mask']")
+        self.assertEqual(ast.unparse(diagnostic.body[2].value), "kwargs['attention_mask']")
+        self.assertLess(guard.lineno, forward.body[-1].lineno)
+
+    def test_unpadded_gate_requires_bitwise_causality_and_registered_allones_tolerance(self):
+        tree = ast.parse(Path(qualify_native.__file__).read_text(encoding="utf-8"))
+        stage = next(node for node in ast.walk(tree) if isinstance(node, ast.If)
+                     and ast.unparse(node.test) == "unpadded_ce" and any(isinstance(child, ast.With) for child in node.body))
+        source = ast.unparse(stage)
+        self.assertIn("torch.equal(short_logits[:, :-3], altered[:, :-3])", source)
+        self.assertIn("torch.tensor([[17, 18, 19]], device='cuda')", source)
+        self.assertIn("attention_mask=torch.ones_like(short_ids)", source)
+        self.assertIn("metrics['max_abs'] <= cfg['logprob_max_atol']", source)
+        self.assertIn("metrics['mean_abs'] <= cfg['logprob_mean_atol']", source)
+        self.assertIn("require(metrics['qualified'], 'explicit all-ones likelihood disagreement')", source)
+        self.assertIn("result['checks']['native_unpadded_causality']", source)
+        self.assertIn("result['checks']['explicit_allones_mask_equivalence']", source)
+
     def test_containment_limits_are_explicit_and_not_native_qualification(self):
         for stage in ("load_forward", "full", "backward_resume"):
             cfg = laptop_profile.expected_config(stage)
@@ -204,7 +307,8 @@ class LaptopProfileTests(unittest.TestCase):
         # Replace every external query and the watchdog: this launches no worker.
         profiles = (laptop_profile.RESOURCE_PROFILE, laptop_profile.STREAMED_PROFILE)
         stages = ("load_forward", "full", "backward_resume")
-        for profile, stage in [(None, None)] + list(product(profiles, stages)):
+        registrations = [(None, None)] + list(product(profiles, stages)) + [(laptop_profile.STREAMED_PROFILE, "unpadded_ce")]
+        for profile, stage in registrations:
             with self.subTest(profile=profile, stage=stage), tempfile.TemporaryDirectory() as directory:
                 base = Path(directory)
                 cfg = (json.loads(laptop_profile.LEGACY_CONFIG_PATH.read_bytes()) if stage is None
@@ -276,7 +380,7 @@ class LaptopProfileTests(unittest.TestCase):
     def test_padding_failure_telemetry_precedes_unchanged_failure_gate(self):
         tree = ast.parse(Path(qualify_native.__file__).read_text(encoding="utf-8"))
         conditional = next(node for node in ast.walk(tree) if isinstance(node, ast.If)
-                           and ast.unparse(node.test) == "not backward_resume_only")
+                           and ast.unparse(node.test) == "not backward_resume_only and (not unpadded_ce)")
         require_calls = [node for node in ast.walk(conditional) if isinstance(node, ast.Call)
                          and isinstance(node.func, ast.Name) and node.func.id == "require"
                          and len(node.args) > 1 and isinstance(node.args[1], ast.Constant)
