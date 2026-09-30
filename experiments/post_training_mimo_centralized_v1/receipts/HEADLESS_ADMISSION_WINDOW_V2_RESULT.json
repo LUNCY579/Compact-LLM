@@ -1,0 +1,46 @@
+{
+  "status": "HEADLESS_ADMISSION_WINDOW_TERMINAL_NO_NATIVE_WORK",
+  "recorded_at_utc": "2026-09-30T06:48:17.322051+00:00",
+  "previous_goal_turn_classification": "PROGRESS",
+  "current_goal_turn_classification": "VERIFIED_WAIT_AND_SOURCE_SCOPE_PROGRESS",
+  "controller_pid": 216792,
+  "controller_handle_missing_after_terminal_failure": true,
+  "source_sha": "7a10f8fd1e53679516d2267c655002365a4d0166",
+  "elapsed_controller_seconds": 601.0626996999999,
+  "RAM_observations": 256,
+  "minimum_available_GiB": 0.5812416076660156,
+  "maximum_available_GiB": 0.95465087890625,
+  "required_before_launch_GiB": 3.0625,
+  "native_supervisor_invoked": false,
+  "native_model_calls": 0,
+  "optimizer_steps": 0,
+  "generated_tokens": 0,
+  "no_automatic_retry": true,
+  "raw_files": {
+    "dispatch_FAILURE_RECEIPT.json": {
+      "bytes": 51902,
+      "sha256": "09ef1a6e128c404f81c2064cda663567202a2a75c0d9d71433ce3f4ac7281779"
+    },
+    "dispatch_PLAN.json": {
+      "bytes": 1716,
+      "sha256": "cae820e132944020166aab7e0cdf8d80e612f7364ea45f60932499d7f4feabb1"
+    },
+    "bootstrap_BOOTSTRAP.json": {
+      "bytes": 846,
+      "sha256": "953f3aff37a0fd816989cd586a5c121decb86a174c81758cb1b4fba6e49d5233"
+    },
+    "bootstrap_stderr.log": {
+      "bytes": 573,
+      "sha256": "6f6878861d381cf691b1d50fdcfd06c0a9c663c8463c29cfce427d8c0d03cb6b"
+    },
+    "bootstrap_stdout.log": {
+      "bytes": 295,
+      "sha256": "e4ae0e5e7eccbe21c9020ce3d01c34293973a01f9c163b37a6a3d2df2e59f80b"
+    }
+  },
+  "source_scope_review": "artifacts/mimo_central/unpadded_scope_source_review_v1.json",
+  "next_safe_FAST_task": "Prospective AMEND012 exact unpadded microbatch1 CE scope matching prepared E1 inputs; no native grant",
+  "known_padding_failure_preserved": true,
+  "goal_complete": false,
+  "e1_authorized": false
+}
