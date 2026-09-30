@@ -18,19 +18,26 @@ COUNTS = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310, "forwa
           "backward": 5, "optimizer_step": 5, "checkpoint_save": 1, "checkpoint_reload": 1}
 
 
-def fixture_result():
+def fixture_result(qualification_stage="unpadded_ce"):
+    narrow = qualification_stage == "unpadded_ce512"
+    contexts = (256, 512) if narrow else (256, 512, 1024)
+    optimizer_calls = 4 if narrow else 5
+    forward_positions, training_positions = (26608, 1792) if narrow else (41456, 3840)
+    operation_calls = 393 if narrow else 396
+    counts = {**COUNTS, "forward": 71 if narrow else 72, "backward": optimizer_calls, "optimizer_step": optimizer_calls}
     stages = ["preload", "loaded"]
     for prefix in ("base_parity", "zero_parity"):
         stages.extend(f"{prefix}_{index}" for index in range(32))
     stages.extend(["unpad_causality", "unpad_allones_equivalence"])
-    for length in (256, 512, 1024):
+    for length in contexts:
         stages.extend([f"before_backward_{length}", f"backward_{length}", f"after_step_{length}"])
     stages.append("complete")
-    accounting = {"accounting_version": 2, "max_optimizer_calls": 5, "last_call_id": 396,
+    accounting = {"accounting_version": 2, "max_optimizer_calls": optimizer_calls, "last_call_id": operation_calls,
                   "operations": {name: {"attempted": count, "returned": count, "failed": 0, "pending": 0}
-                                 for name, count in COUNTS.items()}, "pending_calls": [],
-                  "forward_input_positions_attempted": 41456, "forward_input_positions_returned": 41456,
-                  "training_forward_input_positions_attempted": 3840, "training_forward_input_positions_returned": 3840}
+                                 for name, count in counts.items()}, "pending_calls": [],
+                  "forward_input_positions_attempted": forward_positions, "forward_input_positions_returned": forward_positions,
+                  "training_forward_input_positions_attempted": training_positions,
+                  "training_forward_input_positions_returned": training_positions}
     checks = {name: True for name in ("exact_native_load", "eos_pad_mask", "save_reload_resume_bitwise",
                                      "frozen_base_unchanged", "finite_scoped_backward")}
     checks.update(zero_adapter_parity={"prompts": 32, "max_abs": 0.0},
@@ -43,23 +50,28 @@ def fixture_result():
                for index, stage in enumerate(stages)]
     profiles = [{"context": length, "loss": 1.0, "gradient_norm": .1, "seconds": 2.0,
                  "tokens_per_second": length / 2.0, "peak_allocated_bytes": 2 * 1024**3,
-                 "optimizer_tensor_bytes": 9175488} for length in (256, 512, 1024)]
-    return {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0", "status": "PASS_E0_UNPADDED_CE_SCOPED",
+                 "optimizer_tensor_bytes": 9175488} for length in contexts]
+    config_sha = "42a32cfa2fe4dc1250a288bacec2a60d150c5498d8dced9bba23b0c5037f5929" if narrow else evidence.CONFIG_SHA256
+    return {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0",
+            "status": "PASS_E0_UNPADDED_CE512_SCOPED" if narrow else "PASS_E0_UNPADDED_CE_SCOPED",
             "evidence_level": "MEASURED / REPRODUCED", "code_sha": "a" * 40, "dirty_at_launch": False,
-            "config_sha256": evidence.CONFIG_SHA256, "pretrained_loads": 1, "optimizer_steps": 5,
-            "training_tokens": 3840, "generation_tokens": 0, "teacher_calls": 0, "accounting_version": 2,
-            "call_accounting": accounting, "resource_profile": "LAPTOP_STREAMED_V1", "qualification_stage": "unpadded_ce",
-            "runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE_V1", "loader_mode": "stream_read_2MiB_v1",
+            "config_sha256": config_sha, "pretrained_loads": 1, "optimizer_steps": optimizer_calls,
+            "training_tokens": training_positions, "generation_tokens": 0, "teacher_calls": 0, "accounting_version": 2,
+            "call_accounting": accounting, "resource_profile": "LAPTOP_STREAMED_V1", "qualification_stage": qualification_stage,
+            "runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1" if narrow else "UNPADDED_SINGLE_SEQUENCE_CE_V1",
+            "loader_mode": "stream_read_2MiB_v1",
             "checks": checks, "resources": samples, "resource_profiles": profiles, "loader_diagnostics": {},
             "load_seconds": 100.0, "checkpoint_save_seconds": 1.0, "checkpoint_reload_seconds": 1.0,
             "wall_seconds": 1000.0, "e1_authorized": False,
             "unqualified": ["padding", "packing", "batched inference", "KV-cache sampler",
                             "sampled online/offline likelihood", "evaluation capture", "preservation",
-                            "E1 data/replay", "held-out capability", "long context beyond1024"]}
+                            "E1 data/replay", "held-out capability", "long context beyond512" if narrow else "long context beyond1024"]}
 
 
 def fixture_journal(result, names):
     """Stage synthetic intent/return/resource records independently of checker code."""
+    narrow = result["qualification_stage"] == "unpadded_ce512"
+    contexts = (256, 512) if narrow else (256, 512, 1024)
     events, call_id, resource_index = [], 0, 0
     def emit(kind, **values):
         events.append({"elapsed_seconds": len(events) / 10.0, "event": kind, **values})
@@ -92,7 +104,7 @@ def fixture_journal(result, names):
     for prefix in ("base_parity", "zero_parity"):
         for index in range(32):
             name = f"{prefix}_{index}"
-            call("forward", name, (256, 512, 1024)[index % 3])
+            call("forward", name, contexts[index % len(contexts)])
             resource(name)
     call("forward", "unpad_reference", 80)
     call("forward", "unpad_causality_perturbed", 80)
@@ -113,11 +125,11 @@ def fixture_journal(result, names):
     for name in ("resume_uninterrupted", "resume_reloaded"):
         if name == "resume_reloaded":
             call("checkpoint_reload", "adapter_resume_reload")
-        call("forward", name, 1024, True)
+        call("forward", name, 512 if narrow else 1024, True)
         call("backward", name)
         call("optimizer_step", name)
     resource("complete")
-    assert call_id == 396 and len(events) == 875 and resource_index == 78
+    assert (call_id, len(events), resource_index) == ((393, 865, 75) if narrow else (396, 875, 78))
     return events
 
 
@@ -137,8 +149,8 @@ class UnpaddedEvidenceTests(unittest.TestCase):
         self.inventory = json.loads((ROOT / "receipts/titan_static_v1/PARAMETER_INVENTORY.json").read_text())
         self.names = sorted(self.inventory["tensors"])
 
-    def bundle_values(self):
-        result = fixture_result()
+    def bundle_values(self, qualification_stage="unpadded_ce"):
+        result = fixture_result(qualification_stage)
         events = fixture_journal(result, self.names)
         return result, fixture_cost(result), events
 
@@ -318,16 +330,18 @@ class UnpaddedEvidenceTests(unittest.TestCase):
             evidence.validate_accounting_bundle(result, fixture_cost(result), events, self.names)
         self.assertEqual(caught.exception.code, "TIMING_JOURNAL_CONTRADICTION")
 
-    def metadata_fixture(self, base):
+    def metadata_fixture(self, base, qualification_stage="unpadded_ce"):
         """Complete synthetic metadata; source/assets are deliberately not native evidence."""
+        selected = evidence.registration(qualification_stage)
+        config_relative = selected["config_relative"]
         package = base / "repo/experiments/post_training_mimo_centralized_v1"
         bundle = base / "bundle"
-        for relative in (evidence.CONFIG_RELATIVE, "receipts/PRIMARY_STUDENT_RECEIPT.json", "receipts/titan_static_v1/PRIMARY_STUDENT_RECEIPT.json",
+        for relative in (config_relative, "receipts/PRIMARY_STUDENT_RECEIPT.json", "receipts/titan_static_v1/PRIMARY_STUDENT_RECEIPT.json",
                          "receipts/titan_static_v1/PARAMETER_INVENTORY.json"):
             target = package / relative
             target.parent.mkdir(parents=True, exist_ok=True)
             target.write_bytes((ROOT / relative).read_bytes())
-        result, cost, events = self.bundle_values()
+        result, cost, events = self.bundle_values(qualification_stage)
         diagnostics = {"loader_mode": "stream_read_2MiB_v1", "header_bytes": 35216, "file_bytes": 1192135064,
                        "payload_bytes": 1192099840, "serialized_tensors": 310, "read_buffer_bytes": 2097152,
                        "maximum_payload_read_bytes": 2097152, "payload_chunk_count": 682,
@@ -342,7 +356,7 @@ class UnpaddedEvidenceTests(unittest.TestCase):
                    "platform": "Windows-synthetic", "packages": deepcopy(evidence.PACKAGES),
                    "gpu": "Synthetic control, not hardware", "cuda": "12.6", "total_vram_bytes": 8 * 1024**3,
                    "attention": "eager", "base_dtype": "bfloat16", "adapter_dtype": "float32"}
-        files = {"E0_RESULT.json": result, "CONFIG.json": json.loads((ROOT / evidence.CONFIG_RELATIVE).read_text()),
+        files = {"E0_RESULT.json": result, "CONFIG.json": json.loads((ROOT / config_relative).read_text()),
                  "SOURCE_RECEIPT.json": {"code_sha": "a" * 40, "dirty": False, "script_sha256": "b" * 64,
                     "dependency_sha256": {name: "b" * 64 for name in evidence.DEPENDENCIES}},
                  "RUNTIME_RECEIPT.json": runtime,
@@ -356,7 +370,7 @@ class UnpaddedEvidenceTests(unittest.TestCase):
                     "tensor_sha256": {name: "b" * 64 for name in self.names}, "loader_mode": evidence.LOADER_MODE,
                     "loader_diagnostics": deepcopy(diagnostics)},
                  "TRAINABLE_INVENTORY.json": {"modules": modules, "parameters": parameters, "count": 1146880},
-                 "RESOURCE_BASELINE.json": {"status": evidence.PASS_STATUS, "samples": deepcopy(result["resources"]),
+                 "RESOURCE_BASELINE.json": {"status": result["status"], "samples": deepcopy(result["resources"]),
                                             "profiles": deepcopy(result["resource_profiles"])}, "COST_LEDGER.json": cost}
         for name, value in files.items():
             write_json(bundle / name, value)
@@ -364,26 +378,26 @@ class UnpaddedEvidenceTests(unittest.TestCase):
         (bundle / "adapter_resume.pt").write_bytes(b"Synthetic control; never Torch-loaded")
         supervision = bundle.with_name(bundle.name + "_supervisor")
         launch = {"command": [runtime["executable"], "-B", "-m", "experiments.post_training_mimo_centralized_v1.scripts.qualify_native",
-                   "--config", str(package / evidence.CONFIG_RELATIVE), "--output", str(bundle), "--go-path", str(supervision / "GO.json")],
-                  "config_sha256": evidence.CONFIG_SHA256, "supervisor_sha256": "b" * 64, "watchdog_sha256": "b" * 64,
+                   "--config", str(package / config_relative), "--output", str(bundle), "--go-path", str(supervision / "GO.json")],
+                  "config_sha256": result["config_sha256"], "supervisor_sha256": "b" * 64, "watchdog_sha256": "b" * 64,
                   "observed_gpu_processes": [], "source_sha": "a" * 40, "resource_profile": evidence.RESOURCE_PROFILE,
-                  "qualification_stage": "unpadded_ce", "resource_limits": deepcopy(evidence.RESOURCE_LIMITS), "loader_mode": evidence.LOADER_MODE}
+                  "qualification_stage": qualification_stage, "resource_limits": deepcopy(evidence.RESOURCE_LIMITS), "loader_mode": evidence.LOADER_MODE}
         write_json(supervision / "LAUNCH.json", launch)
-        write_json(supervision / "GO.json", {"config_sha256": evidence.CONFIG_SHA256})
+        write_json(supervision / "GO.json", {"config_sha256": result["config_sha256"]})
         write_json(supervision / "SUPERVISOR.json", {"status": "PASS_PROCESS_ONLY", "reason": None, "exit_code": 0,
                     "native_qualification": False, "elapsed_seconds": 1001.0, "limit_seconds": 1800,
                     "memory_poll_seconds": .1, "peak_observed_process_tree_rss_bytes": 1024**3})
-        (supervision / "stdout.log").write_text(json.dumps({"status": evidence.PASS_STATUS, "error": None,
-                    "wall_seconds": result["wall_seconds"], "optimizer_steps": 5}) + "\n", encoding="utf-8")
+        (supervision / "stdout.log").write_text(json.dumps({"status": result["status"], "error": None,
+                    "wall_seconds": result["wall_seconds"], "optimizer_steps": result["optimizer_steps"]}) + "\n", encoding="utf-8")
         (supervision / "stderr.log").write_bytes(b"")
         return package, bundle
 
-    def inspect_fixture(self, package, bundle):
+    def inspect_fixture(self, package, bundle, qualification_stage="unpadded_ce"):
         def no_assets(*args, **kwargs):
             raise evidence.GateError("SYNTHETIC_NO_ASSETS", "metadata controls are not native evidence")
         with patch.object(evidence.low, "_verify_source"), patch.object(evidence.low, "_verify_committed_helper"), \
              patch.object(evidence, "_verify_assets", side_effect=no_assets) as assets:
-            report = evidence.inspect_unpadded_scope(package, e0_directory=bundle)
+            report = evidence.inspect_unpadded_scope(package, e0_directory=bundle, qualification_stage=qualification_stage)
         return report, assets.call_count
 
     def test_complete_synthetic_metadata_never_claims_native_qualification(self):
@@ -423,16 +437,20 @@ class UnpaddedEvidenceTests(unittest.TestCase):
 
     def test_pinned_current_native_source_closure_matches_real_history(self):
         # Source identity alone is deliberately not native execution evidence.
-        producer = "e8865c7afa510e00ee773686469188e1540fd183"
+        producer = "d5640306dac3ea33b862e77bb1eb932a980a9e4f"
         repo = ROOT.parents[1]
-        bound = {}
-        for relative in (evidence.CONFIG_SOURCE, evidence.low.QUALIFIER, *evidence.DEPENDENCIES,
-                         evidence.low.SUPERVISOR, evidence.low.WATCHDOG):
-            digest = evidence.hashlib.sha256((repo / relative).read_bytes()).hexdigest()
-            evidence.low._verify_source(repo, producer, relative, digest, bound)
-        for relative in evidence.NATIVE_HELPERS:
-            evidence.low._verify_committed_helper(repo, producer, relative, bound)
-        self.assertEqual(len(bound), 11)
+        for stage in ("unpadded_ce", "unpadded_ce512"):
+            selected = evidence.registration(stage)
+            config_source = "experiments/post_training_mimo_centralized_v1/" + selected["config_relative"]
+            bound = {}
+            for relative in (config_source, evidence.low.QUALIFIER, *evidence.DEPENDENCIES,
+                             evidence.low.SUPERVISOR, evidence.low.WATCHDOG):
+                digest = evidence.hashlib.sha256((repo / relative).read_bytes()).hexdigest()
+                evidence.low._verify_source(repo, producer, relative, digest, bound)
+            for relative in evidence.NATIVE_HELPERS:
+                evidence.low._verify_committed_helper(repo, producer, relative, bound)
+            self.assertEqual(len(bound), 11)
+            self.assertEqual(bound[str((repo / config_source).resolve())]["sha256"], selected["config_sha256"])
 
     def test_bundle_metadata_mutations_fail_before_asset_reads(self):
         cases = (("RUNTIME_RECEIPT.json", "attention", "sdpa"), ("RUNTIME_RECEIPT.json", "cuda", "12.7"),
@@ -522,6 +540,165 @@ class UnpaddedEvidenceTests(unittest.TestCase):
         code = "import sys; import experiments.post_training_mimo_centralized_v1.scripts.unpadded_evidence; assert not any(n == 'torch' or n.startswith('torch.') or n == 'transformers' or n.startswith('transformers.') or n.endswith('.qualify_native') for n in sys.modules)"
         run = subprocess.run([sys.executable, "-B", "-c", code], capture_output=True, text=True)
         self.assertEqual(run.returncode, 0, run.stderr)
+
+    def test_ce512_explicit_scope_has_independently_derived_counts_without_qualification(self):
+        result, cost, events = self.bundle_values("unpadded_ce512")
+        self.assertIsNone(evidence.validate_result(result, qualification_stage="unpadded_ce512"))
+        self.assertIsNone(evidence.validate_accounting_bundle(result, cost, events, self.names,
+                                                           qualification_stage="unpadded_ce512"))
+        attempts = [event for event in events if event["event"] == "operation_attempt"]
+        self.assertEqual(len(events), 865)
+        self.assertEqual(len(attempts), 393)
+        self.assertEqual(sum(event["operation"] == "forward" for event in attempts), 71)
+        self.assertEqual(sum(event["operation"] == "backward" for event in attempts), 4)
+        self.assertEqual(sum(event["operation"] == "optimizer_step" for event in attempts), 4)
+        self.assertEqual(sum(event["input_positions"] for event in attempts), 26608)
+        self.assertEqual(sum(event["input_positions"] for event in attempts if event["training"]), 1792)
+        self.assertEqual(sum(event["event"] == "resource" for event in events), 75)
+        self.assertEqual(sum(event["event"] == "resource_profile" for event in events), 2)
+        self.assertEqual([profile["context"] for profile in result["resource_profiles"]], [256, 512])
+        self.assertFalse(result["e1_authorized"])
+        with self.assertRaises(evidence.GateError):
+            evidence.validate_result(result)  # Historical default does not infer a successor.
+
+    def test_ce512_and_historical_claims_cannot_cross_promote(self):
+        for selected, supplied in (("unpadded_ce", "unpadded_ce512"), ("unpadded_ce512", "unpadded_ce")):
+            with self.subTest(selected=selected), self.assertRaises(evidence.GateError):
+                evidence.validate_result(fixture_result(supplied), qualification_stage=selected)
+        cases = (("status", evidence.PASS_STATUS), ("runtime_scope", evidence.RUNTIME_SCOPE),
+                 ("config_sha256", evidence.CONFIG_SHA256), ("qualification_stage", "unpadded_ce"),
+                 ("optimizer_steps", 5), ("training_tokens", 3840),
+                 ("unqualified", deepcopy(evidence.UNQUALIFIED)))
+        for field, value in cases:
+            result = fixture_result("unpadded_ce512")
+            result[field] = value
+            with self.subTest(field=field), self.assertRaises(evidence.GateError):
+                evidence.validate_result(result, qualification_stage="unpadded_ce512")
+
+    def test_ce512_rejects_513_and_1024_token_forward_or_profile_claims(self):
+        for length in (513, 1024):
+            result, cost, events = self.bundle_values("unpadded_ce512")
+            for event in events:
+                if event.get("stage") == "base_parity_1" and event.get("operation") == "forward":
+                    event["input_positions"] = length
+            with self.subTest(journal_tokens=length), self.assertRaises(evidence.GateError) as caught:
+                evidence.validate_accounting_bundle(result, cost, events, self.names, qualification_stage="unpadded_ce512")
+            self.assertEqual(caught.exception.code, "EVENTS_CONTRACT")
+            result = fixture_result("unpadded_ce512")
+            result["resource_profiles"][-1]["context"] = length
+            with self.subTest(profile_tokens=length), self.assertRaises(evidence.GateError):
+                evidence.validate_result(result, qualification_stage="unpadded_ce512")
+        result, cost, events = self.bundle_values("unpadded_ce512")
+        for event in events:
+            if event.get("stage") == "resume_reloaded" and event.get("operation") == "forward":
+                event["input_positions"] = 1024
+        with self.assertRaises(evidence.GateError):
+            evidence.validate_accounting_bundle(result, cost, events, self.names, qualification_stage="unpadded_ce512")
+
+    def test_ce512_requires_its_complete_four_call_and_865_record_workload(self):
+        for field, value in (("max_optimizer_calls", 5), ("last_call_id", 396),
+                             ("forward_input_positions_returned", 41456),
+                             ("training_forward_input_positions_attempted", 3840)):
+            result = fixture_result("unpadded_ce512")
+            result["call_accounting"][field] = value
+            with self.subTest(field=field), self.assertRaises(evidence.GateError):
+                evidence.validate_result(result, qualification_stage="unpadded_ce512")
+        for mutation in ("drop", "duplicate", "extra_profile", "reordered_context"):
+            result, cost, events = self.bundle_values("unpadded_ce512")
+            if mutation == "drop":
+                events.pop()
+            elif mutation == "duplicate":
+                events.append(deepcopy(events[-1]))
+            elif mutation == "extra_profile":
+                result["resource_profiles"].append(deepcopy(result["resource_profiles"][-1]))
+            else:
+                result["resource_profiles"].reverse()
+            with self.subTest(mutation=mutation), self.assertRaises(evidence.GateError):
+                evidence.validate_accounting_bundle(result, cost, events, self.names, qualification_stage="unpadded_ce512")
+
+    def test_ce512_preserves_numerical_checks_resource_floors_and_timing_bounds(self):
+        for check, field, value in (("explicit_allones_mask_equivalence", "mean_abs", .010001),
+                                    ("native_unpadded_causality", "bitwise", False)):
+            result = fixture_result("unpadded_ce512")
+            result["checks"][check][field] = value
+            with self.subTest(check=check), self.assertRaises(evidence.GateError):
+                evidence.validate_result(result, qualification_stage="unpadded_ce512")
+        for field, value in (("host_available_gib", 1.249), ("rss_gib", 1.751), ("gpu_free_gib", .499)):
+            result = fixture_result("unpadded_ce512")
+            result["resources"][1][field] = value
+            with self.subTest(resource=field), self.assertRaises(evidence.GateError):
+                evidence.validate_result(result, qualification_stage="unpadded_ce512")
+        for field in ("load_seconds", "checkpoint_save_seconds", "checkpoint_reload_seconds", "profile"):
+            result, cost, events = self.bundle_values("unpadded_ce512")
+            if field == "profile":
+                profile = result["resource_profiles"][-1]
+                profile["seconds"] = .000001
+                profile["tokens_per_second"] = profile["context"] / profile["seconds"]
+                event = [event for event in events if event["event"] == "resource_profile"][-1]
+                event["profile"] = deepcopy(profile)
+            else:
+                result[field] = .000001
+            with self.subTest(timer=field), self.assertRaises(evidence.GateError) as caught:
+                evidence.validate_accounting_bundle(result, fixture_cost(result), events, self.names,
+                                                   qualification_stage="unpadded_ce512")
+            self.assertEqual(caught.exception.code, "TIMING_JOURNAL_CONTRADICTION")
+
+    def test_ce512_complete_synthetic_metadata_still_requires_all_asset_bytes(self):
+        with tempfile.TemporaryDirectory() as directory:
+            package, bundle = self.metadata_fixture(Path(directory), "unpadded_ce512")
+            report, calls = self.inspect_fixture(package, bundle, "unpadded_ce512")
+            self.assertEqual(calls, 1)
+            self.assertEqual(report["status"], "BLOCKED")
+            self.assertEqual(report["reasons"][0]["code"], "SYNTHETIC_NO_ASSETS")
+            self.assertFalse(report["native_launch_authorized"])
+            self.assertFalse(report["e1_authorized"])
+            self.assertTrue(report["no_native_executor"])
+            with patch.object(evidence, "_verify_assets", side_effect=AssertionError("no silent successor")):
+                default = evidence.inspect_unpadded_scope(package, e0_directory=bundle)
+            self.assertEqual(default["status"], "BLOCKED")
+            self.assertEqual(default["reasons"][0]["code"], "UNPADDED_NOT_PASSED")
+
+    def test_ce512_launch_config_or_scope_drift_blocks_before_assets(self):
+        for mutation in ("config", "launch_stage", "launch_hash", "stdout"):
+            with self.subTest(mutation=mutation), tempfile.TemporaryDirectory() as directory:
+                package, bundle = self.metadata_fixture(Path(directory), "unpadded_ce512")
+                supervision = bundle.with_name(bundle.name + "_supervisor")
+                if mutation == "config":
+                    (bundle / "CONFIG.json").write_bytes((ROOT / evidence.CONFIG_RELATIVE).read_bytes())
+                elif mutation == "stdout":
+                    (supervision / "stdout.log").write_text(json.dumps({"status": evidence.PASS_STATUS, "error": None,
+                            "wall_seconds": 1000.0, "optimizer_steps": 5}) + "\n", encoding="utf-8")
+                else:
+                    path = supervision / "LAUNCH.json"
+                    launch = json.loads(path.read_text())
+                    launch["qualification_stage" if mutation == "launch_stage" else "config_sha256"] = (
+                            "unpadded_ce" if mutation == "launch_stage" else evidence.CONFIG_SHA256)
+                    write_json(path, launch)
+                report, calls = self.inspect_fixture(package, bundle, "unpadded_ce512")
+                self.assertEqual(report["status"], "BLOCKED")
+                self.assertEqual(calls, 0)
+
+    def test_ce512_cli_requires_explicit_selection_and_rejects_unknown_stage(self):
+        with tempfile.TemporaryDirectory() as directory:
+            bundle = Path(directory)
+            write_json(bundle / "E0_RESULT.json", fixture_result("unpadded_ce512"))
+            command = [sys.executable, "-B", "-m", "experiments.post_training_mimo_centralized_v1.scripts.unpadded_evidence",
+                       "--experiment-root", str(ROOT), "--e0-directory", str(bundle)]
+            default = subprocess.run(command, capture_output=True, text=True)
+            self.assertEqual(default.returncode, 0, default.stderr)
+            default_report = json.loads(default.stdout)
+            self.assertEqual(default_report["reasons"][0]["code"], "UNPADDED_NOT_PASSED")
+            selected = subprocess.run(command + ["--qualification-stage", "unpadded_ce512"], capture_output=True, text=True)
+            self.assertEqual(selected.returncode, 0, selected.stderr)
+            selected_report = json.loads(selected.stdout)
+            self.assertEqual(selected_report["status"], "BLOCKED")
+            self.assertNotEqual(selected_report["reasons"][0]["code"], "UNPADDED_NOT_PASSED")
+            self.assertFalse(selected_report["e1_authorized"])
+            invalid = subprocess.run(command + ["--qualification-stage", "unknown"], capture_output=True, text=True)
+            self.assertNotEqual(invalid.returncode, 0)
+        report = evidence.inspect_unpadded_scope(ROOT, qualification_stage="unknown")
+        self.assertEqual(report["status"], "BLOCKED")
+        self.assertEqual(report["reasons"][0]["code"], "UNREGISTERED_QUALIFICATION_STAGE")
 
 
 if __name__ == "__main__":

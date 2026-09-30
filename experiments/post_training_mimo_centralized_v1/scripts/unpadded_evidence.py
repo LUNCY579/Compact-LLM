@@ -1,4 +1,4 @@
-"""Strict, stdlib-only evidence diagnostics for UNPADDED_SINGLE_SEQUENCE_CE_V1.
+"""Strict, stdlib-only evidence diagnostics for explicitly selected unpadded CE scopes.
 
 Value fixtures alone never qualify a bundle. A claimed scoped pass must bind the
 registered config, current and committed source closure, native checks, ordered
@@ -61,41 +61,84 @@ OPTIMIZER_TENSOR_BYTES = 2 * 1146880 * 4 + 112 * 4
 GateError = low.GateError
 _require, _same, _number = low._require, low._same, low._number
 
+# A new scope is never inferred from supplied result metadata. The original
+# registration remains the public default, including its immutable config pin.
+REGISTRATIONS = {
+    "unpadded_ce": {
+        "config_relative": CONFIG_RELATIVE, "config_sha256": CONFIG_SHA256,
+        "pass_status": PASS_STATUS, "runtime_scope": RUNTIME_SCOPE,
+        "contexts": (256, 512, 1024), "optimizer_calls": 5, "forward_calls": 72,
+        "operation_calls": 396, "forward_positions": 41456, "training_positions": 3840,
+        "resource_samples": 78, "journal_records": 875,
+        "unqualified": UNQUALIFIED,
+        "bundle_name": "e0_laptop_stream_unpadded_ce_v1",
+        "consistency_status": "PASS_E0_UNPADDED_SCOPE_EVIDENCE_CONSISTENCY_ONLY",
+    },
+    "unpadded_ce512": {
+        "config_relative": "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json",
+        "config_sha256": "42a32cfa2fe4dc1250a288bacec2a60d150c5498d8dced9bba23b0c5037f5929",
+        "pass_status": "PASS_E0_UNPADDED_CE512_SCOPED",
+        "runtime_scope": "UNPADDED_SINGLE_SEQUENCE_CE512_V1",
+        "contexts": (256, 512), "optimizer_calls": 4, "forward_calls": 71,
+        "operation_calls": 393, "forward_positions": 26608, "training_positions": 1792,
+        "resource_samples": 75, "journal_records": 865,
+        "unqualified": UNQUALIFIED[:-1] + ["long context beyond512"],
+        "bundle_name": "e0_laptop_stream_unpadded_ce512_v1",
+        "consistency_status": "PASS_E0_UNPADDED_CE512_SCOPE_EVIDENCE_CONSISTENCY_ONLY",
+    },
+}
+
+
+def registration(qualification_stage="unpadded_ce"):
+    _require(type(qualification_stage) is str and qualification_stage in REGISTRATIONS,
+             "UNREGISTERED_QUALIFICATION_STAGE", "select an explicitly registered unpadded CE stage")
+    selected = REGISTRATIONS[qualification_stage]
+    _require(type(selected["config_sha256"]) is str and re.fullmatch("[0-9a-f]{64}", selected["config_sha256"]),
+             "UNFROZEN_QUALIFICATION_STAGE", "the selected prospective config is not byte-pinned")
+    return selected
+
 
 def _read(path, bound):
     _require(Path(path).stat().st_size <= METADATA_LIMIT, "METADATA_SIZE_LIMIT", str(path))
     return low._read(path, bound)
 
 
-def successful_accounting():
-    counts = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310, "forward": 72,
-              "backward": 5, "optimizer_step": 5, "checkpoint_save": 1, "checkpoint_reload": 1}
-    return {"accounting_version": 2, "max_optimizer_calls": 5, "last_call_id": 396,
+def successful_accounting(*, qualification_stage="unpadded_ce"):
+    selected = registration(qualification_stage)
+    counts = {"model_construct": 1, "checkpoint_load": 1, "tensor_copy": 310, "forward": selected["forward_calls"],
+              "backward": selected["optimizer_calls"], "optimizer_step": selected["optimizer_calls"],
+              "checkpoint_save": 1, "checkpoint_reload": 1}
+    return {"accounting_version": 2, "max_optimizer_calls": selected["optimizer_calls"], "last_call_id": selected["operation_calls"],
             "operations": {name: {"attempted": counts[name], "returned": counts[name], "failed": 0, "pending": 0}
                            for name in OPERATIONS}, "pending_calls": [],
-            "forward_input_positions_attempted": 41456, "forward_input_positions_returned": 41456,
-            "training_forward_input_positions_attempted": 3840, "training_forward_input_positions_returned": 3840}
+            "forward_input_positions_attempted": selected["forward_positions"],
+            "forward_input_positions_returned": selected["forward_positions"],
+            "training_forward_input_positions_attempted": selected["training_positions"],
+            "training_forward_input_positions_returned": selected["training_positions"]}
 
 
-def resource_stages():
+def resource_stages(*, qualification_stage="unpadded_ce"):
+    selected = registration(qualification_stage)
     stages = ["preload", "loaded"] + [f"base_parity_{i}" for i in range(32)]
     stages += [f"zero_parity_{i}" for i in range(32)] + ["unpad_causality", "unpad_allones_equivalence"]
-    for length in (256, 512, 1024):
+    for length in selected["contexts"]:
         stages += [f"before_backward_{length}", f"backward_{length}", f"after_step_{length}"]
     return stages + ["complete"]
 
 
-def validate_result(result):
+def validate_result(result, *, qualification_stage="unpadded_ce"):
     """Values-only validation; this function never returns a qualification grant."""
+    selected = registration(qualification_stage)
     low._finite(result)
-    _require(type(result) is dict and result.get("status") == PASS_STATUS,
+    _require(type(result) is dict and result.get("status") == selected["pass_status"],
              "UNPADDED_NOT_PASSED", "exact scoped pass required")
-    fixed = {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0", "status": PASS_STATUS,
-             "evidence_level": "MEASURED / REPRODUCED", "dirty_at_launch": False, "config_sha256": CONFIG_SHA256,
-             "pretrained_loads": 1, "optimizer_steps": 5, "training_tokens": 3840, "generation_tokens": 0,
+    fixed = {"schema_version": 1, "experiment_id": "RINEYA-0P6B-E0", "status": selected["pass_status"],
+             "evidence_level": "MEASURED / REPRODUCED", "dirty_at_launch": False, "config_sha256": selected["config_sha256"],
+             "pretrained_loads": 1, "optimizer_steps": selected["optimizer_calls"],
+             "training_tokens": selected["training_positions"], "generation_tokens": 0,
              "teacher_calls": 0, "e1_authorized": False, "accounting_version": 2,
-             "resource_profile": RESOURCE_PROFILE, "qualification_stage": "unpadded_ce",
-             "loader_mode": LOADER_MODE, "runtime_scope": RUNTIME_SCOPE, "unqualified": UNQUALIFIED}
+             "resource_profile": RESOURCE_PROFILE, "qualification_stage": qualification_stage,
+             "loader_mode": LOADER_MODE, "runtime_scope": selected["runtime_scope"], "unqualified": selected["unqualified"]}
     variable = {"code_sha", "wall_seconds", "checks", "resources", "resource_profiles", "call_accounting",
                 "loader_diagnostics", "load_seconds", "checkpoint_save_seconds", "checkpoint_reload_seconds"}
     _require(set(result) == set(fixed) | variable, "UNPADDED_RESULT_FIELDS", "missing/extra result fields or failure present")
@@ -104,7 +147,8 @@ def validate_result(result):
     _require(type(result["code_sha"]) is str and re.fullmatch("[0-9a-f]{40}", result["code_sha"]),
              "SOURCE_IDENTITY", "full producer commit required")
     _require(_number(result["wall_seconds"], minimum=.000001, maximum=1800), "WALL_CEILING", "invalid native duration")
-    _require(_same(result["call_accounting"], successful_accounting()), "CALL_ACCOUNTING_CONTRACT", "registered counters differ")
+    _require(_same(result["call_accounting"], successful_accounting(qualification_stage=qualification_stage)),
+             "CALL_ACCOUNTING_CONTRACT", "registered counters differ")
     checks = result["checks"]
     _require(type(checks) is dict and set(checks) == CHECKS, "UNPADDED_CHECKS", "exact eight scoped checks required")
     for name in TRUE_CHECKS:
@@ -122,9 +166,10 @@ def validate_result(result):
     _require(_number(ones["max_abs"], maximum=.03125) and _number(ones["mean_abs"], maximum=.01)
              and ones["mean_abs"] <= ones["max_abs"], "ALLONES_CONTRACT", "registered likelihood tolerance failed")
     profiles = result["resource_profiles"]
-    _require(type(profiles) is list and len(profiles) == 3, "RESOURCE_PROFILES", "three profiles required")
+    _require(type(profiles) is list and len(profiles) == len(selected["contexts"]),
+             "RESOURCE_PROFILES", "all selected context profiles required")
     fields = {"context", "loss", "gradient_norm", "seconds", "tokens_per_second", "peak_allocated_bytes", "optimizer_tensor_bytes"}
-    for context, profile in zip((256, 512, 1024), profiles):
+    for context, profile in zip(selected["contexts"], profiles):
         _require(type(profile) is dict and set(profile) == fields and type(profile["context"]) is int
                  and profile["context"] == context, "RESOURCE_PROFILES", "profile context/fields differ")
         for field in ("loss", "gradient_norm"):
@@ -139,8 +184,8 @@ def validate_result(result):
     samples = result["resources"]
     fields = {"stage", "elapsed_seconds", "host_available_gib", "rss_gib", "gpu_free_gib", "gpu_allocated_gib",
               "gpu_reserved_gib", "peak_allocated_gib", "disk_free_gib", "admission_required_gib"}
-    _require(type(samples) is list and len(samples) == 78 and all(type(sample) is dict for sample in samples)
-             and [sample.get("stage") for sample in samples] == resource_stages(),
+    _require(type(samples) is list and len(samples) == selected["resource_samples"] and all(type(sample) is dict for sample in samples)
+             and [sample.get("stage") for sample in samples] == resource_stages(qualification_stage=qualification_stage),
              "RESOURCE_COVERAGE", "missing/extra/reordered guards")
     previous = -1
     for sample in samples:
@@ -157,7 +202,8 @@ def validate_result(result):
         _require(_number(result[field], minimum=.000001, maximum=result["wall_seconds"]), "TIMING_MEASUREMENT", field)
 
 
-def _expected_events(result, tensor_names):
+def _expected_events(result, tensor_names, *, qualification_stage="unpadded_ce"):
+    selected = registration(qualification_stage)
     _require(type(tensor_names) in (list, tuple) and len(tensor_names) == 310 and len(set(tensor_names)) == 310
              and all(low._nonblank(name) for name in tensor_names), "JOURNAL_TENSOR_INVENTORY", "310 distinct names required")
     events = [{"event": "runtime_import_start"}, {"event": "runtime_import_complete"}]
@@ -187,14 +233,14 @@ def _expected_events(result, tensor_names):
     for prefix in ("base_parity", "zero_parity"):
         for index in range(32):
             stage = f"{prefix}_{index}"
-            call("forward", stage, (256, 512, 1024)[index % 3])
+            call("forward", stage, selected["contexts"][index % len(selected["contexts"])])
             resource(stage)
     call("forward", "unpad_reference", 80)
     call("forward", "unpad_causality_perturbed", 80)
     resource("unpad_causality")
     call("forward", "unpad_allones_mask", 80)
     resource("unpad_allones_equivalence")
-    for length, profile in zip((256, 512, 1024), result["resource_profiles"]):
+    for length, profile in zip(selected["contexts"], result["resource_profiles"]):
         stage = f"training_{length}"
         resource(f"before_backward_{length}")
         call("forward", stage, length, True)
@@ -204,23 +250,26 @@ def _expected_events(result, tensor_names):
         events.append({"event": "resource_profile", "profile": profile})
         resource(f"after_step_{length}")
     call("checkpoint_save", "adapter_resume_save")
-    call("forward", "resume_uninterrupted", 1024, True)
+    call("forward", "resume_uninterrupted", selected["contexts"][-1], True)
     call("backward", "resume_uninterrupted")
     call("optimizer_step", "resume_uninterrupted")
     call("checkpoint_reload", "adapter_resume_reload")
-    call("forward", "resume_reloaded", 1024, True)
+    call("forward", "resume_reloaded", selected["contexts"][-1], True)
     call("backward", "resume_reloaded")
     call("optimizer_step", "resume_reloaded")
     resource("complete")
-    _require(call_id == 396 and next(samples, None) is None and len(events) == 875, "JOURNAL_WORKLOAD_CONTRACT", "workload differs")
+    _require(call_id == selected["operation_calls"] and next(samples, None) is None
+             and len(events) == selected["journal_records"], "JOURNAL_WORKLOAD_CONTRACT", "workload differs")
     return events
 
 
-def validate_accounting_bundle(result, cost, events, tensor_names):
-    validate_result(result)
+def validate_accounting_bundle(result, cost, events, tensor_names, *, qualification_stage="unpadded_ce"):
+    selected = registration(qualification_stage)
+    validate_result(result, qualification_stage=qualification_stage)
     _require(type(cost) is dict and _same(cost, {name: result[name] for name in COST_FIELDS}), "COST_RECEIPT_DRIFT", "cost/result differ")
-    expected = _expected_events(result, tensor_names)
-    _require(type(events) is list and len(events) == 875, "EVENTS_CONTRACT", "complete 875-record journal required")
+    expected = _expected_events(result, tensor_names, qualification_stage=qualification_stage)
+    _require(type(events) is list and len(events) == selected["journal_records"],
+             "EVENTS_CONTRACT", "complete selected-scope journal required")
     previous = -1
     for index, (event, contract) in enumerate(zip(events, expected)):
         _require(type(event) is dict and set(event) == set(contract) | {"elapsed_seconds"}, "EVENTS_CONTRACT", f"fields at {index}")
@@ -289,7 +338,8 @@ def _bind_binary(path, bound, ceiling, *, nonempty=False):
     bound[str(path)] = {"sha256": low._digest(path), "bytes": size}
 
 
-def _validate_stdout(path, result):
+def _validate_stdout(path, result, *, qualification_stage="unpadded_ce"):
+    selected = registration(qualification_stage)
     last = b""
     with Path(path).open("rb") as stream:
         while True:
@@ -299,7 +349,8 @@ def _validate_stdout(path, result):
             _require(len(line) <= METADATA_LIMIT, "STDOUT_CONTRACT", "oversized stdout line")
             if line.strip():
                 last = line.strip()
-    expected = {"status": PASS_STATUS, "error": None, "wall_seconds": result["wall_seconds"], "optimizer_steps": 5}
+    expected = {"status": selected["pass_status"], "error": None, "wall_seconds": result["wall_seconds"],
+                "optimizer_steps": selected["optimizer_calls"]}
     _require(last and _same(low._parse(last), expected), "STDOUT_CONTRACT", "final worker stdout differs from result")
 
 
@@ -313,23 +364,25 @@ def _verify_assets(cfg, primary, inventory, model, bound):
     low._check_weight_tensor_bytes(model_dir / "model.safetensors", inventory, model)
 
 
-def inspect_unpadded_scope(experiment_root, *, e0_directory=None):
+def inspect_unpadded_scope(experiment_root, *, e0_directory=None, qualification_stage="unpadded_ce"):
     root = Path(experiment_root).resolve()
-    bundle = Path(e0_directory).resolve() if e0_directory is not None else root / "results/e0_laptop_stream_unpadded_ce_v1"
     bound = {}
     report = {"status": "BLOCKED", "reasons": [], "bound_files": bound, "native_launch_authorized": False,
               "no_native_executor": True, "e1_authorized": False,
               "claim": "Local artifact identity and internal consistency only; no cryptographic execution proof, current-memory or efficacy claim."}
     try:
+        selected = registration(qualification_stage)
+        bundle = Path(e0_directory).resolve() if e0_directory is not None else root / "results" / selected["bundle_name"]
         result = _read(bundle / "E0_RESULT.json", bound)
-        if result.get("status") != PASS_STATUS:
+        if result.get("status") != selected["pass_status"]:
             report["reasons"].append({"code": "UNPADDED_NOT_PASSED", "detail": str(result.get("status", "MISSING_STATUS"))[:200]})
             return report
-        config_path = root / CONFIG_RELATIVE
+        config_path = root / selected["config_relative"]
         cfg = _read(config_path, bound)
-        _require(bound[str(config_path)]["sha256"] == CONFIG_SHA256, "UNPADDED_CONFIG_IDENTITY", "registered config bytes changed")
+        _require(bound[str(config_path)]["sha256"] == selected["config_sha256"],
+                 "UNPADDED_CONFIG_IDENTITY", "registered config bytes changed")
         _require(_same(_read(bundle / "CONFIG.json", bound), cfg), "UNPADDED_CONFIG_DRIFT", "bundle config differs")
-        validate_result(result)
+        validate_result(result, qualification_stage=qualification_stage)
         supervision = bundle.with_name(bundle.name + "_supervisor")
         _require(not (bundle / "FAILURE_RECEIPT.json").exists() and not (supervision / "FAILURE_RECEIPT.json").exists(),
                  "FAILURE_PRESENT", "pass has failure receipt")
@@ -347,7 +400,8 @@ def inspect_unpadded_scope(experiment_root, *, e0_directory=None):
         _require(set(source) == {"code_sha", "dirty", "script_sha256", "dependency_sha256"} and source["code_sha"] == result["code_sha"]
                  and source["dirty"] is False and type(source["dependency_sha256"]) is dict
                  and set(source["dependency_sha256"]) == set(DEPENDENCIES), "SOURCE_IDENTITY", "source receipt/closure differs")
-        low._verify_source(repo, result["code_sha"], CONFIG_SOURCE, CONFIG_SHA256, bound)
+        config_source = "experiments/post_training_mimo_centralized_v1/" + selected["config_relative"]
+        low._verify_source(repo, result["code_sha"], config_source, selected["config_sha256"], bound)
         low._verify_source(repo, result["code_sha"], low.QUALIFIER, source["script_sha256"], bound)
         for relative, digest in source["dependency_sha256"].items():
             low._verify_source(repo, result["code_sha"], relative, digest, bound)
@@ -371,16 +425,18 @@ def inspect_unpadded_scope(experiment_root, *, e0_directory=None):
         model, trainable = _read(bundle / "MODEL_RECEIPT.json", bound), _read(bundle / "TRAINABLE_INVENTORY.json", bound)
         _validate_inventory(model, trainable, primary, inventory, result)
         resources = _read(bundle / "RESOURCE_BASELINE.json", bound)
-        _require(_same(resources, {"status": PASS_STATUS, "samples": result["resources"], "profiles": result["resource_profiles"]}),
+        _require(_same(resources, {"status": selected["pass_status"], "samples": result["resources"], "profiles": result["resource_profiles"]}),
                  "RESOURCE_RECEIPT_DRIFT", "resource receipt differs")
         cost = _read(bundle / "COST_LEDGER.json", bound)
         event_path = bundle / "EVENTS.jsonl"
         _require(event_path.stat().st_size <= EVENT_LIMIT, "EVENT_SIZE_LIMIT", "journal too large")
         raw = event_path.read_bytes()
         lines = raw.splitlines()
-        _require(len(lines) == 875 and all(line.strip() for line in lines), "EVENTS_CONTRACT", "complete journal required")
+        _require(len(lines) == selected["journal_records"] and all(line.strip() for line in lines),
+                 "EVENTS_CONTRACT", "complete journal required")
         bound[str(event_path)] = {"sha256": hashlib.sha256(raw).hexdigest(), "bytes": len(raw)}
-        validate_accounting_bundle(result, cost, [low._parse(line) for line in lines], sorted(inventory["tensors"]))
+        validate_accounting_bundle(result, cost, [low._parse(line) for line in lines], sorted(inventory["tensors"]),
+                                   qualification_stage=qualification_stage)
         supervisor = _read(supervision / "SUPERVISOR.json", bound)
         _require(set(supervisor) == {"status", "reason", "exit_code", "native_qualification", "elapsed_seconds", "limit_seconds",
                                     "memory_poll_seconds", "peak_observed_process_tree_rss_bytes"}
@@ -394,9 +450,10 @@ def inspect_unpadded_scope(experiment_root, *, e0_directory=None):
         launch, go = _read(supervision / "LAUNCH.json", bound), _read(supervision / "GO.json", bound)
         _require(set(launch) == {"command", "config_sha256", "supervisor_sha256", "watchdog_sha256", "observed_gpu_processes", "source_sha",
                                 "resource_profile", "qualification_stage", "resource_limits", "loader_mode"}
-                 and _same(go, {"config_sha256": CONFIG_SHA256}) and launch["config_sha256"] == CONFIG_SHA256
+                 and _same(go, {"config_sha256": selected["config_sha256"]})
+                 and launch["config_sha256"] == selected["config_sha256"]
                  and launch["source_sha"] == result["code_sha"] and launch["resource_profile"] == RESOURCE_PROFILE
-                 and launch["qualification_stage"] == "unpadded_ce" and launch["loader_mode"] == LOADER_MODE
+                 and launch["qualification_stage"] == qualification_stage and launch["loader_mode"] == LOADER_MODE
                  and _same(launch["resource_limits"], RESOURCE_LIMITS), "LAUNCH_IDENTITY", "launch limits/config/scope differ")
         command = launch["command"]
         _require(type(command) is list and len(command) == 10 and command[:4] == [runtime["executable"], "-B", "-m",
@@ -427,10 +484,11 @@ def inspect_unpadded_scope(experiment_root, *, e0_directory=None):
         _bind_binary(supervision / "stderr.log", bound, 16 * 1024**2)
         _require(bound[str((supervision / "stdout.log").resolve())]["bytes"] + bound[str((supervision / "stderr.log").resolve())]["bytes"] <= 16 * 1024**2,
                  "LOG_SIZE_LIMIT", "combined logs exceed watchdog limit")
-        _validate_stdout(supervision / "stdout.log", result)
+        _validate_stdout(supervision / "stdout.log", result, qualification_stage=qualification_stage)
         _verify_assets(cfg, primary, inventory, model, bound)
-        report.update(status="PASS_E0_UNPADDED_SCOPE_EVIDENCE_CONSISTENCY_ONLY", runtime_scope=RUNTIME_SCOPE,
-                      qualified_contexts=[256, 512, 1024], supported_forward="one unpadded sequence, no cache; validated all-ones mask omitted")
+        report.update(status=selected["consistency_status"], runtime_scope=selected["runtime_scope"],
+                      qualified_contexts=list(selected["contexts"]), supported_maximum_tokens=selected["contexts"][-1],
+                      supported_forward="one unpadded sequence, no cache; validated all-ones mask omitted")
     except GateError as error:
         report["reasons"].append({"code": error.code, "detail": str(error)[:400]})
     except (OSError, ValueError, TypeError, KeyError, AttributeError, RecursionError, OverflowError, StopIteration, subprocess.SubprocessError) as error:
@@ -442,8 +500,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--experiment-root", required=True, type=Path)
     parser.add_argument("--e0-directory", type=Path)
+    parser.add_argument("--qualification-stage", choices=tuple(REGISTRATIONS), default="unpadded_ce",
+                        help="Explicit scope selection; the historical unpadded_ce remains the default")
     args = parser.parse_args()
-    print(json.dumps(inspect_unpadded_scope(args.experiment_root, e0_directory=args.e0_directory), indent=2, allow_nan=False))
+    print(json.dumps(inspect_unpadded_scope(args.experiment_root, e0_directory=args.e0_directory,
+                                          qualification_stage=args.qualification_stage), indent=2, allow_nan=False))
 
 
 if __name__ == "__main__":
