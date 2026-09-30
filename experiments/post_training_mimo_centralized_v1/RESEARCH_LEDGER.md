@@ -573,3 +573,25 @@ limitedreportednote separatelyfromtheactualsourcejoin. Languageorigin/quality
 review is inheritedfromfrozenpriorprovenance; notnewhumanapproval or wholepretraining
 exclusion. Native512scope remainsqualified; sourcecapture/gradedpreservation/long
 context/sustainedE1fit andcurrentnativeexecutor remainopen. Goal staysactive.
+
+
+## Frozen shortgreedy capture pilot andnumericalstop
+
+AMEND014/configcab513 andindependentworker/checker reviews/44CPUcontrols(1.130s)
+were committedbeforeonecontainednativepilot from3ed5777167817edd7032f8ed3125afd2e6daa3ad.
+Exactload;318selectedcallsreturned(310copies,6forwards)/1286positions;3newIDs
+[16,22,151645] visible17, naturalEOS; noanswercorrectnessfilter.128fixture
+completeduntilfailedNLLcheck;384unattempted. Onlinevsbulkerrors.0414324105,
+.0373841524,.0000814913, mean.0262993514 exceedunchanged.03125/.01.
+Worker25.437s/supervisor26.640s. InternalRSSmax1.404602GiB;external100mspeak
+1492574208bytes maymiss instantaneouspeak. Hostminimum2.554611GiB/GPUfree5.400391,
+GPUallocationpeak1.400038GiB; resourcesheld. No finalbase/sourcecheck, noqualification.
+
+Actualfailure/result/cost/journal/stdoutcopies byteexact. Earlyfailure receipt
+accounting isstale0; finalresult/cost/journal318is authoritative. Bothretained,
+no reinterpretationaszerowork. Purecheckerblockedbeforeweights. NewAMEND015
+fixesfailedprompt+IDs for2x2held-hiddenorigin×LMheadrows diagnosticplusGPUFP32
+head-only comparators, all0generation/training/grants; no causesclaimedwithout
+measurement andnooriginalproducer/config/pins changed. Fullgoal/best unchanged.
+Languagegradingstillneedsindependentqualifiedlabels/provider/cost/blinding;
+userpreferencequestionpending whiledeterministic work proceeds. No gradercalls.
