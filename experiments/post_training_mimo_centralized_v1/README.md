@@ -24,6 +24,13 @@ The new cycle has two verified loads. Historical E1/scheduler plans need measure
 successors; full E0 and later science remain incomplete. CHECK/FINAL remain closed,
 and the current best recipe remains unchanged Titan.
 
+AMENDMENT_012 adds a CPU-tested unpadded single-sequence CE qualification scope,
+matching prepared E1 inputs while preserving the earlier padded-forward failure.
+It requires separate native causality, mask equivalence, CE, gradients and resume.
+The launcher defaults to this scope. Its native pass and E1 validator are still
+missing. The last controller timed out without invoking a native supervisor;
+no model or controller is currently running. Its wait receipts are preserved.
+
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that
 same commit before implementation. Only this execution branch accumulates new work.

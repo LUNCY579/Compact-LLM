@@ -453,3 +453,27 @@ acquisition/retentionunmeasured. The nextinformationgain is resource/backward/re
 fit andpaddingerror diagnosis under unchangedtolerances. The operatingroute changed,
 not modelscale/data/retention criteria or thescientific definitionofsuccess. Thefull
 originalresearchgoal remains incomplete. No closedpayload opened or recipe promoted.
+
+
+## Scoped CE preparation after verified headless wait
+
+The corrected detached controllerPID216792 was verifiedlive and then terminal.
+Its601.063second admission window had256RAMobservations, min0.581242/max0.954651GiB,
+below3.0625required. It neverinvokedanative supervisor. RawPLAN/FAILURE/bootstraplogs
+are preservedbyteexact inheadless_admission_window_v2. This was averifiedwait,
+not a model run, memoryfit result or silent retry. LaterOS1.396980GiB and0Pythonworkers
+still didnotearnnativeadmission. No new model/optimizer/generation/teacherwork.
+
+Read-only review identifiedactualE1CE inputs: microbatch1,zero padding,allone masks.
+AMEND012 prospectively bindsUNPADDED_SINGLE_SEQUENCE_CE_V1 with hardinput boundaries,
+mandatory independentunpaddedcausality andrealallones-vs-omittedlikelihood checks at
+unchangedtolerances. It preservesoriginalEOSlabels,causalCE,3contextgradientprofiles,
+5disposableupdatecalls,resume,basehashandresourcebounds. Oldfullpaddingfailure remains;
+probabilityRL,packing,padding/cache/batchedinference/evaluationremainunqualified.
+
+76stdlibcontrols passed1.336s (process1.648372s). Independentnon-author assistantreview
+foundnoblocking sourceissue; it isnotnativeorhumanapproval. Semanticrow eligibility
+needsactualrow/token/labelbinding. LauncherWindowsAuditOnly succeededforthe newstage.
+No nativepassorscopedE1validator/currentruntimeplanexists. Goal remainsincomplete.
+The currentdefault trialis unpadded_ce onceheadroomchanges; no newbackgroundjob
+wasstartedatthesameinadequateresource state. Currentbestandclosedbanks unchanged.

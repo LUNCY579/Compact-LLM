@@ -20,8 +20,10 @@ It stops on source changes, timeout or failure and never retries automatically.
 See LAPTOP_RUNBOOK.md. Closing the desktop app can reduce its memory use; working
 set totals are not guaranteed reclaimable memory, so actual headroom is measured.
 
-The default backward_resume phase measures 256/512/1024 gradients and five
-reversible mechanics updates. Its partial success cannot qualify full E0 or E1.
+The default unpadded_ce phase additionally requires native unpadded causality and
+real all-one-mask equivalence before the 256/512/1024 gradients and five reversible
+mechanics updates. It matches actual single-sequence CE inputs and has a distinct
+scoped status. Its success cannot qualify full E0 or authorize E1 alone.
 Run the instrumented full stage separately to record the padding error magnitude,
 retaining the existing tolerances. No E1 training is authorized by a resource pass.
 
@@ -32,3 +34,9 @@ adapters/Adam state on GPU and sequential evaluation panels. E1 remains seed 101
 1024 replay rows. Language grading and long-context preservation remain separate
 prerequisites. Current best remains unchanged Titan; acquisition/retention are null
 and CHECK/FINAL stay closed. The full research objective remains incomplete.
+
+The previous detached controller is terminal after 601.063 seconds, with zero native
+invocations and all 256 RAM observations below 1 GiB. Preserve that verified wait;
+do not infer a model-memory failure or restart without changed headroom. AMENDMENT_012
+and configs/E0_LAPTOP_STREAM_UNPADDED_CE.json bind the current prospectively tested
+scope. Its evidence validator and native execution remain incomplete.

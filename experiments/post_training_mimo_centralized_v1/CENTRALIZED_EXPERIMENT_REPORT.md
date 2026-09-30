@@ -86,16 +86,19 @@ The failed log/receipt remains preserved. CPU controls do not establish GPU fit.
 
 ## App-independent execution and detailed sequence
 
-The last OS-only observation found 1.037 GiB available and no Python workers.
+The corrected standalone controller completed its admission window after
+601.063 seconds. It recorded 256 observations, with 0.581-0.955 GiB available,
+and never invoked a native supervisor. Its process is terminal and the raw wait
+receipts are preserved. A later OS reading was 1.397 GiB with no Python workers.
 Further same-state native attempts stopped. A regular PowerShell launcher can run
 outside the desktop app. It waits at most ten minutes for two observations at
 least 3.0625 GiB, including supervisor allowance, then invokes one contained
-30-minute backward_resume mechanics trial. It aborts on source/config changes,
+30-minute scoped qualification trial. It aborts on source/config changes,
 resource failure, timeout or numerical failure and records durable results.
 Desktop working-set observations near 2 GiB do not guarantee that closing it
 reclaims exactly that amount. Actual headroom is checked before model work.
 
-The default partial stage retains the exact loader, base and zero-adapter
+The earlier backward_resume resource stage retains the exact loader, base and zero-adapter
 comparisons, positional EOS/PAD label mechanics, 256/512/1024 gradients, five
 disposable optimizer calls, checkpoint save/reload and bitwise within-stage resume.
 It omits unresolved padded-forward/causality and sampler checks and explicitly
@@ -109,6 +112,30 @@ sequential evaluation panels. Avoid retaining a second CPU model or concurrent
 CPU-heavy data preparation. Register activation checkpointing or shorter contexts
 only if measured VRAM requires them. Existing E1 plans remain historical until
 rebound to qualified current source/runtime.
+
+## Scope matching the actual SFT inputs
+
+AMENDMENT_012 registers UNPADDED_SINGLE_SEQUENCE_CE_V1. Prepared E1 data require
+microbatch one, zero padding, all-one masks and completion-only labels. The
+new scope validates those boundaries, omits a redundant validated all-one mask
+for primary forwards and rejects cache, custom positions and packing metadata.
+Semantic data eligibility still requires actual row/token/label binding; IDs alone
+cannot prove a sequence is eligible.
+
+The scoped worker adds mandatory native 80-token unpadded causality (bitwise
+77-token prefix agreement after perturbing the last three tokens) and an actual
+explicit-all-one-mask comparison at the unchanged 0.03125/0.01 likelihood bounds.
+It retains EOS labels, causal CE, finite confined gradients, all three context
+profiles, five disposable calls, resume and unchanged-base checks. Padding,
+batched/cached inference, sampled-policy likelihood and evaluation capture remain
+unsupported or unqualified. The known full E0 padding failure remains preserved.
+
+Seventy-six current stdlib controls passed in 1.336 seconds, and non-author source
+review found no blocking source issue. The new native scope has not run. Its
+prospective scoped PASS cannot qualify full E0 or authorize E1; the scope-specific
+validator, current plan and preservation/collection gates remain outstanding.
+The standalone launcher now defaults to unpadded_ce. No new controller or model
+was launched after the expired window at unchanged inadequate headroom.
 
 ## Prepared science and milestone audit
 
@@ -141,7 +168,7 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Failure modes | Padded likelihood and later headroom drop | Recorded | No tolerance or guard auto-relaxation |
 | Interpretation | 7.4 GiB was inherited reserve, not model demand | Source audit | Training fit still needs proof |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Standalone bounded backward/resume and padding diagnostic | Registered | Actual RAM admission |
+| Next experiment | Standalone unpadded CE qualification; padding diagnosis remains separate | Registered | Actual RAM admission |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
 
 The original capability/retention research objective remains incomplete. Current

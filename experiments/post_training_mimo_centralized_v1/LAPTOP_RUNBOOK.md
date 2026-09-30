@@ -23,7 +23,7 @@ Closing the desktop app can reduce its observed roughly 2 GiB working set, but
 working-set totals are not guaranteed reclaimable RAM; the controller measures
 actual available memory. The trial does not need the chat UI to remain open.
 
-The default is the separately scoped backward_resume stage. It waits up to ten
+The default is the AMENDMENT_012 unpadded_ce stage, matching the prepared single-sequence CE inputs. It waits up to ten
 minutes for headroom, then launches one process-contained trial with a 30-minute
 worker ceiling. It stops on memory, GPU, time, source, numerical or resume failure.
 There is no automatic model retry, guard increase or E1 launch. Waiting time and
@@ -42,6 +42,7 @@ local and disposable; the published Titan checkpoint is never overwritten.
 |---|---|---|
 | load_forward | 600 s; zero updates/generation | Exact GPU load and one finite 256-token forward |
 | full | 1800 s; at most five disposable updates | Every original E0 numerical/resource check; currently stops on padded likelihood |
+| unpadded_ce | 1800 s; at most five disposable updates | Unpadded causality, real all-one-mask equivalence, CE, gradients and resume; no full E0 or E1 grant |
 | backward_resume | 1800 s; at most five disposable updates | 256/512/1024 backward fit, confined gradients, save/resume and frozen-base identity; padding/sampler unresolved |
 
 Native adapter training fit and resume remain unmeasured until the last phase runs.
@@ -54,3 +55,9 @@ microbatches, rank-8 q/v adapters and adapter-only checkpoints. Perform evaluati
 and token decoding sequentially rather than keeping a CPU reference model or
 extra tokenizer/evaluation process resident during training. Use separate registered
 successor plans; preserve all historical resource-policy receipts.
+
+The first corrected detached controller exhausted its ten-minute window without
+starting a native supervisor: 256 observations remained below 1 GiB. Its PID is
+terminal. The current scope is CPU-tested and source-reviewed, not natively passed.
+Use the new default after actual host headroom changes; there is no automatic
+same-state model retry.
