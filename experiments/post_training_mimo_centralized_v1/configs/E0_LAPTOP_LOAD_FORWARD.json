@@ -15,12 +15,10 @@
     "vocab.json": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
   },
   "contexts": [
-    256,
-    512,
-    1024
+    256
   ],
-  "parity_prompts": 32,
-  "generation_cap": 32,
+  "parity_prompts": 0,
+  "generation_cap": 0,
   "eos_ids": [
     151645,
     151643
@@ -40,7 +38,7 @@
   "gpu_worker_free_gib": 0.5,
   "disk_free_gib": 4.0,
   "wall_seconds": 600,
-  "maximum_optimizer_calls": 5,
+  "maximum_optimizer_calls": 0,
   "update_semantics": "one disposable update per context restored to initialization; last-context second step evaluated twice for deterministic resume",
   "historical_fp32_parity_claim": false,
   "resource_profile": "LAPTOP_GPU_RESIDENT_V1",

@@ -50,7 +50,8 @@ overshoot. Stop and preserve failures if any measured limit is violated.
 
 First run a <=600 s exact-load resource pilot, with one 256-token frozen no-cache
 forward retaining only the last vocabulary logits. Zero adapters, optimizer calls
-and generated tokens. Verify exact checkpoint/assets, every copied tensor, tying,
+and generated tokens; config caps for optimizer, generation and parity loops are
+explicitly zero, with only the 256-token probe context. Verify exact checkpoint/assets, every copied tensor, tying,
 tokenizer and finite logits. A distinct resource-only PASS cannot qualify E1.
 
 If that pilot fits, run the <=1800 s full original E0 workload under the same laptop
