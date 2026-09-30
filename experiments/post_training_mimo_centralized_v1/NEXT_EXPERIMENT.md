@@ -61,11 +61,26 @@ fit remain unmeasured. E1 launch flags remain false; CHECK/FINAL remain closed.
 The original one-Titan verified capability/retention objective is still open.
 
 
-AMENDMENT_020 now implements the internal injected-Torch backend and versioned
-engine publication path. Thirty-five fake/synthetic CPU controls pass; these do
-not establish physical math/resource/resume qualification. Next connect an owned,
-separately registered mechanical GPU qualifier using the exact verified loader,
-real20-sequence accumulation, adapter-only durablepublication, sameprocessrestore,
-primitive/outercost witnesses and frozen-base integrity. Do not launch E1 from
-these helpers or merely a supplied approval/status. Resource headroom and all
-original capture/language/longcontext/currentlaunch gates remain necessary.
+AMENDMENT_020 implements the internal injected-Torch backend and versioned
+engine publication path. Its 35 fake/synthetic CPU controls do not establish
+physical math, resource fit or resume qualification. AMENDMENT_021 now registers
+an owned two-update mechanics worker over the first 40 actual seed-101 TRAIN
+rows. The independent prefix audit verified 5,248 input and 463 supervised
+positions, unequal completion lengths and all source/label bindings at about
+51.23 MiB of process RAM. This data audit ran no framework or model.
+
+The next GPU milestone is that bounded native backend qualification: exact
+streamed Titan loading, zero-adapter parity, two groups of 20 backward calls,
+independent reference gradients, adapter-only publication, state-1 restoration
+checked against an earlier independent snapshot, and copied-gradient clipping/
+Adam continuation. Including reference and parity passes, the registered maximum
+is 62 forwards, 8,326 input and 736 supervised forward positions. Restoration
+happens before any step-2 accumulation. It clears gradients once, in addition
+to the two training resets; every actual primitive must remain counted.
+
+Launch only from a clean committed checkout when the full 3.3125 GiB pre-worker
+budget is available, retaining the 2 GiB worker cap and 1.25 GiB system reserve.
+Current readings below that budget do not justify an unchanged model retry.
+This disposable mechanics result cannot qualify E1, select a production
+checkpoint or demonstrate acquisition/retention. Capture, language, long-context
+and sustained-training prerequisites remain necessary for the full objective.

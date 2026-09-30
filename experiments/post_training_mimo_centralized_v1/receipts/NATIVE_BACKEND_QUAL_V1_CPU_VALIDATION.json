@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "status": "PASS_17_OWNED_QUALIFIER_CPU_CONTROLS_ONLY",
+  "command": [
+    "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+    "-B",
+    "-m",
+    "unittest",
+    "-v",
+    "experiments.post_training_mimo_centralized_v1.tests.test_qualify_native_backend"
+  ],
+  "exit_code": 0,
+  "tests": 17,
+  "reported_test_seconds": 0.016,
+  "measured_process_seconds": 0.2778301999933319,
+  "source_pins": {
+    "scripts/qualify_native_backend.py": {
+      "sha256": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a",
+      "bytes": 41487
+    },
+    "tests/test_qualify_native_backend.py": {
+      "sha256": "7fe8f421e1d183907b06c831e510f970369258da5a3902f67955207c6790051a",
+      "bytes": 12172
+    },
+    "configs/NATIVE_BACKEND_QUALIFICATION_V1.json": {
+      "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae",
+      "bytes": 36949
+    }
+  },
+  "author_reported_prior_final_runs_seconds": [
+    0.015,
+    0.016
+  ],
+  "author_prior_streams_available": false,
+  "root_final_streams": {
+    "stdout": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\receipts\\native_backend_qual_v1_cpu\\stdout.log",
+    "stderr": "C:\\Users\\clclc\\BusinessProject\\ChatBubble-post-training-Mimo\\experiments\\post_training_mimo_centralized_v1\\receipts\\native_backend_qual_v1_cpu\\stderr.log"
+  },
+  "framework_imports": 0,
+  "model_calls": 0,
+  "optimizer_steps": 0,
+  "native_math_qualified": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

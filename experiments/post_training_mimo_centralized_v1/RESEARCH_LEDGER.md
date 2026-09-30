@@ -649,3 +649,39 @@ Freshresource observations atturnstart were1.32 GiB available, later1.38, withno
 Backendsource validatesexact310BF16base/112FP32adapter inventories andbasehashes/tie, keepsq/v/eager/eval/cacheoff CE512 math, exactAdamWdefaults andequal-sequence1/20 accumulation. It savesonlybounded adapter/optimizer/Python+TorchCPU+CUDA0RNG artifacts andreturnsreferences. Sameprocessrestore requiresdurablypublishedmanifest anddeserializes theSAME verifiedboundedBytesIO, validatingphysicalschema beforeGPUcopies. PublicationtypedV2cursor/POSTsave costs mustbe durablebefore exposingboundary; explicitplannedcomponent replacesrowIDguessing.
 
 SeparateimmediateTorchprimitive counters preserve actualreturnedwork iflaterbackendmodule checksorjournalpublication fail. Constructorfactory retainsdetached primitive costs ontheORIGINAL raisedexception; futureownedworker mustusecreate andpublishtwo scopeledgers. Costsarenotreset byrestore. Crossprocessreconstruction/rollbackremainunsupported andunqualified. Rootsource review foundandfixed unboundedartifact/manifest reads, componentguessing,envelopekind andconstructorfailurevisibility gaps beforeregistration. Initial8fakecontrols5pass/3fixtureerrors are recordedseparately, withoutinventingmissingrawstreams. InitialV2discovery included14importedlegacytests, not21newtests; fixedimports andadded routing/primitivecontrols. Final35combinedcontrols(21backendfake+14V2synthetic) passed5.629seconds, process5.9181814seconds, withpreservedstreams. No actualframework/model/GPU/update/generation/teacher workoccurred. Sourcecommittedc4b67c72; nativephysics,ownedworker,currentlaunchvalidators,capture/language/longcontext/sustainedfit remainpending, allgrantsfalse/fullobjectiveopen.
+
+
+## 2026-09-30: owned two-update backend qualifier prepared
+
+The preceding goal turn was a status check, not experimental progress. This turn
+registered AMENDMENT_021 and built an owned, bounded native mechanics worker for
+the exact Titan and first 40 frozen seed-101 TRAIN rows. Independent actual-data
+binding passed all selected source/input/label checks: 5,248 inputs, 463 targets,
+15 distinct completion lengths, 2.032 seconds and 53,714,944-byte process high-water.
+An initial audit code assumption about a stored label digest failed; the corrected
+audit hashes the actual labels independently. No framework or model was imported.
+
+The worker uses the qualified streamed CUDA loader, reader, backend and owned
+Windows watchdog. It checks two real 20-sequence accumulations, reference gradients,
+zero-adapter parity and adapter-only publication/restoration. Deliberate adapter,
+moment and three-RNG faults must be repaired against an independent pre-save
+snapshot; both updates must change adapters. Restore precedes reference/step-2
+work. Reference passes must preserve parameters, moments, RNG and live gradients.
+Native, reference, loader/parity and fault costs are distinct; restoration's extra
+reset remains counted. Prospective dose is 62 forwards, 8,326 inputs and 736
+supervised forward positions. No E1 or evaluation-bank grant follows.
+
+Independent review corrected the inherited global no-grad description, late RNG
+shape capture, a missing reference-gradient mutation witness, nontrivial restore
+and update witnesses, diagnostic preservation and stale post-journal admission.
+Initial registration bytes are preserved; numerical/resource/fixture limits stayed
+unchanged. The final 17 CPU controls passed in 0.016 seconds (process 0.2778302
+seconds), with raw stdout/stderr saved. Source review passed at the recorded worker,
+test and config hashes. These checks cannot prove actual Torch/CUDA physics.
+
+Available RAM rose from about 0.80-1.08 to 2.87-2.97 GiB, then 3.265 GiB, without
+intervention; GPU free was 6,980 MiB. This is a genuine resource-state change, so a
+bounded owned admission attempt is justified after source commit. Keep 3.3125 GiB
+pre-worker admission, 2 GiB worker RSS, 1.25 GiB reserve and all other original
+guards. Physical result, acquisition and retention remain unmeasured. The full
+one-Titan capability/retention objective remains open and current best unchanged.

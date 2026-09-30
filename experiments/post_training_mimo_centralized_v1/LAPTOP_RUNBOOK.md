@@ -69,3 +69,19 @@ observations and a strictfresh preload check. The maximum wait is60seconds with
 2-second polls. Timeout or source/runtime-floor failure stops without model retry.
 The prior admitted worker failed before any model call; the successor's first
 preworker window remained below3.3125 GiB. It is not native-qualified or E1-authorized.
+
+AMENDMENT_021 separately registers the native backend's two-update mechanics
+qualification. Its worker is source only until the physical result passes. Use
+the pinned Python executable and exact registration from a clean committed tree:
+
+```powershell
+& 'C:\Users\clclc\BusinessProject\.venv-mq001\Scripts\python.exe' -B -m experiments.post_training_mimo_centralized_v1.scripts.qualify_native_backend --config experiments/post_training_mimo_centralized_v1/configs/NATIVE_BACKEND_QUALIFICATION_V1.json --supervise
+```
+
+The owned output is write-once under the registration's `approved_run_relative`.
+The controller requires two full-budget pre-worker observations; the contained
+worker then uses the bounded post-import wait and a fresh pre-load check. Keep
+the source tree unchanged during a live run. No native retry is implied by a
+timeout, and no full experiment or evaluation-bank access follows from this
+small mechanics test. Its reference passes and restore reset are counted
+separately from the 40-row native training cursor.

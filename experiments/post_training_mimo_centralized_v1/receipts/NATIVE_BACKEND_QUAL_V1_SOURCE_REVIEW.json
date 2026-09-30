@@ -1,0 +1,41 @@
+{
+  "schema_version": 1,
+  "status": "PASS_INDEPENDENT_SOURCE_REVIEW_ONLY_PHYSICAL_UNPROVEN",
+  "author": "/root/e1_bound_reader",
+  "reviewers": [
+    "/root",
+    "/root/laptop_gates_review"
+  ],
+  "source_pins": {
+    "scripts/qualify_native_backend.py": {
+      "sha256": "f775b9df35a498886fc37b5a6d84076f82eea61f92b758afc6421dcd6b41809a",
+      "bytes": 41487
+    },
+    "tests/test_qualify_native_backend.py": {
+      "sha256": "7fe8f421e1d183907b06c831e510f970369258da5a3902f67955207c6790051a",
+      "bytes": 12172
+    },
+    "configs/NATIVE_BACKEND_QUALIFICATION_V1.json": {
+      "sha256": "5c48a50b32cb8824d0c01a164b69375c1244a53ea60838abe466b45d882735ae",
+      "bytes": 36949
+    }
+  },
+  "checks": [
+    "Exact loader/runtime/source/actual40TRAIN prefix binding",
+    "Independent pre-save state1 snapshots and nontrivial adapter/moment/three-RNG fault repair",
+    "Restore before reference/native step2 and reference gradients preserve live .grad/state/RNG",
+    "Both native updates change adapters and reference/native accumulated gradients are nonzero",
+    "Independent NLL/gradient comparisons; copied-gradient clip/Adam continuation",
+    "All method/primitive/reference/loader/fault scopes and attempted/returned position costs retained",
+    "Post-journal admission deadlines and fresh full-budget launch/preload guards",
+    "External owned Windows Job watchdog; immutable base/assets; no E1/bank grant"
+  ],
+  "resource_limits_unchanged": true,
+  "numerical_limits_unchanged": true,
+  "framework_imports": 0,
+  "model_calls": 0,
+  "native_math_qualified": false,
+  "native_resume_qualified": false,
+  "E1_authorized": false,
+  "CHECK_FINAL_access": false
+}

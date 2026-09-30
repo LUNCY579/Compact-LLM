@@ -432,6 +432,41 @@ frozen-base integrity and sustained resource measurement remain required. Curren
 host readings were1.32-1.38 GiB with no Python workers,so no model retry was made.
 Every scientific/native launch flag remains false; the full objective is open.
 
+## Bounded backend qualification: registered, physically unproven
+
+AMENDMENT_021 registers one disposable two-update native backend test. It uses
+the first 40 actual TRAIN rows from the unchanged seed-101 schedule as mechanics
+fixtures, without reading DEV, CHECK or FINAL. An independent actual-data audit
+verified every selected source/input/label binding: 5,248 input positions and
+463 supervised positions, with 15 distinct completion lengths. It took 2.032
+seconds and peaked at 53,714,944 bytes (51.23 MiB) of process RAM. It imported no
+framework and performed no model call or optimizer update. An initial audit code
+assumption about a stored label digest failed; the corrected audit independently
+hashes the actual label array. Both observations are retained.
+
+The worker reuses the qualified streamed CUDA loader, native backend, TRAIN
+reader, post-import wait and Windows watchdog. It checks zero-adapter parity,
+two 20-sequence accumulations, independent gradients, adapter-only publication,
+restoration against an earlier independent snapshot and copied-gradient Adam
+continuation. The frozen base stays on GPU. Cross-process recovery, sustained
+throughput and capability gains remain unproven.
+
+Including reference and parity passes, the prospective maximum is 62 model
+forwards, 8,326 input positions and 736 supervised forward positions. Two native
+updates and one reference update are counted separately. Restoration contributes
+one actual reset in addition to the two training resets. CPU source controls
+cannot substitute for these physical measurements. Review corrected the copied
+global no-grad descriptor and requires RNG shapes to be frozen before model work
+and live gradients to remain unchanged during reference passes.
+
+No physical result exists yet. Available RAM rose from 0.80-1.08 to 2.87-2.97 GiB,
+still below the unchanged 3.3125 GiB pre-worker budget; GPU free memory was
+6,980 MiB. Keep worker RSS at most 2 GiB and the 1.25 GiB system
+reserve. The next milestone is this bounded qualification when admitted, while
+the capture numerical failure, calibrated language grading, long-context baseline
+and sustained E1 prerequisites remain open. Best remains unchanged Titan and
+verified acquisition/retention gain remains unmeasured.
+
 ## Prepared science and milestone audit
 
 Preparation remains available: 4096 acquisition TRAIN parents, 768 deterministic
@@ -463,5 +498,5 @@ retained in their existing receipts and ledgers. CHECK/FINAL remain closed.
 | Failure modes | Padding, 1024 VRAM, capture NLL, stale failure counter | Recorded | Correct final accounting and diagnosis |
 | Interpretation | Old reserve overstated this route; capture gap is upstream | Measured scope | Sustained fit and numerical mechanism still open |
 | Ruled out | Admission failures alone prove Titan needs 7.4 GiB free | Invalid inference | No efficacy conclusion |
-| Next experiment | Same four causal forwards with bounded post-import wait | Source/CPU ready; RAM wait | Preserve failed bulk test and limits |
+| Next experiment | Registered 40-row/two-update backend qualification | Physically unproven; RAM gate | Capture and preservation prerequisites remain open |
 | Heavy compute justified | Bounded qualification | Conditional | E1 waits for scientific gates |
