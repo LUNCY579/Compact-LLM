@@ -339,7 +339,7 @@ def run(args):
     validate_config(cfg)
     laptop = laptop_profile.metadata_present(cfg)
     streamed = laptop and cfg.get("loader_mode") == laptop_profile.STREAMED_LOADER_MODE
-    unpadded_ce = streamed and cfg["qualification_stage"] == "unpadded_ce"
+    unpadded_ce = streamed and cfg["qualification_stage"] in ("unpadded_ce", "unpadded_ce512")
     if streamed:
         from experiments.post_training_mimo_centralized_v1.scripts import stream_checkpoint
     require(json.loads(args.go_path.read_text())["config_sha256"] == sha(config_path), "GO config mismatch")
@@ -506,7 +506,7 @@ def run(args):
         def forward(ids, stage, training=False, **kwargs):
             # numel reads shape metadata and includes actual left/right padding.
             if unpadded_ce:
-                validated = laptop_profile.prepare_unpadded_forward(ids, kwargs)
+                validated = laptop_profile.prepare_unpadded_forward(ids, kwargs, runtime_scope=cfg["runtime_scope"])
                 if stage == "unpad_allones_mask":
                     require(tuple(ids.shape) == (1,80) and training is False, "all-ones diagnostic requires its fixed frozen 80-token fixture")
                     require(kwargs.get("attention_mask") is not None, "all-ones diagnostic mask missing")
@@ -776,10 +776,11 @@ def run(args):
         result["checks"]["frozen_base_unchanged"] = True
         result["checks"]["finite_scoped_backward"] = True
         if unpadded_ce:
-            result["status"] = laptop_profile.UNPADDED_PASS_STATUS
+            result["status"] = (laptop_profile.UNPADDED512_PASS_STATUS if cfg["qualification_stage"] == "unpadded_ce512"
+                                else laptop_profile.UNPADDED_PASS_STATUS)
             result["unqualified"] = ["padding", "packing", "batched inference", "KV-cache sampler",
                                      "sampled online/offline likelihood", "evaluation capture", "preservation",
-                                     "E1 data/replay", "held-out capability", "long context beyond1024"]
+                                     "E1 data/replay", "held-out capability", f"long context beyond{cfg['contexts'][-1]}"]
         elif backward_resume_only:
             result["status"] = laptop_profile.BACKWARD_PASS_STATUS
             result["unqualified"] = ["native padding/causality", "sampled likelihood", "KV-cache sampler",

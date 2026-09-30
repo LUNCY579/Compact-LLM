@@ -243,6 +243,80 @@ class LaptopProfileTests(unittest.TestCase):
             self.assertIs(original["attention_mask"], mask)
         self.assertEqual(laptop_profile.prepare_unpadded_forward(ids, {"use_cache": False}), {"use_cache": False})
 
+    def test_ce512_registration_is_exact_and_preserves_historical_config_bytes(self):
+        cfg = laptop_profile.expected_config("unpadded_ce512", profile=laptop_profile.STREAMED_PROFILE)
+        qualify_native.validate_config(cfg)
+        self.assertEqual(cfg["contexts"], [256, 512])
+        self.assertEqual(cfg["parity_prompts"], 32)
+        self.assertEqual(cfg["maximum_optimizer_calls"], 4)
+        self.assertEqual(cfg["generation_cap"], 0)
+        self.assertEqual(cfg["wall_seconds"], 1800)
+        self.assertEqual(cfg["runtime_scope"], "UNPADDED_SINGLE_SEQUENCE_CE512_V1")
+        self.assertEqual(laptop_profile.UNPADDED512_PASS_STATUS, "PASS_E0_UNPADDED_CE512_SCOPED")
+        self.assertNotEqual(laptop_profile.UNPADDED512_PASS_STATUS, laptop_profile.UNPADDED_PASS_STATUS)
+        path = Path(__file__).resolve().parents[1] / "configs/E0_LAPTOP_STREAM_UNPADDED_CE512.json"
+        self.assertEqual(json.loads(path.read_bytes()), cfg)
+        self.assertEqual(hashlib.sha256(path.read_bytes()).hexdigest(), "42a32cfa2fe4dc1250a288bacec2a60d150c5498d8dced9bba23b0c5037f5929")
+        historical = path.with_name("E0_LAPTOP_STREAM_UNPADDED_CE.json")
+        self.assertEqual(hashlib.sha256(historical.read_bytes()).hexdigest(), "94797dfa80a17cba8e59559854a45f48a0b48a3c5ff901000d6c79b467fe3772")
+        with self.assertRaises(RuntimeError):
+            laptop_profile.expected_config("unpadded_ce512")
+        for field, value in (("contexts", [256, 512, 1024]), ("contexts", [256, 512.0]),
+                             ("maximum_optimizer_calls", 5), ("runtime_scope", laptop_profile.UNPADDED_SCOPE),
+                             ("generation_cap", 1), ("qualification_stage", "unpadded_ce"),
+                             ("resource_profile", laptop_profile.RESOURCE_PROFILE), ("gpu_worker_free_gib", .1)):
+            with self.subTest(field=field), self.assertRaises(RuntimeError):
+                qualify_native.validate_config({**cfg, field: value})
+
+    def test_ce512_forward_boundary_and_unsupported_options_fail_closed(self):
+        scope = laptop_profile.UNPADDED512_SCOPE
+        kwargs = {"use_cache": False, "attention_mask": FakeData((1, 512), [1] * 512)}
+        self.assertEqual(laptop_profile.prepare_unpadded_forward(FakeData((1, 512)), kwargs, runtime_scope=scope),
+                         {"use_cache": False})
+        for length in (513, 1024):
+            for overrides in ({}, {"max_tokens": 1024}, {"runtime_scope_bypass": True},
+                              {"packing": True}, {"use_cache": True}):
+                with self.subTest(length=length, overrides=overrides), self.assertRaises(RuntimeError):
+                    laptop_profile.prepare_unpadded_forward(FakeData((1, length)), {"use_cache": False, **overrides}, runtime_scope=scope)
+        for overrides in ({"packing": True}, {"use_cache": True}, {"position_ids": FakeData((1, 512))},
+                          {"attention_mask": FakeData((1, 512), [1] * 511 + [0])}):
+            with self.subTest(unsupported=overrides), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(FakeData((1, 512)), {"use_cache": False, **overrides}, runtime_scope=scope)
+        for invalid in ("unknown", None, True, 512):
+            with self.subTest(scope=invalid), self.assertRaises(RuntimeError):
+                laptop_profile.prepare_unpadded_forward(FakeData((1, 80)), {"use_cache": False}, runtime_scope=invalid)
+        # The historical 1024 scope is unchanged and remains a different operation.
+        self.assertEqual(laptop_profile.prepare_unpadded_forward(FakeData((1, 1024)), {"use_cache": False}), {"use_cache": False})
+
+    def test_ce512_budget_stops_before_a_fifth_optimizer_invocation(self):
+        cfg = laptop_profile.expected_config("unpadded_ce512", profile=laptop_profile.STREAMED_PROFILE)
+        calls = []
+        journal = qualify_native.CallAccounting(lambda *args, **kwargs: None, cfg["maximum_optimizer_calls"])
+        for index in range(4):
+            journal.call("optimizer_step", lambda: calls.append("returned"), stage=str(index))
+        with self.assertRaisesRegex(RuntimeError, "OPTIMIZER_CALL_BUDGET"):
+            journal.call("optimizer_step", lambda: calls.append("extra"), stage="forbidden")
+        self.assertEqual(calls, ["returned"] * 4)
+        self.assertEqual(journal.snapshot()["operations"]["optimizer_step"]["attempted"], 4)
+
+    def test_ce512_accounting_is_derived_from_registered_actual_loop_structure(self):
+        cfg = laptop_profile.expected_config("unpadded_ce512", profile=laptop_profile.STREAMED_PROFILE)
+        # The source loops submit two 32-case parity rounds, three 80-token
+        # diagnostics, one training call per context and two last-context resumes.
+        contexts = cfg["contexts"]
+        parity_positions = sum(contexts[index % len(contexts)] for index in range(cfg["parity_prompts"]))
+        training_positions = sum(contexts) + 2 * contexts[-1]
+        forwards = 2 * cfg["parity_prompts"] + 3 + len(contexts) + 2
+        optimizer_calls = len(contexts) + 2
+        operations = 1 + 1 + 310 + forwards + optimizer_calls * 2 + 1 + 1
+        resources = 2 + 2 * cfg["parity_prompts"] + 2 + 3 * len(contexts) + 1
+        self.assertEqual((forwards, optimizer_calls, operations), (71, 4, 393))
+        self.assertEqual((2 * parity_positions + 240 + training_positions, training_positions), (26608, 1792))
+        self.assertEqual((resources, len(contexts), 2 + 2 * operations + resources + len(contexts)), (75, 2, 865))
+        tree = ast.parse(Path(qualify_native.__file__).read_text(encoding="utf-8"))
+        self.assertFalse(any(isinstance(node, ast.Call) and isinstance(node.func, ast.Attribute)
+                             and node.func.attr in ("train", "gradient_checkpointing_enable") for node in ast.walk(tree)))
+
     def test_unpadded_forward_rejects_batches_zero_masks_packing_and_cache(self):
         for shape in ((2, 80), (80,), (1, 80, 1), (0, 80), (True, 80), (1, 0), (1, 1025)):
             with self.subTest(shape=shape), self.assertRaises(RuntimeError):
@@ -271,6 +345,8 @@ class LaptopProfileTests(unittest.TestCase):
         self.assertIsInstance(guard, ast.If)
         self.assertEqual(ast.unparse(guard.test), "unpadded_ce")
         self.assertEqual(ast.unparse(guard.body[0].value.func), "laptop_profile.prepare_unpadded_forward")
+        self.assertEqual({keyword.arg: ast.unparse(keyword.value) for keyword in guard.body[0].value.keywords},
+                         {"runtime_scope": "cfg['runtime_scope']"})
         diagnostic = guard.body[1]
         self.assertEqual(ast.unparse(diagnostic.test), "stage == 'unpad_allones_mask'")
         self.assertEqual(ast.unparse(diagnostic.body[0].value.func), "require")
@@ -307,7 +383,8 @@ class LaptopProfileTests(unittest.TestCase):
         # Replace every external query and the watchdog: this launches no worker.
         profiles = (laptop_profile.RESOURCE_PROFILE, laptop_profile.STREAMED_PROFILE)
         stages = ("load_forward", "full", "backward_resume")
-        registrations = [(None, None)] + list(product(profiles, stages)) + [(laptop_profile.STREAMED_PROFILE, "unpadded_ce")]
+        registrations = [(None, None)] + list(product(profiles, stages)) + [(laptop_profile.STREAMED_PROFILE, "unpadded_ce"),
+                                                                        (laptop_profile.STREAMED_PROFILE, "unpadded_ce512")]
         for profile, stage in registrations:
             with self.subTest(profile=profile, stage=stage), tempfile.TemporaryDirectory() as directory:
                 base = Path(directory)

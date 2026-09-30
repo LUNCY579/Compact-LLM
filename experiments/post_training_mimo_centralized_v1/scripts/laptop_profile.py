@@ -21,6 +21,8 @@ PROBE_PASS_STATUS = "PASS_E0_LOAD_FORWARD_RESOURCE_ONLY"
 BACKWARD_PASS_STATUS = "PASS_E0_BACKWARD_RESUME_RESOURCE_ONLY"
 UNPADDED_PASS_STATUS = "PASS_E0_UNPADDED_CE_SCOPED"
 UNPADDED_SCOPE = "UNPADDED_SINGLE_SEQUENCE_CE_V1"
+UNPADDED512_PASS_STATUS = "PASS_E0_UNPADDED_CE512_SCOPED"
+UNPADDED512_SCOPE = "UNPADDED_SINGLE_SEQUENCE_CE512_V1"
 FULL_PASS_STATUS = "PASS_E0_SCOPED_NO_EFFICACY_CLAIM"
 LEGACY_CONFIG_SHA256 = "8fcab3ce006c9a698af86975769a4076edc78cf8005f64ad823d9d47bcbe518d"
 LEGACY_CONFIG_PATH = Path(__file__).resolve().parents[1] / "configs/E0_TITAN_BF16.json"
@@ -39,9 +41,9 @@ def metadata_present(cfg):
 
 def expected_config(stage, profile=RESOURCE_PROFILE):
     """Derive a complete registration from byte-pinned immutable historical E0."""
-    _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume", "unpadded_ce"), "unregistered laptop qualification stage")
+    _require(type(stage) is str and stage in ("load_forward", "full", "backward_resume", "unpadded_ce", "unpadded_ce512"), "unregistered laptop qualification stage")
     _require(type(profile) is str and profile in (RESOURCE_PROFILE, STREAMED_PROFILE), "unregistered laptop resource profile")
-    _require(stage != "unpadded_ce" or profile == STREAMED_PROFILE, "unpadded CE requires streamed profile")
+    _require(stage not in ("unpadded_ce", "unpadded_ce512") or profile == STREAMED_PROFILE, "unpadded CE requires streamed profile")
     raw = LEGACY_CONFIG_PATH.read_bytes()
     _require(hashlib.sha256(raw).hexdigest() == LEGACY_CONFIG_SHA256, "historical E0 config drift")
     cfg = deepcopy(json.loads(raw))
@@ -60,6 +62,9 @@ def expected_config(stage, profile=RESOURCE_PROFILE):
     elif stage == "unpadded_ce":
         cfg.update(generation_cap=0, runtime_scope=UNPADDED_SCOPE,
                    update_semantics="single-sequence unpadded completion CE qualification; padding, packing, batched inference and sampled-policy likelihood remain unsupported")
+    elif stage == "unpadded_ce512":
+        cfg.update(generation_cap=0, runtime_scope=UNPADDED512_SCOPE, contexts=[256, 512], maximum_optimizer_calls=4,
+                   update_semantics="single-sequence unpadded completion CE qualification through 512 tokens; padding, packing, batched inference and sampled-policy likelihood remain unsupported")
     return cfg
 
 
@@ -89,15 +94,17 @@ def resource_limits(cfg):
                                        "admission_budget")}
 
 
-def prepare_unpadded_forward(ids, kwargs):
+def prepare_unpadded_forward(ids, kwargs, *, runtime_scope=UNPADDED_SCOPE):
     """Validate one unpadded sequence and omit its redundant all-ones mask.
 
     No packed/custom-position/cache path is supported. The qualification worker
     has one fixed diagnostic that restores an already validated all-ones mask.
     """
+    _require(type(runtime_scope) is str and runtime_scope in (UNPADDED_SCOPE, UNPADDED512_SCOPE), "unregistered unpadded forward scope")
+    maximum = 512 if runtime_scope == UNPADDED512_SCOPE else 1024
     shape = tuple(ids.shape)
-    _require(len(shape) == 2 and type(shape[0]) is int and shape[0] == 1 and type(shape[1]) is int and 0 < shape[1] <= 1024,
-             "UNPADDED_SCOPE requires one 2D sequence of at most 1024 tokens")
+    _require(len(shape) == 2 and type(shape[0]) is int and shape[0] == 1 and type(shape[1]) is int and 0 < shape[1] <= maximum,
+             "UNPADDED_SCOPE requires one 2D sequence of at most " + str(maximum) + " tokens")
     _require(type(kwargs) is dict and set(kwargs) <= {"use_cache", "logits_to_keep", "attention_mask"},
              "UNPADDED_SCOPE does not support packing, custom positions or extra forward options")
     _require(kwargs.get("use_cache") is False, "UNPADDED_SCOPE requires use_cache=False")

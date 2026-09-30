@@ -1,7 +1,7 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('load_forward','full','backward_resume','unpadded_ce')]
-    [string]$Stage = 'unpadded_ce',
+    [ValidateSet('load_forward','full','backward_resume','unpadded_ce','unpadded_ce512')]
+    [string]$Stage = 'unpadded_ce512',
     [ValidateRange(0,600)]
     [int]$WaitSeconds = 600,
     [ValidatePattern('^[A-Za-z0-9_-]{0,48}$')]
@@ -16,6 +16,7 @@ $taskNames = @{
     full = 'E0_LAPTOP_STREAM_FULL.json'
     backward_resume = 'E0_LAPTOP_STREAM_BACKWARD_RESUME.json'
     unpadded_ce = 'E0_LAPTOP_STREAM_UNPADDED_CE.json'
+    unpadded_ce512 = 'E0_LAPTOP_STREAM_UNPADDED_CE512.json'
 }
 $taskConfig = Join-Path $taskRoot ('experiments\post_training_mimo_centralized_v1\configs\' + $taskNames[$Stage])
 $taskArtifactRoot = Join-Path $taskRoot 'artifacts\mimo_central'
