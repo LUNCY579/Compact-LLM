@@ -117,6 +117,35 @@
       "language_grading_qualified": false,
       "dev_input_scorer_binding": "manifests/DEV_INPUT_SCORER_BINDING.json",
       "dev_binding_scope": "Static data/pure deterministic scorers only; no native capture, full run manifest or language grading"
+    },
+    {
+      "id": "LAPTOP_RESOURCE_QUALIFICATION",
+      "registration": [
+        "AMENDMENT_009.md",
+        "AMENDMENT_010.md",
+        "AMENDMENT_011.md"
+      ],
+      "status": "EXACT_LOAD_ZERO_ADAPTER_PARITY_MEASURED_BACKWARD_PENDING_PADDING_FAIL",
+      "native_pretrained_loads": 2,
+      "native_optimizer_steps": 0,
+      "native_generated_tokens": 0,
+      "load_peak_RSS_GiB": 1.9278907775878906,
+      "full_peak_RSS_GiB": 1.9510383605957031,
+      "peak_CUDA_allocated_GiB": 1.400038242340088,
+      "current_profile": "LAPTOP_STREAMED_V1",
+      "system_reserve_GiB": 1.25,
+      "worker_RSS_ceiling_GiB": 1.75,
+      "loader_buffer_bytes": 2097152,
+      "streamed_GPU_loader_qualified": false,
+      "backward_resume_qualified": false,
+      "full_E0_qualified": false,
+      "E1_authorized": false,
+      "headless_launcher": "scripts/run_laptop_trial.ps1",
+      "native_result_index": [
+        "receipts/LAPTOP_NATIVE_STAGE_001_RESULTS.json",
+        "receipts/LAPTOP_NATIVE_STAGE_002_RESULTS.json",
+        "receipts/LAPTOP_NATIVE_STAGE_003_RESULTS.json"
+      ]
     }
   ],
   "later_tracks": {
@@ -131,5 +160,8 @@
     "E6": "actual MiMo sandbox transfer",
     "SIDE": "architecture / inference separate; all need new full registration"
   },
-  "cycle_status": "BLOCKED_AFTER_THREE_RESUMED_TURNS_PENDING_HOST_RESOURCES"
+  "cycle_status": "USER_AUTHORIZED_LAPTOP_REPLAN_PARTIAL_NATIVE_LOAD_MEASURED",
+  "operational_successor": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
+  "experimental_scope": "Original one-Titan capability/retention objective retained; RAM workflow amended by user",
+  "latest_available_RAM_GiB": 1.0372657775878906
 }

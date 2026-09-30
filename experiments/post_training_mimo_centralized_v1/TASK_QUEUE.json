@@ -76,10 +76,10 @@
       "ram_gib": 1.0,
       "gpu_gib": 4.0,
       "disk_gib": 4,
-      "artifact": "results/e0_titan_v4/E0_RESULT.json",
-      "blocker": "Third resumed turn OS-only RAM 7.794994354248047 GiB remains below the pre-v4 state of8.156063 GiB that failed after imports; no worker and no justified retry. Fresh three-turn blocked audit passed. Latest v4 preload was 7.378871917724609 GiB; v3/v4 remain two attempts in the first resumed turn. All eight accounting-v2 operation classes are zero; native qualification still absent; another retry needs meaningful resource change",
+      "artifact": "results/e0_laptop_full_v1/E0_RESULT.json",
+      "blocker": "Native exact load and32zero-adapter cases measured; padded likelihood failed. Full numerical/backward/resume qualification remains missing. Laptop successor route registered separately.",
       "status": "blocked",
-      "evidence_receipt": "results/e0_titan_v4/E0_RESULT.json",
+      "evidence_receipt": "results/e0_laptop_full_v1/E0_RESULT.json",
       "native_gate_receipt": "configs/E0_TITAN_BF16.json",
       "expected_information_value": "qualify prerequisite or discriminate next gate",
       "next_decision_impact": "Does exact Titan support scoped native mechanics?"
@@ -270,5 +270,8 @@
       "expected_information_value": "Prevent use of target-bearing token arrays as policy prompts; remove manual source/scorer wiring",
       "next_decision_impact": "832 actual DEV prompt inputs and separate evaluator semantics bound; native capture and language grading remain unqualified"
     }
-  ]
+  ],
+  "queue_scope": "Historical scheduler minima retained; current laptop phases use the separately registered headless runner",
+  "current_operational_plan": "manifests/LAPTOP_EXECUTION_PLAN_V2.json",
+  "current_operational_runner": "scripts/run_laptop_trial.ps1"
 }

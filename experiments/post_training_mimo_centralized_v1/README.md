@@ -5,26 +5,24 @@ Weight SHA256: `537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7
 See [RESEARCH_PROTOCOL](RESEARCH_PROTOCOL.md) and
 [PRIMARY_STUDENT_RECEIPT](receipts/PRIMARY_STUDENT_RECEIPT.json).
 
-Current state: exact static Titan identity measured; latest E0 v4 stopped at preload
-with 7.378871917724609 GiB host RAM available, below the unchanged 7.4 GiB admission
-floor. Its source was `62ad48e2ade0ec4b3023e2aef5736bc34c6022d1`; see
-[v4 result](results/e0_titan_v4/E0_RESULT.json). Accounting version 2 records zero
-attempts, returns, failures and pending calls for all eight operation classes.
-Native model loads, optimizer updates and generated tokens remain zero; efficacy
-is UNMEASURED. Independent DEV preparation and the subsequent
-accounting source-review/CPU-test work are complete, without a native qualification.
-No trained candidate or capability improvement is claimed. The original 344M draft is
-preserved under evidence/superseded_initial_draft and is out of primary scope.
+Current state (30 September 2026): exact GPU loading and a 256-token frozen
+forward succeeded, with an observed process-tree RAM peak of 1.928 GiB. A full
+attempt passed 32 bitwise zero-adapter comparisons before a padded-likelihood
+failure. Backward, updates, generation and capability effects remain unmeasured.
 
-Earlier [v3](results/e0_titan_v3/E0_RESULT.json) stopped at 6.936687469482422 GiB on
-source `5e5fe36ebc6c2725c61c4c4cf78d3f85344cba80`. OS-only available RAM improved
-from 7.649 GiB before v3 to 8.251 GiB, then 8.156 GiB before v4, justifying the
-new bounded attempt. Both attempts occurred in the same resumed goal turn:
-that first resumed turn contained two failed preload attempts. A subsequent OS-only
-check found 7.287 GiB before imports and no Python workers; the fresh blocked-turn
-count is now 3. The latest OS-only check is 7.795 GiB, below the pre-v4 state
-that failed admission. The full goal is blocked after the fresh three-turn audit.
-See receipts/RESUMPTION_003_BLOCKED_AUDIT.json.
+The user authorized a plan for this 16 GB laptop. AMENDMENT_009-011 introduce named
+bounded profiles. The smallest route uses a 2 MiB read buffer, a 1.75 GiB worker
+RSS cap and a 1.25 GiB system reserve. Its complete GPU path still needs qualification.
+See the [laptop runbook](LAPTOP_RUNBOOK.md) and
+[updated plan](manifests/LAPTOP_EXECUTION_PLAN_V2.json). The
+[standalone adapter trial](scripts/run_laptop_adapter_trial.cmd) waits for
+3.0625 GiB available and saves its bounded results outside the desktop app.
+
+The earlier admission failures and blocked audits remain historical evidence under
+their old 7.4/6 GiB policy. Their zero-model-work statements apply to those attempts.
+The new cycle has two verified loads. Historical E1/scheduler plans need measured
+successors; full E0 and later science remain incomplete. CHECK/FINAL remain closed,
+and the current best recipe remains unchanged Titan.
 
 The source branch was fetched and verified at
 `03db218ceebc61a2bc04f2482cf7e094045e01c1`; the execution branch was pushed at that

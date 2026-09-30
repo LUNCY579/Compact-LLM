@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "status": "UPDATED_LAPTOP_ROUTE_PARTIAL_NATIVE_MEASUREMENTS",
+  "amendment": "AMENDMENT_009.md",
+  "primary_weight_sha256": "537201676814ade103c4efa63f5ebe758ea309971803c4ad633dbca5b6b531b7",
+  "resource_profile": "LAPTOP_STREAMED_V1",
+  "system_available_RAM_reserve_GiB": 1.25,
+  "worker_process_tree_RSS_ceiling_GiB": 1.75,
+  "post_import_admission": "1.25 + max(0,1.75-currentRSS)",
+  "VRAM_first": true,
+  "stages": [
+    {
+      "id": "LP0",
+      "status": "COMPLETE_CPU_ONLY",
+      "action": "71stdlib and9actual CPUloader controls; historical12tiny numerical controls retained separately"
+    },
+    {
+      "id": "LP1",
+      "status": "MEASURED_PREVIOUS_PROFILE",
+      "action": "Exact GPUload+finite256forward",
+      "peak_RSS_GiB": 1.9278907775878906,
+      "new_streamed_GPU_path": "UNQUALIFIED"
+    },
+    {
+      "id": "LP2A",
+      "status": "PADDING_NUMERICAL_FAIL",
+      "action": "Full E0 diagnostic under fixedtolerances",
+      "zero_adapter_parity": {
+        "prompts": 32,
+        "max_abs": 0.0
+      },
+      "measured_error_magnitude": "UNMEASURED; instrumentedretry stopped atpreload"
+    },
+    {
+      "id": "LP2B",
+      "status": "PENDING_AVAILABLE_RAM",
+      "action": "Independent256/512/1024backward+five disposable updates+resume",
+      "config": "configs/E0_LAPTOP_STREAM_BACKWARD_RESUME.json",
+      "scope": "resource/mechanics only, padding/sampler unresolved"
+    },
+    {
+      "id": "LP3",
+      "status": "PENDING_NATIVE_QUALIFICATION",
+      "action": "Reviewed current-runtime evidence validator, laptop E1 queue/schedule/native collection successor"
+    },
+    {
+      "id": "LP4",
+      "status": "PENDING",
+      "action": "Sequential source/preservation panels, qualifiedlanguagecalibration andlongcontext runtime"
+    },
+    {
+      "id": "LP5",
+      "status": "PENDING",
+      "action": "E1seed101 thenDEV gate;211/307conditional;CHECK/FINALclosed"
+    }
+  ],
+  "fallbacks_if_measured_VRAM_failure": [
+    "Separately register and qualify activation checkpointing",
+    "Separately register shorter qualified context without target truncation"
+  ],
+  "concurrency": "One native GPU worker; no CPU-heavy concurrent preparation until measured headroom supports it",
+  "historical_plans_and_receipts": "Preserved; no historical resource-policy receipts relabeled",
+  "goal_scope": "Original verified capability/retention research on one exact Titan0.6B; revised operational route, no weaker scientific success criterion",
+  "e1_authorized": false,
+  "amendments": [
+    "AMENDMENT_009.md",
+    "AMENDMENT_010.md",
+    "AMENDMENT_011.md"
+  ],
+  "headless_before_launch_budget_GiB": 3.0625,
+  "loader_buffer_bytes": 2097152,
+  "headless_launcher": "scripts/run_laptop_trial.ps1"
+}

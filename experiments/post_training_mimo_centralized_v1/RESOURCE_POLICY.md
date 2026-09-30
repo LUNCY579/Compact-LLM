@@ -1,5 +1,12 @@
 # Resource policy
 
+AMENDMENT_011 adds LAPTOP_STREAMED_V1: fixed 2 MiB checkpoint read buffer,
+1.25 GiB system reserve, 1.75 GiB process-tree RSS ceiling and admission reserving
+all remaining allowed worker growth. Before-worker budget is 3 GiB; the standalone
+controller adds 64 MiB for its supervisor. The loader has CPU byte-identity controls,
+but its complete GPU path and backward fit remain unqualified. See LAPTOP_RUNBOOK.
+
+
 AMENDMENT_009 and the user's 29 September authorization introduce the named
 LAPTOP_GPU_RESIDENT_V1 profile for this 16 GB laptop. Keep 2 GiB system RAM
 available and bound the worker process tree to 2.5 GiB RSS. After imports, admission

@@ -411,3 +411,45 @@ seven-turn records are not used to meet this threshold. No eligible independent
 FAST work or live native job remains. Record goal BLOCKED after final publication,
 never COMPLETE. Resume only after meaningful resource-state change; retain the
 full original research objective and all scientific gates.
+
+
+## User-authorized laptop replan, 29-30 September 2026
+
+The user explicitly permitted RAM/plan changes for16GB hardware and prioritized
+VRAM-heavy work. Audit traced7.4/6GiB toPRLC project defaults with aCPUreference,
+not measuredTitan demand. AMEND009 registered dynamicadmission with2GiBreserve
+and2.5GiB RSScap. Probe at79ad1a61 loaded exact596M BF16 Titan and ran one256token
+forward in10.406s; supervisor11.219s andpeakRSS1.927891GiB. GPUallocpeak1.400038GiB.
+FullE0 atsame source passed32zero-adapter cases max0, then failed firstleft-padding
+likelihood at15.656s; supervisor16.546s,RSSpeak1.951038GiB. No backward/updates/gen.
+Two non-author assistant source/receipt reviews confirmed scoped evidence; no human
+approval or efficacy follows. The actualpaddingerror magnitude was not retained.
+
+AMEND010 added failure-only finite-safe error telemetry without changing tolerance,
+and separated resource/backward/resume measurement. That partialstage retains the
+original5disposable updatecalls and3contexts but explicitly omits unresolvedpadding/
+sampling checks and sampler RNGdraws. It never qualifiesfullE0/E1. The instrumented
+fullv2 stopped atpreload afterexternalRAMpressure, beforemodelwork (7.891/8.719s).
+
+AMEND011 registers fixed2MiB directCPUbuffer-toGPU loading, strictBF16header/payload
+coverage and310compositecopyspans; source/GPUhashidentity remainsstrict. Namedprofile
+LAPTOP_STREAMED_V1 reserve1.25GiB,RSScap1.75GiB, budgetswholegrowth3GiB beforelaunch.
+71stdlib controls and9actualCPUloader controls passed. Defaultloaderunitrun skipped
+its opt-inTorch test; explicit opt-inrun passed9tests, andbothlogs are retained.
+A firstsource-binding testfailedbecause a newlyintroducedhelper didnot exist in the
+oldhistoricalcommit; fixture now verifiesactualolddependencies and rejects invented
+history. Production source binding strengthened; originalfailedreceipt preserved.
+
+Streamedloadv1 at4526d705 stopped atpreload (5.078/5.875s), no weightaccess. Itisnot
+proof thenewGPUloader fits. CurrentOSRAM later1.037GiB with noPythonworker, already
+belowthereserve. No guardautoraise or further same-state retry. Anapp-independent
+boundedPowerShelllauncher was prepared/audited towait<=600s for>=3.0625GiB andrunone
+registered<=1800s mechanicsphase. It preserves source/config/admission/completion
+receipts andfailure evidence; noE1 launch. Desktop working set~2GiB isnot a guarantee
+of reclaimableRAM. No userprocess was terminated.
+
+Currentprimary unchanged, nativeverifiedloads2,optimizersteps0,training/gen/teacher0;
+acquisition/retentionunmeasured. The nextinformationgain is resource/backward/resume
+fit andpaddingerror diagnosis under unchangedtolerances. The operatingroute changed,
+not modelscale/data/retention criteria or thescientific definitionofsuccess. Thefull
+originalresearchgoal remains incomplete. No closedpayload opened or recipe promoted.
