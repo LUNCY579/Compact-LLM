@@ -477,3 +477,27 @@ needsactualrow/token/labelbinding. LauncherWindowsAuditOnly succeededforthe news
 No nativepassorscopedE1validator/currentruntimeplanexists. Goal remainsincomplete.
 The currentdefault trialis unpadded_ce onceheadroomchanges; no newbackgroundjob
 wasstartedatthesameinadequateresource state. Currentbestandclosedbanks unchanged.
+
+
+## Scoped evidence checker and first streamed unpadded native trial
+
+The exact scoped consistency checker passed95stdlib controls in4.106s
+(process4.471799s), including timing contradiction controls and rejection of
+old failed/resource-only bundles. Independent assistant source review found no
+remaining blocker; this is not human approval or a native execution proof.
+
+Actual OS headroom changed to5.220612GiB with0Python workers. The committed
+controller admitted two readings5.117710/5.121353GiB and launched one trial from
+a4454e17009c9d3aadd87e2b9b633c2969f5be00. Fixed2MiB streamed copying loaded310tensors
+exactly. Thirty-two zero-adapter cases matchedbitwise; unpadded causality and
+allones equivalence passed with0max/mean error.256/512profiles completed two
+disposable updates.1024forward/backward returned, then the0.5GiBVRAMfloor
+stopped the trial at0.161270GiBfree. CUDAallocatedpeak6.254207GiB and reserved
+6.638672GiB; process-tree RSSpeak1.740429GiB and minimum sampled host headroom
+3.031586GiB. Worker32.000s/supervisor33.172s. No checkpoint save/reload or full
+scoped PASS. Legacy train768 positions after completed steps; actual training
+forwards1792 positions across3contexts. These are mechanics, not learned-capability
+evidence. Native campaign loads now3, disposable updates2, generation/teacher0.
+All raw failure artifacts preserved byteexact. The checker rejects this BLOCKED
+result before asset access. Register activation checkpointing prospectively for
+1024; do not lower GPU/RAM floors. Original goal and best recipe remain unchanged.
