@@ -184,6 +184,18 @@
       "forwards": 0,
       "capture_authorized": false,
       "E1_authorized": false
+    },
+    {
+      "id": "E1_TRAINING_COMPONENTS_V1",
+      "status": "PASS_STDLIB_AND_ACTUAL_SCHEDULED_READER_ONLY",
+      "registration": "AMENDMENT_017.md",
+      "config": "configs/E1_TRAINING_COMPONENTS_V1.json",
+      "CPU_control_count": 53,
+      "scheduled_rows": 5120,
+      "actual_reader_receipt": "receipts/E1_TRAIN_READER_ACTUAL_DATA_AUDIT.json",
+      "native_backend_connected": false,
+      "native_accumulation_resume_qualified": false,
+      "E1_authorized": false
     }
   ],
   "later_tracks": {
@@ -219,5 +231,7 @@
   "E1_authorized": false,
   "latest_capture_qualification": "BLOCKED_NUMERICAL_RESOURCES_PASSED",
   "latest_diagnostic": "receipts/CAPTURE_GEOMETRY_D1_NATIVE_RESULT.json",
-  "latest_causal_diagnostic": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json"
+  "latest_causal_diagnostic": "receipts/CAPTURE_CAUSAL_D2_ADMISSION_RESULT.json",
+  "automatic_turn_failure_evidence": "receipts/AUTOMATIC_TURN_CAPACITY_FAILURE_V1.json",
+  "current_scheduled_reader": "receipts/E1_TRAIN_READER_ACTUAL_DATA_AUDIT.json"
 }

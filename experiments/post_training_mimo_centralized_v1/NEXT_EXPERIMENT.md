@@ -40,6 +40,18 @@ completion CE, all targets and adapter-only checkpoints. Then bind the current
 native executor and seed-101 schedule: 256 steps, 16 acquisition plus four replay
 sequences per step; seeds 211/307 depend on the registered DEV screen.
 
+
+The interrupted automatic coding turn failed with a selected-model service-capacity
+error; this app status is separate from the RAM and capture gates. Work was recovered
+and committed. AMENDMENT_017 now has53 passing CPU controls for the scheduled TRAIN
+reader, independent256-update accounting and deterministic accumulation/checkpoint
+components. The actual reader passed all5120 scheduled lookups, with full680532
+inputs/63546 targets, max398 and81 masked prior replies. Process high-water was
+50.797 MiB; retained metadata5.392 MiB and no retained token population. This is
+actual data access and synthetic engine evidence only. The native backend, physical
+accumulation/RNG/cross-process resume and current launch validators are still missing;
+no E1 launch or capability/preservation claim follows.
+
 Current best is unchanged Titan. Acquisition, retention and sustained training
 fit remain unmeasured. E1 launch flags remain false; CHECK/FINAL remain closed.
 The original one-Titan verified capability/retention objective is still open.
