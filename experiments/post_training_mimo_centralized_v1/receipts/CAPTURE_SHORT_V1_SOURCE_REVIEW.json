@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "status": "NO_REMAINING_BLOCKING_PRODUCER_CHECKER_SOURCE_ISSUE_IDENTIFIED",
+  "recorded_at_utc": "2026-09-30T11:42:01.527020+00:00",
+  "producer_reviewer": "/root/laptop_resource_rationale",
+  "checker_reviewer": "/root/laptop_gates_review",
+  "review_type": "Independent non-author assistant source review, not human/native approval",
+  "source_sha256": {
+    "scripts/greedy_capture.py": "8cc3d0a4e9e4d9d18b5ef9c7f62142f83f0fb84f1779bed389a7c5d99f8c3492",
+    "scripts/qualify_capture.py": "53867509693361d92097b4cd7d19aa90cbd91470a45b5d0acd001e3a0cacd3fc",
+    "scripts/supervise_capture.py": "c3b479db45335444a5621030a6d9cd1a3d9a12b73c571264725e2f12e5a7a8b8",
+    "scripts/capture_evidence.py": "016fac2f57f27a3da1b91c6b765e21c51169cc4f85713ac4faeb533d019b7421"
+  },
+  "resolved_initial_mismatch": "Fixturegeneration timinginventory synchronized betweenproducer/checker; oldtokens_per_second rejected",
+  "checks_reviewed": [
+    "ExactdirectCUDA_BF16streamload/frozenbaremodel",
+    "Greedyrawargmax/LMdiagnosticvsbehavior0",
+    "EOS/newemissions/terminal-only extraction",
+    "N+1teacherforcedfirstNshift",
+    "Actualdynamiccounts/prefixhash/journal645+4S",
+    "Generation/offline timing lower+outerupperbounds",
+    "Source/currentcommitted and12repo+2installed pins",
+    "CPUcontrols vsnaturalEOSobservations",
+    "Partialfailuretruthfulness/resource/Windowscontainment"
+  ],
+  "framework_imports_by_reviewers": 0,
+  "weight_reads_by_reviewers": 0,
+  "native_jobs_by_reviewers": 0,
+  "limitations": [
+    "Source/localconsistency only",
+    "No independentdetokenization/execution proof",
+    "NoDEV/language/E1grant"
+  ],
+  "E1_authorized": false
+}
