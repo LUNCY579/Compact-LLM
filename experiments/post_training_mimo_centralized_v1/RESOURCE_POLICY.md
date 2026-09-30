@@ -1,10 +1,28 @@
 # Resource policy
 
-One major GPU worker. Preserve inherited PRLC minima: host available >=7.4 GiB
+AMENDMENT_009 and the user's 29 September authorization introduce the named
+LAPTOP_GPU_RESIDENT_V1 profile for this 16 GB laptop. Keep 2 GiB system RAM
+available and bound the worker process tree to 2.5 GiB RSS. After imports, admission
+requires available RAM >=2 + max(0, 2.5 - current worker RSS) GiB, budgeting all
+remaining allowed worker growth. An over-cap worker fails. GPU admission/runtime
+floors remain 4/0.5 GiB, disk 4 GiB. Independent containment/watchdog limits apply
+throughout. These prospective pilot bounds require native measurement.
+
+The load_forward stage lasts at most 600 seconds, performs strict exact loading
+and one 256-token frozen last-logit forward, and has optimizer/generation caps zero.
+The full stage retains every original E0 numerical fixture and the 1800-second/five-
+optimizer-call bounds. Source, configs and outputs must be committed/write-once.
+No new profile status or resource-only PASS grants E1 authorization. Register the
+measured laptop queue/E1/long-context successors before their affected runs.
+
+## Historical profile retained
+
+One major GPU worker. The original config preserves inherited PRLC minima: host available >=7.4 GiB
 before native load, worker available >=6.0 GiB throughout, device available >=4.0
 GiB before load, disk free >=4.0 GiB. These are minima, not evidence of fit.
 Monitor actual worker RSS, available host RAM, GPU allocated/reserved and free
-memory; fail closed when unavailable. Do not lower floors to launch.
+memory; fail closed when unavailable. Its floors remain fixed. The named laptop
+successor is an explicit authorized amendment, not a modification of old receipts.
 
 E0: 30-minute wall ceiling; maximum 32 non-evaluation parity fixtures, 32 generated
 tokens for throughput/logprob check, 256/512/1024 context profiles. Bounded

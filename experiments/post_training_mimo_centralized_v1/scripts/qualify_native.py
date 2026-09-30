@@ -19,6 +19,8 @@ import sys
 import time
 import traceback
 
+from experiments.post_training_mimo_centralized_v1.scripts import laptop_profile
+
 
 def sha(path):
     h = hashlib.sha256()
@@ -279,6 +281,9 @@ def completion_loss(torch, logits, ids, labels):
 
 
 def validate_config(cfg):
+    if laptop_profile.metadata_present(cfg):
+        laptop_profile.validate_config(cfg)
+        return
     for field in ("host_free_gib","worker_free_gib","gpu_free_gib","gpu_worker_free_gib","disk_free_gib","wall_seconds"):
         require(type(cfg.get(field)) in (int,float) and math.isfinite(cfg[field]), "nonfinite/invalid resource")
     require(cfg.get("gpu_worker_free_gib",0) >= .5, "GPU worker floor")
@@ -320,6 +325,7 @@ def run(args):
     config_path = args.config.resolve()
     cfg = json.loads(config_path.read_text())
     validate_config(cfg)
+    laptop = laptop_profile.metadata_present(cfg)
     require(json.loads(args.go_path.read_text())["config_sha256"] == sha(config_path), "GO config mismatch")
     root = Path(__file__).resolve().parents[3]
     head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=root, text=True).strip()
@@ -331,8 +337,14 @@ def run(args):
                   config_sha256=sha(config_path), pretrained_loads=0, optimizer_steps=0,
                   training_tokens=0, generation_tokens=0, teacher_calls=0, checks={}, resources=[],
                   resource_profiles=[], accounting_version=ACCOUNTING_VERSION)
+    if laptop:
+        result.update(resource_profile=cfg["resource_profile"], qualification_stage=cfg["qualification_stage"])
     write(out / "CONFIG.json", cfg)
-    write(out / "SOURCE_RECEIPT.json", {"code_sha": head, "dirty": False, "script_sha256": sha(__file__)})
+    source_receipt = {"code_sha": head, "dirty": False, "script_sha256": sha(__file__)}
+    if laptop:
+        source_receipt["dependency_sha256"] = {
+            "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py": sha(laptop_profile.__file__)}
+    write(out / "SOURCE_RECEIPT.json", source_receipt)
     def event(kind, **values):
         with (out / "EVENTS.jsonl").open("a", encoding="utf-8") as f:
             f.write(json.dumps({"elapsed_seconds": time.monotonic()-started, "event": kind, **values}, allow_nan=False) + "\n")
@@ -378,9 +390,14 @@ def run(args):
                         gpu_reserved_gib=torch.cuda.memory_reserved() / 2**30,
                         peak_allocated_gib=torch.cuda.max_memory_allocated() / 2**30,
                         disk_free_gib=psutil.disk_usage(str(out)).free / 2**30)
+            if laptop:
+                snap["admission_required_gib"] = laptop_profile.admission_required_gib(cfg, snap["rss_gib"])
             result["resources"].append(snap)
             event("resource", **snap)
-            require(snap["host_available_gib"] >= cfg["host_free_gib"] if admission else
+            if laptop:
+                require(snap["rss_gib"] <= cfg["worker_rss_limit_gib"], "PROCESS_RSS_GUARD")
+            required_host = snap["admission_required_gib"] if laptop and admission else cfg["host_free_gib"]
+            require(snap["host_available_gib"] >= required_host if admission else
                     snap["host_available_gib"] >= cfg["worker_free_gib"], "HOST_RAM_GUARD")
             require(snap["disk_free_gib"] >= cfg["disk_free_gib"], "DISK_GUARD")
             if admission:
@@ -469,6 +486,20 @@ def run(args):
             seq = padding + prompt
             require(len(seq) == length, "fixture length")
             return torch.tensor([seq], device="cuda", dtype=torch.long)
+
+        if laptop and cfg["qualification_stage"] == "load_forward":
+            with torch.no_grad():
+                ids = prompt_ids(0, 256)
+                logits = forward(ids, "load_forward_256", use_cache=False, logits_to_keep=1).logits
+                require(bool(torch.isfinite(logits).all()), "nonfinite load/forward probe")
+                del logits
+            result["checks"]["load_forward_finite"] = True
+            guard("load_forward_256")
+            result["status"] = laptop_profile.PROBE_PASS_STATUS
+            result["unqualified"] = ["zero-adapter parity", "sampled likelihood", "EOS/PAD masks",
+                                     "LoRA/backward/optimizer", "deterministic resume", "E1 data/replay",
+                                     "held-out capability", "long context beyond256"]
+            return 0
 
         baseline = []
         with torch.no_grad():

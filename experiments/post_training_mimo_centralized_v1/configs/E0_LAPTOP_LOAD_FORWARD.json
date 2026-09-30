@@ -39,7 +39,7 @@
   "disk_free_gib": 4.0,
   "wall_seconds": 600,
   "maximum_optimizer_calls": 0,
-  "update_semantics": "one disposable update per context restored to initialization; last-context second step evaluated twice for deterministic resume",
+  "update_semantics": "no adapters, backward, optimizer updates, generation or benchmarks; strict load and one frozen 256-token forward only",
   "historical_fp32_parity_claim": false,
   "resource_profile": "LAPTOP_GPU_RESIDENT_V1",
   "qualification_stage": "load_forward",

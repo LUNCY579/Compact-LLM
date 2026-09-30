@@ -8,6 +8,7 @@ import subprocess
 import sys
 from experiments.opallo_native_collector_v1.supervisor import run_bounded
 from experiments.post_training_mimo_centralized_v1.scripts.qualify_native import sha, validate_config, write
+from experiments.post_training_mimo_centralized_v1.scripts import laptop_profile
 
 
 def main():
@@ -19,6 +20,7 @@ def main():
     a = p.parse_args()
     cfg = json.loads(a.config.read_text())
     validate_config(cfg)
+    laptop = laptop_profile.metadata_present(cfg)
     root = Path(__file__).resolve().parents[3]
     output = a.output.resolve()
     supervision = output.parent / (output.name + "_supervisor")
@@ -41,11 +43,15 @@ def main():
         command = [sys.executable,"-B","-m","experiments.post_training_mimo_centralized_v1.scripts.qualify_native",
                    "--config",str(a.config.resolve()),"--output",str(output),"--go-path",str(supervision/"GO.json")]
         supervision.mkdir(parents=True)
-        write(supervision/"LAUNCH.json",dict(command=command,config_sha256=sha(a.config),
+        launch = dict(command=command,config_sha256=sha(a.config),
               supervisor_sha256=sha(__file__),watchdog_sha256=sha(root/"experiments/opallo_native_collector_v1/supervisor.py"),
-              observed_gpu_processes=active.splitlines(),source_sha=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip()))
+              observed_gpu_processes=active.splitlines(),source_sha=subprocess.check_output(["git","rev-parse","HEAD"],text=True).strip())
+        if laptop:
+            launch.update(resource_profile=cfg["resource_profile"], qualification_stage=cfg["qualification_stage"],
+                          resource_limits=laptop_profile.resource_limits(cfg))
+        write(supervision/"LAUNCH.json", launch)
         run_bounded(command,root,supervision,seconds=cfg["wall_seconds"],min_free_gib=cfg["worker_free_gib"],
-                    max_rss_gib=4.0,go={"config_sha256":sha(a.config)})
+                    max_rss_gib=cfg["worker_rss_limit_gib"] if laptop else 4.0,go={"config_sha256":sha(a.config)})
         return 0
     except Exception as exc:
         supervision.mkdir(parents=True,exist_ok=True)

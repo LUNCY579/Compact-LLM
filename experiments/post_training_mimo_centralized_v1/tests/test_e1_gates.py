@@ -289,9 +289,17 @@ class E1GateControls(unittest.TestCase):
     def test_native_source_helpers_match_recorded_commit_without_imports(self):
         source = json.loads((ROOT / "results/e0_titan_v2/SOURCE_RECEIPT.json").read_text())
         bound = {}
-        for relative in gates.NATIVE_HELPERS:
+        # The v2 source predates the laptop helper. Its actual three dependencies
+        # remain verifiable; adding today's helper cannot rewrite that history.
+        laptop_helper = "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py"
+        historical_helpers = tuple(path for path in gates.NATIVE_HELPERS if path != laptop_helper)
+        for relative in historical_helpers:
             gates._verify_committed_helper(ROOT.parents[1], source["code_sha"], relative, bound)
-        self.assertEqual(len(bound), len(gates.NATIVE_HELPERS))
+        self.assertEqual(len(bound), len(historical_helpers))
+        self.assertIn(laptop_helper, gates.NATIVE_HELPERS)
+        with self.assertRaises(gates.GateError) as error:
+            gates._verify_committed_helper(ROOT.parents[1], source["code_sha"], laptop_helper, {})
+        self.assertEqual(error.exception.code, "SOURCE_HISTORY_DRIFT")
         with self.assertRaises(gates.GateError):
             gates._verify_source(ROOT.parents[1], source["code_sha"], gates.QUALIFIER, "0" * 64, {})
 

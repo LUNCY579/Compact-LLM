@@ -46,7 +46,8 @@ SUPERVISOR = "experiments/post_training_mimo_centralized_v1/scripts/supervise_na
 WATCHDOG = "experiments/opallo_native_collector_v1/supervisor.py"
 NATIVE_HELPERS = ("experiments/maxrl_comp002_pretraining_v1/mechanics.py",
                   "experiments/maxrl_comp002_pretraining_v1/preflight.py",
-                  "experiments/opallo_native_collector_v1/contract.py")
+                  "experiments/opallo_native_collector_v1/contract.py",
+                  "experiments/post_training_mimo_centralized_v1/scripts/laptop_profile.py")
 PACKAGES = {"torch": "2.10.0+cu126", "transformers": "4.57.1",
             "safetensors": "0.7.0", "tokenizers": "0.22.2"}
 TRUE_CHECKS = {"exact_native_load", "native_padding_and_causality", "eos_pad_mask",
