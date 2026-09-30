@@ -26,7 +26,7 @@ Then register and qualify actual frozen-source response capture/decoding and
 preservation, language calibration and native long-context evaluation; bind measured
 current laptop queue/E1 successors and implement the gated native executor. Preserve
 microbatch 1, accumulation 20, rank-8 q/v BF16 base /FP32 adapters, mean-completion-per-sequence
-CE and seed101Ã¢â‚¬â„¢s256-step16acquisition+4replay schedule. Actual full-dose consumer
+CE and seed 101: 256 steps, 16 acquisition plus 4 replay sequences per step. Actual full-dose consumer
 fit and sustained RSS must be measured separately; keep GPUresident state, adapter-only
 checkpoints, streamed rows and sequential evaluation. Longer training contexts may
 use separately registered activation checkpointing when required. Original E1 plans
