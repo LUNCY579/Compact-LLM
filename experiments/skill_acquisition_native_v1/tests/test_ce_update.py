@@ -72,6 +72,56 @@ class PureTests(unittest.TestCase):
         self.assertNotEqual(expected,pooled)
         with self.assertRaises(ValueError):ce.loss_from_logprobs(values[:-1])
 
+    def test_prepared_content_binding_detects_same_length_prompt_target_and_order_drift(self):
+        row=rows()[3]; original=ce.prepared_row_binding(row)
+        self.assertEqual(original['prepared_row_sha256'],ce.update.digest(row))
+        self.assertEqual((original['prompt_tokens'],original['labeled_tokens'],original['full_sequence_tokens']),
+                         (len(row['prompt_ids']),len(row['completion_ids']),len(row['prompt_ids'])+len(row['completion_ids'])))
+        for change in ('prompt','target','target-order'):
+            changed=copy.deepcopy(row)
+            if change=='prompt':changed['prompt_ids'][0]+=1
+            if change=='target':changed['completion_ids'][0]+=1
+            if change=='target-order':changed['completion_ids'][:-1]=reversed(changed['completion_ids'][:-1])
+            value=ce.prepared_row_binding(changed)
+            with self.subTest(change=change):
+                for key in ('id','prompt_tokens','labeled_tokens','full_sequence_tokens'):self.assertEqual(value[key],original[key])
+                self.assertNotEqual(value['prepared_row_sha256'],original['prepared_row_sha256'])
+                if change=='prompt':
+                    self.assertNotEqual(value['prompt_ids_sha256'],original['prompt_ids_sha256'])
+                    self.assertEqual(value['completion_ids_sha256'],original['completion_ids_sha256'])
+                else:
+                    self.assertEqual(value['prompt_ids_sha256'],original['prompt_ids_sha256'])
+                    self.assertNotEqual(value['completion_ids_sha256'],original['completion_ids_sha256'])
+        for key in ('prompt_ids','completion_ids'):
+            for tokens in ([],[True],[-1],[1.0],[float('nan')],[float('inf')],[None],(1,),'1'):
+                bad=copy.deepcopy(row);bad[key]=tokens
+                with self.subTest(key=key,tokens=tokens),self.assertRaises(ValueError):ce.prepared_row_binding(bad)
+        for identity in ('',None,True,7):
+            bad=copy.deepcopy(row);bad['id']=identity
+            with self.subTest(identity=identity),self.assertRaises(ValueError):ce.prepared_row_binding(bad)
+
+    def test_static_recipe_identity_excludes_exact_live_fields_and_binds_every_static_choice(self):
+        value=recipe(); original=ce.static_recipe_sha256(value)
+        for key,new in (('boundary_id',7),('generation',4),('symbolic_snapshot','c'*64),
+                        ('start_policy_id','d'*64),('U_before',3)):
+            changed=copy.deepcopy(value);changed[key]=new;ce.validate_recipe(changed)
+            with self.subTest(dynamic=key):self.assertEqual(ce.static_recipe_sha256(changed),original)
+        for change in ('lr','betas','clip-literal','inventory','EOS'):
+            changed=copy.deepcopy(value)
+            if change=='lr':changed['optimizer']['lr']*=2
+            if change=='betas':changed['optimizer']['betas'][0]=.8
+            if change=='clip-literal':changed['gradient_clipping']['max_norm']=1
+            if change=='inventory':changed['trainable_names']=changed['trainable_names'][:-1]
+            if change=='EOS':changed['eos_ids'].append(31)
+            ce.validate_recipe(changed)
+            with self.subTest(static=change):self.assertNotEqual(ce.static_recipe_sha256(changed),original)
+        # The helper excludes only the named live fields, without granting new
+        # keys or silently omitting future static configuration.
+        changed=copy.deepcopy(value);changed['future_static_field']='bound'
+        self.assertNotEqual(ce.static_recipe_sha256(changed),original)
+        self.assertEqual(value,recipe())
+        with self.assertRaises(ValueError):ce.static_recipe_sha256(None)
+
 
 @unittest.skipUnless(os.environ.get('COMP_RS_RUN_NATIVE_CPU_TESTS')=='1','actual CPU CE graphs await root clearance')
 class TinyCPU(unittest.TestCase):

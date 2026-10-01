@@ -13,10 +13,32 @@ from . import update
 SCHEMA = 'SKILL-ACQUISITION-CE-UPDATE-RECIPE-1'
 REDUCTION = 'mean_labeled_tokens_per_row_then_equal_rows'
 ROWS = 8
+RECIPE_DYNAMIC_FIELDS = frozenset(('boundary_id', 'generation', 'symbolic_snapshot', 'start_policy_id', 'U_before'))
 
 
 def require(condition,message):
     if not condition:raise ValueError(message)
+
+
+def static_recipe_sha256(recipe):
+    """Pure canonical snapshot digest excluding exactly the five live fields."""
+    require(type(recipe) is dict, 'recipe mapping required for static identity')
+    return update.digest({key:value for key,value in recipe.items() if key not in RECIPE_DYNAMIC_FIELDS})
+
+
+def prepared_row_binding(row):
+    """Pure identity of exact unpadded prompt and prepared target-plus-EOS IDs."""
+    require(type(row) is dict and type(row.get('id')) is str and row['id'], 'prepared row identity')
+    for key in ('prompt_ids', 'completion_ids'):
+        require(type(row.get(key)) is list and row[key]
+                and all(type(token) is int and token >= 0 for token in row[key]),
+                'prepared nonempty finite integer ' + key)
+    prepared = {key: row[key] for key in ('id', 'prompt_ids', 'completion_ids')}
+    P, C = len(row['prompt_ids']), len(row['completion_ids'])
+    return {'id': row['id'], 'prompt_tokens': P, 'labeled_tokens': C, 'full_sequence_tokens': P + C,
+            'prompt_ids_sha256': update.digest(row['prompt_ids']),
+            'completion_ids_sha256': update.digest(row['completion_ids']),
+            'prepared_row_sha256': update.digest(prepared)}
 
 
 def validate_recipe(recipe):
@@ -134,6 +156,7 @@ def boundary_update(model,optimizer,rows,recipe,operation):
     """
     validate_recipe(recipe)
     validate_rows(rows,recipe)
+    recipe_sha256=static_recipe_sha256(recipe)
     require(callable(operation),'physical operation observer required')
     devices={p.device for p in model.parameters()}
     require(len(devices)==1 and next(iter(devices)).type=='cpu','synthetic CPU CE fixtures only')
@@ -142,6 +165,7 @@ def boundary_update(model,optimizer,rows,recipe,operation):
     from experiments.maxrl_comp002_pretraining_v1 import s0_runtime as runtime,s0_generate as generate,s0_pilot as pilot
     from experiments.maxrl_comp002_pretraining_v1.mechanics import completion_labels
     metadata={key:recipe[key] for key in ('boundary_id','generation','symbolic_snapshot','start_policy_id')}
+    metadata['static_recipe_sha256']=recipe_sha256
     metadata['objective']='SUPERVISED_EQUAL_ROW_TOKEN_MEAN_CE'
     optimizer_attempted=False
     primary_error=None
@@ -175,9 +199,13 @@ def boundary_update(model,optimizer,rows,recipe,operation):
                 'gradient_clipping_recipe':dict(recipe['gradient_clipping']),'updated':False}
         losses=[]
         for row in rows:
-            prompt,completion=row['prompt_ids'],row['completion_ids']
+            # Freeze the contents used by both the pre-forward observer and the
+            # actual graph; caller list mutation cannot change the priced row.
+            prompt,completion=list(row['prompt_ids']),list(row['completion_ids'])
+            binding=prepared_row_binding({'id':row['id'],'prompt_ids':prompt,'completion_ids':completion})
             P,C=len(prompt),len(completion)
-            row_meta=dict(metadata,prompt_id=row['id'],selected_tokens=C,full_sequence_tokens=P+C)
+            row_meta=dict(metadata,prompt_id=binding['id'],selected_tokens=C,full_sequence_tokens=P+C,
+                          **{key:binding[key] for key in ('prompt_ids_sha256','completion_ids_sha256','prepared_row_sha256')})
             with update._span(operation,'loss_forward',row_meta,device) as forward:
                 sequence=torch.tensor([prompt+completion],dtype=torch.long,device=device)
                 labels=completion_labels(sequence,torch.ones_like(sequence,dtype=torch.bool),[P],[C],
@@ -199,7 +227,7 @@ def boundary_update(model,optimizer,rows,recipe,operation):
             with update._span(operation,'backward',row_meta,device) as backward:
                 loss.backward()
             losses.append(scalar)
-            result['rows'].append({'id':row['id'],'prompt_tokens':P,'labeled_tokens':C,
+            result['rows'].append({**binding,
                 'selected_predictor_positions':list(range(P-1,P+C-1)),'target_positions':list(range(P,P+C)),
                 'prompt_positions_selected':0,'pad_positions_selected':0,'eos_positions_selected':1,
                 'row_mean_nll':-math.fsum(selected)/C,'weighted_loss':scalar,

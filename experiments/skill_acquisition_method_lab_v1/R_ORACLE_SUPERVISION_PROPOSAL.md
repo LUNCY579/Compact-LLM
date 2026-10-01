@@ -139,8 +139,8 @@ this new 3,000-row common-anchor SFT experiment. A separately registered narrow
 trainer and approved measured limits remain necessary.
 
 The shared prospective CE boundary is now implemented in
-`../skill_acquisition_native_v1/ce_update.py`. Five pure controls and ten actual
-CPU model controls passed in the superseding CE-core V2 receipt, including the
+`../skill_acquisition_native_v1/ce_update.py`. The earlier five pure controls and
+ten actual CPU model controls passed in the superseding CE-core V2 receipt, including the
 independent gradient reference, clipping/Adam order, post-step cleanup failure,
 and rejection of an earlier negative second-moment chunk before model work.
 Review prompted the chunk-validation fix; the prior receipt is preserved.
@@ -163,3 +163,16 @@ trainer-source references remain unresolved; every execution/grant flag remains
 false and proposal plans cannot export synthetic checkpoint scope. Full
 canonical/policy TRAIN files must be revalidated at future native ingestion.
 Receipts are retained under `../skill_acquisition_native_v1/evidence/`.
+
+The shared CE core now binds exact copied prompt/target token contents and a
+static recipe digest before admitted model work. The separate synthetic CPU
+durable journal retains all admitted reservations across reopening and ancestor
+rollback, and requires full update/cleanup and fresh restore-fence proofs.
+Its combined 74-case suite passed, including 25 actual CPU cases; collection
+imported no frameworks and CUDA remained uninitialized. The four initial test
+failures and their fixture-only corrections are preserved with the final receipt.
+
+This is preparation for both treatment choices. Synthetic declared profiles,
+bounded bootstrap validation and resume within one OS process do not supply a
+native execution grant, measured full-unit budgets, outer setup/hash admission,
+a qualified process/resource controller or scientific learning evidence.

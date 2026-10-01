@@ -25,6 +25,7 @@ A completed donor file is not evidence that its skill was acquired.
 | `data.py` | Verify TRAIN manifests, canonical and policy files, row roles, IDs, prompts, and rendered token census. |
 | `plan.py` | Fix exposure order, sample seeds, and separate exposure count C from applied Adam count U. |
 | `ce_plan.py` | Bind unapproved 3,000-row CE8 exposure/label plans; permit checkpoint metadata export only for explicit synthetic fixtures. |
+| `ce_journal.py` | Persist synthetic CPU CE8 reservations, observed update proofs, C/U and restore fences; refuse native/proposal execution. |
 | `protocol.py` | Validate authorization, S0 ancestry, source/runtime bindings, qualification, and measured budgets. |
 | `update.py` | Verify sampled-policy identity and raw log probabilities; apply the proposed MaxRL loss; extract a donor relative to the actual warm anchor. |
 | `checkpoint.py` | Stream parameters, Adam state, module modes, and process RNG state into two verified rolling checkpoints. |
@@ -72,7 +73,7 @@ row, equal row weights, one-shift target/EOS masks, global norm clipping before
 Adam, and frozen-state/U proofs. Reset and failure cleanup remain observable;
 an exception after an Adam attempt requires discarding or restoring live state.
 
-Its five pure and ten actual CPU checks passed in the superseding
+The earlier core's five pure and ten actual CPU checks passed in the superseding
 `evidence/CE_CORE_CPU_CHECKS_V2_20261001.json` receipt. Review found and fixed a
 second-moment sign check that covered only the final chunk. The new multi-chunk
 regression proves earlier corruption is rejected before forward, clipping or
@@ -84,6 +85,13 @@ loader, experiment driver, evaluation, target policy, retry defaults or grant.
 The existing B2 checkpoint/progress adapter must not be presented as a qualified
 CE8 adapter. Full integration and native qualification still require the new
 operator decision and a separately registered scope.
+
+The current core additionally binds the exact copied prompt/target token IDs and
+the static recipe digest in every CE callback. Equal token lengths cannot admit
+a substituted teacher, and a different valid optimizer recipe cannot use the
+same journal scope. The live boundary/fence fields are excluded from the static
+recipe digest. Seven pure and ten actual core controls are included in the
+current combined durable-accounting receipt below.
 
 The separate `ce_checkpoint.py` adapter now verifies eight globally unique row
 identities per boundary, every completed boundary updated, exact static CE
@@ -117,6 +125,41 @@ Proposal plans always deny execution and cannot export fixture checkpoint scope.
 The preparation references full canonical/policy TRAIN hashes; future native
 ingestion must revalidate those files. A target-plan binding and tokenizer census
 do not constitute a native recipe, measured resource envelope or learning result.
+
+## Synthetic durable CE accounting
+
+`ce_journal.py` is a separate CPU mechanics prototype. It binds an explicit
+synthetic fixture plan, prepared token/target rows, static recipe, source/runtime
+references, anchors and finite declared limits. Proposal/native scope is denied
+before path access. Hash-chained, fsynced rows preserve admitted operation,
+selected/full-sequence token, hash, IO, metadata and wall reservations across
+reopening and rollback. No failed or pending reservation is refunded.
+
+Logical C=U advances only after the complete observed CE result and successful
+cleanup. Any incomplete CE attempt requires verified ancestor restoration with
+a fresh fence before further CE. Reused or stale restore/update proofs are
+rejected. The caller recomputes actual restored policy identity. Unknown
+interrupted wall prevents further work and a consistent completion seal.
+
+The combined suite passed **74/74 controls**, including **25 actual CPU cases**,
+with no skips/errors, no framework imports during collection and uninitialized
+CUDA. Real partial Adam mutation was restored to C0; two-boundary stochastic
+resume matched uninterrupted parameters, moments, module modes and Python/NumPy/
+CPU RNG bit for bit. Content/recipe/forward/Adam/metadata controls reject work at
+their admitted boundaries. See `evidence/CE8_DURABLE_CPU_CHECKS_V2_20261001.json`.
+
+The original 74-case run and its four test failures are retained. Its fixes
+changed the purity assertion for mixed test execution and normalized newly
+attached dropout modules to eval before the initial snapshot; production source
+was unchanged. The earlier 44-case content-binding receipt is also retained.
+
+Profiles are synthetic upper declarations. Recipe hashing precedes the first
+kernel callback; constructor validation and bounded replay are setup scope.
+A native controller still needs outer admission and measured pricing for that
+work, a verified boot identity, actual process/resource guards, full data
+revalidation and a separately registered experiment. Reopening uses fresh
+objects in one OS process. These controls do not qualify native/full-unit costs,
+a fresh-process trainer, acquisition, composition, retention or a training grant.
 
 ## Production interface
 
