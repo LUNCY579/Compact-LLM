@@ -24,6 +24,24 @@ def progress(C, U, updated, generation=0):
 
 
 class MetadataTests(unittest.TestCase):
+    class Budget:
+        def __init__(self, ceiling=cp.METADATA_RESERVE):
+            self.ceiling, self.reserved, self.events = ceiling, 0, []
+
+        def __call__(self, kind, bytes_upper, *, write_id, path):
+            cp.require(type(bytes_upper) is int and bytes_upper > 0, 'exact positive metadata reservation')
+            cp.require(self.reserved + bytes_upper <= self.ceiling, 'cumulative metadata ceiling')
+            cp.require(write_id not in {event['write_id'] for event in self.events}, 'unique metadata write id')
+            self.reserved += bytes_upper
+            self.events.append(dict(kind=kind, bytes_upper=bytes_upper, write_id=write_id, path=path))
+
+    @staticmethod
+    def bindings():
+        return {'ordered_plan': [{'row_ids': ['r0', 's0']}],
+                'inventory': [{'name': 'weight', 'shape': [2], 'dtype': 'F32'}],
+                'code': 'fixed-code', 'data': 'fixed-data', 'runtime': 'no-framework-fixture', 'recipe': 'fixed-recipe',
+                'own_start_sha256': 'a' * 64, 'common_anchor_sha256': 'b' * 64}
+
     def test_U_counts_updated_history_independently_of_C(self):
         rows = [['r0', 's0'], ['r1', 's1']]
         value = progress(2, 1, [True, False])
@@ -118,6 +136,77 @@ class MetadataTests(unittest.TestCase):
             self.assertEqual(lower['identity_hash_attempts_lower'], 4)
             self.assertGreater(lower['identity_hash_bytes_lower'], len(cp.canonical(bindings)))
 
+    def test_constructor_json_and_journal_each_reserve_exact_prospective_bytes(self):
+        budget = self.Budget()
+        with tempfile.TemporaryDirectory(prefix='comp-rs-metadata-reserve-') as directory:
+            with mock.patch.object(cp.NativeCheckpoints, '_check_gate', return_value={}):
+                adapter = cp.NativeCheckpoints(directory, self.bindings(), 2, lambda stage: None,
+                                               metadata_reserve=budget)
+                binding = adapter.directory / cp.BINDING_FILE
+                self.assertEqual(budget.events[0]['kind'], 'checkpoint_json')
+                self.assertEqual(budget.events[0]['bytes_upper'], len(binding.read_bytes()))
+                self.assertTrue(budget.events[0]['path'].endswith('.partial'))
+                for index in range(2):
+                    before = (adapter.directory / cp.JOURNAL_FILE).stat().st_size if index else 0
+                    adapter._journal('fixture', index=index)
+                    after = (adapter.directory / cp.JOURNAL_FILE).stat().st_size
+                    self.assertEqual(budget.events[-1]['kind'], 'checkpoint_journal')
+                    self.assertEqual(budget.events[-1]['bytes_upper'], after - before)
+                self.assertEqual(budget.reserved, len(binding.read_bytes()) + after)
+
+    def test_metadata_rejection_precedes_constructor_or_append_file_creation(self):
+        with tempfile.TemporaryDirectory(prefix='comp-rs-metadata-denied-') as directory:
+            budget = self.Budget(0)
+            with mock.patch.object(cp.NativeCheckpoints, '_check_gate', return_value={}):
+                with self.assertRaisesRegex(ValueError, 'metadata ceiling'):
+                    cp.NativeCheckpoints(directory, self.bindings(), 2, lambda stage: None, metadata_reserve=budget)
+                self.assertEqual(list(Path(directory).iterdir()), [])
+                budget.ceiling = cp.METADATA_RESERVE
+                adapter = cp.NativeCheckpoints(directory, self.bindings(), 2, lambda stage: None, metadata_reserve=budget)
+                budget.ceiling = budget.reserved
+                with self.assertRaisesRegex(ValueError, 'metadata ceiling'):
+                    adapter._journal('denied')
+                self.assertFalse((adapter.directory / cp.JOURNAL_FILE).exists())
+                self.assertFalse(adapter.events)
+
+    def test_failed_partial_json_keeps_reservation_despite_removed_file(self):
+        budget = self.Budget()
+        with tempfile.TemporaryDirectory(prefix='comp-rs-metadata-partial-') as directory:
+            with mock.patch.object(cp.NativeCheckpoints, '_check_gate', return_value={}):
+                adapter = cp.NativeCheckpoints(directory, self.bindings(), 2, lambda stage: None, metadata_reserve=budget)
+                before = budget.reserved
+                value = {'fixture': 'attempted metadata'}
+                amount = len(cp.canonical(value)) + 1
+                target = adapter.directory / 'ATTEMPT.json'
+                original = Path.open
+                class FailingFile:
+                    def __init__(self, stream): self.stream = stream
+                    def __enter__(self): self.stream.__enter__(); return self
+                    def __exit__(self, *args): return self.stream.__exit__(*args)
+                    def __getattr__(self, name): return getattr(self.stream, name)
+                    def write(self, raw):
+                        self.stream.write(raw[:1])
+                        raise OSError('fixture partial metadata write')
+                def observed(path, mode='r', *args, **kwargs):
+                    stream = original(path, mode, *args, **kwargs)
+                    return FailingFile(stream) if mode == 'xb' and str(path).endswith('.partial') else stream
+                with mock.patch.object(Path, 'open', observed):
+                    with self.assertRaisesRegex(OSError, 'partial metadata'):
+                        adapter._publish_json(target, value)
+                self.assertFalse(target.exists())
+                self.assertEqual(list(adapter.directory.glob('*.partial')), [])
+                self.assertEqual(budget.reserved, before + amount)
+                budget.ceiling = budget.reserved
+                with self.assertRaisesRegex(ValueError, 'metadata ceiling'):
+                    adapter._publish_json(target, value)
+
+    def test_constructor_refuses_missing_metadata_callback_before_any_write(self):
+        with tempfile.TemporaryDirectory(prefix='comp-rs-metadata-callback-') as directory:
+            target = Path(directory) / 'not-created'
+            with self.assertRaisesRegex(ValueError, 'callback required'):
+                cp.NativeCheckpoints(target, self.bindings(), 2, lambda stage: None, metadata_reserve=None)
+            self.assertFalse(target.exists())
+
 
 @unittest.skipUnless(os.environ.get('COMP_RS_RUN_NATIVE_CPU_TESTS') == '1',
                      'tiny Torch CPU tests await root resource clearance')
@@ -164,7 +253,7 @@ class NativeCPUTests(unittest.TestCase):
     def adapter(self, directory, model, ledger, bindings=None):
         return cp.NativeCheckpoints(directory, bindings or self.bindings(model),
                                     sum(value.numel() for value in model.parameters()),
-                                    self.gates.append).attach_ledger(ledger)
+                                    self.gates.append, metadata_reserve=MetadataTests.Budget()).attach_ledger(ledger)
 
     class Ledger:
         def __init__(self):

@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 
 from experiments.skill_acquisition_native_v1 import journal as j, plan
 
@@ -236,6 +237,73 @@ class JournalTests(unittest.TestCase):
         with self.assertRaisesRegex(plan.CeilingRejected,"model_load"):
             self.ledger.operation("model_load","started","load2")
         self.assertNotIn("load2",self.ledger.external_ops)
+
+    def test_row_and_external_IO_each_fit_but_combined_denied_before_append(self):
+        prior=self.ledger.rollout_start(self.planned.trajectory(0,0,0),3,'e'*64)
+        self.ledger._wall_last=None # isolate the one event under audit
+        metadata={'write_bytes_upper':500}
+        payload={'operation':'input_io','phase':'started','operation_id':'exact-edge','metadata':metadata}
+        class Frozen(j.datetime.datetime):
+            @classmethod
+            def now(cls,tz=None):return cls(2026,9,30,tzinfo=tz)
+        body={'seq':len(self.ledger.events),'previous':self.ledger.previous,'binding_sha256':self.ledger.binding_sha256,
+              'kind':'operation','payload':payload,'utc':Frozen.now(j.datetime.timezone.utc).isoformat()}
+        row_bytes=len(j.canonical(dict(body,sha256=j.digest(body))))+1
+        old=self.ledger.extra['chunk_io_write_bytes']
+        self.ledger.extra_limits['chunk_io_write_bytes']=old+max(row_bytes,500)
+        self.assertLessEqual(old+row_bytes,self.ledger.extra_limits['chunk_io_write_bytes'])
+        self.assertLessEqual(old+500,self.ledger.extra_limits['chunk_io_write_bytes'])
+        self.assertGreater(old+row_bytes+500,self.ledger.extra_limits['chunk_io_write_bytes'])
+        before=self.ledger.path.read_bytes();count=len(self.ledger.events);head=self.ledger.previous
+        worked=[]
+        with patch.object(j.datetime,'datetime',Frozen),self.assertRaisesRegex(plan.CeilingRejected,'chunk_io_write'):
+            self.ledger.operation('input_io','started','exact-edge',**metadata)
+            worked.append(True)
+        self.assertFalse(worked)
+        self.assertEqual(self.ledger.path.read_bytes(),before)
+        self.assertEqual((len(self.ledger.events),self.ledger.previous),(count,head))
+        self.assertIn(prior,self.ledger.core.pending_rollouts)
+        self.assertNotIn('exact-edge',self.ledger.external_ops)
+
+    def test_metadata_reservation_retained_when_file_absent_and_after_replay(self):
+        partial=self.root/'checkpoints'/'.checkpoint.json.nonce.partial'
+        self.ledger.reserve_metadata('checkpoint_json',1024,write_id='unknown-write',path=partial)
+        self.assertFalse(partial.exists())
+        before=self.ledger.metadata_cumulative_reserved_bytes
+        self.ledger.end_invocation('interrupted')
+        old=self.ledger.metadata_cumulative_reserved_bytes
+        resumed=self.new(resume=True)
+        self.assertGreaterEqual(resumed.metadata_cumulative_reserved_bytes,old)
+        self.assertGreater(before,1024)
+        self.assertEqual(resumed.metadata_class_bytes['checkpoint_json'],1024)
+        self.assertIn('unknown-write',resumed.metadata_write_ids)
+        with self.assertRaisesRegex(ValueError,'identity/path'):
+            resumed.reserve_metadata('checkpoint_json',1,write_id='unknown-write',path=partial)
+
+    def test_metadata_external_upper_plus_own_row_combined_edge_denied(self):
+        self.ledger.reserve_metadata('runner_receipt',90_000_000,write_id='retained',path=self.root/'attempt.json')
+        self.ledger._wall_last=None
+        remaining=self.ledger.metadata_limit-self.ledger.metadata_cumulative_reserved_bytes
+        before=self.ledger.path.read_bytes()
+        with self.assertRaisesRegex(plan.CeilingRejected,'owned metadata'):
+            self.ledger.reserve_metadata('runner_receipt',remaining,write_id='would-overrun',path=self.root/'result.json')
+        self.assertEqual(self.ledger.path.read_bytes(),before)
+        self.assertNotIn('would-overrun',self.ledger.metadata_write_ids)
+
+    def test_metadata_envelope_class_count_and_owned_path_enforced(self):
+        caps=dict(self.caps,active_metadata_reserve_bytes=64*1024**2,
+                  metadata_write_envelope={'fixed_bytes_upper':64*1024**2,'classes':{
+                      kind:{'writes_upper':1 if kind=='checkpoint_json' else 100,'serialized_bytes_upper':2*1024**2}
+                      for kind in plan.METADATA_CLASSES}})
+        ledger=j.DurableLedger(self.root/'classified',self.planned,caps,{'code':'d'*64},self.extra,clock=lambda:self.now)
+        ledger.start_invocation(boot_id='same-boot')
+        path=ledger.directory/'checkpoints'/'.metadata.json.partial'
+        ledger.reserve_metadata('checkpoint_json',100,write_id='first',path=path)
+        ledger._wall_last=None
+        before=ledger.path.read_bytes()
+        with self.assertRaisesRegex(plan.CeilingRejected,'class count'):
+            ledger.reserve_metadata('checkpoint_json',1,write_id='second',path=path)
+        self.assertEqual(ledger.path.read_bytes(),before)
 
 
 if __name__=="__main__": unittest.main()

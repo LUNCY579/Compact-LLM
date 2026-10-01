@@ -71,5 +71,30 @@ class StorageBudgetTests(unittest.TestCase):
         self.assertEqual(caps['active_metadata_reserve_basis']['smaller_metadata_only_reserve_status'],
                          'UNQUALIFIED_WRITER_CENSUS_AND_ENFORCEMENT_REQUIRED')
 
+    def test_bound_inline_metadata_census_tightens_W_and_carries_writer_envelope(self):
+        io=self.io(512*1024**2)
+        census={'schema':'S1_METADATA_CENSUS-1','plan_sha256':self.planned.sha256,
+                'io_preimage_sha256':plan.digest(io),'fixed_bytes_upper':64*1024**2,
+                'classes':{kind:{'writes_upper':10,'serialized_bytes_upper':4096} for kind in plan.METADATA_CLASSES}}
+        io['metadata_census']=census
+        caps=plan.derive_caps(self.planned,inventory_numel=self.numel,unit_io_budget=io,metadata_census=census)
+        expected=64*1024**2+4*10*4096
+        self.assertEqual(caps['active_metadata_reserve_bytes'],expected)
+        self.assertEqual(caps['active_storage_reserve_bytes'],28*self.numel+expected)
+        self.assertEqual(caps['metadata_write_envelope']['classes'],census['classes'])
+        self.assertEqual(caps['active_metadata_reserve_basis']['smaller_metadata_only_reserve_status'],'ENFORCED_METADATA_CENSUS')
+        wrong=copy.deepcopy(census);wrong['io_preimage_sha256']='0'*64
+        with self.assertRaisesRegex(ValueError,'preimage'):
+            plan.derive_caps(self.planned,inventory_numel=self.numel,unit_io_budget=io,metadata_census=wrong)
+
+    def test_metadata_census_class_type_population_not_unbounded_free_number(self):
+        io=self.io(512*1024**2)
+        census={'schema':'S1_METADATA_CENSUS-1','plan_sha256':self.planned.sha256,
+                'io_preimage_sha256':plan.digest(io),'fixed_bytes_upper':64*1024**2,
+                'classes':{kind:{'writes_upper':10,'serialized_bytes_upper':4096} for kind in plan.METADATA_CLASSES}}
+        census['classes']['runner_receipt']['writes_upper']=False
+        with self.assertRaisesRegex(ValueError,'finite count'):
+            plan.derive_caps(self.planned,inventory_numel=self.numel,unit_io_budget=io,metadata_census=census)
+
 
 if __name__=='__main__':unittest.main()

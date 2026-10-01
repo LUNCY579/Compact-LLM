@@ -181,9 +181,10 @@ def boundary_loss(reward_groups, trajectory_logprob_sums):
     return -total / (B * G)
 
 MIN_ACTIVE_METADATA = 64 * 1024 ** 2
+METADATA_CLASSES = frozenset(('physical_ledger','checkpoint_json','checkpoint_journal','runner_receipt'))
 
 
-def derive_caps(plan, prompt_lengths=None, prices=None, inventory_numel=None, *, unit_io_budget=None):
+def derive_caps(plan, prompt_lengths=None, prices=None, inventory_numel=None, *, unit_io_budget=None,metadata_census=None):
     """Derive finite compute and active-storage limits from bound unit evidence.
 
     W, the cumulative unit write ceiling, is already a rigorous upper for every
@@ -193,10 +194,10 @@ def derive_caps(plan, prompt_lengths=None, prices=None, inventory_numel=None, *,
     Retained bytes cannot exceed bytes ever written. W also includes retired
     tensor-payload rewrites, so this safe bound can be impractically large.
 
-    A smaller metadata-only number is NOT admitted here. It needs a separately
-    bound whole-unit census and enforcement in every metadata writer, including
-    partial/unknown failed writes. A claimed number without that integration is
-    not a resource proof. No numeric measurement or training grant is invented.
+    An optional separately bound metadata census can tighten this bound. Its
+    per-class prospective write limits are enforced by the production durable
+    ledger and every child/result writer. Reservations survive failed writes,
+    cleanup and rollback. No numeric measurement or training grant is invented.
     """
     D, N, I = plan.prompts, len(plan.boundaries), 1 + RESUME_CAP
     trajectories = math.ceil((1 + RHO) * D * G)
@@ -215,7 +216,7 @@ def derive_caps(plan, prompt_lengths=None, prices=None, inventory_numel=None, *,
               'final_C': N, 'final_U_upper': N, 'nominal_rollouts': D * G,
               'canonical_generated_tokens_upper': CAP * D * G,
               'active_metadata_reserve_bytes': None, 'active_storage_reserve_bytes': None,
-              'active_metadata_reserve_basis': None, 'unresolved': []}
+              'active_metadata_reserve_basis': None,'metadata_write_envelope':None, 'unresolved': []}
     if prompt_lengths is not None:
         ids = [p.row_id for b in plan.boundaries for p in b.prompts]
         require(set(prompt_lengths) == set(ids) and len(prompt_lengths) == D, 'missing/extra census rows')
@@ -252,6 +253,25 @@ def derive_caps(plan, prompt_lengths=None, prices=None, inventory_numel=None, *,
             'cumulative_unit_chunk_io_write_bytes': W,
             'scope': 'owned serialized metadata; conservative bound also includes retired tensor-payload writes',
             'smaller_metadata_only_reserve_status': 'UNQUALIFIED_WRITER_CENSUS_AND_ENFORCEMENT_REQUIRED'}
+        if metadata_census is not None:
+            require(type(metadata_census) is dict and metadata_census.get('schema')=='S1_METADATA_CENSUS-1'
+                    and metadata_census.get('plan_sha256')==plan.sha256
+                    and metadata_census.get('io_preimage_sha256')==digest({k:v for k,v in unit_io_budget.items() if k!='metadata_census'}),
+                    'metadata census schema/plan/IO preimage drift')
+            F,classes=metadata_census.get('fixed_bytes_upper'),metadata_census.get('classes')
+            require(type(F) is int and F>=0 and type(classes) is dict and set(classes)==METADATA_CLASSES,
+                    'metadata fixed allowance/class population')
+            require(all(type(value) is dict and set(value)=={'writes_upper','serialized_bytes_upper'}
+                        and all(type(value[key]) is int and value[key]>0 for key in value) for value in classes.values()),
+                    'metadata class finite count/serialized bound')
+            class_bytes=sum(value['writes_upper']*value['serialized_bytes_upper'] for value in classes.values())
+            tighter=max(MIN_ACTIVE_METADATA,F+class_bytes)
+            result['active_metadata_reserve_bytes']=min(result['active_metadata_reserve_bytes'],tighter)
+            result['metadata_write_envelope']={'fixed_bytes_upper':F,'classes':json.loads(canonical(classes))}
+            result['active_metadata_reserve_basis'].update(rule='min(W fallback, max(64MiB,fixed+sum(writes*bytes)))',
+                metadata_census_preimage_sha256=digest(metadata_census),fixed_bytes_upper=F,class_bytes_upper=class_bytes,
+                scope='owned metadata; all prospective writes classified and permanently charged before physical append',
+                smaller_metadata_only_reserve_status='ENFORCED_METADATA_CENSUS')
     else:
         result['unresolved'].append('bound cumulative unit IO write ceiling for active metadata')
     if inventory_numel is not None:

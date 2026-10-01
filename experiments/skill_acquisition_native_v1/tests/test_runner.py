@@ -69,7 +69,9 @@ class RunnerPureTests(unittest.TestCase):
         self.addCleanup(temp.cleanup)
         self.planned=tiny_plan()
         prices={k:1 for k in ("t_gen95","t_update95","t_ckpt_upper","t_init_upper","t_restore_upper","t_cleanup_upper","t_finalize_upper")}
-        caps=plan.derive_caps(self.planned,{"row%d"%i:3 for i in range(4)},prices,10)
+        io_budget={"schema":"S1_IO_BUDGET-1","measured":True,"plan_sha256":self.planned.sha256,
+                   "inventory":{"numel":10},"caps":{"chunk_io_write_bytes":10**8}}
+        caps=plan.derive_caps(self.planned,{"row%d"%i:3 for i in range(4)},prices,10,unit_io_budget=io_budget)
         self.ledger=journal.DurableLedger(self.root,self.planned,caps,{"code":"d"*64},{k:10**8 for k in journal.IO_FIELDS})
         self.ledger.start_invocation(boot_id="pure-spy-boot")
         self.profiles={kind:{key:0 for key in runner.PROFILE_FIELDS} for kind in runner.IO_KINDS}
@@ -165,6 +167,17 @@ class RunnerPureTests(unittest.TestCase):
         self.assertEqual(len(actual["sha256"]),64)
         self.assertGreater(self.ledger.extra["chunk_io_read_bytes"],0)
         with self.assertRaises(FileExistsError):runner.create_json(path,{"test":"overwrite"},self.ops)
+
+    def test_metadata_reservation_precedes_receipt_body_write(self):
+        path=self.root/"denied-result.json"
+        with patch.object(self.ledger,"reserve_metadata",side_effect=plan.CeilingRejected("metadata budget")) as reserve:
+            with self.assertRaisesRegex(plan.CeilingRejected,"metadata budget"):
+                runner.create_json(path,{"test":"accounting-spy"},self.ops)
+        self.assertFalse(path.exists())
+        args,kwargs=reserve.call_args
+        self.assertEqual(args,("runner_receipt",len(journal.canonical({"test":"accounting-spy"}))+1))
+        self.assertEqual(kwargs["path"],str(path.resolve()))
+        self.assertTrue(kwargs["write_id"])
 
     def test_checkpoint_cadence_and_first_actual_U(self):
         self.assertTrue(runner.checkpoint_due(10,0,0))

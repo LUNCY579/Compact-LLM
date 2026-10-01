@@ -530,6 +530,7 @@ def create_json(path,value,operations):
                          identity_hash_attempts_upper=1,identity_hash_bytes_upper=len(raw)) as op:
         bound=operations.profiles["receipt_write"]
         require(len(raw)<=bound["write_bytes_upper"],"receipt exceeds measured write reservation")
+        operations.ledger.reserve_metadata("runner_receipt",len(raw),write_id=uuid.uuid4().hex,path=str(Path(path).resolve()))
         with Path(path).open("xb") as stream:
             for start in range(0,len(raw),1024**2):
                 piece=raw[start:start+1024**2]
@@ -644,7 +645,8 @@ def run(packet,*,resume=False,reason=None,started=None,setup=None):
                 "packet_sha256":protocol.digest(packet)}
             bindings["process_rng_seed"]=backend.process_rng_seed
             with operations.span("checkpoint_construct",**constructor_hash_lower_bound(bindings)):
-                checkpoints=NativeCheckpoints(output/"checkpoints",bindings,packet["inventory"]["numel"],gate).attach_ledger(operations)
+                checkpoints=NativeCheckpoints(output/"checkpoints",bindings,packet["inventory"]["numel"],gate,
+                    metadata_reserve=ledger.reserve_metadata).attach_ledger(operations)
             if resume:backend.restore(checkpoints,ledger,operations)
             else:backend.save(checkpoints,ledger,operations)
             execute_boundaries(context["planned"],rendered,ledger,backend,operations,checkpoints,packet["update_recipe"],10)

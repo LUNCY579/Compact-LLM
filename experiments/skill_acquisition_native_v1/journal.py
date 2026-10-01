@@ -103,6 +103,16 @@ class DurableLedger:
         self.progress = plan.Progress(planned, self.core)
         self.plan_rows = [[p.row_id for p in boundary.prompts] for boundary in planned.boundaries]
         self.extra = {key: 0 for key in IO_FIELDS}
+        self.metadata_limit=caps.get('active_metadata_reserve_bytes')
+        if self.metadata_limit is None and planned.synthetic:
+            self.metadata_limit=max(plan.MIN_ACTIVE_METADATA,self.extra_limits['chunk_io_write_bytes'])
+        require(type(self.metadata_limit) is int and self.metadata_limit>=plan.MIN_ACTIVE_METADATA,
+                'bound active metadata ceiling required')
+        self.metadata_envelope=caps.get('metadata_write_envelope')
+        self.metadata_cumulative_reserved_bytes,self.metadata_fixed_reserved_bytes=0,0
+        self.metadata_class_writes={kind:0 for kind in plan.METADATA_CLASSES}
+        self.metadata_class_bytes={kind:0 for kind in plan.METADATA_CLASSES}
+        self.metadata_write_ids=set()
         self.external_ops, self.samples, self.invocations = {}, {}, {}
         self.used_restores=set()
         self.events, self.previous = [], None
@@ -111,7 +121,7 @@ class DurableLedger:
         self.restoration_pending = False
         self.fatal = False
         header = {"schema": SCHEMA, "bindings": self.bindings, "plan_sha256": planned.sha256,
-                  "caps": caps, "extra_limits": self.extra_limits}
+                  "caps": caps, "extra_limits": self.extra_limits,"metadata_ceiling_bytes":self.metadata_limit}
         self.binding_sha256 = digest(header)
         self.path = self.directory / "PHYSICAL_COSTS.jsonl"
         self.directory.mkdir(parents=True, exist_ok=True)
@@ -121,13 +131,16 @@ class DurableLedger:
             self.header_bytes=header_path.stat().st_size
             require(header_path.is_file() and _load(header_path.read_bytes()) == header,
                     "resume ledger source/plan/recipe/caps binding drift")
+            self._extra_add({'chunk_io_write_bytes':self.header_bytes})
+            self._metadata_add('fixed',self.header_bytes)
             self._replay()
         else:
             require(not header_path.exists() and not self.path.exists(), "ledger is create-only")
             self._extra_check({"chunk_io_write_bytes": len(canonical(header)) + 1})
+            self._metadata_add('fixed',len(canonical(header))+1)
             _exclusive(header_path, header)
+            self._extra_add({'chunk_io_write_bytes':header_path.stat().st_size})
         self.header_bytes = header_path.stat().st_size
-        self._extra_add({"chunk_io_write_bytes": self.header_bytes})
         if resume:
             self._event("setup_io", {"read_bytes": self.header_bytes + (self.path.stat().st_size if self.path.exists() else 0)})
 
@@ -151,6 +164,31 @@ class DurableLedger:
     def _extra_add(self, changes):
         self.extra = self._extra_check(changes)
 
+    def _metadata_add(self,kind,upper):
+        require(type(upper) is int and upper>=0 and (kind=='fixed' or kind in plan.METADATA_CLASSES),'metadata class/byte type')
+        if self.metadata_cumulative_reserved_bytes+upper>self.metadata_limit:
+            raise plan.CeilingRejected('cumulative owned metadata hard ceiling')
+        if self.metadata_envelope is not None:
+            if kind=='fixed':
+                if self.metadata_fixed_reserved_bytes+upper>self.metadata_envelope['fixed_bytes_upper']:
+                    raise plan.CeilingRejected('fixed metadata allowance')
+            else:
+                bounds=self.metadata_envelope['classes'][kind]
+                if upper>bounds['serialized_bytes_upper'] or self.metadata_class_writes[kind]+1>bounds['writes_upper']:
+                    raise plan.CeilingRejected('metadata class count/serialized bound: '+kind)
+        self.metadata_cumulative_reserved_bytes+=upper
+        if kind=='fixed':self.metadata_fixed_reserved_bytes+=upper
+        else:
+            self.metadata_class_writes[kind]+=1
+            self.metadata_class_bytes[kind]+=upper
+
+    def _apply_admitted_row(self,kind,payload,row_bytes):
+        # The same order is used live and on replay. Each dictionary has a
+        # fixed counter population; no history/model clone is involved.
+        self._extra_add({'chunk_io_write_bytes':row_bytes})
+        self._metadata_add('fixed' if kind=='setup_io' else 'physical_ledger',row_bytes)
+        self._apply(kind,payload)
+
     def _replay(self):
         if not self.path.exists():
             return
@@ -166,8 +204,7 @@ class DurableLedger:
                 require(body.get("seq") == len(self.events) and body.get("previous") == self.previous
                         and body.get("binding_sha256") == self.binding_sha256 and digest(body) == entry.get("sha256"),
                         "cost journal hash/order/source binding drift")
-                self._extra_add({"chunk_io_write_bytes": len(raw)})
-                self._apply(body["kind"], body["payload"])
+                self._apply_admitted_row(body['kind'],body['payload'],len(raw))
                 self.events.append(entry)
                 self.previous = entry["sha256"]
 
@@ -181,14 +218,12 @@ class DurableLedger:
         require(len(raw) <= MAX_LINE, "cost event byte budget")
         # In-memory admission can conservatively advance before an IO failure.
         # No caller may start physical work until this method successfully fsyncs.
-        self._extra_check({"chunk_io_write_bytes": len(raw)})
         try:
-            self._apply(kind, payload)
+            self._apply_admitted_row(kind,payload,len(raw))
             with self.path.open("ab") as stream:
                 require(stream.write(raw) == len(raw), "short cost journal write")
                 stream.flush()
                 os.fsync(stream.fileno())
-            self._extra_add({"chunk_io_write_bytes": len(raw)})
         except BaseException:
             self.fatal = True
             raise
@@ -214,6 +249,15 @@ class DurableLedger:
                 expected=self.header_bytes+sum(len(canonical(event))+1 for event in self.events)
                 require(payload["read_bytes"]==expected,"resume ledger observed read size drift")
                 self._extra_add({"chunk_io_read_bytes":payload["read_bytes"]})
+        elif kind=='metadata_reservation':
+            identifier=payload['write_id']
+            target=Path(payload['path']).resolve()
+            require(type(identifier) is str and identifier and identifier not in self.metadata_write_ids
+                    and target.is_relative_to(self.directory) and target!=self.directory,
+                    'owned metadata write identity/path')
+            require(payload['class'] in plan.METADATA_CLASSES-{'physical_ledger'},'external metadata class')
+            self._metadata_add(payload['class'],payload['bytes_upper'])
+            self.metadata_write_ids.add(identifier)
         elif kind == "invocation_start":
             self.core.invocation(resume=payload["resume"])
             require(payload["id"] not in self.invocations, "duplicate invocation")
@@ -410,6 +454,12 @@ class DurableLedger:
         self.tick_wall()
         self._event("operation", {"operation": kind, "phase": phase, "operation_id": operation_id, "metadata": metadata})
 
+    def reserve_metadata(self,kind,bytes_upper,*,write_id,path):
+        """Fsync the permanent row+external reservation before caller opens its file."""
+        self.tick_wall()
+        return self._event('metadata_reservation',{'class':kind,'bytes_upper':bytes_upper,
+                          'write_id':write_id,'path':str(Path(path).resolve())})
+
     def charge_setup(self, observations):
         """Charge bounded bootstrap reads that preceded plan admission, before framework work."""
         changes=bootstrap_charges(observations)
@@ -455,5 +505,9 @@ class DurableLedger:
                 "last_event_sha256": self.previous, "progress": {k: v for k, v in self.progress_record().items() if k != "history"},
                 "history_sha256": digest(self.progress.history), "cumulative": dict(self.core.counters),
                 "identity_and_IO_cumulative": dict(self.extra), "unknown_wall": self.core.wall_unknown,
+                'metadata_ceiling_bytes':self.metadata_limit,
+                'metadata_cumulative_reserved_bytes':self.metadata_cumulative_reserved_bytes,
+                'metadata_fixed_reserved_bytes':self.metadata_fixed_reserved_bytes,
+                'metadata_class_writes':dict(self.metadata_class_writes),'metadata_class_bytes':dict(self.metadata_class_bytes),
                 "pending_rollouts": len(self.core.pending_rollouts),
                 "pending_operations": sum(op["phase"] == "started" for op in self.external_ops.values())}

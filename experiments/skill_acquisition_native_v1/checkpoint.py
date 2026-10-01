@@ -3,7 +3,9 @@
 This module supplies storage mechanics, not a training grant or stage runner.
 ``gate(stage)`` must enforce the caller's resource/admission envelope. Bindings
 pin the exact ordered plan, inventory, start/reference anchors and code/data/
-runtime/recipe. Call ``attach_ledger`` before a fresh-process restore.
+runtime/recipe. Supply ``metadata_reserve`` before constructor writes, and call
+``attach_ledger`` before a fresh-process restore. Metadata reservations are
+permanent across failures, interrupted writes and rolling retirement.
 
 The returned fence is a symbolic C/U/history snapshot, never a model policy ID.
 The runner installs it and rejects every older-generation operation/trajectory.
@@ -133,8 +135,10 @@ def validate_progress(progress, plan_rows):
 
 
 class NativeCheckpoints:
-    def __init__(self, directory, bindings, numel, gate):
+    def __init__(self, directory, bindings, numel, gate, *, metadata_reserve):
         require(callable(gate) and type(numel) is int and numel > 0, 'gate and positive inventory required')
+        require(callable(metadata_reserve), 'metadata reservation callback required before constructor writes')
+        self.metadata_reserve = metadata_reserve
         self.directory = Path(directory).resolve()
         self.bindings = _json(canonical(bindings))
         require(type(self.bindings) is dict, 'bindings mapping required')
@@ -198,6 +202,7 @@ class NativeCheckpoints:
         require(len(raw) <= MAX_JSON and not os.path.lexists(path), 'metadata budget/create-only publication')
         self._check_gate('metadata_write')
         temporary = self._path('.' + path.name + '.' + uuid.uuid4().hex + '.partial')
+        self.metadata_reserve('checkpoint_json', len(raw), write_id=uuid.uuid4().hex, path=str(temporary))
         try:
             with temporary.open('xb') as stream:
                 for start in range(0, len(raw), CHUNK):
@@ -240,6 +245,7 @@ class NativeCheckpoints:
         raw = canonical(entry) + b'\n'
         path = self._path(JOURNAL_FILE)
         require((path.stat().st_size if path.exists() else 0) + len(raw) <= MAX_JOURNAL, 'checkpoint journal byte ceiling')
+        self.metadata_reserve('checkpoint_journal', len(raw), write_id=uuid.uuid4().hex, path=str(path))
         with path.open('ab') as stream:
             for start in range(0, len(raw), CHUNK):
                 block = raw[start:start + CHUNK]

@@ -478,6 +478,41 @@ class ProtocolTests(unittest.TestCase):
         self.authorize(packet)
         self.reject(packet, 'reservation drift')
 
+    def metadata_census_packet(self):
+        """Synthetic size envelopes exercise admission; no measured native census."""
+        packet = self.packet()
+        io = copy.deepcopy(self.values['io_budget'])
+        metadata = {'schema': 'S1_METADATA_CENSUS-1', 'code_sha256': packet['code_sha256'],
+            'update_recipe_sha256': p.digest(packet['update_recipe']), 'plan_sha256': self.values['plan']['plan_sha256'],
+            'io_preimage_sha256': p.digest(io), 'fixed_bytes_upper': 64 * 1024 ** 2,
+            'classes': {name: {'writes_upper': 1024, 'serialized_bytes_upper': 4096}
+                        for name in ('physical_ledger', 'checkpoint_json', 'checkpoint_journal', 'runner_receipt')}}
+        io['metadata_census'] = metadata
+        packet['io_budget'] = self.bound('io_budget', io)
+        reserve = metadata['fixed_bytes_upper'] + sum(item['writes_upper'] * item['serialized_bytes_upper']
+                                                     for item in metadata['classes'].values())
+        packet['limits'].update(active_metadata_reserve_bytes=reserve,
+                                active_storage_reserve_bytes=28 * packet['inventory']['numel'] + reserve)
+        return self.authorize(packet)
+
+    def test_bound_metadata_census_can_admit_smaller_enforced_storage_budget(self):
+        packet = self.metadata_census_packet()
+        self.admit(packet)
+        self.assertEqual(packet['limits']['active_metadata_reserve_bytes'], 80 * 1024 ** 2)
+        self.assertLess(packet['limits']['active_metadata_reserve_bytes'], packet['limits']['chunk_io_write_bytes'])
+        context = p.admitted_context(packet)
+        self.assertEqual(context['caps']['active_metadata_reserve_bytes'], 80 * 1024 ** 2)
+
+    def test_metadata_census_must_bind_source_recipe_plan_and_IO_without_self_hash(self):
+        for field in ('code_sha256', 'update_recipe_sha256', 'plan_sha256', 'io_preimage_sha256'):
+            with self.subTest(field=field):
+                packet = self.metadata_census_packet()
+                io = copy.deepcopy(self.values['io_budget'])
+                io['metadata_census'][field] = {'protocol.py': '0' * 64} if field == 'code_sha256' else '0' * 64
+                packet['io_budget'] = self.bound('io_budget', io)
+                self.authorize(packet)
+                self.reject(packet, 'metadata census .*binding')
+
     def test_qualification_counts_cases_and_score_error(self):
         self.mutations([('qualification', path, value, 'qualification|parity|acceptance|fixture case') for path, value in
             (('counts.backwards', 0), ('counts.optimizer_steps', True), ('mechanics_cases.C_greater_than_U', False),

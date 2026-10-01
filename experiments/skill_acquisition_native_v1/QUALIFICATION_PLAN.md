@@ -70,12 +70,19 @@ Do not infer numeric ceilings from unrelated CE throughput.
 
 The retained physical ledger also needs a whole-unit storage reservation.
 64 MiB is a minimum metadata allowance, not a demonstrated bound for all
-trajectories and operations. The current safe fallback reserves the entire
-bound cumulative IO-write allowance as potential metadata, in addition to
-28 bytes per trainable parameter for binary artifacts. This can exceed local
-disk capacity. A smaller practical reservation requires a separately measured
-metadata census and an enforced counter covering every metadata writer;
-that tighter accounting remains unimplemented.
+trajectories and operations. Without a bound metadata census, the safe fallback
+reserves the entire cumulative IO-write allowance as potential metadata, in
+addition to 28 bytes per trainable parameter for binary artifacts. Its atomic
+binary-write lower bound already requires about 144.45 GiB free disk.
+
+A smaller reservation now requires a bound `S1_METADATA_CENSUS-1` with finite
+class counts and serialized byte limits. The ledger enforces the fixed pool,
+each class, and the cumulative cap before a write. Checkpoint constructors,
+child JSON/JSONL writes, and runner receipts use the same permanent reservation
+callback. Failed, interrupted, and retired writes receive no refund. Event-row
+bytes and external reservations are checked together before physical append.
+Native measurements for this census remain missing; parser fixtures supply no
+usable production budget.
 
 Qualification provenance is now checked in a bound scope, separate scope
 authorization, native samples, mechanics token/reward fixtures, and a retained

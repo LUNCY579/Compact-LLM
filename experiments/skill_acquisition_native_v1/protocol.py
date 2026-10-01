@@ -590,9 +590,17 @@ def _planning(packet, proposal, prerequisites):
             and io.get('plan_sha256') == planned.sha256 and io.get('inventory') == packet['inventory']
             and io.get('qualification_sha256') == packet['qualification']['sha256'],
             'unit IO budget measurement/plan/qualification binding')
+    metadata = io.get('metadata_census')
+    if metadata is not None:
+        require(type(metadata) is dict and metadata.get('code_sha256') == packet['code_sha256']
+                and metadata.get('update_recipe_sha256') == digest(packet['update_recipe'])
+                and metadata.get('plan_sha256') == planned.sha256
+                and metadata.get('io_preimage_sha256') == digest({key: value for key, value in io.items()
+                                                                if key != 'metadata_census'}),
+                'metadata census code/recipe/plan/IO preimage binding')
     try:
         caps = planning.derive_caps(planned, census.get('prompt_lengths'), prices,
-                                    packet['inventory']['numel'], unit_io_budget=io)
+                                    packet['inventory']['numel'], unit_io_budget=io, metadata_census=metadata)
     except (ValueError, KeyError, TypeError, ZeroDivisionError) as error:
         raise AdmissionRejected('resolved plan ceilings: ' + str(error)) from error
     require(not caps['unresolved'], 'unresolved plan ceilings')
