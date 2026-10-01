@@ -4,6 +4,7 @@ from __future__ import annotations
 import ctypes as c
 from ctypes import wintypes as w
 import os
+import shutil
 import time
 
 QUERY = 0x1000
@@ -15,6 +16,11 @@ WAIT_TIMEOUT = 258
 def require(value, message):
     if not value:
         raise RuntimeError(message)
+
+
+def require_reserves(kernel, directory, host_floor=1.25):
+    require(kernel.available() >= host_floor, 'CPU host reserve floor')
+    require(shutil.disk_usage(directory).free / 2**30 >= 4, 'CPU ongoing disk reserve floor')
 
 
 class Basic(c.Structure):

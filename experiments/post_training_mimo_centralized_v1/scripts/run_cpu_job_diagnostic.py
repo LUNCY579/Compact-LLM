@@ -8,10 +8,11 @@ import sys
 import time
 import uuid
 from . import diagnose_windows_job as probe
-from .windows_job_cpu import Kernel, TracedJob, QUERY, SYNC, TERMINATE, WAIT_TIMEOUT, require, validate_owned_identity, cleanup_owned
+from .windows_job_cpu import Kernel, TracedJob, QUERY, SYNC, TERMINATE, WAIT_TIMEOUT, require, validate_owned_identity, cleanup_owned, require_reserves
 
 
 def main():
+    started = time.monotonic()
     require(len(sys.argv) == 1 and os.name == 'nt' and not probe.forbidden_modules(), 'CPU guard has no overrides')
     cfg = probe.read(probe.CONFIG)
     require(hashlib.sha256(probe.CONFIG.read_bytes()).hexdigest() == probe.CONFIG_SHA256, 'frozen CPU config changed')
@@ -25,7 +26,7 @@ def main():
     source_sha, frozen = probe.git('rev-parse', 'HEAD'), probe.sources()
     children, token, peak = {}, uuid.uuid4().hex, 0
     process = job = root_identity = None
-    error, started = None, time.monotonic()
+    error = None
 
     def retain(pid):
         if pid not in children:
@@ -44,7 +45,7 @@ def main():
     def guard():
         nonlocal peak
         require(time.monotonic() - started < 45 and not kernel.logging_errors, 'CPU outer time/evidence ceiling')
-        require(kernel.available() >= 1.25, 'CPU host reserve floor')
+        require_reserves(kernel, directory)
         rss = 0
         if process is not None and process.poll() is None:
             rss += kernel.rss(int(process._handle))
@@ -100,7 +101,8 @@ def main():
     finally:
         cleanup = cleanup_owned(kernel, job, children, process, os.getpid())
         probe.write(directory / 'OUTER_CLEANUP.json', cleanup)
-    passed = error is None and cleanup['status'] == 'OWNED_CPU_PROCESSES_EXITED' and not kernel.logging_errors
+    passed = (error is None and cleanup['status'] == 'OWNED_CPU_PROCESSES_EXITED'
+              and not kernel.logging_errors and time.monotonic() - started < 45)
     result = {'status': 'PASS_CPU_ONLY_EXTERNAL_CONTAINMENT' if passed else 'BLOCKED_CPU_OUTER_GUARD',
               'error': error, 'elapsed_seconds': time.monotonic() - started, 'source_sha': source_sha,
               'peak_observed_process_tree_rss_bytes': peak, 'cleanup': cleanup,

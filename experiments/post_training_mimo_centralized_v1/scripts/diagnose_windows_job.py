@@ -14,7 +14,7 @@ import sys
 import time
 import uuid
 
-from .windows_job_cpu import Kernel, TracedJob, QUERY, SYNC, TERMINATE, WAIT_TIMEOUT, require, validate_owned_identity, cleanup_owned
+from .windows_job_cpu import Kernel, TracedJob, QUERY, SYNC, TERMINATE, WAIT_TIMEOUT, require, validate_owned_identity, cleanup_owned, require_reserves
 
 ROOT = Path(__file__).resolve().parents[3]
 PACKAGE = ROOT / 'experiments/post_training_mimo_centralized_v1'
@@ -99,6 +99,7 @@ def worker(args):
         require(witness['api_success'], 'primary worker membership API failure')
         negative = kernel.membership(me, w.HANDLE(-2), 'invalid_job_handle_negative_control')
         require(not negative['api_success'] and negative['member'] is None, 'invalid Job handle negative control did not fail')
+        require(not kernel.logging_errors, 'worker CPU API evidence logging failed')
         write(directory / 'WORKER_RESULT.json', {'status': 'RECORDED_CPU_API_AND_LINEAGE_ONLY',
               'identity': identity, 'lineage': lineage, 'sources': own_sources, 'membership': witness,
               'negative_control': negative, 'forbidden_modules': forbidden_modules(),
@@ -106,6 +107,7 @@ def worker(args):
     finally:
         kernel.close(duplicate)
         kernel.close(parent)
+    require(not kernel.logging_errors, 'worker CPU cleanup evidence logging failed')
     return 0
 
 
@@ -166,7 +168,7 @@ def supervise():
                 nonlocal peak
                 require(not kernel.logging_errors, 'CPU API evidence logging failed')
                 require(time.monotonic() - started < 30, 'CPU suite wall ceiling')
-                require(kernel.available() >= 1.25, 'CPU host reserve ceiling')
+                require_reserves(kernel, OUTPUT)
                 rss = 0
                 if process is not None and process.poll() is None:
                     rss += kernel.rss(int(process._handle))

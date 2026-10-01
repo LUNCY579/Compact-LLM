@@ -4,9 +4,11 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from types import SimpleNamespace
 from unittest.mock import patch
 
 from experiments.post_training_mimo_centralized_v1.scripts import diagnose_windows_job as probe
+from experiments.post_training_mimo_centralized_v1.scripts import windows_job_cpu as windows
 from experiments.post_training_mimo_centralized_v1.scripts.windows_job_cpu import Kernel, membership_result, validate_owned_identity, cleanup_owned
 
 
@@ -149,6 +151,41 @@ class CPUJobControls(unittest.TestCase):
         self.assertEqual(cfg['model_operations'], 0)
         self.assertEqual(cfg['gpu_operations'], 0)
         self.assertFalse(cfg['native_capture_authorized'])
+
+    def test_disk_drop_after_initial_admission_blocks_the_next_guard(self):
+        kernel = SimpleNamespace(available=lambda: 5)
+        with patch.object(windows.shutil, 'disk_usage', side_effect=[SimpleNamespace(free=5 * 2**30), SimpleNamespace(free=3 * 2**30)]):
+            windows.require_reserves(kernel, 'owned-directory')
+            with self.assertRaisesRegex(RuntimeError, 'disk reserve'):
+                windows.require_reserves(kernel, 'owned-directory')
+
+    def test_worker_lost_api_log_cannot_publish_success(self):
+        class WorkerKernel:
+            logging_errors = ['injected worker evidence loss']
+            def current(self): return 1
+            def identity(self, handle, pid): return {'pid': pid, 'created_filetime': 123, 'image_path': 'python.exe'}
+            def lineage(self, pid, parent): return [{'pid': pid}, {'pid': parent}]
+            def open(self, pid, rights): return 10
+            def call(self, name, *args):
+                self_outer.assertEqual(name, 'DuplicateHandle')
+                args[3]._obj.value = 2
+                return 1, 0
+            def membership(self, handle, job, label):
+                return membership_result(0, 6, -1) if 'negative' in label else membership_result(1, 0, 0)
+            def close(self, handle): pass
+        self_outer = self
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)
+            directory = output / 'IMMEDIATE_ASSIGN'
+            directory.mkdir()
+            args = SimpleNamespace(case_path=directory, supervisor_pid=123, token='a' * 32)
+            go = {'token': args.token, 'sources': {'fixed': 'digest'}, 'supervisor_pid': 123,
+                  'supervisor_identity': {'pid': 123, 'created_filetime': 123, 'image_path': 'python.exe'}, 'job_handle': 99}
+            with patch.object(probe, 'OUTPUT', output), patch.object(probe, 'Kernel', return_value=WorkerKernel()), \
+                 patch.object(probe, 'sources', return_value=go['sources']), patch.object(probe, 'wait_file', return_value=go):
+                with self.assertRaisesRegex(RuntimeError, 'evidence logging failed'):
+                    probe.worker(args)
+            self.assertFalse((directory / 'WORKER_RESULT.json').exists())
 
 
 if __name__ == '__main__':
