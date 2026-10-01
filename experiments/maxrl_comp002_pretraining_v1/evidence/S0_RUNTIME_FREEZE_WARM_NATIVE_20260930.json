@@ -1,0 +1,115 @@
+{
+  "anchor": {
+    "arm_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
+    "base_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
+    "delta_path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_WARMSTART_DELTA.safetensors",
+    "delta_sha256": "09911292ff466e40c81308d6181c25f6c7cb998500bb6476ed0bf19769050d95",
+    "warmstart_receipt_sha256": "5f5992dcd5ba166f3823219876bae3158f87b2802cf4f34e810e62c89a4b8e78"
+  },
+  "anchor_digest_rule": "anchor arm_sha256 = anchor_digest(model) = state_fingerprint(model): sha256 over the sorted names of EVERY parameter and buffer of the model (named_parameters and named_buffers, remove_duplicate=False: the tied lm_head.weight alias and the non-persistent model.rotary_emb.inv_freq included) of name + NUL + arm_build.tensor_digest(tensor) + LF, i.e. arm_build.state_digest of that full name -> tensor map, FP32, as the tensors sit on the device. It is taken on the REBUILT model: Supa loaded by the S0 FP32 loader, then the delta file as read back by arm_build.read_delta added in FP32 in place (param.add_(delta), which is bitwise arm_build's fl32(arm + fl32(1.0 * delta))). Never on the trained FP32 master weights: fl32(base + fl32(final - base)) need not equal final.",
+  "checkout": {
+    "clean": true,
+    "head": "0c312a824d29835ec210ad6867d57c0eb5745ccf",
+    "repo": "C:\\Users\\clclc\\.codex\\worktrees\\comp-rs-native-q1\\ChatBubble-titan-model-soup-mini-v1"
+  },
+  "code_bundle_sha256": "2ffa150e2005deb0edd80b61a656e85bd9e4380b403c2883e72a9693cf0cf330",
+  "code_sha256": {
+    "arm_build.py": "a1b0a0f099de6e2765c1915915f4b4e22b4e3bec89f876bd9e445991c1af1598",
+    "mechanics.py": "e643eb196341e65f926733f22a2d23f668d8c09f046ebc5ae1d6561471cb0e88",
+    "preflight.py": "e6f0e53d34929c53c9db35d3e99b27a521f6a934717de107bd3c8464590544e8",
+    "s0_churn.py": "8e7473152f936fb4965abaef1b38e099b3b3a4dd9c7672a3c8d8ccf1ceb37062",
+    "s0_competence.py": "05a70d8b7248f0c54b27e7dc286259e16d7365fe640ebb44e1f834151188067e",
+    "s0_enroll.py": "b48ae3b55aab4a28dc1c55a5a226567ded61c826d8f492160a8be344082cb8ae",
+    "s0_freeze.py": "c11594492363b151a0921f0b2e0a22b433ca187dc3463177e5507bdd5db69d37",
+    "s0_generate.py": "60ba77eb8f688347b7852bb9b53f2728b8b1250578d1b36c0e210b6e3e7b3457",
+    "s0_pilot.py": "7ae20fda82fc3084b9a60634d213b7a62a7a494b64760e09710ca893c769e04c",
+    "s0_q1_fp32.py": "4c7af10214c2eb0f5fa1296a42344b8635383d4b503cb012bfd1d2b175ae1c87",
+    "s0_runtime.py": "739f97eda8688ffc32ab6683a6e98c4c2589a6bf2adc01bd18aabf10bca330bf"
+  },
+  "created_utc": "2026-10-01T01:44:18+00:00",
+  "decoding_preimage": {
+    "attn_implementation": "sdpa",
+    "cublas_workspace_config": ":4096:8",
+    "cuda": {
+      "capability": [
+        8,
+        9
+      ],
+      "cuda_build": "12.6",
+      "cudnn_version": 91002,
+      "device_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "driver_version": "566.07",
+      "nvidia_smi_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+      "sdp_backends": {
+        "cudnn": true,
+        "flash": true,
+        "math": true,
+        "mem_efficient": true
+      }
+    },
+    "decoding": {
+      "add_generation_prompt": true,
+      "add_special_tokens": false,
+      "batch_size": 1,
+      "do_sample": false,
+      "enable_thinking": false,
+      "eos_token_id": [
+        151645,
+        151643
+      ],
+      "greedy": true,
+      "max_new_tokens": 128,
+      "num_beams": 1,
+      "pad_token_id": 151643
+    },
+    "deterministic_algorithms": true,
+    "deterministic_warn_only": false,
+    "device": "cuda:0",
+    "dtype": "float32",
+    "float32_matmul_precision": "highest",
+    "num_threads": 4,
+    "packages": {
+      "safetensors": "0.7.0",
+      "tokenizers": "0.22.2",
+      "torch": "2.10.0+cu126",
+      "transformers": "4.57.1"
+    },
+    "python": "3.11.15",
+    "schema": "COMP-RS-001-S0-DECODING-1",
+    "tf32_cuda_matmul": false,
+    "tf32_cudnn": false
+  },
+  "decoding_sha256": "87220f47bedea9c4520abfcbd622aa042aaf6437a46cba0b825c3a6bef3f16b8",
+  "experiment": "COMP-RS-001",
+  "host_floor": {
+    "margin_gib": 1.0,
+    "peak_worker_rss_gib": 1.9738121032714844,
+    "source": "S0-Q1 host_floor.peak_worker_rss_gib (carried over, section 18)"
+  },
+  "host_floor_gib": 2.9738121032714844,
+  "inputs": {
+    "a_pilot": null,
+    "pilot": null,
+    "q1": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_Q1_FP32.json",
+      "sha256": "b1fa6d660abc89b889b914834bc01fc4c9dba8df31b4df5eea24692e7e47094e"
+    },
+    "warmstart": {
+      "path": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\S0_WARMSTART.json",
+      "sha256": "5f5992dcd5ba166f3823219876bae3158f87b2802cf4f34e810e62c89a4b8e78"
+    }
+  },
+  "inventory": {
+    "blocks": null,
+    "decision": null,
+    "name": "PENDING",
+    "registered_numel": null,
+    "rule": "C12 / section 18: no pilot has run on theta0'; the section 16 pilot ladder is re-run on theta0' after S0-C on theta0' passes"
+  },
+  "registered_run": true,
+  "registration": "COMP_RS_001_AMENDMENT_1.md section 18 (Amendment 2, step 3: the runtime freeze for theta0'), on section 16 (S0-F) and Clarifications C10-C12",
+  "schema": "COMP-RS-001-S0-FREEZE-WARM-1",
+  "scoring_code_bundle_sha256": "df351b69179cf67d04dc73928e0173f63834a80a00a2bc2453a25254987d56a8",
+  "stage": "S0_RUNTIME_FREEZE",
+  "test_mode": false
+}
