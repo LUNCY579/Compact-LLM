@@ -339,6 +339,35 @@ class SuspendedLaunchControls(unittest.TestCase):
             self.assertEqual(result['status'], 'BLOCKED_OWNED_CLEANUP')
             self.assertEqual(result['final_job_accounting_before_close']['total_processes'], 10)
 
+    def test_missing_receipt_after_root_creation_makes_aggregate_unknown(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)
+            directory = output / 'NORMAL_EXIT_CLEANUP'
+            directory.mkdir()
+            qual.metadata.logger(directory / 'CONTROLLER_API.jsonl')(
+                {'event': 'owned_cpu_root_created', 'pid': 99})
+            with patch.object(qual, 'OUTPUT', output):
+                accounting = qual.case_creation_accounting(['NORMAL_EXIT_CLEANUP'])
+            self.assertIsNone(accounting['worker_roots_created'])
+            self.assertIsNone(accounting['experimental_os_processes_created_observed'])
+            self.assertEqual(accounting['process_creation_accounting_status'], 'UNCERTAIN_MISSING_CASE_RECEIPT')
+            self.assertEqual(accounting['case_receipts_missing'], ['NORMAL_EXIT_CLEANUP'])
+            self.assertEqual(accounting['complete_receipt_worker_root_lower_bound'], 0)
+
+    def test_missing_later_case_preserves_confirmed_lower_bounds_separately(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp)
+            directory = output / 'NORMAL_EXIT_CLEANUP'
+            directory.mkdir()
+            qual.write(directory / 'CASE_RESULT.json', {'main_worker_root_created': 1,
+                                                       'os_processes_created_observed': 3})
+            with patch.object(qual, 'OUTPUT', output):
+                accounting = qual.case_creation_accounting(['NORMAL_EXIT_CLEANUP', 'TERMINATE_ACTIVE_TREE'])
+            self.assertIsNone(accounting['worker_roots_created'])
+            self.assertEqual(accounting['complete_receipt_worker_root_lower_bound'], 1)
+            self.assertEqual(accounting['complete_receipt_os_process_lower_bound'], 3)
+            self.assertEqual(accounting['case_receipts_missing'], ['TERMINATE_ACTIVE_TREE'])
+
 
 if __name__ == '__main__':
     unittest.main()

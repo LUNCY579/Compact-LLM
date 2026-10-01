@@ -1,0 +1,29 @@
+{
+  "status": "BLOCKED_CPU_PRELAUNCH_ACCOUNTING",
+  "source_sha": "5cf7aea845c1bbc3eb38c26b94b06e3115e59d80",
+  "reviewer": "/root/exact_prefix_review",
+  "config_sha256": "55a92ccfd0836775793cf3212d7f08a6a5df879e455f20efb97861047a3217cd",
+  "fixture_receipt_sha256": "f0d1d6fbd58d892aa0dfec98f4834cf6eb7db36d1513b30cefb1e6244c0390de",
+  "remaining_findings": [
+    {
+      "priority": "P2",
+      "finding": "Missing attempted-case result receipts can cause an incorrect aggregate zero creation count. Track attempts, mark aggregate counts null/uncertain, retain confirmed lower bounds and add regression fixture."
+    }
+  ],
+  "resolved_findings": [
+    "All six prior blockers resolved.",
+    "Signaled held handles and exit code two precede active-termination Job close.",
+    "Dummy autonomous timeout lies outside the whole 45-second outer window.",
+    "Lifetime process accounting, actual image pins, fallback rejection and startup persistence present."
+  ],
+  "verified": [
+    "Seven source pins and both logs match the 97-test fixture receipt.",
+    "All thirteen plus nine prior originals and tracked copies unchanged.",
+    "Both new attempt directories absent.",
+    "Frozen config hash unchanged."
+  ],
+  "probes_run_by_reviewer": 0,
+  "files_changed_by_reviewer": 0,
+  "service_tier_verified": false,
+  "native_capture_authorized": false
+}

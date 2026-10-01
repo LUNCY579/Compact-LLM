@@ -411,6 +411,35 @@ def run_case(cfg, name, deadline, frozen, source_sha):
     return result
 
 
+def case_creation_accounting(attempted_cases):
+    """Missing attempted-case receipts make aggregate counts unknown, not zero."""
+    complete, missing, errors = [], [], {}
+    for name in attempted_cases:
+        path = OUTPUT / name / 'CASE_RESULT.json'
+        if not path.exists():
+            missing.append(name)
+            continue
+        try:
+            value = read(path)
+            require(value['main_worker_root_created'] in (0, 1)
+                    and isinstance(value['os_processes_created_observed'], int)
+                    and 0 <= value['os_processes_created_observed'] <= 3,
+                    'CPU case accounting fields invalid')
+            complete.append(value)
+        except Exception as error:
+            missing.append(name)
+            errors[name] = type(error).__name__ + ': ' + str(error)
+    roots = sum(value['main_worker_root_created'] for value in complete)
+    processes = sum(value['os_processes_created_observed'] for value in complete)
+    return {'attempted_cases': list(attempted_cases), 'case_receipts_missing': missing,
+            'case_receipt_errors': errors,
+            'process_creation_accounting_status': 'UNCERTAIN_MISSING_CASE_RECEIPT' if missing else 'COMPLETE_CASE_RECEIPTS',
+            'worker_roots_created': None if missing else roots,
+            'experimental_os_processes_created_observed': None if missing else processes,
+            'complete_receipt_worker_root_lower_bound': roots,
+            'complete_receipt_os_process_lower_bound': processes}
+
+
 def controller(args):
     cfg = config()
     directory = OUTPUT.with_name(OUTPUT.name + '_outer')
@@ -424,22 +453,20 @@ def controller(args):
     require(not OUTPUT.exists(), 'CPU suite already consumed')
     OUTPUT.mkdir()
     started, deadline = time.monotonic(), time.monotonic() + 30
-    results, error = [], None
+    results, attempted, error = [], [], None
     try:
         for name in cfg['cases']:
             require(sources() == go['sources'], 'CPU controller source changed')
+            attempted.append(name)
             results.append(run_case(cfg, name, deadline, go['sources'], go['source_sha']))
     except BaseException as exc:
         error = type(exc).__name__ + ': ' + str(exc)
-    case_receipts = [read(OUTPUT / name / 'CASE_RESULT.json') for name in cfg['cases']
-                     if (OUTPUT / name / 'CASE_RESULT.json').exists()]
-    passed = error is None and len(results) == 3 and time.monotonic() < deadline
+    accounting = case_creation_accounting(attempted)
+    passed = (error is None and len(results) == 3 and not accounting['case_receipts_missing']
+              and time.monotonic() < deadline)
     result = {'status': 'PASS_CPU_SUSPENDED_CONTAINMENT_AND_CLEANUP_ONLY' if passed else 'BLOCKED_CPU_SUITE',
               'source_sha': go['source_sha'], 'sources': sources(), 'elapsed_seconds': time.monotonic() - started,
-              'cases': results, 'error': error,
-              'worker_roots_created': sum(r['main_worker_root_created'] for r in case_receipts),
-              'experimental_os_processes_created_observed': sum(
-                  r['os_processes_created_observed'] for r in case_receipts), **zero_scope()}
+              'cases': results, 'error': error, **accounting, **zero_scope()}
     write(OUTPUT / 'QUALIFICATION_RESULT.json', result)
     return 0 if passed else 2
 
