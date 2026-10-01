@@ -96,7 +96,7 @@ long-context memory qualification remain unavailable.
 ## Freeze, preserved scope and next decision
 
 [FREEZE_GAPFIX.json](FREEZE_GAPFIX.json) SHA-256:
-`2b65dd960a0e48f02f2c3c078b1cc98875b309442b9a7c02c8af510d1892cb7a`.
+`8cc0bf04f7bb335e6261f8e3d1fa629e9079ad8b1c4c7fa9160ac8b27837ef72`.
 It binds 30 local artifacts plus six dependency roles. The original renderer
 SHA-256 is `30b1791e1c30afb9f1cb40b0e57b3c8c62d6c39c23a8e3f20af2e17cfc1c937b`;
 the exact DEV fixture SHA-256 is
