@@ -387,6 +387,40 @@ linkage, retained-ledger replay, verification pricing and capability activation 
 after the new experiment decision and registration. Acquisition, composition
 and functional retention remain unproven.
 
+## Checkpoint child and controller services
+
+`ce_checkpoint_worker.py` implements the three declared qualification child
+branches, exact two-batch accounting, prefix restore, corrupt/stale restore
+attempts and full-state readback. A resumed child inherits logical U1 through
+an immutable admission bound to the original manifest, raw parent ledger,
+source, worker and anchors. It must restore and establish its own fresh fence
+before CE continues. Parent costs remain in the parent ledger; failed attempts
+remain charged. Cleanup precedes lease return and publication.
+
+`ce_native_services.py` implements stable controller dispatch, separate setup
+and native cost ownership, durable bootstrap accounting, resource barriers and
+service lifecycle checks. Worker context is finalized before permit issuance.
+Preparation leaves CUDA uninitialized for the backend's sole configuration.
+Missing source-owned roles refuse before dependent filesystem or model work.
+
+The combined child/service source suite passed **196/196 controls** with exact
+source hashes, no skips/errors, no ML framework imports, models or optimizer
+steps. See `evidence/CE8_CHILD_SERVICES_SOURCE_CHECKS_20261001.json`. No model or
+checkpoint child ran for this source milestone.
+
+The revised unapproved registration budget retains eight restore attempts,
+six save allowances and twelve full-state fingerprints. Its analytical totals
+fit the proposed checkpoint IO caps; these are reservations, not measured
+prices or proof of resource fit. The earlier proposal receipt remains evidence
+for its original revision. The new arithmetic receipt is retained in the
+method lab's `evidence/CE8_REGISTRATION_CP_COUNT_AMENDMENT_20261001.json`.
+
+Concrete child initialization, process supervision, GPU lease transfer,
+publication, issuer and final raw branch reductions still require integration.
+Native registries remain empty and the producer remains **DRAFT_UNQUALIFIED**.
+The warm stop, pending experiment choice and frozen scope govern native work.
+Acquisition, retention and independent composition remain unproved.
+
 ## Production interface
 
 ```powershell

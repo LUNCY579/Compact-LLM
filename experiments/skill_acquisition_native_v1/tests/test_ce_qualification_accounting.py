@@ -59,6 +59,40 @@ class Tests(unittest.TestCase):
     def raw(self, name='raw'):
         path = self.root / (name + '.json'); raw = b'{"fixture":true}\n'; path.write_bytes(raw)
         return {'path': str(path), 'sha256': hashlib.sha256(raw).hexdigest(), 'bytes': len(raw)}
+    def child_payload(self, branch='resumed'):
+        bindings = self.context['bindings']; batches = bindings['scope']['qualifier_execution']['adam_batches']
+        rawref = {'path': str(self.root / 'parent-proof.json'), 'sha256': 'a' * 64, 'bytes': 10}
+        parent = {'worker_identity_sha256': 'f' * 64, 'boot_identity_sha256': self.proof['boot_identity_sha256'],
+            'pid': 11, 'creation_filetime_100ns': 100, 'request_sha256': '1' * 64,
+            'scope_sha256': self.context['scope_sha256'], 'code_sha256': bindings['source']['code_sha256']}
+        history = [{'boundary': 0, 'row_ids': batches[0], 'updated': True,
+                    'start_policy_id': bindings['anchors']['own_start_sha256'],
+                    'final_policy_id': '2' * 64, 'result_sha256': '3' * 64}]
+        original = {'recipe': bindings['recipe']['recipe'], 'code': bindings['source']['code_sha256'],
+            'own_start_sha256': bindings['anchors']['own_start_sha256'],
+            'common_anchor_sha256': bindings['anchors']['common_anchor_sha256'],
+            'ordered_plan': [{'boundary': i, 'logical_exposure': 0, 'row_ids': batch} for i, batch in enumerate(batches)]}
+        manifest = {'schema': 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1', 'bindings': original,
+            'bindings_sha256': a.digest(original),
+            'progress': {'C': 1, 'U': 1, 'history': history, 'generation': 0, 'snapshot': '9' * 64}}
+        manifest['manifest_sha256'] = a.digest(manifest)
+        return {'schema': a.CHILD_PREFIX, 'branch': branch, 'parent_request_sha256': '1' * 64,
+            'child_request_sha256': self.context['request_sha256'], 'scope_sha256': self.context['scope_sha256'],
+            'static_recipe_sha256': self.context['static_recipe_sha256'], 'code_sha256': bindings['source']['code_sha256'],
+            'common_anchor_sha256': bindings['anchors']['common_anchor_sha256'],
+            'own_start_sha256': bindings['anchors']['own_start_sha256'], 'qualification_batches': batches,
+            'worker_identity_sha256': self.proof['worker_identity_sha256'], 'parent_worker_identity_sha256': 'f' * 64,
+            'parent_proof': parent, 'parent_ledger_refs': {key: dict(rawref) for key in ('header', 'journal', 'seal')},
+            'parent_stage_seal': {'schema': 'CE8-CHECKPOINT-PARENT-STAGE-SEAL-1', 'stage': 'checkpoint_resume',
+                'completed': False, 'worker_open': True, 'C': 2, 'U': 2,
+                'worker_identity_sha256': 'f' * 64, 'request_sha256': '1' * 64,
+                'scope_sha256': self.context['scope_sha256'], 'ledger_head': '5' * 64, 'binding_sha256': '6' * 64},
+            'ingestion_receipt_sha256': self.receipt['receipt_sha256'], 'inherited_U': 1 if branch == 'resumed' else 0,
+            'inherited_history': history if branch == 'resumed' else [], 'prefix_manifest_ref': dict(rawref),
+            'prefix_checkpoint_bindings_sha256': manifest['bindings_sha256'], 'prefix_manifest': manifest,
+            'endpoint_raw_refs': {key: dict(rawref) for key in ('parameters', 'adam', 'rng')}}
+    def child_admission(self, payload):
+        return a.CheckpointChildAdmission(self.context, None, self.proof, payload)
     def finish_prior(self, ledger, target):
         for stage in a.q.STAGES[1:a.q.STAGES.index(target)]:
             ledger.begin_stage(stage, 'fixture/' + stage)
@@ -74,6 +108,65 @@ class Tests(unittest.TestCase):
             with self.subTest(service_type=type(services).__name__), patch.object(Path, 'open', side_effect=AssertionError('unapproved FS')):
                 with self.assertRaisesRegex(ValueError, 'verifier is unregistered'):
                     a.QualificationAccounting(context, None, {}, {}, bootstrap_handle=BoolTrap())
+
+    def test_native_child_prefix_registry_refuses_before_proof_or_model_access(self):
+        class Trap:
+            def __getattribute__(self, key): raise AssertionError('unapproved child lineage access')
+        with patch.object(Path, 'open', side_effect=AssertionError('unapproved IO')):
+            with self.assertRaisesRegex(ValueError, 'verifier is unregistered'):
+                a.CheckpointChildAdmission(Trap(), Trap(), Trap(), Trap(), verifier=lambda *args: True)
+        self.assertFalse(a._REGISTERED_CHILD_PREFIX_VERIFIERS)
+
+    def test_inherited_prefix_records_external_costs_and_blocks_ce_until_actual_restore(self):
+        ledger = self.make(); payload = self.child_payload(); cap = self.child_admission(payload)
+        before = copy.deepcopy(ledger.cumulative); wall = ledger.actual_wall_seconds
+        ledger.admit_checkpoint_child_prefix(payload, admission_handle=cap)
+        self.assertEqual(ledger.progress_record()['C'], 1); self.assertEqual(ledger.progress_record()['U'], 1)
+        self.assertEqual(ledger.progress_record()['history'], payload['inherited_history'])
+        self.assertTrue(ledger.requires_restore)
+        self.assertEqual(ledger.events[-1]['kind'], 'checkpoint_child_prefix')
+        self.assertTrue(all(ledger.cumulative[key] >= before[key] for key in a.COST_FIELDS))
+        self.assertGreaterEqual(ledger.actual_wall_seconds, wall)
+        ledger.begin_stage('checkpoint_resume', 'fixture/resumed')
+        with self.assertRaisesRegex(ValueError, 'requires restore'):
+            ledger.operation('fingerprint', 'started', 'premature', reason='ce_pre_boundary_identity', state_bytes=100,
+                objective='SUPERVISED_EQUAL_ROW_TOKEN_MEAN_CE', boundary_id=1, generation=ledger.generation,
+                symbolic_snapshot=ledger.symbolic_snapshot, start_policy_id='2' * 64,
+                static_recipe_sha256=self.context['static_recipe_sha256'])
+        with self.assertRaises(ValueError): ledger.commit_boundary({'updated': True, 'U_after': 2})
+
+    def test_foreign_prefix_fields_boolean_U_and_missing_raw_refs_are_denied(self):
+        good = self.child_payload()
+        mutations = (lambda p: p.update(child_request_sha256='0' * 64),
+            lambda p: p.update(worker_identity_sha256='0' * 64),
+            lambda p: p.update(code_sha256={'foreign': '0' * 64}),
+            lambda p: p.update(inherited_U=True), lambda p: p.pop('parent_ledger_refs'),
+            lambda p: p.pop('prefix_manifest_ref'),
+            lambda p: p['qualification_batches'][0].__setitem__(0, 'foreign-row'),
+            lambda p: p['parent_proof'].update(request_sha256='0' * 64),
+            lambda p: p['parent_stage_seal'].update(completed=True),
+            lambda p: p['prefix_manifest']['progress'].update(U=True))
+        for index, mutate in enumerate(mutations):
+            payload = copy.deepcopy(good); mutate(payload)
+            with self.subTest(mutation=index), self.assertRaises(ValueError): self.child_admission(payload)
+
+    def test_actual_os_parent_proof_shape_is_normalized_without_flattened_native_claims(self):
+        payload = self.child_payload()
+        parent = payload['parent_proof']
+        parent['os_identity'] = {key: parent.pop(key) for key in ('pid', 'creation_filetime_100ns')}
+        code = parent.pop('code_sha256')
+        parent['sources'] = {'source_files': {key: {'sha256': value} for key, value in code.items()}}
+        cap = self.child_admission(payload)
+        self.assertFalse(cap._native)
+
+    def test_prefix_single_use_U0_branch_and_stale_restore_are_explicit(self):
+        ledger = self.make(); payload = self.child_payload('prefix'); cap = self.child_admission(payload)
+        ledger.admit_checkpoint_child_prefix(payload, admission_handle=cap)
+        self.assertEqual(ledger.progress_record()['C'], 0); self.assertFalse(ledger.requires_restore)
+        with self.assertRaisesRegex(ValueError, 'once'):
+            ledger.admit_checkpoint_child_prefix(payload, admission_handle=cap)
+        ledger.begin_stage('checkpoint_resume', 'fixture/prefix')
+        with self.assertRaises(ValueError): ledger.install_restore({'progress': ledger.progress_record()})
 
     def test_advancing_clock_end_uses_one_retained_tick_without_stale_timestamp(self):
         class AdvancingClock:

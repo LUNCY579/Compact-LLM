@@ -1,4 +1,16 @@
 {
+  "amendments": [
+    {
+      "approved": false,
+      "prior_metadata_validation_receipt": "C:\\Users\\clclc\\BusinessProject\\comp-rs-001-records\\s0\\r-oracle-supervision-proposal-20261001\\CE8_REGISTRATION_METADATA_VALIDATION_20261001.json",
+      "prior_proposal_sha256": "ae336060220fd097ed96565cc60471c9dea4604b5203991ae2ee1b7d448bde6f",
+      "qualification_authorized": false,
+      "reason": "actual fresh-child corruption+good-recovery source bodies require8 restore attempts, not old2; current source requires4 scheduled saves plus up to2 optionalC0 allowances",
+      "schema": "CE8-REGISTRATION-CP-COUNT-AMENDMENT-1",
+      "training_authorized": false,
+      "utc": "2026-10-01T23:33:51.432490+00:00"
+    }
+  ],
   "anchors": {
     "base_weights_sha256": "962abc5bcd5a83e3b7693bd278ae9215b6d83389a847913da9330b34dd5dd24b",
     "common_anchor_sha256": "ff516ff86259c101a8cf55b4bf548e267f74719dc450ad34538f4383ca55d84b",
@@ -5821,15 +5833,57 @@
     ],
     "attempt_policy": "one attempt per stage; failure/unknown work retains its full reservation and stops; no unregistered repeats",
     "checkpoint_accounting_bound": {
-      "combined_adapter_and_storage_read_reservation_bytes_upper": 448311984128,
-      "combined_adapter_and_storage_write_reservation_bytes_upper": 56038998016,
+      "additional_costs": "child constructor/bootstrap/source/handle/RPC/lease/reload/final-publication work must remain separately prepaid in final approved accounting profiles; source metadata arithmetic does not supply those measured costs.",
+      "combined_adapter_and_storage_read_reservation_bytes_upper": 784545972224,
+      "combined_adapter_and_storage_write_reservation_bytes_upper": 76925857792,
+      "combined_with_corruption_copy_read_bytes_upper": 792877021184,
+      "combined_with_corruption_copy_write_bytes_upper": 85256906755,
+      "corruption_copy_read_bytes_upper": 8331048960,
+      "corruption_copy_rule": "three separate child-owned copies, whole payload+64MiB metadata read/write allowances plus one mutated byte per copy; original checkpoints retained, no symlink/foreign file mutation",
+      "corruption_copy_write_bytes_upper": 8331048963,
       "inherited_metadata_reserve_bytes": 67108864,
       "inherited_single_checkpoint_write_bytes_upper": 2709907456,
-      "max_adapter_calls": 8,
+      "inherited_single_restore_write_bytes_upper": 67108864,
+      "max_adapter_calls": 14,
       "native_numel": 220233216,
-      "note": "Additional constructor/raw-artifact/hash/metadata verification work is separately charged; this bound does not assert measured actual costs.",
       "outer_and_nested_both_charged": true,
+      "restore_attempts_upper": 8,
+      "save_attempts_upper": 6,
+      "state_fingerprint_rule": "twelve full live parameter/Adam/module/Python/NumPy/CPU/CUDA RNG digest snapshots: before/after-corrupt/after-stale/after-good-recovery in each branch; separately declared analytical hash allowance, not a measured upper price",
       "status": "ANALYTICAL_PROPOSAL_RESERVATION_BOUND_NOT_MEASURED_IO"
+    },
+    "checkpoint_branch_counts": {
+      "actual_childbranches": [
+        "uninterrupted2",
+        "prefix1",
+        "resumed1"
+      ],
+      "all_failed_unknown_costs_retained": true,
+      "ancestry_reason": "NativeCheckpoints.save validates full exact history/U/generation and live state; first save at qualifiedU1/U2 is permitted. NativeCheckpoints.restore requires a retained checkpoint; its caller cannot invent an ancestor.",
+      "base_requires_initial_C0_before_first_save": false,
+      "caps_rule": "all attempted native restore work consumes full reservation, including corruption rejection. Optional C0 saves are bounded allowances, not implicit additional attempts or grants.",
+      "failed_corruption_restore_attempts": 3,
+      "native_optimizer_attempts_upper": 6,
+      "native_restore_attempts_upper": 8,
+      "native_saves_upper": 6,
+      "native_workers_total": 4,
+      "negative_control_full_state_fingerprints": 12,
+      "optional_initial_C0_saves_upper": 2,
+      "restore_attempts": {
+        "corrupt_latest_rejections": 3,
+        "final_parent_qualified_endpoint_restore": 1,
+        "fresh_resumed_child_prefix_restore": 1,
+        "verified_good_recovery_restores": 3
+      },
+      "scheduled_checkpoint_saves": 4,
+      "scheduled_save_roles": [
+        "parent_qualified_U2",
+        "uninterrupted_child_U2",
+        "prefix_child_U1",
+        "resumed_child_U2"
+      ],
+      "status": "UNAPPROVED_ANALYTICAL_WORK_COUNTS_NOT_MEASURED_PRICES",
+      "successful_restore_attempts_upper": 5
     },
     "criteria": {
       "adam_clipping": "at least two actual native CE8 Adam steps; clip1/norm2 before every Adam; actual U advances once; lazy state fresh atU0; all gradients finite/confined and all frozen parameters/buffers bitwise unchanged",
@@ -5861,19 +5915,30 @@
       "wall_s_upper": 19200
     },
     "global_caps": {
-      "identity_hash_attempts_upper": 810000,
-      "identity_hash_bytes_upper": 1421634174976,
-      "io_read_bytes_upper": 725849473024,
-      "io_write_bytes_upper": 94489280512,
-      "metadata_bytes_upper": 1811939328,
+      "identity_hash_attempts_upper": 1010000,
+      "identity_hash_bytes_upper": 4720169058304,
+      "io_read_bytes_upper": 1275605286912,
+      "io_write_bytes_upper": 163208757248,
+      "metadata_bytes_upper": 2080374784,
       "operation_attempts_upper": 220000,
       "wall_seconds_upper": 57600
     },
     "greedy_heldout_outputs": 0,
-    "native_checkpoint_restores_upper": 2,
+    "native_checkpoint_restores_upper": 8,
     "native_checkpoint_saves_upper": 6,
     "native_optimizer_attempts_upper": 8,
     "native_processes_upper": 4,
+    "negative_control_state_fingerprint_bound": {
+      "complete_profile_requirement": "state_proof_bounds must additionally cover actual CPU/CUDA RNG tensors and canonical module/group/Python/NumPy metadata before any hashing; actual shape census still requires qualification.",
+      "minimum_native_hash_work_bytes_per_snapshot": 2642799208,
+      "per_snapshot_identity_hash_attempts_upper": 10000,
+      "per_snapshot_identity_hash_bytes_upper": 8589934592,
+      "qualification_stage_hash_ceiling_includes_this_allowance": true,
+      "snapshots_upper": 12,
+      "status": "UNAPPROVED_FINITE_HARD_PROPOSAL_NOT_MEASURED",
+      "total_identity_hash_attempts_upper": 120000,
+      "total_identity_hash_bytes_upper": 103079215104
+    },
     "qualification_weights": "disposable; restore/reset from common warm anchor for each independent qualification trajectory and production arm; never reused as an acquired donor",
     "stage_caps": {
       "adam_clipping": {
@@ -5887,12 +5952,12 @@
         "wall_seconds_upper": 3600
       },
       "checkpoint_resume": {
-        "identity_hash_attempts_upper": 200000,
-        "identity_hash_bytes_upper": 1099511627776,
-        "io_read_bytes_upper": 549755813888,
-        "io_write_bytes_upper": 68719476736,
+        "identity_hash_attempts_upper": 400000,
+        "identity_hash_bytes_upper": 4398046511104,
+        "io_read_bytes_upper": 1099511627776,
+        "io_write_bytes_upper": 137438953472,
         "max_attempts": 1,
-        "metadata_bytes_upper": 268435456,
+        "metadata_bytes_upper": 536870912,
         "operation_attempts_upper": 30000,
         "wall_seconds_upper": 3600
       },

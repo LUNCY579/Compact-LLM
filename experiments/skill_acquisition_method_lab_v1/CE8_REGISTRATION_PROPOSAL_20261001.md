@@ -79,11 +79,24 @@ caps, operation, read/write, hash and metadata bounds are in the JSON.
 Outer controller summaries reference native charges instead of charging them
 again; their own bootstrap/verification work fits the stage-operation envelope.
 An additional independent outer clock would require another approved allowance.
-Checkpoint reservations include both the backend wrapper and inherited storage
-charges: up to six saves plus two restores require an analytical combined
-upper bound of 417.53 GiB read and 52.20 GiB write. The proposed checkpoint
-stage ceilings are 512 GiB and 64 GiB. These are cumulative reservations,
-separate from the active disk-space envelope, and have not been measured.
+Checkpoint reservations include the backend wrapper and inherited storage.
+The actual child control plan requires **eight restore attempts**: three
+corrupt-latest rejections, three verified good-ancestor recoveries, one fresh
+resumed-child prefix restore, and the final parent endpoint restore. Every
+failed attempt retains its full charge. Four saves are scheduled (parent U2,
+uninterrupted U2, prefix U1, resumed U2), with two bounded optional C0 allowances.
+The base save primitive validates complete history and permits a first U1/U2
+save; restore requires an actually retained checkpoint.
+
+With six save allowances, eight restore attempts and three isolated corruption
+copies, the analytical combined reservation is **738.43 GiB read / 79.41 GiB
+write**. Proposed checkpoint stage ceilings are **1,024 GiB read / 128 GiB
+write**. Twelve complete live-state fingerprints receive a separate finite
+96 GiB hash allowance within the stage's 4 TiB hash ceiling. These cumulative
+reservations are separate from active disk capacity and are not measured costs.
+Child bootstrap, source/handle, RPC, lease, reload and publication costs still
+need complete separately approved profiles. The earlier metadata validation
+receipt remains evidence for its prior proposal revision.
 
 The actual tokenizer-only receipt identifies the maxima **P = 1,259**,
 **C = 29**, and **S = 1,287** independently. For each teacher arm, one row

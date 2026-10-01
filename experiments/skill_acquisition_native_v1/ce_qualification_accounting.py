@@ -32,6 +32,117 @@ KINDS = ce.NATIVE_KINDS | frozenset(('journal_construct', 'qualification_mask',
     'qualification_artifact_readback', 'qualification_reducer_overhead', 'resource_probe', 'resource_cuda_probe'))
 COST_FIELDS = q.COST_FIELDS
 canonical, digest, require = q.canonical, q.digest, q.require
+CHILD_PREFIX = 'CE8-CHECKPOINT-CHILD-PREDECESSOR-1'
+_REGISTERED_CHILD_PREFIX_VERIFIERS = frozenset()
+_CHILD_PREFIX_SEAL = object()
+
+
+class CheckpointChildAdmission:
+    """Source-issued immutable parent/child lineage; native issuer stays closed."""
+    __slots__ = ('_seal', '_native', '_payload', '_request', '_worker')
+    def __init__(self, context, permit, proof, payload, *, verifier=None):
+        fixture = type(context) is dict and context.get('schema') == FIXTURE
+        if not fixture:
+            require(any(verifier is item for item in _REGISTERED_CHILD_PREFIX_VERIFIERS),
+                    'checkpoint child prefix verifier is unregistered')
+            authority.require_execution_permit(permit, context, 'checkpoint_resume')
+            require(verifier(context, proof, payload) is True, 'registered child prefix evidence refused')
+        else:
+            require(context.get('mode') == 'synthetic_fixture' and permit is None,
+                    'explicit non-native child-prefix fixture required')
+        _validate_child_prefix(context, proof, payload)
+        for key, value in (('_seal', _CHILD_PREFIX_SEAL), ('_native', not fixture),
+                ('_payload', _clone(payload)), ('_request', context['request_sha256']),
+                ('_worker', proof['worker_identity_sha256'])):
+            object.__setattr__(self, key, value)
+    def __setattr__(self, key, value): raise ValueError('child-prefix admission is immutable')
+
+
+def _validate_child_prefix(context, proof, payload):
+    require(type(payload) is dict and payload.get('schema') == CHILD_PREFIX
+            and payload.get('branch') in ('uninterrupted', 'prefix', 'resumed'), 'declared qualification CP child branch')
+    bindings = context['bindings']; batches = bindings['scope']['qualifier_execution']['adam_batches']
+    require(payload.get('child_request_sha256') == context['request_sha256']
+            and payload.get('scope_sha256') == context['scope_sha256']
+            and payload.get('static_recipe_sha256') == context['static_recipe_sha256']
+            and payload.get('code_sha256') == bindings['source']['code_sha256']
+            and payload.get('qualification_batches') == batches
+            and payload.get('worker_identity_sha256') == proof['worker_identity_sha256']
+            and payload.get('ingestion_receipt_sha256') == bindings['scope']['qualifier_accounting']['ingestion_receipt_sha256']
+            and all(payload.get(key) == bindings['anchors'][key] for key in ('common_anchor_sha256', 'own_start_sha256')),
+            'CP child request/source/recipe/worker/anchor/census/batch drift')
+    parent = payload.get('parent_proof')
+    parent_os = parent.get('os_identity', parent) if type(parent) is dict else None
+    require(type(parent) is dict and parent.get('worker_identity_sha256') == payload.get('parent_worker_identity_sha256')
+            and parent.get('worker_identity_sha256') != proof['worker_identity_sha256']
+            and parent.get('boot_identity_sha256') == proof['boot_identity_sha256']
+            and type(parent_os) is dict and q.integer(parent_os.get('pid'), 1)
+            and q.integer(parent_os.get('creation_filetime_100ns'), 1)
+            and q.hex64(payload.get('parent_request_sha256')),
+            'exact independent same-boot parent OS lineage required')
+    observed_sources = parent.get('sources', {}).get('source_files') if type(parent.get('sources')) is dict else None
+    if observed_sources is not None:
+        require(type(observed_sources) is dict and all(type(value) is dict and q.hex64(value.get('sha256')) for value in observed_sources.values()),
+                'exact observed parent source-file map')
+        parent_code = {key: value['sha256'] for key, value in observed_sources.items()}
+    else:
+        require(context.get('schema') == FIXTURE, 'native parent needs actual observed source map')
+        parent_code = parent.get('code_sha256')
+    require(parent.get('request_sha256') == payload['parent_request_sha256']
+            and parent.get('scope_sha256') == payload['scope_sha256']
+            and parent_code == payload['code_sha256'], 'parent request/source/scope drift')
+    refs = payload.get('parent_ledger_refs')
+    require(type(refs) is dict and set(refs) == {'header', 'journal', 'seal'}, 'all externally retained parent ledger references required')
+    def ref(value):
+        return (type(value) is dict and type(value.get('path')) is str and Path(value['path']).is_absolute()
+                and q.hex64(value.get('sha256')) and q.integer(value.get('bytes'), 1))
+    require(all(ref(value) for value in refs.values()), 'exact parent raw ledger proof refs')
+    stage_seal = payload.get('parent_stage_seal')
+    require(type(stage_seal) is dict and stage_seal.get('schema') == 'CE8-CHECKPOINT-PARENT-STAGE-SEAL-1'
+            and stage_seal.get('stage') == 'checkpoint_resume' and stage_seal.get('completed') is False
+            and stage_seal.get('worker_open') is True and type(stage_seal.get('C')) is type(stage_seal.get('U')) is int
+            and stage_seal['C'] == stage_seal['U'] == 2
+            and stage_seal.get('worker_identity_sha256') == parent['worker_identity_sha256']
+            and stage_seal.get('request_sha256') == payload['parent_request_sha256']
+            and stage_seal.get('scope_sha256') == payload['scope_sha256']
+            and q.hex64(stage_seal.get('ledger_head')) and q.hex64(stage_seal.get('binding_sha256')),
+            'exact live parent checkpoint-stage seal; no completion claim')
+    U = payload.get('inherited_U')
+    require(type(U) is int and U == (1 if payload['branch'] == 'resumed' else 0), 'strict branch-specific inherited U')
+    history = payload.get('inherited_history')
+    require(type(history) is list and len(history) == U, 'exact inherited logical history')
+    if U:
+        require(ref(payload.get('prefix_manifest_ref')) and q.hex64(payload.get('prefix_checkpoint_bindings_sha256'))
+                and type(payload.get('endpoint_raw_refs')) is dict
+                and set(payload['endpoint_raw_refs']) == {'parameters', 'adam', 'rng'}
+                and all(ref(value) for value in payload['endpoint_raw_refs'].values()), 'raw prefix model/Adam/RNG/manifest evidence required')
+        entry = history[0]
+        require(type(entry) is dict and type(entry.get('boundary')) is int and entry['boundary'] == 0
+                and entry.get('row_ids') == batches[0] and entry.get('updated') is True
+                and entry.get('start_policy_id') == bindings['anchors']['own_start_sha256']
+                and q.hex64(entry.get('final_policy_id')) and q.hex64(entry.get('result_sha256')),
+                'exact first qualification batch/policy/result ancestor required')
+        manifest = payload.get('prefix_manifest')
+        require(type(manifest) is dict and manifest.get('schema') == 'SKILL-ACQUISITION-NATIVE-CHECKPOINT-1'
+                and manifest.get('manifest_sha256') == digest({key: value for key, value in manifest.items() if key != 'manifest_sha256'})
+                and type(manifest.get('bindings')) is dict
+                and manifest.get('bindings_sha256') == digest(manifest['bindings']) == payload['prefix_checkpoint_bindings_sha256'],
+                'exact original prefix manifest/bindings body digests required')
+        original = manifest['bindings']
+        require(original.get('recipe') == bindings['recipe']['recipe']
+                and original.get('ordered_plan') == [{'boundary': i, 'logical_exposure': 0, 'row_ids': batch} for i, batch in enumerate(batches)]
+                and original.get('own_start_sha256') == payload['own_start_sha256']
+                and original.get('common_anchor_sha256') == payload['common_anchor_sha256']
+                and original.get('code') == payload['code_sha256'], 'prefix original recipe/source/anchor/plan drift')
+        progress = manifest.get('progress')
+        from .checkpoint import validate_progress
+        validate_progress(progress, batches)
+        require(progress['C'] == progress['U'] == 1 and progress['history'] == history,
+                'prefix manifest exact observed U1/history required')
+    declared = bindings['scope'].get('checkpoint_child_lineage')
+    if context.get('schema') != FIXTURE:
+        require(declared == payload, 'child lineage differs from source-bound frozen request')
+    return payload
 
 
 def _clone(value): return json.loads(canonical(value))
@@ -186,6 +297,7 @@ class QualificationAccounting:
         self.fatal = self.unknown_wall = False
         self.active = None
         self.operations, self.attempts, self.events, self.metadata_ids = {}, [], [], set()
+        self.child_prefixes = set()
         self.cumulative = {k: 0 for k in COST_FIELDS}
         self.by_stage = {stage: {k: 0 for k in COST_FIELDS} for stage in q.STAGES}
         self.directory = Path(spec['owned_directory']).resolve()
@@ -326,6 +438,22 @@ class QualificationAccounting:
         self._charge(stage, _add(amounts, {'metadata_bytes_upper': len(raw), 'io_write_bytes_upper': len(raw),
             'identity_hash_attempts_upper': 1, 'identity_hash_bytes_upper': len(canonical(body))})); action()
     def _prepare(self, kind, payload):
+        if kind == 'checkpoint_child_prefix':
+            _validate_child_prefix(self.context, self._current_proof, payload)
+            require(self.active is None and self._ce.progress['C'] == self._ce.progress['U'] == 0
+                    and self._ce.active_attempt is None and not self.child_prefixes,
+                    'child prefix must be admitted once before any own CE work')
+            inherited = payload['inherited_U']
+            progress = {'C': inherited, 'U': inherited, 'history': _clone(payload['inherited_history']), 'generation': 0}
+            progress['snapshot'] = digest(dict(progress, plan_sha256=self._ce.plan['plan_sha256']))
+            from .checkpoint import validate_progress
+            validate_progress(progress, self._ce.plan_rows)
+            def apply():
+                self.child_prefixes.add(digest(payload))
+                self.external_predecessors.update(q.STAGES[:q.STAGES.index('checkpoint_resume')])
+                self._ce.progress = progress
+                self._ce.requires_restore = bool(inherited)
+            return None, {}, apply
         if kind == 'setup':
             amount = _price(payload['profile'])
             if not self._header_cost_prepaid: amount = _add(amount, payload.get('header_costs', {}))
@@ -475,6 +603,19 @@ class QualificationAccounting:
     __call__ = operation
     def commit_boundary(self, result): return self._event('commit', {'result': result})
     def install_restore(self, record): return self._event('restore', {'record': record})
+    def admit_checkpoint_child_prefix(self, payload, *, admission_handle=None, verifier=None):
+        if not self.fixture:
+            require(any(verifier is item for item in _REGISTERED_CHILD_PREFIX_VERIFIERS),
+                    'checkpoint child prefix verifier is unregistered')
+            authority.require_execution_permit(self.permit, self.context, 'checkpoint_resume')
+        require(type(admission_handle) is CheckpointChildAdmission
+                and getattr(admission_handle, '_seal', None) is _CHILD_PREFIX_SEAL
+                and admission_handle._native is (not self.fixture)
+                and admission_handle._request == self.request_sha256
+                and admission_handle._worker == self._current_proof['worker_identity_sha256']
+                and admission_handle._payload == payload, 'opaque exact current-child prefix admission required')
+        _validate_child_prefix(self.context, self._current_proof, payload)
+        return self._event('checkpoint_child_prefix', payload)
     def progress_record(self): return _clone(self._ce.progress)
     def operation_evidence(self, operation_id):
         require(operation_id in self.operations, 'known retained qualification operation required')
@@ -577,6 +718,7 @@ def replay_state(context, header, prepared_receipt):
     state.external_predecessors = {'ingestion_tokenizer'} if state.spec.get('ingestion_bootstrap_ref') else set()
     state.fatal = state.unknown_wall = False
     state.active, state.operations, state.attempts, state.events, state.metadata_ids = None, {}, [], [], set()
+    state.child_prefixes = set()
     state.cumulative = dict.fromkeys(COST_FIELDS, 0)
     state.by_stage = {stage: dict.fromkeys(COST_FIELDS, 0) for stage in q.STAGES}
     state.reducer_reserved_bytes, state.reducer_by_stage = 0, dict.fromkeys(q.STAGES, 0)
