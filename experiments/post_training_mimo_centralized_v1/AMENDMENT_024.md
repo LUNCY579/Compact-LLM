@@ -47,6 +47,15 @@ verified before resume/BOOT_GO. Total created processes <=9: one controller,
 three launcher/interpreter pairs and two single-process dummies. Root invocations
 above that controller are the existing execution tool/pinned venv, not experimental
 workers. No hidden retry or unregistered diagnostic launch.
+Enforce the cumulative ceiling with public Job lifetime TotalProcesses accounting,
+including a final query before the Job closes; sampled PID sets are separate
+observations. Bind each actual interpreter's READY/held image path and bytes to
+the frozen actual interpreter before GO. Termination-control exit waits precede
+inner Job close, so that close cannot substitute for the tested termination.
+The dummy's autonomous exit is at least fifty seconds after arming, outside the
+entire unchanged 45-second outer window. The outer containment still bounds its
+actual run. Record that deadline. Require the active-termination control's held
+exit codes to equal the requested TerminateJobObject code two.
 
 Unchanged resource limits: 30-second suite, 45-second external ceiling including
 cleanup, five seconds per metadata phase, 100 ms guard polling, <=0.5 GiB observed

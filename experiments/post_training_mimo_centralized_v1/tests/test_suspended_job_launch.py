@@ -1,6 +1,9 @@
 """CPU fixtures for fail-closed launch ordering and held-handle cleanup."""
 import json
+import io
+import hashlib
 from pathlib import Path
+from types import SimpleNamespace
 import tempfile
 import unittest
 from unittest.mock import patch
@@ -229,6 +232,112 @@ class SuspendedLaunchControls(unittest.TestCase):
         self.assertEqual(cfg['model_operations'], 0)
         self.assertEqual(cfg['gpu_operations'], 0)
         self.assertFalse(cfg['native_capture_authorized'])
+
+    def test_active_termination_proof_waits_on_every_owned_handle_with_job_still_open(self):
+        owned = items()
+        class SignaledKernel(FakeKernel):
+            def call(self, name, handle, *args, **kwargs):
+                self_outer.assertEqual(name, 'WaitForSingleObject')
+                return 0, 0
+            def exit_code(self, handle, label):
+                return 2
+        self_outer = self
+        tree = SimpleNamespace(job=SimpleNamespace(handle=800), process=FakeProcess(),
+                               root_identity={'pid': 99}, children=owned, kernel=SignaledKernel(owned),
+                               guard=lambda: None, deadline=5)
+        with patch.object(qual.time, 'monotonic', return_value=0):
+            witnesses = qual.confirm_job_termination_before_close(tree)
+        self.assertEqual([row['identity']['pid'] for row in witnesses], [99, 100, 200])
+        self.assertTrue(all(row['wait_return'] == 0 and row['inner_job_handle_still_open'] == 800 for row in witnesses))
+        self.assertEqual(tree.job.handle, 800)
+
+    def test_active_termination_timeout_blocks_before_any_job_close(self):
+        tree = SimpleNamespace(job=SimpleNamespace(handle=800), process=FakeProcess(),
+                               root_identity={'pid': 99}, children=items(), kernel=FakeKernel(items()),
+                               guard=lambda: None, deadline=5)
+        with patch.object(qual.time, 'monotonic', return_value=0), \
+             self.assertRaisesRegex(RuntimeError, 'termination unproved before close'):
+            qual.confirm_job_termination_before_close(tree)
+        self.assertEqual(tree.job.handle, 800)
+
+    def test_active_termination_wrong_exit_code_blocks_with_inner_job_still_open(self):
+        kernel = FakeKernel(items())
+        kernel.call = lambda *args, **kwargs: (0, 0)
+        kernel.exit_code = lambda *args: 1
+        tree = SimpleNamespace(job=SimpleNamespace(handle=800), process=FakeProcess(),
+                               root_identity={'pid': 99}, children=items(), kernel=kernel,
+                               guard=lambda: None, deadline=5)
+        with patch.object(qual.time, 'monotonic', return_value=0), \
+             self.assertRaisesRegex(RuntimeError, 'exit code two'):
+            qual.confirm_job_termination_before_close(tree)
+        self.assertEqual(tree.job.handle, 800)
+
+    def test_startup_exception_consumes_one_cpu_attempt_with_blocking_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / 'owned'
+            with patch.object(qual, 'OUTPUT', output), \
+                 patch.object(qual, 'outer', side_effect=RuntimeError('injected admission failure')), \
+                 patch.object(qual.sys, 'stdout', io.StringIO()):
+                self.assertEqual(qual.guarded_outer(), 2)
+            receipt = qual.read(output.with_name('owned_outer') / 'OUTER_EXCEPTION.json')
+            self.assertEqual(receipt['status'], 'BLOCKED_CPU_OUTER_EXCEPTION')
+            self.assertFalse(receipt['native_capture_authorized'])
+            self.assertEqual(receipt['model_operations'], 0)
+            self.assertIn('not assumed zero', receipt['process_creation_accounting'])
+
+    def test_startup_failure_cannot_overwrite_a_previous_blocking_receipt(self):
+        with tempfile.TemporaryDirectory() as temp:
+            output = Path(temp) / 'owned'
+            directory = output.with_name('owned_outer')
+            directory.mkdir()
+            receipt = directory / 'OUTER_EXCEPTION.json'
+            qual.write(receipt, {'status': 'ORIGINAL_CPU_BLOCK'})
+            original = receipt.read_bytes()
+            with patch.object(qual, 'OUTPUT', output), \
+                 patch.object(qual, 'outer', side_effect=RuntimeError('later startup blocked')), \
+                 patch.object(qual.sys, 'stdout', io.StringIO()):
+                self.assertEqual(qual.guarded_outer(), 2)
+            self.assertEqual(receipt.read_bytes(), original)
+
+    def test_redirected_actual_interpreter_or_changed_image_bytes_block(self):
+        with tempfile.TemporaryDirectory() as temp:
+            pinned = Path(temp) / 'pinned.exe'
+            pinned.write_bytes(b'frozen image')
+            cfg = {'cpu_interpreter': str(pinned),
+                   'cpu_interpreter_sha256': hashlib.sha256(pinned.read_bytes()).hexdigest()}
+            qual.require_pinned_actual_image({'image_path': str(pinned)}, cfg)
+            with self.assertRaisesRegex(RuntimeError, 'redirected'):
+                qual.require_pinned_actual_image({'image_path': str(Path(temp) / 'redirected.exe')}, cfg)
+            pinned.write_bytes(b'changed image')
+            with self.assertRaisesRegex(RuntimeError, 'bytes changed'):
+                qual.require_pinned_actual_image({'image_path': str(pinned)}, cfg)
+
+    def test_job_lifetime_ceiling_blocks_even_with_only_one_sampled_pid(self):
+        kernel = LaunchKernel()
+        kernel.available = lambda: 5
+        kernel.job_accounting = lambda handle: {'total_processes': 10, 'active_processes': 1}
+        with tempfile.TemporaryDirectory() as temp:
+            tree = qual.Tree(kernel, Path(temp), 5)
+            tree.process, tree.job = FakeProcess(), SimpleNamespace(handle=800)
+            tree.rss_if_active = lambda handle: 0
+            with patch.object(qual.time, 'monotonic', return_value=0), \
+                 self.assertRaisesRegex(RuntimeError, 'lifetime/active'):
+                tree.guard()
+            self.assertEqual(tree.observed_created_pids(), [99])
+            self.assertEqual(tree.peak_job_lifetime_processes, 10)
+
+    def test_final_job_accounting_failure_still_attempts_owned_cleanup(self):
+        kernel = LaunchKernel()
+        kernel.job_accounting = lambda handle: {'total_processes': 10, 'active_processes': 0}
+        with tempfile.TemporaryDirectory() as temp:
+            tree = qual.Tree(kernel, Path(temp), 5)
+            tree.job = SimpleNamespace(handle=800)
+            expected = {'status': 'OWNED_CPU_PROCESSES_EXITED', 'errors': []}
+            with patch.object(qual, 'cleanup_owned', return_value=expected) as cleanup:
+                result = tree.cleanup()
+            cleanup.assert_called_once()
+            self.assertEqual(result['status'], 'BLOCKED_OWNED_CLEANUP')
+            self.assertEqual(result['final_job_accounting_before_close']['total_processes'], 10)
 
 
 if __name__ == '__main__':

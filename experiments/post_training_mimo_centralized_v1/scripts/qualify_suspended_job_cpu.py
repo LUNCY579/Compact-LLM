@@ -44,6 +44,14 @@ def zero_scope():
             'forbidden_modules': metadata.forbidden_modules()}
 
 
+def require_pinned_actual_image(identity, cfg):
+    expected = Path(cfg['cpu_interpreter']).resolve()
+    require(os.path.normcase(str(Path(identity['image_path']).resolve())) == os.path.normcase(str(expected)),
+            'actual CPU interpreter redirected from frozen image')
+    require(hashlib.sha256(expected.read_bytes()).hexdigest() == cfg['cpu_interpreter_sha256'],
+            'actual CPU interpreter image bytes changed')
+
+
 def preserved_evidence():
     counts = {}
     for name in ('EXACT_PREFIX_V1_ATTEMPT_SUMMARY.json', 'JOB_CONTAINMENT_DIAGNOSTIC_V1_OUTCOME.json'):
@@ -63,12 +71,14 @@ def preserved_evidence():
 
 class Tree:
     """Only held creation-bound descendants of this Popen root may be retained."""
-    def __init__(self, kernel, directory, deadline):
+    def __init__(self, kernel, directory, deadline, maximum_total_processes=9):
         self.kernel, self.directory, self.deadline = kernel, directory, deadline
         self.process = self.job = self.root_identity = None
         self.children, self.peak = {}, 0
         self.min_ram = self.min_disk = None
         self.frozen_sources = sources()
+        self.maximum_total_processes = maximum_total_processes
+        self.peak_job_lifetime_processes = self.peak_job_active_processes = 0
 
     def retain(self, pid):
         if pid == self.process.pid:
@@ -112,6 +122,11 @@ class Tree:
         if self.process is not None:
             rss += self.rss_if_active(int(self.process._handle))
         if self.job is not None and self.job.handle:
+            accounting = self.kernel.job_accounting(self.job.handle)
+            self.peak_job_lifetime_processes = max(self.peak_job_lifetime_processes, accounting['total_processes'])
+            self.peak_job_active_processes = max(self.peak_job_active_processes, accounting['active_processes'])
+            require(accounting['total_processes'] <= self.maximum_total_processes
+                    and accounting['active_processes'] <= 4, 'CPU owned Job lifetime/active process ceiling')
             pids = self.kernel.job_pids(self.job.handle)
             require(len(pids) <= 4, 'CPU unchanged four-process simultaneous ceiling')
             for pid in pids:
@@ -142,23 +157,41 @@ class Tree:
         return proof
 
     def cleanup(self, manual_fallback=True):
-        return cleanup_owned(self.kernel, self.job, self.children, self.process,
-                             os.getpid(), manual_fallback=manual_fallback)
+        final_accounting, accounting_error = None, None
+        if self.job is not None and self.job.handle:
+            try:
+                final_accounting = self.kernel.job_accounting(self.job.handle)
+                self.peak_job_lifetime_processes = max(self.peak_job_lifetime_processes, final_accounting['total_processes'])
+                self.peak_job_active_processes = max(self.peak_job_active_processes, final_accounting['active_processes'])
+                require(final_accounting['total_processes'] <= self.maximum_total_processes
+                        and final_accounting['active_processes'] <= 4, 'final CPU Job accounting ceiling')
+            except Exception as error:
+                accounting_error = str(error)
+        result = cleanup_owned(self.kernel, self.job, self.children, self.process,
+                               os.getpid(), manual_fallback=manual_fallback)
+        result['final_job_accounting_before_close'] = final_accounting
+        if accounting_error:
+            result['status'] = 'BLOCKED_OWNED_CLEANUP'
+            result['errors'].append('final Job accounting: ' + accounting_error)
+        return result
 
     def resources(self):
         return {'peak_observed_process_tree_rss_bytes': self.peak,
                 'minimum_observed_available_ram_gib': self.min_ram,
-                'minimum_observed_disk_free_gib': self.min_disk}
+                'minimum_observed_disk_free_gib': self.min_disk,
+                'peak_job_lifetime_process_count': self.peak_job_lifetime_processes,
+                'peak_job_active_process_count': self.peak_job_active_processes}
 
     def observed_created_pids(self):
         return sorted(set(self.children) | ({self.process.pid} if self.process is not None else set()))
 
 
-def actual_ready(tree, ready, token, frozen):
+def actual_ready(tree, ready, token, frozen, cfg):
     require(ready['token'] == token and ready['sources'] == frozen, 'CPU READY token/source mismatch')
     tree.guard()
     item = tree.retain(ready['identity']['pid'])
     validate_owned_identity(ready['identity'], item['identity'], ready['lineage'], os.getpid(), tree.process.pid)
+    require_pinned_actual_image(item['identity'], cfg)
     member = tree.kernel.membership(item['handle'], tree.job.handle, 'actual_interpreter_before_GO')
     require(member['api_success'] and member['member'], 'actual interpreter is outside suspended owned Job')
     return item, member
@@ -177,6 +210,7 @@ def handshake(kernel, directory, prefix, parent_pid, token):
     frozen = sources()
     me = kernel.current()
     identity = kernel.identity(me, os.getpid())
+    require_pinned_actual_image(identity, config())
     lineage = kernel.lineage(os.getpid(), parent_pid)
     write(directory / (prefix + 'READY.json'), {'token': token, 'identity': identity, 'lineage': lineage,
           'sources': frozen, 'ready_monotonic_ns': time.monotonic_ns(), **zero_scope()})
@@ -213,8 +247,11 @@ def dummy(args):
     finally:
         kernel.close(job)
     require(not kernel.logging_errors, 'CPU dummy close evidence failed')
-    write(directory / 'DUMMY_ARMED.json', {'identity': identity, 'member': member, 'token': args.token, **zero_scope()})
-    deadline = time.monotonic() + 10
+    # Autonomous exit cannot occur within the entire owned 45-second window.
+    # The outer Job/guard still enforces that unchanged window.
+    deadline = time.monotonic() + config()['limits']['external_ceiling_seconds'] + config()['limits']['phase_seconds']
+    write(directory / 'DUMMY_ARMED.json', {'identity': identity, 'member': member, 'token': args.token,
+          'autonomous_exit_not_before_monotonic_ns': int(deadline * 1e9), **zero_scope()})
     while time.monotonic() < deadline:
         time.sleep(.1)
     raise RuntimeError('CPU dummy survived its registered parent cleanup phase')
@@ -249,6 +286,7 @@ def worker(args):
         try:
             observed = kernel.identity(handle, child.pid)
             validate_owned_identity(ready['identity'], observed, ready['lineage'], os.getpid(), child.pid)
+            require_pinned_actual_image(observed, cfg)
             inherited = kernel.membership(handle, job, 'dummy_specific_job_before_GO')
             require(inherited['api_success'] and inherited['member'], 'CPU dummy inheritance unavailable')
         finally:
@@ -277,11 +315,31 @@ def wait_exit(tree, expected):
     require(tree.process.returncode == expected and time.monotonic() < deadline, 'CPU worker wrong/late exit')
 
 
+def confirm_job_termination_before_close(tree):
+    require(tree.job is not None and tree.job.handle, 'termination proof requires the inner Job still open')
+    owned = [{'handle': int(tree.process._handle), 'identity': tree.root_identity},
+             *tree.children.values()]
+    witnesses = []
+    for item in owned:
+        tree.guard()
+        waited, error = tree.kernel.call('WaitForSingleObject', item['handle'], 2000,
+                                         context={'termination_before_job_close': item['identity']})
+        require(waited == 0 and time.monotonic() < tree.deadline and not tree.kernel.logging_errors,
+                f'owned Job termination unproved before close: {waited}/{error}')
+        code = tree.kernel.exit_code(item['handle'], {'termination_before_job_close': item['identity']})
+        require(code == 2 and not tree.kernel.logging_errors, 'owned Job termination expected exit code two')
+        witnesses.append({'identity': item['identity'], 'wait_return': waited,
+                          'exit_code': code,
+                          'inner_job_handle_still_open': int(tree.job.handle)})
+    return witnesses
+
+
 def run_case(cfg, name, deadline, frozen, source_sha):
     directory = OUTPUT / name
     directory.mkdir()
     kernel = Kernel(metadata.logger(directory / 'CONTROLLER_API.jsonl'))
-    tree, token = Tree(kernel, directory, deadline), uuid.uuid4().hex
+    tree = Tree(kernel, directory, deadline, maximum_total_processes=2 if name == 'WRONG_JOB_GO' else 3)
+    token = uuid.uuid4().hex
     wrong_job = None
     error = None
     witnesses = {}
@@ -291,7 +349,7 @@ def run_case(cfg, name, deadline, frozen, source_sha):
         with (directory / 'stdout.log').open('xb') as stdout, (directory / 'stderr.log').open('xb') as stderr:
             witnesses['suspended_launch'] = tree.launch(command, stdout, stderr)
             ready = wait_file(directory / 'READY.json', min(deadline, time.monotonic() + 5), tree.guard)
-            actual, member = actual_ready(tree, ready, token, frozen)
+            actual, member = actual_ready(tree, ready, token, frozen, cfg)
             require(ready['identity']['pid'] != tree.process.pid, 'pinned venv pair shape changed')
             witnesses['actual_identity'], witnesses['actual_membership'] = actual['identity'], member
             go_job = tree.job.handle
@@ -312,6 +370,7 @@ def run_case(cfg, name, deadline, frozen, source_sha):
                 require(armed['identity'] == actual['identity'] and armed['token'] == token, 'CPU worker arm mismatch')
                 descendant = tree.retain(armed['dummy_identity']['pid'])
                 require(descendant['identity'] == armed['dummy_identity'], 'CPU dummy held identity changed')
+                require_pinned_actual_image(descendant['identity'], cfg)
                 inherited = kernel.membership(descendant['handle'], tree.job.handle, 'held_dummy_inner_job')
                 require(inherited['api_success'] and inherited['member'], 'held dummy Job mismatch')
                 witnesses['dummy_identity'], witnesses['dummy_membership'] = descendant['identity'], inherited
@@ -328,6 +387,7 @@ def run_case(cfg, name, deadline, frozen, source_sha):
                             'termination control requires active verified tree')
                     tree.job.terminate()
                     witnesses['explicit_owned_job_termination'] = True
+                    witnesses['termination_exit_before_job_close'] = confirm_job_termination_before_close(tree)
     except BaseException as exc:
         error = type(exc).__name__ + ': ' + str(exc)
     finally:
@@ -343,6 +403,7 @@ def run_case(cfg, name, deadline, frozen, source_sha):
               and sources() == frozen and time.monotonic() < deadline)
     result = {'status': 'PASS_CPU_CONTAINMENT_AND_OWNED_CLEANUP' if passed else 'BLOCKED_CPU_CASE',
               'case': name, 'error': error, 'witnesses': witnesses, 'cleanup': cleanup,
+              'main_worker_root_created': int(tree.process is not None),
               'observed_created_pids': tree.observed_created_pids(),
               'os_processes_created_observed': len(tree.observed_created_pids()), **tree.resources(), **zero_scope()}
     write(directory / 'CASE_RESULT.json', result)
@@ -370,14 +431,15 @@ def controller(args):
             results.append(run_case(cfg, name, deadline, go['sources'], go['source_sha']))
     except BaseException as exc:
         error = type(exc).__name__ + ': ' + str(exc)
+    case_receipts = [read(OUTPUT / name / 'CASE_RESULT.json') for name in cfg['cases']
+                     if (OUTPUT / name / 'CASE_RESULT.json').exists()]
     passed = error is None and len(results) == 3 and time.monotonic() < deadline
     result = {'status': 'PASS_CPU_SUSPENDED_CONTAINMENT_AND_CLEANUP_ONLY' if passed else 'BLOCKED_CPU_SUITE',
               'source_sha': go['source_sha'], 'sources': sources(), 'elapsed_seconds': time.monotonic() - started,
               'cases': results, 'error': error,
-              'worker_roots_started': sum((OUTPUT / name / 'CONTROLLER_API.jsonl').exists() for name in cfg['cases']),
+              'worker_roots_created': sum(r['main_worker_root_created'] for r in case_receipts),
               'experimental_os_processes_created_observed': sum(
-                  read(OUTPUT / name / 'CASE_RESULT.json')['os_processes_created_observed']
-                  for name in cfg['cases'] if (OUTPUT / name / 'CASE_RESULT.json').exists()), **zero_scope()}
+                  r['os_processes_created_observed'] for r in case_receipts), **zero_scope()}
     write(OUTPUT / 'QUALIFICATION_RESULT.json', result)
     return 0 if passed else 2
 
@@ -418,7 +480,7 @@ def outer():
             proof = tree.launch(command, stdout, stderr)
             write(directory / 'OUTER_SUSPENDED_PROOF.json', proof)
             ready = wait_file(directory / 'BOOT_READY.json', min(tree.deadline, time.monotonic() + 5), tree.guard)
-            actual, _ = actual_ready(tree, ready, token, frozen)
+            actual, _ = actual_ready(tree, ready, token, frozen, cfg)
             require(actual['identity']['pid'] == tree.process.pid, 'CPU controller single-process shape changed')
             publish_go(directory, 'BOOT_GO.json', token, actual['identity'], frozen, kernel, tree.job.handle, source_sha)
             while tree.process.poll() is None:
@@ -431,7 +493,8 @@ def outer():
         cleanup = tree.cleanup()
         write(directory / 'OUTER_CLEANUP.json', cleanup)
     passed = (error is None and cleanup['status'] == 'OWNED_CPU_PROCESSES_EXITED'
-              and not kernel.logging_errors and sources() == frozen and time.monotonic() < tree.deadline)
+              and not cleanup['owned_process_fallback_pids'] and not kernel.logging_errors
+              and sources() == frozen and time.monotonic() < tree.deadline)
     result = {'status': 'PASS_CPU_ONLY_EXTERNAL_CONTAINMENT' if passed else 'BLOCKED_CPU_OUTER_GUARD',
               'error': error, 'elapsed_seconds': time.monotonic() - started, 'source_sha': source_sha,
               'sources': frozen, 'cleanup': cleanup, 'controller_os_processes_created': int(tree.process is not None),
@@ -441,10 +504,31 @@ def outer():
     return 0 if passed else 2
 
 
+def guarded_outer():
+    """Consume and preserve admission/startup exceptions without overwriting evidence."""
+    try:
+        return outer()
+    except BaseException as exc:
+        directory = OUTPUT.with_name(OUTPUT.name + '_outer')
+        result = {'status': 'BLOCKED_CPU_OUTER_EXCEPTION',
+                  'error': type(exc).__name__ + ': ' + str(exc),
+                  'process_creation_accounting': 'Use retained API/launch receipts; not assumed zero.',
+                  **zero_scope()}
+        try:
+            directory.mkdir(parents=True, exist_ok=True)
+            receipt = directory / 'OUTER_EXCEPTION.json'
+            if not receipt.exists():
+                write(receipt, result)
+        except Exception as receipt_error:
+            result['receipt_error'] = type(receipt_error).__name__ + ': ' + str(receipt_error)
+        print(json.dumps(result, sort_keys=True), flush=True)
+        return 2
+
+
 def main():
     require(not metadata.forbidden_modules(), 'CPU scope already imported framework')
     if len(sys.argv) == 1:
-        return outer()
+        return guarded_outer()
     parser = argparse.ArgumentParser()
     mode = parser.add_mutually_exclusive_group(required=True)
     mode.add_argument('--controller', action='store_true')

@@ -63,6 +63,12 @@ class JobPids(c.Structure):
     _fields_ = [('assigned', w.DWORD), ('returned', w.DWORD), ('pids', c.c_size_t * 8)]
 
 
+class JobAccounting(c.Structure):
+    _fields_ = [(name, c.c_longlong) for name in (
+        'TotalUserTime', 'TotalKernelTime', 'ThisPeriodTotalUserTime', 'ThisPeriodTotalKernelTime')] + [
+        (name, w.DWORD) for name in ('TotalPageFaultCount', 'TotalProcesses', 'ActiveProcesses', 'TotalTerminatedProcesses')]
+
+
 class ThreadEntry(c.Structure):
     _fields_ = [('dwSize', w.DWORD), ('cntUsage', w.DWORD),
                 ('th32ThreadID', w.DWORD), ('th32OwnerProcessID', w.DWORD),
@@ -84,6 +90,7 @@ class Kernel:
             'GetCurrentProcess': ([], w.HANDLE),
             'OpenProcess': ([w.DWORD, w.BOOL, w.DWORD], w.HANDLE),
             'GetProcessTimes': ([w.HANDLE, *([c.POINTER(w.FILETIME)] * 4)], w.BOOL),
+            'GetExitCodeProcess': ([w.HANDLE, c.POINTER(w.DWORD)], w.BOOL),
             'QueryFullProcessImageNameW': ([w.HANDLE, w.DWORD, w.LPWSTR, c.POINTER(w.DWORD)], w.BOOL),
             'CreateToolhelp32Snapshot': ([w.DWORD, w.DWORD], w.HANDLE),
             'Process32FirstW': ([w.HANDLE, c.POINTER(ProcessEntry)], w.BOOL),
@@ -235,6 +242,23 @@ class Kernel:
         result, error = self.call('QueryInformationJobObject', job_handle, 3, c.byref(info), c.sizeof(info), c.byref(returned))
         require(result and info.returned == info.assigned and info.returned <= 8, f'owned Job process list unavailable: {error}')
         return list(info.pids[:info.returned])
+
+    def job_accounting(self, job_handle):
+        info, returned = JobAccounting(), w.DWORD()
+        result, error = self.call('QueryInformationJobObject', job_handle, 1,
+                                  c.byref(info), c.sizeof(info), c.byref(returned))
+        require(result and returned.value == c.sizeof(info), f'owned Job lifetime accounting unavailable: {error}')
+        witness = {'total_processes': int(info.TotalProcesses), 'active_processes': int(info.ActiveProcesses),
+                   'total_terminated_processes': int(info.TotalTerminatedProcesses)}
+        self.record({'event': 'owned_job_lifetime_accounting', **witness})
+        return witness
+
+    def exit_code(self, process_handle, label):
+        code = w.DWORD()
+        result, error = self.call('GetExitCodeProcess', process_handle, c.byref(code), context=label)
+        require(result, f'owned process exit code unavailable: {error}')
+        self.record({'event': 'owned_process_exit_code', 'label': label, 'exit_code': int(code.value)})
+        return int(code.value)
 
 
 class TracedJob:
