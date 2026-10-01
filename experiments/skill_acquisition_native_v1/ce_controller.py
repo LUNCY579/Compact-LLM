@@ -234,11 +234,29 @@ class OuterAdmission:
                                  self.request['scope_ref']['sha256'], seal=_PERMIT_SEAL, qualification_rows=rows)
 
 
+def registered_factory_descriptor(context):
+    """Resolve a JSON source descriptor; no callable enters frozen evidence."""
+    require(type(context) is dict and 'backend_factory' not in context,
+            'backend factory must use JSON source identity, not a callback object')
+    descriptor = context.get('backend_factory_descriptor')
+    require(type(descriptor) is dict and set(descriptor) == {'module', 'symbol', 'source_sha256'}
+            and type(descriptor['module']) is str and re.fullmatch(r'[A-Za-z_]\w*(\.[A-Za-z_]\w*)*', descriptor['module'])
+            and type(descriptor['symbol']) is str and descriptor['symbol'].isidentifier()
+            and _hex(descriptor['source_sha256']), 'exact backend factory source descriptor required')
+    source = context.get('bindings', {}).get('source', {}).get('code_sha256', {})
+    path = descriptor['module'].replace('.', '/') + '.py'
+    require(source.get(path) == descriptor['source_sha256'], 'backend factory outside verified source map')
+    candidates = [value for value in _REGISTERED_NATIVE_FACTORIES
+                  if getattr(value, '__module__', None) == descriptor['module']
+                  and getattr(value, '__qualname__', None) == descriptor['symbol']]
+    require(len(candidates) == 1, 'no registered native worker exists; command is not qualified')
+    return candidates[0]
+
+
 def build_backend_command(request, context, request_ref, *, resume=False, reason=None, synthetic_fixture=False):
     """Pure command data only. No subprocess, shell, environment or module default."""
     validate_request(request, synthetic_fixture=synthetic_fixture)
-    require(synthetic_fixture or any(context.get('backend_factory') is value for value in _REGISTERED_NATIVE_FACTORIES),
-            'no registered native worker exists; command is not qualified')
+    if not synthetic_fixture: registered_factory_descriptor(context)
     _ref(request_ref)
     require(context.get('request_file_sha256') == request_ref['sha256'], 'verified raw command request file identity')
     worker = context.get('worker') if type(context) is dict else None

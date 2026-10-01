@@ -1,0 +1,729 @@
+{
+  "schema": "CE8-WINDOWS-PROCESS-FIXTURE-1",
+  "utc": "2026-10-01T23:04:10.483780+00:00",
+  "classification": "actual owned hidden JSON-only OS child/RPC/terminal; no native/model qualification",
+  "ready": {
+    "fixture": true,
+    "framework_imports": 0,
+    "model_loads": 0,
+    "native_qualified": false
+  },
+  "pong": {
+    "echo": {
+      "sample": 17
+    },
+    "fixture": true,
+    "native_qualified": false
+  },
+  "finish": {
+    "fixture_complete": true,
+    "native_qualified": false
+  },
+  "terminal": {
+    "schema": "CE8-OWNED-PROCESS-TERMINAL-1",
+    "worker_identity_sha256": "5c8bcb55dd473396862b0a1362adfaa2b74050fa6275cce4d30c9c17129fc590",
+    "os_identity": {
+      "pid": 6748,
+      "creation_filetime_100ns": 134353694503890366,
+      "image_path": "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+      "argv": [
+        "C:\\Users\\clclc\\AppData\\Roaming\\uv\\python\\cpython-3.11.15-windows-x86_64-none\\python.exe",
+        "-m",
+        "experiments.skill_acquisition_native_v1.ce_process_fixture",
+        "--request",
+        "C:\\Users\\clclc\\AppData\\Local\\Temp\\ce-json-child-h3we0rbq\\request.json"
+      ],
+      "boot_identity": "windows-boot-guid-f04c76b5-411b-11f0-89c2-ddcd86d0f53c"
+    },
+    "exit_code": 0,
+    "exit_filetime_100ns": 134353694504814667,
+    "launcher_identity": {
+      "pid": 244260,
+      "creation_filetime_100ns": 134353694503518425,
+      "image_path": "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+      "terminal_identity_only": false,
+      "signaled": false,
+      "exit_code": 259,
+      "exit_filetime_100ns": null,
+      "argv": [
+        "C:\\Users\\clclc\\BusinessProject\\.venv-mq001\\Scripts\\python.exe",
+        "-m",
+        "experiments.skill_acquisition_native_v1.ce_process_fixture",
+        "--request",
+        "C:\\Users\\clclc\\AppData\\Local\\Temp\\ce-json-child-h3we0rbq\\request.json"
+      ],
+      "boot_identity": "windows-boot-guid-f04c76b5-411b-11f0-89c2-ddcd86d0f53c"
+    },
+    "request_sha256": "6a7b77c2bf35b23d0af4aae12d39391aebc1ed51df0ba8667802e64eaffa07a7",
+    "scope_sha256": "912cdb56fae8fd94d20012dfcc90f756e0663803e591dcea7abf5b8504b5d835",
+    "native_qualified": false,
+    "status_file_used": false
+  },
+  "events": [
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 2613
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 83
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 262144
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 91648
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "started",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 8388608,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 8388608
+    },
+    {
+      "kind": "fixture_reference_prepare",
+      "phase": "returned",
+      "bytes_read": 5789
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "11dfaf33bb654c7a98e63e434da01e78",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "11dfaf33bb654c7a98e63e434da01e78",
+      "wall_s": 0.0007423999995808117
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "49b2771dbf144967ac98660827f2a3c7",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "49b2771dbf144967ac98660827f2a3c7",
+      "wall_s": 1.7700000171316788e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "1768ff2a6444435e823301fb9a4dc84e",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "1768ff2a6444435e823301fb9a4dc84e",
+      "wall_s": 2.049999966402538e-05
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "10644df7f84344ef806b36fc10223311",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "10644df7f84344ef806b36fc10223311",
+      "wall_s": 0.00038700000004610047
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "started",
+      "operation_id": "03b20c9d068e474eab782d55e5ea6795",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_os_binding",
+      "phase": "returned",
+      "operation_id": "03b20c9d068e474eab782d55e5ea6795",
+      "wall_s": 0.08881879999898956
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "started",
+      "operation_id": "4bebd9dbdfc04364b174dc11501ff1a8",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "worker_handle_close",
+      "phase": "returned",
+      "operation_id": "4bebd9dbdfc04364b174dc11501ff1a8",
+      "wall_s": 2.860000131477136e-05
+    },
+    {
+      "kind": "process_launch_preflight",
+      "phase": "started",
+      "operation_id": "84a435d46cf04696981dd41104ff2ca4",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_preflight",
+      "phase": "returned",
+      "operation_id": "84a435d46cf04696981dd41104ff2ca4",
+      "wall_s": 0.0007558999986940762
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "9ef1077fc5064103a20901156f87f75a",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 262145,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 262145
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "9ef1077fc5064103a20901156f87f75a",
+      "wall_s": 0.0004788000005646609
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "9487020fcd324abfac92ba5054fac7bf",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 91649,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 91649
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "9487020fcd324abfac92ba5054fac7bf",
+      "wall_s": 0.000674000000799424
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "4fa2ac16f4634081ac67cdfb9caaa83c",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 84,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 84
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "4fa2ac16f4634081ac67cdfb9caaa83c",
+      "wall_s": 0.00023809999947843608
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "started",
+      "operation_id": "0b0a08488305456b8146e6fd07779186",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 2614,
+      "identity_hash_attempts_upper": 1,
+      "identity_hash_bytes_upper": 2614
+    },
+    {
+      "kind": "worker_source_verification",
+      "phase": "returned",
+      "operation_id": "0b0a08488305456b8146e6fd07779186",
+      "wall_s": 0.00023660000078962184
+    },
+    {
+      "kind": "process_launch_preflight",
+      "phase": "started",
+      "operation_id": "ed125c8fd8b44ac8832a2094c293567d",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_preflight",
+      "phase": "returned",
+      "operation_id": "ed125c8fd8b44ac8832a2094c293567d",
+      "wall_s": 9.750000026542693e-05
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "started",
+      "operation_id": "ebfe117beb2645bdbbdd88b3c40a62df",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "returned",
+      "operation_id": "ebfe117beb2645bdbbdd88b3c40a62df",
+      "wall_s": 1.779999911377672e-05
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "started",
+      "operation_id": "a5b39a550cf643189f64fc39d9b23c53",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "returned",
+      "operation_id": "a5b39a550cf643189f64fc39d9b23c53",
+      "wall_s": 9.060000047611538e-05
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "started",
+      "operation_id": "c9d4673caaa745d6ad6f23de62d7f054",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_parent",
+      "phase": "returned",
+      "operation_id": "c9d4673caaa745d6ad6f23de62d7f054",
+      "wall_s": 5.8900001022266224e-05
+    },
+    {
+      "kind": "process_owned_stop",
+      "phase": "started",
+      "operation_id": "73e360bc12284fa7846176ab1e046d45",
+      "deferred_owned_cleanup": true,
+      "launch_spec_sha256": "b7f8ba82259ab3ba4ccca5761326347ff016028378de848a2fcc288161751494"
+    },
+    {
+      "kind": "process_launch",
+      "phase": "started",
+      "operation_id": "d83c00c5009d424482295b61112bb393",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch",
+      "phase": "returned",
+      "operation_id": "d83c00c5009d424482295b61112bb393",
+      "wall_s": 0.006698999999571242
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "eef34376fb9f47a5b557156a882eb3ea",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "eef34376fb9f47a5b557156a882eb3ea",
+      "wall_s": 0.00014589999955205712
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "1ca5b34cf4ba46adb8fcf3ec80dd67cd",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "1ca5b34cf4ba46adb8fcf3ec80dd67cd",
+      "wall_s": 5.140000030223746e-05
+    },
+    {
+      "kind": "process_launch_child_census",
+      "phase": "started",
+      "operation_id": "cc9795080664441f9c1a72c39d18ef78",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child_census",
+      "phase": "returned",
+      "operation_id": "cc9795080664441f9c1a72c39d18ef78",
+      "wall_s": 0.025388100000782288
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "bb01adad91dd44b08229f5e7afc22b1e",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "bb01adad91dd44b08229f5e7afc22b1e",
+      "wall_s": 3.5400000342633575e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "d6f7ed51de7a4ee9934b3dfc2bb921eb",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "d6f7ed51de7a4ee9934b3dfc2bb921eb",
+      "wall_s": 0.0001809999994293321
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "76097a1d82ce433a8bb83b39c87a72af",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "76097a1d82ce433a8bb83b39c87a72af",
+      "wall_s": 2.469999890308827e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "716b7291e8d141a9b0dc50bda67bc996",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "716b7291e8d141a9b0dc50bda67bc996",
+      "wall_s": 6.629999916185625e-05
+    },
+    {
+      "kind": "process_launch_child_census",
+      "phase": "started",
+      "operation_id": "76ea86c3509d42b181600ad4d5a541df",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child_census",
+      "phase": "returned",
+      "operation_id": "76ea86c3509d42b181600ad4d5a541df",
+      "wall_s": 0.025389499998709653
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "864015fa34c743e29652f6ed470e30f0",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "864015fa34c743e29652f6ed470e30f0",
+      "wall_s": 3.7200001315795816e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "53f1989838924b36966ff19fd3dbaee7",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "53f1989838924b36966ff19fd3dbaee7",
+      "wall_s": 0.00018009999985224567
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "d1e23d12333142de9d7f0f892f726a16",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "d1e23d12333142de9d7f0f892f726a16",
+      "wall_s": 2.8899999961140566e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "2b20121872344ed5bb348ccaa5d3effe",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "2b20121872344ed5bb348ccaa5d3effe",
+      "wall_s": 6.86999992467463e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "e29e8f2a47ec46169650c753778f91d9",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "e29e8f2a47ec46169650c753778f91d9",
+      "wall_s": 1.5699999494245276e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "5bf5428b5a614c83976445be29b70091",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "5bf5428b5a614c83976445be29b70091",
+      "wall_s": 0.00013529999887396116
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "9bce3a41055f4c9c8b822d325212d831",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "9bce3a41055f4c9c8b822d325212d831",
+      "wall_s": 2.1800000467919745e-05
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "started",
+      "operation_id": "5ca68d5ea1cb4e97bd9f0ca828b2eba8",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_launch_child",
+      "phase": "returned",
+      "operation_id": "5ca68d5ea1cb4e97bd9f0ca828b2eba8",
+      "wall_s": 4.6799999836366624e-05
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "started",
+      "operation_id": "ddc862eb43d349c6b13f6a99f45807b9",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 4096,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "returned",
+      "operation_id": "ddc862eb43d349c6b13f6a99f45807b9",
+      "wall_s": 0.04118259999995644
+    },
+    {
+      "kind": "process_rpc_send",
+      "phase": "started",
+      "operation_id": "cc2a9499961d4bfc9c71c20cf6db9fd3",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_rpc_send",
+      "phase": "returned",
+      "operation_id": "cc2a9499961d4bfc9c71c20cf6db9fd3",
+      "wall_s": 0.00035930000012740493
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "started",
+      "operation_id": "0ce923607ef34274a87caad8698b62a2",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 4096,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "returned",
+      "operation_id": "0ce923607ef34274a87caad8698b62a2",
+      "wall_s": 0.00036689999978989363
+    },
+    {
+      "kind": "process_rpc_send",
+      "phase": "started",
+      "operation_id": "d616b43bbb314805b3309e57621976fd",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_rpc_send",
+      "phase": "returned",
+      "operation_id": "d616b43bbb314805b3309e57621976fd",
+      "wall_s": 0.000260199998592725
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "started",
+      "operation_id": "0e4964fc79ac4111b70d38a3d284772c",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 4096,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_rpc_receive",
+      "phase": "returned",
+      "operation_id": "0e4964fc79ac4111b70d38a3d284772c",
+      "wall_s": 0.0006609000010939781
+    },
+    {
+      "kind": "process_terminal",
+      "phase": "started",
+      "operation_id": "e0c84cd1110a497bbdb28e8a3a92ece7",
+      "operation_attempts_upper": 1,
+      "io_read_bytes_upper": 0,
+      "identity_hash_attempts_upper": 0,
+      "identity_hash_bytes_upper": 0
+    },
+    {
+      "kind": "process_terminal",
+      "phase": "returned",
+      "operation_id": "e0c84cd1110a497bbdb28e8a3a92ece7",
+      "wall_s": 0.005039300000134972
+    },
+    {
+      "kind": "process_owned_stop",
+      "phase": "returned",
+      "operation_id": "73e360bc12284fa7846176ab1e046d45",
+      "pid": 244260,
+      "reason": "normal_terminal_cleanup",
+      "error": null
+    }
+  ],
+  "remaining_prepaid_bounds": {
+    "operation_attempts_upper": 457,
+    "io_read_bytes_upper": 24797044,
+    "identity_hash_attempts_upper": 491,
+    "identity_hash_bytes_upper": 24809332
+  },
+  "source_before": "8f0759e5b7a38950a54ddbfee943a6ae921961283ed2aa212a103beac4c4fede",
+  "source_after": "8f0759e5b7a38950a54ddbfee943a6ae921961283ed2aa212a103beac4c4fede",
+  "source_unchanged": true,
+  "frameworks": [],
+  "model_loads": 0,
+  "native_qualified": false,
+  "native_execution_authorized": false,
+  "elapsed_s": 0.13645729999916512,
+  "checker_sha256": "fa07e91cbb2b4b6522e5a8f95b52bac7d10c3aae4cd395d84ec9a0aa3fc61093"
+}

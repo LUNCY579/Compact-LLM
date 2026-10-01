@@ -132,6 +132,20 @@ class Backend:
 
 
 class ControllerTests(unittest.TestCase):
+    def test_factory_command_identity_is_json_and_still_requires_registered_source(self):
+        descriptor = {'module': 'experiments.skill_acquisition_native_v1.ce_native_backend',
+                      'symbol': 'create_backend', 'source_sha256': 'a' * 64}
+        context = {'backend_factory_descriptor': descriptor,
+                   'bindings': {'source': {'code_sha256': {
+                       'experiments/skill_acquisition_native_v1/ce_native_backend.py': 'a' * 64}}}}
+        c.canonical(context)
+        with self.assertRaisesRegex(c.AdmissionError, 'no registered'): c.registered_factory_descriptor(context)
+        with self.assertRaisesRegex(c.AdmissionError, 'callback object'):
+            c.registered_factory_descriptor(dict(context, backend_factory=lambda: None))
+        context['backend_factory_descriptor']['source_sha256'] = 'b' * 64
+        with self.assertRaisesRegex(c.AdmissionError, 'verified source map'): c.registered_factory_descriptor(context)
+        self.assertFalse(c._REGISTERED_NATIVE_FACTORIES)
+
     def test_outer_metadata_copy_does_not_clone_live_permit_or_services(self):
         class Opaque:
             def __deepcopy__(self, memo): raise AssertionError('live capability copied as JSON evidence')

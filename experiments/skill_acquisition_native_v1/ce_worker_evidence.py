@@ -189,20 +189,24 @@ class _WindowsOS:
         require(bool(argv) and 0 < count.value <= 4096, 'OS argv parsing failed')
         try: return [argv[index] for index in range(count.value)]
         finally: self.kernel.LocalFree(c.cast(argv, c.c_void_p))
-    def snapshot(self, handle, *, command=True):
+    def snapshot(self, handle, *, command=True, terminal=False):
         c = self.ctypes
+        wait = int(self.kernel.WaitForSingleObject(handle, 0)); require(wait in (0, 258), 'OS process wait failed/ambiguous')
         class FileTime(c.Structure): _fields_ = [('low', c.c_uint32), ('high', c.c_uint32)]
         creation, exited, kernel, user = FileTime(), FileTime(), FileTime(), FileTime()
         require(bool(self.kernel.GetProcessTimes(handle, c.byref(creation), c.byref(exited), c.byref(kernel), c.byref(user))), 'OS process times unavailable')
         pid = int(self.kernel.GetProcessId(handle)); require(pid > 0, 'OS PID unavailable')
-        name = c.create_unicode_buffer(32768); length = c.c_uint32(len(name))
-        require(bool(self.kernel.QueryFullProcessImageNameW(handle, 0, name, c.byref(length))), 'OS executable image unavailable')
-        wait = int(self.kernel.WaitForSingleObject(handle, 0)); require(wait in (0, 258), 'OS process wait failed/ambiguous')
+        image = None
+        terminal_identity_only = terminal and wait == 0
+        if not terminal_identity_only:
+            name = c.create_unicode_buffer(32768); length = c.c_uint32(len(name))
+            require(bool(self.kernel.QueryFullProcessImageNameW(handle, 0, name, c.byref(length))), 'OS executable image unavailable')
+            image = name.value
         code = c.c_uint32(); require(bool(self.kernel.GetExitCodeProcess(handle, c.byref(code))), 'OS process exit code unavailable')
         result = {'pid': pid, 'creation_filetime_100ns': (int(creation.high) << 32) | int(creation.low),
-            'image_path': name.value, 'signaled': wait == 0, 'exit_code': int(code.value),
+            'image_path': image, 'terminal_identity_only': terminal_identity_only, 'signaled': wait == 0, 'exit_code': int(code.value),
             'exit_filetime_100ns': ((int(exited.high) << 32) | int(exited.low)) if wait == 0 else None}
-        if command: result['argv'] = self.command(handle)
+        if command and not terminal_identity_only: result['argv'] = self.command(handle)
         return result
 
 
@@ -303,7 +307,11 @@ class WinWorkerHandle:
         require(self._seal is _HANDLE_SEAL and not self.closed, 'retained worker handle required for terminal evidence')
         if self.native: _admit(self.spec, self._permit, self.observer)
         boot = self.budget.run('worker_os_binding', self.os.boot)
-        facts = self.budget.run('worker_os_binding', lambda: self.os.snapshot(self.handle, command=False))
+        facts = self.budget.run('worker_os_binding', lambda: self.os.snapshot(self.handle, command=False, terminal=True))
+        if facts.get('terminal_identity_only') is True:
+            require(facts['signaled'] is True and facts['pid'] == self.identity['pid']
+                    and facts['creation_filetime_100ns'] == self.identity['creation_filetime_100ns'], 'terminal retained process identity changed')
+            facts = dict(facts, image_path=self.identity['image_path'])
         identity = compare_identity(self.spec, facts, boot)
         require(identity == self.identity and facts['signaled'] is True, 'same retained worker is not OS-terminal')
         require(type(facts['exit_code']) is int and type(facts['exit_filetime_100ns']) is int

@@ -16,7 +16,7 @@ CONTEXT = 'CE8-OUTER-ADMISSION-CONTEXT-1'
 STAGES = frozenset(('backend_construct', 'module_import', 'runtime_anchor',
     'ce_boundary', 'checkpoint_construct', 'checkpoint_save', 'checkpoint_restore',
     'refresh_policy', 'donor_publish_verify', 'delta_roundtrip', 'cleanup',
-    'journal_construct', 'journal_operation', 'journal_restore',
+    'journal_construct', 'journal_operation', 'journal_restore', 'completion_publication',
     'ingestion_tokenizer', 'longest_masks', 'likelihood_gradient_parity',
     'adam_clipping', 'checkpoint_resume', 'resource_io_measurement'))
 _REGISTERED_NATIVE_AUTHORITY_VERIFIERS = frozenset()

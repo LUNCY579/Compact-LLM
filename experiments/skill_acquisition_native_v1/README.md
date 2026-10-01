@@ -333,6 +333,52 @@ launch/RPC, fresh-process checkpoint comparisons, platform publication
 durability and final service/producer integration remain required. The warm
 study's stop and pending operator choice still govern any new native treatment.
 
+## Launch, checkpoint and publication adapters
+
+`ce_process_launch.py` implements hidden Windows subprocess launch and bounded
+JSON RPC. Launch authority and post-launch observation authority are separate;
+both registries remain empty. The fixture route admits only the fixed
+`ce_process_fixture` module after explicit resource clearance. Parent identity,
+launcher and process image, full argv/environment, source and request hashes,
+message sizes, sequence, worker PID and deadlines are bound.
+
+Windows virtual environment launchers may create a separate base-Python child.
+The declared redirector topology retains both handles, verifies OS parent and
+creation-time lineage, and checks the actual worker's image/argv before RPC.
+Terminal evidence uses the same retained handle's PID, creation time, signaled
+state and exit code, tied to the image observed while live. Owned cleanup is
+prepaid and still releases handles after receipt failures.
+
+`ce_checkpoint_qualification.py` supplies storage for exactly two qualification
+CE8 batches and three independent process branches: uninterrupted U2, U1
+prefix, and U1 restore followed by U2. Raw parameter/Adam/RNG payload bytes and
+canonical module/Python/NumPy metadata are compared. Strict fence ancestry and
+bounded manifests are required. Source-registered lease handoff and checkpoint
+worker services are still missing; their empty registries refuse before parent
+release. The parent reload path verifies its existing runtime and avoids a
+second CUDA configuration.
+
+`ce_publication.py` publishes create-only receipts using same-directory Windows
+`MoveFileExW(WRITE_THROUGH)`, file fsync and exact readback. Artifact verification
+streams large payloads; JSON materialization is bounded. Original replayed costs
+and the full publication prepayment are both retained. Receipts remain
+`UNQUALIFIED_COMPLETION`, with no execution or learning claim.
+
+The combined source suite passed **175/175 controls**, with unchanged source,
+no skips/errors and no ML framework imports. A real hidden JSON-only child
+fixture passed handshake, ping, finish, terminal exit0 and cleanup; an actual
+Windows small-file publication fixture passed create-only/readback/overwrite
+refusal. Two earlier child fixture failures and a permit-order test failure are
+retained beside their corrected evidence. See
+`evidence/CE8_LAUNCH_CHECKPOINT_SOURCE_CHECKS_20261001.json` and the fixture receipts.
+
+Factory selection for child command construction now uses a JSON module/symbol/
+source-hash descriptor. A descriptor cannot register a callable or issue scope.
+Actual checkpoint child handlers, GPU lease handoff, final resource/issuer
+services and native producer activation remain incomplete. Native models,
+discarded qualification updates and training still require the selected
+experiment and frozen authorization scope.
+
 The qualification producer remains **DRAFT_UNQUALIFIED**. Its native verifier
 registry is empty; flipping an activation flag or providing stage booleans,
 unrelated blob hashes or a caller-supplied verifier cannot produce native PASS.

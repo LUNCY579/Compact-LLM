@@ -111,6 +111,9 @@ class WorkerContractTests(unittest.TestCase):
         terminal = worker.terminal_evidence()
         self.assertEqual(terminal['exit_code'], 259)  # signaled process may actually exit with259
         self.assertFalse(terminal['status_file_used'])
+        actual.update(image_path=None, terminal_identity_only=True)
+        terminal = worker.terminal_evidence()
+        self.assertEqual(terminal['os_identity']['image_path'], value['process_image_ref']['path'])
         actual['creation_filetime_100ns'] += 1
         with self.assertRaises(w.WorkerEvidenceError): worker.terminal_evidence()
 
