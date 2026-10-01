@@ -1,0 +1,77 @@
+{
+  "utc": "2026-10-01T21:28:47.067997+00:00",
+  "host_ram_free_gib": 10.95302963256836,
+  "disk_free_gib": 81.57644653320312,
+  "lease": null,
+  "python_jobs": [
+    {
+      "pid": 48540,
+      "name": "python.exe",
+      "rss_bytes": 4943872
+    },
+    {
+      "pid": 48724,
+      "name": "python.exe",
+      "rss_bytes": 21987328
+    },
+    {
+      "pid": 48800,
+      "name": "python.exe",
+      "rss_bytes": 15855616
+    },
+    {
+      "pid": 48968,
+      "name": "python.exe",
+      "rss_bytes": 4919296
+    },
+    {
+      "pid": 147972,
+      "name": "python.exe",
+      "rss_bytes": 5275648
+    },
+    {
+      "pid": 148060,
+      "name": "python.exe",
+      "rss_bytes": 34107392
+    }
+  ],
+  "model_forwards": 0,
+  "model_loads": 0,
+  "gpu_raw": "NVIDIA GeForce RTX 4070 Laptop GPU, 8188, 1042, 29",
+  "gpu_free_gib": 1.017578125,
+  "gpu_holders_raw": "2608, [Insufficient Permissions]\n7148, C:\\Windows\\explorer.exe\n12440, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\CrossDeviceResume.exe\n15944, C:\\Windows\\SystemApps\\Microsoft.Windows.StartMenuExperienceHost_cw5n1h2txyewy\\StartMenuExperienceHost.exe\n15920, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\SearchHost.exe\n8784, C:\\Program Files (x86)\\Microsoft\\EdgeWebView\\Application\\154.0.4258.48\\msedgewebview2.exe\n18304, C:\\Program Files\\WindowsApps\\Microsoft.YourPhone_1.26072.257.0_x64__8wekyb3d8bbwe\\PhoneExperienceHost.exe\n21560, C:\\Windows\\SystemApps\\MicrosoftWindows.Client.CBS_cw5n1h2txyewy\\TextInputHost.exe\n22092, C:\\Windows\\SystemApps\\ShellExperienceHost_cw5n1h2txyewy\\ShellExperienceHost.exe\n16268, C:\\Program Files\\WindowsApps\\MicrosoftWindows.Client.WebExperience_526.21100.40.0_x64__cw5n1h2txyewy\\WidgetBoard.exe\n17048, C:\\Windows\\SystemApps\\Microsoft.LockApp_cw5n1h2txyewy\\LockApp.exe\n24376, C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.928.3736.0_x64__2p2nqsd0c76g0\\app\\ChatGPT.exe\n26156, [Insufficient Permissions]\n26488, C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n29776, C:\\Users\\clclc\\AppData\\Local\\OpenAI\\Codex\\runtimes\\cua_node\\154806497bb51bae\\bin\\node_modules\\@oai\\sky\\bin\\windows\\swift\\x64\\codex-computer-use-swift.exe\n27788, [Insufficient Permissions]\n33140, C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe\n19048, C:\\Windows\\System32\\ApplicationFrameHost.exe\n13472, C:\\Windows\\ImmersiveControlPanel\\SystemSettings.exe\n44704, C:\\Windows\\System32\\svchost.exe\n44384, C:\\Program Files\\WindowsApps\\Microsoft.Edge.GameAssist_1.0.4019.0_x64__8wekyb3d8bbwe\\EdgeGameAssist.exe\n45604, C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe\n29728, C:\\Program Files\\WindowsApps\\Claude_2.16120.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe\n50328, C:\\Program Files\\WindowsApps\\Claude_2.16120.0.0_x64__pzs8sxrjxfjjc\\app\\claude.exe\n31104, C:\\Windows\\System32\\ShellHost.exe",
+  "gpu_attribution_incomplete": true,
+  "foreign_gpu_compute_pids": [
+    2608,
+    7148,
+    12440,
+    15944,
+    15920,
+    8784,
+    18304,
+    21560,
+    22092,
+    16268,
+    17048,
+    24376,
+    26156,
+    26488,
+    29776,
+    27788,
+    33140,
+    19048,
+    13472,
+    44704,
+    44384,
+    45604,
+    29728,
+    50328,
+    31104
+  ],
+  "blockers": [
+    "GPU below conservative 6GiB preload threshold",
+    "GPU ownership attribution incomplete",
+    "foreign GPU compute PIDs; exclusive model ownership not established"
+  ],
+  "status": "BLOCKED"
+}
